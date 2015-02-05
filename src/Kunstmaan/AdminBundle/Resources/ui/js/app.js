@@ -9,6 +9,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
+        kunstmaanbundles.filter.init();
     };
 
     return {

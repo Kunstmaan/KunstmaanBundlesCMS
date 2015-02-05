@@ -2,7 +2,13 @@
    Buttons
    ========================================================================== */
 
-.btn {
+/* General
+   ========================================================================== */
+.btn--no-border {
+    border: 0;
+}
+
+.btn--raised {
     box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
     transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
 
@@ -11,6 +17,14 @@
     }
 }
 
+.btn--flat-top {
+    border-radius: 0 0 $border-radius-base $border-radius-base;
+    border-top: 0;
+}
+
+
+/* Types
+   ========================================================================== */
 .btn-default {
 
     &:hover {
@@ -19,7 +33,18 @@
     }
 }
 
-.btn--flat-top {
-    border-radius: 0 0 $border-radius-base $border-radius-base;
-    border-top: 0;
+.btn-primary {
+
+    &:hover {
+        background: $green;
+        border-color: $green;
+    }
+}
+
+
+
+/* Icons in buttons
+   ========================================================================== */
+.btn__icon {
+    color: $gray-light;
 }

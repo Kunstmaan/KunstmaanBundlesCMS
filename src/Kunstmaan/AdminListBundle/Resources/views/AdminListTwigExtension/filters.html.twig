@@ -1,15 +1,127 @@
 {% if filter.filterdefinitions|length > 0 %}
 <div class="app__filter">
-    <div id="app__filter" class="toggle-item">
+
+    <!-- Toggle Item -->
+    <div id="app__filter" class="toggle-item{% if filter.currentfilters|length >0 %} toggle-item--active{% endif %}">
         <div class="toggle-item__content app__filter__content">
-            Filters
+            <form class="form form-inline" action="{{ path(basepath, extraparams) }}">
+
+                <fieldset class="form__fieldset form__fieldset--padded">
+                    <!-- Start Filter -->
+                    <div class="js-filter-line app__filter__line {% if filter.currentfilters|length >0 %}hidden{% endif %}">
+                        <div class="form-group">
+                            <select id="add-first-filter" class="form-control">
+                            {# <select class="form-control" onchange="createFilter(this, true, {startDate: '{{ datePicker_startDate }}'})"> #}
+                                <option>{{ "form.choosetypefilter"|trans }}</option>
+                                {% for columnname, value in filter.filterdefinitions %}
+                                    {% if value['filtername'] is defined %}
+                                        {% set filtername = value['filtername'] %}
+                                    {% else %}
+                                        {% set filtername = columnname %}
+                                    {% endif %}
+                                    <option value="{{columnname}}">{{filtername|trans}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    {% for columnname, value in filter.currentfilters %}
+                        <div class="app__filter__line">
+                            <select class="filterdummy filterselect" name="filter_columnname[]" onchange="updateOptions(this, {startDate: '{{ datePicker_startDate }}'})">
+                                {% for defcolumnname, defvalue in filter.filterdefinitions %}
+                                    {% if defvalue['filtername'] is defined %}
+                                        {% set filtername = defvalue['filtername'] %}
+                                    {% else %}
+                                        {% set filtername = defcolumnname %}
+                                    {% endif %}
+                                    <option value="{{defcolumnname}}" {% if value.columnname == defcolumnname %} selected="selected" {% endif %}>{{filtername | trans}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="hidden" name="filter_uniquefilterid[]" class="js-unique-filter-id" value="{{value.uniqueid}}">
+                            <span class="filteroptions">
+                                {% set namesuffix %}_{{value.uniqueid}}{%endset%}
+                                {% include value.type.template with {'filtertype': value.type, 'data': value.data, 'options': value.options, 'nameprefix': 'filter_', 'namesuffix': namesuffix} %}
+                            </span>
+                            <button class="btn btn-default btn--no-border" type="button" onclick="return removeThisFilter(this)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+
+
+
+                <fieldset class="form__fieldset form__fieldset--padded">
+                    <!-- Add filter -->
+                    <div>
+                        <button type="button" id="add-filter" class="js-create-filter-btn btn btn-default btn--no-border" data-first="false">
+                        {# <button class="btn btn-default btn--no-border" type="button" onclick="return createFilter(this, false, {startDate: '{{ datePicker_startDate }}'})"> #}
+                            <i class="fa fa-plus-circle btn__icon"></i>
+                            {{ "form.addfilter"|trans }}
+                        </button>
+                    </div>
+                </fieldset>
+
+
+
+                <!-- Hidden fields -->
+                {% for key, value in filter.currentparameters %}
+                    {% if key|slice(0, 7) != 'filter_' and key != 'page' %}
+                        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+                    {% endif %}
+                {% endfor %}
+
+
+
+                <!-- Form Actions -->
+                <div class="form-actions form-actions--padded">
+                    <button type="button" id="clear-all-filters" class="btn btn-default btn--raised form-actions__btn">
+                        Clear
+                    </button>
+                    <button type="submit" name="filter" value="filter" id="apply-all-filters" class="btn btn-primary btn--raised form-actions__btn">
+                        Filter
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-    <button type="button" class="js-toggle-btn btn btn-default btn--flat-top toggle-button app__filter__toggle" data-target="#app__filter">
+
+
+
+    <!-- Toggle Button -->
+    <button type="button" class="js-toggle-btn btn btn-default btn--flat-top toggle-button app__filter__toggle {% if filter.currentfilters|length >0 %} toggle-button--active{% endif %}" data-target="#app__filter">
         Filter
-        <i class="fa fa-chevron-down toggle-btn__icon--show app__filter__toggle__icon"></i>
-        <i class="fa fa-chevron-up toggle-btn__icon--hide app__filter__toggle__icon"></i>
+        <i class="fa fa-chevron-down btn__icon toggle-btn__icon--show"></i>
+        <i class="fa fa-chevron-up btn__icon toggle-btn__icon--hide"></i>
     </button>
+
+
+
+    <!-- Dummy Stuff -->
+    <div id="filterdummyline" class="hidden">
+        <select class="filterdummy filterselect" name="columnname[]" onchange="updateOptions(this, {startDate: '{{ datePicker_startDate }}'})">
+            {% for columnname, value in filter.filterdefinitions %}
+            {% if value['filtername'] is defined %}
+                        {% set filtername = value['filtername'] %}
+                    {% else %}
+                        {% set filtername = columnname %}
+                    {% endif %}
+            <option value="{{columnname}}">{{filtername|trans}}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="uniquefilterid[]" class="js-unique-filter-id" value="">
+        <span class="filteroptions"></span>
+        <button class="btn btn-default btn--no-border" type="button" onclick="return removeThisFilter(this)">
+            <i class="fa fa-trash-o"></i>
+        </button>
+    </div>
+
+    {% for columnname, value in filter.filterdefinitions %}
+        <div id="filterdummyoptions_{{columnname|replace({'.': '_'})}}" class="hidden">
+            {% include value.type.template with {'filtertype': value.type, 'options': value.options, 'nameprefix': '', 'namesuffix': ''} %}
+        </div>
+    {% endfor %}
 </div>
 
 

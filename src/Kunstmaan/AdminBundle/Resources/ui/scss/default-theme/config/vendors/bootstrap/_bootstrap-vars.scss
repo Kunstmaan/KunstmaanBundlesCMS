@@ -23,7 +23,7 @@ $gray:                   #555;
 $gray-light:             #999;
 $gray-lighter:           #ddd;
 
-$brand-primary:         darken(#428bca, 6.5%); // #337ab7
+$brand-primary:         $blue;
 $brand-success:         #5cb85c;
 $brand-info:            #5bc0de;
 $brand-warning:         #f0ad4e;
@@ -159,11 +159,11 @@ $btn-font-weight:                normal;
 
 $btn-default-color:              #333;
 $btn-default-bg:                 #fff;
-$btn-default-border:             #ccc;
+$btn-default-border:             $gray-lighter;
 
 $btn-primary-color:              #fff;
-$btn-primary-bg:                 $brand-primary;
-$btn-primary-border:             darken($btn-primary-bg, 5%);
+$btn-primary-bg:                 $green;
+$btn-primary-border:             $green;
 
 $btn-success-color:              #fff;
 $btn-success-bg:                 $brand-success;
