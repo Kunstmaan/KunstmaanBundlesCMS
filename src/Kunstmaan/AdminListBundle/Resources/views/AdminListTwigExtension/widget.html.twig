@@ -49,7 +49,7 @@
                 {% endfor %}
 
                 <!-- Actions -->
-                <th class="table-actions">
+                <th class="table__actions">
                     {{ 'form.actions'|trans }}
                 </th>
             </tr>
@@ -81,9 +81,9 @@
                 {% endfor %}
 
                 <!-- Actions -->
-                <td class="table-actions">
+                <td class="table__actions">
                     {% if adminlist.canEdit(item) %}
-                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text">
+                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item">
                             <i class="fa fa-pencil-square-o"></i>
                             Edit
                         </a>
@@ -91,7 +91,7 @@
 
                     {% if adminlist.canDelete(item) %}
                         {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
-                        <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text">
+                        <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item">
                             <i class="fa fa-trash-o"></i>
                             Delete
                         </a>
@@ -102,7 +102,7 @@
                             {% if itemAction.template is not null %}
                                 {% include itemAction.template with {'row': item, 'item': item, 'action': itemAction} %}
                             {% else %}
-                                <a href="{{ path(itemAction.getUrlFor(item)["path"], itemAction.getUrlFor(item)[("params")] ) }}" class="link--text">
+                                <a href="{{ path(itemAction.getUrlFor(item)["path"], itemAction.getUrlFor(item)[("params")] ) }}" class="link--text table__actions__item">
                                     {% if itemAction.getIconFor(item) is not null %}
                                         <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
                                     {% endif %}

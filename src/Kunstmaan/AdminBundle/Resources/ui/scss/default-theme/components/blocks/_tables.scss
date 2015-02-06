@@ -57,7 +57,23 @@
    ========================================================================== */
 .table--no-actions {
 
-    .table-actions {
+    .table__actions {
         display: none;
+    }
+}
+
+
+.table__actions__item {
+    display: block;
+
+    transition: color .3s ease;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    @media (min-width: $screen-md) {
+        display: inline-block;
+        margin: 0 .8rem 0 0;
     }
 }

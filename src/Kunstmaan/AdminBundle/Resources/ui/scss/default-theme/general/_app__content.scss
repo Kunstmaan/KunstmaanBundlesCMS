@@ -2,6 +2,9 @@
    App Content
    ========================================================================== */
 
+
+/* General
+   ========================================================================== */
 .app__content {
     z-index: 1;
     position: relative;
@@ -25,7 +28,11 @@
 }
 
 
+/* Header
+   ========================================================================== */
+// General
 .app__content__header {
+    margin-top: 1rem;
     padding: 0 0 1em 0;
 
     border-bottom: 1px solid $gray-lighter;
@@ -34,14 +41,37 @@
         font-size: .5em;
         color: $gray-light;
 
-        @media (max-width: $screen-md) {
+        @media (max-width: $screen-lg) {
             display: block;
             line-height: 1.4;
         }
     }
 }
 
+// Title
+.app__content__header__title {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 
+
+// Actions
+.app__content__header__extra-actions {
+    text-align: right;
+}
+
+
+
+
+/* Breadcrumb
+   ========================================================================== */
 .app__content__breadcrumb {
     padding: 0 0 0 3em;
+}
+
+.app__main--no-sidebar {
+
+    .app__content__breadcrumb {
+        padding-left: 0;
+    }
 }

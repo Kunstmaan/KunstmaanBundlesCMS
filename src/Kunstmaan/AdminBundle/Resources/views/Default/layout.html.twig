@@ -28,12 +28,13 @@
     {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
 
 
+    {% set lowestTopChild = adminmenu.lowestTopChild %}
+    {% if lowestTopChild %}
+        {% set navigationChildren = lowestTopChild.navigationChildren %}
+    {% endif %}
+
     <!-- Main Content -->
-    <main role="main" id="app__main" class="container-fluid app__main">
-        {% set lowestTopChild = adminmenu.lowestTopChild %}
-        {% if lowestTopChild %}
-            {% set navigationChildren = lowestTopChild.navigationChildren %}
-        {% endif %}
+    <main role="main" id="app__main" class="container-fluid app__main{% if lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
 
         <div class="row">
             {% if lowestTopChild and navigationChildren | length > 0 %}
@@ -85,14 +86,18 @@
                     <!-- App Content - Header -->
                     <!--Content-header-->
                     {% block header %}
-                        <div class="app__content__header">
-                            {% if adminmenu.current %}
-                                <h1>
-                                    {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
-                                </h1>
-                            {% endif %}
-                            {% block extra_actions_header %}{% endblock %}
-                        </div>
+                        <header class="app__content__header">
+                            <div class="row">
+                                {% if adminmenu.current %}
+                                    <div class="col-sm-6 col-md-8">
+                                        <h1 class="app__content__header__title">
+                                            {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+                                        </h1>
+                                    </div>
+                                {% endif %}
+                                {% block extra_actions_header %}{% endblock %}
+                            </div>
+                        </header>
                     {% endblock %}
 
 
