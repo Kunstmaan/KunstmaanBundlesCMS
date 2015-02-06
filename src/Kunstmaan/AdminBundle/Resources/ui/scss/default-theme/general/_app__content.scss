@@ -31,8 +31,8 @@
     border-bottom: 1px solid $gray-lighter;
 
     small {
-        font-size: .4em;
-        color: $gray;
+        font-size: .5em;
+        color: $gray-light;
 
         @media (max-width: $screen-md) {
             display: block;

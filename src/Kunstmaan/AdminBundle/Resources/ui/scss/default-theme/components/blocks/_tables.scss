@@ -43,3 +43,14 @@
         @extend .fa-caret-down;
     }
 }
+
+
+
+/* Table actions
+   ========================================================================== */
+.table--no-actions {
+
+    .table-actions {
+        display: none;
+    }
+}

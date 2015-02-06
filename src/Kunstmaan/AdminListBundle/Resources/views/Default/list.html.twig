@@ -1,15 +1,5 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-{% block extracss %}
-    {{ parent() }}
-    {% stylesheets '@KunstmaanAdminListBundle/Resources/public/css/*'
-       output='generated-css/adminlist-style.css'
-       filter='cssrewrite'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
-
 {% block extra_actions_header %}
     {% if adminlist.canAdd() or adminlist.canExport() %}
         <div class="extra_actions_header">
@@ -21,30 +11,44 @@
                         {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
                     {% endif %}
                     {% if adminaddlist|length > 1 %}
-                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ 'form.add' | trans }}<span class="caret"></span></a>
+                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                            {{ 'form.add' | trans }}
+                            <i class="fa fa-caret-down"></i>
+                        </a>
                         <ul class="dropdown-menu">
                             {% for key,add in adminaddlist %}
-                                <li><a href="{{ path(add["path"], add[("params")]) }}" >{{ key }}</a></li>
+                                <li>
+                                    <a href="{{ path(add["path"], add[("params")]) }}">
+                                        {{ key }}
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     {% else %}
                         {% for key,add in adminaddlist %}
-                            <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">{{ 'form.add' | trans }} {{ key }}</a>
+                            <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">
+                                {{ 'form.add' | trans }}
+                                {{ key }}
+                            </a>
                         {% endfor %}
                     {% endif %}
                 {% endif %}
                 {% if adminlist.canExport() %}
                     <div class="btn-group dropdown">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="icon-download-alt"></i>
+                            <i class="fa fa-download"></i>
                             Export to
-                            <i class="icon-caret-down"></i>
+                            <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu">
                             {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
                             {% for name, ext in supported_export_extensions() %}
                                 {% set exportparams = exportparams|merge({"_format": ext}) %}
-                                <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
+                                <li>
+                                    <a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">
+                                        {{ name }}
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -56,7 +60,7 @@
                         {% else %}
                             <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}" class="btn">
                                 {% if action.getIcon() is not null %}
-                                    <i class="icon-{{ action.getIcon() }} }}"></i> {{ action.getLabel() }}
+                                    <i class="fa fa-{{ action.getIcon() }} }}"></i> {{ action.getLabel() }}
                                 {% else %}
                                     {{ action.getLabel() }}
                                 {% endif %}
