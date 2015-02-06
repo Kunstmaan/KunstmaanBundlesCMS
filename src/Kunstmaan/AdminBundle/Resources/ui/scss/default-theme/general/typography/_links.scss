@@ -13,3 +13,11 @@
 .link--block {
     display: block;
 }
+
+.link--text {
+    color: $text-color;
+
+    &:hover {
+        color: $link-hover-color;
+    }
+}

@@ -14,16 +14,23 @@
     transition: background .3s ease;
     cursor: pointer;
 
-    &:hover {
-        background: $gray-ultralight;
-    }
-
     &:before {
         @extend .fa;
 
         position: absolute;
         top: 1rem;
         right: 1rem;
+    }
+
+    &:not(.table--sortable__th--up), &:not(.table--sortable__th--down) {
+
+        &:hover {
+            background: $gray-ultralight;
+
+            &:before {
+                @extend .fa-sort;
+            }
+        }
     }
 }
 
