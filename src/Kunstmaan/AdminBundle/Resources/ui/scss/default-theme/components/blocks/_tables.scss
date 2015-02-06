@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+/* Sortable
+   ========================================================================== */
+.table--sortable {
+
+}
+
+.table--sortable__th {
+    position: relative;
+
+    transition: background .3s ease;
+    cursor: pointer;
+
+    &:hover {
+        background: $gray-ultralight;
+    }
+
+    &:before {
+        @extend .fa;
+
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+}
+
+.table--sortable__th--up, .table--sortable__th--down {
+    background: $gray-ultralight;
+}
+
+.table--sortable__th--up {
+
+    &:before {
+        @extend .fa-caret-up;
+    }
+}
+
+.table--sortable__th--down {
+    &:before {
+        @extend .fa-caret-down;
+    }
+}
