@@ -16,12 +16,14 @@
 /* Blocks
    ========================================================================== */
 @import "blocks/buttons",
-        "blocks/tables";
+        "blocks/tables",
+        "blocks/choice-block";
 
 
 /* Structures
    ========================================================================== */
-@import "structures/app__filter";
+@import "structures/app__filter",
+        "structures/page-template";
 
 
 /* Forms
