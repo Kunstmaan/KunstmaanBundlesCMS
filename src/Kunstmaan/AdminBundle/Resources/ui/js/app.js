@@ -2,10 +2,13 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.app = (function($, window, undefined) {
 
-    var init;
+    var init,
+        $mainActions = $('#page-main-actions-top');
 
     init = function() {
         cargobay.toggle.init();
+
+        appScroll();
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
@@ -14,7 +17,44 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.pageTemplateEditor.init();
         kunstmaanbundles.checkIfEdited.init();
         kunstmaanbundles.preventDoubleClick.init();
+        kunstmaanbundles.mainActions.init();
     };
+
+
+    // On Scroll
+    appScroll = function() {
+        if($mainActions) {
+            var _onScroll, _requestTick, _update,
+                latestKnownScrollY = 0,
+                ticking = false;
+
+            _onScroll = function() {
+                latestKnownScrollY = window.pageYOffset;
+                _requestTick();
+            };
+
+            _requestTick = function() {
+                if(!ticking) {
+                    window.requestAnimationFrame(_update);
+                }
+                ticking = true;
+            };
+
+            _update = function() {
+                ticking = false;
+
+                var currentScrollY = latestKnownScrollY;
+
+                kunstmaanbundles.mainActions.updateScroll(currentScrollY, $mainActions);
+            };
+
+            window.onscroll = function(e) {
+                _onScroll();
+            };
+        }
+
+    };
+
 
     return {
         init: init

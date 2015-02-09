@@ -15,6 +15,7 @@
         PagePartEditor = [];
     }
 </script>
+
 <div class="pagepartscontainer" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}"
      data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
     <div class="new_pagepart first">
@@ -36,7 +37,9 @@
         {% endfor %}
     </div>
 </div>
+
 <div id="pagepartsdeletedcontainer"></div>
+
 <script>
     PagePartEditor = {
         propBarMouseDownHandler: function () {
