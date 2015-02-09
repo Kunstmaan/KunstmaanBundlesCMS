@@ -29,11 +29,11 @@
 /* Node
    ========================================================================== */
 .jstree-node {
-    min-width: 2em;
-    min-height: 2em;
-    margin-left: 2em;
+    min-width: 2.3rem;
+    min-height: 2.3rem;
+    margin-left: 2.3rem;
 
-    line-height: 2em;
+    line-height: 2.3rem;
     white-space: nowrap;
 }
 
@@ -44,9 +44,10 @@
     display: inline-block;
     padding: 0 .4em 0 0;
     margin: 0;
-    height: 2em;
+    height: 2.3rem;
 
-    line-height: 2em;
+    font-size: 1.3rem;
+    line-height: 2.3rem;
     color: $black;
     text-decoration: none;
     vertical-align: top;
@@ -80,10 +81,11 @@
         display: inline-block;
         margin: 0;
         padding: 0;
-        width: 2em;
-        height: 2em;
+        width: 2.3rem;
+        height: 2.3rem;
 
-        line-height: 2em;
+        color: $gray;
+        line-height: 2.3rem;
         text-align: center;
         text-decoration: none;
         vertical-align: top;
@@ -96,7 +98,7 @@
 }
 
 .jstree-node {
-    background-position: -292px -2px;
+    background-position: -292px -4px;
     background-repeat: repeat-y;
 }
 
@@ -121,15 +123,15 @@
 }
 
 .jstree-open > .jstree-ocl {
-    background-position: -132px -2px;
+    background-position: -132px -4px;
 }
 
 .jstree-closed > .jstree-ocl {
-    background-position: -100px -2px;
+    background-position: -100px -4px;
 }
 
 .jstree-leaf > .jstree-ocl {
-    background-position: -68px -2px;
+    background-position: -68px -4px;
 }
 
 
