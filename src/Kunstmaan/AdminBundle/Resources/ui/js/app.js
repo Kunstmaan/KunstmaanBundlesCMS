@@ -17,7 +17,6 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.pageTemplateEditor.init();
         kunstmaanbundles.checkIfEdited.init();
         kunstmaanbundles.preventDoubleClick.init();
-        kunstmaanbundles.mainActions.init();
     };
 
 

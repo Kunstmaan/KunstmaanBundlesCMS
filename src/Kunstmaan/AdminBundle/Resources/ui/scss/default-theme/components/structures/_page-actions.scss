@@ -21,14 +21,16 @@
 
     height: $navbar-height;
 
-    padding: .3em 1em;
+    padding: .4em 1em;
     background: #f7f7f7;
     border-bottom: 1px solid $gray-lighter;
+
+    transition: transform .3s ease;
 }
 
 
 .page-main-actions--top--show {
-    transform: translateX(-$navbar-height);
+    transform: translateY($navbar-height);
 }
 
 
