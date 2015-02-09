@@ -4,12 +4,12 @@
     {% spaceless %}
         {{ form_widget(form) }}
         <script>
-            jQuery(document).ready(function(){
-                $('#{{ id }}').colorpicker({
-                    format: 'hex'
-                });
+            // jQuery(document).ready(function(){
+            //     $('#{{ id }}').colorpicker({
+            //         format: 'hex'
+            //     });
 
-            });
+            // });
         </script>
     {% endspaceless %}
 {% endblock %}
@@ -79,44 +79,44 @@
                     </ul>
 
                     <script>
-                        $(document).ready(function () {
-                            var collectionHolder = $('ul.ul_{{ form.vars.id }}');
-                            var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
-                            {% if sortable %}
-                                var removeButtonHtml = '<a href="#" class="del red"><i class="icon-trash"></i></a>';
-                            {% else %}
-                                var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
-                            {% endif %}
+                        // $(document).ready(function () {
+                        //     var collectionHolder = $('ul.ul_{{ form.vars.id }}');
+                        //     var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
+                        //     {% if sortable %}
+                        //         var removeButtonHtml = '<a href="#" class="del red"><i class="icon-trash"></i></a>';
+                        //     {% else %}
+                        //         var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+                        //     {% endif %}
 
-                            var allow_add = {{ form.vars.allow_add|default('0') }};
-                            var allow_delete = {{ form.vars.allow_delete|default('0') }};
-                            var min = {{ attr['nested_form_min']|default('0') }};
-                            var max = {{ attr['nested_form_max']|default('false') }};
-                            var sortable = {{ attr['nested_sortable']|default('false') }};
+                        //     var allow_add = {{ form.vars.allow_add|default('0') }};
+                        //     var allow_delete = {{ form.vars.allow_delete|default('0') }};
+                        //     var min = {{ attr['nested_form_min']|default('0') }};
+                        //     var max = {{ attr['nested_form_max']|default('false') }};
+                        //     var sortable = {{ attr['nested_sortable']|default('false') }};
 
-                            new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max, sortable).init();
+                        //     new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max, sortable).init();
 
-                            if (sortable) {
-                                collectionHolder.sortable({
-                                    handle: '.prop_bar',
-                                    cursor: 'move',
-                                    placeholder: "placeholder",
-                                    forcePlaceholderSize: true,
-                                    tolerance:"pointer",
-                                    revert: 100
-                                }).bind('sortupdate', function() {
-                                    // Adapt weight field
-                                    var weight = 0;
-                                    $('.ul_{{ form.vars.id }} li').each(function() {
-                                        var fieldId = $(this).data('sortkey');
-                                        if (fieldId === undefined) {
-                                            return;
-                                        }
-                                        $('#' + fieldId).val(weight++);
-                                    });
-                                });
-                            }
-                        });
+                        //     if (sortable) {
+                        //         collectionHolder.sortable({
+                        //             handle: '.prop_bar',
+                        //             cursor: 'move',
+                        //             placeholder: "placeholder",
+                        //             forcePlaceholderSize: true,
+                        //             tolerance:"pointer",
+                        //             revert: 100
+                        //         }).bind('sortupdate', function() {
+                        //             // Adapt weight field
+                        //             var weight = 0;
+                        //             $('.ul_{{ form.vars.id }} li').each(function() {
+                        //                 var fieldId = $(this).data('sortkey');
+                        //                 if (fieldId === undefined) {
+                        //                     return;
+                        //                 }
+                        //                 $('#' + fieldId).val(weight++);
+                        //             });
+                        //         });
+                        //     }
+                        // });
                     </script>
                 {% else %}
                     {{ form_widget(form) }}
@@ -124,31 +124,31 @@
 
                 {% if max_length %}
                     <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}").charCount({
-                                allowed: {{ max_length }},
-                                counterText: 'Characters left: ',
-                                css: 'help-inline',
-                                cssExceeded: 'error'
-                            });
-                            $("#{{ id }}").attr('maxlength', '');
-                        });
+                        // jQuery(document).ready(function(){
+                        //     $("#{{ id }}").charCount({
+                        //         allowed: {{ max_length }},
+                        //         counterText: 'Characters left: ',
+                        //         css: 'help-inline',
+                        //         cssExceeded: 'error'
+                        //     });
+                        //     $("#{{ id }}").attr('maxlength', '');
+                        // });
                     </script>
                 {% endif %}
                 {% if attr['title'] is defined %}
                     <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}").tooltip();
-                        });
+                        // jQuery(document).ready(function(){
+                        //     $("#{{ id }}").tooltip();
+                        // });
                     </script>
                 {% endif %}
 
                 {% if attr['info_text'] is defined %}
                     &nbsp; <strong title="{{ attr['info_text'] }}" id="{{ id }}_info_text" style="cursor:help;">?</strong>
                     <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}_info_text").tooltip();
-                        });
+                        // jQuery(document).ready(function(){
+                        //     $("#{{ id }}_info_text").tooltip();
+                        // });
                     </script>
                 {% endif %}
 
@@ -171,11 +171,11 @@
     {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
     {% if widget == 'single_text' %}
         <script>
-            jQuery(document).ready(function(){
-                $("#{{ id }}").inputmask("date");
-                $("#{{ id }}").addClass('form_datepicker');
-                $("#{{ id }}").datepicker({'format': 'dd/mm/yyyy'});
-            });
+            // jQuery(document).ready(function(){
+            //     $("#{{ id }}").inputmask("date");
+            //     $("#{{ id }}").addClass('form_datepicker');
+            //     $("#{{ id }}").datepicker({'format': 'dd/mm/yyyy'});
+            // });
         </script>
     {% endif %}
     {{ block('base_date_widget') }}
@@ -185,15 +185,15 @@
     {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
     {% if widget == 'single_text' %}
         <script>
-            jQuery(document).ready(function(){
-                $("#{{ id }}").inputmask("hh:mm");
-                $("#{{ id }}").addClass('form_timepicker');
-                $("#{{ id }}").timepicker({
-                    'showMeridian': false,
-                    'minuteStep': 1,
-                    'defaultTime': false
-                });
-            });
+            // jQuery(document).ready(function(){
+            //     $("#{{ id }}").inputmask("hh:mm");
+            //     $("#{{ id }}").addClass('form_timepicker');
+            //     $("#{{ id }}").timepicker({
+            //         'showMeridian': false,
+            //         'minuteStep': 1,
+            //         'defaultTime': false
+            //     });
+            // });
         </script>
     {% endif %}
     {# type="time" shows am/pm in chrome #}
