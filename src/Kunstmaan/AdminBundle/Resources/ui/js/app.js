@@ -11,6 +11,9 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.sidebartree.init();
         kunstmaanbundles.filter.init();
         kunstmaanbundles.sortableTable.init();
+        kunstmaanbundles.pageTemplateEditor.init();
+        kunstmaanbundles.checkIfEdited.init();
+        kunstmaanbundles.preventDoubleClick.init();
     };
 
     return {
