@@ -30,11 +30,11 @@
     <h1 class="app__content__header__title">
         {{ page.title }}
         {% if draft %}
-            <small>
+            <small class="app__content__header__title__small">
                 Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
             </small>
         {% else %}
-            <small>
+            <small class="app__content__header__title__small">
                 Public version
                 {% if draftNodeVersion is not null %}
                     (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)

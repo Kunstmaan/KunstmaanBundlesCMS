@@ -5,6 +5,8 @@
 /* Main actions
    ========================================================================== */
 .page-main-actions {
+    margin: 1rem 0;
+
     text-align: right;
 }
 
@@ -21,11 +23,16 @@
 
     height: $navbar-height;
 
+    margin: 0;
     padding: .4em 1em;
     background: #f7f7f7;
     border-bottom: 1px solid $gray-lighter;
 
     transition: transform .3s ease;
+
+    @media (max-width: $screen-lg) {
+        display: none;
+    }
 }
 
 
@@ -39,7 +46,9 @@
 /* Sub actions
    ========================================================================== */
 .page-sub-actions {
-    margin-top: -2rem;
-
     text-align: right;
+
+    @media (min-width: $screen-md) {
+        margin-top: -2.2rem;
+    }
 }

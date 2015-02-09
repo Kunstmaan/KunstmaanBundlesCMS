@@ -1,189 +1,267 @@
-<!--MODALS-->
-<div id="unpub" class="modal hide fade">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">&times;</button>
-        <h3>Are you sure you want to unpublish this page?</h3>
-    </div>
-    <form action="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-        <div class="modal-body">
-           <p>If you do this, the page will be offline!</p>
-           <label><input id="unpub_chkbx" type="checkbox"> Unpublish later</label>
-           <div id="unpub_later">
-                <div class="input-append bootstrap-timepicker">
-                  <input id="unpub_tmpckr" type="text" class="input-small" name="unpub_time">
-                  <span class="add-on"><i class="icon-time"></i></span>
+<!-- MODALS -->
+
+<!-- Modal - Unpublish -->
+<div id="unpub" class="modal fade">
+    <div class="modal-dialog">
+         <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Are you sure you want to unpublish this page?</h3>
+            </div>
+
+            <form action="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                <!-- Body -->
+                <div class="modal-body">
+                   <p>If you do this, the page will be offline!</p>
+                   <label><input id="unpub_chkbx" type="checkbox"> Unpublish later</label>
+                   <div id="unpub_later">
+                        <div class="input-append bootstrap-timepicker">
+                          <input id="unpub_tmpckr" type="text" class="input-small" name="unpub_time">
+                          <span class="add-on"><i class="icon-time"></i></span>
+                        </div>
+                        <input id="unpub_date" type="hidden" name="unpub_date">
+                      <div id="unpub_dtpckr"></div>
+                   </div>
+                   <script>
+                  //       var syncView = function() {
+                  //        $('#unpub_later').toggle(this.checked);
+                        //     $('#unpub_publish_action').toggle(!this.checked);
+                        //     $('#unpub_publishlater_action').toggle(this.checked);
+                  //       };
+                  //       $(syncView);
+                        // $(function(){
+                        //  $('#unpub_dtpckr').datepicker().on('changeDate', function(ev){
+                  //            $('#unpub_date').val(ev.date.getFullYear()+'-'+(ev.date.getMonth()+1)+'-'+ev.date.getDate());
+                  //           });
+                        //  $('#unpub_dtpckr').datepicker('setStartDate', new Date());
+                     //        $('#unpub_tmpckr').timepicker({
+                  //               minuteStep: 1,
+                  //               template: 'modal',
+                  //               showMeridian: false,
+                  //               showInputs: true
+                  //           });
+                        // });
+                        // $('#unpub_chkbx').change(syncView);
+                    </script>
                 </div>
-                <input id="unpub_date" type="hidden" name="unpub_date">
-              <div id="unpub_dtpckr"></div>
-           </div>
-           <script>
-          //       var syncView = function() {
-          //       	$('#unpub_later').toggle(this.checked);
-    		    //     $('#unpub_publish_action').toggle(!this.checked);
-    		    //     $('#unpub_publishlater_action').toggle(this.checked);
-          //       };
-          //       $(syncView);
-    		    // $(function(){
-    		    // 	$('#unpub_dtpckr').datepicker().on('changeDate', function(ev){
-          //           	$('#unpub_date').val(ev.date.getFullYear()+'-'+(ev.date.getMonth()+1)+'-'+ev.date.getDate());
-          //           });
-    		    // 	$('#unpub_dtpckr').datepicker('setStartDate', new Date());
-    	     //        $('#unpub_tmpckr').timepicker({
-          //               minuteStep: 1,
-          //               template: 'modal',
-          //               showMeridian: false,
-          //               showInputs: true
-          //           });
-    		    // });
-    		    // $('#unpub_chkbx').change(syncView);
-    	    </script>
-        </div>
-        <div class="modal-footer">
-            <div id="unpub_publishlater_action" class="btn_group">
-                <input id="unpub_publishlater_action" type="submit" name="submit" value="Unpublish later" class="btn btn-primary" />
-                <button class="btn" data-dismiss="modal">Cancel</button>
-            </div>
-            <div id="unpub_publish_action" class="btn_group">
-                <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
-                <button class="btn" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </form>
-</div>
 
-<div id="pub" class="modal hide fade">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">&times;</button>
-        <h3>Are you sure you want to publish this page?</h3>
-    </div>
-    <form action="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-        <div class="modal-body">
-            <p>If you do this, the page will be online!</p>
-            <label><input id="pub_chkbx" type="checkbox"> Publish later</label>
-               <div id="pub_later">
-                    <div class="input-append bootstrap-timepicker">
-                      <input id="pub_tmpckr" type="text" class="input-small" name="pub_time">
-                      <span class="add-on"><i class="icon-time"></i></span>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div id="unpub_publishlater_action" class="btn_group">
+                        <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary">Unpublish later</button>
+                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
-                    <input id="pub_date" type="hidden" name="pub_date">
-                  <div id="pub_dtpckr"></div>
-               </div>
-               <script>
-              //       var syncView = function() {
-              //       	$('#pub_later').toggle(this.checked);
-        		    //     $('#pub_publish_action').toggle(!this.checked);
-        		    //     $('#pub_publishlater_action').toggle(this.checked);
-              //       };
-              //       $(syncView);
-        		    // $(function(){
-        		    // 	$('#pub_dtpckr').datepicker().on('changeDate', function(ev){
-              //           	$('#pub_date').val(ev.date.getFullYear()+'-'+(ev.date.getMonth()+1)+'-'+ev.date.getDate());
-              //           });
-        		    // 	$('#pub_dtpckr').datepicker('setStartDate', new Date());
-        	     //        $('#pub_tmpckr').timepicker({
-              //               minuteStep: 1,
-              //               template: 'modal',
-              //               showMeridian: false,
-              //               showInputs: true
-              //           });
-        		    // });
-        		    // $('#pub_chkbx').change(syncView);
-        	    </script>
+                    <div id="unpub_publish_action" class="btn_group">
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
+                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-            <div id="pub_publishlater_action" class="btn_group">
-                <input id="pub_publishlater_action" type="submit" name="submit" value="Publish later" class="btn btn-primary" />
-                <button class="btn" data-dismiss="modal">Cancel</button>
-            </div>
-            <div id="pub_publish_action" class="btn_group">
-                <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger">Publish</a>
-                <button class="btn" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </form>
-</div>
-
-<div id="versions" class="modal hide fade">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">&times;</button>
-        <h3>Versions</h3>
-    </div>
-    <div class="modal-body">
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Last modified</th>
-                <th>User</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% set publicVersion = nodeTranslation.getPublicNodeVersion() %}
-            {% for nodeVersion in nodeVersions %}
-                <tr>
-                    <td>{{ nodeVersion.type }}</td>
-                    <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
-                    <td>{{ nodeVersion.owner }}</td>
-                    <td class="actions">
-                        <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank"><i class="icon-eye-open"></i>Preview</a>
-                        {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
-                            <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}"><i class="icon-refresh"></i>Revert</a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
     </div>
 </div>
 
+
+
+<!-- Modal - Publish -->
+<div id="pub" class="modal fade">
+    <div class="modal-dialog">
+         <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Are you sure you want to publish this page?</h3>
+            </div>
+
+            <form action="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <p>If you do this, the page will be online!</p>
+                    <label><input id="pub_chkbx" type="checkbox"> Publish later</label>
+                       <div id="pub_later">
+                            <div class="input-append bootstrap-timepicker">
+                              <input id="pub_tmpckr" type="text" class="input-small" name="pub_time">
+                              <span class="add-on"><i class="icon-time"></i></span>
+                            </div>
+                            <input id="pub_date" type="hidden" name="pub_date">
+                          <div id="pub_dtpckr"></div>
+                       </div>
+                       <script>
+                      //       var syncView = function() {
+                      //        $('#pub_later').toggle(this.checked);
+                            //     $('#pub_publish_action').toggle(!this.checked);
+                            //     $('#pub_publishlater_action').toggle(this.checked);
+                      //       };
+                      //       $(syncView);
+                            // $(function(){
+                            //  $('#pub_dtpckr').datepicker().on('changeDate', function(ev){
+                      //            $('#pub_date').val(ev.date.getFullYear()+'-'+(ev.date.getMonth()+1)+'-'+ev.date.getDate());
+                      //           });
+                            //  $('#pub_dtpckr').datepicker('setStartDate', new Date());
+                         //        $('#pub_tmpckr').timepicker({
+                      //               minuteStep: 1,
+                      //               template: 'modal',
+                      //               showMeridian: false,
+                      //               showInputs: true
+                      //           });
+                            // });
+                            // $('#pub_chkbx').change(syncView);
+                        </script>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div id="pub_publishlater_action">
+                        <button id="pub_publishlater_action" type="submit" name="submit" class="btn btn-primary">
+                            Publish later
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div id="pub_publish_action">
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger">
+                            Publish
+                        </a>
+                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal - Versions -->
+<div id="versions" class="modal fade">
+    <div class="modal-dialog">
+         <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Versions</h3>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Last modified</th>
+                            <th>User</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% set publicVersion = nodeTranslation.getPublicNodeVersion() %}
+                    {% for nodeVersion in nodeVersions %}
+                        <tr>
+                            <td>{{ nodeVersion.type }}</td>
+                            <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
+                            <td>{{ nodeVersion.owner }}</td>
+                            <td class="table__actions">
+                                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item">
+                                    <i class="fa fa-eye"></i>
+                                    Preview
+                                </a>
+                                {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
+                                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item">
+                                        <i class="fa fa-refresh"></i>
+                                        Revert
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal - Add subpage -->
 {% set pagePossibleChildPages = page.possibleChildTypes %}
 {% if pagePossibleChildPages is not empty %}
-    <div id="add-subpage-modal" class="modal hide fade">
-        <div class="modal-header">
-            <button class="close" data-dismiss="modal">&times;</button>
-            <h3>Add subpage</h3>
+    <div id="add-subpage-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3>Add subpage</h3>
+                </div>
+
+                <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                    <!-- body -->
+                    <div class="modal-body">
+                        <div class="input_prop">
+                            <label for="addpage_title">Title</label>
+                            <input name="title" id="addpage_title" type="text">
+                        </div>
+                        <div class="input_prop">
+                            <label for="addpage_type">Type</label>
+                            <select name="type" id="addpage_type">
+                                {% for pageType in pagePossibleChildPages %}
+                                    <option value="{{ pageType.class }}">{{ pageType.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-primary">Add</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-            <div class="modal-body">
-                <div class="input_prop">
-                    <label for="addpage_title">Title</label>
-                    <input name="title" id="addpage_title" type="text">
-                </div>
-                <div class="input_prop">
-                    <label for="addpage_type">Type</label>
-                    <select name="type" id="addpage_type">
-                        {% for pageType in pagePossibleChildPages %}
-                            <option value="{{ pageType.class }}">{{ pageType.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="btn_group">
-                    <button type="submit" name="submit" class="btn btn-primary">Add</button>
-                    <button class="btn" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </form>
     </div>
 {% endif %}
 
-<div id="delete-page-modal" class="modal hide fade">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">&times;</button>
-        <h3>Delete page '{{ page.title }}'</h3>
-    </div>
-    <div class="modal-body">
-        <p>This will remove the page completely! Are you really sure about this?</p>
-    </div>
-    <div class="modal-footer">
-        <div class="btn_group">
-            <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-                <button type="submit" name="submit" class="btn btn-danger">Delete</button>
-                <button class="btn" data-dismiss="modal">Cancel</button>
-            </form>
+
+<!-- Modal - Delete page -->
+<div id="delete-page-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Delete page '{{ page.title }}'</h3>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <p>This will remove the page completely! Are you really sure about this?</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+                    <button type="submit" name="submit" class="btn btn-danger">Delete</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

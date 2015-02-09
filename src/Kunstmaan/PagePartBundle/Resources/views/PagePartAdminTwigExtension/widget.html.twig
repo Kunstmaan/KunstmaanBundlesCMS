@@ -16,8 +16,9 @@
     // }
 </script>
 
-<div class="pagepartscontainer" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}"
-     data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
+<div class="pagepartscontainer" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
+
+    <!-- First New PP select -->
     <div class="new_pagepart first">
         <select onchange="return PagePartEditor.addPagepart(this)" class="addselect">
             <option value="">Add a pagepart</option>
@@ -27,11 +28,8 @@
         </select>
     </div>
 
-    <div id="parts_{{ pagepartadmin.context }}" class="pageparts_sortable" data-scope="{% spaceless %}
-    {% for type in pagepartadmin.possiblePagePartTypes %}
-    {{ type.class|replace({'\\':""})~' ' }}
-    {% endfor %}
-    {% endspaceless %}">
+    <!-- Sortable container -->
+    <div id="parts_{{ pagepartadmin.context }}" class="pageparts_sortable" data-scope="{% spaceless %}{% for type in pagepartadmin.possiblePagePartTypes %}{{ type.class|replace({'\\':""})~' ' }}{% endfor %}{% endspaceless %}">
         {% for id, pagepart in pagepartadmin.pagepartmap %}
             {% include 'KunstmaanPagePartBundle:PagePartAdminTwigExtension:pagepart.html.twig' with { 'id': id, 'pagepartadmin': pagepartadmin, 'editmode': false} %}
         {% endfor %}
