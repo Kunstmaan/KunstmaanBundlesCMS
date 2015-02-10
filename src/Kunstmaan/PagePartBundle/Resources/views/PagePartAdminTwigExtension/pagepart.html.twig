@@ -10,10 +10,10 @@
 
     <!-- Hidden fields -->
     {% if pagepart.id == 0 %}
-        <input type="hidden" name="{{context}}_new[]" data-suffix="_new[]" class="pagepartadmin_field_updatecontextname" value="{{id}}">
-        <input type="hidden" name="{{context}}_type_{{id}}" data-suffix="_type_{{id}}" class="pagepartadmin_field_updatecontextname" value="{{pagepartadmin.getClassName(pagepart)}}">
+        <input type="hidden" name="{{context}}_new[]" data-suffix="_new[]" value="{{id}}" class="pagepartadmin_field_updatecontextname">
+        <input type="hidden" name="{{context}}_type_{{id}}" data-suffix="_type_{{id}}" value="{{pagepartadmin.getClassName(pagepart)}}" class="pagepartadmin_field_updatecontextname">
     {% endif %}
-    <input type="hidden" name="{{context}}_sequence[]" data-suffix="_sequence[]" class="pagepartadmin_field_updatecontextname" value="{{id}}">
+    <input type="hidden" name="{{context}}_sequence[]" data-suffix="_sequence[]" value="{{id}}" class="pagepartadmin_field_updatecontextname">
 
 
 
@@ -27,51 +27,53 @@
         {% set editable = false %}
     {% endif %}
 
-    <section class="pagepart">
+    <section class="pp">
         <!-- PP - Header -->
-        <header class="pagepart-header {% if not form['pagepartadmin_'~id].count %}pagepart-header--no-edit{% endif %}">
-            <i class="fa fa-arrows pagepart-header__move-icon"></i>
-            <h6 class="pagepart-header__head">
+        <header class="pp__header {% if not form['pagepartadmin_'~id].count %}pp__header--no-edit{% endif %}">
+            <i class="fa fa-arrows pp__header__move-icon"></i>
+            <h6 class="pp__header__head">
                 {{pagepartadmin.getType(pagepart)}}
             </h6>
-            <div class="pagepart-header__actions">
-                <button class="pagepart-header__actions__del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}">
+            <div class="pp__header__actions">
+                <button type="button" class="pp__header__actions__del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}">
                     <i class="fa fa-trash-o"></i>
                 </button>
                 {% if editable %}
-                    <button class="pagepart-header__actions__edit" onclick="return PagePartEditor.editPagepart('{{id}}')">
+                    <button type="button" class="pp__header__actions__edit" onclick="return PagePartEditor.editPagepart('{{id}}')">
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
                 {% endif %}
             </div>
         </header>
 
-        <!-- PP - View -->
-        <div id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
-            {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
-        </div>
+        <div class="pp__view">
+            <!-- PP - View -->
+            <div id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
+                {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
+            </div>
 
-        <!-- PP - Edit View -->
-        <div id="{{id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
-            {% set pagepartid = 'pagepart'~id %}
-            {% if pagepart.editTemplate is defined %}
-                {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~id]} %}
-            {% else %}
-                {{ form_widget(form['pagepartadmin_'~id]) }}
-            {% endif %}
+            <!-- PP - Edit View -->
+            <div id="{{id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
+                {% set pagepartid = 'pagepart'~id %}
+                {% if pagepart.editTemplate is defined %}
+                    {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~id]} %}
+                {% else %}
+                    {{ form_widget(form['pagepartadmin_'~id]) }}
+                {% endif %}
+            </div>
         </div>
     </section>
 
 
 
     <!-- New PP select -->
-    <div class="new-pagepart">
-      <select onchange="return PagePartEditor.addPagepart(this)">
-        <option value="">Add a pagepart</option>
-        {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-            <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
-        {% endfor %}
-      </select>
+    <div class="pp-container__add">
+        <select onchange="return PagePartEditor.addPagepart(this)" class="form-control input-sm pp-container__add__select">
+            <option value="">Add a pagepart</option>
+            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+                <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+            {% endfor %}
+        </select>
     </div>
 
 

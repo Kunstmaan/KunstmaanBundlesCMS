@@ -10,24 +10,34 @@
                 <button class="close" data-dismiss="modal">
                     <i class="fa fa-times"></i>
                 </button>
-                <h3>Are you sure you want to unpublish this page?</h3>
+                <h3>
+                    Unpublish
+                </h3>
             </div>
 
             <form action="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
 
                 <!-- Body -->
                 <div class="modal-body">
-                   <p>If you do this, the page will be offline!</p>
-                   <label><input id="unpub_chkbx" type="checkbox"> Unpublish later</label>
-                   <div id="unpub_later">
-                        <div class="input-append bootstrap-timepicker">
-                          <input id="unpub_tmpckr" type="text" class="input-small" name="unpub_time">
-                          <span class="add-on"><i class="icon-time"></i></span>
+                   <p>
+                        Are you sure you want to unpublish this page? If you do this, the page will be offline!
+                    </p>
+
+                    <label>
+                        <input id="unpub_chkbx" type="checkbox">
+                        Unpublish later
+                    </label>
+
+                    <div id="unpub_later">
+                        <div class="form-group bootstrap-timepicker">
+                            <input id="unpub_tmpckr" type="text" class="form-control" name="unpub_time">
+                            <span class="add-on"><i class="icon-time"></i></span>
                         </div>
                         <input id="unpub_date" type="hidden" name="unpub_date">
-                      <div id="unpub_dtpckr"></div>
-                   </div>
-                   <script>
+                        <div id="unpub_dtpckr"></div>
+                    </div>
+
+                    <script>
                   //       var syncView = function() {
                   //        $('#unpub_later').toggle(this.checked);
                         //     $('#unpub_publish_action').toggle(!this.checked);
@@ -78,14 +88,18 @@
                 <button class="close" data-dismiss="modal">
                     <i class="fa fa-times"></i>
                 </button>
-                <h3>Are you sure you want to publish this page?</h3>
+                <h3>
+                    Publish
+                </h3>
             </div>
 
             <form action="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
 
                 <!-- Body -->
                 <div class="modal-body">
-                    <p>If you do this, the page will be online!</p>
+                    <p>
+                        Are you sure you want to publish this page? If you do this, the page will be online!
+                    </p>
                     <label><input id="pub_chkbx" type="checkbox"> Publish later</label>
                        <div id="pub_later">
                             <div class="input-append bootstrap-timepicker">
@@ -211,13 +225,17 @@
 
                     <!-- body -->
                     <div class="modal-body">
-                        <div class="input_prop">
-                            <label for="addpage_title">Title</label>
-                            <input name="title" id="addpage_title" type="text">
+                        <div class="form-group">
+                            <label for="addpage_title">
+                                Title
+                            </label>
+                            <input name="title" type="text" id="addpage_title" class="form-control">
                         </div>
-                        <div class="input_prop">
-                            <label for="addpage_type">Type</label>
-                            <select name="type" id="addpage_type">
+                        <div class="form-group">
+                            <label for="addpage_type">
+                                Type
+                            </label>
+                            <select name="type" id="addpage_type" class="form-control">
                                 {% for pageType in pagePossibleChildPages %}
                                     <option value="{{ pageType.class }}">{{ pageType.name }}</option>
                                 {% endfor %}

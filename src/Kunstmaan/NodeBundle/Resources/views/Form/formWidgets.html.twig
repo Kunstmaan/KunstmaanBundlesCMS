@@ -1,11 +1,15 @@
 {% block urlchooser_widget %}
 {% spaceless %}
-    <div id="{{ id }}_widget" class="input-append">
-        <input type="text" id="{{ id }}" name="{{ full_name }}" value="{{ value|default('') }}"/>
-        <button class="btn choosebutton{{ id }}">Choose</button>
+    <div id="{{ id }}_widget" class="input-group">
+        <input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn--raise-on-hover choosebutton{{ id }}">
+                Choose
+            </button>
+        </span>
     </div>
 
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
             $('.choosebutton{{ id }}').on('click', function(ev) {
                 ev.preventDefault();
@@ -21,24 +25,29 @@
 
 {% block slug_widget %}
 {% spaceless %}
-    <div id="{{ id }}_widget">
-        <input type="text" name="{{ full_name }}" id="{{ id }}" data-reset="{{ reset }}" value="{{ value|default('') }}"/> <button class="btn" id="{{ id }}_resetbtn">Reset</button>
+    <div id="{{ id }}_widget" class="input-group">
+        <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" data-reset="{{ reset }}" class="form-control">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn--raise-on-hover" id="{{ id }}_resetbtn">
+                Reset
+            </button>
+        </span>
     </div>
-    <span class="help-inline" id="{{ id }}_preview"></span>
+    <small id="{{ id }}_preview" class="help-block"></small>
 
     <script>
         var updateSlugPreview = function(){
             var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';
             if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-            	urlprefix += '/';
+                urlprefix += '/';
             }
-        	jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
+            jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
         };
         var resetSlug = function(e) {
-        	jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
-        	jQuery('#{{ id }}').change();
-        	e.preventDefault();
-        	return false;
+            jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
+            jQuery('#{{ id }}').change();
+            e.preventDefault();
+            return false;
         }
         jQuery('#{{ id }}').change(updateSlugPreview);
         jQuery('#{{ id }}').keyup(updateSlugPreview);
