@@ -1,29 +1,22 @@
 /* ==========================================================================
-   Page Template
+   Page Part Container
    ========================================================================== */
 
 /* General
    ========================================================================== */
-.page-template {
+.pp-container {
 
 }
 
 
-/* Regions
+/* Add
    ========================================================================== */
-.page-template__region {
-    margin: 2rem 0;
-    padding: 1rem;
-
-    border: 1px solid $gray-lighter;
-    background: #f7f7f7;
+.pp-container__add {
+    text-align: right;
+    margin: 1rem 0;
 }
 
-
-.page-template__region__header {
-    margin: -1rem -1rem 2rem -1rem;
-    padding: 1rem;
-
-    border-bottom: 1px solid $gray-lighter;
-    background: $white;
+.pp-container__add__select {
+    display: inline-block;
+    max-width: 20rem;
 }

@@ -5,11 +5,11 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
     var init,
         changeTemplate;
 
+
     init = function() {
         $('.js-change-page-template').on('click', function() {
             changeTemplate($(this));
         });
-
     };
 
 

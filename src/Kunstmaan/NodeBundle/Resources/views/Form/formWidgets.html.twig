@@ -9,7 +9,7 @@
         </span>
     </div>
 
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
             $('.choosebutton{{ id }}').on('click', function(ev) {
                 ev.preventDefault();
@@ -39,15 +39,15 @@
         var updateSlugPreview = function(){
             var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';
             if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-            	urlprefix += '/';
+                urlprefix += '/';
             }
-        	jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
+            jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
         };
         var resetSlug = function(e) {
-        	jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
-        	jQuery('#{{ id }}').change();
-        	e.preventDefault();
-        	return false;
+            jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
+            jQuery('#{{ id }}').change();
+            e.preventDefault();
+            return false;
         }
         jQuery('#{{ id }}').change(updateSlugPreview);
         jQuery('#{{ id }}').keyup(updateSlugPreview);

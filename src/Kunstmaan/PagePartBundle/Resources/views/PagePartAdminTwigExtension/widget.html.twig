@@ -16,11 +16,11 @@
     // }
 </script>
 
-<div class="pagepartscontainer" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
+<div class="pp-container" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
 
     <!-- First New PP select -->
-    <div class="new_pagepart first">
-        <select onchange="return PagePartEditor.addPagepart(this)" class="addselect">
+    <div class="pp-container__add">
+        <select onchange="return PagePartEditor.addPagepart(this)" class="form-control input-sm pp-container__add__select">
             <option value="">Add a pagepart</option>
             {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
                 <option value="{{ pagePartType.class }}">{{ pagePartType.name }}</option>
