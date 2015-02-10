@@ -25,6 +25,7 @@
         <input type="text" name="{{ full_name }}" id="{{ id }}" data-reset="{{ reset }}" value="{{ value|default('') }}"/> <button class="btn" id="{{ id }}_resetbtn">Reset</button>
     </div>
     <span class="help-inline" id="{{ id }}_preview"></span>
+
     <script>
         var updateSlugPreview = function(){
             var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';

@@ -1,7 +1,7 @@
 {% set id = resource.page.id %}
 <article class="page-template">
     <!-- Hidden fields -->
-    <input type="hidden" class="deletefield" id="pagetemplate_template" name="pagetemplate_template" value="{{ resource.pagetemplate.name }}"/>
+    <input type="hidden" class="deletefield" id="pagetemplate_template_holder" name="pagetemplate_template" value="{{ resource.pagetemplate.name }}"/>
 
 
     <!-- Regions -->
@@ -40,7 +40,7 @@
 
 
         <!-- Change Template - Modal -->
-        <div id="change-template-modal{{ id }}" class="modal page-template__change-modal" role="dialog" aria-hidden="true">
+        <div id="change-template-modal{{ id }}" class="modal fade page-template__change-modal" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -83,7 +83,7 @@
 
                     <div class="modal-footer">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="PageTemplateEditor.changeTemplate(jQuery('input[name=pagetemplate_template_choice]:checked')); $('#change-template-modal{{ id }}').modal('hide');">
+                            <button type="button" class="js-change-page-template btn btn-primary btn--raise-on-hover" data-modal="change-template-modal{{ id }}">
                                 Change
                             </button>
                             <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
@@ -98,14 +98,3 @@
     {% endif %}
 
 </article>
-
-
-<script>
-    // PageTemplateEditor = {
-    //     changeTemplate: function (choice) {
-    //         jQuery('#pagetemplate_template').val(jQuery(choice).val());
-    //         jQuery(choice).closest('form').submit();
-    //         return true;
-    //     }
-    // }
-</script>

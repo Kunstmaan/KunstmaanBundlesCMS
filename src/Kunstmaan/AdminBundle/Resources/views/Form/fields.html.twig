@@ -1,15 +1,14 @@
 {# Widgets #}
-
 {% block color_widget %}
     {% spaceless %}
         {{ form_widget(form) }}
         <script>
-            jQuery(document).ready(function(){
-                $('#{{ id }}').colorpicker({
-                    format: 'hex'
-                });
+            // jQuery(document).ready(function(){
+            //     $('#{{ id }}').colorpicker({
+            //         format: 'hex'
+            //     });
 
-            });
+            // });
         </script>
     {% endspaceless %}
 {% endblock %}
@@ -29,11 +28,24 @@
     {% endspaceless %}
 {% endblock choice_widget_expanded %}
 
-{# Labels #}
+{% block form_widget_simple %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} class="form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}">
+    {% endspaceless %}
+{% endblock form_widget_simple %}
 
+{% block textarea_widget %}
+    {% spaceless %}
+        <textarea {{ block('widget_attributes') }} class="form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}" rows="5">{{ value }}</textarea>
+    {% endspaceless %}
+{% endblock textarea_widget %}
+
+
+{# Labels #}
 {% block form_label %}
     {% spaceless %}
-        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
+        {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
@@ -44,122 +56,123 @@
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}</label>
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+            </label>
         {% endif %}
     {% endspaceless %}
 {% endblock form_label %}
 
-{# Rows #}
 
+{# Rows #}
 {% block form_row %}
     {% spaceless %}
-        <div class="input_prop{% if errors|length > 0 %} error{% endif %}">
+        <div class="form-group{% if errors|length > 0 %} has-error{% endif %}">
             {{ form_label(form) }}
-            <div class="input">
-                {% if attr['nested_form'] is defined and attr['nested_form'] == true %}
-                    {% set sortable = false %}
-                    {% if attr['nested_sortable'] is defined and attr['nested_sortable'] == true %}
-                        {% set sortable = true %}
-                        {% set sortableField = attr['nested_sortable_field']|default('weight') %}
-                    {% endif %}
-                    <ul class="nested_form ul_{{ form.vars.id }}{% if sortable %} nested_sortable{% endif %}"{% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
-                        {% for obj in form %}
-                            <li class="nested_form_item {% if sortable %}nested_form_item--sortable{% endif %}" delkey="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}"{% if sortable %} data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
-                                {% if sortable %}
-                                    <div class="prop_bar">
-                                        <i class="icon-move"></i>
-                                        <div class="actions"></div>
-                                    </div>
-                                {% endif %}
-                                {% for child in obj.children %}
-                                    {{ form_row(child) }}
-                                {% endfor %}
-                            </li>
-                        {% endfor %}
-                    </ul>
 
-                    <script>
-                        $(document).ready(function () {
-                            var collectionHolder = $('ul.ul_{{ form.vars.id }}');
-                            var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
+            {% if attr['nested_form'] is defined and attr['nested_form'] == true %}
+                {% set sortable = false %}
+                {% if attr['nested_sortable'] is defined and attr['nested_sortable'] == true %}
+                    {% set sortable = true %}
+                    {% set sortableField = attr['nested_sortable_field']|default('weight') %}
+                {% endif %}
+                <ul class="nested_form ul_{{ form.vars.id }}{% if sortable %} nested_sortable{% endif %}"{% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
+                    {% for obj in form %}
+                        <li class="nested_form_item {% if sortable %}nested_form_item--sortable{% endif %}" delkey="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}"{% if sortable %} data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
                             {% if sortable %}
-                                var removeButtonHtml = '<a href="#" class="del red"><i class="icon-trash"></i></a>';
-                            {% else %}
-                                var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+                                <div class="prop_bar">
+                                    <i class="icon-move"></i>
+                                    <div class="actions"></div>
+                                </div>
                             {% endif %}
+                            {% for child in obj.children %}
+                                {{ form_row(child) }}
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
 
-                            var allow_add = {{ form.vars.allow_add|default('0') }};
-                            var allow_delete = {{ form.vars.allow_delete|default('0') }};
-                            var min = {{ attr['nested_form_min']|default('0') }};
-                            var max = {{ attr['nested_form_max']|default('false') }};
-                            var sortable = {{ attr['nested_sortable']|default('false') }};
+                <script>
+                    // $(document).ready(function () {
+                    //     var collectionHolder = $('ul.ul_{{ form.vars.id }}');
+                    //     var $addButtonLi = $('<li><a href="#" class="btn btn-mini add-btn"><i class="icon-plus-sign"></i> add new</a></li>');
+                    //     {% if sortable %}
+                    //         var removeButtonHtml = '<a href="#" class="del red"><i class="icon-trash"></i></a>';
+                    //     {% else %}
+                    //         var removeButtonHtml = '<a href="#" class="btn btn-mini del-btn"><i class="icon-trash"></i> delete</a>';
+                    //     {% endif %}
 
-                            new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max, sortable).init();
+                    //     var allow_add = {{ form.vars.allow_add|default('0') }};
+                    //     var allow_delete = {{ form.vars.allow_delete|default('0') }};
+                    //     var min = {{ attr['nested_form_min']|default('0') }};
+                    //     var max = {{ attr['nested_form_max']|default('false') }};
+                    //     var sortable = {{ attr['nested_sortable']|default('false') }};
 
-                            if (sortable) {
-                                collectionHolder.sortable({
-                                    handle: '.prop_bar',
-                                    cursor: 'move',
-                                    placeholder: "placeholder",
-                                    forcePlaceholderSize: true,
-                                    tolerance:"pointer",
-                                    revert: 100
-                                }).bind('sortupdate', function() {
-                                    // Adapt weight field
-                                    var weight = 0;
-                                    $('.ul_{{ form.vars.id }} li').each(function() {
-                                        var fieldId = $(this).data('sortkey');
-                                        if (fieldId === undefined) {
-                                            return;
-                                        }
-                                        $('#' + fieldId).val(weight++);
-                                    });
-                                });
-                            }
-                        });
-                    </script>
-                {% else %}
-                    {{ form_widget(form) }}
-                {% endif %}
+                    //     new PagepartSubForm(collectionHolder, $addButtonLi, removeButtonHtml, allow_add, allow_delete, min, max, sortable).init();
 
-                {% if max_length %}
-                    <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}").charCount({
-                                allowed: {{ max_length }},
-                                counterText: 'Characters left: ',
-                                css: 'help-inline',
-                                cssExceeded: 'error'
-                            });
-                            $("#{{ id }}").attr('maxlength', '');
-                        });
-                    </script>
-                {% endif %}
-                {% if attr['title'] is defined %}
-                    <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}").tooltip();
-                        });
-                    </script>
-                {% endif %}
+                    //     if (sortable) {
+                    //         collectionHolder.sortable({
+                    //             handle: '.prop_bar',
+                    //             cursor: 'move',
+                    //             placeholder: "placeholder",
+                    //             forcePlaceholderSize: true,
+                    //             tolerance:"pointer",
+                    //             revert: 100
+                    //         }).bind('sortupdate', function() {
+                    //             // Adapt weight field
+                    //             var weight = 0;
+                    //             $('.ul_{{ form.vars.id }} li').each(function() {
+                    //                 var fieldId = $(this).data('sortkey');
+                    //                 if (fieldId === undefined) {
+                    //                     return;
+                    //                 }
+                    //                 $('#' + fieldId).val(weight++);
+                    //             });
+                    //         });
+                    //     }
+                    // });
+                </script>
+            {% else %}
+                {{ form_widget(form) }}
+            {% endif %}
 
-                {% if attr['info_text'] is defined %}
-                    &nbsp; <strong title="{{ attr['info_text'] }}" id="{{ id }}_info_text" style="cursor:help;">?</strong>
-                    <script>
-                        jQuery(document).ready(function(){
-                            $("#{{ id }}_info_text").tooltip();
-                        });
-                    </script>
-                {% endif %}
+            {% if max_length %}
+                <script>
+                    // jQuery(document).ready(function(){
+                    //     $("#{{ id }}").charCount({
+                    //         allowed: {{ max_length }},
+                    //         counterText: 'Characters left: ',
+                    //         css: 'help-inline',
+                    //         cssExceeded: 'error'
+                    //     });
+                    //     $("#{{ id }}").attr('maxlength', '');
+                    // });
+                </script>
+            {% endif %}
+            {% if attr['title'] is defined %}
+                <script>
+                    // jQuery(document).ready(function(){
+                    //     $("#{{ id }}").tooltip();
+                    // });
+                </script>
+            {% endif %}
 
-                {{ form_errors(form) }}
-            </div>
+            {% if attr['info_text'] is defined %}
+                &nbsp; <strong title="{{ attr['info_text'] }}" id="{{ id }}_info_text" style="cursor:help;">?</strong>
+                <script>
+                    // jQuery(document).ready(function(){
+                    //     $("#{{ id }}_info_text").tooltip();
+                    // });
+                </script>
+            {% endif %}
+
+            {{ form_errors(form) }}
         </div>
     {% endspaceless %}
 {% endblock form_row %}
 
-{# Misc #}
 
+{# Misc #}
 {% block datetime_widget %}
     {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
     <div class="datetime small-datetime-widget">
@@ -171,11 +184,11 @@
     {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
     {% if widget == 'single_text' %}
         <script>
-            jQuery(document).ready(function(){
-                $("#{{ id }}").inputmask("date");
-                $("#{{ id }}").addClass('form_datepicker');
-                $("#{{ id }}").datepicker({'format': 'dd/mm/yyyy'});
-            });
+            // jQuery(document).ready(function(){
+            //     $("#{{ id }}").inputmask("date");
+            //     $("#{{ id }}").addClass('form_datepicker');
+            //     $("#{{ id }}").datepicker({'format': 'dd/mm/yyyy'});
+            // });
         </script>
     {% endif %}
     {{ block('base_date_widget') }}
@@ -185,15 +198,15 @@
     {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
     {% if widget == 'single_text' %}
         <script>
-            jQuery(document).ready(function(){
-                $("#{{ id }}").inputmask("hh:mm");
-                $("#{{ id }}").addClass('form_timepicker');
-                $("#{{ id }}").timepicker({
-                    'showMeridian': false,
-                    'minuteStep': 1,
-                    'defaultTime': false
-                });
-            });
+            // jQuery(document).ready(function(){
+            //     $("#{{ id }}").inputmask("hh:mm");
+            //     $("#{{ id }}").addClass('form_timepicker');
+            //     $("#{{ id }}").timepicker({
+            //         'showMeridian': false,
+            //         'minuteStep': 1,
+            //         'defaultTime': false
+            //     });
+            // });
         </script>
     {% endif %}
     {# type="time" shows am/pm in chrome #}

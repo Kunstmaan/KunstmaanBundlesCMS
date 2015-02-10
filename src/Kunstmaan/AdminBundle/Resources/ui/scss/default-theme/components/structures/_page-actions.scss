@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Page Actions
+   ========================================================================== */
+
+/* Main actions
+   ========================================================================== */
+.page-main-actions {
+    margin: 1rem 0;
+
+    text-align: right;
+}
+
+
+
+/* Main actions - Top
+   ========================================================================== */
+.page-main-actions--top {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: $navbar-height;
+
+    margin: 0;
+    padding: .4em 1em;
+    background: #f7f7f7;
+    border-bottom: 1px solid $gray-lighter;
+
+    transition: transform .3s ease;
+
+    @media (max-width: $screen-lg) {
+        display: none;
+    }
+}
+
+
+.page-main-actions--top--show {
+    transform: translateY($navbar-height);
+}
+
+
+
+
+/* Sub actions
+   ========================================================================== */
+.page-sub-actions {
+    text-align: right;
+
+    @media (min-width: $screen-md) {
+        margin-top: -2.2rem;
+    }
+}

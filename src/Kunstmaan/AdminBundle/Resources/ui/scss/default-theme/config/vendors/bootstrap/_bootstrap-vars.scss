@@ -224,7 +224,7 @@ $legend-color:                   $gray-dark;
 $legend-border-color:            #e5e5e5;
 
 //** Background color for textual input addons
-$input-group-addon-bg:           $gray-lighter;
+$input-group-addon-bg:           $gray-ultralight;
 //** Border color for textual input addons
 $input-group-addon-border-color: $input-border;
 
@@ -423,18 +423,18 @@ $navbar-inverse-toggle-border-color:        #333;
 //##
 
 //=== Shared nav styles
-$nav-link-padding:                          10px 15px;
-$nav-link-hover-bg:                         $gray-lighter;
+$nav-link-padding:                          .6em 1em;
+$nav-link-hover-bg:                         $gray-ultralight;
 
 $nav-disabled-link-color:                   $gray-light;
 $nav-disabled-link-hover-color:             $gray-light;
 
 //== Tabs
-$nav-tabs-border-color:                     #ddd;
+$nav-tabs-border-color:                     $gray-lighter;
 
 $nav-tabs-link-hover-border-color:          $gray-lighter;
 
-$nav-tabs-active-link-hover-bg:             $body-bg;
+$nav-tabs-active-link-hover-bg:             $white;
 $nav-tabs-active-link-hover-color:          $gray;
 $nav-tabs-active-link-hover-border-color:   #ddd;
 
@@ -705,9 +705,9 @@ $list-group-link-heading-color: #333;
 //
 //##
 
-$panel-bg:                    #fff;
-$panel-body-padding:          15px;
-$panel-heading-padding:       10px 15px;
+$panel-bg:                    #f7f7f7;
+$panel-body-padding:          1.5em;
+$panel-heading-padding:       .3em 1.5em;
 $panel-footer-padding:        $panel-heading-padding;
 $panel-border-radius:         $border-radius-base;
 

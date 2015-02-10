@@ -21,7 +21,7 @@
     {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
 </head>
 
-<body {% block extraparamsinbody %}{% endblock %} class="app">
+<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}">
 {% block body %}
 
     <!-- Header -->

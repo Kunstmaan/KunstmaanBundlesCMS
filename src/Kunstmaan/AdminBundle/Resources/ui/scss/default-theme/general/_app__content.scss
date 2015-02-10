@@ -6,7 +6,6 @@
 /* General
    ========================================================================== */
 .app__content {
-    z-index: 1;
     position: relative;
     background: $white;
 
@@ -36,17 +35,18 @@
     padding: 0 0 1em 0;
 
     border-bottom: 1px solid $gray-lighter;
+}
 
-    small {
-        font-size: .5em;
-        color: $gray-light;
+.app__content__header__title__small {
+    font-size: .5em;
+    color: $gray-light;
 
-        @media (max-width: $screen-lg) {
-            display: block;
-            line-height: 1.4;
-        }
+    @media (max-width: $screen-lg) {
+        display: block;
+        line-height: 1.4;
     }
 }
+
 
 // Title
 .app__content__header__title {

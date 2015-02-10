@@ -9,6 +9,7 @@
 @import "vendors/bootstrap-components/grid",
         "vendors/bootstrap-components/pagination",
         "vendors/bootstrap-components/navbar",
+        "vendors/bootstrap-components/input-group-addon",
         "vendors/font-awesome/icon-symlinks",
         "vendors/jstree";
 
@@ -23,11 +24,14 @@
 /* Structures
    ========================================================================== */
 @import "structures/app__filter",
-        "structures/page-template";
+        "structures/page-template",
+        "structures/page-actions";
 
 
 /* Forms
    ========================================================================== */
 @import "forms/form",
         "forms/fieldset",
-        "forms/form-actions";
+        "forms/form-actions",
+        "forms/form-properties",
+        "forms/form-control";
