@@ -16,6 +16,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.sortableTable.init();
         kunstmaanbundles.checkIfEdited.init();
         kunstmaanbundles.preventDoubleClick.init();
+        kunstmaanbundles.datepicker.init();
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();

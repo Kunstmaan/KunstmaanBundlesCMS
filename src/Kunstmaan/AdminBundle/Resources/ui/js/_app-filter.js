@@ -34,7 +34,7 @@ kunstmaanbundles.filter = (function($, window, undefined) {
                 removeFilterLine($(this));
             });
 
-            $('body').on('change', '.js-filter-select', function() {
+            $('body').on('change', '.js-filter-select:not(#add-first-filter)', function() {
                 updateOptions($(this));
             });
         }
@@ -54,7 +54,6 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         $filterSelect = $('.js-filter-select');
 
         $removeFilterBtn = $('.js-remove-filter-btn');
-
     };
 
 
@@ -70,7 +69,8 @@ kunstmaanbundles.filter = (function($, window, undefined) {
             newFilterLine.find('.js-filter-dummy').val(currentLine.find('.js-filter-select').val());
 
             // Append
-            currentLine.after(newFilterLine);
+            $filterHolder.append(newFilterLine);
+            $addFilterBtn.removeClass('hidden');
         } else {
 
             // Append
@@ -143,6 +143,8 @@ kunstmaanbundles.filter = (function($, window, undefined) {
                 $(this).datepicker(new Date());
             }
         });
+
+        kunstmaanbundles.datepicker.init();
     };
 
 
@@ -151,6 +153,7 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         if($filterHolder.children('.js-filter-line').size() === 2 ){
             $('#first-filter-line option:first').attr('selected', 'selected');
             $('#first-filter-line').removeClass('hidden');
+            $addFilterBtn.addClass('hidden');
         }
         $el.parents('.js-filter-line').remove();
 

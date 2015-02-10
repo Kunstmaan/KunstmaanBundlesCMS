@@ -4,6 +4,10 @@
 
 .app__filter {
     margin-bottom: 2rem;
+
+    .toggle-item--active {
+        overflow: visible;
+    }
 }
 
 .app__filter__content {

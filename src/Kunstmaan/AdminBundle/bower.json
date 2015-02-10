@@ -1,15 +1,15 @@
 {
-    "name": "KunstmaanCMSAdminBundle",
-    "version": "1.0.0",
-    "dependencies": {
-        "bourbon": "~4.1",
-        "bootstrap-sass-official": "~3.3",
-        "fontawesome": "~4.3",
-
-        "jquery": "~2.1",
-        "velocity": "~1.1",
-        "jstree": "~3.0",
-
-        "cargobay": "0.5.2"
-    }
+  "name": "KunstmaanCMSAdminBundle",
+  "version": "1.0.0",
+  "dependencies": {
+    "bourbon": "~4.1",
+    "bootstrap-sass-official": "~3.3",
+    "fontawesome": "~4.3",
+    "jquery": "~2.1",
+    "velocity": "~1.1",
+    "jstree": "~3.0",
+    "eonasdan-bootstrap-datetimepicker": "~4.0",
+    "cargobay": "0.5.2",
+    "moment": "~2.9.0"
+  }
 }
