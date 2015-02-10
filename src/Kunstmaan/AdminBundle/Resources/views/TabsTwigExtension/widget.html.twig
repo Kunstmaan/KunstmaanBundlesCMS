@@ -3,7 +3,7 @@
 
 {% form_theme formView 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-<ul class="nav nav-tabs js-autocollapseTabs">
+<ul class="nav nav-tabs js-auto-collapse-tabs">
     {% for tab in tabPane.tabs %}
         {% set tabIdentifier = tab.identifier %}
         {% set formErrors = tab.getFormErrors(formView) %}
