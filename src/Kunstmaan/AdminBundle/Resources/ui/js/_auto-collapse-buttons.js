@@ -4,7 +4,7 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
 
     var init, createMoreDropdown,
         buttonsVisible,
-        $autoCollapseButtons;
+        $autoCollapseButtons, $btnGroup, $buttonsRedundant, $moreButtonContainer, $moreButton, $caret, $dropdownList;
 
     init = function() {
         buttonsVisible = 2;
