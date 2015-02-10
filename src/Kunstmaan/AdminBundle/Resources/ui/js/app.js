@@ -14,9 +14,11 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.sidebartree.init();
         kunstmaanbundles.filter.init();
         kunstmaanbundles.sortableTable.init();
-        kunstmaanbundles.pageTemplateEditor.init();
         kunstmaanbundles.checkIfEdited.init();
         kunstmaanbundles.preventDoubleClick.init();
+
+        kunstmaanbundles.pageEditor.init();
+        kunstmaanbundles.pagepartEditor.init();
     };
 
 

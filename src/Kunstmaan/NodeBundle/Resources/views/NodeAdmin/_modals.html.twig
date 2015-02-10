@@ -53,12 +53,12 @@
                 <!-- Footer -->
                 <div class="modal-footer">
                     <div id="unpub_publishlater_action" class="btn_group">
-                        <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary">Unpublish later</button>
-                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary btn--raise-on-hover">Unpublish later</button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
                     </div>
                     <div id="unpub_publish_action" class="btn_group">
-                        <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger">Unpublish</a>
-                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">Unpublish</a>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </form>
@@ -121,16 +121,16 @@
                 <!-- Footer -->
                 <div class="modal-footer">
                     <div id="pub_publishlater_action">
-                        <button id="pub_publishlater_action" type="submit" name="submit" class="btn btn-primary">
+                        <button id="pub_publishlater_action" type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
                             Publish later
                         </button>
-                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
                     </div>
                     <div id="pub_publish_action">
-                        <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger">
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
                             Publish
                         </a>
-                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </form>
@@ -227,8 +227,8 @@
 
                     <!-- Footer -->
                     <div class="modal-footer">
-                        <button type="submit" name="submit" class="btn btn-primary">Add</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">Add</button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -258,8 +258,8 @@
             <!-- Footer -->
             <div class="modal-footer">
                 <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-                    <button type="submit" name="submit" class="btn btn-danger">Delete</button>
-                    <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Delete</button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
                 </form>
             </div>
         </div>

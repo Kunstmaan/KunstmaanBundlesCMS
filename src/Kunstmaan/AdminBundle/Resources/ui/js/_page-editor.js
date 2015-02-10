@@ -1,6 +1,6 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.pageTemplateEditor = (function(window, undefined) {
+kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
         changeTemplate;
@@ -12,6 +12,8 @@ kunstmaanbundles.pageTemplateEditor = (function(window, undefined) {
 
     };
 
+
+    // Change Page Template
     changeTemplate = function($btn) {
         var $holder = $('#pagetemplate_template_holder'),
             $checkedTemplateCheckbox = $('input[name=pagetemplate_template_choice]:checked'),
@@ -27,6 +29,8 @@ kunstmaanbundles.pageTemplateEditor = (function(window, undefined) {
         // Submit closest form
         $checkedTemplateCheckbox.closest('form').submit();
     };
+
+
 
     return {
         init: init
