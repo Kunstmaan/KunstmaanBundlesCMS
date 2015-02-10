@@ -55,13 +55,10 @@
 
     @include transition(background-color .15s ease);
 
-    &:focus {
-        outline: 0;
-    }
-
-    &:hover {
+    &:hover, &:focus {
         text-decoration: none;
         color: $black;
+        outline: 0;
     }
 }
 .jstree-anchor--active {
