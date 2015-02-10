@@ -6,20 +6,39 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
         addPagePart, editPagePart, deletePagePart;
 
     init = function() {
+        // Add
+        $('.js-add-pp-select').on('change', function() {
+            addPagePart($(this));
+        });
+
         // Edit
-        $('.js-edit-pagepart-btn').on('click', function() {
+        $('.js-edit-pp-btn').on('click', function() {
             editPagePart($(this));
         });
 
         // Del
-        $('.js-delete-pagepart-btn').on('click', function() {
+        $('.js-delete-pp-btn').on('click', function() {
             deletePagePart($(this));
         });
     };
 
 
     // Add
-    addPagePart = function() {
+    addPagePart = function($select) {
+        var $targetContainer = $select.closest('.js-pp-container'),
+            url = $select.data('url');
+
+        // Get necessary data
+        var pageClassName = $targetContainer.data('pageclassname'),
+            pageId = $targetContainer.data('pageid'),
+            context = $targetContainer.data('context'),
+            ppType = $select.val();
+
+        // Ajax Request
+
+
+        // Reset select
+        $select.val('');
 
         // OLD
         // addPagepart: function (select) {
@@ -69,15 +88,6 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
 
         // Set Active Edit
         window.activeEdit = targetId;
-
-        // OLD
-        // editPagepart: function (id) {
-        //     isEdited = true; // enabling the "leave page" popup
-        //     document.getElementById(id + '_edit').style.display = '';
-        //     document.getElementById(id + '_view').style.display = 'none';
-        //     window.activeEdit = id;
-        //     return false;
-        // }
     };
 
 
@@ -102,19 +112,6 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
         // Hide delete modal
         $('#delete-pagepart-modal-' + targetId).modal('hide');
         $('body').removeClass('modal-open');
-
-
-
-        // OLD
-        // deletePagepart: function (id) {
-        //     isEdited = true; // enabling the "leave page" popup
-        //     document.getElementById(id + '_deleted').checked = 'checked';
-        //     var container = $('#' + id + '_container');
-        //     container.slideUp(function () {
-        //         container.html('');
-        //     });
-        //     return true;
-        // }
     };
 
 

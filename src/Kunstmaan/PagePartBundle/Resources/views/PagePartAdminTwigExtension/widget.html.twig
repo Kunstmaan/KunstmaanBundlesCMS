@@ -16,11 +16,11 @@
     // }
 </script>
 
-<div class="pp-container" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
+<div class="js-pp-container pp-container" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
 
     <!-- First New PP select -->
     <div class="pp-container__add">
-        <select onchange="return PagePartEditor.addPagepart(this)" class="form-control input-sm pp-container__add__select">
+        <select class="js-add-pp-select form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
             <option value="">Add a pagepart</option>
             {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
                 <option value="{{ pagePartType.class }}">{{ pagePartType.name }}</option>
