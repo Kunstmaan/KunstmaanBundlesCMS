@@ -77,18 +77,36 @@
 
 
     <!-- PP - Del modal -->
-    <div id="delete-pagepart-modal{{id}}" class="modal">
-        <div class="modal-header">
-            <button class="close" data-dismiss="modal">&times;</button>
-            <h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
-        </div>
-        <div class="modal-body">
-            <p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
-        </div>
-        <div class="modal-footer">
-            <div class="btn_group">
-                <button type="button" id="" onclick="PagePartEditor.deletePagepart('{{id}}'); $('#delete-pagepart-modal{{id}}').modal('hide');" class="btn btn-danger">Delete</button>
-                <button class="btn" data-dismiss="modal">Cancel</button>
+    <div id="delete-pagepart-modal{{id}}" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    <h3>
+                        Delete pagepart '{{pagepartadmin.getType(pagepart)}}'
+                    </h3>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <p>
+                        This will not remove the pagepart completely, save the page to remove this pagepart permanently.
+                    </p>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" onclick="PagePartEditor.deletePagepart('{{id}}'); $('#delete-pagepart-modal{{id}}').modal('hide');" class="btn btn-danger btn--raise-on-hover">
+                        Delete
+                    </button>
+                    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>
