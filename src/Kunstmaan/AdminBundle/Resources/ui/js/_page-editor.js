@@ -3,7 +3,8 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
-        changeTemplate;
+        changeTemplate, publish, unpublish,
+        initSortable;
 
 
     init = function() {
@@ -80,6 +81,12 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         //     });
         // });
         // $('#unpub_chkbx').change(syncView);
+    };
+
+
+    // Sortable
+    initSortable = function() {
+
     };
 
 
