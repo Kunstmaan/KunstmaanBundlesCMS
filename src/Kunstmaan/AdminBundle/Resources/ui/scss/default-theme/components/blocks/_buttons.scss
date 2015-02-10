@@ -80,3 +80,24 @@
 .btn__icon {
     color: $gray-light;
 }
+
+/* Buttons in dropdown (Main-actions)
+   ========================================================================== */
+.btn-dropdown-menu{
+    border: none;
+    margin: 0;
+    display:block;
+    width: 100%;
+    text-align: left;
+    padding: 3px 20px;
+
+    color: $dropdown-link-color;
+    background: $dropdown-bg;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: $dropdown-link-hover-color;
+        background-color: $dropdown-link-hover-bg;
+    }
+}
