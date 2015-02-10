@@ -110,15 +110,17 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $homePage = new HomePage();
         $homePage->setTitle('Home');
 
+        $availableTranslations = $this->container->getParameter('requiredlocales');
+        $availableTranslations = explode('|', $availableTranslations);
+        
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+        
+        foreach($availableTranslations as $availableTranslation) {
+            $translations[] = array('language' => $availableTranslation, 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Home');
             $translation->setSlug('');
         });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Home');
-            $translation->setSlug('');
-        });
+        }
 
         $options = array(
             'parent' => null,
