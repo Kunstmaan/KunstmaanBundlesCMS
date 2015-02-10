@@ -2,12 +2,24 @@
    Page Actions
    ========================================================================== */
 
+/* Main tabs
+   ========================================================================== */
+.page-main-tabs{
+    @media (min-width: $screen-xs-min){
+        margin: 2rem 0 0;
+    }
+}
+
 /* Main actions
    ========================================================================== */
 .page-main-actions {
     margin: 1rem 0;
 
     text-align: right;
+
+    @media (min-width: $screen-xs-min){
+        float:right;
+    }
 }
 
 
