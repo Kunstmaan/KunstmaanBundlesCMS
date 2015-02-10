@@ -55,8 +55,11 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
         kunstmaanbundles.checkIfEdited.edited();
 
         // Show edit view and hide preview
-        $(targetId + '-edit-view').show();
-        $(targetId + '-preview-view').hide();
+        $('#' + targetId + '-edit-view').removeClass('pp__view__block--hidden');
+        $('#' + targetId + '-preview-view').addClass('pp__view__block--hidden');
+
+        // Add edit active class
+        $('#pp-' + targetId).addClass('pp--edit-active');
 
         // Set Active Edit
         window.activeEdit = targetId;
