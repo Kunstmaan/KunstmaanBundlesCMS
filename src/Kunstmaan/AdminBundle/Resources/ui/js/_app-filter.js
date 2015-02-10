@@ -29,8 +29,13 @@ kunstmaanbundles.filter = (function($, window, undefined) {
                 clearAllFilters();
             });
 
-            $removeFilterBtn.on('click', function() {
-                removeFilterLine();
+            // event handlers for dynamic added elements
+            $('body').on('click', '.js-remove-filter-btn', function() {
+                removeFilterLine($(this));
+            });
+
+            $('body').on('change', '.js-filter-select', function() {
+                updateOptions($(this));
             });
         }
     };
@@ -45,11 +50,12 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         $addFilterBtn = $('#add-filter');
 
         $filterDummyLine = $('#filter-dummy-line');
-        $filterHolder = $('#newFilterLine');
+        $filterHolder = $('#filter-holder');
+        $filterSelect = $('.js-filter-select');
 
         $removeFilterBtn = $('.js-remove-filter-btn');
-    };
 
+    };
 
 
     createFilter = function($this, first) {
@@ -106,18 +112,11 @@ kunstmaanbundles.filter = (function($, window, undefined) {
 
 
     updateOptions = function(el) {
-        var $el = $(el);
+        var $el = $(el),
+            val = $el.val().replace('.',  '_'),
+            uniqueid = $el.parents('.js-filter-line').find('.js-unique-filter-id').val();
 
-        console.log($el);
-
-        var val = $el.val();
-
-        console.log('val: ' + val);
-
-        val = val.replace('.',  '_');
-
-        var uniqueid = $el.parents('.js-filter-line').find('.js-unique-filter-id').val();
-
+        // copy options from hidden filter dummy
         $el.parents('.js-filter-line').find('.js-filter-options').html($('#filterdummyoptions_'+ val).html());
 
         $el.parents('.js-filter-line').find('input, select').each(function(){
@@ -135,7 +134,6 @@ kunstmaanbundles.filter = (function($, window, undefined) {
             if (bracketPos !== -1) {
                 var arrayName = name.substr(0, bracketPos),
                     arrayIndex = name.substr(bracketPos);
-
                 $(this).attr('name', arrayName + '_' + uniqueid + arrayIndex);
             } else {
                 $(this).attr('name', $(this).attr('name') + '_' + uniqueid);
@@ -149,15 +147,13 @@ kunstmaanbundles.filter = (function($, window, undefined) {
 
 
 
-    removeFilterLine = function() {
-        if($('#filtermap').find('.js-filter-line').length === 2){
-            $el.parents('.js-filter-line').remove();
-
+    removeFilterLine = function($el) {
+        if($filterHolder.children('.js-filter-line').size() === 2 ){
+            $('#first-filter-line option:first').attr('selected', 'selected');
             $('#first-filter-line').removeClass('hidden');
-
-        } else {
-            $el.parents('.js-filter-line').remove();
         }
+        $el.parents('.js-filter-line').remove();
+
     };
 
 
