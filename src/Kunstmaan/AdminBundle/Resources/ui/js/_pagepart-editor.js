@@ -6,9 +6,15 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
         addPagePart, editPagePart, deletePagePart;
 
     init = function() {
+        // Edit
         $('.js-edit-pagepart-btn').on('click', function() {
             editPagePart($(this));
-        })
+        });
+
+        // Del
+        $('.js-delete-pagepart-btn').on('click', function() {
+            deletePagePart($(this));
+        });
     };
 
 
@@ -76,7 +82,28 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
 
 
     // Delete
-    deletePagePart = function() {
+    deletePagePart = function($btn) {
+        var targetId = $btn.data('target-id'),
+            $container = $('#' + targetId + '-pp-container');
+
+        // Enable "leave page" modal
+        kunstmaanbundles.checkIfEdited.edited();
+
+        // Slideup and empty container
+        $container.velocity('slideUp', {
+            duration: 300
+        });
+
+        $container.empty();
+
+        // Check is-deleted checkbox
+        $('#' + targetId + '-is-deleted').prop('checked', true);
+
+        // Hide delete modal
+        $('#delete-pagepart-modal-' + targetId).modal('hide');
+        $('body').removeClass('modal-open');
+
+
 
         // OLD
         // deletePagepart: function (id) {

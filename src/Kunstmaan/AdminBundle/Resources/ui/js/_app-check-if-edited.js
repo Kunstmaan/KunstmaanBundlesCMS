@@ -12,6 +12,10 @@ kunstmaanbundles.checkIfEdited = (function($, window, undefined) {
     init = function() {
 
         if(NeedCheck) {
+            $('.js-save-btn').on('click', function() {
+                window.onbeforeunload = null;
+            });
+
             window.onbeforeunload = _doUnload;
         }
     };

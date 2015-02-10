@@ -115,7 +115,7 @@ class ActionsMenuBuilder
             $isFirst = true;
             if (('draft' == $activeNodeVersion->getType()) && $this->isEditableNode) {
                 if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
-                    $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
+                    $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'js-save-btn btn btn--raise-on-hover' . ($isFirst ? ' btn-primary' : ' btn-default'), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
                     $isFirst = false;
                 }
                 if (empty($queuedNodeTranslationAction) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
@@ -124,7 +124,7 @@ class ActionsMenuBuilder
                 $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl(), 'version' => $activeNodeVersion->getId())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn btn-default btn--raise-on-hover')));
             } else {
                 if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
-                    $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'onClick' => 'isEdited=false', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
+                    $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'class' => 'js-save-btn btn btn--raise-on-hover' . ($isFirst ? ' btn-primary' : ' btn-default'), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
                     $isFirst = false;
                 }
                 if ($this->isEditableNode) {

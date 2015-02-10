@@ -2,11 +2,11 @@
 {% set context = pagepartadmin.context %}
 
 <!-- Hidden Fields -->
-<input type="checkbox" class="deletefield hidden" id="{{id}}-deleted" name="{{id}}_deleted" value="true">
+<input type="checkbox" class="deletefield hidden" id="{{id}}-is-deleted" name="{{id}}_deleted" value="true">
 
 
 <!-- Draggable Item -->
-<div class="draggable-item" id="{{id}}-container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
+<div class="draggable-item" id="{{id}}-pp-container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
 
     <!-- Hidden fields -->
     {% if pagepart.id == 0 %}
@@ -33,7 +33,7 @@
                 {{pagepartadmin.getType(pagepart)}}
             </h5>
             <div class="pp__header__actions">
-                <button type="button" class="btn--raise-on-hover pp__header__actions__action pp__header__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}">
+                <button type="button" class="btn--raise-on-hover pp__header__actions__action pp__header__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal-{{id}}">
                     <i class="fa fa-trash-o"></i>
                 </button>
                 {% if editable %}
@@ -77,7 +77,7 @@
 
 
     <!-- PP - Del modal -->
-    <div id="delete-pagepart-modal{{id}}" class="modal fade">
+    <div id="delete-pagepart-modal-{{id}}" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -100,7 +100,7 @@
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <button type="button" onclick="PagePartEditor.deletePagepart('{{id}}'); $('#delete-pagepart-modal{{id}}').modal('hide');" class="btn btn-danger btn--raise-on-hover">
+                    <button type="button" class="js-delete-pagepart-btn btn btn-danger btn--raise-on-hover" data-target-id="{{id}}">
                         Delete
                     </button>
                     <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
