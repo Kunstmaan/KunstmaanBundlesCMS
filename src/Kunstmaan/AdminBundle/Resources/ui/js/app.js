@@ -9,6 +9,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         cargobay.toggle.init();
 
         appScroll();
+        initTooltip();
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
@@ -22,6 +23,8 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();
+
+
     };
 
 
@@ -57,6 +60,10 @@ kunstmaanbundles.app = (function($, window, undefined) {
             };
         }
 
+    };
+
+    initTooltip = function() {
+        $('[data-toggle="tooltip"]').tooltip();
     };
 
 
