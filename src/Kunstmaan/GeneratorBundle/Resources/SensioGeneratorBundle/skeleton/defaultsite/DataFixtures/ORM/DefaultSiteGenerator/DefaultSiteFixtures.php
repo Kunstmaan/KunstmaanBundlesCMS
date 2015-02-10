@@ -62,6 +62,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private $mediaCreator;
 
     /**
+     * Defined locales during generation
+     */
+    private $requiredLocales;
+
+    /**
      * Load data fixtures with the passed EntityManager.
      *
      * @param ObjectManager $manager
@@ -73,16 +78,17 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
         $this->pagePartCreator = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
         $this->mediaCreator = $this->container->get('kunstmaan_media.media_creator_service');
+        $this->requiredLocales = explode("|", $this->container->getParameter("requiredlocales"));
 
         $this->createTranslations();
         $this->createMedia();
         $this->createHomePage();
         $this->createContentPages();
-{% if demosite %}
+        {% if demosite %}
         $this->createAdminListPages();
         // $this->createStylePage();
         $this->createFormPage();
-{% endif %}
+        {% endif %}
         $this->createDashboard();
     }
 
@@ -111,14 +117,13 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $homePage->setTitle('Home');
 
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Home');
-            $translation->setSlug('');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Home');
-            $translation->setSlug('');
-        });
+
+        foreach($this->requiredLocales as $requiredLocale) {
+            $translations[] = array('language' => $requiredLocale, 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Home');
+                $translation->setSlug('');
+            });
+        }
 
         $options = array(
             'parent' => null,
@@ -217,16 +222,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $contentPage->setTitle('Satellite');
 
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Satellite');
-            $translation->setSlug('satellite');
-            $translation->setWeight(20);
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Satelliet');
-            $translation->setSlug('satelliet');
-            $translation->setWeight(20);
-        });
+
+        foreach($this->requiredLocales as $requiredLocale) {
+            if($requiredLocale == 'nl') {
+                $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+                    $translation->setTitle('Satelliet');
+                    $translation->setSlug('satelliet');
+                    $translation->setWeight(20);
+                });
+            } else {
+                $translations[] = array('language' => $requiredLocale, 'callback' => function($page, $translation, $seo) {
+                    $translation->setTitle('Satellite');
+                    $translation->setSlug('satellite');
+                    $translation->setWeight(20);
+                });
+            }
+        }
 
         $options = array(
             'parent' => $homePage,
@@ -237,14 +248,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         );
 
         $this->pageCreator->createPage($contentPage, $translations, $options);
-{% if demosite %}
+        {% if demosite %}
 
         // Add images to database
         $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $imgDir = dirname(__FILE__).'/../../../Resources/public/files/content/';
         $satelliteMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
         $orbitsMedia = $this->mediaCreator->createFile($imgDir.'orbits.jpg', $folder->getId());
-{% endif %}
+        {% endif %}
 
         // Add pageparts
         $pageparts = array();
@@ -259,7 +270,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p>A <b>satellite</b> is an object that orbits another object. In space, satellites may be made by man, or they may be natural. The moon is a natural satellite that orbits the Earth. Most man-made satellites also orbit the Earth, but some orbit other planets, such as Saturn, Venus or Mars, or the moon.</p>'
             )
         );
-{% if demosite %}
+        {% if demosite %}
         $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
             array(
                 'setTitle' => 'History',
@@ -328,7 +339,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p><a href="http://simple.wikipedia.org/wiki/Satellite_(artificial)">Wikipedia</a></p>'
             )
         );
-{% endif %}
+        {% endif %}
 
         $this->pagePartCreator->addPagePartsToPage('satellite', $pageparts, 'en');
 
@@ -344,7 +355,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p>Een <b>kunstmaan</b> of <b>satelliet</b> is een door mensen gemaakt object in een baan om een hemellichaam. Kunstmanen zijn onbemande toestellen die door de mens in een baan zijn gebracht. Natuurlijke manen zijn meestal objecten met de structuur van een kleine planeet of planetoïde die door de zwaartekracht van de planeet in hun baan worden gehouden.</p>'
             )
         );
-{% if demosite %}
+        {% if demosite %}
 
         $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
             array(
@@ -435,7 +446,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 'setContent' => '<p><a href="http://nl.wikipedia.org/wiki/Kunstmaan">Wikipedia</a></p>'
             )
         );
-{% endif %}
+        {% endif %}
 
         $this->pagePartCreator->addPagePartsToPage('satellite', $pageparts, 'nl');
     }
@@ -445,176 +456,192 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * Create a ContentPages based on an admin list
      */
     private function createAdminListPages()
-    {
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
-        $satellitePage = $nodeRepo->findOneBy(array('internalName' => 'satellite'));
+{
+    $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
+    $satellitePage = $nodeRepo->findOneBy(array('internalName' => 'satellite'));
 
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Communication satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_COMMUNICATION);
+    $satelliteOverviewPage = new SatelliteOverviewPage();
+    $satelliteOverviewPage->setTitle('Communication satellites');
+    $satelliteOverviewPage->setType(Satellite::TYPE_COMMUNICATION);
 
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Communication satellites');
-            $translation->setSlug('communication-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Communicatie satellieten');
-            $translation->setSlug('communicatie-satellieten');
-        });
+    $translations = array();
 
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'communication-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Climate research satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_CLIMATE);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Climate research satellites');
-            $translation->setSlug('climate-research-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Klimatologische onderzoekssatellieten');
-            $translation->setSlug('klimatologische-onderzoekssatellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'climate-research-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Passive satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_PASSIVE);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Passive satellites');
-            $translation->setSlug('passive-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Passieve satellieten');
-            $translation->setSlug('passieve-satellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'passive-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
-        $list = array(
-            array('Sputnik 1', '1957-10-04', 'http://en.wikipedia.org/wiki/Sputnik_1', 84, Satellite::TYPE_COMMUNICATION),
-            array('Echo 1', '1960-08-12', 'http://en.wikipedia.org/wiki/Echo_satellite', 180, Satellite::TYPE_COMMUNICATION),
-            array('Telstar 1', '1962-07-10', 'http://en.wikipedia.org/wiki/Telstar', 70, Satellite::TYPE_COMMUNICATION),
-            array('Intelsat I', '1965-04-06', 'http://en.wikipedia.org/wiki/Intelsat_I', 149, Satellite::TYPE_COMMUNICATION),
-
-            array('ACRIMSAT', '1999-12-20', 'http://en.wikipedia.org/wiki/ACRIMSAT', 288, Satellite::TYPE_CLIMATE),
-            array('Terra', '1999-12-18', 'http://en.wikipedia.org/wiki/Terra_(satellite)', 4864, Satellite::TYPE_CLIMATE),
-            array('GRACE', '2002-03-14', 'http://en.wikipedia.org/wiki/Gravity_Recovery_and_Climate_Experiment', 487, Satellite::TYPE_CLIMATE),
-            array('Landsat 7', '1999-04-15', 'http://en.wikipedia.org/wiki/Landsat-7', 1973, Satellite::TYPE_CLIMATE),
-            array('SORCE', '2003-01-25', 'http://en.wikipedia.org/wiki/SORCE', 315, Satellite::TYPE_CLIMATE),
-
-            array('LARES', '2012-02-13', 'http://en.wikipedia.org/wiki/LARES_(satellite)', 400, Satellite::TYPE_PASSIVE),
-            array('LAGEOS 1', '1976-05-04', 'http://en.wikipedia.org/wiki/LAGEOS', 411, Satellite::TYPE_PASSIVE),
-        );
-        foreach ($list as $info) {
-            $satellite = new Satellite();
-            $satellite->setName($info[0]);
-            $satellite->setLaunched(new \DateTime($info[1]));
-            $satellite->setLink($info[2]);
-            $satellite->setWeight($info[3]);
-            $satellite->setType($info[4]);
-
-            $this->manager->persist($satellite);
+    foreach($this->requiredLocales as $requiredLocale ){
+        if($requiredLocale == 'nl') {
+            $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Communicatie satellieten');
+                $translation->setSlug('communicatie-satellieten');
+            });
+        } else {
+            $translations[] = array('language' => $requiredLocale, 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Communication satellites');
+                $translation->setSlug('communication-satellites');
+            });
         }
-
-        $this->manager->flush();
     }
+
+    $options = array(
+        'parent' => $satellitePage,
+        'page_internal_name' => 'communication-satellites',
+        'set_online' => true,
+        'hidden_from_nav' => false,
+        'creator' => self::ADMIN_USERNAME
+    );
+
+    $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
+
+    $satelliteOverviewPage = new SatelliteOverviewPage();
+    $satelliteOverviewPage->setTitle('Climate research satellites');
+    $satelliteOverviewPage->setType(Satellite::TYPE_CLIMATE);
+
+    $translations = array();
+
+    foreach($this->requiredLocales as $requiredLocale){
+        if($requiredLocale == 'nl'){
+            $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Klimatologische onderzoekssatellieten');
+                $translation->setSlug('klimatologische-onderzoekssatellieten');
+            });
+        } else {
+            $translations[] = array('language' => $requiredLocale, 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Climate research satellites');
+                $translation->setSlug('climate-research-satellites');
+            });
+        }
+    }
+
+    $options = array(
+        'parent' => $satellitePage,
+        'page_internal_name' => 'climate-research-satellites',
+        'set_online' => true,
+        'hidden_from_nav' => false,
+        'creator' => self::ADMIN_USERNAME
+    );
+
+    $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
+
+    $satelliteOverviewPage = new SatelliteOverviewPage();
+    $satelliteOverviewPage->setTitle('Passive satellites');
+    $satelliteOverviewPage->setType(Satellite::TYPE_PASSIVE);
+
+    $translations = array();
+
+    foreach($this->requiredLocales as $requiredLocale){
+        if($requiredLocale == 'nl'){
+            $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Passieve satellieten');
+                $translation->setSlug('passieve-satellieten');
+            });
+        } else {
+            $translations[] = array('language' => $requiredLocale, 'callback' => function($page, $translation, $seo) {
+                $translation->setTitle('Passive satellites');
+                $translation->setSlug('passive-satellites');
+            });
+        }
+    }
+
+    $options = array(
+        'parent' => $satellitePage,
+        'page_internal_name' => 'passive-satellites',
+        'set_online' => true,
+        'hidden_from_nav' => false,
+        'creator' => self::ADMIN_USERNAME
+    );
+
+    $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
+
+    $list = array(
+        array('Sputnik 1', '1957-10-04', 'http://en.wikipedia.org/wiki/Sputnik_1', 84, Satellite::TYPE_COMMUNICATION),
+        array('Echo 1', '1960-08-12', 'http://en.wikipedia.org/wiki/Echo_satellite', 180, Satellite::TYPE_COMMUNICATION),
+        array('Telstar 1', '1962-07-10', 'http://en.wikipedia.org/wiki/Telstar', 70, Satellite::TYPE_COMMUNICATION),
+        array('Intelsat I', '1965-04-06', 'http://en.wikipedia.org/wiki/Intelsat_I', 149, Satellite::TYPE_COMMUNICATION),
+
+        array('ACRIMSAT', '1999-12-20', 'http://en.wikipedia.org/wiki/ACRIMSAT', 288, Satellite::TYPE_CLIMATE),
+        array('Terra', '1999-12-18', 'http://en.wikipedia.org/wiki/Terra_(satellite)', 4864, Satellite::TYPE_CLIMATE),
+        array('GRACE', '2002-03-14', 'http://en.wikipedia.org/wiki/Gravity_Recovery_and_Climate_Experiment', 487, Satellite::TYPE_CLIMATE),
+        array('Landsat 7', '1999-04-15', 'http://en.wikipedia.org/wiki/Landsat-7', 1973, Satellite::TYPE_CLIMATE),
+        array('SORCE', '2003-01-25', 'http://en.wikipedia.org/wiki/SORCE', 315, Satellite::TYPE_CLIMATE),
+
+        array('LARES', '2012-02-13', 'http://en.wikipedia.org/wiki/LARES_(satellite)', 400, Satellite::TYPE_PASSIVE),
+        array('LAGEOS 1', '1976-05-04', 'http://en.wikipedia.org/wiki/LAGEOS', 411, Satellite::TYPE_PASSIVE),
+    );
+    foreach ($list as $info) {
+        $satellite = new Satellite();
+        $satellite->setName($info[0]);
+        $satellite->setLaunched(new \DateTime($info[1]));
+        $satellite->setLink($info[2]);
+        $satellite->setWeight($info[3]);
+        $satellite->setType($info[4]);
+
+        $this->manager->persist($satellite);
+    }
+
+    $this->manager->flush();
+}
 
     /**
      * Create a ContentPage with some styled components
      */
     private function createStylePage()
-    {
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
-        $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
+{
+    $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
+    $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
-        $contentPage = new ContentPage();
-        $contentPage->setTitle('Home');
+    $contentPage = new ContentPage();
+    $contentPage->setTitle('Home');
 
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+    $translations = array();
+
+    foreach($this->requiredLocales as $requiredLocale){
+        $translations[] = array('language' => $requiredLocale, 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Styles');
             $translation->setSlug('styles');
             $translation->setWeight(40);
         });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Styles');
-            $translation->setSlug('styles');
-            $translation->setWeight(40);
-        });
+    }
 
-        $options = array(
-            'parent' => $homePage,
-            'page_internal_name' => 'styles',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
+    $options = array(
+        'parent' => $homePage,
+        'page_internal_name' => 'styles',
+        'set_online' => true,
+        'hidden_from_nav' => false,
+        'creator' => self::ADMIN_USERNAME
+    );
 
-        $this->pageCreator->createPage($contentPage, $translations, $options);
+    $this->pageCreator->createPage($contentPage, $translations, $options);
 
-        $pageparts = array();
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Buttons',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Sizes',
-                'setNiv'   => 2
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
-            array(
-                'setContent' => '<p>
+    $pageparts = array();
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+        array(
+            'setTitle' => 'Buttons',
+            'setNiv'   => 1
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+        array(
+            'setTitle' => 'Sizes',
+            'setNiv'   => 2
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
+        array(
+            'setContent' => '<p>
                                  <button class="btn btn-mini">Mini button</button>
                                  <button class="btn btn-small">Small button</button>
                                  <button class="btn">Normal</button>
                                  <button class="btn btn-large">Large button</button>
                                  </p>'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Styles',
-                'setNiv'   => 2
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
-            array(
-                'setContent' => '<p>
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+        array(
+            'setTitle' => 'Styles',
+            'setNiv'   => 2
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
+        array(
+            'setContent' => '<p>
                                  <button class="btn btn-large">Normal</button>
                                  <button class="btn btn-large btn-primary">Primary</button>
                                  <button class="btn btn-large btn-info">Info</button>
@@ -624,214 +651,214 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                                  <button class="btn btn-large btn-inverse">Inverse</button>
                                  <button class="btn btn-large btn-link">Link</button>
                                  </p>'
-            )
-        );
+        )
+    );
 
-        $this->pagePartCreator->addPagePartsToPage('styles', $pageparts, 'en');
-        $this->pagePartCreator->addPagePartsToPage('styles', $pageparts, 'nl');
-    }
+    $this->pagePartCreator->addPagePartsToPage('styles', $pageparts, 'en');
+    $this->pagePartCreator->addPagePartsToPage('styles', $pageparts, 'nl');
+}
 
     /**
      * Create a FormPage
      */
     private function createFormPage()
-    {
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
-        $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
+{
+    $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
+    $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
-        $formPage = new FormPage();
-        $formPage->setTitle('Contact form');
+    $formPage = new FormPage();
+    $formPage->setTitle('Contact form');
 
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
+    $translations = array();
+
+    foreach($this->requiredLocales as $requiredLocale){
+        $translations[] = array('language' => $requiredLocale, 'callback' => function($page, $translation, $seo) {
             $translation->setTitle('Contact');
             $translation->setSlug('contact');
             $translation->setWeight(60);
         });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Contact');
-            $translation->setSlug('contact');
-            $translation->setWeight(60);
-        });
-
-        $options = array(
-            'parent' => $homePage,
-            'page_internal_name' => 'contact',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $node = $this->pageCreator->createPage($formPage, $translations, $options);
-
-        $nodeTranslation = $node->getNodeTranslation('en', true);
-        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        $page = $nodeVersion->getRef($this->manager);
-        $page->setThanks("<p>We have received your submission.</p>");
-        $this->manager->persist($page);
-
-        $nodeTranslation = $node->getNodeTranslation('nl', true);
-        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        $page = $nodeVersion->getRef($this->manager);
-        $page->setThanks("<p>Bedankt, we hebben je bericht succesvol ontvangen.</p>");
-        $this->manager->persist($page);
-
-        $pageparts = array();
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
-            array(
-                'setLabel' => 'Name',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Name is required'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
-            array(
-                'setLabel' => 'Email',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Email is required',
-                'setErrorMessageInvalid' => 'Fill in a valid email address'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
-            array(
-                'setLabel' => 'Subject',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Subject is required',
-                'setChoices' => "I want to make a website with the Kunstmaan bundles \n I'm testing the website \n I want to get a quote for a website built by Kunstmaan"
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
-            array(
-                'setLabel' => 'Message',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Message is required'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
-            array(
-                'setLabel' => 'Send'
-            )
-        );
-
-        $this->pagePartCreator->addPagePartsToPage('contact', $pageparts, 'en');
-
-        $pageparts = array();
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
-            array(
-                'setLabel' => 'Naam',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Naam is verplicht'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
-            array(
-                'setLabel' => 'Email',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Email is verplicht',
-                'setErrorMessageInvalid' => 'Vul een geldif email adres in'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
-            array(
-                'setLabel' => 'Onderwerp',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Onderwerp is verplicht',
-                'setChoices' => "Ik wil een website maken met de Kunstmaan bundles \n Ik ben een website aan het testen \n Ik wil dat Kunstmaan een website voor mij maakt"
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
-            array(
-                'setLabel' => 'Bericht',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Bericht is verplicht'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
-            array(
-                'setLabel' => 'Verzenden'
-            )
-        );
-
-        $this->pagePartCreator->addPagePartsToPage('contact', $pageparts, 'nl');
-
-        $this->manager->flush();
     }
+
+
+
+    $options = array(
+        'parent' => $homePage,
+        'page_internal_name' => 'contact',
+        'set_online' => true,
+        'hidden_from_nav' => false,
+        'creator' => self::ADMIN_USERNAME
+    );
+
+    $node = $this->pageCreator->createPage($formPage, $translations, $options);
+
+    $nodeTranslation = $node->getNodeTranslation('en', true);
+    $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+    $page = $nodeVersion->getRef($this->manager);
+    $page->setThanks("<p>We have received your submission.</p>");
+    $this->manager->persist($page);
+
+    $nodeTranslation = $node->getNodeTranslation('nl', true);
+    $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+    $page = $nodeVersion->getRef($this->manager);
+    $page->setThanks("<p>Bedankt, we hebben je bericht succesvol ontvangen.</p>");
+    $this->manager->persist($page);
+
+    $pageparts = array();
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
+        array(
+            'setLabel' => 'Name',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Name is required'
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
+        array(
+            'setLabel' => 'Email',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Email is required',
+            'setErrorMessageInvalid' => 'Fill in a valid email address'
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
+        array(
+            'setLabel' => 'Subject',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Subject is required',
+            'setChoices' => "I want to make a website with the Kunstmaan bundles \n I'm testing the website \n I want to get a quote for a website built by Kunstmaan"
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
+        array(
+            'setLabel' => 'Message',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Message is required'
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
+        array(
+            'setLabel' => 'Send'
+        )
+    );
+
+    $this->pagePartCreator->addPagePartsToPage('contact', $pageparts, 'en');
+
+    $pageparts = array();
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
+        array(
+            'setLabel' => 'Naam',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Naam is verplicht'
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
+        array(
+            'setLabel' => 'Email',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Email is verplicht',
+            'setErrorMessageInvalid' => 'Vul een geldif email adres in'
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
+        array(
+            'setLabel' => 'Onderwerp',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Onderwerp is verplicht',
+            'setChoices' => "Ik wil een website maken met de Kunstmaan bundles \n Ik ben een website aan het testen \n Ik wil dat Kunstmaan een website voor mij maakt"
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
+        array(
+            'setLabel' => 'Bericht',
+            'setRequired' => true,
+            'setErrorMessageRequired' => 'Bericht is verplicht'
+        )
+    );
+    $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
+        array(
+            'setLabel' => 'Verzenden'
+        )
+    );
+
+    $this->pagePartCreator->addPagePartsToPage('contact', $pageparts, 'nl');
+
+    $this->manager->flush();
+}
 {% endif %}
 
     /**
      * Insert all translations
      */
     private function createTranslations()
-    {
-        // SplashPage
-        $trans['lang_chooser.welcome']['en'] = 'Welcome, continue in English';
-        $trans['lang_chooser.welcome']['fr'] = 'Bienvenu, continuer en Français';
-        $trans['lang_chooser.welcome']['nl'] = 'Welkom, ga verder in het Nederlands';
-        $trans['lang_chooser.welcome']['de'] = 'Willkommen, gehe weiter in Deutsch';
-{% if demosite %}
+{
+    // SplashPage
+    $trans['lang_chooser.welcome']['en'] = 'Welcome, continue in English';
+    $trans['lang_chooser.welcome']['fr'] = 'Bienvenu, continuer en Français';
+    $trans['lang_chooser.welcome']['nl'] = 'Welkom, ga verder in het Nederlands';
+    $trans['lang_chooser.welcome']['de'] = 'Willkommen, gehe weiter in Deutsch';
+    {% if demosite %}
 
-        // AdminList page with satellites
-        $trans['satellite.name']['en'] = 'name';
-        $trans['satellite.launched']['en'] = 'launched';
-        $trans['satellite.weight']['en'] = 'launch mass';
-        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['en'] = 'Communication satellites';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['en'] = 'Climate satellites';
-        $trans['satellite.name']['nl'] = 'naam';
-        $trans['satellite.launched']['nl'] = 'lanceringsdatum';
-        $trans['satellite.weight']['nl'] = 'gewicht';
-        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['nl'] = 'Communicatie satellieten';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische satellieten';
+    // AdminList page with satellites
+    $trans['satellite.name']['en'] = 'name';
+    $trans['satellite.launched']['en'] = 'launched';
+    $trans['satellite.weight']['en'] = 'launch mass';
+    $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['en'] = 'Communication satellites';
+    $trans['satellite.'.Satellite::TYPE_CLIMATE]['en'] = 'Climate satellites';
+    $trans['satellite.name']['nl'] = 'naam';
+    $trans['satellite.launched']['nl'] = 'lanceringsdatum';
+    $trans['satellite.weight']['nl'] = 'gewicht';
+    $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['nl'] = 'Communicatie satellieten';
+    $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische satellieten';
 
-        $trans['article.readmore']['en'] = 'Read more';
-        $trans['article.readmore']['nl'] = 'Lees meer';
+    $trans['article.readmore']['en'] = 'Read more';
+    $trans['article.readmore']['nl'] = 'Lees meer';
 
-        $trans['results']['en'] = 'results';
-        $trans['results']['nl'] = 'resultaten';
-        $trans['search']['en'] = 'search';
-        $trans['search']['nl'] = 'zoeken';
-        $trans['search.looking_for']['en'] = 'You were looking for';
-        $trans['search.looking_for']['nl'] = 'U zocht naar';
-{% endif %}
+    $trans['results']['en'] = 'results';
+    $trans['results']['nl'] = 'resultaten';
+    $trans['search']['en'] = 'search';
+    $trans['search']['nl'] = 'zoeken';
+    $trans['search.looking_for']['en'] = 'You were looking for';
+    $trans['search.looking_for']['nl'] = 'U zocht naar';
+    {% endif %}
 
-        $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
-        foreach ($trans as $key => $array) {
-            foreach ($array as $lang => $value) {
-                $t = new Translation();
-                $t->setKeyword($key);
-                $t->setLocale($lang);
-                $t->setText($value);
-                $t->setDomain('messages');
-                $t->setCreatedAt(new \DateTime());
-                $t->setFlag(Translation::FLAG_NEW);
-                $t->setTranslationId($translationId);
+    $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
+    foreach ($trans as $key => $array) {
+        foreach ($array as $lang => $value) {
+            $t = new Translation();
+            $t->setKeyword($key);
+            $t->setLocale($lang);
+            $t->setText($value);
+            $t->setDomain('messages');
+            $t->setCreatedAt(new \DateTime());
+            $t->setFlag(Translation::FLAG_NEW);
+            $t->setTranslationId($translationId);
 
-                $this->manager->persist($t);
-            }
-            $translationId++;
+            $this->manager->persist($t);
         }
-
-        $this->manager->flush();
+        $translationId++;
     }
+
+    $this->manager->flush();
+}
 
     /**
      * Create some dummy media files
      */
     private function createMedia()
-    {
-        // Add images to database
-        $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-        $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
-        $publicDir = dirname(__FILE__).'/../../../Resources/public/';
-        $this->mediaCreator->createFile($publicDir.'img/general/logo.png', $imageFolder->getId());
-        $this->mediaCreator->createFile($publicDir.'img/general/demo-logo.png', $imageFolder->getId());
-        $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());
+{
+    // Add images to database
+    $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+    $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
+    $publicDir = dirname(__FILE__).'/../../../Resources/public/';
+    $this->mediaCreator->createFile($publicDir.'img/general/logo.png', $imageFolder->getId());
+    $this->mediaCreator->createFile($publicDir.'img/general/demo-logo.png', $imageFolder->getId());
+    $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());
 
-        // Create dummy video folder and add dummy videos
-        {
-            $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
-            $this->createVideoFile('Kunstmaan', 'WPx-Oe2WrUE', $videoFolder);
-        }
+    // Create dummy video folder and add dummy videos
+    {
+        $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
+        $this->createVideoFile('Kunstmaan', 'WPx-Oe2WrUE', $videoFolder);
     }
+}
 
     /**
      * Create a video file record in the database.
@@ -842,21 +869,21 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @return Media
      */
     private function createVideoFile($name, $code, $folder)
-    {
-        // Hack for media bundle issue
-        $dir = dirname($this->container->get('kernel')->getRootDir());
-        chdir($dir . '/web');
-        $media = new Media();
-        $media->setFolder($folder);
-        $media->setName($name);
-        $helper = new RemoteVideoHelper($media);
-        $helper->setCode($code);
-        $helper->setType('youtube');
-        $this->manager->getRepository('KunstmaanMediaBundle:Media')->save($media);
-        chdir($dir);
+{
+    // Hack for media bundle issue
+    $dir = dirname($this->container->get('kernel')->getRootDir());
+    chdir($dir . '/web');
+    $media = new Media();
+    $media->setFolder($folder);
+    $media->setName($name);
+    $helper = new RemoteVideoHelper($media);
+    $helper->setCode($code);
+    $helper->setType('youtube');
+    $this->manager->getRepository('KunstmaanMediaBundle:Media')->save($media);
+    chdir($dir);
 
-        return $media;
-    }
+    return $media;
+}
 
     /**
      * Get the order of this fixture
@@ -864,9 +891,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @return int
      */
     public function getOrder()
-    {
-        return 51;
-    }
+{
+    return 51;
+}
 
     /**
      * Sets the Container.
@@ -876,8 +903,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      * @api
      */
     public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
+{
+    $this->container = $container;
+}
 
 }
