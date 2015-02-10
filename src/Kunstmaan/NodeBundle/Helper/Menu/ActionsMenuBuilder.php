@@ -104,7 +104,7 @@ class ActionsMenuBuilder
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
         $menu              = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'page-main-actions');
+        $menu->setChildrenAttribute('class', 'page-main-actions js-auto-collapse-buttons');
 
 
         if (!is_null($activeNodeVersion)) {

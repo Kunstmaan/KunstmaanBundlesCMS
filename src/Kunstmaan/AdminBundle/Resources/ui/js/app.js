@@ -17,6 +17,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.checkIfEdited.init();
         kunstmaanbundles.preventDoubleClick.init();
         kunstmaanbundles.datepicker.init();
+        kunstmaanbundles.autoCollapseButtons.init();
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();
