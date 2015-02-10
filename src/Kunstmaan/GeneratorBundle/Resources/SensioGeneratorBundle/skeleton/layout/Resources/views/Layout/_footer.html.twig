@@ -1,0 +1,90 @@
+<footer role="footer" class="footer">
+    <section class="splash splash--gray-dark splash--border-top">
+        <div class="container">
+            {% if nodemenu is defined %}
+                {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                {% if searchPageNode %}
+                    <div class="row row--padded hidden-md hidden-lg">
+                        <div class="col-xs-12 col-sm-5 col-sm-offset-7">
+                            <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox">
+                                <div class="searchbox-box">
+                                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="search" class="searchbox__input" />
+                                    <button type="submit" id="search" class="searchbox__submit">
+                                        <i class="icon-search searchbox__submit__icon"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                <div class="row row--padded">
+                    {% for node in activeSubnode.children %}
+                        {% if not node.node.isHiddenFromNav() %}
+                            <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
+                                <h5 class="doormat__title"><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></h5>
+                                <ul class="list-reset doormat__link-list">
+                                    {% if node.children|length>0 %}
+                                        {% if node.node.internalName == 'article_overview_page' %}
+                                            {% for node2 in node.children %}
+                                                {% if loop.index < 4 %}
+                                                    {% if node2.title|length > 40 %}
+                                                        {% set ltitle = node2.title[:40] ~ '...' %}
+                                                    {% else %}
+                                                        {% set ltitle = node2.title %}
+                                                    {% endif %}
+                                                    <li class="doormat__list-item {% if(node2.active) %}active{% endif %}">
+                                                        <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="link--gray doormat__link">{{ ltitle }}</a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for node2 in node.children %}
+                                                {% if not node.node.isHiddenFromNav() or true %}
+                                                    <li class="doormat__list-item {% if(node2.active) %}active{% endif %}">
+                                                        <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="link--gray doormat__link">{{ node2.title }}</a>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-lg-offset-1 col--padded text-right">
+                        <a href="https://twitter.com/kunstmaan" class="social-link">
+                            <i class="social-link__icon icon-twitter"></i>
+                        </a>
+                        <a href="http://www.linkedin.com/company/kunstmaan" class="social-link">
+                            <i class="social-link__icon icon-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/Kunstmaan" class="social-link">
+                            <i class="social-link__icon icon-github"></i>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row row--padded">
+                <div class="col-md-12">
+                    <p class="pull-left">
+                        &copy; {{ "now"|date("Y") }}
+                        {% if nodemenu is defined %}
+                            {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
+                            {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}">{{ sitemap.title }}</a>{% endif %}
+                        {% endif %}
+                    </p>
+                    <p class="pull-right created-by">
+                        Created by <a href="http://www.kunstmaan.be"><img src="{{ asset('bundles/<%= bundle.name|lower|replace({"bundle": ""}) %>/img/general/km-logo.svg') }}" alt="Kunstmaan"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</footer>

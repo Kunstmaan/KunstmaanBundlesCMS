@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+gem 'sass', "3.4.5"
+gem 'hologram', "1.2.0"
