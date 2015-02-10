@@ -50,9 +50,11 @@
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
+        {% set class = 'col-md-2 control-label' %}
         {% if required %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' col-md-2 control-label required')|trim}) %}
-        {% endif %}
+            {%  set class = class ~ ' required' %}
+        {%  endif %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' ' ~ class)|trim}) %}
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
