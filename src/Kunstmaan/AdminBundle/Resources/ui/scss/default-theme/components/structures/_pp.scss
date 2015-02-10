@@ -6,8 +6,18 @@
    ========================================================================== */
 .pp {
     background: $white;
-    border: 1px solid $gray-lighter;
+    border: 1px solid #efefef;
     border-radius: $border-radius-base;
+
+    transition: border-color .3s ease;
+
+    &:hover {
+        border-color: $gray-lighter;
+
+        .pp__header {
+            opacity: 1;
+        }
+    }
 }
 
 
@@ -22,8 +32,10 @@
     height: 3rem;
 
     background: #f7f7f7;
-
     border-bottom: 1px solid $gray-lighter;
+    opacity: .3;
+
+    transition: opacity .3s ease;
 
     &:hover {
         cursor: move;
@@ -115,4 +127,12 @@
         max-width: 100%;
         height: auto;
     }
+}
+
+.pp__view__block {
+
+}
+
+.pp__view__block--hidden {
+    display: none;
 }

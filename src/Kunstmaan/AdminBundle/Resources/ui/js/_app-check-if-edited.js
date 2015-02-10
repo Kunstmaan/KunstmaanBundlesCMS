@@ -17,6 +17,11 @@ kunstmaanbundles.checkIfEdited = (function($, window, undefined) {
     };
 
 
+    edited = function() {
+        isEdited = true;
+    };
+
+
     _doUnload = function() {
         if(isEdited) {
             return 'You haven\'t saved this page, are you sure you want to close it?';
@@ -25,7 +30,8 @@ kunstmaanbundles.checkIfEdited = (function($, window, undefined) {
 
 
     return {
-        init: init
+        init: init,
+        edited: edited
     };
 
 }(jQuery, window));

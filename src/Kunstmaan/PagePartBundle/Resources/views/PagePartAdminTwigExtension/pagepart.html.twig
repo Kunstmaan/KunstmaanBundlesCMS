@@ -37,7 +37,7 @@
                     <i class="fa fa-trash-o"></i>
                 </button>
                 {% if editable %}
-                    <button type="button" class="btn--raise-on-hover pp__header__actions__action pp__header__actions__action--edit" onclick="return PagePartEditor.editPagepart('{{id}}')">
+                    <button type="button" class="js-edit-pagepart-btn btn--raise-on-hover pp__header__actions__action pp__header__actions__action--edit" data-target-id="{{id}}">
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
                 {% endif %}
@@ -45,13 +45,13 @@
         </header>
 
         <div class="pp__view">
-            <!-- PP - View -->
-            <div id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
+            <!-- PP - View - Preview -->
+            <div id="{{id}}-preview-view" class="pp__view__block{% if editmode %} pp__view__block--hidden{% endif %}">
                 {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
             </div>
 
-            <!-- PP - Edit View -->
-            <div id="{{id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
+            <!-- PP - View - Edit -->
+            <div id="{{id}}-edit-view" class="pp__view__block{% if not editmode %} pp__view__block--hidden{% endif %}">
                 {% set pagepartid = 'pagepart'~id %}
                 {% if pagepart.editTemplate is defined %}
                     {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~id]} %}
