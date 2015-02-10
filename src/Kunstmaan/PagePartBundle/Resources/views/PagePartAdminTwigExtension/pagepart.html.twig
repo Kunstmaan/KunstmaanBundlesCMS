@@ -16,7 +16,6 @@
     <input type="hidden" name="{{context}}_sequence[]" data-suffix="_sequence[]" value="{{id}}" class="pagepartadmin_field_updatecontextname">
 
 
-
     <!-- PP -->
     {% if form_has_errors_recursive(form['pagepartadmin_'~id]) %}
         {% set editmode = true %}
@@ -26,20 +25,19 @@
     {% else %}
         {% set editable = false %}
     {% endif %}
-
     <section class="pp">
         <!-- PP - Header -->
         <header class="pp__header {% if not form['pagepartadmin_'~id].count %}pp__header--no-edit{% endif %}">
             <i class="fa fa-arrows pp__header__move-icon"></i>
-            <h6 class="pp__header__head">
+            <h5 class="pp__header__head">
                 {{pagepartadmin.getType(pagepart)}}
-            </h6>
+            </h5>
             <div class="pp__header__actions">
-                <button type="button" class="pp__header__actions__del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}">
+                <button type="button" class="btn--raise-on-hover pp__header__actions__action pp__header__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}">
                     <i class="fa fa-trash-o"></i>
                 </button>
                 {% if editable %}
-                    <button type="button" class="pp__header__actions__edit" onclick="return PagePartEditor.editPagepart('{{id}}')">
+                    <button type="button" class="btn--raise-on-hover pp__header__actions__action pp__header__actions__action--edit" onclick="return PagePartEditor.editPagepart('{{id}}')">
                         <i class="fa fa-pencil-square-o"></i>
                     </button>
                 {% endif %}
