@@ -4,6 +4,7 @@
 
 /* General
    ========================================================================== */
+// Default state
 .pp {
     background: $white;
     border: 1px solid #efefef;
@@ -17,6 +18,19 @@
         .pp__header {
             opacity: 1;
         }
+    }
+}
+
+// Edit active state
+.pp--edit-active {
+    border-color: $gray-lighter;
+
+    .pp__header {
+        opacity: 1;
+    }
+
+    .pp__header__actions__action--edit {
+        background: $white;
     }
 }
 
