@@ -31,7 +31,7 @@
 {% block form_widget_simple %}
     {% spaceless %}
         {% set type = type|default('text') %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} class="form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} class="form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}">
     {% endspaceless %}
 {% endblock form_widget_simple %}
 
@@ -133,7 +133,16 @@
                     // });
                 </script>
             {% else %}
-                {{ form_widget(form) }}
+                {% if attr['info_text'] is defined %}
+                    <div class="input-group">
+                        {{ form_widget(form) }}
+                        <span class="input-group-addon">
+                            <strong class="input-group-addon--tooltip" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text'] }}" id="{{ id }}_info_text">?</strong>
+                        </span>
+                    </div>
+                {% else %}
+                    {{ form_widget(form) }}
+                {% endif %}
             {% endif %}
 
             {% if max_length %}
@@ -153,15 +162,6 @@
                 <script>
                     // jQuery(document).ready(function(){
                     //     $("#{{ id }}").tooltip();
-                    // });
-                </script>
-            {% endif %}
-
-            {% if attr['info_text'] is defined %}
-                &nbsp; <strong title="{{ attr['info_text'] }}" id="{{ id }}_info_text" style="cursor:help;">?</strong>
-                <script>
-                    // jQuery(document).ready(function(){
-                    //     $("#{{ id }}_info_text").tooltip();
                     // });
                 </script>
             {% endif %}
