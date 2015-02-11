@@ -9,10 +9,13 @@
 .app__header__brand {
     display: block;
 
-    background: $green;
     font-size: 1.5rem;
     line-height: 70px;
-    color: $white;
+
+    &, &:hover, &:focus {
+        background: $green;
+        color: $white;
+    }
 }
 
 .app__header__brand__link {

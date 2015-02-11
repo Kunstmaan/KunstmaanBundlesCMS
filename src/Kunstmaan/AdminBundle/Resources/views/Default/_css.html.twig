@@ -9,13 +9,13 @@
 <!-- Customizable Brand Color -->
 <style type="text/css">
     {% if titlecolor is not defined or titlecolor is empty %}
-        {% set titlecolor = "#FFFFFF" %}
+        {% set titlecolor = "#fff" %}
     {% endif %}
         {% if titlebgcolor is not defined or titlebgcolor is empty %}
-    {% set titlebgcolor = "#2997CE" %}
+    {% set titlebgcolor = "#2997ce" %}
     {% endif %}
 
-    .navbar-brand, .navbar-brand:hover, .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:hover {
+    .navbar-brand, .navbar-brand:hover, .navbar-brand:focus, .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
         color: {{ titlecolor }};
         background: {{ titlebgcolor }};
     }

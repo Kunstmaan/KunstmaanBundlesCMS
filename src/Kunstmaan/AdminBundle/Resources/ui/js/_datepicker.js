@@ -2,19 +2,17 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.datepicker = (function($, window, undefined) {
 
-    var init,
-        $datepicker;
+    var init;
 
     init = function() {
-        $datepicker = $('.js-datepicker');
-
-        $datepicker.each(function(key,value) {
+        $('.js-datepicker').each(function(key, value) {
             initDatepicker(value);
         });
     };
 
     initDatepicker = function(el) {
         var $input = $(el).find('input');
+
         $input.datetimepicker({
             format: 'DD/MM/YYYY',
             collapse: true,
@@ -29,6 +27,7 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
                 clear: 'fa fa-trash-o'
             }
         });
+
         $(el).find('span.input-group-addon').click(function(e) {
             $input.focus();
         });
