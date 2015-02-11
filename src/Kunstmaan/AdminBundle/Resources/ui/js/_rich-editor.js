@@ -3,19 +3,21 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.richEditor = (function(window, undefined) {
 
     var init,
-        setUp;
+        enableRichEditors;
 
 
+    // First Init
     init = function() {
 
         $('.js-rich-editor').each(function() {
-            setUp($(this));
+            enableRichEditors($(this));
         });
 
     };
 
 
-    setUp = function($el) {
+    // Enable
+    enableRichEditors = function($el) {
         var $body = $('body'),
             fileBrowseUrl = $body.data('file-browse-url'),
             imageBrowseUrl = $body.data('image-browse-url'),
@@ -109,8 +111,20 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
     };
 
 
+    // Destroy
+    destroyRichEditors = function() {
+        for(instance in CKEDITOR.instances) {
+
+            if($('#' + CKEDITOR.instances[instance].name).hasClass('js-rich-editor')) {
+                CKEDITOR.instances[instance].destroy();
+            };
+        }
+    };
+
+
     return {
-        init: init
+        init: init,
+        destroyRichEditors: destroyRichEditors
     };
 
 }(window));

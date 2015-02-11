@@ -60,9 +60,10 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                 // Enable "leave page" modal
                 kunstmaanbundles.checkIfEdited.edited();
 
+                // Reinit Stuff
                 // result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
-                // disableCKEditors();
-                // enableCKEditors();
+                kunstmaanbundles.richEditor.destroyRichEditors();
+                kunstmaanbundles.richEditor.init();
                 // initCustomSelect();
             }
         });
