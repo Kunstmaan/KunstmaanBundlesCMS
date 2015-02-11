@@ -20,6 +20,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.datepicker.init();
         kunstmaanbundles.autoCollapseButtons.init();
         kunstmaanbundles.autoCollapseTabs.init();
+        kunstmaanbundles.richEditor.init();
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();

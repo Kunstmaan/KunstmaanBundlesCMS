@@ -1,14 +1,76 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.pageEditor = (function(window, undefined) {
+kunstmaanbundles.richEditor = (function(window, undefined) {
 
-    var init;
+    var init,
+        setUp;
 
 
     init = function() {
 
-        // Set editor
-        CKEDITOR.replace( $(this).attr('id'), config);
+        $('.js-rich-editor').each(function() {
+            setUp($(this));
+        });
+
+    };
+
+
+    setUp = function($el) {
+        var $body = $('body'),
+            fileBrowseUrl = $body.data('file-browse-url'),
+            imageBrowseUrl = $body.data('image-browse-url');
+
+
+        CKEDITOR.replace($el.attr('id'), {
+            skin: 'bootstrapck',
+            startupFocus: false,
+            height: 500,
+            bodyClass: 'CKEditor',
+
+            filebrowserBrowseUrl: fileBrowseUrl,
+            filebrowserWindowWidth: 580,
+
+            filebrowserImageBrowseUrl: imageBrowseUrl,
+            filebrowserImageBrowseLinkUrl: imageBrowseUrl,
+            filebrowserImageWindowWidth: 970,
+
+            filebrowserImageUploadUrl: '',
+
+            toolbar: [
+                {
+                    name: 'basicstyles',
+                    items : ['Bold','Italic','Underline','Strike','Subscript','Superscript', 'RemoveFormat']
+                },
+                {
+                    name: 'lists',
+                    items : ['NumberedList','BulletedList']
+                },
+                {
+                    name: 'dents',
+                    items : ['Outdent','Indent']
+                },
+                {
+                    name: 'links',
+                    items : ['Link','Unlink', 'Anchor']
+                },
+                {
+                    name: 'insert',
+                    items : ['Image', 'SpecialChar']
+                },
+                {
+                    name: 'clipboard',
+                    items : ['SelectAll', 'Cut','Copy','PasteText','PasteFromWord','-','Undo','Redo']
+                },
+                {
+                    name: 'editing',
+                    items : []
+                },
+                {
+                    name: 'document',
+                    items : [ 'Source' ]
+                }
+            ]
+        });
     };
 
 

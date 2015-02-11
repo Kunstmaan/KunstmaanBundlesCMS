@@ -21,7 +21,7 @@
     {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
 </head>
 
-<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}">
+<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
 {% block body %}
 
     <!-- Header -->
