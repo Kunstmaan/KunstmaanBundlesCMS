@@ -6,18 +6,20 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
         addPagePart, editPagePart, deletePagePart;
 
     init = function() {
+        var $body = $('body');
+
         // Add
-        $('.js-add-pp-select').on('change', function() {
+        $body.on('change', '.js-add-pp-select', function() {
             addPagePart($(this));
         });
 
         // Edit
-        $('.js-edit-pp-btn').on('click', function() {
+        $body.on('click', '.js-edit-pp-btn', function() {
             editPagePart($(this));
         });
 
         // Del
-        $('.js-delete-pp-btn').on('click', function() {
+        $body.on('click', '.js-delete-pp-btn', function() {
             deletePagePart($(this));
         });
     };
@@ -26,7 +28,7 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
     // Add
     addPagePart = function($select) {
         var $targetContainer = $select.closest('.js-pp-container'),
-            url = $select.data('url');
+            requestUrl = $select.data('url');
 
         // Get necessary data
         var pageClassName = $targetContainer.data('pageclassname'),
@@ -35,40 +37,38 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
             ppType = $select.val();
 
         // Ajax Request
+        $.ajax({
+            url: requestUrl,
+            data: {
+                'pageclassname': pageClassName,
+                'pageid': pageId,
+                'context': context,
+                'type': ppType
+            },
+            async: true,
+            success: function (data) {
+                var result = null,
+                    firstSelect = $select.hasClass('js-add-pp-select--first');
 
+                // Add PP
+                if (firstSelect) {
+                    result = $('#parts-' + context).prepend(data);
+                } else {
+                    result = $select.closest('.js-draggable-item').after(data);
+                }
+
+                // Enable "leave page" modal
+                kunstmaanbundles.checkIfEdited.edited();
+
+                // result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
+                // disableCKEditors();
+                // enableCKEditors();
+                // initCustomSelect();
+            }
+        });
 
         // Reset select
         $select.val('');
-
-        // OLD
-        // addPagepart: function (select) {
-        //     pagepartscontainer = $(select).closest('.pagepartscontainer');
-
-        //     $.ajax({
-        //         url: '{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}',
-        //         data: {
-        //             'pageclassname': pagepartscontainer.data('pageclassname'),
-        //             'pageid': pagepartscontainer.data('pageid'),
-        //             'context': pagepartscontainer.data('context'),
-        //             'type': $(select).val()
-        //         },
-        //         async: true,
-        //         success: function (data) {
-        //             var result = null;
-        //             if ($(select).parent().hasClass('first')) {
-        //                 result = $('#parts_' + pagepartscontainer.data('context')).prepend(data);
-        //             } else {
-        //                 result = $(select).closest('section').after(data);
-        //             }
-        //             result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
-        //             disableCKEditors();
-        //             enableCKEditors();
-        //             initCustomSelect();
-        //         }
-        //     });
-        //     $(select).val('');
-        //     return false;
-        // }
     };
 
 
