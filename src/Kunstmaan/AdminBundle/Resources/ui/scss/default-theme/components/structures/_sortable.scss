@@ -2,6 +2,26 @@
    Sortable
    ========================================================================== */
 
+
+/* Body
+   ========================================================================== */
+.sortable-active {
+
+    .pp-container__add {
+        opacity: 0;
+    }
+}
+
+
+
+/* Container
+   ========================================================================== */
+.sortable-container {
+    transition: transform .3s ease;
+}
+
+
+
 /* Item
    ========================================================================== */
 // General
@@ -11,5 +31,11 @@
 
 // Ghost
 .sortable-item--ghost {
-    opacity: .4;
+    background: $gray-ultralight;
+
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, .3);
+
+    .pp, .pp-container__add {
+        opacity: 0;
+    }
 }

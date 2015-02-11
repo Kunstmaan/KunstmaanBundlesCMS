@@ -100,8 +100,28 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
             Sortable.create(el, {
                 draggable: '.js-sortable-item',
                 handle: '.js-sortable-item__handle',
-                ghostClass: 'sortable-item--ghost'
+                ghostClass: 'sortable-item--ghost',
+
+                scroll: true,
+                scrollSensitivity: 30,
+                scrollSpeed: 10,
+
+                onStart: function(evt) {
+                    $('body').addClass('sortable-active');
+                },
+
+                onEnd: function(evt) {
+                    $('body').removeClass('sortable-active');
+                }
             });
+        });
+
+        $('.js-sortable-item__handle').on('mousedown', function() {
+            $('body').addClass('sortable-active');
+        });
+
+        $('.js-sortable-item__handle').on('mouseup', function() {
+            $('body').removeClass('sortable-active');
         });
 
 
