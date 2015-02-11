@@ -62,8 +62,12 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
 
                 // Reinit Stuff
                 // result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
+
+                // Reinit rich Editors
+                // TODO -> not destroy all? not nessesary?
                 kunstmaanbundles.richEditor.destroyRichEditors();
                 kunstmaanbundles.richEditor.init();
+
                 // initCustomSelect();
             }
         });
