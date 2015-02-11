@@ -12,3 +12,4 @@ types:
     - { name: "Slide", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\SlidePagePart" }
     - { name: "Video", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\VideoPagePart" }
     - { name: "Audio", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\AudioPagePart" }
+    - { name: "Button", class: "Kunstmaan\\PagePartBundle\\Entity\\ButtonPagePart" }

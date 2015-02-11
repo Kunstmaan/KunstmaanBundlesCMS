@@ -1,0 +1,8 @@
+<p {% if resource.center %}class="text--center"{% endif %}>
+    <a href="{{ resource.linkUrl }}" class="{{ resource.cssClasses }}"{% if resource.linkNewWindow %} target="_blank"{% endif %}>
+        {{ resource.linkText|default(resource.linkUrl) }}
+        {% if resource.icon %}
+            <i class="icon icon--carret--right btn--with-icon__icon"></i>
+        {% endif %}
+    </a>
+</p>

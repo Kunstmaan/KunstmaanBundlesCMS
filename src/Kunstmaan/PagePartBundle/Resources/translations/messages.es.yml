@@ -14,3 +14,18 @@ pagepart:
     text:
         content: 'Contenido'
 
+    button:
+        type:
+            primary: Primary
+            secondary: Secondary
+            tertiary: Tertiary
+            quaternary: Quaternary
+            quinary: Quinary
+            link: Link
+
+        size:
+            xl: Extra large
+            lg: Large
+            default: Default
+            sm: Small
+            xs: Extra small
