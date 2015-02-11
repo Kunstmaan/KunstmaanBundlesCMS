@@ -87,12 +87,8 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
 
     // Sortable
+    // TODO: allow groups
     initSortable = function() {
-        // $('.js-sortable-container').sortable({
-        //     items: '.js-sortable-item',
-        //     handle: '.js-sortable-item__handle',
-        //     forcePlaceholderSize: true
-        // });
         $('.js-sortable-container').each(function() {
             var id = $(this).attr('id'),
                 el = document.getElementById(id);
@@ -126,6 +122,83 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
 
 
+        // OLD
+
+        // var scope = $(this).closest('section').data('scope');
+        // $('.pageparts_sortable[data-scope~=' + scope + ']')
+        //         .addClass('connectedSortable')
+        //         .sortable('option', 'connectWith', '.connectedSortable');
+        // $('.pageparts_sortable:not([data-scope~=' + scope + '])')
+        //         .sortable('disable')
+        //         .sortable('option', 'connectWith', false)
+        //         .parent().addClass('region-disabled');
+        // $('.template-block-content').not('.sortable')
+        //         .parent().addClass('region-disabled');
+
+
+        // $(document).ready(function () {
+            // var heightenEmptyDropZones = function (elementHeight) {
+            //     var $empty = jQuery('.connectedSortable:not(:has(>section))');
+            //     $empty.css({'height': elementHeight});
+            // }
+
+            // var autoHeightDropZones = function () {
+            //     jQuery('.connectedSortable').css({'height': ''});
+            // }
+
+            // $('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
+            // $('body').mouseup(
+            //         function () {
+            //             if (PagePartEditor.sortableClicked) {
+            //                 // Enable all sortable regions again
+            //                 $('.pageparts_sortable')
+            //                         .sortable('enable')
+            //                         .sortable('option', 'connectWith', false)
+            //                         .parent().removeClass('region-disabled');
+            //                 $('.template-block-content').not('.sortable')
+            //                         .parent().removeClass('region-disabled');
+            //                 PagePartEditor.sortableClicked = false;
+            //             }
+            //         }
+            // );
+            // $('#parts_{{pagepartadmin.context}}').sortable({
+            //     iframeFix: true,
+            //     connectWith: ".connectedSortable",
+            //     handle: '.prop_bar',
+            //     cursor: 'move',
+            //     placeholder: "placeholder",
+            //     forcePlaceholderSize: true,
+            //     tolerance: "pointer",
+            //     revert: 100,
+            //     opacity: 1,
+            //     start: function (e, ui) {
+            //         $(ui.item).find('.new_pagepart').html('');
+            //         disableCKEditors();
+            //         $('.draggable').css('opacity', ".4");
+            //         $('.ui-sortable-helper .new_pagepart').slideUp("fast");
+
+            //         // Temporarily change the height of empty pagepart containers.
+            //         heightenEmptyDropZones(ui.item.outerHeight(true));
+            //     },
+            //     stop: function (e, ui) {
+            //         $(ui.item).find('.new_pagepart').html($(ui.item).parents('.pagepartscontainer').find('.new_pagepart.first').html());
+            //         //update context names
+            //         var context = $(ui.item).parents('.pagepartscontainer').data('context');
+            //         $(ui.item).find('.pagepartadmin_field_updatecontextname').each(function () {
+            //             $(this).attr('name', context + $(this).data('suffix'));
+            //         });
+            //         enableCKEditors();
+
+            //         // Revert the height for the dropzones.
+            //         autoHeightDropZones();
+
+            //         // Remove connectedSortable when stopped dropping.
+            //         $('.connectedSortable').removeClass('connectedSortable');
+
+            //         $('.draggable').css('opacity', "1");
+            //     }
+            // });
+        // });
     };
 
 
