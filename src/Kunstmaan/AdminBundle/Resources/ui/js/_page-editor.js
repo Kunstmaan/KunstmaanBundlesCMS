@@ -11,6 +11,8 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         $('.js-change-page-template').on('click', function() {
             changeTemplate($(this));
         });
+
+        initSortable();
     };
 
 
@@ -86,6 +88,23 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     // Sortable
     initSortable = function() {
+        // $('.js-sortable-container').sortable({
+        //     items: '.js-sortable-item',
+        //     handle: '.js-sortable-item__handle',
+        //     forcePlaceholderSize: true
+        // });
+        $('.js-sortable-container').each(function() {
+            var id = $(this).attr('id'),
+                el = document.getElementById(id);
+
+            Sortable.create(el, {
+                draggable: '.js-sortable-item',
+                handle: '.js-sortable-item__handle',
+                ghostClass: 'sortable-item--ghost'
+            });
+        });
+
+
 
     };
 

@@ -6,7 +6,7 @@
 
 
 <!-- Draggable Item -->
-<div class="js-draggable-item draggable-item" id="{{id}}-pp-container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
+<div class="js-sortable-item sortable-item" id="{{id}}-pp-container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
 
     <!-- Hidden fields -->
     {% if pagepart.id == 0 %}
@@ -27,7 +27,7 @@
     {% endif %}
     <section id="pp-{{id}}" class="pp">
         <!-- PP - Header -->
-        <header class="pp__header {% if not form['pagepartadmin_'~id].count %}pp__header--no-edit{% endif %}">
+        <header class="js-sortable-item__handle pp__header {% if not form['pagepartadmin_'~id].count %}pp__header--no-edit{% endif %}">
             <i class="fa fa-arrows pp__header__move-icon"></i>
             <h5 class="pp__header__head">
                 {{pagepartadmin.getType(pagepart)}}
