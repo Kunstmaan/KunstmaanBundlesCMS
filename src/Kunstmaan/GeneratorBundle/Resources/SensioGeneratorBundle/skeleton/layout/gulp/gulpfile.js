@@ -298,7 +298,7 @@ gulp.task('watch', function() {
     gulp.watch(config.scss, ['styles']);
 
     // Scripts
-    gulp.watch(config.js.app, ['scripts']);
+    gulp.watch(config.js.app, ['inject-dev-scripts']);
 
     // Images
     gulp.watch(config.img, ['images']);
