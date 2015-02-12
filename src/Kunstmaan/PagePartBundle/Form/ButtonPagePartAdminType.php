@@ -25,11 +25,11 @@ class ButtonPagePartAdminType extends AbstractType
     public function __construct()
     {
         $this->typeChoices = array();
-        foreach (ButtonPagePart::$TYPES as $type) {
+        foreach (ButtonPagePart::$types as $type) {
             $this->typeChoices[$type] = 'pagepart.button.type.' . $type;
         }
         $this->sizeChoices = array();
-        foreach (ButtonPagePart::$SIZES as $size) {
+        foreach (ButtonPagePart::$sizes as $size) {
             $this->sizeChoices[$size] = 'pagepart.button.size.' . $size;
         }
     }

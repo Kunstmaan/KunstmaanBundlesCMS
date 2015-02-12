@@ -74,15 +74,27 @@ class ButtonPagePart extends AbstractPagePart
      */
     private $center = false;
 
+    const TYPE_PRIMARY = "primary";
+    const TYPE_SECONDARY = "secondary";
+    const TYPE_TERTIARY = "tertiary";
+    const TYPE_QUATERNARY = "quaternary";
+    const TYPE_LINK = "link";
+
+    const SIZE_EXTRA_LARGE = "xl";
+    const SIZE_LARGE = "lg";
+    const SIZE_DEFAULT = "default";
+    const SIZE_SMALL = "sm";
+    const SIZE_EXTRA_SMALL = "xs";
+
     /**
      * @var array Supported types
      */
-    public static $TYPES = array('primary','secondary','tertiary','quaternary','quinary','link');
+    public static $types = array(self::TYPE_PRIMARY,self::TYPE_SECONDARY,self::TYPE_TERTIARY,self::TYPE_QUATERNARY,self::TYPE_LINK);
 
     /**
      * @var array Supported sizes
      */
-    public static $SIZES = array('xl','lg','default','sm','xs');
+    public static $sizes = array(self::SIZE_EXTRA_LARGE,self::SIZE_LARGE,self::SIZE_DEFAULT,self::SIZE_SMALL,self::SIZE_EXTRA_SMALL);
 
     /**
      * @param boolean $linkNewWindow
@@ -152,7 +164,7 @@ class ButtonPagePart extends AbstractPagePart
      */
     public function setType($type)
     {
-        if (!in_array($type, self::$TYPES)) {
+        if (!in_array($type, self::$types)) {
             $type = 'primary';
         }
         $this->type = $type;
@@ -178,7 +190,7 @@ class ButtonPagePart extends AbstractPagePart
      */
     public function setSize($size)
     {
-        if (!in_array($size, self::$SIZES)) {
+        if (!in_array($size, self::sizes)) {
             $size = 'default';
         }
         $this->size = $size;
@@ -276,22 +288,5 @@ class ButtonPagePart extends AbstractPagePart
     public function getDefaultAdminType()
     {
         return new ButtonPagePartAdminType();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCssClasses()
-    {
-        $classes = array('btn');
-        $classes[] = 'btn--' . $this->type;
-        if ($this->size !== 'default') {
-            $classes[] = 'btn--' . $this->size;
-        }
-        if ($this->block) {
-            $classes[] = 'btn--block';
-        }
-
-        return implode(' ', $classes);
     }
 }
