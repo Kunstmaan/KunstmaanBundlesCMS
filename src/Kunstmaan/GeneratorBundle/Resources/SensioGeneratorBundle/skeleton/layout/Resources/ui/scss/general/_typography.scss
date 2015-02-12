@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+html, body {
+    font-size: $font-size-base;
+}
+
+* {
+    font-family: $bodyfont;
+    font-weight: normal;
+}
+
+p, ul, ol {
+}
+
+h1, h2, h3, h4, h5, h6 {
+}
+
+strong {
+    font-weight: bold;
+}
+
+a {
+    @include transition(all .2s ease-in-out);
+
+    &:hover, &:focus, &:active {
+    }
+}
+
+hr {
+    border-color: $hr-color;
+}
+
+// Text-pp --> pageparts
