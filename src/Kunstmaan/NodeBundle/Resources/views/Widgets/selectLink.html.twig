@@ -50,63 +50,44 @@
 
 
     <!-- Main Content -->
-    <main role="main" id="app__main" class="container-fluid app__main app__main--has-sidebar">
-        {# <div class="row"> #}
+    <main role="main" id="app__main" class="container-fluid app__main app__main--in-modal">
 
-            <!-- App Sidebar -->
-{#             <aside id="app__sidebar" class="col-md-3 col--padded-large app__sidebar"> #}
-                <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
-                    <ul>
-                        {% for item in tree.rootItems %}
-                            {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
-                        {% endfor %}
-                    </ul>
-                </nav>
+        <!-- App Sidebar -->
+        <aside id="app__sidebar" class="col-md-3 col--padded-large app__sidebar app__sidebar--in-modal">
+            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+                <ul>
+                    {% for item in tree.rootItems %}
+                        {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
+                    {% endfor %}
+                </ul>
+            </nav>
 
-                <hr>
+            <hr>
 
-                <!-- Tree Search -->
-                <div class="form-group app__sidebar__module app__sidebar__search">
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-search"></i>
-                        </span>
-                        <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
-                    </div>
-                </div>
-{#             </aside> #}
-
-                <!-- Content -->
-                <div>
-                    <p id="selection">
-                        Selection: empty
-                    </p>
-                    <button onclick="handleOK({ path:ckurl, id:ckid });return false;" class="btn btn-primary btn--raise-on-hover">
-                        Ok
-                    </button>
-                    <button onclick="handleCancel();" class="btn btn-default btn--raise-on-hover">
-                        Cancel
-                    </button>
-                </div>
-
-
-
-            <!-- App Content - with sidebar -->
-{#             <div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
-
-                <!-- App Sidebar Toggle -->
-                <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle">
-                    <span class="app__sidebar-toggle__show-icon">
-                        <i class="fa fa-caret-right"></i>
-                        <i class="fa fa-list-ul"></i>
+            <!-- Tree Search -->
+            <div class="form-group app__sidebar__module app__sidebar__search">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
                     </span>
-                    <span class="app__sidebar-toggle__hide-icon">
-                        <i class="fa fa-caret-left"></i>
-                        <i class="fa fa-list-ul"></i>
-                    </span>
-                </button> #}
+                    <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+                </div>
             </div>
-        {# </div> #}
+        </aside>
+
+        <!-- Content -->
+        <div>
+            <p id="selection">
+                Selection: empty
+            </p>
+            <button onclick="handleOK({ path:ckurl, id:ckid });return false;" class="btn btn-primary btn--raise-on-hover">
+                Ok
+            </button>
+            <button onclick="handleCancel();" class="btn btn-default btn--raise-on-hover">
+                Cancel
+            </button>
+        </div>
+
     </main>
 
 {% endblock %}
