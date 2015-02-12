@@ -93,12 +93,6 @@ class LayoutGenerator extends KunstmaanGenerator
         $sourceDir = $this->skeletonDir;
         $targetDir = $this->bundle->getPath();
 
-        $relPath = '/Resources/public/';
-        $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
-
-        $relPath = '/Resources/public/scss/config/';
-        $this->renderSingleFile($sourceDir.$relPath, $targetDir.$relPath, '_paths.scss', array('bundle' => $this->bundle), true);
-
         $relPath = '/Resources/ui/';
         $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
 
