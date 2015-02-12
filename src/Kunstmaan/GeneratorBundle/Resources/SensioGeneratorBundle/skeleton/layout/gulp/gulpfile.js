@@ -157,7 +157,7 @@ gulp.task('scripts-prod', ['jshint'], function() {
 });
 
 gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
-    return gulp.src('src/'+ config.project.name + '/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
+    return gulp.src('src/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
         // Inject
         .pipe(plugins.inject(gulp.src(config.dist.js + '/footer.min.js'), {
             ignorePath: '/web'
@@ -167,7 +167,7 @@ gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
         .pipe(plugins.if(allowChmod, plugins.chmod(777)))
 
         // Write
-        .pipe(gulp.dest('src/'+ config.project.name + '/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/'));
+        .pipe(gulp.dest('src/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/'));
 });
 
 // Development
@@ -180,7 +180,7 @@ gulp.task('scripts-dev', ['jshint'], function() {
 gulp.task('inject-dev-scripts', ['scripts-dev'], function() {
     var files = gulp.src(config.js.footer, {read: false})
 
-    return gulp.src('src/'+ config.project.name + '/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
+    return gulp.src('src/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
         // Inject
         .pipe(plugins.inject(files))
 
@@ -192,7 +192,7 @@ gulp.task('inject-dev-scripts', ['scripts-dev'], function() {
         }))
 
         // Write
-        .pipe(gulp.dest('app/Resources/'+ config.project.name + config.project.mainBundle + '/views/' + config.project.mainJsInclude.folder + '/'));
+        .pipe(gulp.dest('app/Resources/' + config.project.mainBundle + '/views/' + config.project.mainJsInclude.folder + '/'));
 });
 
 
@@ -277,7 +277,7 @@ gulp.task('styleguide-dev-js', function() {
 gulp.task('clean', function(done) {
     del([
         distPath + '**',
-        'app/Resources/'+ config.project.name + config.project.mainBundle + '/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName,
+        'app/Resources/' + config.project.mainBundle + '/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName,
     ], done);
 });
 
