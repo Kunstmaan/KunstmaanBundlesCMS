@@ -16,14 +16,16 @@
     padding: 1rem;
 
     border: 1px solid $gray-lighter;
-    background: #f7f7f7;
+    border-radius: $border-radius-base;
+    background: #fcfcfc;
 }
 
 
 .page-template__region__header {
     margin: -1rem -1rem 2rem -1rem;
-    padding: 1rem;
+    padding: .5rem 1rem;
 
     border-bottom: 1px solid $gray-lighter;
+    border-radius: $border-radius-base $border-radius-base 0 0;
     background: $white;
 }

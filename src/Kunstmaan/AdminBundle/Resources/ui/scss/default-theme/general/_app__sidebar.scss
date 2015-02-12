@@ -62,7 +62,7 @@
     @include transition(color .3s ease);
 
     &:hover {
-        color: $green;
+        color: $brand-primary;
     }
 
     &:focus {

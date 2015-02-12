@@ -106,8 +106,8 @@ $padding-base-horizontal:   20px;
 $padding-large-vertical:    10px;
 $padding-large-horizontal:  24px;
 
-$padding-small-vertical:    5px;
-$padding-small-horizontal:  16px;
+$padding-small-vertical:    1px;
+$padding-small-horizontal:  9px;
 
 $padding-xs-vertical:       1px;
 $padding-xs-horizontal:     9px;
@@ -162,8 +162,8 @@ $btn-default-bg:                 #fff;
 $btn-default-border:             $gray-lighter;
 
 $btn-primary-color:              #fff;
-$btn-primary-bg:                 $green;
-$btn-primary-border:             $green;
+$btn-primary-bg:                 $brand-primary;
+$btn-primary-border:             $brand-primary;
 
 $btn-success-color:              #fff;
 $btn-success-bg:                 $brand-success;

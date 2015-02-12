@@ -113,6 +113,10 @@
 
         color: $white;
     }
+
+    &:focus {
+        outline: 0;
+    }
 }
 
 .pp__header__actions__action--del {

@@ -4,6 +4,12 @@
 
 /* General
    ========================================================================== */
+.btn {
+    &:focus {
+        outline: 0;
+    }
+}
+
 .btn--no-border {
     border: 0;
 }
@@ -68,8 +74,8 @@
 .btn-primary {
 
     &:hover {
-        background: $green;
-        border-color: $green;
+        background: $brand-primary;
+        border-color: $brand-primary;
     }
 }
 

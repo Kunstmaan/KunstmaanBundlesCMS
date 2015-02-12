@@ -60,11 +60,12 @@
         color: $black;
         outline: 0;
     }
-}
-.jstree-anchor--active {
 
-    &, &:hover {
-        color: $blue;
+    &.active {
+
+        &, &:hover {
+            color: $brand-primary;
+        }
     }
 }
 
