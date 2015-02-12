@@ -3,7 +3,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
-        changeTemplate, publish, unpublish,
+        changeTemplate, publishLater, unpublishLater,
         urlChooser, slugChooser,
         initSortable;
 
@@ -14,8 +14,16 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         });
 
         initSortable();
-        publish();
-        unpublish();
+
+        if($('#publish-later__check').length) {
+            publishLater();
+        }
+
+        if($('#unpublish-later__check').length) {
+            unpublishLater();
+        }
+
+
     };
 
 
@@ -78,7 +86,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
 
     // Publish
-    publish = function() {
+    publishLater = function() {
         var _toggle = function(check) {
             if(check.checked) {
                 $('#publish-later').show();
@@ -104,7 +112,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
 
     // Unpublish
-    unpublish = function() {
+    unpublishLater = function() {
         var _toggle = function(check) {
             if(check.checked) {
                 $('#unpublish-later').show();
