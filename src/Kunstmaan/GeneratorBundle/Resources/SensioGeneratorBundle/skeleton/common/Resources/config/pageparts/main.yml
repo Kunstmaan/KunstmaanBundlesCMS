@@ -11,3 +11,4 @@ types:
     - { name: "Download", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\DownloadPagePart" }
     - { name: "Slide", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\SlidePagePart" }
     - { name: "Video", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\VideoPagePart" }
+    - { name: "Button", class: "Kunstmaan\\PagePartBundle\\Entity\\ButtonPagePart" }
