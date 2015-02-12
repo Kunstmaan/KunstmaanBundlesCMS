@@ -35,8 +35,7 @@
             "<=bowerComponentsPath>cargobay/src/toggle/js/jquery.toggle.js",
             "<=bowerComponentsPath>cargobay/src/cookie-consent/js/jquery.cookie-consent.js",
             "<=bowerComponentsPath>cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
-            "<=resourcesPath>ui/js/vendors.js",
-            "<=resourcesPath>ui/js/app.js"
+            "<=resourcesPath>ui/js/**/*.js"
         ],
         "other": [
             "<=bowerComponentsPath>html5shiv/dist/html5shiv.min.js"
