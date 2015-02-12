@@ -6,7 +6,8 @@
 
     "project": {
         "name": "testsite",
-        "mainBundle": "{{ bundle.namespace|replace({'\\':'/'}) }}",
+        "mainBundlePath": "{{ bundle.namespace|replace({'\\':'/'}) }}",
+        "mainBundleName": "{{ bundle.getName() }}",
         "mainJsInclude": {
             "folder": "Layout/",
             "fileName": "_js_footer.html.twig"
