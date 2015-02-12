@@ -3,16 +3,15 @@
 /* ==========================================================================
    Gulpfile
 
+
    Development-tasks:
-   - gulp (build + watch)
-   - gulp build
-   - gulp build-deploy (does install for bower and npm, then general build)
+   - gulp (builds for dev + watch)
+   - gulp build (builds for prod)
    - gulp watch
 
    - gulp migrate
    - gulp cc (Clear Cache)
-   - gulp fetch //todo: config in json file
-   - gulp fixperms //todo: config in json file
+   - gulp fixperms
    - gulp maintenance
    - gulp apachectl
    ========================================================================== */
@@ -20,69 +19,47 @@
 
 /* Setup Gulp
    ========================================================================== */
-// Require Gulp
-var gulp = require('gulp');
+// Require
+var gulp = require('gulp'),
+    del = require('del'),
+    fs = require('fs'),
+    path = require('path'),
+    _ = require('lodash'),
+    rebase = require("rebase/tasks/gulp-rebase"),
+    notifier = require('node-notifier'),
+    runSequence = require('run-sequence'),
+    plugins = require('gulp-load-plugins')();
 
-// Load Gulp plugins
-var plugins = require('gulp-load-plugins')();
 
-// Load the notifier.
-var Notifier = require('node-notifier');
+// Gulp Config
+var showErrorNotifications = true,
+    allowChmod = true;
 
-// Set to false if you don't want notifications when an error happens.
-// (Errors will still be logged in Terminal)
-var showErrorNotifications = true;
 
-/* Config
-   ========================================================================== */
-var resourcesPath = './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/';
-var distPath = './web/frontend';
-var bowerComponentsPath = './app/Resources/vendor_bower';
-var {{ bundle.getName() }} = {
-    dist: {
-        css: distPath + '/css',
-        js: distPath + '/js',
-        img: distPath + '/img',
-        video: distPath + '/video',
-        fonts: distPath + '/fonts'
-    },
+// Project Config
+var bowerComponentsPath = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.bowerrc'))).directory;
 
-    styleguide: resourcesPath + '/ui/styleguide',
-    ScssSourcemapPath: '../../../src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/',
+var config = fs.readFileSync(path.resolve(__dirname, '.groundcotrollrc'), 'UTF-8'),
+    vars = _.merge({
+        'bowerComponentsPath': bowerComponentsPath
+    }, JSON.parse(config).vars);
 
-    img: resourcesPath + '/ui/img/**/*.{png,jpg,jpeg,gif,svg,webp}',
-    video: resourcesPath + '/ui/video/**/*.{webm,mp4}',
-    twig: resourcesPath + '/views/**/*.html.twig',
-    scss: resourcesPath + '/ui/scss/**/*.scss',
-    js: {
-        app: resourcesPath + '/ui/js/**/*.js',
-        footer: [
-            bowerComponentsPath + '/jquery/dist/jquery.js',
-            bowerComponentsPath + '/velocity/velocity.js',
-            bowerComponentsPath + '/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js',
-            bowerComponentsPath + '/cargobay/src/toggle/js/jquery.toggle.js',
-            resourcesPath + '/ui/js/*.js'
-        ],
-        other: [
-            bowerComponentsPath + '/html5shiv/dist/html5shiv.min.js'
-        ]
-    },
+var resourcesPath = vars.resourcesPath;
+var distPath = vars.distPath;
 
-    liveReloadFiles: [
-        distPath + '/css/style.min.css',
-        distPath + '/js/footer.min.js'
-    ],
+_.forEach(vars, function(value, key) {
+    config = config.replace(new RegExp('\<\=\s*' + key + '\s*\>', 'ig'), value);
+});
 
-    liveReloadFilesStyleguide: [
-        distPath + '/styleguide/css/style.min.css'
-    ]
-};
+config = JSON.parse(config);
 
 
 /* Errorhandling
    ========================================================================== */
 
-var errorLogger = function(headerMessage,errorMessage){
+var errorLogger, headerLines;
+
+errorLogger = function(headerMessage,errorMessage){
     var header = headerLines(headerMessage);
         header += '\n             '+ headerMessage +'\n           ';
         header += headerLines(headerMessage);
@@ -90,16 +67,15 @@ var errorLogger = function(headerMessage,errorMessage){
     plugins.util.log(plugins.util.colors.red(header) + '             ' + errorMessage + '\r\n')
 
     if(showErrorNotifications){
-        var notifier = new Notifier();
         notifier.notify({
             'title': headerMessage,
             'message': errorMessage,
-            'contentImage':  __dirname + "/gulp_error.jpg"
+            'contentImage':  __dirname + "/gulp_error.png"
         });
     }
 }
 
-var headerLines = function(message){
+headerLines = function(message){
     var lines = '';
     for(var i = 0; i< (message.length + 4); i++){
         lines += '-';
@@ -107,29 +83,24 @@ var headerLines = function(message){
     return lines;
 }
 
-/* Tasks
+
+/* Styles
    ========================================================================== */
-// Styles
+
 gulp.task('styles', function() {
-    return gulp.src({{ bundle.getName() }}.scss)
-        // Scss -> Css
-        .pipe(plugins.rubySass({
-            sourcemap: false,
-            loadPath: './',
+    return plugins.rubySass(config.scssFolder, {
+            loadPath: ['./'],
             bundleExec: true
-        }))
-        .on('error', function (err){
+        })
+        .on('error', function (err) {
             errorLogger('SASS Compilation Error', err.message);
         })
 
         // Combine Media Queries
-        .pipe(plugins.combineMediaQueries())
+        .pipe(plugins.combineMq())
 
-        // Prefix where needed
+        // Prefix where needed -> versie nummers in Gonfiguratie
         .pipe(plugins.autoprefixer('last 2 versions', 'ie 9', 'ie 10', 'ie 11'))
-
-        // Remove all comments
-        .pipe(plugins.stripCssComments())
 
         // Minify output
         .pipe(plugins.minifyCss())
@@ -140,7 +111,7 @@ gulp.task('styles', function() {
         }))
 
         // Write to output
-        .pipe(gulp.dest({{ bundle.getName() }}.dist.css))
+        .pipe(gulp.dest(config.dist.css))
 
         // Show total size of css
         .pipe(plugins.size({
@@ -148,18 +119,21 @@ gulp.task('styles', function() {
         }));
 });
 
+/* Javascript
+   ========================================================================== */
 
 // Jshint
-gulp.task('jshint', function () {
-    return gulp.src([{{ bundle.getName() }}.js.app, '!' + resourcesPath + '/ui/js/vendors/**/*.js'])
+gulp.task('jshint', function() {
+    return gulp.src([config.js.app, '!' + resourcesPath + '/ui/js/vendors/**/*.js'])
         // Jshint
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter(require('jshint-stylish')));
 });
 
-// Scripts
-gulp.task('scripts', ['jshint'], function () {
-    var footerjs = gulp.src({{ bundle.getName() }}.js.footer)
+
+// Production
+gulp.task('scripts-prod', ['jshint'], function() {
+    return gulp.src(config.js.footer)
         // Uglify
         .pipe(plugins.uglify({
             mangle: {
@@ -174,43 +148,61 @@ gulp.task('scripts', ['jshint'], function () {
         .pipe(plugins.concat('footer.min.js'))
 
         // Set desitination
-        .pipe(gulp.dest({{ bundle.getName() }}.dist.js))
+        .pipe(gulp.dest(config.dist.js))
 
         // Show total size of js
         .pipe(plugins.size({
             title: 'js'
         }));
+});
 
-    var otherjs = gulp.src({{ bundle.getName() }}.js.other)
-        // Uglify
-        .pipe(plugins.uglify({
-            mangle: {
-                except: ['jQuery']
+gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
+    return gulp.src('src/'+ config.project.name + '/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
+        // Inject
+        .pipe(plugins.inject(gulp.src(config.dist.js + '/footer.min.js'), {
+            ignorePath: '/web'
+        }))
+
+        // Chmod for local use
+        .pipe(plugins.if(allowChmod, plugins.chmod(777)))
+
+        // Write
+        .pipe(gulp.dest('src/'+ config.project.name + '/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/'));
+});
+
+// Development
+gulp.task('scripts-dev', ['jshint'], function() {
+    return gulp.src(config.js.footer)
+        // Write
+        .pipe(gulp.dest(config.dist.js));
+});
+
+gulp.task('inject-dev-scripts', ['scripts-dev'], function() {
+    var files = gulp.src(config.js.footer, {read: false})
+
+    return gulp.src('src/'+ config.project.name + '/' + config.project.mainBundle + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
+        // Inject
+        .pipe(plugins.inject(files))
+
+        // Rebase
+        .pipe(rebase({
+            script: {
+                '(\/[^"]*\/)': '/frontend/js/'
             }
         }))
-        .on('error', function (err){
-            errorLogger('Javascript Error', err.message);
-        })
 
-        // Set desitination
-        .pipe(gulp.dest({{ bundle.getName() }}.dist.js))
-
-        // Show total size of js
-        .pipe(plugins.size({
-            title: 'js'
-        }));
-
-    var merge = require('merge-stream');
-
-    return merge(footerjs, otherjs);
+        // Write
+        .pipe(gulp.dest('app/Resources/'+ config.project.name + config.project.mainBundle + '/views/' + config.project.mainJsInclude.folder + '/'));
 });
 
 
-// Images
-gulp.task('images', function () {
-    return gulp.src({{ bundle.getName() }}.img)
+/* Images
+   ========================================================================== */
+
+gulp.task('images', function() {
+    return gulp.src(config.img)
         // Only optimize changed images
-        .pipe(plugins.changed({{ bundle.getName() }}.dist.img))
+        .pipe(plugins.changed(config.dist.img))
 
         // Imagemin
         .pipe(plugins.imagemin({
@@ -222,7 +214,7 @@ gulp.task('images', function () {
         }))
 
         // Set desitination
-        .pipe(gulp.dest({{ bundle.getName() }}.dist.img))
+        .pipe(gulp.dest(config.dist.img))
 
         // Show total size of images
         .pipe(plugins.size({
@@ -230,28 +222,126 @@ gulp.task('images', function () {
         }));
 });
 
-// Videos
-gulp.task('videos', function () {
-    return gulp.src({{ bundle.getName() }}.video)
-        // Set desitination
-        .pipe(gulp.dest({{ bundle.getName() }}.dist.video))
 
-        // Show total size of images
-        .pipe(plugins.size({
-            title: 'videos'
-        }));
-});
+/* Styleguide
+   ========================================================================== */
 
-
-// Styleguide -> Change it by https://github.com/rejahrehim/gulp-hologram when it supports bundler
-gulp.task('styleguide', function () {
-    return gulp.src({{ bundle.getName() }}.styleguide, {read: false})
+// Hologram
+gulp.task('styleguide', function() {
+    return gulp.src(config.styleguideFolder, {read: false})
+        // Hologram
         .pipe(plugins.shell([
             'bundle exec hologram',
         ], {
-            cwd: {{ bundle.getName() }}.styleguide
+            cwd: config.styleguideFolder
         }));
 });
+
+
+// Inject scripts
+gulp.task('styleguide-prod-js', function() {
+    return gulp.src(config.dist.styleguide + '/*.html')
+        // Inject
+        .pipe(plugins.inject(gulp.src(config.dist.js + '/footer.min.js'), {
+            ignorePath: '/web'
+        }))
+
+        // Write
+        .pipe(gulp.dest(config.dist.styleguide));
+});
+
+gulp.task('styleguide-dev-js', function() {
+    var files = gulp.src(config.js.footer, {read: false})
+
+    return gulp.src(config.dist.styleguide + '/*.html')
+
+        // Inject
+        .pipe(plugins.inject(files))
+
+        // Rebase
+        .pipe(rebase({
+            script: {
+                '(\/[^"]*\/)': '/frontend/js/'
+            }
+        }))
+
+        // Write
+        .pipe(gulp.dest(config.dist.styleguide));
+});
+
+
+
+/* Clean/clear
+   ========================================================================== */
+
+gulp.task('clean', function(done) {
+    del([
+        distPath + '**',
+        'app/Resources/'+ config.project.name + config.project.mainBundle + '/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName,
+    ], done);
+});
+
+
+/* Default tasks
+   ========================================================================== */
+
+// Watch
+gulp.task('watch', function() {
+    // Livereload
+    plugins.livereload.listen();
+    gulp.watch(config.liveReloadFiles).on('change', function(file) {
+        plugins.livereload.changed(file.path);
+        gulp.start('styleguide');
+    });
+
+    // Styles
+    gulp.watch(config.scss, ['styles']);
+
+    // Scripts
+    gulp.watch(config.js.app, ['scripts']);
+
+    // Images
+    gulp.watch(config.img, ['images']);
+});
+
+
+// Build
+gulp.task('build', function(done) {
+    runSequence(
+        'clean',
+        ['clear-symfony-cache', 'styles', 'inject-prod-scripts', 'images'],
+        'styleguide',
+        'styleguide-prod-js',
+    done);
+});
+
+
+// Build Deploy
+gulp.task('build-deploy', function(done) {
+    allowChmod = false;
+
+    gulp.start('build');
+});
+
+
+// Default
+gulp.task('default', function(done) {
+    runSequence(
+        'clean',
+        ['clear-symfony-cache', 'styles', 'inject-dev-scripts', 'images'],
+        ['styleguide', 'watch'],
+        'styleguide-dev-js',
+    done);
+});
+
+
+/* Other tasks
+   ========================================================================== */
+
+// Clear symfony cache
+gulp.task('clear-symfony-cache', plugins.shell.task([
+    'rm -rf app/cache/*'
+]));
 
 
 // Migrate
@@ -266,17 +356,12 @@ gulp.task('cc', plugins.shell.task([
     'php app/console assets:install web --symlink'
 ]));
 
-// // Fetch
-// gulp.task('fetch', plugins.shell.task([
-//     'kms fetch --project projectname --server servername'
-// ]));
-
-// // Fix perms
-// gulp.task('fixperms', plugins.shell.task([
-//     'sudo python fixperms.py projectname'
-// ], {
-//     cwd: '/opt/kDeploy/tools'
-// }));
+// Fix perms
+gulp.task('fixperms', plugins.shell.task([
+    ['sudo python fixperms.py' + config.project.name]
+], {
+    cwd: '/opt/kDeploy/tools'
+}));
 
 // Maintenance
 gulp.task('maintenance', plugins.shell.task([
@@ -298,45 +383,3 @@ gulp.task('install_npm_bower', plugins.shell.task([
     'npm install',
     'bower install'
 ]));
-
-
-// Watch
-gulp.task('watch', function () {
-    // Livereload
-    plugins.livereload.listen();
-    gulp.watch({{ bundle.getName() }}.liveReloadFiles).on('change', function(file) {
-        plugins.livereload.changed(file.path);
-        gulp.start('styleguide');
-    });
-
-    gulp.watch({{ bundle.getName() }}.liveReloadFilesStyleguide).on('change', function(file) {
-        plugins.livereload.changed(file.path);
-    });
-
-    // Styles
-    gulp.watch({{ bundle.getName() }}.scss, ['styles']);
-
-    // Scripts
-    gulp.watch({{ bundle.getName() }}.js.app, ['scripts']);
-
-    // Images
-    gulp.watch({{ bundle.getName() }}.img, ['images']);
-});
-
-
-// Build
-gulp.task('build', ['styles', 'scripts', 'images', 'videos'], function() {
-    gulp.start('styleguide');
-});
-
-
-//Build Deploy
-gulp.task('build-deploy', ['install_npm_bower'], function() {
-    gulp.start('build');
-});
-
-
-// Default
-gulp.task('default', ['build'], function () {
-    gulp.start('watch');
-});

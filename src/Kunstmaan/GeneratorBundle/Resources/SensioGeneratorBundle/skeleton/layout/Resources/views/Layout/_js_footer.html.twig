@@ -1,4 +1,6 @@
-<script src='/frontend/js/footer.min.js?{{ assets_version() }}'></script>
+<!-- inject:js -->
+    <script src="/frontend/js/footer.min.js"></script>
+<!-- endinject -->
 
 {% if ga_code is defined %}
     <script src='/frontend/js/analytics.min.js?{{ assets_version() }}'></script>
