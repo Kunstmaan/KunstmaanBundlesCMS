@@ -14,6 +14,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
         initSortable();
         publish();
+        unpublish();
     };
 
 
@@ -63,27 +64,27 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     // Unpublish
     unpublish = function() {
+        var _toggle = function(check) {
+            if(check.checked) {
+                $('#unpublish-later').show();
+                $('#unpublish-later-action').show();
+                $('#unpublish-action').hide();
+            } else {
+                $('#unpublish-later').hide();
+                $('#unpublish-later-action').hide();
+                $('#unpublish-action').show();
+            }
+        };
 
-        // OLD
-        // var syncView = function() {
-        //  $('#unpub_later').toggle(this.checked);
-        //     $('#unpub_publish_action').toggle(!this.checked);
-        //     $('#unpub_publishlater_action').toggle(this.checked);
-        // };
-        // $(syncView);
-        // $(function(){
-        //  $('#unpub_dtpckr').datepicker().on('changeDate', function(ev){
-        //      $('#unpub_date').val(ev.date.getFullYear()+'-'+(ev.date.getMonth()+1)+'-'+ev.date.getDate());
-        //     });
-        //  $('#unpub_dtpckr').datepicker('setStartDate', new Date());
-        //     $('#unpub_tmpckr').timepicker({
-        //         minuteStep: 1,
-        //         template: 'modal',
-        //         showMeridian: false,
-        //         showInputs: true
-        //     });
-        // });
-        // $('#unpub_chkbx').change(syncView);
+        if($('#unpublish-later__check')) {
+            var check = document.getElementById('unpublish-later__check');
+
+            _toggle(check);
+
+            $(check).on('change', function() {
+                _toggle(this);
+            });
+        }
     };
 
 

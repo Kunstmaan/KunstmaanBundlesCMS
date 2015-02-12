@@ -148,7 +148,11 @@
 }
 
 .pp__view__block {
+    overflow: hidden;
 
+    .container {
+        max-width: 100%!important;
+    }
 }
 
 .pp__view__block--hidden {

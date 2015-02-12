@@ -39,14 +39,12 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             elShowDefaultDate = $el.data('default-date');
 
 
+        // Set Settings
         var format = (elFormat !== undefined) ? elFormat : defaultFormat,
             collapse = (elCollapse !== undefined) ? elCollapse : defaultCollapse,
             keepOpen = (elKeepOpen !== undefined) ? elKeepOpen : defaultKeepOpen,
             minDate = (elMinDate === 'tomorrow') ? _tomorrow : (elMinDate === 'today') ? _today : defaultMinDate,
             defaultDate = (elShowDefaultDate) ? _setDefaultDate(elMinDate) : defaultShowDefaultDate;
-
-
-        console.log(defaultDate);
 
 
         // Setup
@@ -71,8 +69,6 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             }
         });
 
-
-        // Set focus on click
         $addon.on('click', function() {
             $input.focus();
         });

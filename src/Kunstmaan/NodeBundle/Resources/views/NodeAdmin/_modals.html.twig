@@ -19,34 +19,58 @@
 
                 <!-- Body -->
                 <div class="modal-body">
-                   <p>
+                    <p>
                         Are you sure you want to unpublish this page? If you do this, the page will be offline!
                     </p>
 
-                    <label>
-                        <input id="unpub_chkbx" type="checkbox">
-                        Unpublish later
-                    </label>
+                    <div class="form-group">
+                        <label>
+                            <input id="unpublish-later__check" type="checkbox">
+                            Unpublish later
+                        </label>
+                    </div>
 
-                    <div id="unpub_later">
-                        <div class="form-group bootstrap-timepicker">
-                            <input id="unpub_tmpckr" type="text" class="form-control" name="unpub_time">
-                            <span class="add-on"><i class="icon-time"></i></span>
+                    <div id="unpublish-later">
+
+                        <!-- Date -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-min-date="tomorrow" data-default-date="true">
+                                <input id="unpub_date" type="text" name="unpub_date" class="form-control">
+                                <span class="input-group-addon input-group-addon--has-action">
+                                    <i class="fa fa-calendar-o"></i>
+                                </span>
+                            </div>
                         </div>
-                        <input id="unpub_date" type="hidden" name="unpub_date">
-                        <div id="unpub_dtpckr"></div>
+
+                        <!-- Time -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-format="HH:mm" data-min-date="today" data-default-date="true">
+                                <input id="unpub_tmpckr" type="text" name="unpub_time" class="form-control">
+                                <span class="input-group-addon input-group-addon--has-action">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <div id="unpub_publishlater_action" class="btn_group">
-                        <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary btn--raise-on-hover">Unpublish later</button>
-                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    <div id="unpublish-later-action" class="btn_group">
+                        <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            Unpublish later
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            Cancel
+                        </button>
                     </div>
-                    <div id="unpub_publish_action" class="btn_group">
-                        <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">Unpublish</a>
-                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    <div id="unpublish-action" class="btn_group">
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
+                            Unpublish
+                        </a>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            Cancel
+                        </button>
                     </div>
                 </div>
             </form>

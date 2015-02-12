@@ -10,16 +10,20 @@
 
 {% block messages %}
     {% if queuedNodeTranslationAction %}
-        <div class="alert alert-block">
+        <div class="alert alert-warning">
             <strong>{{ "Warning" | trans }}: </strong>{{ "This page will be " ~ queuedNodeTranslationAction.action ~ "ed at %date%" | trans({"%date%":queuedNodeTranslationAction.date|date('Y-m-d H:i:s')}) }}
-            (<a href="{{ path('KunstmaanNodeBundle_nodes_unschedule_publish', { 'id': node.id}) }}">Cancel</a>)
+            <a href="{{ path('KunstmaanNodeBundle_nodes_unschedule_publish', { 'id': node.id}) }}" class="btn btn-warning btn--raise-on-hover alert__action">
+                Cancel
+            </a>
         </div>
     {% endif %}
     {% if form_has_errors_recursive(form) %}
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
             <strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
             {{ form_errors(form) }}
-            <button class="close" data-dismiss="alert">&times;</button>
+            <button class="close" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
         </div>
     {% endif %}
 {% endblock %}
