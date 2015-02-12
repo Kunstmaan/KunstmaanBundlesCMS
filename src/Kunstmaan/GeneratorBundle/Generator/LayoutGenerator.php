@@ -67,6 +67,15 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
+     * Generate the groundcontroll configuration file.
+     */
+    private function generateGroundcontrollrcFile()
+    {
+        $this->renderSingleFile($this->skeletonDir.'/groundcontroll/', $this->rootDir, '.groundcontrollrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating groundcontroll configuration : <info>OK</info>');
+    }
+
+    /**
      * Generate the gems configuration file.
      */
     private function generateGemsFile()
