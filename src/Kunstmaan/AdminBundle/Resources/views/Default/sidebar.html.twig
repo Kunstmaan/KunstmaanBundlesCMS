@@ -1,23 +1,6 @@
 <!-- Tree -->
 {% set currentMenuItem = adminmenu.current %}
 <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
-    {# {% set currentMenuItem = adminmenu.current %}
-    <ul>
-        {% if lowestTopChild.appearInSidebar %}
-            <li class="jstree-open" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
-                <a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}" class="{% if lowestTopChild.internalname == currentMenuItem.internalname %}jstree-anchor--active{% endif %}">
-                    {{ lowestTopChild.internalname | trans }}
-                </a>
-                <ul>
-        {% endif %}
-        {% for menuitem in navigationChildren %}
-            {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
-        {% endfor %}
-        {% if lowestTopChild.appearInSidebar %}
-                </ul>
-            </li>
-        {% endif %}
-    </ul> #}
     {% set currentMenuItem = adminmenu.current %}
     <ul>
         {% if lowestTopChild.appearInSidebar %}

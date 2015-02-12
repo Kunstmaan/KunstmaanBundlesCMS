@@ -4,6 +4,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
         changeTemplate, publish, unpublish,
+        urlChooser, slugChooser,
         initSortable;
 
 
@@ -33,6 +34,46 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
         // Submit closest form
         $checkedTemplateCheckbox.closest('form').submit();
+    };
+
+
+    // URL-Chooser
+    urlChooser = function() {
+
+        // OLD
+        // $(document).ready(function() {
+        //     $('.choosebutton{{ id }}').on('click', function(ev) {
+        //         ev.preventDefault();
+        //         openDGDialog('{{ path('KunstmaanNodeBundle_selecturl') }}', 580, 500, function(param){
+        //             var widget = jQuery('#{{ id }}_widget');
+        //             widget.find('input').val(dialogWin.returnedValue.path);
+        //         });
+        //     });
+        // });
+    };
+
+
+    // Slug-Chooser
+    slugChooser = function() {
+
+        // OLD
+        // var updateSlugPreview = function(){
+        //     var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';
+        //     if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
+        //         urlprefix += '/';
+        //     }
+        //     jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
+        // };
+        // var resetSlug = function(e) {
+        //     jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
+        //     jQuery('#{{ id }}').change();
+        //     e.preventDefault();
+        //     return false;
+        // }
+        // jQuery('#{{ id }}').change(updateSlugPreview);
+        // jQuery('#{{ id }}').keyup(updateSlugPreview);
+        // jQuery('#{{ id }}_resetbtn').click(resetSlug);
+        // updateSlugPreview();
     };
 
 

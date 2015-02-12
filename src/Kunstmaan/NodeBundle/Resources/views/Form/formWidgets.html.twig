@@ -1,31 +1,34 @@
 {% block urlchooser_widget %}
 {% spaceless %}
-    <div id="{{ id }}_widget" class="input-group">
+    <div id="{{ id }}-widget" class="input-group">
         <input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn--raise-on-hover choosebutton{{ id }}">
+            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
                 Choose
             </button>
         </span>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('.choosebutton{{ id }}').on('click', function(ev) {
-                ev.preventDefault();
-                openDGDialog('{{ path('KunstmaanNodeBundle_selecturl') }}', 580, 500, function(param){
-                    var widget = jQuery('#{{ id }}_widget');
-                    widget.find('input').val(dialogWin.returnedValue.path);
-                });
-            });
-        });
-    </script>
+    <!-- URL Chooser Modal -->
+    <div class="js-ajax-modal modal fade" id="urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">
+                        URL-Chooser
+                    </h3>
+                </div>
+                <div class="js-ajax-modal-body modal-body ajax-modal__body">
+                </div>
+            </div>
+        </div>
+    </div>
 {% endspaceless %}
 {% endblock urlchooser_widget %}
 
 {% block slug_widget %}
 {% spaceless %}
-    <div id="{{ id }}_widget" class="input-group">
+    <div id="{{ id }}-widget" class="input-group">
         <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" data-reset="{{ reset }}" class="form-control">
         <span class="input-group-btn">
             <button type="button" class="btn btn-default btn--raise-on-hover" id="{{ id }}_resetbtn">
@@ -34,25 +37,5 @@
         </span>
     </div>
     <small id="{{ id }}_preview" class="help-block"></small>
-
-    <script>
-        var updateSlugPreview = function(){
-            var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';
-            if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-                urlprefix += '/';
-            }
-            jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
-        };
-        var resetSlug = function(e) {
-            jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
-            jQuery('#{{ id }}').change();
-            e.preventDefault();
-            return false;
-        }
-        jQuery('#{{ id }}').change(updateSlugPreview);
-        jQuery('#{{ id }}').keyup(updateSlugPreview);
-        jQuery('#{{ id }}_resetbtn').click(resetSlug);
-        updateSlugPreview();
-    </script>
 {% endspaceless %}
 {% endblock slug_widget %}

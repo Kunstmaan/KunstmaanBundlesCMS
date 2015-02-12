@@ -21,11 +21,10 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.autoCollapseButtons.init();
         kunstmaanbundles.autoCollapseTabs.init();
         kunstmaanbundles.richEditor.init();
+        kunstmaanbundles.ajaxModal.init();
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();
-
-
     };
 
 
