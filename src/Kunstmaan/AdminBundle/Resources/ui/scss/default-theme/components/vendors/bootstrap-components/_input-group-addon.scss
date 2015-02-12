@@ -5,4 +5,10 @@
 .input-group-addon {
     padding-left: 1em;
     padding-right: 1em;
+
+    border-left: 0;
+}
+
+.input-group-addon--has-action {
+    cursor: pointer;
 }

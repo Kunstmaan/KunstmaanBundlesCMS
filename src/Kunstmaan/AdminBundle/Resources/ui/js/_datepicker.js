@@ -4,34 +4,79 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
 
     var init;
 
+    var _today = moment(),
+        _tomorrow = moment(_today).add(1, 'days');
+
+    var defaultFormat = 'DD-MM-YYYY',
+        defaultCollapse = true,
+        defaultKeepOpen = false,
+        defaultMinDate = false,
+        defaultShowDefaultDate = false;
+
+
     init = function() {
-        $('.js-datepicker').each(function(key, value) {
-            initDatepicker(value);
+        $('.js-datepicker').each(function() {
+            initDatepicker($(this));
         });
     };
 
-    initDatepicker = function(el) {
-        var $input = $(el).find('input');
+
+    _setDefaultDate = function(elMinDate) {
+        if(elMinDate === 'tomorrow') {
+            return _tomorrow;
+        } else {
+            return _today;
+        }
+    };
+
+
+    initDatepicker = function($el) {
+        // Get Settings
+        var elFormat = $el.data('format'),
+            elCollapse = $el.data('collapse'),
+            elKeepOpen = $el.data('keep-open'),
+            elMinDate = $el.data('min-date'),
+            elShowDefaultDate = $el.data('default-date');
+
+
+        var format = (elFormat !== undefined) ? elFormat : defaultFormat,
+            collapse = (elCollapse !== undefined) ? elCollapse : defaultCollapse,
+            keepOpen = (elKeepOpen !== undefined) ? elKeepOpen : defaultKeepOpen,
+            minDate = (elMinDate === 'tomorrow') ? _tomorrow : (elMinDate === 'today') ? _today : defaultMinDate,
+            defaultDate = (elShowDefaultDate) ? _setDefaultDate(elMinDate) : defaultShowDefaultDate;
+
+
+        console.log(defaultDate);
+
+
+        // Setup
+        var $input = $el.find('input'),
+            $addon = $el.find('.input-group-addon');
 
         $input.datetimepicker({
-            format: 'DD/MM/YYYY',
-            collapse: true,
+            format: format,
+            collapse: collapse,
+            keepOpen: keepOpen,
+            minDate: minDate,
+            defaultDate: defaultDate,
             icons: {
                 time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',
                 up: 'fa fa-chevron-up',
                 down: 'fa fa-chevron-down',
-                previous: 'fa fa-chevron-left',
-                next: 'fa fa-chevron-right',
+                previous: 'fa fa-arrow-left',
+                next: 'fa fa-arrow-right',
                 today: 'fa fa-crosshairs',
                 clear: 'fa fa-trash-o'
             }
         });
 
-        $(el).find('span.input-group-addon').click(function(e) {
+
+        // Set focus on click
+        $addon.on('click', function() {
             $input.focus();
         });
-    }
+    };
 
 
     return {

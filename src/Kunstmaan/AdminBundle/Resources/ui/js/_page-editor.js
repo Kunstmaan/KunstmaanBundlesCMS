@@ -13,6 +13,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         });
 
         initSortable();
+        publish();
     };
 
 
@@ -36,27 +37,27 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     // Publish
     publish = function() {
+        var _toggle = function(check) {
+            if(check.checked) {
+                $('#publish-later').show();
+                $('#publish-later-action').show();
+                $('#publish-action').hide();
+            } else {
+                $('#publish-later').hide();
+                $('#publish-later-action').hide();
+                $('#publish-action').show();
+            }
+        };
 
-        // OLD
-        // var syncView = function() {
-        //  $('#pub_later').toggle(this.checked);
-        //     $('#pub_publish_action').toggle(!this.checked);
-        //     $('#pub_publishlater_action').toggle(this.checked);
-        // };
-        // $(syncView);
-        // $(function(){
-        //  $('#pub_dtpckr').datepicker().on('changeDate', function(ev){
-        //      $('#pub_date').val(ev.date.getFullYear()+'-'+(ev.date.getMonth()+1)+'-'+ev.date.getDate());
-        //     });
-        //  $('#pub_dtpckr').datepicker('setStartDate', new Date());
-        //     $('#pub_tmpckr').timepicker({
-        //         minuteStep: 1,
-        //         template: 'modal',
-        //         showMeridian: false,
-        //         showInputs: true
-        //     });
-        // });
-        // $('#pub_chkbx').change(syncView);
+        if($('#publish-later__check')) {
+            var check = document.getElementById('publish-later__check');
+
+            _toggle(check);
+
+            $(check).on('change', function() {
+                _toggle(this);
+            });
+        }
     };
 
 
