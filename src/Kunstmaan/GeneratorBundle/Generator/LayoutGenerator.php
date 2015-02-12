@@ -33,6 +33,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->generateGulpFiles();
         $this->generateBowerFiles();
         $this->generateJshintrcFile();
+        $this->generateGroundcontrollrcFile();
         $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
