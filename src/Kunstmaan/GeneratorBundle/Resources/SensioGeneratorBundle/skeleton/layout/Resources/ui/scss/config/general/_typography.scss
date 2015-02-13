@@ -6,9 +6,9 @@
    ========================================================================== */
 
 $sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$webfont: $sans-serif;
+$webfont: 'Lato', $sans-serif;
 
-$bodyfont: $sans-serif;
+$bodyfont: $webfont;
 $headerfont: $webfont;
 
 $iconfont: "icomoon-frontend";
