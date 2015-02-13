@@ -34,14 +34,14 @@
 
 {% block slug_widget %}
 {% spaceless %}
-    <div id="{{ id }}-widget" class="input-group">
-        <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" data-reset="{{ reset }}" class="form-control">
+    <div id="slug-chooser" class="input-group" data-url-prefix="{{ path('_slug', {'url': prefix|default('')})}}" data-reset="{{ reset }}">
+        <input type="text" name="{{ full_name }}" id="slug-chooser__input" value="{{ value|default('') }}" class="form-control">
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn--raise-on-hover" id="{{ id }}_resetbtn">
+            <button type="button" class="btn btn-default btn--raise-on-hover" id="slug-chooser__resetbtn">
                 Reset
             </button>
         </span>
     </div>
-    <small id="{{ id }}_preview" class="help-block"></small>
+    <small id="slug-chooser__preview" class="help-block"></small>
 {% endspaceless %}
 {% endblock slug_widget %}

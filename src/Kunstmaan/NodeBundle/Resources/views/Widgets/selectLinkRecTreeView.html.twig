@@ -1,4 +1,4 @@
-<li rel="page" class="" {% if item.online == 0 %}data-jstree='{"type":"offline"}'{% endif %}>
+<li rel="page" class="{% if item.online == 0 %}jstree-node--offline{% endif %}" {% if item.online == 0 %}data-jstree='{"type":"offline"}'{% endif %}>
     <a href="javascript:void(0)" class="js-url-chooser-link-select" data-slug="{{ path('_slug', { 'url': item.url }) }}" data-id="{{ item.id }}">
         {{ item.title }}
     </a>

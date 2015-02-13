@@ -21,7 +21,14 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
             unpublishLater();
         }
 
-        initSortable();
+        if($('.js-sortable-container').lenght) {
+            initSortable();
+        };
+
+        if($('#slug-chooser').length) {
+            slugChooser();
+        }
+
         urlChooser();
     };
 
@@ -129,6 +136,38 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     // Slug-Chooser
     slugChooser = function() {
+        var _updateSlugPreview, _resetSlug;
+
+        var $widget = $('#slug-chooser'),
+            $input = $('#slug-chooser__input'),
+            $preview = $('#slug-chooser__preview'),
+            $resetBtn = $('#slug-chooser__resetbtn'),
+            resetValue = $widget.data('reset')
+            urlprefix = $widget.data('url-prefix');
+
+        // Setup url prefix
+        if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
+            urlprefix += '/';
+        }
+
+        // Update function
+        _updateSlugPreview = function() {
+            var inputValue = $input.val();
+
+            $preview.html('url: ' + urlprefix + inputValue);
+        };
+        $input.on('change', _updateSlugPreview);
+        $input.on('keyup', _updateSlugPreview);
+
+        // Reset
+        _resetSlug = function() {
+            $input.val(resetValue);
+            _updateSlugPreview();
+        };
+        $resetBtn.on('click', _resetSlug);
+
+        // Set initial value
+        _updateSlugPreview();
 
         // OLD
         // var updateSlugPreview = function(){
@@ -153,7 +192,9 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     // Publish
     publishLater = function() {
-        var _toggle = function(check) {
+        var _toggle;
+
+        _toggle = function(check) {
             if(check.checked) {
                 $('#publish-later').show();
                 $('#publish-later-action').show();
