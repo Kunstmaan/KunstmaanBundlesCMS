@@ -14,6 +14,8 @@
     border-right-color: $white;
     border-left-color: $white;
 
+    min-height: calc(100vh - 95px);
+
     @media (max-width: $screen-md) {
         @include transform-style(preserve-3d);
         @include transition-property (transform);

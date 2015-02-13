@@ -8,6 +8,12 @@
     .toggle-item--active {
         overflow: visible;
     }
+
+    @media (min-width: $screen-sm) {
+        & + .pagination {
+            margin-top: -3rem;
+        }
+    }
 }
 
 .app__filter__content {

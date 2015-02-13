@@ -8,6 +8,9 @@
     z-index: 0;
     position: absolute;
 
+    height: calc(100vh - 45px);
+    overflow: auto;
+
     @media (max-width: $screen-md) {
         top: 0;
         left: 0;
