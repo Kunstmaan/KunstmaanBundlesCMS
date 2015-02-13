@@ -2,25 +2,21 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.slugChooser = (function(window, undefined) {
 
-    var init, slugChooser;
+    var init, slugChooser,
+        updateSlugPreview, resetSlug;
 
 
     init = function() {
-        if($('#slug-chooser').length) {
-            slugChooser();
-        }
+        // Init
+        $('.js-slug-chooser').each(function() {
+            slugChooser($(this));
+        });
     };
 
 
     // Slug-Chooser
-    slugChooser = function() {
-        var _updateSlugPreview, _resetSlug;
-
-        var $widget = $('#slug-chooser'),
-            $input = $('#slug-chooser__input'),
-            $preview = $('#slug-chooser__preview'),
-            $resetBtn = $('#slug-chooser__resetbtn'),
-            resetValue = $widget.data('reset')
+    slugChooser = function($widget) {
+        var resetValue = $widget.data('reset')
             urlprefix = $widget.data('url-prefix');
 
         // Setup url prefix
@@ -28,24 +24,39 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
             urlprefix += '/';
         }
 
-        // Update function
-        _updateSlugPreview = function() {
-            var inputValue = $input.val();
+        // Elements
+        var $input = $widget.find('.js-slug-chooser__input'),
+            $preview = $widget.find('.js-slug-chooser__preview'),
+            $resetBtn = $widget.find('.js-slug-chooser__reset-btn');
 
-            $preview.html('url: ' + urlprefix + inputValue);
-        };
-        $input.on('change', _updateSlugPreview);
-        $input.on('keyup', _updateSlugPreview);
+        // Update
+        $input.on('change', function() {
+            updateSlugPreview($input, $preview, urlprefix);
+        });
+        $input.on('keyup', function() {
+            updateSlugPreview($input, $preview, urlprefix);
+        });
 
-        // Reset
-        _resetSlug = function() {
-            $input.val(resetValue);
-            _updateSlugPreview();
-        };
-        $resetBtn.on('click', _resetSlug);
+        // Reset Btn
+        $resetBtn.on('click', function() {
+            resetSlug($input, resetValue);
+            updateSlugPreview($input, $preview, urlprefix);
+        });
 
         // Set initial value
-        _updateSlugPreview();
+        updateSlugPreview($input, $preview, urlprefix);
+    };
+
+
+    resetSlug = function($input, resetValue) {
+        $input.val(resetValue);
+    };
+
+
+    updateSlugPreview = function($input, $preview, urlprefix) {
+        var inputValue = $input.val();
+
+        $preview.html('url: ' + urlprefix + inputValue);
     };
 
 

@@ -34,14 +34,16 @@
 
 {% block slug_widget %}
 {% spaceless %}
-    <div id="slug-chooser" class="input-group" data-url-prefix="{{ path('_slug', {'url': prefix|default('')})}}" data-reset="{{ reset }}">
-        <input type="text" name="{{ full_name }}" id="slug-chooser__input" value="{{ value|default('') }}" class="form-control">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn--raise-on-hover" id="slug-chooser__resetbtn">
-                Reset
-            </button>
-        </span>
+    <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')})}}" data-reset="{{ reset }}">
+        <div class="input-group">
+            <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
+            <span class="input-group-btn">
+                <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
+                    Reset
+                </button>
+            </span>
+        </div>
+        <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
     </div>
-    <small id="slug-chooser__preview" class="help-block"></small>
 {% endspaceless %}
 {% endblock slug_widget %}
