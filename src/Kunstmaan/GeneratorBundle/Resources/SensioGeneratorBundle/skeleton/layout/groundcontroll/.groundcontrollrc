@@ -5,7 +5,7 @@
     },
 
     "project": {
-        "name": "{{ websitetitle|lower|replace({' ':''}) }}",
+        "name": "projectname",
         "mainBundlePath": "{{ bundle.namespace|replace({'\\':'/'}) }}",
         "mainBundleName": "{{ bundle.getName() }}",
         "mainJsInclude": {
