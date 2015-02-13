@@ -14,8 +14,6 @@ kunstmaanbundles.ajaxModal = (function($, window, undefined) {
                 $modal.data('loaded', true);
                 $modal.find('.js-ajax-modal-body').append('<iframe class="ajax-modal__body__iframe" frameborder="0" src="' + link + '" width="100%" height="100%" scrolling="auto"></iframe>');
             }
-
-            //window.open(link, "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=400, height=400");
         });
     };
 

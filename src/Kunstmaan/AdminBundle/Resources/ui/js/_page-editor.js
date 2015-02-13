@@ -4,7 +4,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
         changeTemplate, publishLater, unpublishLater,
-        urlChooser, slugChooser,
         initSortable;
 
 
@@ -24,12 +23,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         if($('.js-sortable-container').lenght) {
             initSortable();
         };
-
-        if($('#slug-chooser').length) {
-            slugChooser();
-        }
-
-        urlChooser();
     };
 
 
@@ -48,145 +41,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
         // Submit closest form
         $checkedTemplateCheckbox.closest('form').submit();
-    };
-
-
-    // URL-Chooser
-    urlChooser = function() {
-        var $body = $('body'),
-            itemUrl, itemId;
-
-        // Link Chooser select
-        $body.on('click', '.js-url-chooser-link-select', function(e) {
-            e.preventDefault();
-
-            var $this = $(this),
-                slug = $this.data('slug'),
-                id = $this.data('id');
-
-
-            // Update preview
-            $('#url-chooser__selection-preview').text('Selection: ' + slug);
-
-            // Store values
-            itemUrl = slug;
-            itemId = id;
-        });
-
-
-        // Cancel
-        $('#cancel-url-chooser-modal').on('click', function() {
-            parent.$('#urlChooserModal').modal('hide');
-        });
-
-
-        // OK
-        $('#save-url-chooser-modal').on('click', function() {
-            var result = {
-                path: itemUrl,
-                id: itemId
-            };
-
-            // Set val
-            var linkedInputId = parent.$('#urlChooserModal').data('linked-input-id');
-            parent.$('#' + linkedInputId).val(itemUrl);
-
-            // Close modal
-            parent.$('#urlChooserModal').modal('hide');
-
-
-            // OLD
-            // function handleOK(result) {
-            //     if (window.opener) {
-            //         {% if cke %}
-            //             var funcNum = getUrlParam('CKEditorFuncNum');
-            //             window.opener.CKEDITOR.tools.callFunction(funcNum, result['path']);
-            //         {% else %}
-            //             window.opener.dialogWin.returnedValue = result;
-            //             window.opener.dialogWin.returnFunc()
-            //         {% endif %}
-            //     } else {
-            //         //alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
-            //     }
-
-            //     window.close();
-            //     return false
-            // }
-
-            // function getUrlParam(paramName) {
-            //     var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
-            //     var match = window.location.search.match(reParam) ;
-            //     return (match && match.length > 1) ? match[1] : '' ;
-            // }
-        });
-
-
-        // OLD
-        // $(document).ready(function() {
-        //     $('.choosebutton{{ id }}').on('click', function(ev) {
-        //         ev.preventDefault();
-        //         openDGDialog('{{ path('KunstmaanNodeBundle_selecturl') }}', 580, 500, function(param){
-        //             var widget = jQuery('#{{ id }}_widget');
-        //             widget.find('input').val(dialogWin.returnedValue.path);
-        //         });
-        //     });
-        // });
-    };
-
-
-    // Slug-Chooser
-    slugChooser = function() {
-        var _updateSlugPreview, _resetSlug;
-
-        var $widget = $('#slug-chooser'),
-            $input = $('#slug-chooser__input'),
-            $preview = $('#slug-chooser__preview'),
-            $resetBtn = $('#slug-chooser__resetbtn'),
-            resetValue = $widget.data('reset')
-            urlprefix = $widget.data('url-prefix');
-
-        // Setup url prefix
-        if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-            urlprefix += '/';
-        }
-
-        // Update function
-        _updateSlugPreview = function() {
-            var inputValue = $input.val();
-
-            $preview.html('url: ' + urlprefix + inputValue);
-        };
-        $input.on('change', _updateSlugPreview);
-        $input.on('keyup', _updateSlugPreview);
-
-        // Reset
-        _resetSlug = function() {
-            $input.val(resetValue);
-            _updateSlugPreview();
-        };
-        $resetBtn.on('click', _resetSlug);
-
-        // Set initial value
-        _updateSlugPreview();
-
-        // OLD
-        // var updateSlugPreview = function(){
-        //     var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';
-        //     if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-        //         urlprefix += '/';
-        //     }
-        //     jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
-        // };
-        // var resetSlug = function(e) {
-        //     jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
-        //     jQuery('#{{ id }}').change();
-        //     e.preventDefault();
-        //     return false;
-        // }
-        // jQuery('#{{ id }}').change(updateSlugPreview);
-        // jQuery('#{{ id }}').keyup(updateSlugPreview);
-        // jQuery('#{{ id }}_resetbtn').click(resetSlug);
-        // updateSlugPreview();
     };
 
 

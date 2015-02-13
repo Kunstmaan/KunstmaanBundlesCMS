@@ -3,14 +3,14 @@
     <div id="{{ id }}-widget" class="input-group">
         <input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
+            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
                 Choose
             </button>
         </span>
     </div>
 
     <!-- URL Chooser Modal -->
-    <div class="js-ajax-modal modal fade" id="urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}">
+    <div class="js-ajax-modal modal fade" id="{{ id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
