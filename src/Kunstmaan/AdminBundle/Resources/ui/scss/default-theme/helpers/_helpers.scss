@@ -13,8 +13,9 @@
 
 /* Mixins
    ========================================================================== */
-@import "mixins/placeholder";
-
+@import "mixins/placeholder",
+        "mixins/_grad-top-bottom",
+        "mixins/_single_transition";
 
 /* Animations
    ========================================================================== */
