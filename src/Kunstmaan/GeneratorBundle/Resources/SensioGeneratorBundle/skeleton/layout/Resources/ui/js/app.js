@@ -1,6 +1,6 @@
-var projectname = projectname || {};
+var {{ websitetitle|lower|replace({' ':''}) }} = {{ websitetitle|lower|replace({' ':''}) }} || {};
 
-projectname = (function($, window, undefined) {
+{{ websitetitle|lower|replace({' ':''}) }} = (function($, window, undefined) {
 
     var init;
 
@@ -16,5 +16,5 @@ projectname = (function($, window, undefined) {
 }(jQuery, window));
 
 $(function() {
-    projectname.init();
+    {{ websitetitle|lower|replace({' ':''}) }}.init();
 });
