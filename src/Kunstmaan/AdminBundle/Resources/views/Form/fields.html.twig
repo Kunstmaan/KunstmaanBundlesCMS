@@ -28,6 +28,25 @@
     {% endspaceless %}
 {% endblock choice_widget_expanded %}
 
+{% block choice_widget_collapsed %}
+    {% spaceless %}
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control">
+            {% if empty_value is not none %}
+                <option value="" {% if required and value is empty %}selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+            {% endif %}
+            {% if preferred_choices|length > 0 %}
+                {% set options = preferred_choices %}
+                {{ block('choice_widget_options') }}
+                {% if choices|length > 0 and separator is not none %}
+                    <option disabled="disabled">{{ separator }}</option>
+                {% endif %}
+            {% endif %}
+            {% set options = choices %}
+            {{ block('choice_widget_options') }}
+        </select>
+    {% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
 {% block form_widget_simple %}
     {% spaceless %}
         {% set type = type|default('text') %}
@@ -41,24 +60,60 @@
     {% endspaceless %}
 {% endblock textarea_widget %}
 
+{% block checkbox_widget %}
+    {% spaceless %}
+        <div class="checkbox">
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+                {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-icon">*</span>{% endif %}
+            </label>
+        </div>
+    {% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+    {% spaceless %}
+        <div class="radio">
+            {% if required and not compound %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+            <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-icon">*</span>{% endif %}
+            </label>
+        </div>
+    {% endspaceless %}
+{% endblock radio_widget %}
+
 
 {# Labels #}
 {% block form_label %}
     {% spaceless %}
-        {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
-        {% if not compound %}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-        {% endif %}
-        {% if required %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {% endif %}
-        {% if label is not sameas(false) %}
-            {% if label is empty %}
-                {% set label = name|humanize %}
+        {% if 'checkbox' not in block_prefixes and label is not sameas(false) %}
+            {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
             {% endif %}
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
-            </label>
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is not sameas(false) %}
+                {% if label is empty %}
+                    {% set label = name|humanize %}
+                {% endif %}
+                <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                    {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+                </label>
+            {% endif %}
         {% endif %}
     {% endspaceless %}
 {% endblock form_label %}
