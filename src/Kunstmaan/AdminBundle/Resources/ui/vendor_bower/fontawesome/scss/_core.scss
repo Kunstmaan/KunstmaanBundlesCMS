@@ -1,6 +1,7 @@
 // Base Class Definition
 // -------------------------
 
+%#{$fa-css-prefix},
 .#{$fa-css-prefix} {
   display: inline-block;
   font: normal normal normal #{$fa-font-size-base}/1 FontAwesome; // shortening font declaration
