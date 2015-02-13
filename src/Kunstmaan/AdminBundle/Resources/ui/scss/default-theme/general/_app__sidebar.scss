@@ -16,7 +16,7 @@
         padding-top: 70px !important;
     }
 
-    @media (min-width: $screen-sm) and (max-width: $screen-md){
+    @media (min-width: $screen-sm) and (max-width: $screen-md) {
         width: 30rem;
     }
 
@@ -28,6 +28,7 @@
 
 
 }
+
 .app__sidebar--tree-ready {
     &:before {
         display: none;
@@ -40,10 +41,21 @@
     }
 }
 
+.app__sidebar--static {
+    position: relative;
+}
+
+
+/* Module
+   ========================================================================== */
 .app__sidebar__module {
     opacity: 0;
 }
 
+
+
+/* Navigation
+   ========================================================================== */
 .app__sidebar__navigation {
     width: 100%;
     overflow: auto;

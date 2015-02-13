@@ -13,8 +13,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
             changeTemplate($(this));
         });
 
-        initSortable();
-
         if($('#publish-later__check').length) {
             publishLater();
         }
@@ -23,7 +21,8 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
             unpublishLater();
         }
 
-
+        initSortable();
+        urlChooser();
     };
 
 
@@ -47,6 +46,73 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     // URL-Chooser
     urlChooser = function() {
+        var $body = $('body'),
+            itemUrl, itemId;
+
+        // Link Chooser select
+        $body.on('click', '.js-url-chooser-link-select', function(e) {
+            e.preventDefault();
+
+            var $this = $(this),
+                slug = $this.data('slug'),
+                id = $this.data('id');
+
+
+            // Update preview
+            $('#url-chooser__selection-preview').text('Selection: ' + slug);
+
+            // Store values
+            itemUrl = slug;
+            itemId = id;
+        });
+
+
+        // Cancel
+        $('#cancel-url-chooser-modal').on('click', function() {
+            parent.$('#urlChooserModal').modal('hide');
+        });
+
+
+        // OK
+        $('#save-url-chooser-modal').on('click', function() {
+            var result = {
+                path: itemUrl,
+                id: itemId
+            };
+
+            // Set val
+            var linkedInputId = parent.$('#urlChooserModal').data('linked-input-id');
+            parent.$('#' + linkedInputId).val(itemUrl);
+
+            // Close modal
+            parent.$('#urlChooserModal').modal('hide');
+
+
+            // OLD
+            // function handleOK(result) {
+            //     if (window.opener) {
+            //         {% if cke %}
+            //             var funcNum = getUrlParam('CKEditorFuncNum');
+            //             window.opener.CKEDITOR.tools.callFunction(funcNum, result['path']);
+            //         {% else %}
+            //             window.opener.dialogWin.returnedValue = result;
+            //             window.opener.dialogWin.returnFunc()
+            //         {% endif %}
+            //     } else {
+            //         //alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
+            //     }
+
+            //     window.close();
+            //     return false
+            // }
+
+            // function getUrlParam(paramName) {
+            //     var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
+            //     var match = window.location.search.match(reParam) ;
+            //     return (match && match.length > 1) ? match[1] : '' ;
+            // }
+        });
+
 
         // OLD
         // $(document).ready(function() {
