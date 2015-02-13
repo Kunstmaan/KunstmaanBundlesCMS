@@ -21,6 +21,6 @@
         "cargobay": true,
         "Modernizr": true,
         "dataLayer": true,
-        "{{ websitetitle|lower|replace({' ':''}) }}": true
+        "testsite": true
     }
 }
