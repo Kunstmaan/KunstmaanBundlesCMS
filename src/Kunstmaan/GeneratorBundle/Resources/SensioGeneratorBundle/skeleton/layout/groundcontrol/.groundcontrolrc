@@ -28,6 +28,7 @@
     "img": "<=resourcesPath>ui/img/**/*.{png,jpg,jpeg,gif,svg,webp}",
     "fonts": "<=resourcesPath>ui/fonts/**/*.{eot,svg,ttf,woff}",
     "twig": "<=resourcesPath>views/**/*.html.twig",
+    "scss": "<=resourcesPath>ui/scss/**/*.scss",
 
     "js": {
         "app": "<=resourcesPath>ui/js/**/*.js",
