@@ -65,3 +65,10 @@
         margin-top: -2.2rem;
     }
 }
+
+
+.page-sub-actions--has-buttons {
+    @media (min-width: $screen-md) {
+        margin-top: -3.8rem;
+    }
+}
