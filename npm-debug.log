@@ -1,0 +1,108 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'grunt-tadd',
+1 verbose cli   'grunt-.' ]
+2 info using npm@1.5.0-alpha-1
+3 info using node@v0.10.29
+4 verbose node symlink /usr/local/bin/node
+5 warn package.json BoleroCrowdfunding@1.0.0 No repository field.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'grunt-tadd', null ]
+8 verbose cache add spec="grunt-tadd" args=["grunt-tadd",null]
+9 verbose cache add [ 'grunt-.', null ]
+10 verbose cache add spec="grunt-." args=["grunt-.",null]
+11 verbose parsed spec { raw: 'grunt-tadd',
+11 verbose parsed spec   scope: null,
+11 verbose parsed spec   name: 'grunt-tadd',
+11 verbose parsed spec   rawSpec: '',
+11 verbose parsed spec   spec: '*',
+11 verbose parsed spec   type: 'range' }
+12 verbose addNamed [ 'grunt-tadd', '*' ]
+13 verbose addNamed [ null, '*' ]
+14 verbose parsed spec { raw: 'grunt-.',
+14 verbose parsed spec   scope: null,
+14 verbose parsed spec   name: 'grunt-.',
+14 verbose parsed spec   rawSpec: '',
+14 verbose parsed spec   spec: '*',
+14 verbose parsed spec   type: 'range' }
+15 verbose addNamed [ 'grunt-.', '*' ]
+16 verbose addNamed [ null, '*' ]
+17 silly lockFile b78a858f-grunt-tadd grunt-tadd@*
+18 verbose lock grunt-tadd@* /Users/ibe/.npm/b78a858f-grunt-tadd.lock
+19 silly lockFile 315949ca-grunt grunt-.@*
+20 verbose lock grunt-.@* /Users/ibe/.npm/315949ca-grunt.lock
+21 silly addNameRange { name: 'grunt-.', range: '*', hasData: false }
+22 verbose mapToRegistry name grunt-.
+23 verbose mapToRegistry uri https://registry.npmjs.org/grunt-.
+24 silly addNameRange { name: 'grunt-tadd', range: '*', hasData: false }
+25 verbose mapToRegistry name grunt-tadd
+26 verbose mapToRegistry uri https://registry.npmjs.org/grunt-tadd
+27 verbose request where is /grunt-.
+28 verbose request registry https://registry.npmjs.org/
+29 verbose request id 75e0bb1077da7540
+30 verbose request url raw /grunt-.
+31 verbose request url resolving [ 'https://registry.npmjs.org/', './grunt-.' ]
+32 verbose request url resolved https://registry.npmjs.org/grunt-.
+33 verbose request where is https://registry.npmjs.org/grunt-.
+34 verbose request no basic auth needed
+35 info trying registry request attempt 1 at 14:56:10
+36 http GET https://registry.npmjs.org/grunt-.
+37 verbose request where is /grunt-tadd
+38 verbose request registry https://registry.npmjs.org/
+39 verbose request url raw /grunt-tadd
+40 verbose request url resolving [ 'https://registry.npmjs.org/', './grunt-tadd' ]
+41 verbose request url resolved https://registry.npmjs.org/grunt-tadd
+42 verbose request where is https://registry.npmjs.org/grunt-tadd
+43 verbose request no basic auth needed
+44 info trying registry request attempt 1 at 14:56:10
+45 http GET https://registry.npmjs.org/grunt-tadd
+46 http 404 https://registry.npmjs.org/grunt-.
+47 verbose headers { date: 'Mon, 16 Feb 2015 13:56:11 GMT',
+47 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+47 verbose headers   'content-type': 'application/json',
+47 verbose headers   'cache-control': 'max-age=0',
+47 verbose headers   'content-length': '52',
+47 verbose headers   'accept-ranges': 'bytes',
+47 verbose headers   via: '1.1 varnish',
+47 verbose headers   age: '0',
+47 verbose headers   'x-served-by': 'cache-ams4130-AMS',
+47 verbose headers   'x-cache': 'MISS',
+47 verbose headers   'x-cache-hits': '0',
+47 verbose headers   'x-timer': 'S1424094971.053304,VS0,VE96',
+47 verbose headers   'keep-alive': 'timeout=10, max=50',
+47 verbose headers   connection: 'Keep-Alive' }
+48 silly registry.get cb [ 404,
+48 silly registry.get   { date: 'Mon, 16 Feb 2015 13:56:11 GMT',
+48 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+48 silly registry.get     'content-type': 'application/json',
+48 silly registry.get     'cache-control': 'max-age=0',
+48 silly registry.get     'content-length': '52',
+48 silly registry.get     'accept-ranges': 'bytes',
+48 silly registry.get     via: '1.1 varnish',
+48 silly registry.get     age: '0',
+48 silly registry.get     'x-served-by': 'cache-ams4130-AMS',
+48 silly registry.get     'x-cache': 'MISS',
+48 silly registry.get     'x-cache-hits': '0',
+48 silly registry.get     'x-timer': 'S1424094971.053304,VS0,VE96',
+48 silly registry.get     'keep-alive': 'timeout=10, max=50',
+48 silly registry.get     connection: 'Keep-Alive' } ]
+49 silly lockFile 315949ca-grunt grunt-.@*
+50 silly lockFile 315949ca-grunt grunt-.@*
+51 error 404 404 Not Found: grunt-.
+51 error 404
+51 error 404 'grunt-.' is not in the npm registry.
+51 error 404 You should bug the author to publish it
+51 error 404 It was specified as a dependency of 'BoleroCrowdfunding'
+51 error 404
+51 error 404 Note that you can also install from a
+51 error 404 tarball, folder, or http url, or git url.
+52 error System Darwin 13.4.0
+53 error command "node" "/usr/local/bin/npm" "install" "--save-dev" "grunt-tadd" "grunt-."
+54 error cwd /home/projects/bolcfpr/data/bolcfpr/vendor/kunstmaan/bundles-cms
+55 error node -v v0.10.29
+56 error npm -v 1.5.0-alpha-1
+57 error code E404
+58 verbose exit [ 1, true ]
