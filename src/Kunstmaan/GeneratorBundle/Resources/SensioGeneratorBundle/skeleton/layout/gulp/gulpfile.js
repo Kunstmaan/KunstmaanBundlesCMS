@@ -99,8 +99,8 @@ gulp.task('styles', function() {
         // Combine Media Queries
         .pipe(plugins.combineMq())
 
-        // Prefix where needed
-        .pipe(plugins.autoprefixer(config.project.browserSupport))
+        // Prefix where needed -> versie nummers in Gonfiguratie
+        .pipe(plugins.autoprefixer('last 2 versions', 'ie 9', 'ie 10', 'ie 11'))
 
         // Minify output
         .pipe(plugins.minifyCss())
