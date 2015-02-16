@@ -1,113 +1,158 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
-{% block header %}
-    <h1>{{ 'media.media.title'|trans }}
-        <small>{{ media.name }}</small>
-    </h1>
+
+{% block body %}
+    {% set lowestTopChild = foldermanager.getRootFolderFor(folder) %}
+    {% if lowestTopChild %}
+        {% set navigationChildren = foldermanager.getFolderHierarchy(lowestTopChild) %}
+    {% endif %}
+    {{ parent() }}
 {% endblock %}
+
+
+
+{% block sidebar %}
+   <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+        <ul>
+            {% set parentIds = foldermanager.getParentIds(folder) %}
+            {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
+            {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
+            {% for mediaFolder in folders %}
+                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <hr>
+
+    <!-- Tree Search -->
+    <div class="form-group app__sidebar__module app__sidebar__search">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-search"></i>
+            </span>
+            <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+        </div>
+    </div>
+{% endblock %}
+
+
 
 {% block breadcrumb %}
     {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
 {% endblock %}
 
-{% block sidebar %}
-    <aside id="sidebar" class="sidebar">
-        <div class="search_wrp">
-            <form id="treeform">
-                <input type="text" id="searchVal" value=""/>
-                <button id="search" class="btn search"><i class="icon-search"></i></button>
-            </form>
-        </div>
-        <div class="tree clearfix">
-            <ul>
-                {% set parentIds = foldermanager.getParentIds(folder) %}
-                {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
-                {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
-                {% for mediaFolder in folders %}
-                    {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
-                {% endfor %}
-            </ul>
-        </div>
-    </aside>
+
+
+{% block header %}
+    <h1 class="app__content__header__title">
+        {{ 'media.media.title'|trans }}
+        <small class="app__content__header__title__small">
+            {{ media.name }}
+        </small>
+    </h1>
 {% endblock %}
 
+
+
 {% block content %}
-
-    <!--=========Actions=========-->
-
-    <!--Main-->
-    <div class="main_actions btn-group">
-        {% block extraactions %}{% endblock %}
-        {% block actions %}
-            <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}"
-               data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn">{{ 'form.delete'|trans }}</a>
-        {% endblock %}
+    <!-- Main-actions -->
+    <div class="page-main-actions js-auto-collapse-buttons">
+        <div class="btn-group" role="group">
+            {% block extraactions %}{% endblock %}
+            {% block actions %}
+                <button{#  href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" #} data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
+                    {{ 'form.delete'|trans }}
+                </button>
+            {% endblock %}
+        </div>
     </div>
 
-    <!--Scroll-->
-    <div id="main_actions_top" class="main_actions top">
+
+    <!-- Scroll-actions -->
+    {# <div id="main_actions_top" class="main_actions top">
         <div class="pull-right btn-group">
             {{ block('extraactions') }}
             {{ block('actions') }}
             <a class="btn up">&#9650;</a>
         </div>
-    </div>
+    </div> #}
 
-    <!--=========Tabs=========-->
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#imagegallery"
-                              data-toggle="tab">{{ 'media.media.contenttab.title'|trans|capitalize }}</a></li>
-        <li><a href="#properties" data-toggle="tab">{{ 'media.media.propertiestab.title' | trans }}</a></li>
+
+    <!-- Main Tabs -->
+    <ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
+        <li class="active">
+            <a href="#imagegallery" data-toggle="tab">
+                {{ 'media.media.contenttab.title'|trans|capitalize }}
+            </a>
+        </li>
+        <li>
+            <a href="#properties" data-toggle="tab">
+                {{ 'media.media.propertiestab.title' | trans }}
+            </a>
+        </li>
+        <li class="tab__more dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              More <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
+        </li>
     </ul>
 
     <div class="tab-content">
+
+        <!-- TAB - Imagegallery -->
         <div class="tab-pane active" id="imagegallery">
 
-            <div class="properties">
-                <dl>
-                    {% block mediainfo %}
-                        <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
-                        <dd>{{ media.name }}</dd>
-                        <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
-                        <dd>{{ media.contentType }}</dd>
-                        <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
-                        <dd>{{ media.createdat|date|escape }}</dd>
-                        <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
-                        <dd>{{ media.updatedat|date|escape }}</dd>
-                    {% endblock %}
-                </dl>
+            <div class="row row--padded">
+                <div class="col-md-6 col-lg-5">
+                    <dl>
+                        {% block mediainfo %}
+                            <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
+                            <dd>{{ media.name }}</dd>
+                            <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
+                            <dd>{{ media.contentType }}</dd>
+                            <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
+                            <dd>{{ media.createdat|date|escape }}</dd>
+                            <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
+                            <dd>{{ media.updatedat|date|escape }}</dd>
+                        {% endblock %}
+                    </dl>
+                </div>
+
+                <div class="col-md-6 col-lg-7">
+                    {% block preview %}{% endblock %}
+                </div>
             </div>
-
-            {% block preview %}
-
-            {% endblock %}
-
-            <div id="injection_site"></div>
         </div>
 
+
+        <!-- TAB - Properties -->
         <div class="tab-pane" id="properties">
 
             {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+            <form action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(editform) }}>
+                <fieldset class="panel panel-default form-properties">
+                    <div class="panel-body">
 
-            <form class="properties"
-                  action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}"
-                  method="post" {{ form_enctype(editform) }}>
-                <div class="prop_wrp">
-                    {{ form_widget(editform) }}
-                    <div class="input_prop">
-                        <div class="btn_group">
-                            <button class="btn"
-                                    onclick="window.location = '{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}'"
-                                    type="reset">{{ 'form.cancel' |trans }}</button>
-                            <button class="btn btn-primary" type="submit">{{ 'form.save' |trans }}</button>
+                        {{ form_widget(editform) }}
+
+                        <div class="form-actions form-actions--padded">
+                            <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                                {{ 'form.save' |trans }}
+                            </button>
+                            <button type="reset" class="btn btn-default btn--raise-on-hover">
+                                {{ 'form.cancel' |trans }}
+                            </button>
                         </div>
                     </div>
-                </div>
+                </fieldset>
             </form>
         </div>
     </div>
 
-    <!--=========Modals=========-->
+
+    <!-- Modals -->
     {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
 
 {% endblock %}
