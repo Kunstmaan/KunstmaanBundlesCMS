@@ -13,9 +13,17 @@
 
     &:hover {
         text-decoration: none;
+    }
 
-        .media-thumbnail__helper {
-            opacity: 1;
+    @media (min-width: $screen-lg) {
+        &:hover {
+            .media-thumbnail__helper {
+                opacity: 1;
+            }
+
+            & + .media-thumbnail-del-btn {
+                opacity: 1;
+            }
         }
     }
 }
@@ -68,15 +76,66 @@
 
     font-size: 1.2rem;
     color: $blue;
-    opacity: 0;
 
-    transition: opacity .3s ease;
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+
+        transition: opacity .3s ease;
+    }
 }
 
 
 
+/* Delete
+   ========================================================================== */
+.media-thumbnail-del-btn {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
 
+    padding: .2em .5em;
 
+    border-radius: 0 $default-border-radius 0 $default-border-radius;
+
+    &, &:hover {
+        background: $red;
+        color: $white;
+    }
+
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+
+        transition: opacity .3s ease;
+
+        &:hover {
+            opacity: 1;
+
+            + .media-thumbnail-del-helper {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.media-thumbnail-del-helper {
+    z-index: 2;
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2rem;
+
+    display: none;
+
+    font-size: 1.2rem;
+    color: $red;
+
+    @media (min-width: $screen-lg) {
+        display: block;
+        opacity: 0;
+
+        transition: opacity .3s ease;
+    }
+}
 
 
 

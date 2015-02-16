@@ -148,7 +148,7 @@
                         {{ child.name }}
                     </a>
                 {% else %}
-                    <p class="list-group-item">
+                    <p class="list-group-item text--muted">
                         {{ 'media.folder.sub.no' |trans }}
                     </p>
                 {% endfor %}
@@ -161,7 +161,7 @@
                     {% if adminlist.count > 0 %}
                         {{ parent() }}
                     {% else %}
-                        <p>
+                        <p class="text--muted">
                             {{ 'media.media.no' |trans }}
                         </p>
                     {% endif %}
@@ -179,7 +179,7 @@
                                     {% endif %}
                                 {% endif %}
 
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
                                     <a class="thumbnail media-thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                         <figure>
                                             {% if imageurl %}
@@ -196,25 +196,28 @@
                                         </span>
                                     </a>
 
-                                    {#
-                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}">
-                                        Delete
+                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}" class="media-thumbnail-del-btn">
+                                        <i class="fa fa-trash-o"></i>
                                     </a>
-                                    #}
-
+                                    <span class="media-thumbnail-del-helper">
+                                        Delete
+                                    </span>
                                 </div>
 
                                 {# Clearfixes #}
                                 {% if loop.index is divisible by(2) %}
                                     <div class="clearfix visible-sm-block"></div>
                                 {% endif %}
+                                {% if loop.index is divisible by(3) %}
+                                    <div class="clearfix visible-md-block"></div>
+                                {% endif %}
                                 {% if loop.index is divisible by(4) %}
-                                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                                    <div class="clearfix visible-lg-block"></div>
                                 {% endif %}
                             {% endfor %}
                         </div>
                     {% else %}
-                        <p>
+                        <p class="text--muted">
                             {{ 'media.media.no' |trans }}
                         </p>
                     {% endif %}
