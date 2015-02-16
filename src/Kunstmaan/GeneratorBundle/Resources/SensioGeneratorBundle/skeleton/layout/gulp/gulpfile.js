@@ -99,8 +99,8 @@ gulp.task('styles', function() {
         // Combine Media Queries
         .pipe(plugins.combineMq())
 
-        // Prefix where needed -> versie nummers in Gonfiguratie
-        .pipe(plugins.autoprefixer('last 2 versions', 'ie 9', 'ie 10', 'ie 11'))
+        // Prefix where needed
+        .pipe(plugins.autoprefixer(config.project.browserSupport))
 
         // Minify output
         .pipe(plugins.minifyCss())
@@ -228,7 +228,7 @@ gulp.task('images', function() {
 gulp.task('fonts', function() {
     return gulp.src(config.fonts)
         // Set desitination
-        .pipe(gulp.dest(config.dist.fonts))
+        .pipe(gulp.dest(config.dist.fonts));
 });
 
 
