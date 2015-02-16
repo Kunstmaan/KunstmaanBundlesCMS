@@ -13,10 +13,10 @@
                     </a>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-9">
 
                     {# Main navigation #}
-                    <nav role="navigation" class="js-toggle-container main-nav">
+                    <nav role="navigation" class="js-toggle-container main-nav pull-left">
                         <button class="js-toggle-btn toggle-button" data-target="#main-menu">
                             Menu
                             <i class="icon icon--reorder toggle-btn__icon--show">_</i>
@@ -45,8 +45,8 @@
                     {# Search #}
                     {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                     {# {% if searchPageNode %} #}
-                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form">
-                            <div class="searchbox pull-right">
+                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-left">
+                            <div class="searchbox">
                                 <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                                 <button type="submit" id="search" class="searchbox__submit">
                                     <i class="icon icon--search searchbox__submit__icon">➔</i>
@@ -59,7 +59,7 @@
                     {% if requiredlocales is defined %}
                         {% set langs = requiredlocales|split('|') %}
                         {% if langs|length > 0 %}
-                            <nav class="language-nav">
+                            <nav class="language-nav pull-left">
                                 <span class="language-nav__active-lang">
                                     {{ app.request.locale }}
                                     <i class="icon icon--chevron-down">&#9660;</i>
