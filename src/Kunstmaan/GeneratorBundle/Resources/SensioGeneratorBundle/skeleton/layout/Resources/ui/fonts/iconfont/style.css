@@ -1,27 +1,16 @@
-/* ==========================================================================
-   Icon font
-
-   Based on icomoon style.css
-   ========================================================================== */
-
-/* General
-   ========================================================================== */
-
-// TODO: base64 webfonts and iconfont
-
 @font-face {
-    font-family: '$iconfont';
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?a7621m');
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?#iefixa7621m') format('embedded-opentype'),
-        url('#{$iconfont-path}/#{$iconfont}.woff?a7621m') format('woff'),
-        url('#{$iconfont-path}/#{$iconfont}.ttf?a7621m') format('truetype'),
-        url('#{$iconfont-path}/#{$iconfont}.svg?a7621m##{$iconfont}') format('svg');
+    font-family: 'icomoon';
+    src:url('fonts/icomoon.eot?a7621m');
+    src:url('fonts/icomoon.eot?#iefixa7621m') format('embedded-opentype'),
+        url('fonts/icomoon.woff?a7621m') format('woff'),
+        url('fonts/icomoon.ttf?a7621m') format('truetype'),
+        url('fonts/icomoon.svg?a7621m#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-    font-family: '$iconfont';
+    font-family: 'icomoon';
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -33,10 +22,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
-
-/* Icons
-   ========================================================================== */
 
 .icon-arrow-up:before {
     content: "\e600";
