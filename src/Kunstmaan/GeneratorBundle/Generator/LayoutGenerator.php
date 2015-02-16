@@ -33,7 +33,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->generateGulpFiles();
         $this->generateBowerFiles();
         $this->generateJshintrcFile();
-        $this->generateGroundcontrollrcFile();
+        $this->generateGroundcontrolrcFile();
         $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
@@ -68,12 +68,12 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
-     * Generate the groundcontroll configuration file.
+     * Generate the groundcontrol configuration file.
      */
-    private function generateGroundcontrollrcFile()
+    private function generateGroundcontrolrcFile()
     {
-        $this->renderSingleFile($this->skeletonDir.'/groundcontroll/', $this->rootDir, '.groundcontrollrc', array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating groundcontroll configuration : <info>OK</info>');
+        $this->renderSingleFile($this->skeletonDir.'/groundcontrol/', $this->rootDir, '.groundcontrolrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
     }
 
     /**

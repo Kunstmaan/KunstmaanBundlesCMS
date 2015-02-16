@@ -39,7 +39,7 @@ var showErrorNotifications = true,
 // Project Config
 var bowerComponentsPath = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.bowerrc'))).directory;
 
-var config = fs.readFileSync(path.resolve(__dirname, '.groundcontrollrc'), 'UTF-8'),
+var config = fs.readFileSync(path.resolve(__dirname, '.groundcontrolrc'), 'UTF-8'),
     vars = _.merge({
         'bowerComponentsPath': bowerComponentsPath
     }, JSON.parse(config).vars);
