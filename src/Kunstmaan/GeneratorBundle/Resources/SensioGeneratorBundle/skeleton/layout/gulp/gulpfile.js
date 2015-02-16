@@ -316,9 +316,6 @@ gulp.task('watch', function() {
 
     // Images
     gulp.watch(config.img, ['images']);
-
-    // Fonts
-    gulp.watch(config.fonts, ['fonts']);
 });
 
 
