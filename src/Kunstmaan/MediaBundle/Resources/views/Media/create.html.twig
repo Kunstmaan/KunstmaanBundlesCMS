@@ -11,7 +11,7 @@
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal properties" novalidate="novalidate">
+    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="properties" novalidate="novalidate">
         <div class="prop_wrp">
             {{ form_widget(form) }}
             <div class="input_prop">

@@ -89,7 +89,7 @@
 
             {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-            <form class="form-horizontal properties"
+            <form class="properties"
                   action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}"
                   method="post" {{ form_enctype(editform) }}>
                 <div class="prop_wrp">
