@@ -53,6 +53,6 @@
 
     "liveReloadFiles": [
         "<=distPath>css/style.min.css",
-        "<=distPath>js/footer.min.js"
+        "<=distPath>js/*.js"
     ]
 }
