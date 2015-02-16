@@ -44,6 +44,13 @@
         ]
     },
 
+    "browserSupport": [
+        "last 2 versions",
+        "ie 9",
+        "ie 10",
+        "ie 11"
+    ],
+
     "liveReloadFiles": [
         "<=distPath>css/style.min.css",
         "<=distPath>js/footer.min.js",

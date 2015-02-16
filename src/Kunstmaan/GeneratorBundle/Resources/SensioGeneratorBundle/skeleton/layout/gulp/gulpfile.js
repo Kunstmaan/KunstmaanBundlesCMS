@@ -100,7 +100,7 @@ gulp.task('styles', function() {
         .pipe(plugins.combineMq())
 
         // Prefix where needed
-        .pipe(plugins.autoprefixer('last 2 versions', 'ie 9', 'ie 10', 'ie 11'))
+        .pipe(plugins.autoprefixer(config.browserSupport))
 
         // Minify output
         .pipe(plugins.minifyCss())
