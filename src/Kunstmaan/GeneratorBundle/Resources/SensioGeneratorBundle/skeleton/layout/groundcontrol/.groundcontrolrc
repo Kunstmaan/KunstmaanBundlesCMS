@@ -54,6 +54,7 @@
 
     "liveReloadFiles": [
         "<=distPath>css/style.min.css",
-        "<=distPath>js/*.js"
+        "<=distPath>js/*.js",
+        "<=distPath>styleguide/css/style.min.css"
     ]
 }
