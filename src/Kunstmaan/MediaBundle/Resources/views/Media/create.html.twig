@@ -18,11 +18,7 @@
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-<<<<<<< HEAD
-    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="properties" novalidate="novalidate">
-=======
     <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
->>>>>>> 33b46735db96aee81a4df190b3ca158f0a0bc956
         <div class="prop_wrp">
             {{ form_widget(form) }}
             <div class="form-actions form-actions--padded">
