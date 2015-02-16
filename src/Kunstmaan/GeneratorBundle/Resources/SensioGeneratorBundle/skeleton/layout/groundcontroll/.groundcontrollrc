@@ -26,6 +26,7 @@
     "styleguideFolder": "<=resourcesPath>ui/styleguide",
 
     "img": "<=resourcesPath>ui/img/**/*.{png,jpg,jpeg,gif,svg,webp}",
+    "fonts": "<=resourcesPath>ui/fonts/**/*.{eot,svg,ttf,woff}",
     "twig": "<=resourcesPath>views/**/*.html.twig",
 
     "js": {

@@ -147,7 +147,7 @@ gulp.task('scripts-prod', ['jshint'], function() {
         // Concat
         .pipe(plugins.concat('footer.min.js'))
 
-        // Set desitination
+        // Set destination
         .pipe(gulp.dest(config.dist.js))
 
         // Show total size of js
@@ -213,7 +213,7 @@ gulp.task('images', function() {
             }]
         }))
 
-        // Set desitination
+        // Set destination
         .pipe(gulp.dest(config.dist.img))
 
         // Show total size of images
@@ -227,8 +227,13 @@ gulp.task('images', function() {
 
 gulp.task('fonts', function() {
     return gulp.src(config.fonts)
-        // Set desitination
-        .pipe(gulp.dest(config.dist.fonts));
+        // Set destination
+        .pipe(gulp.dest(config.dist.fonts))
+
+        // Show total size of fonts
+        .pipe(plugins.size({
+            title: 'fonts'
+        }));
 });
 
 
