@@ -1,26 +1,35 @@
-    {% form_theme subform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+<div id="addsub-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-    <form action="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id }  ) }}" id="addsub-modal-form" method="post" {{ form_enctype(subform) }}>
-        <div class="modal-header">
-        	<button class="close" data-dismiss="modal">&times;</button>
-            <h3>{{ 'media.folder.addsub.modal.title' | trans }}</h3>
-        </div>
-        <div class="modal-body">
-	        {{ form_widget(subform) }}
-        </div>
-        <div class="modal-footer">
-            <div class="btn_group">
-	            <button class="btn btn-primary" type="submit">{{ 'media.folder.addsub.modal.save' | trans }}</button>
-	            <button class="btn" type="reset" data-dismiss="modal">{{ 'form.cancel' | trans }}</button>
-	    	</div>
-        </div>
-    </form>
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'media.folder.addsub.modal.title' | trans }}
+                </h3>
+            </div>
 
-    <script>
-        // $(document).ready(function () {
-        //     // bind 'myForm' and provide a simple callback function
-        //     jQuery('#addsub-modal-form').ajaxForm(function (data) {
-        //         jQuery('#addsub-modal').html(data);
-        //     });
-        // });
-    </script>
+            {% form_theme subform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+            <form action="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id }  ) }}" id="addsub-modal-form" method="post" {{ form_enctype(subform) }}>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    {{ form_widget(subform) }}
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                        {{ 'media.folder.addsub.modal.save' | trans }}
+                    </button>
+                    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'form.cancel' | trans }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

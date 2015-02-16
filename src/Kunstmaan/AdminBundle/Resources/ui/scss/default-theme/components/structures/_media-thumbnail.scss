@@ -40,15 +40,33 @@
 
 
 
+/* Icon
+   ========================================================================== */
+.media-thumbnail__icon {
+    display: block;
+    margin: 2rem 0;
+
+    color: $gray-light;
+    font-size: 6rem;
+    text-align: center;
+}
+
+
+
 /* Caption
    ========================================================================== */
 .media-thumbnail__caption {
     position: relative;
+
+    display: block;
     width: 100%;
+    margin: 1rem 0 0;
     overflow: hidden;
 
     font-size: 1.2rem;
     color: $gray-light;
+
+    text-align: center;
 
     &:after {
         content: '';
