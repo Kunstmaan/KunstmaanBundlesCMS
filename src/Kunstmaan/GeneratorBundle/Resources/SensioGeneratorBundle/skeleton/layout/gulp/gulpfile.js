@@ -99,8 +99,8 @@ gulp.task('styles', function() {
         // Combine Media Queries
         .pipe(plugins.combineMq())
 
-        // Prefix where needed
-        .pipe(plugins.autoprefixer(config.project.browserSupport))
+        // Prefix where needed -> versie nummers in Gonfiguratie
+        .pipe(plugins.autoprefixer('last 2 versions', 'ie 9', 'ie 10', 'ie 11'))
 
         // Minify output
         .pipe(plugins.minifyCss())
@@ -222,15 +222,6 @@ gulp.task('images', function() {
         }));
 });
 
-/* Fonts
-   ========================================================================== */
-
-gulp.task('fonts', function() {
-    return gulp.src(config.fonts)
-        // Set desitination
-        .pipe(gulp.dest(config.dist.fonts));
-});
-
 
 /* Styleguide
    ========================================================================== */
@@ -311,9 +302,6 @@ gulp.task('watch', function() {
 
     // Images
     gulp.watch(config.img, ['images']);
-
-    // Fonts
-    gulp.watch(config.fonts, ['fonts']);
 });
 
 
@@ -321,7 +309,7 @@ gulp.task('watch', function() {
 gulp.task('build', function(done) {
     runSequence(
         'clean',
-        ['clear-symfony-cache', 'styles', 'inject-prod-scripts', 'images', 'fonts'],
+        ['clear-symfony-cache', 'styles', 'inject-prod-scripts', 'images'],
         'styleguide',
         'styleguide-prod-js',
     done);
@@ -340,7 +328,7 @@ gulp.task('build-deploy', function(done) {
 gulp.task('default', function(done) {
     runSequence(
         'clean',
-        ['clear-symfony-cache', 'styles', 'inject-dev-scripts', 'images', 'fonts'],
+        ['clear-symfony-cache', 'styles', 'inject-dev-scripts', 'images'],
         ['styleguide', 'watch'],
         'styleguide-dev-js',
     done);
