@@ -142,6 +142,7 @@
 
             <!-- Subfolders Map list -->
             <nav class="list-group list-group--no-top-border" role="navigation">
+
                 {% for child in folder.children %}
                     <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :child.id }) }}" class="list-group-item" data-folder-id="{{ child.id }}">
                         {{ child.name }}
@@ -165,7 +166,59 @@
                         </p>
                     {% endif %}
                 {% else %}
-                    <ul class="thumbnails" id="file-list">
+                    {% if adminlist.count > 0 %}
+                        <div class="row">
+                            {% for media in folder.media %}
+                                {% set handler = mediamanager.getHandler(media) %}
+                                {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                                {% if imageurl is not empty and media.location == 'local' %}
+                                    {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                                        {% set imageurl = imageurl %}
+                                    {% else %}
+                                        {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <div class="col-sm-6 col-md-3">
+                                    <a class="thumbnail media-thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
+                                        <figure>
+                                            {% if imageurl %}
+                                                <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">
+                                            {% else %}
+                                                <i class="fa fa-file"></i>
+                                            {% endif %}
+                                            <figcaption class="media-thumbnail__caption">
+                                                {{ media.name }}
+                                            </figcaption>
+                                        </figure>
+                                    </a>
+
+                                    {# <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}">
+                                        Delete
+                                    </a>
+                                    <span class="helper">
+                                        Click to edit
+                                    </span> #}
+                                </div>
+
+                                {# Clearfixes #}
+                                {% if loop.index is divisible by(2) %}
+                                    <div class="clearfix visible-sm-block"></div>
+                                {% endif %}
+                                {% if loop.index is divisible by(4) %}
+                                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>
+                            {{ 'media.media.no' |trans }}
+                        </p>
+                    {% endif %}
+                {% endif %}
+
+
+                    {# <ul class="thumbnails" id="file-list">
                         {% for media in folder.media %}
                             {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
                             <li>
@@ -196,13 +249,12 @@
                                 {{ 'media.media.no' |trans }}
                             </li>
                         {% endfor %}
-                    </ul>
+                    </ul> #}
                     <script type="text/javascript">
                         // $(document).ready(function () {
                         //     initDel();
                         // });
                     </script>
-                {% endif %}
             </section>
        </div>
 
