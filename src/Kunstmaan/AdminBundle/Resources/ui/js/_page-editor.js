@@ -4,7 +4,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
         changeTemplate, publishLater, unpublishLater,
-        urlChooser, slugChooser,
         initSortable;
 
 
@@ -12,8 +11,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         $('.js-change-page-template').on('click', function() {
             changeTemplate($(this));
         });
-
-        initSortable();
 
         if($('#publish-later__check').length) {
             publishLater();
@@ -23,7 +20,9 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
             unpublishLater();
         }
 
-
+        if($('.js-sortable-container').lenght) {
+            initSortable();
+        };
     };
 
 
@@ -45,49 +44,11 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
     };
 
 
-    // URL-Chooser
-    urlChooser = function() {
-
-        // OLD
-        // $(document).ready(function() {
-        //     $('.choosebutton{{ id }}').on('click', function(ev) {
-        //         ev.preventDefault();
-        //         openDGDialog('{{ path('KunstmaanNodeBundle_selecturl') }}', 580, 500, function(param){
-        //             var widget = jQuery('#{{ id }}_widget');
-        //             widget.find('input').val(dialogWin.returnedValue.path);
-        //         });
-        //     });
-        // });
-    };
-
-
-    // Slug-Chooser
-    slugChooser = function() {
-
-        // OLD
-        // var updateSlugPreview = function(){
-        //     var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';
-        //     if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-        //         urlprefix += '/';
-        //     }
-        //     jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
-        // };
-        // var resetSlug = function(e) {
-        //     jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
-        //     jQuery('#{{ id }}').change();
-        //     e.preventDefault();
-        //     return false;
-        // }
-        // jQuery('#{{ id }}').change(updateSlugPreview);
-        // jQuery('#{{ id }}').keyup(updateSlugPreview);
-        // jQuery('#{{ id }}_resetbtn').click(resetSlug);
-        // updateSlugPreview();
-    };
-
-
     // Publish
     publishLater = function() {
-        var _toggle = function(check) {
+        var _toggle;
+
+        _toggle = function(check) {
             if(check.checked) {
                 $('#publish-later').show();
                 $('#publish-later-action').show();

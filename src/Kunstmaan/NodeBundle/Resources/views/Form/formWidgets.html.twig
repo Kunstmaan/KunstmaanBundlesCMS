@@ -3,14 +3,14 @@
     <div id="{{ id }}-widget" class="input-group">
         <input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
+            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
                 Choose
             </button>
         </span>
     </div>
 
     <!-- URL Chooser Modal -->
-    <div class="js-ajax-modal modal fade" id="urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false">
+    <div class="js-ajax-modal modal fade" id="{{ id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
@@ -34,14 +34,16 @@
 
 {% block slug_widget %}
 {% spaceless %}
-    <div id="{{ id }}-widget" class="input-group">
-        <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" data-reset="{{ reset }}" class="form-control">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn--raise-on-hover" id="{{ id }}_resetbtn">
-                Reset
-            </button>
-        </span>
+    <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')})}}" data-reset="{{ reset }}">
+        <div class="input-group">
+            <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
+            <span class="input-group-btn">
+                <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
+                    Reset
+                </button>
+            </span>
+        </div>
+        <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
     </div>
-    <small id="{{ id }}_preview" class="help-block"></small>
 {% endspaceless %}
 {% endblock slug_widget %}

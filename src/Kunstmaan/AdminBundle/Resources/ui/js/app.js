@@ -25,6 +25,9 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();
+
+        kunstmaanbundles.slugChooser.init();
+        kunstmaanbundles.urlChooser.init();
     };
 
 

@@ -50,10 +50,10 @@
 
 
     <!-- Main Content -->
-    <main role="main" id="app__main" class="container-fluid app__main app__main--in-modal">
+    <main role="main" id="app__main" class="container-fluid app__main url-chooser">
 
         <!-- Modal Sidebar -->
-        <aside id="app__sidebar" class="app__sidebar app__sidebar--in-modal">
+        <aside id="app__sidebar" class="app__sidebar app__sidebar--static url-chooser__tree">
             <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
                 <ul>
                     {% for item in tree.rootItems %}
@@ -76,14 +76,14 @@
         </aside>
 
         <!-- Content -->
-        <div>
-            <p id="selection">
+        <div class="url-chooser__link-select">
+            <p id="url-chooser__selection-preview">
                 Selection: empty
             </p>
-            <button onclick="handleOK({ path:ckurl, id:ckid });return false;" class="btn btn-primary btn--raise-on-hover">
+            <button type="button" id="save-url-chooser-modal" {#onclick="handleOK({ path:ckurl, id:ckid });return false;"#} class="btn btn-primary btn--raise-on-hover"{% if cke %} data-cke="true"{% endif %}>
                 Ok
             </button>
-            <button onclick="handleCancel();" class="btn btn-default btn--raise-on-hover">
+            <button type="button" id="cancel-url-chooser-modal" class="btn btn-default btn--raise-on-hover">
                 Cancel
             </button>
         </div>
