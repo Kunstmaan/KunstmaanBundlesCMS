@@ -1,23 +1,27 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
 {% block body %}
-        <header>
-            <div class="navbar navbar-fixed-top" data-dropdown="dropdown">
-                <div class="navbar-inner">
-                    <div class="container-fluid">
-                        <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
-                        <p class="pull-right">
-                            <a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
-                                <object data="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.svg') }}" type="image/svg+xml">
-                                    <img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.png') }}" alt="Kunstmaan" />
-                                </object>
-                            </a>
-                        </p>
-                   </div>
-               </div>
-            </div>
+        <header role="banner">
+            <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                            <span class="sr-only">Toggle</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navbar-brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">
+                            {{ websitetitle | trans }}
+                        </a>
+
+                    </div>
+                </div>
+            </nav>
         </header>
-        <div class="container-fluid">
+        <div class="container-full-height">
             <div class="login_form">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                      <div class="alert alert-warning">
@@ -36,7 +40,7 @@
                         {% endfor %}
                     </div>
                 {% endfor %}
-                
+
                 {% block fos_user_content %}
                 {% endblock fos_user_content %}
                 {% block forgot_password_link %}
@@ -45,5 +49,13 @@
                     {% endif %}
                 {% endblock %}
             </div>
-         </div>
+        </div>
+
+        {% block footer %}
+            <footer role="contentinfo" class="app__footer container-fluid">
+                <a target="_blank" href="http://www.kunstmaan.be" class="app__footer__kunstmaan-link pull-right">
+                    <img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_dark.svg" alt="Kunstmaan" />
+                </a>
+            </footer>
+        {% endblock %}
 {% endblock %}

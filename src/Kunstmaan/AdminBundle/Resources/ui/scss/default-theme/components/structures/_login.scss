@@ -1,0 +1,247 @@
+/* ==========================================================================
+   App Login
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+.container-full-height {
+    height: 100vh;
+    // vh unit needs fallbacks on iOS7, per device
+    // https://gist.github.com/pburtchaell/e702f441ba9b3f76f587
+
+    // iPad with portrait orientation.
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait){
+        height: 1024px;
+    }
+
+    // iPad with landscape orientation.
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape){
+        height: 768px;
+    }
+
+    // iPhone 5
+    @media screen and (device-aspect-ratio: 40/71) {
+        height: 500px;
+    }
+}
+
+.login_form {
+
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    padding: 20px 30px;
+    margin: 0 auto;
+
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #ffffff), color-stop(100%, #F5F5F5));
+    background: -webkit-linear-gradient(top, #ffffff 20%, #F5F5F5 100%);
+    background: -moz-linear-gradient(top, #ffffff 20%, #F5F5F5 100%);
+    background: -o-linear-gradient(top, #ffffff 20%, #F5F5F5 100%);
+    background: linear-gradient(top, #ffffff 20%, #F5F5F5 100%);
+
+    box-shadow: 0 1px 5px rgba(0,0,0,.15);
+
+    form{
+        margin: 0;
+    }
+    h1{
+        font-size: 18px;
+        color: #BCBEC5;
+        font-weight: 500;
+        text-shadow: 0 1px 1px #FFF;
+    }
+    .alert{
+        font-size: 11px;
+    }
+    .alert-warning{
+        a{
+            float: right;
+            margin: 0;
+            padding: 0;
+            color: #C09853;
+            text-decoration: underline;
+        }
+    }
+    .control-group{
+        position: relative;
+        margin: 0 0 10px 0;
+        &.remember{
+            margin-bottom: 30px;
+            .checkbox{
+                text-align: right;
+            }
+        }
+        a{
+            font-size: 11px;
+            float: right;
+        }
+        [class^="fa"]{
+            display: table;
+            top: 27px;
+            left: 8px;
+            &:before{
+                display: inline-block;
+                border-right: 1px solid #DDD;
+                width: 22px;
+                height: 17px;
+                padding-right: 2px;
+                text-align: center;
+                vertical-align: middle;
+            }
+        }
+    }
+    label{
+        margin: 0 0 2px 0;
+        font-size: 11px;
+        font-weight: normal;
+        line-height: 120%;
+        color: #CCC;
+        text-shadow: 0 1px 0 #FFF;
+    }
+    [class^="fa"]{
+        position: absolute;
+        // top: 27px;
+        // left: 8px;
+        line-height: 120%;
+        z-index: 10;
+        color: #797E8C;
+        opacity: .5;
+    }
+    .error{
+        [class^="fa"]{
+            color: #B94A48;
+        }
+    }
+    .user-data{
+        padding-left: 34px;
+        width: 100%;
+        position: relative;
+        color: #797E8C;
+        margin: 0;
+    }
+    .checkbox{
+        color: #797E8C;
+        opacity: .7;
+        font-size: 13px;
+        line-height: 17px;
+        vertical-align: middle;
+        @include single_transition(opacity, .3s, ease-in-out);
+        &:hover{
+            opacity: .9;
+        }
+        input{
+            position: static;
+            height: 13px;
+            margin-right: 5px;
+        }
+    }
+
+    .btn_group{
+        float: right;
+    }
+
+    .btn{
+        padding: 4px 12px;
+        font-size: 13px;
+        line-height: 20px;
+        color: #333333;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+
+        background-color: #f5f5f5;
+        *background-color: #e6e6e6;
+        background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+        background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+        background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+        background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+        background-repeat: repeat-x;
+        border: 1px solid #bbbbbb;
+        *border: 0;
+        border-color: #C5C5C5;
+        border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+        border-bottom-color: #a2a2a2;
+
+        -webkit-border-radius: 4px;
+         -moz-border-radius: 4px;
+              border-radius: 4px;
+        *zoom: 1;
+        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+         -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+              box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+}
+
+.login_control{
+    position: relative;
+    width: 100%;
+    margin-bottom: -10px;
+    button{
+        // @extend %fa;
+        // @extend %fa-search;
+        position: relative;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        margin: 0 0 0 -25px;
+        border-radius: 50%;
+        border: none;
+        @include grad-top-bottom(#CCC, #DDD);
+        box-shadow: 0 1px 1px #FFF;
+        [class^="fa"]{
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+            opacity: 1;
+            border-radius: 50%;
+            @include grad-top-bottom(#FFF, #EEE);
+            font-size: 30px;
+            color: #B7B7B7;
+            @include single_transition(all, .3s, ease-in-out);
+        }
+        &:hover{
+            [class^="fa"]{
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px 3px rgba(82,168,236,.8);
+            }
+        }
+        &:active, &:focus{
+            outline: none;
+            [class^="fa"]{
+                box-shadow: inset 0 3px 1px rgba(0,0,0,.2), 0 0 8px 3px rgba(82,168,236,.8);
+            }
+        }
+    }
+    &:after{
+        position: absolute;
+        content: "";
+        display: block;
+        top: 25px;
+        height: 1px;
+        width: calc(100% + 60px);
+        margin-left: -30px;
+        margin-right: -30px;
+        background-color: #ddd;
+    }
+}
+
+.forgot_password{
+    position: absolute;
+    right: 0;
+    bottom: -18px;
+    font-size: 11px;
+    color: #797E8C;
+    text-decoration: underline;
+    opacity: .5;
+    line-height: 120%;
+    padding: 5px 0 0 0;
+    @include single_transition(opacity, .3s, ease-in-out);
+    &:hover{
+        opacity: .9;
+        color: #797E8C;
+    }
+}

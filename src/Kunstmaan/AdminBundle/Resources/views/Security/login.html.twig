@@ -4,22 +4,22 @@
 
 <form action="{{ path("fos_user_security_check") }}" method="post">
 	{% if error %}
-    <div class="alert fade in alert-error">
-        <button class="close" data-dismiss="alert">&times;</button>
+    <div class="alert fade in alert-danger">
         Wrong password or email
+        <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
     </div>
 	{% endif %}
-	
-	
+
+
 	<div class="control-group">
 		<label for="username">{{ 'Username:' | trans }}</label>
-		<i class="icon-user"></i>
-		<input class="username" id="username" type="text" name="_username" value="{{ last_username }}" placeholder="{{ 'Username' | trans }}" autofocus />
+		<i class="fa fa-user"></i>
+		<input class="form-control user-data" id="username" type="text" name="_username" value="{{ last_username }}" placeholder="{{ 'Username' | trans }}" autofocus />
 	</div>
 	<div class="control-group">
 		<label for="password">{{ 'Password:' | trans }}</label>
-		<i class="icon-key"></i>
-		<input class="password" id="password" type="password" name="_password" value="" placeholder="{{ 'Password' | trans }}" />
+		<i class="fa fa-key"></i>
+		<input class="form-control user-data" id="password" type="password" name="_password" value="" placeholder="{{ 'Password' | trans }}" />
 	</div>
 	<div class="control-group remember">
 		<label class="checkbox">
@@ -27,13 +27,13 @@
 			{{ 'Remember Me' | trans }}
 		</label>
 	</div>
-	
+
 	<div class="login_control">
 		<button class="login_btn" type="submit" id="_submit" name="_submit">
-			<i class="icon-lock"></i>
+			<i class="fa fa-lock"></i>
 		</button>
 	</div>
-	
+
 </form>
 
 
