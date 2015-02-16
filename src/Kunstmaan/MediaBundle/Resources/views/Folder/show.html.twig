@@ -191,14 +191,17 @@
                                                 {{ media.name }}
                                             </figcaption>
                                         </figure>
+                                        <span class="media-thumbnail__helper">
+                                            Click to edit
+                                        </span>
                                     </a>
 
-                                    {# <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}">
+                                    {#
+                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}">
                                         Delete
                                     </a>
-                                    <span class="helper">
-                                        Click to edit
-                                    </span> #}
+                                    #}
+
                                 </div>
 
                                 {# Clearfixes #}

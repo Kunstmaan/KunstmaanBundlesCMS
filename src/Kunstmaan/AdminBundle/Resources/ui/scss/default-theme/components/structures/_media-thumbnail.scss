@@ -5,12 +5,18 @@
 /* General
    ========================================================================== */
 .media-thumbnail {
+    position: relative;
+
     display: block;
     overflow: hidden;
     min-height: 20rem;
 
     &:hover {
         text-decoration: none;
+
+        .media-thumbnail__helper {
+            opacity: 1;
+        }
     }
 }
 
@@ -50,3 +56,31 @@
         background: linear-gradient(to right, rgba(255, 255, 255, 0) ,rgba(255, 255, 255, 1) 100%);
     }
 }
+
+
+
+/* Helper
+   ========================================================================== */
+.media-thumbnail__helper {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+
+    font-size: 1.2rem;
+    color: $blue;
+    opacity: 0;
+
+    transition: opacity .3s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
