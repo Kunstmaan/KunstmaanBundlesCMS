@@ -45,7 +45,7 @@
                     {# Search #}
                     {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                     {# {% if searchPageNode %} #}
-                        <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form">
+                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form">
                             <div class="searchbox pull-right">
                                 <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                                 <button type="submit" id="search" class="searchbox__submit">
