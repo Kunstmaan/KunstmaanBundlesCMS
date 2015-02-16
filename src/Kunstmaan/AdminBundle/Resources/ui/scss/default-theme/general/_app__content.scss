@@ -39,6 +39,17 @@
     border-bottom: 1px solid $gray-lighter;
 }
 
+.app__content__header--with-margin {
+    margin-bottom: 2rem;
+}
+
+
+// Title
+.app__content__header__title {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .app__content__header__title__small {
     font-size: .5em;
     color: $gray-light;
@@ -47,13 +58,6 @@
         display: block;
         line-height: 1.4;
     }
-}
-
-
-// Title
-.app__content__header__title {
-    margin-top: 0;
-    margin-bottom: 0;
 }
 
 
