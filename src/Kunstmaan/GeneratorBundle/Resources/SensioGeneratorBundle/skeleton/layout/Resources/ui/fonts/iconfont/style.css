@@ -1,16 +1,16 @@
 @font-face {
-	font-family: 'icomoon-frontend';
-	src:url('fonts/icomoon-frontend.eot?vztw97');
-	src:url('fonts/icomoon-frontend.eot?#iefixvztw97') format('embedded-opentype'),
-		url('fonts/icomoon-frontend.woff?vztw97') format('woff'),
-		url('fonts/icomoon-frontend.ttf?vztw97') format('truetype'),
-		url('fonts/icomoon-frontend.svg?vztw97#icomoon-frontend') format('svg');
+	font-family: 'icomoon-front';
+	src:url('fonts/icomoon-front.eot?-xf8xx2');
+	src:url('fonts/icomoon-front.eot?#iefix-xf8xx2') format('embedded-opentype'),
+		url('fonts/icomoon-front.woff?-xf8xx2') format('woff'),
+		url('fonts/icomoon-front.ttf?-xf8xx2') format('truetype'),
+		url('fonts/icomoon-front.svg?-xf8xx2#icomoon-front') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
 [class^="icon--"], [class*=" icon--"] {
-	font-family: 'icomoon-frontend';
+	font-family: 'icomoon-front';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -23,15 +23,7 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon--weather-bliksem:before {
-	content: "\e619";
-}
-
-.icon--menu:before {
-	content: "\e618";
-}
-
-.icon--arrow-down-light:before {
+.icon--arrow-up:before {
 	content: "\e600";
 }
 
@@ -39,91 +31,67 @@
 	content: "\e601";
 }
 
-.icon--arrow-left-light:before {
+.icon--arrow-left:before {
 	content: "\e602";
 }
 
-.icon--arrow-left:before {
+.icon--arrow-right:before {
 	content: "\e603";
 }
 
-.icon--arrow-right-light:before {
+.icon--arrow-tail-down:before {
 	content: "\e604";
 }
 
-.icon--arrow-right:before {
+.icon--arrow-tail-left:before {
 	content: "\e605";
 }
 
-.icon--arrow-up-light:before {
+.icon--arrow-tail-right:before {
 	content: "\e606";
 }
 
-.icon--arrow-up:before {
+.icon--arrow-tail-up:before {
 	content: "\e607";
 }
 
-.icon--close:before {
+.icon--logo-kunstmaan:before {
 	content: "\e608";
 }
 
-.icon--double-arrow-down:before {
+.icon--logo-thecrew:before {
 	content: "\e609";
 }
 
-.icon--download:before {
+.icon--search:before {
 	content: "\e60a";
 }
 
-.icon--edit:before {
+.icon--social-facebook:before {
 	content: "\e60b";
 }
 
-.icon--plus:before {
+.icon--social-linkedin:before {
 	content: "\e60c";
 }
 
-.icon--social-facebook:before {
+.icon--social-twitter:before {
 	content: "\e60d";
 }
 
-.icon--social-linkedin:before {
+.icon--triangle-ddown:before {
 	content: "\e60e";
 }
 
-.icon--social-mail:before {
+.icon--triangle-left:before {
 	content: "\e60f";
 }
 
-.icon--social-twitter:before {
+.icon--triangle-right:before {
 	content: "\e610";
 }
 
-.icon--weather-bewolkt:before {
+.icon--triangle-up:before {
 	content: "\e611";
-}
-
-.icon--weather-zonnig_bewolkt:before {
-	content: "\e612";
-}
-
-.icon--weather-regen:before {
-	content: "\e613";
-}
-
-.icon--weather-sneeuw:before {
-	content: "\e614";
-}
-
-.icon--weather-zon:before {
-	content: "\e615";
-}
-
-.icon--zaalopstelling-theater:before {
-	content: "\e616";
-}
-
-.icon--zaalopstelling-uvorm:before {
-	content: "\e617";
 }
 
