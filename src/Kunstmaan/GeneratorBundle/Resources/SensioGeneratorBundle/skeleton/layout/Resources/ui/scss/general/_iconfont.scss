@@ -10,7 +10,7 @@
 // TODO: base64 webfonts and iconfont
 
 @font-face {
-    font-family: '$iconfont';
+    font-family: $iconfont;
     src:url('#{$iconfont-path}/#{$iconfont}.eot?a7621m');
     src:url('#{$iconfont-path}/#{$iconfont}.eot?#iefixa7621m') format('embedded-opentype'),
         url('#{$iconfont-path}/#{$iconfont}.woff?a7621m') format('woff'),
@@ -21,7 +21,7 @@
 }
 
 [class^="icon-"], [class*=" icon-"] {
-    font-family: '$iconfont';
+    font-family: $iconfont;
     speak: none;
     font-style: normal;
     font-weight: normal;

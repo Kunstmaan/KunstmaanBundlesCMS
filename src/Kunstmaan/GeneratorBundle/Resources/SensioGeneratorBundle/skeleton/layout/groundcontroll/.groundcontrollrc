@@ -11,7 +11,8 @@
         "mainJsInclude": {
             "folder": "Layout/",
             "fileName": "_js_footer.html.twig"
-        }
+        },
+        "browserSupport": ['last 2 versions', 'ie 9', 'ie 10', 'ie 11']
     },
 
     "dist": {
