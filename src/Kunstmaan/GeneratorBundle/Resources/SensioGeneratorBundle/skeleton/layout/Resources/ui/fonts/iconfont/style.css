@@ -1,97 +1,129 @@
 @font-face {
-    font-family: 'icomoon';
-    src:url('fonts/icomoon.eot?a7621m');
-    src:url('fonts/icomoon.eot?#iefixa7621m') format('embedded-opentype'),
-        url('fonts/icomoon.woff?a7621m') format('woff'),
-        url('fonts/icomoon.ttf?a7621m') format('truetype'),
-        url('fonts/icomoon.svg?a7621m#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'icomoon-frontend';
+	src:url('fonts/icomoon-frontend.eot?vztw97');
+	src:url('fonts/icomoon-frontend.eot?#iefixvztw97') format('embedded-opentype'),
+		url('fonts/icomoon-frontend.woff?vztw97') format('woff'),
+		url('fonts/icomoon-frontend.ttf?vztw97') format('truetype'),
+		url('fonts/icomoon-frontend.svg?vztw97#icomoon-frontend') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-    font-family: 'icomoon';
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
+[class^="icon--"], [class*=" icon--"] {
+	font-family: 'icomoon-frontend';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
 
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-arrow-up:before {
-    content: "\e600";
+.icon--weather-bliksem:before {
+	content: "\e619";
 }
 
-.icon-arrow-down:before {
-    content: "\e601";
+.icon--menu:before {
+	content: "\e618";
 }
 
-.icon-arrow-left:before {
-    content: "\e602";
+.icon--arrow-down-light:before {
+	content: "\e600";
 }
 
-.icon-arrow-right:before {
-    content: "\e603";
+.icon--arrow-down:before {
+	content: "\e601";
 }
 
-.icon-arrow-tail-down:before {
-    content: "\e604";
+.icon--arrow-left-light:before {
+	content: "\e602";
 }
 
-.icon-arrow-tail-left:before {
-    content: "\e605";
+.icon--arrow-left:before {
+	content: "\e603";
 }
 
-.icon-arrow-tail-right:before {
-    content: "\e606";
+.icon--arrow-right-light:before {
+	content: "\e604";
 }
 
-.icon-arrow-tail-up:before {
-    content: "\e607";
+.icon--arrow-right:before {
+	content: "\e605";
 }
 
-.icon-logo-kunstmaan:before {
-    content: "\e608";
+.icon--arrow-up-light:before {
+	content: "\e606";
 }
 
-.icon-logo-thecrew:before {
-    content: "\e609";
+.icon--arrow-up:before {
+	content: "\e607";
 }
 
-.icon-search:before {
-    content: "\e60a";
+.icon--close:before {
+	content: "\e608";
 }
 
-.icon-social-facebook:before {
-    content: "\e60b";
+.icon--double-arrow-down:before {
+	content: "\e609";
 }
 
-.icon-social-linkedin:before {
-    content: "\e60c";
+.icon--download:before {
+	content: "\e60a";
 }
 
-.icon-social-twitter:before {
-    content: "\e60d";
+.icon--edit:before {
+	content: "\e60b";
 }
 
-.icon-triangle-ddown:before {
-    content: "\e60e";
+.icon--plus:before {
+	content: "\e60c";
 }
 
-.icon-triangle-left:before {
-    content: "\e60f";
+.icon--social-facebook:before {
+	content: "\e60d";
 }
 
-.icon-triangle-right:before {
-    content: "\e610";
+.icon--social-linkedin:before {
+	content: "\e60e";
 }
 
-.icon-triangle-up:before {
-    content: "\e611";
+.icon--social-mail:before {
+	content: "\e60f";
+}
+
+.icon--social-twitter:before {
+	content: "\e610";
+}
+
+.icon--weather-bewolkt:before {
+	content: "\e611";
+}
+
+.icon--weather-zonnig_bewolkt:before {
+	content: "\e612";
+}
+
+.icon--weather-regen:before {
+	content: "\e613";
+}
+
+.icon--weather-sneeuw:before {
+	content: "\e614";
+}
+
+.icon--weather-zon:before {
+	content: "\e615";
+}
+
+.icon--zaalopstelling-theater:before {
+	content: "\e616";
+}
+
+.icon--zaalopstelling-uvorm:before {
+	content: "\e617";
 }
 
