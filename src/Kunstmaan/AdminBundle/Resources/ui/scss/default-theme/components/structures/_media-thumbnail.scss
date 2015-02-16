@@ -5,15 +5,141 @@
 /* General
    ========================================================================== */
 .media-thumbnail {
+    position: relative;
+
     display: block;
     overflow: hidden;
+    min-height: 20rem;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    @media (min-width: $screen-lg) {
+        &:hover {
+            .media-thumbnail__helper {
+                opacity: 1;
+            }
+
+            & + .media-thumbnail-del-btn {
+                opacity: 1;
+            }
+        }
+    }
 }
 
 
 
 /* Image
    ========================================================================== */
-.media-thumbnail {
+.media-thumbnail__img {
     display: block;
     max-width: 100%;
+    margin: 0 auto;
 }
+
+
+
+/* Caption
+   ========================================================================== */
+.media-thumbnail__caption {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    font-size: 1.2rem;
+    color: $gray-light;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        display: block;
+        width: 5%;
+        height: 100%;
+
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) ,rgba(255, 255, 255, 1) 100%);
+    }
+}
+
+
+
+/* Helper
+   ========================================================================== */
+.media-thumbnail__helper {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+
+    font-size: 1.2rem;
+    color: $blue;
+
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+
+        transition: opacity .3s ease;
+    }
+}
+
+
+
+/* Delete
+   ========================================================================== */
+.media-thumbnail-del-btn {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
+
+    padding: .2em .5em;
+
+    border-radius: 0 $default-border-radius 0 $default-border-radius;
+
+    &, &:hover {
+        background: $red;
+        color: $white;
+    }
+
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+
+        transition: opacity .3s ease;
+
+        &:hover {
+            opacity: 1;
+
+            + .media-thumbnail-del-helper {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.media-thumbnail-del-helper {
+    z-index: 2;
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2rem;
+
+    display: none;
+
+    font-size: 1.2rem;
+    color: $red;
+
+    @media (min-width: $screen-lg) {
+        display: block;
+        opacity: 0;
+
+        transition: opacity .3s ease;
+    }
+}
+
+
+
+
+
+
+
