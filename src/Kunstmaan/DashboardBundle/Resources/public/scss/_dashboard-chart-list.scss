@@ -3,40 +3,56 @@
    ========================================================================== */
 
 .dashboard-chart-list {
-    list-style: none;
-    margin: 0 0 4em 0;
+    margin: 0 0 5rem 0;
+
     text-align: center;
+
+    list-style: none;
 }
 
 .dashboard-chart-list__item {
     display: inline-block;
-    padding: 1em;
+    padding: 1.5rem;
+
     text-align: left;
+
     &:first-child {
         padding-left: 0;
     }
+
     &:last-child {
         padding-right: 0;
     }
+
     @media (min-width: $screen-desk) {
-        padding: 1em 1.5em;
+        padding: 1.5rem 2rem;
     }
+
     @media (min-width: $screen-desk-wide) {
-        padding: 1em 2em;
+        padding: 1.5rem 2.5rem;
     }
 }
 
 .dashboard-chart-list__icon {
     float: left;
-    margin: 0 .6em 0 0;
+
+    margin: 0 1rem 0 0;
 }
 
 .dashboard-chart-list__data {
     float: left;
+
+    padding: 0;
+    margin-top: .3rem;
+
     color: #6d6d6d;
-    padding: .2em 0 0 0;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
 }
 
 .dashboard-chart-list__data__number {
     display: block;
+
+    font-size: 2.6rem;
+    line-height: 2rem;
 }

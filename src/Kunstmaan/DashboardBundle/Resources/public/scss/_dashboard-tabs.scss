@@ -34,6 +34,14 @@
     &:last-child {
         margin: 0;
     }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .dashboard-tabs__item__title {
+            color: $blue;
+        }
+    }
 }
 
 .dashboard-tabs__item--active {
@@ -42,6 +50,14 @@
 
     .dashboard-tabs__controller {
         padding-bottom: 1.5rem;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        .dashboard-tabs__item__title {
+            color: $text-color-lighter;
+        }
     }
 }
 

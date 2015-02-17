@@ -48,46 +48,46 @@
 
 @-webkit-keyframes rotateplane {
     0% {
-        -webkit-transform: perspective(120px);
-                transform: perspective(120px);
+        -webkit-transform: perspective(12rem);
+                transform: perspective(12rem);
     }
     50% {
-        -webkit-transform: perspective(120px) rotateY(180deg);
-                transform: perspective(120px) rotateY(180deg);
+        -webkit-transform: perspective(12rem) rotateY(180deg);
+                transform: perspective(12rem) rotateY(180deg);
     }
     100% {
-        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
-                transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+        -webkit-transform: perspective(12rem) rotateY(180deg) rotateX(180deg);
+                transform: perspective(12rem) rotateY(180deg) rotateX(180deg);
     }
 }
 @-moz-keyframes rotateplane {
     0% {
-        -moz-transform: perspective(120px);
-             transform: perspective(120px);
+        -moz-transform: perspective(12rem);
+             transform: perspective(12rem);
     }
     50% {
-        -moz-transform: perspective(120px) rotateY(180deg);
-             transform: perspective(120px) rotateY(180deg);
+        -moz-transform: perspective(12rem) rotateY(180deg);
+             transform: perspective(12rem) rotateY(180deg);
     }
     100% {
-        -moz-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
-             transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+        -moz-transform: perspective(12rem) rotateY(180deg) rotateX(180deg);
+             transform: perspective(12rem) rotateY(180deg) rotateX(180deg);
     }
 }
 @keyframes rotateplane {
     0% {
-        -webkit-transform: perspective(120px);
-           -moz-transform: perspective(120px);
-                transform: perspective(120px);
+        -webkit-transform: perspective(12rem);
+           -moz-transform: perspective(12rem);
+                transform: perspective(12rem);
     }
     50% {
-        -webkit-transform: perspective(120px) rotateY(180deg);
-           -moz-transform: perspective(120px) rotateY(180deg);
-                transform: perspective(120px) rotateY(180deg);
+        -webkit-transform: perspective(12rem) rotateY(180deg);
+           -moz-transform: perspective(12rem) rotateY(180deg);
+                transform: perspective(12rem) rotateY(180deg);
     }
     100% {
-        -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
-           -moz-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
-                transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+        -webkit-transform: perspective(12rem) rotateY(180deg) rotateX(180deg);
+           -moz-transform: perspective(12rem) rotateY(180deg) rotateX(180deg);
+                transform: perspective(12rem) rotateY(180deg) rotateX(180deg);
     }
 }

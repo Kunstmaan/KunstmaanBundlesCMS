@@ -1,6 +1,7 @@
 /* ==========================================================================
-Dashboard
-========================================================================== */
+   Dashboard
+   ========================================================================== */
+
 @import "vars";
 @import "mixins";
 
@@ -9,6 +10,7 @@ Dashboard
 
 @import "dashboard-tabs";
 @import "dashboard-content";
+@import "dashboard-setup";
 
 @import "dashboard-charts";
 @import "dashboard-chart-list";
