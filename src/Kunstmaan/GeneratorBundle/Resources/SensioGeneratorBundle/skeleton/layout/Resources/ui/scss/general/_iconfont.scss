@@ -11,11 +11,11 @@
 
 @font-face {
     font-family: $iconfont;
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?5ue9yu');
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?#iefix5ue9yu') format('embedded-opentype'),
-        url('#{$iconfont-path}/#{$iconfont}.woff?5ue9yu') format('woff'),
-        url('#{$iconfont-path}/#{$iconfont}.ttf?5ue9yu') format('truetype'),
-        url('#{$iconfont-path}/#{$iconfont}.svg?5ue9yu##{$iconfont}') format('svg');
+    src:url('#{$iconfont-path}/#{$iconfont}.eot?-gb6e8g');
+    src:url('#{$iconfont-path}/#{$iconfont}.eot?#iefix-gb6e8g') format('embedded-opentype'),
+        url('#{$iconfont-path}/#{$iconfont}.woff?-gb6e8g') format('woff'),
+        url('#{$iconfont-path}/#{$iconfont}.ttf?-gb6e8g') format('truetype'),
+        url('#{$iconfont-path}/#{$iconfont}.svg?-gb6e8g##{$iconfont}') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -38,6 +38,11 @@
 
 /* Icons
    ========================================================================== */
+
+.icon--search:before {
+    content: "\e60c";
+}
+
 .icon--social-facebook:before {
     content: "\e608";
 }
@@ -101,7 +106,6 @@
 .icon--triangle-up:before {
     content: "\e611";
 }
-
 
 
 
