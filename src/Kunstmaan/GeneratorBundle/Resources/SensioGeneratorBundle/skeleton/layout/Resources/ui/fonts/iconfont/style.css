@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon-front';
-	src:url('fonts/icomoon-front.eot?-xf8xx2');
-	src:url('fonts/icomoon-front.eot?#iefix-xf8xx2') format('embedded-opentype'),
-		url('fonts/icomoon-front.woff?-xf8xx2') format('woff'),
-		url('fonts/icomoon-front.ttf?-xf8xx2') format('truetype'),
-		url('fonts/icomoon-front.svg?-xf8xx2#icomoon-front') format('svg');
+	src:url('fonts/icomoon-front.eot?5ue9yu');
+	src:url('fonts/icomoon-front.eot?#iefix5ue9yu') format('embedded-opentype'),
+		url('fonts/icomoon-front.woff?5ue9yu') format('woff'),
+		url('fonts/icomoon-front.ttf?5ue9yu') format('truetype'),
+		url('fonts/icomoon-front.svg?5ue9yu#icomoon-front') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -21,6 +21,22 @@
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon--social-facebook:before {
+	content: "\e608";
+}
+
+.icon--social-github:before {
+	content: "\e609";
+}
+
+.icon--social-linkedin:before {
+	content: "\e60a";
+}
+
+.icon--social-twitter:before {
+	content: "\e60b";
 }
 
 .icon--arrow-up:before {
@@ -53,30 +69,6 @@
 
 .icon--arrow-tail-up:before {
 	content: "\e607";
-}
-
-.icon--logo-kunstmaan:before {
-	content: "\e608";
-}
-
-.icon--logo-thecrew:before {
-	content: "\e609";
-}
-
-.icon--search:before {
-	content: "\e60a";
-}
-
-.icon--social-facebook:before {
-	content: "\e60b";
-}
-
-.icon--social-linkedin:before {
-	content: "\e60c";
-}
-
-.icon--social-twitter:before {
-	content: "\e60d";
 }
 
 .icon--triangle-ddown:before {
