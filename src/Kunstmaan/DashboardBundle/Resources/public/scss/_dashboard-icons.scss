@@ -59,14 +59,18 @@
 
 .dash-icon--circle {
     display: inline-block;
-    width: 2em;
-    height: 2em;
+
+    width: 2.8rem;
+    height: 2.8rem;
+
     line-height: 2em;
     text-align: center;
-    border-radius: 100%;
     color: #fff;
+
+    border-radius: 100%;
+
     &.dash-icon--stopwatch {
-        padding-left: 2px;
+        padding-left: .2rem;
     }
 }
 
