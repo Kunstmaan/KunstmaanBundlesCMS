@@ -69,13 +69,13 @@
 
 
 {% block sidebar %}
-    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation">
         <ul>
             {% set parentIds = foldermanager.getParentIds(folder) %}
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
             {% endfor %}
         </ul>
     </nav>
@@ -178,17 +178,6 @@
                         {% if not handler or handler.canHandle(media) %}
                             <div class="col-sm-6 col-md-4 col-lg-3">
                                 <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-image-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}">
-                                    {#
-                                    <a onclick="
-                                        handleOK({
-                                            imgpath: '{{ imageurl }}',
-                                            path:'{{ media.url }}',
-                                            title:'{{ media.name|escape('js') }}',
-                                            id:'{{ media.id }}'
-                                        });
-                                        return false;
-                                    ">
-                                    #}
                                     <figure>
                                         {% if imageurl %}
                                             <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">

@@ -3,10 +3,10 @@
         {{ mediaFolder.name }}
     </a>
     {% if mediaFolder.__children is not empty %}
-    <ul>
-        {% for mediaFolder in mediaFolder.__children %}
-            {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
-        {% endfor %}
-    </ul>
+        <ul>
+            {% for mediaFolder in mediaFolder.__children %}
+                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+            {% endfor %}
+        </ul>
     {% endif %}
 </li>
