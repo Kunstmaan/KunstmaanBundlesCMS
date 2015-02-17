@@ -63,9 +63,9 @@ $(function () {
         switchTab(id, url);
     });
 
-    $("#segment-menu select").chosen(
-        {'search_contains' : true}
-    );
+    // $("#segment-menu select").chosen(
+    //     {'search_contains' : true}
+    // );
 
     $("#segment-menu select").change(function() {
         var segmentId = $(this).find('option:selected').attr('data-segment-id');
