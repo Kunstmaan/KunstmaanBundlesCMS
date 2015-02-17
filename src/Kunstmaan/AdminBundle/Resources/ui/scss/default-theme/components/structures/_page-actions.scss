@@ -20,6 +20,10 @@
 
     @media (min-width: $screen-xs-min) {
         float:right;
+
+        &.page-main-actions--no-tabs {
+            float: none;
+        }
     }
 }
 

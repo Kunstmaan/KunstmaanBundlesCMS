@@ -117,7 +117,7 @@
     </div>
 
     <!-- Main-actions -->
-    <div class="page-main-actions js-auto-collapse-buttons">
+    <div class="page-main-actions page-main-actions--no-tabs js-auto-collapse-buttons">
         <div class="btn-group">
             {% block actions %}
                 <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
@@ -138,10 +138,93 @@
 
 
     <!-- Subfolders Map list -->
-    <nav class="list-group list-group--no-top-border" role="navigation">
-
+    <nav class="list-group" role="navigation">
+        {% for child in folder.children %}
+            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}" class="list-group-item">
+                {{ child.name | trans }}
+            </a>
+        {% else %}
+            <p class="list-group-item text--muted">
+                {{ 'media.folder.sub.no' |trans }}
+            </p>
+        {% endfor %}
     </nav>
 
+
+    <!-- Files -->
+    <section>
+        {% if app.session.get('media-list-view') %}
+            {% if adminlist.count > 0 %}
+                {{ parent() }}
+            {% else %}
+                <p class="text--muted">
+                    {{ 'media.media.no' |trans }}
+                </p>
+            {% endif %}
+        {% else %}
+            {% if adminlist.count > 0 %}
+                <div class="row">
+                    {% for media in folder.media %}
+                        {% set handler = mediamanager.getHandler(media) %}
+                        {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                        {% if imageurl is not empty and media.location == 'local' %}
+                            {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                                {% set imageurl = imageurl %}
+                            {% else %}
+                                {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if not handler or handler.canHandle(media) %}
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-image-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}">
+                                    {#
+                                    <a onclick="
+                                        handleOK({
+                                            imgpath: '{{ imageurl }}',
+                                            path:'{{ media.url }}',
+                                            title:'{{ media.name|escape('js') }}',
+                                            id:'{{ media.id }}'
+                                        });
+                                        return false;
+                                    ">
+                                    #}
+                                    <figure>
+                                        {% if imageurl %}
+                                            <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">
+                                        {% else %}
+                                            <i class="fa fa-file-o media-thumbnail__icon"></i>
+                                        {% endif %}
+                                        <figcaption class="media-thumbnail__caption">
+                                            {{ media.name }}
+                                        </figcaption>
+                                    </figure>
+                                    <span class="media-thumbnail__helper">
+                                        Click to select
+                                    </span>
+                                </a>
+                            </div>
+
+                            {# Clearfixes #}
+                            {% if loop.index is divisible by(2) %}
+                                <div class="clearfix visible-sm-block"></div>
+                            {% endif %}
+                            {% if loop.index is divisible by(3) %}
+                                <div class="clearfix visible-md-block"></div>
+                            {% endif %}
+                            {% if loop.index is divisible by(4) %}
+                                <div class="clearfix visible-lg-block"></div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text--muted">
+                    {{ 'media.media.no' |trans }}
+                </p>
+            {% endif %}
+        {% endif %}
+    </section>
 
 
     {# <div class="main_actions btn-group">
