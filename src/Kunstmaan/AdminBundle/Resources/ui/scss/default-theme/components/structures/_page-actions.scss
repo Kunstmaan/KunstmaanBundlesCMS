@@ -61,14 +61,14 @@
 .page-sub-actions {
     text-align: right;
 
-    @media (min-width: $screen-md) {
+    @media (min-width: $screen-sm) {
         margin-top: -2.2rem;
     }
 }
 
 
 .page-sub-actions--has-buttons {
-    @media (min-width: $screen-md) {
+    @media (min-width: $screen-sm) {
         margin-top: -3.8rem;
     }
 }

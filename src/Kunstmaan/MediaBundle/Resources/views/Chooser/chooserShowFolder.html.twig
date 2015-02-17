@@ -1,104 +1,150 @@
 {% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
 
-{% block extra_actions_header %}{% endblock %}
-{% block top_menu %}{% endblock %}
-{% block footer %}{% endblock %}
+{% set urlParams = {'type': type} %}
+{% if cKEditorFuncNum %}
+    {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
+{% endif %}
+{% if linkChooser %}
+    {% set urlParams = urlParams|merge({'linkChooser': linkChooser}) %}
+{% endif %}
 
-{% block extrajavascript %}
+
+{% block body %}
+    {% set lowestTopChild = foldermanager.getRootFolderFor(folder) %}
+    {% if lowestTopChild %}
+        {% set navigationChildren = foldermanager.getFolderHierarchy(lowestTopChild) %}
+    {% endif %}
     {{ parent() }}
-    <script type="text/javascript">
-        // Handle click of OK button
-        function handleOK(result) {
-            if (window.opener) {
-                {% if cKEditorFuncNum is not empty %}
-                    window.opener.CKEDITOR.tools.callFunction({{ cKEditorFuncNum }}, result.path);
-                {% else %}
-                    window.opener.dialogWin.returnedValue = result;
-                    window.opener.dialogWin.returnFunc();
-                {% endif %}
-            } else {
-                //alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
-            }
-            window.close();
-            return false
-        }
-
-        // Handle click of Cancel button
-        function handleCancel() {
-            window.close();
-            return false
-        }
-    </script>
 {% endblock %}
 
-{% block extraclasshtml "overflow-scroll" %}
 
-{% block extraparamsinbody %}
-    class="media_popup_temp"
+{% block appHeader %}
+    <header role="banner">
+
+        <!-- App Header -->
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+
+                <!-- Header -->
+                <div class="navbar-header">
+
+                    <!--Header - Toggle -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <!-- Navigation -->
+                <div class="collapse navbar-collapse" id="main-nav-bar">
+
+                    <!-- Navigation - Left -->
+                    <ul class="nav navbar-nav">
+                        {% if linkChooserLink is defined and linkChooserLink %}
+                            <li>
+                                <a href="{{ linkChooserLink }}">
+                                    Pages
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0)">
+                                    Media
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Navigation - Right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% set route = app.request.attributes.get('_route') %}
+                        {{ localeswitcher_widget(requiredlocales, route) }}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 {% endblock %}
+
 
 {% block sidebar %}
-    {% set urlParams = {'type': type} %}
-    {% if cKEditorFuncNum %}
-        {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
-    {% endif %}
-    {% if linkChooser %}
-        {% set urlParams = urlParams|merge({'linkChooser': linkChooser}) %}
-    {% endif %}
-
-    <aside class="sidebar" {% if linkChooserLink %}style="margin-top:40px;"{% endif %}>
-        <h2>Media Chooser</h2>
-        <div id="tree" class="tree">
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
         <ul>
             {% set parentIds = foldermanager.getParentIds(folder) %}
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Chooser:chooserShowRecTreeView.html.twig' %}
+                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
             {% endfor %}
         </ul>
-        </div>
-    </aside>
-{% endblock %}
+    </nav>
 
-{% block header %}
-    <div {% if linkChooserLink %}style="margin-top:40px;padding-bottom:1px;"{% endif %}>
-        <h1>{{ folder.name | trans }}</h1>
+    <hr>
+
+    <!-- Tree Search -->
+    <div class="form-group app__sidebar__module app__sidebar__search">
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-search"></i>
+            </span>
+            <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+        </div>
     </div>
 {% endblock %}
 
+
+{% block header %}
+    <h1 class="app__content__header__title">
+        {{ folder.name | trans }}
+    </h1>
+    {% block extra_actions_header %}{% endblock %}
+{% endblock %}
+
+
 {% block content %}
-    {% set urlParams = {'type': type} %}
-    {% if cKEditorFuncNum %}
-        {% set urlParams = urlParams|merge({'CKEditorFuncNum': cKEditorFuncNum}) %}
-    {% endif %}
-    {% if linkChooser %}
-        {% set urlParams = urlParams|merge({'linkChooser': linkChooser}) %}
-    {% endif %}
 
-    {% if linkChooserLink %}
-        <header>
-            <div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
-                <div class="navbar-inner">
-                    <div class="container-fluid">
-                        <a class="brand" href="#">{{ websitetitle | trans }}</a>
-                        <nav>
-                            <ul class="nav secondary-nav">
-                                <li class="first">
-                                    <a href="{{ linkChooserLink }}">Pages</a>
-                                </li>
-                                <li class="active last">
-                                    <a href="#">Media</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-    {% endif %}
+    <!-- Sub-actions -->
+    <div class="page-sub-actions page-sub-actions--has-buttons">
+        <div class="btn-group">
+            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'thumb-view'})) }}" class="btn btn-default btn--raise-on-hover{% if not app.session.get('media-list-view') %} active{% endif %}">
+                <i class="fa fa-picture-o btn__icon"></i>
+            </a>
+            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'list-view'})) }}" class="btn btn-default btn--raise-on-hover{% if app.session.get('media-list-view') %} active{% endif %}">
+                <i class="fa fa-list btn__icon"></i>
+            </a>
+        </div>
+    </div>
 
-    <div class="main_actions btn-group">
+    <!-- Main-actions -->
+    <div class="page-main-actions js-auto-collapse-buttons">
+        <div class="btn-group">
+            {% block actions %}
+                <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                    Add media <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    {% for addaction in mediamanager.getFolderAddActions() %}
+                        <li>
+                            <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">
+                                {{ addaction.name |trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endblock %}
+        </div>
+    </div>
+
+
+    <!-- Subfolders Map list -->
+    <nav class="list-group list-group--no-top-border" role="navigation">
+
+    </nav>
+
+
+
+    {# <div class="main_actions btn-group">
         <div class="btn-group main_actions" style="margin-left:15px;">
             <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'thumb-view'})) }}" class="btn {% if not app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-th-large"></i></a>
             <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'list-view'})) }}" class="btn {% if app.session.get('media-list-view') %}active{% endif %}" style="font-size:14px;"><i class="icon-list"></i></a>
@@ -117,6 +163,7 @@
                 </ul>
         </div>
     </div>
+
     <section class="map-list">
         <table class="table">
             <tbody>
@@ -130,6 +177,7 @@
             </tbody>
         </table>
     </section>
+
     <section class="cont-images--chooser">
         {% if app.session.get('media-list-view') %}
             {% if adminlist.count > 0 %}
@@ -179,5 +227,36 @@
 
     <!--=========Modals=========-->
     {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
-    {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %}
+    {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %} #}
 {% endblock %}
+
+
+{% block footer %}{% endblock %}
+
+
+{# {% block extrajavascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        // Handle click of OK button
+        function handleOK(result) {
+            if (window.opener) {
+                {% if cKEditorFuncNum is not empty %}
+                    window.opener.CKEDITOR.tools.callFunction({{ cKEditorFuncNum }}, result.path);
+                {% else %}
+                    window.opener.dialogWin.returnedValue = result;
+                    window.opener.dialogWin.returnFunc();
+                {% endif %}
+            } else {
+                //alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
+            }
+            window.close();
+            return false
+        }
+
+        // Handle click of Cancel button
+        function handleCancel() {
+            window.close();
+            return false
+        }
+    </script>
+{% endblock %} #}
