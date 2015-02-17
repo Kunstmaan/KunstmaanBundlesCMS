@@ -9,7 +9,7 @@
                 <div class="col-md-3">
                     {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
                     <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
-                        <img src="{{ asset('bundles/<%= bundle.name|lower|replace({"bundle": ""}) %>/img/general/demo-logo.svg') }}" alt=""/>
+                        <img src="frontend/img/general/logo-thecrew.svg') }}" alt="The Crew"/>
                     </a>
                 </div>
 
@@ -19,8 +19,8 @@
                     <nav role="navigation" class="js-toggle-container main-nav pull-left">
                         <button class="js-toggle-btn toggle-button" data-target="#main-menu">
                             Menu
-                            <i class="icon icon--reorder toggle-btn__icon--show">_</i>
-                            <i class="icon icon--remove toggle-btn__icon--hide">x</i>
+                            <i class="icon icon--arrow-down toggle-btn__icon--show"></i>
+                            <i class="icon icon--arrow-up toggle-btn__icon--hide"></i>
                         </button>
 
                         <div id="main-menu" class="toggle-item">
@@ -36,7 +36,7 @@
 
                                 {# Call to action #}
                                 <li class="main-nav__list__item main-nav__list__item--cta">
-                                    <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i>&gt;</i></a>
+                                    <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -49,7 +49,7 @@
                             <div class="searchbox">
                                 <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                                 <button type="submit" id="search" class="searchbox__submit">
-                                    <i class="icon icon--search searchbox__submit__icon">➔</i>
+                                    <i class="icon icon--search searchbox__submit__icon"></i>
                                 </button>
                             </div>
                         </form>
