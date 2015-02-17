@@ -17,7 +17,7 @@ $gray-lighter:      #EEE;
 $blue-dark:         #053046;
 $blue:              #428bca;
 
-$text-color:        $black;
+$text-color:        $gray-dark;
 $hr-color:          $gray-light;
 $link-color:        $blue;
-
+$link-hover-color:  darken($link-color, 15%);
