@@ -126,7 +126,7 @@
                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                     {% for addaction in mediamanager.getFolderAddActions() %}
                         <li>
-                            <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#add{{ addaction.type }}-modal">
                                 {{ addaction.name |trans }}
                             </a>
                         </li>
@@ -214,6 +214,11 @@
             {% endif %}
         {% endif %}
     </section>
+
+
+    <!-- Modals -->
+    {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
+    {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %}
 
 
     {# <div class="main_actions btn-group">

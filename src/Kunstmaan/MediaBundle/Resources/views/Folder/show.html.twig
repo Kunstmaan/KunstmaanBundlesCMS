@@ -78,7 +78,7 @@
                     <ul class="dropdown-menu" role="menu">
                         {% for addaction in mediamanager.getFolderAddActions() %}
                             <li>
-                                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">
+                                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" {# data-toggle="modal" data-target="#add{{ addaction.type }}-modal" #}>
                                     {{ addaction.name |trans }}
                                 </a>
                             </li>
@@ -251,5 +251,6 @@
     <!-- Modals -->
     {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {# {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %} #}
 
 {% endblock %}
