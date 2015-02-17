@@ -17,13 +17,13 @@
 
                     {# Main navigation #}
                     <nav role="navigation" class="js-toggle-container main-nav pull-left">
-                        <button class="js-toggle-btn toggle-button" data-target="#main-menu">
+                        <button class="js-toggle-btn toggle-button main-nav__button" data-target="#main-menu">
                             Menu
                             <i class="icon icon--arrow-down toggle-btn__icon--show"></i>
                             <i class="icon icon--arrow-up toggle-btn__icon--hide"></i>
                         </button>
 
-                        <div id="main-menu" class="toggle-item">
+                        <div id="main-menu" class="toggle-item main-nav__content">
                             <ul class="toggle-item__content main-nav__list">
                                 {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                                 {% for node in activeSubnode.children %}

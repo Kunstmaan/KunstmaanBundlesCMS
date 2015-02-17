@@ -9,6 +9,18 @@
     @include list-reset;
 }
 
+@media(min-width: $screen-md-min) {
+    .main-nav__button {
+        display: none;
+    }
+    .main-nav__content {
+        height: auto !important;
+    }
 
-/* Sublevel
-   ========================================================================== */
+    .main-nav__list__item {
+        display: inline-block;
+    }
+    .main-nav__list__link {
+        display: block;
+    }
+}
