@@ -6,14 +6,14 @@
             {% if nodemenu is defined %}
 
                 {# Logo #}
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-3 col-xs-6">
                     {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
                     <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
                         <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew"/>
                     </a>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-9 col-sm-9 col-xs-6">
 
                     {# Main navigation #}
                     <nav role="navigation" class="js-toggle-container main-nav pull-left">
