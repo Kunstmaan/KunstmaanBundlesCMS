@@ -7,6 +7,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
     init = function() {
         cargobay.toggle.init();
+        cargobay.scrollToTop.init();
 
         appScroll();
         initTooltip();

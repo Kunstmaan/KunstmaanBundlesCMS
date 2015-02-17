@@ -3,9 +3,9 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.urlChooser = (function(window, undefined) {
 
     var init, urlChooser,
-        saveUrlChooserModal;
+        saveUrlChooserModal, saveMediaChooserModal;
 
-    var itemUrl, itemId,
+    var itemUrl, itemId, itemTitle,
         $body = $('body');
 
 
@@ -41,11 +41,13 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
             var $this = $(this),
                 imagePath = $this.data('image-path'),
-                id = $this.data('id');
+                id = $this.data('id'),
+                title = $this.data('title');
 
             // Store values
             itemUrl = imagePath;
-            itemId = id;
+            itemId = id,
+            itemTitle = title;
 
             saveUrlChooserModal();
         });
@@ -69,11 +71,6 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
     // Save for URL-chooser
     saveUrlChooserModal = function() {
-        var result = {
-            path: itemUrl,
-            id: itemId
-        };
-
         var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
             linkedInputId = $parentModal.data('linked-input-id'),
             parentModalId = $parentModal.attr('id');
@@ -81,10 +78,26 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
         // Set val
         parent.$('#' + linkedInputId).val(itemUrl);
 
+        // Extra actions for media chooser
+        if($parentModal.data('media-chooser') === true) {
+            saveMediaChooserModal(linkedInputId);
+        }
+
         // Close modal
         parent.$('#' + parentModalId).modal('hide');
     };
 
+
+    // Save for Media-chooser
+    saveMediaChooserModal = function(linkedInputId) {
+        var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
+            $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
+            $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
+
+        $mediaChooser.addClass('media-chooser--choosen');
+        $previewImg.attr('src', itemUrl);
+        $previewTitle.html(itemTitle);
+    };
 
 
 

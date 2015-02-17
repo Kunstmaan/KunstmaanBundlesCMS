@@ -47,7 +47,7 @@
 
     transition: transform .3s ease;
 
-    @media (max-width: $screen-lg) {
+    @media (max-width: $screen-md) {
         display: none;
     }
 }

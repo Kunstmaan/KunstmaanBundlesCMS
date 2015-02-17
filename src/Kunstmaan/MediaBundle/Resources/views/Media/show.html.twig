@@ -61,7 +61,6 @@
         <div class="btn-group" role="group">
             {% block extraactions %}{% endblock %}
             {% block actions %}
-                {#  href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" #}
                 <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
                     {{ 'form.delete'|trans }}
                 </button>

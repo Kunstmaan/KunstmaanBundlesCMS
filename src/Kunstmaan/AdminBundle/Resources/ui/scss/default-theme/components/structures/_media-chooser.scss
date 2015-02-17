@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Media Chooser
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.media-chooser {
+    position: relative;
+
+    width: 100%;
+    max-width: 40rem;
+
+    .media-chooser__preview {
+        display: none;
+    }
+}
+
+.media-chooser--choosen {
+
+    .media-chooser__preview {
+        display: block;
+    }
+
+    .media-chooser__choose-btn {
+        display: none;
+    }
+}
+
+
+
+/* Choose btn
+   ========================================================================== */
+.media-chooser__choose-btn {
+    position: relative;
+
+    padding-left: 2.5em;
+
+    text-align: left;
+}
+
+.media-chooser__choose-btn__icon {
+    position: absolute;
+    top: .8rem;
+    left: 1.2rem;
+}
