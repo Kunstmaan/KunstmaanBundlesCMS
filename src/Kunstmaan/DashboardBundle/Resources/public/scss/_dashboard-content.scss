@@ -12,11 +12,6 @@
     border: 1px solid $hr-color;
     border-radius: 0 0 3px 3px;
     @include clearfix;
-    &, * {
-        -webkit-box-sizing: border-box;
-           -moz-box-sizing: border-box;
-                box-sizing: border-box;
-    }
 }
 
 .dashboard__content--loading {
