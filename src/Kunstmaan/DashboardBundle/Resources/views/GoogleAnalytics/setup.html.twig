@@ -1,8 +1,5 @@
-{% block header %}{% endblock %}
-
 {% block content %}
     <form method="post" action="" class="form--dashboard-setup" id="dashboard-setup-form">
-        <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
         {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="alert alert-success">
                 {{ flashMessage }}

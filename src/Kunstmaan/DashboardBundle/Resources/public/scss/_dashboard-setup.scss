@@ -12,4 +12,8 @@
 
 .setup-group__select__wrapper {
     margin-bottom: 1rem;
+
+    &.not-shown {
+        display: none;
+    }
 }
