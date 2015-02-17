@@ -7,9 +7,9 @@
         <div {{ macros.attributes(listAttributes) }}>
             <div class="btn-group">
                 {{ block('children') }}
-                <a href="#" class="btn btn-default">
+                <button type="button" class="js-scroll-to-top btn btn-default">
                     <i class="fa fa-caret-up"></i>
-                </a>
+                </button>
             </div>
         </div>
     {% endif %}
