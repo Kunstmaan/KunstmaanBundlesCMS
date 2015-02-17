@@ -76,12 +76,33 @@
         <!-- Preview -->
         <div class="media-chooser__preview">
             <figure>
-                <img src="/" id="{{ id }}__preview__img" class="media-chooser__preview__img">
-                <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
+                {% if(value.ent is defined) %}
+                    {% set media = value.ent %}
+                    {% set handler = mediamanager.getHandler(media) %}
+                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                    {% if imageurl is not empty and media.location == 'local' %}
+                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                            {% set imageurl = imageurl %}
+                        {% else %}
+                            {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                        {% endif %}
+                    {% endif %}
+                    {% if imageurl %}
+                        <img src="{{ imageurl }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="img-thumbnail media-chooser__preview__img">
+                        <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
+                            {{ media.name }}
+                        </figcaption>
+                    {% else %}
+                        <i class="fa fa-file-o"></i>
+                    {% endif %}
+                {% else %}
+                    <img src="/" id="{{ id }}__preview__img" class="img-thumbnail media-chooser__preview__img">
+                    <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
+                {% endif %}
             </figure>
 
             <button type="button" class="btn btn-default media-chooser__preview__del-btn">
-                {{ 'media.widget.delete' | trans }}
+                <i class="fa fa-trash-o"></i>
             </button>
         </div>
 
