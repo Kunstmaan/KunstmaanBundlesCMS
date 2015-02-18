@@ -11,7 +11,7 @@
                 <div class="setup-group" id="account-group">
                     <h4>{{ 'dashboard.ga.setup.accounts' | trans }}</h4>
                     <div id="accounts" class="setup-group__select__wrapper">
-                        <select class="setup-group__select">
+                        <select class="setup-group__select js-advanced-select form-control advanced-select">
                             <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
                             {% for account in accounts %}
                                 <option {% if account.accountId == accountId %}selected{% endif %} data-id="{{account.accountId}}">
@@ -22,7 +22,7 @@
                     </div>
 
                     <div id="properties" class="setup-group__select__wrapper{% if properties is not defined %} not-shown{% endif %}">
-                        <select class="setup-group__select">
+                        <select class="setup-group__select js-advanced-select form-control advanced-select">
                             <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
                             {% if properties is defined %}
                                 {% for property in properties %}
@@ -35,7 +35,7 @@
                     </div>
 
                     <div id="profiles" class="setup-group__select__wrapper{% if profiles is not defined %} not-shown{% endif %}">
-                        <select class="setup-group__select">
+                        <select class="setup-group__select js-advanced-select form-control advanced-select">
                             <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
                             {% if profiles is defined %}
                                 {% for profile in profiles %}
@@ -61,44 +61,44 @@
                         {{ 'dashboard.ga.setup.segment.info' | trans }} <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/segments" target="_blank">{{ 'dashboard.ga.setup.segment.here' | trans }}</a>.
                     </p>
 
-                    <ul>
+                    <ul class="add-segment__list">
                         {% for segment in segments %}
-                            <li id="segment-list__{{ segment.id }}">
+                            <li id="segment-list__{{ segment.id }}" class="clearfix add-segment__list-item">
                                 <div class="display-view">
                                     <span class="display-segment-name">{{ segment.name }}</span> (<span class="display-segment-query"> {{segment.query}} </span>)
-                                    <button class="segment-list-button__delete btn btn-mini" data-segment-id="{{ segment.id }}"><i class="icon-remove"></i> remove</button>
-                                    <button class="segment-list-button__edit btn btn-mini" data-segment-id="{{ segment.id }}"><i class="icon-edit"></i> edit</button>
+                                    <div class="btn-group btn-group-xs pull-right" role="group">
+                                        <button class="segment-list-button__delete btn btn-danger" data-segment-id="{{ segment.id }}">remove</button>
+                                        <button class="segment-list-button__edit btn btn-default" data-segment-id="{{ segment.id }}">edit</button>
+                                    </div>
                                 </div>
-                                <div class="edit-view">
+                                <div class="edit-view clearfix well">
                                     <input type="text" id="segment-edit-name-{{segment.id}}" class="segment-name" value="{{segment.name}}"/>
                                     <input type="text" id="segment-edit-query-{{segment.id}}" class="segment-query" value="{{segment.query}}"/>
-                                    <button class="segment-list-button__confirm btn btn-small" data-segment-id="{{ segment.id }}"><i class="icon-ok"></i> save</button>
+                                    <button class="segment-list-button__confirm btn btn-default pull-right" data-segment-id="{{ segment.id }}">save</button>
                                 </div>
                             </li>
                         {% endfor %}
                     </ul>
 
-                    <div id="segments-new" class="segment--new"></div>
+                    <div id="segments-new"></div>
 
-                    <button type="button" class="btn btn-small" id="segment-button__add">
-                        <i class="icon-plus"></i> add segment
-                    </button>
+                    <button type="button" class="btn btn-primary" id="segment-button__add">add segment</button>
 
                     <div>
                         {% if profileSegments.own | length > 0 %}
                             <h4>{{ 'dashboard.ga.setup.segment.own' | trans }}</h4>
-                            <ul>
+                            <ul class="list-group">
                                 {% for segment in profileSegments.own %}
-                                    <li>
+                                    <li class="list-group-item">
                                         {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
                                     </li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
                             <h4>{{ 'dashboard.ga.setup.segment.builtin' | trans }}</h4>
-                        <ul>
+                        <ul class="list-group">
                             {% for segment in profileSegments.builtin %}
-                                <li>
+                                <li class="list-group-item">
                                     {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
                                 </li>
                             {% endfor %}
@@ -108,9 +108,9 @@
 
                 <div class="setup-group" id="control-group">
                     {% if multiconfig is defined %}
-                        <a href="{{ path('GaCollectionsBundle_Index', {'configId':configId}) }}" class="btn" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
+                        <a href="{{ path('GaCollectionsBundle_Index', {'configId':configId}) }}" class="btn btn-primary" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
                     {% else %}
-                        <a href="{{ path('kunstmaan_dashboard') }}" class="btn" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
+                        <a href="{{ path('kunstmaan_dashboard') }}" class="btn btn-default" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
                     {% endif %}
                     <button disabled id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
                 </div>

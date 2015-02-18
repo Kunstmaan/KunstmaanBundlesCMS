@@ -205,10 +205,10 @@ $(function () {
             var id = $.now();
 
             // create elements
-            var segmentDiv = $('<div>', {'id' : 'segmentDiv'+id});
-            var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segment'+id, 'class' : 'segment-query', 'placeholder' : 'query', 'value' : query});
+            var segmentDiv = $('<div>', {'id' : 'segmentDiv'+id, 'class': 'well add-segment__wrapper clearfix'});
+            var segmentInput = $('<input>', { 'type': 'text', 'id' : 'segment'+id, 'class' : 'segment-query', 'placeholder': 'query', 'value' : query});
             var segmentName = $('<input>', { 'type': 'text', 'id' : 'segment_name'+id, 'class' : 'segment-name', 'placeholder' : 'name', 'value' : name});
-            var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'segment-button__delete btn', 'value' : 'cancel'})
+            var segmentButton = $('<input>', {'type': 'button', 'data-segment-id' : 'segmentDiv'+id, 'class' : 'btn btn-danger pull-right', 'value' : 'cancel'})
 
             // add event trigger for the delete button
             segmentButton.click(function() {
