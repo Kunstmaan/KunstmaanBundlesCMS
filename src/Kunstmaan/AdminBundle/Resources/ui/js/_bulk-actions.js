@@ -5,7 +5,7 @@ kunstmaanbundles.bulkActions = (function($, window, undefined) {
     var init,
         setAllCheckbox, updateBulkCheckboxes, bulkAction;
 
-    var $form = $'#bulk-form'),
+    var $form = $('#bulk-form'),
         $SelectAllCheckbox = $('#select-all-bulk-checkbox'),
         $bulkCheckboxes = $('.js-bulk-checkbox'),
         $bulkActionButtons = $('.js-bulk-action-button');
@@ -15,7 +15,6 @@ kunstmaanbundles.bulkActions = (function($, window, undefined) {
 
         if($form.length) {
             setAllCheckbox();
-            setActionButtons();
 
             $bulkCheckboxes.on('change', updateBulkCheckboxes);
             $bulkActionButtons.on('click', function() {
