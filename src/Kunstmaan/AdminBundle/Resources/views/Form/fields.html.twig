@@ -8,13 +8,11 @@
 
 {% block choice_widget_expanded %}
     {% spaceless %}
-        <div {{ block('widget_container_attributes') }} class="nested_input_prop_container choice">
+        <div {{ block('widget_container_attributes') }}>
             {% for child in form %}
-                <div class="input_prop">
+                <div class="form-group">
                     {{ form_label(child) }}
-                    <div class="input">
-                        {{ form_widget(child) }}
-                    </div>
+                    {{ form_widget(child) }}
                 </div>
             {% endfor %}
         </div>
@@ -216,22 +214,28 @@
 {# Misc #}
 {% block datetime_widget %}
     {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
-    <div class="datetime small-datetime-widget">
-        {{ block('base_datetime_widget') }}
+    <div class="form-group date-time-group">
+        <div class="row">
+            {{ block('base_datetime_widget') }}
+        </div>
     </div>
 {% endblock %}
 
 
 {% block date_widget %}
     {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-    {{ block('base_date_widget') }}
+    <div class="js-datepicker col-sm-7" data-format="DD-MM-YYYY">
+        {{ block('base_date_widget') }}
+    </div>
 {% endblock date_widget %}
 
 
 {% block time_widget %}
     {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
     {% set type = 'text' %}
-    {{ block('base_time_widget') }}
+    <div class="js-datepicker col-sm-5" data-format="HH:mm">
+        {{ block('base_time_widget') }}
+    </div>
 {% endblock time_widget %}
 
 

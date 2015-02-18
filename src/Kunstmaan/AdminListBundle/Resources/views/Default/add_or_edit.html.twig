@@ -1,62 +1,53 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-{% block content %}
-    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate="novalidate">
 
-        {% block main_actions %}
-            <div class="main_actions btn-group">
-                <button type="submit" class="btn btn-primary">
-                    {{ 'Save' | trans }}
-                </button>
+{% block extra_actions_header %}
+    <div class="col-sm-6 col-md-4">
+        <!-- Main-actions -->
+        <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+            <div class="btn-group">
+                {% block actions %}
+                    <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                        {{ 'Save' | trans }}
+                    </button>
+                    <a href="{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}" class="btn btn-default btn--raise-on-hover">
+                        {{ 'form.cancel' | trans }}
+                    </a>
 
-                <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn btn-default">
-                    {{ 'form.cancel' | trans }}
-                </button>
-
-                {% if adminlistconfigurator.hasItemActions() %}
-                    {% for itemAction in adminlistconfigurator.getItemActions() %}
-                        <a class="btn btn-default" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
-                            {% if itemAction.getIconFor(entity) is not null %}
-                                <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}">
-                            {% else %}
-                                {{ itemAction.getLabelFor(entity) }}
-                            {% endif %}
-                        </a>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        {% endblock %}
-
-        <!--Scroll Actions-->
-        <div class="main_actions top" id="main_actions_top">
-            <div class="pull-right btn-group">
-                <button type="submit" class="btn btn-primary">
-                    {{ 'Save' | trans }}
-                </button>
-
-                <button type="reset" onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" class="btn btn-default">
-                    {{ 'form.cancel' | trans }}
-                </button>
-
-                {% if adminlistconfigurator.hasItemActions() %}
-                    {% for itemAction in adminlistconfigurator.getItemActions() %}
-                        <a class="btn btn-default" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
-                            {% if itemAction.getIconFor(entity) is not null %}
-                                <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}">
-                            {% else %}
-                                {{ itemAction.getLabelFor(entity) }}
-                            {% endif %}
-                        </a>
-                    {% endfor %}
-                {% endif %}
-                <a href="#" class="btn btn-default btn-default">
-                    <i class="fa fa-caret-up"></i>
-                </a>
+                    {% if adminlistconfigurator.hasItemActions() %}
+                        {% for itemAction in adminlistconfigurator.getItemActions() %}
+                            <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                                {% if itemAction.getIconFor(entity) is not null %}
+                                    <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}">
+                                {% else %}
+                                    {{ itemAction.getLabelFor(entity) }}
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                {% endblock %}
             </div>
         </div>
 
-        <fieldset class="properties">
+        <!-- Scroll-actions -->
+        <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+            <div class="btn-group">
+                {{ block('actions') }}
+                <button type="button" class="js-scroll-to-top btn btn-default btn--raise-on-hover">
+                    <i class="fa fa-caret-up"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+
+        <!-- Properties -->
+        <fieldset class="form__fieldset--padded">
             {% block form_content %}
                 {{ form_widget(form) }}
             {% endblock %}
