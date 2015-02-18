@@ -6,7 +6,7 @@
         <div class="toggle-item__content app__filter__content">
             <form class="form form-inline" action="{{ path(basepath, extraparams) }}">
 
-                <fieldset id="filter-holder" class="form__fieldset form__fieldset--padded">
+                <fieldset id="filter-holder" class="form__fieldset--padded-full">
                     <!-- Start Filter -->
                     <div id="first-filter-line" class="js-filter-line app__filter__line{% if filter.currentfilters|length >0 %} hidden{% endif %}">
                         <div class="form-group">
@@ -62,7 +62,7 @@
 
 
 
-                <fieldset class="form__fieldset form__fieldset--padded">
+                <fieldset class="form__fieldset--padded-full">
                     <!-- Add filter -->
                     <button type="button" id="add-filter" class="js-create-filter-btn btn btn-default btn--no-border btn--no-hor-padding hidden" data-first="false">
                         <i class="fa fa-plus-circle btn__icon"></i>
