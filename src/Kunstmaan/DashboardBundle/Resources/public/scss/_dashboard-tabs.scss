@@ -26,10 +26,9 @@
     background: #fff;
 
     border-radius: .4rem .4rem 0 0;
+    border: 1px solid transparent;
 
     cursor: pointer;
-
-    @include single_transition(all, .2s, ease-out);
 
     &:last-child {
         margin: 0;
@@ -45,7 +44,7 @@
 }
 
 .dashboard-tabs__item--active {
-    border: 1px solid $hr-color;
+    border-color: $hr-color;
     border-bottom: none;
 
     .dashboard-tabs__controller {

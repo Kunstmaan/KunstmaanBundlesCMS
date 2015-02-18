@@ -5,6 +5,16 @@
 .form--dashboard-setup {
 }
 
+.form--dashboard-setup__aside {
+    padding-right: 4rem;
+}
+
+.form--dashboard-setup__content {
+    padding-left: 4rem;
+
+    border-left: 1px solid #ddd;
+}
+
 .setup-group__select {
     display: block;
     width: 100%;
@@ -16,4 +26,51 @@
     &.not-shown {
         display: none;
     }
+}
+
+.setup-group {
+    margin: 1rem 0;
+    display: block;
+}
+
+.segment-group {
+    ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: block;
+            padding: .3rem .6rem;
+            margin: .5rem 0;
+
+            line-height: 2.4rem;
+
+            border: 1px solid #CCC;
+
+            span.display-segment-query {
+                font-style: italic;
+            }
+        }
+    }
+}
+
+.segment-query {
+    float: left;
+
+    width: 50%;
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.segment-query__selection {
+    color: #30af25;
+    font-weight: bold;
+}
+
+.segment--new {
+    padding: 1rem;
+
+    border: 1px solid #ddd;
+    border-radius: .4rem;
 }

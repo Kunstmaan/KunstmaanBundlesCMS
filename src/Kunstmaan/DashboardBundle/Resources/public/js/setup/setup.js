@@ -62,15 +62,15 @@ $(function () {
     }
 
     /* =============================== ACCOUNTS =============================== */
-        $("#accounts select").chosen(
-            {'search_contains' : true}
-        );
-        $("#properties select").chosen(
-            {'search_contains' : true}
-        );
-        $("#profiles select").chosen(
-            {'search_contains' : true}
-        );
+        //$("#accounts select").chosen(
+        //    {'search_contains' : true}
+        //);
+        //$("#properties select").chosen(
+        //    {'search_contains' : true}
+        //);
+        //$("#profiles select").chosen(
+        //    {'search_contains' : true}
+        //);
 
         // on account selected
         $("#accounts select").change(function() {

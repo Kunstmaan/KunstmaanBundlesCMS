@@ -6,12 +6,6 @@
     </div>
 {% endblock %}
 
-{% block content %}
-    {% for widget in widgets %}
-        {{ render_esi(url(widget.resolvedController, {'id' : id})) }}
-    {% endfor %}
-{% endblock %}
-
 {% block extracss %}
     {% stylesheets
         "@KunstmaanDashboardBundle/Resources/public/scss/_dashboard.scss"
@@ -19,4 +13,10 @@
     %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    {% for widget in widgets %}
+        {{ render_esi(url(widget.resolvedController, {'id' : id})) }}
+    {% endfor %}
 {% endblock %}

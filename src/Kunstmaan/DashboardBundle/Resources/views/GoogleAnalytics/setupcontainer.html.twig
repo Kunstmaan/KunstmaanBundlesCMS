@@ -6,6 +6,15 @@
     </div>
 {% endblock %}
 
+{% block extracss %}
+    {% stylesheets
+        "@KunstmaanDashboardBundle/Resources/public/scss/_dashboard.scss"
+        filter="scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+{% endblock %}
+
 {% block content %}
     {% include 'KunstmaanDashboardBundle:GoogleAnalytics:setup.html.twig'
         with {

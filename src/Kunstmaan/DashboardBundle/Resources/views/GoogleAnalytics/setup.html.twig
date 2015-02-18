@@ -7,7 +7,7 @@
         {% endfor %}
 
         <section class="row">
-            <aside class="col-md-3">
+            <aside class="col-md-3 form--dashboard-setup__aside">
                 <div class="setup-group" id="account-group">
                     <h4>{{ 'dashboard.ga.setup.accounts' | trans }}</h4>
                     <div id="accounts" class="setup-group__select__wrapper">
@@ -54,8 +54,8 @@
                 </div>
             </aside>
 
-            <div class="col-md-9">
-                <div class="setup-group" id="segment-group">
+            <div class="col-md-9 form--dashboard-setup__content">
+                <div class="setup-group segment-group" id="segment-group">
                     <h4>{{ 'dashboard.ga.setup.segments' | trans }}</h4>
                     <p>
                         {{ 'dashboard.ga.setup.segment.info' | trans }} <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/segments" target="_blank">{{ 'dashboard.ga.setup.segment.here' | trans }}</a>.
@@ -78,7 +78,7 @@
                         {% endfor %}
                     </ul>
 
-                    <div id="segments-new"></div>
+                    <div id="segments-new" class="segment--new"></div>
 
                     <button type="button" class="btn btn-small" id="segment-button__add">
                         <i class="icon-plus"></i> add segment
