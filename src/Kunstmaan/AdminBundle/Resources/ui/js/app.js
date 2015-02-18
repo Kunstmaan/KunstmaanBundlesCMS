@@ -23,6 +23,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.autoCollapseTabs.init();
         kunstmaanbundles.richEditor.init();
         kunstmaanbundles.ajaxModal.init();
+        kunstmaanbundles.advancedSelect.init();
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();

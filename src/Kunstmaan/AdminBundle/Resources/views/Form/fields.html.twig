@@ -2,16 +2,9 @@
 {% block color_widget %}
     {% spaceless %}
         {{ form_widget(form) }}
-        <script>
-            // jQuery(document).ready(function(){
-            //     $('#{{ id }}').colorpicker({
-            //         format: 'hex'
-            //     });
-
-            // });
-        </script>
     {% endspaceless %}
 {% endblock %}
+
 
 {% block choice_widget_expanded %}
     {% spaceless %}
@@ -27,6 +20,7 @@
         </div>
     {% endspaceless %}
 {% endblock choice_widget_expanded %}
+
 
 {% block choice_widget_collapsed %}
     {% spaceless %}
@@ -47,6 +41,7 @@
     {% endspaceless %}
 {% endblock choice_widget_collapsed %}
 
+
 {% block form_widget_simple %}
     {% spaceless %}
         {% set type = type|default('text') %}
@@ -54,11 +49,13 @@
     {% endspaceless %}
 {% endblock form_widget_simple %}
 
+
 {% block textarea_widget %}
     {% spaceless %}
         <textarea {{ block('widget_attributes') }} class="form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}" rows="5">{{ value }}</textarea>
     {% endspaceless %}
 {% endblock textarea_widget %}
+
 
 {% block checkbox_widget %}
     {% spaceless %}
@@ -77,6 +74,7 @@
     {% endspaceless %}
 {% endblock checkbox_widget %}
 
+
 {% block radio_widget %}
     {% spaceless %}
         <div class="radio">
@@ -93,6 +91,8 @@
         </div>
     {% endspaceless %}
 {% endblock radio_widget %}
+
+
 
 
 {# Labels #}
@@ -117,6 +117,8 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_label %}
+
+
 
 
 {# Rows #}
@@ -200,31 +202,15 @@
                 {% endif %}
             {% endif %}
 
-            {% if max_length %}
-                <script>
-                    // jQuery(document).ready(function(){
-                    //     $("#{{ id }}").charCount({
-                    //         allowed: {{ max_length }},
-                    //         counterText: 'Characters left: ',
-                    //         css: 'help-inline',
-                    //         cssExceeded: 'error'
-                    //     });
-                    //     $("#{{ id }}").attr('maxlength', '');
-                    // });
-                </script>
-            {% endif %}
-            {% if attr['title'] is defined %}
-                <script>
-                    // jQuery(document).ready(function(){
-                    //     $("#{{ id }}").tooltip();
-                    // });
-                </script>
-            {% endif %}
+            {% if max_length %}{% endif %}
+            {% if attr['title'] is defined %}{% endif %}
 
             {{ form_errors(form) }}
         </div>
     {% endspaceless %}
 {% endblock form_row %}
+
+
 
 
 {# Misc #}
@@ -235,39 +221,19 @@
     </div>
 {% endblock %}
 
+
 {% block date_widget %}
     {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-    {% if widget == 'single_text' %}
-        <script>
-            // jQuery(document).ready(function(){
-            //     $("#{{ id }}").inputmask("date");
-            //     $("#{{ id }}").addClass('form_datepicker');
-            //     $("#{{ id }}").datepicker({'format': 'dd/mm/yyyy'});
-            // });
-        </script>
-    {% endif %}
     {{ block('base_date_widget') }}
 {% endblock date_widget %}
 
+
 {% block time_widget %}
     {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
-    {% if widget == 'single_text' %}
-        <script>
-            // jQuery(document).ready(function(){
-            //     $("#{{ id }}").inputmask("hh:mm");
-            //     $("#{{ id }}").addClass('form_timepicker');
-            //     $("#{{ id }}").timepicker({
-            //         'showMeridian': false,
-            //         'minuteStep': 1,
-            //         'defaultTime': false
-            //     });
-            // });
-        </script>
-    {% endif %}
-    {# type="time" shows am/pm in chrome #}
     {% set type = 'text' %}
     {{ block('base_time_widget') }}
 {% endblock time_widget %}
+
 
 {% block form_errors %}
     {% spaceless %}
@@ -282,6 +248,7 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_errors %}
+
 
 {% block range_widget %}
     {% spaceless %}
