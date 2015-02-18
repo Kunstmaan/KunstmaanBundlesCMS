@@ -3,12 +3,17 @@
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
     <form action="{{ path('KunstmaanUserManagementBundle_settings_users_edit', { 'id' : user.id }) }}" method="post" {{ form_enctype(form) }} novalidate >
-	    <fieldset>
-	        {{ form_rest(form) }}
-	        <div class="form-actions">
-	            <button class="btn btn-primary" type="submit">{{ 'settings.user.edit' | trans }}</button>
-	            <button onclick="window.location = '{{ path('KunstmaanUserManagementBundle_settings_users') }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
-	        </div>
-	    </fieldset>
-	</form>
+        <fieldset class="form__fieldset--padded">
+            {{ form_rest(form) }}
+
+            <div class="form-actions form-actions--padded">
+                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                    {{ 'settings.user.edit' | trans }}
+                </button>
+                <a href="{{ path('KunstmaanUserManagementBundle_settings_users') }}" class="btn btn-default btn--raise-on-hover">
+                    {{ 'form.cancel' | trans }}
+                </a>
+            </div>
+        </fieldset>
+    </form>
 {% endblock %}

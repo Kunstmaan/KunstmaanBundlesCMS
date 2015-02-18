@@ -4,18 +4,26 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>{{ 'Edit dashboard' | trans | raw }}</h1>
+        <h1>
+            {{ 'Edit dashboard' | trans | raw }}
+        </h1>
     </div>
+
     <form action="{{ path('KunstmaanAdminBundle_homepage_admin') }}" method="post" {{ form_enctype(form) }}>
-	    <fieldset>
-	    	{{ form_errors(form) }}
-	    	{{ form_row(form.title) }}
-	                {{ form_row(form.content) }}
-	        {{ form_rest(form) }}
-	        <div class="form-actions">
-	            <button class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
-	            <button onclick="window.location = '{{ path('KunstmaanAdminBundle_homepage') }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
-	        </div>
-	    </fieldset>
-	</form>
+        <fieldset class="form__fieldset--padded">
+            {{ form_errors(form) }}
+            {{ form_row(form.title) }}
+                    {{ form_row(form.content) }}
+            {{ form_rest(form) }}
+
+            <div class="form-actions form-actions--padded">
+                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                    {{ 'form.save' | trans }}
+                </button>
+                <a href="{{ path('KunstmaanAdminBundle_homepage') }}" class="btn btn-default btn--raise-on-hover">
+                    {{ 'form.cancel' | trans }}
+                </a>
+            </div>
+        </fieldset>
+    </form>
 {% endblock %}
