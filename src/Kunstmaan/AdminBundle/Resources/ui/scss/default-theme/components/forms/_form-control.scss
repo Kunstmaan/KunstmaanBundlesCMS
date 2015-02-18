@@ -2,8 +2,30 @@
    Form Actions
    ========================================================================== */
 
+/* General
+   ========================================================================== */
 .form-control {
     max-width: 40rem;
     padding-right: 10px;
     padding-left: 10px;
+}
+
+
+
+/* Icon in control
+   ========================================================================== */
+.form-group--icon-in-control {
+    position: relative;
+}
+
+.form-group--icon-in-control__form-control {
+    padding-left: 3rem;
+}
+
+.form-group--icon-in-control__icon {
+    position: absolute;
+    left: 1rem;
+    top: 3.3rem;
+
+    color: $gray-lighter;
 }
