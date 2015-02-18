@@ -27,7 +27,9 @@
     }
 
     &.page-main-actions--inside-extra-actions-header {
-        margin: 0;
+        @media (min-width: $screen-sm-min) {
+            margin: 0;
+        }
     }
 }
 

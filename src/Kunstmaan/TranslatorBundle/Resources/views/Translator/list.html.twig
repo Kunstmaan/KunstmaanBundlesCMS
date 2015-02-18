@@ -1,26 +1,44 @@
 {% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
 
 {% block extra_actions_header %}
-    <div class="extra_actions_header">
-        <div class="btn-group pull-right">
+    <div class="col-sm-6 col-md-4">
+        <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+            <div class="btn-group">
 
-            {% if adminlist.canAdd() %}
-                {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
-                {% for key,add in adminaddlist %}
-                    <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">{{ 'settings.translator.add' | trans }}</a>
-                {% endfor %}
-            {%  endif %}
+                {% if adminlist.canAdd() %}
+                    {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
+                    {% for key,add in adminaddlist %}
+                        <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
+                            {{ 'settings.translator.add' | trans }}
+                        </a>
+                    {% endfor %}
+                {%  endif %}
 
-            <a class="btn btn btn-medium" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">{{ 'settings.translator.refresh_live' | trans }}</a>
+                <a class="btn btn-default btn--raise-on-hover" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">
+                    {{ 'settings.translator.refresh_live' | trans }}
+                </a>
 
-            <a class="btn btn dropdown-toggle" data-toggle="dropdown" href="#">{{ 'settings.translator.import_translations' | trans }}<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >{{ 'settings.translator.import_translations' | trans }}</a></li>
-                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >{{ 'settings.translator.import_translations_forced' | trans }}</a></li>
-            </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                        {{ 'settings.translator.import_translations' | trans }}
+                        <i class="fa fa-caret-down btn__icon"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >
+                                {{ 'settings.translator.import_translations' | trans }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >
+                                {{ 'settings.translator.import_translations_forced' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block extracss %}
