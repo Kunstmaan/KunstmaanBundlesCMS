@@ -2,6 +2,10 @@
    Dashboard Tabs
    ========================================================================== */
 
+.dashboard {
+    position: relative;
+}
+
 .dashboard-tabs {
     @include clearfix;
 
@@ -73,12 +77,9 @@
     font-weight: normal;
 }
 
-#segment-menu {
-    float:right;
-
-    &:after {
-        clear:both;
-        display: block;
-        content: ' ';
-    }
+.segment-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
 }
