@@ -2,10 +2,7 @@
 {% set form = tabPane.getFormView() %}
 
 
-{% block extrabodyclasses %}
-    {{ parent() }}
-    js-check-if-edited
-{% endblock %}
+{% block extrabodyclasses %}{{ parent() }} js-check-if-edited{% endblock %}
 
 
 {% block messages %}
