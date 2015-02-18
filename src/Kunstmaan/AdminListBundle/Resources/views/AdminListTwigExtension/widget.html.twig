@@ -7,7 +7,7 @@
 {% endif %}
 
 {% if adminlist.hasBulkActions %}
-    <form action="#" method="POST" name="bulkform">
+    <form action="#" method="POST" name="bulkform" id="bulk-form">
 {% endif %}
 
 <!-- Check for actions -->
@@ -121,14 +121,14 @@
             {% if action.template is not null %}
                 {% include action.template with {'action': action} %}
             {% else %}
-                <a href="#" onclick="return doBulkAction('{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}')" class="js-bulk-button btn btn-default btn--raise-on-hover disabled">
+                <button type="button" class="js-bulk-action-button btn btn-default btn--raise-on-hover disabled" data-action="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}">
                     {% if action.getIcon() is not null %}
                         <i class="fa fa-{{ action.getIcon() }} }} btn__icon"></i>
                         {{ action.getLabel() }}
                     {% else %}
                         {{ action.getLabel() }}
                     {% endif %}
-                </a>
+                </button>
             {% endif %}
         {% endfor %}
 

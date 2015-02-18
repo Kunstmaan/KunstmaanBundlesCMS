@@ -3,17 +3,25 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.bulkActions = (function($, window, undefined) {
 
     var init,
-        setAllCheckbox, updateBulkCheckboxes;
+        setAllCheckbox, updateBulkCheckboxes, bulkAction;
 
-    var $SelectAllCheckbox = $('#select-all-bulk-checkbox'),
+    var $form = $'#bulk-form'),
+        $SelectAllCheckbox = $('#select-all-bulk-checkbox'),
         $bulkCheckboxes = $('.js-bulk-checkbox'),
-        $bulkActionButtons = $('.js-bulk-button');
+        $bulkActionButtons = $('.js-bulk-action-button');
 
 
     init = function() {
-        setAllCheckbox();
 
-        $bulkCheckboxes.on('change', updateBulkCheckboxes);
+        if($form.length) {
+            setAllCheckbox();
+            setActionButtons();
+
+            $bulkCheckboxes.on('change', updateBulkCheckboxes);
+            $bulkActionButtons.on('click', function() {
+                bulkAction($(this));
+            });
+        }
     };
 
 
@@ -53,6 +61,15 @@ kunstmaanbundles.bulkActions = (function($, window, undefined) {
         } else {
             $bulkActionButtons.addClass('disabled').attr('disabled', 'true');
         }
+    };
+
+
+    // Action buttons
+    bulkAction = function($btn) {
+        var formAction = $btn.data('action');
+
+        $form.attr('action', formAction);
+        $form.submit();
     };
 
 
