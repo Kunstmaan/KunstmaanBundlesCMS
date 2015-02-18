@@ -75,7 +75,7 @@
 
         <!-- Preview -->
         <div class="media-chooser__preview">
-            <figure>
+            <figure class="thumbnail">
                 {% if(value.ent is defined) %}
                     {% set media = value.ent %}
                     {% set handler = mediamanager.getHandler(media) %}
@@ -88,7 +88,7 @@
                         {% endif %}
                     {% endif %}
                     {% if imageurl %}
-                        <img src="{{ imageurl }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="img-thumbnail media-chooser__preview__img">
+                        <img src="{{ imageurl }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                         <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
                             {{ media.name }}
                         </figcaption>
@@ -96,12 +96,12 @@
                         <i class="fa fa-file-o"></i>
                     {% endif %}
                 {% else %}
-                    <img src="/" id="{{ id }}__preview__img" class="img-thumbnail media-chooser__preview__img">
+                    <img src="/" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                     <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
                 {% endif %}
             </figure>
 
-            <button type="button" class="btn btn-default media-chooser__preview__del-btn">
+            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
                 <i class="fa fa-trash-o"></i>
             </button>
         </div>

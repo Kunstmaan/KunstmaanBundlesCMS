@@ -1,7 +1,9 @@
 {% for flashMessageType, flashMessages in app.session.flashbag.all() %}
     {% for flashMessage in flashMessages %}
         <div class="alert alert-{{ flashMessageType }}">
-            <button type="button" class="close" data-dismiss="alert">×</button>
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
             <strong>{{ flashMessageType | capitalize }}:</strong> {{ flashMessage }}
         </div>
      {% endfor %}
