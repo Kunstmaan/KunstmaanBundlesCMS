@@ -85,7 +85,9 @@
                     <!-- Logged in as -->
                     <li>
                         <a href="{{ path('KunstmaanAdminBundle_user_change_password', { 'id':app.user.id }) }}">
-                            {{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}
+                            <i class="fa fa-user"></i>
+                            &nbsp;
+                            {{ app.user.username|capitalize }}
                         </a>
                     </li>
 
