@@ -71,7 +71,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
             $delBtn = $form.find('.js-nested-form__del-btn');
 
         // "New" button
-        if(allowNew && (maxItems === false || totalItems < maxItems) {
+        if(allowNew && (maxItems === false || totalItems < maxItems)) {
             $newBtn.removeClass('hidden');
         } else {
             $delBtn.addClass('hidden');
