@@ -3,7 +3,10 @@
    ========================================================================== */
 
 .dashboard-chart-list {
-    margin: 0 0 5rem 0;
+    @include clearfix;
+
+    margin: 0;
+    padding: 0;
 
     text-align: center;
 
@@ -11,17 +14,23 @@
 }
 
 .dashboard-chart-list__item {
-    display: inline-block;
+    @include clearfix;
+
+    display: block;
     padding: 1.5rem;
 
     text-align: left;
 
-    &:first-child {
-        padding-left: 0;
-    }
+    @media (min-width: 60rem) {
+        display: inline-block;
 
-    &:last-child {
-        padding-right: 0;
+        &:first-child {
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
+        }
     }
 
     @media (min-width: $screen-desk) {
