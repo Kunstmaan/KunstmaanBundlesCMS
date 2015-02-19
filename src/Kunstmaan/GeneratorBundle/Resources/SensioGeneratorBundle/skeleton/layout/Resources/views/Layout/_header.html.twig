@@ -2,86 +2,89 @@
 <header role="header" class="main-header">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-md-12">
 
-            {% if nodemenu is defined %}
+                {% if nodemenu is defined %}
 
-                {# Logo #}
-                <div class="col-md-3 col-sm-3 col-xs-6">
-                    {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
-                        <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew"/>
-                    </a>
-                </div>
+                    {# Logo #}
+                    <div class="main-header__logo pull-left">
+                        {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
+                            <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew"/>
+                        </a>
+                    </div>
 
-                <div class="col-md-9 col-sm-9 col-xs-6">
+                    <div class="main-header__nav pull-right">
 
-                    {# Main navigation #}
-                    <nav role="navigation" class="js-toggle-container main-nav pull-left">
-                        <button class="js-toggle-btn toggle-button main-nav__button" data-target="#main-menu">
-                            Menu
-                            <i class="icon icon--arrow-down toggle-btn__icon--show"></i>
-                            <i class="icon icon--arrow-up toggle-btn__icon--hide"></i>
-                        </button>
+                        {# Main navigation #}
+                        <nav role="navigation" class="js-toggle-container main-nav pull-left">
+                            <button class="js-toggle-btn toggle-button main-nav__button" data-target="#main-menu">
+                                Menu
+                                <i class="icon icon--arrow-down toggle-btn__icon--show"></i>
+                                <i class="icon icon--arrow-up toggle-btn__icon--hide"></i>
+                            </button>
 
-                        <div id="main-menu" class="toggle-item main-nav__content">
-                            <ul class="toggle-item__content main-nav__list">
-                                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                                {% for node in activeSubnode.children %}
-                                    {% if not node.node.isHiddenFromNav() %}
-                                        <li class="main-nav__list__item {% if(node.active) %}main-nav__list__item--active{% endif %}">
-                                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__list__link">{{ node.title }}</a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-
-                                {# Call to action #}
-                                <li class="main-nav__list__item main-nav__list__item--cta">
-                                    <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-
-                    {# Search #}
-                    {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-                    {# {% if searchPageNode %} #}
-                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-left">
-                            <div class="searchbox">
-                                <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
-                                <button type="submit" id="search" class="searchbox__submit">
-                                    <i class="icon icon--search searchbox__submit__icon"></i>
-                                </button>
-                            </div>
-                        </form>
-                    {# {% endif %} #}
-
-                    {# Language nav #}
-                    {% if requiredlocales is defined %}
-                        {% set langs = requiredlocales|split('|') %}
-                        {% if langs|length > 0 %}
-                            <nav class="language-nav pull-left">
-                                <span class="language-nav__active-lang">
-                                    {{ app.request.locale }}
-                                    <i class="icon icon--chevron-down">&#9660;</i>
-                                </span>
-                                <ul class="list-reset language-nav__list">
-                                    {% for lang in langs %}
-                                        {% if lang != app.request.locale %}
-                                            <li class="language-nav__list__item">
-                                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">
-                                                    {{ lang }}
-                                                </a>
+                            <div id="main-menu" class="toggle-item main-nav__content">
+                                <ul class="toggle-item__content main-nav__list">
+                                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                                    {% for node in activeSubnode.children %}
+                                        {% if not node.node.isHiddenFromNav() %}
+                                            <li class="main-nav__list__item {% if(node.active) %}main-nav__list__item--active{% endif %}">
+                                                <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__list__link">{{ node.title }}</a>
                                             </li>
                                         {% endif %}
                                     {% endfor %}
+
+                                    {# Call to action #}
+                                    <li class="main-nav__list__item main-nav__list__item--cta">
+                                        <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right"></i></a>
+                                    </li>
                                 </ul>
-                            </nav>
+                            </div>
+                        </nav>
+
+                        {# Search #}
+                        {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                        {# {% if searchPageNode %} #}
+                            <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-left">
+                                <div class="searchbox">
+                                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                    <button type="submit" id="search" class="searchbox__submit">
+                                        <i class="icon icon--search searchbox__submit__icon"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        {# {% endif %} #}
+
+                        {# Language nav #}
+                        {% if requiredlocales is defined %}
+                            {% set langs = requiredlocales|split('|') %}
+                            {% if langs|length > 0 %}
+                                <nav class="language-nav pull-left hover-item">
+                                    <span class="language-nav__active-lang">
+                                        {{ app.request.locale }}
+                                        <i class="icon icon--triangle-down language-nav__icon"></i>
+                                    </span>
+                                    <ul class="list-reset language-nav__list hover-item__content">
+                                        {% for lang in langs %}
+                                            {% if lang != app.request.locale %}
+                                                <li class="language-nav__list__item">
+                                                    <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">
+                                                        {{ lang }}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </nav>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
 
-                </div>
+                    </div>
 
-            {% endif %}
+                {% endif %}
+
+            </div>
         </div>
 
     </div>
