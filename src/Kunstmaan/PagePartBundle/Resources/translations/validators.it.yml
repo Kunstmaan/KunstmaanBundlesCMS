@@ -1,0 +1,3 @@
+headerpagepart:
+  niv.not_blank: Niv è obbligatorio.
+  title.not_blank: Il titolo è obbligatorio.

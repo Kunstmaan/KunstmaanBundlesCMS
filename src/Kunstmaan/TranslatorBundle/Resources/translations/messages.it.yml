@@ -1,7 +1,13 @@
 translator:
     translator:
         title: Traduzioni
-
+        inline_edit_title: Aggiungi traduzione
+        emptytext: Non tradotto
+        invalid_translation: Traduzione invalida!
+        fatal_error_occurred: Un grave errore si è verificato durante il salvataggio della traduzione. Riprova più tardi.
+    translations: Traduzioni
+    translation_not_unique: La traduzione dovrebbe essere unica
+    
 settings:
     translator:
         add: Aggiungi taduzione

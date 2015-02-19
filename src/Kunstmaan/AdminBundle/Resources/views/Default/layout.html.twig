@@ -93,9 +93,25 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             {% for topchild in topchildren %}
-                                            <li class="{% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                                <a href="{{ path(topchild.route, topchild.routeparams) }}">{{ topchild.label | trans }}</a>
-                                            </li>
+                                                {% set nestedtopchildren = topchild.topchildren %}
+                                                {% if nestedtopchildren | length > 0 %}
+                                                    <li class="dropdown-submenu {% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
+                                                        <a tabindex="-1" href="#">{{ topchild.label | trans }}</a>
+                                                        <ul class="dropdown-menu">
+                                                            {% for nestedtopchild in nestedtopchildren %}
+                                                                <li class="{% if nestedtopchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
+                                                                    <a href="{{ path(nestedtopchild.route, nestedtopchild.routeparams) }}">{{ nestedtopchild.label | trans }}</a>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+                                                {% else %}
+                                                    {% if topchild.route %}
+                                                        <li class="{% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
+                                                            <a href="{{ path(topchild.route, topchild.routeparams) }}">{{ topchild.label | trans }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endif %}
                                             {% endfor %}
                                         </ul>
                                     </li>

@@ -146,6 +146,13 @@
                         <li>
                             {% set handler = mediamanager.getHandler(media) %}
                             {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                            {% if imageurl is not empty and media.location == 'local' %}
+                                {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                                    {% set imageurl = imageurl %}
+                                {% else %}
+                                    {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                                {% endif %}
+                            {% endif %}
                             <a onclick="handleOK({
                                     imgpath: '{{ imageurl }}',
                                     path:'{{ media.url }}',
@@ -153,13 +160,6 @@
                                     id:'{{ media.id }}'}); return false;"
                                class="thumbnail"
                                href="#">
-                                {% if imageurl is not empty and media.location == 'local' %}
-                                    {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                                        {% set imageurl = imageurl %}
-                                    {% else %}
-                                        {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
-                                    {% endif %}
-                                {% endif %}
                                 {% if imageurl %}
                                     <img src="{{ imageurl }}" alt="{{ media.name }}" />
                                 {% else %}

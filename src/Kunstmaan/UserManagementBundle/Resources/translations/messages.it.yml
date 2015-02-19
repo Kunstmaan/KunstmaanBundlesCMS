@@ -11,6 +11,7 @@ settings:
       username: Username
       password: Password
       repeatedpassword: Ripeti password
+      adminlang: Lingua interfaccia Admin
       email: E-mail
       enabled: Attivo
       roles: Gruppi
