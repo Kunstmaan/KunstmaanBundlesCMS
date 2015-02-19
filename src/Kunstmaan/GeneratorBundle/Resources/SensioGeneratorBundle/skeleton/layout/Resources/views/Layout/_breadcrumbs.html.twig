@@ -1,31 +1,33 @@
-<section class="container">
-    <div class="row">
-        <div class="col-md-6 col--padded">
-            {% block breadcrumbs %}
-                {% if nodemenu is defined and nodemenu.breadCrumb|length > 1 %}
-                    <nav role="navigation">
-                        <ul class="list-reset breadcrumb">
-                            <li>
-                                {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                                <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="breadcrumb__home-link">
-                                    <i class="icon-home"></i>
-                                </a>
-                            </li>
-                            {% for node in nodemenu.breadCrumb %}
-                                {% if not loop.first %}
-                                    {% if loop.last %}
-                                        <li class="active">{{ node.title }}</li>
-                                    {% else %}
-                                        <li>
-                                            <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                                        </li>
-                                    {% endif %}
+{% if nodemenu is defined and nodemenu.breadCrumb|length > 1 %}
+
+    <section class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <nav role="navigation" class="breadcrumb">
+                    <ul class="list-reset breadcrumb__list">
+                        <li class="breadcrumb__list__item">
+                            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="breadcrumb__list__link breadcrumb__list__link--home">
+                                Home
+                            </a>
+                        </li>
+                        {% for node in nodemenu.breadCrumb %}
+                            {% if not loop.first %}
+                                {% if loop.last %}
+                                    <li class="breadcrumb__list__item breadcrumb__list__item--active">{{ node.title }}</li>
+                                {% else %}
+                                    <li class="breadcrumb__list__item">
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="breadcrumb__list__link">{{ node.title }}</a>
+                                    </li>
                                 {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </nav>
-                {% endif %}
-            {% endblock breadcrumbs %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+{% endif %}
