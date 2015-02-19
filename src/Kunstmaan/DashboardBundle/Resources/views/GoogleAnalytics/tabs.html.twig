@@ -3,9 +3,9 @@
     {% for overview in overviews %}
         <li class="dashboard-tabs__item" id="tab{{ overview.id }}">
             <a href="#" class="dashboard-tabs__controller" data-id="{{ overview.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overview.id}) }}" data-toggle="tab">
-                <h6 class="dashboard-tabs__item__title">
-                    {{ overview.title | trans }}
-                </h6>
+
+                {{ overview.title | trans }}
+
             </a>
         </li>
         {% set i = i + 1 %}
