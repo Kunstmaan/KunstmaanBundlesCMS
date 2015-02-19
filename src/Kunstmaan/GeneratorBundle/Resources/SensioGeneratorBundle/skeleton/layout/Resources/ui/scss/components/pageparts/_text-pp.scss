@@ -5,10 +5,6 @@
 .text-pp {
     margin: $default-margin 0;
 
-    &:last-child {
-        margin-bottom: 0;
-    }
-
     a {
         &:hover, &:focus, &:active {
         }
