@@ -72,7 +72,7 @@ class PageTemplateTwigExtension extends \Twig_Extension
 
         $template = $this->environment->loadTemplate($pageTemplate->getTemplate());
 
-        return $template->render($twigContext);
+        return $template->render(array_merge($parameters, $twigContext));
     }
 
     /**

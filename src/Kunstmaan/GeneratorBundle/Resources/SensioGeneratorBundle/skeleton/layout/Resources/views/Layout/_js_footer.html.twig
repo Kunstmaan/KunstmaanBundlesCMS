@@ -1,6 +1,3 @@
-<script src='/frontend/js/footer.min.js?{{ assets_version() }}'></script>
-
-{% if ga_code is defined %}
-    <script src='/frontend/js/analytics.min.js?{{ assets_version() }}'></script>
-    {{ google_analytics_initialize({'account_id': ga_code}) }}
-{% endif %}
+<!-- inject:js -->
+<script src="/frontend/js/footer.min.js"></script>
+<!-- endinject -->

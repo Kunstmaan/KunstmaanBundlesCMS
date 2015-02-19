@@ -27,7 +27,9 @@
    ========================================================================== */
 
 @import "header/main-header",
-        "header/main-nav";
+        "header/main-nav",
+        "header/language-nav",
+        "header/breadcrumb-nav";
 
 
 /* Forms
@@ -43,7 +45,8 @@
         "pageparts/introtext-pp",
         "pageparts/download-pp",
         "pageparts/totop-pp",
-        "pageparts/button-pp";
+        "pageparts/button-pp",
+        "pageparts/image-pp";
 
 
 /* Vendors

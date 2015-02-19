@@ -33,6 +33,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->generateGulpFiles();
         $this->generateBowerFiles();
         $this->generateJshintrcFile();
+        $this->generateGroundcontrolrcFile();
         $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
@@ -67,6 +68,15 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
+     * Generate the groundcontrol configuration file.
+     */
+    private function generateGroundcontrolrcFile()
+    {
+        $this->renderSingleFile($this->skeletonDir.'/groundcontrol/', $this->rootDir, '.groundcontrolrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
+    }
+
+    /**
      * Generate the gems configuration file.
      */
     private function generateGemsFile()
@@ -82,12 +92,6 @@ class LayoutGenerator extends KunstmaanGenerator
     {
         $sourceDir = $this->skeletonDir;
         $targetDir = $this->bundle->getPath();
-
-        $relPath = '/Resources/public/';
-        $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
-
-        $relPath = '/Resources/public/scss/config/';
-        $this->renderSingleFile($sourceDir.$relPath, $targetDir.$relPath, '_paths.scss', array('bundle' => $this->bundle), true);
 
         $relPath = '/Resources/ui/';
         $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);

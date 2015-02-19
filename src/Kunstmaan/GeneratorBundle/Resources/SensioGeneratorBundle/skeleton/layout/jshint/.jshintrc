@@ -17,6 +17,7 @@
     "globals": {
         "jQuery": true,
         "$": true,
+        "cupcake": true,
         "cargobay": true,
         "Modernizr": true,
         "dataLayer": true,

@@ -19,7 +19,7 @@
     {% include '<%= bundle.getName() %>:Layout:_favicons.html.twig' %}
 
     {# Webfonts #}
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 
     {# CSS #}
     {% include '<%= bundle.getName() %>:Layout:_css.html.twig' %}
@@ -39,6 +39,9 @@
     {% block header %}
         {% include '<%= bundle.getName() %>:Layout:_header.html.twig' %}
     {% endblock %}
+
+    {# Header visual #}
+    {% block header_visual %}{% endblock %}
 
     {# Breadcrumbs #}
     {% block breadcrumbs %}

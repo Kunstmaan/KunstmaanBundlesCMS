@@ -3,18 +3,20 @@
    ========================================================================== */
 
 .text-pp {
-   a {
-       &:hover, &:focus, &:active {
-       }
-   }
-   ul {
-       @include list-reset;
-       li {
+    margin: $default-margin 0;
 
-       }
-   }
-   ol {
-       li {
-       }
-   }
+    a {
+        &:hover, &:focus, &:active {
+        }
+    }
+    ul {
+        @include list-reset;
+        li {
+
+        }
+    }
+    ol {
+        li {
+        }
+    }
 }
