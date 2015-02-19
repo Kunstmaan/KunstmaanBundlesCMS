@@ -20,7 +20,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
             unpublishLater();
         }
 
-        if($('.js-sortable-container').lenght) {
+        if($('.js-sortable-container').length) {
             initSortable();
         };
     };
