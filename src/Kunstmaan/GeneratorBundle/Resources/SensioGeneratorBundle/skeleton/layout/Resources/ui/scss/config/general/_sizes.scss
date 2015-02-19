@@ -1,8 +1,8 @@
 /* ==========================================================================
-   Pageparts - Introtext pp
+   Sizes
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
    ========================================================================== */
 
-.introtext-pp {
-    @include introtext;
-    margin: $default-margin 0;
-}
+$default-margin: 1.5rem;
