@@ -73,11 +73,11 @@
 
 {% block extrajavascript %}
     {% javascripts
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/metrics.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris-0.5.0.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/raphael-2.1.2.js'
+        '@KunstmaanDashboardBundle/Resources/ui/js/analytics/metrics.js'
+        '@KunstmaanDashboardBundle/Resources/ui/js/analytics/tabs.js'
+        '@KunstmaanDashboardBundle/Resources/ui/js/analytics/goals.js'
+        '@KunstmaanDashboardBundle/Resources/ui/js/libs/morris-0.5.0.js'
+        '@KunstmaanDashboardBundle/Resources/ui/js/libs/raphael-2.1.2.js'
         output='generated-js/ga_widget.js'
     %}
     <script src="{{ asset_url }}"></script>
