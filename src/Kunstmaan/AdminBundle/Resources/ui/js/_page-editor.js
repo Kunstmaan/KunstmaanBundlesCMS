@@ -99,7 +99,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
 
     // Sortable
-    // TODO: allow groups
     initSortable = function() {
         $('.js-sortable-container').each(function() {
             var id = $(this).attr('id'),
@@ -110,9 +109,11 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                 handle: '.js-sortable-item__handle',
                 ghostClass: 'sortable-item--ghost',
 
+                animation: 100,
+
                 scroll: true,
-                scrollSensitivity: 30,
-                scrollSpeed: 10,
+                scrollSensitivity: 300,
+                scrollSpeed: 300,
 
                 onStart: function(evt) {
                     $('body').addClass('sortable-active');
