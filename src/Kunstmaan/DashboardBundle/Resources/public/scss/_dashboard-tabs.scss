@@ -6,76 +6,76 @@
     position: relative;
 }
 
-.dashboard-tabs {
-    @include clearfix;
+// .dashboard-tabs {
+//     @include clearfix;
 
-    position: relative;
-    z-index: 10;
+//     position: relative;
+//     z-index: 10;
 
-    display: block;
-    margin: 4rem 0 -.1rem 0;
-    padding: 0;
+//     display: block;
+//     margin: 4rem 0 -.1rem 0;
+//     padding: 0;
 
-    list-style: none;
-}
+//     list-style: none;
+// }
 
-.dashboard-tabs__item {
-    float: left;
+// .dashboard-tabs__item {
+//     float: left;
 
-    display: block;
-    margin-right: .3rem;
+//     display: block;
+//     margin-right: .3rem;
 
-    text-align: center;
+//     text-align: center;
 
-    background: #fff;
+//     background: #fff;
 
-    border-radius: .4rem .4rem 0 0;
-    border: 1px solid transparent;
+//     border-radius: .4rem .4rem 0 0;
+//     border: 1px solid transparent;
 
-    cursor: pointer;
+//     cursor: pointer;
 
-    &:last-child {
-        margin: 0;
-    }
+//     &:last-child {
+//         margin: 0;
+//     }
 
-    &:hover,
-    &:focus,
-    &:active {
-        .dashboard-tabs__item__title {
-            color: $blue;
-        }
-    }
-}
+//     &:hover,
+//     &:focus,
+//     &:active {
+//         .dashboard-tabs__item__title {
+//             color: $blue;
+//         }
+//     }
+// }
 
-.dashboard-tabs__item--active {
-    border-color: $hr-color;
-    border-bottom: none;
+// .dashboard-tabs__item--active {
+//     border-color: $hr-color;
+//     border-bottom: none;
 
-    .dashboard-tabs__controller {
-        padding-bottom: 1.5rem;
-    }
+//     .dashboard-tabs__controller {
+//         padding-bottom: 1.5rem;
+//     }
 
-    &:hover,
-    &:focus,
-    &:active {
-        .dashboard-tabs__item__title {
-            color: $text-color-lighter;
-        }
-    }
-}
+//     &:hover,
+//     &:focus,
+//     &:active {
+//         .dashboard-tabs__item__title {
+//             color: $text-color-lighter;
+//         }
+//     }
+// }
 
-.dashboard-tabs__controller {
-    padding: 1rem 2rem;
-}
+// .dashboard-tabs__controller {
+//     padding: 1rem 2rem;
+// }
 
-.dashboard-tabs__item__title {
-    margin: 0;
-    padding: 0;
+// .dashboard-tabs__item__title {
+//     margin: 0;
+//     padding: 0;
 
-    color: $text-color-lighter;
-    font-size: 1.5rem;
-    font-weight: normal;
-}
+//     color: $text-color-lighter;
+//     font-size: 1.5rem;
+//     font-weight: normal;
+// }
 
 .segment-menu {
     position: absolute;

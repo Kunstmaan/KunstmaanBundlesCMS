@@ -1,13 +1,13 @@
 $(function () {
     // show first tab
-    var tab = $('.dashboard-tabs__item:nth-child(2) > div');
+    var tab = $('.dashboard-tabs__item:nth-child(2) > a');
     switchTab(tab.attr('data-id'), tab.attr('data-path'));
 
 
     function switchTab(id, url) {
         $('#data_overview').addClass('dashboard__content--loading');
-        $('.dashboard-tabs__item').removeClass('dashboard-tabs__item--active');
-        $('#tab' + id).addClass('dashboard-tabs__item--active');
+        $('.dashboard-tabs__item').removeClass('active');
+        $('#tab' + id).addClass('active');
 
         $.ajax({
             type: 'get',
@@ -62,10 +62,6 @@ $(function () {
         var url = $(this).find('.dashboard-tabs__controller').attr('data-path');
         switchTab(id, url);
     });
-
-    // $("#segment-menu select").chosen(
-    //     {'search_contains' : true}
-    // );
 
     $("#segment-menu select").change(function() {
         var segmentId = $(this).find('option:selected').attr('data-segment-id');

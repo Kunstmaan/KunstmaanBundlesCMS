@@ -2,7 +2,7 @@
 <div class="dashboard">
     {% if segments | length > 0 %}
         <nav id="segment-menu" class="segment-menu">
-            <select class="js-advanced-select form-control advanced-selec">
+            <select class="form-control">
                 <option data-segment-id="#" data-config-id="{% if configId is defined %}{{configId}}{% endif %}" {% if segmentId is null %}selected{% endif %} >
                     Default
                 </option>

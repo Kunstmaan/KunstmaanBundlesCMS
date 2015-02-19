@@ -142,12 +142,3 @@
 {% endblock %}
 
 
-{% block extracss %}
-    {% stylesheets
-        filter="scss"
-        "@KunstmaanDashboardBundle/Resources/public/scss/_dashboard-setup.scss"
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
-    {% endstylesheets %}
-{% endblock %}
-
