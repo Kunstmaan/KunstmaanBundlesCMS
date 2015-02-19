@@ -3,7 +3,7 @@
    ========================================================================== */
 
 .breadcrumb {
-
+    margin: $default-margin;
 }
 .breadcrumb__list {
 
@@ -12,7 +12,7 @@
     display: inline-block;
 }
 .breadcrumb__list__link {
-    display: block;
+    display: inline-block;
 }
 .breadcrumb__list__link--home {
 
