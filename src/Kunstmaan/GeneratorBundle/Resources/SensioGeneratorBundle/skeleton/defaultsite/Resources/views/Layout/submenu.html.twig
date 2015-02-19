@@ -1,17 +1,17 @@
 <nav role="navigation" class="submenu">
     <div class="row">
-        <div class="col-md-4">
 
-            {% for node in items %}
-                {% if not node.node.isHiddenFromNav() %}
+        {% for node in items %}
+            {% if not node.node.isHiddenFromNav() %}
+                <div class="col-md-4">
                     <div class="submenu__item {% if(node.active) %}submenu__item--active{% endif %}">
                         <a href="{{ path('_slug', { 'url': node.slug }) }}" class="submenu__link {% if(node.active) %}submenu__link--active{% endif %}">
                             {{ node.title }}
                         </a>
                     </div>
-                {% endif %}
-            {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
 
-        </div>
     </div>
 </nav>
