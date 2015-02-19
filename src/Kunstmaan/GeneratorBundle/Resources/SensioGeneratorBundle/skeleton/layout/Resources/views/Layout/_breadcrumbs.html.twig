@@ -11,6 +11,7 @@
                             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="breadcrumb__list__link breadcrumb__list__link--home">
                                 Home
                             </a>
+                            <i class="icon icon--arrow-right breadcrumb__list__icon"></i>
                         </li>
                         {% for node in nodemenu.breadCrumb %}
                             {% if not loop.first %}
@@ -19,6 +20,7 @@
                                 {% else %}
                                     <li class="breadcrumb__list__item">
                                         <a href="{{ path('_slug', { 'url': node.slug }) }}" class="breadcrumb__list__link">{{ node.title }}</a>
+                                        <i class="icon icon--arrow-right breadcrumb__list__icon"></i>
                                     </li>
                                 {% endif %}
                             {% endif %}
