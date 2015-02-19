@@ -1,0 +1,113 @@
+<footer role="footer" class="footer">
+
+    {# Newsletter subscription #}
+    <section class="newsletter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h1>Don't miss out</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni nesciunt similique numquam recusandae quibusdam eius repudiandae quas accusamus enim sit.</p>
+                    <form action="">
+                        <input type="text">
+                        <button type="submit">Subscribe</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Main footer #}
+    {% if nodemenu is defined %}
+        <section class="main-footer">
+            <div class="container">
+                <div class="row">
+
+                    {# Social #}
+                    <div class="col-md-3">
+
+                        <div class="footer__social">
+                            <a href="https://twitter.com/kunstmaan" class="footer__social__link">
+                                <i class="social-link__icon icon--social-twitter"></i>
+                            </a>
+                            <a href="http://www.linkedin.com/company/kunstmaan" class="footer__social__link">
+                                <i class="footer__social__icon icon--social-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/Kunstmaan" class="footer__social__link">
+                                <i class="footer__social__icon icon--social-github"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                    {# Footer navigation #}
+                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                    {% for node in activeSubnode.children %}
+                        {% if not node.node.isHiddenFromNav() %}
+                            <div class="col-md-3">
+
+                                <nav class="footer-nav">
+                                    <h4 class="footer-nav__title">
+                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="footer-nav__title__link">{{ node.title }}</a>
+                                    </h4>
+                                    <ul class="footer-nav__list list-reset">
+                                        {% if node.children|length>0 %}
+                                            {% if node.node.internalName == 'article_overview_page' %}
+                                                {% for node2 in node.children %}
+                                                    {% if loop.index < 4 %}
+                                                        {% if node2.title|length > 40 %}
+                                                            {% set ltitle = node2.title[:40] ~ '...' %}
+                                                        {% else %}
+                                                            {% set ltitle = node2.title %}
+                                                        {% endif %}
+                                                        <li class="footer-nav__list__item {% if(node2.active) %}footer-nav__list--active{% endif %}">
+                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__list__link">{{ ltitle }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for node2 in node.children %}
+                                                    {% if not node.node.isHiddenFromNav() or true %}
+                                                        <li class="footer-nav__list__item {% if(node2.active) %}footer-nav__list--active{% endif %}">
+                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__list__link">{{ node2.title }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {# Subfooter #}
+    <section class="subfooter">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <p class="pull-left">
+                        &copy; {{ "now"|date("Y") }}
+                        {% if nodemenu is defined %}
+                            {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
+                            {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}">{{ sitemap.title }}</a>{% endif %}
+                        {% endif %}
+                    </p>
+                    <p class="pull-right created-by">
+                        Created by <a href="http://www.kunstmaan.be"><img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan"></a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</footer>

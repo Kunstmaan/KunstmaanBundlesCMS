@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Styleguide Theme Kunstmaan
+   ========================================================================== */
+
+/* Header
+   ========================================================================== */
+.styleguide__header {
+    overflow: hidden;
+    background: #1bc8a1 !important;
+    color: #fff !important;
+}
+
+@media (min-width: 950px) {
+    .styleguide__header {
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}
+
+.styleguide__header__head {
+    margin: 0;
+    padding-left: 1em;
+
+    font-family: arial, sans-serif;
+    font-size: 1rem;
+    line-height: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff !important;
+}
+
+@media (min-width: 950px) {
+    .styleguide__header__head {
+        float: left;
+    }
+
+    .styleguide__header__main-nav {
+        float: right;
+        padding-right: 1.5em;
+    }
+}
+
+.styleguide__header__main-nav__item {
+    position: relative;
+
+    display: inline-block;
+    height: 3rem;
+    padding: 0 1em;
+
+    font-size: 1rem;
+    line-height: 3rem;
+    color: #fff;
+    text-decoration: none;
+
+    transition: color .15s ease;
+}
+
+.styleguide__header__main-nav__item:hover {
+    color: #003767;
+}
+
+.styleguide__header__main-nav__item--active, .styleguide__header__main-nav__item--active:hover {
+    background: #fff;
+    color: #003767;
+}
+
+
+/* Main
+   ========================================================================== */
+@media (min-width: 950px) {
+    .styleguide__main {
+        padding-left: 15vw;
+    }
+}
+
+
+/* Blocks Navigation
+   ========================================================================== */
+.styleguide__block-navigation {
+    z-index: 99;
+    position: fixed;
+    top: 3rem;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+
+    display: none;
+    width: 15vw;
+    padding: 1rem 0 4rem 0;
+
+    border-right: 1px solid #8597a2;
+    background: #fff;
+}
+
+@media (min-width: 950px) {
+    .styleguide__block-navigation {
+        display: block;
+    }
+}
+
+.styleguide__block-navigation__item {
+    display: block;
+    padding: .5em 1em;
+
+    font-size: .8rem;
+    color: #000;
+    text-align: right;
+    text-decoration: none;
+}
+
+.styleguide__block-navigation__item--top:hover {
+    color: #1bc8a1;
+    text-decoration: none;
+}
+
+
+
+/* Content Container
+   ========================================================================== */
+.styleguide__content-container > h1 {
+    position: relative !important;
+    padding-top: 6.5rem !important;
+    margin-bottom: 2rem !important;
+    font-size: 2rem !important;
+    line-height: 1 !important;
+
+    color: #1bc8a1 !important;
+}
+
+.styleguide__content-container > h1:before {
+    content: '' !important;
+    position: absolute !important;
+    top: 6.7rem !important;
+    left: -1rem !important;
+    display: block !important;
+    width: .5rem !important;
+    height: .8em !important;
+
+    background: #1bc8a1 !important;
+    opacity: .2 !important;
+}
+
+.styleguide__content-container > h1:first-child {
+    padding-top: 3.5rem !important;
+}
+
+.styleguide__content-container > h1:first-child:before {
+    top: 3.7rem !important;
+}
+
+
+/* Color template
+   ========================================================================== */
+.styleguide__color-template {
+    display: inline-block;
+    margin: 0 1.5rem 1.5rem 0;
+
+    text-align: center;
+}
+
+.styleguide__color-template__example {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    margin: 0 auto 1rem;
+
+    border-radius: 50%;
+}
+
+
+
+/* Code blocks
+   ========================================================================== */
+.codeBlock {
+    margin: 2rem 0;
+    white-space: nowrap;
+
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    font-size: .9rem;
+}
+
+.styleguide__code {
+    padding: .1em .2em;
+    white-space: nowrap;
+
+    color: #000;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    font-size: .9rem;
+}
+
+/* Helper classes
+   ========================================================================== */
+.styleguide--dark-bg {
+    background-color: #e3e3e3;
+    padding: 1em;
+}
+.styleguide--green-bg {
+    background-color: #1bc8a1;
+    padding: 1em;
+}

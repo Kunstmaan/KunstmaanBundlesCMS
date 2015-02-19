@@ -1,16 +1,22 @@
-<nav role="navigation">
-    <ul class="list-reset sub-navigation">
-    {% for node in items %}
-        {% if not node.node.isHiddenFromNav() %}
-            <li class="sub-navigation__item {% if(node.active) %}sub-navigation__item--active{% endif %}">
-                <a href="{{ path('_slug', { 'url': node.slug }) }}" class="sub-navigation__link">
-                    {{ node.title }}
-                    {% if(node.active) %}
-                        <i class="icon-chevron-right sub-navigation__link__icon"></i>
-                    {% endif %}
-                </a>
-            </li>
-        {% endif %}
-    {% endfor %}
-    </ul>
+<nav role="navigation" class="submenu">
+    <div class="row">
+
+        {% for node in items %}
+            {% if not node.node.isHiddenFromNav() %}
+                <div class="col-md-4 col-sm-4">
+
+                    <div class="submenu__item {% if(node.active) %}submenu__item--active{% endif %}">
+                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="submenu__link {% if(node.active) %}submenu__link--active{% endif %}">
+                            <img src="http://placehold.it/360x200" alt="" class="submenu__img">
+                            <h2 class="submenu__title">{{ node.title }}</h2>
+                            <p class="submenu__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum facilis ab nam quia commodi vero quod ad libero dolorum in.</p>
+                            <span class="submenu__cta">Take a look at lorem ipsum <i class="icon icon--arrow-right"></i></span>
+                        </a>
+                    </div>
+
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
 </nav>
