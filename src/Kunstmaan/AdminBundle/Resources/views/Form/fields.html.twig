@@ -159,28 +159,6 @@
                         </div>
                     {% endfor %}
                 </div>
-
-
-                {# <button type="button" class="btn--raise-on-hover nested-form__item__header__actions__action nested-form__item__header__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="">
-                    <i class="fa fa-trash-o"></i>
-                </button> #}
-
-
-                {# <ul class="nested_form ul_{{ form.vars.id }}{% if sortable %} nested_sortable{% endif %}"{% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
-                    {% for obj in form %}
-                        <li class="nested_form_item {% if sortable %}nested_form_item--sortable{% endif %}" delkey="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}"{% if sortable %} data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
-                            {% if sortable %}
-                                <div class="prop_bar">
-                                    <i class="icon-move"></i>
-                                    <div class="actions"></div>
-                                </div>
-                            {% endif %}
-                            {% for child in obj.children %}
-                                {{ form_row(child) }}
-                            {% endfor %}
-                        </li>
-                    {% endfor %}
-                </ul> #}
             {% else %}
                 {% if attr['info_text'] is defined %}
                     {# Info text #}
