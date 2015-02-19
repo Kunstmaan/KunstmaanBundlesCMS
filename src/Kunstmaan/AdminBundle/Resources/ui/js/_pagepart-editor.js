@@ -63,6 +63,11 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                 // Reinit rich Editors
                 kunstmaanbundles.richEditor.destroyRichEditors();
                 kunstmaanbundles.richEditor.init();
+
+                // reinit colorpicker
+                initColorpicker();
+
+                // initCustomSelect();
             }
         });
 

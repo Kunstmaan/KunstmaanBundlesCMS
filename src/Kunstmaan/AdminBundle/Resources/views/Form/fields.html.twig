@@ -1,9 +1,10 @@
 {# Widgets #}
 {% block color_widget %}
     {% spaceless %}
-        {{ form_widget(form) }}
-
-        {# TO DO #}
+        <div class="js-colorpicker input-group">
+            <input {{ block('widget_attributes') }} class="form-control"/>
+            <span class="input-group-addon"><i></i></span>
+        </div>
     {% endspaceless %}
 {% endblock %}
 

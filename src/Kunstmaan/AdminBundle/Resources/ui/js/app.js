@@ -11,6 +11,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
         appScroll();
         initTooltip();
+        initColorpicker();
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
@@ -72,6 +73,10 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
     initTooltip = function() {
         $('[data-toggle="tooltip"]').tooltip();
+    };
+
+    initColorpicker = function() {
+        $('.js-colorpicker').colorpicker();
     };
 
 
