@@ -57,7 +57,7 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                     result = $select.closest('.js-draggable-item').after(data);
                 }
 
-                // Enable "leave page" modal
+                // Enable leave-page modal
                 kunstmaanbundles.checkIfEdited.edited();
 
                 // Reinit rich Editors
@@ -67,7 +67,11 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                 // reinit colorpicker
                 initColorpicker();
 
-                // initCustomSelect();
+                // Reinit custom selects
+                kunstmaanbundles.advancedSelect.init();
+
+                // Reinit nested forms
+                kunstmaanbundles.nestedForm.init();
             }
         });
 

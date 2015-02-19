@@ -136,7 +136,7 @@
                     {% set sortableField = attr['nested_sortable_field']|default('weight') %}
                 {% endif %}
 
-                <div id="{{ form.vars.id }}__nested-form" class="js-nested-form nested-form{% if sortable %} js-sortable-container sortable-container nested-form--sortable{% endif %}" data-sortable="{% if sortable %}true{% else %}false{% endif %}" data-allow-new="{{ form.vars.allow_add|default('0') }}" data-allow-delete="{{ form.vars.allow_delete|default('0') }}" data-min-items="{{ attr['nested_form_min']|default('0') }}" data-max-items="{{ attr['nested_form_max']|default('false') }}" data-sortable="{{ attr['nested_sortable']|default('false') }}" {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
+                <div id="{{ form.vars.id }}__nested-form" class="js-nested-form nested-form{% if sortable %} js-sortable-container sortable-container nested-form--sortable{% endif %}" data-sortable="{% if sortable %}true{% else %}false{% endif %}" data-allow-new="{{ form.vars.allow_add|default('0') }}" data-allow-delete="{{ form.vars.allow_delete|default('0') }}" data-min-items="{{ attr['nested_form_min']|default('0') }}" data-max-items="{{ attr['nested_form_max']|default('false') }}" data-sortable="{{ attr['nested_sortable']|default('false') }}" {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %} data-initialized="false">
 
                     {# Items #}
                     {% for obj in form %}
@@ -159,28 +159,6 @@
                         </div>
                     {% endfor %}
                 </div>
-
-
-                {# <button type="button" class="btn--raise-on-hover nested-form__item__header__actions__action nested-form__item__header__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="">
-                    <i class="fa fa-trash-o"></i>
-                </button> #}
-
-
-                {# <ul class="nested_form ul_{{ form.vars.id }}{% if sortable %} nested_sortable{% endif %}"{% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %}>
-                    {% for obj in form %}
-                        <li class="nested_form_item {% if sortable %}nested_form_item--sortable{% endif %}" delkey="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{{ obj.vars.value.id }}"{% if sortable %} data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
-                            {% if sortable %}
-                                <div class="prop_bar">
-                                    <i class="icon-move"></i>
-                                    <div class="actions"></div>
-                                </div>
-                            {% endif %}
-                            {% for child in obj.children %}
-                                {{ form_row(child) }}
-                            {% endfor %}
-                        </li>
-                    {% endfor %}
-                </ul> #}
             {% else %}
                 {% if attr['info_text'] is defined %}
                     {# Info text #}

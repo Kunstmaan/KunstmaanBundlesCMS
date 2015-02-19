@@ -4,7 +4,8 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
     var init, setupForm,
         addNewItem, delItem,
-        addNewBtn, addDelBtn, showOrHideActions;
+        addNewBtn, addDelBtn, showOrHideActions,
+        updateSortkeys;
 
 
     var newButtonHtml = '<button type="button" class="js-nested-form__add-btn btn btn-primary btn--raise-on-hover nested-form__add-btn">Add</button>';
@@ -13,7 +14,14 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
     init = function() {
         $('.js-nested-form').each(function() {
-            setupForm($(this));
+            var $form = $(this),
+                initialized = $form.data('initialized');
+
+            if(!initialized) {
+                setupForm($form);
+                $form.data('initialized', true);
+            }
+
         });
     };
 
@@ -26,8 +34,6 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
             minItems = $form.data('min-items'),
             maxItems = $form.data('max-items'),
             $currentItems = $form.find('.js-nested-form__item');
-
-        console.log('sortable: ' + sortable + ' | allowAdd: ' + allowNew + ' | allowDelete: ' + allowDelete + ' | minItems: ' + minItems + ' | maxItems: ' + maxItems);
 
         // Set index
         var totalItems = $currentItems.length;
@@ -56,6 +62,13 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
         // Check Actions
         showOrHideActions($form);
+
+        // Update Sortkeys
+        if(sortable) {
+            $form.on('sort', function() {
+                updateSortkeys($form);
+            });
+        }
     };
 
 
@@ -147,12 +160,18 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
         // Init Ajax Modals
         kunstmaanbundles.ajaxModal.resetAjaxModals();
+
+        // Update sortkeys
+        if(sortable) {
+            updateSortkeys($form);
+        }
     };
 
 
     // Delete item
     delItem = function($btn, $form, $item) {
-        var delKey = $item.data('delete-key');
+        var delKey = $item.data('delete-key'),
+            sortable = $form.data('sortable');
 
         // Set delKey
         if(delKey) {
@@ -164,6 +183,28 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
         // Check that we need to show/hide the add/delete buttons
         showOrHideActions($form);
+
+        // Update sortkeys
+        if(sortable) {
+            updateSortkeys($form);
+        }
+    };
+
+
+    // Update Sortkeys
+    updateSortkeys = function($form) {
+        var key = 0,
+            $currentItems = $form.find('.js-nested-form__item');
+
+        $currentItems.each(function() {
+            var fieldId = $(this).data('sortkey');
+
+            if (fieldId === undefined) {
+                return;
+            }
+
+            $('#' + fieldId).val(key++);
+        });
     };
 
 
