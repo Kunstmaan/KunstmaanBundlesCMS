@@ -131,8 +131,7 @@
                 {# Nested forms #}
                 {% set sortable = false %}
                 {% if attr['nested_sortable'] is defined and attr['nested_sortable'] == true %}
-                    {# {% set sortable = true %} #}
-                    {% set sortable = false %}
+                    {% set sortable = true %}
                     {% set sortableField = attr['nested_sortable_field']|default('weight') %}
                 {% endif %}
 

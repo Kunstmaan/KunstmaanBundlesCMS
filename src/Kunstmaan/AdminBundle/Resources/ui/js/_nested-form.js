@@ -144,6 +144,9 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
         // Reinit rich Editors
         kunstmaanbundles.richEditor.destroyRichEditors();
         kunstmaanbundles.richEditor.init();
+
+        // Init Ajax Modals
+        kunstmaanbundles.ajaxModal.resetAjaxModals();
     };
 
 
