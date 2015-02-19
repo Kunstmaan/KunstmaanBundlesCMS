@@ -44,6 +44,13 @@
     left: 1.2rem;
 }
 
+.has-error {
+
+    .media-chooser__choose-btn {
+        border-color: $red;
+    }
+}
+
 
 
 /* Preview
