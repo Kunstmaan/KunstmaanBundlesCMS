@@ -12,11 +12,10 @@
 
     display: block;
 
-    font-size: 1.5rem;
+    //font-size: 1.6rem;
+    font-weight: 500;
 
-    &,
-    &:hover,
-    &:focus {
+    &, &:hover, &:focus {
         background: $green;
         color: $white;
     }
@@ -49,7 +48,11 @@
 }
 
 .app__nav__container {
-    .nav > li:first-child > a {
-        padding-left: 2.4rem;
+
+    @media (min-width: $screen-sm) {
+
+        .nav > li:first-child > a {
+            padding-left: 2.4rem;
+        }
     }
 }
