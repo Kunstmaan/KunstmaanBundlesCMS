@@ -4,11 +4,16 @@
         {% for node in items %}
             {% if not node.node.isHiddenFromNav() %}
                 <div class="col-md-4">
+
                     <div class="submenu__item {% if(node.active) %}submenu__item--active{% endif %}">
                         <a href="{{ path('_slug', { 'url': node.slug }) }}" class="submenu__link {% if(node.active) %}submenu__link--active{% endif %}">
-                            {{ node.title }}
+                            <img src="http://placehold.it/360x200" alt="" class="submenu__img">
+                            <h2 class="submenu__title">{{ node.title }}</h2>
+                            <p class="submenu__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum facilis ab nam quia commodi vero quod ad libero dolorum in.</p>
+                            <span class="submenu__cta">Take a look at lorem ipsum <i class="icon icon--arrow-right"></i></span>
                         </a>
                     </div>
+
                 </div>
             {% endif %}
         {% endfor %}
