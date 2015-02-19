@@ -131,56 +131,6 @@
                 </button>
             {% endif %}
         {% endfor %}
-
-
-        <script>
-            // function doBulkAction(url) {
-            //     document.bulkform.action = url;
-            //     document.bulkform.submit();
-
-            //     return false;
-            // }
-
-            // function validateBulkCheckboxes() {
-            //     var allChecked = true;
-            //     var oneChecked = false;
-
-            //     var checkboxes = document.querySelectorAll('.js-bulk-checkbox');
-            //     for (var i=0; i<checkboxes.length; i++) {
-            //         var cb = checkboxes[i];
-            //         if (cb.checked == true) {
-            //             oneChecked = true;
-            //         } else {
-            //             allChecked = false;
-            //         }
-            //     }
-
-            //     $('#js-all-bulk-checkbox').prop('checked', allChecked);
-
-            //     if (oneChecked) {
-            //         $('.js-bulk-button').removeClass('disabled');
-            //     } else {
-            //         $('.js-bulk-button').addClass('disabled');
-            //     }
-            // }
-
-            // var allCheckbox = document.getElementById('js-all-bulk-checkbox');
-            // allCheckbox.onchange = function() {
-            //     if (allCheckbox.checked == true) {
-            //         $('.js-bulk-checkbox').prop('checked', true);
-            //         $('.js-bulk-button').removeClass('disabled');
-            //     } else {
-            //         $('.js-bulk-checkbox').prop('checked', false);
-            //         $('.js-bulk-button').addClass('disabled');
-            //     }
-            // };
-
-            // var checkboxes = document.querySelectorAll('.js-bulk-checkbox');
-            // for (var key in checkboxes) {
-            //     checkboxes[key].onchange = validateBulkCheckboxes;
-            // }
-        </script>
-
     </form>
 {% endif %}
 
