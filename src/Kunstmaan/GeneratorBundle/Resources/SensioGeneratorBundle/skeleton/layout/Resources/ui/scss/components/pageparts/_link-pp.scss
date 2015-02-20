@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Pageparts - Link pp
+   ========================================================================== */
+
+.link-pp {
+    margin: $default-margin 0;
+
+      ///////////////
+     //   THEME   //
+    ///////////////
+
+    font-size: .85rem;
+
+    a {
+        display: inline-block;
+        color: $black;
+        font-weight: 600;
+
+        @extend .icon;
+        @extend .icon--arrow-right;
+
+        &:before {
+            font-family: $iconfont;
+            font-size: .25rem;
+            display: inline-block;
+            margin-left: .2rem;
+        }
+    }
+}
