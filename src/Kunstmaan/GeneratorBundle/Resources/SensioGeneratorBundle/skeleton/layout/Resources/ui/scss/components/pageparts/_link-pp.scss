@@ -30,4 +30,8 @@
     font-size: .5rem;
     display: inline-block;
     margin-left: .5rem;
+
+    &:before {
+        font-family: $iconfont;
+    }
 }
