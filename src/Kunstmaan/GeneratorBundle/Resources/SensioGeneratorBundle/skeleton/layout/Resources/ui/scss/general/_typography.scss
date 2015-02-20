@@ -34,3 +34,28 @@ hr {
 }
 
 // Text-pp --> pageparts
+
+
+  ///////////////
+ //   THEME   //
+///////////////
+
+h1 {
+    color: $blue;
+    font-size: 3rem;
+    margin: 2.2rem;
+}
+h2 {
+    font-size: 1.8rem;
+}
+h3 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+}
+h4, h5, h6 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+h2, h3, h4, h5, h6 {
+    margin: 1.6rem;
+}
