@@ -2,13 +2,18 @@
    Pageparts - Button pp
    ========================================================================== */
 
+.button-pp {
+    margin: $default-margin;
+}
+
   ///////////////
  //   THEME   //
 ///////////////
 
-.button-pp {
+.btn {
     font-size: .8rem;
     text-transform: uppercase;
+    text-align: center;
     color: $black;
 
     display: inline-block;
@@ -26,11 +31,11 @@
 /* Colors
    ========================================================================== */
 
-.button-pp--primary {
+.btn--primary {
     background-color: $blue;
     color: $white;
 }
-.button-pp--secondary {
+.btn--secondary {
     background-color: $blue-dark;
     color: $white;
 }
