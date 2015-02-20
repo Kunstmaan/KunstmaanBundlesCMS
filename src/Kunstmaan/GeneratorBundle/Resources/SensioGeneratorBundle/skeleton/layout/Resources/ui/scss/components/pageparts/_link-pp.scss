@@ -15,14 +15,19 @@
         display: inline-block;
         color: $black;
         font-weight: 600;
-
-        @extend .icon--arrow-right;
-
-        &:before {
-            font-family: $iconfont;
-            font-size: .25rem;
-            display: inline-block;
-            margin-left: .2rem;
-        }
     }
+}
+
+.link-pp__link {
+    display: inline-block;
+    color: $black;
+    font-weight: 600;
+}
+
+.link-pp__icon {
+    @extend .icon--arrow-right;
+
+    font-size: .5rem;
+    display: inline-block;
+    margin-left: .5rem;
 }
