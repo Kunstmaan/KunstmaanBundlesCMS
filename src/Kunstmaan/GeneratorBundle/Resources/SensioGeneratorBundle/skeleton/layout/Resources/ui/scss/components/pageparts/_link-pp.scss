@@ -16,7 +16,6 @@
         color: $black;
         font-weight: 600;
 
-        @extend .icon;
         @extend .icon--arrow-right;
 
         &:before {
