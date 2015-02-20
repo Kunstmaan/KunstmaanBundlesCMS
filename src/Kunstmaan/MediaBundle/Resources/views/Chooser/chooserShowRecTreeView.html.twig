@@ -1,5 +1,7 @@
-<li class="{% if mediaFolder.id in parentIds %}jstree-open blub{% endif %} {% if folder is not null and folder.id == mediaFolder.id %}active{% endif %}" rel="{{ mediaFolder.rel }}">
-    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({ 'folderId': mediaFolder.id })) }}">{{ mediaFolder.name }}</a>
+<li class="{% if mediaFolder.id in parentIds %}jstree-open{% endif %}" data-jstree='{"type":"{{ mediaFolder.rel }}"}' rel="{{ mediaFolder.rel }}">
+    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({ 'folderId': mediaFolder.id })) }}" class="{% if folder is not null and folder.id == mediaFolder.id %}active{% endif %}">
+        {{ mediaFolder.name }}
+    </a>
     {% if mediaFolder.__children is not empty %}
         <ul>
             {% for mediaFolder in mediaFolder.__children %}

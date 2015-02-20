@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Fonts
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Webfonts
+   ========================================================================== */
+$open-sans: 'Open Sans', Helvetica, arial, sans-serif;
+$rokkitt: 'Rokkitt', Georgia, serif;
+
+
+/* Iconfonts
+   ========================================================================== */
+$iconfont-name: "bolerocf";
+
+
+/* Defaults
+   ========================================================================== */
+$font-family--base:         $open-sans;
+$font-family--headings:     $rokkitt;
+
+$font-family--buttons:      $rokkitt;
+$font-family--buttons--xs:  $open-sans;

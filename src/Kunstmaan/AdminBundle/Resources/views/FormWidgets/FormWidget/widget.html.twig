@@ -1,7 +1,9 @@
 {% if resource.types is not empty %}
-    <fieldset class="properties">
-        {% for typeName in resource.types|keys %}
-            {{ form_widget(formView[typeName]) }}
-        {%  endfor %}
+    <fieldset class="panel panel-default form-properties">
+        <div class="panel-body">
+            {% for typeName in resource.types|keys %}
+                {{ form_widget(formView[typeName]) }}
+            {%  endfor %}
+        </div>
     </fieldset>
 {% endif %}
