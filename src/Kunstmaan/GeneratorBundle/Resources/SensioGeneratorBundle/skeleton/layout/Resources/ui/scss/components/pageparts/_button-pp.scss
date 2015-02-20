@@ -2,8 +2,21 @@
    Pageparts - Button pp
    ========================================================================== */
 
-.button-pp {
+  ///////////////
+ //   THEME   //
+///////////////
 
+.button-pp {
+    font-size: .8rem;
+    text-transform: uppercase;
+    color: $black;
+
+    display: inline-block;
+    padding: .85rem 1rem;
+    background-color: $white;
+
+    border: 1px solid $hr-color;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,.2);
 }
 
 /* Sizes
@@ -12,3 +25,29 @@
 
 /* Colors
    ========================================================================== */
+
+.button-pp--primary {
+    background-color: $blue;
+    color: $white;
+}
+.button-pp--secondary {
+    background-color: $blue-dark;
+    color: $white;
+}
+
+
+/* Alignment
+   ========================================================================== */
+
+.button-pp--left {
+    text-align: left;
+}
+.button-pp--center {
+    text-align: center;
+}
+.button-pp--right {
+    text-align: right;
+}
+.button-pp--block {
+    display: block;
+}
