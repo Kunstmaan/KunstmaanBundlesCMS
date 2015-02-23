@@ -27,7 +27,7 @@
                             </ul>
                         {% else %}
                             {% for key,add in adminaddlist %}
-                                <a class="btn btn-primary btn--raised" href="{{ path(add["path"], add[("params")]) }}">
+                                <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
                                     {{ 'form.add' | trans }}
                                     {{ key }}
                                 </a>
@@ -36,7 +36,7 @@
                     {% endif %}
                     {% if adminlist.canExport() %}
                         <div class="btn-group dropdown">
-                            <a class="btn btn-default btn--raised dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown" href="#">
                                 Export to
                                 <i class="fa fa-caret-down btn__icon"></i>
                             </a>

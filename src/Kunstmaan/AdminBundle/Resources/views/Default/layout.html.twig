@@ -2,7 +2,7 @@
 {% set extraclasshtml %}{% block extraclasshtml %}{% endblock %}{% endset %}
 
 <!DOCTYPE html>
-<html class="no-js {{ extraclasshtml }}" lang="en">
+<html class="{{ extraclasshtml }}" lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -16,7 +16,8 @@
 
     <!-- Styles -->
     {% include "KunstmaanAdminBundle:Default:_css.html.twig" %}
-
+    <!-- Extra CSS -->
+    {% block extracss %}{% endblock %}
     <!-- JS -->
     {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
 </head>
@@ -33,8 +34,9 @@
 {% block body %}
 
     <!-- Header -->
-    {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
-
+    {% block appHeader %}
+        {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
+    {% endblock %}
 
     <!-- Main Content -->
     <main role="main" id="app__main" class="container-fluid app__main{% if lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
@@ -106,11 +108,7 @@
 
 
                     <!-- App Content - Content -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            {% block content %}{% endblock %}
-                        </div>
-                    </div>
+                    {% block content %}{% endblock %}
 
                 </div>
             </div>

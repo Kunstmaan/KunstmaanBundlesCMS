@@ -78,7 +78,7 @@
                     <ul class="dropdown-menu" role="menu">
                         {% for addaction in mediamanager.getFolderAddActions() %}
                             <li>
-                                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">
+                                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}" {# data-toggle="modal" data-target="#add{{ addaction.type }}-modal" #}>
                                     {{ addaction.name |trans }}
                                 </a>
                             </li>
@@ -102,12 +102,14 @@
 
 
     <!-- Scroll-actions -->
-    {# <div id="main_actions_top" class="main_actions top">
-        <div class="pull-right btn-group">
+    <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+        <div class="btn-group">
             {{ block('actions') }}
-            <a class="btn up">&#9650;</a>
+            <a href="#" class="btn btn-default">
+                <i class="fa fa-caret-up"></i>
+            </a>
         </div>
-    </div> #}
+    </div>
 
 
     <!-- Main Tabs -->
@@ -191,7 +193,7 @@
                                         </span>
                                     </a>
 
-                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}" class="media-thumbnail-del-btn">
+                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" #} class="btn media-thumbnail-del-btn">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                     <span class="media-thumbnail-del-helper">
@@ -249,5 +251,6 @@
     <!-- Modals -->
     {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {# {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %} #}
 
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-	<form class="form-horizontal" action="{{ path('KunstmaanUserManagementBundle_settings_roles_add') }}" method="post" {{ form_enctype(form) }} novalidate >
+	<form action="{{ path('KunstmaanUserManagementBundle_settings_roles_add') }}" method="post" {{ form_enctype(form) }} novalidate >
 	    <fieldset>
 	        {{ form_rest(form) }}
 	        <div class="form-actions">

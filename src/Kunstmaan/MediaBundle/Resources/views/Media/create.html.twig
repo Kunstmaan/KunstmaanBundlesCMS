@@ -1,24 +1,34 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
 
-{% block title %}{{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}{% endblock%}
+
+{% block title %}
+    {{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}
+{% endblock %}
+
 
 {% block header %}
-    <div class="page-header">
-        <h1>{{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}</h1>
-    </div>
+    <header class="app__content__header app__content__header--with-margin">
+        <h1 class="app__content__header__title">
+            {{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}
+        </h1>
+    </header>
 {% endblock %}
+
 
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="properties" novalidate="novalidate">
+    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
         <div class="prop_wrp">
             {{ form_widget(form) }}
-            <div class="input_prop">
-                <div class="btn_group">
-                    <button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' | trans }}</button>
-                    <button class="btn btn-primary" type="submit">{{ 'media.file.add' | trans }}</button>
-                </div>
+            <div class="form-actions form-actions--padded">
+
+                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                    {{ 'media.file.add' | trans }}
+                </button>
+                <a class="btn btn-default btn--raise-on-hover" href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}">
+                    {{ 'form.cancel' | trans }}
+                </a>
             </div>
          </div>
     </form>

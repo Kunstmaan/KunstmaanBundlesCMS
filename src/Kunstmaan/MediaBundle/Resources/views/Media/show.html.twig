@@ -61,7 +61,8 @@
         <div class="btn-group" role="group">
             {% block extraactions %}{% endblock %}
             {% block actions %}
-                <button{#  href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" #} data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
+                {#  href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" #}
+                <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
                     {{ 'form.delete'|trans }}
                 </button>
             {% endblock %}
@@ -70,13 +71,15 @@
 
 
     <!-- Scroll-actions -->
-    {# <div id="main_actions_top" class="main_actions top">
-        <div class="pull-right btn-group">
+    <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+        <div class="btn-group">
             {{ block('extraactions') }}
             {{ block('actions') }}
-            <a class="btn up">&#9650;</a>
+            <a href="#" class="btn btn-default">
+                <i class="fa fa-caret-up"></i>
+            </a>
         </div>
-    </div> #}
+    </div>
 
 
     <!-- Main Tabs -->
