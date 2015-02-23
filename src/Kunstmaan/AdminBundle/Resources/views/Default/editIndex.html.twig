@@ -6,7 +6,7 @@
     <div class="page-header">
         <h1>{{ 'Edit dashboard' | trans | raw }}</h1>
     </div>
-    <form class="form-horizontal" action="{{ path('KunstmaanAdminBundle_homepage_admin') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('KunstmaanAdminBundle_homepage_admin') }}" method="post" {{ form_enctype(form) }}>
 	    <fieldset>
 	    	{{ form_errors(form) }}
 	    	{{ form_row(form.title) }}

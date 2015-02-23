@@ -110,11 +110,6 @@
     </div> #}
 
 
-
-
-
-
-
     <!-- Main Tabs -->
     <ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
         <li class="active">
@@ -148,7 +143,7 @@
                         {{ child.name }}
                     </a>
                 {% else %}
-                    <p class="list-group-item">
+                    <p class="list-group-item text--muted">
                         {{ 'media.folder.sub.no' |trans }}
                     </p>
                 {% endfor %}
@@ -161,7 +156,7 @@
                     {% if adminlist.count > 0 %}
                         {{ parent() }}
                     {% else %}
-                        <p>
+                        <p class="text--muted">
                             {{ 'media.media.no' |trans }}
                         </p>
                     {% endif %}
@@ -179,242 +174,52 @@
                                     {% endif %}
                                 {% endif %}
 
-                                <div class="col-sm-6 col-md-3">
+                                <div class="col-sm-6 col-md-4 col-lg-3">
                                     <a class="thumbnail media-thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                         <figure>
                                             {% if imageurl %}
                                                 <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">
                                             {% else %}
-                                                <i class="fa fa-file"></i>
+                                                <i class="fa fa-file-o media-thumbnail__icon"></i>
                                             {% endif %}
                                             <figcaption class="media-thumbnail__caption">
                                                 {{ media.name }}
                                             </figcaption>
                                         </figure>
+                                        <span class="media-thumbnail__helper">
+                                            Click to edit
+                                        </span>
                                     </a>
 
-                                    {# <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}">
-                                        Delete
+                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-toggle="modal" data-target="sure-modal-{{ media.id }}" class="media-thumbnail-del-btn">
+                                        <i class="fa fa-trash-o"></i>
                                     </a>
-                                    <span class="helper">
-                                        Click to edit
-                                    </span> #}
+                                    <span class="media-thumbnail-del-helper">
+                                        Delete
+                                    </span>
                                 </div>
 
                                 {# Clearfixes #}
                                 {% if loop.index is divisible by(2) %}
                                     <div class="clearfix visible-sm-block"></div>
                                 {% endif %}
+                                {% if loop.index is divisible by(3) %}
+                                    <div class="clearfix visible-md-block"></div>
+                                {% endif %}
                                 {% if loop.index is divisible by(4) %}
-                                    <div class="clearfix visible-md-block visible-lg-block"></div>
+                                    <div class="clearfix visible-lg-block"></div>
                                 {% endif %}
                             {% endfor %}
                         </div>
                     {% else %}
-                        <p>
+                        <p class="text--muted">
                             {{ 'media.media.no' |trans }}
                         </p>
                     {% endif %}
                 {% endif %}
-
-
-                    {# <ul class="thumbnails" id="file-list">
-                        {% for media in folder.media %}
-                            {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
-                            <li>
-                                <a class="thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
-                                    {% set handler = mediamanager.getHandler(media) %}
-                                    {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
-                                    {% if imageurl is not empty and media.location == 'local' %}
-                                        {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                                            {% set imageurl = imageurl %}
-                                        {% else %}
-                                            {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if imageurl %}
-                                        <img src="{{ imageurl }}" alt="{{ media.name }}" />
-                                    {% else %}
-                                        <div style="font-size: 135px;text-align:center">
-                                            <i class="icon-file"></i>
-                                        </div>
-                                   {% endif %}
-                                    <p class="img_name">{{ media.name }}</p>
-                                </a>
-                                <a class="del" href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" data-controls-modal="sure-modal-{{ media.id }}" data-backdrop="true" data keyboard="true" class="close-btn" title="delete">close</a>
-                                <span class="helper">Click to edit</span>
-                             </li>
-                        {% else %}
-                            <li class="no_item">
-                                {{ 'media.media.no' |trans }}
-                            </li>
-                        {% endfor %}
-                    </ul> #}
-                    <script type="text/javascript">
-                        // $(document).ready(function () {
-                        //     initDel();
-                        // });
-                    </script>
             </section>
        </div>
 
-
-       <script>
-     //   $(function(){
-
-        //  var dropbox = $('#file-list'),
-        //      message = $('.message', dropbox);
-
-        //  dropbox.filedrop({
-        //      paramname:'files',
-        //      maxfiles: 500,
-        //      maxfilesize: 200,
-        //      url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}',
-
-        //      drop: function(e) {
-        //          files = e.dataTransfer.files;
-        //          if (files === null || files === undefined || files.length <= 0) {
-     //                 if(e.dataTransfer.getData('Text')) {
-     //                     jQuery.ajax({
-     //                         url: '{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' :folder.id }) }}',
-     //                         data: {'text': e.dataTransfer.getData('Text')},
-     //                         async: false,
-     //                         success: function() {
-     //                             window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
-     //                         }
-     //                     });
-     //                 }
-        //          }
-     //         },
-
-        //      error: function(err, file) {
-        //          switch(err) {
-        //              case 'BrowserNotSupported':
-        //                  break;
-        //              case 'TooManyFiles':
-        //                  break;
-        //              case 'FileTooLarge':
-        //                  alert(file.name+' is too large! Please upload files up to 2mb (configurable).');
-        //                  break;
-        //              default:
-        //                  break;
-        //          }
-        //      },
-
-        //      uploadStarted:function(i, file, len){
-        //          createProgressInfo(file);
-        //      },
-
-        //      progressUpdated: function(i, file, progress) {
-        //          $.data(file).find('.progress .bar').css('width', progress + '%');
-        //      },
-
-        //      uploadFinished:function(i,file,response){
-        //          $.data(file).find('.progress .bar').css('width', '100%');
-        //          $.data(file).find('.uploadtitle').html('Done');
-        //      },
-
-        //      afterAll:function(i,file,response){
-        //          window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}';
-        //      },
-
-     //            dragOver: function() {
-     //                dropbox.addClass('dragging-over');
-     //            },
-
-     //            dragLeave: function() {
-     //                dropbox.removeClass('dragging-over');
-     //            }
-
-        //  });
-
-        //  var template = '<div><span style="font-weight:bold" class="uploadtitle">Uploading file...</span> <span class="uploadfilename"></span><div class="progress progress-striped"><div class="bar" style="width: 0%;"></div></div></div>';
-
-        //  function createProgressInfo(file){
-        //      var preview = $(template);
-        //      preview.appendTo(jQuery('#dropprogressinfo'));
-        //      preview.find('.uploadfilename').html(file.name);
-
-        //      // Associating a preview container
-        //      // with the file, using jQuery's $.data():
-        //      $.data(file,preview);
-        //  }
-
-     //        // media are draggable to folders
-     //        function initDragAndDrop() {
-     //            var draggables = dropbox.find('> li');
-     //            draggables.draggable({
-     //                revert: true,
-     //                containment: 'document',
-     //                cursorAt: {left: -10, top: -10},
-     //            })
-     //            // init droppables only if a drag starts
-     //            .on('dragstart', function(e) {
-     //                initDroppables();
-     //                draggables.off('dragstart');
-     //            });
-
-     //            // make folder links droppable
-     //            function initDroppables() {
-     //                // only run it once
-     //                if ($(document).data('droppable-initialized') === true) {
-     //                    console.log('already init');
-     //                    return;
-     //                }
-     //                $(document).data('droppable-initialized', true);
-
-     //                $('a[data-folder-id]').droppable({
-     //                    hoverClass: 'draggable-over',
-     //                    tolerance: 'pointer',
-     //                    drop: function(event, ui) {
-     //                        var target = $(event.target);
-     //                        var folderId = target.data('folder-id');
-     //                        var mediaDraggable = ui.draggable.first();
-     //                        var mediaId = mediaDraggable.find('a[data-media-id]').first().data('media-id');
-     //                        $.ajax({
-     //                            url: '{{ path('KunstmaanMediaBundle_media_move') }}',
-     //                            type: 'POST',
-     //                            data: {
-     //                                folderId: folderId,
-     //                                mediaId: mediaId
-     //                            }
-     //                        }).done(function() {
-     //                            displayConfirmation(target);
-     //                        }).fail(function(xhr) {
-     //                            mediaDraggable.fadeIn(300);
-     //                            displayFailure(target, JSON.parse(xhr.responseText));
-     //                        });
-     //                        mediaDraggable.fadeOut(300);
-     //                    }
-     //                });
-     //            }
-
-     //            function displayConfirmation(elem) {
-     //                elem.addClass('move-success');
-     //                setTimeout(function() {
-     //                    elem.removeClass('move-success');
-     //                }, 400);
-     //            }
-
-     //            function displayFailure(elem, data) {
-     //                elem.addClass('move-failure');
-     //                elem.popover({
-     //                    content: data.error.title,
-     //                    placement: 'top',
-     //                    title: 'error'
-     //                });
-     //                elem.popover('show');
-     //                setTimeout(function() {
-     //                    elem.removeClass('move-failure');
-     //                    elem.popover('destroy');
-     //                }, 2000);
-     //            }
-     //        }
-     //        initDragAndDrop();
-
-        // });
-
-       </script>
 
        <!-- TAB - Properties -->
        <div class="tab-pane" id="properties">
@@ -441,30 +246,8 @@
     </div>
 
 
-
-
-
-
-
-    <!--=========Modals=========-->
-    <div id="addsub-modal" class="modal hide fade">
-        {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
-    </div>
+    <!-- Modals -->
+    {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
-    {# include 'KunstmaanMediaBundle:Image:create-modal.html.twig' #}
 
-    <script type="text/javascript">
-        // $(document).ready(function() {
-        //     // Javascript to enable link to tab
-        //     var url = document.location.toString();
-        //     if (url.match('#')) {
-        //         $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
-        //     }
-
-        //     // Change hash for page-reload
-        //     $('.nav-tabs a').on('shown', function (e) {
-        //         window.location.hash = e.target.hash;
-        //     })
-        // });
-    </script>
 {% endblock %}

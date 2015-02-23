@@ -15,9 +15,13 @@
     {% set titlebgcolor = "#2997ce" %}
     {% endif %}
 
-    .navbar-brand, .navbar-brand:hover, .navbar-brand:focus, .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    .app__header__brand, .app__header__brand:hover, .app__header__brand:focus, .navbar-inverse .app__header__brand, .navbar-inverse .app__header__brand:hover, .navbar-inverse .app__header__brand:focus {
         color: {{ titlecolor }};
         background: {{ titlebgcolor }};
+    }
+
+    header .navbar .app__header__brand:after {
+        border-left-color: {{ titlebgcolor }};
     }
 </style>
 

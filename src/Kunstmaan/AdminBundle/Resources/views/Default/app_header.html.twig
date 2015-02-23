@@ -1,4 +1,4 @@
-<header role="banner">
+<header class="app__header" role="banner">
 
     <!-- App Header -->
     <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
@@ -16,13 +16,13 @@
                 </button>
 
                 <!-- Header - Brand -->
-                <a class="navbar-brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">
+                <a class="navbar-brand app__header__brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">
                     {{ websitetitle | trans }}
                 </a>
             </div>
 
             <!-- Navigation -->
-            <div class="collapse navbar-collapse" id="main-nav-bar">
+            <div class="collapse navbar-collapse app__nav__container" id="main-nav-bar">
 
                 <!-- Navigation - Left -->
                 <ul class="nav navbar-nav">
