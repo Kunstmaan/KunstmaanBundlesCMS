@@ -4,28 +4,26 @@
 
 .header-visual {
     position: relative;
-
-    height: 680px;
-    overflow: hidden;
 }
 
 .header-visual__img {
-    @extend .container-fluid;
-
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     z-index: 0;
 
     width: 100%;
 }
 .header-visual__content {
-    @extend .container;
-
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 1;
 
     width: 100%;
+}
+.header-visual__content__inner {
+    @extend .container;
+
+    padding-top: 5rem;
 }
 
 .header-visual__title {
