@@ -1,4 +1,4 @@
-<li id="folder-{{ mediaFolder.id }}" class="{% if mediaFolder.id in parentIds %}jstree-open{% endif %}" rel="{{ mediaFolder.rel }}">
+<li id="folder-{{ mediaFolder.id }}" class="{% if mediaFolder.id in parentIds %}jstree-open{% endif %}" data-jstree='{"type":"{{ mediaFolder.rel }}"}' rel="{{ mediaFolder.rel }}">
     <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': mediaFolder.id }) }}" data-folder-id="{{ mediaFolder.id }}" class="{% if folder is not null and folder.id == mediaFolder.id %}active{% endif %}">
         {{ mediaFolder.name }}
     </a>

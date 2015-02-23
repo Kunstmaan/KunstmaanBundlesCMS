@@ -1,7 +1,7 @@
 {
   "name": "Sortable",
   "main": "Sortable.js",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "homepage": "http://rubaxa.github.io/Sortable/",
   "authors": [
     "RubaXa <ibnRubaXa@gmail.com>"
@@ -24,13 +24,13 @@
     "test",
     "tests"
   ],
-  "_release": "1.0.1",
+  "_release": "1.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "1.0.1",
-    "commit": "3573544350d0f8c298ce474679f98ebc5dee82c3"
+    "tag": "1.1.0",
+    "commit": "c492250bf031b3d621ebbdd0e9f4f4f0a2312c83"
   },
   "_source": "git://github.com/RubaXa/Sortable.git",
-  "_target": "1.0.1",
+  "_target": "1.1.0",
   "_originalSource": "Sortable"
 }

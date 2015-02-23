@@ -23,7 +23,7 @@
     transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
 
     &:hover:not(.active) {
-        box-shadow: 0 3px 8px rgba(0,0,0,.12),0 3px 4px rgba(0,0,0,.12);
+        box-shadow: 0 3px 8px rgba(0,0,0,.04),0 3px 4px rgba(0,0,0,.04);
     }
 }
 

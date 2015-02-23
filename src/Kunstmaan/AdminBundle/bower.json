@@ -11,6 +11,8 @@
     "eonasdan-bootstrap-datetimepicker": "~4.0",
     "cargobay": "0.5.2",
     "moment": "2.9.0",
-    "Sortable": "1.0.1"
+    "Sortable": "1.1.0",
+    "select2": "4.0.0-beta.3",
+    "mjolnic-bootstrap-colorpicker" : "2.1.0"
   }
 }

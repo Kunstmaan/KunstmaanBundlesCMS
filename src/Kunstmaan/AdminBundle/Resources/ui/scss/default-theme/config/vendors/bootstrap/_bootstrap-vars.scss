@@ -196,7 +196,7 @@ $input-bg-disabled:              $gray-lighter;
 //** Text color for `<input>`s
 $input-color:                    $gray;
 //** `<input>` border color
-$input-border:                   #ccc;
+$input-border:                   $gray-lighter;
 
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -211,7 +211,7 @@ $input-border-radius-small:      $border-radius-small;
 $input-border-focus:             #66afe9;
 
 //** Placeholder text color
-$input-color-placeholder:        #999;
+$input-color-placeholder:        $gray-light;
 
 //** Default `.form-control` height
 $input-height-base:              ($line-height-computed + ($padding-base-vertical * 2) + 2);
@@ -705,14 +705,14 @@ $list-group-link-heading-color: #333;
 //
 //##
 
-$panel-bg:                    #f7f7f7;
+$panel-bg:                    #fcfcfc;
 $panel-body-padding:          1.5em;
 $panel-heading-padding:       .3em 1.5em;
 $panel-footer-padding:        $panel-heading-padding;
 $panel-border-radius:         $border-radius-base;
 
 //** Border color for elements within panels
-$panel-inner-border:          #ddd;
+$panel-inner-border:          $gray-light;
 $panel-footer-bg:             #f5f5f5;
 
 $panel-default-text:          $gray-dark;

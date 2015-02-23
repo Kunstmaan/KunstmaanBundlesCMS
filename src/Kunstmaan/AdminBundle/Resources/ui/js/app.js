@@ -7,9 +7,11 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
     init = function() {
         cargobay.toggle.init();
+        cargobay.scrollToTop.init();
 
         appScroll();
         initTooltip();
+        initColorpicker();
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
@@ -22,12 +24,16 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.autoCollapseTabs.init();
         kunstmaanbundles.richEditor.init();
         kunstmaanbundles.ajaxModal.init();
+        kunstmaanbundles.advancedSelect.init();
 
         kunstmaanbundles.pageEditor.init();
         kunstmaanbundles.pagepartEditor.init();
 
         kunstmaanbundles.slugChooser.init();
         kunstmaanbundles.urlChooser.init();
+        kunstmaanbundles.mediaChooser.init();
+        kunstmaanbundles.bulkActions.init();
+        kunstmaanbundles.nestedForm.init();
     };
 
 
@@ -67,6 +73,10 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
     initTooltip = function() {
         $('[data-toggle="tooltip"]').tooltip();
+    };
+
+    initColorpicker = function() {
+        $('.js-colorpicker').colorpicker();
     };
 
 

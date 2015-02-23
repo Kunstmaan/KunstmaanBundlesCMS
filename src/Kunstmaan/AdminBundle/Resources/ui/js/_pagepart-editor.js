@@ -57,18 +57,21 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                     result = $select.closest('.js-draggable-item').after(data);
                 }
 
-                // Enable "leave page" modal
+                // Enable leave-page modal
                 kunstmaanbundles.checkIfEdited.edited();
 
-                // Reinit Stuff
-                // result.find('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
-
                 // Reinit rich Editors
-                // TODO -> not destroy all? not nessesary?
                 kunstmaanbundles.richEditor.destroyRichEditors();
                 kunstmaanbundles.richEditor.init();
 
-                // initCustomSelect();
+                // reinit colorpicker
+                initColorpicker();
+
+                // Reinit custom selects
+                kunstmaanbundles.advancedSelect.init();
+
+                // Reinit nested forms
+                kunstmaanbundles.nestedForm.init();
             }
         });
 

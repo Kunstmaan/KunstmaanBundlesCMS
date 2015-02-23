@@ -6,11 +6,11 @@ kunstmaanbundles.mainActions = (function(window, undefined) {
 
     updateScroll = function(currentScrollY, $menu) {
 
-        if(currentScrollY >= 180){
+        if(currentScrollY >= 120){
             $menu.addClass('page-main-actions--top--show');
         }
 
-        if(currentScrollY < 180){
+        if(currentScrollY < 120){
             $menu.removeClass('page-main-actions--top--show');
         }
     };

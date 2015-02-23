@@ -25,6 +25,12 @@
             float: none;
         }
     }
+
+    &.page-main-actions--inside-extra-actions-header {
+        @media (min-width: $screen-sm-min) {
+            margin: 0;
+        }
+    }
 }
 
 
@@ -47,7 +53,7 @@
 
     transition: transform .3s ease;
 
-    @media (max-width: $screen-lg) {
+    @media (max-width: $screen-md) {
         display: none;
     }
 }

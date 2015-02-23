@@ -116,23 +116,37 @@
         </div>
     </div>
 
+
     <!-- Main-actions -->
     <div class="page-main-actions page-main-actions--no-tabs js-auto-collapse-buttons">
         <div class="btn-group">
             {% block actions %}
-                <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-                    Add media <i class="fa fa-caret-down"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    {% for addaction in mediamanager.getFolderAddActions() %}
-                        <li>
-                            <a href="javascript:void(0)" data-toggle="modal" data-target="#add{{ addaction.type }}-modal">
-                                {{ addaction.name |trans }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                        Add media <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        {% for addaction in mediamanager.getFolderAddActions() %}
+                            <li>
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#add{{ addaction.type }}-modal">
+                                    {{ addaction.name |trans }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endblock %}
+        </div>
+    </div>
+
+
+    <!-- Scroll-actions -->
+    <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+        <div class="btn-group">
+            {{ block('actions') }}
+            <button type="button" class="js-scroll-to-top btn btn-default">
+                <i class="fa fa-caret-up"></i>
+            </button>
         </div>
     </div>
 
@@ -177,7 +191,7 @@
 
                         {% if not handler or handler.canHandle(media) %}
                             <div class="col-sm-6 col-md-4 col-lg-3">
-                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-image-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}">
+                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}">
                                     <figure>
                                         {% if imageurl %}
                                             <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">

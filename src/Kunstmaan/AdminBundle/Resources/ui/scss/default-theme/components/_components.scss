@@ -13,9 +13,12 @@
         "vendors/bootstrap-components/input-group-addon",
         "vendors/bootstrap-components/alert",
         "vendors/bootstrap-components/list-group",
+        "vendors/bootstrap-components/table",
         "vendors/font-awesome/icon-symlinks",
         "vendors/jstree",
-        "vendors/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker";
+        "vendors/select2",
+        "vendors/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker",
+        "vendors/mjolnic-bootstrap-colorpicker/mjolnic-bootstrap-colorpicker";
 
 
 /* Forms
@@ -24,7 +27,9 @@
         "forms/fieldset",
         "forms/form-actions",
         "forms/form-properties",
-        "forms/form-control";
+        "forms/form-group",
+        "forms/form-control",
+        "forms/label";
 
 
 /* Blocks
@@ -44,5 +49,6 @@
         "structures/sortable",
         "structures/ajax-modal",
         "structures/url-chooser",
-        "structures/media-thumbnail";
-        "structures/login";
+        "structures/media-chooser",
+        "structures/media-thumbnail",
+        "structures/nested-form";

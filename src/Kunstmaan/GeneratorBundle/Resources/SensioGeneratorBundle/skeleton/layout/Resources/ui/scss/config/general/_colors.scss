@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Colors
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+$black:             #373737;
+$white:             #FFF;
+
+$gray-darker:       #444;
+$gray-dark:         #606060;
+$gray:              #9D9D9D;
+$gray-light:        #E2E2E2;
+$gray-lighter:      #EEE;
+
+$blue-dark:         #053046;
+$blue:              #5CB8E6;
+
+$text-color:        $gray-dark;
+$hr-color:          $gray-light;
+$link-color:        $blue;
+$link-hover-color:  darken($link-color, 15%);

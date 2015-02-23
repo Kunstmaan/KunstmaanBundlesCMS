@@ -37,6 +37,24 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                     },
                     'offline': {
                         'icon': 'fa fa-chain-broken'
+                    },
+                    'folder': {
+                        'icon': 'fa fa-folder-o'
+                    },
+                    'image': {
+                        'icon': 'fa fa-picture-o'
+                    },
+                    'files': {
+                        'icon': 'fa fa-files-o'
+                    },
+                    'slideshow': {
+                        'icon': 'fa fa-desktop'
+                    },
+                    'video': {
+                        'icon': 'fa fa-film'
+                    },
+                    'media': {
+                        'icon': 'fa fa-folder-o'
                     }
                 },
                 'search' : {

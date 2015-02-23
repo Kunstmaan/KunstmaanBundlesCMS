@@ -85,7 +85,9 @@
                     <!-- Logged in as -->
                     <li>
                         <a href="{{ path('KunstmaanAdminBundle_user_change_password', { 'id':app.user.id }) }}">
-                            {{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}
+                            <i class="fa fa-user"></i>
+                            &nbsp;
+                            {{ app.user.username|capitalize }}
                         </a>
                     </li>
 
@@ -100,72 +102,3 @@
         </div>
     </nav>
 </header>
-
-
-
-{# OLD #}
-{#
-<!--=========Top menu=========-->
-<header>
-    <div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
-                <nav>
-                    <ul class="nav">
-                        {% for menuitem in adminmenu.topchildren %}
-                        {% set topchildren = menuitem.topchildren %}
-                        {% if topchildren | length > 0 %}
-                        <li class="dropdown {% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                {{ menuitem.label | trans }}
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                {% for topchild in topchildren %}
-                                    {% set nestedtopchildren = topchild.topchildren %}
-                                    {% if nestedtopchildren | length > 0 %}
-                                        <li class="dropdown-submenu {% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                            <a tabindex="-1" href="#">{{ topchild.label | trans }}</a>
-                                            <ul class="dropdown-menu">
-                                                {% for nestedtopchild in nestedtopchildren %}
-                                                    <li class="{% if nestedtopchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                                        <a href="{{ path(nestedtopchild.route, nestedtopchild.routeparams) }}">{{ nestedtopchild.label | trans }}</a>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    {% else %}
-                                        {% if topchild.route %}
-                                            <li class="{% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                                <a href="{{ path(topchild.route, topchild.routeparams) }}">{{ topchild.label | trans }}</a>
-                                            </li>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        {% else %}
-                        <li class="{% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                            <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.label | trans }}</a>
-                        </li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
-                    <ul class="nav pull-right">
-                        {% set route = app.request.attributes.get('_route') %}
-                        {% set attribs = app.request.attributes.all %}
-                        {{ localeswitcher_widget(requiredlocales, route) }}
-                        <li>
-                            <a href="{{ path('KunstmaanAdminBundle_user_change_password', { 'id':app.user.id }) }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-#}
