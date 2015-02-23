@@ -55,10 +55,17 @@ h3 {
     font-size: 1.4rem;
     text-transform: uppercase;
 }
-h4, h5, h6 {
+h4 {
     font-size: 1rem;
     font-weight: 600;
 }
-h2, h3, h4, h5, h6 {
+h5, h6 {
+    font-size: .9rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 1.4rem 0;
+}
+
+h2, h3, h4 {
     margin: 1.6rem 0;
 }
