@@ -18,6 +18,8 @@
     z-index: 0;
 }
 .header-visual__content {
+    @extend .container;
+
     position: relative;
     z-index: 1;
 
