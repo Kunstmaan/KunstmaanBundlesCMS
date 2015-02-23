@@ -1,0 +1,12 @@
+/* ==========================================================================
+   Bootstrap pagination fallback (until fanta has it right)
+   ========================================================================== */
+
+.input-group-addon {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.input-group-addon--has-action {
+    cursor: pointer;
+}

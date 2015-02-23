@@ -1,22 +1,38 @@
 {% for type, form in forms %}
-    <div id="add{{ type }}-modal" class="modal hide fade">
+    <div id="add{{ type }}-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-        {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-
-        <form action="{{ path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': type})) }}" method="post" {{ form_enctype(form) }}>
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal">&times;</button>
-                {% set title = 'media.' ~ type ~ '.modal.title' %}
-                <h3>{{ title | trans }}</h3>
-            </div>
-            <div class="modal-body--upload">{{ form_widget(form) }}</div>
-            <div class="modal-footer">
-                <div class="btn_group">
-                    {% set save = 'media.' ~ type ~ '.modal.save' %}
-                    <button class="btn btn-primary" type="submit">{{ save | trans }}</button>
-                    <button class="btn" type="reset" data-dismiss="modal">{{ 'form.cancel' | trans }}</button>
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    {% set title = 'media.' ~ type ~ '.modal.title' %}
+                    <h3>
+                        {{ title | trans }}
+                    </h3>
                 </div>
+
+                {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+                <form action="{{ path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': type})) }}" method="post" {{ form_enctype(form) }}>
+                    <!-- Body -->
+                    <div class="modal-body">
+                        {{ form_widget(form) }}
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        {% set save = 'media.' ~ type ~ '.modal.save' %}
+                        <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ save | trans }}
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'form.cancel' | trans }}
+                        </button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 {% endfor %}

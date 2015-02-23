@@ -1,48 +1,49 @@
 {% block urlchooser_widget %}
 {% spaceless %}
-    <div id="{{ id }}_widget" class="input-append">
-        <input type="text" id="{{ id }}" name="{{ full_name }}" value="{{ value|default('') }}"/>
-        <button class="btn choosebutton{{ id }}">Choose</button>
+    <div id="{{ id }}-widget" class="input-group">
+        <input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
+                Choose
+            </button>
+        </span>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.choosebutton{{ id }}').on('click', function(ev) {
-                ev.preventDefault();
-                openDGDialog('{{ path('KunstmaanNodeBundle_selecturl') }}', 580, 500, function(param){
-                    var widget = jQuery('#{{ id }}_widget');
-                    widget.find('input').val(dialogWin.returnedValue.path);
-                });
-            });
-        });
-    </script>
+    <!-- URL Chooser Modal -->
+    <div class="js-ajax-modal modal fade" id="{{ id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3 class="modal-title">
+                        URL-Chooser
+                    </h3>
+                </div>
+
+                <!-- Body -->
+                <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+            </div>
+        </div>
+    </div>
 {% endspaceless %}
 {% endblock urlchooser_widget %}
 
 {% block slug_widget %}
 {% spaceless %}
-    <div id="{{ id }}_widget">
-        <input type="text" name="{{ full_name }}" id="{{ id }}" data-reset="{{ reset }}" value="{{ value|default('') }}"/> <button class="btn" id="{{ id }}_resetbtn">Reset</button>
+    <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')})}}" data-reset="{{ reset }}">
+        <div class="input-group">
+            <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
+            <span class="input-group-btn">
+                <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
+                    Reset
+                </button>
+            </span>
+        </div>
+        <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
     </div>
-    <span class="help-inline" id="{{ id }}_preview"></span>
-    <script>
-        var updateSlugPreview = function(){
-            var urlprefix = '{{ path('_slug', {'url': prefix|default('')})}}';
-            if(urlprefix.length == 0 || urlprefix.indexOf('/', urlprefix.length - 1) == -1) { //endwidth
-            	urlprefix += '/';
-            }
-        	jQuery('#{{ id }}_preview').html('{{ 'url' | trans }}: '+urlprefix+jQuery('#{{ id }}').val());
-        };
-        var resetSlug = function(e) {
-        	jQuery('#{{ id }}').val(jQuery('#{{ id }}').data('reset'));
-        	jQuery('#{{ id }}').change();
-        	e.preventDefault();
-        	return false;
-        }
-        jQuery('#{{ id }}').change(updateSlugPreview);
-        jQuery('#{{ id }}').keyup(updateSlugPreview);
-        jQuery('#{{ id }}_resetbtn').click(resetSlug);
-        updateSlugPreview();
-    </script>
 {% endspaceless %}
 {% endblock slug_widget %}

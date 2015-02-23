@@ -1,0 +1,100 @@
+/* ==========================================================================
+   App Sidebar
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.app__sidebar {
+    z-index: 0;
+    position: absolute;
+
+    height: calc(100vh - 45px);
+    overflow: auto;
+
+    @media (max-width: $screen-md) {
+        top: 0;
+        left: 0;
+
+        padding-right: 4.5em;
+        padding-top: 70px !important;
+    }
+
+    @media (min-width: $screen-sm) and (max-width: $screen-md) {
+        width: 30rem;
+    }
+
+    &:before {
+        @extend %loading;
+
+        top: 7rem;
+    }
+
+
+}
+
+.app__sidebar--tree-ready {
+    &:before {
+        display: none;
+    }
+
+    .app__sidebar__module {
+        @include transition(opacity .3s ease);
+
+        opacity: 1;
+    }
+}
+
+.app__sidebar--static {
+    position: relative;
+}
+
+
+/* Module
+   ========================================================================== */
+.app__sidebar__module {
+    opacity: 0;
+}
+
+
+
+/* Navigation
+   ========================================================================== */
+.app__sidebar__navigation {
+    width: 100%;
+    overflow: auto;
+}
+
+
+/* Toggle
+   ========================================================================== */
+.app__sidebar-toggle {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+
+    @include transition(color .3s ease);
+
+    &:hover {
+        color: $brand-primary;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.app__sidebar-toggle__hide-icon {
+    display: none;
+
+    @media (min-width: $screen-md) {
+        display: inline-block;
+    }
+}
+
+.app__sidebar-toggle__show-icon {
+    display: inline-block;
+
+    @media (min-width: $screen-md) {
+        display: none;
+    }
+}

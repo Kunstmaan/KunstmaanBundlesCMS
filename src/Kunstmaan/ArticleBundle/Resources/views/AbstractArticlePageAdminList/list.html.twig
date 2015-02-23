@@ -2,32 +2,57 @@
 
 {% block extra_actions_header %}
     {% if adminlistconfigurator.overviewPage %}
-        <div class="main_actions btn-group">
-            <a href="#" data-target="#add-subpage-modal" data-toggle="modal" class="btn">{{ 'form.add'|trans }}</a>
+        <div class="main-actions">
+            <a href="#" data-target="#add-subpage-modal" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
+                {{ 'form.add'|trans }}
+            </a>
         </div>
-        <div id="add-subpage-modal" class="modal hide fade">
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal">&times;</button>
-                <h3>Add Abstract Article</h3>
+
+        <!-- Modal - Add Subpage -->
+        <div id="add-subpage-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3>
+                            Add Abstract Article
+                        </h3>
+                    </div>
+
+                    <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : 'Kunstmaan\\ArticleBundle\\Entity\\AbstractArticlePage'}) }}" method="post" novalidate="novalidate">
+                        <!-- Body -->
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="addpage_title">
+                                    Title
+                                </label>
+                                <input type="text" name="title" id="addpage_title" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer">
+                            <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                                Add
+                            </button>
+                            <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : 'Kunstmaan\\ArticleBundle\\Entity\\AbstractArticlePage'}) }}" method="post" novalidate="novalidate">
-                <div class="modal-body">
-                    <div class="input_prop">
-                        <label for="addpage_title">Title</label>
-                        <input name="title" id="addpage_title" type="text">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="btn_group">
-                        <input type="submit" name="submit" value="Add" class="btn btn-primary" />
-                        <button class="btn" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </form>
         </div>
     {% else %}
-        <div class='alert alert-block'>
+        <div class="alert alert-warning">
             <strong>Warning: </strong> You need to create at least one overview page before you can create a Abstract Article
+            <button class="close" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
         </div>
     {% endif %}
 {% endblock %}

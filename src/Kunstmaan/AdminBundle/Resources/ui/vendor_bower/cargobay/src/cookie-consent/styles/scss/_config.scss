@@ -1,0 +1,26 @@
+//   Cookie consent config
+
+//   This file is exclusively intended for setting up variables.
+//   Never add styles directly to this file
+
+
+//General
+$cookie-bar-position-top:                   auto!default;
+$cookie-bar-position-right:                 auto!default;
+$cookie-bar-position-bottom:                0!default;
+$cookie-bar-position-left:                  0!default;
+$cookie-bar-color:                          rgba(86,86,86,0.95)!default;
+$cookie-bar-text-align:                     center!default;
+$cookie-bar-width:                          100%!default;
+$cookie-bar-padding:                        10px 10px 0px 10px!default;
+$cookie-bar-font-color:                     #fff!default;
+$cookie-bar-font-family:                    Helvetica, Arial, sans-serif!default;
+$cookie-bar-font-size:                      13px!default;
+$cookie-bar-line-height:                    1.7!default;
+
+//Policy link
+$cookie-bar-policy-link-color:              #fff!default;
+$cookie-bar-policy-link-text-decoration:    underline!default;
+
+//Button
+$cookie-bar-button-margin:                  0 0 0 5px!default;

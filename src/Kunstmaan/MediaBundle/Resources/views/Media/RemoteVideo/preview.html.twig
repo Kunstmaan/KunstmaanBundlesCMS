@@ -1,15 +1,15 @@
 {% set handler = mediamanager.getHandler(media) %}
 {% set helper = handler.getFormHelper(media) %}
 {% if helper.type == 'youtube' %}
-<div class="video-pp youtube-pp">
-    <iframe width="560" height="315" src="//www.youtube.com/embed/{{ helper.code }}" frameborder="0" allowfullscreen></iframe>
-</div>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe width="560" height="315" src="//www.youtube.com/embed/{{ helper.code }}" frameborder="0" allowfullscreen class="embed-responsive-item"></iframe>
+    </div>
 {% elseif helper.type == 'vimeo' %}
-<div class="video-pp vimeo-pp">
-    <iframe src="//player.vimeo.com/video/{{ helper.code }}" width="500" height="290" frameborder="0"></iframe>
-</div>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe src="//player.vimeo.com/video/{{ helper.code }}" width="500" height="290" frameborder="0" class="embed-responsive-item"></iframe>
+    </div>
 {% elseif helper.type == 'dailymotion' %}
-<div class="video-pp dailymotion-pp">
-    <iframe frameborder="0" width="480" height="270" src="//www.dailymotion.com/embed/video/{{ helper.code }}"></iframe>
-</div>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe frameborder="0" width="480" height="270" src="//www.dailymotion.com/embed/video/{{ helper.code }}" class="embed-responsive-item"></iframe>
+    </div>
 {% endif %}

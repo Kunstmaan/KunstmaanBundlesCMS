@@ -4,3 +4,4 @@ composer.phar
 autoload.php
 /vendor/
 .idea
+npm-debug.log
