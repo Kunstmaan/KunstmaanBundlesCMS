@@ -30,20 +30,22 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->bundle = $bundle;
         $this->rootDir = $rootDir;
 
-        $this->generateGruntFiles();
+        $this->generateGulpFiles();
         $this->generateBowerFiles();
+        $this->generateJshintrcFile();
+        $this->generateGroundcontrolrcFile();
+        $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
     }
 
     /**
-     * Generate the grunt configuration files.
+     * Generate the gulp configuration files.
      */
-    private function generateGruntFiles()
+    private function generateGulpFiles()
     {
-        $this->renderFiles($this->skeletonDir.'/grunt/', $this->rootDir, array('bundle' => $this->bundle), true);
-
-        $this->assistant->writeLine('Generating grunt configuration : <info>OK</info>');
+        $this->renderFiles($this->skeletonDir.'/gulp/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating gulp configuration : <info>OK</info>');
     }
 
     /**
@@ -57,20 +59,44 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
-     * Generate the public asset files.
+     * Generate the jshint configuration file.
+     */
+    private function generateJshintrcFile()
+    {
+        $this->renderSingleFile($this->skeletonDir.'/jshint/', $this->rootDir, '.jshintrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating jshint configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the groundcontrol configuration file.
+     */
+    private function generateGroundcontrolrcFile()
+    {
+        $this->renderSingleFile($this->skeletonDir.'/groundcontrol/', $this->rootDir, '.groundcontrolrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the gems configuration file.
+     */
+    private function generateGemsFile()
+    {
+        $this->renderFiles($this->skeletonDir.'/gems/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating gems configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the ui asset files.
      */
     private function generateAssets()
     {
         $sourceDir = $this->skeletonDir;
         $targetDir = $this->bundle->getPath();
 
-        $relPath = '/Resources/public/';
+        $relPath = '/Resources/ui/';
         $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
 
-        $relPath = '/Resources/public/scss/config/';
-        $this->renderSingleFile($sourceDir.$relPath, $targetDir.$relPath, '_paths.scss', array('bundle' => $this->bundle), true);
-
-        $this->assistant->writeLine('Generating public assets : <info>OK</info>');
+        $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
 
     /**
