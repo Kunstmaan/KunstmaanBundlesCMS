@@ -10,6 +10,7 @@
         }
     }
 
+    //THEME
     ul {
         @include list-reset;
         li {
@@ -19,15 +20,23 @@
             &:before {
                 content: "•";
                 position: absolute;
-                top: 2px;
+                top: 0;
                 left: 0;
 
-                font-size: 5px;
+                font-size: .7rem;
+                color: $blue;
             }
         }
     }
 
     ol {
         padding-left: 1.4rem;
+    }
+
+    ul, ol {
+        li {
+            line-height: 150%;
+            margin-bottom: .4rem;
+        }
     }
 }
