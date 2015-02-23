@@ -9,14 +9,25 @@
         &:hover, &:focus, &:active {
         }
     }
+
     ul {
         @include list-reset;
         li {
+            padding-left: .9rem;
+            position: relative;
 
+            &:before {
+                content: "•";
+                position: absolute;
+                top: 2px;
+                left: 0;
+
+                font-size: 5px;
+            }
         }
     }
+
     ol {
-        li {
-        }
+        padding-left: 1.4rem;
     }
 }
