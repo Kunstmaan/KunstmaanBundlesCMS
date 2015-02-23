@@ -16,6 +16,8 @@
     top: 0;
     left: 0;
     z-index: 0;
+
+    width: 100%;
 }
 .header-visual__content {
     @extend .container;
@@ -29,6 +31,7 @@
 .header-visual__title {
     font-size: 5.625rem;
     font-weight: 100;
+    line-height: 100%;
     color: $white;
     text-transform: uppercase;
 }
