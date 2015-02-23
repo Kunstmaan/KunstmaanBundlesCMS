@@ -3,7 +3,9 @@
 {% block extraactions %}
 
     {% if handler.aviaryApiKey %}
-        <button type="button" class="btn btn-primary" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}');" >{{ 'media.media.edit.action' | trans }}</button>
+        <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}');" >
+            {{ 'media.media.edit.action' | trans }}
+        </button>
 
         <!-- Load Feather code -->
         <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
@@ -31,8 +33,9 @@
         </script>
     {% endif %}
 
-    <a href="{{ asset(media.url) }}" data-toggle="modal" class="btn">{{ 'media.media.download.action'|trans }}</a>
-
+    <a href="{{ asset(media.url) }}" class="btn btn-default btn--raise-on-hover">
+        {{ 'media.media.download.action'|trans }}
+    </a>
 {% endblock %}
 
 {% block preview %}
@@ -44,5 +47,5 @@
             {% set imageurl = imageurl | imagine_filter('media_detail_thumbnail') %}
         {% endif %}
     {% endif %}
-    <p><img id="editimage" class="thumbnail" src="{{ imageurl }}" alt="{{ media.name }}" /></p>
+    <img id="editimage" class="img-thumbnail" src="{{ imageurl }}" alt="{{ media.name }}">
 {% endblock %}

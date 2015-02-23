@@ -1,40 +1,14 @@
-<select name="{{nameprefix}}comparator{{namesuffix}}">
-    <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
-    <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
-</select>
-<input type="text" class="input-small form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[date]" {% if data.value['date'] is defined %}value="{{data.value['date']}}"{% endif %} />
-<input type="text" class="input-small form_timepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[time]" {% if data.value['time'] is defined %}value="{{data.value['time']}}"{% endif %} />
-{% if nameprefix != "" and namesuffix != "" %}
-	<script>
-    	$(document).ready(function() {
-            $('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker({'format' : 'dd/mm/yyyy'});
-        	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker('setStartDate', '{{ datePicker_startDate }}');
-        	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').inputmask("date");
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+        <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
+        <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
+    </select>
+</div>
 
-            $(".form_timepicker{{ nameprefix }}{{ namesuffix }}").inputmask("hh:mm");
-            $(".form_timepicker{{ nameprefix }}{{ namesuffix }}").addClass('form_timepicker');
-            $(".form_timepicker{{ nameprefix }}{{ namesuffix }}").timepicker({
-                'showMeridian': false,
-                'minuteStep': 1,
-                'defaultTime': '00:00'
-            });
+<div class="form-group">
+    <input type="text" class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[date]" {% if data.value['date'] is defined %}value="{{data.value['date']}}"{% endif %}>
+</div>
 
-        });
-	</script>
-{% else %}
-	<script>
-    	$(document).ready(function() {
-            $('.form_datepicker').datepicker({'format' : 'dd/mm/yyyy'});
-        	$('.form_datepicker').datepicker('update');
-        	$('.form_datepicker').inputmask("date");
-
-            $(".form_timepicker").inputmask("hh:mm");
-            $(".form_timepicker").addClass('form_timepicker');
-            $(".form_timepicker").timepicker({
-                'showMeridian': false,
-                'minuteStep': 1,
-                'defaultTime': '00:00'
-            });
-        });
-	</script>
-{% endif %}
+<div class="form-group">
+    <input type="text" class="form-control form_timepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[time]" {% if data.value['time'] is defined %}value="{{data.value['time']}}"{% endif %}>
+</div>

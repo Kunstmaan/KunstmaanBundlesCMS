@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Icon symlinks
+   ========================================================================== */
+
+.fa-file-csv-o {
+    @extend .fa-file-code-o;
+}
+
+.fa-remove-sign {
+    @extend .fa-trash-o;
+}
+
+.icon-ok {
+    @extend .fa;
+    @extend .fa-check;
+}
+
+.icon-remove {
+    @extend .fa;
+    @extend .fa-times;
+}

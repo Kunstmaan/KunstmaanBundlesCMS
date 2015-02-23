@@ -9,7 +9,7 @@
 </div>
 {% endif %}
 
-<div class="permissionscontainer">
+<div class="permissionscontainer form-properties">
     <div id="permissionChanges"></div>
 {% spaceless %}
     <table class="table table-bordered table-striped">
@@ -23,17 +23,17 @@
         </thead>
         <tbody>
             {% for role in permissionadmin.getAllRoles() %}
-	            <tr>
-	                <td>
-	                    {{ role.getRole() }}
-	                </td>
-	                {% set permission = permissionadmin.getPermission(role) %}
-	                {% for permissionName in permissionadmin.getPossiblePermissions() %}
-		                <td>
-		                    <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} onchange="permissionChange('{{ role.getRole() }}', '{{ permissionName }}', this, {% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %})"/>
-		                </td>
-	                {% endfor %}
-	            </tr>
+                <tr>
+                    <td>
+                        {{ role.getRole() }}
+                    </td>
+                    {% set permission = permissionadmin.getPermission(role) %}
+                    {% for permissionName in permissionadmin.getPossiblePermissions() %}
+                        <td>
+                            <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} onchange="permissionChange('{{ role.getRole() }}', '{{ permissionName }}', this, {% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %})"/>
+                        </td>
+                    {% endfor %}
+                </tr>
             {% endfor %}
         </tbody>
     </table>

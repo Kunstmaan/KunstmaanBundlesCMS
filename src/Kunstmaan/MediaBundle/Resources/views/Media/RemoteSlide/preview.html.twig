@@ -2,8 +2,10 @@
 {% set helper = handler.getFormHelper(media) %}
 
 {% if helper.type == 'slideshare' %}
-    <div style="width:425px" id="__ss_{{ helper.code }}" class="slide-pp">
-        <iframe src="http://www.slideshare.net/slideshow/embed_code/{{ helper.code }}" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-    	<h5 class="title">{{ media.name }}</h5>
+    <div style="width:425px" id="__ss_{{ helper.code }}" class="embed-responsive embed-responsive-16by9">
+        <iframe src="http://www.slideshare.net/slideshow/embed_code/{{ helper.code }}" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" class="embed-responsive-item"></iframe>
+        <h5>
+            {{ media.name }}
+        </h5>
     </div>
 {% endif %}

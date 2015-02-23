@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Header - Breadcrumb navigation
+   ========================================================================== */
+
+.breadcrumb {
+    margin: $default-margin;
+}
+.breadcrumb__list {
+
+}
+.breadcrumb__list__item {
+    display: inline-block;
+}
+.breadcrumb__list__link {
+    display: inline-block;
+}
+.breadcrumb__list__link--home {
+
+}
+.breadcrumb__list__link--active {
+
+}
+.breadcrumb__list__icon {
+    font-size: .5rem;
+}

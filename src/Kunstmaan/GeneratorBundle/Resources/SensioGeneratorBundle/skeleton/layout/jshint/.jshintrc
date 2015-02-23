@@ -1,0 +1,26 @@
+{
+    "node": true,
+    "browser": true,
+    "esnext": true,
+    "bitwise": false,
+    "curly": false,
+    "eqeqeq": true,
+    "eqnull": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "undef": true,
+    "strict": false,
+    "trailing": false,
+    "smarttabs": true,
+    "globals": {
+        "jQuery": true,
+        "$": true,
+        "cupcake": true,
+        "cargobay": true,
+        "Modernizr": true,
+        "dataLayer": true,
+        "projectname": true
+    }
+}
