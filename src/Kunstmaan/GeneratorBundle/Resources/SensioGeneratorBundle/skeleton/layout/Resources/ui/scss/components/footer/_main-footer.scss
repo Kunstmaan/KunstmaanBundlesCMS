@@ -26,19 +26,20 @@
 
 }
 .footer-nav__title {
-    font-weight: 600;
-    font-size: .65rem;
+    font-size: .7rem;
     text-transform: uppercase;
+    margin: 0 0 1rem 0;
 }
 .footer-nav__title__link {
     color: $black;
+    font-weight: 600;
 }
 
 .footer-nav__list {
 
 }
 .footer-nav__list__item {
-
+    font-size: .9rem;
 }
 .footer-nav__list__link {
     color: $gray;
