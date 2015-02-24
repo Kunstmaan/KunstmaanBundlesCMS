@@ -2,6 +2,8 @@
    Header - Breadcrumb navigation
    ========================================================================== */
 
+// THEME
+
 .breadcrumb {
     margin: $default-margin 0;
 }
@@ -10,6 +12,7 @@
 }
 .breadcrumb__list__item {
     display: inline-block;
+    font-size: .8rem;
 }
 .breadcrumb__list__link {
     display: inline-block;
@@ -22,4 +25,6 @@
 }
 .breadcrumb__list__icon {
     font-size: .5rem;
+    margin-right: 0 .5rem;
+    vertical-align: middle;
 }
