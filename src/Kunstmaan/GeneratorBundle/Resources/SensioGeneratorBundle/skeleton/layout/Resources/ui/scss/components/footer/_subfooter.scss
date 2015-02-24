@@ -16,10 +16,11 @@
 
 .subfooter__credentials {
     font-size: .75rem;
-    font-weight: 600;
 }
 .subfooter__credentials__link {
     display: inline-block;
+    vertical-align: text-top;
+    margin-left: .2rem;
 }
 .subfooter__credentials__img {
     display: block;
