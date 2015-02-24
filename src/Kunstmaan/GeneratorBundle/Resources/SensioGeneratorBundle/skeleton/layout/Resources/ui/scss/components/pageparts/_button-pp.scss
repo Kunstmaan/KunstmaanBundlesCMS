@@ -38,20 +38,20 @@
    ========================================================================== */
 
 .btn--primary {
-    background-color: $blue;
+    background-color: $theme-color;
     color: $white;
-    border-color: $blue;
+    border-color: $theme-color;
     &:hover, &:focus, &:active {
-        background-color: $blue;
+        background-color: $theme-color;
         color: $white;
     }
 }
 .btn--secondary {
-    background-color: $blue-dark;
+    background-color: $theme-color-dark;
     color: $white;
-    border-color: $blue-dark;
+    border-color: $theme-color-dark;
     &:hover, &:focus, &:active {
-        background-color: $blue-dark;
+        background-color: $theme-color-dark;
         color: $white;
     }
 }

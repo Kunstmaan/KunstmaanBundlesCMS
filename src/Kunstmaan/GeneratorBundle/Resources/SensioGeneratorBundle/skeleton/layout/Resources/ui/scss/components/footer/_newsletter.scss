@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Footer - Newsletter
+   ========================================================================== */
+
+// THEME
+.newsletter {
+    background-color: $theme-color;
+}
+.newsletter__title {
+    color: $white;
+}
+.newsletter__text {
+    color: $white;
+}
+
+
+/* Form
+   ========================================================================== */
+.newsletter__form {
+    display: inline-block;
+}
+.newsletter__form__input {
+    display: inline-block;
+}
+.newsletter__form__btn {
+    display: inline-block;
+    margin-left: .65rem;
+}
