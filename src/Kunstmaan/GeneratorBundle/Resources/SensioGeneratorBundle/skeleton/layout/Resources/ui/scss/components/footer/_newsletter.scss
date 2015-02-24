@@ -4,16 +4,22 @@
 
 // THEME
 .newsletter {
+}
+.newsletter__inner {
     background-color: $theme-color;
     padding: 2rem 0 2.5rem;
 }
+
 .newsletter__title {
+    @extend .container;
+
     color: $white;
     font-size: 2rem;
     margin-top: 0;
     margin-bottom: 1.5rem;
 }
 .newsletter__text {
+    @extend .container;
     margin: $default-margin 0;
 
     p {
@@ -28,6 +34,7 @@
 /* Form
    ========================================================================== */
 .newsletter__form {
+    @extend .container;
 }
 .newsletter__form__input {
     width: 100%;

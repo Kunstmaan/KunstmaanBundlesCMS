@@ -2,18 +2,20 @@
 
     {# Newsletter subscription #}
     <section class="newsletter text-center">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
 
-                    <h2 class="newsletter__title">Don't miss out</h2>
-                    <div class="newsletter__text">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni nesciunt similique numquam recusandae quibusdam eius repudiandae quas accusamus enim sit.</p>
+                    <div class="newsletter__inner">
+                        <h2 class="newsletter__title">Don't miss out</h2>
+                        <div class="newsletter__text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni nesciunt similique numquam recusandae quibusdam eius repudiandae quas accusamus enim sit.</p>
+                        </div>
+                        <form action="" class="newsletter__form">
+                            <input type="text" class="newsletter__form__input">
+                            <button type="submit" class="btn btn--secondary newsletter__form__btn">Subscribe</button>
+                        </form>
                     </div>
-                    <form action="" class="newsletter__form">
-                        <input type="text" class="newsletter__form__input">
-                        <button type="submit" class="btn btn--secondary newsletter__form__btn">Subscribe</button>
-                    </form>
                 </div>
 
             </div>
@@ -27,7 +29,7 @@
                 <div class="row">
 
                     {# Social #}
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-sm-3">
 
                         <div class="footer__social">
                             <a href="https://twitter.com/kunstmaan" class="footer__social__link">
@@ -47,7 +49,7 @@
                     {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                     {% for node in activeSubnode.children %}
                         {% if not node.node.isHiddenFromNav() %}
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-3">
 
                                 <nav class="footer-nav">
                                     <h6 class="footer-nav__title">
@@ -96,16 +98,18 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <p class="pull-left subfooter__info">
-                        &copy; {{ "now"|date("Y") }}
-                        {% if nodemenu is defined %}
-                            {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
-                            {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}" class="subfooter__info__link">{{ sitemap.title }}</a>{% endif %}
-                        {% endif %}
-                    </p>
-                    <p class="pull-right subfooter__credentials">
-                        Created by <a href="http://www.kunstmaan.be" class="subfooter__credentials__link"><img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="subfooter__credentials__img"></a>
-                    </p>
+                    <div class="subfooter__inner">
+                        <p class="pull-left subfooter__info">
+                            &copy; {{ "now"|date("Y") }}
+                            {% if nodemenu is defined %}
+                                {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
+                                {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}" class="subfooter__info__link">{{ sitemap.title }}</a>{% endif %}
+                            {% endif %}
+                        </p>
+                        <p class="pull-right subfooter__credentials">
+                            Created by <a href="http://www.kunstmaan.be" class="subfooter__credentials__link"><img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="subfooter__credentials__img"></a>
+                        </p>
+                    </div>
 
                 </div>
             </div>

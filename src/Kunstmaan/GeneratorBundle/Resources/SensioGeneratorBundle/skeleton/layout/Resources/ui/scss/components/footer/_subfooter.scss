@@ -3,8 +3,10 @@
    ========================================================================== */
 
 .subfooter {
-    padding: 1rem;
+}
+.subfooter__inner {
     border-top: 1px solid $hr-color;
+    padding: 1rem;
 }
 
 .subfooter__info {
