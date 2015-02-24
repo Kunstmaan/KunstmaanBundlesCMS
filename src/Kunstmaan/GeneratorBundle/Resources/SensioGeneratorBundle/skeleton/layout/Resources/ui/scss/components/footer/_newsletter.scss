@@ -25,8 +25,13 @@
     display: inline-block;
 }
 .newsletter__form__input {
-    display: inline-block;
+    width: 340px;
 
+    // cf. button-pp
+    font-size: .8rem;
+    color: $black;
+
+    display: inline-block;
     padding: .65rem 1rem;
     background-color: $white;
     border: 1px solid $hr-color;

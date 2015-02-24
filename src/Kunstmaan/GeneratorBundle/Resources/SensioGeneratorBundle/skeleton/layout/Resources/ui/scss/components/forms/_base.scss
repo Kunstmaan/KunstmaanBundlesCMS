@@ -2,6 +2,12 @@
    Forms - Base
    ========================================================================== */
 
+button, input[type="text"], input[type="textarea"] {
+    &:focus {
+        outline: none;
+    }
+}
+
 input[type="text"], input[type="textarea"] {
 
 }
