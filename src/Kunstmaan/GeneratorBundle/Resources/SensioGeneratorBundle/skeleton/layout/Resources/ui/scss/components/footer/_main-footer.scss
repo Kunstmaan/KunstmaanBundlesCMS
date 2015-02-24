@@ -11,7 +11,11 @@
 /* Footer social
    ========================================================================== */
 .footer__social {
-    margin-top: -5px;
+    margin: 2rem 0;
+
+    @media(min-width: $screen-sm-min) {
+        margin-top: -5px;
+    }
 }
 .footer__social__link {
     color: $gray;
