@@ -51,10 +51,12 @@
 .newsletter__form__btn {
     display: block;
     margin-top: .5rem;
+    width: 100%;
 
     @media(min-width: $screen-sm-min) {
         display: inline-block;
         margin-left: .5rem;
         margin-top: 0;
+        width: auto;
     }
 }
