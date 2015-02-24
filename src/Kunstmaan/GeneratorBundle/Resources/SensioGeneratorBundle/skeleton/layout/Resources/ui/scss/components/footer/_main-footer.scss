@@ -15,7 +15,11 @@
 }
 .footer__social__link {
     color: $gray;
-    margin-right: .4rem;
+    margin-right: 1rem;
+
+    &:hover, &:focus, &:active {
+        text-decoration: none;
+    }
 }
 .social-link__icon {
 
@@ -27,13 +31,17 @@
 
 }
 .footer-nav__title {
-    font-size: .8rem;
+    font-size: .75rem;
     text-transform: uppercase;
     margin: 0 0 1rem 0;
 }
 .footer-nav__title__link {
     color: $black;
     font-weight: 600;
+
+    &:hover, &:focus, &:active {
+        color: $black;
+    }
 }
 
 .footer-nav__list {
@@ -46,4 +54,8 @@
 }
 .footer-nav__list__link {
     color: $gray;
+
+    &:hover, &:focus, &:active {
+        text-decoration: none;
+    }
 }
