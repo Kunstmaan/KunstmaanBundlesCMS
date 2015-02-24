@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Blocks - Submenu
+   ========================================================================== */
+
+// THEME
+
+.submenu {
+    margin: 4.4rem 0;
+}
+
+.submenu__item {
+
+}
+.submenu__link {
+    &:hover, &:focus, &:active {
+        text-decoration: none;
+    }
+}
+.submenu__img {
+    display: block;
+}
+.submenu__titel {
+    color: $text-color;
+}
+.submenu__text {
+    color: $gray;
+}
+.submenu__cta {
+    //color: $black;
+}
