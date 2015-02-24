@@ -17,11 +17,9 @@
     color: $black;
 
     display: inline-block;
-    padding: .85rem 1rem;
+    padding: .65rem 1rem;
     background-color: $white;
-
     border: 1px solid $hr-color;
-
     @include box-shadow;
 
     &:hover, &:focus, &:active {

@@ -12,7 +12,7 @@
     font-size: 2rem;
     margin-top: 0;
 }
-.newsletter__text {
+.newsletter__text p {
     color: $white;
     max-width: 750px;
     display: inline-block;
@@ -26,6 +26,11 @@
 }
 .newsletter__form__input {
     display: inline-block;
+
+    padding: .65rem 1rem;
+    background-color: $white;
+    border: 1px solid $hr-color;
+    @include box-shadow;
 }
 .newsletter__form__btn {
     display: inline-block;
