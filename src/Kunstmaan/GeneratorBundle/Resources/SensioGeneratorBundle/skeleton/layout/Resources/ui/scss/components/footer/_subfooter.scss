@@ -14,10 +14,10 @@
 .subfooter__info {
     font-size: .75rem;
     margin: 0;
+    text-align: center;
 
-    @media(max-width: $screen-xs-max) {
-        float: none;
-        text-align: center;
+    @media(min-width: $screen-xs-min) {
+        float: left;
     }
 }
 .subfooter__info__link {
@@ -31,10 +31,10 @@
 .subfooter__credentials {
     font-size: .75rem;
     margin: 0;
+    text-align: center;
 
-    @media(max-width: $screen-xs-max) {
-        float: none;
-        text-align: center;
+    @media(min-width: $screen-xs-min) {
+        float: right;
     }
 }
 .subfooter__credentials__link {

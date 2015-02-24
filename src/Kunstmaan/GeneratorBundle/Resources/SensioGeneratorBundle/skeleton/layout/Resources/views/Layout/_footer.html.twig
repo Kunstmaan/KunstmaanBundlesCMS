@@ -103,14 +103,14 @@
                 <div class="col-md-12">
 
                     <div class="subfooter__inner">
-                        <p class="pull-left subfooter__info">
+                        <p class="subfooter__info">
                             &copy; {{ "now"|date("Y") }}
                             {% if nodemenu is defined %}
                                 {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
                                 {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}" class="subfooter__info__link">{{ sitemap.title }}</a>{% endif %}
                             {% endif %}
                         </p>
-                        <p class="pull-right subfooter__credentials">
+                        <p class="subfooter__credentials">
                             Created by <a href="http://www.kunstmaan.be" class="subfooter__credentials__link"><img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="subfooter__credentials__img"></a>
                         </p>
                     </div>
