@@ -10,9 +10,10 @@
     padding: 2rem 0 2.5rem;
 }
 
-.newsletter__title {
+.newsletter__content {
     @extend .container;
-
+}
+.newsletter__title {
     color: $white;
     font-size: 2rem;
     margin-top: 0;
