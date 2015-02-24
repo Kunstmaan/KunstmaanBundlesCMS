@@ -13,8 +13,12 @@
 .footer__social {
     margin: 2rem 0;
 
+    @media(max-width: $screen-xs-max) {
+        text-align: center;
+    }
+
     @media(min-width: $screen-sm-min) {
-        margin-top: -5px;
+        margin-top: calc(2rem - 5px);
     }
 }
 .footer__social__link {
@@ -26,7 +30,6 @@
     }
 }
 .social-link__icon {
-
 }
 
 
@@ -34,6 +37,10 @@
    ========================================================================== */
 .footer-nav {
     margin: 2rem 0;
+
+    @media(max-width: $screen-xs-max) {
+        text-align: center;
+    }
 }
 .footer-nav__title {
     font-size: .75rem;

@@ -14,6 +14,11 @@
 .subfooter__info {
     font-size: .75rem;
     margin: 0;
+
+    @media(max-width: $screen-xs-max) {
+        float: none;
+        text-align: center;
+    }
 }
 .subfooter__info__link {
     color: $text-color;
@@ -26,6 +31,11 @@
 .subfooter__credentials {
     font-size: .75rem;
     margin: 0;
+
+    @media(max-width: $screen-xs-max) {
+        float: none;
+        text-align: center;
+    }
 }
 .subfooter__credentials__link {
     display: inline-block;
