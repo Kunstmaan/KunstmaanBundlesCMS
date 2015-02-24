@@ -15,6 +15,7 @@
 }
 .footer__social__link {
     color: $gray;
+    margin-right: .4rem;
 }
 .social-link__icon {
 
@@ -26,7 +27,7 @@
 
 }
 .footer-nav__title {
-    font-size: .7rem;
+    font-size: .8rem;
     text-transform: uppercase;
     margin: 0 0 1rem 0;
 }
@@ -40,6 +41,8 @@
 }
 .footer-nav__list__item {
     font-size: .9rem;
+    line-height: 150%;
+    margin-bottom: .4rem;
 }
 .footer-nav__list__link {
     color: $gray;
