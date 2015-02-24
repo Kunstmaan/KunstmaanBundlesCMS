@@ -5,7 +5,7 @@
 .subfooter {
 }
 .subfooter__inner {
-    @include clearfix
+    @include clearfix;
 
     border-top: 1px solid $hr-color;
     padding: 1rem 0;
