@@ -3,16 +3,16 @@
    ========================================================================== */
 
 .totop-pp {
-    margin: $default-margin 0;
+    margin: 3rem 0;
 
     // THEME
     font-size: .85rem;
     text-align: right;
-    color: $text-color;
     border-bottom: 1px solid $hr-color;
     padding-bottom: .5rem;
 
     a {
         display: inline-block;
+        color: $text-color;
     }
 }
