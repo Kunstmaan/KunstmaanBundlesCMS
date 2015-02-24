@@ -1,6 +1,6 @@
-<div class="container">
-    <% if demosite %><% endif %>
+<% if demosite %><% endif %>
 
+<div class="container">
     <div class="row">
         <div class="col-md-12">
 
@@ -16,19 +16,31 @@
 
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-4 col-sm-4">
-            <img src="/frontend/img/icons/lamp.svg" alt="">
-            {{ render_pageparts(page, 'left_column') }}
-        </div>
-        <div class="col-md-4 col-sm-4">
-            <img src="/frontend/img/icons/user.svg" alt="">
-            {{ render_pageparts(page, 'middle_column') }}
-        </div>
-        <div class="col-md-4 col-sm-4">
-            <img src="/frontend/img/icons/layout.svg" alt="">
-            {{ render_pageparts(page, 'right_column') }}
+<section class="splash splash--gray-lighter">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-4">
+                <div class="text-center">
+                    <img src="/frontend/img/icons/lamp.svg" alt="">
+                </div>
+                {{ render_pageparts(page, 'left_column') }}
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="text-center">
+                    <img src="/frontend/img/icons/user.svg" alt="">
+                </div>
+                {{ render_pageparts(page, 'middle_column') }}
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="text-center">
+                    <img src="/frontend/img/icons/layout.svg" alt="">
+                </div>
+                {{ render_pageparts(page, 'right_column') }}
+            </div>
+
         </div>
     </div>
-</div>
+</section>

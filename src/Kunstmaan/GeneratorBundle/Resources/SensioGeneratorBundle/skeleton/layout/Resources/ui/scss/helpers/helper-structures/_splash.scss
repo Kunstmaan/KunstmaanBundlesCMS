@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Helper structures - Splash
+   ========================================================================== */
+
+.splash {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.splash--primary {
+    background-color: $theme-color;
+}
+.splash--gray-lighter {
+    background-color: $gray-lighter;
+}
