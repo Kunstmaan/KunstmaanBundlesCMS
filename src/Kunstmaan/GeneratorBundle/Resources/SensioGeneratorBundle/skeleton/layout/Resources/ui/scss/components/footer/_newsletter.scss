@@ -5,12 +5,13 @@
 // THEME
 .newsletter {
     background-color: $theme-color;
-    padding: 2.5rem;
+    padding: 2.5rem 0;
 }
 .newsletter__title {
     color: $white;
     font-size: 2rem;
     margin-top: 0;
+    margin-bottom: 1.5rem;
 }
 .newsletter__text p {
     color: $white;
@@ -22,22 +23,33 @@
 /* Form
    ========================================================================== */
 .newsletter__form {
-    display: inline-block;
 }
 .newsletter__form__input {
-    width: 340px;
+    width: 100%;
+    display: block;
 
     // cf. button-pp
     font-size: .8rem;
     color: $black;
 
-    display: inline-block;
     padding: .65rem 1rem;
     background-color: $white;
     border: 1px solid $hr-color;
     @include box-shadow;
+
+    @media(min-width: $screen-sm-min) {
+        width: 340px;
+        max-width: 100%;
+        display: inline-block;
+    }
 }
 .newsletter__form__btn {
-    display: inline-block;
-    margin-left: .65rem;
+    display: block;
+    margin-top: .5rem;
+
+    @media(min-width: $screen-sm-min) {
+        display: inline-block;
+        margin-left: .5rem;
+        margin-top: 0;
+    }
 }
