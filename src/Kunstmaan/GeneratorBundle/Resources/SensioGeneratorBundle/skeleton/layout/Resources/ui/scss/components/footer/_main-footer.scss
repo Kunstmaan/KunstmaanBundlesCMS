@@ -1,3 +1,45 @@
 /* ==========================================================================
    Footer - Main footer
    ========================================================================== */
+
+// THEME
+.main-footer {
+    padding: 2.5rem;
+}
+
+
+/* Footer social
+   ========================================================================== */
+.footer__social {
+
+}
+.footer__social__link {
+    color: $gray;
+}
+.social-link__icon {
+
+}
+
+/* Footer navigation
+   ========================================================================== */
+.footer-nav {
+
+}
+.footer-nav__title {
+    font-weight: 600;
+    font-size: .65rem;
+    text-transform: uppercase;
+}
+.footer-nav__title__link {
+    color: $black;
+}
+
+.footer-nav__list {
+
+}
+.footer-nav__list__item {
+
+}
+.footer-nav__list__link {
+    color: $gray;
+}

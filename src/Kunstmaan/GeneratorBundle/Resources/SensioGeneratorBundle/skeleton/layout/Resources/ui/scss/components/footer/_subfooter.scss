@@ -3,7 +3,8 @@
    ========================================================================== */
 
 .subfooter {
-
+    padding: 1rem;
+    border-top: 1px solid $hr-color;
 }
 
 .subfooter__info {
@@ -12,6 +13,9 @@
 .subfooter__info__link {
     color: $text-color;
     display: inline-block;
+    &:hover, &:focus, &:active {
+        color: $text-color;
+    }
 }
 
 .subfooter__credentials {

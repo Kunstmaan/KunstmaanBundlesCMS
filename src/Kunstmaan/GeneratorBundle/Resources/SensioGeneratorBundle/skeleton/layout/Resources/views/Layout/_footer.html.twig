@@ -50,9 +50,9 @@
                             <div class="col-md-3">
 
                                 <nav class="footer-nav">
-                                    <h4 class="footer-nav__title">
+                                    <h6 class="footer-nav__title">
                                         <a href="{{ path('_slug', { 'url': node.slug }) }}" class="footer-nav__title__link">{{ node.title }}</a>
-                                    </h4>
+                                    </h6>
                                     <ul class="footer-nav__list list-reset">
                                         {% if node.children|length>0 %}
                                             {% if node.node.internalName == 'article_overview_page' %}
