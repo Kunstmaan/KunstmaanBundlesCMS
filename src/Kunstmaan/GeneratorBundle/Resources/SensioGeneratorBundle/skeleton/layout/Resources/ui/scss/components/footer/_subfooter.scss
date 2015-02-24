@@ -2,4 +2,25 @@
    Footer - Subfooter
    ========================================================================== */
 
+.subfooter {
 
+}
+
+.subfooter__info {
+    font-size: .75rem;
+}
+.subfooter__info__link {
+    color: $text-color;
+    display: inline-block;
+}
+
+.subfooter__credentials {
+    font-size: .75rem;
+    font-weight: 600;
+}
+.subfooter__credentials__link {
+    display: inline-block;
+}
+.subfooter__credentials__img {
+    display: block;
+}
