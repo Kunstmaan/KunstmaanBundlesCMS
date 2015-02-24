@@ -7,15 +7,17 @@
 
     // THEME
     font-size: .85rem;
-    font-weight: 600;
 
     @extend .icon--arrow-tail-down;
 
     &:before {
-        font-family: $iconfont;
-        display: inline-block;
-        font-variant: normal;
+        @include iconfont-reset;
         margin-right: .5rem;
         font-size: 11px;
+    }
+
+    a {
+        color: $text-color;
+        font-weight: 600;
     }
 }
