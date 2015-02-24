@@ -34,7 +34,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     /**
      * Username that is used for creating pages
      */
-    const ADMIN_USERNAME = 'Admin';
+    const ADMIN_USERNAME = 'admin';
 
     /**
      * @var ContainerInterface
