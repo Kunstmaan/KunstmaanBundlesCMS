@@ -21,7 +21,8 @@
     background-color: $white;
 
     border: 1px solid $hr-color;
-    box-shadow: 0px 2px 4px 0px rgba(0,0,0,.2);
+
+    @include box-shadow;
 
     &:hover, &:focus, &:active {
         background-color: $white;

@@ -5,12 +5,17 @@
 // THEME
 .newsletter {
     background-color: $theme-color;
+    padding: 2.5rem;
 }
 .newsletter__title {
     color: $white;
+    font-size: 2rem;
+    margin-top: 0;
 }
 .newsletter__text {
     color: $white;
+    max-width: 750px;
+    display: inline-block;
 }
 
 
