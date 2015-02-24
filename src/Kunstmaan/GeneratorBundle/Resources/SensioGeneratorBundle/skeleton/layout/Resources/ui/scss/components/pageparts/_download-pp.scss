@@ -4,4 +4,19 @@
 
 .download-pp {
     margin: $default-margin 0;
+
+    // THEME
+    font-size: .85rem;
+    font-weight: 600;
+
+    @extend .icon;
+    @extend .icon--arrow-tail-down;
+
+    &:before {
+        font-family: $iconfont;
+        display: inline-block;
+        font-variant: normal;
+        margin-right: .5rem;
+        font-size: 11px;
+    }
 }
