@@ -5,12 +5,15 @@
 .subfooter {
 }
 .subfooter__inner {
+    @include clearfix
+
     border-top: 1px solid $hr-color;
-    padding: 1rem;
+    padding: 1rem 0;
 }
 
 .subfooter__info {
     font-size: .75rem;
+    margin: 0;
 }
 .subfooter__info__link {
     color: $text-color;
@@ -22,6 +25,7 @@
 
 .subfooter__credentials {
     font-size: .75rem;
+    margin: 0;
 }
 .subfooter__credentials__link {
     display: inline-block;
