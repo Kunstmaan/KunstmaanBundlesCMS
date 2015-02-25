@@ -1,11 +1,20 @@
 {% if recursiveSupport %}
 <div id="permissionChangesInfo"></div>
-<div id="permissionChangesModal" class="modal hide">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>{{ 'Permission changes'|trans }}</h3>
+<div id="permissionChangesModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'Permission changes'|trans }}
+                </h3>
+            </div>
+
+            <div class="modal-body"></div>
+        </div>
     </div>
-    <div class="modal-body"></div>
 </div>
 {% endif %}
 
