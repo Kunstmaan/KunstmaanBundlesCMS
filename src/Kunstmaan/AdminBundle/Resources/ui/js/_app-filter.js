@@ -11,6 +11,8 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         $addFirstFilterSelect, $addFilterBtn, $removeFilterBtn,
         $filterDummyLine, $filterHolder;
 
+    var $body = $('body');
+
 
     init = function() {
 
@@ -155,15 +157,20 @@ kunstmaanbundles.filter = (function($, window, undefined) {
             $('#first-filter-line').removeClass('hidden');
             $addFilterBtn.addClass('hidden');
         }
-        $el.parents('.js-filter-line').remove();
 
+        $el.parents('.js-filter-line').remove();
     };
 
 
 
     clearAllFilters = function() {
+        // Set Loading
+        $body.addClass('app--loading');
+
+        // Remove all filters
         $('.app__filter__line').remove();
 
+        // Submit
         $applyAllFiltersBtn.trigger('click');
     };
 

@@ -5,6 +5,8 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
     var init,
         addPagePart, editPagePart, deletePagePart;
 
+    var $body = $('body');
+
     init = function() {
         var $body = $('body');
 
@@ -36,6 +38,9 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
             context = $targetContainer.data('context'),
             ppType = $select.val();
 
+        // Set Loading
+        $body.addClass('app--loading');
+
         // Ajax Request
         $.ajax({
             url: requestUrl,
@@ -56,6 +61,9 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                 } else {
                     result = $select.closest('.js-draggable-item').after(data);
                 }
+
+                // Remove Loading
+                $body.removeClass('app--loading');
 
                 // Enable leave-page modal
                 kunstmaanbundles.checkIfEdited.edited();
