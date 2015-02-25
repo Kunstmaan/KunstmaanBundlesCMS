@@ -65,12 +65,16 @@
 
 .table__actions__item {
     display: block;
-    margin: 0 .8rem .8rem 0;
+    margin: 0 .8rem 0 0;
 
     white-space: nowrap;
     transition: color .3s ease;
 
     &:hover {
         text-decoration: none;
+    }
+
+    & + .table__actions__item {
+        margin-bottom: .8rem;
     }
 }
