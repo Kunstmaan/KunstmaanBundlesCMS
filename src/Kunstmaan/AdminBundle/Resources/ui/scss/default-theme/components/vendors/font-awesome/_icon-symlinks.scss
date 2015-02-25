@@ -10,12 +10,16 @@
     @extend .fa-trash-o;
 }
 
-.icon-ok {
+
+// Glyphicon
+.glyphicon {
     @extend .fa;
+}
+
+.glyphicon-ok {
     @extend .fa-check;
 }
 
-.icon-remove {
-    @extend .fa;
+.glyphicon-remove {
     @extend .fa-times;
 }

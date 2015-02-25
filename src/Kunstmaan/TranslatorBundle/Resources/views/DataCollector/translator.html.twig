@@ -28,23 +28,29 @@
 {% endblock %}
 
 {% block panel %}
-    <h2>Translations ({{ collector.totalTranslations }})</h2>
+    <h2>
+        Translations ({{ collector.totalTranslations }})
+    </h2>
 
     <table>
-        <tr>
-            <th>Domain</th>
-            <th>Locale</th>
-            <th>Keyword</th>
-            <th>Text</th>
-        </tr>
-        {% for translation in collector.translations %}
-        <tr>
-            <td>{{ translation.domain }}</td>
-            <td>{{ translation.locale }}</td>
-            <td>{{ translation.keyword }}</td>
-            <td>{{ translation.text | truncate(40) }}</td>
+        <thead>
+            <tr>
+                <th>Domain</th>
+                <th>Locale</th>
+                <th>Keyword</th>
+                <th>Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for translation in collector.translations %}
+            <tr>
+                <td>{{ translation.domain }}</td>
+                <td>{{ translation.locale }}</td>
+                <td>{{ translation.keyword }}</td>
+                <td>{{ translation.text | truncate(40) }}</td>
 
-        </tr>
-        {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
