@@ -71,6 +71,10 @@
 .page-sub-actions {
     text-align: right;
 
+    a:not(:first-child) {
+        margin-left: 1rem;
+    }
+
     @media (min-width: $screen-sm) {
         margin-top: -2.2rem;
     }
