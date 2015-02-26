@@ -26,10 +26,11 @@ $search-height: 48px;
     color: $black;
 
     padding: .65rem 1rem;
-    padding-right: calc(1rem + #{$search-height});
     background-color: $gray-lighter;
     border: 1px solid $hr-color;
     @include box-shadow;
+
+    padding-right: $search-height;
 }
 .searchbox__submit {
     width: $search-height;
@@ -46,4 +47,5 @@ $search-height: 48px;
 }
 .searchbox__submit__icon {
     color: $theme-color;
+    font-size: .8rem;
 }
