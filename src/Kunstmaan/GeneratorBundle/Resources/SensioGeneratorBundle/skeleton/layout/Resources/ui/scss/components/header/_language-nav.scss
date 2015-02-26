@@ -11,7 +11,9 @@
 }
 
 .language-nav__active-lang {
-
+    font-size: .65rem;
+    font-weight: 400;
+    text-transform: uppercase;
 }
 .language-nav__icon {
     font-size: .3rem;
@@ -31,4 +33,5 @@
 }
 .language-nav__list__link {
     display: block;
+    font-weight: 400;
 }
