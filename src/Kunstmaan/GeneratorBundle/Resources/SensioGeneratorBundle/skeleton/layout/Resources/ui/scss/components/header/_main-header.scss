@@ -9,3 +9,17 @@
 .main-header {
     padding: .9rem 0;
 }
+
+/* Header logo
+   ========================================================================== */
+.main-header__logo {
+    height: $logo-height;
+}
+.main-header__logo__link {
+    height: $logo-height;
+    display: flex;
+    align-items: center;
+}
+.main-header__logo__img {
+    display: block;
+}

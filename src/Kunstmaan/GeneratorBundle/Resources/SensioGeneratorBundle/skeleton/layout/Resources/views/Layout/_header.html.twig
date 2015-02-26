@@ -9,8 +9,8 @@
                     {# Logo #}
                     <div class="main-header__logo pull-left">
                         {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
-                            <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew"/>
+                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo__link">
+                            <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img"/>
                         </a>
                     </div>
 
