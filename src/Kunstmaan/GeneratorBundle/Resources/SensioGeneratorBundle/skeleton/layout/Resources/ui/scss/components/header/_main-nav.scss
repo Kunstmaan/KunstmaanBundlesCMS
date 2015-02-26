@@ -25,22 +25,28 @@
         margin-right: 1rem;
 
         font-size: .65rem;
+        font-weight: 400;
         text-transform: uppercase;
     }
     .main-nav__list__item--cta {
         text-transform: none;
+        font-size: .8rem;
     }
     .main-nav__list__link {
         display: block;
         color: $text-color;
+
+        &:hover, &:focus, &:active {
+            color: $text-color;
+        }
     }
     .main-nav__list__link--cta {
         color: $theme-color;
+        margin-left: 1.7rem;
     }
     .main-nav__list__icon--cta {
-        font-size: .8rem;
+        font-size: .5rem;
         display: inline-block;
         vertical-align: middle;
-        margin-left: 1.7rem;
     }
 }
