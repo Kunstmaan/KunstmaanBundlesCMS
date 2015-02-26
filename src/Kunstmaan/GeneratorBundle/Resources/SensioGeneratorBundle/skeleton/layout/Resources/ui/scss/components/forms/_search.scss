@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Forms - Search
+   ========================================================================== */
+
+.searchbox-form {
+
+}
+.searchbox {
+
+}
+.searchbox__input {
+
+    // cf. button-pp
+    font-size: .8rem;
+    color: $black;
+
+    padding: .65rem 1rem;
+    background-color: $gray-lighter;
+    border: 1px solid $hr-color;
+    @include box-shadow;
+}
+.searchbox__submit {
+
+}
+.searchbox__submit__icon {
+
+}
