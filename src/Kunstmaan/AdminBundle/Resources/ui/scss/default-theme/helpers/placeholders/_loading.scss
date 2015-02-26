@@ -14,8 +14,8 @@
 
     margin: -.5rem 0 0 -.5rem;
 
-    background-color: $green;
-    border-radius: 100%;
+    background-color: #E6E7E9;
+    border-radius: 3px;
 
-    @include animation(rotateplane 1.2s infinite ease-in-out);
+    @include animation(rotateloading 1.2s infinite ease-in-out);
 }

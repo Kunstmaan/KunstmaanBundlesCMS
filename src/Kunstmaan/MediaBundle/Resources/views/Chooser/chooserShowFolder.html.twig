@@ -69,6 +69,19 @@
 
 
 {% block sidebar %}
+    <!-- Search -->
+    <button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
+        <i class="fa fa-search"></i>
+    </button>
+    <div id="sidebar-search-toggle" class="toggle-item">
+        <div class="toggle-item__content">
+            <div class="app__sidebar__search-toggle-item">
+                <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+                <hr>
+            </div>
+        </div>
+    </div>
+
     <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation">
         <ul>
             {% set parentIds = foldermanager.getParentIds(folder) %}
@@ -79,18 +92,6 @@
             {% endfor %}
         </ul>
     </nav>
-
-    <hr>
-
-    <!-- Tree Search -->
-    <div class="form-group app__sidebar__module app__sidebar__search">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="fa fa-search"></i>
-            </span>
-            <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
-        </div>
-    </div>
 {% endblock %}
 
 

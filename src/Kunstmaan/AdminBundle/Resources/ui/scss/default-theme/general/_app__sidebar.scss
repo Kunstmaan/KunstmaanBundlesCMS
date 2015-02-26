@@ -10,6 +10,10 @@
 
     height: calc(100vh - 45px);
     overflow: auto;
+    padding-top: 1.5em;
+    padding-bottom: 2.5em;
+
+    @extend %transition-color;
 
     @media (max-width: $screen-md) {
         top: 0;
@@ -97,4 +101,25 @@
     @media (min-width: $screen-md) {
         display: none;
     }
+}
+
+
+
+/* Search
+   ========================================================================== */
+.app__sidebar__search-toggle-btn {
+    position: absolute;
+    top: 1rem;
+    right: 0;
+
+    background: transparent;
+    color: #9A9CA8;
+
+    &:active {
+        box-shadow: none;
+    }
+}
+
+.app__sidebar__search-toggle-item {
+    padding-top: 2em;
 }
