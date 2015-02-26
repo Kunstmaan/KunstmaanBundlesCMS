@@ -26,7 +26,7 @@ $search-height: 48px;
     color: $black;
 
     padding: .65rem 1rem;
-    padding-right: calc(1rem + $search-height);
+    padding-right: calc(1rem + #{$search-height});
     background-color: $gray-lighter;
     border: 1px solid $hr-color;
     @include box-shadow;
