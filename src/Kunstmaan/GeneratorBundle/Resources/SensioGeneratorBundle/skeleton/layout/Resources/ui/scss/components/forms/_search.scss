@@ -2,13 +2,23 @@
    Forms - Search
    ========================================================================== */
 
+// THEME
+$search-height: 48px;
+
+
 .searchbox-form {
-
 }
-.searchbox {
 
+.searchbox {
+    width: $search-height;
+    height: $search-height;
+    position: relative;
 }
 .searchbox__input {
+    width: 340px;
+    max-width: 100%;
+    height: $search-height;
+    display: inline-block;
 
     // cf. button-pp
     font-size: .8rem;
@@ -20,8 +30,17 @@
     @include box-shadow;
 }
 .searchbox__submit {
+    width: $search-height;
+    height: $search-height;
+    line-height: $search-height;
+    text-align: center;
 
+    background: none;
+
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 .searchbox__submit__icon {
-
+    color: $theme-color;
 }
