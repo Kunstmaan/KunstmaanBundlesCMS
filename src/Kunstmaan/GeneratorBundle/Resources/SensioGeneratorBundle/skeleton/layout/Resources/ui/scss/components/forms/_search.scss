@@ -25,7 +25,8 @@ $search-height: 48px;
     font-size: .8rem;
     color: $black;
 
-    padding: .65rem calc(1rem + $search-height) .65rem 1rem;
+    padding: .65rem 1rem;
+    padding-right: calc(1rem + $search-height);
     background-color: $gray-lighter;
     border: 1px solid $hr-color;
     @include box-shadow;
