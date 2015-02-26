@@ -2,28 +2,45 @@
    Header - Main navigation
    ========================================================================== */
 
-.main-nav {
-    @media(min-width: $screen-md-min) {
+/* Desktop
+   ========================================================================== */
+@media(min-width: $screen-md-min) {
+    .main-nav {
         margin-right: 2rem;
     }
-}
-.main-nav__list {
-    @include list-reset;
-}
 
-@media(min-width: $screen-md-min) {
     .main-nav__button {
         display: none;
     }
+
     .main-nav__content {
         height: auto !important;
     }
 
+    .main-nav__list {
+        @include list-reset;
+    }
     .main-nav__list__item {
         display: inline-block;
         margin-right: 1rem;
+
+        font-size: .65rem;
+        text-transform: uppercase;
+    }
+    .main-nav__list__item--cta {
+        text-transform: none;
     }
     .main-nav__list__link {
         display: block;
+        color: $text-color;
+    }
+    .main-nav__list__link--cta {
+        color: $theme-color;
+    }
+    .main-nav__list__icon--cta {
+        font-size: .8rem;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 1.7rem;
     }
 }
