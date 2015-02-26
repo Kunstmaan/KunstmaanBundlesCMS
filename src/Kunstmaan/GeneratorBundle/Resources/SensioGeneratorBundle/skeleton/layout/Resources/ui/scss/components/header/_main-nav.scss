@@ -30,11 +30,16 @@
    }
    .main-nav__list__link--cta {
        color: $theme-color;
+
+       &:hover, &:focus, &:active {
+           color: $theme-color;
+       }
    }
    .main-nav__list__icon--cta {
        font-size: .5rem;
        display: inline-block;
        vertical-align: middle;
+       margin-left: .3rem;
    }
 
 /* Desktop
