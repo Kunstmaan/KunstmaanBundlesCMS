@@ -3,7 +3,9 @@
    ========================================================================== */
 
 .main-nav {
-
+    @media(min-width: $screen-md-min) {
+        margin-right: 2rem;
+    }
 }
 .main-nav__list {
     @include list-reset;
@@ -19,6 +21,7 @@
 
     .main-nav__list__item {
         display: inline-block;
+        margin-right: 1rem;
     }
     .main-nav__list__link {
         display: block;
