@@ -56,7 +56,7 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
             'page_internal_name' => 'sitemap',
             'set_online' => true,
             'hidden_from_nav' => true,
-            'creator' => 'Admin'
+            'creator' => 'admin'
         );
 
         $pageCreator->createPage($sitemapPage, $translations, $options);
