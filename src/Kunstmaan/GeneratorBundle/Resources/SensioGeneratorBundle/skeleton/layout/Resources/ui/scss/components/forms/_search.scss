@@ -11,8 +11,8 @@ $search-height: 48px;
 }
 
 .searchbox {
-    width: $search-height;
-    height: $search-height;
+    // width: $search-height;
+    // height: $search-height;
     position: relative;
 }
 .searchbox__input {
@@ -33,9 +33,10 @@ $search-height: 48px;
 .searchbox__submit {
     width: $search-height;
     height: $search-height;
-    line-height: $search-height;
+    line-height: $search-height - 3px;
     text-align: center;
 
+    border: none;
     background: none;
 
     position: absolute;
