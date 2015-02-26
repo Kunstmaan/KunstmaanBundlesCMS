@@ -5,8 +5,6 @@
 .main-nav {
     @media(min-width: $screen-md-min) {
         margin-right: 2rem;
-        display: flex;
-        align-items: center;
     }
 }
 .main-nav__list {
