@@ -27,7 +27,10 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
             })
             // Create
             .jstree({
-                'plugins': ['types', 'search'],
+                'plugins': [
+                    'types',
+                    'search'
+                ],
                 'types': {
                     '#': {
                         'icon': 'fa fa-home'
