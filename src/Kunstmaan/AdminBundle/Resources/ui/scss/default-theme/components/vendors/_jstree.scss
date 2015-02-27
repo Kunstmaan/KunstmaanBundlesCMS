@@ -101,7 +101,7 @@
 }
 
 .jstree-node {
-    background-position: -292px -4px;
+    background-position: -292px -3px;
     background-repeat: repeat-y;
 }
 
@@ -126,22 +126,16 @@
 }
 
 .jstree-open > .jstree-ocl {
-    background-position: -132px -4px;
+    background-position: -132px -3px;
 }
 
 .jstree-closed > .jstree-ocl {
-    background-position: -100px -4px;
+    background-position: -100px -3px;
 }
 
 .jstree-leaf > .jstree-ocl {
-    background-position: -68px -4px;
+    background-position: -68px -3px;
 }
-
-
-// Ajax loader
-// .jstree-container-ul .jstree-loading > .jstree-ocl {
-//     background: url("/bundles/kunstmaanadmin/vendor/jstree/dist/themes/default/throbber.gif") center center no-repeat;
-// }
 
 
 /* Open/Close Tree
@@ -210,148 +204,17 @@
     height: 16px;
 }
 
-
-
-
-
-/* Removed styling from default theme (not needed)
-   ========================================================================== */
-.jstree-themeicon {
-   background-position: -260px -4px;
-}
-.jstree-striped {
-   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAMAAAB/qqA+AAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMNAMM9s3UAAAAXSURBVHjajcEBAQAAAIKg/H/aCQZ70AUBjAATb6YPDgAAAABJRU5ErkJggg==") left top repeat;
-}
-.jstree-disabled {
-   background: transparent;
-   color: #666;
-}
-.jstree-disabled.jstree-hovered {
-   background: transparent;
-   box-shadow: none;
-}
-.jstree-disabled.jstree-clicked {
-   background: #efefef;
-}
-.jstree-disabled > .jstree-icon {
-   opacity: 0.8;
-}
-.jstree-file {
-   background: url("/bundles/kunstmaanadmin/default-theme/img/jstree/32px.png") -100px -68px no-repeat;
-}
-.jstree-folder {
-   background: url("/bundles/kunstmaanadmin/default-theme/img/jstree/32px.png") -260px -4px no-repeat;
-}
-.jstree-no-dots .jstree-node,
-.jstree-no-dots .jstree-leaf > .jstree-ocl {
-   background: transparent;
-}
-.jstree-no-dots .jstree-open > .jstree-ocl {
-   background-position: -36px -4px;
-}
-.jstree-no-dots .jstree-closed > .jstree-ocl {
-   background-position: -4px -4px;
-}
-.jstree-disabled {
-   background: transparent;
-}
-.jstree-disabled.jstree-hovered {
-   background: transparent;
-}
-.jstree-disabled.jstree-clicked {
-   background: #efefef;
-}
-.jstree-no-checkboxes .jstree-checkbox {
-   display: none !important;
-}
-.jstree-checkbox-no-clicked .jstree-clicked {
-   background: transparent;
-   box-shadow: none;
-}
-.jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
-   background: #e7f4f9;
-}
-.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked {
-   background: transparent;
-}
-.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
-   background: #e7f4f9;
-}
-.jstree-checkbox {
-   background-position: -164px -4px;
-}
-.jstree-checkbox:hover {
-   background-position: -164px -36px;
-}
-.jstree-clicked > .jstree-checkbox {
-   background-position: -228px -4px;
-}
-.jstree-clicked > .jstree-checkbox:hover {
-   background-position: -228px -36px;
-}
 .jstree-anchor > .jstree-undetermined {
    background-position: -196px -4px;
 }
+
 .jstree-anchor > .jstree-undetermined:hover {
    background-position: -196px -36px;
 }
-.jstree-striped {
-   background-size: auto 48px;
-}
-.jstree-no-icons .jstree-anchor > .jstree-themeicon {
-   display: none;
-}
-.jstree-node,
-.jstree-icon {
-   background-repeat: no-repeat;
-   background-color: transparent;
-}
-.jstree-wholerow-ul .jstree-hovered,
-.jstree-wholerow-ul .jstree-clicked {
-   background: transparent;
-   box-shadow: none;
-   border-radius: 0;
-}
-.jstree-wholerow {
-   box-sizing: border-box;
-}
-.jstree-wholerow-hovered {
-   background: #e7f4f9;
-}
-.jstree-wholerow-clicked {
-   background: #beebff;
-   background: -moz-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #beebff), color-stop(100%, #a8e4ff));
-   background: -webkit-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-   background: -o-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-   background: -ms-linear-gradient(top, #beebff 0%, #a8e4ff 100%);
-   background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%);
-}
-.jstree-wholerow {
-   height: 2em;
-}
-.jstree-wholerow-ul {
-   position: relative;
-   display: inline-block;
-   min-width: 100%;
-}
-.jstree-wholerow-ul .jstree-leaf > .jstree-ocl {
-   cursor: pointer;
-}
-.jstree-wholerow-ul .jstree-anchor,
-.jstree-wholerow-ul .jstree-icon {
-   position: relative;
-}
-.jstree-wholerow-ul .jstree-wholerow {
-   width: 100%;
-   cursor: pointer;
-   position: absolute;
-   left: 0;
-   user-select: none;
-}
+
 #jstree-marker {
    position: absolute;
-   top: 0;
+   top: -4px;
    left: 0;
    margin: 0;
    padding: 0;
@@ -364,28 +227,205 @@
    font-size: 0;
    line-height: 0;
 }
-.jstree-no-icons .jstree-themeicon,
-.jstree-anchor > .jstree-themeicon-hidden {
-   display: none;
-}
-.jstree-rtl .jstree-node {
-   margin-right: 24px;
-}
-.jstree-rtl .jstree-anchor {
-   padding: 0 1px 0 4px;
-}
-.jstree-rtl .jstree-anchor > .jstree-themeicon {
-   margin-left: 2px;
-   margin-right: 0;
-}
-.jstree-rtl .jstree-node {
-   margin-left: 0;
-}
-.jstree-rtl .jstree-container-ul > .jstree-node {
-   margin-right: 0;
-}
 
 
+
+
+/* Unnessesary styles (for now)
+   ========================================================================== */
+// .jstree-themeicon {
+//    background-position: -260px -4px;
+// }
+
+// .jstree-disabled {
+//    background: transparent;
+//    color: #666;
+// }
+
+// .jstree-disabled.jstree-hovered {
+//    background: transparent;
+//    box-shadow: none;
+// }
+
+// .jstree-disabled.jstree-clicked {
+//    background: #efefef;
+// }
+
+// .jstree-disabled > .jstree-icon {
+//    opacity: 0.8;
+// }
+
+// .jstree-no-dots .jstree-node,
+// .jstree-no-dots .jstree-leaf > .jstree-ocl {
+//    background: transparent;
+// }
+
+// .jstree-no-dots .jstree-open > .jstree-ocl {
+//    background-position: -36px -4px;
+// }
+
+// .jstree-no-dots .jstree-closed > .jstree-ocl {
+//    background-position: -4px -4px;
+// }
+
+// .jstree-disabled {
+//    background: transparent;
+// }
+
+// .jstree-disabled.jstree-hovered {
+//    background: transparent;
+// }
+
+// .jstree-disabled.jstree-clicked {
+//    background: #efefef;
+// }
+
+// .jstree-no-checkboxes .jstree-checkbox {
+//    display: none !important;
+// }
+
+// .jstree-checkbox-no-clicked .jstree-clicked {
+//    background: transparent;
+//    box-shadow: none;
+// }
+
+// .jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
+//    background: #e7f4f9;
+// }
+
+// .jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked {
+//    background: transparent;
+// }
+
+// .jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
+//    background: #e7f4f9;
+// }
+
+// .jstree-checkbox {
+//    background-position: -164px -4px;
+// }
+
+// .jstree-checkbox:hover {
+//    background-position: -164px -36px;
+// }
+
+// .jstree-clicked > .jstree-checkbox {
+//    background-position: -228px -4px;
+// }
+
+// .jstree-clicked > .jstree-checkbox:hover {
+//    background-position: -228px -36px;
+// }
+
+// .jstree-anchor > .jstree-undetermined {
+//    background-position: -196px -4px;
+// }
+
+// .jstree-anchor > .jstree-undetermined:hover {
+//    background-position: -196px -36px;
+// }
+
+// .jstree-striped {
+//    background-size: auto 48px;
+// }
+
+// .jstree-no-icons .jstree-anchor > .jstree-themeicon {
+//    display: none;
+// }
+
+// .jstree-node,
+// .jstree-icon {
+//    background-color: transparent;
+// }
+
+// .jstree-wholerow-ul .jstree-hovered,
+// .jstree-wholerow-ul .jstree-clicked {
+//    background: transparent;
+//    box-shadow: none;
+//    border-radius: 0;
+// }
+
+// .jstree-wholerow {
+//    box-sizing: border-box;
+// }
+
+// .jstree-wholerow-hovered {
+//    background: #e7f4f9;
+// }
+
+// .jstree-wholerow-clicked {
+//    background: #beebff;
+//    background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%);
+// }
+
+// .jstree-wholerow {
+//    height: 2em;
+// }
+
+// .jstree-wholerow-ul {
+//    position: relative;
+//    display: inline-block;
+//    min-width: 100%;
+// }
+
+// .jstree-wholerow-ul .jstree-leaf > .jstree-ocl {
+//    cursor: pointer;
+// }
+
+// .jstree-wholerow-ul .jstree-anchor,
+// .jstree-wholerow-ul .jstree-icon {
+//    position: relative;
+// }
+
+// .jstree-wholerow-ul .jstree-wholerow {
+//    width: 100%;
+//    cursor: pointer;
+//    position: absolute;
+//    left: 0;
+//    user-select: none;
+// }
+
+// #jstree-marker {
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    margin: 0;
+//    padding: 0;
+//    border-right: 0;
+//    border-top: 5px solid transparent;
+//    border-bottom: 5px solid transparent;
+//    border-left: 5px solid;
+//    width: 0;
+//    height: 0;
+//    font-size: 0;
+//    line-height: 0;
+// }
+
+// .jstree-no-icons .jstree-themeicon,
+// .jstree-anchor > .jstree-themeicon-hidden {
+//    display: none;
+// }
+
+// .jstree-rtl .jstree-node {
+//    margin-right: 24px;
+// }
+
+// .jstree-rtl .jstree-anchor {
+//    padding: 0 1px 0 4px;
+// }
+
+// .jstree-rtl .jstree-anchor > .jstree-themeicon {
+//    margin-left: 2px;
+//    margin-right: 0;
+// }
+
+// .jstree-rtl .jstree-node {
+//    margin-left: 0;
+// }
+
+// .jstree-rtl .jstree-container-ul > .jstree-node {
+//    margin-right: 0;
+// }
 // .vakata-context {
 //    display: none;
 // }
