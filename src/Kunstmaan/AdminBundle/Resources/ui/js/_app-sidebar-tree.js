@@ -27,7 +27,25 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
             })
             // Create
             .jstree({
-                'plugins': ['types', 'search'],
+                'core': { // http://www.jstree.com/api/#/?q=$.jstree.defaults.dnd&f=$.jstree.defaults.core.check_callback
+                    'check_callback': function (operation, node, node_parent, node_position, more) {
+                        // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+                        // in case of 'rename_node' node_position is filled with the new node name
+
+                        console.log('operation: ' + operation);
+                        console.log('node: ' + node);
+                        console.log('node_parent: ' + node_parent);
+                        console.log('node_position: ' + node_position);
+                        console.log('more: ' + more);
+
+                        // return operation === 'rename_node' ? true : false;
+                    }
+                },
+                'plugins': [
+                    'types',
+                    'search',
+                    'dnd'
+                ],
                 'types': {
                     '#': {
                         'icon': 'fa fa-home'
