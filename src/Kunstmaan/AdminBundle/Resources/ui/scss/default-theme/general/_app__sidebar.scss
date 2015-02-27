@@ -13,7 +13,7 @@
     padding-top: 1.5em;
     padding-bottom: 2.5em;
 
-    @extend %transition-color;
+    @include transition(color .3s ease);
 
     @media (max-width: $screen-md) {
         top: 0;
@@ -114,6 +114,8 @@
 
     background: transparent;
     color: #9A9CA8;
+
+    @include transition(color .3s ease);
 
     &:active {
         box-shadow: none;

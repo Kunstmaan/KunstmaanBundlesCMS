@@ -52,17 +52,20 @@
 .choice-block__input:checked {
 
     & + .choice-block__item {
-        @extend %transition-border;
         border: 1px solid $brand-primary;
 
+        @include transition(border .3s ease);
+
         .choice-block__item__head {
-            @extend %transition-color;
             color: $brand-primary;
+
+            @include transition(color .3s ease);
         }
 
         .choice-block__item__col {
-            @extend %transition-background;
             background: $gray-lighter;
+
+            @include transition(background .3s ease);
         }
     }
 
