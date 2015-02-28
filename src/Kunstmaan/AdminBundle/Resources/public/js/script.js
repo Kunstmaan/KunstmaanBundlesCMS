@@ -440,8 +440,14 @@ function initCustomSelect() {
 
 //Custom Select
 function initDisableButtonsOnSubmit() {
+    var formSubmitting = false;
     $("#pageadminform").submit(function(){
-        $(".main_actions").find("button, a").attr('disabled','disabled').addClass("disabled");
+        if (formSubmitting) {
+            return false;
+        }
+
+        formSubmitting = true;
+        $(".main_actions").find("button, a").attr('data-toggle', null).addClass("disabled");
     });
 }
 
