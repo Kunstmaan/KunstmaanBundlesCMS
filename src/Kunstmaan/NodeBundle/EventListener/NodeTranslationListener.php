@@ -10,7 +10,7 @@ use Kunstmaan\NodeBundle\Entity\Node,
     Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -73,7 +73,7 @@ class NodeTranslationListener
                 $publicNode = $publicNodeVersion->getRef($em);
 
                 /** Do nothing for StructureNode objects, skip */
-                if ($publicNode instanceof StructureNode) {
+                if ($publicNode instanceof HasNodeInterface && $publicNode->isStructureNode()) {
                     continue;
                 }
 
