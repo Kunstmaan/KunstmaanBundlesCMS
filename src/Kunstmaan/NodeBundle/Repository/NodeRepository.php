@@ -202,7 +202,7 @@ class NodeRepository extends NestedTreeRepository
                     break;
 
                 default:
-                    $satement = 'IF(%s, %s, %s)';
+                    $statement = 'IF(%s, %s, %s)';
             }
 
             return sprintf($statement, $expression, $trueValue, $falseValue);
