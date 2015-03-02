@@ -8,7 +8,7 @@
             {% else %}
                 {% form_theme frontendform '<%= bundle.name %>:Form:fields.html.twig' %}
 
-                <form action='{{ path('_slug', { 'url': nodemenu.current.slug }) }}' method="post" {{ form_enctype(frontendform) }} novalidate="true" class="form-horizontal" role="form">
+                <form action='{{ path('_slug', { 'url': nodemenu.current.slug }) }}' method="post" {{ form_enctype(frontendform) }} novalidate="true" class="form--default" role="form">
                     {{ render_pageparts(page, 'main') }}
                     {{ form_rest(frontendform) }}
                 </form>
