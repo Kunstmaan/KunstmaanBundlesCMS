@@ -2,15 +2,12 @@
    Forms - Base
    ========================================================================== */
 
-button, input[type="text"], input[type="textarea"] {
+button, input[type="text"], textarea, select {
     &:focus {
         outline: none;
     }
 }
 
-input[type="text"], input[type="textarea"] {
-
-}
 
 /* Default
    ========================================================================== */
@@ -23,10 +20,6 @@ input[type="text"], input[type="textarea"] {
         max-width: 460px;
     }
 
-    .form-control--textarea {
-        height: 5.6rem;
-    }
-
     .form-control--input, .form-control--textarea, .form-control--select {
         padding: .2rem 0;
         display: block;
@@ -34,6 +27,7 @@ input[type="text"], input[type="textarea"] {
         border: 0;
         border-bottom: 1px solid $hr-color;
         width: 100%;
+        min-height: 38px;
         font-weight: 400;
 
         ~ .form-bar {
@@ -67,6 +61,10 @@ input[type="text"], input[type="textarea"] {
         }
     }
 
+    .form-control--textarea {
+        height: 5.6rem;
+    }
+
     .control-label {
         color: $gray;
         padding: .2rem 0; // same as form-control
@@ -76,6 +74,34 @@ input[type="text"], input[type="textarea"] {
         left: 0;
         transition: all 0.3s ease;
         pointer-events: none;
+    }
+
+    // Select
+    .select-wrapper {
+        position: relative;
+    }
+    .form-control--select {
+        // reset
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+
+        //style
+        height: 38px;
+    }
+    .select__icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: 38px;
+        height: 38px;
+        text-align: center;
+        font-size: .8rem;
+        line-height: 38px;
+        color: $gray;
     }
 
 }

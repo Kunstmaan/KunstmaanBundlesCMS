@@ -57,20 +57,23 @@
 {# Form widget: Selectbox #}
 {% block choice_widget_collapsed %}
     {% spaceless %}
-        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
-            {% if empty_value is not none %}
-                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
-            {% endif %}
-            {% if preferred_choices|length > 0 %}
-                {% set options = preferred_choices %}
-                {{ block('choice_widget_options') }}
-                {% if choices|length > 0 and separator is not none %}
-                    <option disabled="disabled">{{ separator }}</option>
+        <div class="select-wrapper">
+            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
+                {% if empty_value is not none %}
+                    <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
                 {% endif %}
-            {% endif %}
-            {% set options = choices %}
-            {{ block('choice_widget_options') }}
-        </select>
+                {% if preferred_choices|length > 0 %}
+                    {% set options = preferred_choices %}
+                    {{ block('choice_widget_options') }}
+                    {% if choices|length > 0 and separator is not none %}
+                        <option disabled="disabled">{{ separator }}</option>
+                    {% endif %}
+                {% endif %}
+                {% set options = choices %}
+                {{ block('choice_widget_options') }}
+            </select>
+            <i class="icon icon--triangle-down select__icon"></i>
+        </div>
     {% endspaceless %}
 {% endblock choice_widget_collapsed %}
 
