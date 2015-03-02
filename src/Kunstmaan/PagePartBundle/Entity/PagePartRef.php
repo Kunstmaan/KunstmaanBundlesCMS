@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
  * Reference between a page and a pagepart
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\PagePartBundle\Repository\PagePartRefRepository")
- * @ORM\Table(name="kuma_page_part_refs", indexes={@ORM\Index(name="idx_kuma_search", columns={"pageId", "pageEntityname", "context"})})
+ * @ORM\Table(name="kuma_page_part_refs", indexes={@ORM\Index(name="idx_page_part_search", columns={"pageId", "pageEntityname", "context"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class PagePartRef
