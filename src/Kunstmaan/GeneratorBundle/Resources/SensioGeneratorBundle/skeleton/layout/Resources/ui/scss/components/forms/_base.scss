@@ -39,6 +39,7 @@ button, input[type="text"], textarea, select {
             position: absolute;
             bottom: 0;
             left: 0;
+            z-index: 3;
             transition: all 0.2s ease;
         }
 
@@ -79,6 +80,7 @@ button, input[type="text"], textarea, select {
     // Select
     .select-wrapper {
         position: relative;
+        border-bottom: 1px solid $hr-color;
 
         ~ .control-label, ~ .form-bar {
             display: none;
@@ -86,6 +88,7 @@ button, input[type="text"], textarea, select {
     }
     .form-control--select {
         // reset
+        border: none;
         box-shadow: none;
         background: transparent;
         background-image: none;
