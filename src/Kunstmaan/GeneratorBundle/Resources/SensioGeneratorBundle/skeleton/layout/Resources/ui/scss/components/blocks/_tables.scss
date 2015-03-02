@@ -4,12 +4,15 @@
 
 /* Default
    ========================================================================== */
+.table-container {
+    max-width: 100%;
+}
 table {
     margin: $default-margin 0;
     width: 100%;
 
     @media(min-width: $screen-md-min) {
-        width: 50%;
+        width: 70%;
     }
 }
 tr {
