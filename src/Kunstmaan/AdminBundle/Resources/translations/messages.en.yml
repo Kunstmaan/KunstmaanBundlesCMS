@@ -4,7 +4,7 @@ pages:
   parts: PageParts
   draft: Draft
   pagenottranslated: This page is not translated
-  copyfrom: Copy from language 
+  copyfrom: Copy from language
   createemptypage: Create as an empty page
 
 # Modules
@@ -38,6 +38,7 @@ tools:
 form:
   cancel: Cancel
   delete: Delete
+  deletesure: Are you sure you want to delete this?
   edit: Edit
   add: Add New
   save: Save
@@ -52,14 +53,14 @@ form:
   forgot:
     password: Forgot my password.
   permissions: Permissions
-  properties: Properties 
+  properties: Properties
   createdat: Created At
   updatedat: Updated At
   actions: Actions
   addfilter: Add filter
   choosetypefilter: Filter on
   versions: Versions
-  
+
 omnext:
   home: Home
   title: Welcome!
