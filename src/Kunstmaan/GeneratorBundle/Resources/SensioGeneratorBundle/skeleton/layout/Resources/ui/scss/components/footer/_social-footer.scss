@@ -6,8 +6,11 @@
 
 }
 .social-footer__inner {
-    padding: 2.5rem 0;
+    padding: 1.5rem 0;
     border-bottom: 2px solid $hr-color;
+    @media(min-width: $screen-sm-min) {
+        padding: 2.5rem 0;
+    }
 }
 .social-footer__link {
     color: $gray;
