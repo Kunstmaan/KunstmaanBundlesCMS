@@ -19,12 +19,16 @@ input[type="text"], input[type="textarea"] {
     .form-group {
         position: relative;
         margin: 2rem 0 1rem;
+        width: 100%;
+        max-width: 460px;
     }
 
     .form-control--input, .form-control--textarea {
-        padding: .5rem 0;
+        padding: .2rem 0;
         border: 0;
         border-bottom: 1px solid $hr-color;
+        width: 100%;
+        font-weight: 600;
 
         ~ .form-bar {
             display: block;
@@ -50,7 +54,8 @@ input[type="text"], input[type="textarea"] {
             ~ .control-label {
                 font-size: 0.75rem;
                 color: $theme-color;
-                top: -2.25rem;
+                font-weight: 600;
+                top: -2rem;
                 transition: all 0.2s ease;
             }
         }
@@ -58,7 +63,7 @@ input[type="text"], input[type="textarea"] {
 
     .control-label {
         color: $gray;
-        padding: 1rem 0;
+        padding: .2rem 0; // same as form-control
 
         position: absolute;
         top: 0;
