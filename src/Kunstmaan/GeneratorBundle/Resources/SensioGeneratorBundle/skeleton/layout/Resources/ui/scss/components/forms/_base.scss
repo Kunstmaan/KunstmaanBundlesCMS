@@ -86,20 +86,21 @@ button, input[type="text"], textarea, select {
         background: transparent;
         background-image: none;
         -webkit-appearance: none;
+        border-radius: 0;
 
         //style
         height: 38px;
+        position: relative;
+        z-index: 2;
     }
     .select__icon {
         position: absolute;
         top: 0;
-        right: 0;
+        right: .2rem;
 
-        width: 38px;
         height: 38px;
-        text-align: center;
-        font-size: .5rem;
-        line-height: 38px;
+        font-size: .4rem;
+        line-height: 40px;
         color: $gray;
     }
 

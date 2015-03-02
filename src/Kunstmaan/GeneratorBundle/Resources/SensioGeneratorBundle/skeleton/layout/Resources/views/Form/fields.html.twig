@@ -5,22 +5,26 @@
     {% endspaceless %}
 {% endblock widget_container_attributes %}
 
+
 {# Form row #}
 {% block form_row %}
     {% spaceless %}
+
         <div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">
             {{ form_widget(form) }}
-            {{ form_label(form) }}
             <span class="form-bar"></span>
 
             {{ form_errors(form) }}
         </div>
+
     {% endspaceless %}
 {% endblock form_row %}
+
 
 {# Form label #}
 {% block form_label %}
     {% spaceless %}
+
         {% if label is not sameas(false) %}
             {% if not compound %}
                 {% set label_attr = label_attr|merge({'for': id}) %}
@@ -36,27 +40,37 @@
                 {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
             </label>
         {% endif %}
+
     {% endspaceless %}
 {% endblock form_label %}
+
 
 {# Form widget: Input #}
 {% block form_widget_simple %}
     {% spaceless %}
         {% set type = type|default('text') %}
+
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input"/>
+        {{ form_label(form) }}
+
     {% endspaceless %}
 {% endblock form_widget_simple %}
 
 {# Form widget: Textarea #}
 {% block textarea_widget %}
     {% spaceless %}
+
         <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea">{{ value }}</textarea>
+        {{ form_label(form) }}
+
     {% endspaceless %}
 {% endblock textarea_widget %}
+
 
 {# Form widget: Selectbox #}
 {% block choice_widget_collapsed %}
     {% spaceless %}
+
         <div class="select-wrapper">
             <i class="icon icon--triangle-down select__icon"></i>
             <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
@@ -75,36 +89,46 @@
             </select>
             {{ form_label(form) }}
         </div>
+
     {% endspaceless %}
 {% endblock choice_widget_collapsed %}
+
 
 {# Form errors #}
 {% block form_errors %}
     {% spaceless %}
+
         {% if errors|length > 0 %}
             {% for error in errors %}
                 <span class="help-block">{{ error.message }}</span>
             {% endfor %}
         {% endif %}
+
     {% endspaceless %}
 {% endblock form_errors %}
+
 
 {# Button row #}
 {% block button_row %}
     {% spaceless %}
+
         <div class="form-group text-right">
             {{ form_widget(form) }}
         </div>
+
     {% endspaceless %}
 {% endblock button_row %}
+
 
 {# Submit button #}
 {% block submit_widget %}
     {% spaceless %}
+
         <div class="form-group text-right">
             {% set type = type|default('submit') %}
             {{ block('button_widget') }}
         </div>
+
     {% endspaceless %}
 {% endblock submit_widget %}
 
