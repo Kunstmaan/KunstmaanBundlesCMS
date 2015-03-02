@@ -1,0 +1,22 @@
+/* ==========================================================================
+   Blocks - Tables
+   ========================================================================== */
+
+/* Default
+   ========================================================================== */
+table {
+    margin: $default-margin 0;
+}
+tr {
+    border-bottom: 1px solid $hr-color;
+}
+th {
+    font-weight: 600;
+    color: $theme-color;
+    text-align: left;
+}
+td {
+    font-weight: 300;
+    padding: .8rem 0;
+    text-align: left;
+}
