@@ -80,7 +80,7 @@ button, input[type="text"], textarea, select {
     .select-wrapper {
         position: relative;
 
-        > .control-label, > .form-bar {
+        ~ .control-label, ~ .form-bar {
             display: none;
         }
     }
