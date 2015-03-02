@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Footer - Social footer
+   ========================================================================== */
+
+.social-footer {
+    margin: 3rem 0;
+
+    @media(max-width: $screen-xs-max) {
+        text-align: center;
+    }
+
+    @media(min-width: $screen-sm-min) {
+        margin-top: calc(2rem - 5px);
+    }
+}
+.social-footer__inner {
+    border-bottom: 2px solid $hr-color;
+}
+.social-footer__link {
+    color: $gray;
+    margin-right: 1rem;
+
+    &:hover, &:focus, &:active {
+        text-decoration: none;
+    }
+}
+.social-link__icon {
+}

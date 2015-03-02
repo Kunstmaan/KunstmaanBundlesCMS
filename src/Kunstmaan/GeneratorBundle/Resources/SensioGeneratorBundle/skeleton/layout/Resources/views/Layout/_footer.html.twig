@@ -23,28 +23,34 @@
         </div>
     </section>
 
+
+    {# Social footer #}
+    <section class="social-footer">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="social-footer__inner text-center">
+                    <a href="https://twitter.com/kunstmaan" class="social-footer__link">
+                        <i class="social-link__icon icon--social-twitter"></i>
+                    </a>
+                    <a href="http://www.linkedin.com/company/kunstmaan" class="social-footer__link">
+                        <i class="social-footer__icon icon--social-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Kunstmaan" class="social-footer__link">
+                        <i class="social-footer__icon icon--social-github"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
     {# Main footer #}
     {% if nodemenu is defined %}
         <section class="main-footer">
             <div class="container">
                 <div class="row">
-
-                    {# Social #}
-                    <div class="col-md-3 col-sm-3">
-
-                        <div class="footer__social">
-                            <a href="https://twitter.com/kunstmaan" class="footer__social__link">
-                                <i class="social-link__icon icon--social-twitter"></i>
-                            </a>
-                            <a href="http://www.linkedin.com/company/kunstmaan" class="footer__social__link">
-                                <i class="footer__social__icon icon--social-linkedin"></i>
-                            </a>
-                            <a href="https://github.com/Kunstmaan" class="footer__social__link">
-                                <i class="footer__social__icon icon--social-github"></i>
-                            </a>
-                        </div>
-
-                    </div>
 
                     {# Footer navigation #}
                     {% set activeSubnode = nodemenu.getActiveForDepth(1) %}

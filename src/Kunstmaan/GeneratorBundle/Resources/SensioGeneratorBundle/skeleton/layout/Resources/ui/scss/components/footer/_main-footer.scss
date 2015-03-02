@@ -8,31 +8,6 @@
 }
 
 
-/* Footer social
-   ========================================================================== */
-.footer__social {
-    margin: 2rem 0;
-
-    @media(max-width: $screen-xs-max) {
-        text-align: center;
-    }
-
-    @media(min-width: $screen-sm-min) {
-        margin-top: calc(2rem - 5px);
-    }
-}
-.footer__social__link {
-    color: $gray;
-    margin-right: 1rem;
-
-    &:hover, &:focus, &:active {
-        text-decoration: none;
-    }
-}
-.social-link__icon {
-}
-
-
 /* Footer navigation
    ========================================================================== */
 .footer-nav {
