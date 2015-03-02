@@ -16,10 +16,13 @@ input[type="text"], input[type="textarea"] {
    ========================================================================== */
 .form--default {
 
+    .form-group {
+        position: relative;
+    }
+
     input, textarea {
         margin: 2rem 0 1rem;
         padding: 1rem 0;
-        position: relative;
         border: 0;
 
         ~ .form-bar {
@@ -53,7 +56,7 @@ input[type="text"], input[type="textarea"] {
     }
 
     .control-label {
-        color: $gray-light;
+        color: $gray;
         padding: 1rem 0;
 
         position: absolute;
