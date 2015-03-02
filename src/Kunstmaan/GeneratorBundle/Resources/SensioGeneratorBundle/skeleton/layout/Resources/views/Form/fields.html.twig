@@ -73,6 +73,7 @@
                 {% set options = choices %}
                 {{ block('choice_widget_options') }}
             </select>
+            {{ form_label(form) }}
         </div>
     {% endspaceless %}
 {% endblock choice_widget_collapsed %}
