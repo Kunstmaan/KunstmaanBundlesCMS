@@ -82,7 +82,6 @@ button, input[type="text"], textarea, select {
     }
     .form-control--select {
         // reset
-        border: none;
         box-shadow: none;
         background: transparent;
         background-image: none;
@@ -99,7 +98,7 @@ button, input[type="text"], textarea, select {
         width: 38px;
         height: 38px;
         text-align: center;
-        font-size: .8rem;
+        font-size: .5rem;
         line-height: 38px;
         color: $gray;
     }
