@@ -6,6 +6,7 @@
    ========================================================================== */
 .table-container {
     max-width: 100%;
+    overflow-x: scroll;
 }
 table {
     margin: $default-margin 0;
