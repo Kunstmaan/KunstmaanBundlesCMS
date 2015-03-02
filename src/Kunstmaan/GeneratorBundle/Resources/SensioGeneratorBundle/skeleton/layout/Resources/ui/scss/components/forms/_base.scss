@@ -18,12 +18,13 @@ input[type="text"], input[type="textarea"] {
 
     .form-group {
         position: relative;
+        margin: 2rem 0 1rem;
     }
 
-    input, textarea {
-        margin: 2rem 0 1rem;
-        padding: 1rem 0;
+    .form-control--input, .form-control--textarea {
+        padding: .5rem 0;
         border: 0;
+        border-bottom: 1px solid $hr-color;
 
         ~ .form-bar {
             display: block;
@@ -32,7 +33,7 @@ input[type="text"], input[type="textarea"] {
             background: $theme-color;
 
             position: absolute;
-            bottom: 0;
+            bottom: -1px;
             left: 0;
             transition: all 0.2s ease;
         }

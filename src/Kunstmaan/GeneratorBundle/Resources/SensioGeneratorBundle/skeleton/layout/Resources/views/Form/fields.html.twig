@@ -43,21 +43,21 @@
 {% block form_widget_simple %}
     {% spaceless %}
         {% set type = type|default('text') %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control"/>
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input"/>
     {% endspaceless %}
 {% endblock form_widget_simple %}
 
 {# Form widget: Textarea #}
 {% block textarea_widget %}
     {% spaceless %}
-        <textarea {{ block('widget_attributes') }} class="form-control">{{ value }}</textarea>
+        <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea">{{ value }}</textarea>
     {% endspaceless %}
 {% endblock textarea_widget %}
 
 {# Form widget: Selectbox #}
 {% block choice_widget_collapsed %}
     {% spaceless %}
-        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}  class="form-control">
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}  class="form-control form-control--select">
             {% if empty_value is not none %}
                 <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
             {% endif %}
