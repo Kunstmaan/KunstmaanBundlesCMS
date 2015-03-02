@@ -50,7 +50,7 @@ input[type="text"], input[type="textarea"] {
             }
         }
 
-        &:focus, &:valid, &:not([value=""]) {
+        &:focus, &:valid, &.form-control--filled {
             ~ .control-label {
                 font-size: 0.75rem;
                 color: $theme-color;
