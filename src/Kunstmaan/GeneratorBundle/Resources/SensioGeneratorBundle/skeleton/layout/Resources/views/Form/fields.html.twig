@@ -50,14 +50,14 @@
 {# Form widget: Textarea #}
 {% block textarea_widget %}
     {% spaceless %}
-        <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea">{{ value }}</textarea>
+        <textarea {{ block('widget_attributes') }} rows="4" class="form-control form-control--textarea">{{ value }}</textarea>
     {% endspaceless %}
 {% endblock textarea_widget %}
 
 {# Form widget: Selectbox #}
 {% block choice_widget_collapsed %}
     {% spaceless %}
-        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} rows="4" class="form-control form-control--select">
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
             {% if empty_value is not none %}
                 <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
             {% endif %}
