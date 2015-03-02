@@ -52,14 +52,12 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
             },
             async: true,
             success: function (data) {
-                var result = null,
-                    firstSelect = $select.hasClass('js-add-pp-select--first');
-
                 // Add PP
+                var firstSelect = $select.hasClass('js-add-pp-select--first');
                 if (firstSelect) {
-                    result = $('#parts-' + context).prepend(data);
+                    $('#parts-' + context).prepend(data);
                 } else {
-                    result = $select.closest('.js-draggable-item').after(data);
+                    $select.closest('.js-sortable-item').after(data);
                 }
 
                 // Remove Loading
