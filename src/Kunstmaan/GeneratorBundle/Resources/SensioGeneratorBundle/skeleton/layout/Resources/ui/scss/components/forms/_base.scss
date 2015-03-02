@@ -28,7 +28,7 @@ input[type="text"], input[type="textarea"] {
         border: 0;
         border-bottom: 1px solid $hr-color;
         width: 100%;
-        font-weight: 600;
+        font-weight: 400;
 
         ~ .form-bar {
             display: block;
@@ -50,12 +50,12 @@ input[type="text"], input[type="textarea"] {
             }
         }
 
-        &:focus, &:valid {
+        &:focus, &:valid, &:not([value=""]) {
             ~ .control-label {
                 font-size: 0.75rem;
                 color: $theme-color;
-                font-weight: 600;
-                top: -2rem;
+                font-weight: 400;
+                top: -1.2rem;
                 transition: all 0.2s ease;
             }
         }
