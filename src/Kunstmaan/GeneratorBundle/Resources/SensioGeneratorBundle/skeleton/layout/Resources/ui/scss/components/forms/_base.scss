@@ -23,7 +23,11 @@ input[type="text"], input[type="textarea"] {
         max-width: 460px;
     }
 
-    .form-control--input, .form-control--textarea {
+    .form-control--textarea {
+        height: 5.6rem;
+    }
+
+    .form-control--input, .form-control--textarea, .form-control--select {
         padding: .2rem 0;
         display: block;
 
