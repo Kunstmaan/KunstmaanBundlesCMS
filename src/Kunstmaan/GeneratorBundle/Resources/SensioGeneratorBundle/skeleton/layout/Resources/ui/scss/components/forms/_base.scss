@@ -88,10 +88,15 @@ button, input[type="text"], textarea, select {
         -webkit-appearance: none;
         border-radius: 0;
 
-        //style
         height: 38px;
         position: relative;
         z-index: 2;
+
+        opacity: 0;
+
+        &:focus, &:valid, &.form-control--filled {
+            opacity: 1;
+        }
     }
     .select__icon {
         position: absolute;
