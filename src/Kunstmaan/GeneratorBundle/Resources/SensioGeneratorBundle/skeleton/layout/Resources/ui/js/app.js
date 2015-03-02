@@ -2,7 +2,7 @@ var projectname = projectname || {};
 
 projectname = (function($, window, undefined) {
 
-    var init;
+    var init, initForms;
 
     init = function() {
         cargobay.scrollToTop.init();
