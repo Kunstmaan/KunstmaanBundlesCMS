@@ -140,10 +140,10 @@ class AclHelper
      */
     private function getPermittedAclIdsSQLForUser(Query $query)
     {
-        $aclConnection = $this->em->getConnection();
-        $database      = $aclConnection->getDatabase();
-        $mask          = $query->getHint('acl.mask');
-        $rootEntity    = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
+        $aclConnection  = $this->em->getConnection();
+        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
+        $mask           = $query->getHint('acl.mask');
+        $rootEntity     = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         /* @var $token TokenInterface */
         $token     = $this->securityContext->getToken();
@@ -175,13 +175,13 @@ class AclHelper
         }
 
         $selectQuery = <<<SELECTQUERY
-SELECT DISTINCT o.object_identifier as id FROM {$database}.acl_object_identities as o
-INNER JOIN {$database}.acl_classes c ON c.id = o.class_id
-LEFT JOIN {$database}.acl_entries e ON (
+SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}acl_object_identities as o
+INNER JOIN {$databasePrefix}acl_classes c ON c.id = o.class_id
+LEFT JOIN {$databasePrefix}acl_entries e ON (
     e.class_id = o.class_id AND (e.object_identity_id = o.id
     OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
 )
-LEFT JOIN {$database}.acl_security_identities s ON (
+LEFT JOIN {$databasePrefix}acl_security_identities s ON (
 s.id = e.security_identity_id
 )
 WHERE c.class_type = {$rootEntity}
