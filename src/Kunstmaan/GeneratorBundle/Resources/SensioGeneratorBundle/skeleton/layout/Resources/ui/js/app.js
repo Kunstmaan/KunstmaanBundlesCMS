@@ -14,7 +14,7 @@ projectname = (function($, window, undefined) {
     initForms = function() {
         if( $('.form--default').length ) {
             $('.form-control').bind('blur', function () {
-                if( !$(this).val() ) {
+                if( $(this).val() ) {
                     $(this).addClass('form-control--filled');
                 } else {
                     $(this).removeClass('form-control--filled');
