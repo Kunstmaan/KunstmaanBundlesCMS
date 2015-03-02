@@ -12,6 +12,7 @@
 
         <div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">
             {{ form_widget(form) }}
+            {{ form_label(form) }}
             <span class="form-bar"></span>
 
             {{ form_errors(form) }}
@@ -51,7 +52,6 @@
         {% set type = type|default('text') %}
 
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input"/>
-        {{ form_label(form) }}
 
     {% endspaceless %}
 {% endblock form_widget_simple %}
@@ -61,7 +61,6 @@
     {% spaceless %}
 
         <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea">{{ value }}</textarea>
-        {{ form_label(form) }}
 
     {% endspaceless %}
 {% endblock textarea_widget %}
@@ -88,6 +87,7 @@
                 {{ block('choice_widget_options') }}
             </select>
             {{ form_label(form) }}
+            <span class="form-bar"></span>
         </div>
 
     {% endspaceless %}

@@ -79,6 +79,10 @@ button, input[type="text"], textarea, select {
     // Select
     .select-wrapper {
         position: relative;
+
+        > .control-label, > .form-bar {
+            display: none;
+        }
     }
     .form-control--select {
         // reset
