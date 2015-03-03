@@ -19,7 +19,7 @@
 {% endblock form_row %}
 
 
-{# Form label default #}
+{# Form label #}
 {% block form_label %}
     {% spaceless %}
 
@@ -30,6 +30,7 @@
             {% if required %}
                 {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label required')|trim}) %}
             {% endif %}
+            {{dump(label_attr)}}
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}
@@ -87,6 +88,9 @@
                 {% set options = choices %}
                 {{ block('choice_widget_options') }}
             </select>
+
+            {% set label_attr = label_attr|merge({'aaa': 'aaa'}) %}
+
             {{ form_label(form) }}
             <span class="form-bar"></span>
         </div>
