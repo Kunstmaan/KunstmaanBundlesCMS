@@ -35,9 +35,7 @@ button, input[type="text"], textarea, select {
             height: 1px;
             background: $theme-color;
 
-            position: absolute;
-            bottom: 0;
-            left: 0;
+            margin-top: -1px;
             z-index: 3;
             transition: all 0.2s ease;
         }
@@ -117,10 +115,6 @@ button, input[type="text"], textarea, select {
         z-index: 2;
 
         opacity: 0;
-
-        ~ .form-bar {
-            bottom: -1px;
-        }
 
         &:focus, &:valid, &.form-control--filled {
             opacity: 1;
