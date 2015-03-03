@@ -48,7 +48,7 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
 
                 // Reset id's
                 $('#' + parentNode).find(' > ul > li').each(function() {
-                    var id = $container.attr('id').replace(/node-/,'');
+                    var id = $(this).attr('id').replace(/node-/,'');
 
                     params.nodes.push(id);
                 });
