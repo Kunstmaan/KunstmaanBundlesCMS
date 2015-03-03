@@ -30,13 +30,12 @@
             {% if required %}
                 {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label required')|trim}) %}
             {% endif %}
-            {{dump(label_attr)}}
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}
 
             <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+                {{ label|trans({}, translation_domain) }}{% if required %} <span class="form-group__required-symbol">*</span>{% endif %}
             </label>
         {% endif %}
 
@@ -89,14 +88,45 @@
                 {{ block('choice_widget_options') }}
             </select>
 
-            {% set label_attr = label_attr|merge({'aaa': 'aaa'}) %}
-
             {{ form_label(form) }}
             <span class="form-bar"></span>
         </div>
 
     {% endspaceless %}
 {% endblock choice_widget_collapsed %}
+
+{# Form widget: Radiobuttons / Checkboxes #}
+{% block choice_widget_expanded %}
+    {% spaceless %}
+
+        {% if isToggleButton is defined and isToggleButton %}
+            {# Radiobuttons #}
+            <div {{ block('widget_container_attributes') }} class="js-form-optional-item__radio" {% if target is defined %}data-target="{{ target }}"{% endif %} {% if showValue is defined %}data-show-value="{{ showValue }}"{% endif %}>
+                {% for child in form %}
+                    {{ form_widget(child, { 'required': false }) }}
+                    {{ form_label(child, { 'required': false }) }}
+                {% endfor %}
+            </div>
+        {% elseif isMultipleToggleButton is defined and isMultipleToggleButton %}
+            {# Checkboxes #}
+            <div {{ block('widget_container_attributes') }} class="js-form-optional-item__radio--multiple" {% if target is defined %}data-target="{{ target }}"{% endif %}>
+                {% for child in form %}
+                    {{ form_widget(child, { 'required': false }) }}
+                    {{ form_label(child, { 'required': false }) }}
+                {% endfor %}
+            </div>
+        {% else %}
+            {# Shared #}
+            <div {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    {{ form_widget(child, { 'required': false }) }}
+                    {{ form_label(child, { 'required': false }) }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
 
 
 {# Form errors #}
