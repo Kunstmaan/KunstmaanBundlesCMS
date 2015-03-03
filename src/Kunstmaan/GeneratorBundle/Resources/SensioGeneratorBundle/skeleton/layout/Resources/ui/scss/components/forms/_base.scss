@@ -69,7 +69,7 @@ button, input[type="text"], textarea, select {
     .control-label {
         color: $gray;
     }
-    .control-label--float
+    .control-label--float {
         padding: .2rem 0; // same as form-control
         position: absolute;
         top: 0;
