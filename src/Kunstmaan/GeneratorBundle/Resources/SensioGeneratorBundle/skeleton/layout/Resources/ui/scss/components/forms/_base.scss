@@ -65,8 +65,6 @@ button, input[type="text"], textarea, select {
         height: 5.6rem;
     }
 
-    /* Control-label
-       ========================================================================== */
     .control-label {
         color: $gray;
 
@@ -76,13 +74,6 @@ button, input[type="text"], textarea, select {
         left: 0;
         transition: all 0.3s ease;
         pointer-events: none;
-    }
-    .form-widget--choices, .form-widget--file-upload {
-        padding-top: .5rem;
-        ~ .control-label {
-            top: -1.2rem;
-            transition: all 0.2s ease;
-        }
     }
 
     /* Widget - Hidden
@@ -133,6 +124,30 @@ button, input[type="text"], textarea, select {
         font-size: .4rem;
         line-height: 40px;
         color: $gray;
+    }
+
+    /* Widget - Choices
+       ========================================================================== */
+    .form-widget--choices {
+        padding-top: .6rem;
+
+        ~ .control-label {
+            top: -1.2rem;
+        }
+    }
+
+    /* Widget - File Upload
+       ========================================================================== */
+    .form-widget--file-upload {
+        padding-top: .6rem;
+
+        .control-label {
+            top: -1.2rem;
+        }
+
+        ~ .control-label, ~ .form-bar {
+            display: none;
+        }
     }
 
 }
