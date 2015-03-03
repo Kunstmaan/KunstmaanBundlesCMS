@@ -16,6 +16,8 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
     buildTree = function() {
         if($sidebarNavContainer !== 'undefined' && $sidebarNavContainer !== null) {
             $sidebarNavContainer
+
+
             // Show when ready
             .on('ready.jstree', function() {
                 $sidebar.addClass('app__sidebar--tree-ready');
@@ -25,11 +27,17 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
 
                 document.location.href = href;
             })
+
+
             // Create
             .jstree({
+                'core': {
+                    'check_callback' : true
+                },
                 'plugins': [
                     'types',
-                    'search'
+                    'search',
+                    'dnd'
                 ],
                 'types': {
                     '#': {
