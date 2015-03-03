@@ -50,13 +50,9 @@ button, input[type="text"], textarea, select {
             }
         }
 
-        &:focus, &:valid, &.form-control--filled, &.form-widget--choices--filled {
+        &:focus, &:valid, &.form-control--filled {
             ~ .control-label {
-                font-size: 0.75rem;
-                color: $theme-color;
-                font-weight: 400;
-                top: -1.2rem;
-                transition: all 0.2s ease;
+                @include control-label-active;
             }
         }
     }
@@ -133,6 +129,11 @@ button, input[type="text"], textarea, select {
 
         ~ .control-label {
             top: -1.2rem;
+        }
+    }
+    .form-widget--choices--filled {
+        ~ .control-label {
+            @include control-label-active;
         }
     }
 
