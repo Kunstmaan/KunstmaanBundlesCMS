@@ -8,7 +8,6 @@ button, input[type="text"], textarea, select {
     }
 }
 
-
 /* Default
    ========================================================================== */
 .form--default {
@@ -19,6 +18,8 @@ button, input[type="text"], textarea, select {
         width: 100%;
         max-width: 460px;
     }
+
+    .form-group__required-symbol {}
 
     .form-control--input, .form-control--textarea, .form-control--select {
         padding: .2rem 0;

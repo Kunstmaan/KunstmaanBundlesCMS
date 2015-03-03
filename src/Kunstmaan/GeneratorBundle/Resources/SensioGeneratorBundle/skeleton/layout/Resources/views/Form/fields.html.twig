@@ -45,12 +45,18 @@
     {% endspaceless %}
 {% endblock form_label %}
 
+{% block hidden_widget %}
+    {% spaceless %}
+        {%- set type = type|default('hidden') -%}
+        {{ block('form_widget_simple') }} ilhguyk
+    {% endspaceless %}
+{% endblock hidden_widget %}
 
 {# Form widget: Input #}
 {% block form_widget_simple %}
     {% spaceless %}
-        {% set type = type|default('text') %}
 
+        {% set type = type|default('text') %}
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input"/>
         {{ form_label(form) }}
 
@@ -93,6 +99,62 @@
 
     {% endspaceless %}
 {% endblock choice_widget_collapsed %}
+
+
+{# Form widget: Choice expanded - Radiobutton / Checkbox #}
+{% block choice_widget_expanded %}
+    {% spaceless %}
+
+        <div {{ block('widget_container_attributes') }} class="form-choices">
+            {% for child in form %}
+                {{ form_widget(child, { 'required': false }) }}
+            {% endfor %}
+        </div>
+
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+
+{# Form widget: Radiobutton #}
+{% block radio_widget %}
+    {% spaceless %}
+
+        <div class="radio">
+            {% if required and not compound %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+            <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-symbol">*</span>{% endif %}
+            </label>
+        </div>
+
+    {% endspaceless %}
+{% endblock radio_widget %}
+
+
+{# Form widget: Checkbox #}
+{% block checkbox_widget %}
+    {% spaceless %}
+
+        <div class="checkbox">
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="{% if isToggleButton is defined and isToggleButton %}js-form-optional-item__checkbox{% endif %}" {% if isToggleButton is defined and target is defined %}data-target="{{ target }}"{% endif %}>
+            <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-symbol">*</span>{% endif %}
+            </label>
+        </div>
+
+    {% endspaceless %}
+{% endblock checkbox_widget %}
 
 
 {# Form errors #}
