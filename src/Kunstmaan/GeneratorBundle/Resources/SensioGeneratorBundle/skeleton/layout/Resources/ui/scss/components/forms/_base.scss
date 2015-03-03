@@ -72,6 +72,21 @@ button, input[type="text"], textarea, select {
         pointer-events: none;
     }
 
+    /* Errors
+       ========================================================================== */
+    .form-group--has-error {
+        .form-bar {
+            width: 100%;
+            background: $red;
+        }
+
+        .help-block {
+            font-size: .8rem;
+            font-weight: 400;
+            color: $red;
+        }
+    }
+
     /* Widget - Hidden
        ========================================================================== */
     .form-widget--hidden {
@@ -154,5 +169,6 @@ button, input[type="text"], textarea, select {
             display: none;
         }
     }
+
 
 }

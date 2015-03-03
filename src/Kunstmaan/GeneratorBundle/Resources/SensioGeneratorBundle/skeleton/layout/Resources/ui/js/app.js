@@ -14,7 +14,7 @@ projectname = (function($, window, undefined) {
     initForms = function() {
         if( $('.form--default').length ) {
 
-            $('.form-control').bind('focus', function () {
+            $('.js-form-control').bind('focus', function () {
                 $(this).addClass('form-control--filled');
             });
             $('.form-control').bind('blur', function () {
@@ -29,7 +29,7 @@ projectname = (function($, window, undefined) {
                 $(this).parent().parent().parent().find('.form-widget--choices').addClass('form-widget--choices--filled');
             });
             $('.js-form-control-choice').bind('blur', function () {
-                if( $(this).val() ) {
+                if( $(this).is(':checked') ) {
                     $(this).parent().parent().parent().find('.form-widget--choices').addClass('form-widget--choices--filled');
                 } else {
                     $(this).parent().parent().parent().find('.form-widget--choices').removeClass('form-widget--choices--filled');

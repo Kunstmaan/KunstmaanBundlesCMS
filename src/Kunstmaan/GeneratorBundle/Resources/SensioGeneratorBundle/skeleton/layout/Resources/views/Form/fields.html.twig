@@ -64,7 +64,7 @@
     {% spaceless %}
 
         {% set type = type|default('text') %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input"/>
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="js-form-control form-control form-control--input"/>
         {{ form_label(form) }}
         <span class="form-bar"></span>
 
@@ -76,7 +76,7 @@
 {% block textarea_widget %}
     {% spaceless %}
 
-        <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea">{{ value }}</textarea>
+        <textarea {{ block('widget_attributes') }} class="js-form-control form-control form-control--textarea">{{ value }}</textarea>
         {{ form_label(form) }}
 
     {% endspaceless %}
@@ -89,7 +89,7 @@
 
         <div {{ block('widget_container_attributes') }} class="form-widget--select">
             <i class="icon icon--triangle-down select__icon"></i>
-            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
+            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="js-form-control form-control form-control--select">
                 {% if empty_value is not none %}
                     <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
                 {% endif %}
@@ -136,7 +136,7 @@
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}
-            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="js-form-control-choice">
+            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="js-form-control-choice form-control-choice">
             <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
                 {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-symbol">*</span>{% endif %}
             </label>
@@ -157,7 +157,7 @@
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}
-            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="js-form-control-choice">
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="js-form-control-choice form-control-choice">
             <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
                 {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-symbol">*</span>{% endif %}
             </label>
