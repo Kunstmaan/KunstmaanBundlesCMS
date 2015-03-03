@@ -7,12 +7,7 @@ button, input[type="text"], textarea, select {
         outline: none;
     }
 }
-.form-widget--hidden {
-    display: none;
-}
 
-/* Default
-   ========================================================================== */
 .form--default {
 
     .form-group {
@@ -70,6 +65,8 @@ button, input[type="text"], textarea, select {
         height: 5.6rem;
     }
 
+    /* Control-label
+       ========================================================================== */
     .control-label {
         color: $gray;
 
@@ -80,9 +77,23 @@ button, input[type="text"], textarea, select {
         transition: all 0.3s ease;
         pointer-events: none;
     }
+    .form-widget--choices, .form-widget--file-upload {
+        .control-label {
+            font-size: 0.75rem;
+            top: -1.2rem;
+            transition: all 0.2s ease;
+        }
+    }
 
-    // Select
-    .select-wrapper {
+    /* Widget - Hidden
+       ========================================================================== */
+    .form-widget--hidden {
+        display: none;
+    }
+
+    /* Widget - Select
+       ========================================================================== */
+    .form-widget--select {
         position: relative;
         border-bottom: 1px solid $hr-color;
 

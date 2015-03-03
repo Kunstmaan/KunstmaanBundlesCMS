@@ -86,7 +86,7 @@
 {% block choice_widget_collapsed %}
     {% spaceless %}
 
-        <div class="select-wrapper">
+        <div {{ block('widget_container_attributes') }} class="form-widget--select">
             <i class="icon icon--triangle-down select__icon"></i>
             <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
                 {% if empty_value is not none %}
@@ -103,6 +103,7 @@
                 {{ block('choice_widget_options') }}
             </select>
             {{ form_label(form) }}
+            <span class="form-bar"></span>
         </div>
 
     {% endspaceless %}
