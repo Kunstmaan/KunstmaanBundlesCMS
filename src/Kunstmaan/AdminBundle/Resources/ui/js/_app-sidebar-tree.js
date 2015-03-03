@@ -15,22 +15,57 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
 
     buildTree = function() {
         if($sidebarNavContainer !== 'undefined' && $sidebarNavContainer !== null) {
-            $sidebarNavContainer
-
 
             // Show when ready
-            .on('ready.jstree', function() {
+            $sidebarNavContainer.on('ready.jstree', function() {
+                // http://www.jstree.com/api/#/?q=.jstree%20Event&f=ready.jstree
+
                 $sidebar.addClass('app__sidebar--tree-ready');
-            })
-            .on('changed.jstree', function(e, data) {
+            });
+
+
+            // Go to url
+            $sidebarNavContainer.on('changed.jstree', function(e, data) {
+                // http://www.jstree.com/api/#/?q=.jstree%20Event&f=changed.jstree
+
                 var href = data.event.currentTarget.href;
 
                 document.location.href = href;
-            })
+            });
+
+
+            // Drag and drop callback
+            $sidebarNavContainer.on('move_node.jstree', function(e, data) {
+                // http://www.jstree.com/api/#/?q=.jstree%20Event&f=move_node.jstree
+
+                // Vars
+                var $container = $(this),
+                    parentNode = data.parent,
+                    reorderUrl = $container.data('reorder-url'),
+                    params = {
+                        nodes : []
+                    };
+
+                // Reset id's
+                $('#' + parentNode).find(' > ul > li').each(function() {
+                    var id = $container.attr('id').replace(/node-/,'');
+
+                    params.nodes.push(id);
+                });
+
+                // Save
+                $.post(
+                    reorderUrl,
+                    params,
+                    function(result){
+                        console.log('move_node saved');
+                    }
+                );
+            });
 
 
             // Create
-            .jstree({
+            $sidebarNavContainer.jstree({
                 'core': {
                     'check_callback' : true
                 },
