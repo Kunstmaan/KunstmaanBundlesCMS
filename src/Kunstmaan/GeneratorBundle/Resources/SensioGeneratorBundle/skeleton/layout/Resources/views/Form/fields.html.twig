@@ -136,7 +136,7 @@
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}
-            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="js-form-control-choice">
             <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
                 {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-symbol">*</span>{% endif %}
             </label>
@@ -157,7 +157,7 @@
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}
-            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="{% if isToggleButton is defined and isToggleButton %}js-form-optional-item__checkbox{% endif %}" {% if isToggleButton is defined and target is defined %}data-target="{{ target }}"{% endif %}>
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="js-form-control-choice">
             <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
                 {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-symbol">*</span>{% endif %}
             </label>

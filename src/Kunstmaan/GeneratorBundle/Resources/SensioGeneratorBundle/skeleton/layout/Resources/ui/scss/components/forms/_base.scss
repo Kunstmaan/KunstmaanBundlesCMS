@@ -50,7 +50,7 @@ button, input[type="text"], textarea, select {
             }
         }
 
-        &:focus, &:valid, &.form-control--filled {
+        &:focus, &:valid, &.form-control--filled, &.form-widget--choices--filled {
             ~ .control-label {
                 font-size: 0.75rem;
                 color: $theme-color;
@@ -129,7 +129,7 @@ button, input[type="text"], textarea, select {
     /* Widget - Choices
        ========================================================================== */
     .form-widget--choices {
-        padding-top: .6rem;
+        padding-top: .5rem;
 
         ~ .control-label {
             top: -1.2rem;
@@ -139,7 +139,11 @@ button, input[type="text"], textarea, select {
     /* Widget - File Upload
        ========================================================================== */
     .form-widget--file-upload {
-        padding-top: .6rem;
+        padding-top: .5rem;
+
+        .form-control {
+            line-height: 80%;
+        }
 
         .control-label {
             top: -1.2rem;
