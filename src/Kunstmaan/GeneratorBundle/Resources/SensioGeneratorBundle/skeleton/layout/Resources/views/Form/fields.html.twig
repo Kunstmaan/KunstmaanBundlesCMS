@@ -12,9 +12,6 @@
 
         <div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">
             {{ form_widget(form) }}
-            {{ form_label(form) }}
-            <span class="form-bar"></span>
-
             {{ form_errors(form) }}
         </div>
 
@@ -22,7 +19,7 @@
 {% endblock form_row %}
 
 
-{# Form label #}
+{# Form label default #}
 {% block form_label %}
     {% spaceless %}
 
@@ -43,6 +40,29 @@
         {% endif %}
 
     {% endspaceless %}
+{% endblock form_label_float %}
+
+{# Form label float #}
+{% block form_label_float %}
+    {% spaceless %}
+
+        {% if label is not sameas(false) %}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label control-label--float required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+            </label>
+        {% endif %}
+
+    {% endspaceless %}
 {% endblock form_label %}
 
 
@@ -52,6 +72,8 @@
         {% set type = type|default('text') %}
 
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input"/>
+        {{ form_label_float(form) }}
+        <span class="form-bar"></span>
 
     {% endspaceless %}
 {% endblock form_widget_simple %}
@@ -61,6 +83,8 @@
     {% spaceless %}
 
         <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea">{{ value }}</textarea>
+        {{ form_label_float(form) }}
+        <span class="form-bar"></span>
 
     {% endspaceless %}
 {% endblock textarea_widget %}
@@ -86,7 +110,7 @@
                 {% set options = choices %}
                 {{ block('choice_widget_options') }}
             </select>
-            {{ form_label(form) }}
+            {{ form_label_float(form) }}
             <span class="form-bar"></span>
         </div>
 
