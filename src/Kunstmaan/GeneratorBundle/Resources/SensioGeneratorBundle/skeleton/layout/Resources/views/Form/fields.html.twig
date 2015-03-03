@@ -50,7 +50,7 @@
 {% block hidden_widget %}
     {% spaceless %}
 
-        <div {{ block('widget_container_attributes') }} class="form--hidden">
+        <div {{ block('widget_container_attributes') }} class="form-widget--hidden">
             {% set type = type|default('hidden') %}
             {{ block('form_widget_simple') }}
         </div>
@@ -69,6 +69,7 @@
 
     {% endspaceless %}
 {% endblock form_widget_simple %}
+
 
 {# Form widget: Textarea #}
 {% block textarea_widget %}
@@ -112,7 +113,7 @@
 {% block choice_widget_expanded %}
     {% spaceless %}
 
-        <div {{ block('widget_container_attributes') }} class="form-choices">
+        <div {{ block('widget_container_attributes') }} class="form-widget--choices">
             {% for child in form %}
                 {{ form_widget(child, { 'required': false }) }}
             {% endfor %}
@@ -162,6 +163,18 @@
 
     {% endspaceless %}
 {% endblock checkbox_widget %}
+
+
+{# Form widget: File upload #}
+{% block file_widget %}
+    {% spaceless %}
+
+        <div {{ block('widget_container_attributes') }} class="form-widget--file-upload">
+            {{ block('form_widget') }}
+        </div>
+
+    {% endspaceless %}
+{% endblock %}
 
 
 {# Form errors #}
