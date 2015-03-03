@@ -78,8 +78,8 @@ button, input[type="text"], textarea, select {
         pointer-events: none;
     }
     .form-widget--choices, .form-widget--file-upload {
+        padding-top: .5rem;
         ~ .control-label {
-            font-size: 0.75rem;
             top: -1.2rem;
             transition: all 0.2s ease;
         }

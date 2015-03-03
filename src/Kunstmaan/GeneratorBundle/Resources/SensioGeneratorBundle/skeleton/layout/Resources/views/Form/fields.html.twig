@@ -65,7 +65,6 @@
 
         {% set type = type|default('text') %}
         <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input"/>
-        {{ form_label(form) }}
 
     {% endspaceless %}
 {% endblock form_widget_simple %}
@@ -170,7 +169,9 @@
 {% block file_widget %}
     {% spaceless %}
 
-        <div {{ block('widget_container_attributes') }} class="form-widget--file-upload"></div>
+        <div {{ block('widget_container_attributes') }} class="form-widget--file-upload">
+            {{ block('form_widget') }}
+        </div>
 
     {% endspaceless %}
 {% endblock %}
