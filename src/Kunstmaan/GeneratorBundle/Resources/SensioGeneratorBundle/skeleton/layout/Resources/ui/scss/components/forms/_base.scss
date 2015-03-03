@@ -75,8 +75,9 @@ button, input[type="text"], textarea, select {
     /* Errors
        ========================================================================== */
     .form-group--has-error {
-        .form-control--input, .form-control--textarea, .form-control--select, .form-widget--select {
-            border-bottom-color: $red;
+        .form-bar {
+            width: 100%;
+            background: $red;
         }
 
         .help-block {
