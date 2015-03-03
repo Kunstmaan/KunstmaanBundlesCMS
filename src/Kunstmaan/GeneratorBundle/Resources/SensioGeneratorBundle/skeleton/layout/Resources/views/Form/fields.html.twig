@@ -45,12 +45,19 @@
     {% endspaceless %}
 {% endblock form_label %}
 
+
+{# Form widget: Hidden #}
 {% block hidden_widget %}
     {% spaceless %}
-        {%- set type = type|default('hidden') -%}
-        {{ block('form_widget_simple') }} ilhguyk
+
+        <div {{ block('widget_container_attributes') }} class="form--hidden">
+            {% set type = type|default('hidden') %}
+            {{ block('form_widget_simple') }}
+        </div>
+
     {% endspaceless %}
 {% endblock hidden_widget %}
+
 
 {# Form widget: Input #}
 {% block form_widget_simple %}
