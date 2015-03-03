@@ -116,6 +116,10 @@ button, input[type="text"], textarea, select {
 
         opacity: 0;
 
+        ~ .form-bar {
+            bottom: -1px;
+        }
+
         &:focus, &:valid, &.form-control--filled {
             opacity: 1;
         }
