@@ -51,14 +51,8 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
             $('#' + parentNode).find('> ul > li').each(function() {
                 var newId = $(this).attr('id').replace(/node-/,'');
 
-                console.log('reset id: ' + newId);
-
                 params.nodes.push(newId);
             });
-
-            console.log('parentNode: ' + parentNode);
-            console.log('results:');
-            console.log(params);
 
             //; Save
             $.post(
@@ -66,7 +60,6 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                 params,
                 function(result){
                     console.log('move_node saved');
-                    console.log(result);
                 }
             );
         });
@@ -80,18 +73,14 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                     // in case of 'rename_node' node_position is filled with the new node name
 
                     if(operation === 'move_node') {
-                        console.log('-- move_node ---------------');
 
-                        // Has it got a parent (no dnd outsite home)
-                        console.log('node_parent.id: ' + node_parent.id);
-
+                        // No dnd outsite root
                         if(!node_parent || node_parent.id === '#') {
                             return false;
                         }
 
                         // Go ahead
                         return true;
-
 
                         // OLD
                         // "check_move" : function (m) {
@@ -102,9 +91,19 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                         //     if(p[0] && m.np[0] && p[0] === m.np[0]) return true;
                         //     return false;
                         // }
-
-                        console.log('-----------------');
-
+                        // requires crrm plugin
+                        // .o - the node being moved
+                        // .r - the reference node in the move
+                        // .ot - the origin tree instance
+                        // .rt - the reference tree instance
+                        // .p - the position to move to (may be a string - "last", "first", etc)
+                        // .cp - the calculated position to move to (always a number)
+                        // .np - the new parent
+                        // .oc - the original node (if there was a copy)
+                        // .cy - boolen indicating if the move was a copy
+                        // .cr - same as np, but if a root node is created this is -1
+                        // .op - the former parent
+                        // .or - the node that was previously in the position of the moved node
                     } else {
                         return true;
                     }
