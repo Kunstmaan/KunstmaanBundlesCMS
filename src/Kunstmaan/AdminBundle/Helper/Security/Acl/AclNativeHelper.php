@@ -107,13 +107,13 @@ class AclNativeHelper
         }
 
         $joinTableQuery = <<<SELECTQUERY
-SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}.acl_object_identities as o
-INNER JOIN {$databasePrefix}.acl_classes c ON c.id = o.class_id
-LEFT JOIN {$databasePrefix}.acl_entries e ON (
+SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}acl_object_identities as o
+INNER JOIN {$databasePrefix}acl_classes c ON c.id = o.class_id
+LEFT JOIN {$databasePrefix}acl_entries e ON (
     e.class_id = o.class_id AND (e.object_identity_id = o.id
     OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
 )
-LEFT JOIN {$databasePrefix}.acl_security_identities s ON (
+LEFT JOIN {$databasePrefix}acl_security_identities s ON (
 s.id = e.security_identity_id
 )
 WHERE c.class_type = {$rootEntity}
