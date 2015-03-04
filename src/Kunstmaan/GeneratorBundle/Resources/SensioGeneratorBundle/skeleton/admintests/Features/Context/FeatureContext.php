@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Features\Context;
+namespace Sandbox\WebBundle\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Behat\Context\Step;
@@ -105,7 +105,7 @@ class FeatureContext extends AbstractContext
     public function iTryToLogInWith($username, $password)
     {
         return array(
-            new Step\Given("I am on \"".$this->lang."/login\""),
+            new Step\Given("I am on \"".$this->lang."/admin/login\""),
             new Step\Given("I wait 1 seconds"),
             new Step\Given("I press \"×\" if present"),
             new Step\Given("I fill in \"username\" with \"". $username . "\""),
@@ -198,7 +198,7 @@ class FeatureContext extends AbstractContext
     public function getPageUrlForPageName($pageName)
     {
         $pages = array(
-            "forgot password" => $this->lang."/resetting/request",
+            "forgot password" => $this->lang."/admin/resetting/request",
             "users" => $this->lang."/admin/settings/users",
             "create new user" => $this->lang."/admin/settings/users/add",
             "groups" => $this->lang."/admin/settings/groups",
@@ -206,7 +206,7 @@ class FeatureContext extends AbstractContext
             "roles" => $this->lang."/admin/settings/roles",
             "create new role" => $this->lang."/admin/settings/roles/add",
             "dashboard" => $this->lang."/admin",
-            "login" => $this->lang."/login",
+            "login" => $this->lang."/admin/login",
             "media" => $this->lang."/admin/media/folder/1",
             "add new image" => $this->lang."/admin/media/create/2/file",
             "image" => $this->lang."/admin/media/folder/2",
