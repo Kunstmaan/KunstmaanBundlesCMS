@@ -51,7 +51,9 @@
     background: #f7f7f7;
     border-bottom: 1px solid $gray-lighter;
 
-    transition: transform .3s ease;
+    @include transition-property(transform);
+    @include transition-duration(.3s);
+    @include transition-timing-function(ease);
 
     @media (max-width: $screen-md) {
         display: none;
@@ -60,7 +62,7 @@
 
 
 .page-main-actions--top--show {
-    transform: translateY($navbar-height);
+    @include transform(translateY($navbar-height));
 }
 
 
