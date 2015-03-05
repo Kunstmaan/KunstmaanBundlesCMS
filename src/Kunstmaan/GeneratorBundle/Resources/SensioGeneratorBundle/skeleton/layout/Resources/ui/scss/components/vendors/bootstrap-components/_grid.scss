@@ -12,3 +12,8 @@
         align-items: flex-end;
     }
 }
+.row--reverse {
+    @media(min-width: $screen-sm-min) {
+        flex-direction: row-reverse;
+    }
+}
