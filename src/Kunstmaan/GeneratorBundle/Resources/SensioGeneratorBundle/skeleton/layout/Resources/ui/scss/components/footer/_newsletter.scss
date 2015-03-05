@@ -9,6 +9,8 @@
 
 .newsletter__content {
     @extend .container;
+    width: auto;
+    max-width: 750px;
 }
 .newsletter__title {
     color: $white;
