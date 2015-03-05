@@ -73,7 +73,6 @@
     {% spaceless %}
 
         <textarea {{ block('widget_attributes') }} class="js-form-control form-control form-control--textarea">{{ value }}</textarea>
-        {{ form_label(form) }}
 
     {% endspaceless %}
 {% endblock textarea_widget %}
@@ -100,7 +99,6 @@
                 {{ block('choice_widget_options') }}
             </select>
             {{ form_label(form) }}
-            <span class="form-bar"></span>
         </div>
 
     {% endspaceless %}
