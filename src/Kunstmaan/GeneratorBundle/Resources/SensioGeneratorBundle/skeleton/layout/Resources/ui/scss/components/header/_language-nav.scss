@@ -2,10 +2,8 @@
    Header - Language nav
    ========================================================================== */
 
-  ///////////////
- //   THEME   //
-///////////////
-
+/* Default
+   ========================================================================== */
 .language-nav {
     position: relative;
 }
@@ -16,19 +14,11 @@
     text-transform: uppercase;
 }
 .language-nav__icon {
-    font-size: .3rem;
-    line-height: 1rem;
-    vertical-align: middle;
-    margin-left: .1rem;
+    display: none;
 }
 
-.language-nav__list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-}
 .language-nav__list__item {
-    display: block;
+    display: inline-block;
     font-size: .65rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -37,3 +27,41 @@
     display: block;
     font-weight: 400;
 }
+
+
+/* Desktop
+   ========================================================================== */
+@media(min-width: $screen-md-min) {
+
+    .language-nav {
+        z-index: 5;
+        padding: .5rem;
+
+        &:hover, &:focus {
+            @include box-shadow;
+
+            .language-nav__list {
+                display: block;
+            }
+        }
+    }
+
+    .language-nav__icon {
+        font-size: .3rem;
+        line-height: 1rem;
+        vertical-align: middle;
+        margin-left: .1rem;
+    }
+    .language-nav__list {
+        display: none;
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+    .language-nav__list__item {
+        display: block;
+    }
+
+}
+
