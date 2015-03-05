@@ -26,6 +26,7 @@
 .language-nav__list__link {
     display: block;
     font-weight: 400;
+    color: $gray;
 }
 
 
@@ -38,8 +39,6 @@
         padding: .5rem;
 
         &:hover, &:focus {
-            @include box-shadow;
-
             .language-nav__list {
                 display: block;
             }
@@ -47,6 +46,8 @@
     }
 
     .language-nav__icon {
+        display: block;
+
         font-size: .3rem;
         line-height: 1rem;
         vertical-align: middle;
@@ -58,6 +59,8 @@
         position: absolute;
         top: 100%;
         left: 0;
+
+        @include box-shadow;
     }
     .language-nav__list__item {
         display: block;
