@@ -30,6 +30,7 @@ button, input[type="text"], textarea, select {
         font-weight: 400;
 
         ~ .control-label:after {
+            content: " ";
             display: block;
             width: 0;
             height: 1px;
