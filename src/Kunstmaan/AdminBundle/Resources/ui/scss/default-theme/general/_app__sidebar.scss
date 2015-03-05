@@ -108,6 +108,7 @@
 /* Search
    ========================================================================== */
 .app__sidebar__search-toggle-btn {
+    z-index: 2;
     position: absolute;
     top: 1rem;
     right: 0;

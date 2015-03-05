@@ -78,6 +78,9 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
 
                 // Reinit nested forms
                 kunstmaanbundles.nestedForm.init();
+
+                // Rest ajax-modals
+                kunstmaanbundles.ajaxModal.resetAjaxModals();
             }
         });
 
