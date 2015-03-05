@@ -3,8 +3,12 @@
    ========================================================================== */
 
 .row--flex {
-    display: flex;
+    @media(min-width: $screen-sm-min) {
+        display: flex;
+    }
 }
 .row--align-end {
-    align-items: flex-end;
+    @media(min-width: $screen-sm-min) {
+        align-items: flex-end;
+    }
 }
