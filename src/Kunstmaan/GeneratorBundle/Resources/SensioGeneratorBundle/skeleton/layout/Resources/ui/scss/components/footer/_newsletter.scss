@@ -27,6 +27,11 @@
     @extend .container;
     margin: $default-margin 0;
 
+    @media(min-width: $screen-sm-min) {
+        width: auto;
+        max-width: 750px;
+    }
+
     p {
         color: $white;
         max-width: 750px;
