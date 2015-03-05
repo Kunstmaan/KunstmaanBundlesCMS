@@ -13,6 +13,9 @@
     width: 100%;
 }
 .header-visual__content {
+    margin-bottom: 2rem;
+    text-align: center;
+
     @media(min-width: $screen-md-min) {
         position: absolute;
         top: 0;
@@ -20,6 +23,8 @@
         z-index: 1;
 
         width: 100%;
+        margin-bottom: 0;
+        text-align: left;
     }
 }
 .header-visual__content__inner {
@@ -41,11 +46,10 @@
     }
 }
 .header-visual__text {
-    margin-bottom: 2.5rem;
-
     @media(min-width: $screen-md-min) {
         color: $white;
         max-width: 50%;
+        margin-bottom: 2.5rem;
     }
 }
 .header-visual__btn {
