@@ -86,12 +86,13 @@ headerLines = function(message){
 
 /* Styles
    ========================================================================== */
-
 gulp.task('styles', function() {
-    return plugins.rubySass(config.scssFolder, {
-            loadPath: ['./'],
-            bundleExec: true
-        })
+    return gulp.src(config.scss)
+        // Sass
+        .pipe(plugins.rubySass({
+            loadPath: './',
+            bundleExec: true,
+        }))
         .on('error', function (err) {
             errorLogger('SASS Compilation Error', err.message);
         })
