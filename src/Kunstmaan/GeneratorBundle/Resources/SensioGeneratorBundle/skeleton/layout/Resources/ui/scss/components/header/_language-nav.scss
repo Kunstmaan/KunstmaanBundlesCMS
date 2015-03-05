@@ -36,17 +36,23 @@
 
     .language-nav {
         z-index: 5;
-        padding: .5rem;
+        padding: 0 .5rem;
+
+        @include transition(all .2s ease-in-out);
 
         &:hover, &:focus {
+            background: $gray-light;
+            @include box-shadow;
+
             .language-nav__list {
-                display: block;
+                opacity: 1;
+                z-index: 6;
             }
         }
     }
 
     .language-nav__icon {
-        display: block;
+        display: inline-block;
 
         font-size: .3rem;
         line-height: 1rem;
@@ -54,13 +60,18 @@
         margin-left: .1rem;
     }
     .language-nav__list {
-        display: none;
+        opacity: 0;
 
         position: absolute;
         top: 100%;
         left: 0;
+        z-index: 0;
 
+        padding: 0 .5rem .3rem;
+        background: $gray-light;
         @include box-shadow;
+
+        @include transition(all .2s ease-in-out);
     }
     .language-nav__list__item {
         display: block;
