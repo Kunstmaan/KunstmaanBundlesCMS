@@ -3,26 +3,25 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
-        changeTemplate, publishLater, unpublishLater,
-        initSortable;
+        changeTemplate, publishLater, unpublishLater, sortable, permissions;
 
 
     init = function() {
         $('.js-change-page-template').on('click', function() {
             changeTemplate($(this));
         });
-
         if($('#publish-later__check').length) {
             publishLater();
         }
-
         if($('#unpublish-later__check').length) {
             unpublishLater();
         }
-
         if($('.js-sortable-container').length) {
-            initSortable();
+            sortable();
         };
+        if($('#permissions-container').length) {
+            permissions();
+        }
     };
 
 
@@ -99,7 +98,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
 
     // Sortable
-    initSortable = function() {
+    sortable = function() {
         $('.js-sortable-container').each(function() {
             var id = $(this).attr('id'),
                 el = document.getElementById(id);
@@ -131,6 +130,127 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
         $('.js-sortable-item__handle').on('mouseup', function() {
             $('body').removeClass('sortable-active');
+        });
+    };
+
+
+    // Permission
+    permissions = function() {
+        // Container
+        var $permissionsContainer = $('#permissions-container');
+
+
+        // Changes
+        var changes = [];
+        changes['add'] = [];
+        changes['del'] = [];
+
+
+        // Checkboxes
+        $('.js-permission-checkbox').on('change', function() {
+            var checkbox = this,
+                $checkbox = $(checkbox),
+                role = $checkbox.data('role'),
+                permission = $checkbox.data('permission'),
+                origValue = $checkbox.data('original-value');
+
+
+            // Add/Remove change
+            if (origValue == checkbox.checked) {
+                // Remove change...
+                var idx;
+
+                if (origValue) {
+                    idx = changes['del'].indexOf(role + '.' + permission);
+                    if (idx != -1) {
+                        changes['del'].splice(idx, 1);
+                    }
+                } else {
+                    idx = changes['add'].indexOf(role + '.' + permission);
+                    if (idx != -1) {
+                        changes['add'].splice(idx, 1);
+                    }
+                }
+            } else {
+                // Add change
+                if (checkbox.checked) {
+                    changes['add'].push(role + '.' + permission);
+                } else {
+                    changes['del'].push(role + '.' + permission);
+                }
+            }
+
+
+            // Add hidden fields
+            var hiddenfieldsContainer = $("#permission-hidden-fields"),
+                hiddenfields;
+
+            if (changes['add'].length > 0) {
+                for (var i=0; i<changes['add'].length; i++) {
+                    var params = changes['add'][i].split('.');
+                    hiddenfields = hiddenfields + '<input type="hidden" name="permission-hidden-fields[' + params[0] + '][ADD][]" value="' + params[1] + '">';
+                }
+            }
+
+            if (changes['del'].length > 0) {
+                for (var i=0; i<changes['del'].length; i++) {
+                    var params = changes['del'][i].split('.');
+                    hiddenfields = hiddenfields + '<input type="hidden" name="permission-hidden-fields[' + params[0] + '][DEL][]" value="' + params[1] + '">';
+                }
+            }
+
+            hiddenfieldsContainer.html(hiddenfields);
+
+
+            // Display changes in div?
+            var isRecursive = $permissionsContainer.data('recursive');
+
+            if(isRecursive) {
+                var transPermsAdded = $permissionsContainer.data('trans-perms-added'),
+                    transPermsRemoved = $permissionsContainer.data('trans-perms-removed');
+
+                var $infoContainer= $('#permission-changes-info-container'),
+                    modalHtml = '';
+
+                // Additions
+                if (changes['add'].length > 0) {
+                    modalHtml = modalHtml + '<p>' + transPermsAdded;
+                    modalHtml = modalHtml + '<ul>';
+
+                    for (var i=0; i<changes['add'].length; i++) {
+                        var params = changes['add'][i].split('.');
+
+                        modalHtml = modalHtml + '<li><strong>' + params[0] + '</strong> : ' + params[1] + '</li>';
+                    }
+
+                    modalHtml = modalHtml + '</ul>';
+                    modalHtml = modalHtml + '</p>';
+                }
+
+                // Deletions
+                if (changes['del'].length > 0) {
+                    modalHtml = modalHtml + '<p>' + transPermsRemoved;
+                    modalHtml = modalHtml + '<ul>';
+
+                    for (var i=0; i<changes['del'].length; i++) {
+                        var params = changes['del'][i].split('.');
+
+                        modalHtml = modalHtml + '<li><strong>' + params[0] + '</strong> : ' + params[1] + '</li>';
+                    }
+
+                    modalHtml = modalHtml + '</ul>';
+                    modalHtml = modalHtml + '</p>';
+                }
+
+                // Setup info container
+                if (modalHtml != '') {
+                    $('#permission-changes-modal__body').html(modalHtml);
+                    $infoContainer.removeClass('hidden');
+                } else {
+                    $infoContainer.addClass('hidden');
+                    $('#apply-recursive').prop('checked', false);
+                }
+            }
         });
     };
 
