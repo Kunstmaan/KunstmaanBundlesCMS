@@ -29,7 +29,7 @@ button, input[type="text"], textarea, select {
         min-height: 38px;
         font-weight: 400;
 
-        ~ .control-label:after {
+        ~ .form-bar {
             content: " ";
             display: block;
             width: 0;
@@ -43,7 +43,7 @@ button, input[type="text"], textarea, select {
 
         &:focus {
             outline: none;
-            ~ .control-label:after {
+            ~ .form-bar {
                 width: 100%;
                 transition: all 0.075s ease;
             }
@@ -74,7 +74,7 @@ button, input[type="text"], textarea, select {
     /* Errors
        ========================================================================== */
     .form-group--has-error {
-        .control-label:after {
+        .form-bar {
             width: 100%;
             background: $red;
         }
@@ -117,7 +117,7 @@ button, input[type="text"], textarea, select {
 
         opacity: 0;
 
-        ~ .control-label:after {
+        ~ .form-bar {
             margin-top: 0;
             margin-bottom: -1px;
         }
