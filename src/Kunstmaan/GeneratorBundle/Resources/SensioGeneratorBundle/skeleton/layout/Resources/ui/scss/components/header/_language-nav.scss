@@ -41,7 +41,7 @@
         @include transition(all .2s ease-in-out);
 
         &:hover, &:focus {
-            background: $gray-light;
+            background: $gray-lighter;
             @include box-shadow;
 
             .language-nav__list {
@@ -66,9 +66,10 @@
         top: 100%;
         left: 0;
         z-index: 0;
+        width: 100%;
 
         padding: 0 .5rem .3rem;
-        background: $gray-light;
+        background: $gray-lighter;
         @include box-shadow;
 
         @include transition(all .2s ease-in-out);
