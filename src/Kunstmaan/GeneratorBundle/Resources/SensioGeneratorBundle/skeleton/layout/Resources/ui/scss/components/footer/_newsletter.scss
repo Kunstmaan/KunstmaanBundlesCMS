@@ -45,6 +45,11 @@
    ========================================================================== */
 .newsletter__form {
     @extend .container;
+
+    @media(min-width: $screen-sm-min) {
+        width: auto;
+        max-width: 750px;
+    }
 }
 .newsletter__form__input {
     width: 100%;
