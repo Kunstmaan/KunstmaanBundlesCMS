@@ -12,7 +12,7 @@
 .newsletter__content {
     @extend .container;
 
-    @media(min-width: $screen-md-min) {
+    @media(min-width: $screen-sm-min) {
         width: auto;
         max-width: 750px;
     }
