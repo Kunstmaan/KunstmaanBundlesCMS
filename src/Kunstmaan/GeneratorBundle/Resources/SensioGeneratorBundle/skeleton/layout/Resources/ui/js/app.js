@@ -31,6 +31,8 @@ projectname = (function($, window, undefined) {
             $('.js-form-control-choice').bind('blur', function () {
                 if( $(this).is(':checked') ) {
                     $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
+                } else if( $(this).closest('.form-widget--choices').find('.form-control-choice').is(':checked') ) {
+                    $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
                 } else {
                     $(this).closest('.form-widget--choices').removeClass('form-widget--choices--filled');
                 }
