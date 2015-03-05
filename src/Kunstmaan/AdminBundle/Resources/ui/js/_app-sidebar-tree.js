@@ -79,32 +79,16 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                             return false;
                         }
 
-                        // Go ahead
-                        return true;
+                        // Only on same level please
+                        if(node.parent === node_parent.id) {
+                            return true;
+                        }
 
-                        // OLD
-                        // "check_move" : function (m) {
-                        //     var p = this._get_parent(m.o);
-                        //     if(!p) return false;
-                        //     p = p == -1 ? this.get_container() : p;
-                        //     if(p === m.np) return true;
-                        //     if(p[0] && m.np[0] && p[0] === m.np[0]) return true;
-                        //     return false;
-                        // }
-                        // requires crrm plugin
-                        // .o - the node being moved
-                        // .r - the reference node in the move
-                        // .ot - the origin tree instance
-                        // .rt - the reference tree instance
-                        // .p - the position to move to (may be a string - "last", "first", etc)
-                        // .cp - the calculated position to move to (always a number)
-                        // .np - the new parent
-                        // .oc - the original node (if there was a copy)
-                        // .cy - boolen indicating if the move was a copy
-                        // .cr - same as np, but if a root node is created this is -1
-                        // .op - the former parent
-                        // .or - the node that was previously in the position of the moved node
+                        // Nope
+                        return false;
+
                     } else {
+
                         return true;
                     }
                 }
