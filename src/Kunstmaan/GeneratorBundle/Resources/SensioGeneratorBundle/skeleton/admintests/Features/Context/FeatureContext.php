@@ -1,6 +1,6 @@
 <?php
 
-namespace Sandbox\WebBundle\Features\Context;
+namespace {{ namespace }}\Features\Context;
 
 use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Behat\Context\Step;
