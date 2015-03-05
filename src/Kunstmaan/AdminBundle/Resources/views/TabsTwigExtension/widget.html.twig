@@ -8,7 +8,7 @@
         {% set tabIdentifier = tab.identifier %}
         {% set formErrors = tab.getFormErrors(formView) %}
 
-        <li {% if activeTab == tabIdentifier %} class="active" {% endif %} onClick="jQuery('#currenttab').val('{{ tabIdentifier }}');">
+        <li {% if activeTab == tabIdentifier %} class="active" {% endif %}>
             <a href="#{{ tabIdentifier }}" data-toggle="tab">
                 {{ tab.title }}
                 {% if formErrors|length > 0 %}
