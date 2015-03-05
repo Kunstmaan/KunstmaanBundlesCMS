@@ -26,13 +26,13 @@ projectname = (function($, window, undefined) {
             });
 
             $('.js-form-control-choice').bind('focus', function () {
-                $(this).parent().parent().parent().find('.form-widget--choices').addClass('form-widget--choices--filled');
+                $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
             });
             $('.js-form-control-choice').bind('blur', function () {
                 if( $(this).is(':checked') ) {
-                    $(this).parent().parent().parent().find('.form-widget--choices').addClass('form-widget--choices--filled');
+                    $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
                 } else {
-                    $(this).parent().parent().parent().find('.form-widget--choices').removeClass('form-widget--choices--filled');
+                    $(this).closest('.form-widget--choices').removeClass('form-widget--choices--filled');
                 }
             });
         }

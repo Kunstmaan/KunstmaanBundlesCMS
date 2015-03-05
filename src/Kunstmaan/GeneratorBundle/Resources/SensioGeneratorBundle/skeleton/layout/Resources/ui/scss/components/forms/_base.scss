@@ -29,7 +29,8 @@ button, input[type="text"], textarea, select {
         min-height: 38px;
         font-weight: 400;
 
-        ~ .form-bar {
+        &:after {
+            content: " ";
             display: block;
             width: 0;
             height: 1px;
@@ -42,7 +43,7 @@ button, input[type="text"], textarea, select {
 
         &:focus {
             outline: none;
-            ~ .form-bar {
+            &:after {
                 width: 100%;
                 transition: all 0.075s ease;
             }
@@ -73,9 +74,11 @@ button, input[type="text"], textarea, select {
     /* Errors
        ========================================================================== */
     .form-group--has-error {
-        .form-bar {
-            width: 100%;
-            background: $red;
+        .form-control--input, .form-control--textarea, .form-control--select {
+            &:after {
+                width: 100%;
+                background: $red;
+            }
         }
 
         .help-block {
@@ -97,7 +100,7 @@ button, input[type="text"], textarea, select {
         position: relative;
         border-bottom: 1px solid $hr-color;
 
-        ~ .control-label, ~ .form-bar {
+        ~ .control-label {
             display: none;
         }
     }
@@ -116,7 +119,7 @@ button, input[type="text"], textarea, select {
 
         opacity: 0;
 
-        ~ .form-bar {
+        &:after {
             margin-top: 0;
             margin-bottom: -1px;
         }
@@ -164,7 +167,7 @@ button, input[type="text"], textarea, select {
             top: -1.2rem;
         }
 
-        ~ .control-label, ~ .form-bar {
+        ~ .control-label {
             display: none;
         }
     }
