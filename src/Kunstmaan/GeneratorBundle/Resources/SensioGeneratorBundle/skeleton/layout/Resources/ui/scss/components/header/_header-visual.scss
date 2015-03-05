@@ -13,30 +13,40 @@
     width: 100%;
 }
 .header-visual__content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+    @media(min-width: $screen-md-min) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
 
-    width: 100%;
+        width: 100%;
+    }
 }
 .header-visual__content__inner {
     @extend .container;
 
-    padding-top: 6%;
+    @media(min-width: $screen-md-min) {
+        padding-top: 6%;
+    }
 }
 
 .header-visual__title {
-    font-size: 5.625rem;
     font-weight: 100;
     line-height: 100%;
-    color: $white;
     text-transform: uppercase;
+
+    @media(min-width: $screen-md-min) {
+        font-size: 5.625rem;
+        color: $white;
+    }
 }
 .header-visual__text {
-    color: $white;
     margin-bottom: 2.5rem;
-    max-width: 50%;
+
+    @media(min-width: $screen-md-min) {
+        color: $white;
+        max-width: 50%;
+    }
 }
 .header-visual__btn {
 
