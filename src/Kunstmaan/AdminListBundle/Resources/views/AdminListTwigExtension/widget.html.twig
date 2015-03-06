@@ -102,12 +102,15 @@
                             {% if itemAction.template is not null %}
                                 {% include itemAction.template with {'row': item, 'item': item, 'action': itemAction} %}
                             {% else %}
-                                <a href="{{ path(itemAction.getUrlFor(item)["path"], itemAction.getUrlFor(item)[("params")] ) }}" class="link--text table__actions__item">
-                                    {% if itemAction.getIconFor(item) is not null %}
-                                        <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
-                                    {% endif %}
-                                    {{ itemAction.getLabelFor(item) }}
-                                </a>
+                                {% set url = itemAction.getUrlFor(item) %}
++                               {% if url %}
+                                    <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item">
+                                        {% if itemAction.getIconFor(item) is not null %}
+                                            <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
+                                        {% endif %}
+                                        {{ itemAction.getLabelFor(item) }}
+                                    </a>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
