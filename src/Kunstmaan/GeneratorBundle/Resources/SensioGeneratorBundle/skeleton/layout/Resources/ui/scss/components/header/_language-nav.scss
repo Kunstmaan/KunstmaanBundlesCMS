@@ -27,6 +27,10 @@
     display: block;
     font-weight: 400;
     color: $gray;
+
+    &:hover, &:focus {
+        text-decoration: none;
+    }
 }
 
 

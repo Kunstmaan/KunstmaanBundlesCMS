@@ -25,3 +25,27 @@
     display: flex;
     align-items: center;
 }
+
+// Mobile
+@media(min-width: $screen-md-min) {
+    .main-header__nav--mobile {
+        display: none;
+    }
+}
+@media(max-width: $screen-sm-max) {
+    .main-header__nav--mobile {
+        display: block;
+    }
+}
+
+// Desktop
+@media(max-width: $screen-sm-max) {
+    .main-header__nav--desktop {
+        display: none;
+    }
+}
+@media(min-width: $screen-md-min) {
+    .main-header__nav--desktop {
+        display: block;
+    }
+}

@@ -42,26 +42,38 @@
        margin-left: .3rem;
    }
 
+/* Mobile
+   ========================================================================== */
+@media(max-width: $screen-sm-max) {
+    .main-header__nav--mobile {
+
+    }
+}
+
 /* Desktop
    ========================================================================== */
 @media(min-width: $screen-md-min) {
-    .main-nav {
-        margin-right: 2rem;
-    }
+    .main-header__nav--desktop {
 
-    .main-nav__button {
-        display: none;
-    }
+        .main-nav {
+            margin-right: 2rem;
+        }
 
-    .main-nav__content {
-        height: auto !important;
-    }
+        .main-nav__button {
+            display: none;
+        }
 
-    .main-nav__list__item {
-        display: inline-block;
-        margin-right: 1rem;
-    }
-    .main-nav__list__link--cta {
-        margin-left: 1.7rem;
+        .main-nav__content {
+            height: auto !important;
+        }
+
+        .main-nav__list__item {
+            display: inline-block;
+            margin-right: 1rem;
+        }
+        .main-nav__list__link--cta {
+            margin-left: 1.7rem;
+        }
+
     }
 }
