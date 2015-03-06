@@ -2,14 +2,14 @@ var projectname = projectname || {};
 
 projectname = (function($, window, undefined) {
 
-    var init, initForms, initToggleClass;
+    var init, initForms, initDesktopSearch;
 
     init = function() {
         cargobay.scrollToTop.init();
         cargobay.toggle.init();
 
         initForms();
-        initToggleClass();
+        initDesktopSearch();
     };
 
     initForms = function() {
@@ -41,9 +41,9 @@ projectname = (function($, window, undefined) {
         }
     };
 
-    initToggleClass = function() {
+    initDesktopSearch = function() {
         $('.js-searchbox').on('click', function() {
-            $(this).toggleClass('searchbox--active');
+            $(this).addClass('searchbox--active');
         });
     };
 
