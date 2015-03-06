@@ -91,9 +91,11 @@
                     {# Search #}
                     {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                     {# {% if searchPageNode %} #}
-                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-right">
+                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-left">
                             <div class="searchbox">
-                                <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                <div class="searchbox__input-wrapper">
+                                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                </div>
                                 <button type="submit" id="search" class="searchbox__submit">
                                     <i class="icon icon--search searchbox__submit__icon"></i>
                                 </button>
@@ -154,7 +156,9 @@
                         {# {% if searchPageNode %} #}
                             <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-left">
                                 <div class="searchbox">
-                                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                    <div class="searchbox__input-wrapper">
+                                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                    </div>
                                     <button type="submit" id="search" class="searchbox__submit">
                                         <i class="icon icon--search searchbox__submit__icon"></i>
                                     </button>

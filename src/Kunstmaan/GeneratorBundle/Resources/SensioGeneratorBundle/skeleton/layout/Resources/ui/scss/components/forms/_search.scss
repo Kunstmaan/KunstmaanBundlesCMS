@@ -8,15 +8,19 @@
 }
 
 .searchbox {
-    // width: $search-height;
-    // height: $search-height;
+    min-width: $search-height;
+    height: $search-height;
     position: relative;
 }
-.searchbox__input {
+.searchbox__input-wrapper {
     width: 340px;
     max-width: 100%;
-    height: $search-height;
+}
+.searchbox__input {
+    width: 100%;
     display: inline-block;
+    height: $search-height;
+    line-height: $search-height;
 
     // cf. button-pp
     font-size: .8rem;
