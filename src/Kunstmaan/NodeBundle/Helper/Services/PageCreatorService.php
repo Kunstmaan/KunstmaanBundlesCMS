@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Kunstmaan\AdminBundle\Repository\UserRepository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -111,7 +112,11 @@ class PageCreatorService
         /** @var $userRepo UserRepository */
         $userRepo = $em->getRepository($this->userEntityClass);
         /** @var $seoRepo SeoRepository */
-        $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
+        try {
+            $seoRepo = $em->getRepository('KunstmaanSeoBundle:Seo');
+        } catch (ORMException $e) {
+            $seoRepo = null;
+        }
 
         $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
         $creator     = $userRepo->findOneBy(array('username' => $pagecreator));

@@ -14,9 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\FolderRepository")
  * @ORM\Table(name="kuma_folders", indexes={
- *      @ORM\Index(name="idx_internal_name", columns={"internal_name"}),
- *      @ORM\Index(name="idx_name", columns={"name"}),
- *      @ORM\Index(name="idx_deleted", columns={"deleted"})
+ *      @ORM\Index(name="idx_folder_internal_name", columns={"internal_name"}),
+ *      @ORM\Index(name="idx_folder_name", columns={"name"}),
+ *      @ORM\Index(name="idx_folder_deleted", columns={"deleted"})
  * })
  * @Gedmo\Tree(type="nested")
  * @ORM\HasLifecycleCallbacks

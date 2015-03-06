@@ -10,7 +10,7 @@ use Kunstmaan\NodeBundle\Entity\PageInterface;
  * Configuration for page templates
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\PagePartBundle\Repository\PageTemplateConfigurationRepository")
- * @ORM\Table(name="kuma_page_template_configuration", indexes={@ORM\Index(name="idx_kuma_search", columns={"page_id", "page_entity_name"})})
+ * @ORM\Table(name="kuma_page_template_configuration", indexes={@ORM\Index(name="idx_page_template_config_search", columns={"page_id", "page_entity_name"})})
  */
 class PageTemplateConfiguration extends AbstractEntity
 {

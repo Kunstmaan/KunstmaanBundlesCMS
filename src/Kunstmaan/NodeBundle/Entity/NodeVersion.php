@@ -12,7 +12,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  * NodeVersion
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeVersionRepository")
- * @ORM\Table(name="kuma_node_versions", indexes={@ORM\Index(name="idx_kuma_lookup", columns={"ref_id", "ref_entity_name"})})
+ * @ORM\Table(name="kuma_node_versions", indexes={@ORM\Index(name="idx_node_version_lookup", columns={"ref_id", "ref_entity_name"})})
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */

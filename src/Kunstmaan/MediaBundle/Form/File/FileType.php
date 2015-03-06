@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -40,6 +41,7 @@ class FileType extends AbstractType
             'file',
             'file',
             array(
+                'constraints' => array(new File()),
                 'required' => false
             )
         );
@@ -70,7 +72,7 @@ class FileType extends AbstractType
                         'file',
                         'file',
                         array(
-                            'constraints' => array(new NotBlank()),
+                            'constraints' => array(new NotBlank(), new File()),
                             'required' => true
                         )
                     );
