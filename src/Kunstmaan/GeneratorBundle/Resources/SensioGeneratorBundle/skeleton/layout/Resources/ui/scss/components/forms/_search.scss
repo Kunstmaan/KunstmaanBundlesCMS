@@ -9,11 +9,12 @@
 
 .searchbox {
     min-width: $search-height;
-    height: $search-height;
     position: relative;
+    padding: .5rem;
+    overflow: hidden;
 }
 .searchbox--active {
-    .searchbox__input-wrapper {
+    .searchbox__content {
         width: 340px;
     }
 
@@ -24,15 +25,16 @@
     }
 }
 
-.searchbox__input-wrapper {
+.searchbox__content {
+    position: relative;
     max-width: 100%;
     width: 0;
-    @include transition(width .3s ease-in-out);
+    @include transition(width .2s ease-in-out);
 }
 
 .searchbox__input {
     opacity: 0;
-    @include transition(opacity .1s ease-in-out);
+    @include transition(opacity .2s ease-in-out);
 
     position: relative;
     z-index: 2;
