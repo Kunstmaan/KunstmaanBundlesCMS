@@ -13,7 +13,9 @@
     position: relative;
 }
 .searchbox--active {
-    width: 340px;
+    .searchbox__input-wrapper {
+        width: 340px;
+    }
 
     .searchbox__input {
         opacity: 1;
@@ -25,7 +27,7 @@
 .searchbox__input-wrapper {
     max-width: 100%;
     width: 0;
-    @include transition(width .4s ease-in-out);
+    @include transition(width .3s ease-in-out);
 }
 
 .searchbox__input {
