@@ -42,8 +42,8 @@ projectname = (function($, window, undefined) {
     };
 
     initToggleClass = function() {
-        $('.js-searchbox__submit').on('click', function() {
-            $(this).closest('.searchbox__input-wrapper').toggleClass('searchbox__input-wrapper--active');
+        $('.js-searchbox').on('click', function() {
+            $(this).toggleClass('searchbox__input-wrapper--active');
         });
     };
 
