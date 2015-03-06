@@ -2,22 +2,23 @@ var projectname = projectname || {};
 
 projectname = (function($, window, undefined) {
 
-    var init, initForms;
+    var init, initForms, initToggleClass;
 
     init = function() {
         cargobay.scrollToTop.init();
         cargobay.toggle.init();
 
         initForms();
+        initToggleClass();
     };
 
     initForms = function() {
         if( $('.form--default').length ) {
 
-            $('.js-form-control').bind('focus', function () {
+            $('.js-form-control').bind('focus', function() {
                 $(this).addClass('form-control--filled');
             });
-            $('.form-control').bind('blur', function () {
+            $('.form-control').bind('blur', function() {
                 if( $(this).val() ) {
                     $(this).addClass('form-control--filled');
                 } else {
@@ -25,10 +26,10 @@ projectname = (function($, window, undefined) {
                 }
             });
 
-            $('.js-form-control-choice').bind('focus', function () {
+            $('.js-form-control-choice').bind('focus', function() {
                 $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
             });
-            $('.js-form-control-choice').bind('blur', function () {
+            $('.js-form-control-choice').bind('blur', function() {
                 if( $(this).is(':checked') ) {
                     $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
                 } else if( $(this).closest('.form-widget--choices').find('.form-control-choice').is(':checked') ) {
@@ -38,6 +39,12 @@ projectname = (function($, window, undefined) {
                 }
             });
         }
+    };
+
+    initToggleClass = function() {
+        $('.js-searchbox__submit').on('click', function() {
+            $(this).closest('.searchbox__input-wrapper').toggleClass('searchbox__input-wrapper--active');
+        });
     };
 
     return {
