@@ -8,12 +8,18 @@
 }
 
 .searchbox {
-    min-width: $search-height;
+    min-width: calc($search-height + 1rem);
     position: relative;
     padding: .5rem;
     overflow: hidden;
+
+    @extend .searchbox__submit__icon;
 }
 .searchbox--active {
+    &:after {
+        display: none;
+    }
+
     .searchbox__content {
         width: 340px;
     }
