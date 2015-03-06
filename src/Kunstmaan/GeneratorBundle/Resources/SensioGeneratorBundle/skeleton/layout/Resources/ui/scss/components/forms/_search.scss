@@ -12,8 +12,6 @@
     position: relative;
     padding: .5rem;
     overflow: hidden;
-
-    @extend .searchbox__submit__icon;
 }
 .searchbox--active {
     &:after {
@@ -34,7 +32,7 @@
 .searchbox__content {
     position: relative;
     max-width: 100%;
-    width: 0;
+    width: $search-height;
     @include transition(width .2s ease-in-out);
 }
 
