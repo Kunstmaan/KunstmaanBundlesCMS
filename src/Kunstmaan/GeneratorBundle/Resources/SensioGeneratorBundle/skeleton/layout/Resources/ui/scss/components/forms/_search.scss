@@ -10,13 +10,11 @@
 .searchbox {
     min-width: calc(#{$search-height} + 1rem);
     position: relative;
-    padding: .5rem;
     overflow: hidden;
+    @include transition(overflow .1s ease-in-out .2s);
 }
 .searchbox--active {
-    &:after {
-        display: none;
-    }
+    overflow: visible;
 
     .searchbox__content {
         width: 340px;
