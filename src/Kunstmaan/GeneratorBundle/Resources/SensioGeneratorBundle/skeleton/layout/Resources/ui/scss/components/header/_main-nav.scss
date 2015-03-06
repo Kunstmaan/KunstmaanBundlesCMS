@@ -45,7 +45,11 @@
 /* Mobile
    ========================================================================== */
 @media(max-width: $screen-sm-max) {
-    .main-header__nav--mobile {
+    .main-header--mobile {
+
+        .main-nav__contact {
+            @include list-reset;
+        }
 
     }
 }
@@ -53,18 +57,10 @@
 /* Desktop
    ========================================================================== */
 @media(min-width: $screen-md-min) {
-    .main-header__nav--desktop {
+    .main-header--desktop {
 
         .main-nav {
             margin-right: 2rem;
-        }
-
-        .main-nav__button {
-            display: none;
-        }
-
-        .main-nav__content {
-            height: auto !important;
         }
 
         .main-nav__list__item {
