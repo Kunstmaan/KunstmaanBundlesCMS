@@ -30,7 +30,7 @@
 
 .searchbox__input {
     opacity: 0;
-    @include transition(opacity .4s ease-in-out);
+    @include transition(opacity .1s ease-in-out);
 
     position: relative;
     z-index: 2;
