@@ -13,10 +13,22 @@
     position: relative;
 }
 .searchbox__input-wrapper {
-    width: 340px;
     max-width: 100%;
+    width: 0;
+    @include transition(width .2s ease-in-out);
 }
+.searchbox__input-wrapper--active {
+    width: 340px;
+
+    .searchbox__input {
+        opacity: 1;
+    }
+}
+
 .searchbox__input {
+    opacity: 0;
+    @include transition(opacity .2s ease-in-out);
+
     width: 100%;
     display: inline-block;
     height: $search-height;
