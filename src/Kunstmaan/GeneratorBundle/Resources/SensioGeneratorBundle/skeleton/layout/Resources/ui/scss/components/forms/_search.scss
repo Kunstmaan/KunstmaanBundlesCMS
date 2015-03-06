@@ -11,7 +11,6 @@
     min-width: $search-height;
     height: $search-height;
     position: relative;
-    cursor: pointer;
 }
 .searchbox--active {
     width: 340px;
@@ -19,21 +18,23 @@
     .searchbox__input {
         opacity: 1;
         z-index: 0;
+        cursor: text;
     }
 }
 
 .searchbox__input-wrapper {
     max-width: 100%;
     width: 0;
-    @include transition(width .2s ease-in-out);
+    @include transition(width .4s ease-in-out);
 }
 
 .searchbox__input {
     opacity: 0;
-    @include transition(opacity .2s ease-in-out);
+    @include transition(opacity .4s ease-in-out);
 
     position: relative;
     z-index: 2;
+    cursor: pointer;
 
     width: 340px;
     display: inline-block;
