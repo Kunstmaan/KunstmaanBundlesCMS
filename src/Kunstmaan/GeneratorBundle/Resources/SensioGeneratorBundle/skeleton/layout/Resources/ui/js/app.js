@@ -43,7 +43,7 @@ projectname = (function($, window, undefined) {
 
     initToggleClass = function() {
         $('.js-searchbox').on('click', function() {
-            $(this).toggleClass('searchbox__input-wrapper--active');
+            $(this).toggleClass('searchbox--active');
         });
     };
 

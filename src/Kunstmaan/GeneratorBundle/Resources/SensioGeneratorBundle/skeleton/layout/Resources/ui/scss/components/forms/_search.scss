@@ -11,6 +11,7 @@
     min-width: $search-height;
     height: $search-height;
     position: relative;
+    cursor: pointer;
 }
 .searchbox--active {
     width: 340px;
