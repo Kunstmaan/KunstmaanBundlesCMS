@@ -96,7 +96,7 @@
                                 <div class="searchbox__input-wrapper">
                                     <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                                 </div>
-                                <button type="submit" id="search" class="searchbox__submit js-searchbox__submit">
+                                <button type="submit" id="search" class="searchbox__submit">
                                     <i class="icon icon--search searchbox__submit__icon"></i>
                                 </button>
                             </div>
@@ -159,7 +159,7 @@
                                     <div class="searchbox__input-wrapper">
                                         <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
                                     </div>
-                                    <button type="submit" id="search" class="searchbox__submit">
+                                    <button type="submit" id="search" class="searchbox__submit js-searchbox__submit">
                                         <i class="icon icon--search searchbox__submit__icon"></i>
                                     </button>
                                 </div>
