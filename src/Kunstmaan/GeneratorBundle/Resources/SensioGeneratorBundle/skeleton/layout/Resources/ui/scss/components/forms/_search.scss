@@ -11,10 +11,9 @@
     min-width: calc(#{$search-height} + 1rem);
     position: relative;
     overflow: hidden;
-    @include transition(overflow .1s ease-in-out .2s);
 }
 .searchbox--active {
-    overflow: visible;
+    @include box-shadow;
 
     .searchbox__content {
         width: 340px;
@@ -54,7 +53,6 @@
     padding: .65rem 1rem;
     background-color: $gray-lighter;
     border: 1px solid $hr-color;
-    @include box-shadow;
 
     padding-right: $search-height;
 }
