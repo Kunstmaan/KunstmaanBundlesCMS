@@ -1,13 +1,11 @@
-{# Header #}
-<header role="header" class="main-header">
+{# Mobile header #}
+<header role="header" class="main-header main-header--mobile">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
 
                 {% if nodemenu is defined %}
-
-                    {# Mobile nav #}
-                    <div class="main-header__nav main-header__nav--mobile pull-right">
+                    <div class="main-header__nav pull-right">
 
                         {# Main navigation #}
                         <nav role="navigation" class="js-toggle-container main-nav pull-left">
@@ -83,19 +81,32 @@
                             </form>
                         {# {% endif %} #}
                     </div>
-                    {# end Mobile nav #}
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</header>
 
 
-                    {# Desktop nav #}
-                    <div class="main-header__nav main-header__nav--desktop pull-right">
+{# Desktop header #}
+<header role="header" class="main-header main-header--desktop">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
 
-                        {# Logo #}
-                        <div class="main-header__logo pull-left">
-                            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo__link">
-                                <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img"/>
-                            </a>
-                        </div>
+                {% if nodemenu is defined %}
+
+                    {# Logo #}
+                    <div class="main-header__logo pull-left">
+                        {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo__link">
+                            <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img"/>
+                        </a>
+                    </div>
+
+                    <div class="main-header__nav pull-right">
 
                         {# Main navigation #}
                         <nav role="navigation" class="main-nav pull-left">
@@ -157,8 +168,6 @@
                         {% endif %}
 
                     </div>
-                    {# end Desktop nav #}
-
                 {% endif %}
 
             </div>
