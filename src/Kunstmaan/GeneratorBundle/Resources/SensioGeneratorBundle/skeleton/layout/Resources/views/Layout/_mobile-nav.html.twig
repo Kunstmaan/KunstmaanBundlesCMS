@@ -7,7 +7,7 @@
         {% if langs|length > 0 %}
             <nav class="language-nav">
                 <ul class="list-reset language-nav__list">
-                    {% if lang != app.request.locale %}
+                    {% if lang = app.request.locale %}
                         <li class="language-nav__list__item language-nav__list__item--active-lang">
                             {{ app.request.locale }}
                         </li>

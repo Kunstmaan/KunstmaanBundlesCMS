@@ -42,7 +42,7 @@
                 }
             },
             resetClickFn = function(evt) {
-                if (evt.target == reset) {
+                if (evt.target === reset) {
                     resetMenu();
                     document.removeEventListener(eventtype, bodyClickFn);
                 }
