@@ -2,7 +2,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
 
 {{ bundle.getName() }} = (function($, window, undefined) {
 
-    var init, initForms, initDesktopSearch;
+    var init;
 
     init = function() {
         cargobay.scrollToTop.init();
