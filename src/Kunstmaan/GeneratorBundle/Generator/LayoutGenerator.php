@@ -94,7 +94,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $targetDir = $this->bundle->getPath();
 
         $relPath = '/Resources/ui/';
-        $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, array('bundle' => $this->bundle), true);
+        $this->renderFiles($sourceDir.$relPath, $targetDir.$relPath, array('bundle' => $this->bundle), true);
 
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
