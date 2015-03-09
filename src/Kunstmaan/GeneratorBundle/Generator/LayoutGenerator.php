@@ -30,11 +30,23 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->bundle = $bundle;
         $this->rootDir = $rootDir;
 
-        $this->generateGulpFiles();
         $this->generateBowerFiles();
+        $this->generateGulpFiles();
+        $this->generateJshintrcFile();
+        $this->generateGroundcontrolrcFile();
         $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
+    }
+
+    /**
+     * Generate the bower configuration files.
+     */
+    private function generateBowerFiles()
+    {
+        $this->renderFiles($this->skeletonDir.'/bower/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->renderSingleFile($this->skeletonDir.'/bower/', $this->rootDir, '.bowerrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating bower configuration : <info>OK</info>');
     }
 
     /**
@@ -47,13 +59,21 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
-     * Generate the bower configuration files.
+     * Generate the jshint configuration file.
      */
-    private function generateBowerFiles()
+    private function generateJshintrcFile()
     {
-        $this->renderFiles($this->skeletonDir.'/bower/', $this->rootDir, array('bundle' => $this->bundle), true);
-        $this->renderSingleFile($this->skeletonDir.'/bower/', $this->rootDir, '.bowerrc', array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating bower configuration : <info>OK</info>');
+        $this->renderSingleFile($this->skeletonDir.'/gulp/', $this->rootDir, '.jshintrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating jshint configuration : <info>OK</info>');
+    }
+
+    /**
+     * Generate the groundcontrol configuration file.
+     */
+    private function generateGroundcontrolrcFile()
+    {
+        $this->renderSingleFile($this->skeletonDir.'/gulp/', $this->rootDir, '.groundcontrolrc', array('bundle' => $this->bundle), true);
+        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
     }
 
     /**
