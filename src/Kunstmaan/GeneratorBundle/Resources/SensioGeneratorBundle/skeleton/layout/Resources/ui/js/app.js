@@ -1,6 +1,6 @@
-var projectname = projectname || {};
+var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
 
-projectname = (function($, window, undefined) {
+{{ bundle.getName() }} = (function($, window, undefined) {
 
     var init, initForms, initDesktopSearch;
 
@@ -54,5 +54,5 @@ projectname = (function($, window, undefined) {
 }(jQuery, window));
 
 $(function() {
-    projectname.init();
+    {{ bundle.getName() }}.init();
 });

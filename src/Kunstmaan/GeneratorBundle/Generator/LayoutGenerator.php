@@ -32,8 +32,6 @@ class LayoutGenerator extends KunstmaanGenerator
 
         $this->generateGulpFiles();
         $this->generateBowerFiles();
-        $this->generateJshintrcFile();
-        $this->generateGroundcontrolrcFile();
         $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
@@ -56,24 +54,6 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles($this->skeletonDir.'/bower/', $this->rootDir, array('bundle' => $this->bundle), true);
         $this->renderSingleFile($this->skeletonDir.'/bower/', $this->rootDir, '.bowerrc', array('bundle' => $this->bundle), true);
         $this->assistant->writeLine('Generating bower configuration : <info>OK</info>');
-    }
-
-    /**
-     * Generate the jshint configuration file.
-     */
-    private function generateJshintrcFile()
-    {
-        $this->renderSingleFile($this->skeletonDir.'/jshint/', $this->rootDir, '.jshintrc', array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating jshint configuration : <info>OK</info>');
-    }
-
-    /**
-     * Generate the groundcontrol configuration file.
-     */
-    private function generateGroundcontrolrcFile()
-    {
-        $this->renderSingleFile($this->skeletonDir.'/groundcontrol/', $this->rootDir, '.groundcontrolrc', array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
     }
 
     /**
