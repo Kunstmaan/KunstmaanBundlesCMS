@@ -8,8 +8,8 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
         cargobay.scrollToTop.init();
         cargobay.toggle.init();
 
-        forms.init();
-        search.init();
+        {{ bundle.getName() }}.forms.init();
+        {{ bundle.getName() }}.search.init();
     };
 
     return {

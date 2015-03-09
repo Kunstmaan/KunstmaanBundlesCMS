@@ -37,12 +37,6 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
         }
     };
 
-    initSearch = function() {
-        $('.js-searchbox').on('click', function() {
-            $(this).addClass('searchbox--active');
-        });
-    };
-
     return {
         init: init
     };
