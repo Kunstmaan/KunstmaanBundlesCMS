@@ -34,9 +34,11 @@
 
 
     <!-- Nav settings -->
-    {% set lowestTopChild = adminmenu.lowestTopChild %}
-    {% if lowestTopChild %}
-        {% set navigationChildren = lowestTopChild.navigationChildren %}
+    {% if lowestTopChild is not defined %}
+        {% set lowestTopChild = adminmenu.lowestTopChild %}
+        {% if lowestTopChild %}
+            {% set navigationChildren = lowestTopChild.navigationChildren %}
+        {% endif %}
     {% endif %}
 
 
