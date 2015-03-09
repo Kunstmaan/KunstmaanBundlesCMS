@@ -2,7 +2,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
 
 {{ bundle.getName() }}.search = (function($, window, undefined) {
 
-    var init, initForms;
+    var init, initSearch;
 
     init = function() {
         initSearch();
