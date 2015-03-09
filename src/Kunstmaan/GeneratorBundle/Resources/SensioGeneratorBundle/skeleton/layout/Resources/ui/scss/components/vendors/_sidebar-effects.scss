@@ -1,12 +1,9 @@
 /* ==========================================================================
-   Codrops Sidebar Effect
+   Codrops Sidebar Effect - adjusted
    ========================================================================== */
 
-html,
-body,
-.st-container,
-.st-pusher,
-.st-content {
+html, body,
+.st-container, .st-pusher, .st-content {
     height: 100%;
 }
 
@@ -14,8 +11,7 @@ body,
     overflow-y: scroll;
 }
 
-.st-content,
-.st-content-inner {
+.st-content, .st-content-inner {
     position: relative;
 }
 
@@ -36,7 +32,6 @@ body,
         right: 0;
         width: 0;
         height: 0;
-        background: rgba(0,0,0,0.2);
         content: '';
         opacity: 0;
         transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
@@ -68,38 +63,71 @@ body,
     left: 0;
     z-index: 100;
     visibility: hidden;
-    width: 300px;
+    width: $mobile-nav-width;
     height: 100%;
-    background: #48a770;
     transition: all 0.5s;
-    :after {
+
+    background: $black;
+
+    &:after {
         position: absolute;
         top: 0;
         right: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.2);
         content: '';
         opacity: 1;
         transition: opacity 0.5s;
     }
 }
 
-/* Effect */
+
+/* Individual effects */
+
+/* Effect 1: Slide in on top */
+.st-effect-1.st-menu {
+    visibility: visible;
+    transform: translate3d(-100%, 0, 0);
+}
+
+.st-effect-1.st-menu-open .st-effect-1.st-menu {
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+}
+
+.st-effect-1.st-menu::after {
+    display: none;
+}
+
+/* Effect 2: Reveal */
+.st-effect-2.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-2.st-menu {
+    z-index: 1;
+}
+
+.st-effect-2.st-menu-open .st-effect-2.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+}
+
+.st-effect-2.st-menu::after {
+    display: none;
+}
+
 /* Effect 3: Push*/
 .st-effect-3.st-menu-open .st-pusher {
-    -webkit-transform: translate3d(300px, 0, 0);
-    transform: translate3d(300px, 0, 0);
+    transform: translate3d($mobile-nav-width, 0, 0);
 }
 
 .st-effect-3.st-menu {
-    -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
 }
 
 .st-effect-3.st-menu-open .st-effect-3.st-menu {
     visibility: visible;
-    -webkit-transition: -webkit-transform 0.5s;
     transition: transform 0.5s;
 }
 
@@ -107,8 +135,289 @@ body,
     display: none;
 }
 
+/* Effect 4: Slide along */
+.st-effect-4.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-4.st-menu {
+    z-index: 1;
+    transform: translate3d(-50%, 0, 0);
+}
+
+.st-effect-4.st-menu-open .st-effect-4.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
+}
+
+.st-effect-4.st-menu::after {
+    display: none;
+}
+
+/* Effect 5: Reverse slide out */
+.st-effect-5.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-5.st-menu {
+    z-index: 1;
+    transform: translate3d(50%, 0, 0);
+}
+
+.st-effect-5.st-menu-open .st-effect-5.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Effect 6: Rotate pusher */
+.st-effect-6.st-container {
+    perspective: 1500px;
+}
+
+.st-effect-6 .st-pusher {
+    transform-origin: 0% 50%;
+    transform-style: preserve-3d;
+}
+
+.st-effect-6.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0) rotateY(-15deg);
+}
+
+.st-effect-6.st-menu {
+    transform: translate3d(-100%, 0, 0);
+    transform-origin: 100% 50%;
+    transform-style: preserve-3d;
+}
+
+.st-effect-6.st-menu-open .st-effect-6.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(-100%, 0, 0) rotateY(15deg);
+}
+
+.st-effect-6.st-menu::after {
+    display: none;
+}
+
+/* Effect 7: 3D rotate in */
+.st-effect-7.st-container {
+    perspective: 1500px;
+    perspective-origin: 0% 50%;
+}
+
+.st-effect-7 .st-pusher {
+    transform-style: preserve-3d;
+}
+
+.st-effect-7.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-7.st-menu {
+    transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+    transform-origin: 100% 50%;
+    transform-style: preserve-3d;
+}
+
+.st-effect-7.st-menu-open .st-effect-7.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(-100%, 0, 0) rotateY(0deg);
+}
+
+/* Effect 8: 3D rotate out */
+.st-effect-8.st-container {
+    perspective: 1500px;
+    perspective-origin: 0% 50%;
+}
+
+.st-effect-8 .st-pusher {
+    transform-style: preserve-3d;
+}
+
+.st-effect-8.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-8.st-menu {
+    transform: translate3d(-100%, 0, 0) rotateY(90deg);
+    transform-origin: 100% 50%;
+    transform-style: preserve-3d;
+}
+
+.st-effect-8.st-menu-open .st-effect-8.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(-100%, 0, 0) rotateY(0deg);
+}
+
+.st-effect-8.st-menu::after {
+    display: none;
+}
+
+/* Effect 9: Scale down pusher */
+.st-effect-9.st-container {
+    perspective: 1500px;
+}
+
+.st-effect-9 .st-pusher {
+    transform-style: preserve-3d;
+}
+
+.st-effect-9.st-menu-open .st-pusher {
+    transform: translate3d(0, 0, -$mobile-nav-width);
+}
+
+.st-effect-9.st-menu {
+    opacity: 1;
+    transform: translate3d(-100%, 0, 0);
+}
+
+.st-effect-9.st-menu-open .st-effect-9.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
+}
+
+.st-effect-9.st-menu::after {
+    display: none;
+}
+
+/* Effect 10: Scale up */
+.st-effect-10.st-container {
+    perspective: 1500px;
+    perspective-origin: 0% 50%;
+}
+
+.st-effect-10.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-10.st-menu {
+    z-index: 1;
+    opacity: 1;
+    transform: translate3d(0, 0, -$mobile-nav-width);
+}
+
+.st-effect-10.st-menu-open .st-effect-10.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Effect 11: Scale and rotate pusher */
+.st-effect-11.st-container {
+    perspective: 1500px;
+}
+
+.st-effect-11 .st-pusher {
+    transform-style: preserve-3d;
+}
+
+.st-effect-11.st-menu-open .st-pusher {
+    transform: translate3d(100px, 0, -600px) rotateY(-20deg);
+}
+
+.st-effect-11.st-menu {
+    opacity: 1;
+    transform: translate3d(-100%, 0, 0);
+}
+
+.st-effect-11.st-menu-open .st-effect-11.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
+}
+
+.st-effect-11.st-menu::after {
+    display: none;
+}
+
+/* Effect 12: Open door */
+.st-effect-12.st-container {
+    perspective: 1500px;
+}
+
+.st-effect-12 .st-pusher {
+    transform-origin: 100% 50%;
+    transform-style: preserve-3d;
+}
+
+.st-effect-12.st-menu-open .st-pusher {
+    transform: rotateY(-10deg);
+}
+
+.st-effect-12.st-menu {
+    opacity: 1;
+    transform: translate3d(-100%, 0, 0);
+}
+
+.st-effect-12.st-menu-open .st-effect-12.st-menu {
+    visibility: visible;
+    transition: transform 0.5s;
+    transform: translate3d(0, 0, 0);
+}
+
+.st-effect-12.st-menu::after {
+    display: none;
+}
+
+/* Effect 13: Fall down */
+.st-effect-13.st-container {
+    perspective: 1500px;
+    perspective-origin: 0% 50%;
+}
+
+.st-effect-13.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-13.st-menu {
+    z-index: 1;
+    opacity: 1;
+    transform: translate3d(0, -100%, 0);
+}
+
+.st-effect-13.st-menu-open .st-effect-13.st-menu {
+    visibility: visible;
+    transition-timing-function: ease-in-out;
+    transition-property: transform;
+    transform: translate3d(0, 0, 0);
+    transition-speed: 0.2s;
+}
+
+/* Effect 14: Delayed 3D rotate */
+.st-effect-14.st-container {
+    perspective: 1500px;
+    perspective-origin: 0% 50%;
+}
+
+.st-effect-14 .st-pusher {
+    transform-style: preserve-3d;
+}
+
+.st-effect-14.st-menu-open .st-pusher {
+    transform: translate3d($mobile-nav-width, 0, 0);
+}
+
+.st-effect-14.st-menu {
+    transform: translate3d(-100%, 0, 0) rotateY(90deg);
+    transform-origin: 0% 50%;
+    transform-style: preserve-3d;
+}
+
+.st-effect-14.st-menu-open .st-effect-14.st-menu {
+    visibility: visible;
+    transition-delay: 0.1s;
+    transition-timing-function: ease-in-out;
+    transition-property: transform;
+    transform: translate3d(-100%, 0, 0) rotateY(0deg);
+}
+
 /* Fallback example for browsers that don't support 3D transforms (and no JS fallback) */
 .no-csstransforms3d .st-pusher,
 .no-js .st-pusher {
-    padding-left: 300px;
+    padding-left: $mobile-nav-width;
 }
