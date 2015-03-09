@@ -26,12 +26,18 @@
         top: 0;
         left: 0;
         z-index: 3;
+
+        height: $mainnav-height-mobile;
+    }
+    .main-nav__button__icon {
+        font-size: 15px;
     }
     .main-header__logo {
         position: relative;
         z-index: 2;
 
         width: 100%;
+        height: $logo-height-mobile:;
         text-align: center;
     }
     .searchbox-form {

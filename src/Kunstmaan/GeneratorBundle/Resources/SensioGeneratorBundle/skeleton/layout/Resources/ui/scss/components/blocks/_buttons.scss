@@ -4,6 +4,9 @@
 
 .btn, button {
     display: inline-block;
+    background: none;
+    border: 0;
+    padding: 0;
 
     &:hover, &:focus, &:active {
     }

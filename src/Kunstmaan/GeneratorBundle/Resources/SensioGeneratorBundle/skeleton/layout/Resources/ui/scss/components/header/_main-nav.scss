@@ -9,7 +9,7 @@
 
    .main-nav__list {
        @include list-reset;
-       line-height: $search-height;
+       line-height: $mainnav-height;
    }
    .main-nav__list__item {
        font-size: .65rem;
