@@ -6,16 +6,16 @@
 
                 {% if nodemenu is defined %}
                     {# Main navigation trigger #}
-                    <div class="main-header__nav pull-left">
+                    <div class="main-header__nav">
                         <nav id="st-trigger-effects" role="navigation" class="main-nav pull-left">
                             <button class="main-nav__button" data-effect="st-effect-3">
-                                <i class="icon icon--arrow-down">---</i>Push
+                                <i class="icon icon--arrow-left"></i>
                             </button>
                         </nav>
                     </div>
 
                     {# Logo #}
-                    <div class="main-header__logo pull-left">
+                    <div class="main-header__logo">
                         {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
                         <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo__link">
                             <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img"/>
@@ -25,7 +25,7 @@
                     {# Search #}
                     {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                     {# {% if searchPageNode %} #}
-                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-left">
+                        <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form">
                             <div class="searchbox">
                                 <div class="searchbox__input-wrapper">
                                     <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />

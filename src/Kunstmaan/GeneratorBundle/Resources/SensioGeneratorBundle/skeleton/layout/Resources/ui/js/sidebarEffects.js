@@ -1,6 +1,7 @@
 /**
  * sidebarEffects.js v1.0.0
  * http://www.codrops.com
+ * http://tympanus.net/Development/SidebarTransitions/
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php

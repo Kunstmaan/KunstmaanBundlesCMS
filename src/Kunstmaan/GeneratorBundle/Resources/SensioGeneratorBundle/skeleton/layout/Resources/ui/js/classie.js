@@ -1,4 +1,6 @@
-/*!
+/*
+ * http://tympanus.net/Development/SidebarTransitions/
+ *
  * classie - class helper functions
  * from bonzo https://github.com/ded/bonzo
  *

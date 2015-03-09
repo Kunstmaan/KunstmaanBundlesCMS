@@ -14,6 +14,23 @@
 @media(max-width: $screen-sm-max) {
     .main-header--mobile {
         display: block;
+
+        .main-header__nav {
+            position: absolute;
+            left: 0;
+            z-index: 3;
+        }
+        .main-header__logo {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+        }
+        .searchbox-form {
+            position: absolute;
+            right: 0;
+            z-index: 4;
+        }
     }
 }
 
