@@ -1,17 +1,18 @@
 {# Mobile navigation #}
 
-<nav id="main-menu" class="main-nav__content">
+<nav class="mobile-nav">
     {# Language nav #}
     {% if requiredlocales is defined %}
         {% set langs = requiredlocales|split('|') %}
         {% if langs|length > 0 %}
-            <nav class="language-nav pull-left">
-                <span class="language-nav__active-lang">
-                    {{ app.request.locale }}
-                    <i class="icon icon--triangle-down language-nav__icon"></i>
-                </span>
+            <nav class="language-nav">
                 <ul class="list-reset language-nav__list">
                     {% for lang in langs %}
+                        {% if lang != app.request.locale %}
+                            <li class="language-nav__list__item language-nav__list__item--active-lang">
+                                {{ app.request.locale }}
+                            </li>
+                        {% endif %}
                         {% if lang != app.request.locale %}
                             <li class="language-nav__list__item">
                                 <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">

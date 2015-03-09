@@ -8,11 +8,6 @@
     position: relative;
 }
 
-.language-nav__active-lang {
-    font-size: .65rem;
-    font-weight: 400;
-    text-transform: uppercase;
-}
 .language-nav__icon {
     display: none;
 }
@@ -26,7 +21,6 @@
 .language-nav__list__link {
     display: block;
     font-weight: 400;
-    color: $gray;
 
     &:hover, &:focus {
         text-decoration: none;
@@ -63,6 +57,11 @@
         vertical-align: middle;
         margin-left: .1rem;
     }
+    .language-nav__active-lang {
+        font-size: .65rem;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
     .language-nav__list {
         opacity: 0;
 
@@ -80,6 +79,9 @@
     }
     .language-nav__list__item {
         display: block;
+    }
+    .language-nav__list__link {
+        color: $gray;
     }
 
 }

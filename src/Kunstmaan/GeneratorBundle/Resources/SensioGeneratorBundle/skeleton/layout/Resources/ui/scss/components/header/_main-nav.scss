@@ -45,8 +45,15 @@
 
 /* Mobile
    ========================================================================== */
+@media(min-width: $screen-md-min) {
+    .mobile-nav {
+        display: none;
+    }
+}
 @media(max-width: $screen-sm-max) {
-    .main-header--mobile {
+    .mobile-nav {
+        display: block;
+
 
         .main-nav__contact {
             @include list-reset;
