@@ -5,78 +5,12 @@
             <div class="col-md-12">
 
                 {% if nodemenu is defined %}
+                    {# Main navigation trigger #}
                     <div class="main-header__nav pull-left">
-
-                        {# Main navigation #}
-                        <nav role="navigation" class="js-toggle-container main-nav pull-left">
-                            <button class="js-toggle-btn toggle-button main-nav__button" data-target="#main-menu">
-                                Menu
-                                <i class="icon icon--arrow-down toggle-btn__icon--show"></i>
-                                <i class="icon icon--arrow-up toggle-btn__icon--hide"></i>
+                        <nav role="navigation" class="main-nav pull-left">
+                            <button class="main-nav__button" data-effect="st-effect-3">
+                                <i class="icon icon--arrow-down">---</i>Push
                             </button>
-
-                            <div id="main-menu" class="toggle-item main-nav__content">
-
-                                {# Language nav #}
-                                {% if requiredlocales is defined %}
-                                    {% set langs = requiredlocales|split('|') %}
-                                    {% if langs|length > 0 %}
-                                        <nav class="language-nav pull-left">
-                                            <span class="language-nav__active-lang">
-                                                {{ app.request.locale }}
-                                                <i class="icon icon--triangle-down language-nav__icon"></i>
-                                            </span>
-                                            <ul class="list-reset language-nav__list">
-                                                {% for lang in langs %}
-                                                    {% if lang != app.request.locale %}
-                                                        <li class="language-nav__list__item">
-                                                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">
-                                                                {{ lang }}
-                                                            </a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </nav>
-                                    {% endif %}
-                                {% endif %}
-
-                                {# Main navigation list #}
-                                <ul class="toggle-item__content main-nav__list">
-                                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                                    {% for node in activeSubnode.children %}
-                                        {% if not node.node.isHiddenFromNav() %}
-                                            <li class="main-nav__list__item {% if(node.active) %}main-nav__list__item--active{% endif %}">
-                                                <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__list__link">{{ node.title }}</a>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-
-                                    {# Call to action #}
-                                    <li class="main-nav__list__item main-nav__list__item--cta">
-                                        <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right main-nav__list__icon--cta"></i></a>
-                                    </li>
-                                </ul>
-
-                                {# Main navigation buttons #}
-                                <ul class="main-nav__contact">
-                                    <li class="main-nav__contact__item">
-                                        <a href="#" class="main-nav__contact__link">
-                                            <i class="icon icon--mail"></i>Mail
-                                        </a>
-                                    </li>
-                                    <li class="main-nav__contact__item">
-                                        <a href="#" class="main-nav__contact__link">
-                                            <i class="icon icon--phone"></i>Phone
-                                        </a>
-                                    </li>
-                                    <li class="main-nav__contact__item">
-                                        <a href="#" class="main-nav__contact__link">
-                                            <i class="icon icon--location"></i>Location
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </nav>
                     </div>
 
@@ -127,9 +61,8 @@
                         </a>
                     </div>
 
+                    {# Main navigation #}
                     <div class="main-header__nav pull-right">
-
-                        {# Main navigation #}
                         <nav role="navigation" class="main-nav pull-left">
 
                             <div id="main-menu" class="main-nav__content">

@@ -8,7 +8,7 @@
 }
 
 .searchbox {
-    min-width: calc(#{$search-height} + 1rem);
+    min-width: $search-height;
     position: relative;
     overflow: hidden;
 }
