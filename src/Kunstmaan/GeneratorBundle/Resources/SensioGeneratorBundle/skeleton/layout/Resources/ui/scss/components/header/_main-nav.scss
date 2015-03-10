@@ -104,9 +104,13 @@
             display: block;
             text-align: center;
             color: $gray;
+            font-size: 1.875rem;
+
+            &:hover, &:focus {
+                text-decoration: none;
+            }
         }
         .contact-nav__list__icon {
-
         }
 
     }
