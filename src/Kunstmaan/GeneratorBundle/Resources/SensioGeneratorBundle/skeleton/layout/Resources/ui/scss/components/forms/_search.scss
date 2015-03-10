@@ -4,7 +4,6 @@
 
 .searchbox-form {
     margin-right: 1rem;
-    @include transition(width .2s ease-in-out);
 }
 
 .searchbox {
@@ -17,12 +16,12 @@
     position: relative;
     max-width: 100%;
     width: $search-height;
-    @include transition(width .2s ease-in-out);
+    transition: width .2s ease-in-out;
 }
 
 .searchbox__input {
     opacity: 0;
-    @include transition(opacity .2s ease-in-out);
+    transition: opacity .2s ease-in-out;
 
     position: relative;
     z-index: 2;
@@ -85,12 +84,16 @@
 
     .searchbox-form {
         margin-right: 0;
+        width: 0;
+        transition: width .2s ease-in-out;
     }
     .searchbox {
         min-width: $search-height-mobile;
+        @include clearfix;
     }
     .searchbox__content {
         width: $search-height-mobile;
+        float: right;
     }
     .searchbox__input {
         height: $search-height-mobile;
@@ -104,6 +107,9 @@
         top: 0;
         left: 0;
         text-align: center;
+    }
+    .searchbox__submit {
+        background: $white;
     }
     .searchbox__back, .searchbox__submit {
         width: $search-height-mobile;
