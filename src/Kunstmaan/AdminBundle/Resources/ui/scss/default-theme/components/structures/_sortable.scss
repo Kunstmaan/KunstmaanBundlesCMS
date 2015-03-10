@@ -18,6 +18,8 @@
    ========================================================================== */
 .sortable-container {
     transition: transform .3s ease;
+
+    min-height: 3rem; // Enable drop on empty region
 }
 
 

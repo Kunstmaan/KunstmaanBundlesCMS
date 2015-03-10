@@ -5,6 +5,8 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
     var init,
         changeTemplate, publishLater, unpublishLater, sortable, permissions;
 
+    var $body = $('body');
+
 
     init = function() {
         $('.js-change-page-template').on('click', function() {
@@ -100,13 +102,20 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
     // Sortable
     sortable = function() {
         $('.js-sortable-container').each(function() {
-            var id = $(this).attr('id'),
-                el = document.getElementById(id);
+            var $this = $(this),
+                id = $this.attr('id'),
+                el = document.getElementById(id),
+                allowedPageParts = $this.data('scope'); // Which PagePart are allowed in this container?
 
             Sortable.create(el, {
                 draggable: '.js-sortable-item',
                 handle: '.js-sortable-item__handle',
                 ghostClass: 'sortable-item--ghost',
+
+                group: {
+                    name: 'pagepartRegion',
+                    pull: true
+                },
 
                 animation: 100,
 
@@ -115,21 +124,31 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                 scrollSpeed: 300,
 
                 onStart: function(evt) {
-                    $('body').addClass('sortable-active');
+                    // Add active class
+                    $body.addClass('sortable-active');
                 },
 
                 onEnd: function(evt) {
-                    $('body').removeClass('sortable-active');
+                    // Remove active class
+                    $body.removeClass('sortable-active');
+
+                    //update context names
+                    // var context = $(ui.item).parents('.pagepartscontainer').data('context');
+                    // $(ui.item).find('.pagepartadmin_field_updatecontextname').each(function () {
+                    //     $(this).attr('name', context + $(this).data('suffix'));
+                    // });
                 }
             });
         });
 
+        // Add active class
         $('.js-sortable-item__handle').on('mousedown', function() {
-            $('body').addClass('sortable-active');
+            $body.addClass('sortable-active');
         });
 
+        // Remove active class
         $('.js-sortable-item__handle').on('mouseup', function() {
-            $('body').removeClass('sortable-active');
+            $body.removeClass('sortable-active');
         });
     };
 
