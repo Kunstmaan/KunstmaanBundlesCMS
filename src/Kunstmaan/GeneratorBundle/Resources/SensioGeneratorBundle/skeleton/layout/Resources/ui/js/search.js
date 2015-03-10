@@ -9,8 +9,8 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     };
 
     initSearch = function() {
-        $('.js-searchbox').on('click', function() {
-            $(this).addClass('searchbox--active');
+        $('.js-searchbox-form').on('click', function() {
+            $(this).addClass('searchbox-form--active');
         });
     };
 
