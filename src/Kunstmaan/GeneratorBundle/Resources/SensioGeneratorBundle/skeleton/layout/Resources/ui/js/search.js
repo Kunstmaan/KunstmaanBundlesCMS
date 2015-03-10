@@ -9,8 +9,12 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     };
 
     initSearch = function() {
-        $('.js-searchbox-form').on('click', function() {
+        $('.js-searchbox-form').on('click', function(e) {
+            e.stopPropagation();
             $(this).addClass('searchbox-form--active');
+        });
+        $(document).on('click', function (e) {
+            $('.js-searchbox-form').removeClass('searchbox-form--active');
         });
     };
 
