@@ -53,23 +53,29 @@
 @media(max-width: $screen-sm-max) {
     .mobile-nav {
         display: block;
-        padding-top: 2.5rem;
 
         .main-nav__list {
-
+            padding-top: 2.5rem;
         }
         .main-nav__list__item {
             font-size: 1.4rem;
-            font-weight: 300;
-            color: $theme-color;
         }
         .main-nav__list__item--active {
             background-color: $gray-darker;
+
+            .main-nav__list__link {
+                color: $theme-color;
+            }
         }
         .main-nav__list__link {
             padding: .5rem 1.5rem;
             color: $white;
-            font-weight: 300;
+            font-weight: 100;
+            text-transform: none;
+
+            &:hover, &:focus {
+                text-decoration: none;
+            }
         }
 
         // Contact nav
