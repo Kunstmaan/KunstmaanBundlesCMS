@@ -14,7 +14,7 @@ kunstmaanbundles.sidebartoggle = (function(window, undefined) {
             $toggleButton = $('#app__sidebar-toggle');
 
         // Set default session state
-        if(sessionStorage.getItem('altered-state') === 'true' && $toggleButton) {
+        if(sessionStorage.getItem('altered-state') === 'true' && $toggleButton && document.documentElement.clientWidth >= 992) {
             $appMain.toggleClass('app__main--altered-state');
         }
 

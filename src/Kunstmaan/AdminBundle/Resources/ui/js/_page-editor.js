@@ -133,10 +133,15 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                     $body.removeClass('sortable-active');
 
                     //update context names
-                    // var context = $(ui.item).parents('.pagepartscontainer').data('context');
-                    // $(ui.item).find('.pagepartadmin_field_updatecontextname').each(function () {
-                    //     $(this).attr('name', context + $(this).data('suffix'));
-                    // });
+                    var $el = $(evt.item),
+                        context = $el.parents('.js-pp-container').data('context');
+
+                    $el.find('.pagepartadmin_field_updatecontextname').each(function() {
+                        console.log('context: ' + context);
+                        console.log('suffix: ' + $(this).data('suffix'));
+
+                        $(this).attr('name', context + $(this).data('suffix'));
+                    });
                 }
             });
         });
