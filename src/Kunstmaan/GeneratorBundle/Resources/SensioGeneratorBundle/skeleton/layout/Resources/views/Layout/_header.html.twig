@@ -30,7 +30,7 @@
                                 <div class="searchbox">
                                     <div class="searchbox__content">
                                         <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
-                                        <button class="searchbox__back">
+                                        <button class="searchbox__back js-searchbox-back">
                                             <i class="icon icon--arrow-tail-left searchbox__back__icon"></i>
                                         </button>
                                         <button type="submit" id="search" class="searchbox__submit">

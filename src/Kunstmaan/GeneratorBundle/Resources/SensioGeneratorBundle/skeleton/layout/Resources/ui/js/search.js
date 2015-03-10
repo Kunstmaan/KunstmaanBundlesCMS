@@ -13,7 +13,10 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
             e.stopPropagation();
             $(this).addClass('searchbox-form--active');
         });
-        $(document).on('click', function (e) {
+        $(document).on('click', function() {
+            $('.js-searchbox-form').removeClass('searchbox-form--active');
+        });
+        $('.js-searchbox-back').on('click', function() {
             $('.js-searchbox-form').removeClass('searchbox-form--active');
         });
     };
