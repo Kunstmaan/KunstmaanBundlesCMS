@@ -87,11 +87,14 @@
         }
         .contact-nav__list {
             @include list-reset;
+            @include clearfix
         }
         .contact-nav__list__item {
-            display: inline-block;
+            float: left;
+            display: block;
             border: 1px solid $gray-darker;
             border-width: 1px 0 0 1px;
+            width: calc(100% / 3);
 
             &:first-child {
                 border-left-width: 0;
@@ -99,7 +102,8 @@
         }
         .contact-nav__list__link {
             display: block;
-            width: calc(100% / 3);
+            text-align: center;
+            color: $gray;
         }
         .contact-nav__list__icon {
 
