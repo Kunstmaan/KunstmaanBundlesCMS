@@ -17,7 +17,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
             $('.js-searchbox-form').removeClass('searchbox-form--active');
         });
         $('.js-searchbox-back').on('click', function() {
-            $('.js-searchbox-form').removeClass('searchbox-form--active');
+            $(this).closest('.js-searchbox-form').removeClass('searchbox-form--active');
         });
     };
 
