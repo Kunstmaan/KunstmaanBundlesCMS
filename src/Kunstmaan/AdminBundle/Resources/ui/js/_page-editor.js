@@ -137,9 +137,6 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                         context = $el.parents('.js-pp-container').data('context');
 
                     $el.find('.pagepartadmin_field_updatecontextname').each(function() {
-                        console.log('context: ' + context);
-                        console.log('suffix: ' + $(this).data('suffix'));
-
                         $(this).attr('name', context + $(this).data('suffix'));
                     });
                 }
