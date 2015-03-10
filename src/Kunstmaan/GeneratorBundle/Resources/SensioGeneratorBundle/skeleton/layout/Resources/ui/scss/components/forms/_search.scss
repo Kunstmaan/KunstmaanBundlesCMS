@@ -31,6 +31,7 @@
     position: relative;
     z-index: 2;
     cursor: pointer;
+    border: none;
 
     height: $search-height-mobile;
     line-height: $search-height-mobile;
@@ -129,6 +130,8 @@
 
     // Active
     .searchbox-form--active {
+        width: 340px;
+
         .searchbox {
             @include box-shadow;
         }
