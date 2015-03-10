@@ -1,4 +1,4 @@
-{{"{% if pagepartref is defined %}
+{% if pagepartref is defined %}
 <script>
 window.FileChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
     window.CKEDITOR.tools.callFunction(2, url);
@@ -7,4 +7,4 @@ window.FileChosenCallback['{{ pagepartref.id }}'] = function(url, id) {
 {% endif %}
 <div class='text-pp'>
 {{resource.content|raw}}
-</div>"}}
+</div>

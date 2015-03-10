@@ -146,7 +146,7 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
         );
 
         // template, target, parameters
-        $this->renderFile('/Resources/views/PageParts/'.$this->entity.'/view.html.twig', $ResourcePath, $params);
+        $this->renderTwig('/Resources/views/PageParts/'.$this->entity.'/view.html.twig', $ResourcePath, $params);
 
         $this->assistant->writeLine('Generating '.$this->entity.' template:     <info>OK</info>');
     }
