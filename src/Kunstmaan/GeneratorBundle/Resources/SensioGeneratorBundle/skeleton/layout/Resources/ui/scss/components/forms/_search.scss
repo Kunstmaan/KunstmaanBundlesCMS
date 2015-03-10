@@ -99,14 +99,13 @@
         padding: 0 $search-height-mobile 0 calc(#{$search-height-mobile} + 1rem);
     }
 
-    .searchbox__back-icon {
+    .searchbox__back {
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 4;
         text-align: center;
     }
-    .searchbox__submit, .searchbox__back-icon {
+    .searchbox__back, .searchbox__submit {
         width: $search-height-mobile;
         height: $search-height-mobile;
         line-height: $search-height-mobile;
