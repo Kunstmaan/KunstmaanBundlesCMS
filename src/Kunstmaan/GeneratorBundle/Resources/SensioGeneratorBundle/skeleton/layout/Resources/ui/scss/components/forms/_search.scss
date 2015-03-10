@@ -68,7 +68,8 @@
     top: 0;
     right: 0;
 }
-.searchbox__submit__icon, .searchbox__back-icon {
+
+.searchbox__submit__icon {
     color: $theme-color;
     font-size: .8rem;
 }
@@ -90,6 +91,9 @@
     .searchbox__input {
         height: $search-height-mobile;
         line-height: $search-height-mobile;
+
+        padding-left: $search-height-mobile;
+        padding-right: $search-height-mobile;
     }
 
     .searchbox--active {
@@ -105,6 +109,11 @@
         }
     }
 
+    .searchbox__back-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     .searchbox__submit, .searchbox__back-icon {
         width: $search-height-mobile;
         height: $search-height-mobile;
