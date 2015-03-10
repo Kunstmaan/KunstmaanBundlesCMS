@@ -96,6 +96,7 @@
 @media(min-width: $screen-md-min) {
 
     .searchbox-form {
+        width: $search-height;
         margin-right: 1rem;
     }
 
