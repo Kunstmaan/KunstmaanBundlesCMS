@@ -9,16 +9,17 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     };
 
     initSearch = function() {
-        $('.js-searchbox-form').on('click', function(e) {
+        $('.js-searchbox-content').on('click', function(e) {
             e.stopPropagation();
-            $(this).addClass('searchbox-form--active');
+            $(this).closest('.js-searchbox-form').addClass('searchbox-form--active');
+            console.log("test");
         });
         $(document).on('click', function() {
             $('.js-searchbox-form').removeClass('searchbox-form--active');
         });
         $('.js-searchbox-back').on('click', function() {
-            $(this).find('.js-searchbox-form').removeClass('searchbox-form--active');
-            console.log("komaan");
+            $(this).closest('.js-searchbox-form').removeClass('searchbox-form--active');
+            console.log("hups");
         });
     };
 
