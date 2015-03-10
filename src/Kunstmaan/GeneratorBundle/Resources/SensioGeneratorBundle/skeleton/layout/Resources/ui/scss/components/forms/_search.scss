@@ -44,6 +44,7 @@
     display: inline-block;
     height: $search-height;
     line-height: $search-height;
+    text-transform: capitalize;
 
     // cf. button-pp
     font-size: .8rem;
