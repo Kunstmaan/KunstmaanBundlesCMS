@@ -32,17 +32,19 @@
             <h5 class="pp__header__head">
                 {{pagepartadmin.getType(pagepart)}}
             </h5>
-            <div class="pp__header__actions">
-                <button type="button" class="btn--raise-on-hover pp__header__actions__action pp__header__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal-{{id}}">
-                    <i class="fa fa-trash-o"></i>
-                </button>
-                {% if editable %}
-                    <button type="button" class="js-edit-pp-btn btn--raise-on-hover pp__header__actions__action pp__header__actions__action--edit" data-target-id="{{id}}">
-                        <i class="fa fa-pencil-square-o"></i>
-                    </button>
-                {% endif %}
-            </div>
         </header>
+
+        <!-- PP - actions -->
+        <div class="pp__actions">
+            <button type="button" class="btn--raise-on-hover pp__actions__action pp__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal-{{id}}">
+                <i class="fa fa-trash-o"></i>
+            </button>
+            {% if editable %}
+                <button type="button" class="js-edit-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--edit" data-target-id="{{id}}">
+                    <i class="fa fa-pencil-square-o"></i>
+                </button>
+            {% endif %}
+        </div>
 
         <div class="pp__view">
             <!-- PP - View - Preview -->

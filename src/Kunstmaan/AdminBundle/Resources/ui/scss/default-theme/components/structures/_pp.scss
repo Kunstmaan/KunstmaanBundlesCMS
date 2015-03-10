@@ -6,6 +6,8 @@
    ========================================================================== */
 // Default state
 .pp {
+    position: relative;
+
     background: $white;
     border: 1px solid #efefef;
     border-radius: $border-radius-base;
@@ -15,7 +17,7 @@
     &:hover {
         border-color: $gray-lighter;
 
-        .pp__header {
+        .pp__header, .pp__actions {
             opacity: 1;
         }
     }
@@ -25,11 +27,11 @@
 .pp--edit-active {
     border-color: $gray-lighter;
 
-    .pp__header {
+    .pp__header, .pp__actions {
         opacity: 1;
     }
 
-    .pp__header__actions__action--edit {
+    .pp__actions__action--edit {
         background: $white;
     }
 }
@@ -86,12 +88,20 @@
 }
 
 
-// Actions
-.pp__header__actions {
-    float: right;
+
+/* Header
+   ========================================================================== */
+.pp__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    opacity: .3;
+
+    transition: opacity .3s ease;
 }
 
-.pp__header__actions__action {
+.pp__actions__action {
     position: relative;
 
     float: right;
@@ -108,6 +118,10 @@
 
     transition: background .3s ease, color .3s ease;
 
+    &:last-child {
+        border-top-right-radius: 2px;
+    }
+
     &:hover {
         z-index: 1;
 
@@ -119,7 +133,7 @@
     }
 }
 
-.pp__header__actions__action--del {
+.pp__actions__action--del {
 
 
     &:hover {
@@ -127,7 +141,7 @@
     }
 }
 
-.pp__header__actions__action--edit {
+.pp__actions__action--edit {
 
     &:hover {
         background: $blue;
