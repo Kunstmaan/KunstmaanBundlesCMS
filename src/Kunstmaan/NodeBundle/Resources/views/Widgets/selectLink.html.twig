@@ -54,16 +54,6 @@
 
         <!-- Modal Sidebar -->
         <aside id="app__sidebar" class="app__sidebar app__sidebar--static url-chooser__tree">
-            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
-                <ul>
-                    {% for item in tree.rootItems %}
-                        {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
-                    {% endfor %}
-                </ul>
-            </nav>
-
-            <hr>
-
             <!-- Tree Search -->
             <div class="form-group app__sidebar__module app__sidebar__search">
                 <div class="input-group">
@@ -72,8 +62,19 @@
                     </span>
                     <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
                 </div>
+
+                <hr>
             </div>
+
+            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+                <ul>
+                    {% for item in tree.rootItems %}
+                        {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
+                    {% endfor %}
+                </ul>
+            </nav>
         </aside>
+
 
         <!-- Content -->
         <div class="url-chooser__link-select">

@@ -20,3 +20,7 @@ div.pagination {
     display: block;
     text-align: right;
 }
+
+.table-responsive + .pagination {
+    margin-top: 0;
+}

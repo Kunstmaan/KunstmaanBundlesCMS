@@ -24,19 +24,23 @@
 
 <body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
 
-<!-- Nav settings -->
-{% set lowestTopChild = adminmenu.lowestTopChild %}
-{% if lowestTopChild %}
-    {% set navigationChildren = lowestTopChild.navigationChildren %}
-{% endif %}
 
 <!-- Body block -->
 {% block body %}
-
     <!-- Header -->
     {% block appHeader %}
         {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
     {% endblock %}
+
+
+    <!-- Nav settings -->
+    {% if lowestTopChild is not defined %}
+        {% set lowestTopChild = adminmenu.lowestTopChild %}
+        {% if lowestTopChild %}
+            {% set navigationChildren = lowestTopChild.navigationChildren %}
+        {% endif %}
+    {% endif %}
+
 
     <!-- Main Content -->
     <main role="main" id="app__main" class="container-fluid app__main{% if lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
@@ -45,7 +49,7 @@
             {% if lowestTopChild and navigationChildren | length > 0 %}
 
                 <!-- App Sidebar -->
-                <aside id="app__sidebar" class="col-md-3 col--padded-large app__sidebar">
+                <aside id="app__sidebar" class="col-md-3 app__sidebar">
                     {% block sidebar %}
                         {% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
                     {% endblock %}
@@ -56,7 +60,7 @@
                 <div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
 
                     <!-- App Sidebar Toggle -->
-                    <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle">
+                    <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle" title="toggle sidebar">
                         <span class="app__sidebar-toggle__show-icon">
                             <i class="fa fa-caret-right"></i>
                             <i class="fa fa-list-ul"></i>

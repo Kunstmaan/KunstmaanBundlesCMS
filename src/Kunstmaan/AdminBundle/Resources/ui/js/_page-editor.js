@@ -3,26 +3,25 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     var init,
-        changeTemplate, publishLater, unpublishLater,
-        initSortable;
+        changeTemplate, publishLater, unpublishLater, sortable, permissions;
 
 
     init = function() {
         $('.js-change-page-template').on('click', function() {
             changeTemplate($(this));
         });
-
         if($('#publish-later__check').length) {
             publishLater();
         }
-
         if($('#unpublish-later__check').length) {
             unpublishLater();
         }
-
         if($('.js-sortable-container').length) {
-            initSortable();
+            sortable();
         };
+        if($('#permissions-container').length) {
+            permissions();
+        }
     };
 
 
@@ -99,7 +98,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
 
     // Sortable
-    initSortable = function() {
+    sortable = function() {
         $('.js-sortable-container').each(function() {
             var id = $(this).attr('id'),
                 el = document.getElementById(id);
@@ -132,86 +131,127 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         $('.js-sortable-item__handle').on('mouseup', function() {
             $('body').removeClass('sortable-active');
         });
+    };
 
 
-
-        // OLD
-
-        // var scope = $(this).closest('section').data('scope');
-        // $('.pageparts_sortable[data-scope~=' + scope + ']')
-        //         .addClass('connectedSortable')
-        //         .sortable('option', 'connectWith', '.connectedSortable');
-        // $('.pageparts_sortable:not([data-scope~=' + scope + '])')
-        //         .sortable('disable')
-        //         .sortable('option', 'connectWith', false)
-        //         .parent().addClass('region-disabled');
-        // $('.template-block-content').not('.sortable')
-        //         .parent().addClass('region-disabled');
+    // Permission
+    permissions = function() {
+        // Container
+        var $permissionsContainer = $('#permissions-container');
 
 
-        // $(document).ready(function () {
-            // var heightenEmptyDropZones = function (elementHeight) {
-            //     var $empty = jQuery('.connectedSortable:not(:has(>section))');
-            //     $empty.css({'height': elementHeight});
-            // }
+        // Changes
+        var changes = [];
+        changes['add'] = [];
+        changes['del'] = [];
 
-            // var autoHeightDropZones = function () {
-            //     jQuery('.connectedSortable').css({'height': ''});
-            // }
 
-            // $('.prop_bar').mousedown(PagePartEditor.propBarMouseDownHandler);
-            // $('body').mouseup(
-            //         function () {
-            //             if (PagePartEditor.sortableClicked) {
-            //                 // Enable all sortable regions again
-            //                 $('.pageparts_sortable')
-            //                         .sortable('enable')
-            //                         .sortable('option', 'connectWith', false)
-            //                         .parent().removeClass('region-disabled');
-            //                 $('.template-block-content').not('.sortable')
-            //                         .parent().removeClass('region-disabled');
-            //                 PagePartEditor.sortableClicked = false;
-            //             }
-            //         }
-            // );
-            // $('#parts_{{pagepartadmin.context}}').sortable({
-            //     iframeFix: true,
-            //     connectWith: ".connectedSortable",
-            //     handle: '.prop_bar',
-            //     cursor: 'move',
-            //     placeholder: "placeholder",
-            //     forcePlaceholderSize: true,
-            //     tolerance: "pointer",
-            //     revert: 100,
-            //     opacity: 1,
-            //     start: function (e, ui) {
-            //         $(ui.item).find('.new_pagepart').html('');
-            //         disableCKEditors();
-            //         $('.draggable').css('opacity', ".4");
-            //         $('.ui-sortable-helper .new_pagepart').slideUp("fast");
+        // Checkboxes
+        $('.js-permission-checkbox').on('change', function() {
+            var checkbox = this,
+                $checkbox = $(checkbox),
+                role = $checkbox.data('role'),
+                permission = $checkbox.data('permission'),
+                origValue = $checkbox.data('original-value');
 
-            //         // Temporarily change the height of empty pagepart containers.
-            //         heightenEmptyDropZones(ui.item.outerHeight(true));
-            //     },
-            //     stop: function (e, ui) {
-            //         $(ui.item).find('.new_pagepart').html($(ui.item).parents('.pagepartscontainer').find('.new_pagepart.first').html());
-            //         //update context names
-            //         var context = $(ui.item).parents('.pagepartscontainer').data('context');
-            //         $(ui.item).find('.pagepartadmin_field_updatecontextname').each(function () {
-            //             $(this).attr('name', context + $(this).data('suffix'));
-            //         });
-            //         enableCKEditors();
 
-            //         // Revert the height for the dropzones.
-            //         autoHeightDropZones();
+            // Add/Remove change
+            if (origValue == checkbox.checked) {
+                // Remove change...
+                var idx;
 
-            //         // Remove connectedSortable when stopped dropping.
-            //         $('.connectedSortable').removeClass('connectedSortable');
+                if (origValue) {
+                    idx = changes['del'].indexOf(role + '.' + permission);
+                    if (idx != -1) {
+                        changes['del'].splice(idx, 1);
+                    }
+                } else {
+                    idx = changes['add'].indexOf(role + '.' + permission);
+                    if (idx != -1) {
+                        changes['add'].splice(idx, 1);
+                    }
+                }
+            } else {
+                // Add change
+                if (checkbox.checked) {
+                    changes['add'].push(role + '.' + permission);
+                } else {
+                    changes['del'].push(role + '.' + permission);
+                }
+            }
 
-            //         $('.draggable').css('opacity', "1");
-            //     }
-            // });
-        // });
+
+            // Add hidden fields
+            var hiddenfieldsContainer = $("#permission-hidden-fields"),
+                hiddenfields;
+
+            if (changes['add'].length > 0) {
+                for (var i=0; i<changes['add'].length; i++) {
+                    var params = changes['add'][i].split('.');
+                    hiddenfields = hiddenfields + '<input type="hidden" name="permission-hidden-fields[' + params[0] + '][ADD][]" value="' + params[1] + '">';
+                }
+            }
+
+            if (changes['del'].length > 0) {
+                for (var i=0; i<changes['del'].length; i++) {
+                    var params = changes['del'][i].split('.');
+                    hiddenfields = hiddenfields + '<input type="hidden" name="permission-hidden-fields[' + params[0] + '][DEL][]" value="' + params[1] + '">';
+                }
+            }
+
+            hiddenfieldsContainer.html(hiddenfields);
+
+
+            // Display changes in div?
+            var isRecursive = $permissionsContainer.data('recursive');
+
+            if(isRecursive) {
+                var transPermsAdded = $permissionsContainer.data('trans-perms-added'),
+                    transPermsRemoved = $permissionsContainer.data('trans-perms-removed');
+
+                var $infoContainer= $('#permission-changes-info-container'),
+                    modalHtml = '';
+
+                // Additions
+                if (changes['add'].length > 0) {
+                    modalHtml = modalHtml + '<p>' + transPermsAdded;
+                    modalHtml = modalHtml + '<ul>';
+
+                    for (var i=0; i<changes['add'].length; i++) {
+                        var params = changes['add'][i].split('.');
+
+                        modalHtml = modalHtml + '<li><strong>' + params[0] + '</strong> : ' + params[1] + '</li>';
+                    }
+
+                    modalHtml = modalHtml + '</ul>';
+                    modalHtml = modalHtml + '</p>';
+                }
+
+                // Deletions
+                if (changes['del'].length > 0) {
+                    modalHtml = modalHtml + '<p>' + transPermsRemoved;
+                    modalHtml = modalHtml + '<ul>';
+
+                    for (var i=0; i<changes['del'].length; i++) {
+                        var params = changes['del'][i].split('.');
+
+                        modalHtml = modalHtml + '<li><strong>' + params[0] + '</strong> : ' + params[1] + '</li>';
+                    }
+
+                    modalHtml = modalHtml + '</ul>';
+                    modalHtml = modalHtml + '</p>';
+                }
+
+                // Setup info container
+                if (modalHtml != '') {
+                    $('#permission-changes-modal__body').html(modalHtml);
+                    $infoContainer.removeClass('hidden');
+                } else {
+                    $infoContainer.addClass('hidden');
+                    $('#apply-recursive').prop('checked', false);
+                }
+            }
+        });
     };
 
 

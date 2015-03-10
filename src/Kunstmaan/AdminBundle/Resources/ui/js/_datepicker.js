@@ -48,7 +48,8 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
 
 
         // Setup
-        var $input = $el.find('input'),
+        var $container = $el.find('.input-group'),
+            $input = $el.find('input'),
             $addon = $el.find('.input-group-addon');
 
         $input.datetimepicker({
@@ -57,6 +58,7 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             keepOpen: keepOpen,
             minDate: minDate,
             defaultDate: defaultDate,
+            widgetParent: $el,
             icons: {
                 time: 'fa fa-clock-o',
                 date: 'fa fa-calendar',

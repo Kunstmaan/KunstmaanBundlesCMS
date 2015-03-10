@@ -5,6 +5,8 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
     var init,
         addPagePart, editPagePart, deletePagePart;
 
+    var $body = $('body');
+
     init = function() {
         var $body = $('body');
 
@@ -36,6 +38,9 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
             context = $targetContainer.data('context'),
             ppType = $select.val();
 
+        // Set Loading
+        $body.addClass('app--loading');
+
         // Ajax Request
         $.ajax({
             url: requestUrl,
@@ -47,15 +52,16 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
             },
             async: true,
             success: function (data) {
-                var result = null,
-                    firstSelect = $select.hasClass('js-add-pp-select--first');
-
                 // Add PP
+                var firstSelect = $select.hasClass('js-add-pp-select--first');
                 if (firstSelect) {
-                    result = $('#parts-' + context).prepend(data);
+                    $('#parts-' + context).prepend(data);
                 } else {
-                    result = $select.closest('.js-draggable-item').after(data);
+                    $select.closest('.js-sortable-item').after(data);
                 }
+
+                // Remove Loading
+                $body.removeClass('app--loading');
 
                 // Enable leave-page modal
                 kunstmaanbundles.checkIfEdited.edited();
@@ -72,6 +78,9 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
 
                 // Reinit nested forms
                 kunstmaanbundles.nestedForm.init();
+
+                // Rest ajax-modals
+                kunstmaanbundles.ajaxModal.resetAjaxModals();
             }
         });
 

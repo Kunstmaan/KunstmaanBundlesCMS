@@ -192,16 +192,31 @@ class NodeRepository extends NestedTreeRepository
      */
     public function getAllMenuNodes($lang, $permission, AclNativeHelper $aclNativeHelper, $includeHiddenFromNav = false)
     {
-        $qb = $this->_em->getConnection()->createQueryBuilder();
+        $connection = $this->_em->getConnection();
+        $qb = $connection->createQueryBuilder();
+        $databasePlatformName = $connection->getDatabasePlatform()->getName();
+        $createIfStatement = function ($expression, $trueValue, $falseValue) use ($databasePlatformName) {
+            switch ($databasePlatformName) {
+                case 'sqlite':
+                    $statement = 'CASE WHEN %s THEN %s ELSE %s END';
+                    break;
+
+                default:
+                    $statement = 'IF(%s, %s, %s)';
+            }
+
+            return sprintf($statement, $expression, $trueValue, $falseValue);
+        };
 
         $sql = <<<SQL
 n.id, n.parent_id AS parent, t.url,
-IF(t.weight IS NULL, v.weight, t.weight) AS weight,
-IF(t.title IS NULL, v.title, t.title) AS title,
-IF(t.online IS NULL, 0, t.online) AS online,
+{$createIfStatement('t.weight IS NULL', 'v.weight', 't.weight')} AS weight,
+{$createIfStatement('t.title IS NULL', 'v.title', 't.title')} AS title,
+{$createIfStatement('t.online IS NULL', '0', 't.online')} AS online,
 n.hidden_from_nav AS hidden,
 n.ref_entity_name AS ref_entity_name
 SQL;
+
 
         $qb->select($sql)
             ->from('kuma_nodes', 'n')

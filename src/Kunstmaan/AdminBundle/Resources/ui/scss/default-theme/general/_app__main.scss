@@ -17,7 +17,7 @@
    ========================================================================== */
 .app__main--altered-state {
 
-    .app__content {
+    &.app__main--has-sidebar .app__content {
         border-left-color: $gray-lighter;
 
         @media (max-width: $screen-sm) {

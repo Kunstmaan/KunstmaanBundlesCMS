@@ -11,7 +11,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  * will execute these changesets and change their status when finished.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\AclChangesetRepository")
- * @ORM\Table(name="kuma_acl_changesets", indexes={@ORM\Index(name="idx_ref", columns={"ref_id", "ref_entity_name"})})
+ * @ORM\Table(name="kuma_acl_changesets", indexes={@ORM\Index(name="idx_acl_changeset_ref", columns={"ref_id", "ref_entity_name"})})
  * @ORM\HasLifecycleCallbacks()
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */

@@ -13,7 +13,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  * Seo metadata for entities
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\SeoBundle\Repository\SeoRepository")
- * @ORM\Table(name="kuma_seo", indexes={@ORM\Index(name="idx_lookup", columns={"ref_id", "ref_entity_name"})})
+ * @ORM\Table(name="kuma_seo", indexes={@ORM\Index(name="idx_seo_lookup", columns={"ref_id", "ref_entity_name"})})
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
  */
 class Seo extends AbstractEntity

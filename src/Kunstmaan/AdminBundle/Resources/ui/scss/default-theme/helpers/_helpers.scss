@@ -6,14 +6,20 @@
 
 /* helperclasses
    ========================================================================== */
-
 @import "helper-classes";
+
+
+/* Animations
+   ========================================================================== */
+@import "animations/rotateplane",
+        "animations/fade";
+
 
 /* Placeholders
    ========================================================================== */
 @import "placeholders/link-reset",
-        "placeholders/default-transitions",
-        "placeholders/loading";
+        "placeholders/loading",
+        "placeholders/fade";
 
 
 /* Mixins
@@ -21,8 +27,3 @@
 @import "mixins/placeholder",
         "mixins/_grad-top-bottom",
         "mixins/_single_transition";
-
-/* Animations
-   ========================================================================== */
-@import "animations/rotateplane",
-        "animations/shake";

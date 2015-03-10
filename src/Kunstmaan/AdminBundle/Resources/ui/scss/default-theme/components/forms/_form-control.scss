@@ -29,3 +29,10 @@
 
     color: $gray-lighter;
 }
+
+
+/* File upload button
+   ========================================================================== */
+input[type=file].form-control {
+    height: auto;
+}

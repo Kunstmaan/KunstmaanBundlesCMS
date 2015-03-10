@@ -301,7 +301,9 @@
 }
 
 .input-group.date {
+    position: relative;
+
     & .input-group-addon {
-  cursor: pointer;
-  }
+        cursor: pointer;
+    }
 }
