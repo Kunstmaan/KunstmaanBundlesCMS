@@ -72,3 +72,50 @@
     color: $theme-color;
     font-size: .8rem;
 }
+
+/* Mobile
+   ========================================================================== */
+@media(max-width: $screen-sm-max) {
+
+    .searchbox-form {
+        width: 100%;
+        margin-right: 0;
+    }
+    .searchbox {
+        min-width: $search-height-mobile;
+    }
+    .searchbox__content {
+        width: $search-height-mobile;
+    }
+    .searchbox__input {
+        height: $search-height-mobile;
+        line-height: $search-height-mobile;
+    }
+
+    .searchbox--active {
+        box-shadow: none;
+
+        .searchbox__content {
+            width: 100%;
+        }
+        .searchbox__input {
+            border: none;
+            background: $white;
+            width: 100%;
+        }
+    }
+
+    .searchbox__submit {
+        width: $search-height-mobile;
+        height: $search-height-mobile;
+        line-height: $search-height-mobile;
+    }
+
+}
+
+
+/* Desktop
+   ========================================================================== */
+@media(min-width: $screen-md-min) {
+
+}
