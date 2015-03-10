@@ -31,7 +31,6 @@
     display: inline-block;
     height: $search-height;
     line-height: $search-height;
-    text-transform: capitalize;
 
     // cf. button-pp
     font-size: .8rem;
@@ -84,7 +83,7 @@
 
     .searchbox-form {
         margin-right: 0;
-        width: 0;
+        width: $search-height-mobile;
         transition: width .2s ease-in-out;
     }
     .searchbox {
@@ -98,6 +97,7 @@
     .searchbox__input {
         height: $search-height-mobile;
         line-height: $search-height-mobile;
+        vertical-align: top;
 
         padding: 0 $search-height-mobile 0 calc(#{$search-height-mobile} + 1rem);
     }
