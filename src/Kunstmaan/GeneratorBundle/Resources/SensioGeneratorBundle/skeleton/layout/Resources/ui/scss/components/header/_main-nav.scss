@@ -79,8 +79,30 @@
         }
 
         // Contact nav
+        .contact-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
         .contact-nav__list {
             @include list-reset;
+        }
+        .contact-nav__list__item {
+            display: inline-block;
+            border: 1px solid $gray-darker;
+            border-width: 1px 0 0 1px;
+
+            &:first-child {
+                border-left-width: 0;
+            }
+        }
+        .contact-nav__list__link {
+            display: block;
+            width: calc(100% / 3);
+        }
+        .contact-nav__list__icon {
+
         }
 
     }
