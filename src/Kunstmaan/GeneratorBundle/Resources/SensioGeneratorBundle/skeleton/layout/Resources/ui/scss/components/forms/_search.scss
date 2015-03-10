@@ -47,7 +47,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 4;
 
     text-align: center;
     display: inline-block;
@@ -86,6 +85,9 @@
 
         background: $white;
         width: 100%;
+    }
+    .searchbox__back {
+        z-index: 4;
     }
 }
 
