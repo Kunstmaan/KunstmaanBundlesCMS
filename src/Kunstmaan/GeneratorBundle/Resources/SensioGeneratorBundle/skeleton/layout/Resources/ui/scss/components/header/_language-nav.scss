@@ -27,6 +27,23 @@
     }
 }
 
+/* Mobile
+   ========================================================================== */
+@media(max-width: $screen-sm-max) {
+
+    .language-nav {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid $hr-color;
+    }
+    .language-nav__list__item {
+        color: $theme-color;
+        margin-right: .8rem;
+    }
+    .language-nav__list__link {
+        color: $white;
+    }
+
+}
 
 /* Desktop
    ========================================================================== */
