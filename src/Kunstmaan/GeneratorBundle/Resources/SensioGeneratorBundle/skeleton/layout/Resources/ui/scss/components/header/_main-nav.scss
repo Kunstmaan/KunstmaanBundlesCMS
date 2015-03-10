@@ -58,7 +58,7 @@
             padding-top: 2.5rem;
         }
         .main-nav__list__item {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
         .main-nav__list__item--active {
             background-color: $gray-darker;
@@ -92,7 +92,7 @@
         .contact-nav__list__item {
             float: left;
             display: block;
-            border: 1px solid $gray-darker;
+            border: 1px solid $gray-dark;
             border-width: 1px 0 0 1px;
             width: calc(100% / 3);
 

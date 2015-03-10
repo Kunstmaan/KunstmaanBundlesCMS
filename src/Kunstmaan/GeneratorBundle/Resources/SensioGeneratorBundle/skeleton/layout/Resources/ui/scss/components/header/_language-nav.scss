@@ -14,7 +14,7 @@
 
 .language-nav__list__item {
     display: inline-block;
-    font-size: .65rem;
+    font-size: .8rem;
     font-weight: 400;
     text-transform: uppercase;
 }
@@ -33,7 +33,7 @@
 
     .language-nav {
         padding: 1rem 1.5rem;
-        border-bottom: 1px solid $gray-darker;
+        border-bottom: 1px solid $gray-dark;
     }
     .language-nav__list {
         line-height: 100%;
@@ -101,6 +101,7 @@
     }
     .language-nav__list__item {
         display: block;
+        font-size: .65rem;
     }
     .language-nav__list__link {
         color: $gray;
