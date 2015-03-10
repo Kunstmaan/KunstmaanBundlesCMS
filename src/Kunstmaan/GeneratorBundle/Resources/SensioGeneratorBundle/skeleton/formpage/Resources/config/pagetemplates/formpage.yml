@@ -1,0 +1,5 @@
+name: "~~~ENTITY~~~"
+rows:
+    - regions: 
+        - { name: "main", span: 12 }
+template: "~~~BUNDLE~~~::Pages\\~~~ENTITY~~~\\pagetemplate.html.twig"
