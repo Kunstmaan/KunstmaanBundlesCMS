@@ -11,11 +11,11 @@
 
 @font-face {
     font-family: $iconfont;
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?-gb6e8g');
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?#iefix-gb6e8g') format('embedded-opentype'),
-        url('#{$iconfont-path}/#{$iconfont}.woff?-gb6e8g') format('woff'),
-        url('#{$iconfont-path}/#{$iconfont}.ttf?-gb6e8g') format('truetype'),
-        url('#{$iconfont-path}/#{$iconfont}.svg?-gb6e8g##{$iconfont}') format('svg');
+    src:url('#{$iconfont-path}/#{$iconfont}.eot?8at4kw');
+    src:url('#{$iconfont-path}/#{$iconfont}.eot?#iefix8at4kw') format('embedded-opentype'),
+        url('#{$iconfont-path}/#{$iconfont}.woff?8at4kw') format('woff'),
+        url('#{$iconfont-path}/#{$iconfont}.ttf?8at4kw') format('truetype'),
+        url('#{$iconfont-path}/#{$iconfont}.svg?8at4kw##{$iconfont}') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -38,6 +38,23 @@
 
 /* Icons
    ========================================================================== */
+
+
+.icon--menu:before {
+    content: "\e60d";
+}
+
+.icon--nav-location:before {
+    content: "\e612";
+}
+
+.icon--nav-mail:before {
+    content: "\e613";
+}
+
+.icon--nav-phone:before {
+    content: "\e614";
+}
 
 .icon--search:before {
     content: "\e60c";
@@ -106,6 +123,3 @@
 .icon--triangle-up:before {
     content: "\e611";
 }
-
-
-
