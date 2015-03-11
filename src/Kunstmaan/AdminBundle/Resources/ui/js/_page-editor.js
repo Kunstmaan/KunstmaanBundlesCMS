@@ -104,10 +104,9 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         $('.js-sortable-container').each(function() {
             var $this = $(this),
                 id = $this.attr('id'),
-                el = document.getElementById(id),
-                allowedPageParts = $this.data('scope'); // Which PagePart are allowed in this container?
+                el = document.getElementById(id);
 
-            Sortable.create(el, {
+            var sortable = Sortable.create(el, {
                 draggable: '.js-sortable-item',
                 handle: '.js-sortable-item__handle',
                 ghostClass: 'sortable-item--ghost',
@@ -124,20 +123,58 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                 scrollSpeed: 300,
 
                 onStart: function(evt) {
+                    var $el = $(evt.item),
+                        elScope = $el.data('scope');
+
+                    console.log('start');
+
+
                     // Add active class
                     $body.addClass('sortable-active');
+
+
+                    // Check if drag is allowed
+                    console.log('evt: ');
+                    console.log(evt);
+
+                    $('.js-sortable-container').on('dragover', function(e) {
+                        var $this = $(this),
+                            allowedPageParts = $this.data('scope').split(' ');
+
+                        if(allowedPageParts.indexOf(elScope) > -1) {
+                            $el.removeClass('sortable-item--error');
+
+                            console.log('OK');
+                        } else {
+                            $el.addClass('sortable-item--error');
+
+                            console.log('nOK');
+                        }
+                    });
                 },
 
                 onEnd: function(evt) {
+                    var $el = $(evt.item),
+                        $PPcontainer = $el.parents('.js-pp-container'),
+                        $contextUpdateField = $el.find('.pagepartadmin_field_updatecontextname')
+                        currentContext = $PPcontainer.data('context');
+
+
                     // Remove active class
                     $body.removeClass('sortable-active');
 
-                    //update context names
-                    var $el = $(evt.item),
-                        context = $el.parents('.js-pp-container').data('context');
 
-                    $el.find('.pagepartadmin_field_updatecontextname').each(function() {
-                        $(this).attr('name', context + $(this).data('suffix'));
+                    // Remove event listeners
+                    $('.js-sortable-container').off('dragover');
+
+
+                    // Set edited on true
+                    kunstmaanbundles.checkIfEdited.edited();
+
+
+                    // Update context name
+                    $contextUpdateField.each(function() {
+                        $(this).attr('name', currentContext + $(this).data('suffix'));
                     });
                 }
             });

@@ -1,14 +1,14 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 {% set context = pagepartadmin.context %}
 
-<!-- Hidden Fields -->
+<!-- Hidden Field - Deleted -->
 <input type="checkbox" class="deletefield hidden" id="{{id}}-is-deleted" name="{{id}}_deleted" value="true">
 
 
 <!-- Draggable Item -->
 <div class="js-sortable-item sortable-item" id="{{id}}-pp-container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
 
-    <!-- Hidden fields -->
+    <!-- Hidden fields - New, Type and Context -->
     {% if pagepart.id == 0 %}
         <input type="hidden" name="{{context}}_new[]" data-suffix="_new[]" value="{{id}}" class="pagepartadmin_field_updatecontextname">
         <input type="hidden" name="{{context}}_type_{{id}}" data-suffix="_type_{{id}}" value="{{pagepartadmin.getClassName(pagepart)}}" class="pagepartadmin_field_updatecontextname">

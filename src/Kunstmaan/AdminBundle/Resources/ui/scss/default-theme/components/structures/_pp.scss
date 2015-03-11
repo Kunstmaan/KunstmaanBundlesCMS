@@ -53,8 +53,9 @@
 
     transition: opacity .3s ease;
 
+    cursor: move;
+
     &:hover {
-        cursor: move;
 
         .pp__header__move-icon {
             color: $blue;
