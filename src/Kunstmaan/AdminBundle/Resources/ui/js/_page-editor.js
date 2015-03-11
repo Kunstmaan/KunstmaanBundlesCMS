@@ -126,29 +126,18 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                     var $el = $(evt.item),
                         elScope = $el.data('scope');
 
-                    console.log('start');
-
-
                     // Add active class
                     $body.addClass('sortable-active');
 
-
                     // Check if drag is allowed
-                    console.log('evt: ');
-                    console.log(evt);
-
                     $('.js-sortable-container').on('dragover', function(e) {
                         var $this = $(this),
                             allowedPageParts = $this.data('scope').split(' ');
 
                         if(allowedPageParts.indexOf(elScope) > -1) {
                             $el.removeClass('sortable-item--error');
-
-                            console.log('OK');
                         } else {
                             $el.addClass('sortable-item--error');
-
-                            console.log('nOK');
                         }
                     });
                 },
@@ -159,18 +148,14 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                         $contextUpdateField = $el.find('.pagepartadmin_field_updatecontextname')
                         currentContext = $PPcontainer.data('context');
 
-
                     // Remove active class
                     $body.removeClass('sortable-active');
-
 
                     // Remove event listeners
                     $('.js-sortable-container').off('dragover');
 
-
                     // Set edited on true
                     kunstmaanbundles.checkIfEdited.edited();
-
 
                     // Update context name
                     $contextUpdateField.each(function() {
