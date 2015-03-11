@@ -11,8 +11,8 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\MediaBundle\Repository\MediaRepository")
  * @ORM\Table(name="kuma_media", indexes={
- *      @ORM\Index(name="idx_name", columns={"name"}),
- *      @ORM\Index(name="idx_deleted", columns={"deleted"})
+ *      @ORM\Index(name="idx_media_name", columns={"name"}),
+ *      @ORM\Index(name="idx_media_deleted", columns={"deleted"})
  * })
  * @ORM\HasLifecycleCallbacks
  */

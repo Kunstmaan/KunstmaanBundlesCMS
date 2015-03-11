@@ -1,0 +1,15 @@
+{# Build classnames for buttons based on twbs#}
+{% macro getClasses(resource) %}
+btn btn--{{ resource.type }} {% if resource.size != "default" %}btn--{{ resource.size }}{% endif %} {% if resource.block == true %}btn--block{% endif %}
+{% endmacro %}
+
+{% import _self as css %}
+
+<p {% if resource.center %}class="text--center"{% endif %}>
+    <a href="{{ resource.linkUrl }}" class="{{ css.getClasses(resource) }}"{% if resource.linkNewWindow %} target="_blank"{% endif %}>
+        {{ resource.linkText|default(resource.linkUrl) }}
+        {% if resource.icon %}
+            <i class="icon icon--carret--right btn--with-icon__icon"></i>
+        {% endif %}
+    </a>
+</p>

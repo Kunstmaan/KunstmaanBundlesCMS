@@ -1,16 +1,21 @@
 {% extends 'KunstmaanMediaBundle:Media:show.html.twig' %}
 
 {% block extraactions %}
-    <a href="{{ asset(media.url) }}" class="btn">{{ 'media.media.download.action'|trans }}</a>
+    <a href="{{ asset(media.url) }}" class="btn btn-primary btn--raise-on-hover">
+        {{ 'media.media.download.action'|trans }}
+    </a>
 {% endblock %}
 
-{% block preview %}
-
-{% endblock %}
+{% block preview %}{% endblock %}
 
 {% block mediainfo %}
     {{ parent() }}
-    <dt>{{ 'media.media.mediainfo.downloadlink'|trans }}:</dt>
-    <dd><a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}"
-           target="_blank">{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}</a></dd>
+    <dt>
+        {{ 'media.media.mediainfo.downloadlink'|trans }}:
+    </dt>
+    <dd>
+        <a href="{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}" target="_blank">
+            {{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}
+        </a>
+    </dd>
 {% endblock %}

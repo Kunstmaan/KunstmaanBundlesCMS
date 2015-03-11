@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Dashboard setup
+   ========================================================================== */
+
+.form--dashboard-setup {
+}
+
+.form--dashboard-setup__aside {
+    padding-right: 4rem;
+}
+
+.form--dashboard-setup__content {
+    padding-left: 4rem;
+
+    border-left: 1px solid #ddd;
+}
+
+.setup-group__select {
+    display: block;
+    width: 100%;
+}
+
+.setup-group__select__wrapper {
+    margin-bottom: 1rem;
+
+    &.not-shown {
+        display: none;
+    }
+}
+
+.setup-group {
+    margin: 1rem 0;
+    display: block;
+}
+
+.segment-query__selection {
+    font-weight: bold;
+}
+
+.edit-view {
+    display: none;
+
+    .well {
+        margin-bottom: 0;
+    }
+}
+
+.segment-name,
+.segment-query {
+    float: left;
+
+    width: 25%;
+    height: 3.3rem;
+    padding: .5rem;
+
+    border: 1px solid #ddd;
+
+    box-shadow: none;
+}
+
+.segment-query {
+    border-left: none;
+}
+
+.add-segment__list {
+    padding: 0;
+    margin: 0 0 2rem 0;
+
+    list-style: none;
+}
+
+.add-segment__list-item {
+    padding: 1rem 0;
+
+    & + & {
+        border-top: 1px solid #ddd;
+    }
+}

@@ -1,69 +1,76 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-{% block extracss %}
-    {{ parent() }}
-    {% stylesheets '@KunstmaanAdminListBundle/Resources/public/css/*'
-       output='generated-css/adminlist-style.css'
-       filter='cssrewrite'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
-
 {% block extra_actions_header %}
     {% if adminlist.canAdd() or adminlist.canExport() %}
-        <div class="extra_actions_header">
-            <div class="btn-group pull-right">
-                {% if adminlist.canAdd() %}
-                    {% if adminlist.getIndexUrl()['params'] is defined %}
-                        {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
-                    {% else %}
-                        {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
-                    {% endif %}
-                    {% if adminaddlist|length > 1 %}
-                        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{ 'form.add' | trans }}<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
+        <div class="col-sm-6 col-md-4">
+            <div class="app__content__header__extra-actions">
+                <div class="btn-group">
+                    {% if adminlist.canAdd() %}
+                        {% if adminlist.getIndexUrl()['params'] is defined %}
+                            {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
+                        {% else %}
+                            {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()) %}
+                        {% endif %}
+                        {% if adminaddlist|length > 1 %}
+                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                {{ 'form.add' | trans }}
+                                <i class="fa fa-caret-down btn__icon"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                {% for key,add in adminaddlist %}
+                                    <li>
+                                        <a href="{{ path(add["path"], add[("params")]) }}">
+                                            {{ key }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
                             {% for key,add in adminaddlist %}
-                                <li><a href="{{ path(add["path"], add[("params")]) }}" >{{ key }}</a></li>
+                                <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
+                                    {{ 'form.add' | trans }}
+                                    {{ key }}
+                                </a>
                             {% endfor %}
-                        </ul>
-                    {% else %}
-                        {% for key,add in adminaddlist %}
-                            <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">{{ 'form.add' | trans }} {{ key }}</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if adminlist.canExport() %}
+                        <div class="btn-group dropdown">
+                            <a class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown" href="#">
+                                Export to
+                                <i class="fa fa-caret-down btn__icon"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
+                                {% for name, ext in supported_export_extensions() %}
+                                    {% set exportparams = exportparams|merge({"_format": ext}) %}
+                                    <li>
+                                        <a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">
+                                            <i class="fa fa-file-{{ name | lower }}-o btn__icon"></i>
+                                            {{ name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    {% if adminlist.hasListActions %}
+                        {% for action in adminlist.getListActions() %}
+                            {% if action.template is not null %}
+                                {% include action.template with {'action': action} %}
+                            {% else %}
+                                <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}" class="btn">
+                                    {% if action.getIcon() is not null %}
+                                        <i class="fa fa-{{ action.getIcon() }} }}"></i>
+                                        {{ action.getLabel() }}
+                                    {% else %}
+                                        {{ action.getLabel() }}
+                                    {% endif %}
+                                </a>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
-                {% endif %}
-                {% if adminlist.canExport() %}
-                    <div class="btn-group dropdown">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="icon-download-alt"></i>
-                            Export to
-                            <i class="icon-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
-                            {% for name, ext in supported_export_extensions() %}
-                                {% set exportparams = exportparams|merge({"_format": ext}) %}
-                                <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
-                {% if adminlist.hasListActions %}
-                    {% for action in adminlist.getListActions() %}
-                        {% if action.template is not null %}
-                            {% include action.template with {'action': action} %}
-                        {% else %}
-                            <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}" class="btn">
-                                {% if action.getIcon() is not null %}
-                                    <i class="icon-{{ action.getIcon() }} }}"></i> {{ action.getLabel() }}
-                                {% else %}
-                                    {{ action.getLabel() }}
-                                {% endif %}
-                            </a>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+                </div>
             </div>
         </div>
     {% endif %}

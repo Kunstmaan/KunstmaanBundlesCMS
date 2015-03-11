@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Gradient top to bottom
+   ========================================================================== */
+
+@mixin grad-top-bottom($color1, $color2){
+    background-color: $color1;
+    background-repeat: repeat-x;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $color1), color-stop(100%, $color2));
+    background-image: -webkit-linear-gradient(top, $color1, $color2);
+    background-image:    -moz-linear-gradient(top, $color1, $color2);
+    background-image:     -ms-linear-gradient(top, $color1, $color2);
+    background-image:      -o-linear-gradient(top, $color1, $color2);
+    background-image:         linear-gradient(top, $color1, $color2);
+}

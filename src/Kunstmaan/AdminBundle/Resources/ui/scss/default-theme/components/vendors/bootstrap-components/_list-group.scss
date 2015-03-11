@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Bootstrap list-group adjustments
+   ========================================================================== */
+
+.list-group--no-top-border {
+    border-top: 0;
+
+    > .list-group-item {
+
+        &:first-child {
+            border-top: 0;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+        }
+    }
+}
