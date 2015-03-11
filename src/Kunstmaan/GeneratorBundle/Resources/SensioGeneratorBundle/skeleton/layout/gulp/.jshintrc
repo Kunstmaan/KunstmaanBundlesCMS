@@ -21,6 +21,7 @@
         "cargobay": true,
         "Modernizr": true,
         "dataLayer": true,
-        "projectname": true
+        "classie": true,
+        "{{ bundle.getName() }}": true
     }
 }

@@ -1,0 +1,57 @@
+/* ==========================================================================
+   Header - Header Visual
+   ========================================================================== */
+
+.header-visual {
+    position: relative;
+}
+
+.header-visual__img {
+    position: relative;
+    z-index: 0;
+
+    width: 100%;
+}
+.header-visual__content {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    @media(min-width: $screen-md-min) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+
+        width: 100%;
+        margin-bottom: 0;
+        text-align: left;
+    }
+}
+.header-visual__content__inner {
+    @extend .container;
+
+    @media(min-width: $screen-md-min) {
+        padding-top: 6%;
+    }
+}
+
+.header-visual__title {
+    font-weight: 100;
+    line-height: 100%;
+    text-transform: uppercase;
+
+    @media(min-width: $screen-md-min) {
+        font-size: 5.625rem;
+        color: $white;
+    }
+}
+.header-visual__text {
+    @media(min-width: $screen-md-min) {
+        color: $white;
+        max-width: 50%;
+        margin-bottom: 2.5rem;
+    }
+}
+.header-visual__btn {
+
+}

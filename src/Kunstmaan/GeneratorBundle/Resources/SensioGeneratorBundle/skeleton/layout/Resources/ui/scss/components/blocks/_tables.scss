@@ -1,0 +1,34 @@
+/* ==========================================================================
+   Blocks - Tables
+   ========================================================================== */
+
+/* Default
+   ========================================================================== */
+.table-container {
+    max-width: 100%;
+    overflow-x: scroll;
+}
+
+table {
+    margin: $default-margin 0;
+    width: 100%;
+
+    @media(min-width: $screen-md-min) {
+        width: 70%;
+    }
+}
+tr {
+    border-bottom: 1px solid $hr-color;
+}
+th, td {
+    padding: .5rem 1.5rem .5rem .1rem;
+    text-align: left;
+}
+th {
+    font-weight: 600;
+    color: $theme-color;
+}
+td {
+    font-weight: 300;
+    text-align: left;
+}

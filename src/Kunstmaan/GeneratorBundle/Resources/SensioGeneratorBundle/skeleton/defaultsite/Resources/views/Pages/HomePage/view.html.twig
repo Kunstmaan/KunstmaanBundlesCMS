@@ -3,15 +3,17 @@
 {# Header visual #}
 {% block header_visual %}
     <header class="header-visual">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
 
                     <img src="http://placehold.it/1400x680" alt="" class="header-visual__img">
                     <div class="header-visual__content">
-                        <h1>Design &amp; development</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.</p>
-                        <a href="#" class="btn">View our projects</a>
+                        <div class="header-visual__content__inner">
+                            <h1 class="header-visual__title">Design &amp; development</h1>
+                            <p class="header-visual__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.</p>
+                            <a href="#" class="btn header-visual__btn">View our projects</a>
+                        </div>
                     </div>
 
                 </div>

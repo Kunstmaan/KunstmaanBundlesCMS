@@ -86,12 +86,13 @@ headerLines = function(message){
 
 /* Styles
    ========================================================================== */
-
 gulp.task('styles', function() {
-    return plugins.rubySass(config.scssFolder, {
-            loadPath: ['./'],
-            bundleExec: true
-        })
+    return gulp.src(config.scss)
+        // Sass
+        .pipe(plugins.rubySass({
+            loadPath: './',
+            bundleExec: true,
+        }))
         .on('error', function (err) {
             errorLogger('SASS Compilation Error', err.message);
         })
@@ -302,11 +303,11 @@ gulp.task('clean', function(done) {
 // Watch
 gulp.task('watch', function() {
     // Livereload
-    plugins.livereload.listen();
-    gulp.watch(config.liveReloadFiles).on('change', function(file) {
-        plugins.livereload.changed(file.path);
-        gulp.start('styleguide');
-    });
+   plugins.livereload.listen();
+   gulp.watch(config.liveReloadFiles).on('change', function(file) {
+       plugins.livereload.changed(file.path);
+       runSequence('styleguide', 'styleguide-dev-js');
+   });
 
     // Styles
     gulp.watch(config.scss, ['styles']);

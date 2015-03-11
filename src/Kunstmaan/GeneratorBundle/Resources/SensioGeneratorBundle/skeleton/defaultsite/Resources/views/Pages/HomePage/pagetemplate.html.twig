@@ -1,15 +1,123 @@
-<div class="container">
-    <% if demosite %><% endif %>
+<% if demosite %><% endif %>
 
+<div class="container">
     <div class="row">
-        <div class="col-md-4">
-            {{ render_pageparts(page, 'left_column') }}
-        </div>
-        <div class="col-md-4">
-            {{ render_pageparts(page, 'middle_column') }}
-        </div>
-        <div class="col-md-4">
-            {{ render_pageparts(page, 'right_column') }}
+        <div class="col-md-12">
+
+            <div class="text-center">
+                <h1>What we do</h1>
+                <div class="introtext-pp">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam aspernatur aliquam velit doloremque! Nihil reiciendis, officia impedit hic et, ut eveniet repellat. Nesciunt voluptatem, ex?</p>
+                </div>
+                <div class="link-pp">
+                    <a href="#" class="link-pp__link">More about us <i class="link-pp__icon"></i></a>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
+<section class="splash splash--gray-lighter">
+    <div class="container">
+        <div class="row row--flex row--align-end">
+
+            <div class="col-md-6 col-sm-6">
+                <h1>Our gear</h1>
+                <div class="text-pp">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>
+                </div>
+                <div class="link-pp">
+                    <a href="#" class="link-pp__link">Discover our projects <i class="link-pp__icon"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <img src="http://placehold.it/820x400" alt="">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="splash">
+    <div class="container">
+        <div class="row row--flex row--align-end row--reverse">
+
+            <div class="col-md-6 col-sm-6">
+                <h1>Lorem ipsum</h1>
+                <div class="text-pp">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>
+                </div>
+                <div class="link-pp">
+                    <a href="#" class="link-pp__link">Take a look at this <i class="link-pp__icon"></i></a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-6">
+                <img src="http://placehold.it/820x400" alt="">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="splash splash--gray-lighter">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h1>How we work</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <div class="text-center">
+                    <div class="image-pp">
+                        <img src="/frontend/img/icons/lamp.svg" alt="" class="img-icon">
+                    </div>
+                    <h5>Idea</h5>
+                </div>
+                {{ render_pageparts(page, 'left_column') }}
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="text-center">
+                    <div class="image-pp">
+                        <img src="/frontend/img/icons/user.svg" alt="" class="img-icon">
+                    </div>
+                    <h5>Prototyping</h5>
+                </div>
+                {{ render_pageparts(page, 'middle_column') }}
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="text-center">
+                    <div class="image-pp">
+                        <img src="/frontend/img/icons/layout.svg" alt="" class="img-icon">
+                    </div>
+                    <h5>Design</h5>
+                </div>
+                {{ render_pageparts(page, 'right_column') }}
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="text-center">
+                <h1>The team</h1>
+                <div class="image-pp">
+                    {# voorlopig nog geen echt grid #}
+                    <img src="http://placehold.it/1145x850" alt="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
