@@ -13,16 +13,14 @@
 /* Mixins
    ========================================================================== */
 @import "mixins/list-reset",
+        "mixins/iconfont-reset",
         "mixins/horizontal-list",
-        "mixins/introtext";
+        "mixins/introtext",
+        "mixins/box-shadow",
+        "mixins/control-label";
 
 
 /* Helper classes
    ========================================================================== */
 
 @import "helper-classes";
-
-
-/* Helper structures
-   ========================================================================== */
-@import "helper-structures/hover-item";

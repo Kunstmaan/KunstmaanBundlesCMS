@@ -1,5 +1,57 @@
-{# Header #}
-<header role="header" class="main-header">
+{# Mobile header #}
+<header role="header" class="main-header main-header--mobile">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                {% if nodemenu is defined %}
+                    <div class="main-header__inner">
+                        {# Main navigation trigger #}
+                        <div class="main-header__nav">
+                            <nav id="st-trigger-effects" role="navigation" class="main-nav">
+                                <button class="main-nav__button" data-effect="st-effect-3">
+                                    <i class="icon icon--menu main-nav__button__icon"></i>
+                                </button>
+                            </nav>
+                        </div>
+
+                        {# Logo #}
+                        <div class="main-header__logo">
+                            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+                            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo__link">
+                                <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img"/>
+                            </a>
+                        </div>
+
+                        {# Search #}
+                        {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                        {# {% if searchPageNode %} #}
+                            <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form js-searchbox-form">
+                                <div class="searchbox">
+                                    <div class="searchbox__back js-searchbox-back">
+                                        <i class="icon icon--arrow-tail-left searchbox__back__icon"></i>
+                                    </div>
+                                    <div class="searchbox__content js-searchbox-content">
+                                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                        <button type="submit" id="search" class="searchbox__submit">
+                                            <i class="icon icon--search searchbox__submit__icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        {# {% endif %} #}
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</header>
+
+
+{# Desktop header #}
+<header role="header" class="main-header main-header--desktop">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -9,23 +61,17 @@
                     {# Logo #}
                     <div class="main-header__logo pull-left">
                         {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}">
-                            <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew"/>
+                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo__link">
+                            <img src="/frontend/img/general/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img"/>
                         </a>
                     </div>
 
+                    {# Main navigation #}
                     <div class="main-header__nav pull-right">
+                        <nav role="navigation" class="main-nav pull-left">
 
-                        {# Main navigation #}
-                        <nav role="navigation" class="js-toggle-container main-nav pull-left">
-                            <button class="js-toggle-btn toggle-button main-nav__button" data-target="#main-menu">
-                                Menu
-                                <i class="icon icon--arrow-down toggle-btn__icon--show"></i>
-                                <i class="icon icon--arrow-up toggle-btn__icon--hide"></i>
-                            </button>
-
-                            <div id="main-menu" class="toggle-item main-nav__content">
-                                <ul class="toggle-item__content main-nav__list">
+                            <div class="main-nav__content">
+                                <ul class="main-nav__list">
                                     {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                                     {% for node in activeSubnode.children %}
                                         {% if not node.node.isHiddenFromNav() %}
@@ -37,7 +83,7 @@
 
                                     {# Call to action #}
                                     <li class="main-nav__list__item main-nav__list__item--cta">
-                                        <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right"></i></a>
+                                        <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right main-nav__list__icon--cta"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -46,12 +92,14 @@
                         {# Search #}
                         {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                         {# {% if searchPageNode %} #}
-                            <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form pull-left">
+                            <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form js-searchbox-form pull-left">
                                 <div class="searchbox">
-                                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
-                                    <button type="submit" id="search" class="searchbox__submit">
-                                        <i class="icon icon--search searchbox__submit__icon"></i>
-                                    </button>
+                                    <div class="searchbox__content js-searchbox-content">
+                                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
+                                        <button type="submit" id="search" class="searchbox__submit">
+                                            <i class="icon icon--search searchbox__submit__icon"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         {# {% endif %} #}
@@ -60,12 +108,12 @@
                         {% if requiredlocales is defined %}
                             {% set langs = requiredlocales|split('|') %}
                             {% if langs|length > 0 %}
-                                <nav class="language-nav pull-left hover-item">
+                                <nav class="language-nav pull-left">
                                     <span class="language-nav__active-lang">
                                         {{ app.request.locale }}
                                         <i class="icon icon--triangle-down language-nav__icon"></i>
                                     </span>
-                                    <ul class="list-reset language-nav__list hover-item__content">
+                                    <ul class="list-reset language-nav__list">
                                         {% for lang in langs %}
                                             {% if lang != app.request.locale %}
                                                 <li class="language-nav__list__item">
@@ -81,7 +129,6 @@
                         {% endif %}
 
                     </div>
-
                 {% endif %}
 
             </div>

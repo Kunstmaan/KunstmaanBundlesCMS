@@ -2,30 +2,110 @@
    Header - Language nav
    ========================================================================== */
 
-  ///////////////
- //   THEME   //
-///////////////
-
+/* Default
+   ========================================================================== */
 .language-nav {
     position: relative;
 }
 
-.language-nav__active-lang {
-
-}
 .language-nav__icon {
-    font-size: .3rem;
-    vertical-align: middle;
+    display: none;
 }
 
-.language-nav__list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-}
 .language-nav__list__item {
-    display: block;
+    display: inline-block;
+    font-size: .8rem;
+    font-weight: 400;
+    text-transform: uppercase;
 }
 .language-nav__list__link {
     display: block;
+    font-weight: 400;
+
+    &:hover, &:focus {
+        text-decoration: none;
+    }
 }
+
+/* Mobile
+   ========================================================================== */
+@media(max-width: $screen-sm-max) {
+
+    .language-nav {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid $gray-dark;
+    }
+    .language-nav__list {
+        line-height: 100%;
+    }
+    .language-nav__list__item {
+        color: $theme-color;
+        margin-right: .8rem;
+        font-weight: 300;
+    }
+    .language-nav__list__link {
+        color: $white;
+        font-weight: 300;
+    }
+
+}
+
+/* Desktop
+   ========================================================================== */
+@media(min-width: $screen-md-min) {
+
+    .language-nav {
+        z-index: 5;
+        padding: 0 .5rem;
+
+        @include transition(all .2s ease-in-out);
+
+        &:hover, &:focus {
+            background: $gray-lighter;
+            @include box-shadow;
+
+            .language-nav__list {
+                opacity: 1;
+                z-index: 6;
+            }
+        }
+    }
+
+    .language-nav__icon {
+        display: inline-block;
+
+        font-size: .3rem;
+        line-height: 1rem;
+        vertical-align: middle;
+        margin-left: .1rem;
+    }
+    .language-nav__active-lang {
+        font-size: .65rem;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+    .language-nav__list {
+        opacity: 0;
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 0;
+        width: 100%;
+
+        padding: 0 .5rem .3rem;
+        background: $gray-lighter;
+        @include box-shadow;
+
+        @include transition(all .2s ease-in-out);
+    }
+    .language-nav__list__item {
+        display: block;
+        font-size: .65rem;
+    }
+    .language-nav__list__link {
+        color: $gray;
+    }
+
+}
+

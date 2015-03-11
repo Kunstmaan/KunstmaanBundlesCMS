@@ -9,14 +9,34 @@
         &:hover, &:focus, &:active {
         }
     }
+
+    //THEME
     ul {
         @include list-reset;
         li {
+            padding-left: .9rem;
+            position: relative;
 
+            &:before {
+                content: "•";
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                font-size: .7rem;
+                color: $theme-color;
+            }
         }
     }
+
     ol {
+        padding-left: 1.4rem;
+    }
+
+    ul, ol {
         li {
+            line-height: 150%;
+            margin-bottom: .4rem;
         }
     }
 }
