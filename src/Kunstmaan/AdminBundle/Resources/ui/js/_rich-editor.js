@@ -22,16 +22,18 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             fileBrowseUrl = $body.data('file-browse-url'),
             imageBrowseUrl = $body.data('image-browse-url'),
             elId = $el.attr('id'),
-            elHeight, elEnterMode, elShiftEnterMode;
+            elHeight, elEnterMode, elShiftEnterMode, elToolbar;
 
-        // Height
+
+        // Set Height
         if($el.attr('height')) {
             elHeight = $el.attr('height');
         } else {
-            elHeight = 500;
+            elHeight = 300;
         }
 
-        // No-paragraphs
+
+        // Paragraphs allowed?
         if($el.attr('noparagraphs')) {
             elEnterMode = CKEDITOR.ENTER_BR;
             elShiftEnterMode = CKEDITOR.ENTER_P;
@@ -39,6 +41,53 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             elEnterMode = CKEDITOR.ENTER_P;
             elShiftEnterMode = CKEDITOR.ENTER_BR;
         }
+
+
+        // Toolbar options
+        if($el.data('simple') === true) {
+            elToolbar = [
+                {
+                    name: 'basicstyles',
+                    items : ['Bold', 'Italic', 'Underline', 'RemoveFormat']
+                }
+            ]
+        } else {
+            elToolbar = [
+                {
+                    name: 'basicstyles',
+                    items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
+                },
+                {
+                    name: 'lists',
+                    items : ['NumberedList', 'BulletedList']
+                },
+                {
+                    name: 'dents',
+                    items : ['Outdent', 'Indent']
+                },
+                {
+                    name: 'links',
+                    items : ['Link','Unlink', 'Anchor']
+                },
+                {
+                    name: 'insert',
+                    items : ['Image', 'Table', 'SpecialChar']
+                },
+                {
+                    name: 'clipboard',
+                    items : ['SelectAll', 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+                },
+                {
+                    name: 'editing',
+                    items : []
+                },
+                {
+                    name: 'document',
+                    items : ['Source']
+                }
+            ]
+        }
+
 
         // Place CK
         CKEDITOR.replace(elId, {
@@ -59,40 +108,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             enterMode: elEnterMode,
             shiftEnterMode: elShiftEnterMode,
 
-            toolbar: [
-                {
-                    name: 'basicstyles',
-                    items : ['Bold','Italic','Underline','Strike','Subscript','Superscript', 'RemoveFormat']
-                },
-                {
-                    name: 'lists',
-                    items : ['NumberedList','BulletedList']
-                },
-                {
-                    name: 'dents',
-                    items : ['Outdent','Indent']
-                },
-                {
-                    name: 'links',
-                    items : ['Link','Unlink', 'Anchor']
-                },
-                {
-                    name: 'insert',
-                    items : ['Image', 'SpecialChar']
-                },
-                {
-                    name: 'clipboard',
-                    items : ['SelectAll', 'Cut','Copy','PasteText','PasteFromWord','-','Undo','Redo']
-                },
-                {
-                    name: 'editing',
-                    items : []
-                },
-                {
-                    name: 'document',
-                    items : [ 'Source' ]
-                }
-            ]
+            toolbar: elToolbar
         });
 
         // Behat tests
