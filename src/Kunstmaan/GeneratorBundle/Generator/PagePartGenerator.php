@@ -334,7 +334,7 @@ class PagePartGenerator extends KunstmaanGenerator
                                             'label' => $this->labelCase($name),
                                             'random' => 'http://www.'.strtolower(Lorem::word()).'.com'
                                         );
-                                    } elseif ($blocks[2] == 'textarea' && array_key_exists('class', $attr) && $attr['class'] == 'rich_editor') {
+                                    } elseif ($blocks[2] == 'textarea' && array_key_exists('class', $attr) && $attr['class'] == 'js-rich-editor rich-editor') {
                                         $pageFields[]['rich_text'] = array(
                                             'label' => $this->labelCase($name),
                                             'random' => Lorem::sentence()

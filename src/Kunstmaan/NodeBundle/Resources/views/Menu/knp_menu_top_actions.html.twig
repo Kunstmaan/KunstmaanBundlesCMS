@@ -5,9 +5,11 @@
 
     {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
         <div {{ macros.attributes(listAttributes) }}>
-            <div class="pull-right btn-group">
+            <div class="btn-group">
                 {{ block('children') }}
-                <a class="btn up">&#9650;</a>
+                <button type="button" class="js-scroll-to-top btn btn-default">
+                    <i class="fa fa-caret-up"></i>
+                </button>
             </div>
         </div>
     {% endif %}

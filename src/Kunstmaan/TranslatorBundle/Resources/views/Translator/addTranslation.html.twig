@@ -2,12 +2,17 @@
 
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-    <form class="form-horizontal" action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} novalidate>
-        <fieldset>
+    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} novalidate>
+        <fieldset class="form__fieldset--padded">
             {{ form_rest(form) }}
-            <div class="form-actions">
-                <button class="btn btn-primary" type="submit">{{ 'settings.translator.add' | trans }}</button>
-                <button onclick="window.location = '{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}'" type="reset" class="btn">{{ 'form.cancel' | trans }}</button>
+
+            <div class="form-actions form-actions--padded">
+                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                    {{ 'settings.translator.add' | trans }}
+                </button>
+                <a href="{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}" class="btn btn-default btn--raise-on-hover">
+                    {{ 'form.cancel' | trans }}
+                </a>
             </div>
         </fieldset>
     </form>

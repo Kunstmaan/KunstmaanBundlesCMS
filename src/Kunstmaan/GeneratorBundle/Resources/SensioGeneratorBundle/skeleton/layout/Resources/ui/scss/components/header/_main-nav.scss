@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Header - Main navigation
+   ========================================================================== */
+
+/* Default
+   ========================================================================== */
+   .main-nav {
+   }
+
+   .main-nav__list {
+       @include list-reset;
+       line-height: $mainnav-height;
+   }
+   .main-nav__list__item {
+       font-size: .65rem;
+       font-weight: 400;
+       text-transform: uppercase;
+   }
+   .main-nav__list__item--cta {
+       text-transform: none;
+       font-size: .82em;
+   }
+   .main-nav__list__link {
+       display: block;
+       color: $text-color;
+       font-weight: 400;
+
+       &:hover, &:focus, &:active {
+           color: $text-color;
+       }
+   }
+   .main-nav__list__link--cta {
+       color: $theme-color;
+
+       &:hover, &:focus, &:active {
+           color: $theme-color;
+       }
+   }
+   .main-nav__list__icon--cta {
+       font-size: .5rem;
+       display: inline-block;
+       vertical-align: middle;
+       margin-left: .3rem;
+   }
+
+/* Mobile
+   ========================================================================== */
+@media(min-width: $screen-md-min) {
+    .mobile-nav {
+        display: none;
+    }
+}
+@media(max-width: $screen-sm-max) {
+    .mobile-nav {
+        display: block;
+
+        .main-nav__list {
+            padding-top: 2.5rem;
+        }
+        .main-nav__list__item {
+            font-size: 1.3rem;
+        }
+        .main-nav__list__item--active {
+            background-color: $gray-darker;
+
+            .main-nav__list__link {
+                color: $theme-color;
+            }
+        }
+        .main-nav__list__link {
+            padding: .5rem 1.5rem;
+            color: $white;
+            font-weight: 100;
+            text-transform: none;
+
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+        }
+
+        // Contact nav
+        .contact-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        .contact-nav__list {
+            @include list-reset;
+            @include clearfix
+        }
+        .contact-nav__list__item {
+            float: left;
+            display: block;
+            border: 1px solid $gray-dark;
+            border-width: 1px 0 0 1px;
+            width: calc(100% / 3);
+
+            &:first-child {
+                border-left-width: 0;
+            }
+        }
+        .contact-nav__list__link {
+            display: block;
+            text-align: center;
+            color: $gray;
+            font-size: 1.875rem;
+            line-height: 100%;
+            padding: .9rem;
+
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+        }
+        .contact-nav__list__icon {
+        }
+
+    }
+}
+
+/* Desktop
+   ========================================================================== */
+@media(min-width: $screen-md-min) {
+    .main-header--desktop {
+
+        .main-nav {
+            margin-right: 2rem;
+        }
+
+        .main-nav__list__item {
+            display: inline-block;
+            margin-right: 1rem;
+        }
+        .main-nav__list__link--cta {
+            margin-left: 1.7rem;
+        }
+
+    }
+}

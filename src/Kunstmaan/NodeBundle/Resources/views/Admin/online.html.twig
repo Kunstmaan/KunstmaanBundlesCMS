@@ -1,8 +1,14 @@
 {% set online = adminlist.getStringValue(row, columnName) %}
 {% if online=='true' %}
-    <i class="icon-check"></i><span class="muted">{{ ' (Online)' | trans }}</span>
+    <i class="fa fa-check-square-o"></i>
+    <span class="text--muted">
+        {{ ' (Online)' | trans }}
+    </span>
 {% elseif online=='false' %}
-    <i class="icon-check-empty"></i><span class="muted">{{ ' (Offline)' | trans }}</span>
+    <i class="fa fa-square-o"></i>
+    <span class="text--muted">
+        {{ ' (Offline)' | trans }}
+    </span>
 {% else %}
     {{ online }}
 {% endif %}

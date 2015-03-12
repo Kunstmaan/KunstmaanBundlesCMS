@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Mixins - Control label
+   ========================================================================== */
+
+@mixin control-label-active {
+    font-size: 0.75rem;
+    color: $theme-color;
+    font-weight: 400;
+    top: -1.2rem;
+    transition: all 0.2s ease;
+}
+
+
+

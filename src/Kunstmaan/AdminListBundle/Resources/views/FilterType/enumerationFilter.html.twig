@@ -1,10 +1,14 @@
-<select name="{{nameprefix}}comparator{{namesuffix}}">
-    <option value="in" {% if data.comparator is defined and data.comparator == "in" %} selected="selected" {% endif %} >contains</option>
-    <option value="notin" {% if data.comparator is defined and data.comparator == "notin" %} selected="selected" {% endif %} >doesn't contain</option>
-</select>
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+        <option value="in" {% if data.comparator is defined and data.comparator == "in" %} selected="selected" {% endif %} >contains</option>
+        <option value="notin" {% if data.comparator is defined and data.comparator == "notin" %} selected="selected" {% endif %} >doesn't contain</option>
+    </select>
+</div>
 
-<select name="{{nameprefix}}value{{namesuffix}}[]" size="4" multiple>
-{% for key,option in options %}
-    <option value="{{ key }}"{% if data.value is defined and key in data.value %} selected{% endif %}>{{ option|trans }}</option>
-{% endfor %}
-</select>
+<div class="form-group">
+    <select name="{{nameprefix}}value{{namesuffix}}[]" size="4" multiple class="form-control">
+    {% for key,option in options %}
+        <option value="{{ key }}"{% if data.value is defined and key in data.value %} selected{% endif %}>{{ option|trans }}</option>
+    {% endfor %}
+    </select>
+</div>

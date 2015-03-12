@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Icon symlinks
+   ========================================================================== */
+
+.fa-file-csv-o {
+    @extend .fa-file-code-o;
+}
+
+.fa-remove-sign {
+    @extend .fa-trash-o;
+}
+
+
+// Glyphicon
+.glyphicon {
+    @extend .fa;
+}
+
+.glyphicon-ok {
+    @extend .fa-check;
+}
+
+.glyphicon-remove {
+    @extend .fa-times;
+}

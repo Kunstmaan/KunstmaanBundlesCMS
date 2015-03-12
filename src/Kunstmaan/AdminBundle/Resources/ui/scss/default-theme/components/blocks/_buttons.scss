@@ -1,0 +1,92 @@
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.btn {
+    &:focus {
+        outline: 0;
+    }
+}
+
+.btn--no-border {
+    border: 0;
+}
+
+.btn--no-hor-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.btn--raise-on-hover {
+    transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
+
+    &:hover:not(.active) {
+        box-shadow: 0 3px 8px rgba(0,0,0,.04),0 3px 4px rgba(0,0,0,.04);
+    }
+}
+
+.btn--flat-top {
+    border-radius: 0 0 $border-radius-base $border-radius-base;
+    border-top: 0;
+}
+
+
+/* Icons
+   ========================================================================== */
+.btn--icon-left {
+    padding-left: 1rem;
+
+    .btn__icon {
+        margin-right: .5rem;
+    }
+}
+
+
+/* Types
+   ========================================================================== */
+.btn-default {
+
+    &:hover:not(.active) {
+        background: $white;
+        border-color: $gray-lighter;
+    }
+}
+
+.btn-primary {
+
+    &:hover:not(.active) {
+        background: $brand-primary;
+        border-color: $brand-primary;
+    }
+}
+
+
+
+/* Icons in buttons
+   ========================================================================== */
+.btn__icon {
+    color: $gray-light;
+}
+
+/* Buttons in dropdown (Main-actions)
+   ========================================================================== */
+.btn-dropdown-menu{
+    border: none;
+    margin: 0;
+    display:block;
+    width: 100%;
+    text-align: left;
+    padding: 3px 20px;
+
+    color: $dropdown-link-color;
+    background: $dropdown-bg;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: $dropdown-link-hover-color;
+        background-color: $dropdown-link-hover-bg;
+    }
+}

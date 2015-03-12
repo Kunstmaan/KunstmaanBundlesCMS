@@ -1,16 +1,39 @@
 <div class="container">
-    <div class="row row--padded">
-        {% set children = nodemenu.current.node.children %}
-        {% if nodemenu.current.node.children|length > 0 %}
-        <div class="col-md-3 col--padded hidden-xs">
-            {% set activeSubnode = nodemenu.getActiveForDepth(2) %}
-            {% include '<%= bundle.name %>:Layout:submenu.html.twig' with {'items': activeSubnode.children} %}
-        </div>
-        <div class="col-md-9 col--padded">
-            {% else %}
-        <div class="col-md-12 col--padded">
+    <div class="row">
+        <div class="col-md-12">
+
+            {% set children = nodemenu.current.node.children %}
+            {% if nodemenu.current.node.children|length > 0 %}
+                <div class="submenu">
+                    {% set activeSubnode = nodemenu.getActiveForDepth(2) %}
+                    {% include '<%= bundle.name %>:Layout:submenu.html.twig' with {'items': activeSubnode.children} %}
+                </div>
             {% endif %}
+
+            {# Pageparts #}
+            <div class="text-center">
+                <h1>Header 1</h1>
+                <div class="introtext-pp">
+                    <p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+                </div>
+            </div>
+
+            <h4>Button pagepart</h4>
+            <div class="button-pp button-pp--left">
+                <a href="#" class="btn btn--primary">Primary button left</a>
+            </div>
+            <div class="button-pp button-pp--center">
+                <a href="#" class="btn btn--secondary">Secondary button center</a>
+            </div>
+            <div class="button-pp button-pp--right">
+                <a href="#" class="btn">Default button right</a>
+            </div>
+            <div class="button-pp button-pp--block">
+                <a href="#" class="btn btn--primary">Primary button block</a>
+            </div>
+
             {{ render_pageparts(page, 'main') }}
+
         </div>
     </div>
 </div>

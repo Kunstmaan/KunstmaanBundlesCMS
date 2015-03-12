@@ -1,0 +1,104 @@
+<header class="app__header" role="banner">
+
+    <!-- App Header -->
+    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+
+            <!-- Header -->
+            <div class="navbar-header">
+
+                <!--Header - Toggle -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                    <span class="sr-only">Toggle</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- Header - Brand -->
+                <a class="navbar-brand app__header__brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">
+                    {{ websitetitle | trans }}
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <div class="collapse navbar-collapse app__nav__container" id="main-nav-bar">
+
+                <!-- Navigation - Left -->
+                <ul class="nav navbar-nav">
+                    {% for menuitem in adminmenu.topchildren %}
+                    {% set topchildren = menuitem.topchildren %}
+                    {% if topchildren | length > 0 %}
+                        <!-- Navigation Item - with sub-items -->
+                        <li class="dropdown{% if menuitem.active %} active{% endif %}">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ menuitem.label | trans }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                {% for topchild in topchildren %}
+                                    {% set nestedtopchildren = topchild.topchildren %}
+                                    {% if nestedtopchildren | length > 0 %}
+                                        <li class="dropdown-submenu{% if topchild.active %} active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                                            <a tabindex="-1" href="#">
+                                                {{ topchild.label | trans }}
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                {% for nestedtopchild in nestedtopchildren %}
+                                                    <li class="{% if nestedtopchild.active %}active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                                                        <a href="{{ path(nestedtopchild.route, nestedtopchild.routeparams) }}">
+                                                            {{ nestedtopchild.label | trans }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% else %}
+                                        {% if topchild.route %}
+                                            <li class="{% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
+                                                <a href="{{ path(topchild.route, topchild.routeparams) }}">
+                                                    {{ topchild.label | trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                        <!-- Navigation Item - without sub-items -->
+                        <li class="{% if menuitem.active %} active{% endif %}">
+                            <a href="{{ path(menuitem.route, menuitem.routeparams) }}">
+                                {{ menuitem.label | trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <!-- Navigation - Right -->
+                <ul class="nav navbar-nav navbar-right">
+                    {% set route = app.request.attributes.get('_route') %}
+                    {% set attribs = app.request.attributes.all %}
+                    {{ localeswitcher_widget(requiredlocales, route) }}
+
+                    <!-- Logged in as -->
+                    <li>
+                        <a href="{{ path('KunstmaanAdminBundle_user_change_password', { 'id':app.user.id }) }}">
+                            <i class="fa fa-user"></i>
+                            &nbsp;
+                            {{ app.user.username|capitalize }}
+                        </a>
+                    </li>
+
+                    <!-- Logout -->
+                    <li>
+                        <a href="{{ path('fos_user_security_logout') }}" id="app__logout" title="logout">
+                            <i class="fa fa-sign-out"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

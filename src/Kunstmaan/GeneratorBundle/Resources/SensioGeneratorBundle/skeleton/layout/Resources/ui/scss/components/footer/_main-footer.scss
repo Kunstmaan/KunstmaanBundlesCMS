@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Footer - Main footer
+   ========================================================================== */
+
+// THEME
+.main-footer {
+    padding: .5rem 0;
+}
+
+
+/* Footer navigation
+   ========================================================================== */
+.footer-nav {
+    margin: 2rem 0;
+
+    @media(max-width: $screen-xs-max) {
+        text-align: center;
+    }
+}
+.footer-nav__title {
+    font-size: .75rem;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+}
+.footer-nav__title__link {
+    color: $black;
+    font-weight: 600;
+
+    &:hover, &:focus, &:active {
+        color: $black;
+    }
+}
+
+.footer-nav__list {
+
+}
+.footer-nav__list__item {
+    font-size: .9rem;
+    line-height: 150%;
+    margin-bottom: .4rem;
+}
+.footer-nav__list__link {
+    color: $gray;
+
+    &:hover, &:focus, &:active {
+        text-decoration: none;
+    }
+}

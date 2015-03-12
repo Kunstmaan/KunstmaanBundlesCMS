@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Components
+
+   Never add styles directly to this file - set up imports
+   ========================================================================== */
+
+
+/* Blocks
+   ========================================================================== */
+
+@import "blocks/submenu",
+        "blocks/buttons",
+        "blocks/tables",
+        "blocks/img-icon";
+
+
+/* Structures
+   ========================================================================== */
+@import "structures/splash";
+
+
+/* Footer
+   ========================================================================== */
+
+@import "footer/main-footer",
+        "footer/social-footer",
+        "footer/subfooter",
+        "footer/newsletter";
+
+
+/* Header
+   ========================================================================== */
+
+@import "header/main-header",
+        "header/main-nav",
+        "header/language-nav",
+        "header/breadcrumb-nav",
+        "header/header-visual"; //THEME
+
+
+/* Forms
+   ========================================================================== */
+
+@import "forms/base",
+        "forms/search";
+
+
+/* Pageparts
+   ========================================================================== */
+
+@import "pageparts/text-pp",
+        "pageparts/introtext-pp",
+        "pageparts/download-pp",
+        "pageparts/totop-pp",
+        "pageparts/button-pp",
+        "pageparts/image-pp",
+        "pageparts/link-pp";
+
+
+/* Vendors
+   ========================================================================== */
+
+@import "vendors/bootstrap-components/grid",
+        "vendors/cargobay-components/cookie-consent",
+        "vendors/cargobay-components/toggle",
+        "vendors/sidebar-effects";
