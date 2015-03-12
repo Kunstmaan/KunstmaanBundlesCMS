@@ -71,7 +71,7 @@ class Slugifier
 			$slugifier = new Slugifier();
 			$text = $slugifier->rus2translit($text);
 			
-            $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+            $text = @iconv('utf-8', 'us-ascii//TRANSLIT', $text);
             setlocale(LC_CTYPE, $previouslocale);
         }
 
