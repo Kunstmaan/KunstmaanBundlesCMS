@@ -1,0 +1,19 @@
+/* ==========================================================================
+   Header
+   ========================================================================== */
+* {
+    -webkit-font-smoothing: antialiased;
+            font-smoothing: antialiased;
+}
+
+.text--upper {
+    text-transform: uppercase;
+}
+
+.text--muted {
+    color: $gray-light;
+}
+
+.text--no-margin {
+    margin: 0;
+}

@@ -1,301 +1,79 @@
 <!DOCTYPE html>
 {% set htmlLocale = app.request.locale|default(defaultlocale)|slice(0,2) %}
-<!--[if lt IE 7]>       <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ htmlLocale }}"> <![endif]-->
-<!--[if IE 7]>          <html class="no-js lt-ie9 lt-ie8" lang="{{ htmlLocale }}">        <![endif]-->
-<!--[if IE 8]>          <html class="no-js lt-ie9" lang="{{ htmlLocale }}">               <![endif]-->
-<!--[if gt IE 8]><!-->  <html class="no-js" lang="{{ htmlLocale }}">                  <!--<![endif]-->
+<!--[if lte IE 8]>      <html class="no-js lt-ie9" lang="{{ htmlLocale }}"> <![endif]-->
+<!--[if gte IE 9]><!--> <html lang="{{ htmlLocale }}"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}</title>
+
+    <title>
+        {{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}
+    </title>
+
     {% if page is defined %}
         {{ render_seo_metadata_for(page) }}
     {% endif %}
 
-    <!-- favicon - apple touch icons -->
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('apple-touch-icon-144x144-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ asset('apple-touch-icon-120x120-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('apple-touch-icon-114x114-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('apple-touch-icon-72x72-precomposed.png') }}">
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('apple-touch-icon-precomposed.png') }}">
+    {# Favicons #}
+    {% include '<%= bundle.getName() %>:Layout:_favicons.html.twig' %}
 
-    <!-- webfonts - should be included through css-method -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    {# Webfonts #}
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 
-    <!-- css -->
+    {# CSS #}
     {% include '<%= bundle.getName() %>:Layout:_css.html.twig' %}
 
-    <!-- js -->
+    {# JS #}
     {% include '<%= bundle.getName() %>:Layout:_js_header.html.twig' %}
 </head>
+
 <body {% block extra_body_attributes %}{% endblock %}>
+    {# Google Tagmanager #}
+    {% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
 
-{% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
+    {# Outdated browser message #}
+    {% include '<%= bundle.getName() %>:Layout:_outdatedbrowser.html.twig' %}
 
-{% block header %}
+    <div class="st-container" id="st-container">
+        <div class="st-pusher">
 
-    <!--[if lte IE 9]>
-    <div class="outdated">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="outdated__title">You are using an outdated browser.</h1>
-                    <h3 class="outdated__subtitle">Some content may be lost or not displayed correctly.</h3>
-                    <p class="outdated__description">Please consider upgrading to a more recent browser.</p>
-                    <a href="http://browsehappy.com/?locale={{ htmlLocale }}" target="_blank" class="outdated__link">Upgrade your browser</a>
+            {# Mobile nav #}
+            {% include '<%= bundle.getName() %>:Layout:_mobile-nav.html.twig' %}
+
+            <div class="st-content">
+                <div class="st-content-inner">
+
+                    {# Header #}
+                    {% block header %}
+                        {% include '<%= bundle.getName() %>:Layout:_header.html.twig' %}
+                    {% endblock %}
+
+                    {# Header visual #}
+                    {% block header_visual %}{% endblock %}
+
+                    {# Breadcrumbs #}
+                    {% block breadcrumbs %}
+                        {% include '<%= bundle.getName() %>:Layout:_breadcrumbs.html.twig' %}
+                    {% endblock %}
+
+                    {# Content #}
+                    <main role="main">
+                        {% block content %}{% endblock %}
+                    </main>
+
+                    {# Footer #}
+                    {% block footer %}
+                        {% include '<%= bundle.getName() %>:Layout:_footer.html.twig' %}
+                    {% endblock %}
+
                 </div>
             </div>
+
         </div>
     </div>
-    <![endif]-->
 
-    <!-- Header -->
-    <header role="header" class="main-header">
-        <section class="container">
-            <div class="row">
-                <div class="col-xs-1 col-sm-9 col-md-6 col-lg-7 js-navigation-space-hook"></div>
-            </div>
-            <div class="row">
-                {% if nodemenu is defined %}
-                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-                        {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                        <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="site-logo">
-                            <img src="{{ asset('bundles/<%= bundle.name|lower|replace({"bundle": ""}) %>/img/general/demo-logo.svg') }}" alt="Demosite" class="site-logo__img"/>
-                        </a>
-                    </div>
-                    <div class="col-xs-12 col-sm-9 col-md-6 col-lg-7">
-                        <nav role="navigation" class="js-navigation navigation navigation--big navigation--animated">
-                            <!-- Mobile navigation toggle -->
-                            <div class="js-navigation__toggle navigation__toggle navigation__toggle--top">
-                                MENU
-                                <i class="icon-reorder"></i>
-                                <i class="icon-remove"></i>
-                            </div>
-                            <!-- Navigation level -->
-                            <ul class="js-main-navigation-level navigation__level">
-                                <li class="navigation__item {% if nodemenu.getActiveForDepth(2) is null %}navigation__item--active{% endif %}">
-                                    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="navigation__link">Home</a>
-                                </li>
-                                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                                {% for node in activeSubnode.children %}
-                                    {% if not node.node.isHiddenFromNav() %}
-                                        <li class="navigation__item {% if(node.active) %}navigation__item--active{% endif %}">
-                                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link">{{ node.title }}</a>
-                                            {% if node.children|length>0 %}
-                                                <!-- Mobile submenu toggle -->
-                                                <div class="js-navigation__toggle navigation__toggle navigation__toggle--sublevel">
-                                                    <i class="icon-chevron-down"></i>
-                                                    <i class="icon-chevron-up"></i>
-                                                </div>
-                                                <!-- Submenu -->
-                                                <ul class="navigation__level navigation__level--sublevel">
-                                                    {% for node in node.children %}
-                                                        {% if not node.node.isHiddenFromNav() %}
-                                                            <li class="navigation__item navigation__item--sublevel {% if(node.active) %}navigation__item--active{% endif %}">
-                                                                <a href="{{ path('_slug', { 'url': node.slug }) }}" class="navigation__link navigation__link--sublevel">
-                                                                    {{ node.title }}
-                                                                    {% if(node.active) %}
-                                                                        <i class="icon-chevron-right"></i>
-                                                                    {% endif %}
-                                                                </a>
-                                                            </li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </nav>
-                    </div>
-                    {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-                    {% if searchPageNode %}
-                        <div class="visible-md visible-lg col-md-3 col-lg-3">
-                            <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox">
-                                <div class="searchbox-box">
-                                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input" />
-                                    <button type="submit" id="search" class="searchbox__submit">
-                                        <i class="icon-search searchbox__submit__icon"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    {% endif %}
-                {% endif %}
-            </div>
-        </section>
-        <section class="splash splash--{% block pagetitleColor %}green{% endblock %} splash--border-bottom">
-            <div class="container splash__container">
-                <div class="row row--padded-large">
-                    <h1 class="col-md-9 splash__title">
-                        {% block pagetitleText %}
-                            {% if page is defined %}
-                                {{ get_title_for(page) }}
-                            {% endif %}
-                        {% endblock %}
-                    </h1>
-                    {% if requiredlocales is defined %}
-                        {% set langs = requiredlocales|split('|') %}
-                        {% if langs|length > 0 %}
-                            <nav class="col-md-2 language-nav">
-                                <span class="language-nav__active-lang">
-                                    {{ app.request.locale }}
-                                    <i class="icon-chevron-down"></i>
-                                </span>
-                                <ul class="list-reset language-nav__list">
-                                    {% for lang in langs %}
-                                        {% if lang != app.request.locale %}
-                                            <li class="language-nav__list-item">
-                                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
-                                                    {{ lang }}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </nav>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </div>
-        </section>
-    </header>
-{% endblock %}
-
-<section class="container">
-    <div class="row">
-        <div class="col-md-6 col--padded">
-            {% block breadcrumbs %}
-                {% if nodemenu is defined and nodemenu.breadCrumb|length > 1 %}
-                    <nav role="navigation">
-                        <ol class="breadcrumb">
-                            <li>
-                                {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-                                <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="breadcrumb__home-link">
-                                    <i class="icon-home"></i>
-                                </a>
-                            </li>
-                            {% for node in nodemenu.breadCrumb %}
-                                {% if not loop.first %}
-                                    {% if loop.last %}
-                                        <li class="active">{{ node.title }}</li>
-                                    {% else %}
-                                        <li>
-                                            <a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a>
-                                        </li>
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-                        </ol>
-                    </nav>
-                {% endif %}
-            {% endblock breadcrumbs %}
-        </div>
-    </div>
-</section>
-
-<!-- Main -->
-<main role="main">
-    {% block content %}{% endblock %}
-</main>
-
-{% block footer %}
-    <!-- Footer -->
-    <footer role="footer" class="footer">
-        <section class="splash splash--gray-dark splash--border-top">
-            <div class="container">
-                {% if nodemenu is defined %}
-                    {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-                    {% if searchPageNode %}
-                        <div class="row row--padded hidden-md hidden-lg">
-                            <div class="col-xs-12 col-sm-5 col-sm-offset-7">
-                                <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox">
-                                    <div class="searchbox-box">
-                                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="search" class="searchbox__input" />
-                                        <button type="submit" id="search" class="searchbox__submit">
-                                            <i class="icon-search searchbox__submit__icon"></i>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                    <div class="row row--padded">
-                        {% for node in activeSubnode.children %}
-                            {% if not node.node.isHiddenFromNav() %}
-                                <nav class="col-xs-12 col-sm-3 col-md-3 col--padded doormat">
-                                    <h5 class="doormat__title"><a href="{{ path('_slug', { 'url': node.slug }) }}">{{ node.title }}</a></h5>
-                                    <ul class="list-reset doormat__link-list">
-                                        {% if node.children|length>0 %}
-                                            {% if node.node.internalName == 'article_overview_page' %}
-                                                {% for node2 in node.children %}
-                                                    {% if loop.index < 4 %}
-                                                        {% if node2.title|length > 40 %}
-                                                            {% set ltitle = node2.title[:40] ~ '...' %}
-                                                        {% else %}
-                                                            {% set ltitle = node2.title %}
-                                                        {% endif %}
-                                                        <li class="doormat__list-item {% if(node2.active) %}active{% endif %}">
-                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="link--gray doormat__link">{{ ltitle }}</a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% else %}
-                                                {% for node2 in node.children %}
-                                                    {% if not node.node.isHiddenFromNav() or true %}
-                                                        <li class="doormat__list-item {% if(node2.active) %}active{% endif %}">
-                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="link--gray doormat__link">{{ node2.title }}</a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        {% endif %}
-                                    </ul>
-                                </nav>
-                            {% endif %}
-                        {% endfor %}
-
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-lg-offset-1 col--padded text-right">
-                            <a href="https://twitter.com/kunstmaan" class="social-link">
-                                <i class="social-link__icon icon-twitter"></i>
-                            </a>
-                            <a href="http://www.linkedin.com/company/kunstmaan" class="social-link">
-                                <i class="social-link__icon icon-linkedin"></i>
-                            </a>
-                            <a href="https://github.com/Kunstmaan" class="social-link">
-                                <i class="social-link__icon icon-github"></i>
-                            </a>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-        </section>
-        <section>
-            <div class="container">
-                <div class="row row--padded">
-                    <div class="col-md-12">
-                        <p class="pull-left">
-                            &copy; {{ "now"|date("Y") }}
-                            {% if nodemenu is defined %}
-                                {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
-                                {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}">{{ sitemap.title }}</a>{% endif %}
-                            {% endif %}
-                        </p>
-                        <p class="pull-right created-by">
-                            Created by <a href="http://www.kunstmaan.be"><img src="{{ asset('bundles/<%= bundle.name|lower|replace({"bundle": ""}) %>/img/general/km-logo.svg') }}" alt="Kunstmaan"></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </footer>
-{% endblock %}
-
-{% include '<%= bundle.getName() %>:Layout:_js_footer.html.twig' %}
+    {# JS Footer #}
+    {% include '<%= bundle.getName() %>:Layout:_js_footer.html.twig' %}
 </body>
 </html>

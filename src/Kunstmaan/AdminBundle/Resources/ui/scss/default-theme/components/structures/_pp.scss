@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Page Part
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+// Default state
+.pp {
+    position: relative;
+
+    background: $white;
+    border: 1px solid #efefef;
+    border-radius: $border-radius-base;
+
+    transition: border-color .3s ease;
+
+    &:hover {
+        border-color: $gray-lighter;
+
+        .pp__header, .pp__actions {
+            opacity: 1;
+        }
+    }
+}
+
+// Edit active state
+.pp--edit-active {
+    border-color: $gray-lighter;
+
+    .pp__header, .pp__actions {
+        opacity: 1;
+    }
+
+    .pp__actions__action--edit {
+        background: $white;
+    }
+}
+
+
+
+/* Header
+   ========================================================================== */
+// General
+.pp__header {
+    position: relative;
+
+    width: 100%;
+    height: 3rem;
+
+    background: #f7f7f7;
+    border-bottom: 1px solid $gray-lighter;
+    opacity: .3;
+
+    transition: opacity .3s ease;
+
+    cursor: move;
+
+    &:hover {
+
+        .pp__header__move-icon {
+            color: $blue;
+        }
+    }
+}
+
+
+// Move icon
+.pp__header__move-icon {
+    position: absolute;
+    top: .8rem;
+    left: .8rem;
+
+    color: $gray-lighter;
+
+    transition: color .3s ease;
+}
+
+
+// Head
+.pp__header__head {
+    float: left;
+    margin: 0;
+    height: 3rem;
+    padding: 0 0 0 3rem;
+
+    color: $gray-light;
+    font-size: 1.3rem;
+    line-height: 3rem;
+}
+
+
+
+/* Header
+   ========================================================================== */
+.pp__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    opacity: .3;
+
+    transition: opacity .3s ease;
+}
+
+.pp__actions__action {
+    position: relative;
+
+    float: right;
+    display: block;
+    height: 3rem;
+    padding: 0 1rem;
+
+    line-height: 3rem;
+    border: 0;
+    border-left: 1px solid $gray-lighter;
+    border-radius: 0;
+    background: transparent;
+    color: $gray-light;
+
+    transition: background .3s ease, color .3s ease;
+
+    &:last-child {
+        border-top-right-radius: 2px;
+    }
+
+    &:hover {
+        z-index: 1;
+
+        color: $white;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+.pp__actions__action--del {
+
+
+    &:hover {
+        background: $brand-danger;
+    }
+}
+
+.pp__actions__action--edit {
+
+    &:hover {
+        background: $blue;
+    }
+}
+
+
+
+/* View
+   ========================================================================== */
+.pp__view {
+    padding: 1em;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.pp__view__block {
+    overflow: hidden;
+
+    .container {
+        max-width: 100%!important;
+    }
+}
+
+.pp__view__block--hidden {
+    display: none;
+}

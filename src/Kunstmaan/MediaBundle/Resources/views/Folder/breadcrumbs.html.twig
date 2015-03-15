@@ -1,11 +1,17 @@
 {% set breadcrumbitems = foldermanager.getParents(folder) %}
 {% if breadcrumbitems | length > 0 %}
-    <ul class="breadcrumb">
+    <ul class="breadcrumb app__content__breadcrumb">
         {% for breadcrumbitem in breadcrumbitems %}
             {% if loop.last %}
-                <li class="active">{{ breadcrumbitem.name }}</li>
+                <li class="active">
+                    {{ breadcrumbitem.name }}
+                </li>
             {% else %}
-                <li><a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': breadcrumbitem.id }) }}">{{ breadcrumbitem.name }}</a></li>
+                <li>
+                    <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId': breadcrumbitem.id }) }}">
+                        {{ breadcrumbitem.name }}
+                    </a>
+                </li>
             {% endif %}
         {% endfor %}
     </ul>

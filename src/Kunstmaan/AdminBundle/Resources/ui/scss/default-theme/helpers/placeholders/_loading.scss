@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Loading
+   ========================================================================== */
+
+%loading {
+    content: " ";
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+
+    margin: -.5rem 0 0 -.5rem;
+
+    background-color: #E6E7E9;
+    border-radius: 3px;
+
+    @include animation(rotateplane 1.2s infinite ease-in-out);
+}

@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Pageparts - Download pp
+   ========================================================================== */
+
+.download-pp {
+    margin: $default-margin 0;
+
+    // THEME
+    font-size: .85rem;
+
+    @extend .icon--arrow-tail-down;
+
+    &:before {
+        @include iconfont-reset;
+        margin-right: .5rem;
+        font-size: 11px;
+    }
+
+    a {
+        color: $text-color;
+        font-weight: 600;
+    }
+}

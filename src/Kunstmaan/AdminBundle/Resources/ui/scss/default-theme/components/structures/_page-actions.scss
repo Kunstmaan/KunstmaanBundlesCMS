@@ -1,0 +1,90 @@
+/* ==========================================================================
+   Page Actions
+   ========================================================================== */
+
+/* Main tabs
+   ========================================================================== */
+.page-main-tabs{
+
+    @media (min-width: $screen-xs-min) {
+        margin: 2rem 0 0;
+    }
+}
+
+/* Main actions
+   ========================================================================== */
+.page-main-actions {
+    margin: 1rem 0;
+
+    text-align: right;
+
+    @media (min-width: $screen-xs-min) {
+        float:right;
+
+        &.page-main-actions--no-tabs {
+            float: none;
+        }
+    }
+
+    &.page-main-actions--inside-extra-actions-header {
+        @media (min-width: $screen-sm-min) {
+            margin: 0;
+        }
+    }
+}
+
+
+
+/* Main actions - Top
+   ========================================================================== */
+.page-main-actions--top {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: $navbar-height;
+
+    margin: 0;
+    padding: .4em 1em;
+    background: #f7f7f7;
+    border-bottom: 1px solid $gray-lighter;
+
+    @include transition-property(transform);
+    @include transition-duration(.3s);
+    @include transition-timing-function(ease);
+
+    @media (max-width: $screen-md) {
+        display: none;
+    }
+}
+
+
+.page-main-actions--top--show {
+    @include transform(translateY($navbar-height));
+}
+
+
+
+
+/* Sub actions
+   ========================================================================== */
+.page-sub-actions {
+    text-align: right;
+
+    a:not(:first-child) {
+        margin-left: 1rem;
+    }
+
+    @media (min-width: $screen-sm) {
+        margin-top: -2.2rem;
+    }
+}
+
+
+.page-sub-actions--has-buttons {
+    @media (min-width: $screen-sm) {
+        margin-top: -3.8rem;
+    }
+}
