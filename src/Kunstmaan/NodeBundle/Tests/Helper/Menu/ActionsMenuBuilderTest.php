@@ -208,7 +208,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $menu = $this->builder->createTopActionsMenu();
         $this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
-        $this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('id'));
+        $this->assertEquals('page-main-actions-top', $menu->getChildrenAttribute('id'));
     }
 
     /**
