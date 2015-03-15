@@ -1,5 +1,11 @@
 language: php
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
   - 5.3
   - 5.4
@@ -23,7 +29,7 @@ before_script:
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
     - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;'
-    - sudo locale-gen nl_BE.UTF-8 && sudo update-locale
+#    - sudo locale-gen nl_BE.UTF-8 && sudo update-locale
     - composer require symfony/symfony:${SYMFONY_VERSION}
     - wget https://phar.phpunit.de/phpunit.phar
     - wget https://scrutinizer-ci.com/ocular.phar
