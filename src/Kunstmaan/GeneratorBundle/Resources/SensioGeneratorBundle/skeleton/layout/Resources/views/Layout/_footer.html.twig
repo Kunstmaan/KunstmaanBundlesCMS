@@ -26,7 +26,7 @@
 
     {# Social footer #}
     <section class="social-footer">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <div class="col-md-12">
 
@@ -101,25 +101,24 @@
         </section>
     {% endif %}
 
-    {# Subfooter #}
-    <section class="subfooter">
-        <div class="container-fluid">
+
+    {# Sub-footer #}
+    <section class="sub-footer">
+        <div class="container">
             <div class="row">
                 <div class="col-md-12">
-
-                    <div class="subfooter__inner">
-                        <p class="subfooter__info">
+                    <div class="sub-footer__inner">
+                        <p class="sub-footer__info">
                             &copy; {{ "now"|date("Y") }}
                             {% if nodemenu is defined %}
                                 {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
-                                {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}" class="subfooter__info__link">{{ sitemap.title }}</a>{% endif %}
+                                {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}" class="sub-footer__info__link">{{ sitemap.title }}</a>{% endif %}
                             {% endif %}
                         </p>
-                        <p class="subfooter__credentials">
-                            Created by <a href="http://www.kunstmaan.be" class="subfooter__credentials__link"><img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="subfooter__credentials__img"></a>
+                        <p class="sub-footer__credentials">
+                            Created by <a href="http://www.kunstmaan.be" class="sub-footer__credentials__link"><img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="sub-footer__credentials__img"></a>
                         </p>
                     </div>
-
                 </div>
             </div>
         </div>

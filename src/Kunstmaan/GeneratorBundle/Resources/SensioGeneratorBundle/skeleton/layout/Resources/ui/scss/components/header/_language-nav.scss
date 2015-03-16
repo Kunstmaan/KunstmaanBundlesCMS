@@ -35,14 +35,17 @@
         padding: 1rem 1.5rem;
         border-bottom: 1px solid $gray-dark;
     }
+
     .language-nav__list {
         line-height: 100%;
     }
+
     .language-nav__list__item {
         color: $theme-color;
         margin-right: .8rem;
         font-weight: 300;
     }
+
     .language-nav__list__link {
         color: $white;
         font-weight: 300;
@@ -79,11 +82,13 @@
         vertical-align: middle;
         margin-left: .1rem;
     }
+
     .language-nav__active-lang {
         font-size: .65rem;
         font-weight: 400;
         text-transform: uppercase;
     }
+
     .language-nav__list {
         opacity: 0;
 
@@ -99,13 +104,14 @@
 
         @include transition(all .2s ease-in-out);
     }
+
     .language-nav__list__item {
         display: block;
         font-size: .65rem;
     }
+
     .language-nav__list__link {
         color: $gray;
     }
-
 }
 

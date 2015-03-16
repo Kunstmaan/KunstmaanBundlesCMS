@@ -2,69 +2,28 @@
    Pageparts - Button pp
    ========================================================================== */
 
+/* General
+   ========================================================================== */
 .button-pp {
     margin: $default-margin 0;
-}
-
-.btn {
-    font-size: .8rem;
-    text-transform: uppercase;
-    text-align: center;
-    color: $black;
-
-    display: inline-block;
-    padding: .65rem 1rem;
-    background-color: $white;
-    border: 1px solid $hr-color;
-    @include box-shadow;
-
-    &:hover, &:focus, &:active {
-        background-color: $white;
-        color: $black;
-        text-decoration: none;
-    }
-}
-
-/* Sizes
-   ========================================================================== */
-
-
-/* Colors
-   ========================================================================== */
-
-.btn--primary {
-    background-color: $theme-color;
-    color: $white;
-    border-color: $theme-color;
-    &:hover, &:focus, &:active {
-        background-color: $theme-color;
-        color: $white;
-    }
-}
-.btn--secondary {
-    background-color: $theme-color-dark;
-    color: $white;
-    border-color: $theme-color-dark;
-    &:hover, &:focus, &:active {
-        background-color: $theme-color-dark;
-        color: $white;
-    }
 }
 
 
 /* Alignment
    ========================================================================== */
-
 .button-pp--left {
     text-align: left;
 }
+
 .button-pp--center {
     text-align: center;
 }
+
 .button-pp--right {
     text-align: right;
 }
 .button-pp--block {
+
     .btn {
         display: block;
     }

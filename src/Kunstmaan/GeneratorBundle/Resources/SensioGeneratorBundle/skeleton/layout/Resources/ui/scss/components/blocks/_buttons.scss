@@ -5,13 +5,22 @@
 /* General
    ========================================================================== */
 .btn {
+{% if demosite %}
+    @include box-shadow;
+{% endif %}
+
     display: inline-block;
     margin: 0;
-    padding: .3em 1.3em;
+    padding: .65em 1em;
 
     background: none;
     border: 0;
     -webkit-appearance: none;
+
+{% if demosite %}
+    background-color: $white;
+    border: 1px solid $hr-color;
+{% endif %}
 
     text-align: center;
     text-decoration: none;
@@ -21,8 +30,13 @@
     white-space: nowrap;
     user-select: none;
 
-    &:hover, &:focus {
+    &:hover, &:focus, &:active {
         text-decoration: none;
+
+{% if demosite %}
+        background-color: $white;
+        color: $black;
+{% endif %}
     }
 
     &:active, &:focus {
@@ -40,7 +54,30 @@
 /* Types
    ========================================================================== */
 // Primary
-.btn--primary {}
+.btn--primary {
+{% if demosite %}
+    background-color: $theme-color;
+    color: $white;
+    border-color: $theme-color;
+
+    &:hover, &:focus, &:active {
+        background-color: $theme-color;
+        color: $white;
+    }
+{% endif %}
+}
 
 // Secondary
-.btn--secondary {}
+.btn--secondary {
+{% if demosite %}
+    background-color: $theme-color-dark;
+    color: $white;
+    border-color: $theme-color-dark;
+
+    &:hover, &:focus, &:active {
+        background-color: $theme-color-dark;
+        color: $white;
+    }
+{% endif %}
+}
+

@@ -7,8 +7,8 @@
 }
 
 .header-visual__img {
-    position: relative;
     z-index: 0;
+    position: relative;
 
     width: 100%;
 }
@@ -17,13 +17,14 @@
     text-align: center;
 
     @media(min-width: $screen-md-min) {
+        z-index: 1;
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 1;
 
         width: 100%;
         margin-bottom: 0;
+
         text-align: left;
     }
 }
@@ -45,13 +46,12 @@
         color: $white;
     }
 }
+
 .header-visual__text {
     @media(min-width: $screen-md-min) {
-        color: $white;
         max-width: 50%;
         margin-bottom: 2.5rem;
-    }
-}
-.header-visual__btn {
 
+        color: $white;
+    }
 }

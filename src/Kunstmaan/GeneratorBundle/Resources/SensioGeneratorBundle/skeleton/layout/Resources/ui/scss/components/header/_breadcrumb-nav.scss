@@ -2,31 +2,31 @@
    Header - Breadcrumb navigation
    ========================================================================== */
 
-// THEME
-
+/* General
+   ========================================================================== */
 .breadcrumb {
     margin: $default-margin 0;
 }
-.breadcrumb__list {
 
-}
+
+/* List
+   ========================================================================== */
 .breadcrumb__list__item {
     display: inline-block;
+
     font-size: .8rem;
     font-weight: 400;
 }
+
 .breadcrumb__list__link {
     display: inline-block;
+
     font-weight: 400;
 }
-.breadcrumb__list__link--home {
 
-}
-.breadcrumb__list__link--active {
-
-}
 .breadcrumb__list__icon {
-    font-size: .5rem;
     margin: 0 .5rem;
+
+    font-size: .5rem;
     vertical-align: middle;
 }

@@ -10,8 +10,8 @@
 @import "blocks/buttons",
         "blocks/tables"{% if demosite %},
         "blocks/submenu",
-        "blocks/img-icon";
-{% else %};{% endif %}
+        "blocks/img-icon"
+{% endif %};
 
 
 /* Structures
@@ -35,13 +35,12 @@
 
 /* Header
    ========================================================================== */
-@import "header/main-header",
+@import "header/main-header"{% if demosite %},
         "header/main-nav",
         "header/language-nav",
-{% if demosite %}
         "header/header-visual",
-{% endif %}
-        "header/breadcrumb-nav";
+        "header/breadcrumb-nav"
+{% endif %};
 
 
 /* Forms
