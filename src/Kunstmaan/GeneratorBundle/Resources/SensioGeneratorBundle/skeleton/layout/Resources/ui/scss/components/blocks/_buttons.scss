@@ -8,7 +8,6 @@
 {% if demosite %}
     @include box-shadow;
 {% endif %}
-
     display: inline-block;
     margin: 0;
     padding: .65em 1em;
@@ -21,7 +20,6 @@
     background-color: $white;
     border: 1px solid $hr-color;
 {% endif %}
-
     text-align: center;
     text-decoration: none;
     vertical-align: middle;

@@ -43,7 +43,7 @@
 {% endif %};
 
 
-/* Forms
+/* Forms => :(
    ========================================================================== */
 @import "forms/base",
         "forms/search";
@@ -51,16 +51,16 @@
 
 /* Pageparts
    ========================================================================== */
-@import "pageparts/text-pp",
+@import "pageparts/button-pp",
+        "pageparts/text-pp",
         "pageparts/introtext-pp",
-        "pageparts/download-pp",
-        "pageparts/totop-pp",
-        "pageparts/button-pp",
         "pageparts/image-pp",
-        "pageparts/link-pp";
+        "pageparts/link-pp",
+        "pageparts/download-pp",
+        "pageparts/totop-pp";
 
 
 /* Vendors
    ========================================================================== */
-@import "vendors/bootstrap-components/grid",
-        "vendors/sidebar-effects";
+@import "vendors/bootstrap-components/grid"{% if demosite %},
+        "vendors/sidebar-effects"{% endif %};

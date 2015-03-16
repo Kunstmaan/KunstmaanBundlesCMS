@@ -7,9 +7,11 @@
 .sub-footer__inner {
     @include clearfix;
 
-    padding: 1rem 0;
+    padding: 1em 0;
 
+{% if demosite %}
     border-top: 2px solid $hr-color;
+{% endif %}
 }
 
 

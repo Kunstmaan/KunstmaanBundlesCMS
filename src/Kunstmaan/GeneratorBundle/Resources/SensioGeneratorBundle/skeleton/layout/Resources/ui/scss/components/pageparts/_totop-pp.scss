@@ -5,14 +5,17 @@
 .totop-pp {
     margin: 3rem 0;
 
-    // THEME
+{% if demosite %}
+    padding-bottom: .5rem;
+
     font-size: .85rem;
     text-align: right;
     border-bottom: 1px solid $hr-color;
-    padding-bottom: .5rem;
 
     a {
         display: inline-block;
+
         color: $text-color;
     }
+{% endif %}
 }

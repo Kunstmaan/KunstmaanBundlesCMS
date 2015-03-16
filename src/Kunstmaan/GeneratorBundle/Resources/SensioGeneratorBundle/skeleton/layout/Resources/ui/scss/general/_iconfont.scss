@@ -6,9 +6,6 @@
 
 /* General
    ========================================================================== */
-
-// TODO: base64 webfonts and iconfont
-
 @font-face {
     font-family: $iconfont;
     src:url('#{$iconfont-path}/#{$iconfont}.eot?8at4kw');
@@ -38,8 +35,7 @@
 
 /* Icons
    ========================================================================== */
-
-
+{% if demosite %}
 .icon--menu:before {
     content: "\e60d";
 }
@@ -123,3 +119,4 @@
 .icon--triangle-up:before {
     content: "\e611";
 }
+{% endif %}

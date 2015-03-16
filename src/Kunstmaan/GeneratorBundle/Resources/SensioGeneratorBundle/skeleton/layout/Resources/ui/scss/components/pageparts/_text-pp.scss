@@ -2,23 +2,23 @@
    Pageparts - Text pp
    ========================================================================== */
 
+/* General
+   ========================================================================== */
 .text-pp {
     margin: $default-margin 0;
 
-    a {
-        &:hover, &:focus, &:active {
-        }
-    }
-
-    //THEME
+{% if demosite %}
     ul {
         @include list-reset;
+
         li {
-            padding-left: .9rem;
             position: relative;
+
+            padding-left: .9rem;
 
             &:before {
                 content: "•";
+
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -34,9 +34,12 @@
     }
 
     ul, ol {
+
         li {
-            line-height: 150%;
             margin-bottom: .4rem;
+
+            line-height: 150%;
         }
     }
+{% endif %}
 }
