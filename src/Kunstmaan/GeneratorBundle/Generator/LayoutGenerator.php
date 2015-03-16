@@ -20,20 +20,24 @@ class LayoutGenerator extends KunstmaanGenerator
     private $rootDir;
 
     /**
+     * @var bool
+     */
+    private $demosite;
+
+    /**
      * Generate the basic layout.
      *
      * @param BundleInterface $bundle         The bundle
      * @param string          $rootDir        The root directory of the application
      */
-    public function generate(BundleInterface $bundle, $rootDir)
+    public function generate(BundleInterface $bundle, $rootDir, $demosite)
     {
         $this->bundle = $bundle;
         $this->rootDir = $rootDir;
+        $this->demosite = $demosite;
 
         $this->generateBowerFiles();
         $this->generateGulpFiles();
-        $this->generateJshintrcFile();
-        $this->generateGroundcontrolrcFile();
         $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
@@ -55,25 +59,9 @@ class LayoutGenerator extends KunstmaanGenerator
     private function generateGulpFiles()
     {
         $this->renderFiles($this->skeletonDir.'/gulp/', $this->rootDir, array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating gulp configuration : <info>OK</info>');
-    }
-
-    /**
-     * Generate the jshint configuration file.
-     */
-    private function generateJshintrcFile()
-    {
         $this->renderSingleFile($this->skeletonDir.'/gulp/', $this->rootDir, '.jshintrc', array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating jshint configuration : <info>OK</info>');
-    }
-
-    /**
-     * Generate the groundcontrol configuration file.
-     */
-    private function generateGroundcontrolrcFile()
-    {
         $this->renderSingleFile($this->skeletonDir.'/gulp/', $this->rootDir, '.groundcontrolrc', array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
+        $this->assistant->writeLine('Generating gulp configuration : <info>OK</info>');
     }
 
     /**
@@ -94,9 +82,9 @@ class LayoutGenerator extends KunstmaanGenerator
         $targetDir = $this->bundle->getPath();
 
         $relPath = '/Resources/ui/';
-        $relPathJs = '/Resources/ui/js/';
         $this->copyFiles($sourceDir.$relPath, $targetDir.$relPath, true);
-        $this->renderFiles($sourceDir.$relPathJs, $targetDir.$relPathJs, array('bundle' => $this->bundle), true);
+        $this->renderFiles($sourceDir.$relPath.'/js/', $targetDir.$relPath.'/js/', array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
+        $this->renderFiles($sourceDir.$relPath.'/scss/', $targetDir.$relPath.'/scss/', array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
 
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
