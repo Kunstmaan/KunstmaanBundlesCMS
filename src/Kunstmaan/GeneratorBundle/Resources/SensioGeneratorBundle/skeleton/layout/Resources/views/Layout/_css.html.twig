@@ -1,8 +1,8 @@
 {% block css %}
-    <!--[if lt IE 9]>
+    <!--[if lte IE 9]>
         <link rel="stylesheet" href="/frontend/css/style-ie9.min.css?{{ assets_version() }}" type="text/css" />
     <![endif]-->
-    <!--[if gte IE 9]><!-->
+    <!--[if gt IE 9]><!-->
         <link rel="stylesheet" href="/frontend/css/style.min.css?{{ assets_version() }}" type="text/css" />
     <!--<![endif]-->
 {% endblock %}
