@@ -31,7 +31,8 @@
         "merge-stream": "0.1.7",
         "node-notifier": "4.1.0",
         "rebase": "0.3.0",
-        "run-sequence": "1.0.2"
+        "run-sequence": "1.0.2",
+        "gulp-rev": "3.0.1"
     },
     "engines": {
         "node": ">=0.10.0"

@@ -3,8 +3,7 @@
 /* ==========================================================================
    Gulpfile
 
-
-   Development-tasks:
+   Tasks:
    - gulp (builds for dev + watch)
    - gulp build (builds for prod)
    - gulp watch
@@ -54,9 +53,10 @@ _.forEach(vars, function(value, key) {
 config = JSON.parse(config);
 
 
+
+
 /* Errorhandling
    ========================================================================== */
-
 var errorLogger, headerLines;
 
 errorLogger = function(headerMessage,errorMessage){
@@ -82,6 +82,21 @@ headerLines = function(message){
     }
     return lines;
 }
+
+
+
+
+/* Add Async tag to script
+   ========================================================================== */
+var addAsyncTag = function (filepath, file, i, length) {
+    if(config.js.addAsync === 'true') {
+        return '<script src="' + filepath + '" async></script>';
+    } else {
+        return '<script src="' + filepath + '"></script>';
+    }
+}
+
+
 
 
 /* Styles
@@ -120,9 +135,11 @@ gulp.task('styles', function() {
         }));
 });
 
+
+
+
 /* Javascript
    ========================================================================== */
-
 // Jshint
 gulp.task('jshint', function() {
     return gulp.src([config.js.app, '!' + resourcesPath + '/ui/js/vendors/**/*.js'])
@@ -148,6 +165,9 @@ gulp.task('scripts-prod', ['jshint'], function() {
         // Concat
         .pipe(plugins.concat('footer.min.js'))
 
+        // Revision
+        .pipe(plugins.rev())
+
         // Set destination
         .pipe(gulp.dest(config.dist.js))
 
@@ -160,7 +180,8 @@ gulp.task('scripts-prod', ['jshint'], function() {
 gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
     return gulp.src('src/' + config.project.mainBundlePath + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
         // Inject
-        .pipe(plugins.inject(gulp.src(config.dist.js + '/footer.min.js'), {
+        .pipe(plugins.inject(gulp.src(config.dist.js + '/**/*.js'), {
+            transform: addAsyncTag,
             ignorePath: '/web'
         }))
 
@@ -170,6 +191,7 @@ gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
         // Write
         .pipe(gulp.dest('src/' + config.project.mainBundlePath + '/Resources/views/' + config.project.mainJsInclude.folder + '/'));
 });
+
 
 // Development
 gulp.task('scripts-dev', ['jshint'], function() {
@@ -197,9 +219,10 @@ gulp.task('inject-dev-scripts', ['scripts-dev'], function() {
 });
 
 
+
+
 /* Images
    ========================================================================== */
-
 gulp.task('images', function() {
     return gulp.src(config.img)
         // Only optimize changed images
@@ -223,9 +246,11 @@ gulp.task('images', function() {
         }));
 });
 
+
+
+
 /* Fonts
    ========================================================================== */
-
 gulp.task('fonts', function() {
     return gulp.src(config.fonts)
         // Set destination
@@ -238,9 +263,10 @@ gulp.task('fonts', function() {
 });
 
 
+
+
 /* Styleguide
    ========================================================================== */
-
 // Hologram
 gulp.task('styleguide', function() {
     return gulp.src(config.styleguideFolder, {read: false})
@@ -257,7 +283,7 @@ gulp.task('styleguide', function() {
 gulp.task('styleguide-prod-js', function() {
     return gulp.src(config.dist.styleguide + '/*.html')
         // Inject
-        .pipe(plugins.inject(gulp.src(config.dist.js + '/footer.min.js'), {
+        .pipe(plugins.inject(gulp.src(config.dist.js + '/**/*.js'), {
             ignorePath: '/web'
         }))
 
@@ -286,9 +312,9 @@ gulp.task('styleguide-dev-js', function() {
 
 
 
+
 /* Clean/clear
    ========================================================================== */
-
 gulp.task('clean', function(done) {
     del([
         distPath + '**',
@@ -297,9 +323,10 @@ gulp.task('clean', function(done) {
 });
 
 
+
+
 /* Default tasks
    ========================================================================== */
-
 // Watch
 gulp.task('watch', function() {
     // Livereload
@@ -350,9 +377,10 @@ gulp.task('default', function(done) {
 });
 
 
+
+
 /* Other tasks
    ========================================================================== */
-
 // Clear symfony cache
 gulp.task('clear-symfony-cache', plugins.shell.task([
     'rm -rf app/cache/*'
@@ -364,12 +392,14 @@ gulp.task('migrate', plugins.shell.task([
     'app/console doctrine:migrations:migrate --no-interaction'
 ]));
 
+
 // Clear Cache
 gulp.task('cc', plugins.shell.task([
     'php app/console cache:clear',
     'php app/console assetic:dump',
     'php app/console assets:install web --symlink'
 ]));
+
 
 // Fix perms
 gulp.task('fixperms', plugins.shell.task([
@@ -378,12 +408,14 @@ gulp.task('fixperms', plugins.shell.task([
     cwd: '/opt/kDeploy/tools'
 }));
 
+
 // Maintenance
 gulp.task('maintenance', plugins.shell.task([
     'sudo python maintenance.py quick'
 ], {
     cwd: '/opt/kDeploy/tools'
 }));
+
 
 // Restart Apache
 gulp.task('apachectl', plugins.shell.task([

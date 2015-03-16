@@ -42,7 +42,8 @@
         ],
         "other": [
             "<=bowerComponentsPath>html5shiv/dist/html5shiv.min.js"
-        ]
+        ],
+        "addAsync": "false"
     },
 
     "browserSupport": [
