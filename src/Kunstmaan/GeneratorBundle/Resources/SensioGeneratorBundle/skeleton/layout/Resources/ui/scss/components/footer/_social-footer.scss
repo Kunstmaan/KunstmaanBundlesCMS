@@ -1,25 +1,36 @@
 /* ==========================================================================
-   Footer - Social footer
+   Footer - Social footer - THEME FILE
    ========================================================================== */
 
+/* General
+   ========================================================================== */
 .social-footer {
 
 }
+
+
+/* Inner
+   ========================================================================== */
 .social-footer__inner {
     padding: 1.5rem 0;
+
     border-bottom: 2px solid $hr-color;
+
     @media(min-width: $screen-sm-min) {
         padding: 2.5rem 0;
     }
 }
+
+
+/* Link
+   ========================================================================== */
 .social-footer__link {
-    color: $gray;
     margin-right: 1rem;
+
+    color: $gray;
     font-size: 1.1rem;
 
     &:hover, &:focus, &:active {
         text-decoration: none;
     }
-}
-.social-link__icon {
 }

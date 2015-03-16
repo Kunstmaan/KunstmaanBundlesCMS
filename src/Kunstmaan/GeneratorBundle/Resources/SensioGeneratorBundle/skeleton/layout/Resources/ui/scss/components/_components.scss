@@ -7,47 +7,51 @@
 
 /* Blocks
    ========================================================================== */
-
-@import "blocks/submenu",
-        "blocks/buttons",
-        "blocks/tables",
+@import "blocks/buttons",
+        "blocks/tables"{% if demosite %},
+        "blocks/submenu",
         "blocks/img-icon";
+{% else %};{% endif %}
 
 
 /* Structures
    ========================================================================== */
+{% if demosite %}
 @import "structures/splash";
+{% else %}
+// @import "structures/..";
+{% endif %}
 
 
 /* Footer
    ========================================================================== */
-
 @import "footer/main-footer",
+{% if demosite %}
         "footer/social-footer",
-        "footer/subfooter",
-        "footer/newsletter";
+        "footer/newsletter",
+{% endif %}
+        "footer/sub-footer";
 
 
 /* Header
    ========================================================================== */
-
 @import "header/main-header",
         "header/main-nav",
         "header/language-nav",
-        "header/breadcrumb-nav",
-        "header/header-visual"; //THEME
+{% if demosite %}
+        "header/header-visual",
+{% endif %}
+        "header/breadcrumb-nav";
 
 
 /* Forms
    ========================================================================== */
-
 @import "forms/base",
         "forms/search";
 
 
 /* Pageparts
    ========================================================================== */
-
 @import "pageparts/text-pp",
         "pageparts/introtext-pp",
         "pageparts/download-pp",
@@ -59,8 +63,5 @@
 
 /* Vendors
    ========================================================================== */
-
 @import "vendors/bootstrap-components/grid",
-        "vendors/cargobay-components/cookie-consent",
-        "vendors/cargobay-components/toggle",
         "vendors/sidebar-effects";

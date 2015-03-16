@@ -1,14 +1,18 @@
 /* ==========================================================================
-   Footer - Newsletter
+   Footer - Newsletter - THEME FILE
    ========================================================================== */
 
-// THEME
+/* General
+   ========================================================================== */
 .newsletter {
-    padding: 2rem 0 2.5rem;
     margin-top: 0;
     margin-bottom: 0;
+    padding: 2em 0 2.5em;
 }
 
+
+/* Content
+   ========================================================================== */
 .newsletter__content, .newsletter__text {
     @extend .container;
 
@@ -17,20 +21,30 @@
         max-width: 750px;
     }
 }
+
+
+/* Title
+   ========================================================================== */
 .newsletter__title {
-    color: $white;
-    font-size: 2rem;
     margin-top: 0;
     margin-bottom: 1.5rem;
+
+    font-size: 2rem;
+    color: $white;
 }
+
+
+/* Text
+   ========================================================================== */
 .newsletter__text {
     margin: $default-margin 0;
 
     p {
-        color: $white;
-        max-width: 750px;
         display: inline-block;
+        max-width: 750px;
         margin: 0;
+
+        color: $white;
     }
 }
 
@@ -45,34 +59,35 @@
         max-width: 750px;
     }
 }
+
 .newsletter__form__input {
-    width: 100%;
-    display: block;
-
-    // cf. button-pp
-    font-size: .8rem;
-    color: $black;
-
-    padding: .65rem 1rem;
-    background-color: $white;
-    border: 1px solid $hr-color;
     @include box-shadow;
 
-    @media(min-width: $screen-sm-min) {
-        width: 340px;
-        max-width: 100%;
-        display: inline-block;
-    }
-}
-.newsletter__form__btn {
-    display: block;
-    margin-top: .5rem;
     width: 100%;
+    display: block;
+    padding: .65em 1em;
+
+    font-size: .8rem;
+    color: $black;
+    background-color: $white;
+    border: 1px solid $hr-color;
 
     @media(min-width: $screen-sm-min) {
         display: inline-block;
+        width: 340px;
+        max-width: 100%;
+    }
+}
+
+.newsletter__form__btn {
+    display: block;
+    width: 100%;
+    margin-top: .5rem;
+
+    @media(min-width: $screen-sm-min) {
+        display: inline-block;
+        width: auto;
         margin-left: .5rem;
         margin-top: 0;
-        width: auto;
     }
 }

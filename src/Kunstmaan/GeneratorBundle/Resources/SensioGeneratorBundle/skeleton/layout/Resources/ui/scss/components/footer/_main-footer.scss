@@ -2,12 +2,13 @@
    Footer - Main footer
    ========================================================================== */
 
-// THEME
+/* General
+   ========================================================================== */
 .main-footer {
-    padding: .5rem 0;
+    padding: .5em 0;
 }
 
-
+{% if demosite %}
 /* Footer navigation
    ========================================================================== */
 .footer-nav {
@@ -17,11 +18,14 @@
         text-align: center;
     }
 }
+
 .footer-nav__title {
+    margin: 0 0 1rem 0;
+
     font-size: .75rem;
     text-transform: uppercase;
-    margin: 0 0 1rem 0;
 }
+
 .footer-nav__title__link {
     color: $black;
     font-weight: 600;
@@ -34,11 +38,14 @@
 .footer-nav__list {
 
 }
+
 .footer-nav__list__item {
+    margin-bottom: .4rem;
+
     font-size: .9rem;
     line-height: 150%;
-    margin-bottom: .4rem;
 }
+
 .footer-nav__list__link {
     color: $gray;
 
@@ -46,3 +53,4 @@
         text-decoration: none;
     }
 }
+{% endif %}

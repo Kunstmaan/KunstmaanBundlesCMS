@@ -2,13 +2,45 @@
    Blocks - Buttons
    ========================================================================== */
 
-.btn, button {
+/* General
+   ========================================================================== */
+.btn {
     display: inline-block;
+    margin: 0;
+    padding: .3em 1.3em;
+
     background: none;
     border: 0;
-    padding: 0;
+    -webkit-appearance: none;
 
-    &:hover, &:focus, &:active {
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+
+    &:hover, &:focus {
+        text-decoration: none;
+    }
+
+    &:active, &:focus {
+        outline: 0;
+    }
+
+    &[disabled], fieldset[disabled] & {
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: .65;
     }
 }
 
+
+/* Types
+   ========================================================================== */
+// Primary
+.btn--primary {}
+
+// Secondary
+.btn--secondary {}

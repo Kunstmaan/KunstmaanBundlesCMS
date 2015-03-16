@@ -1,47 +1,61 @@
 /* ==========================================================================
-   Footer - Subfooter
+   Footer - Sub-footer
    ========================================================================== */
 
-.subfooter {
-}
-.subfooter__inner {
+/* Inner
+   ========================================================================== */
+.sub-footer__inner {
     @include clearfix;
 
-    border-top: 2px solid $hr-color;
     padding: 1rem 0;
+
+    border-top: 2px solid $hr-color;
 }
 
-.subfooter__info {
-    font-size: .75rem;
+
+/* Info
+   ========================================================================== */
+.sub-footer__info {
     margin: 0;
+
+    font-size: .75rem;
     text-align: center;
 
     @media(min-width: $screen-xs-min) {
         float: left;
     }
 }
-.subfooter__info__link {
-    color: $text-color;
+.sub-footer__info__link {
     display: inline-block;
+
+    color: $text-color;
+
     &:hover, &:focus, &:active {
         color: $text-color;
     }
 }
 
-.subfooter__credentials {
+
+/* Credentials
+   ========================================================================== */
+.sub-footer__credentials {
     font-size: .75rem;
-    margin: 0;
     text-align: center;
+
+    margin: 0;
 
     @media(min-width: $screen-xs-min) {
         float: right;
     }
 }
-.subfooter__credentials__link {
+
+.sub-footer__credentials__link {
     display: inline-block;
-    vertical-align: text-top;
     margin-left: .2rem;
+
+    vertical-align: text-top;
 }
-.subfooter__credentials__img {
+
+.sub-footer__credentials__img {
     display: block;
 }
