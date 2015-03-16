@@ -3,5 +3,14 @@
    ========================================================================== */
 
 .form-properties {
-    margin: 2rem 0 1rem;
+    margin: 0 0 1rem;
+
+    background: $white;
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    .table-bordered {
+        border-top: 0;
+    }
 }
