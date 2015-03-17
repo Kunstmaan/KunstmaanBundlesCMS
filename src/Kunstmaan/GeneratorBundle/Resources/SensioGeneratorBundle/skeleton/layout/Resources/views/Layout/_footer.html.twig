@@ -1,5 +1,6 @@
 <footer role="footer" class="footer">
 
+<% if demosite %>
     {# Newsletter subscription #}
     <section class="newsletter splash splash--primary text-center">
         <div class="container-fluid">
@@ -47,6 +48,7 @@
         </div>
     </section>
 
+<% endif %>
 
     {# Main footer #}
     {% if nodemenu is defined %}

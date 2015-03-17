@@ -95,7 +95,7 @@ class LayoutGenerator extends KunstmaanGenerator
     private function generateTemplate()
     {
         $relPath = '/Resources/views/';
-        $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, array('bundle' => $this->bundle), true);
+        $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');
     }

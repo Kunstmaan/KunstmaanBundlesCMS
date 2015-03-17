@@ -35,43 +35,45 @@
     {# Outdated browser message #}
     {% include '<%= bundle.getName() %>:Layout:_outdatedbrowser.html.twig' %}
 
+    <% if demosite %>
     <div class="st-container" id="st-container">
         <div class="st-pusher">
-
             {# Mobile nav #}
             {% include '<%= bundle.getName() %>:Layout:_mobile-nav.html.twig' %}
 
             <div class="st-content">
                 <div class="st-content-inner">
+    <% endif %>
 
-                    {# Header #}
-                    {% block header %}
-                        {% include '<%= bundle.getName() %>:Layout:_header.html.twig' %}
-                    {% endblock %}
+    {# Header #}
+    {% block header %}
+        {% include '<%= bundle.getName() %>:Layout:_header.html.twig' %}
+    {% endblock %}
 
-                    {# Header visual #}
-                    {% block header_visual %}{% endblock %}
+    {# Header visual #}
+    {% block header_visual %}{% endblock %}
 
-                    {# Breadcrumbs #}
-                    {% block breadcrumbs %}
-                        {% include '<%= bundle.getName() %>:Layout:_breadcrumbs.html.twig' %}
-                    {% endblock %}
+    {# Breadcrumbs #}
+    {% block breadcrumbs %}
+        {% include '<%= bundle.getName() %>:Layout:_breadcrumbs.html.twig' %}
+    {% endblock %}
 
-                    {# Content #}
-                    <main role="main">
-                        {% block content %}{% endblock %}
-                    </main>
+    {# Content #}
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
 
-                    {# Footer #}
-                    {% block footer %}
-                        {% include '<%= bundle.getName() %>:Layout:_footer.html.twig' %}
-                    {% endblock %}
+    {# Footer #}
+    {% block footer %}
+        {% include '<%= bundle.getName() %>:Layout:_footer.html.twig' %}
+    {% endblock %}
 
+    <% if demosite %>
                 </div>
             </div>
-
         </div>
     </div>
+    <% endif %>
 
     {# JS Footer #}
     {% include '<%= bundle.getName() %>:Layout:_js_footer.html.twig' %}
