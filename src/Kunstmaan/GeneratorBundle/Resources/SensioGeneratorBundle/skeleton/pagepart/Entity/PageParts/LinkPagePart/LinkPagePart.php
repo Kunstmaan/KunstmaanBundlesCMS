@@ -3,33 +3,32 @@
 namespace {{ namespace }}\Entity\PageParts;
 
 use Doctrine\ORM\Mapping as ORM;
-use {{ namespace }}\Entity\PageParts\AbstractPagePart;
-use Symfony\Component\Validator\Constraint as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * {{ pagepart }}
  *
- * @ORM\Table(name="kuma_{{ pagepartname }}_page_parts")
+ * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  * @ORM\Entity
  */
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="url", type="string", nullable=true)
      * @Assert\NotBlank()
      */
-    protected $url;
+    private $url;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $openinnewwindow;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="text", type="string", nullable=true)
      * @Assert\NotBlank()
      */
-    protected $text;
+    private $text;
+
+    /**
+     * @ORM\Column(name="open_in_new_window", type="boolean", nullable=true)
+     */
+    private $openInNewWindow;
 
     /**
      * @param string $url
@@ -56,7 +55,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getOpenInNewWindow()
     {
-        return $this->openinnewwindow;
+        return $this->openInNewWindow;
     }
 
     /**
@@ -66,7 +65,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setOpenInNewWindow($openInNewWindow)
     {
-        $this->openinnewwindow = $openInNewWindow;
+        $this->openInNewWindow = $openInNewWindow;
 
         return $this;
     }
@@ -92,10 +91,22 @@ class {{ pagepart }} extends AbstractPagePart
     }
 
     /**
+     * Get the twig view.
+     *
      * @return string
      */
-    public function __toString()
+    public function getDefaultView()
     {
-        return "{{ pagepart }}";
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+    }
+
+    /**
+     * Get the admin form type.
+     *
+     * @return {{ adminType }}
+     */
+    public function getDefaultAdminType()
+    {
+        return new {{ adminType }}();
     }
 }

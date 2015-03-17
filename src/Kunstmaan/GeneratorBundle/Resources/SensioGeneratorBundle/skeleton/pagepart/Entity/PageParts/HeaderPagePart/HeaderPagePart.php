@@ -3,38 +3,32 @@
 namespace {{ namespace }}\Entity\PageParts;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-use {{ namespace }}\Entity\PageParts\AbstractPagePart;
-use Symfony\Component\Validator\Constraint as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * {{ pagepart }}
  *
- * @ORM\Table(name="kuma_{{ pagepartname }}_page_parts")
+ * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  * @ORM\Entity
  */
 class {{ pagepart }} extends AbstractPagePart
 {
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(name="niv", type="integer", nullable=true)
+     * @Assert\NotBlank(message="headerpagepart.niv.not_blank")
      */
-    protected $niv;
+    private $niv;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", nullable=true)
+     * @Assert\NotBlank(message="headerpagepart.title.not_blank")
      */
-    protected $title;
+    private $title;
 
     /**
-     * @param ClassMetadata $metadata
+     * @var array Supported header sizes
      */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('niv', new NotBlank(array('message' => 'headerpagepart.niv.not_blank')));
-        $metadata->addPropertyConstraint('title', new NotBlank(array('message' => 'headerpagepart.title.not_blank')));
-    }
+    public static $supportedHeaders = array(1, 2, 3, 4, 5, 6);
 
     /**
      * Set niv
@@ -81,10 +75,22 @@ class {{ pagepart }} extends AbstractPagePart
     }
 
     /**
+     * Get the twig view.
+     *
      * @return string
      */
-    public function __toString()
+    public function getDefaultView()
     {
-        return "HeaderPagePart " . $this->getTitle();
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+    }
+
+    /**
+     * Get the admin form type.
+     *
+     * @return {{ adminType }}
+     */
+    public function getDefaultAdminType()
+    {
+        return new {{ adminType }}();
     }
 }

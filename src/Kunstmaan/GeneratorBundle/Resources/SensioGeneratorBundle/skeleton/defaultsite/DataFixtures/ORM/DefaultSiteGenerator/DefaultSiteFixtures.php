@@ -241,7 +241,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         // Add images to database
         $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-        $imgDir = dirname(__FILE__).'/../../../Resources/public/files/content/';
+        $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
         $satelliteMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
         $orbitsMedia = $this->mediaCreator->createFile($imgDir.'orbits.jpg', $folder->getId());
 {% endif %}
@@ -821,7 +821,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         // Add images to database
         $imageFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
         $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
-        $publicDir = dirname(__FILE__).'/../../../Resources/public/';
+        $publicDir = dirname(__FILE__).'/../../../Resources/ui/';
         $this->mediaCreator->createFile($publicDir.'img/general/logo-kunstmaan.svg', $imageFolder->getId());
         $this->mediaCreator->createFile($publicDir.'img/general/logo-thecrew.svg', $imageFolder->getId());
         $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());

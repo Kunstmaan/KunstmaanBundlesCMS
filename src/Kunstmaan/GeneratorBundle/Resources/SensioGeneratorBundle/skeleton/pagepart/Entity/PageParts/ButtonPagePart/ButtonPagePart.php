@@ -1,15 +1,14 @@
 <?php
 
-namespace {{ namespace }}{{ namespace }}\Entity\PageParts;
+namespace {{ namespace }}\Entity\PageParts;
 
 use Doctrine\ORM\Mapping as ORM;
-use {{ namespace }}\Entity\PageParts\AbstractPagePart;
-use Symfony\Component\Validator\Constraint as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * {{ pagepart }}
  *
- * @ORM\Table(name="kuma_{{ pagepartname }}_page_parts")
+ * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  * @ORM\Entity
  */
 class {{ pagepart }} extends AbstractPagePart
@@ -40,62 +39,83 @@ class {{ pagepart }} extends AbstractPagePart
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     * @ORM\Column(name="type", type="string", length=15, nullable=true)
      * @Assert\NotBlank()
      */
-    private $type = 'primary';
+    private $type;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="size", type="string", length=255, nullable=true)
+     * @ORM\Column(name="size", type="string", length=15, nullable=true)
      * @Assert\NotBlank()
      */
-    private $size = 'default';
+    private $size;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="block", type="boolean", nullable=true)
+     * @ORM\Column(name="position", type="string", length=15, nullable=true)
+     * @Assert\NotBlank()
      */
-    private $block = false;
+    private $position;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="icon", type="boolean", nullable=true)
-     */
-    private $icon = false;
+    const TYPE_PRIMARY = 'primary';
+    const TYPE_SECONDARY = 'secondary';
+    const TYPE_TERTIARY = 'tertiary';
+    const TYPE_QUATERNARY = 'quaternary';
+    const TYPE_LINK = 'link';
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="center", type="boolean", nullable=true)
-     */
-    private $center = false;
+    const SIZE_EXTRA_LARGE = 'xl';
+    const SIZE_LARGE = 'lg';
+    const SIZE_DEFAULT = 'default';
+    const SIZE_SMALL = 'sm';
+    const SIZE_EXTRA_SMALL = 'xs';
 
-    const TYPE_PRIMARY = "primary";
-    const TYPE_SECONDARY = "secondary";
-    const TYPE_TERTIARY = "tertiary";
-    const TYPE_QUATERNARY = "quaternary";
-    const TYPE_LINK = "link";
-
-    const SIZE_EXTRA_LARGE = "xl";
-    const SIZE_LARGE = "lg";
-    const SIZE_DEFAULT = "default";
-    const SIZE_SMALL = "sm";
-    const SIZE_EXTRA_SMALL = "xs";
-
+    const POSITION_LEFT = 'left';
+    const POSITION_CENTER = 'center';
+    const POSITION_RIGHT = 'right';
+    const POSITION_BLOCK = 'block';
+    
     /**
      * @var array Supported types
      */
-    public static $types = array(self::TYPE_PRIMARY,self::TYPE_SECONDARY,self::TYPE_TERTIARY,self::TYPE_QUATERNARY,self::TYPE_LINK);
+    public static $types = array(
+        self::TYPE_PRIMARY,
+        self::TYPE_SECONDARY,
+        self::TYPE_TERTIARY,
+        self::TYPE_QUATERNARY,
+        self::TYPE_LINK
+    );
 
     /**
      * @var array Supported sizes
      */
-    public static $sizes = array(self::SIZE_EXTRA_LARGE,self::SIZE_LARGE,self::SIZE_DEFAULT,self::SIZE_SMALL,self::SIZE_EXTRA_SMALL);
+    public static $sizes = array(
+        self::SIZE_EXTRA_LARGE,
+        self::SIZE_LARGE,
+        self::SIZE_DEFAULT,
+        self::SIZE_SMALL,
+        self::SIZE_EXTRA_SMALL
+    );
 
+    /**
+     * @var array Supported positions
+     */
+    public static $positions = array(
+        self::POSITION_LEFT,
+        self::POSITION_CENTER,
+        self::POSITION_RIGHT,
+        self::POSITION_BLOCK
+    );
+    
+    public function __construct()
+    {
+        $this->type = self::TYPE_PRIMARY;
+        $this->size = self::SIZE_DEFAULT;
+        $this->position = self::POSITION_LEFT;
+    }
+    
     /**
      * @param boolean $linkNewWindow
      *
@@ -161,12 +181,14 @@ class {{ pagepart }} extends AbstractPagePart
      *
      * @param string $type
      * @return {{ pagepart }}
+     * @throws \InvalidArgumentException
      */
     public function setType($type)
     {
         if (!in_array($type, self::$types)) {
-            $type = 'primary';
+            throw new \InvalidArgumentException('Type not supported');
         }
+
         $this->type = $type;
 
         return $this;
@@ -187,11 +209,12 @@ class {{ pagepart }} extends AbstractPagePart
      *
      * @param string $size
      * @return {{ pagepart }}
+     * @throws \InvalidArgumentException
      */
     public function setSize($size)
     {
         if (!in_array($size, self::$sizes)) {
-            $size = 'default';
+            throw new \InvalidArgumentException('Size not supported');
         }
         $this->size = $size;
 
@@ -209,72 +232,49 @@ class {{ pagepart }} extends AbstractPagePart
     }
 
     /**
-     * Set block
+     * Set position
      *
-     * @param boolean $block
+     * @param string $position
      * @return {{ pagepart }}
+     * @throws \InvalidArgumentException
      */
-    public function setBlock($block)
+    public function setPosition($position)
     {
-        $this->block = $block;
+        if (!in_array($position, self::$positions)) {
+            throw new \InvalidArgumentException('Position not supported');
+        }
+        $this->position = $position;
 
         return $this;
     }
 
     /**
-     * Get block
+     * Get position
      *
-     * @return boolean
-     */
-    public function getBlock()
-    {
-        return $this->block;
-    }
-
-    /**
-     * Set icon
-     *
-     * @param boolean $icon
-     * @return {{ pagepart }}
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-
-        return $this;
-    }
-
-    /**
-     * Get icon
-     *
-     * @return boolean
-     */
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isCenter()
-    {
-        return $this->center;
-    }
-
-    /**
-     * @param boolean $center
-     */
-    public function setCenter($center)
-    {
-        $this->center = $center;
-    }
-
-    /**
      * @return string
      */
-    public function __toString()
-{
-    return "{{ pagepart }}";
-}
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Get the twig view.
+     *
+     * @return string
+     */
+    public function getDefaultView()
+    {
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+    }
+
+    /**
+     * Get the admin form type.
+     *
+     * @return {{ adminType }}
+     */
+    public function getDefaultAdminType()
+    {
+        return new {{ adminType }}();
+    }
 }

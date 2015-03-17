@@ -3,13 +3,12 @@
 namespace {{ namespace }}\Entity\PageParts;
 
 use Doctrine\ORM\Mapping as ORM;
-use {{ namespace }}\Entity\PageParts\AbstractPagePart;
-use Symfony\Component\Validator\Constraint as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * {{ pagepart }}
  *
- * @ORM\Table(name="kuma_{{ pagepartname }}_page_parts")
+ * @ORM\Table(name="{{ prefix }}{{ underscoreName }}s")
  * @ORM\Entity
  */
 class {{ pagepart }} extends AbstractPagePart
@@ -41,10 +40,22 @@ class {{ pagepart }} extends AbstractPagePart
     }
 
     /**
+     * Get the twig view.
+     *
      * @return string
      */
-    public function __toString()
+    public function getDefaultView()
     {
-        return "{{ pagepart }} " . htmlentities($this->getContent());
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+    }
+
+    /**
+     * Get the admin form type.
+     *
+     * @return {{ adminType }}
+     */
+    public function getDefaultAdminType()
+    {
+        return new {{ adminType }}();
     }
 }
