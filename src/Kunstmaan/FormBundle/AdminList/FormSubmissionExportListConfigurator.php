@@ -66,7 +66,10 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
             ->from('KunstmaanFormBundle:FormSubmission', 'fs')
             ->innerJoin('fs.node', 'n', 'WITH', 'fs.node = n.id')
             ->andWhere('n.id = :node')
+            // only export the requested language, bc headers aren't translated correctly
+            ->andWhere('fs.lang = :lang')
             ->setParameter('node', $this->nodeTranslation->getNode()->getId())
+            ->setParameter('lang', $this->nodeTranslation->getLang())
             ->addOrderBy('fs.created', 'DESC');
         $iterableResult = $qb->getQuery()->iterate();
         $isHeaderWritten = false;
