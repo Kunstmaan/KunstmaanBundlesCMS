@@ -7,20 +7,24 @@
 
 /* Placeholders
    ========================================================================== */
-
+// @import "placeholders/..";
 
 
 /* Mixins
    ========================================================================== */
+{% if demosite %}
 @import "mixins/list-reset",
         "mixins/iconfont-reset",
         "mixins/horizontal-list",
         "mixins/introtext",
         "mixins/box-shadow",
         "mixins/control-label";
-
+{% else %}
+// @import "mixins/..";
+{% endif %}
 
 /* Helper classes
    ========================================================================== */
-
+{% if demosite %}
 @import "helper-classes";
+{% endif %}

@@ -49,7 +49,11 @@
 /* Forms => :(
    ========================================================================== */
 @import "forms/base",
-        "forms/search";
+        "forms/form-group",
+        "forms/form-control",
+{% if demosite %}
+        "forms/searchbox"
+{% endif %};
 
 
 /* Pageparts

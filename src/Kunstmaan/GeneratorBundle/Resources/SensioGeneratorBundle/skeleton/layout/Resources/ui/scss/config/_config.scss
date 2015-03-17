@@ -9,17 +9,17 @@
    ========================================================================== */
 @import "general/paths",
         "general/colors",
-        "general/typography",
-        "general/sizes";
+        "general/sizes",
+        "general/z-index";
+
+@import "general/typography/fonts",
+        "general/typography/bodycopy";
 
 
 /* Vendors
    ========================================================================== */
-@import "vendors/bourbon";
-
 @import "vendors/bootstrap-vars";
 @import "vendors/bootstrap-imports";
 
 @import "vendors/cargobay-vars";
 @import "vendors/cargobay-imports";
-

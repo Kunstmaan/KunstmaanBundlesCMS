@@ -7,18 +7,18 @@
 /* General
    ========================================================================== */
 @font-face {
-    font-family: $iconfont;
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?8at4kw');
-    src:url('#{$iconfont-path}/#{$iconfont}.eot?#iefix8at4kw') format('embedded-opentype'),
-        url('#{$iconfont-path}/#{$iconfont}.woff?8at4kw') format('woff'),
-        url('#{$iconfont-path}/#{$iconfont}.ttf?8at4kw') format('truetype'),
-        url('#{$iconfont-path}/#{$iconfont}.svg?8at4kw##{$iconfont}') format('svg');
+    font-family: $iconfont-name;
+    src:url('#{$iconfont-path}/#{$iconfont-name}.eot?8at4kw');
+    src:url('#{$iconfont-path}/#{$iconfont-name}.eot?#iefix8at4kw') format('embedded-opentype'),
+        url('#{$iconfont-path}/#{$iconfont-name}.woff?8at4kw') format('woff'),
+        url('#{$iconfont-path}/#{$iconfont-name}.ttf?8at4kw') format('truetype'),
+        url('#{$iconfont-path}/#{$iconfont-name}.svg?8at4kw##{$iconfont-name}') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 [class^="icon--"], [class*=" icon--"] {
-    font-family: $iconfont;
+    font-family: $iconfont-name;
     speak: none;
     font-style: normal;
     font-weight: normal;

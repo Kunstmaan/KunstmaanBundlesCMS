@@ -5,5 +5,9 @@
    Never add styles directly to this file
    ========================================================================== */
 
+{% if demosite %}
+@import "app/Resources/vendor_bower/cargobay/src/cookie-consent/styles/scss/cookie-consent",
+        "app/Resources/vendor_bower/cargobay/src/toggle/styles/scss/toggle";
+{% else %}
 @import "app/Resources/vendor_bower/cargobay/src/cookie-consent/styles/scss/cookie-consent";
-@import "app/Resources/vendor_bower/cargobay/src/toggle/styles/scss/toggle";
+{% endif %}

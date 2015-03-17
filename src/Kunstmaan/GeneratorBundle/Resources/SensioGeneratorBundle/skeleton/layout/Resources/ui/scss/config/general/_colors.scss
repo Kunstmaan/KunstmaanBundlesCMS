@@ -6,22 +6,22 @@
    ========================================================================== */
 
 $black:             #373737;
-$white:             #FFF;
+$white:             #fff;
 
 {% if demosite %}
 $grey-darker:       #444;
 $grey-dark:         #606060;
 {% endif %}
-$grey:              #9D9D9D;
+$grey:              #9d9d9d;
 {% if demosite %}
-$grey-light:        #E2E2E2;
-$grey-lighter:      #F9F9F9;
+$grey-light:        #e2e2e2;
+$grey-lighter:      #f9f9f9;
 
 $blue-dark:         #053046;
 {% endif %}
-$blue:              #5CB8E6;
+$blue:              #5cb8e6;
 
-$red:               #FF4600;
+$red:               #ff4600;
 
 
 {% if demosite %}
@@ -30,14 +30,25 @@ $hr-color:          $grey-light;
 $link-color:        $blue;
 $link-hover-color:  darken($link-color, 15%);
 
-$theme-color-dark:  $blue-dark;
 $theme-color:       $blue;
+$theme-color-dark:  $blue-dark;
 {% else %}
 $text-color:        $black;
 $hr-color:          $grey;
 $link-color:        $blue;
 $link-hover-color:  darken($link-color, 15%);
 
-$theme-color-dark:  $grey;
 $theme-color:       $grey;
+$theme-color-dark:  $grey;
 {% endif %}
+
+
+/*doc
+---
+title: Colors
+name: 01_colors
+category: General
+---
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #373737;'></i><code class='styleguide__code'>#373737 - $black</code></code></div>
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #fff;'></i><code class='styleguide__code'>#fff - $white</code></code></div>
+*/

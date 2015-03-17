@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Forms - Search
+   Forms - Searchbox
    ========================================================================== */
-{% if demosite %}
+
 .searchbox-form {
     width: $search-height-mobile;
     transition: width .2s ease-in-out;
@@ -52,6 +52,7 @@
     display: inline-block;
     cursor: pointer;
 }
+
 .searchbox__submit {
     text-align: center;
     border: none;
@@ -61,15 +62,18 @@
     right: 0;
     background: $white;
 }
+
 .searchbox__back, .searchbox__submit {
     width: $search-height-mobile;
     height: $search-height-mobile;
     line-height: $search-height-mobile;
 }
+
 .searchbox__submit__icon {
     color: $theme-color;
     font-size: .8rem;
 }
+
 
 // Active
 .searchbox-form--active {
@@ -78,6 +82,7 @@
     .searchbox__content {
         width: 100%;
     }
+
     .searchbox__input {
         opacity: 1;
         z-index: 0;
@@ -86,11 +91,13 @@
         background: $white;
         width: 100%;
     }
+
     .searchbox__back {
         z-index: 4;
         background: $white;
     }
 }
+
 
 /* Mobile
    ========================================================================== */
@@ -128,6 +135,7 @@
 
         padding-right: $search-height;
     }
+
     .searchbox__submit {
         width: $search-height;
         height: $search-height;
@@ -143,10 +151,9 @@
         .searchbox {
             @include box-shadow;
         }
+
         .searchbox__content {
             width: 340px;
         }
     }
-
 }
-{% endif %}

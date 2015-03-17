@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Forms - Form control
+   ========================================================================== */
+
+
+/* General
+   ========================================================================== */
+.form-control--input, .form-control--textarea, .form-control--select {
+    display: block;
+    width: 100%;
+    max-width: 26rem;
+    min-height: 3rem;
+    padding: .2em 0;
+
+    border: 0;
+    border-bottom: 1px solid $hr-color;
+    font-weight: 400;
+
+    &:focus {
+        outline: none;
+    }
+
+{% if demosite %}
+    &:focus, &:valid, &.form-control--filled {
+
+        ~ .control-label {
+            @include control-label-active;
+        }
+    }
+{% endif %}
+}
+
+.form-control--textarea {
+    height: 5.6rem;
+    max-width: none;
+}
