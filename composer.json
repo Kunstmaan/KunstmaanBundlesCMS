@@ -45,7 +45,7 @@
         "symfony-cmf/routing-bundle": "~1.1.1",
         "ruflin/elastica": "~1.0",
         "fpn/doctrine-extensions-taggable": "0.9.0",
-        "sensio/generator-bundle": ">=2.3.0, <2.5.0"
+        "sensio/generator-bundle": ">=2.5.2"
     },
     "require-dev": {
         "behat/behat": "~2.5.0",

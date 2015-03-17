@@ -9,6 +9,8 @@ use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Generates classes based on the AbstractArticle classes from KunstmaanArticleBundle
@@ -56,8 +58,8 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Article Generation');
+    	$questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Article Generation');
 
         GeneratorUtils::ensureOptionsProvided($input, array('namespace', 'entity'));
 
@@ -90,10 +92,10 @@ EOT
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Kunstmaan Article generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Kunstmaan Article generator');
 
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
 
         $inputAssistant->askForNamespace(array(
             '',
@@ -123,8 +125,11 @@ EOT
                     return $entity;
                 }
             };
-
-            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('Name', $entity), $entityValidation, false, $entity);
+            
+			$question = new Question($questionHelper->getQuestion('Name', $entity), $entity);
+            $question->setValidator($entityValidation);
+            $entity = $questionHelper->ask($input, $output, $question);
+            
             $input->setOption('entity', $entity);
         }
 

@@ -61,7 +61,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         if (is_null($this->assistant)) {
             $this->assistant = new CommandAssistant();
-            $this->assistant->setDialog($this->getDialogHelper());
+            $this->assistant->setQuestionHelper($this->getQuestionHelper());
             $this->assistant->setKernel($this->getApplication()->getKernel());
         }
         $this->assistant->setOutput($output);
@@ -235,7 +235,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 foreach ($ownBundles as $key => $bundleInfo) {
                     $bundleSelect[$key] = $bundleInfo['name'];
                 }
-                $bundleId   = $this->assistant->askSelect(
+                $bundleId  = $this->assistant->askSelect(
                     'In which bundle do you want to create the ' . $objectName,
                     $bundleSelect
                 );
@@ -482,7 +482,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             $data               = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra);
             $fields[$fieldName] = $data;
         }
-
         return $fields;
     }
 

@@ -317,7 +317,7 @@ class PagePartGenerator extends KunstmaanGenerator
                                     } elseif ($blocks[1] == 'integer') {
                                         $pageFields[]['integer'] = array(
                                             'label' => $this->labelCase($name),
-                                            'random' => Base::randomNumber(3000, 99999)
+                                            'random' => Base::numberBetween(3000, 99999)
                                         );
                                     } elseif ($blocks[1] == 'checkbox') {
                                         $pageFields[]['boolean'] = array(
