@@ -801,4 +801,21 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         return $pages;
     }
+
+    /**
+     * Check that it is possible to generate the behat tests.
+     *
+     * @param BundleInterface $bundle
+     *
+     * @return bool
+     */
+    protected function canGenerateBehatTests(BundleInterface $bundle)
+    {
+        $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/') . '/behat.yml';
+        $pagePartContext = $bundle->getPath() . '/Features/Context/PagePartContext.php';
+        $behatTestPage = $bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
+
+        // Make sure behat is configured and the PagePartContext and BehatTestPage exits
+        return (file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage));
+    }
 }

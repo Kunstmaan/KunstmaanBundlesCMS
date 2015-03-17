@@ -3,11 +3,10 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultPagePartGenerator;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * Generates a new pagepart
+ * Generates the default pageparts
  */
 class GenerateDefaultPagePartsCommand extends KunstmaanGenerateCommand
 {
@@ -20,16 +19,6 @@ class GenerateDefaultPagePartsCommand extends KunstmaanGenerateCommand
      * @var string
      */
     private $prefix;
-
-    /**
-     * @var array
-     */
-    private $pagepartNames;
-
-    /**
-     * @var array
-     */
-    private $fields;
 
     /**
      * @var array
@@ -48,14 +37,15 @@ class GenerateDefaultPagePartsCommand extends KunstmaanGenerateCommand
     {
         $this->setDescription('Generates default pageparts')
             ->setHelp(<<<EOT
-The <info>kuma:generate:defaultpageparts</info> command generates default pageparts and the pageparts configuration.
+The <info>kuma:generate:default-pageparts</info> command generates the default pageparts and adds the pageparts configuration.
 
-<info>php app/console kuma:generate:defaultpageparts</info>
+<info>php app/console kuma:generate:default-pageparts</info>
 EOT
             )
+            ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace to generate the default pageparts in')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table name of the generated entity')
-            ->addOption('delete', '', InputOption::VALUE_OPTIONAL, 'Remove the default pageparts from a bundle')
-            ->setName('kuma:generate:pageparts-default');
+            ->addOption('contexts', '', InputOption::VALUE_OPTIONAL, 'The contexts were we need to allow the pageparts (separated multiple sections with a comma)')
+            ->setName('kuma:generate:default-pageparts');
     }
 
     /**
@@ -73,31 +63,29 @@ EOT
     {
         $this->assistant->writeSection('Default PageParts generation');
 
-        // ALL THE DEFAULT PAGE PARTS THAT NEED TO BE RENDERED
-        // DO NOT FORGET TO ADD THE TEMPLATE FILES THAT GO WITH THE PAGE PART
-        $this->pagepartNames = array(
+        $pagepartNames = array(
             'AbstractPagePart',
-            'LinePagePart',
+            'ButtonPagePart',
             'HeaderPagePart',
+            'IntroTextPagePart',
+            'LinePagePart',
             'LinkPagePart',
             'RawHtmlPagePart',
             'TextPagePart',
             'TocPagePart',
             'ToTopPagePart',
-            'ButtonPagePart'
         );
 
-        foreach($this->pagepartNames as $pagepartName) {
-            $this->createGenerator()->generate($this->bundle, $pagepartName, $this->prefix, array(), $this->sections, $this->behatTest);
+        foreach ($pagepartNames as $pagepartName) {
+            $this->createGenerator()->generate($this->bundle, $pagepartName, $this->prefix, $this->sections, $this->behatTest);
         }
 
         $this->assistant->writeSection('PageParts successfully created', 'bg=green;fg=black');
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you test the pagepart:',
             '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
-            ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@'.$this->pagepartName.'\' @'.$this->bundle->getName().'</comment>' : '')
-        ));
+            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>')
+        );
     }
 
     /**
@@ -114,7 +102,8 @@ EOT
         /**
          * Ask for which bundle we need to create the pagepart
          */
-        $this->bundle = $this->askForBundleName('pagepart');
+        $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
+        $this->bundle = $this->askForBundleName('pagepart', $bundleNamespace);
 
         /**
          * Ask the database table prefix
@@ -124,23 +113,27 @@ EOT
         /**
          * Ask for which page sections we should enable this pagepart
          */
-        $question = 'In which page section configuration file(s) do you want to add the pageparts (multiple possible, separated by comma)';
-        $this->sections = $this->askForSections($question, $this->bundle, true);
+        $contexts = $this->assistant->getOptionOrDefault('contexts', null);
+        if ($contexts) {
+            $contexts = explode(',', $contexts);
+            array_walk($contexts, 'trim');
+
+            $this->sections = array();
+            $allSections = $this->getAvailableSections($this->bundle);
+            foreach ($allSections as $section) {
+                if (in_array($section['context'], $contexts)) {
+                    $this->sections[] = $section['file'];
+                }
+            }
+        } else {
+            $question = 'In which page section configuration file(s) do you want to add the pageparts (multiple possible, separated by comma)';
+            $this->sections = $this->askForSections($question, $this->bundle, true);
+        }
 
         /**
-         * Ask that you want to create behat tests for the new pagepart, if possible
+         * Check that we can create behat tests for the default pagepart
          */
-        if (count($this->sections) > 0) {
-            $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/') . '/behat.yml';
-            $pagePartContext = $this->bundle->getPath() . '/Features/Context/PagePartContext.php';
-            $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
-            // Make sure behat is configured and the PagePartContext and BehatTestPage exits
-            if (file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage)) {
-                $this->behatTest = $this->assistant->askConfirmation('Do you want to generate behat tests for this pagepart? (y/n)', 'y');
-            } else {
-                $this->behatTest = false;
-            }
-        }
+        $this->behatTest = (count($this->sections) > 0 && $this->canGenerateBehatTests($this->bundle));
     }
 
     /**
@@ -155,5 +148,4 @@ EOT
 
         return new DefaultPagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant, $this->getContainer());
     }
-
 }
