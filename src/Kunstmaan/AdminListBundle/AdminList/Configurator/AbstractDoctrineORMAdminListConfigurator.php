@@ -101,6 +101,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         if (is_null($this->pagerfanta)) {
             $adapter = new DoctrineORMAdapter($this->getQuery());
             $this->pagerfanta = new Pagerfanta($adapter);
+            $this->pagerfanta->setNormalizeOutOfRangePages(true);
             $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());
         }
