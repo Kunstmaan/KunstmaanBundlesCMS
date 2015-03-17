@@ -7,7 +7,10 @@
 
 /* Blocks
    ========================================================================== */
-@import "blocks/buttons",
+@import "blocks/img",
+        "blocks/hr",
+        "blocks/links",
+        "blocks/buttons",
         "blocks/tables"{% if demosite %},
         "blocks/submenu",
         "blocks/img-icon"

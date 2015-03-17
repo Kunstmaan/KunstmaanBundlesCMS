@@ -1,7 +1,7 @@
 /* ==========================================================================
    Forms - Base
    ========================================================================== */
-
+{% if demosite %}
 button, input[type="text"], input[type="submit"], textarea, select {
     &:focus {
         outline: none;
@@ -61,7 +61,7 @@ button, input[type="text"], input[type="submit"], textarea, select {
     }
 
     .control-label {
-        color: $gray;
+        color: $grey;
 
         padding: .2rem 0; // same as form-control
         position: absolute;
@@ -134,7 +134,7 @@ button, input[type="text"], input[type="submit"], textarea, select {
         height: 38px;
         font-size: .4rem;
         line-height: 40px;
-        color: $gray;
+        color: $grey;
     }
 
     /* Widget - Choices
@@ -218,3 +218,4 @@ button, input[type="text"], input[type="submit"], textarea, select {
 
 
 }
+{% endif %}

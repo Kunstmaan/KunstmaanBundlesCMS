@@ -5,6 +5,13 @@
    Never add styles directly to this file
    ========================================================================== */
 
-@import "base",
-        "iconfont",
-        "typography";
+/* Base
+   ========================================================================== */
+@import "base";
+
+
+/* Typography
+   ========================================================================== */
+@import "typography/headings",
+        "typography/bodycopy",
+        "typography/iconfont";

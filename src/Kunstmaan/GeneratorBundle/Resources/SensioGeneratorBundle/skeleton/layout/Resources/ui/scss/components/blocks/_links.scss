@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+/* Shared
+   ========================================================================== */
+a {
+    text-decoration: underline;
+    color: $link-color;
+
+    &:hover, &:focus {
+        text-decoration: none;
+        color: $link-hover-color;
+    }
+}
+
+
+/*doc
+---
+title: Links
+name: 04_links
+category: Blocks
+---
+
+```html_example
+
+<p>
+    <a href="#">Link</a>
+</p>
+
+```
+*/

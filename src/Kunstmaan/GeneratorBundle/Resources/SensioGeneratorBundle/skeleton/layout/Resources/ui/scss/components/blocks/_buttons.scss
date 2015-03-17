@@ -13,13 +13,14 @@
     padding: .65em 1em;
 
     background: none;
-    border: 0;
+    border: 1px solid $grey;
     -webkit-appearance: none;
 
 {% if demosite %}
     background-color: $white;
     border: 1px solid $hr-color;
 {% endif %}
+    color: $text-color;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
@@ -30,10 +31,9 @@
 
     &:hover, &:focus, &:active {
         text-decoration: none;
-
+        color: $text-color;
 {% if demosite %}
         background-color: $white;
-        color: $black;
 {% endif %}
     }
 

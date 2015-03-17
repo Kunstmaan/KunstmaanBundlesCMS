@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Images
+   ========================================================================== */
+
+/* Shared
+   ========================================================================== */
+img {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+
+figure {
+    margin: 0;
+
+    img {
+        display: block;
+    }
+}
+
+
+
+
+/*doc
+---
+title: Images
+name: 03_img
+category: Blocks
+---
+
+<h4>Regular</h4>
+```html_example
+    <img src="http://placehold.it/350x250/1bc8a1/ffffff">
+```
+
+<h4>With caption</h4>
+```html_example
+    <figure>
+        <img src="http://placehold.it/350x250/1bc8a1/ffffff">
+        <figcaption>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore perspiciatis voluptatem sed saepe debitis, impedit nesciunt quisquam ipsum molestiae quia ab.
+        </figcaption>
+    </figure>
+```
+*/

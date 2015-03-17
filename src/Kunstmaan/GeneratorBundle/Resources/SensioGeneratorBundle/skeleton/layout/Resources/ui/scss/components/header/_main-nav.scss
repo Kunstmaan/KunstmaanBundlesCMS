@@ -70,7 +70,7 @@
         }
 
         .main-nav__list__item--active {
-            background-color: $gray-darker;
+            background-color: $grey-darker;
 
             .main-nav__list__link {
                 color: $theme-color;
@@ -108,7 +108,7 @@
             display: block;
             width: calc(100% / 3);
 
-            border: 1px solid $gray-dark;
+            border: 1px solid $grey-dark;
             border-width: 1px 0 0 1px;
 
             &:first-child {
@@ -121,7 +121,7 @@
             padding: .9em;
 
             text-align: center;
-            color: $gray;
+            color: $grey;
             font-size: 1.875rem;
             line-height: 100%;
 

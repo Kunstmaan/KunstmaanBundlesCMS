@@ -10,21 +10,24 @@
 @import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/variables";
 @import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins";
 
+
 /* Reset and dependencies
    ========================================================================== */
 @import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/normalize";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/print";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/glyphicons";
 
+
 /* Core CSS
    ========================================================================== */
-@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/scaffolding";
+//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/scaffolding";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/type";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/code";
 @import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/grid";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/tables";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/forms";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/buttons";
+
 
 /* Components
    ========================================================================== */
@@ -50,12 +53,14 @@
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/wells";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/close";
 
+
 /* Components /w javascript
    ========================================================================== */
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/modals";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/tooltip";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/popovers";
 //@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/carousel";
+
 
 /* Utility classes
    ========================================================================== */

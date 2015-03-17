@@ -1,7 +1,7 @@
 /* ==========================================================================
    Forms - Search
    ========================================================================== */
-
+{% if demosite %}
 .searchbox-form {
     width: $search-height-mobile;
     transition: width .2s ease-in-out;
@@ -123,7 +123,7 @@
         line-height: $search-height;
 
         padding: .65rem 1rem;
-        background-color: $gray-lighter;
+        background-color: $grey-lighter;
         border: 1px solid $hr-color;
 
         padding-right: $search-height;
@@ -149,3 +149,4 @@
     }
 
 }
+{% endif %}

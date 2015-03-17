@@ -33,7 +33,7 @@
 
     .language-nav {
         padding: 1rem 1.5rem;
-        border-bottom: 1px solid $gray-dark;
+        border-bottom: 1px solid $grey-dark;
     }
 
     .language-nav__list {
@@ -64,7 +64,7 @@
         @include transition(all .2s ease-in-out);
 
         &:hover, &:focus {
-            background: $gray-lighter;
+            background: $grey-lighter;
             @include box-shadow;
 
             .language-nav__list {
@@ -99,7 +99,7 @@
         width: 100%;
 
         padding: 0 .5rem .3rem;
-        background: $gray-lighter;
+        background: $grey-lighter;
         @include box-shadow;
 
         @include transition(all .2s ease-in-out);
@@ -111,7 +111,7 @@
     }
 
     .language-nav__list__link {
-        color: $gray;
+        color: $grey;
     }
 }
 
