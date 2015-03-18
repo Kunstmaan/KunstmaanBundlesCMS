@@ -56,7 +56,18 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{{ bundle.getName() }}:middle-column', {% if demosite %}'{{ bundle.getName() }}:slider', {% endif %}'{{ bundle.getName() }}:left-column', '{{ bundle.getName() }}:right-column');
+        {% if demosite %}
+            return array(
+                '{{ bundle.getName() }}:header',
+                '{{ bundle.getName() }}:section1',
+                '{{ bundle.getName() }}:section2',
+                '{{ bundle.getName() }}:section3',
+                '{{ bundle.getName() }}:section4',
+                '{{ bundle.getName() }}:section5'
+            );
+        {% else %}
+            return array('{{ bundle.getName() }}:main');
+        {% endif %}
     }
 
     /**
@@ -64,7 +75,7 @@ class HomePage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:homepage'{% if demosite %}, '{{ bundle.getName() }}:homepage-no-slider'{% endif %});
+        return array('{{ bundle.getName() }}:homepage');
     }
 
     /**
