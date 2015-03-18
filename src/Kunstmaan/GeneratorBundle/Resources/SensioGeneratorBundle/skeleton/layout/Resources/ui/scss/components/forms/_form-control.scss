@@ -30,7 +30,37 @@
 {% endif %}
 }
 
+
+/* Textarea
+   ========================================================================== */
 .form-control--textarea {
     height: 5.6rem;
     max-width: none;
+}
+
+
+/* Select
+   ========================================================================== */
+.form-control--select {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+
+    height: 38px;
+    position: relative;
+    z-index: 2;
+
+    opacity: 0;
+
+    ~ .form-bar {
+        margin-top: 0;
+        margin-bottom: -1px;
+    }
+
+    &:focus, &:valid, &.form-control--filled {
+        opacity: 1;
+    }
 }

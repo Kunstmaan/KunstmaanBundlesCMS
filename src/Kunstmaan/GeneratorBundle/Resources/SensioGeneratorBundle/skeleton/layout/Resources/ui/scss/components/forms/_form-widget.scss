@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Forms - Widgets
+   ========================================================================== */
+
+/* Hidden
+   ========================================================================== */
+.form-widget--hidden {
+    display: none;
+}
+
+
+/* Select
+   ========================================================================== */
+.form-widget--select {
+    position: relative;
+    border-bottom: 1px solid $hr-color;
+
+    ~ .control-label {
+        display: none;
+    }
+}
+
+.select__icon {
+    position: absolute;
+    top: 0;
+    right: .2rem;
+
+    height: 38px;
+    font-size: .4rem;
+    line-height: 40px;
+    color: $grey;
+}
+
+
+/* Choices
+   ========================================================================== */
+.form-widget--choices {
+    padding-top: .5rem;
+
+    ~ .control-label {
+        top: -1.2rem;
+    }
+}
+
+.form-widget--choices--filled {
+    ~ .control-label {
+        @include control-label-active;
+    }
+}
+
+
+/* Widget - File Upload
+   ========================================================================== */
+.form-widget--file-upload {
+    padding-top: .5rem;
+
+    .form-control {
+        line-height: 80%;
+    }
+
+    .control-label {
+        top: -1.2rem;
+    }
+
+    ~ .control-label {
+        display: none;
+    }
+}

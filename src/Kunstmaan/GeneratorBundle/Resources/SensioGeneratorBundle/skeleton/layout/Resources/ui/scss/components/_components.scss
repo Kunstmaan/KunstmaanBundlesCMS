@@ -48,10 +48,11 @@
 
 /* Forms => :(
    ========================================================================== */
-@import "forms/base",
-        "forms/form-group",
+@import "forms/form-group",
         "forms/form-control",
-{% if demosite %}
+        "forms/form-control-label",
+        "forms/form-widget",
+        "forms/radio-checkbox"{% if demosite %},
         "forms/searchbox"
 {% endif %};
 

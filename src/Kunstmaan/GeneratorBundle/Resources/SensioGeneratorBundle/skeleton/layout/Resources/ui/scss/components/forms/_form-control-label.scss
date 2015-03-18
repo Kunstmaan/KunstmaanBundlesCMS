@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Forms - Form control label
+   ========================================================================== */
+
+
+/* General
+   ========================================================================== */
+.form-control-label {
+{% if demosite %}
+    color: $grey;
+
+    padding: .2rem 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    transition: all .3s ease;
+
+    pointer-events: none;
+{% endif %}
+}
