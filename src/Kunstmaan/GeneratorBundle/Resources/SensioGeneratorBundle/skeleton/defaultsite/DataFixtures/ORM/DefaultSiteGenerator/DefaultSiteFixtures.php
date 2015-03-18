@@ -117,14 +117,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $homePage->setTitle('Home');
 
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Home');
-            $translation->setSlug('');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Home');
-            $translation->setSlug('');
-        });
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array(
+                'language' => $locale,
+                'callback' => function ($page, $translation, $seo) {
+                    $translation->setTitle('Home');
+                    $translation->setSlug('');
+                }
+            );
+        }
 
         $options = array(
             'parent' => null,
@@ -136,79 +137,32 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $this->pageCreator->createPage($homePage, $translations, $options);
 
-        $pageparts = array();
-        $pageparts['left_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'First column heading',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['left_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-            array(
-                'setContent' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
-            )
-        );
-        $pageparts['middle_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Second column heading',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['middle_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-            array(
-                'setContent' => 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable.'
-            )
-        );
-        $pageparts['right_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Third column heading',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['right_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-            array(
-                'setContent' => 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.'
-            )
-        );
+        foreach ($this->requiredLocales as $locale) {
+            $pageparts = array();
 
-        $this->pagePartCreator->addPagePartsToPage('homepage', $pageparts, 'en');
+            $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Wat doen we?' : 'What do we do?',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\IntroTextPagePart',
+                array(
+                    'setContent' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!'
+                )
+            );
+            $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\LinkPagePart',
+                array(
+                    'setUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
+                    'setText' => $locale == 'nl' ? 'Lees meer' : 'Read more'
+                )
+            );
 
-        $pageparts = array();
-        $pageparts['left_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Eerste title',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['left_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-            array(
-                'setContent' => 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken.'
-            )
-        );
-        $pageparts['middle_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Tweede title',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['middle_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-            array(
-                'setContent' => 'Er zijn vele variaties van passages van Lorem Ipsum beschikbaar maar het merendeel heeft te lijden gehad van wijzigingen in een of andere vorm, door ingevoegde humor of willekeurig gekozen woorden die nog niet half geloofwaardig ogen.'
-            )
-        );
-        $pageparts['right_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Derde titel',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['right_column'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
-            array(
-                'setContent' => 'Het standaard stuk van Lorum Ipsum wat sinds de 16e eeuw wordt gebruikt is hieronder, voor wie er interesse in heeft, weergegeven. Secties 1.10.32 en 1.10.33 van "de Finibus Bonorum et Malorum" door Cicero zijn ook weergegeven in hun exacte originele vorm, vergezeld van engelse versies van de 1914 vertaling door H. Rackham.'
-            )
-        );
-
-        $this->pagePartCreator->addPagePartsToPage('homepage', $pageparts, 'nl');
+            $this->pagePartCreator->addPagePartsToPage('homepage', $pageparts, $locale);
+        }
     }
 
     /**
