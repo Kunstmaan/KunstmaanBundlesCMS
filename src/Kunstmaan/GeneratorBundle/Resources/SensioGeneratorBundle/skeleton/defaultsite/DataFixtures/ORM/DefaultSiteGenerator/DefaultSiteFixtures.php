@@ -62,6 +62,11 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private $mediaCreator;
 
     /**
+      * Defined locales during generation
+      */
+    private $requiredLocales;
+
+    /**
      * Load data fixtures with the passed EntityManager.
      *
      * @param ObjectManager $manager
@@ -73,6 +78,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
         $this->pagePartCreator = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
         $this->mediaCreator = $this->container->get('kunstmaan_media.media_creator_service');
+        $this->requiredLocales = explode('|', $this->container->getParameter('requiredlocales'));
 
         $this->createTranslations();
         $this->createMedia();
