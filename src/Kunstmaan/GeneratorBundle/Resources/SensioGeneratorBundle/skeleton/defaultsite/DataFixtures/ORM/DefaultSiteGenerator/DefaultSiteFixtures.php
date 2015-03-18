@@ -160,6 +160,23 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setText' => $locale == 'nl' ? 'Lees meer' : 'Read more'
                 )
             );
+            $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Het team' : 'The team',
+                    'setNiv' => 2
+                )
+            );
+            // TODO: get real image
+            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+            $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
+            $teamMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+            $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ImagePagePart',
+                array(
+                    'setMedia' => $teamMedia
+                )
+            );
 
             $this->pagePartCreator->addPagePartsToPage('homepage', $pageparts, $locale);
         }
