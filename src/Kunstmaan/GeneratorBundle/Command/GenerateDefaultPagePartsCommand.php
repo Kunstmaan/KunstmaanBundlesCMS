@@ -67,6 +67,7 @@ EOT
             'AbstractPagePart',
             'ButtonPagePart',
             'HeaderPagePart',
+            'ImagePagePart',
             'IntroTextPagePart',
             'LinePagePart',
             'LinkPagePart',
