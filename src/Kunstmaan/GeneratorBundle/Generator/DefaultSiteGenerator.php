@@ -144,7 +144,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         }
 
         if ($this->demosite) {
-            $relPath = '/Entity/PageParts/';
             $sourceDir = $this->skeletonDir.$relPath;
             $targetDir = $this->bundle->getPath().$relPath;
 
@@ -264,16 +263,16 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $sourceDir = $this->skeletonDir.$relPath;
         $targetDir = $this->bundle->getPath().$relPath;
 
-        $this->renderSingleFile($sourceDir, $targetDir, 'footer.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'home.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'left-column.yml', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'main.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'middle-column.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'right-column.yml', $parameters);
 
         if ($this->demosite) {
+            $this->renderSingleFile($sourceDir, $targetDir, 'header.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section1.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section2.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section3.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section4.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section5.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'form.yml', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'slider.yml', $parameters);
         }
 
         $this->assistant->writeLine('Generating pagepart configuration : <info>OK</info>');
@@ -295,7 +294,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->renderSingleFile($sourceDir, $targetDir, 'behat-test-page.yml', $parameters);
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'homepage-no-slider.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'formpage.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'satelliteoverviewpage.yml', $parameters);
         }
@@ -362,10 +360,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         $this->renderSingleFile($sourceDir, $targetDir, 'pagetemplate.html.twig', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'view.html.twig', $parameters);
-        if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'pagetemplate-no-slider.html.twig', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'slider.html.twig', $parameters);
-        }
 
         $relPath = '/Resources/views/Pages/ContentPage/';
         $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);

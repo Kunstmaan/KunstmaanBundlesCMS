@@ -1,0 +1,5 @@
+name: "Header"
+context: "header"
+types:
+    - { name: "Header", class: "Kunstmaan\\PagePartBundle\\Entity\\HeaderPagePart" }
+

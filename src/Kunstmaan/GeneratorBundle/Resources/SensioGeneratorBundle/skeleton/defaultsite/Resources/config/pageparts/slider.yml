@@ -1,4 +1,0 @@
-name: Slider
-context: slider
-types:
-    - { name: Slide, class: {{ bundle.namespace }}\Entity\PageParts\SlidePagePart }
