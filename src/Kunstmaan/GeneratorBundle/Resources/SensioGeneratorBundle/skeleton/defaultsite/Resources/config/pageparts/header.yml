@@ -1,5 +1,5 @@
 name: "Header"
 context: "header"
 types:
-    - { name: "Header", class: "Kunstmaan\\PagePartBundle\\Entity\\HeaderPagePart" }
+    - { name: "PageBanner", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\PageBannerPagePart" }
 

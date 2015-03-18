@@ -140,6 +140,20 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         foreach ($this->requiredLocales as $locale) {
             $pageparts = array();
 
+            // TODO: get real image
+            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+            $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
+            $headerMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+            $pageparts['header'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\PageBannerPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Wat doen we?' : 'What do we do?',
+                    'setDescription' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.',
+                    'setBackgroundImage' => $headerMedia,
+                    'setButtonUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
+                    'setButtonText' => $locale == 'nl' ? 'Onze diensten' : 'Our services',
+                )
+            );
             $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(

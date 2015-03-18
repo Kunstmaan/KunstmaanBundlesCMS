@@ -3,19 +3,22 @@
 namespace {{ namespace }}\Entity\PageParts;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\MediaBundle\Entity\Media;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * SlidePagePart
+ * PageBannerPagePart
  *
- * @ORM\Table(name="{{ prefix }}slide_page_part")
+ * @ORM\Table(name="kw_page_banner_page_parts")
  * @ORM\Entity
  */
-class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
+class PageBannerPagePart extends AbstractPagePart
 {
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -25,13 +28,6 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tick_text", type="string", length=255, nullable=true)
-     */
-    private $tickText;
 
     /**
      * @var string
@@ -59,16 +55,16 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="background_id", referencedColumnName="id")
      * })
      */
-    private $image;
+    private $backgroundImage;
 
     /**
      * Set title
      *
      * @param string $title
-     * @return SlidePagePart
+     * @return PageBannerPagePart
      */
     public function setTitle($title)
     {
@@ -91,7 +87,7 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
      * Set description
      *
      * @param string $description
-     * @return SlidePagePart
+     * @return PageBannerPagePart
      */
     public function setDescription($description)
     {
@@ -111,33 +107,10 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
     }
 
     /**
-     * Set tickText
-     *
-     * @param string $tickText
-     * @return SlidePagePart
-     */
-    public function setTickText($tickText)
-    {
-        $this->tickText = $tickText;
-
-        return $this;
-    }
-
-    /**
-     * Get tickText
-     *
-     * @return string
-     */
-    public function getTickText()
-    {
-        return $this->tickText;
-    }
-
-    /**
      * Set buttonUrl
      *
      * @param string $buttonUrl
-     * @return SlidePagePart
+     * @return PageBannerPagePart
      */
     public function setButtonUrl($buttonUrl)
     {
@@ -160,7 +133,7 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
      * Set buttonText
      *
      * @param string $buttonText
-     * @return SlidePagePart
+     * @return PageBannerPagePart
      */
     public function setButtonText($buttonText)
     {
@@ -183,7 +156,7 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
      * Set buttonNewWindow
      *
      * @param boolean $buttonNewWindow
-     * @return SlidePagePart
+     * @return PageBannerPagePart
      */
     public function setButtonNewWindow($buttonNewWindow)
     {
@@ -203,26 +176,26 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
     }
 
     /**
-     * Set image
+     * Set background
      *
-     * @param \Kunstmaan\MediaBundle\Entity\Media $image
-     * @return SlidePagePart
+     * @param Media $backgroundImage
+     * @return PageBannerPagePart
      */
-    public function setImage(\Kunstmaan\MediaBundle\Entity\Media $image = null)
+    public function setBackgroundImage(Media $backgroundImage = null)
     {
-        $this->image = $image;
+        $this->backgroundImage = $backgroundImage;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get background
      *
-     * @return \Kunstmaan\MediaBundle\Entity\Media
+     * @return Media
      */
-    public function getImage()
+    public function getBackgroundImage()
     {
-        return $this->image;
+        return $this->backgroundImage;
     }
 
     /**
@@ -232,16 +205,16 @@ class SlidePagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:PageParts:SlidePagePart/view.html.twig';
+        return '{{ bundle.getName() }}:PageParts:PageBannerPagePart/view.html.twig';
     }
 
     /**
      * Get the admin form type.
      *
-     * @return \{{ namespace }}\Form\Pageparts\SlidePagePartAdminType
+     * @return \Kunstmaan\WebsiteBundle\Form\PageParts\PageBannerPagePartAdminType
      */
     public function getDefaultAdminType()
     {
-        return new \{{ namespace }}\Form\PageParts\SlidePagePartAdminType();
+        return new \{{ namespace }}\Form\PageParts\PageBannerPagePartAdminType();
     }
 }

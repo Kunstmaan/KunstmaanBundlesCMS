@@ -144,10 +144,11 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         }
 
         if ($this->demosite) {
+            $relPath = '/Entity/PageParts/';
             $sourceDir = $this->skeletonDir.$relPath;
             $targetDir = $this->bundle->getPath().$relPath;
 
-            $this->renderSingleFile($sourceDir, $targetDir, 'SlidePagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePart.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -186,7 +187,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $targetDir = $this->bundle->getPath().$relPath;
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SlidePagePartAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePartAdminType.php', $parameters);
         }
 
         $relPath = '/Form/';
@@ -375,7 +376,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         // Pageparts
 
         if ($this->demosite) {
-            $relPath = '/Resources/views/PageParts/SlidePagePart/';
+            $relPath = '/Resources/views/PageParts/PageBannerPagePart/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
