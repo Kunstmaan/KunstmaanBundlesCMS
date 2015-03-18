@@ -4,9 +4,21 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 interface ExportableInterface
 {
+    /**
+     * @return array
+     */
     public function getExportColumns();
 
-    public function getAllIterator();
+    /**
+     * @return \Iterator
+     */
+    public function getIterator();
 
+    /**
+     * @param array|object $item
+     * @param string       $columnName
+     *
+     * @return string
+     */
     public function getStringValue($item, $columnName);
 }

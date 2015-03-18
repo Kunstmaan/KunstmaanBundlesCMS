@@ -11,6 +11,7 @@ use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -30,14 +31,17 @@ class FormSubmissionsController extends Controller
      *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
+        $em        = $this->getDoctrine()->getManager();
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
-        /* @var $adminList AdminList */
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW), $em);
+
+        /* @var AdminList $adminList */
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
+            new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW),
+            $em
+        );
         $adminList->bindRequest($request);
 
         return array('adminlist' => $adminList);
@@ -48,19 +52,23 @@ class FormSubmissionsController extends Controller
      *
      * @param int $nodeTranslationId
      *
-     * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list")
+     * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"},
+     *                                     name="KunstmaanFormBundle_formsubmissions_list")
      * @Method({"GET", "POST"})
      * @Template()
      *
      * @return array
      */
-    public function listAction($nodeTranslationId)
+    public function listAction(Request $request, $nodeTranslationId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
+        $em              = $this->getDoctrine()->getManager();
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        /* @var $adminList AdminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList(new FormSubmissionAdminListConfigurator($em, $nodeTranslation), $em);
+
+        /** @var AdminList $adminList */
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
+            new FormSubmissionAdminListConfigurator($em, $nodeTranslation),
+            $em
+        );
         $adminList->bindRequest($request);
 
         return array('nodetranslation' => $nodeTranslation, 'adminlist' => $adminList);
@@ -70,9 +78,10 @@ class FormSubmissionsController extends Controller
      * The edit action will be used to edit a given submission
      *
      * @param int $nodeTranslationId The node translation id
-     * @param int $submissionId The submission id
+     * @param int $submissionId      The submission id
      *
-     * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" = "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit")
+     * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" =
+     *                                                    "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit")
      * @Method({"GET", "POST"})
      * @Template()
      *
@@ -80,11 +89,11 @@ class FormSubmissionsController extends Controller
      */
     public function editAction($nodeTranslationId, $submissionId)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em              = $this->getDoctrine()->getManager();
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
+        $formSubmission  = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
 
-        return array('nodetranslation' => $nodeTranslation, 'formsubmission' => $formSubmission,);
+        return array('nodetranslation' => $nodeTranslation, 'formsubmission' => $formSubmission);
     }
 
     /**
@@ -92,7 +101,8 @@ class FormSubmissionsController extends Controller
      *
      * @param int $nodeTranslationId
      *
-     * @Route("/export/{nodeTranslationId}.{_format}", requirements={"nodeTranslationId" = "\d+","_format" = "csv|xlsx"}, name="KunstmaanFormBundle_formsubmissions_export")
+     * @Route("/export/{nodeTranslationId}.{_format}", requirements={"nodeTranslationId" = "\d+","_format" =
+     *                                                 "csv|xlsx"}, name="KunstmaanFormBundle_formsubmissions_export")
      * @Method({"GET"})
      *
      * @return Response
@@ -100,14 +110,14 @@ class FormSubmissionsController extends Controller
     public function exportAction($nodeTranslationId, $_format)
     {
         $em = $this->getDoctrine()->getManager();
-        /* @var $nodeTranslation NodeTranslation */
+        /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $translator = $this->get('translator');
+        $translator      = $this->get('translator');
 
-        /* @var ExportList $exportlist */
+        /** @var ExportList $exportList */
         $configurator = new FormSubmissionExportListConfigurator($em, $nodeTranslation, $translator);
-        $exportlist = $this->get("kunstmaan_adminlist.factory")->createExportList($configurator);
+        $exportList   = $this->get('kunstmaan_adminlist.factory')->createExportList($configurator);
 
-        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($exportlist, $_format);
+        return $this->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
     }
 }

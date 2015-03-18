@@ -15,12 +15,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Abstract admin list configurator, this implements the most common functionality from the AdminListConfiguratorInterface
+ * Abstract admin list configurator, this implements the most common functionality from the
+ * AdminListConfiguratorInterface and ExportListConfiguratorInterface
  */
-abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface
+abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface, ExportListConfiguratorInterface
 {
-    const SUFFIX_ADD = 'add';
-    const SUFFIX_EDIT = 'edit';
+    const SUFFIX_ADD    = 'add';
+    const SUFFIX_EDIT   = 'edit';
     const SUFFIX_EXPORT = 'export';
     const SUFFIX_DELETE = 'delete';
 
@@ -140,15 +141,29 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
+     * Configure the export fields
+     */
+    public function buildExportFields()
+    {
+    }
+
+    /**
+     * Build iterator (if needed)
+     */
+    public function buildIterator()
+    {
+    }
+
+    /**
      * Reset all built members
      */
     public function resetBuilds()
     {
-        $this->fields = array();
-        $this->exportFields = array();
+        $this->fields        = array();
+        $this->exportFields  = array();
         $this->filterBuilder = null;
-        $this->itemActions = array();
-        $this->listActions = array();
+        $this->itemActions   = array();
+        $this->listActions   = array();
     }
 
     /**
@@ -162,15 +177,17 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = array_merge($params, $this->getExtraParameters());
 
-        $friendlyName = explode("\\", $this->getEntityName());
-        $friendlyName = array_pop($friendlyName);
-        $re = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
-        $a = preg_split($re, $friendlyName);
+        $friendlyName      = explode("\\", $this->getEntityName());
+        $friendlyName      = array_pop($friendlyName);
+        $re                = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
+        $a                 = preg_split($re, $friendlyName);
         $superFriendlyName = implode(' ', $a);
 
         return array(
-            $superFriendlyName => array('path'   => $this->getPathByConvention($this::SUFFIX_ADD),
-                                        'params' => $params)
+            $superFriendlyName => array(
+                'path'   => $this->getPathByConvention($this::SUFFIX_ADD),
+                'params' => $params
+            )
         );
     }
 
@@ -184,7 +201,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $params = $this->getExtraParameters();
 
         return array(
-            'path' => $this->getPathByConvention($this::SUFFIX_EXPORT),
+            'path'   => $this->getPathByConvention($this::SUFFIX_EXPORT),
             'params' => array_merge(array('_format' => 'csv'), $params)
         );
     }
@@ -199,7 +216,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $params = $this->getExtraParameters();
 
         return array(
-            'path' => $this->getPathByConvention(),
+            'path'   => $this->getPathByConvention(),
             'params' => $params
         );
     }
@@ -217,13 +234,14 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $this->type;
         }
 
-        if (method_exists($entity, "getAdminType")) {
+        if (method_exists($entity, 'getAdminType')) {
             return $entity->getAdminType();
         }
 
-        throw new InvalidArgumentException("You need to implement the getAdminType method in " . get_class(
-            $this
-        ) . " or " . get_class($entity));
+        throw new InvalidArgumentException(
+            'You need to implement the getAdminType method in ' .
+            get_class($this) . ' or ' . get_class($entity)
+        );
     }
 
     /**
@@ -317,8 +335,12 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return AbstractAdminListConfigurator
      */
-    public function addFilter($columnName, FilterTypeInterface $type = null, $filterName = null, array $options = array())
-    {
+    public function addFilter(
+        $columnName,
+        FilterTypeInterface $type = null,
+        $filterName = null,
+        array $options = array()
+    ) {
         $this->getFilterBuilder()->add($columnName, $type, $filterName, $options);
 
         return $this;
@@ -369,7 +391,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
     /**
      * @param string   $label          The label, only used when the template equals null
-     * @param callable $routeGenerator The generator used to generate the url of an item, when generating the item will be provided
+     * @param callable $routeGenerator The generator used to generate the url of an item, when generating the item will
+     *                                 be provided
      * @param string   $icon           The icon, only used when the template equals null
      * @param string   $template       The template, when not specified the label is shown
      *
@@ -663,15 +686,15 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function bindRequest(Request $request)
     {
-        $query      = $request->query;
-        $session    = $request->getSession();
+        $query   = $request->query;
+        $session = $request->getSession();
 
         $adminListName = 'listconfig_' . $request->get('_route');
 
-        $this->page             = $request->query->getInt('page', 1);
+        $this->page = $request->query->getInt('page', 1);
         // Allow alphanumeric, _ & . in order by parameter!
-        $this->orderBy          = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
-        $this->orderDirection   = $request->query->getAlpha('orderDirection', '');
+        $this->orderBy        = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
+        $this->orderDirection = $request->query->getAlpha('orderDirection', '');
 
         // there is a session and the filter param is not set
         if ($session->has($adminListName) && !$query->has('filter')) {
@@ -690,11 +713,14 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         }
 
         // save current parameters
-        $session->set($adminListName, array(
-            'page'              => $this->page,
-            'orderBy'           => $this->orderBy,
-            'orderDirection'    => $this->orderDirection,
-        ));
+        $session->set(
+            $adminListName,
+            array(
+                'page'           => $this->page,
+                'orderBy'        => $this->orderBy,
+                'orderDirection' => $this->orderDirection,
+            )
+        );
 
 
         $this->getFilterBuilder()->bindRequest($request);
