@@ -85,13 +85,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.onDeepCloneAndSave, method: onDeepCloneAndSave }
 
-    kunstmaan_admin.command_dispatch:
-        class: Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener
-        arguments:
-            logger: "@logger"
-        tags:
-            - { name: kernel.event_listener, event: console.exception }
-
     kunstmaan_admin.logger.processor.user:
         class: Kunstmaan\AdminBundle\Helper\UserProcessor
         arguments: [ "@service_container" ]

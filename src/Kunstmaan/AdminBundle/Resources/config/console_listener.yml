@@ -1,0 +1,7 @@
+services:
+    kernel.listener.command_dispatch:
+        class: Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener
+        arguments:
+            logger: "@logger"
+        tags:
+            - { name: kernel.event_listener, event: console.exception }
