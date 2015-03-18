@@ -2,10 +2,9 @@
    Forms - Form control
    ========================================================================== */
 
-
 /* General
    ========================================================================== */
-.form-control--input, .form-control--textarea, .form-control--select {
+.form-control {
     display: block;
     width: 100%;
     max-width: 26rem;
@@ -13,8 +12,11 @@
     padding: .2em 0;
 
     border: 0;
+
+{% if demosite %}
     border-bottom: 1px solid $hr-color;
     font-weight: 400;
+{% endif %}
 
     &:focus {
         outline: none;
@@ -31,10 +33,17 @@
 }
 
 
+/* Input
+   ========================================================================== */
+.form-control--input {}
+
+
 /* Textarea
    ========================================================================== */
 .form-control--textarea {
-    height: 5.6rem;
+{% if demosite %}
+    min-height: 5.6rem;
+{% endif %}
     max-width: none;
 }
 
@@ -42,25 +51,21 @@
 /* Select
    ========================================================================== */
 .form-control--select {
-    border: none;
+{% if demosite %}
+    z-index: 2;
+    position: relative;
+
+    height: 3rem;
+
+    border-radius: 0;
+    opacity: 0;
     box-shadow: none;
     background: transparent;
     background-image: none;
     -webkit-appearance: none;
-    border-radius: 0;
-
-    height: 38px;
-    position: relative;
-    z-index: 2;
-
-    opacity: 0;
-
-    ~ .form-bar {
-        margin-top: 0;
-        margin-bottom: -1px;
-    }
 
     &:focus, &:valid, &.form-control--filled {
         opacity: 1;
     }
+{% endif %}
 }

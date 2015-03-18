@@ -5,6 +5,7 @@
 /* General
    ========================================================================== */
 .radio, .checkbox {
+{% if demosite %}
     position: relative;
 
     input {
@@ -41,6 +42,7 @@
             box-shadow:inset 0 0 0 4px $white;
         }
     }
+{% endif %}
 }
 
 
@@ -52,12 +54,13 @@
 /* Radiobuttons
    ========================================================================== */
 .radio {
-
+{% if demosite %}
     label {
 
         &:before {
             border-radius: 100%;
         }
     }
+{% endif %}
 }
 

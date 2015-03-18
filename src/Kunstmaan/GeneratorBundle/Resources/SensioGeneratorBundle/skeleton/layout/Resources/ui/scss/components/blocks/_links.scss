@@ -5,8 +5,12 @@
 /* Shared
    ========================================================================== */
 a {
-    text-decoration: underline;
     color: $link-color;
+{% if demosite %}
+    text-decoration: none;
+{% else %}
+    text-decoration: underline;
+{% endif %}
 
     &:hover, &:focus {
         text-decoration: none;

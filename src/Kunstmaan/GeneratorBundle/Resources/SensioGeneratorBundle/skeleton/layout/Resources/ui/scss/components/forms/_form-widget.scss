@@ -12,14 +12,16 @@
 /* Select
    ========================================================================== */
 .form-widget--select {
+{% if demosite %}
     position: relative;
     border-bottom: 1px solid $hr-color;
 
     ~ .control-label {
         display: none;
     }
+{% endif %}
 }
-
+{% if demosite %}
 .select__icon {
     position: absolute;
     top: 0;
@@ -30,28 +32,33 @@
     line-height: 40px;
     color: $grey;
 }
-
+{% endif %}
 
 /* Choices
    ========================================================================== */
 .form-widget--choices {
+{% if demosite %}
     padding-top: .5rem;
 
     ~ .control-label {
         top: -1.2rem;
     }
+{% endif %}
 }
 
 .form-widget--choices--filled {
+{% if demosite %}
     ~ .control-label {
         @include control-label-active;
     }
+{% endif %}
 }
 
 
 /* Widget - File Upload
    ========================================================================== */
 .form-widget--file-upload {
+{% if demosite %}
     padding-top: .5rem;
 
     .form-control {
@@ -65,4 +72,5 @@
     ~ .control-label {
         display: none;
     }
+{% endif %}
 }
