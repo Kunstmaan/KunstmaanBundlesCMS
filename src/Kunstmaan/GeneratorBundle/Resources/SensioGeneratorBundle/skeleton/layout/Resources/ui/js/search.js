@@ -13,9 +13,11 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
             e.stopPropagation();
             $(this).closest('.js-searchbox-form').addClass('searchbox-form--active');
         });
+
         $(document).on('click', function() {
             $('.js-searchbox-form').removeClass('searchbox-form--active');
         });
+
         $('.js-searchbox-back').on('click', function() {
             $(this).closest('.js-searchbox-form').removeClass('searchbox-form--active');
         });

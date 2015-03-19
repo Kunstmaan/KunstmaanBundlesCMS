@@ -70,5 +70,4 @@
 
 /* Vendors
    ========================================================================== */
-@import "vendors/bootstrap-components/grid"{% if demosite %},
-        "vendors/sidebar-effects"{% endif %};
+@import "vendors/bootstrap-components/grid";

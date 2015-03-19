@@ -28,22 +28,21 @@
     {% include '<%= bundle.getName() %>:Layout:_js_header.html.twig' %}
 </head>
 
-<body {% block extra_body_attributes %}{% endblock %}>
+<body id="sidebar-toggle-container" class="sidebar-toggle-container" {% block extra_body_attributes %}{% endblock %}>
     {# Google Tagmanager #}
     {% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
 
     {# Outdated browser message #}
     {% include '<%= bundle.getName() %>:Layout:_outdatedbrowser.html.twig' %}
 
-    <% if demosite %>
-    <div class="st-container" id="st-container">
-        <div class="st-pusher">
-            {# Mobile nav #}
-            {% include '<%= bundle.getName() %>:Layout:_mobile-nav.html.twig' %}
+<% if demosite %>
+    <div id="sidebar-toggle__sidebar" class="sidebar-toggle__side-bar sidebar-toggle__sidebar--left">
+        {# Mobile nav #}
+        {% include '<%= bundle.getName() %>:Layout:_mobile-nav.html.twig' %}
+    </div>
 
-            <div class="st-content">
-                <div class="st-content-inner">
-    <% endif %>
+    <div id="sidebar-toggle__content" class="sidebar-toggle__content">
+<% endif %>
 
     {# Header #}
     {% block header %}
@@ -65,12 +64,9 @@
         {% include '<%= bundle.getName() %>:Layout:_footer.html.twig' %}
     {% endblock %}
 
-    <% if demosite %>
-                </div>
-            </div>
-        </div>
+<% if demosite %>
     </div>
-    <% endif %>
+<% endif %>
 
     {# JS Footer #}
     {% include '<%= bundle.getName() %>:Layout:_js_footer.html.twig' %}

@@ -14,6 +14,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
             $('.js-form-control').bind('focus', function() {
                 $(this).addClass('form-control--filled');
             });
+
             $('.form-control').bind('blur', function() {
                 if( $(this).val() ) {
                     $(this).addClass('form-control--filled');
@@ -25,6 +26,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
             $('.js-form-control-choice').bind('focus', function() {
                 $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
             });
+
             $('.js-form-control-choice').bind('blur', function() {
                 if( $(this).is(':checked') ) {
                     $(this).closest('.form-widget--choices').addClass('form-widget--choices--filled');
