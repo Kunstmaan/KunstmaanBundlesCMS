@@ -222,13 +222,6 @@ interface AdminListConfiguratorInterface
     public function getItems();
 
     /**
-     * Return an iterator for all items that matches the current filtering
-     *
-     * @return \Iterator
-     */
-    public function getAllIterator();
-
-    /**
      * Bind request
      *
      * @param Request $request

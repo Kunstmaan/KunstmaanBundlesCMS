@@ -3,17 +3,14 @@
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Traversable;
-
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
-
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
@@ -53,7 +50,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
-        $this->em = $em;
+        $this->em        = $em;
         $this->aclHelper = $aclHelper;
     }
 
@@ -70,7 +67,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'	 => $this->getPathByConvention($this::SUFFIX_EDIT),
+            'path'   => $this->getPathByConvention($this::SUFFIX_EDIT),
             'params' => $params
         );
     }
@@ -88,7 +85,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
+            'path'   => $this->getPathByConvention($this::SUFFIX_DELETE),
             'params' => $params
         );
     }
@@ -99,7 +96,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter = new DoctrineORMAdapter($this->getQuery());
+            $adapter          = new DoctrineORMAdapter($this->getQuery());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setNormalizeOutOfRangePages(true);
             $this->pagerfanta->setCurrentPage($this->getPage());
@@ -138,7 +135,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      *
      * @return \Iterator
      */
-    public function getAllIterator()
+    public function getIterator()
     {
         return $this->getQuery()->iterate();
     }
@@ -190,6 +187,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         $queryBuilder = $this->em
             ->getRepository($this->getRepositoryName())
             ->createQueryBuilder('b');
+
         return $queryBuilder;
     }
 
@@ -208,7 +206,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      *
      * @param PermissionDefinition $permissionDef
      *
-     * @return AbstractAdminListConfigurator|AbstractDoctrineORMAdminListConfigurator
+     * @return AbstractDoctrineORMAdminListConfigurator
      */
     public function setPermissionDefinition(PermissionDefinition $permissionDef)
     {
@@ -219,10 +217,13 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
 
     /**
      * @param EntityManager $em
+     *
+     * @return AbstractDoctrineORMAdminListConfigurator
      */
     public function setEntityManager($em)
     {
         $this->em = $em;
+
         return $this;
     }
 
@@ -233,5 +234,4 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     {
         return $this->em;
     }
-
 }

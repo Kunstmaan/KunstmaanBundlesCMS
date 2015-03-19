@@ -16,7 +16,6 @@ use Doctrine\ORM\EntityManager;
  */
 class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-
     /**
      * @var string
      */
@@ -41,8 +40,8 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function buildFilters()
     {
         $builder = $this->getFilterBuilder();
-        $builder->add('title', new StringFilterType("title"), "Title")
-                ->add('online', new BooleanFilterType('online'), 'Online');
+        $builder->add('title', new StringFilterType('title'), 'Title')
+            ->add('online', new BooleanFilterType('online'), 'Online');
     }
 
     /**
@@ -50,14 +49,14 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function buildFields()
     {
-        $this->addField("title", "Title", true)
-             ->addField("lang", "Language", true)
-             ->addField("url", "Form path", true);
+        $this->addField('title', 'Title', true)
+            ->addField('lang', 'Language', true)
+            ->addField('url', 'Form path', true);
     }
 
-    /*
- * Add a view action.
- */
+    /**
+     * Add a view action.
+     */
     public function buildItemActions()
     {
         $create_route = function (EntityInterface $item) {
@@ -66,7 +65,11 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
                 'params' => array('nodeTranslationId' => $item->getId())
             );
         };
-        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, "eye-open", "View");
+        $ia           = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction(
+            $create_route,
+            'eye-open',
+            'View'
+        );
         $this->addItemAction($ia);
     }
 
@@ -184,5 +187,4 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
             )
             ->addOrderBy('n.sequenceNumber', 'DESC');
     }
-
 }

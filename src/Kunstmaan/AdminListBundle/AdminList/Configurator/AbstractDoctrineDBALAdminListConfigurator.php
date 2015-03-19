@@ -2,13 +2,11 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use Doctrine\DBAL\Statement;
 use Traversable;
-
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-
 use Pagerfanta\Pagerfanta;
-
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
 use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
@@ -93,7 +91,11 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter          = new DoctrineDBALAdapter($this->getQueryBuilder(), $this->getCountField(), $this->getUseDistinctCount());
+            $adapter          = new DoctrineDBALAdapter(
+                $this->getQueryBuilder(),
+                $this->getCountField(),
+                $this->getUseDistinctCount()
+            );
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());
@@ -105,8 +107,11 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     /**
      * @param array $params
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, /** @noinspection PhpUnusedParameterInspection */ array $params = array())
-    {
+    public function adaptQueryBuilder(
+        QueryBuilder $queryBuilder,
+        /** @noinspection PhpUnusedParameterInspection */
+        array $params = array()
+    ) {
         $queryBuilder->where('1=1');
     }
 
@@ -131,9 +136,9 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      *
      * @return \Iterator
      */
-    public function getAllIterator()
+    public function getIterator()
     {
-        /*@var Statement $statement*/
+        /** @var Statement $statement*/
         $statement = $this->getQueryBuilder()->execute();
 
         return $statement;
@@ -190,7 +195,6 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     {
         return $this->countField;
     }
-
 
     /**
      * When doing the count you can turn the distinct on or off.

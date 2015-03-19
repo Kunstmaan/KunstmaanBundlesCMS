@@ -3,43 +3,69 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Exportlist configuration to list all the form submissions for a given NodeTranslation
+ * Export list configuration to list all the form submissions for a given NodeTranslation
  */
 class FormSubmissionExportListConfigurator implements ExportListConfiguratorInterface
 {
-
     /**
      * @var NodeTranslation
      */
     protected $nodeTranslation;
+
+    /**
+     * @var EntityManagerInterface
+     */
     protected $em;
+
+    /**
+     * @var array
+     */
     protected $exportFields;
+
+    /**
+     * @var \Iterator
+     */
     protected $iterator;
+
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
     /**
-     * @param EntityManager   $em              The entity manager
-     * @param NodeTranslation $nodeTranslation The node translation
-     * @param Translatior     $translator      The translator service
+     * @param EntityManagerInterface $em              The entity manager
+     * @param NodeTranslation        $nodeTranslation The node translation
+     * @param TranslatorInterface    $translator      The translator service
      */
-    public function __construct(EntityManager $em, $nodeTranslation, $translator)
+    public function __construct(EntityManagerInterface $em, $nodeTranslation, $translator)
     {
         $this->nodeTranslation = $nodeTranslation;
-        $this->em = $em;
-        $this->translator = $translator;
+        $this->em              = $em;
+        $this->translator      = $translator;
     }
 
+    /**
+     * @return array
+     */
     public function getExportFields()
     {
         return $this->exportFields;
     }
 
+    /**
+     * @param string $name
+     * @param string $header
+     *
+     * @return FormSubmissionExportListConfigurator
+     */
     public function addExportField($name, $header)
     {
         $this->exportFields[] = new Field($name, $header, false, null);
@@ -47,18 +73,29 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
         return $this;
     }
 
+    /**
+     * Build export fields
+     */
     public function buildExportFields()
     {
-        $this->addExportField('id', $this->translator->trans("Id"))
-            ->addExportField('date', $this->translator->trans("Date"))
-            ->addExportField('language', $this->translator->trans("Language"));
+        $this->addExportField('id', $this->translator->trans('Id'))
+            ->addExportField('date', $this->translator->trans('Date'))
+            ->addExportField('language', $this->translator->trans('Language'));
     }
 
+    /**
+     * @return \Iterator
+     */
     public function getIterator()
     {
         return $this->iterator;
     }
 
+    /**
+     * Build iterator
+     *
+     * NOTE : The submission fields are added as export fields as well ...
+     */
     public function buildIterator()
     {
         $qb = $this->em->createQueryBuilder();
@@ -71,16 +108,20 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
             ->setParameter('node', $this->nodeTranslation->getNode()->getId())
             ->setParameter('lang', $this->nodeTranslation->getLang())
             ->addOrderBy('fs.created', 'DESC');
-        $iterableResult = $qb->getQuery()->iterate();
+        $iterableResult  = $qb->getQuery()->iterate();
         $isHeaderWritten = false;
 
-        $iterator = new ArrayCollection();
+        $collection = new ArrayCollection();
         foreach ($iterableResult as $row) {
-            /* @var $submission FormSubmission */
+            /* @var FormSubmission $submission */
             $submission = $row[0];
 
             // Write row data
-            $data = array('id' => $submission->getId(), 'date' => $submission->getCreated()->format('d/m/Y H:i:s'), 'language' => $submission->getLang());
+            $data = array(
+                'id'       => $submission->getId(),
+                'date'     => $submission->getCreated()->format('d/m/Y H:i:s'),
+                'language' => $submission->getLang()
+            );
             foreach ($submission->getFields() as $field) {
                 $header = $this->translator->trans($field->getLabel());
                 if (!$isHeaderWritten) {
@@ -89,15 +130,15 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
                 $data[$header] = $field->__toString();
             }
             $isHeaderWritten = true;
-            $iterator->add(array($data));
+            $collection->add(array($data));
         }
 
-        $this->iterator = $iterator;
+        $this->iterator = $collection->getIterator();
     }
 
     /**
-     * @param array|object $item       The item
-     * @param string       $columnName The column name
+     * @param array  $item       The item
+     * @param string $columnName The column name
      *
      * @return string
      */
