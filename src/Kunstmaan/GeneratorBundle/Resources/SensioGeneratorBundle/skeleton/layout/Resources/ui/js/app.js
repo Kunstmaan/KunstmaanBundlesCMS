@@ -5,12 +5,14 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     var init;
 
     init = function() {
+{% if demosite %}
         cargobay.scrollToTop.init();
         cargobay.toggle.init();
         cargobay.sidebarToggle.init();
 
         {{ bundle.getName() }}.forms.init();
         {{ bundle.getName() }}.search.init();
+{% endif %}
     };
 
     return {
