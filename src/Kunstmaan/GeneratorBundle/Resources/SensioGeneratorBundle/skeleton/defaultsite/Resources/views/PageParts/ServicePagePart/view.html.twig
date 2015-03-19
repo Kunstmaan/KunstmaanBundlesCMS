@@ -1,0 +1,16 @@
+<div class="col-md-6 col-sm-6">
+    <h1>{{ resource.title }}</h1>
+    {% if resource.description %}
+        <div class="text-pp">
+            {{ resource.description|raw }}
+        </div>
+    {% endif %}
+    {% if resource.linkUrl and resource.linkText %}
+        <div class="link-pp">
+            <a href="{{ resource.linkUrl }}" class="link-pp__link" {% if resource.linkNewWindow %}target="_blank"{% endif %}>{{ resource.linkText }}</a>
+        </div>
+    {% endif %}
+</div>
+<div class="col-md-6 col-sm-6">
+    {% if resource.image is not empty %}<img src="{{ asset(resource.image.url) }}" alt="{{ resource.title }}" />{% endif %}
+</div>

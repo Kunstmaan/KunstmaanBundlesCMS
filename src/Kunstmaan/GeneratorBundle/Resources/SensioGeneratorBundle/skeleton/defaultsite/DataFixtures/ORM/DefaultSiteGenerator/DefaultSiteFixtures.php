@@ -174,6 +174,32 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setText' => $locale == 'nl' ? 'Lees meer' : 'Read more'
                 )
             );
+            // TODO: get real image
+            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+            $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
+            $buyBikeMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+            $pageparts['section2'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ServicePagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Koop een fiets' : 'Buy a bike',
+                    'setDescription' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!',
+                    'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
+                    'setLinkText' => $locale == 'nl' ? 'Lees meer' : 'Read more',
+                    'setImage' => $buyBikeMedia,
+                    'setImagePosition' => 'right',
+                )
+            );
+            $pageparts['section3'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ServicePagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Fietsherstellingen' : 'Bike repair',
+                    'setDescription' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!',
+                    'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
+                    'setLinkText' => $locale == 'nl' ? 'Lees meer' : 'Read more',
+                    'setImage' => $buyBikeMedia,
+                    'setImagePosition' => 'left',
+                )
+            );
             $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(

@@ -211,7 +211,7 @@ class PageBannerPagePart extends AbstractPagePart
     /**
      * Get the admin form type.
      *
-     * @return \Kunstmaan\WebsiteBundle\Form\PageParts\PageBannerPagePartAdminType
+     * @return \{{ namespace }}\Form\PageParts\PageBannerPagePartAdminType
      */
     public function getDefaultAdminType()
     {
