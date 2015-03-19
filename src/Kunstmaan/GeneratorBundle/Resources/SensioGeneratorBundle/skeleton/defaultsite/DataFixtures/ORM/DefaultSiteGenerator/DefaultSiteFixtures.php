@@ -140,10 +140,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         foreach ($this->requiredLocales as $locale) {
             $pageparts = array();
 
-            // TODO: get real image
             $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-            $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
-            $headerMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+            $imgDir = dirname(__FILE__).'/../../../Resources/ui/img/demosite/';
+
+            $headerMedia = $this->mediaCreator->createFile($imgDir.'stocks/homepage__header.jpg', $folder->getId());
             $pageparts['header'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\PageBannerPagePart',
                 array(
@@ -154,6 +154,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setButtonText' => $locale == 'nl' ? 'Onze diensten' : 'Our services',
                 )
             );
+
             $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(
@@ -174,10 +175,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setText' => $locale == 'nl' ? 'Lees meer' : 'Read more'
                 )
             );
-            // TODO: get real image
-            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-            $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
-            $buyBikeMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+
+            $buyBikeMedia = $this->mediaCreator->createFile($imgDir.'stocks/fixie1.png', $folder->getId());
             $pageparts['section2'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
@@ -189,6 +188,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setImagePosition' => 'right',
                 )
             );
+
+            $repairBikeMedia = $this->mediaCreator->createFile($imgDir.'stocks/fixie2.png', $folder->getId());
             $pageparts['section3'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
@@ -196,10 +197,47 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setDescription' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!',
                     'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
                     'setLinkText' => $locale == 'nl' ? 'Lees meer' : 'Read more',
-                    'setImage' => $buyBikeMedia,
+                    'setImage' => $repairBikeMedia,
                     'setImagePosition' => 'left',
                 )
             );
+
+            $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Waarom voor ons kiezen?' : 'Why companyname?',
+                    'setNiv' => 2
+                )
+            );
+            $items = new \Doctrine\Common\Collections\ArrayCollection();
+            $item1Media = $this->mediaCreator->createFile($imgDir.'icons/lamp.svg', $folder->getId());
+            $item1 = new \{{ namespace }}\Entity\UspItem();
+            $item1->setIcon($item1Media);
+            $item1->setTitle('Title 1');
+            $item1->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item1->setWeight(0);
+            $items->add($item1);
+            $item2Media = $this->mediaCreator->createFile($imgDir.'icons/user.svg', $folder->getId());
+            $item2 = new \{{ namespace }}\Entity\UspItem();
+            $item2->setIcon($item2Media);
+            $item2->setTitle('Title 2');
+            $item2->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item2->setWeight(1);
+            $items->add($item2);
+            $item3Media = $this->mediaCreator->createFile($imgDir.'icons/mouse.svg', $folder->getId());
+            $item3 = new \{{ namespace }}\Entity\UspItem();
+            $item3->setIcon($item3Media);
+            $item3->setTitle('Title 3');
+            $item3->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item3->setWeight(2);
+            $items->add($item3);
+            $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\UspPagePart',
+                array(
+                    'setItems' => $items,
+                )
+            );
+
             $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(
@@ -207,10 +245,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setNiv' => 2
                 )
             );
-            // TODO: get real image
-            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
-            $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
-            $teamMedia = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+            $teamMedia = $this->mediaCreator->createFile($imgDir.'stocks/homepage__header.jpg', $folder->getId());
             $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ImagePagePart',
                 array(

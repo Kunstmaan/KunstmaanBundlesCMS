@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * PageBannerPagePart
  *
- * @ORM\Table(name="kw_page_banner_page_parts")
+ * @ORM\Table(name="{{ prefix }}page_banner_page_parts")
  * @ORM\Entity
  */
 class PageBannerPagePart extends AbstractPagePart
