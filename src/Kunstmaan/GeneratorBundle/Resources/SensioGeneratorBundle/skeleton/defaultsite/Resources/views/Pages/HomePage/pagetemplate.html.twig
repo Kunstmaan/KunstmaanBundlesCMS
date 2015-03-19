@@ -51,6 +51,10 @@
     <section class="splash splash--gray-lighter">
         <div class="container-fluid">
             <div class="row row--flex row--align-end">
+
+                {{ render_pageparts(page, 'section2') }}
+
+                {#
                 <div class="col-md-6 col-sm-6">
                     <h1>Our gear</h1>
                     <div class="text-pp">
@@ -63,6 +67,7 @@
                 <div class="col-md-6 col-sm-6">
                     <img src="/frontend/img/demosite/stocks/fixie1.png" alt="Bike">
                 </div>
+                #}
             </div>
         </div>
     </section>
@@ -70,6 +75,10 @@
     <section class="splash">
         <div class="container-fluid">
             <div class="row row--flex row--align-end row--reverse">
+
+                {{ render_pageparts(page, 'section3') }}
+
+                {#
                 <div class="col-md-6 col-sm-6">
                     <h1>Lorem ipsum</h1>
                     <div class="text-pp">
@@ -82,6 +91,7 @@
                 <div class="col-md-6 col-sm-6">
                     <img src="/frontend/img/demosite/stocks/fixie2.png" alt="Bike">
                 </div>
+                #}
             </div>
         </div>
     </section>

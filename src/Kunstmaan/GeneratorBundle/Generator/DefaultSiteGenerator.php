@@ -149,6 +149,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $targetDir = $this->bundle->getPath().$relPath;
 
             $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePart.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -188,6 +189,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePartAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePartAdminType.php', $parameters);
         }
 
         $relPath = '/Form/';
@@ -377,6 +379,9 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $relPath = '/Resources/views/PageParts/PageBannerPagePart/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+
+            $relPath = '/Resources/views/PageParts/ServicePagePart/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
