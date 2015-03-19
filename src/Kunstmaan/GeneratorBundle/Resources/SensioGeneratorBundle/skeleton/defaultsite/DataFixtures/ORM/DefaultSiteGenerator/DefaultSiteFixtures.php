@@ -200,6 +200,42 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setImagePosition' => 'left',
                 )
             );
+            $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Waarom voor ons kiezen?' : 'Why companyname?',
+                    'setNiv' => 2
+                )
+            );
+            // TODO: get real image
+            $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+            $imgDir = dirname(__FILE__).'/../../../Resources/ui/files/content/';
+            $item1Media = $this->mediaCreator->createFile($imgDir.'satellite.jpg', $folder->getId());
+            $items = new \Doctrine\Common\Collections\ArrayCollection();
+            $item1 = new \{{ namespace }}\Entity\UspItem();
+            $item1->setIcon($item1Media);
+            $item1->setTitle('Title 1');
+            $item1->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item1->setWeight(0);
+            $items->add($item1);
+            $item2 = new \{{ namespace }}\Entity\UspItem();
+            $item2->setIcon($item1Media);
+            $item2->setTitle('Title 2');
+            $item2->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item2->setWeight(1);
+            $items->add($item2);
+            $item3 = new \{{ namespace }}\Entity\UspItem();
+            $item3->setIcon($item1Media);
+            $item3->setTitle('Title 3');
+            $item3->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item3->setWeight(2);
+            $items->add($item3);
+            $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\UspPagePart',
+                array(
+                    'setItems' => $items,
+                )
+            );
             $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(

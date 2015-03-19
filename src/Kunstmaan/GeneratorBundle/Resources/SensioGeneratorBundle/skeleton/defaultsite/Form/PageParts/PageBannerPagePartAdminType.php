@@ -28,7 +28,7 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
             'required' => true
         ));
         $builder->add('description', 'textarea', array(
-            'attr' => array('rows' => 10, 'cols' => 600),
+            'attr' => array('rows' => 4, 'cols' => 600),
             'required' => false,
         ));
         $builder->add('backgroundImage', 'media', array(

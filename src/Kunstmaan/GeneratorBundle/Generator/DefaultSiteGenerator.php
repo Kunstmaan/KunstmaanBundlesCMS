@@ -150,6 +150,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
             $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePart.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspPagePart.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -158,6 +159,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $targetDir = $this->bundle->getPath().$relPath;
 
             $this->renderSingleFile($sourceDir, $targetDir, 'Satellite.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspItem.php', $parameters);
         }
 
         $this->assistant->writeLine('Generating entities : <info>OK</info>');
@@ -190,6 +192,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePartAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePartAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspPagePartAdminType.php', $parameters);
         }
 
         $relPath = '/Form/';
@@ -198,6 +201,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspItemAdminType.php', $parameters);
         }
 
         $this->assistant->writeLine('Generating form types : <info>OK</info>');
@@ -382,6 +386,9 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
 
             $relPath = '/Resources/views/PageParts/ServicePagePart/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+
+            $relPath = '/Resources/views/PageParts/UspPagePart/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
