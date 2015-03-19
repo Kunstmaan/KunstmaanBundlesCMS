@@ -49,7 +49,10 @@
 }
 
 .main-nav__button {
+    padding: 0;
+
     box-shadow: none;
+    border: 0;
 }
 
 
@@ -124,7 +127,7 @@
 
         .contact-nav__list__link {
             display: block;
-            padding: .9em;
+            padding: .9em 0;
 
             text-align: center;
             color: $grey;
