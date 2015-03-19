@@ -22,9 +22,3 @@
 {% else %}
 // @import "mixins/..";
 {% endif %}
-
-/* Helper classes
-   ========================================================================== */
-{% if demosite %}
-@import "helper-classes";
-{% endif %}

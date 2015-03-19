@@ -5,6 +5,8 @@
 .header-visual {
     position: relative;
 
+    margin-bottom: 4rem;
+
     @media(min-width: $screen-md-min) {
         overflow: hidden;
         height: 70vh;
@@ -50,9 +52,10 @@
 }
 
 .header-visual__title {
+    margin-top: 0;
+
     line-height: 1;
     text-transform: uppercase;
-
     font-weight: 300;
 
     @media(min-width: $screen-md-min) {

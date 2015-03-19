@@ -65,7 +65,9 @@
         "pageparts/image-pp",
         "pageparts/link-pp",
         "pageparts/download-pp",
-        "pageparts/totop-pp";
+        "pageparts/totop-pp"{% if demosite %},
+        "pageparts/service-pp"
+{% endif %};
 
 
 /* Vendors

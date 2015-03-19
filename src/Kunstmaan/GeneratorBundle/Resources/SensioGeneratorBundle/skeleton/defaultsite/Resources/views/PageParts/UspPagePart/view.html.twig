@@ -1,18 +1,18 @@
 {% if resource.items|length > 0 %}
-    <div class="usp-pp">
-        <ul>
-            {% for uspItem in resource.items %}
-                <li>
-                    <div class="image-pp">
-                        <img src="{{ uspItem.icon.url }}" alt="{{ uspItem.title }}" class="img-icon">
-                    </div>
-                    <h5>{{ uspItem.title }}</h5>
-                    {% if uspItem.description %}
-                        <p>{{ uspItem.description }}</p>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="row">
+        {% for uspItem in resource.items %}
+        <div class="col-sm-4 usp-pp text--center">
+            <img src="{{ uspItem.icon.url }}" alt="{{ uspItem.title }}" class="img-icon">
+            <h5>
+                {{ uspItem.title }}
+            </h5>
+            {% if uspItem.description %}
+                <p>
+                    {{ uspItem.description }}
+                </p>
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
 {% endif %}
 

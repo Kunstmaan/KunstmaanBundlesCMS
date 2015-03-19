@@ -1,0 +1,52 @@
+/* ==========================================================================
+   Pageparts - Button pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.service-pp {
+    padding: 2em 0;
+}
+
+
+/* Alignment
+   ========================================================================== */
+.service-pp--left {
+
+    .service-pp__image {
+        float: left;
+    }
+
+    .service-pp__text {
+        float: right;
+    }
+}
+
+.service-pp--right {
+
+    .service-pp__image {
+        float: right;
+
+        margin-bottom: -4rem;
+    }
+
+    .service-pp__text {
+        float: left;
+    }
+}
+
+
+/* Head
+   ========================================================================== */
+.service-pp__head {
+    margin-top: 0;
+
+    color: $theme-color;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+
+    @media(min-width: $screen-md-min) {
+        font-size: 3rem;
+    }
+}
