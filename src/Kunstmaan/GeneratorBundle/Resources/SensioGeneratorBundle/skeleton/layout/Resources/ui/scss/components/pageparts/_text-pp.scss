@@ -5,7 +5,8 @@
 /* General
    ========================================================================== */
 .text-pp {
-    margin: $default-margin 0;
+    max-width: 40rem;
+    margin: $default-margin auto;
 
 {% if demosite %}
     ul {

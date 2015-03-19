@@ -50,12 +50,14 @@
 }
 
 .header-visual__title {
-    font-weight: 100;
-    line-height: 100%;
+    line-height: 1;
     text-transform: uppercase;
+
+    font-weight: 300;
 
     @media(min-width: $screen-md-min) {
         font-size: 5.625rem;
+        font-weight: 100;
         color: $white;
     }
 }
