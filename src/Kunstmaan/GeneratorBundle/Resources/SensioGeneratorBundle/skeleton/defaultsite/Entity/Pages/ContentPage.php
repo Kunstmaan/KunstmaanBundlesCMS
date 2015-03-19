@@ -3,7 +3,6 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use {{ namespace }}\Form\Pages\ContentPageAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
@@ -60,7 +59,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:contentpage');
+        return array('{{ bundle.getName() }}:contentpage', '{{ bundle.getName() }}:contentpage-with-submenu');
     }
 
     /**

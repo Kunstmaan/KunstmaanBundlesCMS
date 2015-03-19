@@ -137,6 +137,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $this->pageCreator->createPage($homePage, $translations, $options);
 
+        {% if demosite %}
         foreach ($this->requiredLocales as $locale) {
             $pageparts = array();
 
@@ -255,6 +256,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
             $this->pagePartCreator->addPagePartsToPage('homepage', $pageparts, $locale);
         }
+        {% endif %}
     }
 
     /**
@@ -383,6 +385,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 {% endif %}
 
         $this->pagePartCreator->addPagePartsToPage('satellite', $pageparts, 'en');
+        $this->pagePartCreator->setPageTemplate('satellite', 'en', 'Content page with submenu');
 
         $pageparts = array();
         $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
@@ -490,6 +493,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 {% endif %}
 
         $this->pagePartCreator->addPagePartsToPage('satellite', $pageparts, 'nl');
+        $this->pagePartCreator->setPageTemplate('satellite', 'nl', 'Content page with submenu');
     }
 
 {% if demosite %}
