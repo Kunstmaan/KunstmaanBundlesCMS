@@ -301,6 +301,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->renderSingleFile($sourceDir, $targetDir, 'behat-test-page.yml', $parameters);
 
         if ($this->demosite) {
+            $this->renderSingleFile($sourceDir, $targetDir, 'contentpage-with-submenu.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'formpage.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'satelliteoverviewpage.yml', $parameters);
         }
