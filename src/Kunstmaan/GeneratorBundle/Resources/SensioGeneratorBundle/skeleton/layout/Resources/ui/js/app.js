@@ -7,6 +7,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     init = function() {
         cargobay.scrollToTop.init();
         cargobay.toggle.init();
+        cargobay.sidebarToggle.init();
 
         {{ bundle.getName() }}.forms.init();
         {{ bundle.getName() }}.search.init();

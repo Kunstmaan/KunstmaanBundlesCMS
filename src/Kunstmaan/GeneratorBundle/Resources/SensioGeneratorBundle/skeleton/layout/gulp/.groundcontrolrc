@@ -36,6 +36,7 @@
             "<=bowerComponentsPath>jquery/dist/jquery.min.js",
             "<=bowerComponentsPath>velocity/velocity.min.js",
             "<=bowerComponentsPath>cargobay/src/toggle/js/jquery.toggle.js",
+            "<=bowerComponentsPath>cargobay/src/sidebar-toggle/js/jquery.sidebar-toggle.js",
             "<=bowerComponentsPath>cargobay/src/cookie-consent/js/jquery.cookie-consent.js",
             "<=bowerComponentsPath>cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
             "<=resourcesPath>ui/js/**/*.js"

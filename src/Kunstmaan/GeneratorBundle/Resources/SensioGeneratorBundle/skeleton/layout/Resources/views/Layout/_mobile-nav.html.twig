@@ -1,65 +1,64 @@
 {# Mobile navigation #}
-<div class="st-menu st-effect-3 mobile-nav" id="menu-3">
-    {# Language nav #}
-    {% if requiredlocales is defined %}
-        {% set langs = requiredlocales|split('|') %}
-        {% if langs|length > 0 %}
-            <nav class="language-nav">
-                <ul class="list-reset language-nav__list">
-                    <li class="language-nav__list__item language-nav__list__item--active-lang">
-                        {{ app.request.locale }}
-                    </li>
-                    {% for lang in langs %}
-                        {% if lang != app.request.locale %}
-                            <li class="language-nav__list__item">
-                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">
-                                    {{ lang }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </nav>
-        {% endif %}
+
+{# Language nav #}
+{% if requiredlocales is defined %}
+    {% set langs = requiredlocales|split('|') %}
+    {% if langs|length > 0 %}
+        <nav class="language-nav">
+            <ul class="list-reset language-nav__list">
+                <li class="language-nav__list__item language-nav__list__item--active-lang">
+                    {{ app.request.locale }}
+                </li>
+                {% for lang in langs %}
+                    {% if lang != app.request.locale %}
+                        <li class="language-nav__list__item">
+                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">
+                                {{ lang }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
     {% endif %}
+{% endif %}
 
-    {# Main navigation list #}
-    <nav class="main-nav">
-        <ul class="main-nav__list">
-            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-            {% for node in activeSubnode.children %}
-                {% if not node.node.isHiddenFromNav() %}
-                    <li class="main-nav__list__item {% if(node.active) %}main-nav__list__item--active{% endif %}">
-                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__list__link">{{ node.title }}</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
+{# Main navigation list #}
+<nav class="main-nav">
+    <ul class="main-nav__list">
+        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+        {% for node in activeSubnode.children %}
+            {% if not node.node.isHiddenFromNav() %}
+                <li class="main-nav__list__item {% if(node.active) %}main-nav__list__item--active{% endif %}">
+                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__list__link">{{ node.title }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
 
-            {# Call to action #}
-            <li class="main-nav__list__item main-nav__list__item--cta">
-                <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right main-nav__list__icon--cta"></i></a>
-            </li>
-        </ul>
-    </nav>
+        {# Call to action #}
+        <li class="main-nav__list__item main-nav__list__item--cta">
+            <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right main-nav__list__icon--cta"></i></a>
+        </li>
+    </ul>
+</nav>
 
-    {# Main navigation buttons #}
-    <nav class="contact-nav">
-        <ul class="contact-nav__list">
-            <li class="contact-nav__list__item">
-                <a href="#" class="contact-nav__list__link">
-                    <i class="icon icon--nav-mail contact-nav__list__icon"></i>
-                </a>
-            </li>
-            <li class="contact-nav__list__item">
-                <a href="#" class="contact-nav__list__link">
-                    <i class="icon icon--nav-phone contact-nav__list__icon"></i>
-                </a>
-            </li>
-            <li class="contact-nav__list__item">
-                <a href="#" class="contact-nav__list__link">
-                    <i class="icon icon--nav-location contact-nav__list__icon"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+{# Main navigation buttons #}
+<nav class="contact-nav">
+    <ul class="contact-nav__list">
+        <li class="contact-nav__list__item">
+            <a href="#" class="contact-nav__list__link">
+                <i class="icon icon--nav-mail contact-nav__list__icon"></i>
+            </a>
+        </li>
+        <li class="contact-nav__list__item">
+            <a href="#" class="contact-nav__list__link">
+                <i class="icon icon--nav-phone contact-nav__list__icon"></i>
+            </a>
+        </li>
+        <li class="contact-nav__list__item">
+            <a href="#" class="contact-nav__list__link">
+                <i class="icon icon--nav-location contact-nav__list__icon"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
