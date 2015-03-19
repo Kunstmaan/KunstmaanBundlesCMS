@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-sm-6">
+<div class="row service-pp service-pp--{{resource.imagePosition}}">
+    <div class="col-sm-6 service-pp__text">
         <header>
             <h2>
                 {{ resource.title }}
@@ -16,7 +16,7 @@
         {% endif %}
     </div>
 
-    <figure class="col-sm-6">
+    <figure class="col-sm-6 service-pp__image">
         {% if resource.image is not empty %}
             <img src="{{ asset(resource.image.url) }}" alt="{{ resource.title }}">
         {% endif %}
