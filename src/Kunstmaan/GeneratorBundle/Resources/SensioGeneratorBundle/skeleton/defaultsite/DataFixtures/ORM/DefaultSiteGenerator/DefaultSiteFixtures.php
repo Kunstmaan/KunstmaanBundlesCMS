@@ -165,7 +165,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\IntroTextPagePart',
                 array(
-                    'setContent' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!'
+                    'setContent' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>'
                 )
             );
             $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
@@ -181,7 +181,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
                     'setTitle' => $locale == 'nl' ? 'Koop een fiets' : 'Buy a bike',
-                    'setDescription' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!',
+                    'setDescription' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>',
                     'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
                     'setLinkText' => $locale == 'nl' ? 'Lees meer' : 'Read more',
                     'setImage' => $buyBikeMedia,
@@ -194,7 +194,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
                     'setTitle' => $locale == 'nl' ? 'Fietsherstellingen' : 'Bike repair',
-                    'setDescription' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!',
+                    'setDescription' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>',
                     'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
                     'setLinkText' => $locale == 'nl' ? 'Lees meer' : 'Read more',
                     'setImage' => $repairBikeMedia,
