@@ -16,7 +16,24 @@ use Symfony\Component\Form\AbstractType;
  */
 class ContentPage extends AbstractPage  implements HasPageTemplateInterface
 {
+{% if demosite %}
+    /**
+     * @var \Kunstmaan\MediaBundle\Entity\Media
+     *
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="menu_image_id", referencedColumnName="id")
+     * })
+     */
+    private $menuImage;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="menu_description", type="text", nullable=true)
+     */
+    private $menuDescription;
+{% endif %}
     /**
      * Returns the default backend form type for this page
      *
@@ -46,6 +63,43 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
         );
     }
 
+{% if demosite %}
+    /**
+     * @param \Kunstmaan\MediaBundle\Entity\Media $icon
+     */
+    public function setMenuImage($image)
+    {
+        $this->menuImage = $image;
+    }
+
+    /**
+     * @return \Kunstmaan\MediaBundle\Entity\Media
+     */
+    public function getMenuImage()
+    {
+        return $this->menuImage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMenuDescription()
+    {
+        return $this->menuDescription;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return ContentPage
+     */
+    public function setMenuDescription($description)
+    {
+        $this->menuDescription = $description;
+
+        return $this;
+    }
+{% endif %}
     /**
      * @return string[]
      */
