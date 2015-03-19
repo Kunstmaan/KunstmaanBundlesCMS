@@ -190,7 +190,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 )
             );
 
-            $repairBikeMedia = $this->mediaCreator->createFile($imgDir.'stocks/fixie2.png', $folder->getId());
+            $repairBikeMedia = $this->mediaCreator->createFile($imgDir.'stocks/fixie1.png', $folder->getId());
             $pageparts['section3'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
@@ -246,7 +246,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setNiv' => 2
                 )
             );
-            $teamMedia = $this->mediaCreator->createFile($imgDir.'stocks/homepage__header.jpg', $folder->getId());
+            $teamMedia = $this->mediaCreator->createFile($imgDir.'stocks/team.jpg', $folder->getId());
             $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ImagePagePart',
                 array(

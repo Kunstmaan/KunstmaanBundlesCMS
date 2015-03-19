@@ -1,16 +1,24 @@
-<div class="col-md-6 col-sm-6">
-    <h1>{{ resource.title }}</h1>
-    {% if resource.description %}
-        <div class="text-pp">
+<div class="row service-pp service-pp--{{resource.imagePosition}}">
+    <div class="col-sm-6 service-pp__text">
+        <header>
+            <h2>
+                {{ resource.title }}
+            </h2>
+        </header>
+
+        {% if resource.description %}
             {{ resource.description|raw }}
-        </div>
-    {% endif %}
-    {% if resource.linkUrl and resource.linkText %}
-        <div class="link-pp">
-            <a href="{{ resource.linkUrl }}" class="link-pp__link" {% if resource.linkNewWindow %}target="_blank"{% endif %}>{{ resource.linkText }}</a>
-        </div>
-    {% endif %}
-</div>
-<div class="col-md-6 col-sm-6">
-    {% if resource.image is not empty %}<img src="{{ asset(resource.image.url) }}" alt="{{ resource.title }}" />{% endif %}
+        {% endif %}
+        {% if resource.linkUrl and resource.linkText %}
+            <a href="{{ resource.linkUrl }}" class="link-pp__link" {% if resource.linkNewWindow %}target="_blank"{% endif %}>
+                {{ resource.linkText }}
+            </a>
+        {% endif %}
+    </div>
+
+    <figure class="col-sm-6 service-pp__image">
+        {% if resource.image is not empty %}
+            <img src="{{ asset(resource.image.url) }}" alt="{{ resource.title }}">
+        {% endif %}
+    </figure>
 </div>
