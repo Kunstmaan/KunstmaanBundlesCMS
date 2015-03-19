@@ -1,5 +1,5 @@
 services:
-    kernel.listener.command_dispatch:
+    kunstmaan_admin.consolelogger.listener:
         class: Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener
         arguments:
             logger: "@logger"
