@@ -5,6 +5,8 @@
 /* General
    ========================================================================== */
 .service-pp {
+    position: relative;
+
     padding: 2em 0;
 }
 
@@ -14,24 +16,34 @@
 .service-pp--left {
 
     .service-pp__image {
-        float: left;
+
+        @media(min-width: $screen-sm-min) {
+            left: 0;
+        }
     }
 
     .service-pp__text {
-        float: right;
+
+        @media(min-width: $screen-sm-min) {
+            float: right;
+        }
     }
 }
 
 .service-pp--right {
 
     .service-pp__image {
-        float: right;
 
-        margin-bottom: -4rem;
+        @media(min-width: $screen-sm-min) {
+            right: 0;
+        }
     }
 
     .service-pp__text {
-        float: left;
+
+        @media(min-width: $screen-sm-min) {
+            float: left;
+        }
     }
 }
 
@@ -48,5 +60,34 @@
 
     @media(min-width: $screen-md-min) {
         font-size: 3rem;
+    }
+}
+
+
+/* Image
+   ========================================================================== */
+.service-pp__image {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2em;
+
+    @media(min-width: $screen-sm-min) {
+        transform: translateY(50%);
+
+        position: absolute;
+        bottom: 50%;
+
+        max-width: none;
+        padding: 0 2em;
+    }
+
+    @media(min-width: $screen-md-min) {
+        padding: 0 4em;
+    }
+
+    @media(min-width: $screen-lg-min) {
+        transform: translateY(0);
+
+        bottom: -2rem;
     }
 }

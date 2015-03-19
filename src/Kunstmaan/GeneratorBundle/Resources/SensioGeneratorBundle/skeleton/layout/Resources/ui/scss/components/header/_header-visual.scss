@@ -52,13 +52,13 @@
 }
 
 .header-visual__title {
-    margin-top: 0;
-
     line-height: 1;
     text-transform: uppercase;
     font-weight: 300;
 
     @media(min-width: $screen-md-min) {
+        margin-top: 0;
+
         font-size: 5.625rem;
         font-weight: 100;
         color: $white;
