@@ -84,7 +84,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->renderSingleFile($sourceDir, $targetDir, 'DefaultController.php', $parameters, true);
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteAdminListController.php', $parameters, true);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikeAdminListController.php', $parameters, true);
         }
 
         $this->assistant->writeLine('Generating controllers : <info>OK</info>');
@@ -140,7 +140,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPage.php', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteOverviewPage.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -158,7 +157,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $sourceDir = $this->skeletonDir.$relPath;
             $targetDir = $this->bundle->getPath().$relPath;
 
-            $this->renderSingleFile($sourceDir, $targetDir, 'Satellite.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'Bike.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspItem.php', $parameters);
         }
 
@@ -182,7 +181,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPageAdminType.php', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteOverviewPageAdminType.php', $parameters);
         }
 
         $relPath = '/Form/PageParts/';
@@ -200,7 +198,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $targetDir = $this->bundle->getPath().$relPath;
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikeAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspItemAdminType.php', $parameters);
         }
 
@@ -303,7 +301,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'contentpage-with-submenu.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'formpage.yml', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'satelliteoverviewpage.yml', $parameters);
         }
 
         $this->assistant->writeLine('Generating pagetemplate configuration : <info>OK</info>');
@@ -374,9 +371,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $relPath = '/Resources/views/Pages/FormPage/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
-
-            $relPath = '/Resources/views/Pages/SatelliteOverviewPage/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 

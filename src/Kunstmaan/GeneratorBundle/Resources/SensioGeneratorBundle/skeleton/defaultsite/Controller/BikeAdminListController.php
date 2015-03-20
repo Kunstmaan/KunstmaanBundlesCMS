@@ -2,7 +2,7 @@
 
 namespace {{ namespace }}\Controller;
 
-use {{ namespace }}\AdminList\SatelliteAdminListConfigurator;
+use {{ namespace }}\AdminList\BikeAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -10,10 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * The admin list controller for Satellite
- */
-class SatelliteAdminListController extends AdminListController
+class BikeAdminListController extends AdminListController
 {
     /**
      * @var AdminListConfiguratorInterface
@@ -26,7 +23,7 @@ class SatelliteAdminListController extends AdminListController
     public function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new SatelliteAdminListConfigurator($this->getEntityManager());
+            $this->configurator = new BikeAdminListConfigurator($this->getEntityManager());
         }
 
         return $this->configurator;
@@ -35,7 +32,7 @@ class SatelliteAdminListController extends AdminListController
     /**
      * The index action
      *
-     * @Route("/", name="{{ bundle_name|lower }}_admin_satellite")
+     * @Route("/", name="{{ bundle_name|lower }}_admin_bike")
      */
     public function indexAction(Request $request)
     {
@@ -45,7 +42,7 @@ class SatelliteAdminListController extends AdminListController
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle_name|lower }}_admin_satellite_add")
+     * @Route("/add", name="{{ bundle_name|lower }}_admin_bike_add")
      * @Method({"GET", "POST"})
      * @return array
      */
@@ -59,7 +56,7 @@ class SatelliteAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_satellite_edit")
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_edit")
      * @Method({"GET", "POST"})
      *
      * @return array
@@ -74,7 +71,7 @@ class SatelliteAdminListController extends AdminListController
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_satellite_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_delete")
      * @Method({"GET", "POST"})
      *
      * @return array
@@ -85,7 +82,7 @@ class SatelliteAdminListController extends AdminListController
     }
 
     /**
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle_name|lower }}_admin_satellite_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle_name|lower }}_admin_bike_export")
      * @Method({"GET", "POST"})
      * @return array
      */

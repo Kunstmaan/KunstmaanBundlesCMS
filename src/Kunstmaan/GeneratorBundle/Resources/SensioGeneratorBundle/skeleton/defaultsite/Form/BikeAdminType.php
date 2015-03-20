@@ -2,16 +2,12 @@
 
 namespace {{ namespace }}\Form;
 
-use {{ namespace }}\Entity\Satellite;
+use {{ namespace }}\Entity\Bike;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
-/**
- * The type for Satellite
- */
-class SatelliteAdminType extends AbstractType
+class BikeAdminType extends AbstractType
 {
-
     /**
      * Builds the form.
      *
@@ -25,19 +21,19 @@ class SatelliteAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('launched', 'date', array(
-            'widget' => 'single_text',
-            'format' => 'dd/MM/yyyy'
-        ));
-        $builder->add('link');
-        $builder->add('weight', 'integer', array('label' => 'Launch mass (kg)'));
         $builder->add('type', 'choice', array(
-            'choices' => array(
-                Satellite::TYPE_COMMUNICATION => 'Communication satellite',
-                Satellite::TYPE_CLIMATE => 'Climate research satellite',
-                Satellite::TYPE_PASSIVE => 'Passive satellite'
-            )
+            'choices' => array_combine(Bike::$types, Bike::$types),
+            'empty_value' => false,
+            'required' => true
+        ));
+        $builder->add('brand', 'text', array(
+            'required' => true
+        ));
+        $builder->add('model', 'text', array(
+            'required' => true
+        ));
+        $builder->add('price', 'money', array(
+            'required' => true
         ));
     }
 
@@ -48,7 +44,6 @@ class SatelliteAdminType extends AbstractType
      */
     public function getName()
     {
-        return 'satellite_form';
+        return 'bike';
     }
-
 }

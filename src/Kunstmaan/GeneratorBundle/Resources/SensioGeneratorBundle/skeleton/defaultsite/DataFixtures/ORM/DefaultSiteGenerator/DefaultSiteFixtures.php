@@ -5,11 +5,8 @@ namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
@@ -17,13 +14,11 @@ use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
-
 use {{ namespace }}\Entity\Pages\ContentPage;
 use {{ namespace }}\Entity\Pages\HomePage;
 {% if demosite %}
 use {{ namespace }}\Entity\Pages\FormPage;
-use {{ namespace }}\Entity\Satellite;
-use {{ namespace }}\Entity\Pages\SatelliteOverviewPage;
+use {{ namespace }}\Entity\Bike;
 {% endif %}
 
 /**
@@ -294,14 +289,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             // Add pageparts
             $pageparts = array();
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
-                'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(
                     'setTitle' => $locale == 'nl' ? 'Onze diensten' : 'Our services',
                     'setNiv' => 2
                 )
             );
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
-                'Kunstmaan\PagePartBundle\Entity\TextPagePart',
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
                 array(
                     'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
                 )
@@ -309,6 +304,153 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
             $this->pagePartCreator->addPagePartsToPage('services', $pageparts, $locale);
             $this->pagePartCreator->setPageTemplate('services', $locale, 'Content page with submenu');
+        }
+
+        // Buy bikes page
+        $servicesPage = $nodeRepo->findOneBy(array('internalName' => 'services'));
+        $contentPage = new ContentPage();
+        $contentPage->setTitle('Our bikes');
+
+        $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+        $imgDir = dirname(__FILE__).'/../../../Resources/ui/img/demosite/';
+        $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock1.jpg', $folder->getId());
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
+                $translation->setTitle($locale == 'nl' ? 'Onze fietsen' : 'Our bikes');
+                $translation->setSlug($locale == 'nl' ? 'fietsen' : 'bikes');
+                $translation->setWeight(20);
+
+                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuImage($menuMedia);
+            });
+        }
+
+        $options = array(
+            'parent' => $servicesPage,
+            'page_internal_name' => 'buy_bikes',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($contentPage, $translations, $options);
+
+        foreach ($this->requiredLocales as $locale) {
+            // Add pageparts
+            $pageparts = array();
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Onze fietsen' : 'Our bikes',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
+                array(
+                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                )
+            );
+
+            $this->pagePartCreator->addPagePartsToPage('buy_bikes', $pageparts, $locale);
+        }
+
+        // Repair bikes page
+        $contentPage = new ContentPage();
+        $contentPage->setTitle('Repair bikes');
+
+        $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock2.jpg', $folder->getId());
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
+                $translation->setTitle($locale == 'nl' ? 'Fietsen herstellen' : 'Repair bikes');
+                $translation->setSlug($locale == 'nl' ? 'herstellen' : 'repair');
+                $translation->setWeight(20);
+
+                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuImage($menuMedia);
+            });
+        }
+
+        $options = array(
+            'parent' => $servicesPage,
+            'page_internal_name' => 'repair_bikes',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($contentPage, $translations, $options);
+
+        foreach ($this->requiredLocales as $locale) {
+            // Add pageparts
+            $pageparts = array();
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Fietsen herstellen' : 'Repair bikes',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
+                array(
+                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                )
+            );
+
+            $this->pagePartCreator->addPagePartsToPage('repair_bikes', $pageparts, $locale);
+        }
+
+        // Rent bikes page
+        $contentPage = new ContentPage();
+        $contentPage->setTitle('Rent bikes');
+
+        $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock3.jpg', $folder->getId());
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
+                $translation->setTitle($locale == 'nl' ? 'Fietsen verhuur' : 'Rent bikes');
+                $translation->setSlug($locale == 'nl' ? 'verhuur' : 'rent');
+                $translation->setWeight(20);
+
+                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuImage($menuMedia);
+            });
+        }
+
+        $options = array(
+            'parent' => $servicesPage,
+            'page_internal_name' => 'rent_bikes',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($contentPage, $translations, $options);
+
+        foreach ($this->requiredLocales as $locale) {
+            // Add pageparts
+            $pageparts = array();
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Fietsen verhuur' : 'Rent bikes',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
+                array(
+                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                )
+            );
+
+            $this->pagePartCreator->addPagePartsToPage('rent_bikes', $pageparts, $locale);
         }
 {% endif %}
     }
@@ -319,109 +461,24 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createAdminListPages()
     {
-        /*
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
-        $satellitePage = $nodeRepo->findOneBy(array('internalName' => 'satellite'));
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Communication satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_COMMUNICATION);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Communication satellites');
-            $translation->setSlug('communication-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Communicatie satellieten');
-            $translation->setSlug('communicatie-satellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'communication-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Climate research satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_CLIMATE);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Climate research satellites');
-            $translation->setSlug('climate-research-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Klimatologische onderzoekssatellieten');
-            $translation->setSlug('klimatologische-onderzoekssatellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'climate-research-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Passive satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_PASSIVE);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Passive satellites');
-            $translation->setSlug('passive-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Passieve satellieten');
-            $translation->setSlug('passieve-satellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'passive-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
         $list = array(
-            array('Sputnik 1', '1957-10-04', 'http://en.wikipedia.org/wiki/Sputnik_1', 84, Satellite::TYPE_COMMUNICATION),
-            array('Echo 1', '1960-08-12', 'http://en.wikipedia.org/wiki/Echo_satellite', 180, Satellite::TYPE_COMMUNICATION),
-            array('Telstar 1', '1962-07-10', 'http://en.wikipedia.org/wiki/Telstar', 70, Satellite::TYPE_COMMUNICATION),
-            array('Intelsat I', '1965-04-06', 'http://en.wikipedia.org/wiki/Intelsat_I', 149, Satellite::TYPE_COMMUNICATION),
-
-            array('ACRIMSAT', '1999-12-20', 'http://en.wikipedia.org/wiki/ACRIMSAT', 288, Satellite::TYPE_CLIMATE),
-            array('Terra', '1999-12-18', 'http://en.wikipedia.org/wiki/Terra_(satellite)', 4864, Satellite::TYPE_CLIMATE),
-            array('GRACE', '2002-03-14', 'http://en.wikipedia.org/wiki/Gravity_Recovery_and_Climate_Experiment', 487, Satellite::TYPE_CLIMATE),
-            array('Landsat 7', '1999-04-15', 'http://en.wikipedia.org/wiki/Landsat-7', 1973, Satellite::TYPE_CLIMATE),
-            array('SORCE', '2003-01-25', 'http://en.wikipedia.org/wiki/SORCE', 315, Satellite::TYPE_CLIMATE),
-
-            array('LARES', '2012-02-13', 'http://en.wikipedia.org/wiki/LARES_(satellite)', 400, Satellite::TYPE_PASSIVE),
-            array('LAGEOS 1', '1976-05-04', 'http://en.wikipedia.org/wiki/LAGEOS', 411, Satellite::TYPE_PASSIVE),
+            array(Bike::TYPE_CITY_BIKE, 'Gazelle', 'CityZen C7', 600),
+            array(Bike::TYPE_RACING_BIKE, 'Eddy Merckx', 'EMX-525', 2300),
+            array(Bike::TYPE_RACING_BIKE, 'Specialized', 'S-WORKS TARMAC DURA-ACE', 2100),
+            array(Bike::TYPE_MOUNTAIN_BIKE, 'BMC', 'Teamelite TE01 29', 1600),
+            array(Bike::TYPE_MOUNTAIN_BIKE, 'Trek', 'Superfly', 1450),
         );
         foreach ($list as $info) {
-            $satellite = new Satellite();
-            $satellite->setName($info[0]);
-            $satellite->setLaunched(new \DateTime($info[1]));
-            $satellite->setLink($info[2]);
-            $satellite->setWeight($info[3]);
-            $satellite->setType($info[4]);
+            $bike = new Bike();
+            $bike->setType($info[0]);
+            $bike->setBrand($info[1]);
+            $bike->setModel($info[2]);
+            $bike->setPrice($info[3]);
 
-            $this->manager->persist($satellite);
+            $this->manager->persist($bike);
         }
 
-        $this->manager->flush();*/
+        $this->manager->flush();
     }
 
     /**
@@ -645,17 +702,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 {% if demosite %}
 
         // AdminList page with satellites
-        $trans['satellite.name']['en'] = 'name';
-        $trans['satellite.launched']['en'] = 'launched';
-        $trans['satellite.weight']['en'] = 'launch mass';
-        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['en'] = 'Communication satellites';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['en'] = 'Climate satellites';
-        $trans['satellite.name']['nl'] = 'naam';
-        $trans['satellite.launched']['nl'] = 'lanceringsdatum';
-        $trans['satellite.weight']['nl'] = 'gewicht';
-        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['nl'] = 'Communicatie satellieten';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische satellieten';
-
         $trans['article.readmore']['en'] = 'Read more';
         $trans['article.readmore']['nl'] = 'Lees meer';
 
@@ -701,10 +747,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());
 
         // Create dummy video folder and add dummy videos
-        {
-            $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
-            $this->createVideoFile('Kunstmaan', 'WPx-Oe2WrUE', $videoFolder);
-        }
+        $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
+        $this->createVideoFile('Kunstmaan', 'WPx-Oe2WrUE', $videoFolder);
     }
 
     /**
@@ -753,5 +797,4 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         $this->container = $container;
     }
-
 }

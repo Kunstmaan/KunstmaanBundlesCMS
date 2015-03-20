@@ -54,12 +54,6 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
                 'name'  => 'ContentPage',
                 'class' => '{{ namespace }}\Entity\Pages\ContentPage'
             ),
-{% if demosite %}
-            array(
-                'name'  => 'SatelliteOverviewPage',
-                'class' => '{{ namespace }}\Entity\Pages\SatelliteOverviewPage'
-            )
-{% endif %}
         );
     }
 
