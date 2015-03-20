@@ -2,13 +2,6 @@
    Footer - Social footer - THEME FILE
    ========================================================================== */
 
-/* General
-   ========================================================================== */
-.social-footer {
-
-}
-
-
 /* Inner
    ========================================================================== */
 .social-footer__inner {
@@ -29,6 +22,8 @@
 
     color: $grey;
     font-size: 1.1rem;
+
+    transition: color .3s ease;
 
     &:hover, &:focus, &:active {
         text-decoration: none;

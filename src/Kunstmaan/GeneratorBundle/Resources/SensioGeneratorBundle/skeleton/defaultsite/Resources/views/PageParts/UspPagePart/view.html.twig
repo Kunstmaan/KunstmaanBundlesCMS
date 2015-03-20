@@ -1,7 +1,7 @@
 {% if resource.items|length > 0 %}
     <div class="row">
         {% for uspItem in resource.items %}
-        <div class="col-sm-4 usp-pp text--center">
+        <div class="col-sm-4 col--padded usp-pp text--center">
             <img src="{{ uspItem.icon.url }}" alt="{{ uspItem.title }}" class="img-icon">
             <h5>
                 {{ uspItem.title }}
@@ -15,43 +15,3 @@
         {% endfor %}
     </div>
 {% endif %}
-
-
-            {#
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        <h1>How we work</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-sm-4">
-                    <div class="text-center">
-                        <div class="image-pp">
-                            <img src="/frontend/img/demosite/icons/lamp.svg" alt="Lamp icon" class="img-icon">
-                        </div>
-                        <h5>Idea</h5>
-                    </div>
-                    {{ render_pageparts(page, 'left_column') }}
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="text-center">
-                        <div class="image-pp">
-                            <img src="/frontend/img/demosite/icons/user.svg" alt="User icon" class="img-icon">
-                        </div>
-                        <h5>Prototyping</h5>
-                    </div>
-                    {{ render_pageparts(page, 'middle_column') }}
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="text-center">
-                        <div class="image-pp">
-                            <img src="/frontend/img/demosite/icons/layout.svg" alt="Layout icon" class="img-icon">
-                        </div>
-                        <h5>Design</h5>
-                    </div>
-                    {{ render_pageparts(page, 'right_column') }}
-                </div>
-            </div>
-            #}

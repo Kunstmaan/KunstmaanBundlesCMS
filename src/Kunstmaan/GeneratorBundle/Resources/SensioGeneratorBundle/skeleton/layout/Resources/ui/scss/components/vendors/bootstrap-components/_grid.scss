@@ -38,4 +38,9 @@
 .col--padded {
     padding-top: 1em;
     padding-bottom: 1em;
+
+    @media(min-width: $screen-md-min) {
+        padding-top: 2em;
+        padding-bottom: 2em;
+    }
 }

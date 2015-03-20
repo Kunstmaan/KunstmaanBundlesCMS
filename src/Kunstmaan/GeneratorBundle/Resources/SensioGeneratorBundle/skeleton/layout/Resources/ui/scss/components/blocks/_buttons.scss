@@ -10,7 +10,7 @@
 {% endif %}
     display: inline-block;
     margin: 0;
-    padding: .5em 1.5em;
+    padding: .7em 1.5em;
 
     background: none;
     border: 1px solid $text-color;
@@ -24,6 +24,7 @@
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
+    line-height: 1;
 
     cursor: pointer;
     white-space: nowrap;

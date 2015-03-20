@@ -66,6 +66,7 @@
                             </a>
                         </div>
 
+
                         {# Main navigation #}
                         <div class="main-header__nav pull-right">
                             <nav role="navigation" class="main-nav pull-left">
@@ -89,6 +90,7 @@
                                 </div>
                             </nav>
 
+
                             {# Search #}
                             {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
                             {% if searchPageNode %}
@@ -104,27 +106,25 @@
                                 </form>
                             {% endif %}
 
+
                             {# Language nav #}
                             {% if requiredlocales is defined %}
                                 {% set langs = requiredlocales|split('|') %}
                                 {% if langs|length> 0 %}
-                                    <nav class="language-nav pull-left">
+                                    <div class="language-nav pull-left">
                                         <span class="language-nav__active-lang">
                                             {{ app.request.locale }}
                                             <i class="icon icon--triangle-down language-nav__icon"></i>
                                         </span>
-                                        <ul class="list-reset language-nav__list">
-                                            {% for lang in langs %}
-                                                {% if lang != app.request.locale %}
-                                                    <li class="language-nav__list__item">
-                                                        <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__list__link">
-                                                            {{ lang }}
-                                                        </a>
-                                                    </li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    </nav>
+                                        <nav role="navigation" class="language-nav__nav">
+                                        {% for lang in langs %}
+                                            {% if lang != app.request.locale %}
+                                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__nav__item">
+                                                    {{ lang }}
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 {% endif %}
                             {% endif %}
 
