@@ -1,3 +1,4 @@
 name: "Main"
 context: "main"
-types: []
+types:
+    - { name: "BikesList", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\BikesListPagePart" }

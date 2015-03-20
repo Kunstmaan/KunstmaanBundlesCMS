@@ -68,6 +68,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->generateConfig();
         $this->generateRouting($parameters);
         $this->generateTemplates($parameters);
+        $this->generateTwigExtensions($parameters);
     }
 
     /**
@@ -150,6 +151,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePart.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePart.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspPagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikesListPagePart.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -191,6 +193,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePartAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePartAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspPagePartAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikesListPagePartAdminType.php', $parameters);
         }
 
         $relPath = '/Form/';
@@ -385,6 +388,9 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
             $relPath = '/Resources/views/PageParts/UspPagePart/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+
+            $relPath = '/Resources/views/PageParts/BikesListPagePart/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
         // Error templates
@@ -415,6 +421,19 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         }
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');
+    }
+
+    /**
+     * Generate the twig extensions.
+     *
+     * @param array $parameters The template parameters
+     */
+    public function generateTwigExtensions($parameters)
+    {
+        if ($this->demosite) {
+            $relPath = '/Twig/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+        }
     }
 
     /**
