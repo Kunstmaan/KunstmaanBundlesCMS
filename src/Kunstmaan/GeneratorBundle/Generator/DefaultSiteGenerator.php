@@ -346,14 +346,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generateTemplates(array $parameters)
     {
-        if ($this->isMultiLangEnvironment()) {
-            $relPath = '/Resources/views/Default/';
-            $sourceDir = $this->skeletonDir.$relPath;
-            $targetDir = $this->bundle->getPath().$relPath;
-
-            $this->renderSingleFile($sourceDir, $targetDir, 'language-chooser.html.twig', $parameters);
-        }
-
         $relPath = '/Resources/views/Layout/';
         $sourceDir = $this->skeletonDir.$relPath;
         $targetDir = $this->bundle->getPath().$relPath;

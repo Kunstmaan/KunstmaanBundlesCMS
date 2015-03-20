@@ -705,13 +705,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createTranslations()
     {
-        // SplashPage
-        $trans['lang_chooser.welcome']['en'] = 'Welcome, continue in English';
-        $trans['lang_chooser.welcome']['fr'] = 'Bienvenu, continuer en Français';
-        $trans['lang_chooser.welcome']['nl'] = 'Welkom, ga verder in het Nederlands';
-        $trans['lang_chooser.welcome']['de'] = 'Willkommen, gehe weiter in Deutsch';
 {% if demosite %}
-
         // AdminList page with satellites
         $trans['article.readmore']['en'] = 'Read more';
         $trans['article.readmore']['nl'] = 'Lees meer';
