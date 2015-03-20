@@ -585,16 +585,18 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $formPage->setTitle('Contact form');
 
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Contact');
-            $translation->setSlug('contact');
-            $translation->setWeight(60);
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Contact');
-            $translation->setSlug('contact');
-            $translation->setWeight(60);
-        });
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array(
+                'language' => $locale,
+                'callback' => function ($page, $translation, $seo) use ($locale) {
+                    $translation->setTitle('Contact');
+                    $translation->setSlug('contact');
+                    $translation->setWeight(60);
+
+                    $page->setThanks($locale == 'nl' ? '<p>Bedankt, we hebben je bericht succesvol ontvangen.</p>' : '<p>We have received your submission.</p>');
+                }
+            );
+        }
 
         $options = array(
             'parent' => $homePage,
@@ -604,97 +606,55 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             'creator' => self::ADMIN_USERNAME
         );
 
-        $node = $this->pageCreator->createPage($formPage, $translations, $options);
+        $this->pageCreator->createPage($formPage, $translations, $options);
 
-        $nodeTranslation = $node->getNodeTranslation('en', true);
-        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        $page = $nodeVersion->getRef($this->manager);
-        $page->setThanks("<p>We have received your submission.</p>");
-        $this->manager->persist($page);
+        foreach ($this->requiredLocales as $locale) {
+            $pageparts = array();
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                'Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
+                array(
+                    'setLabel' => $locale == 'nl' ? 'Naam' : 'Name',
+                    'setRequired' => true,
+                    'setErrorMessageRequired' => $locale == 'nl' ? 'Naam is verplicht' :'Name is required'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                'Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
+                array(
+                    'setLabel' => 'E-mail',
+                    'setRequired' => true,
+                    'setErrorMessageRequired' => $locale == 'nl' ? 'Email is verplicht' :'E-mail is required',
+                    'setErrorMessageInvalid' => $locale == 'nl' ? 'Vul een geldig e-mail adres in' :'Fill in a valid e-mail address'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
+                array(
+                    'setLabel' => $locale == 'nl' ? 'Onderwerp' :'Subject',
+                    'setRequired' => true,
+                    'setErrorMessageRequired' => $locale == 'nl' ? 'Onderwerp is verplicht' :'Subject is required',
+                    'setChoices' => $locale == 'nl' ?
+                        "Ik wil een website maken met de Kunstmaan bundles \n Ik ben een website aan het testen \n Ik wil dat Kunstmaan een website voor mij maakt" :
+                        "I want to make a website with the Kunstmaan bundles \n I'm testing the website \n I want to get a quote for a website built by Kunstmaan"
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                'Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
+                array(
+                    'setLabel' => $locale == 'nl' ? 'Bericht' : 'Message',
+                    'setRequired' => true,
+                    'setErrorMessageRequired' => $locale == 'nl' ? 'Bericht is verplicht' : 'Message is required'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                'Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
+                array(
+                    'setLabel' => $locale == 'nl' ? 'Verzenden' : 'Send'
+                )
+            );
 
-        $nodeTranslation = $node->getNodeTranslation('nl', true);
-        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        $page = $nodeVersion->getRef($this->manager);
-        $page->setThanks("<p>Bedankt, we hebben je bericht succesvol ontvangen.</p>");
-        $this->manager->persist($page);
-
-        $pageparts = array();
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
-            array(
-                'setLabel' => 'Name',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Name is required'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
-            array(
-                'setLabel' => 'Email',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Email is required',
-                'setErrorMessageInvalid' => 'Fill in a valid email address'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
-            array(
-                'setLabel' => 'Subject',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Subject is required',
-                'setChoices' => "I want to make a website with the Kunstmaan bundles \n I'm testing the website \n I want to get a quote for a website built by Kunstmaan"
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
-            array(
-                'setLabel' => 'Message',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Message is required'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
-            array(
-                'setLabel' => 'Send'
-            )
-        );
-
-        $this->pagePartCreator->addPagePartsToPage('contact', $pageparts, 'en');
-
-        $pageparts = array();
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart',
-            array(
-                'setLabel' => 'Naam',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Naam is verplicht'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart',
-            array(
-                'setLabel' => 'Email',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Email is verplicht',
-                'setErrorMessageInvalid' => 'Vul een geldif email adres in'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart',
-            array(
-                'setLabel' => 'Onderwerp',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Onderwerp is verplicht',
-                'setChoices' => "Ik wil een website maken met de Kunstmaan bundles \n Ik ben een website aan het testen \n Ik wil dat Kunstmaan een website voor mij maakt"
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart',
-            array(
-                'setLabel' => 'Bericht',
-                'setRequired' => true,
-                'setErrorMessageRequired' => 'Bericht is verplicht'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart',
-            array(
-                'setLabel' => 'Verzenden'
-            )
-        );
-
-        $this->pagePartCreator->addPagePartsToPage('contact', $pageparts, 'nl');
+            $this->pagePartCreator->addPagePartsToPage('contact', $pageparts, $locale);
+        }
 
         $this->manager->flush();
     }
