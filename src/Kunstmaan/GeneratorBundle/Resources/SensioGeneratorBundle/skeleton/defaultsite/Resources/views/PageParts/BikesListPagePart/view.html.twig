@@ -14,7 +14,7 @@
                 <tbody>
                 {% for bike in bikes %}
                 <tr>
-                    <td>{{ bike.type }}</a></td>
+                    <td>{{ ('bike.' ~ bike.type)|trans }}</a></td>
                     <td>{{ bike.brand }}</td>
                     <td>{{ bike.model }}</td>
                     <td>{{ bike.price }}</td>

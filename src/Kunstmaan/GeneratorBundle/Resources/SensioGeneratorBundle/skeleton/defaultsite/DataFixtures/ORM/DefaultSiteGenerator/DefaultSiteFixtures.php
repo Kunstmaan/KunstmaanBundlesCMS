@@ -706,7 +706,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createTranslations()
     {
 {% if demosite %}
-        // AdminList page with satellites
+        $trans['bike.type']['en'] = 'Type';
+        $trans['bike.type']['nl'] = 'Type';
+        $trans['bike.brand']['en'] = 'Brand';
+        $trans['bike.brand']['nl'] = 'Merk';
+        $trans['bike.model']['en'] = 'Model';
+        $trans['bike.model']['nl'] = 'Model';
+        $trans['bike.price']['en'] = 'Price';
+        $trans['bike.price']['nl'] = 'Prijs';
+
+        $trans['bike.city_bike']['en'] = 'City bike';
+        $trans['bike.city_bike']['nl'] = 'Stadsfiets';
+        $trans['bike.mountain_bike']['en'] = 'Mountain bike';
+        $trans['bike.mountain_bike']['nl'] = 'Mountainbike';
+        $trans['bike.racing_bike']['en'] = 'Racing bike';
+        $trans['bike.racing_bike']['nl'] = 'Koersfiets';
+
         $trans['article.readmore']['en'] = 'Read more';
         $trans['article.readmore']['nl'] = 'Lees meer';
 
