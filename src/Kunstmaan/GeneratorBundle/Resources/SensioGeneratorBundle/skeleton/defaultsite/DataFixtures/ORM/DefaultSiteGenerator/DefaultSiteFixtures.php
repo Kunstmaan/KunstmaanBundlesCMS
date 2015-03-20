@@ -23,7 +23,6 @@ use {{ namespace }}\Entity\Pages\HomePage;
 {% if demosite %}
 use {{ namespace }}\Entity\Pages\FormPage;
 use {{ namespace }}\Entity\Bike;
-use {{ namespace }}\Entity\Pages\SatelliteOverviewPage;
 {% endif %}
 
 /**
@@ -319,83 +318,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createAdminListPages()
     {
-        /*
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
-        $satellitePage = $nodeRepo->findOneBy(array('internalName' => 'satellite'));
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Communication satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_COMMUNICATION);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Communication satellites');
-            $translation->setSlug('communication-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Communicatie satellieten');
-            $translation->setSlug('communicatie-satellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'communication-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Climate research satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_CLIMATE);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Climate research satellites');
-            $translation->setSlug('climate-research-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Klimatologische onderzoekssatellieten');
-            $translation->setSlug('klimatologische-onderzoekssatellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'climate-research-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-
-        $satelliteOverviewPage = new SatelliteOverviewPage();
-        $satelliteOverviewPage->setTitle('Passive satellites');
-        $satelliteOverviewPage->setType(Satellite::TYPE_PASSIVE);
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Passive satellites');
-            $translation->setSlug('passive-satellites');
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Passieve satellieten');
-            $translation->setSlug('passieve-satellieten');
-        });
-
-        $options = array(
-            'parent' => $satellitePage,
-            'page_internal_name' => 'passive-satellites',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
-*/
-
         $list = array(
             array(Bike::TYPE_CITY_BIKE, 'Gazelle', 'CityZen C7', 600),
             array(Bike::TYPE_RACING_BIKE, 'Eddy Merckx', 'EMX-525', 2300),
@@ -637,18 +559,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 {% if demosite %}
 
         // AdminList page with satellites
-        /*
-        $trans['satellite.name']['en'] = 'name';
-        $trans['satellite.launched']['en'] = 'launched';
-        $trans['satellite.weight']['en'] = 'launch mass';
-        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['en'] = 'Communication satellites';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['en'] = 'Climate satellites';
-        $trans['satellite.name']['nl'] = 'naam';
-        $trans['satellite.launched']['nl'] = 'lanceringsdatum';
-        $trans['satellite.weight']['nl'] = 'gewicht';
-        $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['nl'] = 'Communicatie satellieten';
-        $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische satellieten';
-*/
         $trans['article.readmore']['en'] = 'Read more';
         $trans['article.readmore']['nl'] = 'Lees meer';
 

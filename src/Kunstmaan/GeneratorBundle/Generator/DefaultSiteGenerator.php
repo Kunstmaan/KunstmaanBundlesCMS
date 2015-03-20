@@ -140,7 +140,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPage.php', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteOverviewPage.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -182,7 +181,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPageAdminType.php', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteOverviewPageAdminType.php', $parameters);
         }
 
         $relPath = '/Form/PageParts/';
@@ -303,7 +301,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'contentpage-with-submenu.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'formpage.yml', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'satelliteoverviewpage.yml', $parameters);
         }
 
         $this->assistant->writeLine('Generating pagetemplate configuration : <info>OK</info>');
@@ -374,9 +371,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $relPath = '/Resources/views/Pages/FormPage/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
-
-            $relPath = '/Resources/views/Pages/SatelliteOverviewPage/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
