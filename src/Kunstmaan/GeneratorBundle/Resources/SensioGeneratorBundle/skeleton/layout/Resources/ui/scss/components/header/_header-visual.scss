@@ -74,3 +74,10 @@
         color: $white;
     }
 }
+
+.header-visual__btn {
+
+    @media(min-width: $screen-md-min) {
+        border: 0;
+    }
+}
