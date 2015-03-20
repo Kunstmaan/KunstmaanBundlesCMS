@@ -22,7 +22,7 @@ use {{ namespace }}\Entity\Pages\ContentPage;
 use {{ namespace }}\Entity\Pages\HomePage;
 {% if demosite %}
 use {{ namespace }}\Entity\Pages\FormPage;
-use {{ namespace }}\Entity\Satellite;
+use {{ namespace }}\Entity\Bike;
 use {{ namespace }}\Entity\Pages\SatelliteOverviewPage;
 {% endif %}
 
@@ -394,34 +394,26 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         );
 
         $this->pageCreator->createPage($satelliteOverviewPage, $translations, $options);
+*/
 
         $list = array(
-            array('Sputnik 1', '1957-10-04', 'http://en.wikipedia.org/wiki/Sputnik_1', 84, Satellite::TYPE_COMMUNICATION),
-            array('Echo 1', '1960-08-12', 'http://en.wikipedia.org/wiki/Echo_satellite', 180, Satellite::TYPE_COMMUNICATION),
-            array('Telstar 1', '1962-07-10', 'http://en.wikipedia.org/wiki/Telstar', 70, Satellite::TYPE_COMMUNICATION),
-            array('Intelsat I', '1965-04-06', 'http://en.wikipedia.org/wiki/Intelsat_I', 149, Satellite::TYPE_COMMUNICATION),
-
-            array('ACRIMSAT', '1999-12-20', 'http://en.wikipedia.org/wiki/ACRIMSAT', 288, Satellite::TYPE_CLIMATE),
-            array('Terra', '1999-12-18', 'http://en.wikipedia.org/wiki/Terra_(satellite)', 4864, Satellite::TYPE_CLIMATE),
-            array('GRACE', '2002-03-14', 'http://en.wikipedia.org/wiki/Gravity_Recovery_and_Climate_Experiment', 487, Satellite::TYPE_CLIMATE),
-            array('Landsat 7', '1999-04-15', 'http://en.wikipedia.org/wiki/Landsat-7', 1973, Satellite::TYPE_CLIMATE),
-            array('SORCE', '2003-01-25', 'http://en.wikipedia.org/wiki/SORCE', 315, Satellite::TYPE_CLIMATE),
-
-            array('LARES', '2012-02-13', 'http://en.wikipedia.org/wiki/LARES_(satellite)', 400, Satellite::TYPE_PASSIVE),
-            array('LAGEOS 1', '1976-05-04', 'http://en.wikipedia.org/wiki/LAGEOS', 411, Satellite::TYPE_PASSIVE),
+            array(Bike::TYPE_CITY_BIKE, 'Gazelle', 'CityZen C7', 600),
+            array(Bike::TYPE_RACING_BIKE, 'Eddy Merckx', 'EMX-525', 2300),
+            array(Bike::TYPE_RACING_BIKE, 'Specialized', 'S-WORKS TARMAC DURA-ACE', 2100),
+            array(Bike::TYPE_MOUNTAIN_BIKE, 'BMC', 'Teamelite TE01 29', 1600),
+            array(Bike::TYPE_MOUNTAIN_BIKE, 'Trek', 'Superfly', 1450),
         );
         foreach ($list as $info) {
-            $satellite = new Satellite();
-            $satellite->setName($info[0]);
-            $satellite->setLaunched(new \DateTime($info[1]));
-            $satellite->setLink($info[2]);
-            $satellite->setWeight($info[3]);
-            $satellite->setType($info[4]);
+            $bike = new Bike();
+            $bike->setType($info[0]);
+            $bike->setBrand($info[1]);
+            $bike->setModel($info[2]);
+            $bike->setPrice($info[3]);
 
-            $this->manager->persist($satellite);
+            $this->manager->persist($bike);
         }
 
-        $this->manager->flush();*/
+        $this->manager->flush();
     }
 
     /**
@@ -645,6 +637,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 {% if demosite %}
 
         // AdminList page with satellites
+        /*
         $trans['satellite.name']['en'] = 'name';
         $trans['satellite.launched']['en'] = 'launched';
         $trans['satellite.weight']['en'] = 'launch mass';
@@ -655,7 +648,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['satellite.weight']['nl'] = 'gewicht';
         $trans['satellite.'.Satellite::TYPE_COMMUNICATION]['nl'] = 'Communicatie satellieten';
         $trans['satellite.'.Satellite::TYPE_CLIMATE]['nl'] = 'Klimatologische satellieten';
-
+*/
         $trans['article.readmore']['en'] = 'Read more';
         $trans['article.readmore']['nl'] = 'Lees meer';
 

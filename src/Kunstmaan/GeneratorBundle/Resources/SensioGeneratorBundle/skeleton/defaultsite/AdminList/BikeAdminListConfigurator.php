@@ -3,18 +3,14 @@
 namespace {{ namespace }}\AdminList;
 
 use Doctrine\ORM\EntityManager;
-
-use {{ namespace }}\Form\SatelliteAdminType;
+use {{ namespace }}\Entity\Bike;
+use {{ namespace }}\Form\BikeAdminType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 
-/**
- * The admin list configurator for Satellite
- */
-class SatelliteAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-
     /**
      * @param EntityManager $em        The entity manager
      * @param AclHelper     $aclHelper The acl helper
@@ -22,7 +18,8 @@ class SatelliteAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
-        $this->setAdminType(new SatelliteAdminType());
+
+        $this->setAdminType(new BikeAdminType());
     }
 
     /**
@@ -30,11 +27,10 @@ class SatelliteAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
      */
     public function buildFields()
     {
-        $this->addField('name', 'name', true);
-        $this->addField('launched', 'launched', true);
-        $this->addField('link', 'link', true);
-        $this->addField('weight', 'weight', true);
-        $this->addField('type', 'type', true);
+        $this->addField('type', 'Type', true);
+        $this->addField('brand', 'Brand', true);
+        $this->addField('model', 'Model', true);
+        $this->addField('price', 'Price', true);
     }
 
     /**
@@ -42,11 +38,10 @@ class SatelliteAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
-        $this->addFilter('launched', new ORM\DateFilterType('launched'), 'Launched');
-        $this->addFilter('link', new ORM\StringFilterType('link'), 'Link');
-        $this->addFilter('weight', new ORM\NumberFilterType('weight'), 'Weight');
-        $this->addFilter('type', new ORM\StringFilterType('type'), 'Type');
+        $this->addFilter('type', new ORM\EnumerationFilterType('type'), 'Type', array_combine(Bike::$types, Bike::$types));
+        $this->addFilter('brand', new ORM\StringFilterType('brand'), 'Brand');
+        $this->addFilter('model', new ORM\StringFilterType('model'), 'Model');
+        $this->addFilter('price', new ORM\NumberFilterType('price'), 'Price');
     }
 
     /**
@@ -66,7 +61,6 @@ class SatelliteAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
      */
     public function getEntityName()
     {
-        return 'Satellite';
+        return 'Bike';
     }
-
 }

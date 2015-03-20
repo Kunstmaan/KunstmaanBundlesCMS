@@ -84,7 +84,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->renderSingleFile($sourceDir, $targetDir, 'DefaultController.php', $parameters, true);
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteAdminListController.php', $parameters, true);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikeAdminListController.php', $parameters, true);
         }
 
         $this->assistant->writeLine('Generating controllers : <info>OK</info>');
@@ -158,7 +158,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $sourceDir = $this->skeletonDir.$relPath;
             $targetDir = $this->bundle->getPath().$relPath;
 
-            $this->renderSingleFile($sourceDir, $targetDir, 'Satellite.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'Bike.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspItem.php', $parameters);
         }
 
@@ -200,7 +200,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $targetDir = $this->bundle->getPath().$relPath;
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikeAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspItemAdminType.php', $parameters);
         }
 

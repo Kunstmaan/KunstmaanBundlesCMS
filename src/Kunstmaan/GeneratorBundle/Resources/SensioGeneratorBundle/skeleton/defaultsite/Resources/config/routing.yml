@@ -4,10 +4,10 @@
     prefix:   /
 
 {% if demosite %}
-{{ bundle.name|lower }}_satellite_admin_list:
-    resource: @{{ bundle.name }}/Controller/SatelliteAdminListController.php
+{{ bundle.name|lower }}_bike_admin_list:
+    resource: @{{ bundle.name }}/Controller/BikeAdminListController.php
     type:     annotation
-    prefix:   /{_locale}/admin/satellite/
+    prefix:   /{_locale}/admin/bike/
     requirements:
          _locale: %requiredlocales%
 {% endif %}
