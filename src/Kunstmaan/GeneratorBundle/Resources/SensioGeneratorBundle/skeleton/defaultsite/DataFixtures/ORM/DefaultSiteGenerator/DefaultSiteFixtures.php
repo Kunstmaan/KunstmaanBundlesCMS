@@ -353,6 +353,17 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
                 )
             );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Prijslijst' : 'Pricelist',
+                    'setNiv' => 3
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\BikesListPagePart',
+                array()
+            );
 
             $this->pagePartCreator->addPagePartsToPage('buy_bikes', $pageparts, $locale);
         }
