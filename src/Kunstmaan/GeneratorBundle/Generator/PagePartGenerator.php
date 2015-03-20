@@ -75,7 +75,13 @@ class PagePartGenerator extends KunstmaanGenerator
      */
     private function generatePagePartEntity()
     {
-        list($entityCode, $entityPath) = $this->generateEntity($this->bundle, $this->entity, $this->fields, 'PageParts', $this->prefix, 'Kunstmaan\PagePartBundle\Entity\AbstractPagePart');
+        if ($this->bundle->getPath().'/Entity/PageParts/AbstractPagePart.php') {
+            $abstractClass = $this->bundle->getNamespace().'\Entity\PageParts\AbstractPagePart';
+        } else {
+            $abstractClass = 'Kunstmaan\PagePartBundle\Entity\AbstractPagePart';
+        }
+
+        list($entityCode, $entityPath) = $this->generateEntity($this->bundle, $this->entity, $this->fields, 'PageParts', $this->prefix, $abstractClass);
 
         // Add some extra functions in the generated entity :s
         $params = array(

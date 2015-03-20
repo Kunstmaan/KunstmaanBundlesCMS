@@ -30,7 +30,7 @@ class {{ className }} extends {{ extend_class }}
 {% endif %}
 {% if field.mediaType is defined and field.mediaType != 'none' %}            'mediatype' => '{{ field.mediaType }}',
 {% endif %}
-{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor'),
+{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
 {% endif %}
 {% if key == 'multi_line' %}            'attr' => array('rows' => 10, 'cols' => 600),
 {% endif %}
