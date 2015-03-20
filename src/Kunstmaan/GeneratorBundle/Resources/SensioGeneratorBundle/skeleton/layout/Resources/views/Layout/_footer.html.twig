@@ -52,53 +52,48 @@
 
     {# Main footer #}
     {% if nodemenu is defined %}
-        <section class="main-footer">
-            <div class="container-fluid">
-                <div class="row">
+        <section class="main-footer container-fluid">
+            <div class="row">
+                {# Footer navigation #}
+                {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+                {% for node in activeSubnode.children %}
+                    {% if not node.node.isHiddenFromNav() %}
+                        <div class="col-md-3 col-sm-3">
+                            <nav class="footer-nav">
 
-                    {# Footer navigation #}
-                    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-                    {% for node in activeSubnode.children %}
-                        {% if not node.node.isHiddenFromNav() %}
-                            <div class="col-md-3 col-sm-3">
+                                <h6 class="footer-nav__title">
+                                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="footer-nav__title__link">{{ node.title }}</a>
+                                </h6>
 
-                                <nav class="footer-nav">
-                                    <h6 class="footer-nav__title">
-                                        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="footer-nav__title__link">{{ node.title }}</a>
-                                    </h6>
-                                    <ul class="footer-nav__list list-reset">
-                                        {% if node.children|length>0 %}
-                                            {% if node.node.internalName == 'article_overview_page' %}
-                                                {% for node2 in node.children %}
-                                                    {% if loop.index < 4 %}
-                                                        {% if node2.title|length > 40 %}
-                                                            {% set ltitle = node2.title[:40] ~ '...' %}
-                                                        {% else %}
-                                                            {% set ltitle = node2.title %}
-                                                        {% endif %}
-                                                        <li class="footer-nav__list__item {% if(node2.active) %}footer-nav__list--active{% endif %}">
-                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__list__link">{{ ltitle }}</a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% else %}
-                                                {% for node2 in node.children %}
-                                                    {% if not node.node.isHiddenFromNav() or true %}
-                                                        <li class="footer-nav__list__item {% if(node2.active) %}footer-nav__list--active{% endif %}">
-                                                            <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__list__link">{{ node2.title }}</a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
+                                {% if node.children|length>0 %}
+                                    {% if node.node.internalName == 'article_overview_page' %}
+                                        {% for node2 in node.children %}
+                                            {% if loop.index < 4 %}
+                                                {% if node2.title|length > 40 %}
+                                                    {% set ltitle = node2.title[:40] ~ '...' %}
+                                                {% else %}
+                                                    {% set ltitle = node2.title %}
+                                                {% endif %}
+
+                                                <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__item{% if(node2.active) %} footer-nav__item--active{% endif %}">
+                                                    {{ ltitle }}
+                                                </a>
                                             {% endif %}
-                                        {% endif %}
-                                    </ul>
-                                </nav>
-
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-
-                </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for node2 in node.children %}
+                                            {% if not node.node.isHiddenFromNav() or true %}
+                                                <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__item{% if(node2.active) %} footer-nav__item--active{% endif %}">
+                                                    {{ node2.title }}
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endif %}
+                            </nav>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </section>
     {% endif %}

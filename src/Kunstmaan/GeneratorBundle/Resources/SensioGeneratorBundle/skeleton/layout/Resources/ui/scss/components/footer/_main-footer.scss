@@ -5,7 +5,8 @@
 /* General
    ========================================================================== */
 .main-footer {
-    padding: .5em 0;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
 {% if demosite %}
@@ -35,22 +36,20 @@
     }
 }
 
-.footer-nav__list {
-
-}
-
-.footer-nav__list__item {
+.footer-nav__item {
+    display: block;
     margin-bottom: .4rem;
 
     font-size: .9rem;
     line-height: 150%;
-}
-
-.footer-nav__list__link {
     color: $grey;
 
     &:hover, &:focus, &:active {
         text-decoration: none;
     }
+}
+
+.footer-nav__item--active {
+    color: $link-hover-color;
 }
 {% endif %}

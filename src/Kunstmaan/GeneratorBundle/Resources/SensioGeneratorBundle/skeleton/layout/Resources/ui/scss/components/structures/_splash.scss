@@ -3,7 +3,7 @@
    ========================================================================== */
 
 .splash {
-    margin: 4rem 0;
+    margin: 4rem 0 8rem;
 }
 
 .splash--primary {
@@ -12,4 +12,8 @@
 
 .splash--gray-lighter {
     background-color: $grey-lighter;
+}
+
+.splash--smaller-margin {
+    margin-bottom: 2rem;
 }
