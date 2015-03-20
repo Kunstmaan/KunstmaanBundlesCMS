@@ -5,11 +5,8 @@ namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
@@ -17,7 +14,6 @@ use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
-
 use {{ namespace }}\Entity\Pages\ContentPage;
 use {{ namespace }}\Entity\Pages\HomePage;
 {% if demosite %}
@@ -293,14 +289,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             // Add pageparts
             $pageparts = array();
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
-                'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(
                     'setTitle' => $locale == 'nl' ? 'Onze diensten' : 'Our services',
                     'setNiv' => 2
                 )
             );
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
-                'Kunstmaan\PagePartBundle\Entity\TextPagePart',
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
                 array(
                     'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
                 )
@@ -308,6 +304,153 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
             $this->pagePartCreator->addPagePartsToPage('services', $pageparts, $locale);
             $this->pagePartCreator->setPageTemplate('services', $locale, 'Content page with submenu');
+        }
+
+        // Buy bikes page
+        $servicesPage = $nodeRepo->findOneBy(array('internalName' => 'services'));
+        $contentPage = new ContentPage();
+        $contentPage->setTitle('Our bikes');
+
+        $folder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'image'));
+        $imgDir = dirname(__FILE__).'/../../../Resources/ui/img/demosite/';
+        $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock1.jpg', $folder->getId());
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
+                $translation->setTitle($locale == 'nl' ? 'Onze fietsen' : 'Our bikes');
+                $translation->setSlug($locale == 'nl' ? 'fietsen' : 'bikes');
+                $translation->setWeight(20);
+
+                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuImage($menuMedia);
+            });
+        }
+
+        $options = array(
+            'parent' => $servicesPage,
+            'page_internal_name' => 'buy_bikes',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($contentPage, $translations, $options);
+
+        foreach ($this->requiredLocales as $locale) {
+            // Add pageparts
+            $pageparts = array();
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Onze fietsen' : 'Our bikes',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
+                array(
+                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                )
+            );
+
+            $this->pagePartCreator->addPagePartsToPage('buy_bikes', $pageparts, $locale);
+        }
+
+        // Repair bikes page
+        $contentPage = new ContentPage();
+        $contentPage->setTitle('Repair bikes');
+
+        $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock2.jpg', $folder->getId());
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
+                $translation->setTitle($locale == 'nl' ? 'Fietsen herstellen' : 'Repair bikes');
+                $translation->setSlug($locale == 'nl' ? 'herstellen' : 'repair');
+                $translation->setWeight(20);
+
+                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuImage($menuMedia);
+            });
+        }
+
+        $options = array(
+            'parent' => $servicesPage,
+            'page_internal_name' => 'repair_bikes',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($contentPage, $translations, $options);
+
+        foreach ($this->requiredLocales as $locale) {
+            // Add pageparts
+            $pageparts = array();
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Fietsen herstellen' : 'Repair bikes',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
+                array(
+                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                )
+            );
+
+            $this->pagePartCreator->addPagePartsToPage('repair_bikes', $pageparts, $locale);
+        }
+
+        // Rent bikes page
+        $contentPage = new ContentPage();
+        $contentPage->setTitle('Rent bikes');
+
+        $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock3.jpg', $folder->getId());
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
+                $translation->setTitle($locale == 'nl' ? 'Fietsen verhuur' : 'Rent bikes');
+                $translation->setSlug($locale == 'nl' ? 'verhuur' : 'rent');
+                $translation->setWeight(20);
+
+                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuImage($menuMedia);
+            });
+        }
+
+        $options = array(
+            'parent' => $servicesPage,
+            'page_internal_name' => 'rent_bikes',
+            'set_online' => true,
+            'hidden_from_nav' => false,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($contentPage, $translations, $options);
+
+        foreach ($this->requiredLocales as $locale) {
+            // Add pageparts
+            $pageparts = array();
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => $locale == 'nl' ? 'Fietsen verhuur' : 'Rent bikes',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
+                array(
+                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                )
+            );
+
+            $this->pagePartCreator->addPagePartsToPage('rent_bikes', $pageparts, $locale);
         }
 {% endif %}
     }
@@ -604,10 +747,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());
 
         // Create dummy video folder and add dummy videos
-        {
-            $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
-            $this->createVideoFile('Kunstmaan', 'WPx-Oe2WrUE', $videoFolder);
-        }
+        $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
+        $this->createVideoFile('Kunstmaan', 'WPx-Oe2WrUE', $videoFolder);
     }
 
     /**
@@ -656,5 +797,4 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     {
         $this->container = $container;
     }
-
 }
