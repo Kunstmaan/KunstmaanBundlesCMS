@@ -2,20 +2,20 @@
 
 {% block extraactions %}
 
-    {% if handler.aviaryApiKey %}
+    {% if handler.aviaryApiKey and not (handler.aviaryApiKey starts with 'Register') %}
         <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}');" >
             {{ 'media.media.edit.action' | trans }}
         </button>
 
-        <!-- Load Feather code -->
-        <script type="text/javascript" src="http://feather.aviary.com/js/feather.js"></script>
+        <!-- Load widget code -->
+        <script type="text/javascript" src="http://feather.aviary.com/imaging/v1/editor.js"></script>
 
-        <!-- Instantiate Feather -->
+        <!-- Instantiate the widget -->
         <script type="text/javascript">
+
             var featherEditor = new Aviary.Feather({
                 apiKey: '{{ handler.aviaryApiKey }}',
-                apiVersion: 2,
-                //tools: 'all',
+                tools: 'all',
                 onSave: function(imageID, newURL) {
                     var img = document.getElementById(imageID);
                     img.src = newURL;
