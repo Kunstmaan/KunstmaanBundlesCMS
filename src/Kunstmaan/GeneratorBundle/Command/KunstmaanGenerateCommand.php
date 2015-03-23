@@ -500,7 +500,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $types             = array();
         $types[$counter++] = $niceNames ? 'Single line text' : 'single_line';
         $types[$counter++] = $niceNames ? 'Multi line text' : 'multi_line';
-        $types[$counter++] = $niceNames ? 'Rich text' : 'rich_text';
+        $types[$counter++] = $niceNames ? 'Wysiwyg' : 'wysiwyg';
         $types[$counter++] = $niceNames ? 'Link (url, text, new window)' : 'link';
         if ($this->isBundleAvailable('KunstmaanMediaPagePartBundle')) {
             $types[$counter++] = $niceNames ? 'Image (media, alt text)' : 'image';
@@ -568,11 +568,18 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 );
                 break;
             case 'multi_line':
-            case 'rich_text':
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type'      => 'text',
                     'formType'  => 'textarea',
+                    'nullable'  => $allNullable
+                );
+                break;
+            case 'wysiwyg':
+                $fields[$type][] = array(
+                    'fieldName' => lcfirst(Container::camelize($name)),
+                    'type'      => 'text',
+                    'formType'  => 'wysiwyg',
                     'nullable'  => $allNullable
                 );
                 break;

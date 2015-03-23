@@ -144,3 +144,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -1000 }
+
+    kunstmaan_form.type.wysiwyg:
+        class: Kunstmaan\AdminBundle\Form\WysiwygType
+        tags:
+            - { name: form.type, alias: wysiwyg }
