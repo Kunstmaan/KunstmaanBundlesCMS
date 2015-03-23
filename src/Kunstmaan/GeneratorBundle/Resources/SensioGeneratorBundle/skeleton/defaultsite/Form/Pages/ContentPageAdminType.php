@@ -34,7 +34,7 @@ class ContentPageAdminType extends PageAdminType
             'required' => false
         ));
         $builder->add('menuDescription', 'textarea', array(
-            'attr' => array('rows' => 2, 'cols' => 600),
+            'attr' => array('rows' => 3, 'cols' => 600),
             'required' => false
         ));
 {% endif %}
