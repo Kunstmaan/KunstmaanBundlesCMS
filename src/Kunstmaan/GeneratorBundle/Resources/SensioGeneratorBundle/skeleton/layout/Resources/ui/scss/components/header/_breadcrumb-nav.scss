@@ -5,7 +5,9 @@
 /* General
    ========================================================================== */
 .breadcrumb {
-    margin: $default-margin 0;
+    @media(min-width: $screen-md-min) {
+        margin: 1.5rem 0 0;
+    }
 }
 
 

@@ -44,20 +44,19 @@
         "header/site-nav",
         "header/language-nav",
         "header/contact-nav",
+        "header/search-form",
         "header/header-visual",
         "header/breadcrumb-nav"
 {% endif %};
 
 
-/* Forms => :(
+/* Forms
    ========================================================================== */
 @import "forms/form-group",
         "forms/form-control",
         "forms/form-control-label",
         "forms/form-widget",
-        "forms/radio-checkbox"{% if demosite %},
-        "forms/searchbox"
-{% endif %};
+        "forms/radio-checkbox";
 
 
 /* Pageparts

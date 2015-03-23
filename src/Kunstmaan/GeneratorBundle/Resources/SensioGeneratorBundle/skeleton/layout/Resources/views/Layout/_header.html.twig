@@ -2,8 +2,8 @@
 
 {# Mobile header #}
 {% if nodemenu is defined %}
-    <div class="container-fluid">
-        <header role="header" class="main-header main-header--mobile">
+    <header role="header" class="main-header main-header--mobile">
+        <div class="container-fluid">
 
             {# Main navigation trigger #}
             <button type="button" class="js-sidebar-toggle__toggle-btn sidebar-toggle__toggle-btn btn main-header--mobile__toggle-btn" data-content="#sidebar-toggle__content" data-sidebar="#sidebar-toggle__sidebar" data-container="#sidebar-toggle-container" data-position="left" data-prevent-overflow="true" data-duration="300">
@@ -19,9 +19,9 @@
 
 
             {# Search #}
-            {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-            {% if searchPageNode %}
-                <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form">
+            {# {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+            {% if searchPageNode %} #}
+                <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form js-searchbox-form">
                     <div class="searchbox">
                         <div class="searchbox__back js-searchbox-back">
                             <i class="icon icon--arrow-tail-left searchbox__back__icon"></i>
@@ -34,9 +34,9 @@
                         </div>
                     </div>
                 </form>
-            {% endif %}
-        </header>
-    </div>
+            {# {% endif %} #}
+        </div>
+    </header>
 {% endif %}
 
 
@@ -46,37 +46,31 @@
         <header role="header" class="main-header main-header--desktop {% block extra_main_header_class %}{% endblock %}">
             {# Logo #}
             {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
-            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo pull-left">
+            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
                 <img src="/frontend/img/demosite/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img">
             </a>
 
 
             {# Navigation #}
-            <div class="main-header__nav pull-right">
+            <div class="main-header__nav">
 
                 {# Main nav #}
-                <nav role="navigation" class="main-nav main-nav--desktop pull-left">
+                <nav role="navigation" class="site-nav site-nav--desktop">
                     {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                     {% for node in activeSubnode.children %}
                         {% if not node.node.isHiddenFromNav() %}
-                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__item {% if(node.active) %}main-nav__item--active{% endif %}">
+                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="site-nav__item {% if(node.active) %}site-nav__item--active{% endif %}">
                                 {{ node.title }}
                             </a>
                         {% endif %}
                     {% endfor %}
-
-                    {# Call to action #}
-                    <a href="#" class="main-nav__item main-nav__item--cta">
-                        Call to action
-                        <i class="icon icon--arrow-right main-nav__list__icon--cta"></i>
-                    </a>
                 </nav>
 
 
                 {# Search #}
-                {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-                {% if searchPageNode %}
-                    <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form pull-left">
+                {# {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                {% if searchPageNode %} #}
+                    <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form js-searchbox-form">
                         <div class="searchbox">
                             <div class="searchbox__content js-searchbox-content">
                                 <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input">
@@ -86,14 +80,14 @@
                             </div>
                         </div>
                     </form>
-                {% endif %}
+                {# {% endif %} #}
 
 
                 {# Language nav #}
                 {% if requiredlocales is defined %}
                     {% set langs = requiredlocales|split('|') %}
                     {% if langs|length> 0 %}
-                        <div class="language-nav pull-left">
+                        <div class="language-nav">
                             <span class="language-nav__active-lang">
                                 {{ app.request.locale }}
                                 <i class="icon icon--triangle-down language-nav__icon"></i>
