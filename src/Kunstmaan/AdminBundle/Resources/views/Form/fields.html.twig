@@ -57,6 +57,11 @@
     {% endspaceless %}
 {% endblock textarea_widget %}
 
+{% block wysiwyg_widget %}
+    {% spaceless %}
+        <textarea {{ block('widget_attributes') }} {% if attr['type'] is defined %} data-{{ attr['type'] }}=true {% endif %} class="js-rich-editor rich-editor form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}" rows="10" cols="600">{{ value|raw }}</textarea>
+    {% endspaceless %}
+{% endblock wysiwyg_widget %}
 
 {% block checkbox_widget %}
     {% spaceless %}

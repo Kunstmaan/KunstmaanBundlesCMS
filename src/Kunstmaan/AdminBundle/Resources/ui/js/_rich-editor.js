@@ -48,7 +48,56 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             elToolbar = [
                 {
                     name: 'basicstyles',
-                    items : ['Bold', 'Italic', 'Underline', 'RemoveFormat']
+                    items: ['Bold', 'Italic', 'Underline', 'RemoveFormat']
+                }
+            ]
+        } else if($el.data('full') === true) {
+            elToolbar = [
+                {
+                    name: 'basicstyles',
+                    items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
+                },
+                {
+                    name: 'paragraph',
+                    groups: [ 'align' ],
+                    items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+                },
+                {
+                    name: 'lists',
+                    items : ['NumberedList', 'BulletedList']
+                },
+                {
+                    name: 'dents',
+                    items : ['Outdent', 'Indent']
+                },
+                {
+                    name: 'links',
+                    items : ['Link','Unlink', 'Anchor']
+                },
+                {
+                    name: 'insert',
+                    items : ['Image', 'Table', 'SpecialChar']
+                },
+                {
+                    name: 'clipboard',
+                    items : ['SelectAll', 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+                },
+                {
+                    name: 'editing',
+                    items : []
+                },
+                {
+                    name: 'styles',
+                    items: [ 'Styles', 'Format', 'Font', 'FontSize' ]
+
+                },
+                {
+                    name: 'colors',
+                    items: [ 'TextColor', 'BGColor' ]
+                },
+                {
+                    name: 'document',
+                    items : ['Source']
                 }
             ]
         } else {
