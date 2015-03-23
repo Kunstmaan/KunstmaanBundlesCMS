@@ -68,6 +68,15 @@
 @media(min-width: $screen-md-min) {
     .main-header--desktop {
         display: block;
+
+        border-bottom: 2px solid $hr-color;
+    }
+
+    .homepage {
+
+        .main-header--desktop {
+            border-bottom: 0;
+        }
     }
 
     .main-header__nav {

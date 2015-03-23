@@ -79,7 +79,7 @@
         }
 
         .main-nav__list__item--active {
-            background-color: $grey-darker;
+            background-color: $grey--darker;
 
             .main-nav__list__link {
                 color: $theme-color;
@@ -117,7 +117,7 @@
             display: block;
             width: calc(100% / 3);
 
-            border: 1px solid $grey-dark;
+            border: 1px solid $grey--dark;
             border-width: 1px 0 0 1px;
 
             &:first-child {

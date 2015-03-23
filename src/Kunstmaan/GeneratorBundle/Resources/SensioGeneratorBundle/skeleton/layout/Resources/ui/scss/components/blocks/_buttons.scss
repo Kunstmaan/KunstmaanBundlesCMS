@@ -69,12 +69,12 @@
 // Secondary
 .btn--secondary {
 {% if demosite %}
-    background-color: $theme-color-dark;
+    background-color: $theme-color--dark;
     color: $white;
-    border-color: $theme-color-dark;
+    border-color: $theme-color--dark;
 
     &:hover, &:focus, &:active {
-        background-color: $theme-color-dark;
+        background-color: $theme-color--dark;
         color: $white;
     }
 {% endif %}

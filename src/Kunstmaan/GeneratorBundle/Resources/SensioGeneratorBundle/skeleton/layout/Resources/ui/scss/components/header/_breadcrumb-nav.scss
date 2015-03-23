@@ -9,22 +9,19 @@
 }
 
 
-/* List
+/* Item
    ========================================================================== */
-.breadcrumb__list__item {
+.breadcrumb__item {
     display: inline-block;
 
     font-size: .8rem;
     font-weight: 400;
 }
 
-.breadcrumb__list__link {
-    display: inline-block;
 
-    font-weight: 400;
-}
-
-.breadcrumb__list__icon {
+/* Icon
+   ========================================================================== */
+.breadcrumb__icon {
     margin: 0 .5rem;
 
     font-size: .5rem;

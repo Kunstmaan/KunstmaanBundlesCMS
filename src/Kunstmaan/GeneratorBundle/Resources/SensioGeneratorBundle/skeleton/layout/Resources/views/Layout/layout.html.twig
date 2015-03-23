@@ -28,7 +28,7 @@
     {% include '<%= bundle.getName() %>:Layout:_js_header.html.twig' %}
 </head>
 
-<body id="sidebar-toggle-container" class="sidebar-toggle-container" {% block extra_body_attributes %}{% endblock %}>
+<body id="sidebar-toggle-container" class="sidebar-toggle-container{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
     {# Google Tagmanager #}
     {% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
 

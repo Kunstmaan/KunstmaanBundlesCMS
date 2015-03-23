@@ -76,6 +76,12 @@
 }
 
 .header-visual__btn {
+    padding: .9em 1.5em;
+
+    color: $blue--dark;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 1.1rem;
 
     @media(min-width: $screen-md-min) {
         border: 0;

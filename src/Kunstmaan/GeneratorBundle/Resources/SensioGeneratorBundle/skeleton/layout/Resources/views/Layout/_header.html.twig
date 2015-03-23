@@ -1,7 +1,7 @@
 <% if demosite %>
     {# Mobile header #}
-    <header role="header" class="main-header main-header--mobile">
-        <div class="container-fluid">
+    <div class="container-fluid">
+        <header role="header" class="main-header main-header--mobile">
             <div class="row">
                 <div class="col-md-12">
 
@@ -45,14 +45,12 @@
                     {% endif %}
                 </div>
             </div>
-
-        </div>
-    </header>
-
+        </header>
+    </div>
 
     {# Desktop header #}
-    <header role="header" class="main-header main-header--desktop">
-        <div class="container-fluid">
+    <div class="container-fluid">
+        <header role="header" class="main-header main-header--desktop {% block extra_main_header_class %}{% endblock %}">
             <div class="row">
                 <div class="col-md-12">
 
@@ -127,15 +125,12 @@
                                     </div>
                                 {% endif %}
                             {% endif %}
-
                         </div>
                     {% endif %}
-
                 </div>
             </div>
-
-        </div>
-    </header>
+        </header>
+    </div>
 
 <% else %>
 

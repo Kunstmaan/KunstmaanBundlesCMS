@@ -5,41 +5,41 @@
    Never add styles directly to this file
    ========================================================================== */
 
-$black:             #373737;
-$white:             #fff;
+$black:                 #373737;
+$white:                 #fff;
 
 {% if demosite %}
-$grey-darker:       #444;
-$grey-dark:         #606060;
+$grey--darker:          #444;
+$grey--dark:            #606060;
 {% endif %}
-$grey:              #9d9d9d;
+$grey:                  #9d9d9d;
 {% if demosite %}
-$grey-light:        #e2e2e2;
-$grey-lighter:      #f9f9f9;
+$grey--light:           #e2e2e2;
+$grey--lighter:         #f9f9f9;
 
-$blue-dark:         #053046;
+$blue--dark:             #053046;
 {% endif %}
-$blue:              #5cb8e6;
+$blue:                  #5cb8e6;
 
-$red:               #ff4600;
+$red:                   #ff4600;
 
 
 {% if demosite %}
-$text-color:        $grey-dark;
-$hr-color:          $grey-light;
-$link-color:        $blue;
-$link-hover-color:  darken($link-color, 15%);
+$text-color:            $grey--dark;
+$hr-color:              $grey--light;
+$link-color:            $blue;
+$link-color--hover:     darken($link-color, 15%);
 
-$theme-color:       $blue;
-$theme-color-dark:  $blue-dark;
+$theme-color:           $blue;
+$theme-color--dark:     $blue--dark;
 {% else %}
-$text-color:        $black;
-$hr-color:          $grey;
-$link-color:        $blue;
-$link-hover-color:  darken($link-color, 15%);
+$text-color:            $black;
+$hr-color:              $grey;
+$link-color:            $blue;
+$link-color--hover:     darken($link-color, 15%);
 
-$theme-color:       $grey;
-$theme-color-dark:  $grey;
+$theme-color:           $grey;
+$theme-color--dark:     $grey;
 {% endif %}
 
 
