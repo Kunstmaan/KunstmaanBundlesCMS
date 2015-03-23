@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Header - Language nav
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.site-nav {
+    margin: 2rem 0 0;
+}
+
+
+/* Item
+   ========================================================================== */
+// General
+.site-nav__item {
+    display: block;
+    padding: .3em 1em;
+
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-weight: 300;
+    line-height: $mainnav-height;
+    color: $white;
+
+}
+
+// Active
+.site-nav__item--active {
+    background-color: $grey--darker;
+    color: $theme-color;
+}
+
+// CTA
+.site-nav__item--cta {
+    color: $theme-color;
+}
+
+.site-nav__item--cta__icon {
+    display: inline-block;
+    margin-left: .3rem;
+
+    font-size: .5em;
+    vertical-align: middle;
+}

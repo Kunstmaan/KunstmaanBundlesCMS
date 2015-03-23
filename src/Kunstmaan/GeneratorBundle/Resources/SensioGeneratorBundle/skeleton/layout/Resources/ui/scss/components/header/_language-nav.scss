@@ -5,6 +5,7 @@
 /* Default
    ========================================================================== */
 .language-nav {
+    padding: 0 1em;
     border-bottom: 1px solid $grey--dark;
 
     @media(min-width: $screen-md-min) {
@@ -70,7 +71,7 @@
 
 /* Navigation Item
    ========================================================================== */
-.language-nav__nav__item {
+.language-nav__item {
     display: inline-block;
     padding: 1.3em .5em;
 

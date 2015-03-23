@@ -6,7 +6,7 @@
    ========================================================================== */
 .text-pp {
     max-width: 40rem;
-    margin: $default-margin auto;
+    margin: $default-margin 0;
 
 {% if demosite %}
     ul {

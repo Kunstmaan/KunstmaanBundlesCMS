@@ -41,7 +41,9 @@
    ========================================================================== */
 @import "header/main-header"{% if demosite %},
         "header/main-nav",
+        "header/site-nav",
         "header/language-nav",
+        "header/contact-nav",
         "header/header-visual",
         "header/breadcrumb-nav"
 {% endif %};

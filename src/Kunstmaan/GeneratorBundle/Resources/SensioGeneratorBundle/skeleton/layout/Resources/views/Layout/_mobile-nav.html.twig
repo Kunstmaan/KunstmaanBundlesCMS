@@ -2,63 +2,50 @@
 
 {# Language nav #}
 {% if requiredlocales is defined %}
-    {% set langs = requiredlocales|split('|') %}
-    {% if langs|length > 0 %}
-        <div class="language-nav">
-            <nav role="navigation" class="language-nav__nav">
-                <span class="language-nav__nav__item language-nav__nav__item--active-lang">
-                    {{ app.request.locale }}
-                </span>
-                {% for lang in langs %}
-                    {% if lang != app.request.locale %}
-                        <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__nav__item">
-                            {{ lang }}
-                        </a>
-                    {% endif %}
-                {% endfor %}
-            </nav>
-        </div>
-    {% endif %}
+{% set langs = requiredlocales|split('|') %}
+{% if langs|length > 0 %}
+    <nav role="navigation" class="language-nav">
+        <span class="language-nav__item language-nav__item--current">
+            {{ app.request.locale }}
+        </span>
+        {% for lang in langs %}
+            {% if lang != app.request.locale %}
+                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
+                    {{ lang }}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </nav>
+{% endif %}
 {% endif %}
 
 
-{# Main navigation list #}
-<nav class="main-nav">
-    <ul class="main-nav__list">
-        {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
-        {% for node in activeSubnode.children %}
-            {% if not node.node.isHiddenFromNav() %}
-                <li class="main-nav__list__item {% if(node.active) %}main-nav__list__item--active{% endif %}">
-                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__list__link">{{ node.title }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
+{# Main Navigation #}
+<nav class="site-nav">
+    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+    {% for node in activeSubnode.children %}
+        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="site-nav__item{% if(node.active) %} site-nav__item--active{% endif %}">
+            {{ node.title }}
+        </a>
+    {% endfor %}
 
-        {# Call to action #}
-        <li class="main-nav__list__item main-nav__list__item--cta">
-            <a href="#" class="main-nav__list__link main-nav__list__link--cta">Call to action <i class="icon icon--arrow-right main-nav__list__icon--cta"></i></a>
-        </li>
-    </ul>
+    {# Call to action #}
+    <a href="#" class="site-nav__item site-nav__item--cta">
+        Call to action
+        <i class="icon icon--arrow-right site-nav__item--cta__icon"></i>
+    </a>
 </nav>
 
 
-{# Main navigation buttons #}
+{# Contact Nav #}
 <nav class="contact-nav">
-    <ul class="contact-nav__list">
-        <li class="contact-nav__list__item">
-            <a href="#" class="contact-nav__list__link">
-                <i class="icon icon--nav-mail contact-nav__list__icon"></i>
-            </a>
-        </li>
-        <li class="contact-nav__list__item">
-            <a href="#" class="contact-nav__list__link">
-                <i class="icon icon--nav-phone contact-nav__list__icon"></i>
-            </a>
-        </li>
-        <li class="contact-nav__list__item">
-            <a href="#" class="contact-nav__list__link">
-                <i class="icon icon--nav-location contact-nav__list__icon"></i>
-            </a>
-        </li>
-    </ul>
+    <a href="#" class="contact-nav__item">
+        <i class="icon icon--nav-mail contact-nav__icon"></i>
+    </a>
+    <a href="#" class="contact-nav__item">
+        <i class="icon icon--nav-phone contact-nav__icon"></i>
+    </a>
+    <a href="#" class="contact-nav__item">
+        <i class="icon icon--nav-location contact-nav__icon"></i>
+    </a>
 </nav>
