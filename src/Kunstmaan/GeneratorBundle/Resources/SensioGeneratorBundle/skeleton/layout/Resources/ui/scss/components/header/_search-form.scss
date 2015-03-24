@@ -16,10 +16,12 @@
 
     @media(min-width: $screen-md-min) {
         position: relative;
+        top: -.4rem;
+        right: auto;
 
         float: left;
         width: $search-height;
-        margin: -.4rem 0 0;
+        margin: 0;
     }
 }
 

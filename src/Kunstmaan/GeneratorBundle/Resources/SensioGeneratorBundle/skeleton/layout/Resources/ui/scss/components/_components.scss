@@ -21,7 +21,8 @@
 /* Structures
    ========================================================================== */
 {% if demosite %}
-@import "structures/splash";
+@import "structures/splash",
+        "structures/blog-item";
 {% else %}
 // @import "structures/..";
 {% endif %}
