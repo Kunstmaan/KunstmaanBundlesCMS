@@ -19,9 +19,9 @@
 
 
             {# Search #}
-            {# {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-            {% if searchPageNode %} #}
-                <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form js-searchbox-form">
+            {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+            {% if searchPageNode %}
+                <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form">
                     <div class="searchbox">
                         <div class="searchbox__back js-searchbox-back">
                             <i class="icon icon--arrow-tail-left searchbox__back__icon"></i>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </form>
-            {# {% endif %} #}
+            {% endif %}
         </div>
     </header>
 {% endif %}
@@ -68,9 +68,9 @@
 
 
                 {# Search #}
-                {# {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-                {% if searchPageNode %} #}
-                    <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form js-searchbox-form">
+                {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+                {% if searchPageNode %}
+                    <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form">
                         <div class="searchbox">
                             <div class="searchbox__content js-searchbox-content">
                                 <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input">
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     </form>
-                {# {% endif %} #}
+                {% endif %}
 
 
                 {# Language nav #}
@@ -134,6 +134,7 @@
                 {% endfor %}
             </nav>
 
+
             {# Search #}
             {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
             {% if searchPageNode %}
@@ -148,6 +149,7 @@
                     </div>
                 </form>
             {% endif %}
+
 
             {# Language nav #}
             {% if requiredlocales is defined %}

@@ -1,31 +1,34 @@
 <div class="container">
-    <h2>{{ page.title }}</h2>
-
     {% set count = 0 %}
     {% if pagerfanta.nbResults > 0 %}
         {% for article in pagerfanta.currentPageResults %}
             {% set articlenode = get_node_translation_for(article) %}
-            <article class="main-article main-article--summary">
-                <header>
-                    <time class="main-article__meta">
+            <article class="blog-item blog-item--summary">
+                <header class="blog-item__head">
+                    <time class="blog-item__head__meta">
                         {{ article.date | date("d/m/Y")}}
                         {% if article.author is not empty %}
                             | <strong>{{ article.author.name }}</strong>
                         {% endif %}
                     </time>
-                    <h4 class="main-article__title">
-                        <a href="{{ articlenode.url }}">{{ article.title }}</a>
-                    </h4>
+                    <h3 class="blog-item__head__title">
+                        <a href="{{ articlenode.url }}">
+                            {{ article.title }}
+                        </a>
+                    </h3>
                 </header>
+
                 {{ article.summary }}
-                <p>
-                    <a href="{{ articlenode.url }}" class="btn btn-primary main-article__readmore">
+
+                <p class="text--right blog-item__read-more">
+                    <a href="{{ articlenode.url }}" class="blog-item__read-more__link">
                         {{ 'article.readmore'|trans }}
                     </a>
                 </p>
             </article>
             {% set count = count + 1 %}
         {% endfor %}
+
         {% if pagerfanta.haveToPaginate() %}
             {{ pagerfanta(pagerfanta) }}
         {% endif %}
