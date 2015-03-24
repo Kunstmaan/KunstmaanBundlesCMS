@@ -18,6 +18,7 @@ use {{ namespace }}\Entity\Pages\ContentPage;
 use {{ namespace }}\Entity\Pages\HomePage;
 {% if demosite %}
 use {{ namespace }}\Entity\Pages\FormPage;
+use {{ namespace }}\Entity\Pages\SearchPage;
 use {{ namespace }}\Entity\Bike;
 {% endif %}
 
@@ -83,6 +84,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->createAdminListPages();
         // $this->createStylePage();
         $this->createFormPage();
+        $this->createSearchPage();
 {% endif %}
         $this->createDashboard();
     }
@@ -658,6 +660,42 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $this->manager->flush();
     }
+
+    /**
+     * Create a FormPage
+     */
+    private function createSearchPage()
+    {
+        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
+        $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
+
+        $searchPage = new SearchPage();
+        $searchPage->setTitle('Search');
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array(
+                'language' => $locale,
+                'callback' => function ($page, $translation, $seo) use ($locale) {
+                    $translation->setTitle($locale == 'nl' ? 'Zoeken' : 'Search');
+                    $translation->setSlug($locale == 'nl' ? 'zoeken' : 'search');
+                    $translation->setWeight(50);
+                }
+            );
+        }
+
+        $options = array(
+            'parent' => $homePage,
+            'page_internal_name' => 'search',
+            'set_online' => true,
+            'hidden_from_nav' => true,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($searchPage, $translations, $options);
+
+        $this->manager->flush();
+    }
 {% endif %}
 
     /**
@@ -666,7 +704,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createTranslations()
     {
         $trans = array();
-
 {% if demosite %}
         $trans['bike.type']['en'] = 'Type';
         $trans['bike.type']['nl'] = 'Type';
@@ -684,15 +721,24 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['bike.racing_bike']['en'] = 'Racing bike';
         $trans['bike.racing_bike']['nl'] = 'Koersfiets';
 
+        $trans['pagerfanta.prev']['en'] = 'Previous';
+        $trans['pagerfanta.prev']['nl'] = 'Vorige';
+        $trans['pagerfanta.next']['en'] = 'Next';
+        $trans['pagerfanta.next']['nl'] = 'Volgende';
+
         $trans['article.readmore']['en'] = 'Read more';
         $trans['article.readmore']['nl'] = 'Lees meer';
 
-        $trans['results']['en'] = 'results';
-        $trans['results']['nl'] = 'resultaten';
-        $trans['search']['en'] = 'search';
-        $trans['search']['nl'] = 'zoeken';
-        $trans['search.looking_for']['en'] = 'You were looking for';
-        $trans['search.looking_for']['nl'] = 'U zocht naar';
+        $trans['search.results']['en'] = 'Results';
+        $trans['search.results']['nl'] = 'Resultaten';
+        $trans['search.result']['en'] = 'Result';
+        $trans['search.result']['nl'] = 'Resultaat';
+        $trans['search.for']['en'] = 'for';
+        $trans['search.for']['nl'] = 'voor';
+        $trans['search.search']['en'] = 'search';
+        $trans['search.search']['nl'] = 'zoeken';
+        $trans['search.no_results']['en'] = 'No results found';
+        $trans['search.no_results']['nl'] = 'Geen resultaten gevonden';
 {% endif %}
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();

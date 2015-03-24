@@ -19,9 +19,9 @@
 
 
             {# Search #}
-            {# {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
-            {% if searchPageNode %} #}
-                <form method="get" action="{# {{ path('_slug', { 'url': searchPageNode.slug }) }} #}" class="searchbox-form js-searchbox-form">
+            {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+            {% if searchPageNode %}
+                <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form">
                     <div class="searchbox">
                         <div class="searchbox__back js-searchbox-back">
                             <i class="icon icon--arrow-tail-left searchbox__back__icon"></i>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </form>
-            {# {% endif %} #}
+            {% endif %}
         </div>
     </header>
 {% endif %}
