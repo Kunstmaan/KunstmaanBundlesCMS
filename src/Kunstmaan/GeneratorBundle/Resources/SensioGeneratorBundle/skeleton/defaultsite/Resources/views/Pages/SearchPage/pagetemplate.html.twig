@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col--padded">
+            <form method="get" action="" class="search-results__wrapper">
+                <div class="search-results">
+                    {% if q_query is defined and q_query != '' %}
+                        {% set nrResults = pagerfanta.getNbResults() %}
+                        <strong>{{ nrResults }} {% if nrResults == 1 %}{{ 'search.result'|trans }}{% else %}{{ 'search.results'|trans }}{% endif %}</strong> {{ 'search.for'|trans }} <strong>{{ q_query }}</strong>
+                    {% endif %}
+                </div>
+                <div>
+                    <div>
+                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search.search'|trans }}">
+                        <button type="submit" name="search" id="search" value="{{ 'search.search'|trans|title }}">
+                            <i class="icon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            {% if q_query is defined and q_query != '' %}
+                <h1>{{ 'search.results'|trans }}</h1>
+                {% if nrResults > 0 %}
+                    {% for searchresult in pagerfanta.currentPageResults %}
+                        {% if not loop.first %}<hr />{% endif %}
+                        <h4><a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}">{{ searchresult['_source']['title'] }}</a></h4>
+                        <p>
+                            {% if searchresult['highlight'] is defined %}
+                                {{ searchresult['highlight']['content'][0] | raw }}
+                            {% else %}
+                                {{ searchresult['_source']['content'] | truncate(300) | escape('html') }}
+                            {% endif %}
+                        </p>
+                    {% endfor %}
+                    {% if pagerfanta.getNbPages() > 1 %}
+                        {{ pagerfanta(pagerfanta, null, {'prev_message': 'pagerfanta.prev'|trans, 'next_message': 'pagerfanta.next'|trans}) }}
+                    {% endif %}
+                {% else %}
+                    <p>{{ 'search.no_results'|trans }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>

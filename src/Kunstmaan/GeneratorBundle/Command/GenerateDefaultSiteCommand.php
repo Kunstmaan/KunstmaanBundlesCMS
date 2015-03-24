@@ -83,16 +83,14 @@ EOT
         $this->demosite = $this->assistant->getOption('demosite');
 
         // First we generate the layout if it is not yet generated
-        if (!is_file($this->bundle->getPath().'/Resources/views/Layout/layout.html.twig')) { // TODO: check if layout is not present before bundle generator
-            $command = $this->getApplication()->find('kuma:generate:layout');
-            $arguments = array(
-                'command'      => 'kuma:generate:layout',
-                '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-                '--subcommand' => true
-            );
-            $input = new ArrayInput($arguments);
-            $command->run($input, $this->assistant->getOutput());
-        }
+        $command = $this->getApplication()->find('kuma:generate:layout');
+        $arguments = array(
+            'command'      => 'kuma:generate:layout',
+            '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
+            '--subcommand' => true
+        );
+        $input = new ArrayInput($arguments);
+        $command->run($input, $this->assistant->getOutput());
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
