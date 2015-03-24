@@ -132,13 +132,4 @@
     <input type="hidden" id="config_id" data-id="{{configId}}" />
 {% endblock %}
 
-{% block extrajavascript %}
-    {% javascripts
-        '@KunstmaanDashboardBundle/Resources/ui/js/setup/setup.js'
-        output='generated-js/ga_widget_setup.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
-
 

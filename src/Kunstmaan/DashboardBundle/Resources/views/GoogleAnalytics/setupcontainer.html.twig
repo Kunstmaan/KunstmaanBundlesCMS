@@ -29,3 +29,12 @@
         }
     %}
 {% endblock %}
+
+{% block extrajavascript %}
+    {% javascripts
+        '@KunstmaanDashboardBundle/Resources/ui/js/setup/setup.js'
+        output='KunstmaanDashboardBundleAssets/js/ga-widget-setup.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
