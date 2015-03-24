@@ -1,10 +1,10 @@
 <?php
 
-namespace {{ namespace }}\Entity\{{ entity_class }};
+namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
-use {{ namespace }}\Form\{{ entity_class }}\{{ entity_class }}OverviewPageAdminType;
-use {{ namespace }}\PagePartAdmin\{{ entity_class }}\{{ entity_class }}OverviewPagePagePartAdminConfigurator;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use {{ namespace }}\Form\Pages\{{ entity_class }}OverviewPageAdminType;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
@@ -14,17 +14,25 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * The article overview page which shows its articles
  *
- * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}\{{ entity_class }}OverviewPageRepository")
- * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overviewpages")
+ * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}OverviewPageRepository")
+ * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overview_pages")
  */
-class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
+class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface
 {
     /**
      * @return AbstractPagePartAdminConfigurator[]
      */
     public function getPagePartAdminConfigurations()
     {
-        return array(new {{ entity_class }}OverviewPagePagePartAdminConfigurator());
+        return array('{{ bundle.getName() }}:main');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPageTemplates()
+    {
+        return array('{{ bundle.getName() }}:{{ entity_class|lower }}overviewpage');
     }
 
     /**
@@ -39,7 +47,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
 
     public function getArticleRepository($em)
     {
-        return $em->getRepository('{{ bundle.getName() }}:{{ entity_class }}\{{ entity_class }}Page');
+        return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}Page');
     }
 
     /**
@@ -47,7 +55,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage
      */
     public function getDefaultView()
     {
-        return '{{ bundle.getName() }}:{{ entity_class }}/{{ entity_class }}OverviewPage:view.html.twig';
+        return '{{ bundle.getName() }}:Pages/{{ entity_class }}OverviewPage:view.html.twig';
     }
 
     /**

@@ -83,7 +83,7 @@ EOT
         $this->demosite = $this->assistant->getOption('demosite');
 
         // First we generate the layout if it is not yet generated
-        if (!is_file($this->bundle->getPath().'/Resources/views/Layout/layout.html.twig')) {
+        if (!is_file($this->bundle->getPath().'/Resources/views/Layout/layout.html.twig')) { // TODO: check if layout is not present before bundle generator
             $command = $this->getApplication()->find('kuma:generate:layout');
             $arguments = array(
                 'command'      => 'kuma:generate:layout',
@@ -104,12 +104,28 @@ EOT
             '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
             '--prefix'     => $this->prefix,
             '--contexts'   => 'main',
-            '--quiet' => true
+            '--quiet'      => true
         );
         $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
         $input = new ArrayInput($arguments);
         $command->run($input, $output);
         $this->assistant->writeLine('Generating default pageparts : <info>OK</info>');
+
+        if ($this->demosite) {
+            $command = $this->getApplication()->find('kuma:generate:article');
+            $arguments = array(
+                'command'      => 'kuma:generate:article',
+                '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
+                '--prefix'     => $this->prefix,
+                '--entity'     => 'Blog',
+                '--dummydata'  => true,
+                '--quiet'      => true
+            );
+            $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
+            $input = new ArrayInput($arguments);
+            $command->run($input, $output);
+            $this->assistant->writeLine('Generating blog : <info>OK</info>');
+        }
 
         $this->assistant->writeSection('Site successfully created', 'bg=green;fg=black');
     }

@@ -665,6 +665,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
      */
     private function createTranslations()
     {
+        $trans = array();
+
 {% if demosite %}
         $trans['bike.type']['en'] = 'Type';
         $trans['bike.type']['nl'] = 'Type';

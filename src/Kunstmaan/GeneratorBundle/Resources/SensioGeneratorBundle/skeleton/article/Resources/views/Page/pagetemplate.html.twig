@@ -1,0 +1,20 @@
+{% set author = page.getAuthor() %}
+
+<div class="container">
+    <div class="row row--padded">
+        <article class="main-article col-md-12">
+            <header>
+                <time class="main-article__meta">
+                    {{ page.date | date("d/m/Y")}}
+                    {% if author is not empty %}
+                        | <strong>{{ author.name }}</strong>
+                    {% endif %}
+                </time>
+                <h1 class="main-article__title">
+                    {{ page.title }}
+                </h1>
+            </header>
+            {{ render_pageparts(page, 'main') }}
+        </article>
+    </div>
+</div>

@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}home_pages")
  */
-class HomePage extends AbstractPage  implements HasPageTemplateInterface
+class HomePage extends AbstractPage implements HasPageTemplateInterface
 {
 
     /**
