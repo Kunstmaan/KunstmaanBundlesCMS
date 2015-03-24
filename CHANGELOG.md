@@ -1,4 +1,52 @@
 
+3.0.2 / 2015-03-24
+==================
+
+  * only allow redirects to the same domain, or relative urls
+  * fix form submissions export code cleanup / refactor / add some tests scrutinizer
+  * Update AbstractDoctrineORMAdminListConfigurator.php
+  * bugfix for #196, White page when you delete the only item of a page (not on first page)
+  * only export formsubmissions of the same language (aka NodeTranslation)
+  * fix issue slugify method
+  * fix invisible password
+  * correct namespace in feature context file
+  * fix changed admin urls in generated behat tests
+  * SQL syntax error in admin pages
+  * New generator: FormPage generator
+  * Made indices unique by prefixing entity name
+  * Fixed syntax
+  * Speed up travis builds
+  * Do not prefix database when using SQLite
+  * additional check for a case when file does not exist (did not upload correctly)
+  * added missing constraint to file field
+  * fix: should set isEdited=false on "Save as draft" click
+  * fixes double click prevention breaking "save as draft" button
+  * changed check condition for structure nodes to use "isStructureNode()"
+  * fix typo
+  * changed iconv transliteration setting
+  * fix: PageCreatorService should not fail without KunstmaanSeoBundle
+  * Fix autoloader
+  * Skip when encountering structure node not abort
+  * make it possible to have no item actions for some records
+  * Fix if statement in queries to support SQLite
+  * Username is not capitialized
+  * Lots of fixes to the installation chapter
+  * Fix layout of labels in form by adding default classes
+  * fix wrong file permissions
+  * Reversed parameter order in array_merge after code review
+  * added italian translation - fixed colon issue in en translation
+  * Fix:  - Merge passed parameters with the current twig context - allows passing of view variables when calling render_pagetemplate()  - Argument was previously unused
+  * fix form submissions
+  * allow submenu in Modules top menu
+  * split up into init and resize & some more updates
+  * fix editing top media folder
+  * fix group roles validation
+  * make Imagick dependency optional (only when pdf previews are enabled) kuma:media:create-pdf-previews should only be enabled if enable_pdf_preview is true
+  * Moved if block location so imageurl is available to the click listener
+  * fix more dropdown tab in nav if necessary
+  * make it possible to define a custom list of bundles for which the TranslatorBundle should be used
+  * fix issue #91 and reduce flush
+
 3.0.1 / 2015-01-26
 ==================
 
