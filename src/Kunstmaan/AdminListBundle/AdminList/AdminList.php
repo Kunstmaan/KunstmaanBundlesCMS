@@ -97,9 +97,9 @@ class AdminList
      *
      * @return \Iterator
      */
-    public function getAllIterator()
+    public function getIterator()
     {
-        return $this->configurator->getAllIterator();
+        return $this->configurator->getIterator();
     }
 
     /**

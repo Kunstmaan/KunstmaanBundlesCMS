@@ -31,6 +31,7 @@ abstract class AdminListController extends Controller
      * Shows the list of entities
      *
      * @param AbstractAdminListConfigurator $configurator
+     * @param null|Request                  $request
      *
      * @return array
      */
@@ -40,14 +41,14 @@ abstract class AdminListController extends Controller
         if (is_null($request)) {
             $request = $this->getRequest();
         }
-        /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
-        $adminlist->bindRequest($request);
+        /* @var AdminList $adminList */
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
+        $adminList->bindRequest($request);
 
         return new Response(
             $this->renderView(
                 $configurator->getListTemplate(),
-                array('adminlist' => $adminlist, 'adminlistconfigurator' => $configurator, 'addparams' => array())
+                array('adminlist' => $adminList, 'adminlistconfigurator' => $configurator, 'addparams' => array())
             )
         );
     }
@@ -57,6 +58,9 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $_format      The format to export to
+     * @param null|Request                  $request
+     *
+     * @throws AccessDeniedHttpException
      *
      * @return array
      */
@@ -67,14 +71,11 @@ abstract class AdminListController extends Controller
         }
 
         $em = $this->getEntityManager();
-        if (is_null($request)) {
-            $request = $this->getRequest();
-        }
-        /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
-        $adminlist->bindRequest($request);
 
-        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminlist, $_format);
+        /* @var AdminList $adminList */
+        $adminList = $this->get("kunstmaan_adminlist.factory")->createExportList($configurator, $em);
+
+        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $_format);
     }
 
     /**
@@ -82,6 +83,9 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $type         The type to add
+     * @param null|Request                  $request
+     *
+     * @throws AccessDeniedHttpException
      *
      * @return array
      */
@@ -110,7 +114,7 @@ abstract class AdminListController extends Controller
         $helper    = $configurator->decorateNewEntity($helper);
         $form      = $this->createForm($configurator->getAdminType($helper), $helper);
 
-        if ('POST' == $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $form->submit($request);
             if ($form->isValid()) {
                 $em->persist($helper);
@@ -136,8 +140,11 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param string                        $entityId     The id of the entity that will be edited
+     * @param null|Request                  $request
      *
      * @throws NotFoundHttpException
+     * @throws AccessDeniedHttpException
+     *
      * @return Response
      */
     protected function doEditAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request = null)
@@ -158,7 +165,7 @@ abstract class AdminListController extends Controller
 
         $form = $this->createForm($configurator->getAdminType($helper), $helper);
 
-        if ('POST' == $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $form->submit($request);
             if ($form->isValid()) {
                 $em->persist($helper);
@@ -186,8 +193,11 @@ abstract class AdminListController extends Controller
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
      * @param integer                       $entityId     The id to delete
+     * @param null|Request                  $request
      *
      * @throws NotFoundHttpException
+     * @throws AccessDeniedHttpException
+     *
      * @return Response
      */
     protected function doDeleteAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request = null)
@@ -206,7 +216,7 @@ abstract class AdminListController extends Controller
         }
 
         $indexUrl = $configurator->getIndexUrl();
-        if ('POST' == $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $em->remove($helper);
             $em->flush();
         }

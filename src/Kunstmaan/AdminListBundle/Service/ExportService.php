@@ -3,25 +3,35 @@
 namespace Kunstmaan\AdminListBundle\Service;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
+use Kunstmaan\AdminListBundle\AdminList\ExportList;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExportService
 {
+    /**
+     * @var EngineInterface
+     */
     private $renderer;
 
-    const EXT_CSV = 'csv';
+    const EXT_CSV   = 'csv';
     const EXT_EXCEL = 'xlsx';
 
+    /**
+     * @return array
+     */
     public static function getSupportedExtensions()
     {
-        $rfl = new \ReflectionClass(new self());
+        $rfl  = new \ReflectionClass(new self());
         $data = $rfl->getConstants();
 
         $extensions = array();
         foreach ($data as $name => $ext) {
             if (strpos($name, 'EXT_') !== false) {
-                $key = ucfirst(strtolower(str_replace('EXT_', '', $name)));
+                $key              = ucfirst(strtolower(str_replace('EXT_', '', $name)));
                 $extensions[$key] = $ext;
             }
         }
@@ -29,44 +39,68 @@ class ExportService
         return $extensions;
     }
 
-    public function getDownloadableResponse(AdminList $adminlist, $_format, $template = null)
+    /**
+     * @param ExportableInterface $adminList
+     * @param string              $_format
+     * @param string|null         $template
+     *
+     * @return Response|StreamedResponse
+     *
+     * @throws \Exception
+     */
+    public function getDownloadableResponse(ExportableInterface $adminList, $_format, $template = null)
     {
         switch ($_format) {
             case self::EXT_EXCEL:
-                $writer = $this->createExcelSheet($adminlist);
+                $writer   = $this->createExcelSheet($adminList);
                 $response = $this->createResponseForExcel($writer);
                 break;
             default:
-                $content = $this->createFromTemplate($adminlist, $_format, $template);
+                $content  = $this->createFromTemplate($adminList, $_format, $template);
                 $response = $this->createResponse($content, $_format);
                 break;
         }
 
         $filename = sprintf('entries.%s', $_format);
         $response->headers->set('Content-Disposition', sprintf('attachment; filename=%s', $filename));
+
         return $response;
     }
 
-    public function createFromTemplate(AdminList $adminlist, $_format, $template = null){
-        if($template === null) {
+    /**
+     * @param ExportableInterface $adminList
+     * @param string              $_format
+     * @param string|null         $template
+     *
+     * @return string
+     */
+    public function createFromTemplate(ExportableInterface $adminList, $_format, $template = null)
+    {
+        if ($template === null) {
             $template = sprintf("KunstmaanAdminListBundle:Default:export.%s.twig", $_format);
         }
 
-        $allIterator = $adminlist->getAllIterator();
-        return $this->renderer->render($template, array(
-            "iterator" => $allIterator,
-            "adminlist" => $adminlist,
-            "queryparams" => array()
-        ));
+        $iterator = $adminList->getIterator();
+
+        return $this->renderer->render(
+            $template,
+            array(
+                'iterator'    => $iterator,
+                'adminlist'   => $adminList,
+                'queryparams' => array()
+            )
+        );
     }
 
     /**
-     * @param $adminlist
+     * @param ExportableInterface $adminList
+     *
      * @return \PHPExcel_Writer_Excel2007
+     *
      * @throws \Exception
      * @throws \PHPExcel_Exception
      */
-    public function createExcelSheet(AdminList $adminlist)
+    public function createExcelSheet(ExportableInterface $adminList)
     {
         $objPHPExcel = new \PHPExcel();
 
@@ -75,13 +109,13 @@ class ExportService
         $number = 1;
 
         $row = array();
-        foreach ($adminlist->getExportColumns() as $column) {
+        foreach ($adminList->getExportColumns() as $column) {
             $row[] = $column->getHeader();
         }
         $objWorksheet->fromArray($row, null, 'A' . $number++);
 
-        $allIterator = $adminlist->getAllIterator();
-        foreach($allIterator as $item) {
+        $iterator = $adminList->getIterator();
+        foreach ($iterator as $item) {
             if (array_key_exists(0, $item)) {
                 $itemObject = $item[0];
             } else {
@@ -89,14 +123,14 @@ class ExportService
             }
 
             $row = array();
-            foreach ($adminlist->getExportColumns() as $column) {
-                $data = $adminlist->getStringValue($itemObject, $column->getName());
+            foreach ($adminList->getExportColumns() as $column) {
+                $data = $adminList->getStringValue($itemObject, $column->getName());
                 if (is_object($data)) {
                     if (!$this->renderer->exists($column->getTemplate())) {
                         throw new \Exception('No export template defined for ' . get_class($data));
                     }
 
-                    $data = $this->renderer->render($column->getTemplate(), array("object" => $data));
+                    $data = $this->renderer->render($column->getTemplate(), array('object' => $data));
                 }
 
                 $row[] = $data;
@@ -109,6 +143,12 @@ class ExportService
         return $objWriter;
     }
 
+    /**
+     * @param string $content
+     * @param string $_format
+     *
+     * @return Response
+     */
     public function createResponse($content, $_format)
     {
         $response = new Response();
@@ -118,7 +158,12 @@ class ExportService
         return $response;
     }
 
-    public function createResponseForExcel($writer)
+    /**
+     * @param \PHPExcel_Writer_IWriter $writer
+     *
+     * @return StreamedResponse
+     */
+    public function createResponseForExcel(\PHPExcel_Writer_IWriter $writer)
     {
         $response = new StreamedResponse(
             function () use ($writer) {
@@ -131,6 +176,9 @@ class ExportService
         return $response;
     }
 
+    /**
+     * @param EngineInterface $renderer
+     */
     public function setRenderer($renderer)
     {
         $this->renderer = $renderer;

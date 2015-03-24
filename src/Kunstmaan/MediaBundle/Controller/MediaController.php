@@ -95,7 +95,7 @@ class MediaController extends Controller
 
         // If the redirect url is passed via the url we use it
         $redirectUrl = $request->query->get('redirectUrl');
-        if (empty($redirectUrl)) {
+        if (empty($redirectUrl) || (strpos($redirectUrl, $request->getSchemeAndHttpHost()) !== 0 && strpos($redirectUrl, '/') !== 0)) {
             $redirectUrl = $this->generateUrl(
                 'KunstmaanMediaBundle_folder_show',
                 array('folderId' => $folder->getId())
