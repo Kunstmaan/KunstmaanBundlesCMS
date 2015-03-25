@@ -26,7 +26,8 @@
         "structures/search-results",
         "structures/breadcrumb-nav",
         "structures/header-visual",
-        "structures/newsletter";
+        "structures/newsletter",
+        "structures/pagination";
 {% else %}
 // @import "structures/..";
 {% endif %}

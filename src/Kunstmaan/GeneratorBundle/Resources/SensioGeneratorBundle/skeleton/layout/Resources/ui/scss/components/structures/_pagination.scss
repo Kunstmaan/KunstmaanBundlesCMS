@@ -2,6 +2,16 @@
    Structures - Pagination
    ========================================================================== */
 
+.pagination {
+
+    .prev a,
+    .next a{
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
 /*doc
 ---
 title: Pagination
