@@ -87,6 +87,7 @@ EOT
         $arguments = array(
             'command'      => 'kuma:generate:layout',
             '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
+            '--demosite'   => $this->demosite,
             '--subcommand' => true
         );
         $input = new ArrayInput($arguments);

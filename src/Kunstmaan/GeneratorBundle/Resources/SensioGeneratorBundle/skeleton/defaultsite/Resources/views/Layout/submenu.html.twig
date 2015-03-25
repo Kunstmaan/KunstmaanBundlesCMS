@@ -6,7 +6,7 @@
                 {% if not item['nt'].node.isHiddenFromNav() %}
                     <div class="col-md-4 col-sm-4">
                         <div class="submenu__item">
-                            <a href="{{ path('_slug', { 'url': item['nt'].slug }) }}" class="submenu__link">
+                            <a href="{{ path('_slug', { 'url': item['nt'].url }) }}" class="submenu__link">
                                 {% if item['page'].menuImage is defined and item['page'].menuImage is not empty %}
                                     <img src="{{ item['page'].menuImage.url }}" alt="" class="submenu__img">
                                 {% endif %}
@@ -15,7 +15,7 @@
                                     <p class="submenu__text">{{ item['page'].menuDescription }}</p>
                                 {% endif %}
                                 <div class="link-pp submenu__cta">
-                                    <a href="{{ path('_slug', { 'url': item['nt'].slug }) }}" class="link-pp__link">Take a look at lorem ipsum <i class="link-pp__icon"></i></a>
+                                    <a href="{{ path('_slug', { 'url': item['nt'].url }) }}" class="link-pp__link">Take a look at lorem ipsum <i class="link-pp__icon"></i></a>
                                 </div>
                             </a>
                         </div>
