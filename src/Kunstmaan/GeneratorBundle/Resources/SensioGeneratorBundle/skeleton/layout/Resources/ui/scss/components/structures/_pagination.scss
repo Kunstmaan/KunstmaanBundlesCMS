@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Structures - Pagination
+   ========================================================================== */
+
+/*doc
+---
+title: Pagination
+name: 08_pagination
+category: Structures
+---
+
+```html_example
+<div class="pagination">
+    <ul>
+        <li class="prev disabled">
+            <span>← Previous</span>
+        </li>
+        <li class="active">
+            <span>1</span>
+        </li>
+        <li>
+            <a href="/app_dev.php/nl/blog?page=2">2</a>
+        </li>
+        <li class="next">
+            <a href="/app_dev.php/nl/blog?page=2">Next →</a>
+        </li>
+    </ul>
+</div>
+```
+
+*/
