@@ -3,8 +3,11 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
+use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @ORM\Entity()
@@ -12,6 +15,22 @@ use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
  */
 class SearchPage extends AbstractSearchPage implements HasPageTemplateInterface
 {
+    /**
+     * @param AbstractElasticaSearcher $searcher
+     * @param Request                  $request
+     * @param RenderContext            $context
+     */
+    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext $context)
+    {
+        parent::applySearchParams($searcher, $request, $context);
+
+        // Facets
+        $query = $searcher->getQuery();
+        $facetTerms = new \Elastica\Facet\Terms('type');
+        $facetTerms->setField('type');
+        $query->addFacet($facetTerms);
+    }
+
     /**
      * return string
      */
