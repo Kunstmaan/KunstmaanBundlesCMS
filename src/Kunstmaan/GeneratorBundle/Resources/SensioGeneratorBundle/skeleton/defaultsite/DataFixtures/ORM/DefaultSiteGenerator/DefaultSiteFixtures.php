@@ -776,6 +776,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['pagerfanta.next']['en'] = 'Next';
         $trans['pagerfanta.next']['nl'] = 'Volgende';
 
+        $trans['top']['en'] = 'Top';
+        $trans['top']['nl'] = 'Top';
+
         $trans['article.readmore']['en'] = 'Read more';
         $trans['article.readmore']['nl'] = 'Lees meer';
 

@@ -31,7 +31,8 @@ class BikesTwigExtension extends \Twig_Extension
     {
         return array(
             'get_bikes' => new \Twig_Function_Method($this, 'getBikes'),
-            'get_submenu_items' => new \Twig_Function_Method($this, 'getSubmenuItems')
+            'get_submenu_items' => new \Twig_Function_Method($this, 'getSubmenuItems'),
+            'get_node_trans_by_node_id' => new \Twig_Function_Method($this, 'getNodeTranslationByNodeId')
         );
     }
 
@@ -62,6 +63,31 @@ class BikesTwigExtension extends \Twig_Extension
         }
 
         return $items;
+    }
+
+    /**
+     * Get the node translation object based on node id and language.
+     *
+     * @param int $nodeId
+     * @param string $lang
+     * @return NodeTranslation
+     */
+    public function getNodeTranslationByNodeId($nodeId, $lang)
+    {
+        $repo = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+        $qb = $repo->createQueryBuilder('nt')
+            ->select('nt')
+            ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
+            ->where('n.deleted != 1')
+            ->andWhere('nt.online = 1')
+            ->andWhere('nt.lang = :lang')
+            ->setParameter('lang', $lang)
+            ->andWhere('n.id = :node_id')
+            ->setParameter('node_id', $nodeId)
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
