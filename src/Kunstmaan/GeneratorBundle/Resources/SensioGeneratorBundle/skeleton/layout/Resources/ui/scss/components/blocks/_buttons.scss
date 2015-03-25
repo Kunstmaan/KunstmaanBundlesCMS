@@ -80,3 +80,33 @@
 {% endif %}
 }
 
+
+
+
+/*doc
+---
+title: Buttons
+name: 01_buttons
+category: Blocks
+---
+
+<strong>General</strong>
+
+```html_example
+<button type="button" class="btn">
+    Button
+</button>
+```
+
+<strong>Types</strong>
+
+```html_example
+<button type="button" class="btn btn--primary">
+    Primary
+</button>
+
+<button type="button" class="btn btn--secondary">
+    Secondary
+</button>
+```
+*/

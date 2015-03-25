@@ -24,19 +24,21 @@ figure {
 /*doc
 ---
 title: Images
-name: 03_img
+name: 04_img
 category: Blocks
 ---
 
-<h4>Regular</h4>
+<strong>Regular</strong>
+
 ```html_example
-    <img src="http://placehold.it/350x250/1bc8a1/ffffff">
+    <img src="http://placehold.it/350x250">
 ```
 
-<h4>With caption</h4>
+<strong>With caption</strong>
+
 ```html_example
     <figure>
-        <img src="http://placehold.it/350x250/1bc8a1/ffffff">
+        <img src="http://placehold.it/350x250">
         <figcaption>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore perspiciatis voluptatem sed saepe debitis, impedit nesciunt quisquam ipsum molestiae quia ab.
         </figcaption>

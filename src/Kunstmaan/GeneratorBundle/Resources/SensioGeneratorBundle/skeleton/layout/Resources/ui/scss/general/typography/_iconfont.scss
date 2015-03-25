@@ -126,3 +126,109 @@
     content: "\e611";
 }
 {% endif %}
+
+/*doc
+---
+title: Iconfont
+name: 03_iconfont
+category: Typography
+---
+
+Icon-font made by icomoon
+
+{% if demosite %}
+<i class="icon icon--menu"></i>
+<br>
+<code class='styleguide__code'>icon icon--menu</code>
+
+<i class="icon icon--nav-location"></i>
+<br>
+<code class='styleguide__code'>icon icon--nav-location</code>
+
+<i class="icon icon--nav-mail"></i>
+<br>
+<code class='styleguide__code'>icon icon--nav-mail</code>
+
+<i class="icon icon--nav-phone"></i>
+<br>
+<code class='styleguide__code'>icon icon--nav-phone</code>
+
+<i class="icon icon--search"></i>
+<br>
+<code class='styleguide__code'>icon icon--search</code>
+
+<i class="icon icon--social-facebook"></i>
+<br>
+<code class='styleguide__code'>icon icon--social-facebook</code>
+
+<i class="icon icon--social-github"></i>
+<br>
+<code class='styleguide__code'>icon icon--social-github</code>
+
+<i class="icon icon--social-github"></i>
+<br>
+<code class='styleguide__code'>icon icon--social-github</code>
+
+<i class="icon icon--social-linkedin"></i>
+<br>
+<code class='styleguide__code'>icon icon--social-linkedin</code>
+
+<i class="icon icon--social-twitter"></i>
+<br>
+<code class='styleguide__code'>icon icon--social-twitter</code>
+
+<i class="icon icon--arrow-up"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-up</code>
+
+<i class="icon icon--arrow-down"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-down</code>
+
+<i class="icon icon--arrow-left"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-left</code>
+
+<i class="icon icon--arrow-right"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-right</code>
+
+<i class="icon icon--arrow-tail-down"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-tail-down</code>
+
+<i class="icon icon--arrow-tail-left"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-tail-left</code>
+
+<i class="icon icon--arrow-tail-right"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-tail-right</code>
+
+<i class="icon icon--arrow-tail-up"></i>
+<br>
+<code class='styleguide__code'>icon icon--arrow-tail-up</code>
+
+<i class="icon icon--triangle-down"></i>
+<br>
+<code class='styleguide__code'>icon icon--triangle-down</code>
+
+<i class="icon icon--triangle-left"></i>
+<br>
+<code class='styleguide__code'>icon icon--triangle-left</code>
+
+<i class="icon icon--triangle-right"></i>
+<br>
+<code class='styleguide__code'>icon icon--triangle-right</code>
+
+<i class="icon icon--triangle-up"></i>
+<br>
+<code class='styleguide__code'>icon icon--triangle-up</code>
+
+{% else %}
+<i class="icon icon--"></i>
+<br>
+<code class='styleguide__code'>icon icon--</code>
+{% endif %}
+
+*/

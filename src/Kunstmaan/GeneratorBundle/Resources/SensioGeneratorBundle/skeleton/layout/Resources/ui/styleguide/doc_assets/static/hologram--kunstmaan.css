@@ -2,12 +2,36 @@
    Styleguide Theme Kunstmaan
    ========================================================================== */
 
+/* Theme Color
+   ========================================================================== */
+.styleguide__header {
+    background: #2997ce !important;
+    color: #fff !important;
+}
+
+.styleguide__header__head {
+    color: #fff !important;
+}
+
+.styleguide__header__main-nav__item {
+    color: #fff !important;
+}
+
+.styleguide__header__main-nav__item:hover {
+    color: #fff !important;
+}
+
+.styleguide__header__main-nav__item--active, .styleguide__header__main-nav__item--active:hover {
+    background: #fff !important;
+    color: #333 !important;
+}
+
+
+
 /* Header
    ========================================================================== */
 .styleguide__header {
     overflow: hidden;
-    background: #1bc8a1 !important;
-    color: #fff !important;
 }
 
 @media (min-width: 950px) {
@@ -25,11 +49,10 @@
     padding-left: 1em;
 
     font-family: arial, sans-serif;
-    font-size: 1rem;
-    line-height: 3rem;
+    font-size: 16px;
+    line-height: 40px;
     font-weight: bold;
     text-transform: uppercase;
-    color: #fff !important;
 }
 
 @media (min-width: 950px) {
@@ -47,25 +70,24 @@
     position: relative;
 
     display: inline-block;
-    height: 3rem;
+    height: 40px;
     padding: 0 1em;
 
-    font-size: 1rem;
-    line-height: 3rem;
-    color: #fff;
+    font-size: 16px;
+    line-height: 40px;
     text-decoration: none;
 
-    transition: color .15s ease;
+    transition: opacity .3s ease;
 }
 
 .styleguide__header__main-nav__item:hover {
-    color: #003767;
+    opacity: .8;
 }
 
 .styleguide__header__main-nav__item--active, .styleguide__header__main-nav__item--active:hover {
-    background: #fff;
-    color: #003767;
+    opacity: 1;
 }
+
 
 
 /* Main
@@ -77,21 +99,22 @@
 }
 
 
+
 /* Blocks Navigation
    ========================================================================== */
 .styleguide__block-navigation {
     z-index: 99;
     position: fixed;
-    top: 3rem;
+    top: 40px;
     bottom: 0;
     left: 0;
     overflow: auto;
 
     display: none;
     width: 15vw;
-    padding: 1rem 0 4rem 0;
+    padding: 1em 0 4em 0;
 
-    border-right: 1px solid #8597a2;
+    border-right: 1px solid #E4E4E4;
     background: #fff;
 }
 
@@ -105,8 +128,9 @@
     display: block;
     padding: .5em 1em;
 
-    font-size: .8rem;
-    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
     text-align: right;
     text-decoration: none;
 }
@@ -120,36 +144,31 @@
 
 /* Content Container
    ========================================================================== */
-.styleguide__content-container > h1 {
-    position: relative !important;
-    padding-top: 6.5rem !important;
-    margin-bottom: 2rem !important;
-    font-size: 2rem !important;
-    line-height: 1 !important;
-
-    color: #1bc8a1 !important;
+.styleguide__content-container {
+    max-width: 100%;
+    padding: 0 20px;
 }
 
-.styleguide__content-container > h1:before {
-    content: '' !important;
-    position: absolute !important;
-    top: 6.7rem !important;
-    left: -1rem !important;
-    display: block !important;
-    width: .5rem !important;
-    height: .8em !important;
+.styleguide__content-container > h1 {
+    margin: 0 -20px 0 -20px !important;
 
-    background: #1bc8a1 !important;
-    opacity: .2 !important;
+    position: relative !important;
+    padding: 20px !important;
+    padding-top: 100px !important;
+    margin-bottom: 2rem !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+
+    border-bottom: 1px solid #E4E4E4 !important;
+    background: #fff !important;
+
+    color: #333 !important;
 }
 
 .styleguide__content-container > h1:first-child {
-    padding-top: 3.5rem !important;
+    padding-top: 60px !important;
 }
 
-.styleguide__content-container > h1:first-child:before {
-    top: 3.7rem !important;
-}
 
 
 /* Color template
@@ -163,13 +182,22 @@
 
 .styleguide__color-template__example {
     display: block;
-    width: 3rem;
-    height: 3rem;
-    margin: 0 auto 1rem;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 20px;
 
     border-radius: 50%;
 }
 
+.styleguide__code {
+    padding: .2em .4em;
+    white-space: nowrap;
+
+    color: #333;
+    background-color: #f9f9f9;
+    border: 0;
+    font-size: 12px;
+}
 
 
 /* Code blocks
@@ -179,27 +207,7 @@
     white-space: nowrap;
 
     background-color: #f9f9f9;
+    padding: 0 10px;
     border: 1px solid #ccc;
     font-size: .9rem;
-}
-
-.styleguide__code {
-    padding: .1em .2em;
-    white-space: nowrap;
-
-    color: #000;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    font-size: .9rem;
-}
-
-/* Helper classes
-   ========================================================================== */
-.styleguide--dark-bg {
-    background-color: #e3e3e3;
-    padding: 1em;
-}
-.styleguide--green-bg {
-    background-color: #1bc8a1;
-    padding: 1em;
 }

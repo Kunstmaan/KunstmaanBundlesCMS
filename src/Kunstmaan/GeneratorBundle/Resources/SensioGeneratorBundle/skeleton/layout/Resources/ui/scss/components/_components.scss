@@ -13,7 +13,6 @@
         "blocks/links",
         "blocks/buttons",
         "blocks/tables"{% if demosite %},
-        "blocks/submenu",
         "blocks/img-icon"
 {% endif %};
 
@@ -22,6 +21,7 @@
    ========================================================================== */
 {% if demosite %}
 @import "structures/splash",
+        "structures/submenu",
         "structures/blog-item";
 {% else %}
 // @import "structures/..";
