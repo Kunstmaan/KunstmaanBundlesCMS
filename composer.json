@@ -34,7 +34,7 @@
         "guzzle/guzzle": "3.8.*",
         "white-october/pagerfanta-bundle": "1.0.*",
         "phpoffice/phpexcel": "1.8.*",
-        "alchemy/google-plus-api-client": "~0.6.5",
+        "kunstmaan/google-api-custom": "~1.0.0",
         "ddeboer/data-import-bundle": "0.1.*",
         "gedmo/doctrine-extensions": "2.3.*",
         "lunetics/locale-bundle": "*",
