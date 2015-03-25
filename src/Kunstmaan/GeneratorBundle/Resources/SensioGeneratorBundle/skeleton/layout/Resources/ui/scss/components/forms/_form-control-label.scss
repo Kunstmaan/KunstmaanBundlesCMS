@@ -8,14 +8,25 @@
 .form-control-label {
 {% if demosite %}
     color: $grey;
-
-    padding: .2rem 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    transition: all .3s ease;
+    font-size: .9rem;
 
     pointer-events: none;
 {% endif %}
 }
+
+{% if demosite %}
+.form__input {
+    &:active,
+    &:focus,
+    &.form__input--active {
+        background: $white;
+
+        & + .form__label {
+            font-size: .9rem;
+        }
+    }
+
+    &:focus {
+        background: rgba($black, .1);
+    }
+}{% endif %}

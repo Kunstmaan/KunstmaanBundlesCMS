@@ -10,7 +10,7 @@
 {# Form row #}
 {% block form_row %}
     {% spaceless %}
-        <div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">
+        <div class="form-group <% if demosite %>form__input-group  <% endif %> {% if errors|length > 0 %}form-group--has-error{% endif %}">
             {{ form_widget(form) }}
             {{ form_label(form) }}
             {{ form_errors(form) }}
@@ -27,7 +27,7 @@
                 {% set label_attr = label_attr|merge({'for': id}) %}
             {% endif %}
             {% if required %}
-                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form-control-label form-control-label--required')|trim}) %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form-control-label form__label form-control-label--required')|trim}) %}
             {% endif %}
             {% if label is empty %}
                 {% set label = name|humanize %}
@@ -55,7 +55,7 @@
 {% block form_widget_simple %}
     {% spaceless %}
         {% set type = type|default('text') %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="<% if demosite %>js-form-control <% endif %>form-control form-control--input">
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="<% if demosite %>js-form-control form__input js-form__input <% endif %>form-control form-control--input">
     {% endspaceless %}
 {% endblock form_widget_simple %}
 
