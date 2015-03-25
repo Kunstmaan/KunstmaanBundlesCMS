@@ -22,7 +22,8 @@
 {% if demosite %}
 @import "structures/splash",
         "structures/submenu",
-        "structures/blog-item";
+        "structures/blog-item",
+        "structures/search-results";
 {% else %}
 // @import "structures/..";
 {% endif %}
