@@ -22,11 +22,17 @@
         background: $white;
 
         & + .form__label {
+            transform: translateY(-2rem);
+
             font-size: .9rem;
         }
     }
 
     &:focus {
         background: rgba($black, .1);
+
+        & + .form__label {
+            @include control-label-active;
+        }
     }
 }{% endif %}

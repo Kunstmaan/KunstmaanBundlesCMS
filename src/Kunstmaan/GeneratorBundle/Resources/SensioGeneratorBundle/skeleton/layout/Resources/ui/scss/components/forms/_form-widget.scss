@@ -16,8 +16,8 @@
     position: relative;
     border-bottom: 1px solid $hr-color;
 
-    ~ .control-label {
-        display: none;
+    ~ .form__label {
+        top: -2rem;
     }
 {% endif %}
 }
@@ -40,15 +40,12 @@
 {% if demosite %}
     padding-top: .5rem;
 
-    ~ .control-label {
-        top: -1.2rem;
-    }
 {% endif %}
 }
 
 .form-widget--choices--filled {
 {% if demosite %}
-    ~ .control-label {
+    ~ .form__label {
         @include control-label-active;
     }
 {% endif %}
@@ -65,12 +62,23 @@
         line-height: 80%;
     }
 
-    .control-label {
+    .form__label {
         top: -1.2rem;
     }
 
-    ~ .control-label {
+    ~ .form__label {
         display: none;
     }
 {% endif %}
 }
+
+/* Text area
+   ========================================================================== */
+
+{% if demosite %}
+.form-widget--textarea {
+    ~ .form__label {
+        top: -2.5rem;
+    }
+}
+{% endif %}

@@ -11,7 +11,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
         cargobay.sidebarToggle.init();
         cargobay.animateFormElements.init();
 
-        {{ bundle.getName() }}.forms.init();
+        // {{ bundle.getName() }}.forms.init();
         {{ bundle.getName() }}.search.init();
 {% endif %}
     };
