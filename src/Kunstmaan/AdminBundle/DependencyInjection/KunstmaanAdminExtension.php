@@ -47,6 +47,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {
+            $loader->load('console_listener.yml');
+        }
     }
 
     public function prepend(ContainerBuilder $container)
