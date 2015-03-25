@@ -3,11 +3,20 @@
    ========================================================================== */
 
 .search-results__wrapper {
-    @include clearfix;
-
     padding: 2em;
 
     background: $grey--lighter;
+
+    .search-results__input {
+        width: calc(100% - 75px);
+        max-width: 100%;
+
+        border-bottom: none;
+    }
+}
+
+.search-results__form-group {
+    @include clearfix;
 }
 
 .search-results__input,
@@ -20,6 +29,27 @@
     padding: 0 1.5em;
 }
 
-.search-results__input {
-    border-bottom: none;
+.search-results__text {
+    margin-bottom: 0;
 }
+
+/*doc
+---
+title: Newsletter
+name: 07_newsletter
+category: Structures
+---
+
+```html_example
+<form class="search-results__wrapper">
+    <div class="search-results__form-group">
+        <input type="text" name="query" id="query" placeholder="search" class="form-control search-results__input">
+        <button type="submit" name="search" id="search" class="btn btn--secondary search-results__button">
+            <i class="icon--search"></i>
+        </button>
+    </div>
+    <p class="search-results__text"><strong>5 Resultaten</strong> voor <strong>lorem</strong></p>
+</form>
+```
+
+*/
