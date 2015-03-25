@@ -22,7 +22,10 @@
 {% if demosite %}
 @import "structures/splash",
         "structures/submenu",
-        "structures/blog-item";
+        "structures/blog-item",
+        "structures/breadcrumb-nav",
+        "structures/header-visual",
+        "structures/newsletter";
 {% else %}
 // @import "structures/..";
 {% endif %}
@@ -33,7 +36,6 @@
 @import "footer/main-footer",
 {% if demosite %}
         "footer/social-footer",
-        "footer/newsletter",
 {% endif %}
         "footer/sub-footer";
 
@@ -45,9 +47,7 @@
         "header/site-nav",
         "header/language-nav",
         "header/contact-nav",
-        "header/search-form",
-        "header/header-visual",
-        "header/breadcrumb-nav"
+        "header/search-form"
 {% endif %};
 
 
