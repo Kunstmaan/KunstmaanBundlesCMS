@@ -87,6 +87,11 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles($sourceDir.$relPath.'/scss/', $targetDir.$relPath.'/scss/', array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
         $this->renderFiles($sourceDir.$relPath.'/styleguide/', $targetDir.$relPath.'/styleguide/', array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
 
+        if (!$this->demosite) {
+            //$this->removeDirectory($targetDir . $relPath . '/scss/pages/');
+            //$this->removeFile($targetDir . $relPath . '/scss/components/blocks/_tables.scss');
+        }
+
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
 
