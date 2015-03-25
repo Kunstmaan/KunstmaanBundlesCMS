@@ -96,7 +96,7 @@ kunstmaan_translator:
 	cache_dir: 			%kernel.cache_dir%/translations
 	managed_locales:	[]
 	file_formats:		['yml', 'xliff']
-	
+
 ```
 
 * ```enabled``` : Enabled or disable the KunstmaanTranslatorBundle
@@ -107,5 +107,4 @@ kunstmaan_translator:
 
 We advise you to overwrite the ```default_bundle``` configuration, as you will otherwise only include the KunstmaanTranslatorBundle translations.
 
-
-
+<p align="right"><a href="./05-03-google-analytics-dashboard.md">Next chapter: Google Analytics Dashboard &raquo;</a></p>

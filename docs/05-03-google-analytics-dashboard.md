@@ -11,7 +11,7 @@ Requirements:
 
 We’ll start creating a developers console account. This account is used to communicate with the Google APIs, and stores all credentials. We’ll need these credentials in our app. You can skip this step if you already have an existing account set up.
 
-Go to http://cloud.google.com/console and log in with a Google account. You can use an existing account or create a new one especially for your app. Start by creating a new project. Once the project is created, you’ll have to enable access for the Analytics API. Go to the APIs & Auth section, and select the APIs tab. Search the list for the Analytics API, and enable it by pressing the button on the right.
+Go to [http://cloud.google.com/console](http://cloud.google.com/console) and log in with a Google account. You can use an existing account or create a new one especially for your app. Start by creating a new project. Once the project is created, you’ll have to enable access for the Analytics API. Go to the APIs & Auth section, and select the APIs tab. Search the list for the Analytics API, and enable it by pressing the button on the right.
 
 Now go to the Credentials tab in the APIs & Auth section. You’ll have to create both a client ID and an API key. Start with the client ID, select “web application” and press create. We’ll add an authorized redirect URI later. Now create a new key and choose “browser key”. Leave the whitelist blank and press “create”. Be sure to keep the console open for a while.
 
@@ -40,31 +40,31 @@ Add following parameters to `app/config/parameters.yml.dist`
 Add the dashboard bundle to `composer.json`
 
     "require": {
-        ...
-        "kunstmaan/dashboard-bundle": "2.3.*@dev",
-        ...
+	...
+	"kunstmaan/dashboard-bundle": "~3.0",
+	...
     }
 
 Add the bundle in `app/AppKernel.php`
 
-        $bundles = array(
-            ...
-            new Kunstmaan\DashboardBundle\KunstmaanDashboardBundle(),
-            ...
-        );
+	$bundles = array(
+	    ...
+	    new Kunstmaan\DashboardBundle\KunstmaanDashboardBundle(),
+	    ...
+	);
 
 Add bundle routing in `app/config/routing.yml`
 
     kunstmaan_dashboard:
-        resource: "@KunstmaanDashboardBundle/Resources/config/routing.yml"
-        prefix:   /{_locale}/
-        requirements:
-            _locale: %requiredlocales%
+	resource: "@KunstmaanDashboardBundle/Resources/config/routing.yml"
+	prefix:   /{_locale}/
+	requirements:
+	    _locale: %requiredlocales%
 
 Change dashboard route in `app/config/config.yml`
 
     kunstmaan_admin:
-        dashboard_route: 'kunstmaan_dashboard'
+	dashboard_route: 'kunstmaan_dashboard'
 
 Update composer
 
@@ -103,3 +103,5 @@ You can also load the data from the console with the command
     app/console kuma:dashboard:collect
 
 You can always update the data yourself this way, but it’s easier to configure a cronjob to do this every 30 minutes, or another interval.
+
+<p align="right"><a href="./07-00-contributing.md">Next chapter: Contributing &raquo;</a></p>
