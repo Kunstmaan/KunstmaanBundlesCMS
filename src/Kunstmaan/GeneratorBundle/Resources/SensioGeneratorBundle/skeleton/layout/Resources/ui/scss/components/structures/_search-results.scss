@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Structures - Search results
+   ========================================================================== */
+
+.search-results__wrapper {
+    @include clearfix;
+
+    padding: 2em;
+
+    background: $grey--lighter;
+}
+
+.search-results__input,
+.search-results__button {
+    float: left;
+}
+
+.search-results__button {
+    min-height: 2.5rem;
+    padding: 0 1.5em;
+}
+
+.search-results__input {
+    border-bottom: none;
+}

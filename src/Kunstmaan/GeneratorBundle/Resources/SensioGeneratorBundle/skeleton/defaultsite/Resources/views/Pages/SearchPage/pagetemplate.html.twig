@@ -2,19 +2,19 @@
     <div class="row">
         <div class="col-md-12 col--padded">
             <form method="get" action="" class="search-results__wrapper">
+                <div>
+                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search.search'|trans }}" class="form-control search-results__input">
+                    <button type="submit" name="search" id="search" value="{{ 'search.search'|trans|title }}" class="btn btn--secondary search-results__button">
+                        <i class="icon--search"></i>
+                    </button>
+                </div>
                 <div class="search-results">
                     {% if q_query is defined and q_query != '' %}
-                        {% set nrResults = pagerfanta.getNbResults() %}
-                        <strong>{{ nrResults }} {% if nrResults == 1 %}{{ 'search.result'|trans }}{% else %}{{ 'search.results'|trans }}{% endif %}</strong> {{ 'search.for'|trans }} <strong>{{ q_query }}</strong>
+                        <p>
+                            {% set nrResults = pagerfanta.getNbResults() %}
+                            <strong>{{ nrResults }} {% if nrResults == 1 %}{{ 'search.result'|trans }}{% else %}{{ 'search.results'|trans }}{% endif %}</strong> {{ 'search.for'|trans }} <strong>{{ q_query }}</strong>
+                        </p>
                     {% endif %}
-                </div>
-                <div>
-                    <div>
-                        <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search.search'|trans }}">
-                        <button type="submit" name="search" id="search" value="{{ 'search.search'|trans|title }}">
-                            <i class="icon-search"></i>
-                        </button>
-                    </div>
                 </div>
             </form>
 
