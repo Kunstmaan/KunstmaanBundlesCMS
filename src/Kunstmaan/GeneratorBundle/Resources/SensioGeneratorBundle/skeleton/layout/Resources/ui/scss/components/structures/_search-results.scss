@@ -2,6 +2,9 @@
    Structures - Search results
    ========================================================================== */
 
+/* General
+   ========================================================================== */
+
 .search-results__wrapper {
     padding: 2em;
 
@@ -14,6 +17,9 @@
         border-bottom: none;
     }
 }
+
+/* Input field and button
+   ========================================================================== */
 
 .search-results__form-group {
     @include clearfix;
@@ -28,6 +34,9 @@
     min-height: 2.5rem;
     padding: 0 1.5em;
 }
+
+/* Text
+   ========================================================================== */
 
 .search-results__text {
     margin-bottom: 0;

@@ -30,6 +30,8 @@
     white-space: nowrap;
     user-select: none;
 
+    transition: background .3s ease-in-out;
+
     &:hover, &:focus, &:active {
         text-decoration: none;
         color: $text-color;
@@ -60,7 +62,7 @@
     border-color: $theme-color;
 
     &:hover, &:focus, &:active {
-        background-color: $theme-color;
+        background-color: lighten($theme-color, 5%);
         color: $white;
     }
 {% endif %}
@@ -74,7 +76,7 @@
     border-color: $theme-color--dark;
 
     &:hover, &:focus, &:active {
-        background-color: $theme-color--dark;
+        background-color: lighten($theme-color--dark, 5%);
         color: $white;
     }
 {% endif %}
