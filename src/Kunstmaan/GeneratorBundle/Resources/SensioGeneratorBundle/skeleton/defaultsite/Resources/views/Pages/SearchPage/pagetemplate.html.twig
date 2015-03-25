@@ -56,15 +56,16 @@
                                 {{ searchresult['_source']['content'] | truncate(300) | escape('html') }}
                             {% endif %}
                         </p>
-                        <ul class="breadcrumb">
+                        <nav role="navigation" class="breadcrumb">
                             {% for node_id in searchresult['_source']['ancestors']|reverse %}
                                 {% set nt = get_node_trans_by_node_id(node_id, app.request.locale) %}
                                 {% if nt %}
-                                    <li><a href="{{ path('_slug', { 'url': nt.url }) }}">{{ nt.title }}</a></li>
+                                    <a href="{{ path('_slug', { 'url': nt.url }) }}" class="breadcrumb__item">{{ nt.title }}</a>
+                                    <i class="icon icon--arrow-right breadcrumb__icon"></i>
                                 {% endif %}
                             {% endfor %}
-                            <li><a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}">{{ searchresult['_source']['title'] }}</a></li>
-                        </ul>
+                            <a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}" class="breadcrumb__item breadcrumb__item--current">{{ searchresult['_source']['title'] }}</a>
+                        </nav>
                     {% endfor %}
                     {% if pagerfanta.getNbPages() > 1 %}
                         {{ pagerfanta(pagerfanta, null, {'prev_message': 'pagerfanta.prev'|trans, 'next_message': 'pagerfanta.next'|trans}) }}
