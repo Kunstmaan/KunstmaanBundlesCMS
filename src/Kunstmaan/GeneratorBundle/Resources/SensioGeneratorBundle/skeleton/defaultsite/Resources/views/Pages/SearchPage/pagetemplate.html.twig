@@ -64,7 +64,7 @@
                                     <i class="icon icon--arrow-right breadcrumb__icon"></i>
                                 {% endif %}
                             {% endfor %}
-                            <a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}" class="breadcrumb__item breadcrumb__item--current">{{ searchresult['_source']['title'] }}</a>
+                            <a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}" class="breadcrumb__item breadcrumb__item--current search-results__breadcrumb__item--current">{{ searchresult['_source']['title'] }}</a>
                         </nav>
                     {% endfor %}
                     {% if pagerfanta.getNbPages() > 1 %}
