@@ -20,6 +20,8 @@
                         {% if widget is not null %}
                             {% set pagepartadmin = widget.pagepartadmin %}
                             {{ pagepartadmin_widget(pagepartadmin, formView) }}
+                        {% elseif region.template is defined and region.template %}
+                            {% include region.template with {'page': resource.page} %}
                         {% else %}
                             NO ADMIN FOUND for {{ region.name }}
                         {% endif %}

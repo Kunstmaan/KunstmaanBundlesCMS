@@ -3,6 +3,7 @@
 namespace {{ namespace }}\Twig;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 class BikesTwigExtension extends \Twig_Extension
 {
@@ -29,7 +30,8 @@ class BikesTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_bikes' => new \Twig_Function_Method($this, 'getBikes')
+            'get_bikes' => new \Twig_Function_Method($this, 'getBikes'),
+            'get_submenu_items' => new \Twig_Function_Method($this, 'getSubmenuItems')
         );
     }
 
@@ -39,6 +41,27 @@ class BikesTwigExtension extends \Twig_Extension
     public function getBikes()
     {
         return $this->em->getRepository('{{ bundle.getName() }}:Bike')->findAll();
+    }
+
+    /**
+     * @param AbstractPage $page
+     * @param string $locale
+     * @return array
+     */
+    public function getSubmenuItems(AbstractPage $page, $locale)
+    {
+        $items = array();
+
+        $nv = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor($page);
+        if ($nv) {
+            $nodeTranslations = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineChildren($nv->getNodeTranslation()->getNode(), $locale);
+            foreach ($nodeTranslations as $nt) {
+                $childPage = $nt->getPublicNodeVersion()->getRef($this->em);
+                $items[] = array('nt' => $nt, 'page' => $childPage);
+            }
+        }
+
+        return $items;
     }
 
     /**

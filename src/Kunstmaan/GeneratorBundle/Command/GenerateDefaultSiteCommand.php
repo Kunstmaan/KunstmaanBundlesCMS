@@ -110,6 +110,7 @@ EOT
         $this->assistant->writeLine('Generating default pageparts : <info>OK</info>');
 
         if ($this->demosite) {
+            // Generate a blog
             $command = $this->getApplication()->find('kuma:generate:article');
             $arguments = array(
                 'command'      => 'kuma:generate:article',
