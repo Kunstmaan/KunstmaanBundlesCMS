@@ -82,7 +82,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $this->createContentPages();
 {% if demosite %}
         $this->createAdminListPages();
-        // $this->createStylePage();
         $this->createFormPage();
         $this->createSearchPage();
 {% endif %}
@@ -463,6 +462,138 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 )
             );
 
+            // All pageparts listed below
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => 'Header h1',
+                    'setNiv' => 1
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => 'Header h2',
+                    'setNiv' => 2
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => 'Header h3',
+                    'setNiv' => 3
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => 'Header h4',
+                    'setNiv' => 4
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => 'Header h5',
+                    'setNiv' => 5
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\HeaderPagePart',
+                array(
+                    'setTitle' => 'Header h6',
+                    'setNiv' => 6
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\IntroTextPagePart',
+                array(
+                    'setcontent' => '<p>This is some intro text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\LinePagePart',
+                array()
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TextPagePart',
+                array(
+                    'setcontent' => '<p>This is a regular text pagepart. Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing</a> elit, sed do eiusmod tempor incididunt ut <strong>labore et dolore</strong> magna aliqua.</p>'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\TocPagePart',
+                array()
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ToTopPagePart',
+                array()
+            );
+            $media = $this->mediaCreator->createFile($imgDir.'stocks/fixie1.png', $folder->getId());
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ImagePagePart',
+                array(
+                    'setMedia' => $media // TODO: add caption
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\LinkPagePart',
+                array(
+                    'setUrl' => '/',
+                    'setText' => 'Link text'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ButtonPagePart',
+                array(
+                    'setLinkUrl' => '/',
+                    'setLinkText' => 'Link text',
+                    'setType' => 'primary',
+                    'setSize' => 'default',
+                    'setPosition' => 'left'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ButtonPagePart',
+                array(
+                    'setLinkUrl' => '/',
+                    'setLinkText' => 'Link text',
+                    'setType' => 'secondary',
+                    'setSize' => 'xl',
+                    'setPosition' => 'center'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ButtonPagePart',
+                array(
+                    'setLinkUrl' => '/',
+                    'setLinkText' => 'Link text',
+                    'setType' => 'tertiary',
+                    'setSize' => 'lg',
+                    'setPosition' => 'right'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ButtonPagePart',
+                array(
+                    'setLinkUrl' => '/',
+                    'setLinkText' => 'Link text',
+                    'setType' => 'quaternary',
+                    'setSize' => 'sm',
+                    'setPosition' => 'block'
+                )
+            );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\ButtonPagePart',
+                array(
+                    'setLinkUrl' => '/',
+                    'setLinkText' => 'Link text',
+                    'setType' => 'primary',
+                    'setSize' => 'xs',
+                    'setPosition' => 'center'
+                )
+            );
+
             $this->pagePartCreator->addPagePartsToPage('rent_bikes', $pageparts, $locale);
         }
 {% endif %}
@@ -475,7 +606,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     private function createAdminListPages()
     {
         $list = array(
-            array(Bike::TYPE_CITY_BIKE, 'Gazelle', 'CityZen C7', 600),
+            array(Bike::TYPE_CITY_BIKE, 'Gazelle', 'CityZen C7', 1020),
             array(Bike::TYPE_RACING_BIKE, 'Eddy Merckx', 'EMX-525', 2300),
             array(Bike::TYPE_RACING_BIKE, 'Specialized', 'S-WORKS TARMAC DURA-ACE', 2100),
             array(Bike::TYPE_MOUNTAIN_BIKE, 'BMC', 'Teamelite TE01 29', 1600),
@@ -492,87 +623,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
 
         $this->manager->flush();
-    }
-
-    /**
-     * Create a ContentPage with some styled components
-     */
-    private function createStylePage()
-    {
-        $nodeRepo = $this->manager->getRepository('KunstmaanNodeBundle:Node');
-        $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
-
-        $contentPage = new ContentPage();
-        $contentPage->setTitle('Home');
-
-        $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Styles');
-            $translation->setSlug('styles');
-            $translation->setWeight(40);
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Styles');
-            $translation->setSlug('styles');
-            $translation->setWeight(40);
-        });
-
-        $options = array(
-            'parent' => $homePage,
-            'page_internal_name' => 'styles',
-            'set_online' => true,
-            'hidden_from_nav' => false,
-            'creator' => self::ADMIN_USERNAME
-        );
-
-        $this->pageCreator->createPage($contentPage, $translations, $options);
-
-        $pageparts = array();
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Buttons',
-                'setNiv'   => 1
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Sizes',
-                'setNiv'   => 2
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
-            array(
-                'setContent' => '<p>
-                                 <button class="btn btn-mini">Mini button</button>
-                                 <button class="btn btn-small">Small button</button>
-                                 <button class="btn">Normal</button>
-                                 <button class="btn btn-large">Large button</button>
-                                 </p>'
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-            array(
-                'setTitle' => 'Styles',
-                'setNiv'   => 2
-            )
-        );
-        $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
-            array(
-                'setContent' => '<p>
-                                 <button class="btn btn-large">Normal</button>
-                                 <button class="btn btn-large btn-primary">Primary</button>
-                                 <button class="btn btn-large btn-info">Info</button>
-                                 <button class="btn btn-large btn-success">Success</button>
-                                 <button class="btn btn-large btn-danger">Danger</button>
-                                 <button class="btn btn-large btn-warning">Warning</button>
-                                 <button class="btn btn-large btn-inverse">Inverse</button>
-                                 <button class="btn btn-large btn-link">Link</button>
-                                 </p>'
-            )
-        );
-
-        $this->pagePartCreator->addPagePartsToPage('styles', $pageparts, 'en');
-        $this->pagePartCreator->addPagePartsToPage('styles', $pageparts, 'nl');
     }
 
     /**

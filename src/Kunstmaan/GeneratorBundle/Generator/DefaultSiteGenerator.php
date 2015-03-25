@@ -186,22 +186,22 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPageAdminType.php', $parameters);
         }
 
-        $relPath = '/Form/PageParts/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
-
         if ($this->demosite) {
+            $relPath = '/Form/PageParts/';
+            $sourceDir = $this->skeletonDir.$relPath;
+            $targetDir = $this->bundle->getPath().$relPath;
+
             $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePartAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePartAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspPagePartAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'BikesListPagePartAdminType.php', $parameters);
         }
 
-        $relPath = '/Form/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
-
         if ($this->demosite) {
+            $relPath = '/Form/';
+            $sourceDir = $this->skeletonDir.$relPath;
+            $targetDir = $this->bundle->getPath().$relPath;
+
             $this->renderSingleFile($sourceDir, $targetDir, 'BikeAdminType.php', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'UspItemAdminType.php', $parameters);
         }

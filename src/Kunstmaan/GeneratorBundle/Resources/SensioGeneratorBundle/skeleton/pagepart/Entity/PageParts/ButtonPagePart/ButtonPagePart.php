@@ -186,7 +186,7 @@ class {{ pagepart }} extends AbstractPagePart
     public function setType($type)
     {
         if (!in_array($type, self::$types)) {
-            throw new \InvalidArgumentException('Type not supported');
+            throw new \InvalidArgumentException("Type $type not supported");
         }
 
         $this->type = $type;
@@ -214,7 +214,7 @@ class {{ pagepart }} extends AbstractPagePart
     public function setSize($size)
     {
         if (!in_array($size, self::$sizes)) {
-            throw new \InvalidArgumentException('Size not supported');
+            throw new \InvalidArgumentException("Size $size not supported");
         }
         $this->size = $size;
 
@@ -241,7 +241,7 @@ class {{ pagepart }} extends AbstractPagePart
     public function setPosition($position)
     {
         if (!in_array($position, self::$positions)) {
-            throw new \InvalidArgumentException('Position not supported');
+            throw new \InvalidArgumentException("Position $position not supported");
         }
         $this->position = $position;
 
