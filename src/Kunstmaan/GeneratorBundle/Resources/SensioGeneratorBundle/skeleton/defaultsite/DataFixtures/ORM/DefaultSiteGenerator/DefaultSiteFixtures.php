@@ -462,6 +462,35 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 )
             );
 
+            $this->pagePartCreator->addPagePartsToPage('rent_bikes', $pageparts, $locale);
+        }
+
+        // All pageparts page
+        $contentPage = new ContentPage();
+        $contentPage->setTitle('All pageparts');
+
+        $translations = array();
+        foreach ($this->requiredLocales as $locale) {
+            $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
+                $translation->setTitle('All pageparts');
+                $translation->setSlug('pageparts');
+                $translation->setWeight(70);
+            });
+        }
+
+        $options = array(
+            'parent' => $homePage,
+            'page_internal_name' => 'all_pageparts',
+            'set_online' => true,
+            'hidden_from_nav' => true,
+            'creator' => self::ADMIN_USERNAME
+        );
+
+        $this->pageCreator->createPage($contentPage, $translations, $options);
+
+        foreach ($this->requiredLocales as $locale) {
+            $pageparts = array();
+
             // All pageparts listed below
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
@@ -594,7 +623,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 )
             );
 
-            $this->pagePartCreator->addPagePartsToPage('rent_bikes', $pageparts, $locale);
+            $this->pagePartCreator->addPagePartsToPage('all_pageparts', $pageparts, $locale);
         }
 {% endif %}
     }
