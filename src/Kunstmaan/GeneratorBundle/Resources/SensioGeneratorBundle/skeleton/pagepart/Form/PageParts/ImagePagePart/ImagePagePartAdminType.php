@@ -31,6 +31,9 @@ class {{ pagepart }}AdminType extends AbstractType
             'mediatype' => 'image',
             'required' => true
         ));
+        $builder->add('caption', 'text', array(
+            'required' => false
+        ));
         $builder->add('altText', 'text', array(
             'required' => false,
             'label' => 'mediapagepart.image.alttext'

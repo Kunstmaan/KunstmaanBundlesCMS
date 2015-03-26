@@ -562,7 +562,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ImagePagePart',
                 array(
-                    'setMedia' => $media // TODO: add caption
+                    'setMedia' => $media,
+                    'setCaption' => 'Some caption message'
                 )
             );
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(

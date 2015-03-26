@@ -22,6 +22,11 @@ class {{ pagepart }} extends AbstractPagePart
     private $media;
 
     /**
+     * @ORM\Column(type="string", name="caption", nullable=true)
+     */
+    private $caption;
+
+    /**
      * @ORM\Column(type="string", name="alt_text", nullable=true)
      */
     private $altText;
@@ -99,6 +104,16 @@ class {{ pagepart }} extends AbstractPagePart
     }
 
     /**
+     * Get alt text
+     *
+     * @return string
+     */
+    public function getAltText()
+    {
+        return $this->altText;
+    }
+
+    /**
      * Get media
      *
      * @return Media
@@ -123,13 +138,27 @@ class {{ pagepart }} extends AbstractPagePart
     }
 
     /**
-     * Get alt text
+     * Set caption
+     *
+     * @param string $caption
+     *
+     * @return {{ pagepart }}
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    /**
+     * Get caption
      *
      * @return string
      */
-    public function getAltText()
+    public function getCaption()
     {
-        return $this->altText;
+        return $this->caption;
     }
 
     /**
