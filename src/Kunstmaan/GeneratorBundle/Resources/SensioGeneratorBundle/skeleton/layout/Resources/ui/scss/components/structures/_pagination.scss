@@ -6,21 +6,51 @@
 
     ul {
         padding: 0;
+
+        text-align: center;
     }
 
     li {
         display: inline-block;
 
         list-style: none;
+
+        color: $grey--dark;
+        font-size: .9rem;
+
+        a {
+            color: $grey--dark;
+            font-size: .9rem;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: $blue;
+            }
+        }
+
+        & + li {
+            margin-left: 2rem;
+        }
     }
 
-    .prev a,
-    .next a,
-    .disabled span {
-        text-indent: 100%;
-        white-space: nowrap;
-        overflow: hidden;
+    .active {
+        height: 2rem;
+        width: 2rem;
+
+        background: $blue;
+
+        border-radius: 100%;
+
+        span {
+            color: $white;
+            line-height: 2rem;
+        }
     }
+}
+
+.pagination__direction-icon {
+    font-size: .6rem;
 }
 
 /*doc
