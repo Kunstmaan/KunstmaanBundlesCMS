@@ -177,23 +177,23 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section2'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Koop een fiets' : 'Buy a bike',
+                    'setTitle' => $locale == 'nl' ? 'Onze fiets' : 'Our bycicles',
                     'setDescription' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>',
                     'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
-                    'setLinkText' => $locale == 'nl' ? 'Lees meer' : 'Read more',
+                    'setLinkText' => $locale == 'nl' ? 'Ondek onze projecten' : 'Discover our projects',
                     'setImage' => $buyBikeMedia,
                     'setImagePosition' => 'right',
                 )
             );
 
-            $repairBikeMedia = $this->mediaCreator->createFile($imgDir.'stocks/fixie1.png', $folder->getId());
+            $repairBikeMedia = $this->mediaCreator->createFile($imgDir.'stocks/homepage__maintenance.jpg', $folder->getId());
             $pageparts['section3'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Fietsherstellingen' : 'Bike repair',
+                    'setTitle' => $locale == 'nl' ? 'Onderhoud' : 'Maintenance',
                     'setDescription' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>',
                     'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
-                    'setLinkText' => $locale == 'nl' ? 'Lees meer' : 'Read more',
+                    'setLinkText' => $locale == 'nl' ? 'Bekijk lorem ipsum' : 'Read more',
                     'setImage' => $repairBikeMedia,
                     'setImagePosition' => 'left',
                 )
@@ -202,29 +202,29 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Waarom voor ons kiezen?' : 'Why companyname?',
+                    'setTitle' => $locale == 'nl' ? 'Waarom voor ons kiezen?' : 'Why choose us?',
                     'setNiv' => 2
                 )
             );
             $items = new \Doctrine\Common\Collections\ArrayCollection();
-            $item1Media = $this->mediaCreator->createFile($imgDir.'icons/lamp.svg', $folder->getId());
+            $item1Media = $this->mediaCreator->createFile($imgDir.'icons/icon--1.svg', $folder->getId());
             $item1 = new \{{ namespace }}\Entity\UspItem();
             $item1->setIcon($item1Media);
-            $item1->setTitle('Title 1');
+            $item1->setTitle('Fast repair');
             $item1->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
             $item1->setWeight(0);
             $items->add($item1);
-            $item2Media = $this->mediaCreator->createFile($imgDir.'icons/user.svg', $folder->getId());
+            $item2Media = $this->mediaCreator->createFile($imgDir.'icons/icon--2.svg', $folder->getId());
             $item2 = new \{{ namespace }}\Entity\UspItem();
             $item2->setIcon($item2Media);
-            $item2->setTitle('Title 2');
+            $item2->setTitle('Personal service');
             $item2->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
             $item2->setWeight(1);
             $items->add($item2);
-            $item3Media = $this->mediaCreator->createFile($imgDir.'icons/mouse.svg', $folder->getId());
+            $item3Media = $this->mediaCreator->createFile($imgDir.'icons/icon--3.svg', $folder->getId());
             $item3 = new \{{ namespace }}\Entity\UspItem();
             $item3->setIcon($item3Media);
-            $item3->setTitle('Title 3');
+            $item3->setTitle('10 years of experience');
             $item3->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
             $item3->setWeight(2);
             $items->add($item3);
@@ -238,7 +238,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section5'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\HeaderPagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Het team' : 'The team',
+                    'setTitle' => $locale == 'nl' ? 'Het team' : 'The Team',
                     'setNiv' => 2
                 )
             );

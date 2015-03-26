@@ -1,0 +1,52 @@
+/* ==========================================================================
+   Structures - Pagination
+   ========================================================================== */
+
+.pagination {
+
+    ul {
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+
+        list-style: none;
+    }
+
+    .prev a,
+    .next a,
+    .disabled span {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+/*doc
+---
+title: Pagination
+name: 08_pagination
+category: Structures
+---
+
+```html_example
+<div class="pagination">
+    <ul>
+        <li class="prev disabled">
+            <span>← Previous</span>
+        </li>
+        <li class="active">
+            <span>1</span>
+        </li>
+        <li>
+            <a href="/app_dev.php/nl/blog?page=2">2</a>
+        </li>
+        <li class="next">
+            <a href="/app_dev.php/nl/blog?page=2">Next →</a>
+        </li>
+    </ul>
+</div>
+```
+
+*/

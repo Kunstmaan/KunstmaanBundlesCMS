@@ -30,7 +30,12 @@
         {% endfor %}
 
         {% if pagerfanta.haveToPaginate() %}
-            {{ pagerfanta(pagerfanta) }}
+            {{ pagerfanta(pagerfanta, null, {
+                    'pageParameter': '[page]',
+                    'prev_message':'<span class="icon--arrow-left"></span>',
+                    'next_message':'<span class="icon--arrow-right"></span>'
+                })
+            }}
         {% endif %}
     {% endif %}
 </div>

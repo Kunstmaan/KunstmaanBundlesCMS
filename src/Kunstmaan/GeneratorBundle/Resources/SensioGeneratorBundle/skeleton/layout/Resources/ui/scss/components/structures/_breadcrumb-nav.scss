@@ -18,6 +18,10 @@
 
     font-size: .8rem;
     font-weight: 400;
+
+    & .search-results__breadcrumb__item--current {
+        font-weight: 600;
+    }
 }
 
 
