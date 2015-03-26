@@ -912,8 +912,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
         $publicDir = dirname(__FILE__).'/../../../Resources/ui/';
         $this->mediaCreator->createFile($publicDir.'img/general/logo-kunstmaan.svg', $imageFolder->getId());
+        {% if demosite %}
         $this->mediaCreator->createFile($publicDir.'img/demosite/logo-thecrew.svg', $imageFolder->getId());
         $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());
+        {% endif %}
 
         // Create dummy video folder and add dummy videos
         $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));

@@ -131,7 +131,7 @@ class LayoutGenerator extends KunstmaanGenerator
             $this->removeFile($targetDir . $relPath . '/scss/footer/_social-footer.scss');
 
             // SCSS - Pageparts
-            $this->removeFile($targetDir . $relPath . '/scss/_pageparts/_service-pp.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/pageparts/_service-pp.scss');
 
             // SCSS - Mixins
             $this->removeDirectory($targetDir . $relPath . '/scss/helpers/mixins/');
