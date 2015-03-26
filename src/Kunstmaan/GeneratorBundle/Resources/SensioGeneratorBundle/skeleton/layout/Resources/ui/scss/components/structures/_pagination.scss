@@ -4,8 +4,19 @@
 
 .pagination {
 
+    ul {
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+
+        list-style: none;
+    }
+
     .prev a,
-    .next a{
+    .next a,
+    .disabled span {
         text-indent: 100%;
         white-space: nowrap;
         overflow: hidden;
