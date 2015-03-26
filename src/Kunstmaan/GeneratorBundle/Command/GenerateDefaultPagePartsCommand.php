@@ -65,7 +65,9 @@ EOT
 
         $pagepartNames = array(
             'AbstractPagePart',
+            'AudioPagePart',
             'ButtonPagePart',
+            'DownloadPagePart',
             'HeaderPagePart',
             'ImagePagePart',
             'IntroTextPagePart',

@@ -623,6 +623,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setPosition' => 'center'
                 )
             );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\DownloadPagePart',
+                array(
+                    'setMedia' => $media,
+                )
+            );
+            $video = $this->manager->getRepository('KunstmaanMediaBundle:Media')->findOneBy(array('contentType' => 'remote/video'));
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\VideoPagePart',
+                array(
+                    'setVideo' => $video,
+                    'setCaption' => 'Some text here',
+                    'setThumbnail' => $media
+                )
+            );
+
 
             $this->pagePartCreator->addPagePartsToPage('all_pageparts', $pageparts, $locale);
         }
