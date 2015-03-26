@@ -4,9 +4,10 @@ services:
         tags:
           - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
         arguments: [%defaultlocale%]
-
+{% if demosite %}
     {{ bundle.name|lower }}.bikes.twig.extension:
         class: {{ bundle.namespace }}\Twig\BikesTwigExtension
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: twig.extension }
+{% endif %}

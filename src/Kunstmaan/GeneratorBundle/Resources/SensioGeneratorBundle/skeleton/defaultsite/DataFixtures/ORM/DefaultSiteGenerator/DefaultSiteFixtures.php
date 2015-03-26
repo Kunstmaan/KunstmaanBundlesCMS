@@ -841,6 +841,12 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $trans['search.filter']['en'] = 'Filter';
         $trans['search.filter']['nl'] = 'Filter';
+
+        $trans['footer.visit_us']['en'] = 'Visit us';
+        $trans['footer.visit_us']['nl'] = 'Bezoek ons';
+
+        $trans['footer.contact_us']['en'] = 'Contact us';
+        $trans['footer.contact_us']['nl'] = 'Contacteer ons';
 {% endif %}
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
