@@ -88,8 +88,53 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles($sourceDir.$relPath.'/styleguide/', $targetDir.$relPath.'/styleguide/', array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
 
         if (!$this->demosite) {
-            //$this->removeDirectory($targetDir . $relPath . '/scss/pages/');
-            //$this->removeFile($targetDir . $relPath . '/scss/components/blocks/_tables.scss');
+
+            // Files
+            $this->removeDirectory($targetDir . $relPath . '/files/content/');
+            $this->removeDirectory($targetDir . $relPath . '/files/dummy/');
+
+
+            // Images
+            $this->removeDirectory($targetDir . $relPath . '/fonts/iconfont/');
+
+
+            // JS
+            $this->removeFile($targetDir . $relPath . '/js/search.js');
+
+
+            // Images
+            $this->removeDirectory($targetDir . $relPath . '/img/demosite/');
+
+
+            // SCSS
+            // SCSS - Blocks
+            $this->removeFile($targetDir . $relPath . '/scss/blocks/_img-icon.scss');
+
+            // SCSS - Structures
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_splash.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_submenu.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_blog-item.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_search-results.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_breadcrumb-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_header-visual.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_newsletter.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/structures/_pagination.scss');
+
+            // SCSS - Header
+            $this->removeFile($targetDir . $relPath . '/scss/footer/_main-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/footer/_site-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/footer/_language-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/footer/_contact-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/footer/_search-form.scss');
+
+            // SCSS - Footer
+            $this->removeFile($targetDir . $relPath . '/scss/footer/_social-footer.scss');
+
+            // SCSS - Pageparts
+            $this->removeFile($targetDir . $relPath . '/scss/_pageparts/_service-pp.scss');
+
+            // SCSS - Mixins
+            $this->removeDirectory($targetDir . $relPath . '/scss/helpers/mixins/');
         }
 
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
@@ -100,8 +145,16 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     private function generateTemplate()
     {
+        $sourceDir = $this->skeletonDir;
+        $targetDir = $this->bundle->getPath();
+
         $relPath = '/Resources/views/';
         $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
+
+        if (!$this->demosite) {
+            // Layout
+            $this->removeFile($targetDir . $relPath . '/Layout/mobile_nav.html.twig');
+        }
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');
     }

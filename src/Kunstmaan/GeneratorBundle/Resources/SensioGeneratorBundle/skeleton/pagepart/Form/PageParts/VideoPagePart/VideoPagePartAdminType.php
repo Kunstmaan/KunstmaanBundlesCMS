@@ -6,9 +6,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
-/**
- * {{ pagepart }}AdminType
- */
 class {{ pagepart }}AdminType extends AbstractType
 {
     /**
@@ -23,28 +20,18 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
-        $builder->add('media', 'media', array(
+        $builder->add('video', 'media', array(
             'pattern' => 'KunstmaanMediaBundle_chooser',
-            'label' => 'mediapagepart.image.choosefile',
-            'mediatype' => 'image',
+            'mediatype' => 'video',
             'required' => true
+        ));
+        $builder->add('thumbnail', 'media', array(
+            'pattern' => 'KunstmaanMediaBundle_chooser',
+            'mediatype' => 'image',
+            'required' => false
         ));
         $builder->add('caption', 'text', array(
             'required' => false
-        ));
-        $builder->add('altText', 'text', array(
-            'required' => false,
-            'label' => 'mediapagepart.image.alttext'
-        ));
-        $builder->add('link', 'urlchooser', array(
-            'required' => false,
-            'label' => 'mediapagepart.image.link'
-        ));
-        $builder->add('openInNewWindow', 'checkbox', array(
-            'required' => false,
-            'label' => 'mediapagepart.image.openinnewwindow'
         ));
     }
 
@@ -66,7 +53,7 @@ class {{ pagepart }}AdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}',
+            'data_class' => '{{ namespace }}\Entity\PageParts\{{ pagepart }}',
         ));
     }
 }

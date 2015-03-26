@@ -33,15 +33,6 @@
 {% endif %}
 
 
-/* Footer
-   ========================================================================== */
-@import "footer/main-footer",
-{% if demosite %}
-        "footer/social-footer",
-{% endif %}
-        "footer/sub-footer";
-
-
 /* Header
    ========================================================================== */
 @import "header/main-header"{% if demosite %},
@@ -51,6 +42,15 @@
         "header/contact-nav",
         "header/search-form"
 {% endif %};
+
+
+/* Footer
+   ========================================================================== */
+@import "footer/main-footer",
+{% if demosite %}
+        "footer/social-footer",
+{% endif %}
+        "footer/sub-footer";
 
 
 /* Forms

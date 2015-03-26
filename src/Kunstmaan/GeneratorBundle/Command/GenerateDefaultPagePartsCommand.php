@@ -75,6 +75,7 @@ EOT
             'TextPagePart',
             'TocPagePart',
             'ToTopPagePart',
+            'VideoPagePart',
         );
 
         foreach ($pagepartNames as $pagepartName) {
