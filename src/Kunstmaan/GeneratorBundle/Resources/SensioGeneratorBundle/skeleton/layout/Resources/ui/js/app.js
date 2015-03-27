@@ -9,9 +9,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
         cargobay.scrollToTop.init();
         cargobay.toggle.init();
         cargobay.sidebarToggle.init();
-        cargobay.animateFormElements.init();
-
-        // {{ bundle.getName() }}.forms.init();
+        cargobay.videolink.init();
         {{ bundle.getName() }}.search.init();
 {% endif %}
     };

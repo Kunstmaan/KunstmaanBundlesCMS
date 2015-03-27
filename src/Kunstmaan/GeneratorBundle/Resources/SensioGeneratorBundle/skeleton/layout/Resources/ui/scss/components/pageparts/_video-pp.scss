@@ -1,0 +1,20 @@
+/* ==========================================================================
+   Pageparts - Video pp
+   ========================================================================== */
+/*doc
+---
+title: Video pp
+name: 01_videopp
+category: pageparts
+---
+
+
+```html_example
+<div class="videolink">
+    <a href="//www.youtube.com/embed/C9OfBcjyxKY" target="_blank" class="js-videolink-play-link videolink__video-link" data-video-provider="youtube" data-video-id="C9OfBcjyxKY" data-make-fluid="true">
+        <img src="img/videolink.jpg" alt="videolink-image" class="videolink__video-link__image" />
+    </a>
+    <div class="js-videolink-container videolink__video-container"></div>
+</div>
+```
+*/
