@@ -10,6 +10,7 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
         cargobay.toggle.init();
         cargobay.sidebarToggle.init();
         cargobay.videolink.init();
+        cargobay.cookieconsent.init();
         {{ bundle.getName() }}.search.init();
 {% endif %}
     };
