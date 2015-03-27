@@ -34,14 +34,7 @@
 <% else %>
 
     <div class="container">
-        <header>
-            <h1>
-                Homepage
-            </h1>
-        </header>
-        <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amet fermentum. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-        </p>
+        {{ render_pageparts(page, 'main') }}
     </div>
 
 <% endif %>

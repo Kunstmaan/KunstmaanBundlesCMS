@@ -3,6 +3,7 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use {{ namespace }}\Form\Pages\{{ entity_class }}OverviewPageAdminType;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}OverviewPageRepository")
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_overview_pages")
  */
-class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface
+class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage implements HasPageTemplateInterface, SearchTypeInterface
 {
     /**
      * @return AbstractPagePartAdminConfigurator[]
@@ -56,6 +57,14 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
     public function getDefaultView()
     {
         return '{{ bundle.getName() }}:Pages/{{ entity_class }}OverviewPage:view.html.twig';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSearchType()
+    {
+        return '{{ entity_class }}';
     }
 
     /**
