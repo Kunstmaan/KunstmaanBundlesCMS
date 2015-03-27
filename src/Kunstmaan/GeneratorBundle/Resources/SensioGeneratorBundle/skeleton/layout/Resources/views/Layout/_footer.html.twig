@@ -83,14 +83,22 @@
                 {% endfor %}
 
                 <% if demosite %>
-                    <h6 class="footer-nav__title">
-                        {{ 'footer.visit_us'|trans }}
-                    </h6>
-                    <p>The Crew<br/>Philipssite 5 - bus 10<br/>B-3001 Leuven</p>
-                <h6 class="footer-nav__title">
-                    {{ 'footer.contact_us'|trans }}
-                </h6>
-                <p><strong>T</strong> +32(0)16 300 780<br/><strong>E</strong> hello@kunstmaan.be</p>
+                    <div class="col-md-3 col-sm-3">
+                        <nav class="footer-nav">
+                            <h6 class="footer-nav__title">
+                                {{ 'footer.visit_us'|trans }}
+                            </h6>
+                            <p>The Crew<br/>Philipssite 5 - bus 10<br/>B-3001 Leuven</p>
+                        </nav>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <nav class="footer-nav">
+                            <h6 class="footer-nav__title">
+                                {{ 'footer.contact_us'|trans }}
+                            </h6>
+                            <p><strong>T</strong> +32(0)16 300 780<br/><strong>E</strong> hello@kunstmaan.be</p>
+                        </nav>
+                    </div>
                 <% endif %>
             </div>
         </section>
