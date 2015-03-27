@@ -108,30 +108,30 @@ class LayoutGenerator extends KunstmaanGenerator
 
             // SCSS
             // SCSS - Blocks
-            $this->removeFile($targetDir . $relPath . '/scss/blocks/_img-icon.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/blocks/_img-icon.scss');
 
             // SCSS - Structures
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_splash.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_submenu.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_blog-item.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_search-results.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_breadcrumb-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_header-visual.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_newsletter.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/structures/_pagination.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_splash.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_submenu.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_blog-item.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_search-results.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_breadcrumb-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_header-visual.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_newsletter.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_pagination.scss');
 
             // SCSS - Header
-            $this->removeFile($targetDir . $relPath . '/scss/footer/_main-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/footer/_site-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/footer/_language-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/footer/_contact-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/footer/_search-form.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_main-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_site-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_language-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_contact-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_search-form.scss');
 
             // SCSS - Footer
-            $this->removeFile($targetDir . $relPath . '/scss/footer/_social-footer.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_social-footer.scss');
 
             // SCSS - Pageparts
-            $this->removeFile($targetDir . $relPath . '/scss/pageparts/_service-pp.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/pageparts/_service-pp.scss');
 
             // SCSS - Mixins
             $this->removeDirectory($targetDir . $relPath . '/scss/helpers/mixins/');
