@@ -623,6 +623,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setPosition' => 'center'
                 )
             );
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\DownloadPagePart',
+                array(
+                    'setMedia' => $media,
+                )
+            );
+            $video = $this->manager->getRepository('KunstmaanMediaBundle:Media')->findOneBy(array('contentType' => 'remote/video'));
+            $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
+                '{{ namespace }}\Entity\PageParts\VideoPagePart',
+                array(
+                    'setVideo' => $video,
+                    'setCaption' => 'Some text here',
+                    'setThumbnail' => $media
+                )
+            );
+
 
             $this->pagePartCreator->addPagePartsToPage('all_pageparts', $pageparts, $locale);
         }
@@ -825,6 +841,45 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $trans['search.filter']['en'] = 'Filter';
         $trans['search.filter']['nl'] = 'Filter';
+
+        $trans['footer.visit_us']['en'] = 'Visit us';
+        $trans['footer.visit_us']['nl'] = 'Bezoek ons';
+
+        $trans['footer.contact_us']['en'] = 'Contact us';
+        $trans['footer.contact_us']['nl'] = 'Contacteer ons';
+
+        $trans['warning.outdated.title']['en'] = 'You are using an outdated browser.';
+        $trans['warning.outdated.title']['nl'] = 'Uw browser is verouderd.';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['warning.outdated.title']['fr'] = 'Vous utilisez un navigateur internet dépassé.';
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['warning.outdated.title']['de'] = 'Ihr Browser ist veraltet.';
+        }
+        $trans['warning.outdated.subtitle']['en'] = 'Some page content will be lost or rendered incorrectly.';
+        $trans['warning.outdated.subtitle']['nl'] = 'Sommige inhoud kan verloren gaan of zal niet correct weergegeven worden.';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['warning.outdated.subtitle']['fr'] = "Certain contenu pourrait être perdu ou ne pas s'afficher correctement";
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['warning.outdated.subtitle']['de'] = "Einige Inhalte können verloren gehen oder nicht richtig angezeigt werden.";
+        }
+        $trans['warning.outdated.description']['en'] = 'Please install a more recent version of your browser.';
+        $trans['warning.outdated.description']['nl'] = 'Gelieve een meer recente versie van uw browser te installeren.';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['warning.outdated.description']['fr'] = 'Nous vous conseillons de mettre votre navigateur à jour.';
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['warning.outdated.description']['de'] = 'Bitte aktualisieren Sie Ihren Browser auf eine neuere Version.';
+        }
+        $trans['warning.outdated.upgrade_browser']['en'] = 'Upgrade your browser';
+        $trans['warning.outdated.upgrade_browser']['nl'] = 'Upgrade uw browser';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['warning.outdated.upgrade_browser']['fr'] = 'Mettez votre navigateur à jour';
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['warning.outdated.upgrade_browser']['de'] = 'Aktualisieren Sie Ihren Browser';
+        }
 {% endif %}
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
@@ -857,8 +912,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $filesFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'files'));
         $publicDir = dirname(__FILE__).'/../../../Resources/ui/';
         $this->mediaCreator->createFile($publicDir.'img/general/logo-kunstmaan.svg', $imageFolder->getId());
+        {% if demosite %}
         $this->mediaCreator->createFile($publicDir.'img/demosite/logo-thecrew.svg', $imageFolder->getId());
         $this->mediaCreator->createFile($publicDir.'files/dummy/sample.pdf', $filesFolder->getId());
+        {% endif %}
 
         // Create dummy video folder and add dummy videos
         $videoFolder = $this->manager->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => 'video'));
