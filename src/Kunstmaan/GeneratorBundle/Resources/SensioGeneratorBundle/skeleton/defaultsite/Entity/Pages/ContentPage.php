@@ -117,7 +117,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:contentpage', '{{ bundle.getName() }}:contentpage-with-submenu');
+        return array('{{ bundle.getName() }}:contentpage'{% if demosite %}, '{{ bundle.getName() }}:contentpage-with-submenu'{% endif %});
     }
 
     /**

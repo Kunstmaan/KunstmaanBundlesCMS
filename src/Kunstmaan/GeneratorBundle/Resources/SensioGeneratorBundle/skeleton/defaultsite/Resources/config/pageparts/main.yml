@@ -1,4 +1,8 @@
 name: "Main"
 context: "main"
+{% if demosite %}
 types:
     - { name: "BikesList", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\BikesListPagePart" }
+{% else %}
+types: []
+{% endif %}
