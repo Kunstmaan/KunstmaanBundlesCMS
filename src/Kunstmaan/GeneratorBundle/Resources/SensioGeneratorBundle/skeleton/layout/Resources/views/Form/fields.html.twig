@@ -10,9 +10,9 @@
 {# Form row #}
 {% block form_row %}
     {% spaceless %}
-        <div class="form-group <% if demosite %>form__input-group  <% endif %> {% if errors|length > 0 %}form-group--has-error{% endif %}">
-            {{ form_widget(form) }}
+        <div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">
             {{ form_label(form) }}
+            {{ form_widget(form) }}
             {{ form_errors(form) }}
         </div>
     {% endspaceless %}
@@ -27,7 +27,7 @@
                 {% set label_attr = label_attr|merge({'for': id}) %}
             {% endif %}
             {% if required %}
-                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form-control-label form__label form-control-label--required')|trim}) %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form-control-label form-control-label--required')|trim}) %}
             {% endif %}
             {% if label is empty %}
                 {% set label = name|humanize %}
@@ -55,7 +55,7 @@
 {% block form_widget_simple %}
     {% spaceless %}
         {% set type = type|default('text') %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="<% if demosite %> form__input js-form__input <% endif %>form-control form-control--input">
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input">
     {% endspaceless %}
 {% endblock form_widget_simple %}
 
@@ -63,7 +63,7 @@
 {# Form widget: Textarea #}
 {% block textarea_widget %}
     {% spaceless %}
-        <textarea {{ block('widget_attributes') }} class="<% if demosite %> <% endif %>form-control form-control--textarea form-widget--textarea">{{ value }}</textarea>
+        <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea form-widget--textarea">{{ value }}</textarea>
     {% endspaceless %}
 {% endblock textarea_widget %}
 
@@ -73,7 +73,7 @@
     {% spaceless %}
         <div {{ block('widget_container_attributes') }} class="form-widget--select">
             <i class="icon icon--triangle-down select__icon"></i>
-            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="<% if demosite %> <% endif %>form-control form-control--select">
+            <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
                 {% if empty_value is not none %}
                     <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
                 {% endif %}

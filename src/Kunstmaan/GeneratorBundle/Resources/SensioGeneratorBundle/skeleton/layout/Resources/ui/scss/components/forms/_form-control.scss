@@ -14,7 +14,7 @@
     border: 0;
 
 {% if demosite %}
-    border-bottom: 1px solid $hr-color;
+    border: 1px solid $hr-color;
     font-weight: 400;
 {% endif %}
 
@@ -23,11 +23,9 @@
     }
 
 {% if demosite %}
-    &:focus, &:valid, &.form-control--filled {
-
-        ~ .control-label {
-            @include control-label-active;
-        }
+    &:focus,
+    &.form-control--filled {
+        border-color: $blue;
     }
 {% endif %}
 }
@@ -55,16 +53,17 @@
     z-index: 2;
     position: relative;
 
-    height: 3rem;
+    padding-right: 0;
+
+    border: none;
 
     border-radius: 0;
-    opacity: 0;
     box-shadow: none;
     background: transparent;
     background-image: none;
     -webkit-appearance: none;
 
-    &:focus, &:valid, &.form-control--filled {
+    &:focus, &:valid {
         opacity: 1;
     }
 {% endif %}

@@ -14,11 +14,18 @@
 .form-widget--select {
 {% if demosite %}
     position: relative;
-    border-bottom: 1px solid $hr-color;
 
-    ~ .form__label {
-        top: -2rem;
+    max-width: 26rem;
+    min-height: 2.5rem;
+    padding: 0 2.5rem 0 0;
+
+    border: 1px solid $hr-color;
+
+    &:focus {
+        border-color: $blue;
+        outline: none;
     }
+
 {% endif %}
 }
 {% if demosite %}
@@ -27,9 +34,12 @@
     top: 0;
     right: .2rem;
 
-    height: 38px;
+    height: 2.5rem;
+    width: 2.5rem;
+
     font-size: .4rem;
-    line-height: 40px;
+    line-height: 2.5rem;
+    text-align: center;
     color: $grey;
 }
 {% endif %}
@@ -77,9 +87,8 @@
 
 {% if demosite %}
 .form-widget--textarea {
-    ~ .form__label {
-        top: -2.5rem;
-    }
+    width: 100%;
+    max-width: 26rem;
 }
 {% endif %}
 

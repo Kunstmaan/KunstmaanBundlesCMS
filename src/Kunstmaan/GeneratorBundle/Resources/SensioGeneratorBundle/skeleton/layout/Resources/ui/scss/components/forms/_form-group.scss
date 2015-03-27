@@ -20,6 +20,10 @@
    ========================================================================== */
 .form-group--has-error {
 
+    .form-control {
+        border-color: $red;
+    }
+
     .help-block {
         font-size: .8rem;
         font-weight: 400;
