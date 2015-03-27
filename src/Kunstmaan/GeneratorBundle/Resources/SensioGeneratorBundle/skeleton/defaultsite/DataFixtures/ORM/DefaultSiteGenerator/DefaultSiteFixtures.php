@@ -629,6 +629,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setMedia' => $media,
                 )
             );
+            $media = $this->mediaCreator->createFile($imgDir.'stocks/videothumb.png', $folder->getId());
             $video = $this->manager->getRepository('KunstmaanMediaBundle:Media')->findOneBy(array('contentType' => 'remote/video'));
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\VideoPagePart',
