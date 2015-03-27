@@ -11,10 +11,13 @@
     background: $grey--lighter;
 
     .search-results__input {
-        width: calc(100% - 75px);
+        width: calc(100% - 90px);
+        margin-right: .7rem;
+
         max-width: 100%;
 
-        border-bottom: none;
+        @include box-shadow;
+
     }
 }
 

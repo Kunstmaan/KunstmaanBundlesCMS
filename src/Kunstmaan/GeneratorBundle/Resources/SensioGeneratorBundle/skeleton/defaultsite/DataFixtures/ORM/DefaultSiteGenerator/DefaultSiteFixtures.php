@@ -629,6 +629,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setMedia' => $media,
                 )
             );
+            $media = $this->mediaCreator->createFile($imgDir.'stocks/videothumb.png', $folder->getId());
             $video = $this->manager->getRepository('KunstmaanMediaBundle:Media')->findOneBy(array('contentType' => 'remote/video'));
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\VideoPagePart',
@@ -847,6 +848,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $trans['footer.contact_us']['en'] = 'Contact us';
         $trans['footer.contact_us']['nl'] = 'Contacteer ons';
+{% endif %}
 
         $trans['warning.outdated.title']['en'] = 'You are using an outdated browser.';
         $trans['warning.outdated.title']['nl'] = 'Uw browser is verouderd.';
@@ -880,7 +882,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         if (in_array('de', $this->requiredLocales)) {
             $trans['warning.outdated.upgrade_browser']['de'] = 'Aktualisieren Sie Ihren Browser';
         }
-{% endif %}
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
         foreach ($trans as $key => $array) {

@@ -2,7 +2,9 @@
 
     {{ render_pageparts(page, 'main') }}
 
+    <% if demosite %>
     <div class="submenu">
         {% include '<%= bundle.name %>:Layout:submenu.html.twig' with {'page': page} %}
     </div>
+    <% endif %>
 </div>

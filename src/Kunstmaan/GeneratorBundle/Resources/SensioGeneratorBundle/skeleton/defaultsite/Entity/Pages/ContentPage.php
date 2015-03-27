@@ -5,6 +5,7 @@ namespace {{ namespace }}\Entity\Pages;
 use {{ namespace }}\Form\Pages\ContentPageAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}content_pages")
  */
-class ContentPage extends AbstractPage  implements HasPageTemplateInterface
+class ContentPage extends AbstractPage  implements HasPageTemplateInterface, SearchTypeInterface
 {
 {% if demosite %}
     /**
@@ -94,6 +95,15 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
         return $this;
     }
 {% endif %}
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSearchType()
+    {
+        return 'Page';
+    }
+
     /**
      * @return string[]
      */
@@ -107,7 +117,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:contentpage', '{{ bundle.getName() }}:contentpage-with-submenu');
+        return array('{{ bundle.getName() }}:contentpage'{% if demosite %}, '{{ bundle.getName() }}:contentpage-with-submenu'{% endif %});
     }
 
     /**

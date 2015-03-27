@@ -4,6 +4,7 @@ namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
+use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use {{ namespace }}\Entity\{{ entity_class }}Author;
 use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
@@ -14,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_pages")
  * @ORM\HasLifecycleCallbacks
  */
-class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTemplateInterface
+class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTemplateInterface, SearchTypeInterface
 {
     /**
      * @var {{ entity_class }}Author
@@ -44,6 +45,14 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
     public function getDefaultAdminType()
     {
         return new {{ entity_class }}PageAdminType();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSearchType()
+    {
+        return '{{ entity_class }}';
     }
 
     /**
