@@ -40,7 +40,7 @@
             "<=bowerComponentsPath>cargobay/src/sidebar-toggle/js/jquery.sidebar-toggle.js",
             "<=bowerComponentsPath>cargobay/src/cookie-consent/js/jquery.cookie-consent.js",
             "<=bowerComponentsPath>cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
-            "<=bowerComponentsPath>cargobay/src/animate-form-elements/js/jquery.animate-form-elements.js",
+            "<=bowerComponentsPath>cargobay/src/float-label-form/js/jquery.float-label-form.js",
 {% endif %}
             "<=resourcesPath>ui/js/**/*.js"
         ],

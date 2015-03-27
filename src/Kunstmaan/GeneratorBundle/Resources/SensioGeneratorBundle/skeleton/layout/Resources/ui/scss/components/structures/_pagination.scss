@@ -64,7 +64,7 @@ category: Structures
 <div class="pagination">
     <ul>
         <li class="prev disabled">
-            <span>← Previous</span>
+            <span><span class="icon--arrow-left pagination__direction-icon"></span></span>
         </li>
         <li class="active">
             <span>1</span>
@@ -73,7 +73,9 @@ category: Structures
             <a href="/app_dev.php/nl/blog?page=2">2</a>
         </li>
         <li class="next">
-            <a href="/app_dev.php/nl/blog?page=2">Next →</a>
+            <a href="/app_dev.php/nl/blog?page=2">
+                <span class="icon--arrow-right pagination__direction-icon"></span>
+            </a>
         </li>
     </ul>
 </div>
