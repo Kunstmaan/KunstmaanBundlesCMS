@@ -481,7 +481,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $options = array(
             'parent' => $homePage,
             'page_internal_name' => 'all_pageparts',
-            'set_online' => true,
+            'set_online' => false,
             'hidden_from_nav' => true,
             'creator' => self::ADMIN_USERNAME
         );
