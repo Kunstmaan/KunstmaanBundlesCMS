@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Structures - Cookieconsent
+   ========================================================================== */
+
+.cookie-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 17rem;
+    padding: 0;
+
+    background: none;
+
+    p {
+        position: absolute;
+        left: 0;
+        bottom: 3.8rem;
+
+        padding: 1.5rem;
+        margin: 0;
+
+        color: $white;
+        font-weight: 700;
+        line-height: 1.2;
+        font-size: .7rem;
+        text-align: left;
+    }
+}
+
+.cookie-bar__btn {
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+}
+
+.cookie-bar__triangle {
+    border: 160px solid rgba(51,51,51,.9);
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
+
+/*doc
+---
+title: Cookie consent
+name: 09_cookieconsent
+category: Structures
+---
+
+```html_example
+    <div id="cookie-bar" class="cookie-bar">
+        <p>
+            Deze site gebruikt cookies om uw surfervaring op deze website gemakkelijker te maken. Indien u meer informatie wenst kan u <a href="#" class="cookie-bar__policy">hier ons cookiebeleid lezen</a>.
+        </p>
+        <button type="button" id="cookie-bar__consent-btn" class="btn btn-warning cookie-bar__btn">Doorgaan</button>
+        <div class="cookie-bar__triangle">
+        </div>
+    </div>
+```
+
+*/

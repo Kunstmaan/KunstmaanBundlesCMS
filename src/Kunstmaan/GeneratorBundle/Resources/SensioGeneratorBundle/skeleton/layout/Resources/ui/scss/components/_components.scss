@@ -27,7 +27,8 @@
         "structures/breadcrumb-nav",
         "structures/header-visual",
         "structures/newsletter",
-        "structures/pagination";
+        "structures/pagination",
+        "structures/cookie-consent";
 {% else %}
 // @import "structures/..";
 {% endif %}

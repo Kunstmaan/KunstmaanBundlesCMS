@@ -68,6 +68,11 @@
     </div>
 <% endif %>
 
+    {# Cookieconsent #}
+    {% block cookieconsent %}
+        {% include '<%= bundle.getName() %>:Layout:_cookieconsent.html.twig' %}
+    {% endblock %}
+
     {# JS Footer #}
     {% include '<%= bundle.getName() %>:Layout:_js_footer.html.twig' %}
 </body>
