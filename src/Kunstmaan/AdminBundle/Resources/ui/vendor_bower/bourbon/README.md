@@ -17,8 +17,7 @@ The mixins contain vendor specific prefixes for all CSS3 properties for support 
 
 ## Requirements
 
-- [Sass](https://github.com/sass/sass) 3.3+
-- :warning: If you are using **LibSass**, you need to [use Bourbon 3.2.3](#installing-older-versions-of-bourbon).
+- [Sass](https://github.com/sass/sass) 3.4+ or [LibSass](https://github.com/sass/libsass) 3.1+
 
 ## Installation
 
@@ -72,11 +71,7 @@ For command line help, visit our wiki page on Bourbon’s [command line interfac
   mv app/assets/stylesheets/application.css app/assets/stylesheets/application.scss
   ```
 
-4. Delete the Sprockets directive in `application.scss`:
-
-  ```scss
-  *= require_tree .
-  ```
+4. Delete _all_ Sprockets directives in `application.scss` (`require`, `require_tree` and `require_self`) and use Sass’s native `@import` instead.
 
 5. Import Bourbon at the beginning of `application.scss`. All additional stylesheets should be imported below Bourbon:
 
@@ -99,18 +94,18 @@ For command line help, visit our wiki page on Bourbon’s [command line interfac
 2. Reinstall the Bourbon gem, using the `-v` flag to specify the version you need:
 
   ```bash
-  gem install bourbon -v 3.2.3
+  gem install bourbon -v 3.2.4
   ```
 
 3. Follow the [instructions above](#installation) to install Bourbon into your project.
 
 ## Browser support
 
-- Chrome 10.0+
-- Firefox 3.6+
+- Chrome 26+
+- Firefox 29+
 - Internet Explorer 9+
-- Opera 12+
-- Safari 5.1+
+- Opera 15+
+- Safari 6.1+
 
 ## The Bourbon family
 

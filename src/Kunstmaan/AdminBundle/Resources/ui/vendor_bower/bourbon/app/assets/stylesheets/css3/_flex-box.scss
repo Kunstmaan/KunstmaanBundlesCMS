@@ -48,7 +48,7 @@
   -ms-flex-order: $int; // IE 10
 }
 
-@mixin box-flex($value: 0.0) {
+@mixin box-flex($value: 0) {
   @include prefixer(box-flex, $value, webkit moz spec);
   -ms-flex: $value; // IE 10
 }
@@ -76,9 +76,7 @@
     display: -moz-flex;
     display: -ms-flexbox; // 2011 (IE 10)
     display: flex;
-  }
-
-  @else if $value == "inline-flex" {
+  } @else if $value == "inline-flex" {
     display: -webkit-inline-box;
     display: -moz-inline-box;
     display: inline-box;
@@ -87,9 +85,7 @@
     display: -moz-inline-flex;
     display: -ms-inline-flexbox;
     display: inline-flex;
-  }
-
-  @else {
+  } @else {
     display: $value;
   }
 }
@@ -122,18 +118,12 @@
 
   @if $value == row {
     $value-2009: horizontal;
-  }
-
-  @else if $value == "row-reverse" {
+  } @else if $value == "row-reverse" {
     $value-2009: horizontal;
     $direction: reverse;
-  }
-
-  @else if $value == column {
+  } @else if $value == column {
     $value-2009: vertical;
-  }
-
-  @else if $value == "column-reverse" {
+  } @else if $value == "column-reverse" {
     $value-2009: vertical;
     $direction: reverse;
   }
@@ -155,18 +145,13 @@
 // 2011 - flex-wrap (nowrap | wrap | wrap-reverse)
 // 2012 - flex-wrap (nowrap | wrap | wrap-reverse)
 @mixin flex-wrap($value: nowrap) {
-
   // Alt values
   $alt-value: $value;
   @if $value == nowrap {
     $alt-value: single;
-  }
-
-  @else if $value == wrap {
+  } @else if $value == wrap {
     $alt-value: multiple;
-  }
-
-  @else if $value == "wrap-reverse" {
+  } @else if $value == "wrap-reverse" {
     $alt-value: multiple;
   }
 
@@ -222,17 +207,11 @@
   $alt-value: $value;
   @if $value == "flex-start" {
     $alt-value: start;
-  }
-
-  @else if $value == "flex-end" {
+  } @else if $value == "flex-end" {
     $alt-value: end;
-  }
-
-  @else if $value == "space-between" {
+  } @else if $value == "space-between" {
     $alt-value: justify;
-  }
-
-  @else if $value == "space-around" {
+  } @else if $value == "space-around" {
     $alt-value: distribute;
   }
 
@@ -255,9 +234,7 @@
 
   @if $value == "flex-start" {
     $alt-value: start;
-  }
-
-  @else if $value == "flex-end" {
+  } @else if $value == "flex-end" {
     $alt-value: end;
   }
 
@@ -278,9 +255,7 @@
   $value-2011: $value;
   @if $value == "flex-start" {
     $value-2011: start;
-  }
-
-  @else if $value == "flex-end" {
+  } @else if $value == "flex-end" {
     $value-2011: end;
   }
 
@@ -298,17 +273,11 @@
   $value-2011: $value;
   @if $value == "flex-start" {
     $value-2011: start;
-  }
-
-  @else if $value == "flex-end" {
+  } @else if $value == "flex-end" {
     $value-2011: end;
-  }
-
-  @else if $value == "space-between" {
+  } @else if $value == "space-between" {
     $value-2011: justify;
-  }
-
-  @else if $value == "space-around" {
+  } @else if $value == "space-around" {
     $value-2011: distribute;
   }
 

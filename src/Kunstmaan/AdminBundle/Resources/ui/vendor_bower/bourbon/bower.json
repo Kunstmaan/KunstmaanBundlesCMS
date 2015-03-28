@@ -1,21 +1,23 @@
 {
   "name": "bourbon",
   "description": "A simple and lightweight mixin library for Sass.",
-  "version": "4.1.1",
+  "version": "4.2.1",
   "main": "app/assets/stylesheets/_bourbon.scss",
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "bin",
-    "bourbon.gemspec",
     "CONTRIBUTING.md",
-    "features",
-    "LICENSE.md",
-    "lib",
     "Gemfile",
     "Gemfile.lock",
+    "Rakefile",
+    "_site",
+    "bin",
+    "bourbon.gemspec",
+    "features",
+    "lib",
     "package.json",
-    "Rakefile"
+    "sache.json",
+    "spec"
   ],
   "keywords": [
     "css",
