@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
+                ->booleanNode('enable_console_exception_listener')->defaultTrue()->end()
             ->end();
 
         return $treeBuilder;
