@@ -77,7 +77,7 @@ EOT
     {
         $this->assistant->writeSection('FormPage generation');
         $this->template = strtolower($this->pageName);
-        $this->sections = [strtolower($this->pageName)];
+        $this->sections = array(strtolower($this->pageName));
         $this->createGenerator()->generate($this->bundle, $this->pageName, $this->prefix, $this->fields, $this->template, $this->sections, $this->parentPages);
 
         $this->assistant->writeSection('FormPage successfully created', 'bg=green;fg=black');
