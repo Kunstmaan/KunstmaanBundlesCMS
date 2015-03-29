@@ -18,7 +18,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
      */
     public function __construct(EntityManager $em)
     {
-        $overviewPageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\{{ entity_class }}\\{{ entity_class }}OverviewPage');
+	$overviewPageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\Pages\\{{ entity_class }}OverviewPage');
         foreach ($overviewPageNodes as $overviewPageNode) {
             $this->overviewpageIds[] = $overviewPageNode->getId();
         }
@@ -30,8 +30,8 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             // Page
             $menuItem = new TopMenuItem($menu);
             $menuItem
-                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page')
-                ->setLabel('{{ entity_class }}')
+		->setRoute('{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page')
+		->setLabel('{{ entity_class }} Pages')
                 ->setUniqueId('{{ entity_class }}')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
@@ -43,7 +43,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             // Author
             $menuItem = new TopMenuItem($menu);
             $menuItem
-                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author')
+		->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author')
                 ->setLabel('{{ entity_class }} Authors')
                 ->setUniqueId('{{ entity_class }} Authors')
                 ->setParent($parent);

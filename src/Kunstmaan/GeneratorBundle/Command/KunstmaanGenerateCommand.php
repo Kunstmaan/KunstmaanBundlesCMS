@@ -540,7 +540,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $types             = array();
         $types[$counter++] = $niceNames ? 'Single line text' : 'single_line';
         $types[$counter++] = $niceNames ? 'Multi line text' : 'multi_line';
-        $types[$counter++] = $niceNames ? 'Rich text' : 'rich_text';
+	$types[$counter++] = $niceNames ? 'Wysiwyg' : 'wysiwyg';
         $types[$counter++] = $niceNames ? 'Link (url, text, new window)' : 'link';
         if ($this->isBundleAvailable('KunstmaanMediaPagePartBundle')) {
             $types[$counter++] = $niceNames ? 'Image (media, alt text)' : 'image';
@@ -613,7 +613,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 );
                 break;
             case 'multi_line':
-            case 'rich_text':
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type'      => 'text',
@@ -621,6 +620,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'nullable'  => $allNullable
                 );
                 break;
+	    case 'wysiwyg':
+		$fields[$type][] = array(
+		    'fieldName' => lcfirst(Container::camelize($name)),
+		    'type'      => 'text',
+		    'formType'  => 'wysiwyg',
+		    'nullable'  => $allNullable
+		);
+		break;
             case 'link':
                 foreach (array('url', 'text') as $subField) {
                     $fields[$type][$subField] = array(
@@ -851,5 +858,22 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         }
 
         return $pages;
+    }
+
+    /**
+     * Check that it is possible to generate the behat tests.
+     *
+     * @param BundleInterface $bundle
+     *
+     * @return bool
+     */
+    protected function canGenerateBehatTests(BundleInterface $bundle)
+    {
+	$behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/') . '/behat.yml';
+	$pagePartContext = $bundle->getPath() . '/Features/Context/PagePartContext.php';
+	$behatTestPage = $bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
+
+	// Make sure behat is configured and the PagePartContext and BehatTestPage exits
+	return (file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage));
     }
 }

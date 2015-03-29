@@ -15,7 +15,6 @@ use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
  */
 class GenerateArticleCommand extends GenerateDoctrineCommand
 {
-
     /**
      * @see Command
      */

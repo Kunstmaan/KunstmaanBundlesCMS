@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Form\{{ entity_class }};
+namespace {{ namespace }}\Form\Pages;
 
 use Kunstmaan\ArticleBundle\Form\AbstractArticleOverviewPageAdminType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -18,7 +18,7 @@ class {{ entity_class }}OverviewPageAdminType extends AbstractArticleOverviewPag
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}OverviewPage'
+	    'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}OverviewPage'
         ));
     }
 
@@ -27,6 +27,6 @@ class {{ entity_class }}OverviewPageAdminType extends AbstractArticleOverviewPag
      */
     public function getName()
     {
-        return '{{ entity_class }}OverviewPage';
+	return '{{ entity_class|lower }}_overview_page_type';
     }
 }

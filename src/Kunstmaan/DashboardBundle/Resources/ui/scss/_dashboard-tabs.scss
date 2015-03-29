@@ -1,0 +1,20 @@
+/* ==========================================================================
+   Dashboard Tabs
+   ========================================================================== */
+
+.dashboard {
+    position: relative;
+
+    margin-top: 2rem;
+}
+
+.dashboard-tabs {
+    padding-right: 10rem;
+}
+
+.segment-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}

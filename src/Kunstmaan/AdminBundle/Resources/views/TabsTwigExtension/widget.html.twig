@@ -3,12 +3,12 @@
 
 {% form_theme formView 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-<ul class="nav nav-tabs js-autocollapseTabs">
+<ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
     {% for tab in tabPane.tabs %}
         {% set tabIdentifier = tab.identifier %}
         {% set formErrors = tab.getFormErrors(formView) %}
 
-        <li {% if activeTab == tabIdentifier %} class="active" {% endif %} onClick="jQuery('#currenttab').val('{{ tabIdentifier }}');">
+	<li {% if activeTab == tabIdentifier %} class="active" {% endif %}>
             <a href="#{{ tabIdentifier }}" data-toggle="tab">
                 {{ tab.title }}
                 {% if formErrors|length > 0 %}
@@ -27,9 +27,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               More <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu" id="collapsed">
-
-            </ul>
+	    <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
         </li>
 </ul>
 
@@ -38,7 +36,7 @@
     {% for tab in tabPane.tabs %}
         {% set tabIdentifier = tab.identifier %}
 
-        <div class="{% if activeTab == tabIdentifier %}active{% endif %} tab-pane" id="{{ tabIdentifier }}">
+	<div class="tab-pane{% if activeTab == tabIdentifier %} active{% endif %}" id="{{ tabIdentifier }}">
             {% include tab.template with {'tab' : tab, 'formView': formView} %}
         </div>
     {% endfor %}

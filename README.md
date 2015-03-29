@@ -5,7 +5,7 @@ The Kunstmaan Bundles CMS is an advanced yet user-friendly content management sy
 
 Please refer to the documentation at [http://bundles.kunstmaan.be/getting-started](http://bundles.kunstmaan.be/getting-started) to get your CMS up and running.
 
-![Screenshot](http://bundles.kunstmaan.be/uploads/media/521f4ef030de9.png?7dd5040)
+![Screenshot](http://bundles.kunstmaan.be/uploads/media/5506eb367adee.png?falcon9ef16fd)
 
 ### Browser support
 

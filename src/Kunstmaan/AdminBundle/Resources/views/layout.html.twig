@@ -1,49 +1,43 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
+{% block extrabodyclasses %}login{% endblock %}
+
 {% block body %}
-        <header>
-            <div class="navbar navbar-fixed-top" data-dropdown="dropdown">
-                <div class="navbar-inner">
-                    <div class="container-fluid">
-                        <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
-                        <p class="pull-right">
-                            <a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
-                                <object data="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.svg') }}" type="image/svg+xml">
-                                    <img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_white.png') }}" alt="Kunstmaan" />
-                                </object>
-                            </a>
-                        </p>
-                   </div>
-               </div>
-            </div>
-        </header>
-        <div class="container-fluid">
-            <div class="login_form">
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                     <div class="alert alert-warning">
-                         <strong>{{ 'form.warning' | trans }}: </strong>
-                         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                         <a href="{{ path('fos_user_security_logout') }}">
-                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                         </a>
-                     </div>
+	<h2 class="login__title">
+	    {{ websitetitle | trans }}
+	</h2>
+	<div class="login__form">
+	    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		 <div class="alert alert-warning">
+		     <strong>{{ 'form.warning' | trans }}: </strong>
+		     {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+		     <a href="{{ path('fos_user_security_logout') }}" class="alert__action">
+			{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+		     </a>
+		 </div>
+	    {% endif %}
+	    {% for key, messages in app.session.flashbag.all() %}
+		<div class="alert alert-info {{ key }}">
+		    <button type="button" class="close" data-dismiss="alert">
+			<i class="fa fa-times"></i>
+		    </button>
+		    {% for message in messages %}
+			{{ message|trans({}, 'FOSUserBundle') }}
+		    {% endfor %}
+		</div>
+	    {% endfor %}
+
+	    {% block fos_user_content %}
+	    {% endblock fos_user_content %}
+	    {% block forgot_password_link %}
+		{% if 'resetting' not in app.request.pathInfo and 'profile' not in app.request.pathInfo %}
+		    <a href="{{ path('fos_user_resetting_request') }}" class="login__form__forgot-pw">
+			{{ 'Forgot my password.' | trans }}
+		    </a>
                 {% endif %}
-                {% for key, messages in app.session.flashbag.all() %}
-                    <div class="alert alert-info {{ key }}">
-                        <button class="close" data-dismiss="alert">&times;</button>
-                        {% for message in messages %}
-                            {{ message|trans({}, 'FOSUserBundle') }}
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-                
-                {% block fos_user_content %}
-                {% endblock fos_user_content %}
-                {% block forgot_password_link %}
-                    {% if 'resetting' not in app.request.pathInfo and 'profile' not in app.request.pathInfo %}
-                        <a href="{{ path('fos_user_resetting_request') }}" class="forgot_password fadeInDownPw">{{ 'Forgot my password.' | trans }}</a>
-                    {% endif %}
-                {% endblock %}
-            </div>
-         </div>
+	    {% endblock %}
+	</div>
+	<img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_white.svg" class="login__logo">
+
+	{% block footer %}{% endblock %}
 {% endblock %}

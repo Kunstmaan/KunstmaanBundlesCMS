@@ -18,7 +18,12 @@ class SeoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', 'hidden')
-                ->add('metaTitle', null, array('label' => 'Title', 'attr' => array('info_text' => 'Use %websitetitle% to dynamic fill in the main website title.')))
+		->add('metaTitle', null, array(
+		    'label' => 'Meta title',
+		    'attr' => array(
+			'info_text' => 'Sets the title in the head of your document. It should be short and descriptive. The content of the "Navigation title" field will be used if this field is left blank.'
+		    )
+		))
                 ->add('metaAuthor', null, array('label' => 'Meta author'))
                 ->add('metaDescription', null, array('label' => 'Meta description'))
                 ->add('metaKeywords', null, array('label' => 'Meta keywords'))

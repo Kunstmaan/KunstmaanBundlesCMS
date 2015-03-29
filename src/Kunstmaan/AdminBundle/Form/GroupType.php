@@ -40,7 +40,7 @@ class GroupType extends AbstractType
                     'expanded'      => false,
                     'required'      => true,
                     'attr'          => array(
-                        'class'            => 'chzn-select',
+			'class'            => 'js-advanced-select form-control advanced-select',
                         'data-placeholder' => 'Choose the roles...'
                     ),
                 )

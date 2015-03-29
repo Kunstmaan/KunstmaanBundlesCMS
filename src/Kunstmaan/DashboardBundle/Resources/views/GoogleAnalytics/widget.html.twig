@@ -1,8 +1,8 @@
 {% if token %}
 <div class="dashboard">
     {% if segments | length > 0 %}
-        <nav id="segment-menu">
-            <select>
+	<nav id="segment-menu" class="segment-menu">
+	    <select class="form-control">
                 <option data-segment-id="#" data-config-id="{% if configId is defined %}{{configId}}{% endif %}" {% if segmentId is null %}selected{% endif %} >
                     Default
                 </option>
@@ -71,17 +71,5 @@
     {% include 'KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig' with {'authUrl' : authUrl} %}
 {% endif %}
 
-{% block extrajavascript %}
-    {% javascripts
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/metrics.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/tabs.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/analytics/goals.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/morris-0.5.0.js'
-        '@KunstmaanDashboardBundle/Resources/public/js/libs/raphael-2.1.2.js'
-        output='generated-js/ga_widget.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
 
 

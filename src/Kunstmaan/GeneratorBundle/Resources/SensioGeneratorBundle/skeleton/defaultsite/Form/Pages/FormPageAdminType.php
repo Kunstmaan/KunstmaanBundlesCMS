@@ -27,11 +27,21 @@ class FormPageAdminType extends PageAdminType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
+
+	$builder->add('subject', 'text', array(
+	    'required' => false,
+	));
+	$builder->add('fromEmail', 'email', array(
+	    'required' => false,
+	));
+	$builder->add('toEmail', 'email', array(
+	    'required' => false,
+	));
         $builder->add('thanks', 'textarea', array(
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'rich_editor'
-                    )
+	    'required' => false,
+	    'attr' => array(
+		'class' => 'js-rich-editor rich-editor'
+	    )
         ));
     }
 
@@ -48,8 +58,6 @@ class FormPageAdminType extends PageAdminType
     }
 
     /**
-     * @assert () == 'formpage'
-     *
      * @return string
      */
     public function getName()

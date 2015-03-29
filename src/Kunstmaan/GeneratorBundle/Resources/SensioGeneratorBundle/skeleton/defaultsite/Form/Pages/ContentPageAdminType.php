@@ -27,6 +27,17 @@ class ContentPageAdminType extends PageAdminType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
+{% if demosite %}
+	$builder->add('menuImage', 'media', array(
+	    'pattern' => 'KunstmaanMediaBundle_chooser',
+	    'mediatype' => 'image',
+	    'required' => false
+	));
+	$builder->add('menuDescription', 'textarea', array(
+	    'attr' => array('rows' => 3, 'cols' => 600),
+	    'required' => false
+	));
+{% endif %}
     }
 
     /**
@@ -48,6 +59,6 @@ class ContentPageAdminType extends PageAdminType
      */
     public function getName()
     {
-        return 'page';
+	return 'contentpage';
     }
 }

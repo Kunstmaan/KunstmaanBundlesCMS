@@ -24,7 +24,7 @@ class TagsAdminType extends AbstractType
         $transformer = new TagsTransformer($this->tagManager);
         $builder->addViewTransformer($transformer, true);
     }
-	
+
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults($this->getDefaultOptions(array()));
@@ -43,7 +43,7 @@ class TagsAdminType extends AbstractType
             'multiple' => TRUE,
             'required' => false,
             'attr' => array(
-                'class' => 'chzn-select'
+		'class' => 'js-advanced-select form-control advanced-select'
             )
         );
     }

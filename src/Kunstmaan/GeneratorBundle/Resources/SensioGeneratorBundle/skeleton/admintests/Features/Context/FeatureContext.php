@@ -119,9 +119,11 @@ class FeatureContext extends AbstractContext
      */
     public function iLogOut()
     {
-        $this->iAmOnASpecificPage('dashboard');
-        $this->makeWide();
-        $this->findAndClickButton($this->getSession()->getPage(), 'xpath', '//a[text()="Logout"]');
+	return array(
+	    new Step\Given('I am on "/'.$this->lang.'/admin/dashboard"'),
+	    new Step\Given('I wait 2 seconds'),
+	    new Step\When('I follow "logout"')
+	);
     }
 
     /**

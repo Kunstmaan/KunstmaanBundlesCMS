@@ -1,18 +1,24 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
-
 {% block content %}
-{% if is_granted('ROLE_SUPER_ADMIN') %}
-    <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-medium" style="float:right">{{ 'Edit dashboard' | trans }}</a>
-{% endif %}
-{% if dashboardConfiguration %}
-    <div class="page-header">
-        <h1>{{ dashboardConfiguration.title }}</h1>
-    </div>
-    {{ dashboardConfiguration.content | raw }}
-{% else %}
-    <div class="page-header">
-        <h1>{{ 'omnext.welcome' | trans | raw }}</h1>
-    </div>
-{% endif %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+	<a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-default">
+	    {{ 'Edit dashboard' | trans }}
+	</a>
+    {% endif %}
+
+    {% if dashboardConfiguration %}
+	<div class="page-header">
+	    <h1>
+		{{ dashboardConfiguration.title }}
+	    </h1>
+	</div>
+	{{ dashboardConfiguration.content | raw }}
+    {% else %}
+	<div class="page-header">
+	    <h1>
+		{{ 'omnext.welcome' | trans | raw }}
+	    </h1>
+	</div>
+    {% endif %}
 {% endblock %}

@@ -120,6 +120,7 @@ class MenuBuilder
     {
         $current = $this->getCurrent();
         while (!is_null($current)) {
+
             if ($current instanceof TopMenuItem) {
                 return $current;
             }

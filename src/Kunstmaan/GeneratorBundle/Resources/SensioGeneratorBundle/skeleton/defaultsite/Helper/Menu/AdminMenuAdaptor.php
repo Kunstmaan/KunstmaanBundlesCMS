@@ -6,12 +6,14 @@ use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class AdminMenuAdaptor implements MenuAdaptorInterface
 {
+    /**
+     * @var SecurityContextInterface
+     */
     private $securityContext;
 
     /**
@@ -35,9 +37,9 @@ class AdminMenuAdaptor implements MenuAdaptorInterface
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             $menuitem = new TopMenuItem($menu);
             $menuitem
-                ->setRoute('{{ bundle_name|lower }}_admin_satellite')
-                ->setUniqueId('Manage satellites')
-                ->setLabel('Manage satellites')
+		->setRoute('{{ bundle_name|lower }}_admin_bike')
+		->setUniqueId('manage_bikes')
+		->setLabel('Manage bikes')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {
                 $menuitem->setActive(true);

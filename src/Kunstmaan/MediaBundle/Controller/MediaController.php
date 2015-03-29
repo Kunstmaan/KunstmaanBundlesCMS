@@ -265,8 +265,11 @@ class MediaController extends Controller
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
         $drop = null;
+
         if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0) {
             $drop = $request->files->get('files');
+	} else if (!$request->files->get('file')) {
+	    $drop = $request->files->get('file');
         } else {
             $drop = $request->get('text');
         }
@@ -278,7 +281,7 @@ class MediaController extends Controller
             return new Response(json_encode(array('status' => 'File was uploaded successfuly!')));
         }
 
-        $request->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
+	$request->getSession()->getFlashBag()->add('danger', 'Could not recognize what you dropped!');
 
         return new Response(json_encode(array('status' => 'Could not recognize anything!')));
     }

@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Bodycopy
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Line-height
+   ========================================================================== */
+$line-height--base:     1.6;
+
+$line-height--small:    1.1;
+$line-height--medium:   1.2;
+
+
+/* Text sizes
+   ========================================================================== */
+$text-size--base:               100%;       // 16px
+
+$text-size--small:              .75rem;     // 12px
+$text-size--medium:             .875rem;    // 14px
+$text-size--big:                1.125rem;   // 18px
+$text-size--big--rokkitt:       1.313rem;
+$text-size--bigger:             1.313rem;   // 21px
+$text-size--mega:               1.563rem;   // 25px
+$text-size--ultra:              1.75rem;    // 28px
+$text-size--ultra--rokkitt:     2rem;

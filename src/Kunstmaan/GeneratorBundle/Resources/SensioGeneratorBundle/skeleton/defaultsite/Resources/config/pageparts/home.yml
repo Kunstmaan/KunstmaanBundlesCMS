@@ -1,7 +1,0 @@
-name: "Home"
-context: "main"
-types:
-    - { name: "Header", class: "Kunstmaan\\PagePartBundle\\Entity\\HeaderPagePart" }
-    - { name: "Text", class: "Kunstmaan\\PagePartBundle\\Entity\\TextPagePart" }
-    - { name: "Line", class: "Kunstmaan\\PagePartBundle\\Entity\\LinePagePart" }
-    - { name: "Image", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\ImagePagePart" }

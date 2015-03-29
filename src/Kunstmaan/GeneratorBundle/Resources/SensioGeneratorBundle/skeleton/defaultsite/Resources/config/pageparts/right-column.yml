@@ -1,3 +1,0 @@
-name: "Right column"
-context: "right_column"
-extends: "middle-column"

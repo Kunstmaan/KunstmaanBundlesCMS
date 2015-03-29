@@ -1,0 +1,173 @@
+/* ==========================================================================
+   x-editable custom theme
+   ========================================================================== */
+
+.editableform {
+    margin-bottom: 0;
+}
+
+.editableform .form-group {
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin-bottom: 0;
+    white-space: nowrap;
+    line-height: 20px;
+}
+
+.editableform .form-control {
+    display: block;
+    width: 100%;
+    max-width: none;
+}
+
+.editable-buttons {
+   display: inline-block;
+   vertical-align: top;
+   margin-left: 7px;
+}
+
+.editable-buttons.editable-buttons-bottom {
+   display: block;
+   margin-top: 7px;
+   margin-left: 0;
+   text-align: right;
+}
+
+.editable-input {
+    vertical-align: top;
+    display: block;
+    width: 100%;
+    white-space: normal;
+    max-width: none;
+}
+
+.editable-buttons .editable-cancel {
+   margin-left: 7px;
+}
+
+.editable-buttons button.ui-button-icon-only {
+   height: 24px;
+   width: 30px;
+}
+
+ .editable-error-block {
+    max-width: 300px;
+    margin: 5px 0 0 0;
+    width: auto;
+    white-space: normal;
+}
+
+.editable-error-block.ui-state-error {
+    padding: 3px;
+}
+
+.editable-error {
+   color: red;
+}
+
+/* ---- For specific types ---- */
+.editableform .editable-date {
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+.editable-inline .add-on .icon-th {
+   margin-top: 3px;
+   margin-left: 1px;
+}
+
+.editable-checklist label input[type="checkbox"],
+.editable-checklist label span {
+    vertical-align: middle;
+    margin: 0;
+}
+
+.editable-checklist label {
+    white-space: nowrap;
+}
+
+.editable-wysihtml5 {
+    width: 566px;
+    height: 250px;
+}
+
+.editable-clear {
+   clear: both;
+   font-size: 0.9em;
+   text-decoration: none;
+   text-align: right;
+}
+
+.editable-clear-x {
+   display: block;
+   width: 13px;
+   height: 13px;
+   position: absolute;
+   opacity: 0.6;
+   z-index: 100;
+
+   top: 50%;
+   right: 6px;
+   margin-top: -6px;
+}
+
+.editable-clear-x:hover {
+    opacity: 1;
+}
+
+.editable-pre-wrapped {
+    white-space: pre-wrap;
+}
+.editable-container.editable-popup {
+    max-width: none !important;
+}
+
+.editable-container.popover {
+    width: auto;
+}
+
+.editable-container.editable-inline {
+    display: block;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.editable-container.ui-widget {
+    font-size: inherit;
+    z-index: 9990;
+}
+.editable-click,
+a.editable-click,
+a.editable-click:hover {
+    text-decoration: none;
+    border-bottom: dashed 1px #0088cc;
+}
+
+.editable-click.editable-disabled,
+a.editable-click.editable-disabled,
+a.editable-click.editable-disabled:hover {
+   color: #585858;
+   cursor: default;
+   border-bottom: none;
+}
+
+.editable-empty, .editable-empty:hover, .editable-empty:focus{
+    font-style: italic;
+    color: #DD1144;
+    text-decoration: none;
+}
+
+.editable-unsaved {
+    font-weight: bold;
+}
+
+.editable-bg-transition {
+    transition: background-color 1400ms ease-out;
+}
+
+.form-horizontal .editable {
+    padding-top: 5px;
+    display: inline-block;
+}

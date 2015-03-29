@@ -1,0 +1,182 @@
+<% if demosite %>
+
+{# Mobile header #}
+{% if nodemenu is defined %}
+    <header role="header" class="main-header main-header--mobile">
+	<div class="container-fluid">
+
+	    {# Main navigation trigger #}
+	    <button type="button" class="js-sidebar-toggle__toggle-btn sidebar-toggle__toggle-btn btn main-header--mobile__toggle-btn" data-content="#sidebar-toggle__content" data-sidebar="#sidebar-toggle__sidebar" data-container="#sidebar-toggle-container" data-position="left" data-prevent-overflow="true" data-duration="300">
+		<i class="icon icon--menu main-header--mobile__toggle-btn__icon"></i>
+	    </button>
+
+
+	    {# Logo #}
+	    {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+	    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
+		<img src="/frontend/img/demosite/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img">
+	    </a>
+
+
+	    {# Search #}
+	    {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+	    {% if searchPageNode %}
+		<form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form">
+		    <div class="searchbox">
+			<div class="searchbox__back js-searchbox-back">
+			    <i class="icon icon--arrow-tail-left searchbox__back__icon"></i>
+			</div>
+			<div class="searchbox__content js-searchbox-content">
+			    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input">
+			    <button type="submit" id="search" class="searchbox__submit">
+				<i class="icon icon--search searchbox__submit__icon"></i>
+			    </button>
+			</div>
+		    </div>
+		</form>
+	    {% endif %}
+	</div>
+    </header>
+{% endif %}
+
+
+{# Desktop header #}
+    {# DemositeMessage #}
+    {% block cookieconsent %}
+	{% include '<%= bundle.getName() %>:Layout:_demositemessage.html.twig' %}
+    {% endblock %}
+{% if nodemenu is defined %}
+    <div class="container-fluid">
+	<header role="header" class="main-header main-header--desktop {% block extra_main_header_class %}{% endblock %}">
+	    {# Logo #}
+	    {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+	    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
+		<img src="/frontend/img/demosite/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img">
+	    </a>
+
+
+	    {# Navigation #}
+	    <div class="main-header__nav">
+
+		{# Main nav #}
+		<nav role="navigation" class="site-nav site-nav--desktop">
+		    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+		    {% for node in activeSubnode.children %}
+			{% if not node.node.isHiddenFromNav() %}
+			    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="site-nav__item {% if(node.active) %}site-nav__item--active{% endif %}">
+				{{ node.title }}
+			    </a>
+			{% endif %}
+		    {% endfor %}
+		</nav>
+
+
+		{# Search #}
+		{% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+		{% if searchPageNode %}
+		    <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form">
+			<div class="searchbox">
+			    <div class="searchbox__content js-searchbox-content">
+				<input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input">
+				<button type="submit" id="search" class="searchbox__submit">
+				    <i class="icon icon--search searchbox__submit__icon"></i>
+				</button>
+			    </div>
+			</div>
+		    </form>
+		{% endif %}
+
+
+		{# Language nav #}
+		{% if requiredlocales is defined %}
+		    {% set langs = requiredlocales|split('|') %}
+		    {% if langs|length> 0 %}
+			<div class="language-nav">
+			    <span class="language-nav__active-lang">
+				{{ app.request.locale }}
+				<i class="icon icon--triangle-down language-nav__icon"></i>
+			    </span>
+			    <nav role="navigation" class="language-nav__nav">
+			    {% for lang in langs %}
+				{% if lang != app.request.locale %}
+				    <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
+					{{ lang }}
+				    </a>
+				{% endif %}
+			    {% endfor %}
+			</div>
+		    {% endif %}
+		{% endif %}
+	    </div>
+	</header>
+    </div>
+{% endif %}
+
+<% else %>
+
+{# Default header #}
+{% if nodemenu is defined %}
+    <header role="header" class="main-header">
+	<div class="container-fluid">
+
+	    {# Logo #}
+	    {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+	    <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
+		<img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="main-header__logo__img">
+	    </a>
+
+
+	    {# Main navigation #}
+	    <nav role="navigation" class="main-header__nav main-nav">
+		{% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+		{% for node in activeSubnode.children %}
+		    {% if not node.node.isHiddenFromNav() %}
+			<a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__link {% if(node.active) %}main-nav__link--active{% endif %}">
+			    {{ node.title }}
+			</a>
+		    {% endif %}
+		{% endfor %}
+	    </nav>
+
+
+	    {# Search #}
+	    {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+	    {% if searchPageNode %}
+		<form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form pull-left">
+		    <div class="searchbox">
+			<div class="searchbox__content js-searchbox-content">
+			    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input">
+			    <button type="submit" id="search" class="searchbox__submit">
+				<i class="icon icon--search searchbox__submit__icon"></i>
+			    </button>
+			</div>
+		    </div>
+		</form>
+	    {% endif %}
+
+
+	    {# Language nav #}
+	    {% if requiredlocales is defined %}
+		{% set langs = requiredlocales|split('|') %}
+		{% if langs|length> 0 %}
+		    <div class="language-nav">
+			<span class="language-nav__active-lang">
+			    {{ app.request.locale }}
+			</span>
+			<nav role="navigation">
+			    {% for lang in langs %}
+				{% if lang != app.request.locale %}
+				    <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
+					{{ lang }}
+				    </a>
+				{% endif %}
+			    {% endfor %}
+			</nav>
+		    </div>
+		{% endif %}
+	    {% endif %}
+	</div>
+    </header>
+{% endif %}
+
+<% endif %>

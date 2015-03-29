@@ -1,0 +1,33 @@
+{% stylesheets
+    "@KunstmaanAdminBundle/Resources/ui/scss/style.scss"
+    output="KunstmaanAdminBundleAssets/css/style.min.css" filter="scss"
+%}
+    <link rel="stylesheet" href="{{ asset_url }}">
+{% endstylesheets %}
+
+
+<!-- Customizable Brand Color -->
+<style type="text/css">
+    {% if titlecolor is not defined or titlecolor is empty %}
+	{% set titlecolor = "#fff" %}
+    {% endif %}
+	{% if titlebgcolor is not defined or titlebgcolor is empty %}
+    {% set titlebgcolor = "#2997ce" %}
+    {% endif %}
+
+    .app__header__brand, .app__header__brand:hover, .app__header__brand:focus, .navbar-inverse .app__header__brand, .navbar-inverse .app__header__brand:hover, .navbar-inverse .app__header__brand:focus, .btn-brand, .btn-brand:hover, .btn-brand:focus {
+	color: {{ titlecolor }};
+	background: {{ titlebgcolor }};
+    }
+
+    header .navbar .app__header__brand:after {
+	border-left-color: {{ titlebgcolor }};
+    }
+
+    .login {
+	background: {{ titlebgcolor }};
+    }
+    .login__title, .login__form__forgot-pw, .login__form__forgot-pw:hover {
+	color: {{ titlecolor }};
+    }
+</style>

@@ -1,59 +1,95 @@
 {% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
 
-{% block extra_actions_header %}
-    <div class="extra_actions_header">
-        <div class="btn-group pull-right">
-
-            {% if adminlist.canAdd() %}
-                {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
-                {% for key,add in adminaddlist %}
-                    <a class="btn btn-primary btn-medium" href="{{ path(add["path"], add[("params")]) }}">{{ 'settings.translator.add' | trans }}</a>
-                {% endfor %}
-            {%  endif %}
-
-            <a class="btn btn btn-medium" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">{{ 'settings.translator.refresh_live' | trans }}</a>
-
-            <a class="btn btn dropdown-toggle" data-toggle="dropdown" href="#">{{ 'settings.translator.import_translations' | trans }}<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >{{ 'settings.translator.import_translations' | trans }}</a></li>
-                <li><a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >{{ 'settings.translator.import_translations_forced' | trans }}</a></li>
-            </ul>
-        </div>
-    </div>
-
-{% endblock %}
 
 {% block extracss %}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    {{ parent() }}
+
+    {% stylesheets
+	"@KunstmaanTranslatorBundle/Resources/ui/scss/style.scss"
+	output="KunstmaanTranslatorBundleAssets/css/TranslatorStyle.min.css" filter="scss"
+    %}
+	<link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
-{% block extrajavascript %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap-editable/js/bootstrap-editable.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.fn.editable.defaults.mode = 'inline';
-            $('.editable').each(function() {
-                $(this).editable({
-                    showbuttons: 'bottom',
-                    pk: function() {
-                        return $(this).data("uid");
-                    },
-                    emptytext: '{{ 'translator.translator.emptytext'|trans }}',
-                    params: function(params) {
-                        params.locale = $(this).data('locale');
-                        params.domain = $(this).data('domain');
-                        params.keyword = $(this).data('keyword');
-                        params.translationId = $(this).data('tid');
 
-                        return params;
-                    },
-                    success: function(response, newValue) {
-                        if (response.success) {
-                            $(this).data("uid", response.uid);
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+{% block header %}
+    <header class="app__content__header">
+	<div class="row">
+	    {% if adminmenu.current %}
+		<div class="col-sm-6 col-md-4">
+		    <h1 class="app__content__header__title">
+			{{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+		    </h1>
+		</div>
+	    {% endif %}
+
+	    {% block extra_actions_header %}
+		<!-- Main-actions -->
+		<div class="col-sm-6 col-md-8">
+		    <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+			<div class="btn-group">
+			    {% block actions %}
+				{% if adminlist.canAdd() %}
+				    {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
+				    {% for key,add in adminaddlist %}
+					<a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
+					    {{ 'settings.translator.add' | trans }}
+					</a>
+				    {% endfor %}
+				{%  endif %}
+
+				<a class="btn btn-default btn--raise-on-hover" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">
+				    {{ 'settings.translator.refresh_live' | trans }}
+				</a>
+
+				<div class="btn-group">
+				    <button type="button" class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+					{{ 'settings.translator.import_translations' | trans }}
+					<i class="fa fa-caret-down btn__icon"></i>
+				    </button>
+				    <ul class="dropdown-menu dropdown-menu-right">
+					<li>
+					    <a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >
+						{{ 'settings.translator.import_translations' | trans }}
+					    </a>
+					</li>
+					<li>
+					    <a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >
+						{{ 'settings.translator.import_translations_forced' | trans }}
+					    </a>
+					</li>
+				    </ul>
+				</div>
+			    {% endblock %}
+			</div>
+		    </div>
+
+		    <!-- Scroll-actions -->
+		    <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+			<div class="btn-group">
+			    {{ block('actions') }}
+			    <button type="button" class="js-scroll-to-top btn btn-default btn--raise-on-hover">
+				<i class="fa fa-caret-up"></i>
+			    </button>
+			</div>
+		    </div>
+		</div>
+	    {% endblock %}
+	</div>
+    </header>
+{% endblock %}
+
+
+{% block extrajavascript %}
+    {{ parent() }}
+
+    {% javascripts
+	"@KunstmaanTranslatorBundle/Resources/ui/vendor_bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"
+	"@KunstmaanTranslatorBundle/Resources/ui/js/_inline-edit.js"
+	"@KunstmaanTranslatorBundle/Resources/ui/js/app.js"
+	output="KunstmaanTranslatorBundleAssets/js/translatorFooter.min.js" filter="uglifyjs2"
+    %}
+	<script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

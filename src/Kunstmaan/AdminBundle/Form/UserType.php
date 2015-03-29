@@ -85,7 +85,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                             'expanded' => false,
                             'required' => false,
                             'attr' => array(
-                                'class' => 'chzn-select',
+				'class' => 'js-advanced-select form-control advanced-select',
                                 'data-placeholder' => 'Choose the permission groups...'
                             )
                         )

@@ -1,1 +1,15 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block extrajavascript %}
+    {{ parent() }}
+
+    {% javascripts
+	"@KunstmaanMediaBundle/Resources/ui/vendor_bower/plupload/js/plupload.full.min.js"
+	"@KunstmaanMediaBundle/Resources/ui/js/_bulk-upload.js"
+	"@KunstmaanMediaBundle/Resources/ui/js/_dnd-upload.js"
+	"@KunstmaanMediaBundle/Resources/ui/js/app.js"
+	output="KunstmaanMediaBundleAssets/js/mediaFooter.min.js" filter="uglifyjs2"
+    %}
+	<script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

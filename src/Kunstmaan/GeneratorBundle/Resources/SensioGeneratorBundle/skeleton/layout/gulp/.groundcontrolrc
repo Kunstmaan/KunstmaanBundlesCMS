@@ -1,0 +1,67 @@
+{
+    "vars": {
+	"distPath": "web/frontend/",
+	"resourcesPath": "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/"
+    },
+
+    "project": {
+	"name": "{{ bundle.getName() }}",
+	"mainBundlePath": "{{ bundle.namespace|replace({'\\':'/'}) }}",
+	"mainBundleName": "{{ bundle.getName() }}",
+	"mainJsInclude": {
+	    "folder": "Layout/",
+	    "fileName": "_js_footer.html.twig"
+	}
+    },
+
+    "dist": {
+	"css": "<=distPath>css",
+	"js": "<=distPath>js",
+	"img": "<=distPath>img",
+	"fonts": "<=distPath>fonts",
+	"styleguide": "<=distPath>styleguide"
+    },
+
+    "scssFolder": "<=resourcesPath>ui/scss/",
+    "styleguideFolder": "<=resourcesPath>ui/styleguide",
+
+    "img": "<=resourcesPath>ui/img/**/*.{png,jpg,jpeg,gif,svg,webp}",
+    "fonts": "<=resourcesPath>ui/fonts/**/*.{eot,svg,ttf,woff}",
+    "twig": "<=resourcesPath>views/**/*.html.twig",
+    "scss": "<=resourcesPath>ui/scss/**/*.scss",
+
+    "js": {
+	"app": "<=resourcesPath>ui/js/**/*.js",
+	"footer": [
+	    "<=bowerComponentsPath>jquery/dist/jquery.min.js",
+	    "<=bowerComponentsPath>velocity/velocity.min.js",
+{% if demosite %}
+	    "<=bowerComponentsPath>fitvids/jquery.fitvids.js",
+	    "<=bowerComponentsPath>modernizr/modernizr.js",
+	    "<=bowerComponentsPath>cargobay/src/toggle/js/jquery.toggle.js",
+	    "<=bowerComponentsPath>cargobay/src/sidebar-toggle/js/jquery.sidebar-toggle.js",
+	    "<=bowerComponentsPath>cargobay/src/cookie-consent/js/jquery.cookie-consent.js",
+	    "<=bowerComponentsPath>cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
+	    "<=bowerComponentsPath>cargobay/src/videolink/js/jquery.videolink.js",
+{% endif %}
+	    "<=resourcesPath>ui/js/**/*.js"
+	],
+	"other": [
+	    "<=bowerComponentsPath>html5shiv/dist/html5shiv.min.js"
+	],
+	"addAsync": "false"
+    },
+
+    "browserSupport": [
+	"last 2 versions",
+	"ie 9",
+	"ie 10",
+	"ie 11"
+    ],
+
+    "liveReloadFiles": [
+	"<=distPath>css/style.min.css",
+	"<=distPath>js/*.js",
+	"<=distPath>styleguide/css/style.min.css"
+    ]
+}
