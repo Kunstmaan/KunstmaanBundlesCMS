@@ -3,7 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Helper;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -163,14 +163,14 @@ class GeneratorUtils
      *
      * @param InputInterface     $input
      * @param OutputInterface    $output
-     * @param DialogHelper       $dialog
+     * @param QuestionHelper     $questionHelper
      * @param Kernel             $kernel
      * @param ContainerInterface $container
      *
      * @return InputAssistant
      */
-    public static function getInputAssistant(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel, ContainerInterface $container)
+    public static function getInputAssistant(InputInterface &$input, OutputInterface $output, QuestionHelper $questionHelper, Kernel $kernel, ContainerInterface $container)
     {
-        return new InputAssistant($input, $output, $dialog, $kernel, $container);
+        return new InputAssistant($input, $output, $questionHelper, $kernel, $container);
     }
 }

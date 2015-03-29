@@ -2,10 +2,11 @@
 
 namespace Kunstmaan\GeneratorBundle\Helper;
 
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -20,8 +21,8 @@ class InputAssistant
     /** @var OutputInterface */
     private $output;
 
-    /** @var DialogHelper */
-    private $dialog;
+    /** @var QuestionHelper */
+    private $questionHelper;
 
     /** @var Kernel */
     private $kernel;
@@ -32,15 +33,15 @@ class InputAssistant
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @param DialogHelper $dialog
+     * @param QuestionHelper $questionHelper
      * @param Kernel $kernel
      * @param ContainerInterface $container
      */
-    public function __construct(InputInterface &$input, OutputInterface $output, DialogHelper $dialog, Kernel $kernel, ContainerInterface $container)
+    public function __construct(InputInterface &$input, OutputInterface $output, QuestionHelper $questionHelper, Kernel $kernel, ContainerInterface $container)
     {
         $this->input = $input;
         $this->output = $output;
-        $this->dialog = $dialog;
+        $this->questionHelper = $questionHelper;
         $this->kernel = $kernel;
         $this->container = $container;
     }
@@ -85,8 +86,11 @@ class InputAssistant
         if (!is_null($text) && (count($text) > 0)) {
             $this->output->writeln($text);
         }
-
-        $namespace = $this->dialog->askAndValidate($this->output, $this->dialog->getQuestion('Bundle Namespace', $namespace), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $namespace, $namespaces);
+        
+        $question = new Question($this->questionHelper->getQuestion('Bundle Namespace', $namespace), $namespace);
+        $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'));
+		$question->setAutocompleterValues($namespaces);
+        $namespace = $this->questionHelper->ask($this->input, $this->output, $question);
 
         if ($this->input->hasOption('namespace')) {
             $this->input->setOption('namespace', $namespace);
@@ -103,7 +107,7 @@ class InputAssistant
      */
     private function writeError($message, $exit = false)
     {
-        $this->output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
+        $this->output->writeln($this->questionHelper->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
         if ($exit) {
             exit;
         }
@@ -200,7 +204,8 @@ class InputAssistant
                 $namespace = $this->fixNamespace($namespace);
             }
             $defaultPrefix = GeneratorUtils::cleanPrefix($this->convertNamespaceToSnakeCase($namespace));
-            $prefix = $this->dialog->ask($this->output, $this->dialog->getQuestion('Tablename prefix', $defaultPrefix), $defaultPrefix);
+            $question = new Question($this->questionHelper->getQuestion('Tablename prefix', $defaultPrefix), $defaultPrefix);
+            $prefix = $this->questionHelper->ask($this->input, $this->output, $question);
             $prefix = GeneratorUtils::cleanPrefix($prefix);
             if ($this->input->hasOption('prefix')) {
                 $this->input->setOption('prefix', $prefix);

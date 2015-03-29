@@ -11,7 +11,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Sensio\Bundle\GeneratorBundle\Manipulator\KernelManipulator;
 use Sensio\Bundle\GeneratorBundle\Manipulator\RoutingManipulator;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
  * Generates bundles.
@@ -65,10 +67,11 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
+        $questionHelper = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
-            if (!$dialog->askConfirmation($output, $dialog->getQuestion('Do you confirm generation', 'yes', '?'), true)) {
+        	$confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you confirm generation', 'yes', '?'), true);
+            if (!$questionHelper->ask($input, $output, $confirmationQuestion)) {
                 $output->writeln('<error>Command aborted</error>');
 
                 return 1;
@@ -85,7 +88,7 @@ EOT
         $dir = Validators::validateTargetDir($input->getOption('dir'), $bundle, $namespace);
         $format = 'yml';
 
-        $dialog->writeSection($output, 'Bundle generation');
+        $questionHelper->writeSection($output, 'Bundle generation');
 
         if (!$this
             ->getContainer()
@@ -101,18 +104,18 @@ EOT
         $output->writeln('Generating the bundle code: <info>OK</info>');
 
         $errors = array();
-        $runner = $dialog->getRunner($output, $errors);
+        $runner = $questionHelper->getRunner($output, $errors);
 
         // check that the namespace is already autoloaded
         $runner($this->checkAutoloader($output, $namespace, $bundle));
 
         // register the bundle in the Kernel class
-        $runner($this->updateKernel($dialog, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
+        $runner($this->updateKernel($questionHelper, $input, $output, $this->getContainer()->get('kernel'), $namespace, $bundle));
 
         // routing
-        $runner($this->updateRouting($dialog, $input, $output, $bundle, $format));
+        $runner($this->updateRouting($questionHelper, $input, $output, $bundle, $format));
 
-        $dialog->writeGeneratorSummary($output, $errors);
+        $questionHelper->writeGeneratorSummary($output, $errors);
     }
 
     /**
@@ -125,8 +128,8 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Kunstmaan bundle generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Kunstmaan bundle generator');
 
         // namespace
         $output
@@ -137,10 +140,11 @@ EOT
                 'sub-namespaces, and it should end with the bundle name itself', '(which must have <comment>Bundle</comment> as a suffix).', '',
                 'See http://symfony.com/doc/current/cookbook/bundles/best_practices.html#index-1 for more', 'details on bundle naming conventions.', '',
                 'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problems.', '',));
-
-        $namespace = $dialog
-            ->askAndValidate($output, $dialog->getQuestion('Bundle namespace', $input->getOption('namespace')),
-                array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'), false, $input->getOption('namespace'));
+		
+        $question = new Question($questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace'), $input->getOption('namespace')));
+        $question->setValidator( array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'));
+        $namespace = $questionHelper->ask($input, $output, $question);
+        
         $input->setOption('namespace', $namespace);
 
         // bundle name
@@ -149,7 +153,11 @@ EOT
             ->writeln(
                 array('', 'In your code, a bundle is often referenced by its name. It can be the', 'concatenation of all namespace parts but it\'s really up to you to come',
                 'up with a unique name (a good practice is to start with the vendor name).', 'Based on the namespace, we suggest <comment>' . $bundle . '</comment>.', '',));
-        $bundle = $dialog->askAndValidate($output, $dialog->getQuestion('Bundle name', $bundle), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName'), false, $bundle);
+        
+        $question = new Question($questionHelper->getQuestion('Bundle name', $bundle), $bundle);
+        $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName'));
+		$bundle = $questionHelper->ask($input, $output, $question);
+        
         $input->setOption('bundle-name', $bundle);
 
         // target dir
@@ -157,11 +165,11 @@ EOT
             ->getContainer()
             ->getParameter('kernel.root_dir')) . '/src';
         $output->writeln(array('', 'The bundle can be generated anywhere. The suggested default directory uses', 'the standard conventions.', '',));
-        $dir = $dialog
-            ->askAndValidate($output, $dialog->getQuestion('Target directory', $dir),
-                function ($dir) use ($bundle, $namespace) {
-                    return Validators::validateTargetDir($dir, $bundle, $namespace);
-                }, false, $dir);
+        
+        $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
+        $question->setValidator(function ($dir) use ($bundle, $namespace) { return Validators::validateTargetDir($dir, $bundle, $namespace); });
+        $dir = $questionHelper->ask($input, $output, $question);
+       
         $input->setOption('dir', $dir);
 
         // format
@@ -195,20 +203,21 @@ EOT
     }
 
     /**
-     * @param DialogHelper    $dialog    The dialog helper
-     * @param InputInterface  $input     The command input
-     * @param OutputInterface $output    The command output
-     * @param KernelInterface $kernel    The kernel
-     * @param string          $namespace The namespace
-     * @param string          $bundle    The bundle
+     * @param QuestionHelper  $questionHelper    The question helper
+     * @param InputInterface  $input             The command input
+     * @param OutputInterface $output            The command output
+     * @param KernelInterface $kernel            The kernel
+     * @param string          $namespace         The namespace
+     * @param string          $bundle            The bundle
      *
      * @return array
      */
-    protected function updateKernel(DialogHelper $dialog, InputInterface $input, OutputInterface $output, KernelInterface $kernel, $namespace, $bundle)
+    protected function updateKernel(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, KernelInterface $kernel, $namespace, $bundle)
     {
         $auto = true;
         if ($input->isInteractive()) {
-            $auto = $dialog->askConfirmation($output, $dialog->getQuestion('Confirm automatic update of your Kernel', 'yes', '?'), true);
+        	$confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Confirm automatic update of your Kernel', 'yes', '?'), true);
+        	$auto = $questionHelper->ask($input, $output, $confirmationQuestion);
         }
 
         $output->write('Enabling the bundle inside the Kernel: ');
@@ -228,19 +237,20 @@ EOT
     }
 
     /**
-     * @param DialogHelper    $dialog The dialog helper
-     * @param InputInterface  $input  The command input
-     * @param OutputInterface $output The command output
-     * @param string          $bundle The bundle name
-     * @param string          $format the format
+     * @param QuestionHelper     $questionHelper The question helper
+     * @param InputInterface     $input          The command input
+     * @param OutputInterface    $output         The command output
+     * @param string             $bundle         The bundle name
+     * @param string             $format         The format
      *
      * @return array
      */
-    protected function updateRouting(DialogHelper $dialog, InputInterface $input, OutputInterface $output, $bundle, $format)
+    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, $bundle, $format)
     {
         $auto = true;
         if ($input->isInteractive()) {
-            $auto = $dialog->askConfirmation($output, $dialog->getQuestion('Confirm automatic update of the Routing', 'yes', '?'), true);
+        	$confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Confirm automatic update of the Routing', 'yes', '?'), true);
+            $auto = $questionHelper->ask($input, $output, $confirmationQuestion);
         }
 
         $output->write('Importing the bundle routing resource: ');

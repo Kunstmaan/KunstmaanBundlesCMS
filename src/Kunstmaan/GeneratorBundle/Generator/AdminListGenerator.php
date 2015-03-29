@@ -26,10 +26,10 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      */
     private $skeletonDir;
 
-    private $dialog;
+    private $question;
 
-    public function setDialog($dialog) {
-        $this->dialog = $dialog;
+    public function setQuestion($question) {
+        $this->question = $question;
     }
 
     /**
@@ -63,7 +63,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
                 $this->generateAdminType($bundle, $entityName, $metadata);
                 $output->writeln('Generating the Type code: <info>OK</info>');
             } catch (\Exception $error) {
-                $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+                $output->writeln($this->question->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
                 $output->writeln('Generating the Type code: <error>ERROR</error>');
             }
         }
@@ -72,7 +72,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             $this->generateConfiguration($bundle, $entityName, $metadata, $generateAdminType);
             $output->writeln('Generating the Configuration code: <info>OK</info>');
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln($this->question->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
             $output->writeln('Generating the Configuration code: <error>ERROR</error>');
         }
 
@@ -81,7 +81,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
             $this->generateController($bundle, $entityName, $metadata);
             $output->writeln('Generating the Controller code: <info>OK</info>');
         } catch (\Exception $error) {
-            $output->writeln($this->dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln($this->question->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
             $output->writeln('Generating the Controller code: <error>ERROR</error>');
         }
     }
