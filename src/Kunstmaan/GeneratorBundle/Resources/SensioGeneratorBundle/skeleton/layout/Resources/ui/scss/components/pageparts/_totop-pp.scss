@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Pageparts - Totop pp
+   ========================================================================== */
+
+.totop-pp {
+    margin: 3rem 0;
+
+{% if demosite %}
+    padding-bottom: .5rem;
+
+    font-size: .85rem;
+    text-align: right;
+    border-bottom: 1px solid $hr-color;
+
+    a {
+        display: inline-block;
+
+        color: $text-color;
+    }
+{% endif %}
+}

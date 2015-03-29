@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Forms - Widgets
+   ========================================================================== */
+
+/* Hidden
+   ========================================================================== */
+.form-widget--hidden {
+    display: none;
+}
+
+
+/* Select
+   ========================================================================== */
+.form-widget--select {
+{% if demosite %}
+    position: relative;
+
+    max-width: 26rem;
+    min-height: 2.5rem;
+    padding: 0 2.5rem 0 0;
+
+    border: 1px solid $hr-color;
+
+    &:focus {
+        border-color: $blue;
+        outline: none;
+    }
+
+{% endif %}
+}
+{% if demosite %}
+.select__icon {
+    position: absolute;
+    top: 0;
+    right: .2rem;
+
+    height: 2.5rem;
+    width: 2.5rem;
+
+    font-size: .4rem;
+    line-height: 2.5rem;
+    text-align: center;
+    color: $grey;
+}
+{% endif %}
+
+/* Choices
+   ========================================================================== */
+.form-widget--choices {
+{% if demosite %}
+    padding-top: .5rem;
+
+{% endif %}
+}
+
+.form-widget--choices--filled {
+{% if demosite %}
+    ~ .form__label {
+        @include control-label-active;
+    }
+{% endif %}
+}
+
+
+/* Widget - File Upload
+   ========================================================================== */
+.form-widget--file-upload {
+{% if demosite %}
+    padding-top: .5rem;
+
+    .form-control {
+        line-height: 80%;
+    }
+
+    .form__label {
+        top: -1.2rem;
+    }
+
+    ~ .form__label {
+        display: none;
+    }
+{% endif %}
+}
+
+/* Text area
+   ========================================================================== */
+
+{% if demosite %}
+.form-widget--textarea {
+    width: 100%;
+    max-width: 26rem;
+}
+{% endif %}
+
+
+/*doc
+---
+title: Form Widgets
+name: 05_widgets
+category: Forms
+---
+
+
+```html_example
+```
+*/

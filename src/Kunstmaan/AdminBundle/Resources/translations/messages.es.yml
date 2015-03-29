@@ -4,7 +4,7 @@ pages:
   parts: PageParts
   draft: Borrador
   pagenottranslated: Ésta página no está traducida
-  copyfrom: Copiar de otro idioma 
+  copyfrom: Copiar de otro idioma
   createemptypage: Crear como página vacía
 
 # Modules
@@ -38,6 +38,7 @@ tools:
 form:
   cancel: Cancelar
   delete: Eliminar
+  deletesure: ¿Seguro que quieres borrar esto?
   edit: Editar
   add: Agregar
   save: Guardar
@@ -52,14 +53,14 @@ form:
   forgot:
     password: Olvidó contraseña
   permissions: Permisos
-  properties: Propiedades 
+  properties: Propiedades
   createdat: Creado el
   updatedat: Actualizado el
   actions: Acciones
   addfilter: Agregar filtro
   choosetypefilter: Filtro activado
   versions: Versiones
-  
+
 omnext:
   home: Home
   title: Bienvenido!

@@ -1,25 +1,54 @@
 {% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
-{% block title %}{{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}{% endblock%}
-
-{% block header %}
-    <div class="page-header">
-        <h1>{{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}</h1>
-    </div>
+{% block title %}
+    {{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}
 {% endblock %}
 
-{% block content %}
-    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+{% block header %}{% endblock %}
 
-    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal properties" novalidate="novalidate">
-        <div class="prop_wrp">
-            {{ form_widget(form) }}
-            <div class="input_prop">
-                <div class="btn_group">
-                    <button class="btn" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">{{ 'form.cancel' | trans }}</button>
-                    <button class="btn btn-primary" type="submit">{{ 'media.file.add' | trans }}</button>
+{% block content %}
+    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+
+        <!-- Header -->
+        <header class="app__content__header">
+            <div class="row">
+                <div class="col-sm-6 col-md-8">
+                    <h1 class="app__content__header__title">
+                        {{ 'media.media.addto'| trans({'%folder%': folder.name|trans }) | raw }}
+                    </h1>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <!-- Main-actions -->
+                    <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+                        <div class="btn-group">
+                            {% block actions %}
+                                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                                    {{ 'media.file.add' | trans }}
+                                </button>
+                                <a class="btn btn-default btn--raise-on-hover" href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}">
+                                    {{ 'form.cancel' | trans }}
+                                </a>
+                            {% endblock %}
+                        </div>
+                    </div>
                 </div>
             </div>
-         </div>
+        </header>
+
+        <!-- Scroll-actions -->
+        <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+            <div class="btn-group">
+                {{ block('actions') }}
+                <button type="button" class="js-scroll-to-top btn btn-default btn--raise-on-hover">
+                    <i class="fa fa-caret-up"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Fields -->
+        <fieldset class="form__fieldset--padded">
+            {{ form_widget(form) }}
+        </fieldset>
     </form>
 {% endblock %}

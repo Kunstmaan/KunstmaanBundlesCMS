@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+/* Shared
+   ========================================================================== */
+a {
+    color: $link-color;
+{% if demosite %}
+    text-decoration: none;
+    transition: color .3s ease;
+{% else %}
+    text-decoration: underline;
+{% endif %}
+
+    &:hover, &:focus {
+        text-decoration: none;
+        color: $link-color--hover;
+    }
+}
+
+
+/*doc
+---
+title: Links
+name: 02_links
+category: Blocks
+---
+
+```html_example
+
+<p>
+    <a href="#">Link</a>
+</p>
+
+```
+*/

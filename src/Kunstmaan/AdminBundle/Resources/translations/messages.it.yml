@@ -29,7 +29,7 @@ settings:
 # Tools
 tools:
   title: Accessori
-  clear_frontend_cache: Cancella la cache frontend 
+  clear_frontend_cache: Cancella la cache frontend
   clear_backend_cache: Cancella la cache frontend backend
   clear_all_caches: Cancella tutte le cache
   shutdown: Speghi
@@ -38,6 +38,7 @@ tools:
 form:
   cancel: Cancella
   delete: Elimina
+  deletesure: Sei sicuro di voler eliminare questo ?
   edit: Modifica
   add: Aggiungi nuovo
   save: Salva
@@ -52,14 +53,14 @@ form:
   forgot:
     password: Password dimenticata.
   permissions: Permessi
-  properties: Proprietà 
+  properties: Proprietà
   createdat: Creato il
   updatedat: Modificato il
   actions: Azioni
   addfilter: Aggiungi filtro
   choosetypefilter: Filtro su
   versions: Versioni
-  
+
 omnext:
   home: Home
   title: Benvenuto!

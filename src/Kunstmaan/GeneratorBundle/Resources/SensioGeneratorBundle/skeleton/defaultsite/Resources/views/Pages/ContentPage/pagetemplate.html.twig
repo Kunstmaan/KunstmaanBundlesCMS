@@ -1,16 +1,10 @@
 <div class="container">
-    <div class="row row--padded">
-        {% set children = nodemenu.current.node.children %}
-        {% if nodemenu.current.node.children|length > 0 %}
-        <div class="col-md-3 col--padded hidden-xs">
-            {% set activeSubnode = nodemenu.getActiveForDepth(2) %}
-            {% include '<%= bundle.name %>:Layout:submenu.html.twig' with {'items': activeSubnode.children} %}
-        </div>
-        <div class="col-md-9 col--padded">
-            {% else %}
-        <div class="col-md-12 col--padded">
-            {% endif %}
-            {{ render_pageparts(page, 'main') }}
-        </div>
+
+    {{ render_pageparts(page, 'main') }}
+
+    <% if demosite %>
+    <div class="submenu">
+        {% include '<%= bundle.name %>:Layout:submenu.html.twig' with {'page': page} %}
     </div>
+    <% endif %>
 </div>

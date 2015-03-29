@@ -5,24 +5,20 @@ namespace {{ namespace }}\DataFixtures\ORM\ArticleGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
 use Faker\Provider\Lorem;
 use Faker\Provider\DateTime;
-
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
-
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use {{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Author;
-use {{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}OverviewPage;
-use {{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Page;
+use {{ namespace }}\Entity\{{ entity_class }}Author;
+use {{ namespace }}\Entity\Pages\{{ entity_class }}OverviewPage;
+use {{ namespace }}\Entity\Pages\{{ entity_class }}Page;
 
 /**
- * ArticleFixtures
+ * {{ entity_class }}ArticleFixtures
  */
-class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class {{ entity_class }}ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -46,7 +42,6 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $em = $this->container->get('doctrine.orm.entity_manager');
 
         $pageCreator = $this->container->get('kunstmaan_node.page_creator_service');
-
         $ppCreatorService = $this->container->get('kunstmaan_pageparts.pagepart_creator_service');
 
         // Create article overview page
@@ -54,17 +49,12 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $overviewPage = new {{ entity_class }}OverviewPage();
-        $overviewPage->setTitle('Articles');
+        $overviewPage->setTitle('{{ entity_class }}');
 
         $translations = array();
         foreach ($languages as $lang) {
-            if ($lang == 'nl') {
-                $title = 'Artikels';
-            } else {
-                $title = 'Articles';
-            }
-
-            $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
+            $title = '{{ entity_class }}';
+            $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title) {
                 $translation->setTitle($title);
                 $translation->setSlug(Slugifier::slugify($title));
                 $translation->setWeight(30);
@@ -73,9 +63,9 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $options = array(
             'parent' => $homePage,
-            'page_internal_name' => 'article_overview_page',
+            'page_internal_name' => '{{ entity_class|lower }}_overview_page',
             'set_online' => true,
-            'creator' => 'Admin'
+            'creator' => 'admin'
         );
 
         $pageCreator->createPage($overviewPage, $translations, $options);
@@ -87,9 +77,9 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
 
         // Create articles
-        for($i=1; $i<=14; $i++) {
+        for ($i=1; $i<=6; $i++) {
             $articlePage = new {{ entity_class }}Page();
-            $articlePage->setTitle('Artikel titel '.(15-$i));
+            $articlePage->setTitle('{{ entity_class }} titel '.(7-$i));
             $articlePage->setAuthor($author);
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
@@ -97,12 +87,12 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
             $translations = array();
             foreach ($languages as $lang) {
                 if ($lang == 'nl') {
-                    $title = 'Artikel titel '.(15-$i);
+                    $title = '{{ entity_class }} titel '.(7-$i);
                 } else {
-                    $title = 'Article title '.(15-$i);
+                    $title = '{{ entity_class }} title '.(7-$i);
                 }
 
-                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title, $i) {
+                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title, $i) {
                     $translation->setTitle($title);
                     $translation->setSlug(Slugifier::slugify($title));
                     $translation->setWeight(100 + $i);
@@ -113,7 +103,7 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
                 'parent' => $overviewPage,
                 'set_online' => true,
                 'hidden_from_nav' => true,
-                'creator' => 'Admin'
+                'creator' => 'admin'
             );
 
             $articlePage = $pageCreator->createPage($articlePage, $translations, $options);
@@ -121,7 +111,7 @@ class ArticleFixtures extends AbstractFixture implements OrderedFixtureInterface
             foreach ($languages as $lang) {
                 $pageparts = array(
                     'main' => array(
-                        $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('Kunstmaan\PagePartBundle\Entity\TextPagePart',
+                        $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\TextPagePart',
                             array('setContent' => '<p>'.Lorem::paragraph(15).'</p>')
                         )
                     )

@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Pageparts - Download pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.download-pp {
+{% if demosite %}
+    @extend .icon--arrow-tail-down;
+{% endif %}
+
+    margin: $default-margin 0;
+
+{% if demosite %}
+    font-size: .85rem;
+
+    &:before {
+        @include iconfont-reset;
+
+        margin-right: .5rem;
+
+        font-size: 11px;
+    }
+
+    a {
+        color: $text-color;
+        font-weight: 600;
+    }
+{% endif %}
+}

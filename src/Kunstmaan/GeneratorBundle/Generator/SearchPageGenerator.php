@@ -27,7 +27,6 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     /**
      * @param Filesystem $filesystem  The filesytem
      * @param string     $skeletonDir The skeleton directory
-
      */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {

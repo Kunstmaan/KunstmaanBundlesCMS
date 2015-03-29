@@ -1,11 +1,11 @@
 
 
 {{ bundle.getName()|lower }}_{{ entity_class|lower }}page_admin_list:
-    resource: @{{ bundle.getName() }}/Controller/{{ entity_class }}/{{ entity_class }}PageAdminListController.php
+    resource: @{{ bundle.getName() }}/Controller/{{ entity_class }}PageAdminListController.php
     type:     annotation
     prefix:   /admin/{{ entity_class|lower }}page/
 
 {{ bundle.getName()|lower }}_{{ entity_class|lower }}author_admin_list:
-    resource: @{{ bundle.getName() }}/Controller/{{ entity_class }}/{{ entity_class }}AuthorAdminListController.php
+    resource: @{{ bundle.getName() }}/Controller/{{ entity_class }}AuthorAdminListController.php
     type:     annotation
     prefix:   /admin/{{ entity_class|lower }}author/

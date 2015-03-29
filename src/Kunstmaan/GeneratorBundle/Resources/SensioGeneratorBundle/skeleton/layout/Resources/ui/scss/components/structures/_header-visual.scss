@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Header - Header Visual
+   ========================================================================== */
+
+.header-visual {
+    position: relative;
+
+    margin-bottom: 4rem;
+
+    @media(min-width: $screen-md-min) {
+        overflow: hidden;
+        height: 70vh;
+    }
+}
+
+.header-visual__img {
+    width: 100%;
+
+    @media(min-width: $screen-md-min) {
+        transform: translateY(-50%);
+
+        z-index: 0;
+        position: absolute;
+        top: 50%;
+        left: 0;
+
+        max-height: none;
+    }
+}
+
+.header-visual__content {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    @media(min-width: $screen-md-min) {
+        transform: translateY(-50%);
+
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 0;
+
+        width: 100%;
+        margin-bottom: 0;
+
+        text-align: left;
+    }
+}
+
+.header-visual__content__inner {
+    @extend .container;
+}
+
+.header-visual__title {
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: 300;
+
+    @media(min-width: $screen-md-min) {
+        margin-top: 0;
+
+        font-size: 5.625rem;
+        font-weight: 100;
+        color: $white;
+    }
+}
+
+.header-visual__text {
+
+    @media(min-width: $screen-md-min) {
+        max-width: 50%;
+        margin-bottom: 2.5rem;
+
+        color: $white;
+    }
+}
+
+.header-visual__btn {
+    padding: .9em 1.5em;
+
+    color: $blue--dark;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 1.1rem;
+
+    @media(min-width: $screen-md-min) {
+        border: 0;
+    }
+}
+
+
+/*doc
+---
+title: Header Visual
+name: 01_headervisual
+category: Structures
+---
+
+```html_example
+<figure class="header-visual">
+    <img src="http://placehold.it/1600x1000" class="header-visual__img">
+    <figcaption class="header-visual__content">
+        <div class="header-visual__content__inner">
+            <h1 class="header-visual__title">
+                Title
+            </h1>
+            <p class="header-visual__text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.
+            </p>
+            <a href="/en/services" class="btn header-visual__btn">
+                CTA
+            </a>
+        </div>
+    </figcaption>
+</figure>
+```
+
+*/

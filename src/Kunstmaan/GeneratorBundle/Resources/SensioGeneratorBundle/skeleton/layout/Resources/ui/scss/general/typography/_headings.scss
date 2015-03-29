@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Headings
+   ========================================================================== */
+
+/* Shared
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    margin: 2rem 0 .8rem 0;
+
+    font-family: $font-family--headings;
+    line-height: 1.2;
+
+    + p, + .text-pp p {
+        margin-top: 0;
+    }
+}
+
+
+/* Specific
+   ========================================================================== */
+h1 {
+{% if demosite %}
+    color: $theme-color;
+{% endif %}
+    font-size: 2rem;
+    font-weight: 300;
+
+    @media(min-width: $screen-md-min) {
+        font-size: 3rem;
+    }
+}
+
+h2 {
+{% if demosite %}
+    color: $theme-color;
+{% endif %}
+    font-size: 1.8rem;
+    font-weight: 300;
+
+    @media(min-width: $screen-md-min) {
+        font-size: 2.8rem;
+    }
+}
+
+h3 {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+}
+
+h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+h2, h3, h4 {
+    margin: 1.6rem 0;
+}
+
+h5, h6 {
+    margin: 1.4rem 0;
+
+    font-size: .9rem;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+
+
+
+/*doc
+---
+title: Headings
+name: 01_headings
+category: Typography
+---
+
+```html_example
+<h1>H1. Neque porro quisquam est qui.</h1>
+<h2>H2. Neque porro quisquam est qui.</h2>
+<h3>H3. Neque porro quisquam est qui.</h3>
+<h4>H4. Neque porro quisquam est qui.</h4>
+<h5>H5. Neque porro quisquam est qui.</h5>
+<h6>H6. Neque porro quisquam est qui.</h6>
+```
+*/

@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Pageparts - Video pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.video-pp {
+    margin: 3rem 0;
+}
+
+
+
+/* videolink
+   ========================================================================== */
+{% if demosite %}
+.videolink {
+    a {
+        position: relative;
+
+        &:before {
+            content: "\e610";
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+
+            display: block;
+            width: 5rem;
+            height: 5rem;
+            margin: -2.5rem 0 0 -2.5rem;
+
+            background: rgba($black, .7);
+
+            color: $white;
+            font-family: $iconfont-name;
+            font-size: 2rem;
+            text-align: center;
+            line-height: 5rem;
+
+            border-radius: 50%;
+        }
+    }
+}
+{% endif %}

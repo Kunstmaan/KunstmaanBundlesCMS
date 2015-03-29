@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Colors
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Colors
+   ========================================================================== */
+$black:                 #373737;
+$white:                 #fff;
+
+{% if demosite %}
+$grey--darker:          #444;
+$grey--dark:            #606060;
+{% endif %}
+$grey:                  #9d9d9d;
+{% if demosite %}
+$grey--light:           #e2e2e2;
+$grey--lighter:         #f9f9f9;
+
+$blue--dark:             #053046;
+{% endif %}
+$blue:                  #5cb8e6;
+
+$red:                   #ff4600;
+
+
+/* Specifics
+   ========================================================================== */
+{% if demosite %}
+$text-color:            $grey--dark;
+$hr-color:              $grey--light;
+$link-color:            $blue;
+$link-color--hover:     darken($link-color, 15%);
+
+$theme-color:           $blue;
+$theme-color--dark:     $blue--dark;
+{% else %}
+$text-color:            $black;
+$hr-color:              $grey;
+$link-color:            $blue;
+$link-color--hover:     darken($link-color, 15%);
+
+$theme-color:           $grey;
+$theme-color--dark:     $grey;
+{% endif %}
+
+
+/*doc
+---
+title: Colors
+name: 01_colors
+category: General
+---
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #373737;'></i><code class='styleguide__code'>#373737 - $black</code></code></div>
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #fff;'></i><code class='styleguide__code'>#fff - $white</code></code></div><br>{% if demosite %}
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #444;'></i><code class='styleguide__code'>#444 - $grey--darker</code></code></div>
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #606060;'></i><code class='styleguide__code'>#606060 - $grey--dark</code></code></div>{% endif %}
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #9d9d9d;'></i><code class='styleguide__code'>#9d9d9d - $grey</code></code></div>
+{% if demosite %}<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #e2e2e2;'></i><code class='styleguide__code'>#e2e2e2 - $grey--light</code></code></div>
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #f9f9f9;'></i><code class='styleguide__code'>#f9f9f9 - $grey--lighter</code></code></div>{% endif %}<br>
+{% if demosite %}<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #053046;'></i><code class='styleguide__code'>#053046 - $blue--dark</code></code></div>{% endif %}
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #5cb8e6;'></i><code class='styleguide__code'>#5cb8e6 - $blue</code></code></div>
+<div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #ff4600;'></i><code class='styleguide__code'>#ff4600 - $red</code></code></div>
+*/

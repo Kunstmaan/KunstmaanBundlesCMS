@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Styleguide Theme Kunstmaan
+   ========================================================================== */
+
+/* Theme Color
+   ========================================================================== */
+.styleguide__header {
+    background: #2997ce !important;
+    color: #fff !important;
+}
+
+.styleguide__header__head {
+    color: #fff !important;
+}
+
+.styleguide__header__main-nav__item {
+    color: #fff !important;
+}
+
+.styleguide__header__main-nav__item:hover {
+    color: #fff !important;
+}
+
+.styleguide__header__main-nav__item--active, .styleguide__header__main-nav__item--active:hover {
+    background: #fff !important;
+    color: #333 !important;
+}
+
+
+
+/* Header
+   ========================================================================== */
+.styleguide__header {
+    overflow: hidden;
+}
+
+@media (min-width: 950px) {
+    .styleguide__header {
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}
+
+.styleguide__header__head {
+    margin: 0;
+    padding-left: 1em;
+
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    line-height: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+@media (min-width: 950px) {
+    .styleguide__header__head {
+        float: left;
+    }
+
+    .styleguide__header__main-nav {
+        float: right;
+        padding-right: 1.5em;
+    }
+}
+
+.styleguide__header__main-nav__item {
+    position: relative;
+
+    display: inline-block;
+    height: 40px;
+    padding: 0 1em;
+
+    font-size: 16px;
+    line-height: 40px;
+    text-decoration: none;
+
+    transition: opacity .3s ease;
+}
+
+.styleguide__header__main-nav__item:hover {
+    opacity: .8;
+}
+
+.styleguide__header__main-nav__item--active, .styleguide__header__main-nav__item--active:hover {
+    opacity: 1;
+}
+
+
+
+/* Main
+   ========================================================================== */
+@media (min-width: 950px) {
+    .styleguide__main {
+        padding-left: 15vw;
+    }
+}
+
+
+
+/* Blocks Navigation
+   ========================================================================== */
+.styleguide__block-navigation {
+    z-index: 99;
+    position: fixed;
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+
+    display: none;
+    width: 15vw;
+    padding: 1em 0 4em 0;
+
+    border-right: 1px solid #E4E4E4;
+    background: #fff;
+}
+
+@media (min-width: 950px) {
+    .styleguide__block-navigation {
+        display: block;
+    }
+}
+
+.styleguide__block-navigation__item {
+    display: block;
+    padding: .5em 1em;
+
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    text-align: right;
+    text-decoration: none;
+}
+
+.styleguide__block-navigation__item--top:hover {
+    color: #1bc8a1;
+    text-decoration: none;
+}
+
+
+
+/* Content Container
+   ========================================================================== */
+.styleguide__content-container {
+    max-width: 100%;
+    padding: 0 20px;
+}
+
+.styleguide__content-container > h1 {
+    margin: 0 -20px 0 -20px !important;
+
+    position: relative !important;
+    padding: 20px !important;
+    padding-top: 100px !important;
+    margin-bottom: 2rem !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+
+    border-bottom: 1px solid #E4E4E4 !important;
+    background: #fff !important;
+
+    color: #333 !important;
+}
+
+.styleguide__content-container > h1:first-child {
+    padding-top: 60px !important;
+}
+
+
+
+/* Color template
+   ========================================================================== */
+.styleguide__color-template {
+    display: inline-block;
+    margin: 0 1.5rem 1.5rem 0;
+
+    text-align: center;
+}
+
+.styleguide__color-template__example {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+}
+
+.styleguide__code {
+    padding: .2em .4em;
+    white-space: nowrap;
+
+    color: #333;
+    background-color: #f9f9f9;
+    border: 0;
+    font-size: 12px;
+}
+
+
+/* Code blocks
+   ========================================================================== */
+.codeBlock {
+    margin: 2rem 0;
+    white-space: nowrap;
+
+    background-color: #f9f9f9;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    font-size: .9rem;
+}

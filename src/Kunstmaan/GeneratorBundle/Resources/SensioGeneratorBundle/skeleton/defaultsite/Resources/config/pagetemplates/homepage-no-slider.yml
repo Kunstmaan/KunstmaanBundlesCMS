@@ -1,7 +1,0 @@
-name: "Home page no slider"
-rows:
-    - regions:
-        - { name: "left_column", span: 4 }
-        - { name: "middle_column", span: 4 }
-        - { name: "right_column", span: 4 }
-template: "{{ bundle.name }}::Pages\\HomePage\\pagetemplate-no-slider.html.twig"

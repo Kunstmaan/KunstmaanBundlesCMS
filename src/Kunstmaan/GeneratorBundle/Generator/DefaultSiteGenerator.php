@@ -68,6 +68,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->generateConfig();
         $this->generateRouting($parameters);
         $this->generateTemplates($parameters);
+        $this->generateTwigExtensions($parameters);
     }
 
     /**
@@ -84,7 +85,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->renderSingleFile($sourceDir, $targetDir, 'DefaultController.php', $parameters, true);
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteAdminListController.php', $parameters, true);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikeAdminListController.php', $parameters, true);
         }
 
         $this->assistant->writeLine('Generating controllers : <info>OK</info>');
@@ -140,7 +141,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPage.php', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteOverviewPage.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'SearchPage.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -148,7 +149,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $sourceDir = $this->skeletonDir.$relPath;
             $targetDir = $this->bundle->getPath().$relPath;
 
-            $this->renderSingleFile($sourceDir, $targetDir, 'SlidePagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspPagePart.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikesListPagePart.php', $parameters);
         }
 
         if ($this->demosite) {
@@ -156,7 +160,8 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $sourceDir = $this->skeletonDir.$relPath;
             $targetDir = $this->bundle->getPath().$relPath;
 
-            $this->renderSingleFile($sourceDir, $targetDir, 'Satellite.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'Bike.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspItem.php', $parameters);
         }
 
         $this->assistant->writeLine('Generating entities : <info>OK</info>');
@@ -179,23 +184,26 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         if ($this->demosite) {
             $this->renderSingleFile($sourceDir, $targetDir, 'FormPageAdminType.php', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteOverviewPageAdminType.php', $parameters);
         }
 
-        $relPath = '/Form/PageParts/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
-
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SlidePagePartAdminType.php', $parameters);
+            $relPath = '/Form/PageParts/';
+            $sourceDir = $this->skeletonDir.$relPath;
+            $targetDir = $this->bundle->getPath().$relPath;
+
+            $this->renderSingleFile($sourceDir, $targetDir, 'PageBannerPagePartAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'ServicePagePartAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspPagePartAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikesListPagePartAdminType.php', $parameters);
         }
 
-        $relPath = '/Form/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
-
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'SatelliteAdminType.php', $parameters);
+            $relPath = '/Form/';
+            $sourceDir = $this->skeletonDir.$relPath;
+            $targetDir = $this->bundle->getPath().$relPath;
+
+            $this->renderSingleFile($sourceDir, $targetDir, 'BikeAdminType.php', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'UspItemAdminType.php', $parameters);
         }
 
         $this->assistant->writeLine('Generating form types : <info>OK</info>');
@@ -264,16 +272,16 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $sourceDir = $this->skeletonDir.$relPath;
         $targetDir = $this->bundle->getPath().$relPath;
 
-        $this->renderSingleFile($sourceDir, $targetDir, 'footer.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'home.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'left-column.yml', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'main.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'middle-column.yml', $parameters);
-        $this->renderSingleFile($sourceDir, $targetDir, 'right-column.yml', $parameters);
 
         if ($this->demosite) {
+            $this->renderSingleFile($sourceDir, $targetDir, 'header.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section1.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section2.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section3.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section4.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'section5.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'form.yml', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'slider.yml', $parameters);
         }
 
         $this->assistant->writeLine('Generating pagepart configuration : <info>OK</info>');
@@ -295,9 +303,9 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->renderSingleFile($sourceDir, $targetDir, 'behat-test-page.yml', $parameters);
 
         if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'homepage-no-slider.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'contentpage-with-submenu.yml', $parameters);
             $this->renderSingleFile($sourceDir, $targetDir, 'formpage.yml', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'satelliteoverviewpage.yml', $parameters);
+            $this->renderSingleFile($sourceDir, $targetDir, 'searchpage.yml', $parameters);
         }
 
         $this->assistant->writeLine('Generating pagetemplate configuration : <info>OK</info>');
@@ -340,14 +348,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generateTemplates(array $parameters)
     {
-        if ($this->isMultiLangEnvironment()) {
-            $relPath = '/Resources/views/Default/';
-            $sourceDir = $this->skeletonDir.$relPath;
-            $targetDir = $this->bundle->getPath().$relPath;
-
-            $this->renderSingleFile($sourceDir, $targetDir, 'language-chooser.html.twig', $parameters);
-        }
-
         $relPath = '/Resources/views/Layout/';
         $sourceDir = $this->skeletonDir.$relPath;
         $targetDir = $this->bundle->getPath().$relPath;
@@ -362,10 +362,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         $this->renderSingleFile($sourceDir, $targetDir, 'pagetemplate.html.twig', $parameters);
         $this->renderSingleFile($sourceDir, $targetDir, 'view.html.twig', $parameters);
-        if ($this->demosite) {
-            $this->renderSingleFile($sourceDir, $targetDir, 'pagetemplate-no-slider.html.twig', $parameters);
-            $this->renderSingleFile($sourceDir, $targetDir, 'slider.html.twig', $parameters);
-        }
 
         $relPath = '/Resources/views/Pages/ContentPage/';
         $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
@@ -374,14 +370,23 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             $relPath = '/Resources/views/Pages/FormPage/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
 
-            $relPath = '/Resources/views/Pages/SatelliteOverviewPage/';
+            $relPath = '/Resources/views/Pages/SearchPage/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
         // Pageparts
 
         if ($this->demosite) {
-            $relPath = '/Resources/views/PageParts/SlidePagePart/';
+            $relPath = '/Resources/views/PageParts/PageBannerPagePart/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+
+            $relPath = '/Resources/views/PageParts/ServicePagePart/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+
+            $relPath = '/Resources/views/PageParts/UspPagePart/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+
+            $relPath = '/Resources/views/PageParts/BikesListPagePart/';
             $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
         }
 
@@ -402,17 +407,25 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
             $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
 
-            $sourcePath = '/app/KunstmaanArticleBundle/';
-            $targetPath = $this->rootDir.'/app/Resources/KunstmaanArticleBundle/';
-            $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
-
             $sourcePath = '/app/KunstmaanFormBundle/';
             $targetPath = $this->rootDir.'/app/Resources/KunstmaanFormBundle/';
             $this->renderFiles($this->skeletonDir.$sourcePath, $targetPath, $parameters, true);
-
         }
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');
+    }
+
+    /**
+     * Generate the twig extensions.
+     *
+     * @param array $parameters The template parameters
+     */
+    public function generateTwigExtensions($parameters)
+    {
+        if ($this->demosite) {
+            $relPath = '/Twig/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+        }
     }
 
     /**

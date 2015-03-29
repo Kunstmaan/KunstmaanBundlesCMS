@@ -1,14 +1,8 @@
 name: "Main"
 context: "main"
+{% if demosite %}
 types:
-    - { name: "Header", class: "Kunstmaan\\PagePartBundle\\Entity\\HeaderPagePart" }
-    - { name: "Text", class: "Kunstmaan\\PagePartBundle\\Entity\\TextPagePart" }
-    - { name: "Line", class: "Kunstmaan\\PagePartBundle\\Entity\\LinePagePart" }
-    - { name: "TOC", class: "Kunstmaan\\PagePartBundle\\Entity\\TocPagePart" }
-    - { name: "Link", class: "Kunstmaan\\PagePartBundle\\Entity\\LinkPagePart" }
-    - { name: "To Top", class: "Kunstmaan\\PagePartBundle\\Entity\\ToTopPagePart" }
-    - { name: "Image", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\ImagePagePart" }
-    - { name: "Download", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\DownloadPagePart" }
-    - { name: "Slide", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\SlidePagePart" }
-    - { name: "Video", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\VideoPagePart" }
-    - { name: "Audio", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\AudioPagePart" }
+    - { name: "BikesList", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\BikesListPagePart" }
+{% else %}
+types: []
+{% endif %}

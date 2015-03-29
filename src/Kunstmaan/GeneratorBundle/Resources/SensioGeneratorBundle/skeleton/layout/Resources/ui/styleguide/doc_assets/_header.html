@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<!--[if lte IE 8]> <html class="no-js lt-ie9" lang="nl"> <![endif]-->
+<!--[if gte IE 9]><!-->  <html class="no-js" lang="nl"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ bundle.getName() }} - <%= title %></title>
+
+    <!-- Styleguide styles -->
+    <link rel="stylesheet" href="./static/hologram--kunstmaan.css">
+    <link rel="stylesheet" href="./static/code-highlighting--github.css">
+
+    <!-- Project styles -->
+    <link rel="stylesheet" href="./css/style.min.css">
+
+    <!-- Live-reload -->
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js"></' + 'script>');</script>
+</head>
+<body class="styleguide">
+
+    <!-- Main header -->
+    <header role="header" id="headroomHeader" class="headroom">
+        <div class="styleguide__header">
+            <h1 class="styleguide__header__head">
+                {{ bundle.getName() }}
+            </h1>
+            <nav role="navigation" class="styleguide__header__main-nav">
+                <% @categories.each do |category, file_name| %>
+                    <% current_category = title.downcase %>
+                    <% this_category = file_name.split(".").first.downcase %>
+
+                    <% if current_category == this_category %>
+                        <a href="<%= file_name %>" class="styleguide__header__main-nav__item styleguide__header__main-nav__item--active">
+                            <%= category %>
+                        </a>
+                    <% else %>
+                        <a href="<%= file_name %>" class="styleguide__header__main-nav__item">
+                            <%= category %>
+                        </a>
+                    <% end %>
+                <% end %>
+            </nav>
+        </div>
+    </header>
+
+    <main role="main" class="styleguide__main">
+        <div id="holo-toc-kunstmaan" class="styleguide__block-navigation">
+            <nav role="navigation" id="holo-toc-kunstmaan__nav" class="styleguide__block-navigation__menu">
+                <% @blocks.each do |b| %>
+                    <a href="#<%= b[:name] %>" class="styleguide__block-navigation__item">
+                        <%= b[:title] %>
+                    </a>
+                <% end %>
+            </nav>
+        </div>
+
+        <div class="styleguide__content-container">

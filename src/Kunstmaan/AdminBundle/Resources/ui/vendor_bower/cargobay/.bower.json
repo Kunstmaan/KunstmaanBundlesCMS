@@ -1,0 +1,71 @@
+{
+  "name": "cargobay",
+  "version": "0.5.2",
+  "homepage": "https://github.com/Kunstmaan/cargobay",
+  "authors": [
+    "Indri Kenens",
+    "Ibe Vanmeenen",
+    "Sam Bellen",
+    "Kevin Fivé",
+    "Jens Gyselinck"
+  ],
+  "description": "Html, scss/css and js component library by Kunstmaan",
+  "main": [
+    "src/audioplayer/js/jquery.audioplayer.js",
+    "src/audioplayer/styles/scss/audioplayer.scss",
+    "src/audioplayer/styles/css/audioplayer.css",
+    "src/cookie-consent/js/jquery.cookie-consent.js",
+    "src/cookie-consent/js/vanilla.cookie-consent.js",
+    "src/cookie-consent/styles/scss/cookie-consent.scss",
+    "src/cookie-consent/styles/css/cookie-consent.css",
+    "src/full-img-bg/js/jquery.full-img-bg.js",
+    "src/full-img-bg/styles/scss/full-img-bg.scss",
+    "src/full-img-bg/styles/css/full-img-bg.css",
+    "src/has-space/js/jquery.has-space.js",
+    "src/has-space/js/vanilla.has-space.js",
+    "src/scroll-to/js/jquery.scroll-to.js",
+    "src/scroll-to/js/vanilla.scroll-to.js",
+    "src/scroll-to-top/js/jquery.scroll-to-top.js",
+    "src/scroll-to-top/js/vanilla.scroll-to-top.js",
+    "src/toggle/js/jquery.toggle.js",
+    "src/toggle/js/vanilla.toggle.js",
+    "src/toggle/styles/scss/toggle.scss",
+    "src/toggle/styles/css/toggle.css",
+    "src/videolink/js/jquery.videolink.js",
+    "src/videolink/styles/scss/videolink.scss",
+    "src/videolink/styles/css/videolink.css"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "component",
+    "library",
+    "scss",
+    "sass",
+    "css",
+    "js",
+    "html",
+    "kunstmaan",
+    "cargobay",
+    "Cargo Bay",
+    "cupcake"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.5.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.2",
+    "commit": "eef228428f9d53682116eb9c35822a1a6c62b4d3"
+  },
+  "_source": "git://github.com/Kunstmaan/cargobay.git",
+  "_target": "0.5.2",
+  "_originalSource": "cargobay"
+}

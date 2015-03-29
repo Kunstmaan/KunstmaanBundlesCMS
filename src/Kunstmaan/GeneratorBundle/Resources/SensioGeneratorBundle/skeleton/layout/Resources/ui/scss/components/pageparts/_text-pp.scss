@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Pageparts - Text pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.text-pp {
+    max-width: 40rem;
+    margin: $default-margin 0;
+
+{% if demosite %}
+    ul {
+        @include list-reset;
+
+        li {
+            position: relative;
+
+            padding-left: .9rem;
+
+            &:before {
+                content: "•";
+
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                font-size: .7rem;
+                color: $theme-color;
+            }
+        }
+    }
+
+    ol {
+        padding-left: 1.4rem;
+    }
+
+    ul, ol {
+
+        li {
+            margin-bottom: .4rem;
+
+            line-height: 150%;
+        }
+    }
+{% endif %}
+}
