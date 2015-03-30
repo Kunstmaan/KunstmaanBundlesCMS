@@ -8,6 +8,7 @@ use Faker\Provider\Base;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;
+use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
 /**
  * Generates all classes/files for a new pagepart
@@ -95,7 +96,7 @@ class PagePartGenerator extends KunstmaanGenerator
 
         $this->assistant->writeLine('Generating entity : <info>OK</info>');
     }
-
+    
     /**
      * Generate the admin form type entity.
      */

@@ -149,7 +149,15 @@ EOT
         $fields = $this->askEntityFields($this->bundle);
         $this->fields = array();
         foreach ($fields as $fieldInfo) {
-            $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
+            if($fieldInfo['type'] == 'image') {
+            	$this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], 
+            			          $fieldInfo['extra'], $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes'], true);
+            } 
+            elseif($fieldInfo['type'] == 'media') {
+            	$this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
+            			$fieldInfo['extra'], null, null, null, null, $fieldInfo['mimeTypes'], true);
+            }
+            else $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], null, null, null, null, null, true);
         }
 
         /**

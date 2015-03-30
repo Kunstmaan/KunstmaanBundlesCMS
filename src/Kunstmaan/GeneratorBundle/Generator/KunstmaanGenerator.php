@@ -203,6 +203,7 @@ class KunstmaanGenerator extends Generator
      *
      * @param BundleInterface $bundle
      */
+    
     protected function installDefaultPageTemplates($bundle)
     {
         // Configuration templates
@@ -403,7 +404,6 @@ class KunstmaanGenerator extends Generator
         if (!is_dir(dirname($target))) {
             mkdir(dirname($target), 0777, true);
         }
-
         return file_put_contents($target, $this->renderTwig($template, $parameters, $sourceDir));
     }
 }
