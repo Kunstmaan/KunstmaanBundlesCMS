@@ -41,6 +41,10 @@
 
 
 {# Desktop header #}
+    {# DemositeMessage #}
+    {% block cookieconsent %}
+        {% include '<%= bundle.getName() %>:Layout:_demositemessage.html.twig' %}
+    {% endblock %}
 {% if nodemenu is defined %}
     <div class="container-fluid">
         <header role="header" class="main-header main-header--desktop {% block extra_main_header_class %}{% endblock %}">
