@@ -36,7 +36,7 @@
         text-decoration: none;
         color: $text-color;
 {% if demosite %}
-        background-color: $white;
+        background-color: darken($white, 5%);
 {% endif %}
     }
 

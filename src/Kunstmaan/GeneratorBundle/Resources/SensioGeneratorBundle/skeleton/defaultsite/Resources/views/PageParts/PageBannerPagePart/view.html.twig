@@ -1,6 +1,6 @@
 <figure class="header-visual">
     {% if resource.backgroundImage is not empty %}
-        <img src="{{ asset(resource.backgroundImage.url) }}" class="header-visual__img">
+        <img src="{{ asset(resource.backgroundImage.url)|imagine_filter('optim') }}" class="header-visual__img">
     {% endif %}
 
     <figcaption class="header-visual__content">
