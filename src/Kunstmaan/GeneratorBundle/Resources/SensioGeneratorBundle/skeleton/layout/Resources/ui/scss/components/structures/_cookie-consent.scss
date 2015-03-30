@@ -53,14 +53,16 @@ category: Structures
 ---
 
 ```html_example
-    <div id="cookie-bar" class="cookie-bar">
+<div style="height: 400px; width: 100%; position: relative;">
+    <div id="cookie-bar" class="cookie-bar" style="position: absolute;">
         <p>
-            Deze site gebruikt cookies om uw surfervaring op deze website gemakkelijker te maken. Indien u meer informatie wenst kan u <a href="#" class="cookie-bar__policy">hier ons cookiebeleid lezen</a>.
+            Deze website gebruikt <br>cookies om uw surf- <br>ervaring makkelijker te maken.
         </p>
         <button type="button" id="cookie-bar__consent-btn" class="btn btn-warning cookie-bar__btn">Doorgaan</button>
         <div class="cookie-bar__triangle">
         </div>
     </div>
+</div>
 ```
 
 */
