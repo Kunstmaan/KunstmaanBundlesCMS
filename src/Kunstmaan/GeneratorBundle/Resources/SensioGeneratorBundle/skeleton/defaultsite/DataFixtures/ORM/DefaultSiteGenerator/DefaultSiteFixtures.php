@@ -898,6 +898,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         if (in_array('de', $this->requiredLocales)) {
             $trans['cookieconsent.confirm']['de'] = 'Weitergehen';
         }
+        $trans['cookieconsent.confirm']['en'] = 'Proceed';
+        $trans['cookieconsent.confirm']['nl'] = 'Doorgaan';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['cookieconsent.confirm']['fr'] = 'Continuer';
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['cookieconsent.confirm']['de'] = 'Weitergehen';
+        }
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
         foreach ($trans as $key => $array) {
