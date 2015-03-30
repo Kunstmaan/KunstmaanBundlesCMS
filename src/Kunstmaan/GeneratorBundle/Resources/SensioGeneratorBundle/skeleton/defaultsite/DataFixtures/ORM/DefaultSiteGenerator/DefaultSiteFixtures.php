@@ -882,6 +882,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         if (in_array('de', $this->requiredLocales)) {
             $trans['warning.outdated.upgrade_browser']['de'] = 'Aktualisieren Sie Ihren Browser';
         }
+        $trans['cookieconsent.description']['en'] = 'This website uses <br>cookies to enhance your <br>browsing experience.';
+        $trans['cookieconsent.description']['nl'] = 'Deze website gebruikt <br>cookies om uw surf- <br>ervaring makkelijker te maken.';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['cookieconsent.description']['fr'] = 'Ce site web utilise des <br>cookies pour faciliter votre <br>navigation.';
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['cookieconsent.description']['de'] = 'Diese Website verwendet <br>Cookies, um Ihren Besuch <br>effizienter zu machen.';
+        }
+        $trans['cookieconsent.confirm']['en'] = 'Proceed';
+        $trans['cookieconsent.confirm']['nl'] = 'Doorgaan';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['cookieconsent.confirm']['fr'] = 'Continuer';
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['cookieconsent.confirm']['de'] = 'Weitergehen';
+        }
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
         foreach ($trans as $key => $array) {
