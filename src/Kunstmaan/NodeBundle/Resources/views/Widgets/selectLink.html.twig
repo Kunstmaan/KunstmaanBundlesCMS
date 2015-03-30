@@ -81,10 +81,10 @@
             <p id="url-chooser__selection-preview">
                 Selection: empty
             </p>
-            <button type="button" id="save-url-chooser-modal" class="btn btn-primary btn--raise-on-hover"{% if cke %} data-cke="true"{% endif %}>
+            <button type="button" id="save-url-chooser-modal" class="btn btn-primary btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
                 Ok
             </button>
-            <button type="button" id="cancel-url-chooser-modal" class="btn btn-default btn--raise-on-hover">
+            <button type="button" id="cancel-url-chooser-modal" class="btn btn-default btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
                 Cancel
             </button>
         </div>

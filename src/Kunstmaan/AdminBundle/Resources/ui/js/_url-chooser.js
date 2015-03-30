@@ -3,7 +3,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.urlChooser = (function(window, undefined) {
 
     var init, urlChooser,
-        saveUrlChooserModal, saveMediaChooserModal;
+        saveUrlChooserModal, saveMediaChooserModal, getUrlParam;
 
     var itemUrl, itemId, itemTitle, itemThumbPath,
         $body = $('body');
@@ -61,30 +61,53 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
         // Cancel
         $('#cancel-url-chooser-modal').on('click', function() {
-            var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
-                parentModalId = $parentModal.attr('id');
+            var cke = $(this).data('cke');
 
-            parent.$('#' + parentModalId).modal('hide');
+            if(!cke) {
+                var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
+                    parentModalId = $parentModal.attr('id');
+
+                parent.$('#' + parentModalId).modal('hide');
+
+            } else {
+                window.close();
+            }
         });
 
         // OK
         $('#save-url-chooser-modal').on('click', function() {
-            saveUrlChooserModal();
+            var cke = $(this).data('cke');
+
+            saveUrlChooserModal(cke);
         });
     };
 
 
     // Save for URL-chooser
-    saveUrlChooserModal = function() {
-        var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
-            linkedInputId = $parentModal.data('linked-input-id'),
-            parentModalId = $parentModal.attr('id');
+    saveUrlChooserModal = function(cke) {
+        console.log(cke);
 
-        // Set val
-        parent.$('#' + linkedInputId).val(itemUrl);
+        if(!cke) {
+            var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
+                linkedInputId = $parentModal.data('linked-input-id'),
+                parentModalId = $parentModal.attr('id');
 
-        // Close modal
-        parent.$('#' + parentModalId).modal('hide');
+            // Set val
+            parent.$('#' + linkedInputId).val(itemUrl);
+
+            // Close modal
+            parent.$('#' + parentModalId).modal('hide');
+
+        } else {
+            var funcNum = getUrlParam('CKEditorFuncNum');
+
+            // Set val
+            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
+
+            // Close window
+            window.close();
+        }
+
     };
 
 
@@ -111,40 +134,13 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
     };
 
 
+    // Get Url Parameters
+    getUrlParam = function(paramName) {
+        var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i'),
+            match = window.location.search.match(reParam);
 
-
-    // OLD
-    // function handleOK(result) {
-    //     if (window.opener) {
-    //         {% if cke %}
-    //             var funcNum = getUrlParam('CKEditorFuncNum');
-    //             window.opener.CKEDITOR.tools.callFunction(funcNum, result['path']);
-    //         {% else %}
-    //             window.opener.dialogWin.returnedValue = result;
-    //             window.opener.dialogWin.returnFunc()
-    //         {% endif %}
-    //     } else {
-    //         //alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
-    //     }
-
-    //     window.close();
-    //     return false
-    // }
-
-    // function getUrlParam(paramName) {
-    //     var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
-    //     var match = window.location.search.match(reParam) ;
-    //     return (match && match.length > 1) ? match[1] : '' ;
-    // }
-    // $(document).ready(function() {
-    //     $('.choosebutton{{ id }}').on('click', function(ev) {
-    //         ev.preventDefault();
-    //         openDGDialog('{{ path('KunstmaanNodeBundle_selecturl') }}', 580, 500, function(param){
-    //             var widget = jQuery('#{{ id }}_widget');
-    //             widget.find('input').val(dialogWin.returnedValue.path);
-    //         });
-    //     });
-    // });
+        return (match && match.length > 1) ? match[1] : '';
+    };
 
 
     return {
