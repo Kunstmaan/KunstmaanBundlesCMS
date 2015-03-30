@@ -352,7 +352,9 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $sourceDir = $this->skeletonDir.$relPath;
         $targetDir = $this->bundle->getPath().$relPath;
 
-        $this->renderSingleFile($sourceDir, $targetDir, 'submenu.html.twig', $parameters);
+        if ($this->demosite) {
+            $this->renderSingleFile($sourceDir, $targetDir, 'submenu.html.twig', $parameters);
+        }
 
         // Pages
 

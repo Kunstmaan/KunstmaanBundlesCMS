@@ -44,7 +44,7 @@
                 {# Footer navigation #}
                 {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                 {% for node in activeSubnode.children %}
-                    {% if not node.node.isHiddenFromNav() %}
+                    {% if not node.node.isHiddenFromNav() and node.node.internalName != 'contact' %}
                         <div class="col-md-3 col-sm-3">
                             <nav class="footer-nav">
 
@@ -69,7 +69,7 @@
                                         {% endfor %}
                                     {% else %}
                                         {% for node2 in node.children %}
-                                            {% if not node.node.isHiddenFromNav() or true %}
+                                            {% if not node.node.isHiddenFromNav() %}
                                                 <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__item{% if(node2.active) %} footer-nav__item--active{% endif %}">
                                                     {{ node2.title }}
                                                 </a>
