@@ -52,4 +52,18 @@
 .footer-nav__item--active {
     color: $link-color--hover;
 }
+
+.footer-nav--demosite {
+    .footer-nav__title {
+        color: $black;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: .9rem;
+        line-height: 150%;
+        color: $grey;
+    }
+}
+
 {% endif %}
