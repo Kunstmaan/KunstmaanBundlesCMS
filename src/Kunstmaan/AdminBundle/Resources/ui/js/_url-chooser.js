@@ -41,7 +41,8 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
                 path = $this.data('path'),
                 thumbPath = $this.data('thumb-path'),
                 id = $this.data('id'),
-                title = $this.data('title');
+                title = $this.data('title'),
+                cke = $this.data('cke');
 
             // Store values
             itemUrl = path;
@@ -50,13 +51,19 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
             itemThumbPath = thumbPath;
 
             // Save
-            var $parentModal = $(window.frameElement).closest('.js-ajax-modal');
+            if(!cke) {
+                var isMediaChooser = $(window.frameElement).closest('.js-ajax-modal').data('media-chooser');
 
-            if($parentModal.data('media-chooser') === true) {
-                saveMediaChooserModal();
+                if(isMediaChooser) {
+                    saveMediaChooserModal(false);
+                } else {
+                    saveUrlChooserModal(false);
+                }
+
             } else {
-                saveUrlChooserModal();
+                saveMediaChooserModal(true);
             }
+
         });
 
         // Cancel
@@ -85,8 +92,6 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
     // Save for URL-chooser
     saveUrlChooserModal = function(cke) {
-        console.log(cke);
-
         if(!cke) {
             var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
                 linkedInputId = $parentModal.data('linked-input-id'),
@@ -107,30 +112,40 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
             // Close window
             window.close();
         }
-
     };
 
 
     // Save for Media-chooser
-    saveMediaChooserModal = function(linkedInputId) {
-        var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
-            linkedInputId = $parentModal.data('linked-input-id'),
-            parentModalId = $parentModal.attr('id');
+    saveMediaChooserModal = function(cke) {
+        if(!cke) {
+            var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
+                linkedInputId = $parentModal.data('linked-input-id'),
+                parentModalId = $parentModal.attr('id');
 
-        // Set val
-        parent.$('#' + linkedInputId).val(itemId);
+            // Set val
+            parent.$('#' + linkedInputId).val(itemId);
 
-        // Update preview
-        var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
-            $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
-            $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
+            // Update preview
+            var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
+                $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
+                $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
 
-        $mediaChooser.addClass('media-chooser--choosen');
-        $previewImg.attr('src', itemThumbPath);
-        $previewTitle.html(itemTitle);
+            $mediaChooser.addClass('media-chooser--choosen');
+            $previewImg.attr('src', itemThumbPath);
+            $previewTitle.html(itemTitle);
 
-        // Close modal
-        parent.$('#' + parentModalId).modal('hide');
+            // Close modal
+            parent.$('#' + parentModalId).modal('hide');
+
+        } else {
+            var funcNum = getUrlParam('CKEditorFuncNum');
+
+            // Set val
+            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
+
+            // Close window
+            window.close();
+        }
     };
 
 
