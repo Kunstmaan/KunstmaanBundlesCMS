@@ -1,0 +1,169 @@
+<?php
+
+namespace Kunstmaan\MediaBundle\Validator\Constraints;
+
+use Kunstmaan\MediaBundle\Entity\Media as MediaObject;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+
+
+class MediaValidator extends ConstraintValidator
+{	
+	const KB_BYTES = 1000;
+	const MB_BYTES = 1000000;
+	const KIB_BYTES = 1024;
+	const MIB_BYTES = 1048576;
+		
+	private static $suffices = array(
+			1 => 'bytes',
+			self::KB_BYTES => 'kB',
+			self::MB_BYTES => 'MB',
+			self::KIB_BYTES => 'KiB',
+			self::MIB_BYTES => 'MiB' 
+	);
+	
+	/**
+	 *
+	 * @ERROR!!!
+	 *
+	 */
+	public function validate($value, Constraint $constraint) {
+		
+		if (! $constraint instanceof Media) {
+			throw new UnexpectedTypeException ( $constraint, __NAMESPACE__ . '\Media' );
+		}
+		if ($value) {
+			
+			$mimeType = $value->getContentType();
+			
+			if ($constraint->mimeTypes) {
+				if (!$value instanceof FileObject) {
+					$value = new MediaObject($value);
+				}
+			
+				$mimeTypes = (array) $constraint->mimeTypes;
+			
+				foreach ($mimeTypes as $type) {
+					if ($type === $mimeType) {
+						return;
+					}
+			
+					if ($discrete = strstr($type, '/*', true)) {
+						if (strstr($mimeType, '/', true) === $discrete) {
+							return;
+						}
+					}
+				}
+			
+				$this->buildViolation($constraint->mimeTypesMessage)
+				->setParameter('{{ media }}', $this->formatValue($value->getUrl()))
+				->setParameter('{{ type }}', $this->formatValue($mimeType))
+				->setParameter('{{ types }}', $this->formatValues ( $mimeTypes ) )->setCode ( Media::INVALID_MIME_TYPE_ERROR )->addViolation ();
+				
+				return;
+			}
+			
+			if (preg_match ( '^image\/*^', $mimeType ) && $mimeType != 'image/svg+xml') {
+				
+				$height = $value->getMetadataValue ( 'original_height' );
+				$width = $value->getMetadataValue ( 'original_width' );
+				
+				if ($constraint->minHeight) {
+					if (! ctype_digit ( ( string ) $constraint->minHeight )) {
+						throw new ConstraintDefinitionException ( sprintf ( '"%s" is not a valid minimum height', $constraint->minHeight ) );
+					}
+					
+					if ($height < $constraint->minHeight) {
+						$this->buildViolation ( $constraint->minHeightMessage )->setParameter ( '{{ height }}', $height )->setParameter ( '{{ min_height }}', $constraint->minHeight )->setCode ( Media::TOO_LOW_ERROR )->addViolation ();
+						
+						return;
+					}
+				}
+				
+				if ($constraint->maxHeight) {
+					if (! ctype_digit ( ( string ) $constraint->maxHeight )) {
+						throw new ConstraintDefinitionException ( sprintf ( '"%s" is not a valid maximum height', $constraint->maxHeight ) );
+					}
+					
+					if ($height > $constraint->maxHeight) {
+						$this->buildViolation ( $constraint->maxHeightMessage )->setParameter ( '{{ height }}', $height )->setParameter ( '{{ max_height }}', $constraint->maxHeight )->setCode ( Media::TOO_HIGH_ERROR )->addViolation ();
+						
+						return;
+					}
+				}
+				
+				if ($constraint->minWidth) {
+					if (! ctype_digit ( ( string ) $constraint->minWidth )) {
+						throw new ConstraintDefinitionException ( sprintf ( '"%s" is not a valid minimum width', $constraint->minWidth ) );
+					}
+					
+					if ($width < $constraint->minWidth) {
+						$this->buildViolation ( $constraint->minWidthMessage )->setParameter ( '{{ width }}', $width )->setParameter ( '{{ min_width }}', $constraint->minWidth )->setCode ( Media::TOO_NARROW_ERROR )->addViolation ();
+						
+						return;
+					}
+				}
+				
+				if ($constraint->maxWidth) {
+					if (! ctype_digit ( ( string ) $constraint->maxWidth )) {
+						throw new ConstraintDefinitionException ( sprintf ( '"%s" is not a valid maximum width', $constraint->maxWidth ) );
+					}
+					
+					if ($width > $constraint->maxWidth) {
+						$this->buildViolation ( $constraint->maxWidthMessage)
+							->setParameter('{{ width }}', $width)
+							->setParameter('{{ max_width }}', $constraint->maxWidth)
+							->setCode(Media::TOO_WIDE_ERROR)
+							->addViolation();
+							 
+							return;
+					}
+				}
+			}			 
+    	}
+    }
+    
+    private static function moreDecimalsThan($double, $numberOfDecimals)
+    {
+    	return strlen((string) $double) > strlen(round($double, $numberOfDecimals));
+    }
+    
+    /**
+     * Convert the limit to the smallest possible number
+     * (i.e. try "MB", then "kB", then "bytes")
+     */
+    private function factorizeSizes($size, $limit, $binaryFormat)
+    {
+    	if ($binaryFormat) {
+    		$coef = self::MIB_BYTES;
+    		$coefFactor = self::KIB_BYTES;
+    	} else {
+    		$coef = self::MB_BYTES;
+    		$coefFactor = self::KB_BYTES;
+    	}
+    
+    	$limitAsString = (string) ($limit / $coef);
+    
+    	// Restrict the limit to 2 decimals (without rounding! we
+    	// need the precise value)
+    	while (self::moreDecimalsThan($limitAsString, 2)) {
+    		$coef /= $coefFactor;
+    		$limitAsString = (string) ($limit / $coef);
+    	}
+    
+    	// Convert size to the same measure, but round to 2 decimals
+    	$sizeAsString = (string) round($size / $coef, 2);
+    
+    	// If the size and limit produce the same string output
+    	// (due to rounding), reduce the coefficient
+    	while ($sizeAsString === $limitAsString) {
+    		$coef /= $coefFactor;
+    		$limitAsString = (string) ($limit / $coef);
+    		$sizeAsString = (string) round($size / $coef, 2);
+    	}
+    
+    	return array($sizeAsString, $limitAsString, self::$suffices[$coef]);
+    }
+}
