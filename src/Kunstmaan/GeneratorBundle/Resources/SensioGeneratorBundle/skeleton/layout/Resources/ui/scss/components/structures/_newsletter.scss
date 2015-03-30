@@ -63,6 +63,7 @@
     @include box-shadow;
 
     width: 100%;
+    max-width: 100%;
     display: block;
     padding: .65em 1em;
 
@@ -71,10 +72,16 @@
     background-color: $white;
     border: 1px solid $hr-color;
 
+    &.form-control {
+        max-width: 100%;
+    }
+
     @media(min-width: $screen-sm-min) {
         display: inline-block;
-        width: 340px;
-        max-width: 100%;
+
+        &.form-control {
+            max-width: 18.8rem;
+        }
     }
 }
 
