@@ -19,7 +19,7 @@
 
     <figure class="col-sm-6 service-pp__image">
         {% if resource.image is not empty %}
-            <img src="{{ asset(resource.image.url) }}" alt="{{ resource.title }}">
+            <img src="{{ asset(resource.image.url)|imagine_filter('optimpng') }}" alt="{{ resource.title }}">
         {% endif %}
     </figure>
 </div>

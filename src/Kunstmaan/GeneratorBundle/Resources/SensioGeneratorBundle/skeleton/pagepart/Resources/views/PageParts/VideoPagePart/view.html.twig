@@ -2,7 +2,7 @@
     <div class="video-pp">
         {% set videoImage = asset('frontend/img/general/video-pp--default.svg') %}
         {% if resource.thumbnail is not empty %}
-            {% set videoImage = resource.thumbnail.url %}
+            {% set videoImage = resource.thumbnail.url|imagine_filter('optim') %}
         {% endif %}
 
         {% set handler = mediamanager.getHandler(resource.video) %}
