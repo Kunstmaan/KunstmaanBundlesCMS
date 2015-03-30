@@ -7,13 +7,15 @@
     position: fixed;
     bottom: 0;
     left: 0;
-
+{% if demosite %}
     width: 17rem;
+{% endif %}
     padding: 0;
 
     background: none;
-
+{% if demosite %}
     p {
+
         position: absolute;
         left: 0;
         bottom: 3.8rem;
@@ -27,13 +29,16 @@
         font-size: .7rem;
         text-align: left;
     }
+{% endif %}
 }
 
+{% if demosite %}
 .cookie-bar__btn {
     position: absolute;
     left: 1.5rem;
     bottom: 1.5rem;
 }
+{% endif %}
 
 .cookie-bar__triangle {
     border: 160px solid rgba($blue--dark,.9);
