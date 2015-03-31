@@ -145,6 +145,14 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function buildExportFields()
     {
+        /**
+         * This is only here to prevent a BC break!!!
+         *
+         * Just override this function if you want to set your own fields...
+         */
+        if (empty($this->fields)) {
+            $this->buildFields();
+        }
     }
 
     /**
