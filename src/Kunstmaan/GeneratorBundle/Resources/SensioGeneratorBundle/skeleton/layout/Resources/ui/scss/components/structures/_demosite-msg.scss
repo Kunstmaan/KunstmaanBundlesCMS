@@ -5,6 +5,20 @@
 .demosite-msg__wrapper {
     text-align: center;
     transform: translate3d(0,0,0);
+
+    &:hover,
+    &:focus,
+    &:active {
+        .demosite-msg {
+            background: lighten($blue, 5%);
+        }
+
+        .demosite-msg__btn {
+            &:after {
+                border-color: lighten($blue, 5%) transparent transparent transparent;
+            }
+        }
+    }
 }
 
 .demosite-msg {
@@ -52,10 +66,6 @@
         background: none;
 
         color: $white;
-
-        &:after {
-            border-color: lighten($blue, 5%) transparent transparent transparent;
-        }
     }
 }
 
