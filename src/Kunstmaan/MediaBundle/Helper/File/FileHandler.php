@@ -33,6 +33,8 @@ class FileHandler extends AbstractMediaHandler
      */
     public $mimeTypeGuesser = null;
 
+    CONST MEDIA_PATH = '/uploads/media/';
+
     /**
      * Constructor
      */
@@ -48,7 +50,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function setMediaPath($kernelRootDir)
     {
-        $this->fileSystem = new Filesystem(new Local($kernelRootDir . '/../web/uploads/media/', true));
+        $this->fileSystem = new Filesystem(new Local($kernelRootDir . '/../web' . self::MEDIA_PATH, true));
     }
 
     /**
@@ -139,12 +141,7 @@ class FileHandler extends AbstractMediaHandler
 
         $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
         $media->setContentType($contentType);
-        $relativePath = sprintf(
-            '/%s.%s',
-            $media->getUuid(),
-            ExtensionGuesser::getInstance()->guess($media->getContentType())
-        );
-        $media->setUrl('/uploads/media' . $relativePath);
+        $media->setUrl(self::MEDIA_PATH . $this->getFilePath($media));
         $media->setLocation('local');
     }
 
@@ -183,13 +180,22 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getOriginalFile(Media $media)
     {
-        $relativePath = sprintf(
-            '/%s.%s',
-            $media->getUuid(),
-            ExtensionGuesser::getInstance()->guess($media->getContentType())
-        );
+        return $this->fileSystem->get($this->getFilePath($media), true);
+    }
 
-        return $this->fileSystem->get($relativePath, true);
+    /**
+     *
+     *
+     * @param Media $media
+     * @return string
+     */
+    private function getFilePath(Media $media)
+    {
+        return sprintf(
+            '/%s/%s',
+            $media->getUuid(),
+            $media->getOriginalFilename()
+        );
     }
 
     /**
