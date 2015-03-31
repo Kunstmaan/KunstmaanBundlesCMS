@@ -848,6 +848,15 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $trans['footer.contact_us']['en'] = 'Contact us';
         $trans['footer.contact_us']['nl'] = 'Contacteer ons';
+
+        $trans['demositemessage']['en'] = 'This website is built using the Kunstmaan CMS Bundles.';
+        $trans['demositemessage']['nl'] = 'Deze website is gemaakt met de Kunstmaan CMS Bundles.';
+        if (in_array('fr', $this->requiredLocales)) {
+            $trans['demositemessage']['fr'] = 'Cette site web est realis&eacute;e par les CMS Bundles de Kunstmaan.';
+        }
+        if (in_array('de', $this->requiredLocales)) {
+            $trans['demositemessage']['de'] = 'Diese Webseite w&uuml;rde gestaltet mit Kunstmaan CMS Bundles.';
+        }
 {% endif %}
 
         $trans['warning.outdated.title']['en'] = 'You are using an outdated browser.';
@@ -897,14 +906,6 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         }
         if (in_array('de', $this->requiredLocales)) {
             $trans['cookieconsent.confirm']['de'] = 'Weitergehen';
-        }
-        $trans['demositemessage']['en'] = 'This website is built using the Kunstmaan CMS Bundles.';
-        $trans['demositemessage']['nl'] = 'Deze website is gemaakt met de Kunstmaan CMS Bundles.';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['demositemessage']['fr'] = 'Cette site web est realis&eacute;e par les CMS Bundles de Kunstmaan.';
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['demositemessage']['de'] = 'Diese Webseite w&uuml;rde gestaltet mit Kunstmaan CMS Bundles.';
         }
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
