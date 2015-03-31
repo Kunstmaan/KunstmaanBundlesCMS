@@ -24,6 +24,11 @@ class FileHandler extends AbstractMediaHandler
     const TYPE = 'file';
 
     /**
+     * @var string
+     */
+    const MEDIA_PATH = '/uploads/media/';
+
+    /**
      * @var Filesystem
      */
     public $fileSystem = null;
@@ -33,7 +38,12 @@ class FileHandler extends AbstractMediaHandler
      */
     public $mimeTypeGuesser = null;
 
-    CONST MEDIA_PATH = '/uploads/media/';
+    /**
+     * Files with a blacklisted extension will be converted to txt
+     *
+     * @var array
+     */
+    private $blacklistedExtensions = array();
 
     /**
      * Constructor
@@ -41,6 +51,16 @@ class FileHandler extends AbstractMediaHandler
     public function __construct(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
+    }
+
+    /**
+     * Inject the blacklisted
+     *
+     * @param array $blacklistedExtensions
+     */
+    public function setBlacklistedExtensions(array $blacklistedExtensions)
+    {
+        $this->blacklistedExtensions = $blacklistedExtensions;
     }
 
     /**
@@ -191,10 +211,16 @@ class FileHandler extends AbstractMediaHandler
      */
     private function getFilePath(Media $media)
     {
+        $filename = $media->getOriginalFilename();
+
+        if (!empty($this->blacklistedExtensions)) {
+            $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
+        }
+
         return sprintf(
             '/%s/%s',
             $media->getUuid(),
-            $media->getOriginalFilename()
+            $filename
         );
     }
 
