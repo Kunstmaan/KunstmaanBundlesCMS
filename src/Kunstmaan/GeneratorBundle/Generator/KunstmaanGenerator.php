@@ -203,7 +203,6 @@ class KunstmaanGenerator extends Generator
      *
      * @param BundleInterface $bundle
      */
-    
     protected function installDefaultPageTemplates($bundle)
     {
         // Configuration templates
