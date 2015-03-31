@@ -2,10 +2,17 @@
 
 {% block extra_actions_header %}
     {% if adminlistconfigurator.overviewPage %}
-        <div class="main-actions">
-            <a href="#" data-target="#add-subpage-modal" data-toggle="modal" class="btn btn-default btn--raise-on-hover">
-                {{ 'form.add'|trans }}
-            </a>
+        <div class="col-sm-6 col-md-4">
+            <!-- Main-actions -->
+            <div class="page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+                <div class="btn-group">
+                    {% block actions %}
+                        <button type="button" data-target="#add-subpage-modal" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'form.add'|trans }}
+                        </button>
+                    {% endblock %}
+                </div>
+            </div>
         </div>
 
         <!-- Modal - Add Subpage -->
