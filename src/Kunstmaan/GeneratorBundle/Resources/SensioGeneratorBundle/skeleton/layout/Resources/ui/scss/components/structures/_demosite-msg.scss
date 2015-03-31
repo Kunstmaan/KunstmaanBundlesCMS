@@ -68,7 +68,19 @@ category: Structures
 ---
 
 ```html_example
-
+<div style="position:relative; height: 20rem; width: 100%;">
+    <div class="demosite-msg__wrapper">
+        <section id="demosite-msg" class="demosite-msg toggle-item">
+            <div class="toggle-item__content">
+                <p>Deze website is gemaakt met de Kunstmaan CMS Bundles.</p>
+            </div>
+        </section>
+        <button type="button" class="js-toggle-btn toggle-button btn demosite-msg__btn" data-target="#demosite-msg" data-duration="200">
+            <i class="toggle-btn__icon--show icon icon--arrow-down"></i>
+            <i class="toggle-btn__icon--hide icon icon--arrow-up"></i>
+        </button>
+    </div>
+</div>
 ```
 
 */
