@@ -8,7 +8,6 @@ use Faker\Provider\Base;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;
-use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
 /**
  * Generates all classes/files for a new pagepart
