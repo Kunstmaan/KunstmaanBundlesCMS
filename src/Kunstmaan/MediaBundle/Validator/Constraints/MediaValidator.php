@@ -122,48 +122,6 @@ class MediaValidator extends ConstraintValidator
 					}
 				}
 			}			 
+    		}
     	}
-    }
-    
-    private static function moreDecimalsThan($double, $numberOfDecimals)
-    {
-    	return strlen((string) $double) > strlen(round($double, $numberOfDecimals));
-    }
-    
-    /**
-     * Convert the limit to the smallest possible number
-     * (i.e. try "MB", then "kB", then "bytes")
-     */
-    private function factorizeSizes($size, $limit, $binaryFormat)
-    {
-    	if ($binaryFormat) {
-    		$coef = self::MIB_BYTES;
-    		$coefFactor = self::KIB_BYTES;
-    	} else {
-    		$coef = self::MB_BYTES;
-    		$coefFactor = self::KB_BYTES;
-    	}
-    
-    	$limitAsString = (string) ($limit / $coef);
-    
-    	// Restrict the limit to 2 decimals (without rounding! we
-    	// need the precise value)
-    	while (self::moreDecimalsThan($limitAsString, 2)) {
-    		$coef /= $coefFactor;
-    		$limitAsString = (string) ($limit / $coef);
-    	}
-    
-    	// Convert size to the same measure, but round to 2 decimals
-    	$sizeAsString = (string) round($size / $coef, 2);
-    
-    	// If the size and limit produce the same string output
-    	// (due to rounding), reduce the coefficient
-    	while ($sizeAsString === $limitAsString) {
-    		$coef /= $coefFactor;
-    		$limitAsString = (string) ($limit / $coef);
-    		$sizeAsString = (string) round($size / $coef, 2);
-    	}
-    
-    	return array($sizeAsString, $limitAsString, self::$suffices[$coef]);
-    }
 }
