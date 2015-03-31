@@ -34,6 +34,10 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->booleanNode('enable_pdf_preview')->defaultFalse()->end()
+                ->arrayNode('blacklisted_extensions')
+                    ->defaultValue(array('php', 'htaccess'))
+                    ->prototype('scalar')->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
