@@ -87,7 +87,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
             $articlePage->setTitle(Lorem::sentence(6));
             $articlePage->setAuthor($author);
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
-            $articlePage->setSummary(Lorem::paragraph(3));
+            $articlePage->setSummary(Lorem::paragraph(5));
 
             $translations = array();
             foreach ($languages as $lang) {
