@@ -24,6 +24,11 @@ class FileHandler extends AbstractMediaHandler
     const TYPE = 'file';
 
     /**
+     * @var string
+     */
+    const MEDIA_PATH = '/uploads/media/';
+
+    /**
      * @var Filesystem
      */
     public $fileSystem = null;
@@ -34,11 +39,28 @@ class FileHandler extends AbstractMediaHandler
     public $mimeTypeGuesser = null;
 
     /**
+     * Files with a blacklisted extension will be converted to txt
+     *
+     * @var array
+     */
+    private $blacklistedExtensions = array();
+
+    /**
      * Constructor
      */
     public function __construct(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
+    }
+
+    /**
+     * Inject the blacklisted
+     *
+     * @param array $blacklistedExtensions
+     */
+    public function setBlacklistedExtensions(array $blacklistedExtensions)
+    {
+        $this->blacklistedExtensions = $blacklistedExtensions;
     }
 
     /**
@@ -48,7 +70,7 @@ class FileHandler extends AbstractMediaHandler
      */
     public function setMediaPath($kernelRootDir)
     {
-        $this->fileSystem = new Filesystem(new Local($kernelRootDir . '/../web/uploads/media/', true));
+        $this->fileSystem = new Filesystem(new Local($kernelRootDir . '/../web' . self::MEDIA_PATH, true));
     }
 
     /**
@@ -139,12 +161,7 @@ class FileHandler extends AbstractMediaHandler
 
         $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
         $media->setContentType($contentType);
-        $relativePath = sprintf(
-            '/%s.%s',
-            $media->getUuid(),
-            ExtensionGuesser::getInstance()->guess($media->getContentType())
-        );
-        $media->setUrl('/uploads/media' . $relativePath);
+        $media->setUrl(self::MEDIA_PATH . $this->getFilePath($media));
         $media->setLocation('local');
     }
 
@@ -183,13 +200,28 @@ class FileHandler extends AbstractMediaHandler
      */
     public function getOriginalFile(Media $media)
     {
-        $relativePath = sprintf(
-            '/%s.%s',
-            $media->getUuid(),
-            ExtensionGuesser::getInstance()->guess($media->getContentType())
-        );
+        return $this->fileSystem->get($this->getFilePath($media), true);
+    }
 
-        return $this->fileSystem->get($relativePath, true);
+    /**
+     *
+     *
+     * @param Media $media
+     * @return string
+     */
+    private function getFilePath(Media $media)
+    {
+        $filename = $media->getOriginalFilename();
+
+        if (!empty($this->blacklistedExtensions)) {
+            $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
+        }
+
+        return sprintf(
+            '/%s/%s',
+            $media->getUuid(),
+            $filename
+        );
     }
 
     /**
