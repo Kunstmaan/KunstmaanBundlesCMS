@@ -8,16 +8,17 @@ kunstmaanMediaBundle.dndUpload = (function(window, undefined) {
     // Init
     init = function() {
         var $area = $('#dnd-area'),
+            $container = $('#dnd-container'),
             $status = $('#dnd-area__upload-status'),
             dropUrl = $area.data('drop-url'),
             currentUrl = $area.data('current-url');
 
-        initUpload($area, $status, dropUrl, currentUrl);
+        initUpload($area, $container, $status, dropUrl, currentUrl);
     };
 
 
     // Upload
-    initUpload = function($area, $status, dropUrl, currentUrl) {
+    initUpload = function($area, $container, $status, dropUrl, currentUrl) {
         var dndUploader = new plupload.Uploader({
                 runtimes : 'html5',
                 dragdrop: true,
@@ -32,7 +33,7 @@ kunstmaanMediaBundle.dndUpload = (function(window, undefined) {
 
                 init: {
                     PostInit: function() {
-                        $area.on('dragenter', function() {
+                        $(window).on('dragenter', function() {
                             $area.addClass('dnd-area--dragover');
                         });
 

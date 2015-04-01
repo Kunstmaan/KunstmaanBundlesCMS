@@ -8,7 +8,7 @@ media:
     no: No files in this folder yet.
     dnd:
         tip: Tip:
-        tiptext: did you know you can drop multiple files here?
+        tiptext: did you know you can just drop multiple files here?
         alert:
             title: Incoming!
             text: Drop your files to instantly upload them to this folder.

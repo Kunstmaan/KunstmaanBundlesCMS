@@ -13,15 +13,17 @@
 /* General
    ========================================================================== */
 .dnd-area {
-    position: absolute;
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
 .dnd-area--dragover {
     z-index: 30;
+    display: block;
 
     .dnd-area__drop-alert {
         display: block;
@@ -84,7 +86,7 @@
 .dnd-area__drop-alert__figure {
     z-index: 4;
     position: absolute;
-    top: 4rem;
+    top: calc(50% - 15rem);
     left: calc(50% - 15rem);
 
     width: 30rem;

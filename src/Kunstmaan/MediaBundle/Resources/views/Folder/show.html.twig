@@ -155,7 +155,7 @@
 
 
             <!-- Files -->
-            <section class="dnd-container">
+            <section id="dnd-container" class="dnd-container">
                 <div id="dnd-area" class="dnd-area" data-drop-url="{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}" data-current-url="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}">
                     <div class="dnd-area__drop-alert">
                         <figure class="dnd-area__drop-alert__figure">
@@ -180,6 +180,9 @@
                         <p class="text--muted">
                             {{ 'media.media.no' |trans }}
                         </p>
+                        <p id="dnd-area-link" class="text--muted">
+                            <strong>{{ 'media.media.dnd.tip' |trans }}</strong> {{ 'media.media.dnd.tiptext' |trans }}
+                        </p>
                     {% endif %}
                 {% else %}
                     {% if adminlist.count > 0 %}
@@ -195,7 +198,7 @@
                                     {% endif %}
                                 {% endif %}
 
-                                <div class="col-sm-6 col-md-4 col-lg-3">
+                                <div class="js-can-have-dnd col-sm-6 col-md-4 col-lg-3">
                                     <a class="thumbnail media-thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                         <figure>
                                             {% if imageurl %}
