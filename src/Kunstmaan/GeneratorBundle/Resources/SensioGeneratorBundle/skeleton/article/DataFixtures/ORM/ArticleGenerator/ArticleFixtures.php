@@ -5,6 +5,7 @@ namespace {{ namespace }}\DataFixtures\ORM\ArticleGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Faker\Factory;
 use Faker\Provider\Lorem;
 use Faker\Provider\DateTime;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
@@ -70,26 +71,30 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
 
         $pageCreator->createPage($overviewPage, $translations, $options);
 
-        // Create author
-        $author = new {{ entity_class }}Author();
-        $author->setName('John Doe');
-        $manager->persist($author);
-        $manager->flush();
+        $fakerNL = Factory::create('nl_BE');
+        $fakerEN = Factory::create('en_US');
 
         // Create articles
         for ($i=1; $i<=6; $i++) {
+
+            // Create author
+            $author = new {{ entity_class }}Author();
+            $author->setName($fakerNL->name);
+            $manager->persist($author);
+            $manager->flush();
+
             $articlePage = new {{ entity_class }}Page();
-            $articlePage->setTitle('{{ entity_class }} titel '.(7-$i));
+            $articlePage->setTitle(Lorem::sentence(6));
             $articlePage->setAuthor($author);
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
-            $articlePage->setSummary(Lorem::paragraph(5));
+            $articlePage->setSummary(Lorem::paragraph(3));
 
             $translations = array();
             foreach ($languages as $lang) {
                 if ($lang == 'nl') {
-                    $title = '{{ entity_class }} titel '.(7-$i);
+                    $title = $fakerEN->sentence;
                 } else {
-                    $title = '{{ entity_class }} title '.(7-$i);
+                    $title = $fakerEN->sentence;
                 }
 
                 $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title, $i) {
@@ -112,7 +117,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
                 $pageparts = array(
                     'main' => array(
                         $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\TextPagePart',
-                            array('setContent' => '<p>'.Lorem::paragraph(15).'</p>')
+                            array('setContent' => '<p>'.Lorem::paragraph(15).'</p>' . '<p>'.Lorem::paragraph(25).'</p>' .'<p>'.Lorem::paragraph(10).'</p>')
                         )
                     )
                 );
