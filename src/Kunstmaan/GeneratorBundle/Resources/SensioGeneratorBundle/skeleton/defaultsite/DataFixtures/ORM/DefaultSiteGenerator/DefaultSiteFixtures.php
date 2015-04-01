@@ -144,8 +144,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['header'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\PageBannerPagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Wat doen we?' : 'What do we do?',
-                    'setDescription' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.',
+                    'setTitle' => $locale == 'nl' ? 'Wij zorgen voor jou fiets!' : 'We care for your bike!',
+                    'setDescription' => $locale == 'nl' ? 'De laatste modellen aan de beste prijs met een uitermate goede service na verkoop, daar tekenen wij voor!' : 'The latest models at the best prices with a top notch service guarantee, that\'s our promise!',
                     'setBackgroundImage' => $headerMedia,
                     'setButtonUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
                     'setButtonText' => $locale == 'nl' ? 'Onze diensten' : 'Our services',
@@ -162,14 +162,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\IntroTextPagePart',
                 array(
-                    'setContent' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>'
+                    'setContent' => $locale == 'nl' ? '<p>The Crew volgt de laatste trends in zowel hoge snelheids als retro fietsmodellen. We specialiseren ons in persoonlijke begeleiding bij het kiezen van jou favoriete fiets and maken ons sterk op een uitermate goede service na verkoop.</p>' : '<p>The Crew follows the latest trends in both high performance and retro bicycle models. We specialise in personal assistance choosing your favorite bike and pride ourself on a top of the line after service guarantee.</p>',
                 )
             );
             $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\LinkPagePart',
                 array(
                     'setUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
-                    'setText' => $locale == 'nl' ? 'Lees meer' : 'Read more'
+                    'setText' => $locale == 'nl' ? 'Meer over onze servicegaranties' : 'More on our service guarantees'
                 )
             );
 
@@ -177,10 +177,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section2'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Onze fiets' : 'Our bycicles',
-                    'setDescription' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>',
-                    'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
-                    'setLinkText' => $locale == 'nl' ? 'Ondek onze projecten' : 'Discover our projects',
+                    'setTitle' => $locale == 'nl' ? 'Onze fietsen' : 'Our bycicles',
+                    'setDescription' => $locale == 'nl' ? '<p>Onze selectie van fietsen vertegenwoordigd de filosofie van The Crew. Alleen de beste fietsen bieden we aan, en dat doen we aan de beste prijzen. Geen grootwarenhuis, maar een speciaalzaak met gratis persoonlijk advies in onze winkel.</p>' : '<p>Our selection of bikes represents the philosophy of The Crew. We offer only the best bikes, and do so at the best prices. Not a large retailer, but a specialty shop with free personal advice in our store.</p>',
+                    'setLinkUrl' => $locale == 'nl' ? '/nl/fietsen' : '/en/bikes',
+                    'setLinkText' => $locale == 'nl' ? 'Blader door onze fietsen' : 'Browse through our bikes',
                     'setImage' => $buyBikeMedia,
                     'setImagePosition' => 'right',
                 )
@@ -190,10 +190,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section3'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Onderhoud' : 'Maintenance',
-                    'setDescription' => '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at, omnis ad quia ipsum fugit est magnam itaque error voluptates aliquam odio repellendus quis adipisci in. Alias!</p>',
-                    'setLinkUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
-                    'setLinkText' => $locale == 'nl' ? 'Bekijk lorem ipsum' : 'Read more',
+                    'setTitle' => $locale == 'nl' ? 'Service na verkoop' : 'Maintenance',
+                    'setDescription' => $locale == 'nl' ? '<p>Als er iets mis is met je fiets, dan helpt The Crew je direct verder. Tijdens de reparatie krijg je gratis een andere fiets ter beschikking. Onze vakmannen hebben meer dan 10 jaar ervaring en garanderen zo een top reparatie.</p>' : '<p>If there is something wrong with your bike, The Crew will help you immediately. During the repairs we can offer a replacement, free of charge. Our experts have over 10 years of experience and guarantee a perfect fix, every time.</p>',
+                    'setLinkUrl' => $locale == 'nl' ? '/nl/service-na-verkoop' : '/en/maintenance',
+                    'setLinkText' => $locale == 'nl' ? 'Meer over onze dienst na verkoop' : 'More on our maintenance offer',
                     'setImage' => $repairBikeMedia,
                     'setImagePosition' => 'left',
                 )
@@ -210,22 +210,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $item1Media = $this->mediaCreator->createFile($imgDir.'icons/icon--1.svg', $folder->getId());
             $item1 = new \{{ namespace }}\Entity\UspItem();
             $item1->setIcon($item1Media);
-            $item1->setTitle('Fast repair');
-            $item1->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item1->setTitle($locale == 'nl' ? 'Snelle service' : 'Fast repairs');
+            $item1->setDescription($locale == 'nl' ? 'Gegarandeerd een oplossing voor elk probleem binnen de 48 uur' : 'A guaranteed solution for every problem within 48 hours');
             $item1->setWeight(0);
             $items->add($item1);
             $item2Media = $this->mediaCreator->createFile($imgDir.'icons/icon--2.svg', $folder->getId());
             $item2 = new \{{ namespace }}\Entity\UspItem();
             $item2->setIcon($item2Media);
-            $item2->setTitle('Personal service');
-            $item2->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item2->setTitle($locale == 'nl' ? 'Persoonlijke hulp' : 'Personal service');
+            $item2->setDescription($locale == 'nl' ? 'Onze experten staan elke dag voor u klaar, zonder wachten' : 'Our experts are there for you, every day, no waiting');
             $item2->setWeight(1);
             $items->add($item2);
             $item3Media = $this->mediaCreator->createFile($imgDir.'icons/icon--3.svg', $folder->getId());
             $item3 = new \{{ namespace }}\Entity\UspItem();
             $item3->setIcon($item3Media);
-            $item3->setTitle('10 years of experience');
-            $item3->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item3->setTitle($locale == 'nl' ? '10 jaar ervaring' : '10 years of experience');
+            $item3->setDescription($locale == 'nl' ? 'Ervaren mensen leveren de beste service, op ons kan je rekenen' : 'Experience people offert he best service, you can count on us');
             $item3->setWeight(2);
             $items->add($item3);
             $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
@@ -849,64 +849,39 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['footer.contact_us']['en'] = 'Contact us';
         $trans['footer.contact_us']['nl'] = 'Contacteer ons';
 
-        $trans['demositemessage']['en'] = 'This website is built using the Kunstmaan CMS Bundles.';
-        $trans['demositemessage']['nl'] = 'Deze website is gemaakt met de Kunstmaan CMS Bundles.';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['demositemessage']['fr'] = 'Cette site web est realis&eacute;e par les CMS Bundles de Kunstmaan.';
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['demositemessage']['de'] = 'Diese Webseite w&uuml;rde gestaltet mit Kunstmaan CMS Bundles.';
-        }
+        $trans['demositemessage']['en'] = 'This is the demonstration website of the <a href="http://bundles.kunstmaan.be">KunstmaanBundlesCMS</a>. <strong>All content on this site is purely fictonal!</strong> This site has been created to give you an idea on what you can create using this open-source content management system. You can create your own instance of this site by <a href="https://github.com/roderik/KunstmaanBundlesCMS/blob/master/docs/03-installation.md#generating-your-website-skeleton">running the Default Site Generator with the --demosite option</a>.You can also try out <a href="/en/admin">the administration interface</a> by logging in using <i>admin</i> as username and <i>admin</i> as password.';
+        $trans['demositemessage']['nl'] = 'Dit is de demonstratie website van het <a href="http://bundles.kunstmaan.be">KunstmaanBundlesCMS</a>.<strong>Alle inhoud op deze website is pure fictie!</strong> Deze site is gemaakt om je een idee te geven wat je kan bouwen met dit open-source content management system. Je kan je eigen instantie van deze site opzetten door <a href="https://github.com/roderik/KunstmaanBundlesCMS/blob/master/docs/03-installation.md#generating-your-website-skeleton">het draaien van de Default Site Generator met de --demosite optie</a>.Je kan ook <a href="/en/admin">de administratie module</a> door in te loggen met <i>admin</i> als username en <i>admin</i> as wachtwoord.';
 {% endif %}
 
         $trans['warning.outdated.title']['en'] = 'You are using an outdated browser.';
         $trans['warning.outdated.title']['nl'] = 'Uw browser is verouderd.';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['warning.outdated.title']['fr'] = 'Vous utilisez un navigateur internet dépassé.';
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['warning.outdated.title']['de'] = 'Ihr Browser ist veraltet.';
-        }
+        $trans['warning.outdated.title']['fr'] = 'Vous utilisez un navigateur internet dépassé.';
+        $trans['warning.outdated.title']['de'] = 'Ihr Browser ist veraltet.';
+
         $trans['warning.outdated.subtitle']['en'] = 'Some page content will be lost or rendered incorrectly.';
         $trans['warning.outdated.subtitle']['nl'] = 'Sommige inhoud kan verloren gaan of zal niet correct weergegeven worden.';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['warning.outdated.subtitle']['fr'] = "Certain contenu pourrait être perdu ou ne pas s'afficher correctement";
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['warning.outdated.subtitle']['de'] = "Einige Inhalte können verloren gehen oder nicht richtig angezeigt werden.";
-        }
+        $trans['warning.outdated.subtitle']['fr'] = "Certain contenu pourrait être perdu ou ne pas s'afficher correctement";
+        $trans['warning.outdated.subtitle']['de'] = "Einige Inhalte können verloren gehen oder nicht richtig angezeigt werden.";
+
         $trans['warning.outdated.description']['en'] = 'Please install a more recent version of your browser.';
         $trans['warning.outdated.description']['nl'] = 'Gelieve een meer recente versie van uw browser te installeren.';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['warning.outdated.description']['fr'] = 'Nous vous conseillons de mettre votre navigateur à jour.';
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['warning.outdated.description']['de'] = 'Bitte aktualisieren Sie Ihren Browser auf eine neuere Version.';
-        }
+        $trans['warning.outdated.description']['fr'] = 'Nous vous conseillons de mettre votre navigateur à jour.';
+        $trans['warning.outdated.description']['de'] = 'Bitte aktualisieren Sie Ihren Browser auf eine neuere Version.';
+
         $trans['warning.outdated.upgrade_browser']['en'] = 'Upgrade your browser';
         $trans['warning.outdated.upgrade_browser']['nl'] = 'Upgrade uw browser';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['warning.outdated.upgrade_browser']['fr'] = 'Mettez votre navigateur à jour';
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['warning.outdated.upgrade_browser']['de'] = 'Aktualisieren Sie Ihren Browser';
-        }
+        $trans['warning.outdated.upgrade_browser']['fr'] = 'Mettez votre navigateur à jour';
+        $trans['warning.outdated.upgrade_browser']['de'] = 'Aktualisieren Sie Ihren Browser';
+
         $trans['cookieconsent.description']['en'] = 'This website uses <br>cookies to enhance your <br>browsing experience.';
         $trans['cookieconsent.description']['nl'] = 'Deze website gebruikt <br>cookies om uw surf- <br>ervaring makkelijker te maken.';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['cookieconsent.description']['fr'] = 'Ce site web utilise des <br>cookies pour faciliter votre <br>navigation.';
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['cookieconsent.description']['de'] = 'Diese Website verwendet <br>Cookies, um Ihren Besuch <br>effizienter zu machen.';
-        }
+        $trans['cookieconsent.description']['fr'] = 'Ce site web utilise des <br>cookies pour faciliter votre <br>navigation.';
+        $trans['cookieconsent.description']['de'] = 'Diese Website verwendet <br>Cookies, um Ihren Besuch <br>effizienter zu machen.';
+
         $trans['cookieconsent.confirm']['en'] = 'Proceed';
         $trans['cookieconsent.confirm']['nl'] = 'Doorgaan';
-        if (in_array('fr', $this->requiredLocales)) {
-            $trans['cookieconsent.confirm']['fr'] = 'Continuer';
-        }
-        if (in_array('de', $this->requiredLocales)) {
-            $trans['cookieconsent.confirm']['de'] = 'Weitergehen';
-        }
+        $trans['cookieconsent.confirm']['fr'] = 'Continuer';
+        $trans['cookieconsent.confirm']['de'] = 'Weitergehen';
 
         $translationId = $this->manager->getRepository('KunstmaanTranslatorBundle:Translation')->getUniqueTranslationId();
         foreach ($trans as $key => $array) {
