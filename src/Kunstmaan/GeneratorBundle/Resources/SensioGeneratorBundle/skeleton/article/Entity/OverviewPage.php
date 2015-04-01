@@ -36,16 +36,6 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
 	return array('{{ bundle.getName() }}:{{ entity_class|lower }}overviewpage');
     }
 
-    /**
-     * @param ContainerInterface $container
-     * @param Request            $request
-     * @param RenderContext      $context
-     */
-    public function service(ContainerInterface $container, Request $request, RenderContext $context)
-    {
-        parent::service($container, $request, $context);
-    }
-
     public function getArticleRepository($em)
     {
 	return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}Page');
