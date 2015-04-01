@@ -147,7 +147,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                     'setTitle' => $locale == 'nl' ? 'Wij zorgen voor jou fiets!' : 'We care for your bike!',
                     'setDescription' => $locale == 'nl' ? 'De laatste modellen aan de beste prijs met een uitermate goede service na verkoop, daar tekenen wij voor!' : 'The latest models at the best prices with a top notch service guarantee, that\'s our promise!',
                     'setBackgroundImage' => $headerMedia,
-                    'setButtonUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
+                    'setButtonUrl' => $locale == 'nl' ? '/nl/diensten' : '/en/services',
                     'setButtonText' => $locale == 'nl' ? 'Onze diensten' : 'Our services',
                 )
             );
@@ -168,8 +168,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section1'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\LinkPagePart',
                 array(
-                    'setUrl' => $locale == 'nl' ? '/nl/diensten' : '/' . $locale . '/services',
-                    'setText' => $locale == 'nl' ? 'Meer over onze servicegaranties' : 'More on our service guarantees'
+                    'setUrl' => $locale == 'nl' ? '/nl/diensten' : '/en/services',
+                    'setText' => $locale == 'nl' ? 'Meer over onze diensten' : 'More on our services'
                 )
             );
 
@@ -177,9 +177,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['section2'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
-                    'setTitle' => $locale == 'nl' ? 'Onze fietsen' : 'Our bycicles',
-                    'setDescription' => $locale == 'nl' ? '<p>Onze selectie van fietsen vertegenwoordigd de filosofie van The Crew. Alleen de beste fietsen bieden we aan, en dat doen we aan de beste prijzen. Geen grootwarenhuis, maar een speciaalzaak met gratis persoonlijk advies in onze winkel.</p>' : '<p>Our selection of bikes represents the philosophy of The Crew. We offer only the best bikes, and do so at the best prices. Not a large retailer, but a specialty shop with free personal advice in our store.</p>',
-                    'setLinkUrl' => $locale == 'nl' ? '/nl/fietsen' : '/en/bikes',
+                    'setTitle' => $locale == 'nl' ? 'Onze fietsen' : 'Our bikes',
+                    'setDescription' => $locale == 'nl' ? '<p>Onze selectie van fietsen vertegenwoordigd de filosofie van The Crew. Alleen de beste fietsen bieden we aan, te koop, en dat doen we aan de beste prijzen. Geen grootwarenhuis, maar een speciaalzaak met gratis persoonlijk advies in onze winkel.</p>' : '<p>Our selection of bikes represents the philosophy of The Crew. We offer only the best bikes, and do so at the best prices. Not a large retailer, but a specialty shop with free personal advice in our store.</p>',
+                    'setLinkUrl' => $locale == 'nl' ? '/nl/diensten/koop-een-fiets' : '/en/services/buy-a-bike',
                     'setLinkText' => $locale == 'nl' ? 'Blader door onze fietsen' : 'Browse through our bikes',
                     'setImage' => $buyBikeMedia,
                     'setImagePosition' => 'right',
@@ -192,8 +192,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 array(
                     'setTitle' => $locale == 'nl' ? 'Service na verkoop' : 'Maintenance',
                     'setDescription' => $locale == 'nl' ? '<p>Als er iets mis is met je fiets, dan helpt The Crew je direct verder. Tijdens de reparatie krijg je gratis een andere fiets ter beschikking. Onze vakmannen hebben meer dan 10 jaar ervaring en garanderen zo een top reparatie.</p>' : '<p>If there is something wrong with your bike, The Crew will help you immediately. During the repairs we can offer a replacement, free of charge. Our experts have over 10 years of experience and guarantee a perfect fix, every time.</p>',
-                    'setLinkUrl' => $locale == 'nl' ? '/nl/service-na-verkoop' : '/en/maintenance',
-                    'setLinkText' => $locale == 'nl' ? 'Meer over onze dienst na verkoop' : 'More on our maintenance offer',
+                    'setLinkUrl' => $locale == 'nl' ? '/nl/diensten/herstel-mijn-fiets' : '/en/services/repair-my-bike',
+                    'setLinkText' => $locale == 'nl' ? 'Herstel mijn fiets' : 'Repair my bike',
                     'setImage' => $repairBikeMedia,
                     'setImagePosition' => 'left',
                 )
@@ -225,7 +225,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $item3 = new \{{ namespace }}\Entity\UspItem();
             $item3->setIcon($item3Media);
             $item3->setTitle($locale == 'nl' ? '10 jaar ervaring' : '10 years of experience');
-            $item3->setDescription($locale == 'nl' ? 'Ervaren mensen leveren de beste service, op ons kan je rekenen' : 'Experience people offert he best service, you can count on us');
+            $item3->setDescription($locale == 'nl' ? 'Ervaren mensen leveren de beste service, op ons kan je rekenen' : 'Experience people offer the best service, you can count on us');
             $item3->setWeight(2);
             $items->add($item3);
             $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
@@ -299,7 +299,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\TextPagePart',
                 array(
-                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                    'setContent' => $locale == 'nl' ? 'Je kan bij ons terecht voor een selectie van de beste fietsen, maar ook voor het onderhoud ervan. Onze vakmensen helpen je graag verder in onze winkel.' : 'We are the place to go for a selection of the best bikes, but also for the maintenance of your bike. Our skilled professionals will help you gladly in our store.'
                 )
             );
 
@@ -323,7 +323,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 $translation->setSlug($locale == 'nl' ? 'fietsen' : 'bikes');
                 $translation->setWeight(20);
 
-                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuDescription($locale == 'nl' ? 'Onze selectie van fietsen vertegenwoordigd de filosofie van The Crew. Alleen de beste fietsen bieden we aan, te koop, en dat doen we aan de beste prijzen. Geen grootwarenhuis, maar een speciaalzaak met gratis persoonlijk advies in onze winkel.' : 'Our selection of bikes represents the philosophy of The Crew. We offer only the best bikes, and do so at the best prices. Not a large retailer, but a specialty shop with free personal advice in our store.');
                 $page->setMenuImage($menuMedia);
             });
         }
@@ -351,7 +351,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\TextPagePart',
                 array(
-                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                    'setContent' => $locale == 'nl' ? '<p>Onze selectie van fietsen vertegenwoordigd de filosofie van The Crew. Alleen de beste fietsen bieden we aan, te koop, en dat doen we aan de beste prijzen. Geen grootwarenhuis, maar een speciaalzaak met gratis persoonlijk advies in onze winkel.</p>' : '<p>Our selection of bikes represents the philosophy of The Crew. We offer only the best bikes, and do so at the best prices. Not a large retailer, but a specialty shop with free personal advice in our store.</p>'
                 )
             );
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
@@ -379,10 +379,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         foreach ($this->requiredLocales as $locale) {
             $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
                 $translation->setTitle($locale == 'nl' ? 'Fietsen herstellen' : 'Repair bikes');
-                $translation->setSlug($locale == 'nl' ? 'herstellen' : 'repair');
+                $translation->setSlug($locale == 'nl' ? 'herstel-mijn-fiets' : 'repair-my-bike');
                 $translation->setWeight(20);
 
-                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuDescription($locale == 'nl' ? 'Als er iets mis is met je fiets, dan helpt The Crew je direct verder. Tijdens de reparatie krijg je gratis een andere fiets ter beschikking. Onze vakmannen hebben meer dan 10 jaar ervaring en garanderen zo een top reparatie.' : 'If there is something wrong with your bike, The Crew will help you immediately. During the repairs we can offer a replacement, free of charge. Our experts have over 10 years of experience and guarantee a perfect fix, every time.');
                 $page->setMenuImage($menuMedia);
             });
         }
@@ -410,7 +410,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\TextPagePart',
                 array(
-                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                    'setContent' => $locale == 'nl' ? '<p>Als er iets mis is met je fiets, dan helpt The Crew je direct verder. Tijdens de reparatie krijg je gratis een andere fiets ter beschikking. Onze vakmannen hebben meer dan 10 jaar ervaring en garanderen zo een top reparatie.</p>' : '<p>If there is something wrong with your bike, The Crew will help you immediately. During the repairs we can offer a replacement, free of charge. Our experts have over 10 years of experience and guarantee a perfect fix, every time.</p>'
                 )
             );
 
@@ -427,10 +427,10 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         foreach ($this->requiredLocales as $locale) {
             $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
                 $translation->setTitle($locale == 'nl' ? 'Fietsen verhuur' : 'Rent bikes');
-                $translation->setSlug($locale == 'nl' ? 'verhuur' : 'rent');
+                $translation->setSlug($locale == 'nl' ? 'huur-een-fiets' : 'rent-a-bike');
                 $translation->setWeight(20);
 
-                $page->setMenuDescription('Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+                $page->setMenuDescription($locale == 'nl' ? 'Ben je op vakantie in Leuven en wil je de stad bezoeken per fiets? Dan kan je bij ons een elektrische fiets huren per uur of voor één of meerdere dagen.' : 'On holiday in Leuven and want to explore the town by bike? We rent out electric bikes per hour or for one or more days.');
                 $page->setMenuImage($menuMedia);
             });
         }
@@ -458,7 +458,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $pageparts['main'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
                 '{{ namespace }}\Entity\PageParts\TextPagePart',
                 array(
-                    'setContent' => '<p>Inleiding ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>'
+                    'setContent' => $locale == 'nl' ? '<p>Ben je op vakantie in Leuven en wil je de stad bezoeken per fiets? Dan kan je bij ons een elektrische fiets huren per uur of voor één of meerdere dagen.</p>' : '<p>On holiday in Leuven and want to explore the town by bike? We rent out electric bikes per hour or for one or more days.</p>'
                 )
             );
 
@@ -854,6 +854,9 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         $trans['footer.newsletter.button']['en'] = 'Subscribe';
         $trans['footer.newsletter.button']['nl'] = 'Inschrijven';
+
+        $trans['read.more.on']['en'] = 'Read more on';
+        $trans['read.more.on']['nl'] = 'Lees meer over';
 
         $trans['footer.newsletter.description']['en'] = 'Stay current with our weekly newsletter in which we\'ll tell you about our amazing new products, events and reviews';
         $trans['footer.newsletter.description']['nl'] = 'Blijf op de hoogte van onze fantastische nieuwe producten, events en beoordelingen';
