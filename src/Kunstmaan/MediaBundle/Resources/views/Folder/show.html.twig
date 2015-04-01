@@ -155,7 +155,24 @@
 
 
             <!-- Files -->
-            <section>
+            <section class="dnd-container">
+                <div id="dnd-area" class="dnd-area" data-drop-url="{{ path('KunstmaanMediaBundle_media_drop_upload', { 'folderId' : folder.id } ) }}" data-current-url="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' :folder.id }) }}">
+                    <div class="dnd-area__drop-alert">
+                        <figure class="dnd-area__drop-alert__figure">
+                            <img src="/bundles/kunstmaanadmin/default-theme/img/dnd/dnd_img.svg" alt="dnd" class="dnd-area__drop-alert__figure__img">
+                            <figcaption class="dnd-area__drop-alert__figure__caption">
+                                <h4 class="dnd-area__drop-alert__figure__caption__header">
+                                    {{ 'media.media.dnd.alert.title' |trans }}
+                                </h4>
+                                <p class="dnd-area__drop-alert__figure__caption__text">
+                                    {{ 'media.media.dnd.alert.text' |trans }}
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <ul id="dnd-area__upload-status" class="list-group dnd-area__upload-status"></ul>
+
                 {% if app.session.get('media-list-view') %}
                     {% if adminlist.count > 0 %}
                         {{ parent() }}
@@ -215,9 +232,15 @@
                                 {% endif %}
                             {% endfor %}
                         </div>
+                        <p id="dnd-area-link" class="text--muted">
+                            <strong>{{ 'media.media.dnd.tip' |trans }}</strong> {{ 'media.media.dnd.tiptext' |trans }}
+                        </p>
                     {% else %}
                         <p class="text--muted">
                             {{ 'media.media.no' |trans }}
+                        </p>
+                        <p id="dnd-area-link" class="text--muted">
+                            <strong>{{ 'media.media.dnd.tip' |trans }}</strong> {{ 'media.media.dnd.tiptext' |trans }}
                         </p>
                     {% endif %}
                 {% endif %}
@@ -253,6 +276,20 @@
     <!-- Modals -->
     {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
     {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
-    {# {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %} #}
 
+{% endblock %}
+
+
+{% block extrajavascript %}
+    {{ parent() }}
+
+    {% javascripts
+        "@KunstmaanMediaBundle/Resources/ui/vendor_bower/plupload/js/plupload.full.min.js"
+        "@KunstmaanMediaBundle/Resources/ui/js/_bulk-upload.js"
+        "@KunstmaanMediaBundle/Resources/ui/js/_dnd-upload.js"
+        "@KunstmaanMediaBundle/Resources/ui/js/app.js"
+        output="KunstmaanMediaBundleAssets/js/mediaFooter.min.js" filter="uglifyjs2"
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
