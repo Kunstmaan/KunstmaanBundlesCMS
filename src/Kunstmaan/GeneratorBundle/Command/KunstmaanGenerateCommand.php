@@ -478,8 +478,48 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $mediaTypeId = $this->assistant->askSelect('Media filter', $mediaTypeSelect);
                 $extra       = strtolower($mediaTypeSelect[$mediaTypeId]);
             }
-
-            $data               = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra);
+           
+            if ($typeStrings[$typeId] == 'image' || $typeStrings[$typeId] == 'media') {
+            	
+            	// Ask the allowed mimetypes for the media ojbect
+				$mimeTypes = $this->assistant->ask ('Do you want to limit the possible file types? Then specify a comma-seperated list of types (example: image/png,image/svg+xml), otherwise press ENTER', null);
+				if(isset($mimeTypes)) {
+					$mimeTypes = explode(',', $mimeTypes);
+				}
+				$data = array (
+						'name' => $fieldName,
+						'type' => $typeStrings [$typeId],
+						'extra' => $extra,
+						'mimeTypes' => $mimeTypes,
+				);
+				
+				if ($typeStrings [$typeId] == 'image') {
+	
+					// Ask the minimum height allowed for the image
+					$lengthValidation = function ($length) {
+						if (empty ( $length ) || ! is_numeric ( $length ) || $length < 0) {
+							throw new \InvalidArgumentException ( sprintf ( '"%s" is not a valid length', $length ) );
+						} else {
+							return $length;
+						}
+					};
+					$minHeight = $this->assistant->askAndValidate ( 'What is the minimum height for the media object? (in pixels)', $lengthValidation);
+					
+					// Ask the maximum height allowed for the image
+					$maxHeight = $this->assistant->askAndValidate ( 'What is the maximum height for the media object? (in pixels)', $lengthValidation);
+					
+					// Ask the minimum width allowed for the image
+					$minWidth = $this->assistant->askAndValidate ( 'What is the minimum width for the media object? (in pixels)', $lengthValidation);
+            			 
+            		//Ask the maximum width allowed for the image
+            		$maxWidth = $this->assistant->askAndValidate('What is the maximum width for the media object? (in pixels)', $lengthValidation);
+            		
+            		$data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra, 
+            				'minHeight' => $minHeight, 'maxHeight' => $maxHeight, 'minWidth' => $minWidth, 'maxWidth' => $maxWidth, 'mimeTypes' => $mimeTypes);
+            		}
+            		
+            } else $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra);
+			
             $fields[$fieldName] = $data;
         }
 
@@ -554,6 +594,11 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $name,
         $type,
         $extra = null,
+    	$minHeight = null,
+    	$maxHeight = null,
+    	$minWidth = null,
+    	$maxWidth = null,
+    	$mimeTypes = null,
         $allNullable = false
     ) {
         $fields = array();
@@ -598,6 +643,11 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'type'         => 'image',
                     'formType'     => 'media',
                     'mediaType'    => $extra,
+                    'minHeight'    => $minHeight,
+                    'maxHeight'    => $maxHeight,
+                    'minWidth'     => $minWidth,
+                    'maxWidth'     => $maxWidth,
+                    'mimeTypes'    => $mimeTypes,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
                     'joinColumn'   => array(
                         'name'                 => str_replace('.', '_', Container::underscore($name . '_id')),
@@ -618,6 +668,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'type'         => 'media',
                     'formType'     => 'media',
                     'mediaType'    => $extra,
+                    'mimeTypes'    => $mimeTypes,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
                     'joinColumn'   => array(
                         'name'                 => str_replace('.', '_', Container::underscore($name . '_id')),
@@ -711,7 +762,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 );
                 break;
         }
-
+        
         return $fields;
     }
 

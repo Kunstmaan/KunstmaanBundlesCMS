@@ -95,7 +95,7 @@ class PagePartGenerator extends KunstmaanGenerator
 
         $this->assistant->writeLine('Generating entity : <info>OK</info>');
     }
-
+    
     /**
      * Generate the admin form type entity.
      */
