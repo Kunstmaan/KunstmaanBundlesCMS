@@ -198,7 +198,7 @@
 
 {% block date_widget %}
     {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-    <div class="js-datepicker col-sm-7" data-format="DD-MM-YYYY">
+    <div class="js-datepicker col-sm-7" data-format="DD/MM/YYYY">
         {{ block('base_date_widget') }}
     </div>
 {% endblock date_widget %}
