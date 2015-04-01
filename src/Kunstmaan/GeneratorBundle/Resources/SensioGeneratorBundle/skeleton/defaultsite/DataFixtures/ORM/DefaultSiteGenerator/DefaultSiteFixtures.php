@@ -191,7 +191,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
                 '{{ namespace }}\Entity\PageParts\ServicePagePart',
                 array(
                     'setTitle' => $locale == 'nl' ? 'Service na verkoop' : 'Maintenance',
-                    'setDescription' => $locale == 'nl' ? '<p>Als er iets mis is met je fiets, dan helpt The Crew je direct verder. Tijdens de reparatie krijg je gratis een andere fiets ter beschikking. Onze vakmannen hebben meer dan 10 jaar ervaring en garanderen zo een top reparatie.</p>' : '<p>If there is something wrong with your bike, The Crew will help you immediately. During the repairs we can offer a replacement, free of charge. Our expers have over 10 years of experience and quarantee a perfect fix, every time.</p>',
+                    'setDescription' => $locale == 'nl' ? '<p>Als er iets mis is met je fiets, dan helpt The Crew je direct verder. Tijdens de reparatie krijg je gratis een andere fiets ter beschikking. Onze vakmannen hebben meer dan 10 jaar ervaring en garanderen zo een top reparatie.</p>' : '<p>If there is something wrong with your bike, The Crew will help you immediately. During the repairs we can offer a replacement, free of charge. Our experts have over 10 years of experience and guarantee a perfect fix, every time.</p>',
                     'setLinkUrl' => $locale == 'nl' ? '/nl/service-na-verkoop' : '/en/maintenance',
                     'setLinkText' => $locale == 'nl' ? 'Meer over onze dienst na verkoop' : 'More on our maintenance offer',
                     'setImage' => $repairBikeMedia,
@@ -210,22 +210,22 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
             $item1Media = $this->mediaCreator->createFile($imgDir.'icons/icon--1.svg', $folder->getId());
             $item1 = new \{{ namespace }}\Entity\UspItem();
             $item1->setIcon($item1Media);
-            $item1->setTitle('Fast repair');
-            $item1->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item1->setTitle($locale == 'nl' ? 'Snelle service' : 'Fast repairs');
+            $item1->setDescription($locale == 'nl' ? 'Gegarandeerd een oplossing voor elk probleem binnen de 48 uur' : 'A guaranteed solution for every problem within 48 hours');
             $item1->setWeight(0);
             $items->add($item1);
             $item2Media = $this->mediaCreator->createFile($imgDir.'icons/icon--2.svg', $folder->getId());
             $item2 = new \{{ namespace }}\Entity\UspItem();
             $item2->setIcon($item2Media);
-            $item2->setTitle('Personal service');
-            $item2->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item2->setTitle($locale == 'nl' ? 'Persoonlijke hulp' : 'Personal service');
+            $item2->setDescription($locale == 'nl' ? 'Onze experten staan elke dag voor u klaar, zonder wachten' : 'Our experts are there for you, every day, no waiting');
             $item2->setWeight(1);
             $items->add($item2);
             $item3Media = $this->mediaCreator->createFile($imgDir.'icons/icon--3.svg', $folder->getId());
             $item3 = new \{{ namespace }}\Entity\UspItem();
             $item3->setIcon($item3Media);
-            $item3->setTitle('10 years of experience');
-            $item3->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias accusamus sint nostrum at');
+            $item3->setTitle($locale == 'nl' ? '10 jaar ervaring' : '10 years of experience');
+            $item3->setDescription($locale == 'nl' ? 'Ervaren mensen leveren de beste service, op ons kan je rekenen' : 'Experience people offert he best service, you can count on us');
             $item3->setWeight(2);
             $items->add($item3);
             $pageparts['section4'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
