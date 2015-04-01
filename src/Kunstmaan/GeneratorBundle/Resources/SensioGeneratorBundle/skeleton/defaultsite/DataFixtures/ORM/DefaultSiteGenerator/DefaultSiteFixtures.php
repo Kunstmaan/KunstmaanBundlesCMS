@@ -320,7 +320,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         foreach ($this->requiredLocales as $locale) {
             $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
                 $translation->setTitle($locale == 'nl' ? 'Onze fietsen' : 'Our bikes');
-                $translation->setSlug($locale == 'nl' ? 'fietsen' : 'bikes');
+                $translation->setSlug($locale == 'nl' ? 'koop-een-fiets' : 'buy-a-bike');
                 $translation->setWeight(20);
 
                 $page->setMenuDescription($locale == 'nl' ? 'Onze selectie van fietsen vertegenwoordigd de filosofie van The Crew. Alleen de beste fietsen bieden we aan, te koop, en dat doen we aan de beste prijzen. Geen grootwarenhuis, maar een speciaalzaak met gratis persoonlijk advies in onze winkel.' : 'Our selection of bikes represents the philosophy of The Crew. We offer only the best bikes, and do so at the best prices. Not a large retailer, but a specialty shop with free personal advice in our store.');
@@ -371,14 +371,14 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 
         // Repair bikes page
         $contentPage = new ContentPage();
-        $contentPage->setTitle('Repair bikes');
+        $contentPage->setTitle('Bike repair');
 
         $menuMedia = $this->mediaCreator->createFile($imgDir.'stocks/stock2.jpg', $folder->getId());
 
         $translations = array();
         foreach ($this->requiredLocales as $locale) {
             $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale, $menuMedia) {
-                $translation->setTitle($locale == 'nl' ? 'Fietsen herstellen' : 'Repair bikes');
+                $translation->setTitle($locale == 'nl' ? 'Fiets herstellingen' : 'Bike repair');
                 $translation->setSlug($locale == 'nl' ? 'herstel-mijn-fiets' : 'repair-my-bike');
                 $translation->setWeight(20);
 
@@ -855,8 +855,8 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['footer.newsletter.button']['en'] = 'Subscribe';
         $trans['footer.newsletter.button']['nl'] = 'Inschrijven';
 
-        $trans['read.more.on']['en'] = 'Read more on';
-        $trans['read.more.on']['nl'] = 'Lees meer over';
+        $trans['read.more']['en'] = 'Read more';
+        $trans['read.more']['nl'] = 'Lees meer';
 
         $trans['footer.newsletter.description']['en'] = 'Stay current with our weekly newsletter in which we\'ll tell you about our amazing new products, events and reviews';
         $trans['footer.newsletter.description']['nl'] = 'Blijf op de hoogte van onze fantastische nieuwe producten, events en beoordelingen';
