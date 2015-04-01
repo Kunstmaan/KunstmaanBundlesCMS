@@ -191,7 +191,6 @@ class PagePartAdmin
         // Create the objects for the new pageparts
         $this->newPageParts = array();
         $newRefIds          = $request->get($this->context . '_new');
-
         if (is_array($newRefIds)) {
             foreach ($newRefIds as $newId) {
                 $type                       = $request->get($this->context . '_type_' . $newId);
@@ -201,16 +200,19 @@ class PagePartAdmin
 
         // Sort pageparts again
         $sequences = $request->get($this->context . '_sequence');
+
         if (!is_null($sequences)) {
             $tempPageparts = $this->pageParts;
             $this->pageParts = array();
             foreach ($sequences as $sequence) {
                 if (array_key_exists($sequence, $this->newPageParts)) {
                     $this->pageParts[$sequence] = $this->newPageParts[$sequence];
-                } else {
+                } elseif (array_key_exists($sequence, $tempPageparts)) {
                     $this->pageParts[$sequence] = $tempPageparts[$sequence];
-                }
+                } else
+                    $this->pageParts[$sequence] = $this->getPagePart($sequence, array_search($sequence, $sequences)+1);
             }
+
             unset($tempPageparts);
         }
     }
@@ -356,6 +358,18 @@ class PagePartAdmin
         }
 
         return "no name";
+    }
+
+    /**
+     * @param bigint $id
+     * @param int    $sequenceNumber
+     *
+     * @return PagePart
+     */
+    public function getPagePart($id, $sequenceNumber)
+    {
+        $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+        return $ppRefRepo->getPagePart($id, $this->context, $sequenceNumber);
     }
 
     /**

@@ -181,4 +181,23 @@ class PagePartRefRepository extends EntityRepository
                 ->setParameter('pageId', $page->getId())
                 ->setParameter('context', $context)->getSingleScalarResult() != 0;
     }
+
+    /**
+     * @param bigint   $id             The id
+     * @param string   $context        The context
+     * @param int      $sequenceNumber The sequence number
+     *
+     * @return PagePart
+     */
+    public function getPagePart($id, $context = 'main', $sequenceNumber)
+    {
+        $ppRef = $this->find($id);
+        $ppRef->setContext($context);
+        $ppRef->setSequenceNumber($sequenceNumber);
+        $this->getEntityManager()->persist($ppRef);
+        $this->getEntityManager()->flush();
+
+        return $this->getEntityManager()->getRepository($ppRef->getPagePartEntityName())->find($ppRef->getPagePartId());
+
+    }
 }
