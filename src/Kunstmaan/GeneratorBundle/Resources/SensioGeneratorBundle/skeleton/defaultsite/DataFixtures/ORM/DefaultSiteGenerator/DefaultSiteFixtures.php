@@ -849,7 +849,16 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $trans['footer.contact_us']['en'] = 'Contact us';
         $trans['footer.contact_us']['nl'] = 'Contacteer ons';
 
-        $trans['demositemessage']['en'] = 'This is the demonstration website of the <a href="http://bundles.kunstmaan.be">KunstmaanBundlesCMS</a>. <strong>All content on this site is purely fictonal!</strong> This site has been created to give you an idea on what you can create using this open-source content management system. You can create your own instance of this site by <a href="https://github.com/roderik/KunstmaanBundlesCMS/blob/master/docs/03-installation.md#generating-your-website-skeleton">running the Default Site Generator with the --demosite option</a>.You can also try out <a href="/en/admin">the administration interface</a> by logging in using <i>admin</i> as username and <i>admin</i> as password.';
+        $trans['footer.newsletter.title']['en'] = 'Don\'t miss out';
+        $trans['footer.newsletter.title']['nl'] = 'Blijf op de hoogte';
+
+        $trans['footer.newsletter.button']['en'] = 'Subscribe';
+        $trans['footer.newsletter.button']['nl'] = 'Inschrijven';
+
+        $trans['footer.newsletter.description']['en'] = 'Stay current with our weekly newsletter in which we\'ll tell you about our amazing new products, events and reviews';
+        $trans['footer.newsletter.description']['nl'] = 'Blijf op de hoogte van onze fantastische nieuwe producten, events en beoordelingen';
+
+        $trans['demositemessage']['en'] = 'This is the demonstration website of the <a href="http://bundles.kunstmaan.be">KunstmaanBundlesCMS</a>. <strong>All content on this site is purely fictional!</strong> This site has been created to give you an idea on what you can create using this open-source content management system. You can create your own instance of this site by <a href="https://github.com/roderik/KunstmaanBundlesCMS/blob/master/docs/03-installation.md#generating-your-website-skeleton">running the Default Site Generator with the --demosite option</a>.You can also try out <a href="/en/admin">the administration interface</a> by logging in using <i>admin</i> as username and <i>admin</i> as password.';
         $trans['demositemessage']['nl'] = 'Dit is de demonstratie website van het <a href="http://bundles.kunstmaan.be">KunstmaanBundlesCMS</a>.<strong>Alle inhoud op deze website is pure fictie!</strong> Deze site is gemaakt om je een idee te geven wat je kan bouwen met dit open-source content management system. Je kan je eigen instantie van deze site opzetten door <a href="https://github.com/roderik/KunstmaanBundlesCMS/blob/master/docs/03-installation.md#generating-your-website-skeleton">het draaien van de Default Site Generator met de --demosite optie</a>.Je kan ook <a href="/en/admin">de administratie module</a> door in te loggen met <i>admin</i> als username en <i>admin</i> as wachtwoord.';
 {% endif %}
 

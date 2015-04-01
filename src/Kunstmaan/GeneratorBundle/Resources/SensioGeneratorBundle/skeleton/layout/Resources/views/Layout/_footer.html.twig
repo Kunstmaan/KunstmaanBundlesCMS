@@ -5,13 +5,13 @@
     <section class="newsletter splash splash--primary text--center">
         <div class="container-fluid">
             <div class="newsletter__content">
-                <h2 class="newsletter__title">Don't miss out</h2>
+                <h2 class="newsletter__title">{{ 'footer.newsletter.title'|trans }}</h2>
                 <div class="newsletter__text">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni nesciunt similique numquam recusandae quibusdam eius repudiandae quas accusamus enim sit.</p>
+                    <p>{{ 'footer.newsletter.description'|trans }}</p>
                 </div>
                 <form action="" class="newsletter__form">
                     <input type="text" class="form-control newsletter__form__input">
-                    <button type="submit" class="btn btn--secondary newsletter__form__btn">Subscribe</button>
+                    <button type="submit" class="btn btn--secondary newsletter__form__btn">{{ 'footer.newsletter.button'|trans }}</button>
                 </form>
             </div>
         </div>
@@ -96,7 +96,7 @@
                             <h6 class="footer-nav__title">
                                 {{ 'footer.contact_us'|trans }}
                             </h6>
-                            <p><strong>T</strong> +32(0)16 300 780<br/><strong>E</strong> <a href="mailto:hello@kunstmaan.be" target="_blank">hello@kunstmaan.be</a></p>
+                            <p><strong>T</strong> +32 (0)16 300 780<br/><strong>E</strong> <a href="mailto:bundles@kunstmaan.be" target="_blank">bundles@kunstmaan.be</a></p>
                         </nav>
                     </div>
                 <% endif %>
