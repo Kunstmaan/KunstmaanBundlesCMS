@@ -2,9 +2,11 @@
 
 {% block extra_actions_header %}
     {% if adminlistconfigurator.overviewPage %}
+        {% if adminlist.canAdd() %}
         <div class="main_actions btn-group">
             <a href="#" data-target="#add-subpage-modal" data-toggle="modal" class="btn">{{ 'form.add'|trans }}</a>
         </div>
+        {% endif %}
         <div id="add-subpage-modal" class="modal hide fade">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal">&times;</button>
