@@ -1,6 +1,6 @@
 <?php
 namespace Kunstmaan\FormBundle\Tests\Entity;
-use Kunstmaan\FormBundle\Entity\FormSubmissionField;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 
 /**
@@ -19,7 +19,7 @@ class FormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FormSubmissionField;
+        $this->object = new StringFormSubmissionField();
     }
 
     /**
