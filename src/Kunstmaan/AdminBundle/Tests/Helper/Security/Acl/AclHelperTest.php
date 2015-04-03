@@ -110,6 +110,14 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getQuoteStrategy')
             ->will($this->returnValue($strat));
 
+        $conf->expects($this->any())
+            ->method('getDefaultQueryHints')
+            ->willReturn(array());
+
+        $conf->expects($this->any())
+            ->method('isSecondLevelCacheEnabled')
+            ->willReturn(false);
+
         $this->em->expects($this->any())
             ->method('getConfiguration')
             ->will($this->returnValue($conf));
