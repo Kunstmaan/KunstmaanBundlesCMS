@@ -1,20 +1,18 @@
-Adding news articles
-====================
+# Adding a newssection or blog
 
 Now that we've covered the main topics, let's have a look at some extra utilities bundles we've prepared. Since quite
 a lot of the sites we make need some kind of news section - with news authors, news pages and a news overview page -
 we decided to create a bundle to make implementing these a lot easier.
 
 
-1) Generating the articles skeleton code
-----------------------------------------
+## Generating the articles skeleton code
 
 First up is the article generator :
 
     app/console kuma:generate:article
 
-This will first ask for the bundle namespace (you can accept the default - `Sandbox/WebsiteBundle`), then it will ask for
-a name (enter `News`), and finally it will ask for the table name prefix, so enter `sb_` as before.
+This will first ask for the bundle namespace (you can accept the default - `MyProject/WebsiteBundle`), then it will ask for
+a name (enter `News`), and finally it will ask for the table name prefix, so enter `myproject_websitebundle_` as before.
 
 The basic code skeleton should now be generated, so go ahead and create (and apply) a migration for the database
 changes :
@@ -29,7 +27,7 @@ When you have a look at the admin section (`/app_dev.php/en/admin/`), you'll not
 and authors respectively, but you will not be able to add articles as no NewsOverviewPage has been created yet.
 
 Since we would like to be able to add a News page in the main navigation on the homepage, we first have to enable this,
-so go ahead and open `src/Sandbox/WebsiteBundle/Entity/Pages/HomePage.php` and add the NewsOverviewPage to
+so go ahead and open `src/MyProject/WebsiteBundle/Entity/Pages/HomePage.php` and add the NewsOverviewPage to
 `getPossibleChildTypes` :
 
 ```php
@@ -38,14 +36,14 @@ so go ahead and open `src/Sandbox/WebsiteBundle/Entity/Pages/HomePage.php` and a
      */
     public function getPossibleChildTypes()
     {
-        return array(
-            ...
-            ),
-            array(
-                'name' => 'News Overview Page',
-                'class'=> 'Sandbox\WebsiteBundle\Entity\News\NewsOverviewPage'
-            )
-        );
+	return array(
+	    ...
+	    ),
+	    array(
+		'name' => 'News Overview Page',
+		'class'=> 'MyProject\WebsiteBundle\Entity\News\NewsOverviewPage'
+	    )
+	);
     }
 ```
 
@@ -81,3 +79,6 @@ Adding support for news articles to your site is as simple as this :
 - `src/YourVendor/YourWebsiteBundle/Repository/` contains repositories for the generated entities.
 - `src/YourVendor/YourWebsiteBundle/Resources/views/AdminList/` contains a Twig view for the News page admin list.
 - `src/YourVendor/YourWebsiteBundle/Resources/views/News/`
+
+
+<p align="right"><a href="./04-05-adding-a-search-engine.md">Next chapter: Adding a search engine &raquo;</a></p>

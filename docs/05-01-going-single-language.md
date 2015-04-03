@@ -1,15 +1,15 @@
 Going single language
 =====================
 
-The Standard Edition installs a multilanguage site. This is important for us because Belgium is a multilingual country, but it's clear that there are a lot of cases where it is not needed. While the CMS will always retain it multilingual capabilities, we want to remove the language from the URL. 
+The Standard Edition installs a multilanguage site. This is important for us because Belgium is a multilingual country, but it's clear that there are a lot of cases where it is not needed. While the CMS will always retain it multilingual capabilities, we want to remove the language from the URL.
 
 ## 1) Change the routing.yml
 
 Switch out the default [routing.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/routing.yml) with [routing.singlelang.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/routing.singlelang.yml)
 
 ```
-mv app/config/routing.yml app/config/routing.multilang.yml 
-mv app/config/routing.singlelang.yml app/config/routing.yml 
+mv app/config/routing.yml app/config/routing.multilang.yml
+mv app/config/routing.singlelang.yml app/config/routing.yml
 ```
 
 *WARNING: If you generated bundles before going single language, check that you have all routing moved over to the new routing file!*
@@ -19,8 +19,8 @@ mv app/config/routing.singlelang.yml app/config/routing.yml
 Switch out the default [security.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.yml) with [security.singlelang.yml](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition/blob/master/app/config/security.singlelang.yml)
 
 ```
-mv app/config/security.yml app/config/security.multilang.yml 
-mv app/config/security.singlelang.yml app/config/security.yml 
+mv app/config/security.yml app/config/security.multilang.yml
+mv app/config/security.singlelang.yml app/config/security.yml
 ```
 
 ## 3) Change your AppKernel
@@ -66,4 +66,45 @@ Configure the parameters.yml file like so:
     multilanguage: false
 ```
 
-And that's it, you now have a singlelanguage website. 
+## 7) Prevent the admin from being cached
+
+Change
+
+```
+fos_http_cache:
+    cache_control:
+	rules:
+	    # match admin area
+	    -
+		match:
+		    path: ^/[^/]+/admin
+		headers:
+		    cache_control:
+			public: false
+			max_age: 0
+			s_maxage: 0
+		    last_modified: "-1 hour"
+```
+
+to
+
+```
+fos_http_cache:
+    cache_control:
+	rules:
+	    # match admin area
+	    -
+		match:
+		    path: ^/admin
+		headers:
+		    cache_control:
+			public: false
+			max_age: 0
+			s_maxage: 0
+		    last_modified: "-1 hour"
+```
+
+
+And that's it, you now have a single language website.
+
+<p align="right"><a href="./05-02-manage-translations.md">Next chapter: Managing translations &raquo;</a></p>
