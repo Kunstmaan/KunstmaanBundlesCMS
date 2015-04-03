@@ -2,14 +2,14 @@ name: "Home page"
 rows:
 {% if demosite %}
     - regions:
-    - { name: "header", span: 12 }
-    - { name: "section1", span: 12 }
-    - { name: "section2", span: 12 }
-    - { name: "section3", span: 12 }
-    - { name: "section4", span: 12 }
-    - { name: "section5", span: 12 }
+        - { name: "header", span: 12 }
+        - { name: "section1", span: 12 }
+        - { name: "section2", span: 12 }
+        - { name: "section3", span: 12 }
+        - { name: "section4", span: 12 }
+        - { name: "section5", span: 12 }
 {% else %}
     - regions:
-    - { name: "main", span: 12 }
+        - { name: "main", span: 12 }
 {% endif %}
 template: "{{ bundle.name }}::Pages\\HomePage\\pagetemplate.html.twig"
