@@ -59,6 +59,3 @@ This is based on the best practices described in the [Symfony2 Cookbook](http://
 * use php mess detector already configured when running phpunit
 * use php duplicate code check
 * Form Types will be suffixes with Type when they are used in the frontend and AdminType when they are used for the backend
-
-
-<p align="right"><a href="./06-contributing.md">Back to: Contributing &raquo;</a></p>

@@ -106,5 +106,3 @@ fos_http_cache:
 
 
 And that's it, you now have a single language website.
-
-<p align="right"><a href="./05-02-manage-translations.md">Next chapter: Managing translations &raquo;</a></p>

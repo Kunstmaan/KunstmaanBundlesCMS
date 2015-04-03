@@ -7,5 +7,3 @@ We'll gradually introduce all concepts, starting off with the basics. Throughout
 * [Creating a page part](./04-01-creating-a-page-part.md)
 * [Creating an adminlist](./04-02-creating-an-adminlist.md)
 * [Creating a pagetype](./04-03-creating-a-pagetype.md)
-
-<p align="right"><a href="./04-01-creating-a-page-part.md">Next chapter: Creating a page part &raquo;</a></p>

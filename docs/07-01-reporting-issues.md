@@ -17,5 +17,3 @@ Report your bug to in [the issue tracker at Github](https://github.com/Kunstmaan
 ## Reporting a security issue
 
 If you think that you have found a security issue in the KunstmaanBundlesCMS, don't use the issue tracker and don't publish it publicly. Instead, all security issues must be sent to bundles [at] kunstmaan.be. We will contact you as soon as possible to get it resolved.
-
-<p align="right"><a href="./06-contributing.md">Back to: Contributing &raquo;</a></p>

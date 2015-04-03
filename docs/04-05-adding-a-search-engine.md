@@ -324,5 +324,3 @@ kuma:search:delete
 [3]:  http://www.elasticsearch.org/guide/
 [4]:  http://www.elasticsearch.org/downloads/
 [5]:  http://brew.sh/
-
-<p align="right"><a href="./05-00-cookbook.md">Next chapter: Cookbook &raquo;</a></p>

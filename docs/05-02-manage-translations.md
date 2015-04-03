@@ -29,7 +29,7 @@ This method is much more flexible and has more options.
 - A __normal__ import (same import as in the backend)
 
 ```
-app/console kuma:translator:import
+app/console kuma:translator:import --forced
 ```
 
 - A __forced__ import
@@ -106,5 +106,3 @@ kunstmaan_translator:
 * ```file_formats```: Which type of translation files should be imported
 
 We advise you to overwrite the ```default_bundle``` configuration, as you will otherwise only include the KunstmaanTranslatorBundle translations.
-
-<p align="right"><a href="./05-03-google-analytics-dashboard.md">Next chapter: Google Analytics Dashboard &raquo;</a></p>

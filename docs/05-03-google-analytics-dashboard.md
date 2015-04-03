@@ -103,5 +103,3 @@ You can also load the data from the console with the command
     app/console kuma:dashboard:collect
 
 You can always update the data yourself this way, but it’s easier to configure a cronjob to do this every 30 minutes, or another interval.
-
-<p align="right"><a href="./07-00-contributing.md">Next chapter: Contributing &raquo;</a></p>

@@ -12,7 +12,7 @@ We will get started by downloading the Kunstmaan Bundles Standard Edition to get
 composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname
 ```
 
-![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](images/composer-create.png)
+![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/composer-create.png)
 
 At a certain point it will ask you the following question, answer **N**.
 
@@ -22,7 +22,7 @@ Would you like to install Acme demo bundle? [y/N]
 
 It will then ask you some questions to configure Symfony and the CMS system. At this point just fill in the database_name like so:
 
-![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](images/composer-parameters.png)
+![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/composer-parameters.png)
 
 > Since our project is named myproject, the websitetitle, session_prefix, searchindexname and searchindexprefix are all ok. In a real project they probably aren't.
 
@@ -38,7 +38,7 @@ First step now is to add all these files into version control. What version cont
 
 Create a new repository (in most cases a private one). Don't add any files from the GitHub interface to start with.
 
-![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](images/github.png)
+![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/github.png)
 
 Then execute these commands in `/var/www/myprojectname/` to initialise the git repository
 
@@ -70,7 +70,7 @@ For all other questions, the defaults should suffice.
 
 > Sometimes there are some issues with bash/zsh escaping in terminal input, so use / instead of \ for the namespace delimiter to avoid any problems.
 
-![app/console kuma:generate:bundle](images/bundlegen.png)
+![app/console kuma:generate:bundle](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/bundlegen.png)
 
 ## Generating your website skeleton
 
@@ -80,7 +80,7 @@ Now that we have a bundle to store our code in, we are going to generate the ske
 app/console kuma:generate:default-site
 ```
 
-![app/console kuma:generate:default-site](images/defaultsitegen.png)
+![app/console kuma:generate:default-site](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/defaultsitegen.png)
 
 This generates:
 
@@ -102,7 +102,7 @@ app/console doctrine:schema:create
 app/console doctrine:fixtures:load
 ```
 
-![app/console doctrine:schema:create](images/schemacreate.png)
+![app/console doctrine:schema:create](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/schemacreate.png)
 
 ## Generate Unit and Behat tests (optional)
 
@@ -114,7 +114,7 @@ app/console kuma:generate:admin-tests
 
 Just accept the default bundle namespace at the prompt.
 
-![app/console kuma:generate:admin-tests](images/behattests.png)
+![app/console kuma:generate:admin-tests](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/behattests.png)
 
 
 ## Get all the front-end assets
@@ -147,10 +147,6 @@ app/console assetic:dump
 
 At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/en/admin) should greet you with the following screens.
 
-![Demo Site Admin](images/demositeadmin.png)
+![Demo Site Admin](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/demositeadmin.png)
 
 > Note that the screenshots were made of a site using the `--demosite` option during generation
-
-
-
-<p align="right"><a href="./04-00-content-management.md">Next chapter: Content mangement &raquo;</a></p>

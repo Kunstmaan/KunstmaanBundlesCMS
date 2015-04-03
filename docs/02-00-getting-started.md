@@ -37,12 +37,10 @@ We follow most of the procedures for contributions from the [Symfony](http://sym
 * [Submitting pull requests](./07-02-pull-requests.md)
 * [Coding standards](./07-03-coding-standards.md)
 
-# Support
+## Support
 
 For questions you can always ask your question via a Github Issue ([following the same guidelines as bug reporting](./07-01-reporting-issues.md)) or shoot us an email at bundles AT kunstmaan.be.
 
-# Installation Guide
+## Installation Guide
 
 Installing the KunstmaanBundlesCMS is a short process that is almost fully automated by `composer` and generators. [Check out the in depth guide in the next chapter](./03-00-installation.md).
-
-<p align="right"><a href="./03-00-installation.md">Next chapter: Installation &raquo;</a></p>
