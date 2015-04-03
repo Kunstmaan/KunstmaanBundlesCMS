@@ -2,6 +2,7 @@
 
 {% block extra_actions_header %}
     {% if adminlistconfigurator.overviewPage %}
+        {% if adminlist.canAdd() %}
         <div class="main_actions btn-group">
             <a href="#" data-target="#add-subpage-modal" data-toggle="modal" class="btn">{{ 'form.add'|trans }}</a>
         </div>
@@ -25,6 +26,7 @@
                 </div>
             </form>
         </div>
+        {% endif %}
     {% else %}
         <div class='alert alert-block'>
             <strong>Warning: </strong> You need to create at least one overview page before you can create a Abstract Article
