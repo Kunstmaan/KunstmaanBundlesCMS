@@ -19,7 +19,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4.0",
         "symfony/symfony": "~2.3",
         "white-october/pagerfanta-bundle": "1.0.*",
         "ruflin/elastica": "~1.0",

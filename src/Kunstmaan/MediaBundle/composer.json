@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4.0",
         "symfony/symfony": "~2.3",
         "gedmo/doctrine-extensions": "2.3.*",
         "doctrine/doctrine-fixtures-bundle": "~2.2.0",

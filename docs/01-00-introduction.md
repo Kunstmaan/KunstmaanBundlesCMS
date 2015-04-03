@@ -30,7 +30,7 @@ Starting fresh has a lot of advantages and going further we defined the basic pr
 2. Added on top of the framework we included a lot of **community components** that provide our extended framework with functionality like Image resizing, pagination, user management, an advanced router, etc.
 3. And we wrap all this into a **user friendly admin interface with content management** functionalities.
 
-We are able to support PHP 5.3.9 and up, and all Symfony versions since 2.3. We constantly test and adapt to be able to run the latest and greatest from Symfony and the community.
+We are able to support PHP 5.4 and up, and all Symfony versions since 2.3. We constantly test and adapt to be able to run the latest and greatest from Symfony and the community.
 
 # Open Source
 
