@@ -1,0 +1,36 @@
+{
+    "name": "cargobay",
+    "version": "0.5.2",
+    "dependencies": {},
+    "devDependencies": {
+	"bower": "~1.3",
+
+	"gulp": "3.8.6",
+	"gulp-load-plugins": "0.5.3",
+	"gulp-changed": "0.4.1",
+	"gulp-size": "1.0.0",
+	"gulp-shell": "0.2.9",
+	"gulp-livereload": "2.1.0",
+	"gulp-rename":"latest",
+
+	"gulp-ruby-sass": "0.7.1",
+	"gulp-scss-lint": "0.1.0",
+	"gulp-autoprefixer": "0.0.8",
+	"gulp-minify-css": "0.3.7",
+	"gulp-combine-media-queries": "0.1.0",
+
+	"gulp-modernizr": "https://github.com/doctyper/gulp-modernizr/tarball/develop",
+
+	"gulp-jshint": "1.8.0",
+	"jshint-stylish": "0.4.0",
+	"gulp-uglify": "0.3.1",
+	"gulp-concat": "2.3.4",
+
+	"gulp-imagemin": "0.6.2",
+	"imagemin-svgo": "0.1.0",
+	"chalk": "0.5.1"
+    },
+    "engines": {
+	"node": ">=0.10.0"
+    }
+}

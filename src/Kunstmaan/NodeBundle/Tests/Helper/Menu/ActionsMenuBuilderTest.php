@@ -100,7 +100,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->builder->createSubActionsMenu();
         $this->assertNotNull($menu->getChild('subaction.versions'));
 
-        $this->assertEquals($menu->getChildrenAttribute('class'), 'sub_actions');
+	$this->assertEquals('page-sub-actions',$menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -125,7 +125,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.save'));
         $this->assertNull($menu->getChild('action.delete'));;
 
-        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
+	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -160,7 +160,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.unpublish'));
         $this->assertNull($menu->getChild('action.delete'));
 
-        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
+	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -187,7 +187,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
 
-        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
+	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -207,8 +207,8 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
 
         $menu = $this->builder->createTopActionsMenu();
-        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions top');
-        $this->assertEquals($menu->getChildrenAttribute('id'), 'main_actions_top');
+	$this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
+	$this->assertEquals('page-main-actions-top', $menu->getChildrenAttribute('id'));
     }
 
     /**
@@ -242,7 +242,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.delete'));
 
-        $this->assertEquals($menu->getChildrenAttribute('class'), 'main_actions btn-group');
+	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
 }

@@ -1,280 +1,144 @@
 {% set adminmenu = admin_menu_get() %}
-
 {% set extraclasshtml %}{% block extraclasshtml %}{% endblock %}{% endset %}
 
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js ie6 oldie {{ extraclasshtml }}" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie {{ extraclasshtml }}" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie {{ extraclasshtml }}" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js {{ extraclasshtml }}" lang="en"> <!--<![endif]-->
+<html class="{{ extraclasshtml }}" lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
 
     <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
 
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Favicons -->
+    {% include "KunstmaanAdminBundle:Default:_favicons.html.twig" %}
 
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('apple-touch-icon-72x72.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('apple-touch-icon-114x114.png') }}">
-
-    <!--=========== CSS ===========-->
-    <!--Combine-->
-    {% stylesheets
-        "@KunstmaanAdminBundle/Resources/public/scss/style.scss"
-        "@KunstmaanAdminBundle/Resources/public/js/chosen/chosen.css"
-        filter="scss"
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
-    {% endstylesheets %}
-    <!--[if lte IE 8]>
-    {% stylesheets filter="scss" "@KunstmaanAdminBundle/Resources/public/scss/ie8.scss" %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
-    {% endstylesheets %}
-    <![endif]-->
-    <!--Customizable color brand-->
-    <style type="text/css">
-        {% if titlecolor is not defined or titlecolor is empty %}
-            {% set titlecolor = "#FFFFFF" %}
-        {% endif %}
-            {% if titlebgcolor is not defined or titlebgcolor is empty %}
-        {% set titlebgcolor = "#2997CE" %}
-        {% endif %}
-        header .navbar .container-fluid .brand, header .navbar .container-fluid .brand:visited, header .navbar .container-fluid .brand:hover, header .navbar .container-fluid .brand:active, header .navbar .container-fluid .brand:focus {
-            color: {{ titlecolor }};
-            background-color: {{ titlebgcolor }};
-        }
-        header .navbar .container-fluid .brand:after {
-            border-left-color: {{ titlebgcolor }};
-        }
-    </style>
-    <!--Extra CSS-->
+    <!-- Styles -->
+    {% include "KunstmaanAdminBundle:Default:_css.html.twig" %}
+    <!-- Extra CSS -->
     {% block extracss %}{% endblock %}
-
-
-    <!--=========== JS ===========-->
-    <!--Combined-->
-    {% javascripts
-        '@KunstmaanAdminBundle/Resources/public/js/libs/modernizr.custom.2.6.2.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-1.9.0.min.js'
-        output='generated-js/scripts.js' filter='uglifyjs2'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
+    <!-- JS -->
     {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
-    {% include "KunstmaanAdminBundle:Default:_css_header.html.twig" %}
 </head>
 
+<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
 
 
-<body {% block extraparamsinbody %}{% endblock %}>
+<!-- Body block -->
+{% block body %}
+    <!-- Header -->
+    {% block appHeader %}
+	{% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
+    {% endblock %}
 
-    {% block body %}
-        {% block top_menu %}
-            <!--=========Top menu=========-->
-            <header>
-                <div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
-                    <div class="navbar-inner">
-                        <div class="container-fluid">
-                            <a class="brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">{{ websitetitle | trans }}</a>
-                            <nav>
-                                <ul class="nav">
-                                    {% for menuitem in adminmenu.topchildren %}
-                                    {% set topchildren = menuitem.topchildren %}
-                                    {% if topchildren | length > 0 %}
-                                    <li class="dropdown {% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                            {{ menuitem.label | trans }}
-                                            <b class="caret"></b>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            {% for topchild in topchildren %}
-                                                {% set nestedtopchildren = topchild.topchildren %}
-                                                {% if nestedtopchildren | length > 0 %}
-                                                    <li class="dropdown-submenu {% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                                        <a tabindex="-1" href="#">{{ topchild.label | trans }}</a>
-                                                        <ul class="dropdown-menu">
-                                                            {% for nestedtopchild in nestedtopchildren %}
-                                                                <li class="{% if nestedtopchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                                                    <a href="{{ path(nestedtopchild.route, nestedtopchild.routeparams) }}">{{ nestedtopchild.label | trans }}</a>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </li>
-                                                {% else %}
-                                                    {% if topchild.route %}
-                                                        <li class="{% if topchild.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                                            <a href="{{ path(topchild.route, topchild.routeparams) }}">{{ topchild.label | trans }}</a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                    {% else %}
-                                    <li class="{% if menuitem.active %} active {% endif %} {% if loop.first %} first {% endif %} {% if loop.last %} last {% endif %}">
-                                        <a href="{{ path(menuitem.route, menuitem.routeparams) }}">{{ menuitem.label | trans }}</a>
-                                    </li>
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
-                                <ul class="nav pull-right">
-                                    {% set route = app.request.attributes.get('_route') %}
-                                    {% set attribs = app.request.attributes.all %}
-                                    {{ localeswitcher_widget(requiredlocales, route) }}
-                                    <li>
-                                        <a href="{{ path('KunstmaanAdminBundle_user_change_password', { 'id':app.user.id }) }}">{{ 'layout.logged_in_as'|trans({'%username%':app.user.username}, 'FOSUserBundle') }}</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </header>
-        {% endblock %}
 
-    <!--=========Main Content=========-->
-    <div class="container-fluid">
-        <!--Sidebar-->
-        {% block sidebar %}
-            {% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
-        {% endblock %}
+    <!-- Nav settings -->
+    {% if lowestTopChild is not defined %}
+	{% set lowestTopChild = adminmenu.lowestTopChild %}
+	{% if lowestTopChild %}
+	    {% set navigationChildren = lowestTopChild.navigationChildren %}
+	{% endif %}
+    {% endif %}
 
-        <!--Content_wrp-->
-        <div id="main_content" class="content">
-            <!--Breadcrumb-->
-            {% block breadcrumb %}
-            {% set breadcrumbitems = adminmenu.breadcrumb %}
-            {% if breadcrumbitems | length > 0 %}
-            <ul class="breadcrumb">
-                {% for breadcrumbitem in breadcrumbitems %}
-                {% if loop.last %}
-                <li class="active">{{ breadcrumbitem.label | trans }}</li>
-                {% else %}
-                <li>
-                   {% if  breadcrumbitem.route %}
-                      <a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">{{ breadcrumbitem.label | trans }}</a>
-                   {% else %}
-                      <span>{{ breadcrumbitem.label | trans }}</span>
-                   {% endif %}
-                </li>
-                {% endif %}
-                {% endfor %}
-            </ul>
+
+    <!-- Main Content -->
+    <main role="main" id="app__main" class="container-fluid app__main{% if lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
+
+	<div class="row">
+	    {% if lowestTopChild and navigationChildren | length > 0 %}
+
+		<!-- App Sidebar -->
+		<aside id="app__sidebar" class="col-md-3 app__sidebar">
+		    {% block sidebar %}
+			{% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
+		    {% endblock %}
+		</aside>
+
+
+		<!-- App Content - with sidebar -->
+		<div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
+
+		    <!-- App Sidebar Toggle -->
+		    <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle" title="toggle sidebar">
+			<span class="app__sidebar-toggle__show-icon">
+			    <i class="fa fa-caret-right"></i>
+			    <i class="fa fa-list-ul"></i>
+			</span>
+			<span class="app__sidebar-toggle__hide-icon">
+			    <i class="fa fa-caret-left"></i>
+			    <i class="fa fa-list-ul"></i>
+			</span>
+		    </button>
+	    {% else %}
+
+
+		<!-- App Content - full width -->
+		<div id="app__content" class="col-md-12 col--padded app__content">
             {% endif %}
-            {% endblock %}
 
-            {% for flashMessageType, flashMessages in app.session.flashbag.all() %}
-                {% for flashMessage in flashMessages %}
-                    <div class="alert alert-{{ flashMessageType }}">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ flashMessageType | capitalize }}:</strong> {{ flashMessage }}
-                    </div>
-                 {% endfor %}
-            {% endfor %}
 
-            <!-- Messages -->
-            {% block messages %}{% endblock %}
+		    <!-- App Content - Breadcrumbs -->
+		    {% block breadcrumb %}
+			{% include "KunstmaanAdminBundle:Default:breadcrumbs.html.twig" %}
+		    {% endblock %}
 
-            <!--Content-header-->
-            {% block header %}
-            <div class="page-header">
-                {% if adminmenu.current %}<h1>{{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}</h1>{% endif %}
-                {% block extra_actions_header %}{% endblock %}
-            </div>
-            {% endblock %}
 
-            <!--Content-->
-            {% block content %}{% endblock %}
+		    <!-- App Content - Flash Messages -->
+		    {% block flashmessages %}
+			{% include "KunstmaanAdminBundle:Default:flashmessages.html.twig" %}
+		    {% endblock %}
+
+
+		    <!-- App Content - General Messages -->
+		    {% block messages %}{% endblock %}
+
+
+		    <!-- App Content - Header -->
+		    {% block header %}
+			<header class="app__content__header">
+			    <div class="row">
+				{% if adminmenu.current %}
+				    <div class="col-sm-6 col-md-8">
+					<h1 class="app__content__header__title">
+					    {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+					</h1>
+				    </div>
+				{% endif %}
+				{% block extra_actions_header %}{% endblock %}
+			    </div>
+			</header>
+		    {% endblock %}
+
+
+		    <!-- App Content - Content -->
+		    {% block content %}{% endblock %}
+
+		</div>
+	    </div>
         </div>
-    </div>
+    </main>
 
+
+
+    <!-- Footer -->
     {% block footer %}
-        <!--=========Footer=========-->
-        <footer>
-            <div class="container-fluid">
-                <p class="pull-right">
-                    <a target="_blank" href="http://www.kunstmaan.be" class="kunstmaan-logo">
-                        <object data="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_dark.svg') }}" type="image/svg+xml">
-                            <img src="{{ asset('bundles/kunstmaanadmin/img/general/kunstmaan_dark.png') }}" alt="Kunstmaan" />
-                        </object>
-                    </a>
-                </p>
-            </div>
+	<footer role="contentinfo" class="app__footer container-fluid">
+	    <a target="_blank" href="http://www.kunstmaan.be" class="app__footer__kunstmaan-link pull-right">
+		<img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_dark.svg" alt="Kunstmaan" />
+	    </a>
         </footer>
     {% endblock %}
+
+
 {% endblock %}
 
-    <!--=========== JS ===========-->
 
-    <!--Uncombined-->
-    <script src="{{ asset('bundles/kunstmaanadmin/js/libs/jquery.jstree.js') }}"></script>
-    <script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('bundles/kunstmaanadmin/js/ckeditor/adapters/jquery.js') }}"></script>
+    <!-- JS -->
+    {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
 
-    <!--Combined-->
-    {% javascripts
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery-ui-1.10.0.custom.min.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap.min.js'
-        '@KunstmaanAdminBundle/Resources/public/js/chosen/chosen.jquery.min.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.filedrop.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.fileupload.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.iframe-transport.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.inputmask.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.form.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/jquery.inputmask.date.extensions.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/modaldialog.min.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/responsive-tables.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/charCount.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-datepicker.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-timepicker.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/iphone-style-checkboxes.js'
-        '@KunstmaanAdminBundle/Resources/public/js/libs/bootstrap-colorpicker.js'
-        '@KunstmaanAdminBundle/Resources/public/js/script.js'
-        output='generated-js/scripts_bottom.js' filter='uglifyjs2'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 
-    <!--Extra-->
+    <!-- JS - Extra -->
     {% block extrajavascript %}{% endblock %}
-
-    <!--CKEDITOR-->
-    <script>
-    {% include "KunstmaanAdminBundle:Default:ckeditor.js.twig" %}
-        jQuery(document).ready(function(){
-            jQuery('textarea.rich_editor').each(function(item){
-                var config = {};
-                if($(this).attr('height')){
-                    config.height = $(this).attr('height');
-                }
-                if($(this).attr('noparagraphs')){
-                    config.enterMode = CKEDITOR.ENTER_BR;
-                    config.shiftEnterMode = CKEDITOR.ENTER_P;
-                }
-                CKEDITOR.replace( $(this).attr('id'), config);
-
-                // Add id on iframe so that behat tests can interact
-                var id = $(this).attr('id');
-                var checkExist = setInterval(function() {
-                    if ($('.pagepart .cke_editor_' + id + ' iframe').length) {
-                        var parts = id.split("_");
-                        var name = parts[parts.length-1];
-                        $('.pagepart .cke_editor_' + id + ' iframe').attr('id', 'cke_iframe_' + name);
-                        clearInterval(checkExist);
-                    }
-                }, 150);
-            });
-        });
-
-        {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
-     </script>
 </body>
 </html>

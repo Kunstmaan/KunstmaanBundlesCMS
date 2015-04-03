@@ -11,7 +11,7 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
      *
      * @return array
      */
-    protected function getExtra($overview) {
+    protected function getExtra(AnalyticsOverview $overview) {
         $timespan = $overview->getTimespan() - $overview->getStartOffset();
         $extra = parent::getExtra($overview);
 

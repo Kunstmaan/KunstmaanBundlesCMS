@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}\Form\{{ entity_class }};
+namespace {{namespace}}\Form;
 
 use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,7 +15,7 @@ class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Author'
+	    'data_class' => '{{ namespace }}\Entity\{{ entity_class }}Author'
         ));
     }
 
@@ -24,6 +24,6 @@ class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
      */
     function getName()
     {
-        return '{{ entity_class }}author_form';
+	return '{{ entity_class|lower }}_author_type';
     }
 }

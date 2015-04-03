@@ -5,10 +5,7 @@ namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-
-use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\SitemapBundle\Entity\SitemapPage;
-
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -39,17 +36,15 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
         $sitemapPage = new SitemapPage();
         $sitemapPage->setTitle('Sitemap');
 
+	$locales = explode('|', $this->container->getParameter('requiredlocales'));
         $translations = array();
-        $translations[] = array('language' => 'en', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Sitemap');
-            $translation->setSlug('sitemap');
-            $translation->setWeight(100);
-        });
-        $translations[] = array('language' => 'nl', 'callback' => function($page, $translation, $seo) {
-            $translation->setTitle('Sitemap');
-            $translation->setSlug('sitemap');
-            $translation->setWeight(100);
-        });
+	foreach ($locales as $locale) {
+	    $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) {
+		$translation->setTitle('Sitemap');
+		$translation->setSlug('sitemap');
+		$translation->setWeight(100);
+	    });
+	}
 
         $options = array(
             'parent' => $homePage,
@@ -83,5 +78,4 @@ class SitemapFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $this->container = $container;
     }
-
 }

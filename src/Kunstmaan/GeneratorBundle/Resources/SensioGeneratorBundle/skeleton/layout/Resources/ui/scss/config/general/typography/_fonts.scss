@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Fonts
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Webfonts
+   ========================================================================== */
+{% if demosite %}
+$primary-font: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$secondary-font: Arial, sans-serif;
+{% else %}
+$primary-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$secondary-font: "Times New Roman", serif;
+{% endif %}
+
+
+/* Iconfonts
+   ========================================================================== */
+$iconfont-name: "icomoon-frontend";
+
+
+/* Defaults
+   ========================================================================== */
+$font-family--base:         $primary-font;
+$font-family--headings:     $primary-font;
+$font-family--buttons:      $primary-font;

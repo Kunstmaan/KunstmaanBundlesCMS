@@ -154,6 +154,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     {
         $repository = $this->getOverviewPageRepository();
         $pages = $repository->findActiveOverviewPages();
+
         if (isset($pages) && count($pages) > 0) {
             return $pages[0];
         }
@@ -173,5 +174,4 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     {
         return 'KunstmaanArticleBundle:AbstractArticlePageAdminList:list.html.twig';
     }
-
 }

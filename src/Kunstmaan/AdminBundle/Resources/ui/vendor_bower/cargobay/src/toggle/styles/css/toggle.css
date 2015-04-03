@@ -1,0 +1,39 @@
+/* ==========================================================================
+   Toggle
+   ========================================================================== */
+
+/* Button
+   ========================================================================== */
+
+.toggle-btn {
+	cursor: pointer;
+	margin: 0;
+}
+
+.toggle-btn__icon--show {
+	display: inline-block;
+}
+
+.toggle-btn__icon--hide {
+	display: none;
+}
+
+.toggle-btn--active .toggle-btn__icon--show {
+	display: none;
+}
+
+.toggle-btn--active .toggle-btn__icon--hide {
+	display: inline-block;
+}
+
+/* Item
+   ========================================================================== */
+
+.toggle-item {
+	height: 0;
+	overflow: hidden;
+}
+
+.toggle-item--active {
+	height: auto;
+}

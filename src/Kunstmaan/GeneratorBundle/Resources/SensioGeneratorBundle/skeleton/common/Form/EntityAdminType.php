@@ -42,7 +42,7 @@ class {{ className }} extends {{ extend_class }}
 {% if field.mediaType is defined and field.mediaType != 'none' %}
         ))),
 {% endif %}
-{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'rich_editor'),
+{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
 {% endif %}
 {% if key == 'multi_line' %}            'attr' => array('rows' => 10, 'cols' => 600),
 {% endif %}

@@ -1,73 +1,116 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 {% set context = pagepartadmin.context %}
-<input type="checkbox" class="deletefield" id="{{id}}_deleted" name="{{id}}_deleted" value="true" style="display:none"/>
-<section class="draggable" id="{{id}}_container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
-    {% if pagepart.id == 0 %}
-        <input type="hidden" name="{{context}}_new[]" data-suffix="_new[]" class="pagepartadmin_field_updatecontextname" value="{{id}}" />
-        <input type="hidden" name="{{context}}_type_{{id}}" data-suffix="_type_{{id}}" class="pagepartadmin_field_updatecontextname" value="{{pagepartadmin.getClassName(pagepart)}}" />
-    {% endif %}
-    <input type="hidden" name="{{context}}_sequence[]" data-suffix="_sequence[]" class="pagepartadmin_field_updatecontextname" value="{{id}}" />
 
-    <div class="pagepart">
-        {% if form_has_errors_recursive(form['pagepartadmin_'~id]) %}
-            {% set editmode = true %}
-        {% endif %}
-        {% if form['pagepartadmin_'~id].count %}
-            {% set editable = true %}
-        {% else %}
-            {% set editable = false %}
-        {% endif %}
-        <div class="prop_bar {% if not form['pagepartadmin_'~id].count %}noedit{% endif %}">
-            <i class="icon-move"></i>
-            <h6>{{pagepartadmin.getType(pagepart)}}</h6>
-            <div class="actions">
-                <button class="del red" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal{{id}}">
-                    <i class="icon-trash"></i>
+<!-- Hidden Field - Deleted -->
+<input type="checkbox" class="deletefield hidden" id="{{id}}-is-deleted" name="{{id}}_deleted" value="true">
+
+
+<!-- Draggable Item -->
+<div class="js-sortable-item sortable-item" id="{{id}}-pp-container" data-scope="{{ pagepartadmin.getClassName(pagepart)|replace({'\\':""}) }}" >
+
+    <!-- Hidden fields - New, Type and Context -->
+    {% if pagepart.id == 0 %}
+	<input type="hidden" name="{{context}}_new[]" data-suffix="_new[]" value="{{id}}" class="pagepartadmin_field_updatecontextname">
+	<input type="hidden" name="{{context}}_type_{{id}}" data-suffix="_type_{{id}}" value="{{pagepartadmin.getClassName(pagepart)}}" class="pagepartadmin_field_updatecontextname">
+    {% endif %}
+    <input type="hidden" name="{{context}}_sequence[]" data-suffix="_sequence[]" value="{{id}}" class="pagepartadmin_field_updatecontextname">
+
+
+    <!-- PP -->
+    {% if form_has_errors_recursive(form['pagepartadmin_'~id]) %}
+	{% set editmode = true %}
+    {% endif %}
+    {% if form['pagepartadmin_'~id].count %}
+	{% set editable = true %}
+    {% else %}
+	{% set editable = false %}
+    {% endif %}
+    <section id="pp-{{id}}" class="pp">
+	<!-- PP - Header -->
+	<header class="js-sortable-item__handle pp__header {% if not form['pagepartadmin_'~id].count %}pp__header--no-edit{% endif %}">
+	    <i class="fa fa-arrows pp__header__move-icon"></i>
+	    <h5 class="pp__header__head">
+		{{pagepartadmin.getType(pagepart)}}
+	    </h5>
+	</header>
+
+	<!-- PP - actions -->
+	<div class="pp__actions">
+	    <button type="button" class="btn--raise-on-hover pp__actions__action pp__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal-{{id}}">
+		<i class="fa fa-trash-o"></i>
+	    </button>
+	    {% if editable %}
+		<button type="button" class="js-edit-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--edit" data-target-id="{{id}}">
+		    <i class="fa fa-pencil-square-o"></i>
                 </button>
-                {% if editable %}
-                    <button class="edit bleu" onclick="return PagePartEditor.editPagepart('{{id}}')">
-                        <i class="icon-edit"></i>
-                    </button>
+	    {% endif %}
+	</div>
+
+	<div class="pp__view">
+	    <!-- PP - View - Preview -->
+	    <div id="{{id}}-preview-view" class="pp__view__block{% if editmode %} pp__view__block--hidden{% endif %}">
+		{% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
+	    </div>
+
+	    <!-- PP - View - Edit -->
+	    <div id="{{id}}-edit-view" class="pp__view__block{% if not editmode %} pp__view__block--hidden{% endif %}">
+		{% set pagepartid = 'pagepart'~id %}
+		{% if pagepart.editTemplate is defined %}
+		    {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~id]} %}
+		{% else %}
+		    {{ form_widget(form['pagepartadmin_'~id]) }}
                 {% endif %}
             </div>
         </div>
+    </section>
 
-        <div class="block clearfix" id="{{id}}_view" {% if editmode %}style="display:none"{% endif %} {% if editable %}onDblclick="return edit_{{id}}()"{% endif %}>
-            {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
-        </div>
-        <div class="block clearfix" id="{{id}}_edit" {% if not editmode %}style="display:none"{% endif %}>
-            {% set pagepartid = 'pagepart'~id %}
-            {% if pagepart.editTemplate is defined %}
-                {% include pagepart.editTemplate with {'resource': pagepart, 'pagepartid': pagepartid, 'form': form['pagepartadmin_'~id]} %}
-            {% else %}
-                {{ form_widget(form['pagepartadmin_'~id]) }}
-            {% endif %}
-        </div>
+
+
+    <!-- New PP select -->
+    <div class="pp-container__add">
+	<select class="js-add-pp-select form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
+	    <option value="">Add a pagepart</option>
+	    {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+		<option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+	    {% endfor %}
+	</select>
     </div>
 
-    <div class="new_pagepart">
-      <select onchange="return PagePartEditor.addPagepart(this)" class="addselect">
-        <option value="">Add a pagepart</option>
-        {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-          <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
-        {% endfor %}
-      </select>
-    </div>
 
-    <!--Del modal-->
-    <div id="delete-pagepart-modal{{id}}" class="modal hide fade">
-        <div class="modal-header">
-            <button class="close" data-dismiss="modal">&times;</button>
-            <h3>Delete pagepart '{{pagepartadmin.getType(pagepart)}}'</h3>
-        </div>
-        <div class="modal-body">
-            <p>This will not remove the pagepart completely, save the page to remove this pagepart permanently.</p>
-        </div>
-        <div class="modal-footer">
-            <div class="btn_group">
-                <button type="button" id="" onclick="PagePartEditor.deletePagepart('{{id}}'); $('#delete-pagepart-modal{{id}}').modal('hide');" class="btn btn-danger">Delete</button>
-                <button class="btn" data-dismiss="modal">Cancel</button>
+
+    <!-- PP - Del modal -->
+    <div id="delete-pagepart-modal-{{id}}" class="modal fade">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+
+		<!-- Head -->
+		<div class="modal-header">
+		    <button class="close" data-dismiss="modal">
+			    <i class="fa fa-times"></i>
+			</button>
+		    <h3>
+			Delete pagepart '{{pagepartadmin.getType(pagepart)}}'
+		    </h3>
+		</div>
+
+		<!-- Body -->
+		<div class="modal-body">
+		    <p>
+			This will not remove the pagepart completely, save the page to remove this pagepart permanently.
+		    </p>
+		</div>
+
+		<!-- Footer -->
+		<div class="modal-footer">
+		    <button type="button" class="js-delete-pp-btn btn btn-danger btn--raise-on-hover" data-target-id="{{id}}">
+			Delete
+		    </button>
+		    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+			Cancel
+		    </button>
+		</div>
             </div>
         </div>
     </div>
-</section>
+
+</div>

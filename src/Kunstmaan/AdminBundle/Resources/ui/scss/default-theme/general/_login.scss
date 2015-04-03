@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Login
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.login {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+
+
+/* Title
+   ========================================================================== */
+.login__title {
+    margin: 20vh auto 2rem;
+    text-align: center;
+}
+
+
+
+/* Form
+   ========================================================================== */
+.login__form {
+    position: relative;
+
+    margin: 0 auto;
+    width: 90%;
+    max-width: 40rem;
+    padding: 2em;
+
+    background: $white;
+    border-radius: $default-border-radius;
+}
+
+.login__form__forgot-pw {
+    position: absolute;
+    bottom: -2.2rem;
+    right: 0;
+
+    text-decoration: underline;
+    font-size: 1.3rem;
+}
+
+.login__form__remember-me {
+    overflow: hidden;
+    margin-top: -1rem;
+}
+
+.login__form__remember-me__check {
+    float: right;
+    margin: 0;
+
+    font-size: 1.3rem;
+    color: $gray;
+
+    input[type="checkbox"] {
+	margin-top: 3px;
+    }
+}
+
+
+
+/* Logo
+   ========================================================================== */
+.login__logo {
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+}

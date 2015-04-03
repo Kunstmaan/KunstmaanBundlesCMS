@@ -1,0 +1,83 @@
+/* ==========================================================================
+   App Content
+   ========================================================================== */
+
+
+/* General
+   ========================================================================== */
+.app__content {
+    position: relative;
+    background: $white;
+
+    border: 1px solid $gray-lighter;
+    border-top-color: $white;
+    border-right-color: $white;
+    border-left-color: $white;
+
+    min-height: calc(100vh - 95px);
+
+    @media (max-width: $screen-md) {
+	@include transform-style(preserve-3d);
+	@include transition-property (transform);
+	@include transition-duration(.3s);
+	@include transition-timing-function(ease);
+    }
+
+    @media (min-width: $screen-md) {
+	border-left-color: $gray-lighter;
+    }
+}
+
+
+/* Header
+   ========================================================================== */
+// General
+.app__content__header {
+    margin-top: 1rem;
+    padding: 0 0 1em 0;
+
+    border-bottom: 1px solid $gray-lighter;
+}
+
+.app__content__header--with-margin {
+    margin-bottom: 2rem;
+}
+
+
+// Title
+.app__content__header__title {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.app__content__header__title__small {
+    font-size: .5em;
+    color: $gray-light;
+
+    @media (max-width: $screen-lg) {
+	display: block;
+	line-height: 1.4;
+    }
+}
+
+
+// Actions
+.app__content__header__extra-actions {
+    text-align: right;
+}
+
+
+
+
+/* Breadcrumb
+   ========================================================================== */
+.app__content__breadcrumb {
+    padding: 0 0 0 3em;
+}
+
+.app__main--no-sidebar {
+
+    .app__content__breadcrumb {
+	padding-left: 0;
+    }
+}

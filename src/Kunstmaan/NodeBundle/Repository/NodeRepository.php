@@ -34,7 +34,7 @@ class NodeRepository extends NestedTreeRepository
     }
 
     /**
-     * @param int|null  $parentId             The parent id
+     * @param int|null  $parentId             The parent node id
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
      * @param AclHelper $aclHelper            The acl helper

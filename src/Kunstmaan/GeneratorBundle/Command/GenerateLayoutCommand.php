@@ -33,6 +33,7 @@ EOT
             )
             ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle where we need to create the layout in')
             ->addOption('subcommand', '', InputOption::VALUE_OPTIONAL, 'Whether the command is called from an other command or not')
+	    ->addOption('demosite', '', InputOption::VALUE_NONE, 'Pass this parameter when the demosite styles/javascipt should be generated')
             ->setName('kuma:generate:layout');
     }
 
@@ -58,7 +59,7 @@ EOT
         }
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
-        $this->createGenerator()->generate($this->bundle, $rootDir);
+	$this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'));
 
         if (!$this->isSubCommand()) {
             $this->assistant->writeSection('Layout successfully created', 'bg=green;fg=black');

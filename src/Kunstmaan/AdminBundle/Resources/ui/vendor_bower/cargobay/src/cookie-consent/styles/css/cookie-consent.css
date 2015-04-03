@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Cookie consent
+   ========================================================================== */
+
+.cookie-bar {
+	position: fixed;
+	bottom: 0;
+	top: auto;
+	left: 0;
+	right: auto;
+	display: none;
+	background-color: rgba(86, 86, 86, 0.95);
+	text-align: center;
+	width: 100%;
+	padding: 10px 10px 0px 10px;
+	color: white;
+	line-height: 1.7;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 13px;
+}
+
+.cookie-bar .cookie-bar__policy {
+	color: white;
+	text-decoration: underline;
+}
+
+.cookie-bar .cookie-bar__btn {
+	margin: 0 0 0 5px;
+}
+
+.cookie-bar--visible {
+	display: block;
+}

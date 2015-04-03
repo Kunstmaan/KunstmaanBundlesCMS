@@ -37,6 +37,8 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      * @param ContainerInterface $container
      * @param Request            $request
      * @param RenderContext      $context
+     *
+     * @return void|RedirectResponse
      */
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
@@ -44,8 +46,11 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
 
         $em = $container->get('doctrine')->getManager();
         $repository = $this->getArticleRepository($em);
-        $adapter = new ArrayAdapter($repository->getArticles($request->getLocale()));
+	$pages = $repository->getArticles($request->getLocale());
+
+	$adapter = new ArrayAdapter($pages);
         $pagerfanta = new Pagerfanta($adapter);
+	$pagerfanta->setMaxPerPage(5);
 
         $pagenumber = $request->get('page');
         if (!$pagenumber || $pagenumber < 1) {
@@ -53,7 +58,6 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
         }
         $pagerfanta->setCurrentPage($pagenumber);
         $context['pagerfanta'] = $pagerfanta;
-
     }
 
     /**
@@ -72,5 +76,4 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
     {
         return "KunstmaanArticleBundle:AbstractArticleOverviewPage:view.html.twig";
     }
-
 }

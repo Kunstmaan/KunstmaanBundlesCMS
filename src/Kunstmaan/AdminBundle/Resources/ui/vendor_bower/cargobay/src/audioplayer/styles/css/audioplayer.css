@@ -1,0 +1,247 @@
+/* ==========================================================================
+   Custom Audioplayer
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+
+.audioplayer {
+	position: relative;
+	z-index: 1;
+	display: block;
+	width: 100%;
+	max-width: 30em;
+	height: 2.5em;
+	background: #1d3037;
+}
+
+/* Default Player
+   ========================================================================== */
+
+.audioplayer__defaultplayer {
+	width: 0;
+	height: 0;
+	visibility: hidden;
+}
+
+/* Play-Pause
+   ========================================================================== */
+
+.audioplayer__playpause {
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 2.5em;
+	height: 100%;
+	padding: 0;
+	background: #0bd789;
+	text-align: center;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	color: white;
+}
+
+.audioplayer__playpause__icon-play {
+	display: block;
+}
+
+.audioplayer__playpause__icon-pause {
+	display: none;
+}
+
+.audioplayer--playing .audioplayer__playpause {
+	background: black;
+	color: white;
+}
+
+.audioplayer--playing .audioplayer__playpause__icon-play {
+	display: none;
+}
+
+.audioplayer--playing .audioplayer__playpause__icon-pause {
+	display: block;
+}
+
+/* Bar
+   ========================================================================== */
+
+.audioplayer__bar,
+.audioplayer__bar--loaded,
+.audioplayer__bar--played {
+	position: absolute;
+}
+
+.audioplayer__bar {
+	z-index: 1;
+	top: 50%;
+	right: 1em;
+	left: 3.5em;
+	height: .75em;
+	margin-top: -0.375em;
+	background-color: #333333;
+	cursor: pointer;
+}
+
+.audioplayer__bar--loaded,
+.audioplayer__bar--played {
+	left: 0;
+	top: 0;
+	width: 0;
+	height: 100%;
+}
+
+.audioplayer__bar--loaded {
+	background-color: black;
+	z-index: 1;
+}
+
+.audioplayer__bar--played {
+	background-color: #0bd789;
+	z-index: 2;
+}
+
+/* Time
+   ========================================================================== */
+
+.audioplayer__time {
+	float: left;
+	margin-top: 4em;
+	color: black;
+	font-size: 0.7em;
+	line-height: 100%;
+}
+
+.audioplayer__time--current {
+	left: 0;
+}
+
+.audioplayer__time--current:after {
+	content: '-';
+	margin: 0 .5em;
+}
+
+.audioplayer__time--duration {
+	left: 4em;
+}
+
+/* Volume
+   ========================================================================== */
+
+.audioplayer__volume {
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: none;
+	width: 2.5em;
+	height: 100%;
+}
+
+.audioplayer__volume:hover .audioplayer__volume__adjust {
+	display: block;
+}
+
+.audioplayer__volume__button {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	line-height: 2.5em;
+	background: #0bd789;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	border: none;
+	outline: none;
+}
+
+.audioplayer__volume__button__icon-volume-up {
+	display: block;
+}
+
+.audioplayer__volume__button__icon-volume-off {
+	display: none;
+}
+
+.audioplayer--muted .audioplayer__volume__button__icon-volume-up {
+	display: none;
+}
+
+.audioplayer--muted .audioplayer__volume__button__icon-volume-off {
+	display: block;
+}
+
+.audioplayer__volume__adjust {
+	position: absolute;
+	top: auto;
+	bottom: 100%;
+	display: none;
+	width: 100%;
+	height: 6.25em;
+	cursor: default;
+	background: #1d3037;
+}
+
+.audioplayer__volume__adjust__control {
+	z-index: 1;
+	position: relative;
+	width: 40%;
+	height: 80%;
+	margin: 30% auto 0;
+	background-color: black;
+	cursor: pointer;
+}
+
+.audioplayer__volume__adjust__control__state {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #0bd789;
+}
+
+/* Mini fallback player
+   ========================================================================== */
+
+.audioplayer--mini {
+	width: 2.5em;
+}
+
+.audioplayer--mini .audioplayer__playpause {
+	width: 100%;
+}
+
+@media (min-width: 30em) {
+
+.audioplayer__bar {
+	right: 6em;
+	left: 6em;
+}
+
+.audioplayer__time {
+	position: absolute;
+	top: 50%;
+	margin: -.5em 0 0;
+	color: white;
+}
+
+.audioplayer__time--current {
+	left: 5em;
+}
+
+.audioplayer__time--current:after {
+	display: none;
+}
+
+.audioplayer__time--duration {
+	left: auto;
+	right: 5em;
+}
+
+.audioplayer__volume {
+	display: block;
+}
+
+}

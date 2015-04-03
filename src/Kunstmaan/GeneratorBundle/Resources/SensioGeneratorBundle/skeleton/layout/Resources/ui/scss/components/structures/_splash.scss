@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Structures - Splash
+   ========================================================================== */
+
+.splash {
+    margin: 4rem 0;
+}
+
+.splash--primary {
+    background-color: $theme-color;
+}
+
+.splash--gray-lighter {
+    padding: 2rem 0;
+
+    background-color: $grey--lighter;
+}
+
+.splash--smaller-margin {
+    margin-bottom: 2rem;
+}
+
+
+
+
+/*doc
+---
+title: Splash
+name: 03_splash
+category: Structures
+---
+
+```html_example
+<section class="splash">
+    <p>
+	Lorem Ipsum Dolor
+    </p>
+</section>
+
+<section class="splash splash--primary">
+    <p>
+	Lorem Ipsum Dolor
+    </p>
+</section>
+
+<section class="splash splash--gray-lighter">
+    <p>
+	Lorem Ipsum Dolor
+    </p>
+</section>
+
+<section class="splash splash--gray-lighter splash--smaller-margin">
+    <p>
+	Lorem Ipsum Dolor
+    </p>
+</section>
+```
+
+*/

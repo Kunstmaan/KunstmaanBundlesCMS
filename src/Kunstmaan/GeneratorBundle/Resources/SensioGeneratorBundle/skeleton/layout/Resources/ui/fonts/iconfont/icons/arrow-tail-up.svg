@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="11px" height="12px" viewBox="0 0 11 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow-tail-up</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+	<g id="icons" sketch:type="MSArtboardGroup" transform="translate(-220.000000, -75.000000)" fill="#606060">
+	    <g id="Arrows-tail" sketch:type="MSLayerGroup" transform="translate(204.000000, 75.000000)">
+		<g id="Arrow-tail-up" transform="translate(21.500000, 6.000000) scale(-1, -1) translate(-21.500000, -6.000000) translate(16.000000, 0.000000)" sketch:type="MSShapeGroup">
+		    <path d="M4.89583333,9.21528561 L4.89583333,0.611599027 C4.89583333,0.266967778 5.16632796,0 5.5,0 C5.82391357,0 6.10416667,0.273822211 6.10416667,0.611599027 L6.10416667,9.21692863 L9.64070005,6.06148721 C9.88983196,5.83920141 10.301538,5.83593014 10.5532092,6.0604816 C10.806635,6.2865986 10.8043758,6.64955316 10.5520821,6.87466001 L5.99742587,10.9385128 C5.86630295,11.0555061 5.69014506,11.1118297 5.51598753,11.1061995 C5.332987,11.119944 5.14478806,11.0637589 5.00441559,10.9385128 L0.449759341,6.87466001 C0.200627428,6.65237421 0.196961072,6.28503307 0.448632282,6.0604816 C0.702058098,5.83436461 1.10884775,5.83638036 1.36114141,6.06148721 L4.89583333,9.21528561 Z" id="Rectangle-220"></path>
+		</g>
+	    </g>
+	</g>
+    </g>
+</svg>

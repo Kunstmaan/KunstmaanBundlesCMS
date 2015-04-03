@@ -18,7 +18,7 @@ class AbstractFormPageAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
-        $builder->add('thanks', 'textarea', array('required' => false, 'attr' => array('class' => 'rich_editor')));
+	$builder->add('thanks', 'textarea', array('required' => false, 'attr' => array('class' => 'js-rich-editor rich-editor')));
         $builder->add('subject');
         $builder->add('from_email');
         $builder->add('to_email');
