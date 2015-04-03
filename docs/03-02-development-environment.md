@@ -25,5 +25,3 @@ After cloning go into the `puphpet` folder and run `vagrant up`. This will take 
 We use  *myprojectname* as a name for our project and vhost setup. We also use dummy database credentials (*mydbname, mydbuser, mydbpass*) for MySQL.
 
 For real world use you will need to change this. You can do this via the [PuPHPet web interface](https://puphpet.com) by dragging the `puphpet/config.yaml` file into the browser and adjust the settings. Alternatively you can easily edit the YAML file `puphpet/config.yaml` by hand.
-
-<p align="right"><a href="./03-00-installation.md">Back to: Installation &raquo;</a></p>

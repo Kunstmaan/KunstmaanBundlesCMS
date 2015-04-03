@@ -6,5 +6,3 @@ The cookbook is a continuously growing collection of recipes that explain how to
 * [Google Analytics dashboard](./05-03-google-analytics-dashboard.md)
 
 > Have some cool insight or thing you did with the CMS? Please share it with us and other developers by [sending a pull request](./07-00-contributing.md)!
-
-<p align="right"><a href="./07-00-contributing.md">Next chapter: Contributing &raquo;</a></p>

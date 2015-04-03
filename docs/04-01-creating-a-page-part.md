@@ -22,7 +22,7 @@ First this will ask for a table name prefix, just leave it as it's suggested by 
 
 Then it will ask for a name, this is the class name for your page part. It's best to use something sensible, preferably ending in PagePart, so let's call it the `MyServicesPagePart`.
 
-![app/console kuma:generate:pagepart](./images/ppgenerator.png)
+![app/console kuma:generate:pagepart](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppgenerator.png)
 
 Now the generator will ask for a list of fields to add to the page part, so just enter the following at the respective prompts:
 
@@ -34,7 +34,7 @@ And finally press return at the field name prompt without entering a field name 
 
 Now you will be prompted to select the section(s) you want to add this page part to, for now just enter `3` (Main).
 
-![app/console kuma:generate:pagepart](./images/ppgenfields.png)
+![app/console kuma:generate:pagepart](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppgenfields.png)
 
 If all goes well, the necessary code should have been created, and you'll get a hint on how to update your database to reflect the changes that were made.  You can either forcibly update your database (which might make it harder to deploy, since you will have to manually alter the database when deploying) or you can create a migration for the change (which is advisable).
 
@@ -46,7 +46,7 @@ We prefer the latter, so go ahead and execute :
 This will create a migration and update your database. Now head on over to the back-end (`/app_dev.php/en/admin`) and have a look at the Content PageParts page (`/app_dev.php/en/admin/nodes/2`). If all went well, you should see 'Service'
 at the bottom of the 'Add a pagepart' combobox and you should be able to add, edit and delete Service page parts as well.
 
-![app/console doctrine:migrations](./images/ppmigration.png)
+![app/console doctrine:migrations](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppmigration.png)
 
 ## Modifying the generated page part template
 
@@ -195,5 +195,3 @@ It's that simple! You just have to make sure you use the correct page part templ
 
 [1]:  http://imagine.readthedocs.org/en/latest/
 [2]:  https://github.com/liip/LiipImagineBundle/blob/master/Resources/doc/index.md
-
-<p align="right"><a href="./04-02-creating-an-adminlist.md">Next chapter: Creating an adminlist &raquo;</a></p>

@@ -175,5 +175,3 @@ This function might be deprecated in the (near) future (ideally a controller act
 - `src/YourVendor/YourWebsiteBundle/Entity/Pages` contains the source code of the page type entities.
 - `src/YourVendor/YourWebsiteBundle/Form/Pages` contains the source code of the AdminTypes for your page types (ie. the definition of the page entry form).
 - `src/YourVendor/YourWebsiteBundle/Resources/views/Pages` contains the Twig views for your page types (every page type will be stored in a separate folder).
-
-<p align="right"><a href="./04-04-adding-a-newssection-or-blog.md">Next chapter: Adding a newssection or blog &raquo;</a></p>

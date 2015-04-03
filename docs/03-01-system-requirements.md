@@ -1,9 +1,7 @@
 # System Requirements
 
-The Kunstmaan Bundles CMS
-
 * PHP
-    * minimum version of PHP 5.3.9
+    * minimum version of PHP 5.3.9, but since 5.3 is out of support, we prefer 5.5 or 5.6.
     * JSON needs to be enabled
     * ctype needs to be enabled
     * curl needs to be enabled
@@ -37,5 +35,3 @@ The Kunstmaan Bundles CMS
 * Imagemagick
 * Elasticsearch
 * Memcached (optionally)
-
-<p align="right"><a href="./03-00-installation.md">Back to: Installation &raquo;</a></p>

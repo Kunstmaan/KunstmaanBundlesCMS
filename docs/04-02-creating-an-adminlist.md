@@ -272,5 +272,3 @@ And finally register this service in `src/MyProject/WebsiteBundle/Resources/conf
 ```
 
 If you reload the page in the backend, you should now see a new "Employee" menu item in the Modules menu.
-
-<p align="right"><a href="./04-03-creating-a-pagetype.md">Next chapter: Creating a pagetype &raquo;</a></p>

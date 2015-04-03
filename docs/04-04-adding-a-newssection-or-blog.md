@@ -79,6 +79,3 @@ Adding support for news articles to your site is as simple as this :
 - `src/YourVendor/YourWebsiteBundle/Repository/` contains repositories for the generated entities.
 - `src/YourVendor/YourWebsiteBundle/Resources/views/AdminList/` contains a Twig view for the News page admin list.
 - `src/YourVendor/YourWebsiteBundle/Resources/views/News/`
-
-
-<p align="right"><a href="./04-05-adding-a-search-engine.md">Next chapter: Adding a search engine &raquo;</a></p>

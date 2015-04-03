@@ -6,7 +6,7 @@ The internet, technologies and requirements to do this have changed dramatically
 
 # Philosophy
 
-<img align="right"  width="200" alt="Our solution" src="images/solution.png" />
+<img align="right"  width="200" alt="Our solution" src="https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/solution.png" />
 
 Starting fresh has a lot of advantages and going further we defined the basic premise of our new CMS system.
 
@@ -24,7 +24,7 @@ Starting fresh has a lot of advantages and going further we defined the basic pr
 
 # A three tier solution
 
-<img align="right"  width="200" alt="A three tier solution" src="images/threetier.png" />
+<img align="right"  width="200" alt="A three tier solution" src="https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/threetier.png" />
 
 1. We started with **Symfony Framework (Full Stack)**. The full stack solutions is both a collection of over 30 high quality components that form the basis of the best PHP applications, and a framework that encapsulates these components to speed up the creation of professional, fast and high quality web applications.
 2. Added on top of the framework we included a lot of **community components** that provide our extended framework with functionality like Image resizing, pagination, user management, an advanced router, etc.
@@ -38,8 +38,6 @@ We released the entire system as **MIT licensed open-source** in January of 2012
 
 Developers over the **entire world** have started using the CMS, some of which in companies who have built their business on top of this technology.
 
-![Countries where developers use the Kunstmaan Bundles CMS](images/world.png)
+![Countries where developers use the Kunstmaan Bundles CMS](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/world.png)
 
 This much activity results in a lot of feedback and pull requests from developers and users. The contributions of these **~60** fantastic people have made it better than we could have ever hoped for.
-
-<p align="right"><a href="./02-00-getting-started.md">Next chapter: Getting Started &raquo;</a></p>
