@@ -63,6 +63,8 @@ in mind the following:
 
 ## Step 4: Send a pull request
 
+The title of your pull request should always start with the component you modified ([AdminBundle], [SeoBundle], ...). Use a verb (fixed ..., added ..., ...) to start the title and don't add a period at the end. Try to keep it brief but comprehensive.
+
 When your pull request is not about a bug fix (when you add a new feature or change
 an existing one for instance), it must also include the following:
 
