@@ -3,17 +3,20 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 
 /**
- * This class represents the type for the TextFormWysiwygSubmissionField
+ * Class WysiwygType
+ * @package Kunstmaan\AdminBundle\Form
  */
 class WysiwygType extends AbstractType
 {
+    /**
+     * @return string
+     */
     public function getParent()
     {
-	return 'textarea';
+        return 'textarea';
     }
 
     /**
@@ -21,7 +24,6 @@ class WysiwygType extends AbstractType
      */
     public function getName()
     {
-	// return 'kunstmaan_formbundle_Wysiwygformsubmissiontype';
-	return 'wysiwyg';
+        return 'wysiwyg';
     }
 }
