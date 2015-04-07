@@ -29,7 +29,12 @@
 {% block header %}
     <!-- PageClassName: {{ node.refEntityName }} -->
     <h1 class="app__content__header__title">
-        {{ page.title }}
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <abbr title="{{ node.refEntityName }}">{{ page.title }}</abbr>
+        {% else %}
+            {{ page.title }}
+        {% endif %}
+        
         {% if draft %}
 	    <small class="app__content__header__title__small">
                 Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
