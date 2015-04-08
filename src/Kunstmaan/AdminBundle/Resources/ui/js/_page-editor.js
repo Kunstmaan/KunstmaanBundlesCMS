@@ -304,11 +304,11 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
     // Key Combinations
     keyCombinations = function() {
-    $(document).on('keydown', function(e) {
-        if((e.ctrlKey || e.metaKey) && e.which === 83) {
-            e.preventDefault();
+        $(document).on('keydown', function(e) {
+            if((e.ctrlKey || e.metaKey) && e.which === 83) {
+                e.preventDefault();
 
-            $body.addClass('app--loading');
+                $body.addClass('app--loading');
                 $('#pageadminform').submit();
             };
         });
