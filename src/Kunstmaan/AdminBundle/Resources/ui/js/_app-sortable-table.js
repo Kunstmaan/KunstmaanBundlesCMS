@@ -3,25 +3,22 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.sortableTable = (function(window, undefined) {
 
     var init,
-	goToUrl;
+        goToUrl;
 
     init = function() {
-	$('.js-sortable-link').on('click', function() {
-	    goToUrl($(this));
-	});
-
+        $('.js-sortable-link').on('click', function() {
+            goToUrl($(this));
+        });
     };
 
     goToUrl = function($this) {
-	var url = $this.data('order-url');
+        var url = $this.data('order-url');
 
-	console.log(url);
-
-	window.location = url;
+        window.location = url;
     };
 
     return {
-	init: init
+        init: init
     };
 
 }(window));
