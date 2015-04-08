@@ -14,11 +14,6 @@ composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname
 
 ![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/composer-create.png)
 
-At a certain point it will ask you the following question, answer **N**.
-
-```
-Would you like to install Acme demo bundle? [y/N]
-```
 
 It will then ask you some questions to configure Symfony and the CMS system. At this point just fill in the database_name like so:
 
@@ -98,6 +93,7 @@ This generates:
 When this is done, create the database schema and load all the generated fixtures to fill it.
 
 ```
+app/console doctrine:database:create
 app/console doctrine:schema:create
 app/console doctrine:fixtures:load
 ```
