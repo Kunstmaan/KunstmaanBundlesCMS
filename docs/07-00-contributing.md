@@ -5,3 +5,4 @@ We follow most of the procedures for contributions from the [Symfony](http://sym
 * [Reporting a bug or a security issue](./07-01-reporting-issues.md)
 * [Submitting pull requests](./07-02-pull-requests.md)
 * [Coding standards](./07-03-coding-standards.md)
+* [Preparing a new release](./07-04-preparing-a-new-release.md)

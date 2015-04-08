@@ -22,9 +22,14 @@ Documentation specific to the KunstmaanBundlesCMS can be found on:
     * [System requirements](./03-01-system-requirements.md)
     * [Development environment](./03-02-development-environment.md)
 * [Content Management Guide](./04-00-content-management.md)
-    * [Creating a pagepart](./04-01-creating-a-page-part.md)	* [Creating an adminlist](./04-02-creating-an-adminlist.md)	* [Creating a pagetype](./04-03-creating-a-pagetype.md)
-	* [Adding a newssection or blog](./04-04-adding-a-newssection-or-blog.md)	* [Adding a search engine](./04-05-adding-a-search-engine.md)* [Cookbook](./05-00-cookbook.md)
-	* [Going single language](./05-01-going-single-language.md)	* [Managing translations](./05-02-manage-translations.md)
+    * [Creating a pagepart](./04-01-creating-a-page-part.md)
+	* [Creating an adminlist](./04-02-creating-an-adminlist.md)
+	* [Creating a pagetype](./04-03-creating-a-pagetype.md)
+	* [Adding a newssection or blog](./04-04-adding-a-newssection-or-blog.md)
+	* [Adding a search engine](./04-05-adding-a-search-engine.md)
+* [Cookbook](./05-00-cookbook.md)
+	* [Going single language](./05-01-going-single-language.md)
+	* [Managing translations](./05-02-manage-translations.md)
 	* [Google Analytics dashboard](./05-03-google-analytics-dashboard.md)
 
 > Writing documentation is hard. Especially if the writer is fully into the topic at hand. This results in the glossing over of obvious information for the writer, that might not be obvious for everyone else. We wholeheartedly appreciate pull requests or suggestions for this documentation.
@@ -36,6 +41,7 @@ We follow most of the procedures for contributions from the [Symfony](http://sym
 * [Reporting a bug or a security issue](./07-01-reporting-issues.md)
 * [Submitting pull requests](./07-02-pull-requests.md)
 * [Coding standards](./07-03-coding-standards.md)
+* [Preparing a new release](./07-04-preparing-a-new-release.md)
 
 ## Support
 
