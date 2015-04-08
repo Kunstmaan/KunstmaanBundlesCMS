@@ -15,16 +15,16 @@
     font-size: .85rem;
 
     &:before {
-	@include iconfont-reset;
+        @include iconfont-reset;
 
-	margin-right: .5rem;
+        margin-right: .5rem;
 
-	font-size: 11px;
+        font-size: 11px;
     }
 
     a {
-	color: $text-color;
-	font-weight: 600;
+        color: $text-color;
+        font-weight: 600;
     }
 {% endif %}
 }

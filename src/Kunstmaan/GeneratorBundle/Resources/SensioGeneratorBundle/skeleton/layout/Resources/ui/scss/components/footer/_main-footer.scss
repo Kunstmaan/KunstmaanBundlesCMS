@@ -16,7 +16,7 @@
     margin: 2rem 0;
 
     @media(max-width: $screen-xs-max) {
-	text-align: center;
+        text-align: center;
     }
 }
 
@@ -32,7 +32,7 @@
     font-weight: 600;
 
     &:hover, &:focus, &:active {
-	color: $black;
+        color: $black;
     }
 }
 
@@ -45,7 +45,7 @@
     color: $grey;
 
     &:hover, &:focus, &:active {
-	text-decoration: none;
+        text-decoration: none;
     }
 }
 
@@ -55,14 +55,14 @@
 
 .footer-nav--demosite {
     .footer-nav__title {
-	color: $black;
-	font-weight: 600;
+        color: $black;
+        font-weight: 600;
     }
 
     p {
-	font-size: .9rem;
-	line-height: 150%;
-	color: $grey;
+        font-size: .9rem;
+        line-height: 150%;
+        color: $grey;
     }
 }
 

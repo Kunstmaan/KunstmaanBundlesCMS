@@ -4,10 +4,10 @@
 
 @mixin horizontal-list {
     li {
-	display: inline-block;
+        display: inline-block;
 
-	a {
-	    display: block;
-	}
+        a {
+            display: block;
+        }
     }
 }

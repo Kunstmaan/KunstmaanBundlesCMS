@@ -4,14 +4,13 @@
 
 <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST">
     <div class="form-group">
-	{{ form_widget(form) }}
+        {{ form_widget(form) }}
     </div>
 
-
     <button type="submit" class="btn btn-primary btn--raise-on-hover">
-	{{ 'Reset password' | trans }}
+        {{ 'Reset password' | trans }}
     </button>
     <a href="{{ path('fos_user_security_login' ) }}" class="btn btn-default btn--raise-on-hover">
-	{{ 'form.cancel' | trans }}
+        {{ 'form.cancel' | trans }}
     </a>
 </form>

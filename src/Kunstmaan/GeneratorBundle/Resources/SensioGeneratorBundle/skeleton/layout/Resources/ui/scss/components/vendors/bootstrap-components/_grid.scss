@@ -15,19 +15,19 @@
 .row--flex {
 
     @media(min-width: $screen-sm-min) {
-	display: flex;
+        display: flex;
     }
 }
 .row--align-end {
 
     @media(min-width: $screen-sm-min) {
-	align-items: flex-end;
+        align-items: flex-end;
     }
 }
 .row--reverse {
 
     @media(min-width: $screen-sm-min) {
-	flex-direction: row-reverse;
+        flex-direction: row-reverse;
     }
 }
 
@@ -40,7 +40,7 @@
     padding-bottom: 1em;
 
     @media(min-width: $screen-md-min) {
-	padding-top: 2em;
-	padding-bottom: 2em;
+        padding-top: 2em;
+        padding-bottom: 2em;
     }
 }

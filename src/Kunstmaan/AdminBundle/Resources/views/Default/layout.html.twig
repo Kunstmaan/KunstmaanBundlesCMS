@@ -16,121 +16,120 @@
 
     <!-- Styles -->
     {% include "KunstmaanAdminBundle:Default:_css.html.twig" %}
+
     <!-- Extra CSS -->
     {% block extracss %}{% endblock %}
+
     <!-- JS -->
     {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
 </head>
 
 <body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
 
-
 <!-- Body block -->
 {% block body %}
+
     <!-- Header -->
     {% block appHeader %}
-	{% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
+        {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
     {% endblock %}
 
 
     <!-- Nav settings -->
     {% if lowestTopChild is not defined %}
-	{% set lowestTopChild = adminmenu.lowestTopChild %}
-	{% if lowestTopChild %}
-	    {% set navigationChildren = lowestTopChild.navigationChildren %}
-	{% endif %}
+        {% set lowestTopChild = adminmenu.lowestTopChild %}
+        {% if lowestTopChild %}
+            {% set navigationChildren = lowestTopChild.navigationChildren %}
+        {% endif %}
     {% endif %}
 
 
     <!-- Main Content -->
     <main role="main" id="app__main" class="container-fluid app__main{% if lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
 
-	<div class="row">
-	    {% if lowestTopChild and navigationChildren | length > 0 %}
+        <div class="row">
 
-		<!-- App Sidebar -->
-		<aside id="app__sidebar" class="col-md-3 app__sidebar">
-		    {% block sidebar %}
-			{% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
-		    {% endblock %}
-		</aside>
+            {% if lowestTopChild and navigationChildren | length > 0 %}
 
-
-		<!-- App Content - with sidebar -->
-		<div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
-
-		    <!-- App Sidebar Toggle -->
-		    <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle" title="toggle sidebar">
-			<span class="app__sidebar-toggle__show-icon">
-			    <i class="fa fa-caret-right"></i>
-			    <i class="fa fa-list-ul"></i>
-			</span>
-			<span class="app__sidebar-toggle__hide-icon">
-			    <i class="fa fa-caret-left"></i>
-			    <i class="fa fa-list-ul"></i>
-			</span>
-		    </button>
-	    {% else %}
+                <!-- App Sidebar -->
+                <aside id="app__sidebar" class="col-md-3 app__sidebar">
+                    {% block sidebar %}
+                    {% include "KunstmaanAdminBundle:Default:sidebar.html.twig" %}
+                    {% endblock %}
+                </aside>
 
 
-		<!-- App Content - full width -->
-		<div id="app__content" class="col-md-12 col--padded app__content">
+                <!-- App Content - with sidebar -->
+                <div id="app__content" class="col-md-9 col-md-offset-3 col--padded app__content">
+
+                    <!-- App Sidebar Toggle -->
+                    <button type="button" id="app__sidebar-toggle" class="btn--reset app__sidebar-toggle" title="toggle sidebar">
+                        <span class="app__sidebar-toggle__show-icon">
+                            <i class="fa fa-caret-right"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                        <span class="app__sidebar-toggle__hide-icon">
+                            <i class="fa fa-caret-left"></i>
+                            <i class="fa fa-list-ul"></i>
+                        </span>
+                    </button>
+            {% else %}
+
+                <!-- App Content - full width -->
+                <div id="app__content" class="col-md-12 col--padded app__content">
             {% endif %}
 
-
-		    <!-- App Content - Breadcrumbs -->
-		    {% block breadcrumb %}
-			{% include "KunstmaanAdminBundle:Default:breadcrumbs.html.twig" %}
-		    {% endblock %}
-
-
-		    <!-- App Content - Flash Messages -->
-		    {% block flashmessages %}
-			{% include "KunstmaanAdminBundle:Default:flashmessages.html.twig" %}
-		    {% endblock %}
+                    <!-- App Content - Breadcrumbs -->
+                    {% block breadcrumb %}
+                        {% include "KunstmaanAdminBundle:Default:breadcrumbs.html.twig" %}
+                    {% endblock %}
 
 
-		    <!-- App Content - General Messages -->
-		    {% block messages %}{% endblock %}
+                    <!-- App Content - Flash Messages -->
+                    {% block flashmessages %}
+                        {% include "KunstmaanAdminBundle:Default:flashmessages.html.twig" %}
+                    {% endblock %}
 
 
-		    <!-- App Content - Header -->
-		    {% block header %}
-			<header class="app__content__header">
-			    <div class="row">
-				{% if adminmenu.current %}
-				    <div class="col-sm-6 col-md-8">
-					<h1 class="app__content__header__title">
-					    {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
-					</h1>
-				    </div>
-				{% endif %}
-				{% block extra_actions_header %}{% endblock %}
-			    </div>
-			</header>
-		    {% endblock %}
+                    <!-- App Content - General Messages -->
+                    {% block messages %}{% endblock %}
 
 
-		    <!-- App Content - Content -->
-		    {% block content %}{% endblock %}
+                    <!-- App Content - Header -->
+                    {% block header %}
+                        <header class="app__content__header">
+                            <div class="row">
+                                {% if adminmenu.current %}
+                                    <div class="col-sm-6 col-md-8">
+                                        <h1 class="app__content__header__title">
+                                            {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+                                        </h1>
+                                    </div>
+                                {% endif %}
 
-		</div>
-	    </div>
+                                {% block extra_actions_header %}{% endblock %}
+                            </div>
+                        </header>
+                    {% endblock %}
+
+
+                    <!-- App Content - Content -->
+                    {% block content %}{% endblock %}
+
+                </div>
+            </div>
         </div>
     </main>
 
 
-
     <!-- Footer -->
     {% block footer %}
-	<footer role="contentinfo" class="app__footer container-fluid">
-	    <a target="_blank" href="http://www.kunstmaan.be" class="app__footer__kunstmaan-link pull-right">
-		<img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_dark.svg" alt="Kunstmaan" />
-	    </a>
+        <footer role="contentinfo" class="app__footer container-fluid">
+            <a target="_blank" href="http://www.kunstmaan.be" class="app__footer__kunstmaan-link pull-right">
+                <img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_dark.svg" alt="Kunstmaan" />
+            </a>
         </footer>
     {% endblock %}
-
-
 {% endblock %}
 
 

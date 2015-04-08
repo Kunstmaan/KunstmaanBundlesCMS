@@ -8,50 +8,50 @@
 {% block header %}
     <header class="app__content__header">
         {% set title = 'media.media.bulkupload.addto' %}
-	<h1 class="app__content__header__title">
-	    {{ title | trans({'%folder%': folder.name|trans }) | capitalize | raw }}
-	</h1>
+        <h1 class="app__content__header__title">
+            {{ title | trans({'%folder%': folder.name|trans }) | capitalize | raw }}
+        </h1>
     </header>
 {% endblock %}
 
 {% block content %}
     <div class="row row--padded">
-	<div class="col-md-12">
-	    <div id="bulk-upload" data-url="{{ path('KunstmaanMediaBundle_media_bulk_upload_submit', { 'folderId' : folder.id }) }}">
-		<ul class="list-group" id="bulk-upload__file-list">
-		    <li class="list-group-item">
-			{{ 'media.bulkupload.not_available' | trans }}
-		    </li>
-		</ul>
+        <div class="col-md-12">
+            <div id="bulk-upload" data-url="{{ path('KunstmaanMediaBundle_media_bulk_upload_submit', { 'folderId' : folder.id }) }}">
+                <ul class="list-group" id="bulk-upload__file-list">
+                    <li class="list-group-item">
+                        {{ 'media.bulkupload.not_available' | trans }}
+                    </li>
+                </ul>
 
-		<div id="bulk-upload__container">
+                <div id="bulk-upload__container">
 
-		    <!-- Actions - Upload -->
-		    <div id="bulk-button-wrapper--upload" class="form-actions form-actions--padded">
-			<button type="button" id="bulk-button--pick-files" class="btn btn-primary btn--raise-on-hover">
-			    {{ 'media.bulkupload.select_files' | trans }}
-			</button>
-			<button type="button" id="bulk-button--upload-files" class="btn btn-default btn--raise-on-hover btn-disabled" disabled>
-			    {{ 'media.bulkupload.upload' | trans }}
-			</button>
-			<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) }}" class="btn btn-default btn--raise-on-hover">
-			    {{ 'form.cancel' | trans }}
-			</a>
-		    </div>
+                    <!-- Actions - Upload -->
+                    <div id="bulk-button-wrapper--upload" class="form-actions form-actions--padded">
+                        <button type="button" id="bulk-button--pick-files" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'media.bulkupload.select_files' | trans }}
+                        </button>
+                        <button type="button" id="bulk-button--upload-files" class="btn btn-default btn--raise-on-hover btn-disabled" disabled>
+                            {{ 'media.bulkupload.upload' | trans }}
+                        </button>
+                        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) }}" class="btn btn-default btn--raise-on-hover">
+                            {{ 'form.cancel' | trans }}
+                        </a>
+                    </div>
 
-		    <!-- Actions - Completed -->
-		    <div id="bulk-button-wrapper--completed" class="form-actions form-actions--padded hidden">
-			<p>
-			    <strong>{{ 'media.bulkupload.upload_finished' | trans }}</strong>
-			</p>
-			<a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn btn-default btn--raise-on-hover">
-			    {{ 'media.bulkupload.upload_more' | trans }}
-			</a>
-			<a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) }}" class="btn btn-primary btn--raise-on-hover">
-			    {{ 'media.bulkupload.back_to_folder' | trans }}
-			</a>
-		    </div>
-		</div>
+                    <!-- Actions - Completed -->
+                    <div id="bulk-button-wrapper--completed" class="form-actions form-actions--padded hidden">
+                        <p>
+                            <strong>{{ 'media.bulkupload.upload_finished' | trans }}</strong>
+                        </p>
+                        <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}" class="btn btn-default btn--raise-on-hover">
+                            {{ 'media.bulkupload.upload_more' | trans }}
+                        </a>
+                        <a href="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) }}" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'media.bulkupload.back_to_folder' | trans }}
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

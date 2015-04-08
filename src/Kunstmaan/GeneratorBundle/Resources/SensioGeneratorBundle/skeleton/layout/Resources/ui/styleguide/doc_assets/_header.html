@@ -24,38 +24,38 @@
 
     <!-- Main header -->
     <header role="header" id="headroomHeader" class="headroom">
-	<div class="styleguide__header">
-	    <h1 class="styleguide__header__head">
-		{{ bundle.getName() }}
-	    </h1>
-	    <nav role="navigation" class="styleguide__header__main-nav">
-		<% @categories.each do |category, file_name| %>
-		    <% current_category = title.downcase %>
-		    <% this_category = file_name.split(".").first.downcase %>
+    <div class="styleguide__header">
+        <h1 class="styleguide__header__head">
+        {{ bundle.getName() }}
+        </h1>
+        <nav role="navigation" class="styleguide__header__main-nav">
+        <% @categories.each do |category, file_name| %>
+            <% current_category = title.downcase %>
+            <% this_category = file_name.split(".").first.downcase %>
 
-		    <% if current_category == this_category %>
-			<a href="<%= file_name %>" class="styleguide__header__main-nav__item styleguide__header__main-nav__item--active">
-			    <%= category %>
-			</a>
-		    <% else %>
-			<a href="<%= file_name %>" class="styleguide__header__main-nav__item">
-			    <%= category %>
-			</a>
-		    <% end %>
-		<% end %>
-	    </nav>
-	</div>
+            <% if current_category == this_category %>
+            <a href="<%= file_name %>" class="styleguide__header__main-nav__item styleguide__header__main-nav__item--active">
+                <%= category %>
+            </a>
+            <% else %>
+            <a href="<%= file_name %>" class="styleguide__header__main-nav__item">
+                <%= category %>
+            </a>
+            <% end %>
+        <% end %>
+        </nav>
+    </div>
     </header>
 
     <main role="main" class="styleguide__main">
-	<div id="holo-toc-kunstmaan" class="styleguide__block-navigation">
-	    <nav role="navigation" id="holo-toc-kunstmaan__nav" class="styleguide__block-navigation__menu">
-		<% @blocks.each do |b| %>
-		    <a href="#<%= b[:name] %>" class="styleguide__block-navigation__item">
-			<%= b[:title] %>
-		    </a>
-		<% end %>
-	    </nav>
-	</div>
+    <div id="holo-toc-kunstmaan" class="styleguide__block-navigation">
+        <nav role="navigation" id="holo-toc-kunstmaan__nav" class="styleguide__block-navigation__menu">
+        <% @blocks.each do |b| %>
+            <a href="#<%= b[:name] %>" class="styleguide__block-navigation__item">
+            <%= b[:title] %>
+            </a>
+        <% end %>
+        </nav>
+    </div>
 
-	<div class="styleguide__content-container">
+    <div class="styleguide__content-container">

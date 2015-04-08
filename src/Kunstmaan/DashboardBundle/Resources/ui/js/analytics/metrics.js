@@ -8,8 +8,8 @@ function setMetrics(data) {
     $('#audience-data_new_users').html(data.overview.newUsers);
 
     if (data.goals.length == 0) {
-	$('.dashboard-chart-list').removeClass('dashboard-chart-list__sidebar');
+        $('.dashboard-chart-list').removeClass('dashboard-chart-list__sidebar');
     } else {
-	$('.dashboard-chart-list').addClass('dashboard-chart-list__sidebar');
+        $('.dashboard-chart-list').addClass('dashboard-chart-list__sidebar');
     }
 }

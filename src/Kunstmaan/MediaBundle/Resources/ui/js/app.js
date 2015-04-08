@@ -5,13 +5,13 @@ kunstmaanMediaBundle.app = (function($, window, undefined) {
     var init;
 
     init = function() {
-	kunstmaanMediaBundle.bulkUpload.init();
-	kunstmaanMediaBundle.dndUpload.init();
+        kunstmaanMediaBundle.bulkUpload.init();
+        kunstmaanMediaBundle.dndUpload.init();
     };
 
 
     return {
-	init: init
+        init: init
     };
 
 }(jQuery, window));

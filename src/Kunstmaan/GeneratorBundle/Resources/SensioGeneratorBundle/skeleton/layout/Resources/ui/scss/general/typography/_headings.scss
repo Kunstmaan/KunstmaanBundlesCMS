@@ -11,7 +11,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
 
     + p, + .text-pp p {
-	margin-top: 0;
+        margin-top: 0;
     }
 }
 
@@ -26,7 +26,7 @@ h1 {
     font-weight: 300;
 
     @media(min-width: $screen-md-min) {
-	font-size: 3rem;
+        font-size: 3rem;
     }
 }
 
@@ -38,7 +38,7 @@ h2 {
     font-weight: 300;
 
     @media(min-width: $screen-md-min) {
-	font-size: 2.8rem;
+        font-size: 2.8rem;
     }
 }
 

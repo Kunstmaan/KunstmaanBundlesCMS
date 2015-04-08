@@ -22,23 +22,23 @@
     text-align: left;
 
     @media (min-width: 60rem) {
-	display: inline-block;
+        display: inline-block;
 
-	&:first-child {
-	    padding-left: 0;
-	}
+        &:first-child {
+            padding-left: 0;
+        }
 
-	&:last-child {
-	    padding-right: 0;
-	}
+        &:last-child {
+            padding-right: 0;
+        }
     }
 
     @media (min-width: $screen-desk) {
-	padding: 1.5rem 2rem;
+        padding: 1.5rem 2rem;
     }
 
     @media (min-width: $screen-desk-wide) {
-	padding: 1.5rem 2.5rem;
+        padding: 1.5rem 2.5rem;
     }
 }
 

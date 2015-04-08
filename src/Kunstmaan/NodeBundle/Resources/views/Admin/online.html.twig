@@ -2,12 +2,12 @@
 {% if online=='true' %}
     <i class="fa fa-check-square-o"></i>
     <span class="text--muted">
-	{{ ' (Online)' | trans }}
+        {{ ' (Online)' | trans }}
     </span>
 {% elseif online=='false' %}
     <i class="fa fa-square-o"></i>
     <span class="text--muted">
-	{{ ' (Offline)' | trans }}
+        {{ ' (Offline)' | trans }}
     </span>
 {% else %}
     {{ online }}

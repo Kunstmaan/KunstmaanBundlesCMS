@@ -5,11 +5,11 @@ kunstmaanTranslatorBundle.app = (function($, window, undefined) {
     var init;
 
     init = function() {
-	kunstmaanTranslatorBundle.inlineEdit.init();
+        kunstmaanTranslatorBundle.inlineEdit.init();
     };
 
     return {
-	init: init
+        init: init
     };
 
 }(jQuery, window));

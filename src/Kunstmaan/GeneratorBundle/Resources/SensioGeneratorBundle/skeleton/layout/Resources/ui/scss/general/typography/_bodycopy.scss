@@ -7,7 +7,7 @@
 * {
    -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-	    font-smoothing: antialiased;
+        font-smoothing: antialiased;
 }
 
 html, body {
@@ -21,13 +21,13 @@ p {
     margin: 1rem 0;
 
     @media (min-width: $screen-md-min) {
-	margin: 1.5rem 0;
+        margin: 1.5rem 0;
     }
 }
 
 p, .pp--text {
     + h1, + h2, + h3, + h4, + h5, + h6 {
-	margin-top: 3rem;
+        margin-top: 3rem;
     }
 }
 

@@ -36,11 +36,11 @@
 
 @media (min-width: 950px) {
     .styleguide__header {
-	z-index: 100;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
     }
 }
 
@@ -57,12 +57,12 @@
 
 @media (min-width: 950px) {
     .styleguide__header__head {
-	float: left;
+        float: left;
     }
 
     .styleguide__header__main-nav {
-	float: right;
-	padding-right: 1.5em;
+        float: right;
+        padding-right: 1.5em;
     }
 }
 
@@ -94,7 +94,7 @@
    ========================================================================== */
 @media (min-width: 950px) {
     .styleguide__main {
-	padding-left: 15vw;
+        padding-left: 15vw;
     }
 }
 
@@ -120,7 +120,7 @@
 
 @media (min-width: 950px) {
     .styleguide__block-navigation {
-	display: block;
+        display: block;
     }
 }
 

@@ -5,47 +5,47 @@
 .pagination {
 
     ul {
-	padding: 0;
+        padding: 0;
 
-	text-align: center;
+        text-align: center;
     }
 
     li {
-	display: inline-block;
+        display: inline-block;
 
-	list-style: none;
+        list-style: none;
 
-	color: $grey--dark;
-	font-size: .9rem;
+        color: $grey--dark;
+        font-size: .9rem;
 
-	a {
-	    color: $grey--dark;
-	    font-size: .9rem;
+        a {
+            color: $grey--dark;
+            font-size: .9rem;
 
-	    &:hover,
-	    &:active,
-	    &:focus {
-		color: $blue;
-	    }
-	}
+            &:hover,
+            &:active,
+            &:focus {
+                color: $blue;
+            }
+        }
 
-	& + li {
-	    margin-left: 2rem;
-	}
+        & + li {
+            margin-left: 2rem;
+        }
     }
 
     .active {
-	height: 2rem;
-	width: 2rem;
+        height: 2rem;
+        width: 2rem;
 
-	background: $blue;
+        background: $blue;
 
-	border-radius: 100%;
+        border-radius: 100%;
 
-	span {
-	    color: $white;
-	    line-height: 2rem;
-	}
+        span {
+            color: $white;
+            line-height: 2rem;
+        }
     }
 }
 
@@ -63,20 +63,20 @@ category: Structures
 ```html_example
 <div class="pagination">
     <ul>
-	<li class="prev disabled">
-	    <span><span class="icon--arrow-left pagination__direction-icon"></span></span>
-	</li>
-	<li class="active">
-	    <span>1</span>
-	</li>
-	<li>
-	    <a href="/app_dev.php/nl/blog?page=2">2</a>
-	</li>
-	<li class="next">
-	    <a href="/app_dev.php/nl/blog?page=2">
-		<span class="icon--arrow-right pagination__direction-icon"></span>
-	    </a>
-	</li>
+    <li class="prev disabled">
+        <span><span class="icon--arrow-left pagination__direction-icon"></span></span>
+    </li>
+    <li class="active">
+        <span>1</span>
+    </li>
+    <li>
+        <a href="/app_dev.php/nl/blog?page=2">2</a>
+    </li>
+    <li class="next">
+        <a href="/app_dev.php/nl/blog?page=2">
+        <span class="icon--arrow-right pagination__direction-icon"></span>
+        </a>
+    </li>
     </ul>
 </div>
 ```

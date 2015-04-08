@@ -26,15 +26,15 @@
     color: #6d6d6d;
 
     @media (min-width: $screen-lap) {
-	width: 50%;
+        width: 50%;
     }
 
     @media (min-width: $screen-desk) {
-	width: 33.333333333%;
+        width: 33.333333333%;
     }
 
     @media (min-width: $screen-desk-wide) {
-	width: 25%;
+        width: 25%;
     }
 }
 
@@ -52,9 +52,9 @@
     text-align: right;
 
     strong {
-	display: block;
+        display: block;
 
-	font-size: 2.8rem;
-	font-weight: normal;
+        font-size: 2.8rem;
+        font-weight: normal;
     }
 }

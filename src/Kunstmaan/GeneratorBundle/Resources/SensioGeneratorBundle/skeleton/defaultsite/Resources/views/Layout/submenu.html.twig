@@ -1,27 +1,27 @@
 {% set items = get_submenu_items(page, app.request.locale) %}
 {% if items|length > 0 %}
     <nav role="navigation" class="submenu">
-	<div class="row">
-	    {% for item in items %}
-		{% if not item['nt'].node.isHiddenFromNav() %}
-		    <div class="col-md-4 col-sm-4">
-			<div class="submenu__item">
-			    <a href="{{ path('_slug', { 'url': item['nt'].url }) }}" class="submenu__link">
-				{% if item['page'].menuImage is defined and item['page'].menuImage is not empty %}
-				    <img src="{{ item['page'].menuImage.url|imagine_filter('optim') }}" alt="" class="submenu__img">
-				{% endif %}
-				<h2 class="submenu__title">{{ item['nt'].title }}</h2>
-				{% if item['page'].menuDescription is defined and item['page'].menuDescription %}
-				    <p class="submenu__text">{{ item['page'].menuDescription }}</p>
-				{% endif %}
-				<div class="link-pp submenu__cta">
-				    <a href="{{ path('_slug', { 'url': item['nt'].url }) }}" class="link-pp__link">{{ 'read.more' | trans }} <i class="link-pp__icon"></i></a>
-				</div>
-			    </a>
-			</div>
-		    </div>
-		{% endif %}
-	    {% endfor %}
-	</div>
+        <div class="row">
+            {% for item in items %}
+                {% if not item['nt'].node.isHiddenFromNav() %}
+                    <div class="col-md-4 col-sm-4">
+                        <div class="submenu__item">
+                            <a href="{{ path('_slug', { 'url': item['nt'].url }) }}" class="submenu__link">
+                                {% if item['page'].menuImage is defined and item['page'].menuImage is not empty %}
+                                    <img src="{{ item['page'].menuImage.url|imagine_filter('optim') }}" alt="" class="submenu__img">
+                                {% endif %}
+                                <h2 class="submenu__title">{{ item['nt'].title }}</h2>
+                                {% if item['page'].menuDescription is defined and item['page'].menuDescription %}
+                                    <p class="submenu__text">{{ item['page'].menuDescription }}</p>
+                                {% endif %}
+                                <div class="link-pp submenu__cta">
+                                    <a href="{{ path('_slug', { 'url': item['nt'].url }) }}" class="link-pp__link">{{ 'read.more' | trans }} <i class="link-pp__icon"></i></a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     </nav>
 {% endif %}

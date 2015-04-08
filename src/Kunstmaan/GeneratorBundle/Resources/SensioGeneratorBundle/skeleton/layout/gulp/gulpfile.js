@@ -40,7 +40,7 @@ var bowerComponentsPath = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.b
 
 var config = fs.readFileSync(path.resolve(__dirname, '.groundcontrolrc'), 'UTF-8'),
     vars = _.merge({
-	'bowerComponentsPath': bowerComponentsPath
+    'bowerComponentsPath': bowerComponentsPath
     }, JSON.parse(config).vars);
 
 var resourcesPath = vars.resourcesPath;
@@ -61,24 +61,24 @@ var errorLogger, headerLines;
 
 errorLogger = function(headerMessage,errorMessage){
     var header = headerLines(headerMessage);
-	header += '\n             '+ headerMessage +'\n           ';
-	header += headerLines(headerMessage);
-	header += '\r\n \r\n';
-    plugins.util.log(plugins.util.colors.red(header) + '             ' + errorMessage + '\r\n')
+        header += '\n             '+ headerMessage +'\n           ';
+        header += headerLines(headerMessage);
+        header += '\r\n \r\n';
+        plugins.util.log(plugins.util.colors.red(header) + '             ' + errorMessage + '\r\n')
 
     if(showErrorNotifications){
-	notifier.notify({
-	    'title': headerMessage,
-	    'message': errorMessage,
-	    'contentImage':  __dirname + "/gulp_error.png"
-	});
+        notifier.notify({
+            'title': headerMessage,
+            'message': errorMessage,
+            'contentImage':  __dirname + "/gulp_error.png"
+        });
     }
 }
 
 headerLines = function(message){
     var lines = '';
     for(var i = 0; i< (message.length + 4); i++){
-	lines += '-';
+        lines += '-';
     }
     return lines;
 }
@@ -90,9 +90,9 @@ headerLines = function(message){
    ========================================================================== */
 var addAsyncTag = function (filepath, file, i, length) {
     if(config.js.addAsync === 'true') {
-	return '<script src="' + filepath + '" async></script>';
+        return '<script src="' + filepath + '" async></script>';
     } else {
-	return '<script src="' + filepath + '"></script>';
+        return '<script src="' + filepath + '"></script>';
     }
 }
 
@@ -103,36 +103,36 @@ var addAsyncTag = function (filepath, file, i, length) {
    ========================================================================== */
 gulp.task('styles', function() {
     return gulp.src(config.scss)
-	// Sass
-	.pipe(plugins.rubySass({
-	    loadPath: './',
-	    bundleExec: true,
-	}))
-	.on('error', function (err) {
-	    errorLogger('SASS Compilation Error', err.message);
-	})
+        // Sass
+        .pipe(plugins.rubySass({
+            loadPath: './',
+            bundleExec: true,
+        }))
+        .on('error', function (err) {
+            errorLogger('SASS Compilation Error', err.message);
+        })
 
-	// Combine Media Queries
-	.pipe(plugins.combineMq())
+        // Combine Media Queries
+        .pipe(plugins.combineMq())
 
-	// Prefix where needed
-	.pipe(plugins.autoprefixer(config.browserSupport))
+        // Prefix where needed
+        .pipe(plugins.autoprefixer(config.browserSupport))
 
-	// Minify output
-	.pipe(plugins.minifyCss())
+        // Minify output
+        .pipe(plugins.minifyCss())
 
-	// Rename the file to respect naming covention.
-	.pipe(plugins.rename(function(path){
-	    path.basename += '.min';
-	}))
+        // Rename the file to respect naming covention.
+        .pipe(plugins.rename(function(path){
+            path.basename += '.min';
+        }))
 
-	// Write to output
-	.pipe(gulp.dest(config.dist.css))
+        // Write to output
+        .pipe(gulp.dest(config.dist.css))
 
-	// Show total size of css
-	.pipe(plugins.size({
-	    title: 'css'
-	}));
+        // Show total size of css
+        .pipe(plugins.size({
+            title: 'css'
+        }));
 });
 
 
@@ -143,79 +143,79 @@ gulp.task('styles', function() {
 // Jshint
 gulp.task('jshint', function() {
     return gulp.src([config.js.app, '!' + resourcesPath + '/ui/js/vendors/**/*.js'])
-	// Jshint
-	.pipe(plugins.jshint())
-	.pipe(plugins.jshint.reporter(require('jshint-stylish')));
+        // Jshint
+        .pipe(plugins.jshint())
+        .pipe(plugins.jshint.reporter(require('jshint-stylish')));
 });
 
 
 // Production
 gulp.task('scripts-prod', ['jshint'], function() {
     return gulp.src(config.js.footer)
-	// Uglify
-	.pipe(plugins.uglify({
-	    mangle: {
-		except: ['jQuery']
-	    }
-	}))
-	.on('error', function (err){
-	    errorLogger('Javascript Error', err.message);
-	})
+        // Uglify
+        .pipe(plugins.uglify({
+            mangle: {
+            except: ['jQuery']
+            }
+        }))
+        .on('error', function (err){
+            errorLogger('Javascript Error', err.message);
+        })
 
-	// Concat
-	.pipe(plugins.concat('footer.min.js'))
+        // Concat
+        .pipe(plugins.concat('footer.min.js'))
 
-	// Revision
-	.pipe(plugins.rev())
+        // Revision
+        .pipe(plugins.rev())
 
-	// Set destination
-	.pipe(gulp.dest(config.dist.js))
+        // Set destination
+        .pipe(gulp.dest(config.dist.js))
 
-	// Show total size of js
-	.pipe(plugins.size({
-	    title: 'js'
-	}));
+        // Show total size of js
+        .pipe(plugins.size({
+            title: 'js'
+        }));
 });
 
 gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
     return gulp.src('src/' + config.project.mainBundlePath + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
-	// Inject
-	.pipe(plugins.inject(gulp.src(config.dist.js + '/**/*.js'), {
-	    transform: addAsyncTag,
-	    ignorePath: '/web'
-	}))
+        // Inject
+        .pipe(plugins.inject(gulp.src(config.dist.js + '/**/*.js'), {
+            transform: addAsyncTag,
+            ignorePath: '/web'
+        }))
 
-	// Chmod for local use
-	.pipe(plugins.if(allowChmod, plugins.chmod(777)))
+        // Chmod for local use
+        .pipe(plugins.if(allowChmod, plugins.chmod(777)))
 
-	// Write
-	.pipe(gulp.dest('src/' + config.project.mainBundlePath + '/Resources/views/' + config.project.mainJsInclude.folder + '/'));
+        // Write
+        .pipe(gulp.dest('src/' + config.project.mainBundlePath + '/Resources/views/' + config.project.mainJsInclude.folder + '/'));
 });
 
 
 // Development
 gulp.task('scripts-dev', ['jshint'], function() {
     return gulp.src(config.js.footer)
-	// Write
-	.pipe(gulp.dest(config.dist.js));
+        // Write
+        .pipe(gulp.dest(config.dist.js));
 });
 
 gulp.task('inject-dev-scripts', ['scripts-dev'], function() {
     var files = gulp.src(config.js.footer, {read: false})
 
     return gulp.src('src/' + config.project.mainBundlePath + '/Resources/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName)
-	// Inject
-	.pipe(plugins.inject(files))
+        // Inject
+        .pipe(plugins.inject(files))
 
-	// Rebase
-	.pipe(rebase({
-	    script: {
-		'(\/[^"]*\/)': '/frontend/js/'
-	    }
-	}))
+        // Rebase
+        .pipe(rebase({
+            script: {
+            '(\/[^"]*\/)': '/frontend/js/'
+            }
+        }))
 
-	// Write
-	.pipe(gulp.dest('app/Resources/' + config.project.mainBundleName + '/views/' + config.project.mainJsInclude.folder + '/'));
+        // Write
+        .pipe(gulp.dest('app/Resources/' + config.project.mainBundleName + '/views/' + config.project.mainJsInclude.folder + '/'));
 });
 
 
@@ -225,25 +225,25 @@ gulp.task('inject-dev-scripts', ['scripts-dev'], function() {
    ========================================================================== */
 gulp.task('images', function() {
     return gulp.src(config.img)
-	// Only optimize changed images
-	.pipe(plugins.changed(config.dist.img))
+        // Only optimize changed images
+        .pipe(plugins.changed(config.dist.img))
 
-	// Imagemin
-	.pipe(plugins.imagemin({
-	    optimizationLevel: 3,
-	    progressive: true,
-	    svgoPlugins: [{
-		removeViewBox: false
-	    }]
-	}))
+        // Imagemin
+        .pipe(plugins.imagemin({
+            optimizationLevel: 3,
+            progressive: true,
+            svgoPlugins: [{
+                removeViewBox: false
+            }]
+        }))
 
-	// Set destination
-	.pipe(gulp.dest(config.dist.img))
+        // Set destination
+        .pipe(gulp.dest(config.dist.img))
 
-	// Show total size of images
-	.pipe(plugins.size({
-	    title: 'images'
-	}));
+        // Show total size of images
+        .pipe(plugins.size({
+            title: 'images'
+        }));
 });
 
 
@@ -253,13 +253,13 @@ gulp.task('images', function() {
    ========================================================================== */
 gulp.task('fonts', function() {
     return gulp.src(config.fonts)
-	// Set destination
-	.pipe(gulp.dest(config.dist.fonts))
+        // Set destination
+        .pipe(gulp.dest(config.dist.fonts))
 
-	// Show total size of fonts
-	.pipe(plugins.size({
-	    title: 'fonts'
-	}));
+        // Show total size of fonts
+        .pipe(plugins.size({
+            title: 'fonts'
+        }));
 });
 
 
@@ -270,44 +270,43 @@ gulp.task('fonts', function() {
 // Hologram
 gulp.task('styleguide', function() {
     return gulp.src(config.styleguideFolder, {read: false})
-	// Hologram
-	.pipe(plugins.shell([
-	    'bundle exec hologram',
-	], {
-	    cwd: config.styleguideFolder
-	}));
+        // Hologram
+        .pipe(plugins.shell([
+            'bundle exec hologram',
+        ], {
+            cwd: config.styleguideFolder
+        }));
 });
 
 
 // Inject scripts
 gulp.task('styleguide-prod-js', function() {
     return gulp.src(config.dist.styleguide + '/*.html')
-	// Inject
-	.pipe(plugins.inject(gulp.src(config.dist.js + '/**/*.js'), {
-	    ignorePath: '/web'
-	}))
+        // Inject
+        .pipe(plugins.inject(gulp.src(config.dist.js + '/**/*.js'), {
+            ignorePath: '/web'
+        }))
 
-	// Write
-	.pipe(gulp.dest(config.dist.styleguide));
+        // Write
+        .pipe(gulp.dest(config.dist.styleguide));
 });
 
 gulp.task('styleguide-dev-js', function() {
     var files = gulp.src(config.js.footer, {read: false})
 
     return gulp.src(config.dist.styleguide + '/*.html')
+        // Inject
+        .pipe(plugins.inject(files))
 
-	// Inject
-	.pipe(plugins.inject(files))
+        // Rebase
+        .pipe(rebase({
+            script: {
+            '(\/[^"]*\/)': '/frontend/js/'
+            }
+        }))
 
-	// Rebase
-	.pipe(rebase({
-	    script: {
-		'(\/[^"]*\/)': '/frontend/js/'
-	    }
-	}))
-
-	// Write
-	.pipe(gulp.dest(config.dist.styleguide));
+        // Write
+        .pipe(gulp.dest(config.dist.styleguide));
 });
 
 
@@ -317,8 +316,8 @@ gulp.task('styleguide-dev-js', function() {
    ========================================================================== */
 gulp.task('clean', function(done) {
     del([
-	distPath + '**',
-	'app/Resources/' + config.project.mainBundleName + '/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName,
+        distPath + '**',
+        'app/Resources/' + config.project.mainBundleName + '/views/' + config.project.mainJsInclude.folder + '/' + config.project.mainJsInclude.fileName,
     ], done);
 });
 
@@ -350,10 +349,10 @@ gulp.task('watch', function() {
 // Build
 gulp.task('build', function(done) {
     runSequence(
-	'clean',
-	['clear-symfony-cache', 'styles', 'inject-prod-scripts', 'images', 'fonts'],
-	'styleguide',
-	'styleguide-prod-js',
+        'clean',
+        ['clear-symfony-cache', 'styles', 'inject-prod-scripts', 'images', 'fonts'],
+        'styleguide',
+        'styleguide-prod-js',
     done);
 });
 
@@ -369,10 +368,10 @@ gulp.task('build-deploy', function(done) {
 // Default
 gulp.task('default', function(done) {
     runSequence(
-	'clean',
-	['clear-symfony-cache', 'styles', 'inject-dev-scripts', 'images', 'fonts'],
-	['styleguide', 'watch'],
-	'styleguide-dev-js',
+        'clean',
+        ['clear-symfony-cache', 'styles', 'inject-dev-scripts', 'images', 'fonts'],
+        ['styleguide', 'watch'],
+        'styleguide-dev-js',
     done);
 });
 

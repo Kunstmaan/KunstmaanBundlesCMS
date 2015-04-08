@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
-	{{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}
+    {{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}
     </title>
 
     {% if page is defined %}
@@ -40,8 +40,8 @@
 
 <% if demosite %>
     <div id="sidebar-toggle__sidebar" class="sidebar-toggle__sidebar sidebar-toggle__sidebar--left main-nav main-nav--mobile">
-	{# Mobile nav #}
-	{% include '<%= bundle.getName() %>:Layout:_mobile-nav.html.twig' %}
+        {# Mobile nav #}
+        {% include '<%= bundle.getName() %>:Layout:_mobile-nav.html.twig' %}
     </div>
 
     <div id="sidebar-toggle__content" class="sidebar-toggle__content">
@@ -49,22 +49,22 @@
 
     {# Header #}
     {% block header %}
-	{% include '<%= bundle.getName() %>:Layout:_header.html.twig' %}
+        {% include '<%= bundle.getName() %>:Layout:_header.html.twig' %}
     {% endblock %}
 
     {# Breadcrumbs #}
     {% block breadcrumbs %}
-	{% include '<%= bundle.getName() %>:Layout:_breadcrumbs.html.twig' %}
+        {% include '<%= bundle.getName() %>:Layout:_breadcrumbs.html.twig' %}
     {% endblock %}
 
     {# Content #}
     <main role="main">
-	{% block content %}{% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
     {# Footer #}
     {% block footer %}
-	{% include '<%= bundle.getName() %>:Layout:_footer.html.twig' %}
+        {% include '<%= bundle.getName() %>:Layout:_footer.html.twig' %}
     {% endblock %}
 
 <% if demosite %>
@@ -73,7 +73,7 @@
 
     {# Cookieconsent #}
     {% block cookieconsent %}
-	{% include '<%= bundle.getName() %>:Layout:_cookieconsent.html.twig' %}
+        {% include '<%= bundle.getName() %>:Layout:_cookieconsent.html.twig' %}
     {% endblock %}
 
     {# JS Footer #}

@@ -6,7 +6,7 @@
    ========================================================================== */
 .breadcrumb {
     @media(min-width: $screen-md-min) {
-	margin: 1.5rem 0 0;
+        margin: 1.5rem 0 0;
     }
 }
 
@@ -20,7 +20,7 @@
     font-weight: 400;
 
     & .search-results__breadcrumb__item--current {
-	font-weight: 600;
+        font-weight: 600;
     }
 }
 
@@ -46,15 +46,15 @@ category: Structures
 ```html_example
 <nav role="navigation" class="breadcrumb">
     <a href="#" class="breadcrumb__item breadcrumb__item--home">
-	Home
+    Home
     </a>
     <i class="icon icon--arrow-right breadcrumb__icon"></i>
     <a href="#" class="breadcrumb__item">
-	Blub
+    Blub
     </a>
     <i class="icon icon--arrow-right breadcrumb__icon"></i>
     <span class="breadcrumb__item breadcrumb__item--current">
-	Contact
+    Contact
     </span>
 </nav>
 ```
