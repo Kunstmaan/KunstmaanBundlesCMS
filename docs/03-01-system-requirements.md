@@ -1,7 +1,7 @@
 # System Requirements
 
 * PHP
-    * minimum version of PHP 5.3.9, but since 5.3 is out of support, we prefer 5.5 or 5.6.
+    * minimum version of PHP 5.4, but we prefer 5.5 or 5.6.
     * JSON needs to be enabled
     * ctype needs to be enabled
     * curl needs to be enabled
