@@ -15,11 +15,11 @@
     transition: border-color .3s ease;
 
     &:hover {
-	border-color: $gray-lighter;
+        border-color: $gray-lighter;
 
-	.pp__header, .pp__actions {
-	    opacity: 1;
-	}
+        .pp__header, .pp__actions {
+            opacity: 1;
+        }
     }
 }
 
@@ -28,11 +28,11 @@
     border-color: $gray-lighter;
 
     .pp__header, .pp__actions {
-	opacity: 1;
+        opacity: 1;
     }
 
     .pp__actions__action--edit {
-	background: $white;
+        background: $white;
     }
 }
 
@@ -57,9 +57,9 @@
 
     &:hover {
 
-	.pp__header__move-icon {
-	    color: $blue;
-	}
+        .pp__header__move-icon {
+            color: $blue;
+        }
     }
 }
 
@@ -120,17 +120,17 @@
     transition: background .3s ease, color .3s ease;
 
     &:last-child {
-	border-top-right-radius: 2px;
+        border-top-right-radius: 2px;
     }
 
     &:hover {
-	z-index: 1;
+        z-index: 1;
 
-	color: $white;
+        color: $white;
     }
 
     &:focus {
-	outline: 0;
+        outline: 0;
     }
 }
 
@@ -138,14 +138,14 @@
 
 
     &:hover {
-	background: $brand-danger;
+        background: $brand-danger;
     }
 }
 
 .pp__actions__action--edit {
 
     &:hover {
-	background: $blue;
+        background: $blue;
     }
 }
 
@@ -157,8 +157,8 @@
     padding: 1em;
 
     img {
-	max-width: 100%;
-	height: auto;
+        max-width: 100%;
+        height: auto;
     }
 }
 
@@ -166,7 +166,7 @@
     overflow: hidden;
 
     .container {
-	max-width: 100%!important;
+        max-width: 100%!important;
     }
 }
 

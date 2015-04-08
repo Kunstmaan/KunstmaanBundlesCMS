@@ -13,10 +13,11 @@
 /* General
    ========================================================================== */
 .dnd-area {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
+
+    display: none;
     width: 100vw;
     height: 100vh;
 }
@@ -26,43 +27,43 @@
     display: block;
 
     .dnd-area__drop-alert {
-	display: block;
+        display: block;
     }
 
     .dnd-area__drop-alert__figure {
-	-webkit-animation-name: animDndPopOver;
-		animation-name: animDndPopOver;
-	-webkit-animation-duration: 1s;
-		animation-duration: 1s;
-	-webkit-animation-iteration-count: 5;
-		animation-iteration-count: 5;
+        -webkit-animation-name: animDndPopOver;
+                animation-name: animDndPopOver;
+        -webkit-animation-duration: 1s;
+                animation-duration: 1s;
+        -webkit-animation-iteration-count: 5;
+                animation-iteration-count: 5;
     }
 }
 
 @-webkit-keyframes animDndPopOver {
     0% {
-	box-shadow: 0 0 0 0 $blue;
+        box-shadow: 0 0 0 0 $blue;
     }
 
     50% {
-	box-shadow: 0 0 0 20px $blue;
+        box-shadow: 0 0 0 20px $blue;
     }
 
     100% {
-	box-shadow: 0 0 0 0 $blue;
+        box-shadow: 0 0 0 0 $blue;
     }
 }
 @keyframes animDndPopOver {
     0% {
-	box-shadow: 0 0 0 0 $blue;
+        box-shadow: 0 0 0 0 $blue;
     }
 
     50% {
-	box-shadow: 0 0 0 20px $blue;
+        box-shadow: 0 0 0 20px $blue;
     }
 
     100% {
-	box-shadow: 0 0 0 0 $blue;
+        box-shadow: 0 0 0 0 $blue;
     }
 }
 

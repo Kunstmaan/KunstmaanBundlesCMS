@@ -12,39 +12,41 @@
 /* Loading
    ========================================================================== */
 .app--loading {
+
     .app__main {
-	&:before {
-	    content: " ";
 
-	    z-index: 601;
-	    position: fixed;
-	    top: 50vh;
-	    left: 50vw;
+        &:before {
+            content: " ";
 
-	    display: block;
-	    width: 3rem;
-	    height: 3rem;
-	    margin: -1.5rem 0 0 -1.5rem;
+            z-index: 601;
+            position: fixed;
+            top: 50vh;
+            left: 50vw;
 
-	    background-color: #D1D5DF;
-	    border-radius: 3px;
+            display: block;
+            width: 3rem;
+            height: 3rem;
+            margin: -1.5rem 0 0 -1.5rem;
 
-	    @include animation(rotateplane 1.2s infinite ease-in-out);
-	}
+            background-color: #D1D5DF;
+            border-radius: 3px;
 
-	&:after {
-	    content: " ";
+            @include animation(rotateplane 1.2s infinite ease-in-out);
+        }
 
-	    z-index: 600;
-	    position: fixed;
-	    top: 0;
-	    left: 0;
+        &:after {
+            content: " ";
 
-	    display: block;
-	    width: 100vw;
-	    height: 100vh;
+            z-index: 600;
+            position: fixed;
+            top: 0;
+            left: 0;
 
-	    background: rgba(255, 255, 255, .8);
-	}
+            display: block;
+            width: 100vw;
+            height: 100vh;
+
+            background: rgba(255, 255, 255, .8);
+        }
     }
 }

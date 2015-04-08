@@ -12,19 +12,20 @@
     min-height: 20rem;
 
     &:hover {
-	text-decoration: none;
+        text-decoration: none;
     }
 
     @media (min-width: $screen-lg) {
-	&:hover {
-	    .media-thumbnail__helper {
-		opacity: 1;
-	    }
 
-	    & + .media-thumbnail-del-btn {
-		opacity: 1;
-	    }
-	}
+        &:hover {
+            .media-thumbnail__helper {
+                opacity: 1;
+            }
+
+            & + .media-thumbnail-del-btn {
+                opacity: 1;
+            }
+        }
     }
 }
 
@@ -69,17 +70,17 @@
     text-align: center;
 
     &:after {
-	content: '';
+        content: '';
 
-	position: absolute;
-	top: 0;
-	right: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
 
-	display: block;
-	width: 5%;
-	height: 100%;
+        display: block;
+        width: 5%;
+        height: 100%;
 
-	background: linear-gradient(to right, rgba(255, 255, 255, 0) ,rgba(255, 255, 255, 1) 100%);
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) ,rgba(255, 255, 255, 1) 100%);
     }
 }
 
@@ -96,9 +97,9 @@
     color: $blue;
 
     @media (min-width: $screen-lg) {
-	opacity: 0;
+        opacity: 0;
 
-	transition: opacity .3s ease;
+        transition: opacity .3s ease;
     }
 }
 
@@ -113,26 +114,25 @@
     right: 1.5rem;
 
     padding: .2em .5em;
-
     border-radius: 0 $default-border-radius 0 $default-border-radius;
 
     &, &:hover {
-	background: $red;
-	color: $white;
+        background: $red;
+        color: $white;
     }
 
     @media (min-width: $screen-lg) {
-	opacity: 0;
+        opacity: 0;
 
-	transition: opacity .3s ease;
+        transition: opacity .3s ease;
 
-	&:hover {
-	    opacity: 1;
+    &:hover {
+        opacity: 1;
 
-	    + .media-thumbnail-del-helper {
-		opacity: 1;
-	    }
-	}
+        + .media-thumbnail-del-helper {
+            opacity: 1;
+        }
+    }
     }
 }
 
@@ -148,9 +148,9 @@
     color: $red;
 
     @media (min-width: $screen-lg) {
-	display: block;
-	opacity: 0;
+        display: block;
+        opacity: 0;
 
-	transition: opacity .3s ease;
+        transition: opacity .3s ease;
     }
 }
