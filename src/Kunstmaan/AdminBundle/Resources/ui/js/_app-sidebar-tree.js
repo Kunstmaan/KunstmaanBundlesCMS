@@ -29,7 +29,11 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
             // DOCS: http://www.jstree.com/api/#/?q=.jstree%20Event&f=changed.jstree
             var href = data.event.currentTarget.href;
 
-            document.location.href = href;
+            if (data.event.ctrlKey || data.event.metaKey) {
+                window.open(href);
+            } else {
+                document.location.href = href;
+            }
         });
 
 
