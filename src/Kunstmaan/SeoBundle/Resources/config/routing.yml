@@ -1,0 +1,3 @@
+Seo_Menuadaptor:
+    resource: "@KunstmaanSeoBundle/Controller/Admin/SettingsController.php"
+    type:     annotation
