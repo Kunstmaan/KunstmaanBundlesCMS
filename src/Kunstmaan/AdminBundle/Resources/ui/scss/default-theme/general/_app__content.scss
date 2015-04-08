@@ -48,6 +48,10 @@
 .app__content__header__title {
     margin-top: 0;
     margin-bottom: 0;
+
+    abbr {
+        border-bottom: 0;
+    }
 }
 
 .app__content__header__title__small {
