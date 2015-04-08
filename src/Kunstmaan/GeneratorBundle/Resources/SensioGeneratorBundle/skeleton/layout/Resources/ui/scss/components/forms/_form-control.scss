@@ -19,13 +19,13 @@
 {% endif %}
 
     &:focus {
-	outline: none;
+        outline: none;
     }
 
 {% if demosite %}
     &:focus,
     &.form-control--filled {
-	border-color: $blue;
+        border-color: $blue;
     }
 {% endif %}
 }
@@ -69,7 +69,7 @@
     font-size: .7rem;
 
     &:focus, &:valid {
-	opacity: 1;
+        opacity: 1;
     }
 {% endif %}
 }

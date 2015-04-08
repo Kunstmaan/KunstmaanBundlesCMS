@@ -6,27 +6,27 @@ kunstmaanbundles.preventDoubleClick = (function($, window, undefined) {
 
 
     init = function() {
-	$('.js-prevent-double-click').on('click', function(e) {
-	    e.preventDefault();
+        $('.js-prevent-double-click').on('click', function(e) {
+            e.preventDefault();
 
-	    _checkDoubleClick($(this));
-	});
+            _checkDoubleClick($(this));
+        });
     };
 
 
     _checkDoubleClick = function($link) {
-	if ($link.hasClass('click-disabled')) {
-	    return false;
-	}
+        if ($link.hasClass('click-disabled')) {
+            return false;
+        }
 
-	$link.addClass('click-disabled');
+        $link.addClass('click-disabled');
 
-	window.location = $link.attr('href');
+        window.location = $link.attr('href');
     };
 
 
     return {
-	init: init
+        init: init
     };
 
 }(jQuery, window));

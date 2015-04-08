@@ -15,13 +15,13 @@
     transition: width .2s ease-in-out;
 
     @media(min-width: $screen-md-min) {
-	position: relative;
-	top: -.4rem;
-	right: auto;
+        position: relative;
+        top: -.4rem;
+        right: auto;
 
-	float: left;
-	width: $search-height;
-	margin: 0;
+        float: left;
+        width: $search-height;
+        margin: 0;
     }
 }
 
@@ -36,7 +36,7 @@
     overflow: hidden;
 
     @media(min-width: $screen-md-min) {
-	min-width: $search-height;
+        min-width: $search-height;
     }
 }
 
@@ -54,8 +54,8 @@
     transition: width .2s ease-in-out;
 
     @media(min-width: $screen-md-min) {
-	float: none;
-	width: $search-height;
+        float: none;
+        width: $search-height;
     }
 }
 
@@ -81,20 +81,20 @@
     transition: opacity .2s ease-in-out;
 
     &:focus, &:active {
-	outline: 0;
+        outline: 0;
     }
 
     @media(min-width: $screen-md-min) {
-	width: 340px;
-	display: inline-block;
-	height: $search-height;
-	line-height: $search-height;
+        width: 340px;
+        display: inline-block;
+        height: $search-height;
+        line-height: $search-height;
 
-	padding: .65rem 1rem;
-	background-color: $grey--lighter;
-	border: 1px solid $hr-color;
+        padding: .65rem 1rem;
+        background-color: $grey--lighter;
+        border: 1px solid $hr-color;
 
-	padding-right: $search-height;
+        padding-right: $search-height;
     }
 }
 
@@ -135,11 +135,11 @@
     color: $text-color;
 
     @media(min-width: $screen-md-min) {
-	width: $search-height;
-	height: $search-height;
-	line-height: $search-height - 3px;
+        width: $search-height;
+        height: $search-height;
+        line-height: $search-height - 3px;
 
-	background: none;
+        background: none;
     }
 }
 
@@ -156,32 +156,32 @@
     width: 100%;
 
     .searchbox__content {
-	width: 100%;
+        width: 100%;
     }
 
     .searchbox__input {
-	opacity: 1;
-	z-index: 0;
-	cursor: text;
+        opacity: 1;
+        z-index: 0;
+        cursor: text;
 
-	background: $white;
-	width: 100%;
+        background: $white;
+        width: 100%;
     }
 
     .searchbox__back {
-	z-index: 4;
-	background: $white;
+        z-index: 4;
+        background: $white;
     }
 
     @media(min-width: $screen-md-min) {
-	width: 340px;
+        width: 340px;
 
-	.searchbox {
-	    @include box-shadow;
-	}
+        .searchbox {
+            @include box-shadow;
+        }
 
-	.searchbox__content {
-	    width: 340px;
-	}
+        .searchbox__content {
+            width: 340px;
+        }
     }
 }

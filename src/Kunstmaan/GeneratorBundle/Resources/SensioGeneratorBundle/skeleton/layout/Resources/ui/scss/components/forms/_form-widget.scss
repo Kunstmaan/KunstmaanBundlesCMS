@@ -22,8 +22,8 @@
     border: 1px solid $hr-color;
 
     &:focus {
-	border-color: $blue;
-	outline: none;
+        border-color: $blue;
+        outline: none;
     }
 
 {% endif %}
@@ -57,7 +57,7 @@
 .form-widget--choices--filled {
 {% if demosite %}
     ~ .form__label {
-	@include control-label-active;
+        @include control-label-active;
     }
 {% endif %}
 }
@@ -70,15 +70,15 @@
     padding-top: .5rem;
 
     .form-control {
-	line-height: 80%;
+        line-height: 80%;
     }
 
     .form__label {
-	top: -1.2rem;
+        top: -1.2rem;
     }
 
     ~ .form__label {
-	display: none;
+        display: none;
     }
 {% endif %}
 }

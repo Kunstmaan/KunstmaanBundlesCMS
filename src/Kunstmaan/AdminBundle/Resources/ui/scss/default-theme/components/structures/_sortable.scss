@@ -5,12 +5,9 @@
 
 /* Body
    ========================================================================== */
-.sortable-active {
+// .sortable-active {
 
-    .pp-container__add {
-	//opacity: 0;
-    }
-}
+// }
 
 
 
@@ -42,28 +39,28 @@
     border: 1px solid $red;
 
     &:before {
-	position: absolute;
-	top: 4rem;
-	left: 0;
+        position: absolute;
+        top: 4rem;
+        left: 0;
 
-	width: 100%;
+        width: 100%;
 
-	text-align: center;
-	font-size: 3rem;
-	color: $white;
+        text-align: center;
+        font-size: 3rem;
+        color: $white;
     }
 
     .pp {
-	background: transparent;
-	border: 0;
+        background: transparent;
+        border: 0;
     }
 
     .pp__header, .pp__actions {
-	opacity: 1;
+        opacity: 1;
     }
 
     .pp-container__add {
-	opacity: 0;
+        opacity: 0;
     }
 }
 
@@ -71,14 +68,13 @@
 // Ghost
 .sortable-item--ghost {
     background: $gray-ultralight;
-
     box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
 
     .pp, .pp-container__add {
-	opacity: 0;
+        opacity: 0;
     }
 
     &.sortable-item--error {
-	background: $red;
+        background: $red;
     }
 }

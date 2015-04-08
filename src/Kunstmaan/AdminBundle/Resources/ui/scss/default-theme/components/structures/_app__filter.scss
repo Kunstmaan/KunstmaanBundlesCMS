@@ -10,19 +10,21 @@
     border-top: 1px solid $gray-lighter;
 
     .toggle-item--active {
-	overflow: visible;
+        overflow: visible;
     }
 
     @media (min-width: $screen-sm) {
-	& + .pagination {
-	    margin-top: -3rem;
-	}
+
+        & + .pagination {
+            margin-top: -3rem;
+        }
     }
 }
 
 .app__content__header + .app__filter {
     border-top: 0;
 }
+
 
 
 /* Content
@@ -33,11 +35,13 @@
 }
 
 
+
 /* Toggle
    ========================================================================== */
-.app__filter__toggle {
+// .app__filter__toggle {
 
-}
+// }
+
 
 
 /* Line

@@ -11,18 +11,18 @@
     max-width: 40rem;
 
     .media-chooser__preview {
-	display: none;
+        display: none;
     }
 }
 
 .media-chooser--choosen {
 
     .media-chooser__preview {
-	display: block;
+        display: block;
     }
 
     .media-chooser__choose-btn {
-	display: none;
+        display: none;
     }
 }
 
@@ -47,7 +47,7 @@
 .has-error {
 
     .media-chooser__choose-btn {
-	border-color: $red;
+        border-color: $red;
     }
 }
 
@@ -61,17 +61,17 @@
 
     &:hover {
 
-	.media-chooser__preview__del-btn {
-	    opacity: 1;
-	}
+        .media-chooser__preview__del-btn {
+            opacity: 1;
+        }
     }
 }
 
 
 // Image
-.media-chooser__preview__img {
+// .media-chooser__preview__img {
 
-}
+// }
 
 
 // Title
@@ -92,25 +92,23 @@
     right: 0;
 
     padding: .2em .5em;
-
     border-radius: 0 $default-border-radius 0 $default-border-radius;
 
     &, &:hover {
-	background: $red;
-	color: $white;
+        background: $red;
+        color: $white;
     }
 
     @media (min-width: $screen-lg) {
-	opacity: 0;
+        opacity: 0;
+        transition: opacity .3s ease;
 
-	transition: opacity .3s ease;
+        &:hover {
+            opacity: 1;
 
-	&:hover {
-	    opacity: 1;
-
-	    + .media-thumbnail-del-helper {
-		opacity: 1;
-	    }
-	}
+            + .media-thumbnail-del-helper {
+                opacity: 1;
+            }
+        }
     }
 }

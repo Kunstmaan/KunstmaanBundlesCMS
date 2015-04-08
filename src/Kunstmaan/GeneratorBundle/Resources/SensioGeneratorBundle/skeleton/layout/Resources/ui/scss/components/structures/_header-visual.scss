@@ -8,9 +8,9 @@
     margin-bottom: 4rem;
 
     @media(min-width: $screen-md-min) {
-	overflow: hidden;
-	height: 70vh;
-	max-height: 40rem;
+        overflow: hidden;
+        height: 70vh;
+        max-height: 40rem;
     }
 }
 
@@ -18,14 +18,14 @@
     width: 100%;
 
     @media(min-width: $screen-md-min) {
-	transform: translateY(-50%);
+        transform: translateY(-50%);
 
-	z-index: 0;
-	position: absolute;
-	top: 50%;
-	left: 0;
+        z-index: 0;
+        position: absolute;
+        top: 50%;
+        left: 0;
 
-	max-height: none;
+        max-height: none;
     }
 }
 
@@ -34,17 +34,17 @@
     text-align: center;
 
     @media(min-width: $screen-md-min) {
-	transform: translateY(-50%);
+        transform: translateY(-50%);
 
-	z-index: 1;
-	position: absolute;
-	top: 50%;
-	left: 0;
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 0;
 
-	width: 100%;
-	margin-bottom: 0;
+        width: 100%;
+        margin-bottom: 0;
 
-	text-align: left;
+        text-align: left;
     }
 }
 
@@ -58,21 +58,21 @@
     font-weight: 300;
 
     @media(min-width: $screen-md-min) {
-	margin-top: 0;
+        margin-top: 0;
 
-	font-size: 5.625rem;
-	font-weight: 100;
-	color: $white;
+        font-size: 5.625rem;
+        font-weight: 100;
+        color: $white;
     }
 }
 
 .header-visual__text {
 
     @media(min-width: $screen-md-min) {
-	max-width: 50%;
-	margin-bottom: 2.5rem;
+        max-width: 50%;
+        margin-bottom: 2.5rem;
 
-	color: $white;
+        color: $white;
     }
 }
 
@@ -85,7 +85,7 @@
     font-size: 1.1rem;
 
     @media(min-width: $screen-md-min) {
-	border: 0;
+        border: 0;
     }
 }
 
@@ -101,17 +101,17 @@ category: Structures
 <figure class="header-visual">
     <img src="http://placehold.it/1600x1000" class="header-visual__img">
     <figcaption class="header-visual__content">
-	<div class="header-visual__content__inner">
-	    <h1 class="header-visual__title">
-		Title
-	    </h1>
-	    <p class="header-visual__text">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.
-	    </p>
-	    <a href="/en/services" class="btn header-visual__btn">
-		CTA
-	    </a>
-	</div>
+    <div class="header-visual__content__inner">
+        <h1 class="header-visual__title">
+        Title
+        </h1>
+        <p class="header-visual__text">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.
+        </p>
+        <a href="/en/services" class="btn header-visual__btn">
+        CTA
+        </a>
+    </div>
     </figcaption>
 </figure>
 ```

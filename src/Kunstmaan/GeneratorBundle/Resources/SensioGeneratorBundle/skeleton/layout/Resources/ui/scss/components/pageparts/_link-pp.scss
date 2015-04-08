@@ -11,9 +11,9 @@
     font-size: .85rem;
 
     a {
-	display: inline-block;
-	color: $black;
-	font-weight: 600;
+        display: inline-block;
+        color: $black;
+        font-weight: 600;
     }
 {% endif %}
 }
@@ -38,7 +38,7 @@
     margin-left: .5rem;
 
     &:before {
-	@include iconfont-reset;
+        @include iconfont-reset;
     }
 }
 {% endif %}

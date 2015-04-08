@@ -52,21 +52,21 @@
 .choice-block__input:checked {
 
     & + .choice-block__item {
-	border: 1px solid $brand-primary;
+        border: 1px solid $brand-primary;
 
-	@include transition(border .3s ease);
+        @include transition(border .3s ease);
 
-	.choice-block__item__head {
-	    color: $brand-primary;
+        .choice-block__item__head {
+            color: $brand-primary;
 
-	    @include transition(color .3s ease);
-	}
+            @include transition(color .3s ease);
+        }
 
-	.choice-block__item__col {
-	    background: $gray-lighter;
+        .choice-block__item__col {
+            background: $gray-lighter;
 
-	    @include transition(background .3s ease);
-	}
+            @include transition(background .3s ease);
+        }
     }
 
 

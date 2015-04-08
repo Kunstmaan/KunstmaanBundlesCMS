@@ -20,8 +20,9 @@
 /* Container List
    ========================================================================== */
 .jstree-container-ul {
+
     > .jstree-node {
-	margin-left: 0;
+        margin-left: 0;
     }
 }
 
@@ -56,16 +57,16 @@
     @include transition(background-color .15s ease);
 
     &:hover, &:focus {
-	text-decoration: none;
-	color: $black;
-	outline: 0;
+        text-decoration: none;
+        color: $black;
+        outline: 0;
     }
 
     &.active {
 
-	&, &:hover {
-	    color: $brand-primary;
-	}
+        &, &:hover {
+            color: $brand-primary;
+        }
     }
 }
 
@@ -80,18 +81,18 @@
 .jstree-icon {
 
     &, &:empty {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-	width: 2.3rem;
-	height: 2.3rem;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        width: 2.3rem;
+        height: 2.3rem;
 
-	font-size: 1.3rem;
-	color: $gray;
-	line-height: 2.3rem;
-	text-align: center;
-	text-decoration: none;
-	vertical-align: top;
+        font-size: 1.3rem;
+        color: $gray;
+        line-height: 2.3rem;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: top;
     }
 }
 
@@ -173,28 +174,28 @@
     padding: 4px;
 
     .jstree-icon, .jstree-copy {
-	display: inline-block;
-	text-decoration: none;
-	margin: 0 2px 0 0;
-	padding: 0;
-	width: 16px;
-	height: 16px;
+        display: inline-block;
+        text-decoration: none;
+        margin: 0 2px 0 0;
+        padding: 0;
+        width: 16px;
+        height: 16px;
     }
 
     .jstree-ok, .jstree-er {
-	background: url("/bundles/kunstmaanadmin/default-theme/img/jstree/kuma.svg") no-repeat;
+        background: url("/bundles/kunstmaanadmin/default-theme/img/jstree/kuma.svg") no-repeat;
     }
 
     .jstree-ok {
-	background-position: -9px -71px;
+        background-position: -9px -71px;
     }
 
     .jstree-er {
-	background-position: -39px -71px;
+        background-position: -39px -71px;
     }
 
     .jstree-copy {
-	margin: 0 2px 0 2px;
+        margin: 0 2px 0 2px;
     }
 }
 
@@ -205,27 +206,27 @@
 }
 
 .jstree-anchor > .jstree-undetermined {
-   background-position: -196px -4px;
+    background-position: -196px -4px;
 }
 
 .jstree-anchor > .jstree-undetermined:hover {
-   background-position: -196px -36px;
+    background-position: -196px -36px;
 }
 
 #jstree-marker {
-   position: absolute;
-   top: -4px;
-   left: 0;
-   margin: 0;
-   padding: 0;
-   border-right: 0;
-   border-top: 5px solid transparent;
-   border-bottom: 5px solid transparent;
-   border-left: 5px solid;
-   width: 0;
-   height: 0;
-   font-size: 0;
-   line-height: 0;
+    position: absolute;
+    top: -4px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    border-right: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
 }
 
 

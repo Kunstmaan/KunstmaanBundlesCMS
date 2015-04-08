@@ -8,9 +8,9 @@
 
     .nested-form__item__header {
 
-	&:hover {
-	    cursor: move;
-	}
+        &:hover {
+            cursor: move;
+        }
     }
 }
 
@@ -26,7 +26,7 @@
     border-radius: $border-radius-base;
 
     &:hover {
-	border-color: $gray-lighter;
+        border-color: $gray-lighter;
     }
 }
 
@@ -46,9 +46,9 @@
 
     &:hover {
 
-	.nested-form__item__header__move-icon {
-	    color: $blue;
-	}
+        .nested-form__item__header__move-icon {
+            color: $blue;
+        }
     }
 }
 
@@ -88,21 +88,20 @@
     transition: background .3s ease, color .3s ease;
 
     &:hover {
-	z-index: 1;
+        z-index: 1;
 
-	color: $white;
+        color: $white;
     }
 
     &:focus {
-	outline: 0;
+        outline: 0;
     }
 }
 
 .nested-form__item__header__actions__action--del {
 
-
     &:hover {
-	background: $brand-danger;
+        background: $brand-danger;
     }
 }
 

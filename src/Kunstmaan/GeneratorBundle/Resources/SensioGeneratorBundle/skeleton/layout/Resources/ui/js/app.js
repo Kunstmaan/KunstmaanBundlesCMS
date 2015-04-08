@@ -6,18 +6,18 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
 
     init = function() {
 {% if demosite %}
-	cargobay.scrollToTop.init();
-	cargobay.toggle.init();
-	cargobay.sidebarToggle.init();
-	cargobay.videolink.init();
-	cargobay.cookieConsent.init();
-	{{ bundle.getName() }}.search.init();
-	{{ bundle.getName() }}.demoMsg.init();
+        cargobay.scrollToTop.init();
+        cargobay.toggle.init();
+        cargobay.sidebarToggle.init();
+        cargobay.videolink.init();
+        cargobay.cookieConsent.init();
+        {{ bundle.getName() }}.search.init();
+        {{ bundle.getName() }}.demoMsg.init();
 {% endif %}
     };
 
     return {
-	init: init
+        init: init
     };
 
 }(jQuery, window));

@@ -1,17 +1,17 @@
 {% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
 
 {% block header %}
-    <div class="page-header">
-	<h1>{{ 'dashboard.ga.setup.title' | trans }}</h1>
-    </div>
+    <header class="page-header">
+        <h1>{{ 'dashboard.ga.setup.title' | trans }}</h1>
+    </header>
 {% endblock %}
 
 {% block extracss %}
     {% stylesheets
-	"@KunstmaanDashboardBundle/Resources/ui/scss/_dashboard.scss"
-	filter="scss"
+    "@KunstmaanDashboardBundle/Resources/ui/scss/_dashboard.scss"
+    filter="scss"
     %}
-	<link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
 {% endblock %}
 
@@ -32,9 +32,9 @@
 
 {% block extrajavascript %}
     {% javascripts
-	'@KunstmaanDashboardBundle/Resources/ui/js/setup/setup.js'
-	output='KunstmaanDashboardBundleAssets/js/ga-widget-setup.js'
+    '@KunstmaanDashboardBundle/Resources/ui/js/setup/setup.js'
+    output='KunstmaanDashboardBundleAssets/js/ga-widget-setup.js'
     %}
-    <script src="{{ asset_url }}"></script>
+        <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

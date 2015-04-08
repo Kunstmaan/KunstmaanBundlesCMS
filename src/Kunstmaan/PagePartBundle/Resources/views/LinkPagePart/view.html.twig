@@ -14,6 +14,7 @@
 {% endif %}
 
 <p class="link-pp">
-    <a href="{{ resource.url }}"
-       {% if resource.openinnewwindow %}target="_blank"{% endif %}>{% if resource.text is defined and resource.text != "" %}{{ resource.text }}{% else %}{{ resource.url }}{% endif %}</a>
+    <a href="{{ resource.url }}"{% if resource.openinnewwindow %} target="_blank"{% endif %}>
+        {% if resource.text is defined and resource.text != "" %}{{ resource.text }}{% else %}{{ resource.url }}{% endif %}
+    </a>
 </p>

@@ -12,18 +12,18 @@
 /* Animations
    ========================================================================== */
 @import "animations/rotateplane",
-	"animations/fade";
+        "animations/fade";
 
 
 /* Placeholders
    ========================================================================== */
 @import "placeholders/link-reset",
-	"placeholders/loading",
-	"placeholders/fade";
+        "placeholders/loading",
+        "placeholders/fade";
 
 
 /* Mixins
    ========================================================================== */
 @import "mixins/placeholder",
-	"mixins/_grad-top-bottom",
-	"mixins/_single_transition";
+        "mixins/_grad-top-bottom",
+        "mixins/_single_transition";

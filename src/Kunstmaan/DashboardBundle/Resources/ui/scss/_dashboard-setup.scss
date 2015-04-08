@@ -24,7 +24,7 @@
     margin-bottom: 1rem;
 
     &.not-shown {
-	display: none;
+        display: none;
     }
 }
 
@@ -41,7 +41,7 @@
     display: none;
 
     .well {
-	margin-bottom: 0;
+        margin-bottom: 0;
     }
 }
 
@@ -73,6 +73,6 @@
     padding: 1rem 0;
 
     & + & {
-	border-top: 1px solid #ddd;
+        border-top: 1px solid #ddd;
     }
 }

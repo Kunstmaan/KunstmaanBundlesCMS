@@ -12,7 +12,7 @@
 {% block body %}
     {% set lowestTopChild = foldermanager.getRootFolderFor(folder) %}
     {% if lowestTopChild %}
-	{% set navigationChildren = foldermanager.getFolderHierarchy(lowestTopChild) %}
+        {% set navigationChildren = foldermanager.getFolderHierarchy(lowestTopChild) %}
     {% endif %}
     {{ parent() }}
 {% endblock %}
@@ -21,49 +21,49 @@
 {% block appHeader %}
     <header role="banner">
 
-	<!-- App Header -->
-	<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-	    <div class="container-fluid">
+        <!-- App Header -->
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
 
-		<!-- Header -->
-		<div class="navbar-header">
+                <!-- Header -->
+                <div class="navbar-header">
 
-		    <!--Header - Toggle -->
-		    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
-			<span class="sr-only">Toggle</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		    </button>
-		</div>
+                    <!--Header - Toggle -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
 
-		<!-- Navigation -->
-		<div class="collapse navbar-collapse" id="main-nav-bar">
+                <!-- Navigation -->
+                <div class="collapse navbar-collapse" id="main-nav-bar">
 
-		    <!-- Navigation - Left -->
-		    <ul class="nav navbar-nav">
-			{% if linkChooserLink is defined and linkChooserLink %}
-			    <li>
-				<a href="{{ linkChooserLink }}">
-				    Pages
-				</a>
-			    </li>
-			    <li class="active">
-				<a href="javascript:void(0)">
-				    Media
-				</a>
-			    </li>
-			{% endif %}
-		    </ul>
+                    <!-- Navigation - Left -->
+                    <ul class="nav navbar-nav">
+                        {% if linkChooserLink is defined and linkChooserLink %}
+                            <li>
+                                <a href="{{ linkChooserLink }}">
+                                    Pages
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0)">
+                                    Media
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
 
-		    <!-- Navigation - Right -->
-		    <ul class="nav navbar-nav navbar-right">
-			{% set route = app.request.attributes.get('_route') %}
-			{{ localeswitcher_widget(requiredlocales, route) }}
-		    </ul>
-		</div>
-	    </div>
-	</nav>
+                    <!-- Navigation - Right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% set route = app.request.attributes.get('_route') %}
+                        {{ localeswitcher_widget(requiredlocales, route) }}
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 {% endblock %}
 
@@ -71,15 +71,16 @@
 {% block sidebar %}
     <!-- Search -->
     <button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
-	<i class="fa fa-search"></i>
+        <i class="fa fa-search"></i>
     </button>
+
     <div id="sidebar-search-toggle" class="toggle-item">
-	<div class="toggle-item__content">
-	    <div class="app__sidebar__search-toggle-item">
-		<input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
-		<hr>
-	    </div>
-	</div>
+        <div class="toggle-item__content">
+            <div class="app__sidebar__search-toggle-item">
+                <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+                <hr>
+            </div>
+        </div>
     </div>
 
     <!-- Tree -->
@@ -98,7 +99,7 @@
 
 {% block header %}
     <h1 class="app__content__header__title">
-	{{ folder.name | trans }}
+        {{ folder.name | trans }}
     </h1>
     {% block extra_actions_header %}{% endblock %}
 {% endblock %}
@@ -108,62 +109,62 @@
 
     <!-- Sub-actions -->
     <div class="page-sub-actions page-sub-actions--has-buttons">
-	<div class="btn-group">
-	    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'thumb-view'})) }}" class="btn btn-default btn--raise-on-hover{% if not app.session.get('media-list-view') %} active{% endif %}">
-		<i class="fa fa-picture-o btn__icon"></i>
-	    </a>
-	    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'list-view'})) }}" class="btn btn-default btn--raise-on-hover{% if app.session.get('media-list-view') %} active{% endif %}">
-		<i class="fa fa-list btn__icon"></i>
-	    </a>
-	</div>
+        <div class="btn-group">
+            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'thumb-view'})) }}" class="btn btn-default btn--raise-on-hover{% if not app.session.get('media-list-view') %} active{% endif %}">
+                <i class="fa fa-picture-o btn__icon"></i>
+            </a>
+            <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': folder.id, viewMode: 'list-view'})) }}" class="btn btn-default btn--raise-on-hover{% if app.session.get('media-list-view') %} active{% endif %}">
+                <i class="fa fa-list btn__icon"></i>
+            </a>
+        </div>
     </div>
 
 
     <!-- Main-actions -->
     <div class="page-main-actions page-main-actions--no-tabs js-auto-collapse-buttons">
-	<div class="btn-group">
-	    {% block actions %}
-		<div class="btn-group">
-		    <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-			Add media <i class="fa fa-caret-down"></i>
-		    </button>
-		    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-			{% for addaction in mediamanager.getFolderAddActions() %}
-			    <li>
-				<a href="javascript:void(0)" data-toggle="modal" data-target="#add{{ addaction.type }}-modal">
-				    {{ addaction.name |trans }}
-				</a>
-			    </li>
-			{% endfor %}
-		    </ul>
-		</div>
-	    {% endblock %}
+        <div class="btn-group">
+            {% block actions %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                        Add media <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    {% for addaction in mediamanager.getFolderAddActions() %}
+                        <li>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#add{{ addaction.type }}-modal">
+                                {{ addaction.name |trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endblock %}
+            </div>
         </div>
-    </div>
 
 
     <!-- Scroll-actions -->
     <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
-	<div class="btn-group">
-	    {{ block('actions') }}
-	    <button type="button" class="js-scroll-to-top btn btn-default">
-		<i class="fa fa-caret-up"></i>
-	    </button>
+        <div class="btn-group">
+            {{ block('actions') }}
+            <button type="button" class="js-scroll-to-top btn btn-default">
+                <i class="fa fa-caret-up"></i>
+            </button>
         </div>
     </div>
 
 
     <!-- Subfolders Map list -->
     <nav class="list-group" role="navigation">
-	{% for child in folder.children %}
-	    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}" class="list-group-item">
-		{{ child.name | trans }}
-	    </a>
-	{% else %}
-	    <p class="list-group-item text--muted">
-		{{ 'media.folder.sub.no' |trans }}
-	    </p>
-	{% endfor %}
+    {% for child in folder.children %}
+        <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams|merge({'folderId': child.id})) }}" class="list-group-item">
+            {{ child.name | trans }}
+        </a>
+    {% else %}
+        <p class="list-group-item text--muted">
+            {{ 'media.folder.sub.no' |trans }}
+        </p>
+    {% endfor %}
     </nav>
 
 
@@ -173,61 +174,61 @@
             {% if adminlist.count > 0 %}
                 {{ parent() }}
             {% else %}
-		<p class="text--muted">
+                <p class="text--muted">
                     {{ 'media.media.no' |trans }}
                 </p>
             {% endif %}
         {% else %}
-	    {% if adminlist.count > 0 %}
-		<div class="row">
-		    {% for media in folder.media %}
-			{% set handler = mediamanager.getHandler(media) %}
-			{% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
-			{% if imageurl is not empty and media.location == 'local' %}
-			    {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-				{% set imageurl = imageurl %}
-			    {% else %}
-				{% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+            {% if adminlist.count > 0 %}
+                <div class="row">
+                    {% for media in folder.media %}
+                        {% set handler = mediamanager.getHandler(media) %}
+                        {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                        {% if imageurl is not empty and media.location == 'local' %}
+                            {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
+                                {% set imageurl = imageurl %}
+                            {% else %}
+                                {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
                             {% endif %}
-			{% endif %}
+                        {% endif %}
 
-			{% if not handler or handler.canHandle(media) %}
-			    <div class="col-sm-6 col-md-4 col-lg-3">
-				<a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
-				    <figure>
-					{% if imageurl %}
-					    <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">
-					{% else %}
-					    <i class="fa fa-file-o media-thumbnail__icon"></i>
-					{% endif %}
-					<figcaption class="media-thumbnail__caption">
-					    {{ media.name }}
-					</figcaption>
-				    </figure>
-				    <span class="media-thumbnail__helper">
-					Click to select
-				    </span>
-				</a>
-			    </div>
+                        {% if not handler or handler.canHandle(media) %}
+                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
+                                    <figure>
+                                        {% if imageurl %}
+                                            <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">
+                                        {% else %}
+                                            <i class="fa fa-file-o media-thumbnail__icon"></i>
+                                        {% endif %}
+                                        <figcaption class="media-thumbnail__caption">
+                                            {{ media.name }}
+                                        </figcaption>
+                                    </figure>
+                                    <span class="media-thumbnail__helper">
+                                        Click to select
+                                    </span>
+                                </a>
+                            </div>
 
-			    {# Clearfixes #}
-			    {% if loop.index is divisible by(2) %}
-				<div class="clearfix visible-sm-block"></div>
-			    {% endif %}
-			    {% if loop.index is divisible by(3) %}
-				<div class="clearfix visible-md-block"></div>
-			    {% endif %}
-			    {% if loop.index is divisible by(4) %}
-				<div class="clearfix visible-lg-block"></div>
-			    {% endif %}
-			{% endif %}
-		    {% endfor %}
-		</div>
-	    {% else %}
-		<p class="text--muted">
-		    {{ 'media.media.no' |trans }}
-		</p>
-	    {% endif %}
+                            {# Clearfixes #}
+                            {% if loop.index is divisible by(2) %}
+                                <div class="clearfix visible-sm-block"></div>
+                            {% endif %}
+                            {% if loop.index is divisible by(3) %}
+                                <div class="clearfix visible-md-block"></div>
+                            {% endif %}
+                            {% if loop.index is divisible by(4) %}
+                                <div class="clearfix visible-lg-block"></div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text--muted">
+                    {{ 'media.media.no' |trans }}
+                </p>
+            {% endif %}
         {% endif %}
     </section>
 

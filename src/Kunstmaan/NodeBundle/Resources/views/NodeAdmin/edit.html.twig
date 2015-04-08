@@ -7,20 +7,20 @@
 
 {% block messages %}
     {% if queuedNodeTranslationAction %}
-	<div class="alert alert-warning">
+        <div class="alert alert-warning">
             <strong>{{ "Warning" | trans }}: </strong>{{ "This page will be " ~ queuedNodeTranslationAction.action ~ "ed at %date%" | trans({"%date%":queuedNodeTranslationAction.date|date('Y-m-d H:i:s')}) }}
-	    <a href="{{ path('KunstmaanNodeBundle_nodes_unschedule_publish', { 'id': node.id}) }}" class="btn btn-warning btn--raise-on-hover alert__action">
-		Cancel
-	    </a>
+            <a href="{{ path('KunstmaanNodeBundle_nodes_unschedule_publish', { 'id': node.id}) }}" class="btn btn-warning btn--raise-on-hover alert__action">
+                Cancel
+            </a>
         </div>
     {% endif %}
     {% if form_has_errors_recursive(form) %}
-	<div class="alert alert-danger">
+        <div class="alert alert-danger">
             <strong>{{ "Error" | trans }}: </strong>{{ "The form has not been saved because there are validation errors" | trans }}
             {{ form_errors(form) }}
-	    <button class="close" data-dismiss="alert">
-		<i class="fa fa-times"></i>
-	    </button>
+            <button class="close" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+            </button>
         </div>
     {% endif %}
 {% endblock %}
@@ -34,13 +34,13 @@
         {% else %}
             {{ page.title }}
         {% endif %}
-        
+
         {% if draft %}
-	    <small class="app__content__header__title__small">
+            <small class="app__content__header__title__small">
                 Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
             </small>
         {% else %}
-	    <small class="app__content__header__title__small">
+            <small class="app__content__header__title__small">
                 Public version
                 {% if draftNodeVersion is not null %}
                     (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)

@@ -21,8 +21,8 @@
     text-align: center;
 
     @media(min-width: $screen-md-min) {
-	float: left;
-	width: auto;
+        float: left;
+        width: auto;
     }
 }
 
@@ -42,7 +42,7 @@
     position: relative;
 
     @media(min-width: $screen-md-min) {
-	display: none;
+        display: none;
     }
 
 }
@@ -62,7 +62,7 @@
     &:active,
     &:focus,
     &:hover {
-	background: $white;
+        background: $white;
     }
 }
 
@@ -74,10 +74,10 @@
     display: none;
 
     @media(min-width: $screen-md-min) {
-	display: block;
-	height: 3.5rem;
+        display: block;
+        height: 3.5rem;
 
-	border-bottom: 2px solid $hr-color;
+        border-bottom: 2px solid $hr-color;
     }
 }
 
@@ -85,7 +85,7 @@
 .homepage {
 
     .main-header--desktop {
-	border-bottom: 0;
+        border-bottom: 0;
     }
 }
 

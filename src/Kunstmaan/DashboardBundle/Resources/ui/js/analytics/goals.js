@@ -2,14 +2,15 @@
 function setGoals(data) {
     var disableGoals = $('#disable-goals').attr('data-disable-goals');
     if (disableGoals) {
-	return;
+        return;
     }
 
     $('.dashboard-goals-list').attr('style', 'display:none;');
     $('#goalOverview' + data.overview.id).attr('style', 'display:block;');
+
     // create box for each goal
     for (var i = 0; i < data.goals.length; i++) {
-	addGoalBox(data, i);
+        addGoalBox(data, i);
     }
 }
 
@@ -22,19 +23,19 @@ function addGoalBox(data, i) {
 
     // render the chart
     new Morris.Area({
-	element: chart,
-	lineWidth: 2,
-	lineColors: ['#8ac9e1'],
-	fillOpacity: '.9',
-	hideHover: 'auto',
-	pointSize: 0,
-	data: data.goals[i].chartData,
-	xkey: 'timestamp',
-	ykeys: ['conversions'],
-	labels: ['Conversions'],
-	gridTextSize: 10,
-	gridTextColor: '#a7a7a7',
-	resize: true,
-	redraw: true
+        element: chart,
+        lineWidth: 2,
+        lineColors: ['#8ac9e1'],
+        fillOpacity: '.9',
+        hideHover: 'auto',
+        pointSize: 0,
+        data: data.goals[i].chartData,
+        xkey: 'timestamp',
+        ykeys: ['conversions'],
+        labels: ['Conversions'],
+        gridTextSize: 10,
+        gridTextColor: '#a7a7a7',
+        resize: true,
+        redraw: true
     });
 }

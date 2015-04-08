@@ -7,6 +7,6 @@ btn btn--{{ resource.type }} {% if resource.size != 'default' %}btn--{{ resource
 
 <p class="btn-pp btn-pp--{{ resource.position }}">
     <a href="{{ resource.linkUrl }}" class="{{ css.getClasses(resource) }}"{% if resource.linkNewWindow %} target="_blank"{% endif %}>
-	{{ resource.linkText|default(resource.linkUrl) }}
+        {{ resource.linkText|default(resource.linkUrl) }}
     </a>
 </p>

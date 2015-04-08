@@ -2,8 +2,8 @@
     <h2>{{ page.title }}</h2>
     <form method="get" action="" class="well form-search">
         <input type="text" name="query" id="query" class="input-medium search-query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" />
-	<input type="submit" name="search" id="search" value="{{ 'search.search'|trans }}" class="btn" />
-	&nbsp;&nbsp;{% if q_query is defined and q_query != '' %}{{ 'search.looking_for'|trans({'%query%': q_query}) }}{% endif %}
+    <input type="submit" name="search" id="search" value="{{ 'search.search'|trans }}" class="btn" />
+    &nbsp;&nbsp;{% if q_query is defined and q_query != '' %}{{ 'search.looking_for'|trans({'%query%': q_query}) }}{% endif %}
     </form>
     {% if q_query is defined and q_query != '' %}
         <h3>{{ 'search.results'|trans }}</h3>

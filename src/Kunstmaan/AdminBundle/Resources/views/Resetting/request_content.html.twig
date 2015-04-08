@@ -4,9 +4,9 @@
 
 {% if invalid_username is defined %}
     <div class="alert alert-error">
-	<button type="button" class="close" data-dismiss="alert">
-	    <i class="fa fa-times"></i>
-	</button>
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
         <strong>{{ 'form.error' | trans }}: </strong>
         {{ 'The username or email address does not exist.' | trans }}
     </div>
@@ -14,19 +14,19 @@
 
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST">
     <div class="form-group form-group--icon-in-control">
-	<label for="username" class="label--lighter">
-	    {{ 'Username or email address' |trans }}:
-	</label>
+        <label for="username" class="label--lighter">
+            {{ 'Username or email address' |trans }}:
+        </label>
 
-	<input class="form-control form-group--icon-in-control__form-control" id="username" type="text" name="username" value="" placeholder="{{ 'Username or email address' |trans }}" autofocus>
-	<i class="fa fa-user form-group--icon-in-control__icon"></i>
+        <input class="form-control form-group--icon-in-control__form-control" id="username" type="text" name="username" value="" placeholder="{{ 'Username or email address' |trans }}" autofocus>
+        <i class="fa fa-user form-group--icon-in-control__icon"></i>
     </div>
 
     <button type="submit" class="btn btn-primary btn--raise-on-hover">
-	{{ 'Reset password' |trans }}
+        {{ 'Reset password' |trans }}
     </button>
     <a href="{{ path('fos_user_security_login' ) }}" class="btn btn-default btn--raise-on-hover">
-	{{ 'form.cancel' | trans }}
+        {{ 'form.cancel' | trans }}
     </a>
 </form>
 

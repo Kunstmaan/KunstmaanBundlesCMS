@@ -12,8 +12,8 @@
     margin: 1.5rem 0;
 
     &:first-child {
-	padding-top: 0;
-	margin-top: 0;
+        padding-top: 0;
+        margin-top: 0;
     }
 }
 
@@ -23,13 +23,13 @@
 .form-group--has-error {
 
     .form-control {
-	border-color: $red;
+        border-color: $red;
     }
 
     .help-block {
-	font-size: .8rem;
-	font-weight: 400;
-	color: $red;
+        font-size: .8rem;
+        font-weight: 400;
+        color: $red;
     }
 }
 
@@ -46,7 +46,7 @@ category: Forms
 ```html_example
 <div class="form-group">
     <label for="fg1" class="form-control-label">
-	Name
+    Name
     </label>
     <input type="text" id="fg1" name="fg1" class="{% if demosite %}js-form__input{% endif %} form-control form-control--input">
 </div>
@@ -57,7 +57,7 @@ category: Forms
 ```html_example
 <div class="form-group form-group--has-error">
     <label for="fg2" class="form-control-label">
-	Name
+    Name
     </label>
     <input type="text" id="fg2" name="fg2" class="{% if demosite %}js-form__input{% endif %} form-control form-control--input">
 </div>

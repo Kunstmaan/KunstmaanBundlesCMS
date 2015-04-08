@@ -3,19 +3,18 @@
 {% block extraactions %}
 
     {% if handler.aviaryApiKey and not (handler.aviaryApiKey starts with 'Register') %}
-	<button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}');" >
-	    {{ 'media.media.edit.action' | trans }}
-	</button>
+        <button type="button" class="btn btn-primary btn--raise-on-hover" onclick="return launchEditor('editimage', '{{ app.request.getScheme()~'://'~app.request.getHttpHost()~asset(media.url) }}');" >
+            {{ 'media.media.edit.action' | trans }}
+        </button>
 
-	<!-- Load widget code -->
-	<script type="text/javascript" src="http://feather.aviary.com/imaging/v1/editor.js"></script>
+        <!-- Load widget code -->
+        <script src="http://feather.aviary.com/imaging/v1/editor.js"></script>
 
-	<!-- Instantiate the widget -->
-        <script type="text/javascript">
-
+        <!-- Instantiate the widget -->
+        <script>
             var featherEditor = new Aviary.Feather({
                 apiKey: '{{ handler.aviaryApiKey }}',
-		tools: 'all',
+                tools: 'all',
                 onSave: function(imageID, newURL) {
                     var img = document.getElementById(imageID);
                     img.src = newURL;
@@ -34,7 +33,7 @@
     {% endif %}
 
     <a href="{{ asset(media.url) }}" class="btn btn-default btn--raise-on-hover">
-	{{ 'media.media.download.action'|trans }}
+        {{ 'media.media.download.action'|trans }}
     </a>
 {% endblock %}
 

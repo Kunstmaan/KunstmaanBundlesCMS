@@ -10,37 +10,37 @@
 
 {% if demosite %}
     ul {
-	@include list-reset;
+        @include list-reset;
 
-	li {
-	    position: relative;
+        li {
+            position: relative;
 
-	    padding-left: .9rem;
+            padding-left: .9rem;
 
-	    &:before {
-		content: "•";
+            &:before {
+                content: "•";
 
-		position: absolute;
-		top: 0;
-		left: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
 
-		font-size: .7rem;
-		color: $theme-color;
-	    }
-	}
+                font-size: .7rem;
+                color: $theme-color;
+            }
+        }
     }
 
     ol {
-	padding-left: 1.4rem;
+        padding-left: 1.4rem;
     }
 
     ul, ol {
 
-	li {
-	    margin-bottom: .4rem;
+        li {
+            margin-bottom: .4rem;
 
-	    line-height: 150%;
-	}
+            line-height: 150%;
+        }
     }
 {% endif %}
 }

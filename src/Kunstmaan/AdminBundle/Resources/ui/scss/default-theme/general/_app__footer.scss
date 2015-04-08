@@ -11,7 +11,7 @@
     opacity: .3;
 
     &:hover {
-	opacity: 1;
+        opacity: 1;
     }
 
     @include transition(opacity .3s ease);

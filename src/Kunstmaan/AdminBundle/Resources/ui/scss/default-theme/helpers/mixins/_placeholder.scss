@@ -4,22 +4,22 @@
 
 @mixin placeholder($color, $text-transform) {
     &::-webkit-input-placeholder {
-	color: $color;
-	text-transform: $text-transform;
+        color: $color;
+        text-transform: $text-transform;
     }
 
     &::-moz-placeholder {
-	color: $color;
-	text-transform: $text-transform;
+        color: $color;
+        text-transform: $text-transform;
     }
 
     &:-ms-input-placeholder {
-	color: $color;
-	text-transform: $text-transform;
+        color: $color;
+        text-transform: $text-transform;
     }
 
     &:placeholder {
-	color: $color;
-	text-transform: $text-transform;
+        color: $color;
+        text-transform: $text-transform;
     }
 }

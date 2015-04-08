@@ -23,16 +23,15 @@
 {% block media_widget %}
 {% spaceless %}
     <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
-	<!-- Hidden input -->
-	<input id="{{ id }}" type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}">
+        <!-- Hidden input -->
+        <input id="{{ id }}" type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}">
 
-
-	<!-- Preview -->
-	<div class="media-chooser__preview">
-	    <figure class="thumbnail">
-		{% if(value.ent is defined) %}
-		    {% set media = value.ent %}
-		    {% set handler = mediamanager.getHandler(media) %}
+        <!-- Preview -->
+        <div class="media-chooser__preview">
+            <figure class="thumbnail">
+                {% if(value.ent is defined) %}
+                    {% set media = value.ent %}
+                    {% set handler = mediamanager.getHandler(media) %}
                     {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                     {% if imageurl is not empty and media.location == 'local' %}
                         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
@@ -42,52 +41,52 @@
                         {% endif %}
                     {% endif %}
                     {% if imageurl %}
-			<img src="{{ imageurl }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
-			<figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
-			    {{ media.name }}
-			</figcaption>
+                        <img src="{{ imageurl }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                        <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
+                            {{ media.name }}
+                        </figcaption>
                     {% else %}
-			<i class="fa fa-file-o"></i>
+                        <i class="fa fa-file-o"></i>
                     {% endif %}
-		{% else %}
-		    <img src="/" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
-		    <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
-		{% endif %}
-	    </figure>
+                {% else %}
+                    <img src="/" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                    <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
+                {% endif %}
+            </figure>
 
-	    <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
-		<i class="fa fa-trash-o"></i>
-	    </button>
-	</div>
+            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
+                <i class="fa fa-trash-o"></i>
+            </button>
+        </div>
 
 
-	<!-- Select Button -->
-	<button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn" data-toggle="modal" data-target="#{{ id }}-mediaChooserModal" data-link="{{ path(chooser, {'type': mediatype}) }}">
-	    <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
-	    {{ 'media.widget.choose' | trans }}
-	</button>
+        <!-- Select Button -->
+        <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn" data-toggle="modal" data-target="#{{ id }}-mediaChooserModal" data-link="{{ path(chooser, {'type': mediatype}) }}">
+            <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
+            {{ 'media.widget.choose' | trans }}
+        </button>
     </div>
 
 
     <!-- Media Chooser Modal -->
     <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true">
-	<div class="modal-dialog modal-lg">
-	    <div class="modal-content">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-		<!-- Header -->
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal">
-			<i class="fa fa-times"></i>
-		    </button>
-		    <h3 class="modal-title">
-			Media-Chooser
-		    </h3>
-		</div>
+                <!-- Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3 class="modal-title">
+                        Media-Chooser
+                    </h3>
+                </div>
 
-		<!-- Body -->
-		<div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
-	    </div>
-	</div>
+                <!-- Body -->
+                <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+            </div>
+        </div>
     </div>
 {% endspaceless %}
 {% endblock %}

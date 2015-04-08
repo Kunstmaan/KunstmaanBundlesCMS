@@ -17,14 +17,14 @@
     min-height: calc(100vh - 95px);
 
     @media (max-width: $screen-md) {
-	@include transform-style(preserve-3d);
-	@include transition-property (transform);
-	@include transition-duration(.3s);
-	@include transition-timing-function(ease);
+        @include transform-style(preserve-3d);
+        @include transition-property (transform);
+        @include transition-duration(.3s);
+        @include transition-timing-function(ease);
     }
 
     @media (min-width: $screen-md) {
-	border-left-color: $gray-lighter;
+        border-left-color: $gray-lighter;
     }
 }
 
@@ -55,8 +55,8 @@
     color: $gray-light;
 
     @media (max-width: $screen-lg) {
-	display: block;
-	line-height: 1.4;
+        display: block;
+        line-height: 1.4;
     }
 }
 
@@ -78,6 +78,6 @@
 .app__main--no-sidebar {
 
     .app__content__breadcrumb {
-	padding-left: 0;
+        padding-left: 0;
     }
 }

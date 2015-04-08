@@ -17,16 +17,16 @@
 
     .service-pp__image {
 
-	@media(min-width: $screen-sm-min) {
-	    left: 0;
-	}
+        @media(min-width: $screen-sm-min) {
+            left: 0;
+        }
     }
 
     .service-pp__text {
 
-	@media(min-width: $screen-sm-min) {
-	    float: right;
-	}
+        @media(min-width: $screen-sm-min) {
+            float: right;
+        }
     }
 }
 
@@ -34,16 +34,16 @@
 
     .service-pp__image {
 
-	@media(min-width: $screen-sm-min) {
-	    right: 0;
-	}
+        @media(min-width: $screen-sm-min) {
+            right: 0;
+        }
     }
 
     .service-pp__text {
 
-	@media(min-width: $screen-sm-min) {
-	    float: left;
-	}
+        @media(min-width: $screen-sm-min) {
+            float: left;
+        }
     }
 }
 
@@ -59,7 +59,7 @@
     line-height: 1.2;
 
     @media(min-width: $screen-md-min) {
-	font-size: 3rem;
+        font-size: 3rem;
     }
 }
 
@@ -72,11 +72,11 @@
     padding: 2em;
 
     @media(min-width: $screen-sm-min) {
-	max-width: none;
-	padding: 0 2em;
+        max-width: none;
+        padding: 0 2em;
     }
 
     @media(min-width: $screen-md-min) {
-	padding: 0 4em;
+        padding: 0 4em;
     }
 }

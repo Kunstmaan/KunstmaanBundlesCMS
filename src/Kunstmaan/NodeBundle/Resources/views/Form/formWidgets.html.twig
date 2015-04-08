@@ -1,33 +1,33 @@
 {% block urlchooser_widget %}
 {% spaceless %}
     <div id="{{ id }}-widget" class="input-group">
-	<input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
-	<span class="input-group-btn">
-	    <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
-		Choose
-	    </button>
-	</span>
+        <input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
+                Choose
+            </button>
+        </span>
     </div>
 
     <!-- URL Chooser Modal -->
     <div class="js-ajax-modal modal fade" id="{{ id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}">
-	<div class="modal-dialog modal-lg">
-	    <div class="modal-content">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-		<!-- Header -->
-		<div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal">
-			<i class="fa fa-times"></i>
-		    </button>
-		    <h3 class="modal-title">
-			URL-Chooser
-		    </h3>
-		</div>
+                <!-- Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3 class="modal-title">
+                        URL-Chooser
+                    </h3>
+                </div>
 
-		<!-- Body -->
-		<div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
-	    </div>
-	</div>
+                <!-- Body -->
+                <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+            </div>
+        </div>
     </div>
 {% endspaceless %}
 {% endblock urlchooser_widget %}
@@ -35,15 +35,15 @@
 {% block slug_widget %}
 {% spaceless %}
     <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')})}}" data-reset="{{ reset }}">
-	<div class="input-group">
-	    <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
-	    <span class="input-group-btn">
-		<button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
-		    Reset
-		</button>
-	    </span>
-	</div>
-	<small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
+        <div class="input-group">
+            <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
+            <span class="input-group-btn">
+                <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
+                    Reset
+                </button>
+            </span>
+        </div>
+        <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
     </div>
 {% endspaceless %}
 {% endblock slug_widget %}

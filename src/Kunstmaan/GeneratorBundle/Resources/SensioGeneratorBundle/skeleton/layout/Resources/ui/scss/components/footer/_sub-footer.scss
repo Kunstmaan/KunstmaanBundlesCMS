@@ -24,7 +24,7 @@
     text-align: center;
 
     @media(min-width: $screen-xs-min) {
-	float: left;
+        float: left;
     }
 }
 .sub-footer__info__link {
@@ -33,7 +33,7 @@
     color: $text-color;
 
     &:hover, &:focus, &:active {
-	color: $text-color;
+        color: $text-color;
     }
 }
 
@@ -47,7 +47,7 @@
     margin: 0;
 
     @media(min-width: $screen-xs-min) {
-	float: right;
+        float: right;
     }
 }
 

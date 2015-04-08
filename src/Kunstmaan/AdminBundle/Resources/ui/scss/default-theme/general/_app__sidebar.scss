@@ -16,33 +16,34 @@
     @include transition(color .3s ease);
 
     @media (max-width: $screen-md) {
-	top: 0;
-	left: 0;
+        top: 0;
+        left: 0;
 
-	padding-right: 4.5em;
-	padding-top: 70px !important;
+        padding-right: 4.5em;
+        padding-top: 70px !important;
     }
 
     @media (min-width: $screen-sm) and (max-width: $screen-md) {
-	width: 30rem;
+        width: 30rem;
     }
 
     &:before {
-	@extend %loading;
+        @extend %loading;
 
-	top: 7rem;
+        top: 7rem;
     }
 }
 
 .app__sidebar--tree-ready {
+
     &:before {
-	display: none;
+        display: none;
     }
 
     .app__sidebar__module {
-	@include transition(opacity .3s ease);
+        @include transition(opacity .3s ease);
 
-	opacity: 1;
+        opacity: 1;
     }
 }
 
@@ -78,11 +79,11 @@
     @include transition(color .3s ease);
 
     &:hover {
-	color: $brand-primary;
+        color: $brand-primary;
     }
 
     &:focus {
-	outline: none;
+        outline: none;
     }
 }
 
@@ -90,7 +91,7 @@
     display: none;
 
     @media (min-width: $screen-md) {
-	display: inline-block;
+        display: inline-block;
     }
 }
 
@@ -98,7 +99,7 @@
     display: inline-block;
 
     @media (min-width: $screen-md) {
-	display: none;
+        display: none;
     }
 }
 
@@ -118,7 +119,7 @@
     @include transition(color .3s ease);
 
     &:active {
-	box-shadow: none;
+        box-shadow: none;
     }
 }
 

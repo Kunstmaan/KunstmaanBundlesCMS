@@ -8,7 +8,7 @@
     margin: 2rem 0 0;
 
     @media(min-width: $screen-md-min) {
-	margin: 0 2rem 0 0;
+        margin: 0 2rem 0 0;
     }
 }
 
@@ -31,15 +31,15 @@
     color: $white;
 
     @media(min-width: $screen-md-min) {
-	display: inline-block;
-	margin: 0 .5rem 0 0;
-	padding: .5em 1em;
+        display: inline-block;
+        margin: 0 .5rem 0 0;
+        padding: .5em 1em;
 
-	font-size: .65rem;
-	line-height: 1;
-	font-weight: 400;
-	color: $text-color;
-	text-transform: uppercase;
+        font-size: .65rem;
+        line-height: 1;
+        font-weight: 400;
+        color: $text-color;
+        text-transform: uppercase;
     }
 }
 
@@ -49,8 +49,8 @@
     color: $theme-color;
 
     @media(min-width: $screen-md-min) {
-	background: transparent;
-	color: $theme-color;
+        background: transparent;
+        color: $theme-color;
    }
 }
 

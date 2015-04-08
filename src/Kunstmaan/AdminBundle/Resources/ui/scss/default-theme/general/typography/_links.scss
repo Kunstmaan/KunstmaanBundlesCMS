@@ -6,7 +6,7 @@
     color: $gray;
 
     &:hover, &:focus {
-	color: $green;
+        color: $green;
     }
 }
 
@@ -18,13 +18,13 @@
     color: $text-color;
 
     &:hover {
-	color: $link-hover-color;
+        color: $link-hover-color;
     }
 }
 
 .link--danger {
 
     &:hover {
-	color: $brand-danger;
+        color: $brand-danger;
     }
 }

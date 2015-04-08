@@ -4,9 +4,9 @@
 </button>
 <div id="sidebar-search-toggle" class="toggle-item">
     <div class="toggle-item__content">
-	<div class="app__sidebar__search-toggle-item">
-	    <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
-	    <hr>
+        <div class="app__sidebar__search-toggle-item">
+            <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+            <hr>
         </div>
     </div>
 </div>
@@ -16,19 +16,19 @@
 <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
     {% set currentMenuItem = adminmenu.current %}
     <ul>
-	{% if lowestTopChild.appearInSidebar %}
-	    <li class="jstree-open {% if lowestTopChild.internalname == currentMenuItem.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
-		<a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}" class="{% if lowestTopChild.internalname == currentMenuItem.internalname %}jstree-anchor--active{% endif %}">
-		   {{ lowestTopChild.internalname | trans }}
-		</a>
-		<ul>
-	{% endif %}
-	{% for menuitem in navigationChildren %}
-	    {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
-	{% endfor %}
-	{% if lowestTopChild.appearInSidebar %}
-		</ul>
-	    </li>
-	{% endif %}
+    {% if lowestTopChild.appearInSidebar %}
+        <li class="jstree-open {% if lowestTopChild.internalname == currentMenuItem.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
+            <a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}" class="{% if lowestTopChild.internalname == currentMenuItem.internalname %}jstree-anchor--active{% endif %}">
+                {{ lowestTopChild.internalname | trans }}
+            </a>
+            <ul>
+    {% endif %}
+    {% for menuitem in navigationChildren %}
+        {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
+    {% endfor %}
+    {% if lowestTopChild.appearInSidebar %}
+            </ul>
+        </li>
+    {% endif %}
     </ul>
 </nav>

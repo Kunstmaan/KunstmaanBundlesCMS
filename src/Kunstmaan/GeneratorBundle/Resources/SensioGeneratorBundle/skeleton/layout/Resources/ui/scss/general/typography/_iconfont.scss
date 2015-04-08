@@ -10,9 +10,9 @@
     font-family: $iconfont-name;
     src:url('#{$iconfont-path}/#{$iconfont-name}.eot?8at4kw');
     src:url('#{$iconfont-path}/#{$iconfont-name}.eot?#iefix8at4kw') format('embedded-opentype'),
-	url('#{$iconfont-path}/#{$iconfont-name}.woff?8at4kw') format('woff'),
-	url('#{$iconfont-path}/#{$iconfont-name}.ttf?8at4kw') format('truetype'),
-	url('#{$iconfont-path}/#{$iconfont-name}.svg?8at4kw##{$iconfont-name}') format('svg');
+    url('#{$iconfont-path}/#{$iconfont-name}.woff?8at4kw') format('woff'),
+    url('#{$iconfont-path}/#{$iconfont-name}.ttf?8at4kw') format('truetype'),
+    url('#{$iconfont-path}/#{$iconfont-name}.svg?8at4kw##{$iconfont-name}') format('svg');
     font-weight: normal;
     font-style: normal;
 }

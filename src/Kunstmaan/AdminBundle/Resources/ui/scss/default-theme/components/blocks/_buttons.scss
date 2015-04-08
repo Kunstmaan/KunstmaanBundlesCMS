@@ -6,7 +6,7 @@
    ========================================================================== */
 .btn {
     &:focus {
-	outline: 0;
+        outline: 0;
     }
 }
 
@@ -23,7 +23,7 @@
     transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
 
     &:hover:not(.active) {
-	box-shadow: 0 3px 8px rgba(0,0,0,.04),0 3px 4px rgba(0,0,0,.04);
+        box-shadow: 0 3px 8px rgba(0,0,0,.04),0 3px 4px rgba(0,0,0,.04);
     }
 }
 
@@ -39,7 +39,7 @@
     padding-left: 1rem;
 
     .btn__icon {
-	margin-right: .5rem;
+        margin-right: .5rem;
     }
 }
 
@@ -49,16 +49,16 @@
 .btn-default {
 
     &:hover:not(.active) {
-	background: $white;
-	border-color: $gray-lighter;
+        background: $white;
+        border-color: $gray-lighter;
     }
 }
 
 .btn-primary {
 
     &:hover:not(.active) {
-	background: $brand-primary;
-	border-color: $brand-primary;
+        background: $brand-primary;
+        border-color: $brand-primary;
     }
 }
 
@@ -85,8 +85,8 @@
 
     &:hover,
     &:focus {
-	text-decoration: none;
-	color: $dropdown-link-hover-color;
-	background-color: $dropdown-link-hover-bg;
+        text-decoration: none;
+        color: $dropdown-link-hover-color;
+        background-color: $dropdown-link-hover-bg;
     }
 }

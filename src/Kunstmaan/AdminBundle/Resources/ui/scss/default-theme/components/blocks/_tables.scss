@@ -4,10 +4,6 @@
 
 /* Sortable
    ========================================================================== */
-.table--sortable {
-
-}
-
 .table--sortable__th {
     position: relative;
 
@@ -15,22 +11,22 @@
     cursor: pointer;
 
     &:before {
-	@extend .fa;
+        @extend .fa;
 
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
     }
 
     &:not(.table--sortable__th--up), &:not(.table--sortable__th--down) {
 
-	&:hover {
-	    background: $gray-ultralight;
+        &:hover {
+            background: $gray-ultralight;
 
-	    &:before {
-		@extend .fa-sort;
-	    }
-	}
+            &:before {
+                @extend .fa-sort;
+            }
+        }
     }
 }
 
@@ -41,13 +37,14 @@
 .table--sortable__th--up {
 
     &:before {
-	@extend .fa-caret-up;
+        @extend .fa-caret-up;
     }
 }
 
 .table--sortable__th--down {
+
     &:before {
-	@extend .fa-caret-down;
+        @extend .fa-caret-down;
     }
 }
 
@@ -58,7 +55,7 @@
 .table--no-actions {
 
     .table__actions {
-	display: none;
+        display: none;
     }
 }
 
@@ -71,10 +68,10 @@
     transition: color .3s ease;
 
     &:hover {
-	text-decoration: none;
+        text-decoration: none;
     }
 
     & + .table__actions__item {
-	margin-bottom: .8rem;
+        margin-bottom: .8rem;
     }
 }

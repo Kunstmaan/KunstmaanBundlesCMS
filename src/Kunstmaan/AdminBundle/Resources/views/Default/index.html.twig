@@ -2,23 +2,23 @@
 
 {% block content %}
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-	<a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-default">
-	    {{ 'Edit dashboard' | trans }}
-	</a>
+        <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-default">
+            {{ 'Edit dashboard' | trans }}
+        </a>
     {% endif %}
 
     {% if dashboardConfiguration %}
-	<div class="page-header">
-	    <h1>
-		{{ dashboardConfiguration.title }}
-	    </h1>
-	</div>
-	{{ dashboardConfiguration.content | raw }}
+        <header class="page-header">
+            <h1>
+                {{ dashboardConfiguration.title }}
+            </h1>
+        </header>
+        {{ dashboardConfiguration.content | raw }}
     {% else %}
-	<div class="page-header">
-	    <h1>
-		{{ 'omnext.welcome' | trans | raw }}
-	    </h1>
-	</div>
+        <header class="page-header">
+            <h1>
+                {{ 'omnext.welcome' | trans | raw }}
+            </h1>
+        </header>
     {% endif %}
 {% endblock %}

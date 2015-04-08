@@ -3,10 +3,11 @@
    ========================================================================== */
 
 .pagination {
-    ul {
-	margin: 0;
 
-	@extend .pagination;
+    ul {
+        margin: 0;
+
+        @extend .pagination;
     }
 }
 
