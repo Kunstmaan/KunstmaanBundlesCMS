@@ -67,6 +67,7 @@
 
     &.collapse {
       display: block !important;
+      visibility: visible !important;
       height: auto !important;
       padding-bottom: 0; // Override default setting
       overflow: visible !important;
@@ -250,14 +251,14 @@
       box-shadow: none;
       > li > a,
       .dropdown-header {
-	padding: 5px 15px 5px 25px;
+        padding: 5px 15px 5px 25px;
       }
       > li > a {
-	line-height: $line-height-computed;
-	&:hover,
-	&:focus {
-	  background-image: none;
-	}
+        line-height: $line-height-computed;
+        &:hover,
+        &:focus {
+          background-image: none;
+        }
       }
     }
   }
@@ -270,8 +271,8 @@
     > li {
       float: left;
       > a {
-	padding-top:    $navbar-padding-vertical;
-	padding-bottom: $navbar-padding-vertical;
+        padding-top:    $navbar-padding-vertical;
+        padding-bottom: $navbar-padding-vertical;
       }
     }
   }
@@ -300,7 +301,7 @@
       margin-bottom: 5px;
 
       &:last-child {
-	margin-bottom: 0;
+        margin-bottom: 0;
       }
     }
   }
@@ -417,24 +418,24 @@
 
       &:hover,
       &:focus {
-	color: $navbar-default-link-hover-color;
-	background-color: $navbar-default-link-hover-bg;
+        color: $navbar-default-link-hover-color;
+        background-color: $navbar-default-link-hover-bg;
       }
     }
     > .active > a {
       &,
       &:hover,
       &:focus {
-	color: $navbar-default-link-active-color;
-	background-color: $navbar-default-link-active-bg;
+        color: $navbar-default-link-active-color;
+        background-color: $navbar-default-link-active-bg;
       }
     }
     > .disabled > a {
       &,
       &:hover,
       &:focus {
-	color: $navbar-default-link-disabled-color;
-	background-color: $navbar-default-link-disabled-bg;
+        color: $navbar-default-link-disabled-color;
+        background-color: $navbar-default-link-disabled-bg;
       }
     }
   }
@@ -462,38 +463,38 @@
       &,
       &:hover,
       &:focus {
-	background-color: $navbar-default-link-active-bg;
-	color: $navbar-default-link-active-color;
+        background-color: $navbar-default-link-active-bg;
+        color: $navbar-default-link-active-color;
       }
     }
 
     @media (max-width: $grid-float-breakpoint-max) {
       // Dropdowns get custom display when collapsed
       .open .dropdown-menu {
-	> li > a {
-	  color: $navbar-default-link-color;
-	  &:hover,
-	  &:focus {
-	    color: $navbar-default-link-hover-color;
-	    background-color: $navbar-default-link-hover-bg;
-	  }
-	}
-	> .active > a {
-	  &,
-	  &:hover,
-	  &:focus {
-	    color: $navbar-default-link-active-color;
-	    background-color: $navbar-default-link-active-bg;
-	  }
-	}
-	> .disabled > a {
-	  &,
-	  &:hover,
-	  &:focus {
-	    color: $navbar-default-link-disabled-color;
-	    background-color: $navbar-default-link-disabled-bg;
-	  }
-	}
+        > li > a {
+          color: $navbar-default-link-color;
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-hover-color;
+            background-color: $navbar-default-link-hover-bg;
+          }
+        }
+        > .active > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-active-color;
+            background-color: $navbar-default-link-active-bg;
+          }
+        }
+        > .disabled > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-disabled-color;
+            background-color: $navbar-default-link-disabled-bg;
+          }
+        }
       }
     }
   }
@@ -520,7 +521,7 @@
     fieldset[disabled] & {
       &:hover,
       &:focus {
-	color: $navbar-default-link-disabled-color;
+        color: $navbar-default-link-disabled-color;
       }
     }
   }
@@ -551,24 +552,24 @@
 
       &:hover,
       &:focus {
-	color: $navbar-inverse-link-hover-color;
-	background-color: $navbar-inverse-link-hover-bg;
+        color: $navbar-inverse-link-hover-color;
+        background-color: $navbar-inverse-link-hover-bg;
       }
     }
     > .active > a {
       &,
       &:hover,
       &:focus {
-	color: $navbar-inverse-link-active-color;
-	background-color: $navbar-inverse-link-active-bg;
+        color: $navbar-inverse-link-active-color;
+        background-color: $navbar-inverse-link-active-bg;
       }
     }
     > .disabled > a {
       &,
       &:hover,
       &:focus {
-	color: $navbar-inverse-link-disabled-color;
-	background-color: $navbar-inverse-link-disabled-bg;
+        color: $navbar-inverse-link-disabled-color;
+        background-color: $navbar-inverse-link-disabled-bg;
       }
     }
   }
@@ -596,44 +597,44 @@
       &,
       &:hover,
       &:focus {
-	background-color: $navbar-inverse-link-active-bg;
-	color: $navbar-inverse-link-active-color;
+        background-color: $navbar-inverse-link-active-bg;
+        color: $navbar-inverse-link-active-color;
       }
     }
 
     @media (max-width: $grid-float-breakpoint-max) {
       // Dropdowns get custom display
       .open .dropdown-menu {
-	> .dropdown-header {
-	  border-color: $navbar-inverse-border;
-	}
-	.divider {
-	  background-color: $navbar-inverse-border;
-	}
-	> li > a {
-	  color: $navbar-inverse-link-color;
-	  &:hover,
-	  &:focus {
-	    color: $navbar-inverse-link-hover-color;
-	    background-color: $navbar-inverse-link-hover-bg;
-	  }
-	}
-	> .active > a {
-	  &,
-	  &:hover,
-	  &:focus {
-	    color: $navbar-inverse-link-active-color;
-	    background-color: $navbar-inverse-link-active-bg;
-	  }
-	}
-	> .disabled > a {
-	  &,
-	  &:hover,
-	  &:focus {
-	    color: $navbar-inverse-link-disabled-color;
-	    background-color: $navbar-inverse-link-disabled-bg;
-	  }
-	}
+        > .dropdown-header {
+          border-color: $navbar-inverse-border;
+        }
+        .divider {
+          background-color: $navbar-inverse-border;
+        }
+        > li > a {
+          color: $navbar-inverse-link-color;
+          &:hover,
+          &:focus {
+            color: $navbar-inverse-link-hover-color;
+            background-color: $navbar-inverse-link-hover-bg;
+          }
+        }
+        > .active > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-inverse-link-active-color;
+            background-color: $navbar-inverse-link-active-bg;
+          }
+        }
+        > .disabled > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-inverse-link-disabled-color;
+            background-color: $navbar-inverse-link-disabled-bg;
+          }
+        }
       }
     }
   }
@@ -655,7 +656,7 @@
     fieldset[disabled] & {
       &:hover,
       &:focus {
-	color: $navbar-inverse-link-disabled-color;
+        color: $navbar-inverse-link-disabled-color;
       }
     }
   }

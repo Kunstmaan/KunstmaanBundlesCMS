@@ -2,13 +2,13 @@ define([
   'jquery'
 ], function ($) {
   function InitSelection (decorated, $element, options) {
-    if (console && console.warn) {
+    if (options.get('debug') && window.console && console.warn) {
       console.warn(
-	'Select2: The `initSelection` option has been deprecated in favor' +
-	' of a custom data adapter that overrides the `current` method. ' +
-	'This method is now called multiple times instead of a single ' +
-	'time when the instance is initialized. Support will be removed ' +
-	'for the `initSelection` option in future versions of Select2'
+        'Select2: The `initSelection` option has been deprecated in favor' +
+        ' of a custom data adapter that overrides the `current` method. ' +
+        'This method is now called multiple times instead of a single ' +
+        'time when the instance is initialized. Support will be removed ' +
+        'for the `initSelection` option in future versions of Select2'
       );
     }
 
@@ -31,7 +31,7 @@ define([
       self._isInitialized = true;
 
       if (!$.isArray(data)) {
-	data = [data];
+        data = [data];
       }
 
       callback(data);

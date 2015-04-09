@@ -41,27 +41,26 @@ define([
 
     if (this.$element.prop('multiple')) {
       this.current(function (currentData) {
-	var val = [];
+        var val = [];
 
-	data = [data];
-	data.push.apply(data, currentData);
+        data = [data];
+        data.push.apply(data, currentData);
 
-	for (var d = 0; d < data.length; d++) {
-	  id = data[d].id;
+        for (var d = 0; d < data.length; d++) {
+          var id = data[d].id;
 
-	  if (val.indexOf(id) === -1) {
-	    val.push(id);
-	  }
-	}
+          if ($.inArray(id, val) === -1) {
+            val.push(id);
+          }
+        }
 
-	self.$element.val(val);
-	self.$element.trigger('change');
+        self.$element.val(val);
+        self.$element.trigger('change');
       });
     } else {
       var val = data.id;
 
       this.$element.val(val);
-
       this.$element.trigger('change');
     }
   };
@@ -85,11 +84,11 @@ define([
       var val = [];
 
       for (var d = 0; d < currentData.length; d++) {
-	id = currentData[d].id;
+        var id = currentData[d].id;
 
-	if (id !== data.id && val.indexOf(id) === -1) {
-	  val.push(id);
-	}
+        if (id !== data.id && $.inArray(id, val) === -1) {
+          val.push(id);
+        }
       }
 
       self.$element.val(val);
@@ -130,7 +129,7 @@ define([
       var $option = $(this);
 
       if (!$option.is('option') && !$option.is('optgroup')) {
-	return;
+        return;
       }
 
       var option = self.item($option);
@@ -138,13 +137,17 @@ define([
       var matches = self.matches(params, option);
 
       if (matches !== null) {
-	data.push(matches);
+        data.push(matches);
       }
     });
 
     callback({
       results: data
     });
+  };
+
+  SelectAdapter.prototype.addOptions = function ($options) {
+    this.$element.append($options);
   };
 
   SelectAdapter.prototype.option = function (data) {
@@ -155,7 +158,12 @@ define([
       option.label = data.text;
     } else {
       option = document.createElement('option');
-      option.innerText = data.text;
+
+      if (option.textContent !== undefined) {
+        option.textContent = data.text;
+      } else {
+        option.innerText = data.text;
+      }
     }
 
     if (data.id) {
@@ -168,6 +176,10 @@ define([
 
     if (data.selected) {
       option.selected = true;
+    }
+
+    if (data.title) {
+      option.title = data.title;
     }
 
     var $option = $(option);
@@ -192,26 +204,28 @@ define([
 
     if ($option.is('option')) {
       data = {
-	id: $option.val(),
-	text: $option.html(),
-	disabled: $option.prop('disabled'),
-	selected: $option.prop('selected')
+        id: $option.val(),
+        text: $option.text(),
+        disabled: $option.prop('disabled'),
+        selected: $option.prop('selected'),
+        title: $option.prop('title')
       };
     } else if ($option.is('optgroup')) {
       data = {
-	text: $option.prop('label'),
-	children: []
+        text: $option.prop('label'),
+        children: [],
+        title: $option.prop('title')
       };
 
       var $children = $option.children('option');
       var children = [];
 
       for (var c = 0; c < $children.length; c++) {
-	var $child = $($children[c]);
+        var $child = $($children[c]);
 
-	var child = this.item($child);
+        var child = this.item($child);
 
-	children.push(child);
+        children.push(child);
       }
 
       data.children = children;
@@ -228,8 +242,8 @@ define([
   SelectAdapter.prototype._normalizeItem = function (item) {
     if (!$.isPlainObject(item)) {
       item = {
-	id: item,
-	text: item
+        id: item,
+        text: item
       };
     }
 

@@ -47,7 +47,7 @@
 
 	var inp = document.createElement("INPUT");
 	inp.type = "checkbox";
-	inp.className = "jstree-realcheckbox";
+	inp.className = "jstree-checkbox jstree-realcheckbox";
 
 	$.jstree.defaults.realcheckboxes = {};
 
@@ -90,8 +90,9 @@
 		};
 		this._realcheckboxes = function () {
 			var ts = this.settings.checkbox.tie_selection;
+			console.log(ts);
 			$('.jstree-realcheckbox').each(function () {
-				this.checked = (!ts && this.parentNode.className.indexOf("jstree-checked") !== -1) || (ts && this.parentNode.parentNode.className.indexOf('jstree-clicked') !== -1);
+				this.checked = (!ts && this.parentNode.parentNode.className.indexOf("jstree-checked") !== -1) || (ts && this.parentNode.parentNode.className.indexOf('jstree-clicked') !== -1);
 				this.indeterminate = this.parentNode.className.indexOf("jstree-undetermined") !== -1;
 				this.disabled = this.parentNode.parentNode.className.indexOf("disabled") !== -1;
 			});
@@ -225,10 +226,125 @@
 	};
 })(jQuery);
 
+// massloading
+(function ($, undefined) {
+	"use strict";
+	$.jstree.defaults.massload = function (nodes, callback) {
+		callback(false);
+	};
+	$.jstree.plugins.massload = function (options, parent) {
+		this.init = function (el, options) {
+			parent.init.call(this, el, options);
+			this._data.massload = {};
+		};
+		this._load_nodes = function (nodes, callback, is_callback) {
+			if(is_callback && !$.isEmptyObject(this._data.massload)) {
+				return parent._load_nodes.call(this, nodes, callback, is_callback);
+			}
+			this.settings.massload.call(this, nodes, $.proxy(function (data) {
+				if(data) {
+					for(var i in data) {
+						if(data.hasOwnProperty(i)) {
+							this._data.massload[i] = data[i];
+						}
+					}
+				}
+				parent._load_nodes.call(this, nodes, callback, is_callback);
+			}, this));
+		};
+		this._load_node = function (obj, callback) {
+			var d = this._data.massload[obj.id];
+			if(d) {
+				return this[typeof d === 'string' ? '_append_html_data' : '_append_json_data'](obj, typeof d === 'string' ? $($.parseHTML(d)).filter(function () { return this.nodeType !== 3; }) : d, function (status) {
+					callback.call(this, status);
+					delete this._data.massload[obj.id];
+				});
+			}
+			return parent._load_node.call(this, obj, callback);
+		};
+	};
+})(jQuery);
+
+// object as data
+(function ($, undefined) {
+	"use strict";
+	$.jstree.defaults.datamodel = {};
+	$.jstree.plugins.datamodel = function (options, parent) {
+		this.init = function (el, options) {
+			this._data.datamodel = {};
+			parent.init.call(this, el, options);
+		};
+		this._datamodel = function (id, nodes, callback) {
+			var i = 0, j = nodes.length, tmp = [], obj = null;
+			for(; i < j; i++) {
+				this._data.datamodel[nodes[i].getID()] = nodes[i];
+				obj = {
+					id : nodes[i].getID(),
+					text : nodes[i].getText(),
+					children : nodes[i].hasChildren()
+				};
+				if(nodes[i].getExtra) {
+					obj = nodes[i].getExtra(obj); // icon, type
+				}
+				tmp.push(obj);
+			}
+			return this._append_json_data(id, tmp, $.proxy(function (status) {
+				callback.call(this, status);
+			}, this));
+		};
+		this._load_node = function (obj, callback) {
+			var id = obj.id;
+			var nd = obj.id === "#" ? this.settings.core.data : this._data.datamodel[obj.id].getChildren($.proxy(function (nodes) {
+				this._datamodel(id, nodes, callback);
+			}, this));
+			if($.isArray(nd)) {
+				this._datamodel(id, nd, callback);
+			}
+		};
+	};
+})(jQuery);
+/* demo of the above
+function treeNode(val) {
+	var id = ++treeNode.counter;
+	this.getID = function () {
+		return id;
+	};
+	this.getText = function () {
+		return val.toString();
+	};
+	this.getExtra = function (obj) {
+		obj.icon = false;
+		return obj;
+	};
+	this.hasChildren = function () {
+		return true;
+	};
+	this.getChildren = function () {
+		return [
+			new treeNode(Math.pow(val, 2)),
+			new treeNode(Math.sqrt(val)),
+		];
+	};
+}
+treeNode.counter = 0;
+			
+$('#jstree').jstree({
+	'core': {
+		'data': [
+					new treeNode(2),
+					new treeNode(3),
+					new treeNode(4),
+					new treeNode(5)
+				]
+	},
+	plugins : ['datamodel']
+});
+*/
+
 // paste override
 (function ($, undefined) {
 	"use strict";
-	$.jstree.plugins.nohover = function () {
+	$.jstree.plugins.pastewithpos = function () {
 		this.paste = function (obj, pos) {
 			obj = this.get_node(obj);
 			if(!obj || !ccp_mode || !ccp_mode.match(/^(copy_node|move_node)$/) || !ccp_node) { return false; }

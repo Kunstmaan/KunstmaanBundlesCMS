@@ -16,8 +16,8 @@ define([
   HidePlaceholder.prototype.normalizePlaceholder = function (_, placeholder) {
     if (typeof placeholder === 'string') {
       placeholder = {
-	id: '',
-	text: placeholder
+        id: '',
+        text: placeholder
       };
     }
 
@@ -31,7 +31,7 @@ define([
       var item = data[d];
 
       if (this.placeholder.id === item.id) {
-	modifiedData.splice(d, 1);
+        modifiedData.splice(d, 1);
       }
     }
 

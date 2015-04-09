@@ -38,21 +38,21 @@ define([
 
     this.$results.on('scroll', function () {
       var isLoadMoreVisible = $.contains(
-	document.documentElement,
-	self.$loadingMore[0]
+        document.documentElement,
+        self.$loadingMore[0]
       );
 
       if (self.loading || !isLoadMoreVisible) {
-	return;
+        return;
       }
 
       var currentOffset = self.$results.offset().top +
-	self.$results.outerHeight(false);
+        self.$results.outerHeight(false);
       var loadingMoreOffset = self.$loadingMore.offset().top +
-	self.$loadingMore.outerHeight(false);
+        self.$loadingMore.outerHeight(false);
 
       if (currentOffset + 50 >= loadingMoreOffset) {
-	self.loadMore();
+        self.loadMore();
       }
     });
   };

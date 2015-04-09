@@ -7,7 +7,7 @@ define(function () {
       var message = 'Vinsamlegast styttið texta um ' + overChars + ' staf';
 
       if (overChars <= 1) {
-	return message;
+        return message;
       }
 
       return message + 'i';
@@ -17,8 +17,8 @@ define(function () {
 
       var message = 'Vinsamlegast skrifið ' + remainingChars + ' staf';
 
-      if (overChars > 1) {
-	message += 'i';
+      if (remainingChars > 1) {
+        message += 'i';
       }
 
       message += ' í viðbót';
@@ -28,7 +28,7 @@ define(function () {
     loadingMore: function () {
       return 'Sæki fleiri niðurstöður…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       return 'Þú getur aðeins valið ' + args.maximum + ' atriði';
     },
     noResults: function () {

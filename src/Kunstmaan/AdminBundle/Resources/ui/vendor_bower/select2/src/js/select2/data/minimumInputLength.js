@@ -12,12 +12,12 @@ define([
 
     if (params.term.length < this.minimumInputLength) {
       this.trigger('results:message', {
-	message: 'inputTooShort',
-	args: {
-	  minimum: this.minimumInputLength,
-	  input: params.term,
-	  params: params
-	}
+        message: 'inputTooShort',
+        args: {
+          minimum: this.minimumInputLength,
+          input: params.term,
+          params: params
+        }
       });
 
       return;

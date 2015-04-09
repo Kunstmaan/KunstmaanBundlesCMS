@@ -28,7 +28,7 @@ define([
 
     this.$selection.on('click', function (evt) {
       self.trigger('toggle', {
-	originalEvent: evt
+        originalEvent: evt
       });
     });
 
@@ -40,8 +40,8 @@ define([
       var data = $selection.data('data');
 
       self.trigger('unselect', {
-	originalEvent: evt,
-	data: data
+        originalEvent: evt,
+        data: data
       });
     });
   };
@@ -52,16 +52,17 @@ define([
 
   MultipleSelection.prototype.display = function (data) {
     var template = this.options.get('templateSelection');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return template(data);
+    return escapeMarkup(template(data));
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
     var $container = $(
       '<li class="select2-selection__choice">' +
-	'<span class="select2-selection__choice__remove" role="presentation">' +
-	  '&times;' +
-	'</span>' +
+        '<span class="select2-selection__choice__remove" role="presentation">' +
+          '&times;' +
+        '</span>' +
       '</li>'
     );
 
@@ -75,7 +76,7 @@ define([
       return;
     }
 
-    var $selections = [];
+    var $selections = $();
 
     for (var d = 0; d < data.length; d++) {
       var selection = data[d];
@@ -84,9 +85,11 @@ define([
       var $selection = this.selectionContainer();
 
       $selection.append(formatted);
+      $selection.prop('title', selection.title || selection.text);
+
       $selection.data('data', selection);
 
-      $selections.push($selection);
+      $selections = $selections.add($selection);
     }
 
     this.$selection.find('.select2-selection__rendered').append($selections);

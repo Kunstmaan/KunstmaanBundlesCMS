@@ -15,7 +15,7 @@ define(function () {
       var remainingChars = args.minimum - args.input.length;
 
       var message = 'Gelieve ' + remainingChars +
-	' of meer karakters in te voeren';
+        ' of meer karakters in te voeren';
 
       return message;
     },
@@ -26,7 +26,7 @@ define(function () {
       var message = 'Er kunnen maar ' + args.maximum + ' item';
 
       if (args.maximum != 1) {
-	message += 's';
+        message += 's';
       }
       message += ' worden geselecteerd';
 

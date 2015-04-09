@@ -32,8 +32,8 @@ define([
     if (tokenData.term !== params.term) {
       // Replace the search term if we have the search box
       if (this.$search.length) {
-	this.$search.val(tokenData.term);
-	this.$search.focus();
+        this.$search.val(tokenData.term);
+        this.$search.focus();
       }
 
       params.term = tokenData.term;
@@ -49,23 +49,23 @@ define([
 
     var createTag = this.createTag || function (params) {
       return {
-	id: params.term,
-	text: params.term
+        id: params.term,
+        text: params.term
       };
     };
 
     while (i < term.length) {
       var termChar = term[i];
 
-      if (separators.indexOf(termChar) === -1) {
-	i++;
+      if ($.inArray(termChar, separators) === -1) {
+        i++;
 
-	continue;
+        continue;
       }
 
       var part = term.substr(0, i);
       var partParams = $.extend({}, params, {
-	term: part
+        term: part
       });
 
       var data = createTag(partParams);

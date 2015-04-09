@@ -19,10 +19,16 @@ define([
 
     Select2.__super__.constructor.call(this);
 
+    // Set up the tabindex
+
+    var tabindex = $element.attr('tabindex') || 0;
+    $element.data('old-tabindex', tabindex);
+    $element.attr('tabindex', '-1');
+
     // Set up containers and adapters
 
     var DataAdapter = this.options.get('dataAdapter');
-    this.data = new DataAdapter($element, this.options);
+    this.dataAdapter = new DataAdapter($element, this.options);
 
     var $container = this.render();
 
@@ -41,7 +47,7 @@ define([
     this.dropdown.position(this.$dropdown, $container);
 
     var ResultsAdapter = this.options.get('resultsAdapter');
-    this.results = new ResultsAdapter($element, this.options, this.data);
+    this.results = new ResultsAdapter($element, this.options, this.dataAdapter);
     this.$results = this.results.render();
 
     this.results.position(this.$results, this.$dropdown);
@@ -64,9 +70,9 @@ define([
     this._registerEvents();
 
     // Set the initial state
-    this.data.current(function (initialData) {
+    this.dataAdapter.current(function (initialData) {
       self.trigger('selection:update', {
-	data: initialData
+        data: initialData
       });
     });
 
@@ -75,10 +81,6 @@ define([
 
     // Synchronize any monitored attributes
     this._syncAttributes();
-
-    this._tabindex = $element.attr('tabindex') || 0;
-
-    $element.attr('tabindex', '-1');
 
     $element.data('select2', this);
   };
@@ -118,7 +120,7 @@ define([
       var styleWidth = this._resolveWidth($element, 'style');
 
       if (styleWidth != null) {
-	return styleWidth;
+        return styleWidth;
       }
 
       return this._resolveWidth($element, 'element');
@@ -128,7 +130,7 @@ define([
       var elementWidth = $element.outerWidth(false);
 
       if (elementWidth <= 0) {
-	return 'auto';
+        return 'auto';
       }
 
       return elementWidth + 'px';
@@ -138,18 +140,18 @@ define([
       var style = $element.attr('style');
 
       if (typeof(style) !== 'string') {
-	return null;
+        return null;
       }
 
       var attrs = style.split(';');
 
-      for (i = 0, l = attrs.length; i < l; i = i + 1) {
-	attr = attrs[i].replace(/\s/g, '');
-	var matches = attr.match(WIDTH);
+      for (var i = 0, l = attrs.length; i < l; i = i + 1) {
+        var attr = attrs[i].replace(/\s/g, '');
+        var matches = attr.match(WIDTH);
 
-	if (matches !== null && matches.length >= 1) {
-	  return matches[1];
-	}
+        if (matches !== null && matches.length >= 1) {
+          return matches[1];
+        }
       }
 
       return null;
@@ -159,7 +161,7 @@ define([
   };
 
   Select2.prototype._bindAdapters = function () {
-    this.data.bind(this, this.$container);
+    this.dataAdapter.bind(this, this.$container);
     this.selection.bind(this, this.$container);
 
     this.dropdown.bind(this, this.$container);
@@ -170,10 +172,10 @@ define([
     var self = this;
 
     this.$element.on('change.select2', function () {
-      self.data.current(function (data) {
-	self.trigger('selection:update', {
-	  data: data
-	});
+      self.dataAdapter.current(function (data) {
+        self.trigger('selection:update', {
+          data: data
+        });
       });
     });
 
@@ -190,19 +192,21 @@ define([
 
     if (observer != null) {
       this._observer = new observer(function (mutations) {
-	$.each(mutations, self._sync);
+        $.each(mutations, self._sync);
       });
       this._observer.observe(this.$element[0], {
-	attributes: true,
-	subtree: false
+        attributes: true,
+        subtree: false
       });
+    } else if (this.$element[0].addEventListener) {
+      this.$element[0].addEventListener('DOMAttrModified', self._sync, false);
     }
   };
 
   Select2.prototype._registerDataEvents = function () {
     var self = this;
 
-    this.data.on('*', function (name, params) {
+    this.dataAdapter.on('*', function (name, params) {
       self.trigger(name, params);
     });
   };
@@ -216,8 +220,8 @@ define([
     });
 
     this.selection.on('*', function (name, params) {
-      if (nonRelayEvents.indexOf(name) !== -1) {
-	return;
+      if ($.inArray(name, nonRelayEvents) !== -1) {
+        return;
       }
 
       self.trigger(name, params);
@@ -259,21 +263,33 @@ define([
       self.$container.addClass('select2-container--disabled');
     });
 
+    this.on('focus', function () {
+      self.$container.addClass('select2-container--focus');
+    });
+
+    this.on('blur', function () {
+      self.$container.removeClass('select2-container--focus');
+    });
+
     this.on('query', function (params) {
-      this.data.query(params, function (data) {
-	self.trigger('results:all', {
-	  data: data,
-	  query: params
-	});
+      if (!self.isOpen()) {
+        self.trigger('open');
+      }
+
+      this.dataAdapter.query(params, function (data) {
+        self.trigger('results:all', {
+          data: data,
+          query: params
+        });
       });
     });
 
     this.on('query:append', function (params) {
-      this.data.query(params, function (data) {
-	self.trigger('results:append', {
-	  data: data,
-	  query: params
-	});
+      this.dataAdapter.query(params, function (data) {
+        self.trigger('results:append', {
+          data: data,
+          query: params
+        });
       });
     });
 
@@ -281,30 +297,34 @@ define([
       var key = evt.which;
 
       if (self.isOpen()) {
-	if (key === KEYS.ENTER) {
-	  self.trigger('results:select');
+        if (key === KEYS.ENTER) {
+          self.trigger('results:select');
 
-	  evt.preventDefault();
-	} else if (key === KEYS.UP) {
-	  self.trigger('results:previous');
+          evt.preventDefault();
+        } else if ((key === KEYS.SPACE && evt.ctrlKey)) {
+          self.trigger('results:toggle');
 
-	  evt.preventDefault();
-	} else if (key === KEYS.DOWN) {
-	  self.trigger('results:next');
+          evt.preventDefault();
+        } else if (key === KEYS.UP) {
+          self.trigger('results:previous');
 
-	  evt.preventDefault();
-	} else if (key === KEYS.ESC || key === KEYS.TAB) {
-	  self.close();
+          evt.preventDefault();
+        } else if (key === KEYS.DOWN) {
+          self.trigger('results:next');
 
-	  evt.preventDefault();
-	}
+          evt.preventDefault();
+        } else if (key === KEYS.ESC || key === KEYS.TAB) {
+          self.close();
+
+          evt.preventDefault();
+        }
       } else {
-	if (key === KEYS.ENTER || key === KEYS.SPACE ||
-	    ((key === KEYS.DOWN || key === KEYS.UP) && evt.altKey)) {
-	  self.open();
+        if (key === KEYS.ENTER || key === KEYS.SPACE ||
+            ((key === KEYS.DOWN || key === KEYS.UP) && evt.altKey)) {
+          self.open();
 
-	  evt.preventDefault();
-	}
+          evt.preventDefault();
+        }
       }
     });
   };
@@ -314,7 +334,7 @@ define([
 
     if (this.options.get('disabled')) {
       if (this.isOpen()) {
-	this.close();
+        this.close();
       }
 
       this.trigger('disable');
@@ -339,17 +359,17 @@ define([
     if (name in preTriggerMap) {
       var preTriggerName = preTriggerMap[name];
       var preTriggerArgs = {
-	prevented: false,
-	name: name,
-	args: args
+        prevented: false,
+        name: name,
+        args: args
       };
 
       actualTrigger.call(this, preTriggerName, preTriggerArgs);
 
       if (preTriggerArgs.prevented) {
-	args.prevented = true;
+        args.prevented = true;
 
-	return;
+        return;
       }
     }
 
@@ -391,15 +411,15 @@ define([
   };
 
   Select2.prototype.enable = function (args) {
-    if (console && console.warn) {
+    if (this.options.get('debug') && window.console && console.warn) {
       console.warn(
-	'Select2: The `select2("enable")` method has been deprecated and will' +
-	' be removed in later Select2 versions. Use $element.prop("disabled")' +
-	' instead.'
+        'Select2: The `select2("enable")` method has been deprecated and will' +
+        ' be removed in later Select2 versions. Use $element.prop("disabled")' +
+        ' instead.'
       );
     }
 
-    if (args.length === 0) {
+    if (args == null || args.length === 0) {
       args = [true];
     }
 
@@ -408,15 +428,33 @@ define([
     this.$element.prop('disabled', disabled);
   };
 
-  Select2.prototype.val = function (args) {
-    if (console && console.warn) {
+  Select2.prototype.data = function () {
+    if (this.options.get('debug') &&
+        arguments.length > 0 && window.console && console.warn) {
       console.warn(
-	'Select2: The `select2("val")` method has been deprecated and will be' +
-	' removed in later Select2 versions. Use $element.val() instead.'
+        'Select2: Data can no longer be set using `select2("data")`. You ' +
+        'should consider setting the value instead using `$element.val()`.'
       );
     }
 
-    if (args.length === 0) {
+    var data = [];
+
+    this.dataAdapter.current(function (currentData) {
+      data = currentData;
+    });
+
+    return data;
+  };
+
+  Select2.prototype.val = function (args) {
+    if (this.options.get('debug') && window.console && console.warn) {
+      console.warn(
+        'Select2: The `select2("val")` method has been deprecated and will be' +
+        ' removed in later Select2 versions. Use $element.val() instead.'
+      );
+    }
+
+    if (args == null || args.length === 0) {
       return this.$element.val();
     }
 
@@ -424,7 +462,7 @@ define([
 
     if ($.isArray(newVal)) {
       newVal = $.map(newVal, function (obj) {
-	return obj.toString();
+        return obj.toString();
       });
     }
 
@@ -441,22 +479,25 @@ define([
     if (this._observer != null) {
       this._observer.disconnect();
       this._observer = null;
+    } else if (this.$element[0].removeEventListener) {
+      this.$element[0]
+        .removeEventListener('DOMAttrModified', this._sync, false);
     }
 
     this._sync = null;
 
     this.$element.off('.select2');
-    this.$element.attr('tabindex', this._tabindex);
+    this.$element.attr('tabindex', this.$element.data('old-tabindex'));
 
     this.$element.show();
     this.$element.removeData('select2');
 
-    this.data.destroy();
+    this.dataAdapter.destroy();
     this.selection.destroy();
     this.dropdown.destroy();
     this.results.destroy();
 
-    this.data = null;
+    this.dataAdapter = null;
     this.selection = null;
     this.dropdown = null;
     this.results = null;
@@ -465,8 +506,8 @@ define([
   Select2.prototype.render = function () {
     var $container = $(
       '<span class="select2 select2-container">' +
-	'<span class="selection"></span>' +
-	'<span class="dropdown-wrapper" aria-hidden="true"></span>' +
+        '<span class="selection"></span>' +
+        '<span class="dropdown-wrapper" aria-hidden="true"></span>' +
       '</span>'
     );
 

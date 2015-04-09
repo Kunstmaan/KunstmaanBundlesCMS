@@ -14,7 +14,7 @@ define([
   Dropdown.prototype.render = function () {
     var $dropdown = $(
       '<span class="select2-dropdown">' +
-	'<span class="select2-results"></span>' +
+        '<span class="select2-results"></span>' +
       '</span>'
     );
 
@@ -32,26 +32,6 @@ define([
   Dropdown.prototype.destroy = function () {
     // Remove the dropdown from the DOM
     this.$dropdown.remove();
-  };
-
-  Dropdown.prototype.bind = function (container, $container) {
-    var self = this;
-
-    container.on('select', function (params) {
-      self._onSelect(params);
-    });
-
-    container.on('unselect', function (params) {
-      self._onUnSelect(params);
-    });
-  };
-
-  Dropdown.prototype._onSelect = function () {
-    this.trigger('close');
-  };
-
-  Dropdown.prototype._onUnSelect = function () {
-    this.trigger('close');
   };
 
   return Dropdown;

@@ -18,9 +18,9 @@ define(function () {
       var message = 'Sie können nur ' + args.maximum + ' Eintr';
 
       if (args.maximum === 1) {
-	message += 'ag';
+        message += 'ag';
       } else {
-	message += 'äge';
+        message += 'äge';
       }
 
       message += ' auswählen';

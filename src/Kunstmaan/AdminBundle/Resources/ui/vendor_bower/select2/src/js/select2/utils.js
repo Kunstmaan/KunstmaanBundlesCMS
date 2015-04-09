@@ -1,4 +1,6 @@
-define([], function () {
+define([
+  'jquery'
+], function ($) {
   var Utils = {};
 
   Utils.Extend = function (ChildClass, SuperClass) {
@@ -10,7 +12,7 @@ define([], function () {
 
     for (var key in SuperClass) {
       if (__hasProp.call(SuperClass, key)) {
-	ChildClass[key] = SuperClass[key];
+        ChildClass[key] = SuperClass[key];
       }
     }
 
@@ -30,11 +32,11 @@ define([], function () {
       var m = proto[methodName];
 
       if (typeof m !== 'function') {
-	continue;
+        continue;
       }
 
       if (methodName === 'constructor') {
-	continue;
+        continue;
       }
 
       methods.push(methodName);
@@ -55,9 +57,9 @@ define([], function () {
       var calledConstructor = SuperClass.prototype.constructor;
 
       if (argCount > 0) {
-	unshift.call(arguments, SuperClass.prototype.constructor);
+        unshift.call(arguments, SuperClass.prototype.constructor);
 
-	calledConstructor = DecoratorClass.prototype.constructor;
+        calledConstructor = DecoratorClass.prototype.constructor;
       }
 
       calledConstructor.apply(this, arguments);
@@ -72,10 +74,10 @@ define([], function () {
     DecoratedClass.prototype = new ctr();
 
     for (var m = 0; m < superMethods.length; m++) {
-	var superMethod = superMethods[m];
+        var superMethod = superMethods[m];
 
-	DecoratedClass.prototype[superMethod] =
-	  SuperClass.prototype[superMethod];
+        DecoratedClass.prototype[superMethod] =
+          SuperClass.prototype[superMethod];
     }
 
     var calledMethod = function (methodName) {
@@ -83,17 +85,17 @@ define([], function () {
       var originalMethod = function () {};
 
       if (methodName in DecoratedClass.prototype) {
-	originalMethod = DecoratedClass.prototype[methodName];
+        originalMethod = DecoratedClass.prototype[methodName];
       }
 
       var decoratedMethod = DecoratorClass.prototype[methodName];
 
       return function () {
-	var unshift = Array.prototype.unshift;
+        var unshift = Array.prototype.unshift;
 
-	unshift.call(arguments, originalMethod);
+        unshift.call(arguments, originalMethod);
 
-	return decoratedMethod.apply(this, arguments);
+        return decoratedMethod.apply(this, arguments);
       };
     };
 
@@ -166,25 +168,25 @@ define([], function () {
       var dataLevel = data;
 
       if (keys.length === 1) {
-	continue;
+        continue;
       }
 
       for (var k = 0; k < keys.length; k++) {
-	var key = keys[k];
+        var key = keys[k];
 
-	// Lowercase the first letter
-	// By default, dash-separated becomes camelCase
-	key = key.substring(0, 1).toLowerCase() + key.substring(1);
+        // Lowercase the first letter
+        // By default, dash-separated becomes camelCase
+        key = key.substring(0, 1).toLowerCase() + key.substring(1);
 
-	if (!(key in dataLevel)) {
-	  dataLevel[key] = {};
-	}
+        if (!(key in dataLevel)) {
+          dataLevel[key] = {};
+        }
 
-	if (k == keys.length - 1) {
-	  dataLevel[key] = data[originalKey];
-	}
+        if (k == keys.length - 1) {
+          dataLevel[key] = data[originalKey];
+        }
 
-	dataLevel = dataLevel[key];
+        dataLevel = dataLevel[key];
       }
 
       delete data[originalKey];
@@ -206,7 +208,7 @@ define([], function () {
 
     //Check both x and y declarations
     if (overflowX === overflowY &&
-	(overflowY === 'hidden' || overflowY === 'visible')) {
+        (overflowY === 'hidden' || overflowY === 'visible')) {
       return false;
     }
 
@@ -216,6 +218,27 @@ define([], function () {
 
     return ($el.innerHeight() < el.scrollHeight ||
       $el.innerWidth() < el.scrollWidth);
+  };
+
+  Utils.escapeMarkup = function (markup) {
+    var replaceMap = {
+      '\\': '&#92;',
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&#39;',
+      '/': '&#47;'
+    };
+
+    // Do not try to escape the markup if it's not a string
+    if (typeof markup !== 'string') {
+      return markup;
+    }
+
+    return String(markup).replace(/[&<>"'\/\\]/g, function (match) {
+      return replaceMap[match];
+    });
   };
 
   return Utils;

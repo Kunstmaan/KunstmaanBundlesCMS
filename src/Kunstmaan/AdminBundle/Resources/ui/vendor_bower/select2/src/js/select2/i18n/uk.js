@@ -1,13 +1,13 @@
 define(function () {
   // Ukranian
   function ending (count, one, couple, more) {
-    if ([11,12,13,14].indexOf(count % 100) !== -1) {
+    if (count % 100 > 10 && count % 100 < 15) {
       return more;
     }
     if (count % 10 === 1) {
       return one;
     }
-    if ([2,3,4].indexOf(count % 10) !== -1) {
+    if (count % 10 > 1 && count % 10 < 5) {
       return couple;
     }
     return more;
@@ -20,7 +20,7 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
       return 'Будь ласка, видаліть ' + overChars + ' ' +
-	ending(args.maximum, 'літеру', 'літери', 'літер');
+        ending(args.maximum, 'літеру', 'літери', 'літер');
     },
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
@@ -31,7 +31,7 @@ define(function () {
     },
     maximumSelected: function (args) {
       return 'Ви можете вибрати лише ' + args.maximum + ' ' +
-	ending(args.maximum, 'пункт', 'пункти', 'пунктів');
+        ending(args.maximum, 'пункт', 'пункти', 'пунктів');
     },
     noResults: function () {
       return 'Нічого не знайдено';

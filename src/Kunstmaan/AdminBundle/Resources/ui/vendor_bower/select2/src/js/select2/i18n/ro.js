@@ -8,7 +8,7 @@ define(function () {
       message += ' caracter';
 
       if (message !== 1) {
-	message += 'e';
+        message += 'e';
       }
 
       return message;
@@ -20,7 +20,7 @@ define(function () {
       message += ' caracter';
 
       if (message !== 1) {
-	message += 'e';
+        message += 'e';
       }
 
       return message;
@@ -28,12 +28,12 @@ define(function () {
     loadingMore: function () {
       return 'Se încarcă…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Aveți voie să selectați cel mult ' + args.maximum;
       message += ' element';
 
       if (message !== 1) {
-	message += 'e';
+        message += 'e';
       }
 
       return message;

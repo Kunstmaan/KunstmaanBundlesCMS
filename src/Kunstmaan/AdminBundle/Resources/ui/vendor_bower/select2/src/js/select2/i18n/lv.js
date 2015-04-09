@@ -27,14 +27,14 @@ define(function () {
 
       var message = 'Lūdzu ievadiet vēl ' + remainingChars;
 
-      message += ' simbol' + ending(overChars, 'us', 'u', 'us');
+      message += ' simbol' + ending(remainingChars, 'us', 'u', 'us');
 
       return message;
     },
     loadingMore: function () {
       return 'Datu ielāde…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Jūs varat izvēlēties ne vairāk kā ' + args.maximum;
 
       message += ' element' + ending(args.maximum, 'us', 'u', 'us');

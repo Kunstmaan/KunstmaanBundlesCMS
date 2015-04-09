@@ -76,7 +76,10 @@ $("select").select2({
     <p>
       You can also define nested configurations, which are typically needed for
       options such as AJAX. Each level of nesting should be separated by two
-      dashes (<code>--</code>) instead of one.
+      dashes (<code>--</code>) instead of one. Due to
+      <a href="https://github.com/jquery/jquery/issues/2070">a jQuery bug</a>,
+      nested options using <code>data-*</code> attributes
+      <a href="https://github.com/select2/select2/issues/2969">do not work in jQuery 1.x</a>.
     </p>
 
 <pre class="prettyprint linenums">
@@ -88,12 +91,12 @@ $("select").select2({
     </p>
 
 <pre class="prettyprint linenums">
-  $("select").select2({
-    ajax: {
-      url: "http://example.org/api/test",
-      cache: "true"
-    }
-  });
+$("select").select2({
+  ajax: {
+    url: "http://example.org/api/test",
+    cache: "true"
+  }
+});
 </pre>
 
     <p>
@@ -109,52 +112,41 @@ $("select").select2({
     <p>
       You can find more information on how to integrate Select2 with your
       existing AMD-based project by
-      <a href="announcements-4.0.html#amd-builds">viewing the 4.0 release notes</a>.
+      <a href="announcements-4.0.html#builds">viewing the 4.0 release notes</a>.
       Select2 automatically loads some modules when the adapters are being
       automatically constructed, so those who are using Select2 with a custom
-      AMD build using their own system will need to specify the pathes that are
+      AMD build using their own system may need to specify the paths that are
       generated to the Select2 modules.
     </p>
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd>
-	    <code>amdBase</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>amdBase</code>
+          </dd>
 
-	  <dt>Default</dt>
-	  <dd>
-	    <code>select2/</code>
-	  </dd>
-	</dl>
+          <dt>Default</dt>
+          <dd>
+            <code>select2/</code>
+          </dd>
+        </dl>
       </div>
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd>
-	    <code>amdLanguageBase</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>amdLanguageBase</code>
+          </dd>
 
-	  <dt>Default</dt>
-	  <dd>
-	    <code>select2/i18n/</code>
-	  </dd>
-	</dl>
+          <dt>Default</dt>
+          <dd>
+            <code>select2/i18n/</code>
+          </dd>
+        </dl>
       </div>
     </div>
-
-    <p>
-      If you are using Select2 in your own code base with your own AMD build
-      system, it is recommended to use the full source of Select2 instead of the
-      custom AMD build (<code>select2.amd.js</code>). This will allow you to
-      apply your own build steps, such as minification and concatenation,
-      independent of the Select2 defaults. You will need to set the path to the
-      source directories in the <code>amdBase</code> and
-      <code>amdLanguage</code> base options, which can be set globally through
-      <a href="#defaults">the default options</a>.
-    </p>
 
     <h2>
       Display
@@ -178,41 +170,41 @@ $("select").select2({
 
     <div class="row">
       <div class="col-sm-4">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd>
-	    <code>placeholder</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>placeholder</code>
+          </dd>
 
-	  <dt>Value</dt>
-	  <dd>string or object</dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>string or object</dd>
+        </dl>
 
-	<hr />
+        <hr />
 
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/selection/base">SelectionAdapter</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/selection/base">SelectionAdapter</code>
+          </dd>
 
-	  <dt>Decorator</dt>
-	  <dd>
-	    <code title="select2/selection/placeholder">Placeholder</code>
-	    and
-	    <code title="select2/dropdown/hidePlaceholder">HidePlaceholder</code>
-	  </dd>
-	</dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/selection/placeholder">Placeholder</code>
+            and
+            <code title="select2/dropdown/hidePlaceholder">HidePlaceholder</code>
+          </dd>
+        </dl>
       </div>
 
       <div class="col-sm-8">
-	<div class="alert alert-warning">
-	  <strong>Heads up!</strong>
-	  Because browsers assume that the first <code>option</code> in
-	  single-value select boxes is selected, you should add an empty
-	  <code>&lt;option&gt;&lt;/option&gt;</code> tag that the placeholder
-	  should use or it may not work.
-	</div>
+        <div class="alert alert-warning">
+          <strong>Heads up!</strong>
+          Because browsers assume that the first <code>option</code> in
+          single-value select boxes is selected, you should add an empty
+          <code>&lt;option&gt;&lt;/option&gt;</code> tag that the placeholder
+          should use or it may not work.
+        </div>
       </div>
     </div>
 
@@ -256,27 +248,27 @@ placeholder: {
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd><code>allowClear</code></dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>allowClear</code></dd>
 
-	  <dt>Value</dt>
-	  <dd>boolean</dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>boolean</dd>
+        </dl>
       </div>
 
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/selection/base">SelectionAdapter</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/selection/base">SelectionAdapter</code>
+          </dd>
 
-	  <dt>Decorator</dt>
-	  <dd>
-	    <code title="select2/selection/allowClear">AllowClear</code>
-	  </dd>
-	</dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/selection/allowClear">AllowClear</code>
+          </dd>
+        </dl>
       </div>
     </div>
 
@@ -321,49 +313,49 @@ placeholder: {
 
     <div class="row">
       <div class="col-sm-8">
-	<table class="table table-striped table-bordered">
-	  <thead>
-	    <tr>
-	      <th>Value</th>
-	      <th>Description</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td><code>"element"</code></td>
-	      <td>
-		Uses javascript to calculate the width of the source element.
-	      </td>
-	    </tr>
-	    <tr>
-	      <td><code>"style"</code></td>
-	      <td>
-		Copies the value of the width <code>style</code> attribute set on the source element.
-	      </td>
-	    </tr>
-	    <tr>
-	      <td><code>"resolve"</code></td>
-	      <td>
-		Tries to use <code>style</code> to determine the width, falling back to <code>element</code>.
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>Anything else</td>
-	      <td>
-		The value of the <code>width</code> option is diretly set as the width of the container.
-	      </td>
-	    </tr>
-	  </tbody>
-	</table>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>"element"</code></td>
+              <td>
+                Uses javascript to calculate the width of the source element.
+              </td>
+            </tr>
+            <tr>
+              <td><code>"style"</code></td>
+              <td>
+                Copies the value of the width <code>style</code> attribute set on the source element.
+              </td>
+            </tr>
+            <tr>
+              <td><code>"resolve"</code></td>
+              <td>
+                Tries to use <code>style</code> to determine the width, falling back to <code>element</code>.
+              </td>
+            </tr>
+            <tr>
+              <td>Anything else</td>
+              <td>
+                The value of the <code>width</code> option is directly set as the width of the container.
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="col-sm-4">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd><code>width</code></dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>width</code></dd>
 
-	  <dt>Value</dt>
-	  <dd>string</dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>string</dd>
+        </dl>
       </div>
     </div>
 
@@ -382,30 +374,30 @@ placeholder: {
 
     <div class="row">
       <div class="col-sm-4">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd><code>language</code></dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>language</code></dd>
 
-	  <dt>Value</dt>
-	  <dd>object or string</dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>object or string</dd>
+        </dl>
 
-	<hr />
+        <hr />
 
-	<dl class="dl-horizontal">
-	  <dt>Module</dt>
-	  <dd>
-	    <code title="select2/translation">Translation</code>
-	  </dd>
-	</dl>
+        <dl class="dl-horizontal">
+          <dt>Module</dt>
+          <dd>
+            <code title="select2/translation">Translation</code>
+          </dd>
+        </dl>
       </div>
 
       <div class="col-sm-8">
-	<p class="alert alert-warning">
-	  <strong>Heads up!</strong> When using translations provided by Select2,
-	  you must make sure to include the translation file in your page after
-	  Select2.
-	</p>
+        <p class="alert alert-warning">
+          <strong>Heads up!</strong> When using translations provided by Select2,
+          you must make sure to include the translation file in your page after
+          Select2.
+        </p>
       </div>
     </div>
 
@@ -434,6 +426,112 @@ language: {
 }
 </pre>
 
+    <h3 id="templating">
+      Templating results and selections
+    </h3>
+
+    <p>
+      By default, Select2 will display the option text within the list of
+      results and when the option has been selected.  Select2 comes with options
+      that allow you to further customize the display of results and selections,
+      allowing you to display them however you want.
+    </p>
+
+    <h4 id="templateSelection">
+      Customizing the display of selections
+    </h4>
+
+    <p>
+      When an option is displayed after it has been selected, it is passed
+      through a formatting function that determines what is displayed. By
+      default, the function only returns the <code>text</code> key of the data
+      object.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Key</dt>
+      <dd><code>templateSelection</code></dd>
+
+      <dt>Value</dt>
+      <dd>A function taking a <code>selection</code> object</dd>
+    </dl>
+
+    <div class="alert alert-info">
+      <strong>Anything rendered as a selection is templated.</strong>
+      This includes placeholders and pre-existing selections that are displayed,
+      so you must ensure that your templating functions can support them.
+    </div>
+
+    <p>
+      The <code>templateSelection</code> function should return a string
+      containing the text to be displayed, or an object (such as a jQuery
+      object) that contains the data that should be displayed.
+    </p>
+
+    <p>
+      <strong>Strings are assumed to contain only text</strong> and will be
+      passed through the <code>escapeMarkup</code> function, which strips any
+      HTML markup.
+    </p>
+
+    <p>
+      <strong>
+        Anything else will be passed
+        <a href="https://api.jquery.com/append/">directly to <code>jQuery.fn.append</code></a>
+      </strong> and will be handled directly by jQuery.  Any markup, such as
+      HTML, returned will not be escaped and it is up to you to escape any
+      malicious input provided by users.
+    </p>
+
+    <h4 id="templateResult">
+      Customizing the display of results
+    </h4>
+
+    <p>
+      When an option is displayed after it has been selected, it is passed
+      through a formatting function that determines what is displayed. By
+      default, the function only returns the <code>text</code> key of the data
+      object.
+    </p>
+
+    <dl class="dl-horizontal">
+      <dt>Key</dt>
+      <dd><code>templateSelection</code></dd>
+
+      <dt>Value</dt>
+      <dd>A function taking a <code>selection</code> object</dd>
+    </dl>
+
+    <div class="alert alert-info">
+      <strong>Anything rendered in the results is templated.</strong>
+      This includes results such as the "Searching..." and "Loading more..."
+      text which will periodically be displayed, which allows you to add more
+      advanced formatting to these automatically generated options.
+    </div>
+
+    <p>
+      The <code>templateResult</code> function should return a string
+      containing the text to be displayed, or an object (such as a jQuery
+      object) that contains the data that should be displayed.  It can also
+      return <code>null</code>, which will prevent the option from being
+      displayed in the results list.
+    </p>
+
+    <p>
+      <strong>Strings are assumed to contain only text</strong> and will be
+      passed through the <code>escapeMarkup</code> function, which strips any
+      HTML markup.
+    </p>
+
+    <p>
+      <strong>
+        Anything else will be passed
+        <a href="https://api.jquery.com/append/">directly to <code>jQuery.fn.append</code></a>
+      </strong> and will be handled directly by jQuery.  Any markup, such as
+      HTML, returned will not be escaped and it is up to you to escape any
+      malicious input provided by users.
+    </p>
+
     <h2>
       Results
     </h2>
@@ -456,22 +554,22 @@ language: {
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd><code>data</code></dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>data</code></dd>
 
-	  <dt>Value</dt>
-	  <dd>array of objects</dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>array of objects</dd>
+        </dl>
       </div>
 
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/data/array">ArrayAdapter</code>
-	  </dd>
-	</dl>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/array">ArrayAdapter</code>
+          </dd>
+        </dl>
       </div>
     </div>
 
@@ -492,22 +590,22 @@ language: {
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd><code>ajax</code></dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>ajax</code></dd>
 
-	  <dt>Value</dt>
-	  <dd>object</dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>object</dd>
+        </dl>
       </div>
 
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/data/ajax">AjaxAdapter</code>
-	  </dd>
-	</dl>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/ajax">AjaxAdapter</code>
+          </dd>
+        </dl>
       </div>
     </div>
 
@@ -562,6 +660,25 @@ ajax: {
     return {
       results: data
     };
+  },
+  // You can use a custom AJAX transport function if you do not want to use the
+  // default one provided by jQuery.
+  //
+  // @param params The object containing the parameters used to generate the
+  //   request.
+  // @param success A callback function that takes `data`, the results from the
+  //   request.
+  // @param failure A callback function that indicates that the request could
+  //   not be completed.
+  // @returns An object that has an `abort` function that can be called to abort
+  //   the request if needed.
+  transport: function (params, success, failure) {
+    var $request = $.ajax(params);
+
+    $request.then(success);
+    $request.fail(failure);
+
+    return $request;
   }
 }
 </pre>
@@ -578,27 +695,27 @@ ajax: {
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd><code>tags</code></dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>tags</code></dd>
 
-	  <dt>Value</dt>
-	  <dd>boolean / array of objects</dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>boolean / array of objects</dd>
+        </dl>
       </div>
 
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/data/base">DataAdapter</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
 
-	  <dt>Decorator</dt>
-	  <dd>
-	    <code title="select2/data/tags">Tags</code>
-	  </dd>
-	</dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/data/tags">Tags</code>
+          </dd>
+        </dl>
       </div>
     </div>
 
@@ -630,13 +747,13 @@ ajax: {
     <dl class="dl-horizontal">
       <dt>Key</dt>
       <dd>
-	<code>matcher</code>
+        <code>matcher</code>
       </dd>
 
       <dt>Value</dt>
       <dd>
-	A function taking search <code>params</code> and the
-	<code>data</code> object.
+        A function taking search <code>params</code> and the
+        <code>data</code> object.
       </dd>
     </dl>
 
@@ -703,34 +820,34 @@ matcher: function (params, data) {
 
     <div class="row">
       <div class="col-sm-4">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd><code>dropdownParent</code></dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>dropdownParent</code></dd>
 
-	  <dt>Value</dt>
-	  <dd>jQuery element or DOM node</dd>
+          <dt>Value</dt>
+          <dd>jQuery element or DOM node</dd>
 
-	  <hr />
+          <hr />
 
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/dropdown">DropdownAdapter</code>
-	  </dd>
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
 
-	  <dt>Decorator</dt>
-	  <dd>
-	    <code title="select2/dropdown/attachBody">AttachBody</code>
-	  </dd>
-	</dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/attachBody">AttachBody</code>
+          </dd>
+        </dl>
       </div>
 
       <div class="col-sm-8">
-	<div class="alert alert-warning">
-	  <strong>Heads up!</strong>
-	  This will cause DOM events to be raised outside of the standard
-	  Select2 DOM container. This can cause issues with
-	  third-party components such as modals.
-	</div>
+        <div class="alert alert-warning">
+          <strong>Heads up!</strong>
+          This will cause DOM events to be raised outside of the standard
+          Select2 DOM container. This can cause issues with
+          third-party components such as modals.
+        </div>
       </div>
     </div>
 
@@ -739,7 +856,7 @@ matcher: function (params, data) {
       displaying the dropdown below the container. Select2 will display above
       the container if there is not enough space below the container, but there
       is enough space above it. You are also not limited to displaying the
-      drodown within the parent container, which means Select2 will render
+      dropdown within the parent container, which means Select2 will render
       correctly inside of modals and other small containers.
     </p>
 
@@ -754,32 +871,32 @@ matcher: function (params, data) {
 
     <div class="row">
       <div class="col-sm-4">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/dropdown">DropdownAdapter</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
 
-	  <dt>Decorator</dt>
-	  <dd>
-	    <code title="select2/dropdown/attachContainer">AttachContainer</code>
-	  </dd>
-	</dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/attachContainer">AttachContainer</code>
+          </dd>
+        </dl>
       </div>
 
       <div class="col-sm-8">
-	<div class="alert alert-warning">
-	  <strong>Check your build.</strong> This module is only included in the
-	  <a href="index.html#builds-full" class="alert-link">full builds</a> of
-	  Select2.
-	</div>
+        <div class="alert alert-warning">
+          <strong>Check your build.</strong> This module is only included in the
+          <a href="index.html#builds-full" class="alert-link">full builds</a> of
+          Select2.
+        </div>
       </div>
     </div>
 
     <div class="alert alert-info">
       <strong>
-	<a href="https://harvesthq.github.io/chosen/">Harvest Chosen</a>
-	migrators!
+        <a href="https://harvesthq.github.io/chosen/">Harvest Chosen</a>
+        migrators!
       </strong>
       If you are migrating to Select2 from Chosen, this option will cause
       Select2 to position the dropdown in a similar way.
@@ -797,12 +914,12 @@ matcher: function (params, data) {
     <dl class="dl-horizontal">
       <dt>Adapter</dt>
       <dd>
-	<code title="select2/dropdown">DropdownAdapter</code>
+        <code title="select2/dropdown">DropdownAdapter</code>
       </dd>
 
       <dt>Decorator</dt>
       <dd>
-	<code title="select2/dropdown/search">DropdownSearch</code>
+        <code title="select2/dropdown/search">DropdownSearch</code>
       </dd>
     </dl>
 
@@ -810,6 +927,116 @@ matcher: function (params, data) {
       A search box is added to the top of the dropdown automatically for select
       boxes where only a single option can be selected.
     </p>
+
+    <h3 id="dropdown-minimumInputLength">
+      Minimum search term length to filter results
+    </h3>
+
+    <p>
+      Sometimes when working with large data sets, it is more efficient to start
+      filtering the results when the search term is a certain length. This is
+      very common when working with remote data sets, as allows for only
+      significant search terms to be used.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>minimumInputLength</code></dd>
+
+          <dt>Value</dt>
+          <dd>integer</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/data/minimumInputLength">MinimumInputLength</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <h3 id="dropdown-maximumInputLength">
+      Maximum search term length to filter results
+    </h3>
+
+    <p>
+      In some cases, search terms need to be limited to a certain range. Select2
+      allows you to limit the length of the search term such that it does not
+      exceed a certain length.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>maximumInputLength</code></dd>
+
+          <dt>Value</dt>
+          <dd>integer</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/data/maximumInputLength">MaximumInputLength</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <h3 id="dropdown-maximumInputLength">
+      Minimum results to display the search box
+    </h3>
+
+    <p>
+      When working with smaller data sets, the search box can take up more space
+      that is necessary, as there are not enough results for filtering to be
+      effective. Select2 allows you to only display the search box when the
+      number of search results reaches a certain threshold.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>minimumResultsForSearch</code></dd>
+
+          <dt>Value</dt>
+          <dd>integer</dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/minimumResultsForSearch">MinimumResultsForSearch</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
 
     <h2 id="dropdown-select-on-close">
       Select the highlighted option on close
@@ -826,14 +1053,58 @@ matcher: function (params, data) {
     <dl class="dl-horizontal">
       <dt>Adapter</dt>
       <dd>
-	<code title="select2/results">ResultsAdapter</code>
+        <code title="select2/results">ResultsAdapter</code>
       </dd>
 
       <dt>Decorator</dt>
       <dd>
-	<code title="select2/dropdown/selectOnClose">SelectOnClose</code>
+        <code title="select2/dropdown/selectOnClose">SelectOnClose</code>
       </dd>
     </dl>
+
+    <h2 id="closeOnSelect">
+      Close the dropdown when a result is selected
+    </h2>
+
+    <p>
+      Select2 will automatically close the dropdown when an element is selected,
+      similar to what is done with a normal select box.  This behavior can be
+      changed though to keep the dropdown open when results are selected,
+      allowing for multiple options to be selected quickly.
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd><code>closeOnSelect</code></dd>
+
+          <dt>Default</dt>
+          <dd><code>true</code></dd>
+        </dl>
+      </div>
+
+      <div class="col-sm-6">
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/dropdown">DropdownAdapter</code>
+          </dd>
+
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/dropdown/closeOnSelect">CloseOnSelect</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <p>
+      If this decorator is not used (or <code>closeOnSelect</code> is set to
+      <code>false</code>), the dropdown will not automatically close when a
+      result is selected.  The dropdown will also never close if the
+      <kbd>ctrl</kbd> key is held down when the result is selected.
+    </p>
   </section>
 
   <section id="events">
@@ -850,12 +1121,12 @@ matcher: function (params, data) {
     <dl class="dl-horizontal">
       <dt>Adapter</dt>
       <dd>
-	<code title="select2/selection">SelectionAdapter</code>
+        <code title="select2/selection">SelectionAdapter</code>
       </dd>
 
       <dt>Decorator</dt>
       <dd>
-	<code title="select2/selection/eventRelay">EventRelay</code>
+        <code title="select2/selection/eventRelay">EventRelay</code>
       </dd>
     </dl>
 
@@ -969,18 +1240,18 @@ Adapter.destroy = function () { };
     <dl class="dl-horizontal">
       <dt>Key</dt>
       <dd>
-	<code>selectionAdapter</code>
+        <code>selectionAdapter</code>
       </dd>
 
       <dt>Default</dt>
       <dd>
-	<code title="select2/selection/single">SingleSelection</code> or
-	<code title="select2/selection/multiple">MultipleSelection</code>
+        <code title="select2/selection/single">SingleSelection</code> or
+        <code title="select2/selection/multiple">MultipleSelection</code>
       </dd>
 
       <dt>Base</dt>
       <dd>
-	<code title="select2/selection/base">BaseSelection</code>
+        <code title="select2/selection/base">BaseSelection</code>
       </dd>
     </dl>
 
@@ -1007,17 +1278,17 @@ SelectionAdapter.update = function (data) { };
     <dl class="dl-horizontal">
       <dt>Key</dt>
       <dd>
-	<code>dataAdapter</code>
+        <code>dataAdapter</code>
       </dd>
 
       <dt>Default</dt>
       <dd>
-	<code title="select2/data/select">SelectAdapter</code>
+        <code title="select2/data/select">SelectAdapter</code>
       </dd>
 
       <dt>Base</dt>
       <dd>
-	<code title="select2/data/base">BaseAdapter</code>
+        <code title="select2/data/base">BaseAdapter</code>
       </dd>
     </dl>
 
@@ -1064,12 +1335,12 @@ DataAdapter.query = function (params, callback) {
     <dl class="dl-horizontal">
       <dt>Key</dt>
       <dd>
-	<code>dropdownAdapter</code>
+        <code>dropdownAdapter</code>
       </dd>
 
       <dt>Default</dt>
       <dd>
-	<code title="select2/dropdown">DropdownAdapter</code>
+        <code title="select2/dropdown">DropdownAdapter</code>
       </dd>
     </dl>
 
@@ -1087,12 +1358,12 @@ DataAdapter.query = function (params, callback) {
     <dl class="dl-horizontal">
       <dt>Key</dt>
       <dd>
-	<code>resultsAdapter</code>
+        <code>resultsAdapter</code>
       </dd>
 
       <dt>Default</dt>
       <dd>
-	<code title="select2/results">ResultsAdapter</code>
+        <code title="select2/results">ResultsAdapter</code>
       </dd>
     </dl>
   </section>
@@ -1128,7 +1399,7 @@ DataAdapter.query = function (params, callback) {
     </p>
 
 <pre class="prettyprint linenums">
-$.fn.select2.default2.set("theme", "classic");
+$.fn.select2.defaults.set("theme", "classic");
 </pre>
 
     <p>
@@ -1177,27 +1448,27 @@ $.fn.select2.default2.set("theme", "classic");
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd>
-	    <code>matcher</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>matcher</code>
+          </dd>
 
-	  <dt>Value</dt>
-	  <dd>
-	    A function taking a search <code>term</code> and the data object
-	    <code>text</code>.
-	  </dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>
+            A function taking a search <code>term</code> and the data object
+            <code>text</code>.
+          </dd>
+        </dl>
       </div>
 
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/compat/matcher">oldMatcher</code>
-	  </dd>
-	</dl>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/compat/matcher">oldMatcher</code>
+          </dd>
+        </dl>
       </div>
     </div>
 
@@ -1229,31 +1500,31 @@ $.fn.select2.default2.set("theme", "classic");
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd>
-	    <code>initSelection</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>initSelection</code>
+          </dd>
 
-	  <dt>Value</dt>
-	  <dd>
-	    A function taking a <code>callback</code>
-	  </dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>
+            A function taking a <code>callback</code>
+          </dd>
+        </dl>
       </div>
 
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/data/base">DataAdapter</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
 
-	  <dt>Decorator</dt>
-	  <dd>
-	    <code title="select2/compat/initSelection">InitSelection</code>
-	  </dd>
-	</dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/compat/initSelection">InitSelection</code>
+          </dd>
+        </dl>
       </div>
     </div>
 
@@ -1278,34 +1549,66 @@ $.fn.select2.default2.set("theme", "classic");
 
     <div class="row">
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Key</dt>
-	  <dd>
-	    <code>query</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Key</dt>
+          <dd>
+            <code>query</code>
+          </dd>
 
-	  <dt>Value</dt>
-	  <dd>
-	    A function taking <code>params</code> (including a <code>callback</code>)
-	  </dd>
-	</dl>
+          <dt>Value</dt>
+          <dd>
+            A function taking <code>params</code> (including a <code>callback</code>)
+          </dd>
+        </dl>
       </div>
 
       <div class="col-sm-6">
-	<dl class="dl-horizontal">
-	  <dt>Adapter</dt>
-	  <dd>
-	    <code title="select2/data/base">DataAdapter</code>
-	  </dd>
+        <dl class="dl-horizontal">
+          <dt>Adapter</dt>
+          <dd>
+            <code title="select2/data/base">DataAdapter</code>
+          </dd>
 
-	  <dt>Decorator</dt>
-	  <dd>
-	    <code title="select2/compat/query">Query</code>
-	  </dd>
-	</dl>
+          <dt>Decorator</dt>
+          <dd>
+            <code title="select2/compat/query">Query</code>
+          </dd>
+        </dl>
       </div>
     </div>
   </section>
+
+  <h2 id="input-fallback">
+    Compatibility with <code>&lt;input type="text" /&gt;</code>
+  </h2>
+
+  <p class="alert alert-warning">
+    <a href="announcements-4.0.html#hidden-input" class="alert-link">Deprecated in Select2 4.0.</a>
+    It is now encouraged to use the <code>&lt;select&gt;</code> tag instead.
+  </p>
+
+  <p>
+    In past versions of Select2, a <code>&lt;select&gt;</code> element could
+    only be used with a limited subset of options. An
+    <code>&lt;input type="hidden" /&gt;</code> was required instead, which did
+    not allow for a graceful fallback for users who did not have JavaScript
+    enabled. Select2 now supports the <code>&lt;select&gt;</code> element for
+    all options, so it is no longer required to use <code>&lt;input /&gt;</code>
+    elements with Select2.
+  </p>
+
+  <dl class="dl-horizontal">
+    <dt>Adapter</dt>
+    <dd>
+      <code title="select2/data/base">DataAdapter</code>
+    </dd>
+
+    <dt>Decorator</dt>
+    <dd>
+      <code title="select2/compat/inputData">InputData</code>
+    </dd>
+  </dl>
+</section>
 </div>
 
 <script type="text/javascript">

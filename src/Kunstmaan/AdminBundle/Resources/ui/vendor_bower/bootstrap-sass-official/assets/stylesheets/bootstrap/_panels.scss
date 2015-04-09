@@ -72,15 +72,15 @@
     // Add border top radius for first one
     &:first-child {
       .list-group-item:first-child {
-	border-top: 0;
-	@include border-top-radius(($panel-border-radius - 1));
+        border-top: 0;
+        @include border-top-radius(($panel-border-radius - 1));
       }
     }
     // Add border bottom radius for last one
     &:last-child {
       .list-group-item:last-child {
-	border-bottom: 0;
-	@include border-bottom-radius(($panel-border-radius - 1));
+        border-bottom: 0;
+        @include border-bottom-radius(($panel-border-radius - 1));
       }
     }
   }
@@ -119,17 +119,17 @@
     > thead:first-child,
     > tbody:first-child {
       > tr:first-child {
-	border-top-left-radius: ($panel-border-radius - 1);
-	border-top-right-radius: ($panel-border-radius - 1);
+        border-top-left-radius: ($panel-border-radius - 1);
+        border-top-right-radius: ($panel-border-radius - 1);
 
-	td:first-child,
-	th:first-child {
-	  border-top-left-radius: ($panel-border-radius - 1);
-	}
-	td:last-child,
-	th:last-child {
-	  border-top-right-radius: ($panel-border-radius - 1);
-	}
+        td:first-child,
+        th:first-child {
+          border-top-left-radius: ($panel-border-radius - 1);
+        }
+        td:last-child,
+        th:last-child {
+          border-top-right-radius: ($panel-border-radius - 1);
+        }
       }
     }
   }
@@ -141,17 +141,17 @@
     > tbody:last-child,
     > tfoot:last-child {
       > tr:last-child {
-	border-bottom-left-radius: ($panel-border-radius - 1);
-	border-bottom-right-radius: ($panel-border-radius - 1);
+        border-bottom-left-radius: ($panel-border-radius - 1);
+        border-bottom-right-radius: ($panel-border-radius - 1);
 
-	td:first-child,
-	th:first-child {
-	  border-bottom-left-radius: ($panel-border-radius - 1);
-	}
-	td:last-child,
-	th:last-child {
-	  border-bottom-right-radius: ($panel-border-radius - 1);
-	}
+        td:first-child,
+        th:first-child {
+          border-bottom-left-radius: ($panel-border-radius - 1);
+        }
+        td:last-child,
+        th:last-child {
+          border-bottom-right-radius: ($panel-border-radius - 1);
+        }
       }
     }
   }
@@ -172,32 +172,32 @@
     > tbody,
     > tfoot {
       > tr {
-	> th:first-child,
-	> td:first-child {
-	  border-left: 0;
-	}
-	> th:last-child,
-	> td:last-child {
-	  border-right: 0;
-	}
+        > th:first-child,
+        > td:first-child {
+          border-left: 0;
+        }
+        > th:last-child,
+        > td:last-child {
+          border-right: 0;
+        }
       }
     }
     > thead,
     > tbody {
       > tr:first-child {
-	> td,
-	> th {
-	  border-bottom: 0;
-	}
+        > td,
+        > th {
+          border-bottom: 0;
+        }
       }
     }
     > tbody,
     > tfoot {
       > tr:last-child {
-	> td,
-	> th {
-	  border-bottom: 0;
-	}
+        > td,
+        > th {
+          border-bottom: 0;
+        }
       }
     }
   }

@@ -7,9 +7,9 @@ define(function () {
       var message = 'Engada ';
 
       if (overChars === 1) {
-	message += 'un carácter';
+        message += 'un carácter';
       } else {
-	message += overChars + ' caracteres';
+        message += overChars + ' caracteres';
       }
 
       return message;
@@ -20,9 +20,9 @@ define(function () {
       var message = 'Elimine ';
 
       if (remainingChars === 1) {
-	message += 'un carácter';
+        message += 'un carácter';
       } else {
-	message += remainingChars + ' caracteres';
+        message += remainingChars + ' caracteres';
       }
 
       return message;
@@ -30,13 +30,13 @@ define(function () {
     loadingMore: function () {
       return 'Cargando máis resultados…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Só pode ';
 
       if (args.maximum === 1) {
-	message += 'un elemento';
+        message += 'un elemento';
       } else {
-	message += args.maximum + ' elementos';
+        message += args.maximum + ' elementos';
       }
 
       return message;

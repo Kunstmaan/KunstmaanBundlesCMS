@@ -38,6 +38,32 @@ test('does not trigger on blank or null terms', function (assert) {
   });
 });
 
+test('white space is trimmed by default', function (assert) {
+  var data = new SelectTags($('#qunit-fixture .single'), options);
+
+  data.query({
+    term: '  '
+  }, function (data) {
+    assert.equal(data.results.length, 1);
+
+    var item = data.results[0];
+
+    assert.equal(item.id, 'One');
+    assert.equal(item.text, 'One');
+  });
+
+  data.query({
+    term: ' One '
+  }, function (data) {
+    assert.equal(data.results.length, 1);
+
+    var item = data.results[0];
+
+    assert.equal(item.id, 'One');
+    assert.equal(item.text, 'One');
+  });
+});
+
 test('does not trigger for additional pages', function (assert) {
   var data = new SelectTags($('#qunit-fixture .single'), options);
 
@@ -192,11 +218,11 @@ test('the createTag options customizes the function', function (assert) {
     new Options({
       tags: true,
       createTag: function (params) {
-	return {
-	  id: params.term,
-	  text: params.term,
-	  tag: true
-	};
+        return {
+          id: params.term,
+          text: params.term,
+          tag: true
+        };
       }
     })
   );

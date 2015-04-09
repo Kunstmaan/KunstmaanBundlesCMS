@@ -7,7 +7,7 @@ define(function () {
       var message = 'Моля въведете с ' + overChars + ' по-малко символ';
 
       if (overChars > 1) {
-	message += 'a';
+        message += 'a';
       }
 
       return message;
@@ -18,7 +18,7 @@ define(function () {
       var message = 'Моля въведете още ' + remainingChars + ' символ';
 
       if (remainingChars > 1) {
-	message += 'a';
+        message += 'a';
       }
 
       return message;
@@ -30,9 +30,9 @@ define(function () {
       var message = 'Можете да направите до ' + args.maximum + ' ';
 
       if (args.maximum > 1) {
-	message += 'избора';
+        message += 'избора';
       } else {
-	message += 'избор';
+        message += 'избор';
       }
 
       return message;

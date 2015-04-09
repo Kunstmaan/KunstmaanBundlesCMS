@@ -30,10 +30,10 @@ th {
     > tr {
       > th,
       > td {
-	padding: $table-cell-padding;
-	line-height: $line-height-base;
-	vertical-align: top;
-	border-top: 1px solid $table-border-color;
+        padding: $table-cell-padding;
+        line-height: $line-height-base;
+        vertical-align: top;
+        border-top: 1px solid $table-border-color;
       }
     }
   }
@@ -49,7 +49,7 @@ th {
     > tr:first-child {
       > th,
       > td {
-	border-top: 0;
+        border-top: 0;
       }
     }
   }
@@ -74,7 +74,7 @@ th {
     > tr {
       > th,
       > td {
-	padding: $table-condensed-cell-padding;
+        padding: $table-condensed-cell-padding;
       }
     }
   }
@@ -93,7 +93,7 @@ th {
     > tr {
       > th,
       > td {
-	border: 1px solid $table-border-color;
+        border: 1px solid $table-border-color;
       }
     }
   }
@@ -187,12 +187,12 @@ table {
       > thead,
       > tbody,
       > tfoot {
-	> tr {
-	  > th,
-	  > td {
-	    white-space: nowrap;
-	  }
-	}
+        > tr {
+          > th,
+          > td {
+            white-space: nowrap;
+          }
+        }
       }
     }
 
@@ -204,16 +204,16 @@ table {
       > thead,
       > tbody,
       > tfoot {
-	> tr {
-	  > th:first-child,
-	  > td:first-child {
-	    border-left: 0;
-	  }
-	  > th:last-child,
-	  > td:last-child {
-	    border-right: 0;
-	  }
-	}
+        > tr {
+          > th:first-child,
+          > td:first-child {
+            border-left: 0;
+          }
+          > th:last-child,
+          > td:last-child {
+            border-right: 0;
+          }
+        }
       }
 
       // Only nuke the last row's bottom-border in `tbody` and `tfoot` since
@@ -221,12 +221,12 @@ table {
       // remove the border altogether.
       > tbody,
       > tfoot {
-	> tr:last-child {
-	  > th,
-	  > td {
-	    border-bottom: 0;
-	  }
-	}
+        > tr:last-child {
+          > th,
+          > td {
+            border-bottom: 0;
+          }
+        }
       }
 
     }

@@ -8,7 +8,7 @@ define([
 
     ArrayAdapter.__super__.constructor.call(this, $element, options);
 
-    $element.append(this.convertToOptions(data));
+    this.addOptions(this.convertToOptions(data));
   }
 
   Utils.Extend(ArrayAdapter, SelectAdapter);
@@ -19,7 +19,7 @@ define([
     if ($option.length === 0) {
       $option = this.option(data);
 
-      this.$element.append($option);
+      this.addOptions($option);
     }
 
     ArrayAdapter.__super__.select.call(this, data);
@@ -33,12 +33,12 @@ define([
       return self.item($(this)).id;
     }).get();
 
-    var $options = [];
+    var $options = $();
 
     // Filter out all items except for the one passed in the argument
     function onlyItem (item) {
       return function () {
-	return $(this).val() == item.id;
+        return $(this).val() == item.id;
       };
     }
 
@@ -46,28 +46,28 @@ define([
       var item = this._normalizeItem(data[d]);
 
       // Skip items which were pre-loaded, only merge the data
-      if (existingIds.indexOf(item.id) >= 0) {
-	var $existingOption = $existing.filter(onlyItem(item));
+      if ($.inArray(item.id, existingIds) >= 0) {
+        var $existingOption = $existing.filter(onlyItem(item));
 
-	var existingData = this.item($existingOption);
-	var newData = $.extend(true, {}, existingData, item);
+        var existingData = this.item($existingOption);
+        var newData = $.extend(true, {}, existingData, item);
 
-	var $newOption = this.option(existingData);
+        var $newOption = this.option(existingData);
 
-	$existingOption.replaceWith($newOption);
+        $existingOption.replaceWith($newOption);
 
-	continue;
+        continue;
       }
 
       var $option = this.option(item);
 
       if (item.children) {
-	var $children = this.convertToOptions(item.children);
+        var $children = this.convertToOptions(item.children);
 
-	$option.append($children);
+        $option.append($children);
       }
 
-      $options.push($option);
+      $options = $options.add($option);
     }
 
     return $options;

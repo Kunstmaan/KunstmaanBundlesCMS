@@ -18,8 +18,8 @@ define([
 
     container.on('*', function (name, params) {
       // Ignore events that should not be relayed
-      if (relayEvents.indexOf(name) === -1) {
-	return;
+      if ($.inArray(name, relayEvents) === -1) {
+        return;
       }
 
       // The parameters should always be an object
@@ -27,14 +27,14 @@ define([
 
       // Generate the jQuery event for the Select2 event
       var evt = $.Event('select2:' + name, {
-	params: params
+        params: params
       });
 
       self.$element.trigger(evt);
 
       // Only handle preventable events if it was one
-      if (preventableEvents.indexOf(name) === -1) {
-	return;
+      if ($.inArray(name, preventableEvents) === -1) {
+        return;
       }
 
       params.prevented = evt.isDefaultPrevented();

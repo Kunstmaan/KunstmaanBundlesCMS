@@ -5,7 +5,7 @@ define(function () {
 
     if (n % 10 < 5 && n % 10 > 0 && (n % 100 < 5 || n % 100 > 19)) {
       if (n % 10 > 1) {
-	message += 'a';
+        message += 'a';
       }
     } else {
       message += 'ova';
@@ -28,7 +28,7 @@ define(function () {
     loadingMore: function () {
       return 'Učitavanje rezultata…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       return 'Maksimalan broj odabranih stavki je ' + args.maximum;
     },
     noResults: function () {

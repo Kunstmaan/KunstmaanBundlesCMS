@@ -1,5 +1,5 @@
 /* ========================================================================
- * Bootstrap: dropdown.js v3.3.4
+ * Bootstrap: dropdown.js v3.3.2
  * http://getbootstrap.com/javascript/#dropdowns
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -19,7 +19,7 @@
     $(element).on('click.bs.dropdown', this.toggle)
   }
 
-  Dropdown.VERSION = '3.3.4'
+  Dropdown.VERSION = '3.3.2'
 
   Dropdown.prototype.toggle = function (e) {
     var $this = $(this)
@@ -33,8 +33,8 @@
 
     if (!isActive) {
       if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
-	// if mobile we use a backdrop because click events don't delegate
-	$('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+        // if mobile we use a backdrop because click events don't delegate
+        $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
       }
 
       var relatedTarget = { relatedTarget: this }
@@ -43,12 +43,12 @@
       if (e.isDefaultPrevented()) return
 
       $this
-	.trigger('focus')
-	.attr('aria-expanded', 'true')
+        .trigger('focus')
+        .attr('aria-expanded', 'true')
 
       $parent
-	.toggleClass('open')
-	.trigger('shown.bs.dropdown', relatedTarget)
+        .toggleClass('open')
+        .trigger('shown.bs.dropdown', relatedTarget)
     }
 
     return false
@@ -72,7 +72,7 @@
       return $this.trigger('click')
     }
 
-    var desc = ' li:not(.disabled):visible a'
+    var desc = ' li:not(.divider):visible a'
     var $items = $parent.find('[role="menu"]' + desc + ', [role="listbox"]' + desc)
 
     if (!$items.length) return

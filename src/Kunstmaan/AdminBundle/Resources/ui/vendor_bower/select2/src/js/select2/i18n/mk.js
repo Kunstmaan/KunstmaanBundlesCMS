@@ -7,7 +7,7 @@ define(function () {
       var message = 'Ве молиме внесете ' + args.maximum + ' помалку карактер';
 
       if (args.maximum !== 1) {
-	message += 'и';
+        message += 'и';
       }
 
       return message;
@@ -18,7 +18,7 @@ define(function () {
       var message = 'Ве молиме внесете уште ' + args.maximum + ' карактер';
 
       if (args.maximum !== 1) {
-	message += 'и';
+        message += 'и';
       }
 
       return message;
@@ -26,13 +26,13 @@ define(function () {
     loadingMore: function () {
       return 'Вчитување резултати…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Можете да изберете само ' + args.maximum + ' ставк';
 
       if (args.maximum === 1) {
-	message += 'а';
+        message += 'а';
       } else {
-	message += 'и';
+        message += 'и';
       }
 
       return message;

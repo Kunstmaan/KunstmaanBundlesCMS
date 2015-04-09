@@ -10,9 +10,9 @@ define(function () {
       var message = 'Per favore cancella ' + overChars + ' caratter';
 
       if (overChars !== 1) {
-	message += 'i';
+        message += 'i';
       } else {
-	message += 'e';
+        message += 'e';
       }
 
       return message;
@@ -31,9 +31,9 @@ define(function () {
       var message = 'Puoi selezionare solo ' + args.maximum + ' element';
 
       if (args.maximum !== 1) {
-	message += 'i';
+        message += 'i';
       } else {
-	message += 'o';
+        message += 'o';
       }
 
       return message;

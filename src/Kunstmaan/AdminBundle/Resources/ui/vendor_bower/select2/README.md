@@ -92,12 +92,12 @@ The license is available within the repository in the [LICENSE][license] file.
 [license]: LICENSE.md
 [meteor-select2]: https://github.com/nate-strauser/meteor-select2
 [meteor-select2-alt]: https://jquery-select2.meteor.com
-[meteor-select2-bootstrap3]: https://github.com/esperadomedia/meteor-select2-bootstrap3-css/
+[meteor-select2-bootstrap3]: https://github.com/zimme/meteor-select2-bootstrap3-css/
 [releases]: https://github.com/select2/select2/releases
 [select2-rails]: https://github.com/argerim/select2-rails
 [symfony-select2]: https://github.com/19Gerhard85/sfSelect2WidgetsPlugin
 [symfony2-select2]: https://github.com/avocode/FormExtensions
-[travis-ci-image]: https://travis-ci.org/select2/select2.svg?branch=select2-ng
+[travis-ci-image]: https://travis-ci.org/select2/select2.svg?branch=master
 [travis-ci-status]: https://travis-ci.org/select2/select2
 [wicket]: http://wicket.apache.org
 [wicket-select2]: https://github.com/ivaynberg/wicket-select2

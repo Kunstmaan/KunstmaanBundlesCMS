@@ -9,8 +9,9 @@ define([
 
     var $search = $(
       '<span class="select2-search select2-search--dropdown">' +
-	'<input class="select2-search__field" type="search" tabindex="-1"' +
-	' role="textbox" />' +
+        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
+        ' spellcheck="false" role="textbox" />' +
       '</span>'
     );
 
@@ -33,7 +34,15 @@ define([
       self._keyUpPrevented = evt.isDefaultPrevented();
     });
 
-    this.$search.on('keyup', function (evt) {
+    // Workaround for browsers which do not support the `input` event
+    // This will prevent double-triggering of events for browsers which support
+    // both the `keyup` and `input` events.
+    this.$search.on('input', function (evt) {
+      // Unbind the duplicated `keyup` event
+      $(this).off('keyup');
+    });
+
+    this.$search.on('keyup input', function (evt) {
       self.handleSearch(evt);
     });
 
@@ -43,7 +52,7 @@ define([
       self.$search.focus();
 
       window.setTimeout(function () {
-	self.$search.focus();
+        self.$search.focus();
       }, 0);
     });
 
@@ -55,13 +64,13 @@ define([
 
     container.on('results:all', function (params) {
       if (params.query.term == null || params.query.term === '') {
-	var showSearch = self.showSearch(params);
+        var showSearch = self.showSearch(params);
 
-	if (showSearch) {
-	  self.$searchContainer.removeClass('select2-search--hide');
-	} else {
-	  self.$searchContainer.addClass('select2-search--hide');
-	}
+        if (showSearch) {
+          self.$searchContainer.removeClass('select2-search--hide');
+        } else {
+          self.$searchContainer.addClass('select2-search--hide');
+        }
       }
     });
   };
@@ -71,7 +80,7 @@ define([
       var input = this.$search.val();
 
       this.trigger('query', {
-	term: input
+        term: input
       });
     }
 
