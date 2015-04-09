@@ -39,7 +39,7 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
             ppType = $select.val();
 
         // Set Loading
-        $body.addClass('app--loading');
+        kunstmaanbundles.appLoading.addLoading();
 
         // Ajax Request
         $.ajax({
@@ -61,7 +61,7 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                 }
 
                 // Remove Loading
-                $body.removeClass('app--loading');
+                kunstmaanbundles.appLoading.removeLoading();
 
                 // Enable leave-page modal
                 kunstmaanbundles.checkIfEdited.edited();

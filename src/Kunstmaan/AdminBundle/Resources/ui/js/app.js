@@ -34,6 +34,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.mediaChooser.init();
         kunstmaanbundles.bulkActions.init();
         kunstmaanbundles.nestedForm.init();
+        kunstmaanbundles.appLoading.init();
     };
 
 

@@ -308,7 +308,8 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
             if((e.ctrlKey || e.metaKey) && e.which === 83) {
                 e.preventDefault();
 
-                $body.addClass('app--loading');
+                kunstmaanbundles.appLoading.addLoading();
+
                 $('#pageadminform').submit();
             };
         });

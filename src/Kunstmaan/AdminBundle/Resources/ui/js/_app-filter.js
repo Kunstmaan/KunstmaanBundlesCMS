@@ -168,7 +168,7 @@ kunstmaanbundles.filter = (function($, window, undefined) {
 
     clearAllFilters = function() {
         // Set Loading
-        $body.addClass('app--loading');
+        kunstmaanbundles.appLoading.addLoading();
 
         // Remove all filters
         $('.app__filter__line').remove();

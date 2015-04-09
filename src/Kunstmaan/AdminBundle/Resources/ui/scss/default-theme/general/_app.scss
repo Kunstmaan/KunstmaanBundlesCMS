@@ -18,7 +18,7 @@
         &:before {
             content: " ";
 
-            z-index: 601;
+            z-index: 9001;
             position: fixed;
             top: 50vh;
             left: 50vw;
@@ -37,7 +37,7 @@
         &:after {
             content: " ";
 
-            z-index: 600;
+            z-index: 9001;
             position: fixed;
             top: 0;
             left: 0;
