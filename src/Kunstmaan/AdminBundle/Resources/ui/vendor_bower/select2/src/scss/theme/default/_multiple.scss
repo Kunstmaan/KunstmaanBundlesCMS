@@ -5,6 +5,7 @@
   cursor: text;
 
   .select2-selection__rendered {
+    box-sizing: border-box;
     list-style: none;
     margin: 0;
     padding: 0 5px;
@@ -74,13 +75,18 @@
   }
 }
 
+&.select2-container--focus {
+  .select2-selection--multiple {
+    border: solid black 1px;
+    outline: 0;
+  }
+}
+
 &.select2-container--disabled {
   .select2-selection--multiple {
     background-color: #eee;
     cursor: default;
   }
-
-
 
   .select2-selection__choice__remove {
     display: none;

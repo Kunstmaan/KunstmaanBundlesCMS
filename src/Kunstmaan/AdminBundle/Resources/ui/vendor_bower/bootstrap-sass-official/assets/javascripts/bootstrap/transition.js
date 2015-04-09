@@ -1,5 +1,5 @@
 /* ========================================================================
- * Bootstrap: transition.js v3.3.4
+ * Bootstrap: transition.js v3.3.2
  * http://getbootstrap.com/javascript/#transitions
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -25,7 +25,7 @@
 
     for (var name in transEndEventNames) {
       if (el.style[name] !== undefined) {
-	return { end: transEndEventNames[name] }
+        return { end: transEndEventNames[name] }
       }
     }
 
@@ -51,7 +51,7 @@
       bindType: $.support.transition.end,
       delegateType: $.support.transition.end,
       handle: function (e) {
-	if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
+        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments)
       }
     }
   })

@@ -14,12 +14,12 @@ define([
 
     if ($.isArray(tags)) {
       for (var t = 0; t < tags.length; t++) {
-	var tag = tags[t];
-	var item = this._normalizeItem(tag);
+        var tag = tags[t];
+        var item = this._normalizeItem(tag);
 
-	var $option = this.option(item);
+        var $option = this.option(item);
 
-	this.$element.append($option);
+        this.$element.append($option);
       }
     }
   }
@@ -29,7 +29,7 @@ define([
 
     this._removeOldTags();
 
-    if (params.term == null || params.term === '' || params.page != null) {
+    if (params.term == null || params.page != null) {
       decorated.call(this, params, callback);
       return;
     }
@@ -38,42 +38,42 @@ define([
       var data = obj.results;
 
       for (var i = 0; i < data.length; i++) {
-	var option = data[i];
+        var option = data[i];
 
-	var checkChildren = (
-	  option.children != null &&
-	  !wrapper({
-	    results: option.children
-	  }, true)
-	);
+        var checkChildren = (
+          option.children != null &&
+          !wrapper({
+            results: option.children
+          }, true)
+        );
 
-	var checkText = option.text === params.term;
+        var checkText = option.text === params.term;
 
-	if (checkText || checkChildren) {
-	  if (child) {
-	    return false;
-	  }
+        if (checkText || checkChildren) {
+          if (child) {
+            return false;
+          }
 
-	  obj.data = data;
-	  callback(obj);
+          obj.data = data;
+          callback(obj);
 
-	  return;
-	}
+          return;
+        }
       }
 
       if (child) {
-	return true;
+        return true;
       }
 
       var tag = self.createTag(params);
 
       if (tag != null) {
-	var $option = self.option(tag);
-	$option.attr('data-select2-tag', true);
+        var $option = self.option(tag);
+        $option.attr('data-select2-tag', true);
 
-	self.$element.append($option);
+        self.addOptions($option);
 
-	self.insertTag(data, tag);
+        self.insertTag(data, tag);
       }
 
       obj.results = data;
@@ -85,9 +85,15 @@ define([
   };
 
   Tags.prototype.createTag = function (decorated, params) {
+    var term = $.trim(params.term);
+
+    if (term === '') {
+      return null;
+    }
+
     return {
-      id: params.term,
-      text: params.term
+      id: term,
+      text: term
     };
   };
 
@@ -102,7 +108,7 @@ define([
 
     $options.each(function () {
       if (this.selected) {
-	return;
+        return;
       }
 
       $(this).remove();

@@ -141,13 +141,9 @@ output {
   &[disabled],
   &[readonly],
   fieldset[disabled] & {
+    cursor: $cursor-disabled;
     background-color: $input-bg-disabled;
     opacity: 1; // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655
-  }
-
-  &[disabled],
-  fieldset[disabled] & {
-    cursor: $cursor-disabled;
   }
 
   // [converter] extracted textarea& to textarea.form-control
@@ -204,7 +200,7 @@ input[type="search"] {
 // horizontal forms, use the predefined grid classes.
 
 .form-group {
-  margin-bottom: $form-group-margin-bottom;
+  margin-bottom: 15px;
 }
 
 
@@ -244,7 +240,6 @@ input[type="search"] {
 // Radios and checkboxes on same line
 .radio-inline,
 .checkbox-inline {
-  position: relative;
   display: inline-block;
   padding-left: 20px;
   margin-bottom: 0;
@@ -301,7 +296,6 @@ input[type="checkbox"] {
   padding-bottom: ($padding-base-vertical + 1);
   // Remove default margin from `p`
   margin-bottom: 0;
-  min-height: ($line-height-computed + $font-size-base);
 
   &.input-lg,
   &.input-sm {
@@ -329,7 +323,6 @@ input[type="checkbox"] {
     padding: $padding-small-vertical $padding-small-horizontal;
     font-size: $font-size-small;
     line-height: $line-height-small;
-    min-height: ($line-height-computed + $font-size-small);
   }
 }
 
@@ -343,7 +336,6 @@ input[type="checkbox"] {
     padding: $padding-large-vertical $padding-large-horizontal;
     font-size: $font-size-large;
     line-height: $line-height-large;
-    min-height: ($line-height-computed + $font-size-large);
   }
 }
 
@@ -463,7 +455,7 @@ input[type="checkbox"] {
       .input-group-addon,
       .input-group-btn,
       .form-control {
-	width: auto;
+        width: auto;
       }
     }
 
@@ -487,7 +479,7 @@ input[type="checkbox"] {
       vertical-align: middle;
 
       label {
-	padding-left: 0;
+        padding-left: 0;
       }
     }
     .radio input[type="radio"],
@@ -564,14 +556,14 @@ input[type="checkbox"] {
   .form-group-lg {
     @media (min-width: $screen-sm-min) {
       .control-label {
-	padding-top: (($padding-large-vertical * $line-height-large) + 1);
+        padding-top: (($padding-large-vertical * $line-height-large) + 1);
       }
     }
   }
   .form-group-sm {
     @media (min-width: $screen-sm-min) {
       .control-label {
-	padding-top: ($padding-small-vertical + 1);
+        padding-top: ($padding-small-vertical + 1);
       }
     }
   }

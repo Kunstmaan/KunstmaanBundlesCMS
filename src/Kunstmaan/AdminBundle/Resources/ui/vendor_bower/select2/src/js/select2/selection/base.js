@@ -14,12 +14,21 @@ define([
 
   BaseSelection.prototype.render = function () {
     var $selection = $(
-      '<span class="select2-selection" tabindex="0" role="combobox" ' +
+      '<span class="select2-selection" role="combobox" ' +
       'aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">' +
       '</span>'
     );
 
+    this._tabindex = 0;
+
+    if (this.$element.data('old-tabindex') != null) {
+      this._tabindex = this.$element.data('old-tabindex');
+    } else if (this.$element.attr('tabindex') != null) {
+      this._tabindex = this.$element.attr('tabindex');
+    }
+
     $selection.attr('title', this.$element.attr('title'));
+    $selection.attr('tabindex', this._tabindex);
 
     this.$selection = $selection;
 
@@ -34,13 +43,19 @@ define([
 
     this.container = container;
 
-    this.$selection.attr('aria-owns', resultsId);
+    this.$selection.on('focus', function (evt) {
+      self.trigger('focus', evt);
+    });
+
+    this.$selection.on('blur', function (evt) {
+      self.trigger('blur', evt);
+    });
 
     this.$selection.on('keydown', function (evt) {
       self.trigger('keypress', evt);
 
       if (evt.which === KEYS.SPACE) {
-	evt.preventDefault();
+        evt.preventDefault();
       }
     });
 
@@ -55,6 +70,7 @@ define([
     container.on('open', function () {
       // When the dropdown is open, aria-expanded="true"
       self.$selection.attr('aria-expanded', 'true');
+      self.$selection.attr('aria-owns', resultsId);
 
       self._attachCloseHandler(container);
     });
@@ -63,6 +79,7 @@ define([
       // When the dropdown is closed, aria-expanded="false"
       self.$selection.attr('aria-expanded', 'false');
       self.$selection.removeAttr('aria-activedescendant');
+      self.$selection.removeAttr('aria-owns');
 
       self.$selection.focus();
 
@@ -70,7 +87,7 @@ define([
     });
 
     container.on('enable', function () {
-      self.$selection.attr('tabindex', '0');
+      self.$selection.attr('tabindex', self._tabindex);
     });
 
     container.on('disable', function () {
@@ -89,15 +106,15 @@ define([
       var $all = $('.select2.select2-container--open');
 
       $all.each(function () {
-	var $this = $(this);
+        var $this = $(this);
 
-	if (this == $select[0]) {
-	  return;
-	}
+        if (this == $select[0]) {
+          return;
+        }
 
-	var $element = $this.data('element');
+        var $element = $this.data('element');
 
-	$element.select2('close');
+        $element.select2('close');
       });
     });
   };

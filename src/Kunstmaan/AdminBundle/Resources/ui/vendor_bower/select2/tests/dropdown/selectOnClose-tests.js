@@ -1,5 +1,7 @@
 module('Dropdown - selectOnClose');
 
+var $ = require('jquery');
+
 var Utils = require('select2/utils');
 var Options = require('select2/options');
 
@@ -78,8 +80,8 @@ test('will not trigger if no results here highlighted', function (assert) {
   select.append({
     results: [
       {
-	id: '1',
-	text: 'Test'
+        id: '1',
+        text: 'Test'
       }
     ]
   });
@@ -117,8 +119,8 @@ test('will trigger if there is a highlighted result', function (assert) {
   select.append({
     results: [
       {
-	id: '1',
-	text: 'Test'
+        id: '1',
+        text: 'Test'
       }
     ]
   });

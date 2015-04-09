@@ -4,10 +4,10 @@ define(function () {
     inputTooLong: function (args) {
       var overChars = args.input.length - args.maximum;
 
-      var message = 'Supprimez " + n + " caractère';
+      var message = 'Supprimez ' + overChars + ' caractère';
 
       if (overChars !== 1) {
-	message += 's';
+        message += 's';
       }
 
       return message;
@@ -15,10 +15,10 @@ define(function () {
     inputTooShort: function (args) {
       var remainingChars = args.minimum - args.input.length;
 
-      var message = 'Saisissez " + n + " caractère';
+      var message = 'Saisissez ' + remainingChars + ' caractère';
 
-      if (overChars !== 1) {
-	message += 's';
+      if (remainingChars !== 1) {
+        message += 's';
       }
 
       return message;
@@ -26,12 +26,12 @@ define(function () {
     loadingMore: function () {
       return 'Chargement de résultats supplémentaires…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Vous pouvez seulement sélectionner ' +
-	args.maximum + ' élément';
+        args.maximum + ' élément';
 
       if (args.maximum !== 1) {
-	message += 's';
+        message += 's';
       }
 
       return message;

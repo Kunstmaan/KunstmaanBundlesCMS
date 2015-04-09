@@ -7,9 +7,9 @@ define(function () {
       var message = 'Idatzi ';
 
       if (overChars == 1) {
-	message += 'karaktere bat';
+        message += 'karaktere bat';
       } else {
-	message += overChars + ' karaktere';
+        message += overChars + ' karaktere';
       }
 
       message += ' gutxiago';
@@ -21,10 +21,10 @@ define(function () {
 
       var message = 'Idatzi ';
 
-      if (overChars == 1) {
-	message += 'karaktere bat';
+      if (remainingChars == 1) {
+        message += 'karaktere bat';
       } else {
-	message += overChars + ' karaktere';
+        message += remainingChars + ' karaktere';
       }
 
       message += ' gehiago';
@@ -34,11 +34,11 @@ define(function () {
     loadingMore: function () {
       return 'Emaitza gehiago kargatzen…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       if (args.maximum === 1) {
-	return 'Elementu bakarra hauta dezakezu';
+        return 'Elementu bakarra hauta dezakezu';
       } else {
-	return args.maximum + ' elementu hauta ditzakezu soilik';
+        return args.maximum + ' elementu hauta ditzakezu soilik';
       }
     },
     noResults: function () {

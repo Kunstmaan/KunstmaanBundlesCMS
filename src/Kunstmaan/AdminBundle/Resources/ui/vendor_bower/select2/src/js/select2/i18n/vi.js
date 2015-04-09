@@ -7,7 +7,7 @@ define(function () {
       var message = 'Vui lòng nhập ít hơn ' + overChars + ' ký tự';
 
       if (overChars != 1) {
-	message += 's';
+        message += 's';
       }
 
       return message;

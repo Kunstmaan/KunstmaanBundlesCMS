@@ -31,6 +31,8 @@ define([
   };
 
   Results.prototype.displayMessage = function (params) {
+    var escapeMarkup = this.options.get('escapeMarkup');
+
     this.clear();
     this.hideLoading();
 
@@ -40,7 +42,11 @@ define([
 
     var message = this.options.get('translations').get(params.message);
 
-    $message.text(message(params.args));
+    $message.append(
+      escapeMarkup(
+        message(params.args)
+      )
+    );
 
     this.$results.append($message);
   };
@@ -52,9 +58,9 @@ define([
 
     if (data.results == null || data.results.length === 0) {
       if (this.$results.children().length === 0) {
-	this.trigger('results:message', {
-	  message: 'noResults'
-	});
+        this.trigger('results:message', {
+          message: 'noResults'
+        });
       }
 
       return;
@@ -89,34 +95,37 @@ define([
 
     this.data.current(function (selected) {
       var selectedIds = $.map(selected, function (s) {
-	return s.id.toString();
+        return s.id.toString();
       });
 
       var $options = self.$results
-	.find('.select2-results__option[aria-selected]');
+        .find('.select2-results__option[aria-selected]');
 
       $options.each(function () {
-	var $option = $(this);
+        var $option = $(this);
 
-	var item = $.data(this, 'data');
+        var item = $.data(this, 'data');
 
-	if (item.id != null && selectedIds.indexOf(item.id.toString()) > -1) {
-	  $option.attr('aria-selected', 'true');
-	} else {
-	  $option.attr('aria-selected', 'false');
-	}
+        // id needs to be converted to a string when comparing
+        var id = '' + item.id;
+
+        if ($.inArray(id, selectedIds) > -1) {
+          $option.attr('aria-selected', 'true');
+        } else {
+          $option.attr('aria-selected', 'false');
+        }
       });
 
       var $selected = $options.filter('[aria-selected=true]');
 
       // Check if there are any selected options
       if ($selected.length > 0) {
-	// If there are selected options, highlight the first
-	$selected.first().trigger('mouseenter');
+        // If there are selected options, highlight the first
+        $selected.first().trigger('mouseenter');
       } else {
-	// If there are no selected options, highlight the first option
-	// in the dropdown
-	$options.first().trigger('mouseenter');
+        // If there are no selected options, highlight the first option
+        // in the dropdown
+        $options.first().trigger('mouseenter');
       }
     });
   };
@@ -163,6 +172,10 @@ define([
       option.id = data._resultId;
     }
 
+    if (data.title) {
+      option.title = data.title;
+    }
+
     if (data.children) {
       attrs.role = 'group';
       attrs['aria-label'] = data.text;
@@ -187,15 +200,15 @@ define([
       var $children = [];
 
       for (var c = 0; c < data.children.length; c++) {
-	var child = data.children[c];
+        var child = data.children[c];
 
-	var $child = this.option(child);
+        var $child = this.option(child);
 
-	$children.push($child);
+        $children.push($child);
       }
 
       var $childrenContainer = $('<ul></ul>', {
-	'class': 'select2-results__options select2-results__options--nested'
+        'class': 'select2-results__options select2-results__options--nested'
       });
 
       $childrenContainer.append($children);
@@ -223,7 +236,7 @@ define([
       self.append(params.data);
 
       if (container.isOpen()) {
-	self.setClasses();
+        self.setClasses();
       }
     });
 
@@ -231,7 +244,7 @@ define([
       self.append(params.data);
 
       if (container.isOpen()) {
-	self.setClasses();
+        self.setClasses();
       }
     });
 
@@ -241,7 +254,7 @@ define([
 
     container.on('select', function () {
       if (!container.isOpen()) {
-	return;
+        return;
       }
 
       self.setClasses();
@@ -249,7 +262,7 @@ define([
 
     container.on('unselect', function () {
       if (!container.isOpen()) {
-	return;
+        return;
       }
 
       self.setClasses();
@@ -271,27 +284,31 @@ define([
       self.$results.removeAttr('aria-activedescendant');
     });
 
+    container.on('results:toggle', function () {
+      var $highlighted = self.getHighlightedResults();
+
+      if ($highlighted.length === 0) {
+        return;
+      }
+
+      $highlighted.trigger('mouseup');
+    });
+
     container.on('results:select', function () {
       var $highlighted = self.getHighlightedResults();
 
       if ($highlighted.length === 0) {
-	return;
+        return;
       }
 
       var data = $highlighted.data('data');
 
       if ($highlighted.attr('aria-selected') == 'true') {
-	if (self.options.get('multiple')) {
-	  self.trigger('unselect', {
-	    data: data
-	  });
-	} else {
-	  self.trigger('close');
-	}
+        self.trigger('close');
       } else {
-	self.trigger('select', {
-	  data: data
-	});
+        self.trigger('select', {
+          data: data
+        });
       }
     });
 
@@ -304,14 +321,14 @@ define([
 
       // If we are already at te top, don't move further
       if (currentIndex === 0) {
-	return;
+        return;
       }
 
       var nextIndex = currentIndex - 1;
 
       // If none are highlighted, highlight the first
       if ($highlighted.length === 0) {
-	nextIndex = 0;
+        nextIndex = 0;
       }
 
       var $next = $options.eq(nextIndex);
@@ -323,9 +340,9 @@ define([
       var nextOffset = self.$results.scrollTop() + (nextTop - currentOffset);
 
       if (nextIndex === 0) {
-	self.$results.scrollTop(0);
+        self.$results.scrollTop(0);
       } else if (nextTop - currentOffset < 0) {
-	self.$results.scrollTop(nextOffset);
+        self.$results.scrollTop(nextOffset);
       }
     });
 
@@ -340,7 +357,7 @@ define([
 
       // If we are at the last option, stay there
       if (nextIndex >= $options.length) {
-	return;
+        return;
       }
 
       var $next = $options.eq(nextIndex);
@@ -348,14 +365,14 @@ define([
       $next.trigger('mouseenter');
 
       var currentOffset = self.$results.offset().top +
-	self.$results.outerHeight(false);
+        self.$results.outerHeight(false);
       var nextBottom = $next.offset().top + $next.outerHeight(false);
       var nextOffset = self.$results.scrollTop() + nextBottom - currentOffset;
 
       if (nextIndex === 0) {
-	self.$results.scrollTop(0);
+        self.$results.scrollTop(0);
       } else if (nextBottom > currentOffset) {
-	self.$results.scrollTop(nextOffset);
+        self.$results.scrollTop(nextOffset);
       }
     });
 
@@ -369,30 +386,30 @@ define([
 
     if ($.fn.mousewheel) {
       this.$results.on('mousewheel', function (e) {
-	var top = self.$results.scrollTop();
+        var top = self.$results.scrollTop();
 
-	var bottom = (
-	  self.$results.get(0).scrollHeight -
-	  self.$results.scrollTop() +
-	  e.deltaY
-	);
+        var bottom = (
+          self.$results.get(0).scrollHeight -
+          self.$results.scrollTop() +
+          e.deltaY
+        );
 
-	var isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
-	var isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
+        var isAtTop = e.deltaY > 0 && top - e.deltaY <= 0;
+        var isAtBottom = e.deltaY < 0 && bottom <= self.$results.height();
 
-	if (isAtTop) {
-	  self.$results.scrollTop(0);
+        if (isAtTop) {
+          self.$results.scrollTop(0);
 
-	  e.preventDefault();
-	  e.stopPropagation();
-	} else if (isAtBottom) {
-	  self.$results.scrollTop(
-	    self.$results.get(0).scrollHeight - self.$results.height()
-	  );
+          e.preventDefault();
+          e.stopPropagation();
+        } else if (isAtBottom) {
+          self.$results.scrollTop(
+            self.$results.get(0).scrollHeight - self.$results.height()
+          );
 
-	  e.preventDefault();
-	  e.stopPropagation();
-	}
+          e.preventDefault();
+          e.stopPropagation();
+        }
       });
     }
 
@@ -403,21 +420,21 @@ define([
       var data = $this.data('data');
 
       if ($this.attr('aria-selected') === 'true') {
-	if (self.options.get('multiple')) {
-	  self.trigger('unselect', {
-	    originalEvent: evt,
-	    data: data
-	  });
-	} else {
-	  self.trigger('close');
-	}
+        if (self.options.get('multiple')) {
+          self.trigger('unselect', {
+            originalEvent: evt,
+            data: data
+          });
+        } else {
+          self.trigger('close');
+        }
 
-	return;
+        return;
       }
 
       self.trigger('select', {
-	originalEvent: evt,
-	data: data
+        originalEvent: evt,
+        data: data
       });
     });
 
@@ -426,11 +443,11 @@ define([
       var data = $(this).data('data');
 
       self.getHighlightedResults()
-	  .removeClass('select2-results__option--highlighted');
+          .removeClass('select2-results__option--highlighted');
 
       self.trigger('results:focus', {
-	data: data,
-	element: $(this)
+        data: data,
+        element: $(this)
       });
     });
   };
@@ -473,13 +490,16 @@ define([
 
   Results.prototype.template = function (result, container) {
     var template = this.options.get('templateResult');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
     var content = template(result);
 
     if (content == null) {
       container.style.display = 'none';
+    } else if (typeof content === 'string') {
+      container.innerHTML = escapeMarkup(content);
     } else {
-      container.innerHTML = content;
+      $(container).append(content);
     }
   };
 

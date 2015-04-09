@@ -4,32 +4,32 @@
     "keywords": ["bootstrap", "css", "sass"],
     "homepage": "http://github.com/twbs/bootstrap-sass",
     "authors": [
-	{
-	    "name": "Thomas McDonald"
-	},
-	{
-	    "name": "Tristan Harward"
-	},
-	{
-	    "name": "Peter Gumeson"
-	},
-	{
-	    "name": "Gleb Mazovetskiy"
-	},
-	{
-	    "name": "Mark Otto"
-	},
-	{
-	    "name": "Jacob Thornton"
-	}
+        {
+            "name": "Thomas McDonald"
+        },
+        {
+            "name": "Tristan Harward"
+        },
+        {
+            "name": "Peter Gumeson"
+        },
+        {
+            "name": "Gleb Mazovetskiy"
+        },
+        {
+            "name": "Mark Otto"
+        },
+        {
+            "name": "Jacob Thornton"
+        }
     ],
     "support": {
-	"issues": "https://github.com/twbs/bootstrap-sass/issues"
+        "issues": "https://github.com/twbs/bootstrap-sass/issues"
     },
     "license": "MIT",
     "extra": {
-	"branch-alias": {
-	    "dev-master": "3.3.x-dev"
-	}
+        "branch-alias": {
+            "dev-master": "3.3.x-dev"
+        }
     }
 }

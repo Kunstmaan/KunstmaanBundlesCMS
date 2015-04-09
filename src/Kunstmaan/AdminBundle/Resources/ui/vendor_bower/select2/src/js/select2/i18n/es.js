@@ -10,22 +10,22 @@ define(function () {
       var message = 'Por favor, elimine ' + remainingChars + ' car';
 
       if (remainingChars == 1) {
-	message += 'ácter';
+        message += 'ácter';
       } else {
-	message += 'acteres';
+        message += 'acteres';
       }
 
       return message;
     },
     inputTooShort: function (args) {
-      var remaningChars = args.minimum - args.input.length;
+      var remainingChars = args.minimum - args.input.length;
 
       var message = 'Por favor, introduzca ' + remainingChars + ' car';
 
       if (remainingChars == 1) {
-	message += 'ácter';
+        message += 'ácter';
       } else {
-	message += 'acteres';
+        message += 'acteres';
       }
 
       return message;
@@ -33,11 +33,11 @@ define(function () {
     loadingMore: function () {
       return 'Cargando más resultados…';
     },
-    maximumSelection: function (args) {
+    maximumSelected: function (args) {
       var message = 'Sólo puede seleccionar ' + args.maximum + ' elemento';
 
       if (args.maximum != 1) {
-	message += 's';
+        message += 's';
       }
 
       return message;

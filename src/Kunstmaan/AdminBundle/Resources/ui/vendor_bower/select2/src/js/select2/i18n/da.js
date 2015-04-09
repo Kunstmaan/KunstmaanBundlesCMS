@@ -25,7 +25,7 @@ define(function () {
       var message = 'Du kan kun vælge ' + args.maximum + ' emne';
 
       if (args.maximum != 1) {
-	message += 'r';
+        message += 'r';
       }
 
       return message;

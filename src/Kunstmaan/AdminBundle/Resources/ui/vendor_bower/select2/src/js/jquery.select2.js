@@ -13,20 +13,20 @@ define([
       options = options || {};
 
       if (typeof options === 'object') {
-	this.each(function () {
-	  var instanceOptions = $.extend({}, options, true);
+        this.each(function () {
+          var instanceOptions = $.extend({}, options, true);
 
-	  var instance = new Select2($(this), instanceOptions);
-	});
+          var instance = new Select2($(this), instanceOptions);
+        });
 
-	return this;
+        return this;
       } else if (typeof options === 'string') {
-	var instance = this.data('select2');
-	var args = Array.prototype.slice.call(arguments, 1);
+        var instance = this.data('select2');
+        var args = Array.prototype.slice.call(arguments, 1);
 
-	return instance[options](args);
+        return instance[options](args);
       } else {
-	throw new Error('Invalid arguments for Select2: ' + options);
+        throw new Error('Invalid arguments for Select2: ' + options);
       }
     };
   }

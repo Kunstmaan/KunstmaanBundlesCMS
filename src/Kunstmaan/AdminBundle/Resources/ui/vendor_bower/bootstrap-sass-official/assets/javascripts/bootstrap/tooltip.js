@@ -1,5 +1,5 @@
 /* ========================================================================
- * Bootstrap: tooltip.js v3.3.4
+ * Bootstrap: tooltip.js v3.3.2
  * http://getbootstrap.com/javascript/#tooltip
  * Inspired by the original jQuery.tipsy by Jason Frame
  * ========================================================================
@@ -15,17 +15,17 @@
   // ===============================
 
   var Tooltip = function (element, options) {
-    this.type       = null
-    this.options    = null
-    this.enabled    = null
-    this.timeout    = null
-    this.hoverState = null
+    this.type       =
+    this.options    =
+    this.enabled    =
+    this.timeout    =
+    this.hoverState =
     this.$element   = null
 
     this.init('tooltip', element, options)
   }
 
-  Tooltip.VERSION  = '3.3.4'
+  Tooltip.VERSION  = '3.3.2'
 
   Tooltip.TRANSITION_DURATION = 150
 
@@ -52,23 +52,19 @@
     this.options   = this.getOptions(options)
     this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
 
-    if (this.$element[0] instanceof document.constructor && !this.options.selector) {
-      throw new Error('`selector` option must be specified when initializing ' + this.type + ' on the window.document object!')
-    }
-
     var triggers = this.options.trigger.split(' ')
 
     for (var i = triggers.length; i--;) {
       var trigger = triggers[i]
 
       if (trigger == 'click') {
-	this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
       } else if (trigger != 'manual') {
-	var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
-	var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
 
-	this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
-	this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
       }
     }
 
@@ -86,8 +82,8 @@
 
     if (options.delay && typeof options.delay == 'number') {
       options.delay = {
-	show: options.delay,
-	hide: options.delay
+        show: options.delay,
+        hide: options.delay
       }
     }
 
@@ -171,18 +167,18 @@
       if (this.options.animation) $tip.addClass('fade')
 
       var placement = typeof this.options.placement == 'function' ?
-	this.options.placement.call(this, $tip[0], this.$element[0]) :
-	this.options.placement
+        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement
 
       var autoToken = /\s?auto?\s?/i
       var autoPlace = autoToken.test(placement)
       if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
 
       $tip
-	.detach()
-	.css({ top: 0, left: 0, display: 'block' })
-	.addClass(placement)
-	.data('bs.' + this.type, this)
+        .detach()
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
+        .data('bs.' + this.type, this)
 
       this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
 
@@ -191,19 +187,19 @@
       var actualHeight = $tip[0].offsetHeight
 
       if (autoPlace) {
-	var orgPlacement = placement
-	var $container   = this.options.container ? $(this.options.container) : this.$element.parent()
-	var containerDim = this.getPosition($container)
+        var orgPlacement = placement
+        var $container   = this.options.container ? $(this.options.container) : this.$element.parent()
+        var containerDim = this.getPosition($container)
 
-	placement = placement == 'bottom' && pos.bottom + actualHeight > containerDim.bottom ? 'top'    :
-		    placement == 'top'    && pos.top    - actualHeight < containerDim.top    ? 'bottom' :
-		    placement == 'right'  && pos.right  + actualWidth  > containerDim.width  ? 'left'   :
-		    placement == 'left'   && pos.left   - actualWidth  < containerDim.left   ? 'right'  :
-		    placement
+        placement = placement == 'bottom' && pos.bottom + actualHeight > containerDim.bottom ? 'top'    :
+                    placement == 'top'    && pos.top    - actualHeight < containerDim.top    ? 'bottom' :
+                    placement == 'right'  && pos.right  + actualWidth  > containerDim.width  ? 'left'   :
+                    placement == 'left'   && pos.left   - actualWidth  < containerDim.left   ? 'right'  :
+                    placement
 
-	$tip
-	  .removeClass(orgPlacement)
-	  .addClass(placement)
+        $tip
+          .removeClass(orgPlacement)
+          .addClass(placement)
       }
 
       var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
@@ -211,18 +207,18 @@
       this.applyPlacement(calculatedOffset, placement)
 
       var complete = function () {
-	var prevHoverState = that.hoverState
-	that.$element.trigger('shown.bs.' + that.type)
-	that.hoverState = null
+        var prevHoverState = that.hoverState
+        that.$element.trigger('shown.bs.' + that.type)
+        that.hoverState = null
 
-	if (prevHoverState == 'out') that.leave(that)
+        if (prevHoverState == 'out') that.leave(that)
       }
 
       $.support.transition && this.$tip.hasClass('fade') ?
-	$tip
-	  .one('bsTransitionEnd', complete)
-	  .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
-	complete()
+        $tip
+          .one('bsTransitionEnd', complete)
+          .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
+        complete()
     }
   }
 
@@ -246,10 +242,10 @@
     // so we use setOffset directly with our own function B-0
     $.offset.setOffset($tip[0], $.extend({
       using: function (props) {
-	$tip.css({
-	  top: Math.round(props.top),
-	  left: Math.round(props.left)
-	})
+        $tip.css({
+          top: Math.round(props.top),
+          left: Math.round(props.left)
+        })
       }
     }, offset), 0)
 
@@ -276,10 +272,10 @@
     this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical)
   }
 
-  Tooltip.prototype.replaceArrow = function (delta, dimension, isVertical) {
+  Tooltip.prototype.replaceArrow = function (delta, dimension, isHorizontal) {
     this.arrow()
-      .css(isVertical ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
-      .css(isVertical ? 'top' : 'left', '')
+      .css(isHorizontal ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
+      .css(isHorizontal ? 'top' : 'left', '')
   }
 
   Tooltip.prototype.setContent = function () {
@@ -292,14 +288,14 @@
 
   Tooltip.prototype.hide = function (callback) {
     var that = this
-    var $tip = $(this.$tip)
+    var $tip = this.tip()
     var e    = $.Event('hide.bs.' + this.type)
 
     function complete() {
       if (that.hoverState != 'in') $tip.detach()
       that.$element
-	.removeAttr('aria-describedby')
-	.trigger('hidden.bs.' + that.type)
+        .removeAttr('aria-describedby')
+        .trigger('hidden.bs.' + that.type)
       callback && callback()
     }
 
@@ -309,10 +305,10 @@
 
     $tip.removeClass('in')
 
-    $.support.transition && $tip.hasClass('fade') ?
+    $.support.transition && this.$tip.hasClass('fade') ?
       $tip
-	.one('bsTransitionEnd', complete)
-	.emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
+        .one('bsTransitionEnd', complete)
+        .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
       complete()
 
     this.hoverState = null
@@ -351,9 +347,9 @@
 
   Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
     return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2 } :
-	   placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 } :
-	   placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
-	/* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width }
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 } :
+           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width }
 
   }
 
@@ -368,17 +364,17 @@
       var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
       var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
       if (topEdgeOffset < viewportDimensions.top) { // top overflow
-	delta.top = viewportDimensions.top - topEdgeOffset
+        delta.top = viewportDimensions.top - topEdgeOffset
       } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
-	delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
+        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
       }
     } else {
       var leftEdgeOffset  = pos.left - viewportPadding
       var rightEdgeOffset = pos.left + viewportPadding + actualWidth
       if (leftEdgeOffset < viewportDimensions.left) { // left overflow
-	delta.left = viewportDimensions.left - leftEdgeOffset
+        delta.left = viewportDimensions.left - leftEdgeOffset
       } else if (rightEdgeOffset > viewportDimensions.width) { // right overflow
-	delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
+        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
       }
     }
 
@@ -427,8 +423,8 @@
     if (e) {
       self = $(e.currentTarget).data('bs.' + this.type)
       if (!self) {
-	self = new this.constructor(e.currentTarget, this.getDelegateOptions())
-	$(e.currentTarget).data('bs.' + this.type, self)
+        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
+        $(e.currentTarget).data('bs.' + this.type, self)
       }
     }
 
@@ -453,7 +449,7 @@
       var data    = $this.data('bs.tooltip')
       var options = typeof option == 'object' && option
 
-      if (!data && /destroy|hide/.test(option)) return
+      if (!data && option == 'destroy') return
       if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
       if (typeof option == 'string') data[option]()
     })

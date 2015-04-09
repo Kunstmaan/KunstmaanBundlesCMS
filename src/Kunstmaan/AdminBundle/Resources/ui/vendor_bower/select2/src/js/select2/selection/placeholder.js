@@ -10,8 +10,8 @@ define([
   Placeholder.prototype.normalizePlaceholder = function (_, placeholder) {
     if (typeof placeholder === 'string') {
       placeholder = {
-	id: '',
-	text: placeholder
+        id: '',
+        text: placeholder
       };
     }
 
@@ -23,7 +23,7 @@ define([
 
     $placeholder.html(this.display(placeholder));
     $placeholder.addClass('select2-selection__placeholder')
-		.removeClass('select2-selection__choice');
+                .removeClass('select2-selection__choice');
 
     return $placeholder;
   };

@@ -12,18 +12,18 @@ define([
       var self = this;
 
       this.current(function (currentData) {
-	var count = currentData != null ? currentData.length : 0;
-	if (self.maximumSelectionLength > 0 &&
-	  count >= self.maximumSelectionLength) {
-	  self.trigger('results:message', {
-	    message: 'maximumSelected',
-	    args: {
-	      maximum: self.maximumSelectionLength
-	    }
-	  });
-	  return;
-	}
-	decorated.call(self, params, callback);
+        var count = currentData != null ? currentData.length : 0;
+        if (self.maximumSelectionLength > 0 &&
+          count >= self.maximumSelectionLength) {
+          self.trigger('results:message', {
+            message: 'maximumSelected',
+            args: {
+              maximum: self.maximumSelectionLength
+            }
+          });
+          return;
+        }
+        decorated.call(self, params, callback);
       });
   };
 

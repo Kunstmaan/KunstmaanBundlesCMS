@@ -11,14 +11,14 @@ define([
     params.term = params.term || '';
 
     if (this.maximumInputLength > 0 &&
-	params.term.length > this.maximumInputLength) {
+        params.term.length > this.maximumInputLength) {
       this.trigger('results:message', {
-	message: 'inputTooLong',
-	args: {
-	  minimum: this.maximumInputLength,
-	  input: params.term,
-	  params: params
-	}
+        message: 'inputTooLong',
+        args: {
+          maximum: this.maximumInputLength,
+          input: params.term,
+          params: params
+        }
       });
 
       return;

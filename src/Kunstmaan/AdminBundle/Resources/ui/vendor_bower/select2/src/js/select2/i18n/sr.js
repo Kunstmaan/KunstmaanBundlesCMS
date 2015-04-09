@@ -7,7 +7,7 @@ define(function () {
 
     if (count % 10 >= 2 && count % 10 <= 4 &&
       (count % 100 < 12 || count % 100 > 14)) {
-	return some;
+        return some;
     }
 
     return many;

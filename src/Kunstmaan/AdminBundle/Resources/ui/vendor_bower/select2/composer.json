@@ -10,12 +10,12 @@
   "extra": {
     "component": {
       "scripts": [
-	"dist/js/select2.js"
+        "dist/js/select2.js"
       ],
       "files": [
-	"dist/js/select2.js",
-	"dist/js/i18n/*.js",
-	"dist/css/select2.css"
+        "dist/js/select2.js",
+        "dist/js/i18n/*.js",
+        "dist/css/select2.css"
       ]
     }
   }

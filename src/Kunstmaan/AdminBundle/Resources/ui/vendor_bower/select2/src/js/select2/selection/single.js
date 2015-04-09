@@ -18,7 +18,7 @@ define([
     $selection.html(
       '<span class="select2-selection__rendered"></span>' +
       '<span class="select2-selection__arrow" role="presentation">' +
-	'<b role="presentation"></b>' +
+        '<b role="presentation"></b>' +
       '</span>'
     );
 
@@ -38,11 +38,11 @@ define([
     this.$selection.on('mousedown', function (evt) {
       // Only respond to left clicks
       if (evt.which !== 1) {
-	return;
+        return;
       }
 
       self.trigger('toggle', {
-	originalEvent: evt
+        originalEvent: evt
       });
     });
 
@@ -65,8 +65,9 @@ define([
 
   SingleSelection.prototype.display = function (data) {
     var template = this.options.get('templateSelection');
+    var escapeMarkup = this.options.get('escapeMarkup');
 
-    return template(data);
+    return escapeMarkup(template(data));
   };
 
   SingleSelection.prototype.selectionContainer = function () {
@@ -83,7 +84,9 @@ define([
 
     var formatted = this.display(selection);
 
-    this.$selection.find('.select2-selection__rendered').html(formatted);
+    var $rendered = this.$selection.find('.select2-selection__rendered');
+    $rendered.empty().append(formatted);
+    $rendered.prop('title', selection.title || selection.text);
   };
 
   return SingleSelection;

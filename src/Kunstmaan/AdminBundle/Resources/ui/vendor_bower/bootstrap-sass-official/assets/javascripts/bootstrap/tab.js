@@ -1,5 +1,5 @@
 /* ========================================================================
- * Bootstrap: tab.js v3.3.4
+ * Bootstrap: tab.js v3.3.2
  * http://getbootstrap.com/javascript/#tabs
  * ========================================================================
  * Copyright 2011-2015 Twitter, Inc.
@@ -17,7 +17,7 @@
     this.element = $(element)
   }
 
-  Tab.VERSION = '3.3.4'
+  Tab.VERSION = '3.3.2'
 
   Tab.TRANSITION_DURATION = 150
 
@@ -51,12 +51,12 @@
     this.activate($this.closest('li'), $ul)
     this.activate($target, $target.parent(), function () {
       $previous.trigger({
-	type: 'hidden.bs.tab',
-	relatedTarget: $this[0]
+        type: 'hidden.bs.tab',
+        relatedTarget: $this[0]
       })
       $this.trigger({
-	type: 'shown.bs.tab',
-	relatedTarget: $previous[0]
+        type: 'shown.bs.tab',
+        relatedTarget: $previous[0]
       })
     })
   }
@@ -69,32 +69,32 @@
 
     function next() {
       $active
-	.removeClass('active')
-	.find('> .dropdown-menu > .active')
-	  .removeClass('active')
-	.end()
-	.find('[data-toggle="tab"]')
-	  .attr('aria-expanded', false)
+        .removeClass('active')
+        .find('> .dropdown-menu > .active')
+          .removeClass('active')
+        .end()
+        .find('[data-toggle="tab"]')
+          .attr('aria-expanded', false)
 
       element
-	.addClass('active')
-	.find('[data-toggle="tab"]')
-	  .attr('aria-expanded', true)
+        .addClass('active')
+        .find('[data-toggle="tab"]')
+          .attr('aria-expanded', true)
 
       if (transition) {
-	element[0].offsetWidth // reflow for transition
-	element.addClass('in')
+        element[0].offsetWidth // reflow for transition
+        element.addClass('in')
       } else {
-	element.removeClass('fade')
+        element.removeClass('fade')
       }
 
-      if (element.parent('.dropdown-menu').length) {
-	element
-	  .closest('li.dropdown')
-	    .addClass('active')
-	  .end()
-	  .find('[data-toggle="tab"]')
-	    .attr('aria-expanded', true)
+      if (element.parent('.dropdown-menu')) {
+        element
+          .closest('li.dropdown')
+            .addClass('active')
+          .end()
+          .find('[data-toggle="tab"]')
+            .attr('aria-expanded', true)
       }
 
       callback && callback()
@@ -102,8 +102,8 @@
 
     $active.length && transition ?
       $active
-	.one('bsTransitionEnd', next)
-	.emulateTransitionEnd(Tab.TRANSITION_DURATION) :
+        .one('bsTransitionEnd', next)
+        .emulateTransitionEnd(Tab.TRANSITION_DURATION) :
       next()
 
     $active.removeClass('in')

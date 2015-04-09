@@ -10,13 +10,13 @@
     &:first-child {
       > a,
       > span {
-	@include border-left-radius($border-radius);
+        @include border-left-radius($border-radius);
       }
     }
     &:last-child {
       > a,
       > span {
-	@include border-right-radius($border-radius);
+        @include border-right-radius($border-radius);
       }
     }
   }

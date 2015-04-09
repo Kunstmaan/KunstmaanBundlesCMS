@@ -2,15 +2,15 @@ define([
 
 ], function () {
   function countResults (data) {
-    count = 0;
+    var count = 0;
 
     for (var d = 0; d < data.length; d++) {
       var item = data[d];
 
       if (item.children) {
-	count += countResults(item.children);
+        count += countResults(item.children);
       } else {
-	count++;
+        count++;
       }
     }
 
@@ -19,6 +19,10 @@ define([
 
   function MinimumResultsForSearch (decorated, $element, options, dataAdapter) {
     this.minimumResultsForSearch = options.get('minimumResultsForSearch');
+
+    if (this.minimumResultsForSearch < 0) {
+      this.minimumResultsForSearch = Infinity;
+    }
 
     decorated.call(this, $element, options, dataAdapter);
   }

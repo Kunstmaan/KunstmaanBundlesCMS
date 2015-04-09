@@ -7,7 +7,7 @@ define(function () {
       var message = 'Sisesta ' + overChars + ' täht';
 
       if (overChars != 1) {
-	message += 'e';
+        message += 'e';
       }
 
       message += ' vähem';
@@ -20,7 +20,7 @@ define(function () {
       var message = 'Sisesta ' + remainingChars + ' täht';
 
       if (remainingChars != 1) {
-	message += 'e';
+        message += 'e';
       }
 
       message += ' rohkem';
@@ -34,9 +34,9 @@ define(function () {
       var message = 'Saad vaid ' + args.maximum + ' tulemus';
 
       if (args.maximum == 1) {
-	message += 'e';
+        message += 'e';
       } else {
-	message += 't';
+        message += 't';
       }
 
       message += ' valida';
