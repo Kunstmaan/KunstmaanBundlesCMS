@@ -8,6 +8,7 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\MediaBundle\Form\FolderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -112,6 +113,10 @@ class ChooserController extends Controller
         $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 
+        $sub = new Folder();
+        $sub->setParent($folder);
+        $subForm  = $this->createForm(new FolderType($sub), $sub);
+
         $linkChooserLink = null;
         if (!empty($linkChooser)) {
             $params = array();
@@ -124,7 +129,7 @@ class ChooserController extends Controller
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
 
-       $viewVariabels = array(
+        $viewVariabels = array(
             'cKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser'     => $linkChooser,
             'linkChooserLink' => $linkChooserLink,
@@ -134,7 +139,7 @@ class ChooserController extends Controller
             'type'            => $type,
             'folder'          => $folder,
             'adminlist'       => $adminList,
-
+            'subform'         => $subForm->createView()
         );
 
         /* generate all forms */

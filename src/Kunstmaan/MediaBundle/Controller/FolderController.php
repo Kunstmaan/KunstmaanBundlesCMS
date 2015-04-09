@@ -113,10 +113,12 @@ class FolderController extends Controller
             $this->get('session')->getFlashBag()->add('success', 'Folder \'' . $folderName . '\' has been deleted!');
             $folderId = $parentFolder->getId();
         }
+        if (strpos($_SERVER['HTTP_REFERER'],'chooser')) {
+            $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
+        } else $redirect = 'KunstmaanMediaBundle_folder_show';
 
         return new RedirectResponse(
-            $this->generateUrl(
-                'KunstmaanMediaBundle_folder_show',
+            $this->generateUrl($redirect,
                 array(
                     'folderId' => $folderId
                 )
@@ -153,16 +155,16 @@ class FolderController extends Controller
                     'success',
                     'Folder \'' . $folder->getName() . '\' has been created!'
                 );
+                if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
+                    $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
+                } else $redirect = 'KunstmaanMediaBundle_folder_show';
 
-                return new Response(
-                    '<script>window.location="' .
-                    $this->generateUrl(
-                        'KunstmaanMediaBundle_folder_show',
+                return new RedirectResponse(
+                    $this->generateUrl( $redirect,
                         array(
                             'folderId' => $folder->getId()
                         )
-                    ) .
-                    '"</script>'
+                    )
                 );
             }
         }
