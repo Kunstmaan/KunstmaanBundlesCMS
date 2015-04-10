@@ -129,4 +129,10 @@ class Events
      */
     const CONFIGURE_ACTION_MENU = 'kunstmaan_node.configureActionMenu';
 
+    /**
+     * This event will be triggered when the sluglistener needs to do security checks
+     *
+     * @var string
+     */
+    const SLUG_SECURITY = 'kunstmaan_node.slug.security';
 }
