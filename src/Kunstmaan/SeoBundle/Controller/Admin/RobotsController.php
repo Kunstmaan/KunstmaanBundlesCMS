@@ -6,6 +6,7 @@ use Kunstmaan\SeoBundle\Entity\Robots;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class RobotsController extends Controller
 {
@@ -14,29 +15,24 @@ class RobotsController extends Controller
      *
      * @Route(path="/robots.txt", name="KunstmaanSeoBundle_robots")
      * @Template(template="@KunstmaanSeo/Admin/Robots/index.html.twig")
+     * @param Request $request
      *
+     * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $repository = $this->get('doctrine')->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
+        $entity = $this->get('doctrine')->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
+        $robots = "# Warning: No real robots.txt file has been found.\n# Create a robots.txt file in your document root to modify this content\nUser-agent: *";
 
-        // Fall back to robots.txt if database is empty
-        if(!$repository->getRobotsTxt()) {
-            $robots =  "# Warning: No real robots.txt file has been found.
-                        # Create a robots.txt file in your document root to modify this content
-
-                        User-agent: *";
-            $file = $this->get('request')->getBasePath() . "robots.txt";
-
-            // fall back to default if file does not exists
-            if(file_exists($file)) {
+        if ($entity and $entity->getRobotsTxt()) {
+            $robots = $entity->getRobotsTxt();
+        } else {
+            $file = $request->getBasePath() . "robots.txt";
+            if (file_exists($file)) {
                 $robots = file_get_contents($file);
             }
-
-            return array('robots' => $robots);
         }
 
-        return array('robots'  => $repository->getRobotsTxt());
-
+        return array('robots' => $robots);
     }
 }

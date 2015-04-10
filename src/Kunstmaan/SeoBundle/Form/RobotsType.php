@@ -18,7 +18,7 @@ class RobotsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('robotsTxt', 'textarea', array(
-            'label' => 'Robots.txt',
+            'label' => 'robots.txt',
             'attr' => array(
                 'rows' => 15
             )

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SettingsController extends BaseSettingsController
 {
     /**
-     * @Route(path="/admin/settings/robots", name="KunstmaanSeoBundle_settings_robots")
+     * @Route(path="/", name="KunstmaanSeoBundle_settings_robots")
      * @Template(template="@KunstmaanSeo/Admin/Settings/robotsSettings.html.twig")
      * @param Request $request
      * @return array|RedirectResponse
