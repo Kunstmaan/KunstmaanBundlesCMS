@@ -22,10 +22,13 @@
                         <div class="btn-group">
                             {% block actions %}
                                 <button type="submit" class="btn btn-primary btn--raise-on-hover">
-                                    {{ 'form.save' | trans }}
+                                    {{ 'seo.action.save' | trans }}
                                 </button>
                                 <a href="{{ path('KunstmaanSeoBundle_settings_robots') }}" class="btn btn-default btn--raise-on-hover">
-                                    {{ 'form.cancel' | trans }}
+                                    {{ 'seo.action.cancel' | trans }}
+                                </a>
+                                <a class="btn btn-default btn--raise-on-hover" href="/robots.txt">
+                                    {{ 'seo.action.preview' | trans }}
                                 </a>
                             {% endblock %}
                         </div>
@@ -50,5 +53,7 @@
         </fieldset>
 
     </form>
+
+    <strong>{{ 'seo.robots.tip' |trans }}</strong> {{ 'seo.robots.moreinfo' |trans }} <a href="http://bundles.kunstmaan.be/documentation/cookbook" target="_blank">cookbook</a>
 
 {% endblock %}
