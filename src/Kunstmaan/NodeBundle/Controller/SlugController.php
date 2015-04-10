@@ -7,6 +7,8 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Event\Events;
+use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * This controller is for showing frontend pages based on slugs
@@ -101,11 +104,20 @@ class SlugController extends Controller
             /** @noinspection PhpUndefinedMethodInspection */
             $renderContext->setView($entity->getDefaultView());
         }
+        $preEvent = new SlugEvent(null, $renderContext);
+        $this->container->get('event_dispatcher')->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
+        $renderContext = $preEvent->getRenderContext();
 
         /** @noinspection PhpUndefinedMethodInspection */
         $response = $entity->service($this->container, $request, $renderContext);
 
-        if ($response instanceof Response) {
+        $postEvent = new SlugEvent($response,$renderContext);
+        $this->container->get('event_dispatcher')->dispatch(Events::POST_SLUG_ACTION, $postEvent);
+
+        $response = $postEvent->getResponse();
+        $renderContext = $postEvent->getRenderContext();
+
+        if ($response instanceof Response){
             return $response;
         }
 
