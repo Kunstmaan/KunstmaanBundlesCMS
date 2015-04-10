@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
  *     "email" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField"
  * })
  */
-class FormSubmissionField
+abstract class FormSubmissionField
 {
     /**
      * This id of this FormSubmissionField
