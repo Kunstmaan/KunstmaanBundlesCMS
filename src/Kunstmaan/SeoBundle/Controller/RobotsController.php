@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\SeoBundle\Controller\Admin;
+namespace Kunstmaan\SeoBundle\Controller;
 
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,7 +13,7 @@ class RobotsController extends Controller
     /**
      * Generates the robots.txt content when available in the database and falls back to normal robots.txt if exists
      *
-     * @Route(path="/robots.txt", name="KunstmaanSeoBundle_robots")
+     * @Route(path="/robots.txt", name="KunstmaanSeoBundle_robots", defaults={"_format": "txt"})
      * @Template(template="@KunstmaanSeo/Admin/Robots/index.html.twig")
      * @param Request $request
      *
