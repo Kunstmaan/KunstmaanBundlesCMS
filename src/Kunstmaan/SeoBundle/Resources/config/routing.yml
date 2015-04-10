@@ -1,0 +1,4 @@
+KunstmaanSeoBundle_settings:
+    resource: "@KunstmaanSeoBundle/Controller/Admin/SettingsController.php"
+    prefix:   /admin/settings/robots
+    type:     annotation

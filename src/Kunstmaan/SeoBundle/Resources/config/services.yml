@@ -36,3 +36,9 @@ services:
         arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.clone.helper"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.postDeepCloneAndSave, method: postDeepCloneAndSave }
+
+    kunstmaanseobundle.seo_management_menu_adaptor:
+        class: Kunstmaan\SeoBundle\Helper\Menu\SeoManagementMenuAdaptor
+        arguments: ["@security.context"]
+        tags:
+            -  { name: 'kunstmaan_admin.menu.adaptor' }
