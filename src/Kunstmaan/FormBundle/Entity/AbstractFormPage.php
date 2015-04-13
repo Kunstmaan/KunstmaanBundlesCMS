@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
+use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
 
@@ -12,9 +13,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\AbstractType;
@@ -25,7 +23,7 @@ use Symfony\Component\Form\AbstractType;
  * Furthermore it's possible to configure an administrative email to be send when a form is submitted with in it an
  * overview of all the submitted fields.
  */
-abstract class AbstractFormPage extends AbstractPage implements FormPageInterface, HasPagePartsInterface
+abstract class AbstractFormPage extends AbstractPage implements FormPageInterface, HasPagePartsInterface, SlugActionInterface
 {
     /**
      * The thank you text to be shown when the form was successfully submitted
@@ -174,27 +172,6 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * This service function will handle the creation of the form and submitting the form
-     *
-     * @param ContainerInterface $container The Container
-     * @param Request            $request   The Request
-     * @param RenderContext      $context   The Render context
-     *
-     * @return null|RedirectResponse|void
-     */
-    public function service(ContainerInterface $container, Request $request, RenderContext $context)
-    {
-        $thanksParam = $request->get('thanks');
-        if (!empty($thanksParam)) {
-            $context["thanks"] = true;
-
-            return null;
-        }
-
-        return $container->get('kunstmaan_form.form_handler')->handleForm($this, $request, $context);
-    }
-
-    /**
      * Returns the default backend form type for this form
      *
      * @return AbstractType
@@ -212,6 +189,14 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     public function getFormElementsContext()
     {
         return "main";
+    }
+
+    /**
+     * @return string
+     */
+    public function getControllerAction()
+    {
+        return 'KunstmaanFormBundle:AbstractFormPage:service';
     }
 
 }
