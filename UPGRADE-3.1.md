@@ -1,5 +1,17 @@
 # UPGRADE FROM 3.0 to 3.1
 
+## Manual upgrade needed in generated adminlist Twig templates for the ArticleBundle
+
+When using the Article generator, it will create a list.html.twig template in your website bundle. Due to the upgrade to Bootstrap 3, these templates need to be updated, unfortunately by hand.
+
+Change the ```extra_actions_header``` block to match the one from the GeneratorBundle found in:
+
+```
+vendor/kunstmaan/bundles-cms/src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/article/Resources/views/PageAdminList/list.html.twig
+```
+
+Replace all variables to match your original version
+
 ## Deprecated the service method in Pages in favour of controller methods
 
 You should remove the service method in your entities and replace them by implementing the SlugActionInterface. Add the method getControllerAction and make it return a callable string.
