@@ -189,7 +189,7 @@ class InputAssistant
             );
         }
 
-        if (is_null($prefix)) {
+        while (is_null($prefix)) {
             if (count($text) > 0) {
                 $this->output->writeln($text);
             }
@@ -204,6 +204,16 @@ class InputAssistant
             $prefix = GeneratorUtils::cleanPrefix($prefix);
             if ($this->input->hasOption('prefix')) {
                 $this->input->setOption('prefix', $prefix);
+            }
+
+            if($prefix == '') {
+                break;
+            }
+
+            if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $prefix)) {
+                $this->output->writeln(sprintf('<bg=red> "%s" contains invalid characters</>', $prefix));
+                $prefix = $text = null;
+                continue;
             }
         }
 

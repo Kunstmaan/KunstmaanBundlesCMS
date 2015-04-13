@@ -118,6 +118,8 @@ EOT
             $entityValidation = function ($entity) {
                 if (empty($entity)) {
                     throw new \RuntimeException('You have to provide a entity name!');
+		        } elseif (!preg_match('/^[a-zA-Z][a-zA-Z_0-9]+$/', $entity)) {
+		            throw new \InvalidArgumentException(sprintf("%s".' contains invalid characters', $entity));
                 } else {
                     return $entity;
                 }
