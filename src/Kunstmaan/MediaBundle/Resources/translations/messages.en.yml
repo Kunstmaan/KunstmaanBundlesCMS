@@ -9,9 +9,9 @@ media:
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
-    alert:
-      title: Incoming!
-      text: Drop your files to instantly upload them to this folder.
+      alert:
+        title: Incoming!
+        text: Drop your files to instantly upload them to this folder.
     bulkupload:
       addto: Upload files to "%folder%"
     contenttab:
