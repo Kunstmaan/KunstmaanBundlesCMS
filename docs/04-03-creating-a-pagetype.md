@@ -137,36 +137,37 @@ render it below the page parts.
 {% endblock %}
 ```
 
-Next we'll have to pass the employees to the Twig function. To do that we currently have a `service` function that you can override in the page type class.
+Next we'll have to pass the employees to the Twig function. To do that we currently have a to implements the SlugActionInterface.
 
 So add the following in `EmployeesPage.php` :
 
 ```php
-...
-use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-...
-
-    /**
-     * @param ContainerInterface $container The Container
-     * @param Request            $request   The Request
-     * @param RenderContext      $context   The Render context
-     *
-     * @return void|RedirectResponse
-     */
-    public function service(ContainerInterface $container, Request $request, RenderContext $context)
+    use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
+    
+    public function getControllerAction()
     {
-	$em = $container->get('doctrine.orm.entity_manager');
-	$employees = $em->getRepository('MyProjectWebsiteBundle:Employee')->findAll();
+        return 'MyProjectWebsiteBundle:Controller:service';
+    }
+```
 
-	$context['employees'] = $employees;
+And create a new Controller `EmployeesPageController.php` to handle the logic :
+
+```php
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
+    ...
+
+    public function serviceAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $employees = $em->getRepository('MyProjectWebsiteBundle:Employee')->findAll();
+        
+        $context['employees'] = $employees;
+        $request->attributes->set('_renderContext',$context);
     }
 ```
 
 As you can see we just fetch all employees (using Doctrine), and pass them into the RenderContext (which is passed into Twig, so you'll get the list in your Twig template as the `employees` variable).
-
-This function might be deprecated in the (near) future (ideally a controller action should be executed instead of having this code here).
 
 
 ## Under the hood
