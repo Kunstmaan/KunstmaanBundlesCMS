@@ -36,8 +36,10 @@ kunstmaanMediaBundle.dndUpload = (function(window, undefined) {
 
                 init: {
                     PostInit: function() {
-                        $(window).on('dragenter', function() {
-                            $area.addClass('dnd-area--dragover');
+                        $(window).on('dragenter', function(e) {
+                            if($.inArray('text/html', e.originalEvent.dataTransfer.types) === -1 && $.inArray('text/plain', e.originalEvent.dataTransfer.types) === -1) {
+                                $area.addClass('dnd-area--dragover');
+                            }
                         });
 
                         $area.on('dragleave drop dragend', function() {
