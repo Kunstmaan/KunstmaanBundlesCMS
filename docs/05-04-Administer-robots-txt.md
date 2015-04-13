@@ -6,14 +6,14 @@ A web crawler, also known as robot, searches the web to index it's content. A we
 You can guide these crawlers on your website by providing a robots.txt file.
 Although respectable web crawlers follow the directives in a robots.txt file, each crawler might interpret the directives differently.
 
-By default, there will be not robots.txt file present when you install Kunstmaan standard edition bundle.
+By default, there will be no robots.txt file present when you install the Kunstmaan standard edition bundle.
 But we made it easy to manage your robots.txt file and the behaviour of robots.
 
 ## Administer your robots.txt using the admin interface
 
 If you are a site administrator.
 You can edit your robots.txt file in admin interface by going to settings and by choosing for "Robots" in the sub menu.
-Make sure you do not have a real robots.txt file in your document root folder if prefer to use this way of managing your robots.txt.
+Make sure you do not have a real robots.txt file in your document root folder if you prefer to use this way of managing your robots.txt.
 
 ![Image of Robots administration](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/robots-admin.png)
 
@@ -21,8 +21,8 @@ In case you forget to fill in your robots setting, the kunstmaan bundles will fa
 
 ## Administer using a robots.txt file
 
-In case you do have a robots.txt file in your document root, symfony will use this file to guide robots.
-In this case, you can just Leave the robots.txt field empty.
+If you do have a robots.txt file in your document root, symfony will use this file to guide robots.
+You can just Leave the robots.txt field empty.
 
 ## Robots.txt syntax
 
