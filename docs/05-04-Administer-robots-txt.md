@@ -6,25 +6,27 @@ A web crawler, also known as robot, searches the web to index it's content. A we
 You can guide these crawlers on your website by providing a robots.txt file.
 Although respectable web crawlers follow the directives in a robots.txt file, each crawler might interpret the directives differently.
 
-By default, all robots will be granted access to your site.
-But luckily the Kunstmaan bundles made it easy to manage your robots.txt file and the behaviour of robots.
+By default, there will be not robots.txt file present when you install Kunstmaan standard edition bundle.
+But we made it easy to manage your robots.txt file and the behaviour of robots.
 
-## Administer using the admin interface
+## Administer your robots.txt using the admin interface
 
 If you are a site administrator.
 You can edit your robots.txt file in admin interface by going to settings and by choosing for "Robots" in the sub menu.
+Make sure you do not have a real robots.txt file in your document root folder if prefer to use this way of managing your robots.txt.
 
 ![Image of Robots administration](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/robots-admin.png)
 
+In case you forget to fill in your robots setting, the kunstmaan bundles will fall back to a standard robots.txt configuration that allows access of all robots.
+
 ## Administer using a robots.txt file
 
-If you leave the Robots field empty, the Kunstmaan bundles will look for a robot.txt file in the document root folder and use the content of that file.
-You could also use this as a fall back method, so we recommend having a robots.txt file present in your document root (typically the /web folder).
+In case you do have a robots.txt file in your document root, symfony will use this file to guide robots.
+In this case, you can just Leave the robots.txt field empty.
 
 ## Robots.txt syntax
 
-The syntax for using the keywords is as follows:
-
+Possible keywords inside your configuration:
 
 * **User-agent:** the name of the robot the following rule applies to, you can use * as a wildcard
 * **Disallow:** the path you want to block, you can use multiples of this line and use * as a wildcard
