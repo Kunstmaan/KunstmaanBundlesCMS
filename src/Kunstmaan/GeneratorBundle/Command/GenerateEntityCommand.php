@@ -151,6 +151,12 @@ EOT
 
             list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
+            // check entity name
+            if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $entity)) {
+                $output->writeln(sprintf('<bg=red> "%s" is not a valid entity name.</>', $entity));
+                continue;
+            }
+
             // check reserved words
             if ($this->getGenerator()->isReservedKeyword($entity)) {
                 $output->writeln(sprintf('<bg=red> "%s" is a reserved word</>.', $entity));
