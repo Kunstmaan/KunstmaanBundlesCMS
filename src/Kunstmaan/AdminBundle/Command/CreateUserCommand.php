@@ -101,8 +101,13 @@ EOT
 
         // Attach groups
         $groupNames = explode(',', $groupOption);
+    $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
+
+    $groupOutput = "";
+
         foreach ($groupNames as $groupName) {
-            $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
+        $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
+        $groupOutput .= $groups[$groupName] . ", ";
             if (!empty($group)) {
                 $user->getGroups()->add($group);
             }
@@ -115,7 +120,10 @@ EOT
         $em->persist($user);
         $em->flush();
 
-        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), $groupOption));
+    // Remove trailing comma
+    $groupOutput = substr($groupOutput, 0, -2);
+
+    $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), $groupOutput ));
     }
 
     /**
@@ -183,10 +191,20 @@ EOT
             $input->setArgument('locale', $locale);
         }
 
+    $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
+
         if (!$input->getOption('group')) {
+
+        $output->writeln('<info>available groups:</info>');
+
+        for($i = 0 ; $i < count($groups); $i++){
+        $output->writeln('[<info>' . $i . '</info>] ' . $groups[$i]);
+        }
+
             $group = $this->getHelper('dialog')->askAndValidate(
                 $output,
-                'Please enter the group(s) the user should be a member of:',
+        'Please enter the group(s) the user should be a member of (multiple possible, separated by comma):',
+
                 function($group) {
                     if (empty($group)) {
                         throw new \InvalidArgumentException('Groups can not be empty');
