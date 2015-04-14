@@ -11,6 +11,7 @@
     "gulp-combine-mq": "0.3.1",
     "gulp-concat": "2.4.3",
     "gulp-debug": "^2.0.0",
+    "gulp-flatten": "0.0.4",
     "gulp-hologram": "^1.2.0",
     "gulp-if": "^1.2.5",
     "gulp-imagemin": "2.1.0",

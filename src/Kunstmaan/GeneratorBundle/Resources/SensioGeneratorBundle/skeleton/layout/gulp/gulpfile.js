@@ -196,6 +196,9 @@ gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
 // Development
 gulp.task('scripts-dev', ['jshint'], function() {
     return gulp.src(config.js.footer)
+        // Flatten
+        .pipe(plugins.flatten())
+
         // Write
         .pipe(gulp.dest(config.dist.js));
 });
