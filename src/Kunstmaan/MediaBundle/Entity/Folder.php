@@ -294,6 +294,17 @@ class Folder extends AbstractEntity implements GedmoNode
     }
 
     /**
+     * @param Media $media
+     * @return $this
+     */
+    public function removeMedia(Media $media)
+    {
+        $this->media->removeElement($media);
+
+        return $this;
+    }
+
+    /**
      * Get media
      *
      * @param bool $includeDeleted
