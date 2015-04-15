@@ -99,13 +99,15 @@
                     {% block header %}
                         <header class="app__content__header">
                             <div class="row">
-                                {% if adminmenu.current %}
+                                {% block admin_page_title %}
                                     <div class="col-sm-6 col-md-8">
-                                        <h1 class="app__content__header__title">
-                                            {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
-                                        </h1>
+                                        {% if adminmenu.current %}
+                                            <h1 class="app__content__header__title">
+                                                {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
+                                            </h1>
+                                        {% endif %}
                                     </div>
-                                {% endif %}
+                                {% endblock %}
 
                                 {% block extra_actions_header %}{% endblock %}
                             </div>
