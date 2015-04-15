@@ -196,6 +196,9 @@ gulp.task('inject-prod-scripts', ['scripts-prod'], function() {
 // Development
 gulp.task('scripts-dev', ['jshint'], function() {
     return gulp.src(config.js.footer)
+        // Flatten
+        .pipe(plugins.flatten())
+
         // Write
         .pipe(gulp.dest(config.dist.js));
 });
@@ -210,7 +213,7 @@ gulp.task('inject-dev-scripts', ['scripts-dev'], function() {
         // Rebase
         .pipe(rebase({
             script: {
-            '(\/[^"]*\/)': '/frontend/js/'
+                '(\/[^"]*\/)': '/frontend/js/'
             }
         }))
 
@@ -301,8 +304,13 @@ gulp.task('styleguide-dev-js', function() {
         // Rebase
         .pipe(rebase({
             script: {
-            '(\/[^"]*\/)': '/frontend/js/'
+                '(\/[^"]*\/)': '/frontend/js/'
             }
+        }))
+
+        // Inject livereload
+        .pipe(plugins.injectReload({
+            host: "http://' + (location.host || 'localhost').split(':')[0] + '"
         }))
 
         // Write
