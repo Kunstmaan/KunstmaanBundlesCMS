@@ -18,8 +18,8 @@ Template.typeDefinition.helpers({
     return Attributes.find({}, {
       sort: { order: 1 },
       transform: function (doc) {
-	doc.icon = Types.findOne({name: doc.type}).icon;
-	return doc;
+        doc.icon = Types.findOne({name: doc.type}).icon;
+        return doc;
       }
     });
   },
@@ -37,7 +37,7 @@ Template.typeDefinition.helpers({
     // event handler for reordering attributes
     onSort: function (event) {
       console.log('Item %s went from #%d to #%d',
-	  event.data.name, event.oldIndex, event.newIndex
+          event.data.name, event.oldIndex, event.newIndex
       );
     }
   }
@@ -90,11 +90,11 @@ Template.sortable.events({
     // custom code, working on a specific collection
     if (Attributes.find().count() === 0) {
       Meteor.setTimeout(function () {
-	Attributes.insert({
-	  name: 'Not nice to delete the entire list! Add some attributes instead.',
-	  type: 'String',
-	  order: 0
-	})
+        Attributes.insert({
+          name: 'Not nice to delete the entire list! Add some attributes instead.',
+          type: 'String',
+          order: 0
+        })
       }, 1000);
     }
   }
