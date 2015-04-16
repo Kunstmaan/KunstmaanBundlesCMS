@@ -84,8 +84,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                             'multiple' => true,
                             'expanded' => false,
                             'required' => false,
-                            'attr' => array(
-				'class' => 'js-advanced-select form-control advanced-select',
+                            'attr' => array('class' => 'js-advanced-select form-control advanced-select',
                                 'data-placeholder' => 'Choose the permission groups...'
                             )
                         )
@@ -106,8 +105,10 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('password_required' => false));
+        $resolver->setDefaults(
+        array('password_required' => false,
+            'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
+        ));
         $resolver->addAllowedValues(array('password_required' => array(true, false)));
     }
-
 }
