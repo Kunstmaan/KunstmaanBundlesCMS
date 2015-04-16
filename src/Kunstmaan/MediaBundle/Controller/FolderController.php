@@ -117,10 +117,13 @@ class FolderController extends Controller
             $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
         } else $redirect = 'KunstmaanMediaBundle_folder_show';
 
+        $type = $this->get('request')->get('type');
+
         return new RedirectResponse(
             $this->generateUrl($redirect,
                 array(
-                    'folderId' => $folderId
+                    'folderId' => $folderId,
+                    'type' => $type,
                 )
             )
         );
@@ -159,10 +162,13 @@ class FolderController extends Controller
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
                 } else $redirect = 'KunstmaanMediaBundle_folder_show';
 
+                $type = $request->get('type');
+
                 return new RedirectResponse(
                     $this->generateUrl( $redirect,
                         array(
-                            'folderId' => $folder->getId()
+                            'folderId' => $folder->getId(),
+                            'type' => $type,
                         )
                     )
                 );

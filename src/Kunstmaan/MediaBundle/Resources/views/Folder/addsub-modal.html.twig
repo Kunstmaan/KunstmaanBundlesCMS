@@ -13,7 +13,7 @@
             </div>
 
             {% form_theme subform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-            <form action="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id }  ) }}" id="addsub-modal-form" method="post" {{ form_enctype(subform) }}>
+            <form action="{{ path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id , 'type' : type }) }}" id="addsub-modal-form" method="post" {{ form_enctype(subform) }}>
 
                 <!-- Body -->
                 <div class="modal-body">
