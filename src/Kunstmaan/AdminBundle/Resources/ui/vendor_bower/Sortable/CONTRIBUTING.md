@@ -15,3 +15,4 @@
 
  1. Before PR run `grunt`;
  2. Only into [dev](https://github.com/RubaXa/Sortable/tree/dev/)-branch.
+

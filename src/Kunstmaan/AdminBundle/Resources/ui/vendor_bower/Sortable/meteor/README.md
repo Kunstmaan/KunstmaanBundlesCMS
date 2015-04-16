@@ -57,14 +57,14 @@ Define the options in a helper for the template that calls Sortable:
 ```js
 Template.myTemplate.helpers({
     playerOptions: function () {
-	return {
-	    group: {
-		name: "league",
-		pull: true,
-		put: false
-	    },
-	    sort: false
-	};
+        return {
+            group: {
+                name: "league",
+                pull: true,
+                put: false
+            },
+            sort: false
+        };
     }
 });
 ```
@@ -82,13 +82,13 @@ the data context in `event.data`. You can access `event.data.order` this way:
 ```js
 Template.myTemplate.helpers({
     playersOptions: function () {
-	return {
-	    onSort: function(/**Event*/event) {
-		console.log('Moved player #%d from %d to %d',
-		    event.data.order, event.oldIndex, event.newIndex
-		);
-	    }
-	};
+        return {
+            onSort: function(/**Event*/event) {
+                console.log('Moved player #%d from %d to %d',
+                    event.data.order, event.oldIndex, event.newIndex
+                );
+            }
+        };
     }
 });
 ```
