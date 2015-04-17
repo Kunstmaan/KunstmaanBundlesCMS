@@ -107,7 +107,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         $queryBuilder->andWhere('b.lang = :lang');
         $queryBuilder->andWhere('n.deleted = 0');
         $queryBuilder->andWhere('n.refEntityName = :class');
-        $queryBuilder->addOrderBy("nv.updated", "DESC");
+        $queryBuilder->addOrderBy("b.updated", "DESC");
         $queryBuilder->setParameter('lang', $this->locale);
     }
 
