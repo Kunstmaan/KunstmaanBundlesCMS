@@ -22,7 +22,14 @@ class RobotsController extends Controller
     public function indexAction(Request $request)
     {
         $entity = $this->get('doctrine')->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
-        $robots = "# Warning: No real robots.txt file has been found.\n# Create a robots.txt file in your document root to modify this content\nUser-agent: *";
+        $robots = "
+# Warning: This is a default value and example.
+# No custom robots.txt has been defined.
+# Adjust this file in the admin panel
+# or place a robots.txt file in your document root.
+
+User-agent: *
+            ";
 
         if ($entity and $entity->getRobotsTxt()) {
             $robots = $entity->getRobotsTxt();

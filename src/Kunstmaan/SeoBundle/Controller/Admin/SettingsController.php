@@ -26,13 +26,27 @@ class SettingsController extends BaseSettingsController
 
         $em     = $this->getDoctrine()->getManager();
         $repo   = $this->getDoctrine()->getRepository("KunstmaanSeoBundle:Robots");
+        $default = $repo->findOneBy(array())->getRobotsTxt();
 
         $settings = $repo->findOneBy(array());
         if (is_null($settings)) {
             $settings = new Robots();
         }
 
-        $form = $this->createForm(new RobotsType(), $settings);
+
+        if (!$default)
+        {
+            $default = "
+# Warning: This is a default value and example.
+# No custom robots.txt has been defined.
+# Adjust and save these values
+# or place a robots.txt file in your document root.
+
+User-agent: *
+            ";
+        }
+
+        $form = $this->createForm(new RobotsType($default), $settings);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
