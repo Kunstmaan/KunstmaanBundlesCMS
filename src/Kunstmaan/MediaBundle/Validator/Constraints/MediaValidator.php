@@ -4,31 +4,19 @@ namespace Kunstmaan\MediaBundle\Validator\Constraints;
 
 use Kunstmaan\MediaBundle\Entity\Media as MediaObject;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 
 class MediaValidator extends ConstraintValidator
-{	
-	const KB_BYTES = 1000;
-	const MB_BYTES = 1000000;
-	const KIB_BYTES = 1024;
-	const MIB_BYTES = 1048576;
-		
-	private static $suffices = array(
-			1 => 'bytes',
-			self::KB_BYTES => 'kB',
-			self::MB_BYTES => 'MB',
-			self::KIB_BYTES => 'KiB',
-			self::MIB_BYTES => 'MiB' 
-	);
-	
-	/**
-	 *
-	 * @ERROR!!!
-	 *
-	 */
+{
+    /**
+     *
+     * @param mixed $value
+     * @param Constraint $constraint
+     * @throws ConstraintDefinitionException
+     */
 	public function validate($value, Constraint $constraint) {
 		
 		if (! $constraint instanceof Media) {
@@ -39,7 +27,7 @@ class MediaValidator extends ConstraintValidator
 			$mimeType = $value->getContentType();
 			
 			if ($constraint->mimeTypes) {
-				if (!$value instanceof FileObject) {
+				if (!$value instanceof MediaObject) {
 					$value = new MediaObject($value);
 				}
 			
