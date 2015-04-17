@@ -2,7 +2,8 @@
 seo:
     robots:
         tip: Tip:
-        moreinfo: Meer info over de Kunstmaan robots.txt is te vinden in ons
+        warning: This is a default value and example, no custom robots.txt has been defined.
+        moreinfo: You can find more information about the Kunstmaan robots.txt at our
 
     action:
         save: Save
