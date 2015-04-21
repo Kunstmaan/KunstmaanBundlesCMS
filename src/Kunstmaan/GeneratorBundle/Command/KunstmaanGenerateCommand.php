@@ -505,7 +505,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                         'mimeTypes' => $mimeTypes,
                 );
 
-                if ($typeStrings [$typeId] == 'image') {
+                if ($extra == 'image') {
 
                     // Ask the minimum height allowed for the image
                     $lengthValidation = function ($length) {
@@ -526,7 +526,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     //Ask the maximum width allowed for the image
                     $maxWidth = $this->assistant->askAndValidate('What is the maximum width for the media object? (in pixels)', $lengthValidation);
 
-                    $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra,
+                    $data = array('name' => $fieldName, 'type' => 'image', 'extra' => $extra,
                             'minHeight' => $minHeight, 'maxHeight' => $maxHeight, 'minWidth' => $minWidth, 'maxWidth' => $maxWidth, 'mimeTypes' => $mimeTypes);
                     }
 
