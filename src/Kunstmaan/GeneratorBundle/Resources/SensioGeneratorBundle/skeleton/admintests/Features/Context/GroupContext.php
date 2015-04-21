@@ -63,7 +63,7 @@ class GroupContext extends BehatContext
      */
     public function iEditGroup($groupName)
     {
-        $this->getMainContext()->clickAction($groupName, 'edit', 'groups');
+        $this->getMainContext()->clickAction($groupName, 'Edit', 'groups');
     }
 
     /**
@@ -73,7 +73,7 @@ class GroupContext extends BehatContext
      */
     public function iDeleteGroup($groupName)
     {
-        $this->getMainContext()->clickAction($groupName, 'delete', 'groups');
+        $this->getMainContext()->clickAction($groupName, 'Delete', 'groups');
 
         $page = $this->getMainContext()->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@class, 'modal')]");

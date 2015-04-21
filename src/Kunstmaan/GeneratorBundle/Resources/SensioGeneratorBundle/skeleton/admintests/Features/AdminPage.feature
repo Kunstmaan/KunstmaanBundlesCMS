@@ -51,7 +51,7 @@ Feature: AdminPage
     Then I should not see "Not found"
 
   @javascript
-  Scenario: Publish the page
+  Scenario: Unpublish the page
     Given I unpublish page "ContentsubPage"
     Then I should see "has been unpublished"
 
