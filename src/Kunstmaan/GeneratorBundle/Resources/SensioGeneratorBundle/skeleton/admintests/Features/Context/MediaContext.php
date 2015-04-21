@@ -220,7 +220,7 @@ class MediaContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[text()='Delete']");
+                $this->getMainContext()->findAndClickButton($page, 'xpath', "//a[contains(@href, 'del')]");
 
                 return;
             }

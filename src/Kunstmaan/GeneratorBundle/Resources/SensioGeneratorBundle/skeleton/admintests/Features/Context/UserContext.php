@@ -50,7 +50,7 @@ class UserContext extends BehatContext
      */
     public function iEditUser($username)
     {
-        $this->getMainContext()->clickAction($username, 'edit', 'users');
+        $this->getMainContext()->clickAction($username, 'Edit', 'users');
     }
 
     /**
@@ -60,7 +60,7 @@ class UserContext extends BehatContext
      */
     public function iDeleteUser($username)
     {
-        $this->getMainContext()->clickAction($username, 'delete', 'users');
+        $this->getMainContext()->clickAction($username, 'Delete', 'users');
 
         $page = $this->getMainContext()->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@class, 'modal')]");

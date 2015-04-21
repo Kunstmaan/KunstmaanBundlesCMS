@@ -40,6 +40,7 @@ class PageContext extends BehatContext
             "addpage_type" => $this->getMainContext()->fixStepArgument($pageType)
         );
 
+        $this->getMainContext()->pressButton("More");
         $this->getMainContext()->pressButton("Add subpage");
         $this->getMainContext()->iWaitSeconds(1);
 
@@ -102,6 +103,7 @@ class PageContext extends BehatContext
         // Navigate to the page we want to publish
         $this->getMainContext()->clickLink($pageName);
         // Click the save button
+        $this->getMainContext()->pressButton("More");
         $this->getMainContext()->pressButton($action);
     }
 
@@ -172,7 +174,7 @@ class PageContext extends BehatContext
     {
         $states = array(
             'Publish' => 'pub',
-            'Unpublish' => 'unpub_publish_action'
+            'Unpublish' => 'unpub'
         );
 
         if (!is_null($pageName)) {
@@ -186,13 +188,8 @@ class PageContext extends BehatContext
 
         $page = $this->getMainContext()->getSession()->getPage();
 
-        $publishButton = $page->find('xpath', "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' main_actions ')]/descendant-or-self::*/a");
-        if (!is_null($publishButton)) {
-            $publishButton->click();
-        } else {
-            $message = sprintf('No publish button was found');
-            throw new ExpectationException($message, $this->getSession());
-        }
+        $this->getMainContext()->pressButton("More");
+        $this->getMainContext()->clickLink($state);
 
         $modals = $page->findAll('xpath', "//div[contains(@id, $states[$state])]");
 
@@ -204,7 +201,7 @@ class PageContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[text()='".$state."']");
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[contains(@class, 'btn btn-danger btn--raise-on-hover')]");
 
                 return;
             }
@@ -223,6 +220,7 @@ class PageContext extends BehatContext
         // Navigate to the page we want to delete
         $this->getMainContext()->clickLink($pageName);
 
+        $this->getMainContext()->pressButton("More");
         $this->getMainContext()->pressButton("Delete");
 
         $page = $this->getMainContext()->getSession()->getPage();

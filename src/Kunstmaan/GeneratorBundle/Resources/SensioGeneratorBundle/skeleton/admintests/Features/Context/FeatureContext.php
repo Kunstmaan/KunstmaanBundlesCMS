@@ -252,16 +252,13 @@ class FeatureContext extends AbstractContext
     {
         $this->iAmOnASpecificPage($pageName);
 
-        $name = $this->fixStepArgument($name);
-        $action = ucfirst($this->fixStepArgument($action));
-
-        $page = $this->getSession()->getPage();
-
-        $td = $page->find('xpath', '//div[@class="content"]//table//td[text()="' . $name . '"]');
-        if (!is_null($td)) {
-            $tr = $td->getParent();
-            $this->findAndClickButton($tr, 'xpath', '//a[text()="' . $action . '"]');
+        $page = $this->getMainContext()->getSession()->getPage();
+        $row = $page->find('css', sprintf('table tr:contains("%s")', $name));
+        if (!$row) {
+            throw new \Exception(sprintf('Cannot find any row on the page containing the text "%s"', $name));
         }
+
+        $row->clickLink($action);
     }
 
     /**
@@ -278,8 +275,8 @@ class FeatureContext extends AbstractContext
     {
         //Only activate the filter module if it is not an additionally filter
         if (!$additionally) {
-            $selector = new CssSelector();
-            $this->findAndClickButton($this->getSession()->getPage(), 'xpath', $selector->translateToXPath('div.iPhoneCheckHandle'));
+            $page = $this->getMainContext()->getSession()->getPage();
+            $this->getMainContext()->findAndClickButton($page, 'xpath', "//button[contains(@data-target, '#app__filter')]");
         }
 
         $records = $this->createFilterRecords($filterType, $filterComparator, $filterValue, $additionally);
@@ -333,7 +330,7 @@ class FeatureContext extends AbstractContext
         if ($additionally) {
             $selector = new CssSelector();
             //We need to know the number of filter lines present for the comparator and value field
-            $nrOfFilterOptions = count($this->getSession()->getPage()->findAll("xpath", $selector->translateToXPath('form span.filteroptions')));
+            $nrOfFilterOptions = count($this->getSession()->getPage()->findAll("xpath", $selector->translateToXPath('form span.js-filter-options')));
 
             return array(
                 "filter_columnname[]" => $this->fixStepArgument($filterType),
@@ -342,7 +339,7 @@ class FeatureContext extends AbstractContext
             );
         } else {
             return array(
-                "addfilter" => $this->fixStepArgument($filterType),
+                "add-first-filter" => $this->fixStepArgument($filterType),
                 "filter_comparator_1" => $this->fixStepArgument($filterComparator),
                 "filter_value_1" => $this->fixStepArgument($filterValue),
             );
