@@ -49,7 +49,7 @@ class {{ pagepart }}AdminType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
 	$resolver->setDefaults(array(
-	    'data_class' => '{{ namespace }}\Entity\{{ pagepart }}',
+	    'data_class' => '{{ namespace }}\Entity\PageParts\{{ pagepart }}',
 	));
     }
 }
