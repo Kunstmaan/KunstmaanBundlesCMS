@@ -131,6 +131,11 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                     var $el = $(evt.item),
                         elScope = $el.data('scope');
 
+                    // Destroy rich editors inside dragged element
+                    $el.find('.js-rich-editor').each(function() {
+                        kunstmaanbundles.richEditor.destroySpecificRichEditor($(this));
+                    });
+
                     // Add active class
                     $body.addClass('sortable-active');
 
@@ -150,7 +155,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                 onEnd: function(evt) {
                     var $el = $(evt.item),
                         $PPcontainer = $el.parents('.js-pp-container'),
-                        $contextUpdateField = $el.find('.pagepartadmin_field_updatecontextname')
+                        $contextUpdateField = $el.find('.pagepartadmin_field_updatecontextname'),
                         currentContext = $PPcontainer.data('context');
 
                     // Remove active class
@@ -165,6 +170,11 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
                     // Update context name
                     $contextUpdateField.each(function() {
                         $(this).attr('name', currentContext + $(this).data('suffix'));
+                    });
+
+                    // Enable rich editors inside dragged element
+                    $el.find('.js-rich-editor').each(function() {
+                        kunstmaanbundles.richEditor.enableRichEditor($(this));
                     });
                 }
             });

@@ -66,8 +66,7 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                 // Enable leave-page modal
                 kunstmaanbundles.checkIfEdited.edited();
 
-                // Reinit rich Editors
-                kunstmaanbundles.richEditor.destroyRichEditors();
+                // Enable new Rich Editors
                 kunstmaanbundles.richEditor.init();
 
                 // reinit colorpicker
