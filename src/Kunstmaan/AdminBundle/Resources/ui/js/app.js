@@ -2,16 +2,16 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.app = (function($, window, undefined) {
 
-    var init,
+    var init, appScroll,
         $mainActions = $('#page-main-actions-top');
 
+
+    // General App init
     init = function() {
         cargobay.toggle.init();
         cargobay.scrollToTop.init();
 
         appScroll();
-        initTooltip();
-        initColorpicker();
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
@@ -35,6 +35,8 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.bulkActions.init();
         kunstmaanbundles.nestedForm.init();
         kunstmaanbundles.appLoading.init();
+        kunstmaanbundles.tooltip.init();
+        kunstmaanbundles.colorpicker.init();
     };
 
 
@@ -60,7 +62,6 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
             _update = function() {
                 ticking = false;
-
                 var currentScrollY = latestKnownScrollY;
 
                 kunstmaanbundles.mainActions.updateScroll(currentScrollY, $mainActions);
@@ -70,14 +71,6 @@ kunstmaanbundles.app = (function($, window, undefined) {
                 _onScroll();
             };
         }
-    };
-
-    initTooltip = function() {
-        $('[data-toggle="tooltip"]').tooltip();
-    };
-
-    initColorpicker = function() {
-        $('.js-colorpicker').colorpicker();
     };
 
 
