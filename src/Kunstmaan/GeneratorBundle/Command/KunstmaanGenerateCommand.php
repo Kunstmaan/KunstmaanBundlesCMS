@@ -101,7 +101,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
         foreach ($finder as $file) {
             $bundles[$counter++] = array(
-                'name'      => str_replace(DIRECTORY_SEPARATOR, '', $file->getRelativePath()),
+                'name'      => basename($file->getFilename(), '.php'),
                 'namespace' => $file->getRelativePath(),
                 'dir'       => $file->getPath()
             );
