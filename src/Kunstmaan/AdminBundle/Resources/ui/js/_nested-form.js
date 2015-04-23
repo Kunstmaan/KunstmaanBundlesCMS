@@ -21,7 +21,6 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
                 setupForm($form);
                 $form.data('initialized', true);
             }
-
         });
     };
 
@@ -154,7 +153,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
         // Add "Delete" button
         addDelBtn($newItem, $form);
 
-        // Reinit rich Editors
+        // Init new rich editors
         kunstmaanbundles.richEditor.init();
 
         // Init Ajax Modals

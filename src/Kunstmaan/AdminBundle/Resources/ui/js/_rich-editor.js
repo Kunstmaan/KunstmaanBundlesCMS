@@ -3,21 +3,21 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.richEditor = (function(window, undefined) {
 
     var init,
-        enableRichEditors;
+        enableRichEditor, destroyAllRichEditors, destroySpecificRichEditor;
 
 
     // First Init
     init = function() {
         $('.js-rich-editor').each(function() {
             if(!$(this).hasClass('js-rich-editor--enabled')) {
-                enableRichEditors($(this));
+                enableRichEditor($(this));
             }
         });
     };
 
 
     // Enable
-    enableRichEditors = function($el) {
+    enableRichEditor = function($el) {
         var $body = $('body'),
             fileBrowseUrl = $body.data('file-browse-url'),
             imageBrowseUrl = $body.data('image-browse-url'),
@@ -178,22 +178,37 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
     };
 
 
-    // Destroy
-    destroyRichEditors = function() {
+    // Destroy All
+    destroyAllRichEditors = function() {
         for(instance in CKEDITOR.instances) {
+            var $el = $('#' + CKEDITOR.instances[instance].name);
 
-            if($('#' + CKEDITOR.instances[instance].name).hasClass('js-rich-editor')) {
-                CKEDITOR.instances[instance].destroy();
+            if($el.hasClass('js-rich-editor')) {
+                $el.removeClass('js-rich-editor--enabled');
 
-                $(this).removeClass('js-rich-editor--enabled');
+                CKEDITOR.instances[instance].destroy(true);
             };
         }
     };
 
 
+    // Destroy Specific
+    destroySpecificRichEditor = function($el) {
+        var elId = $el.attr('id'),
+            editor = CKEDITOR.instances[elId];
+
+        if(editor) {
+            editor.destroy(true);
+        }
+    };
+
+
+    // Returns
     return {
         init: init,
-        destroyRichEditors: destroyRichEditors
+        enableRichEditor: enableRichEditor,
+        destroyAllRichEditors: destroyAllRichEditors,
+        destroySpecificRichEditor: destroySpecificRichEditor
     };
 
 }(window));
