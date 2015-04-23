@@ -268,7 +268,7 @@ class MediaController extends Controller
 
         if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0) {
             $drop = $request->files->get('files');
-	} else if (!$request->files->get('file')) {
+	} else if ($request->files->get('file')) {
 	    $drop = $request->files->get('file');
         } else {
             $drop = $request->get('text');
