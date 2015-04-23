@@ -155,7 +155,6 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
         addDelBtn($newItem, $form);
 
         // Reinit rich Editors
-        kunstmaanbundles.richEditor.destroyRichEditors();
         kunstmaanbundles.richEditor.init();
 
         // Init Ajax Modals

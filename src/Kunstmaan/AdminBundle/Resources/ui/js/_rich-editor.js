@@ -9,7 +9,9 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
     // First Init
     init = function() {
         $('.js-rich-editor').each(function() {
-            enableRichEditors($(this));
+            if(!$(this).hasClass('js-rich-editor--enabled')) {
+                enableRichEditors($(this));
+            }
         });
     };
 
@@ -158,6 +160,8 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             toolbar: elToolbar
         });
 
+        $el.addClass('js-rich-editor--enabled');
+
         // Behat tests
         // Add id on iframe so that behat tests can interact
         var checkExist = setInterval(function() {
@@ -180,6 +184,8 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
 
             if($('#' + CKEDITOR.instances[instance].name).hasClass('js-rich-editor')) {
                 CKEDITOR.instances[instance].destroy();
+
+                $(this).removeClass('js-rich-editor--enabled');
             };
         }
     };
