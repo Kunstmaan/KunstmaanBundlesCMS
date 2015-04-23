@@ -64,7 +64,7 @@
     {% if attr['maxlength'] is defined %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
     {% endif %}
-    <textarea {{ block('widget_attributes') }} {% if attr['type'] is defined %} data-{{ attr['type'] }}=true {% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
+    <textarea {{ block('widget_attributes') }}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
 {% endspaceless %}
 {% endblock wysiwyg_widget %}
 
