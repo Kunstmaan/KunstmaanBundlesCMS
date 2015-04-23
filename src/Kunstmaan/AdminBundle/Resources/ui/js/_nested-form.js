@@ -158,6 +158,12 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
         kunstmaanbundles.richEditor.destroyRichEditors();
         kunstmaanbundles.richEditor.init();
 
+        // Init new tooltips
+        kunstmaanbundles.tooltip.init();
+
+        // Init new colorpickers
+        kunstmaanbundles.colorpicker.init();
+
         // Init Ajax Modals
         kunstmaanbundles.ajaxModal.resetAjaxModals();
 
