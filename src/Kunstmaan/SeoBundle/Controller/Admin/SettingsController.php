@@ -30,6 +30,7 @@ class SettingsController extends BaseSettingsController
         $repo = $this->getDoctrine()->getRepository("KunstmaanSeoBundle:Robots");
         $robot = $repo->findOneBy(array());
         $default = $this->container->getParameter('robots_default');
+        $isSaved = true;
 
         if (!$robot) {
             $robot = new Robots();
@@ -37,6 +38,7 @@ class SettingsController extends BaseSettingsController
 
         if ($robot->getRobotsTxt() == NULL) {
             $robot->setRobotsTxt($default);
+            $isSaved = false;
         }
 
         $form = $this->createForm(new RobotsType(), $robot);
@@ -51,7 +53,7 @@ class SettingsController extends BaseSettingsController
             }
         }
 
-        if ($robot->getRobotsTxt() === $default) {
+        if (!$isSaved) {
             $warning = $this->get('translator')->trans('seo.robots.warning');
             $this->get('session')->getFlashBag()->add('warning', $warning);
         }
