@@ -1,6 +1,8 @@
 Kunstmaan Bundles CMS
 =====================
 
+[![Join the chat at https://gitter.im/Kunstmaan/KunstmaanBundlesCMS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Kunstmaan/KunstmaanBundlesCMS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony2 framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much much more.
 
 Please refer to the documentation at [http://bundles.kunstmaan.be/getting-started](http://bundles.kunstmaan.be/getting-started) to get your CMS up and running.
