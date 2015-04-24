@@ -69,8 +69,11 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
                 // Enable new Rich Editors
                 kunstmaanbundles.richEditor.init();
 
-                // reinit colorpicker
-                initColorpicker();
+                // Init new tooltips
+                kunstmaanbundles.tooltip.init();
+
+                // Init new colorpickers
+                kunstmaanbundles.colorpicker.init();
 
                 // Reinit custom selects
                 kunstmaanbundles.advancedSelect.init();
