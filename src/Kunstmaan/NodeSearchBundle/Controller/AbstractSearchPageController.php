@@ -89,6 +89,15 @@ class AbstractSearchPageController extends Controller{
             ->setData($this->sanitizeSearchQuery($queryString))
             ->setContentType($queryType)
             ->setLanguage($lang);
+
+
+        // Facets
+        $query      = $searcher->getQuery();
+        $facetTerms = new \Elastica\Facet\Terms('type');
+
+        $facetTerms->setField('type');
+
+        $query->addFacet($facetTerms);
     }
 
     /**
