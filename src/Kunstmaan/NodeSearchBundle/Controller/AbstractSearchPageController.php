@@ -29,25 +29,15 @@ class AbstractSearchPageController extends Controller{
      */
     public function serviceAction(Request $request)
     {
-        $entity          = $request->attributes->get('_entity');
-        $url             = $request->attributes->get('url');
-        $nodeTranslation        = $request->attributes->get('_nodeTranslation');
-        $nodeMenu        = $request->attributes->get('_nodeMenu');
-
         //create the render context
-        $renderContext = new RenderContext(
-        array(
-            '_nodeTranslation' => $nodeTranslation,
-            'slug' => $url,
-            'page' => $entity,
-            'resource' => $entity,
-            'nodemenu' => $nodeMenu,
-        ));
+        $renderContext = new RenderContext();
 
         if ($request->query->has('query')) {
             $pagerfanta            = $this->search($this->container, $request, $renderContext);
-            $context['pagerfanta'] = $pagerfanta;
-            $request->attributes->set('_renderContext', $context);
+
+            $renderContext['pagerfanta'] = $pagerfanta;
+
+            $request->attributes->set('_renderContext', $renderContext);
         }
     }
 
