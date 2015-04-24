@@ -33,16 +33,17 @@ class RenderContextListener
             $url             = $request->attributes->get('url');
             $nodeMenu        = $request->attributes->get('_nodeMenu');
             $parameters      = $request->attributes->get('_renderContext');
+
             $renderContext = array(
-                '_nodeTranslation' => $nodeTranslation,
-                'slug' => $url,
-                'page' => $entity,
-                'resource' => $entity,
-                'nodemenu' => $nodeMenu,
+                '_nodeTranslation'  => $nodeTranslation,
+                'slug'              => $url,
+                'page'              => $entity,
+                'resource'          => $entity,
+                'nodemenu'          => $nodeMenu,
             );
 
-            if (is_array($parameters)) {
-                $parameters = array_merge($renderContext, $parameters);
+            if (is_array($parameters) || $parameters instanceof \ArrayObject) {
+                $parameters = array_merge($renderContext, (array)$parameters);
             } else {
                 $parameters = $renderContext;
             }
