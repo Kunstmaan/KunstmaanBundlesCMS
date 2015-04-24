@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
+namespace Kunstmaan\GeneratorBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
+namespace Kunstmaan\GeneratorBundle\DataFixtures\ORM;
 
 use Kunstmaan\AdminBundle\Entity\Role;
 

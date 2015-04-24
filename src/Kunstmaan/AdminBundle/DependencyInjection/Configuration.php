@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->fixXmlConfig('admin_locale')
             ->children()
+                ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
                 ->arrayNode('admin_locales')
                     ->defaultValue(array('en'))
