@@ -2,21 +2,72 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.richEditor = (function(window, undefined) {
 
-    var init,
-        enableRichEditor, destroyAllRichEditors, destroySpecificRichEditor;
+    var _ckEditorConfigs = {
+        'kumaDefault': [
+            {
+                name: 'basicstyles',
+                items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
+            },
+            {
+                name: 'lists',
+                items : ['NumberedList', 'BulletedList']
+            },
+            {
+                name: 'dents',
+                items : ['Outdent', 'Indent']
+            },
+            {
+                name: 'links',
+                items : ['Link','Unlink', 'Anchor']
+            },
+            {
+                name: 'insert',
+                items : ['Image', 'Table', 'SpecialChar']
+            },
+            {
+                name: 'clipboard',
+                items : ['SelectAll', 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+            },
+            {
+                name: 'editing',
+                items : []
+            },
+            {
+                name: 'document',
+                items : ['Source']
+            }
+        ]
+    };
 
+    var init,
+        enableRichEditor, destroyAllRichEditors, destroySpecificRichEditor,
+        _collectEditorConfigs;
 
     // First Init
     init = function() {
+        // This object is declared global in _ckeditor_configs.html.twig
+        _collectEditorConfigs(window.ckEditorConfigs);
+
         $('.js-rich-editor').each(function() {
-            if(!$(this).hasClass('js-rich-editor--enabled')) {
+            if (!$(this).hasClass('js-rich-editor--enabled')) {
                 enableRichEditor($(this));
             }
         });
     };
 
+    // PRIVATE
+    _collectEditorConfigs = function(customConfigs) {
+        for (var key in customConfigs) {
+            // Do not allow overriding of the fallback config.
+            if (key === 'kumaDefault') {
+                throw new Error('kumaDefault is a reserved name for the default Kunstmaan ckeditor configuration. Please choose another name.');
+            } else {
+                _ckEditorConfigs[key] = customConfigs[key];
+            }
+        }
+    };
 
-    // Enable
+    // PUBLIC
     enableRichEditor = function($el) {
         var $body = $('body'),
             fileBrowseUrl = $body.data('file-browse-url'),
@@ -26,7 +77,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
 
 
         // Set Height
-        if($el.attr('height')) {
+        if ($el.attr('height')) {
             elHeight = $el.attr('height');
         } else {
             elHeight = 300;
@@ -34,7 +85,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
 
 
         // Paragraphs allowed?
-        if($el.attr('noparagraphs')) {
+        if ($el.attr('noparagraphs')) {
             elEnterMode = CKEDITOR.ENTER_BR;
             elShiftEnterMode = CKEDITOR.ENTER_P;
         } else {
@@ -42,101 +93,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             elShiftEnterMode = CKEDITOR.ENTER_BR;
         }
 
-
-        // Toolbar options
-        if($el.data('simple') === true) {
-            elToolbar = [
-                {
-                    name: 'basicstyles',
-                    items: ['Bold', 'Italic', 'Underline', 'RemoveFormat']
-                }
-            ]
-        } else if($el.data('full') === true) {
-            elToolbar = [
-                {
-                    name: 'basicstyles',
-                    items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
-                },
-                {
-                    name: 'paragraph',
-                    groups: [ 'align' ],
-                    items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
-                },
-                {
-                    name: 'lists',
-                    items : ['NumberedList', 'BulletedList']
-                },
-                {
-                    name: 'dents',
-                    items : ['Outdent', 'Indent']
-                },
-                {
-                    name: 'links',
-                    items : ['Link','Unlink', 'Anchor']
-                },
-                {
-                    name: 'insert',
-                    items : ['Image', 'Table', 'SpecialChar']
-                },
-                {
-                    name: 'clipboard',
-                    items : ['SelectAll', 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
-                },
-                {
-                    name: 'editing',
-                    items : []
-                },
-                {
-                    name: 'styles',
-                    items: [ 'Styles', 'Format', 'Font', 'FontSize' ]
-
-                },
-                {
-                    name: 'colors',
-                    items: [ 'TextColor', 'BGColor' ]
-                },
-                {
-                    name: 'document',
-                    items : ['Source']
-                }
-            ]
-        } else {
-            elToolbar = [
-                {
-                    name: 'basicstyles',
-                    items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
-                },
-                {
-                    name: 'lists',
-                    items : ['NumberedList', 'BulletedList']
-                },
-                {
-                    name: 'dents',
-                    items : ['Outdent', 'Indent']
-                },
-                {
-                    name: 'links',
-                    items : ['Link','Unlink', 'Anchor']
-                },
-                {
-                    name: 'insert',
-                    items : ['Image', 'Table', 'SpecialChar']
-                },
-                {
-                    name: 'clipboard',
-                    items : ['SelectAll', 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
-                },
-                {
-                    name: 'editing',
-                    items : []
-                },
-                {
-                    name: 'document',
-                    items : ['Source']
-                }
-            ]
-        }
-
+        elToolbar = (_ckEditorConfigs.hasOwnProperty($el.data('editor-mode'))) ? _ckEditorConfigs[$el.data('editor-mode')] : _ckEditorConfigs['kumaDefault'];
 
         // Place CK
         CKEDITOR.replace(elId, {
