@@ -45,8 +45,14 @@
         </div>
 
         <!-- Fields -->
+
+
         <fieldset class="form__fieldset--padded">
-            {{ form_rest(form) }}
+            {% if tabPane is defined %}
+                {{ tabs_widget(tabPane) }}
+            {% else %}
+                {{ form_rest(form) }}
+            {% endif %}
         </fieldset>
     </form>
 {% endblock %}

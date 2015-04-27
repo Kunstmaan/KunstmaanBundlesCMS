@@ -5,7 +5,10 @@ namespace Kunstmaan\UserManagementBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Util\UserManipulator;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
+use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
+use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -159,10 +162,21 @@ class UsersController extends BaseSettingsController
             $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
         }
 
+        $event = new AdaptSimpleFormEvent($request, $formType, $user);
+        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
+        $tabPane = $event->getTabPane();
+
         $form = $this->createForm($formType, $user, array('password_required' => false));
 
         if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
+
+            if($tabPane){
+                $tabPane->bindRequest($request);
+                $form = $tabPane->getForm();
+            } else {
+                $form->handleRequest($request);
+            }
+
             if ($form->isValid()) {
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('fos_user.user_manager');
@@ -180,10 +194,16 @@ class UsersController extends BaseSettingsController
             }
         }
 
-        return array(
-            'form' => $form->createView(),
-            'user' => $user
+    $params = array(
+        'form' => $form->createView(),
+        'user' => $user,
         );
+
+    if($tabPane) {
+        $params = array_merge($params, array('tabPane' => $tabPane));
+    }
+
+    return $params;
     }
 
     /**
