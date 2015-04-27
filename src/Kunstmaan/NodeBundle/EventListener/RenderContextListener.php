@@ -35,7 +35,7 @@ class RenderContextListener
             $parameters      = $request->attributes->get('_renderContext');
 
             $renderContext = array(
-                '_nodeTranslation'  => $nodeTranslation,
+                'nodetranslation'   => $nodeTranslation,
                 'slug'              => $url,
                 'page'              => $entity,
                 'resource'          => $entity,
