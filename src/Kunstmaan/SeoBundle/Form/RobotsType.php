@@ -11,13 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class RobotsType extends AbstractType
 {
-
-    private $default;
-
-    function __construct($default = null) {
-        $this->default = $default;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -26,7 +19,6 @@ class RobotsType extends AbstractType
     {
         $builder->add('robotsTxt', 'textarea', array(
             'label' => 'robots.txt',
-            'data' => $this->default,
             'attr' => array(
                 'rows' => 15
             )
