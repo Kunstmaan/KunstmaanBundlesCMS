@@ -82,7 +82,8 @@ class FolderController extends Controller
             'subform'       => $subForm->createView(),
             'editform'      => $editForm->createView(),
             'folder'        => $folder,
-            'adminlist'     => $adminList
+            'adminlist'     => $adminList,
+            'type'          => null,
         );
     }
 
