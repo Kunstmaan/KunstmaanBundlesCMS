@@ -76,6 +76,7 @@ abstract class AdminListController extends Controller
 
         /* @var AdminList $adminList */
         $adminList = $this->get("kunstmaan_adminlist.factory")->createExportList($configurator, $em);
+        $adminList->bindRequest($request);
 
         return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $_format);
     }
