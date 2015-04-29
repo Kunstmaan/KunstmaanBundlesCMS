@@ -135,4 +135,18 @@ class Events
      * @var string
      */
     const SLUG_SECURITY = 'kunstmaan_node.slug.security';
+
+    /**
+     * This event will be triggered before the slugaction is performed
+     *
+     * @var string
+     */
+    const PRE_SLUG_ACTION = 'kunstmaan_node.preSlugAction';
+
+    /**
+     * This event will be triggered after the slugaction is performed
+     *
+     * @var string
+     */
+    const POST_SLUG_ACTION = 'kunstmaan_node.postSlugAction';
 }
