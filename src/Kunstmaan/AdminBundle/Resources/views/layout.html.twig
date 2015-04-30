@@ -11,8 +11,8 @@
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="alert alert-warning">
                 <strong>{{ 'form.warning' | trans }}: </strong>
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-                <a href="{{ path('fos_user_security_logout') }}" class="alert__action">
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                <a href="{{ path('fos_user_security_logout') }}" class="btn btn-warning alert__action">
                     {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                 </a>
             </div>
