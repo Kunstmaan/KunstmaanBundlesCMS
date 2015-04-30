@@ -144,7 +144,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 	    $pageparts['header'][] = $this->pagePartCreator->getCreatorArgumentsForPagePartAndProperties(
 		'{{ namespace }}\Entity\PageParts\PageBannerPagePart',
 		array(
-		    'setTitle' => $locale == 'nl' ? 'Wij zorgen voor jou fiets!' : 'We care for your bike!',
+		    'setTitle' => $locale == 'nl' ? 'Wij zorgen voor jouw fiets!' : 'We care for your bike!',
 		    'setDescription' => $locale == 'nl' ? 'De laatste modellen aan de beste prijs met een uitermate goede service na verkoop, daar tekenen wij voor!' : 'The latest models at the best prices with a top notch service guarantee, that\'s our promise!',
 		    'setBackgroundImage' => $headerMedia,
 		    'setButtonUrl' => $locale == 'nl' ? '/nl/diensten' : '/en/services',
