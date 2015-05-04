@@ -59,12 +59,10 @@ class SlugListener
         }
 
         $nodeTranslation = $request->attributes->get('_nodeTranslation');
-        $entity = $nodeTranslation->getPublicNodeVersion()->getRef($this->em);
+        $entity = $nodeTranslation->getRef($this->em);
 
         //if the entity is an instance of the SlugControllerActionInterface, change the controller
         if ($entity instanceof SlugActionInterface) {
-
-            $entity = $nodeTranslation->getRef($this->em);
             $request->attributes->set('_entity', $entity);
 
             //do security check by firing an event that gets handled by the SlugSecurityListener
