@@ -70,3 +70,26 @@
     bottom: 2rem;
     transform: translateX(-50%);
 }
+
+
+
+/* FOS - User change password overwrites
+   ========================================================================== */
+.fos_user_change_password {
+    
+    label {
+        @extend .label--lighter;
+    }
+    
+    input[type="text"], input[type="password"] {
+        @extend .form-control;
+        
+        margin-bottom: 1rem;
+    }
+    
+    input[type="submit"] {
+        @extend .btn;
+        @extend .btn-primary;
+        @extend .btn-block;
+    }
+}
