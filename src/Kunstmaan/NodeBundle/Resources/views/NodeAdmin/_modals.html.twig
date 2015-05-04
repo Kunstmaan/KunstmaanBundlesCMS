@@ -284,3 +284,39 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal - Duplicate page -->
+<div id="duplicate-page-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Duplicate page '{{ page.title }}'</h3>
+            </div>
+
+            <form action="{{ path('KunstmaanNodeBundle_nodes_duplicate', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="duplicatepage_title">
+                            New title
+                        </label>
+                        <input name="title" type="text" id="title" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Duplicate</button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

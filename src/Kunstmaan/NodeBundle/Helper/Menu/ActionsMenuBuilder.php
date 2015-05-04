@@ -147,7 +147,9 @@ class ActionsMenuBuilder
 		    $menu->addChild('action.addsubpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
                 }
             }
-
+            if (!is_null($node->getParent()) && ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node))) {
+                $menu->addChild('action.duplicate', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#duplicate-page-modal'), 'extras' => array('renderType' => 'button')));
+            }
             if (!is_null($node->getParent()) && ($this->context->isGranted(PermissionMap::PERMISSION_DELETE, $node))) {
 		$menu->addChild('action.delete', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'onClick' => 'oldEdited = isEdited; isEdited=false', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#delete-page-modal'), 'extras' => array('renderType' => 'button')));
             }
