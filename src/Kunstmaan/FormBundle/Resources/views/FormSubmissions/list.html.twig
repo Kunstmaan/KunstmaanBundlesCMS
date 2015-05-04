@@ -2,28 +2,33 @@
 
 {% block extra_actions_header %}
     {% if adminlist.canExport() %}
-        <div class="extra_actions_header">
-            <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="icon-download-alt"></i>
-                    Export to
-                    <i class="icon-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
-                    {% for name, ext in supported_export_extensions() %}
-                        {% set exportparams = exportparams|merge({"_format": ext}) %}
-                        <li><a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">{{ name }}</a></li>
-                    {% endfor %}
-                </ul>
+        <div class="col-sm-6 col-md-4">
+            <div class="app__content__header__extra-actions">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Export to
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
+                        {% for name, ext in supported_export_extensions() %}
+                            {% set exportparams = exportparams|merge({"_format": ext}) %}
+                            <li>
+                                <a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">
+                                    <i class="fa fa-file-{{ name|lower }}-o"></i>
+                                    {{ name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     {% endif %}
 {% endblock %}
 
 {% block content %}
-
     <h2>{{ nodetranslation.title }}</h2>
+    
     {{ adminlist_widget(adminlist, 'KunstmaanFormBundle_formsubmissions_list', {"nodeTranslationId" : nodetranslation.id}) }}
-
 {% endblock %}
