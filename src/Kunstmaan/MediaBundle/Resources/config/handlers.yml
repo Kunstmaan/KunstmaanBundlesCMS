@@ -9,24 +9,25 @@ parameters:
 services:
     kunstmaan_media.media_handlers.remote_slide:
         class: "%kunstmaan_media.media_handler.remote_slide.class%"
+        arguments: [1]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
 
     kunstmaan_media.media_handlers.remote_video:
         class: "%kunstmaan_media.media_handler.remote_video.class%"
-        arguments: ["%kunstmaan_media.remote_video%"]
+        arguments: [1, "%kunstmaan_media.remote_video%"]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
 
     kunstmaan_media.media_handlers.remote_audio:
         class: "%kunstmaan_media.media_handler.remote_audio.class%"
-        arguments: ["%kunstmaan_media.soundcloud_api_key%"]
+        arguments: [1, "%kunstmaan_media.soundcloud_api_key%"]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
 
     kunstmaan_media.media_handlers.image:
         class: "%kunstmaan_media.media_handler.image.class%"
-        arguments: ["@kunstmaan_media.mimetype_guesser.factory", "%aviary_api_key%"]
+        arguments: [1, "@kunstmaan_media.mimetype_guesser.factory", "%aviary_api_key%"]
         calls:
             - [ setMediaPath, [ "%kernel.root_dir%" ] ]
             - [ setBlacklistedExtensions, [ "%kunstmaan_media.blacklisted_extensions%" ] ]
@@ -35,7 +36,7 @@ services:
 
     kunstmaan_media.media_handlers.file:
         class: "%kunstmaan_media.media_handler.file.class%"
-        arguments: ["@kunstmaan_media.mimetype_guesser.factory"]
+        arguments: [0, "@kunstmaan_media.mimetype_guesser.factory"]
         calls:
             - [ setMediaPath, [ "%kernel.root_dir%" ] ]
             - [ setBlacklistedExtensions, [ "%kunstmaan_media.blacklisted_extensions%" ] ]
