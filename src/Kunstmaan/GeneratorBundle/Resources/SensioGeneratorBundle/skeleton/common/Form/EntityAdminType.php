@@ -29,18 +29,30 @@ class {{ className }} extends {{ extend_class }}
         $builder->add('{{ field.fieldName }}', '{{ field.formType }}', array(
 {% if field.formType == 'media' %}            'pattern' => 'KunstmaanMediaBundle_chooser',
 {% endif %}
-{% if field.mediaType is defined and field.mediaType != 'none' %}            'mediatype' => '{{ field.mediaType }}', 
+{% if field.mediaType is defined and field.mediaType != 'none' %}            'mediatype' => '{{ field.mediaType }}',
+{% if field.mimeTypes != null or (field.mediaType == 'image' and (field.minHeight != null or field.maxHeight != null or field.minWidth != null or field.maxWidth or null)) %}
             'constraints' => array(new Assert\Media(array(
-		        'mimeTypes' => array({% for type in field.mimeTypes %}'{{ type }}',{% endfor %}),
+{% if field.mimeTypes != null %}
+                'mimeTypes' => array({% for type in field.mimeTypes %}'{{ type }}',{% endfor %}),
+{% endif %}
 {% endif %}
 {% if field.mediaType is defined and field.mediaType == 'image' %}
-		        'minHeight' => '{{ field.minHeight }}', 
-		        'maxHeight' => '{{ field.maxHeight }}', 
-		        'minWidth' => '{{ field.minWidth }}', 
-		        'maxWidth' => '{{ field.maxWidth }}',
+{% if field.minHeight != null %}
+                'minHeight' => '{{ field.minHeight }}',
 {% endif %}
-{% if field.mediaType is defined and field.mediaType != 'none' %}
-        ))),
+{% if field.maxHeight != null %}
+                'maxHeight' => '{{ field.maxHeight }}',
+{% endif %}
+{% if field.minWidth != null %}
+                'minWidth' => '{{ field.minWidth }}',
+{% endif %}
+{% if field.maxWidth != null %}
+                'maxWidth' => '{{ field.maxWidth }}',
+{% endif %}
+{% endif %}
+{% if field.mimeTypes != null or (field.mediaType == 'image' and (field.minHeight != null or field.maxHeight != null or field.minWidth != null or field.maxWidth or null)) %}
+            ))),
+{% endif %}
 {% endif %}
 {% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
 {% endif %}
