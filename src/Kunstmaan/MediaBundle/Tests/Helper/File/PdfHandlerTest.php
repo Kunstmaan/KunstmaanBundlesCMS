@@ -33,7 +33,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
         $factory = $this->getMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
         $this->filesDir = realpath(__DIR__ . '/../../Files');
 
-        $this->object = new PdfHandler($factory);
+        $this->object = new PdfHandler(1, $factory);
         $this->object->setPdfTransformer($this->pdfTransformer);
     }
 

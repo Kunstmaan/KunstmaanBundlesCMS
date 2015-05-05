@@ -45,7 +45,7 @@ class MediaManager
     }
 
     /**
-     * Returns handler to handle the Media item which can handle the item. If no handler is found, it returns FileHandler
+     * Returns handler with the highest priority to handle the Media item which can handle the item. If no handler is found, it returns FileHandler
      *
      * @param Media $media
      *
@@ -53,17 +53,18 @@ class MediaManager
      */
     public function getHandler($media)
     {
+        $bestHandler = $this->defaultHandler;
         foreach ($this->handlers as $handler) {
-            if ($handler->canHandle($media)) {
-                return $handler;
+            if ($handler->canHandle($media) && $handler->getPriority() > $bestHandler->getPriority()) {
+                $bestHandler = $handler;
             }
         }
 
-        return $this->defaultHandler;
+        return $bestHandler;
     }
 
     /**
-     * Returns handler to handle the Media item based on the Type. If no handler is found, it returns FileHandler
+     * Returns handler with the highest priority to handle the Media item based on the Type. If no handler is found, it returns FileHandler
      *
      * @param string $type
      *
@@ -71,13 +72,14 @@ class MediaManager
      */
     public function getHandlerForType($type)
     {
+        $bestHandler = $this->defaultHandler;
         foreach ($this->handlers as $handler) {
-            if ($handler->getType() == $type) {
-                return $handler;
+            if ($handler->getType() == $type && $handler->getPriority() > $bestHandler->getPriority()) {
+                $bestHandler = $handler;
             }
         }
 
-        return $this->defaultHandler;
+        return $bestHandler;
     }
 
     /**

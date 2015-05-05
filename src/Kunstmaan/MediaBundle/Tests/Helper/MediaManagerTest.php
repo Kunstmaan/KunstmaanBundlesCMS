@@ -23,7 +23,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->defaultHandler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler');
+        $this->defaultHandler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', array(0));
         $this->defaultHandler
             ->expects($this->any())
             ->method('canHandle')
@@ -262,7 +262,7 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getCustomHandler($media = null, $name = null)
     {
-        $handler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler');
+        $handler = $this->getMockForAbstractClass('Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler', array(1));
         if (empty($name)) {
             $name = 'CustomHandler';
         }

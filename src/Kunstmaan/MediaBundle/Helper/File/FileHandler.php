@@ -48,8 +48,9 @@ class FileHandler extends AbstractMediaHandler
     /**
      * Constructor
      */
-    public function __construct(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
+    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
+        parent::__construct($priority);
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
     }
 

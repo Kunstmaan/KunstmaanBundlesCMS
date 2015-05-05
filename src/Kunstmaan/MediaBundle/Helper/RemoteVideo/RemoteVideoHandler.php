@@ -29,8 +29,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
      * Constructor. Takes the configuration of the RemoveVideoHandler
      * @param array $configuration
      */
-    public function __construct($configuration = array())
+    public function __construct($priority, $configuration = array())
     {
+        parent::__construct($priority);
         $this->configuration = $configuration;
     }
 
