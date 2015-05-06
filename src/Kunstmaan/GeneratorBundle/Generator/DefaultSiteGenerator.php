@@ -47,11 +47,12 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->demosite = $demosite;
 
         $parameters = array(
-            'namespace'   => $this->bundle->getNamespace(),
-            'bundle'      => $this->bundle,
-            'bundle_name' => $this->bundle->getName(),
-            'prefix'      => $this->prefix,
-            'demosite'    => $this->demosite
+            'namespace'     => $this->bundle->getNamespace(),
+            'bundle'        => $this->bundle,
+            'bundle_name'   => $this->bundle->getName(),
+            'prefix'        => $this->prefix,
+            'demosite'      => $this->demosite,
+            'multilanguage' => $this->isMultiLangEnvironment(),
         );
 
         $this->generateControllers($parameters);
