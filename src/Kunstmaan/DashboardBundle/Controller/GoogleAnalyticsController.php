@@ -86,7 +86,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function setTokenAction(Request $request)
     {
-        $code = $request->query->get('code');
+        $code = urldecode($request->query->get('code'));
 
         if (isset($code)) {
             $clientHelper = $this->container->get('kunstmaan_dashboard.helper.google.client');
