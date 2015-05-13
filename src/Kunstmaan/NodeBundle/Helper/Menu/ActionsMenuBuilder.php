@@ -120,7 +120,7 @@ class ActionsMenuBuilder
                 }
 		$menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl(), 'version' => $activeNodeVersion->getId())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn btn-default btn--raise-on-hover')));
                 if (empty($queuedNodeTranslationAction) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
-		    $menu->addChild('action.publish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#pub', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default')), 'extras' => array('renderType' => 'button')));
+		    $menu->addChild('action.publish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#pub', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'))));
                 }
             } else {
                 if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
