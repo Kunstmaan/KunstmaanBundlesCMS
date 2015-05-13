@@ -17,7 +17,7 @@ services:
 
     kunstmaan_media.media_handlers.pdf:
         class: "%kunstmaan_media.media_handler.pdf.class%"
-        arguments: ["@kunstmaan_media.mimetype_guesser.factory"]
+        arguments: [1, "@kunstmaan_media.mimetype_guesser.factory"]
         calls:
             - [ setMediaPath, [ "%kernel.root_dir%" ] ]
             - [ setPdfTransformer, [ "@kunstmaan_media.pdf_transformer" ]]
