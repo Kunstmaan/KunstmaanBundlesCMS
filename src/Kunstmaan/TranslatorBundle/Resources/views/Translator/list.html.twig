@@ -55,7 +55,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" >
+                                            <a data-toggle="modal" data-target="#import-force-modal" >
                                                 {{ 'settings.translator.import_translations_forced' | trans }}
                                             </a>
                                         </li>
@@ -78,6 +78,9 @@
             {% endblock %}
         </div>
     </header>
+
+    {% include 'KunstmaanTranslatorBundle:Modals:_modals.html.twig' %}
+
 {% endblock %}
 
 
