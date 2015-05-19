@@ -1,0 +1,30 @@
+<!-- MODALS -->
+
+<!-- Modal - Import forced -->
+<div id="import-force-modal" class="modal fade">
+    <div class="modal-dialog">
+    <div class="modal-content">
+
+        <!-- Head -->
+        <div class="modal-header">
+        <button class="close" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+        </button>
+        <h3>Are you sure you want to force an import?</h3>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-body">
+            <p>All existing translations will be overwritten.</p>
+        </div>
+        <!-- Footer -->
+        <div class="modal-footer">
+
+        <form action="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" method="post" novalidate="novalidate">
+            <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Import</button>
+            <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+        </form>
+        </div>
+        </div>
+    </div>
+</div>
