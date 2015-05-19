@@ -178,6 +178,8 @@ class FormPageGenerator extends KunstmaanGenerator
         $dirPath = $this->bundle->getPath();
         $this->filesystem->copy($this->skeletonDir . '/Resources/views/Pages/FormPage/view.html.twig', $dirPath . '/Resources/views/Pages/'.$this->entity.'/view.html.twig', true);
         $this->filesystem->copy($this->skeletonDir . '/Resources/views/Pages/FormPage/pagetemplate.html.twig', $dirPath . '/Resources/views/Pages/'.$this->entity.'/pagetemplate.html.twig', true);
+        GeneratorUtils::replace("~~~BUNDLE~~~", $this->bundle->getName(), $dirPath . '/Resources/views/Pages/'.$this->entity.'/pagetemplate.html.twig');
+
         GeneratorUtils::prepend("{% extends '" . $this->bundle->getName() .":Page:layout.html.twig' %}\n", $dirPath . '/Resources/views/Pages/'.$this->entity.'/view.html.twig');
     }
 
