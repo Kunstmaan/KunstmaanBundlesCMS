@@ -12,6 +12,7 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Kunstmaan\NodeBundle\Entity\HideFromNodeTreeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -145,6 +146,25 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
+     * Determine if current node is a structure node.
+     *
+     * @param string $refEntityName
+     *
+     * @return bool
+     */
+    private function isStructureNode($refEntityName)
+    {
+        $structureNode = false;
+        if (class_exists($refEntityName)) {
+            $page     = new $refEntityName();
+            $structureNode = ($page instanceof StructureNode);
+            unset($page);
+        }
+
+        return $structureNode;
+    }
+
+    /**
      * Get an array with the id's off all nodes in the tree that should be expanded.
      *
      * @param $request
@@ -191,7 +211,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 ->setUniqueId('node-' . $child['id'])
                 ->setLabel($child['title'])
                 ->setParent($parent)
-                ->setOffline(!$child['online'])
+                ->setOffline(!$child['online'] && !$this->isStructureNode($child['ref_entity_name']))
                 ->setRole('page')
                 ->setWeight($child['weight']);
 
