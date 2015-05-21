@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\Menu\SimpleTreeView;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,7 +58,7 @@ class WidgetsController extends Controller
         $locale = $this->getRequest()->getLocale();
 
         $qb = $em->getConnection()->createQueryBuilder();
-        $qb->select('n.id, n.parent_id, t.weight, t.title, t.online, t.url')
+        $qb->select('n.id, n.parent_id, t.weight, t.title, t.online, t.url, n.ref_entity_name')
             ->from('kuma_nodes', 'n')
             ->leftJoin('n', 'kuma_node_translations', 't', "(t.node_id = n.id AND t.lang = ?)")
             ->where('n.deleted = 0')
@@ -78,6 +79,9 @@ class WidgetsController extends Controller
 
         $simpleTreeView = new SimpleTreeView();
         foreach ($result as $data) {
+            if ($this->isStructureNode($data['ref_entity_name'])) {
+                $data['online'] = true;
+            }
             $simpleTreeView->addItem($data['parent_id'], $data);
         }
 
@@ -96,5 +100,24 @@ class WidgetsController extends Controller
             'tree' => $simpleTreeView,
             'mediaChooserLink' => $mediaChooserLink
         );
+    }
+
+    /**
+     * Determine if current node is a structure node.
+     *
+     * @param string $refEntityName
+     *
+     * @return bool
+     */
+    private function isStructureNode($refEntityName)
+    {
+        $structureNode = false;
+        if (class_exists($refEntityName)) {
+            $page     = new $refEntityName();
+            $structureNode = ($page instanceof StructureNode);
+            unset($page);
+        }
+
+        return $structureNode;
     }
 }
