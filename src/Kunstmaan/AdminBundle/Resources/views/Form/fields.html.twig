@@ -47,14 +47,16 @@
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} class="form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}">
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %}>
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
 
 {% block textarea_widget %}
 {% spaceless %}
-    <textarea {{ block('widget_attributes') }} class="form-control{% if attr['maxlength'] is defined %} js-max-length-input{% endif %}" rows="5">{{ value }}</textarea>
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+    <textarea {{ block('widget_attributes') }} rows="5">{{ value }}</textarea>
 {% endspaceless %}
 {% endblock textarea_widget %}
 
