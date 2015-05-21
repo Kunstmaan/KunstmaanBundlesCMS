@@ -53,6 +53,13 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
     }
 
     /**
+     * Build the filters, default none
+     */
+    public function buildFilters()
+    {
+    }
+
+    /**
      * @return array
      */
     public function getExportFields()
