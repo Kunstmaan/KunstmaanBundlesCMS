@@ -202,26 +202,29 @@
 {% block datetime_widget %}
     {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
     <div class="form-group date-time-group">
-        <div class="row">
-            {{ block('base_datetime_widget') }}
-        </div>
+        {{ block('base_datetime_widget') }}
     </div>
 {% endblock %}
 
 
 {% block date_widget %}
-    {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-    <div class="js-datepicker col-sm-7" data-format="DD/MM/YYYY">
-        {{ block('base_date_widget') }}
+    <div class="form--double-widget__col">
+        {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
+        <div class="js-datepicker" data-format="DD/MM/YYYY">
+            {{ block('base_date_widget') }}
+        </div>
     </div>
+
 {% endblock date_widget %}
 
 
 {% block time_widget %}
-    {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
-    {% set type = 'text' %}
-    <div class="js-datepicker col-sm-5" data-format="HH:mm">
-        {{ block('base_time_widget') }}
+    <div class="form--double-widget__col">
+        {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
+        {% set type = 'text' %}
+        <div class="js-datepicker" data-format="HH:mm">
+            {{ block('base_time_widget') }}
+        </div>
     </div>
 {% endblock time_widget %}
 
