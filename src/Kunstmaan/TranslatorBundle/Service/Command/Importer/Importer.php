@@ -47,6 +47,10 @@ class Importer
 
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
+        if (strlen($keyword) > 255) {
+            return false;
+        }
+
         $translationGroup = $this->translationGroupManager->getTranslationGroupByKeywordAndDomain($keyword, $domain);
 
         if (!($translationGroup instanceof TranslationGroup)) {
