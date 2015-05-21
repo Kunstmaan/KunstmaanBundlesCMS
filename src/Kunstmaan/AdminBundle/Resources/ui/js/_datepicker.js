@@ -58,6 +58,10 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             keepOpen: keepOpen,
             minDate: minDate,
             defaultDate: defaultDate,
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'bottom'
+            },
             widgetParent: $el,
             icons: {
                 time: 'fa fa-clock-o',
