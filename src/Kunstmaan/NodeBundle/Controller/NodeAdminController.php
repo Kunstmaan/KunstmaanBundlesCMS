@@ -293,6 +293,65 @@ class NodeAdminController extends Controller
     }
 
     /**
+     * @param int $id
+     *
+     * @throws AccessDeniedException
+     * @Route("/{id}/duplicate", requirements={"_method" = "POST", "id" = "\d+"}, name="KunstmaanNodeBundle_nodes_duplicate")
+     * @Template()
+     *
+     * @return RedirectResponse
+     */
+    public function duplicateAction($id)
+    {
+        $this->init();
+        /* @var Node $parentNode */
+        $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        // Check with Acl
+        $this->checkPermission($originalNode, PermissionMap::PERMISSION_EDIT);
+
+        $request = $this->get('request');
+
+        $originalNodeTranslations = $originalNode->getNodeTranslation($this->locale, true);
+        $originalRef = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);
+        $newPage = $this->get('kunstmaan_admin.clone.helper')->deepCloneAndSave($originalRef);
+
+        //set the title
+        $title = $request->get('title');
+        if (is_string($title) && !empty($title)) {
+            $newPage->setTitle($title);
+        } else {
+            $newPage->setTitle('New page');
+        }
+
+        //set the parent
+        $parentNodeTranslation = $originalNode->getParent()->getNodeTranslation($this->locale,true);
+        $parent = $parentNodeTranslation->getPublicNodeVersion()->getRef($this->em);
+
+        $newPage->setParent($parent);
+
+        $this->em->persist($newPage);
+        $this->em->flush();
+
+        /* @var Node $nodeNewPage */
+        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')->createNodeFor($newPage, $this->locale, $this->user);
+
+        $nodeTranslation = $nodeNewPage->getNodeTranslation($this->locale, true);
+        if ($newPage->isStructureNode()) {
+            $nodeTranslation->setSlug('');
+            $this->em->persist($nodeTranslation);
+        }
+
+        $this->em->flush();
+
+        $this->updateAcl($originalNode, $nodeNewPage);
+
+        $this->get('session')->getFlashBag()->add('success', 'The page has been duplicated!');
+
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeNewPage->getId())));
+    }
+
+    /**
      * @param int $id The node id
      *
      * @throws AccessDeniedException
@@ -401,25 +460,7 @@ class NodeAdminController extends Controller
 
         $this->em->flush();
 
-        /* @var MutableAclProviderInterface $aclProvider */
-        $aclProvider = $this->container->get('security.acl.provider');
-        /* @var ObjectIdentityRetrievalStrategyInterface $strategy */
-        $strategy = $this->container->get('security.acl.object_identity_retrieval_strategy');
-        $parentIdentity = $strategy->getObjectIdentity($parentNode);
-        $parentAcl = $aclProvider->findAcl($parentIdentity);
-
-        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
-        $newAcl = $aclProvider->createAcl($newIdentity);
-
-        $aces = $parentAcl->getObjectAces();
-        /* @var EntryInterface $ace */
-        foreach ($aces as $ace) {
-            $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
-            }
-        }
-        $aclProvider->updateAcl($newAcl);
+        $this->updateAcl($parentNode, $nodeNewPage);
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -698,6 +739,33 @@ class NodeAdminController extends Controller
 
             $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, new NodeEvent($childNode, $childNodeTranslation, $childNodeVersion, $childNodePage));
         }
+    }
+
+    /**
+     * @param $originalNode
+     * @param $nodeNewPage
+     */
+    private function updateAcl($originalNode, $nodeNewPage)
+    {
+        /* @var MutableAclProviderInterface $aclProvider */
+        $aclProvider = $this->container->get('security.acl.provider');
+        /* @var ObjectIdentityRetrievalStrategyInterface $strategy */
+        $strategy = $this->container->get('security.acl.object_identity_retrieval_strategy');
+        $originalIdentity = $strategy->getObjectIdentity($originalNode);
+        $originalAcl = $aclProvider->findAcl($originalIdentity);
+
+        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
+        $newAcl = $aclProvider->createAcl($newIdentity);
+
+        $aces = $originalAcl->getObjectAces();
+        /* @var EntryInterface $ace */
+        foreach ($aces as $ace) {
+            $securityIdentity = $ace->getSecurityIdentity();
+            if ($securityIdentity instanceof RoleSecurityIdentity) {
+                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
+            }
+        }
+        $aclProvider->updateAcl($newAcl);
     }
 
 }
