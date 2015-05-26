@@ -17,7 +17,11 @@
 
                 <!-- Header - Brand -->
                 <a class="navbar-brand app__header__brand" href="{{ path('KunstmaanAdminBundle_homepage') }}">
+                    {% if admin_logo is defined %}
+                    <img class="app__header__brand__img" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
+                    {% else %}
                     {{ websitetitle | trans }}
+                    {% endif %}
                 </a>
             </div>
 
