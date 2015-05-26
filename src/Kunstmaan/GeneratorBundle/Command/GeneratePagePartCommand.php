@@ -150,12 +150,12 @@ EOT
         $this->fields = array();
         foreach ($fields as $fieldInfo) {
             if($fieldInfo['type'] == 'image') {
-            	$this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], 
-            			          $fieldInfo['extra'], $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes'], true);
+                $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
+                                  $fieldInfo['extra'], $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes'], true);
             } 
             elseif($fieldInfo['type'] == 'media') {
-            	$this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
-            			$fieldInfo['extra'], null, null, null, null, $fieldInfo['mimeTypes'], true);
+                $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
+                        $fieldInfo['extra'], null, null, null, null, $fieldInfo['mimeTypes'], true);
             }
             else $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], null, null, null, null, null, true);
         }
@@ -169,10 +169,10 @@ EOT
         /**
          * Ask that you want to create behat tests for the new pagepart, if possible
          */
-	if (count($this->sections) > 0 && $this->canGenerateBehatTests($this->bundle)) {
-	    $this->behatTest = $this->assistant->askConfirmation('Do you want to generate behat tests for this pagepart? (y/n)', 'y');
-	} else {
-	    $this->behatTest = false;
+        if (count($this->sections) > 0 && $this->canGenerateBehatTests($this->bundle)) {
+            $this->behatTest = $this->assistant->askConfirmation('Do you want to generate behat tests for this pagepart? (y/n)', 'y');
+        } else {
+            $this->behatTest = false;
         }
     }
 

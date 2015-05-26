@@ -490,7 +490,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $mediaTypeId = $this->assistant->askSelect('Media filter', $mediaTypeSelect);
                 $extra       = strtolower($mediaTypeSelect[$mediaTypeId]);
             }
-           
+
             if ($typeStrings[$typeId] == 'image' || $typeStrings[$typeId] == 'media') {
 
                 // Ask the allowed mimetypes for the media ojbect
@@ -507,31 +507,35 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
                 if ($extra == 'image') {
 
-                    // Ask the minimum height allowed for the image
-                    $lengthValidation = function ($length) {
-                        if (empty ( $length ) || ! is_numeric ( $length ) || $length < 0) {
-                            throw new \InvalidArgumentException ( sprintf ( '"%s" is not a valid length', $length ) );
-                        } else {
-                            return $length;
-                        }
-                    };
-                    $minHeight = $this->assistant->askAndValidate ( 'What is the minimum height for the media object? (in pixels)', $lengthValidation);
+                    $minHeight = $maxHeight = $minWidth = $maxWidth = null;
+                    if ($this->assistant->askConfirmation('Do you want to add validation of the dimensions of the media object? (y/n)', 'n', '?', false)) {
 
-                    // Ask the maximum height allowed for the image
-                    $maxHeight = $this->assistant->askAndValidate ( 'What is the maximum height for the media object? (in pixels)', $lengthValidation);
+                        // Ask the minimum height allowed for the image
+                        $lengthValidation = function ($length) {
+                            if ((is_numeric($length) && $length < 0) || (!is_numeric($length) && !empty($length))) {
+                                throw new \InvalidArgumentException(sprintf('"%s" is not a valid length', $length));
+                            } else {
+                                return $length;
+                            }
+                        };
 
-                    // Ask the minimum width allowed for the image
-                    $minWidth = $this->assistant->askAndValidate ( 'What is the minimum width for the media object? (in pixels)', $lengthValidation);
+                        $minHeight = $this->assistant->askAndValidate('What is the minimum height for the media object? (in pixels)', $lengthValidation);
 
-                    //Ask the maximum width allowed for the image
-                    $maxWidth = $this->assistant->askAndValidate('What is the maximum width for the media object? (in pixels)', $lengthValidation);
+                        // Ask the maximum height allowed for the image
+                        $maxHeight = $this->assistant->askAndValidate('What is the maximum height for the media object? (in pixels)', $lengthValidation);
 
-                    $data = array('name' => $fieldName, 'type' => 'image', 'extra' => $extra,
-                            'minHeight' => $minHeight, 'maxHeight' => $maxHeight, 'minWidth' => $minWidth, 'maxWidth' => $maxWidth, 'mimeTypes' => $mimeTypes);
+                        // Ask the minimum width allowed for the image
+                        $minWidth = $this->assistant->askAndValidate('What is the minimum width for the media object? (in pixels)', $lengthValidation);
+
+                        //Ask the maximum width allowed for the image
+                        $maxWidth = $this->assistant->askAndValidate('What is the maximum width for the media object? (in pixels)', $lengthValidation);
+
                     }
+                    $data = array('name' => $fieldName, 'type' => 'image', 'extra' => $extra,
+                        'minHeight' => $minHeight, 'maxHeight' => $maxHeight, 'minWidth' => $minWidth, 'maxWidth' => $maxWidth, 'mimeTypes' => $mimeTypes);
 
+                }
             } else $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra);
-
             $fields[$fieldName] = $data;
         }
 
@@ -552,7 +556,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $types             = array();
         $types[$counter++] = $niceNames ? 'Single line text' : 'single_line';
         $types[$counter++] = $niceNames ? 'Multi line text' : 'multi_line';
-    $types[$counter++] = $niceNames ? 'Wysiwyg' : 'wysiwyg';
+        $types[$counter++] = $niceNames ? 'Wysiwyg' : 'wysiwyg';
         $types[$counter++] = $niceNames ? 'Link (url, text, new window)' : 'link';
         if ($this->isBundleAvailable('KunstmaanMediaPagePartBundle')) {
             $types[$counter++] = $niceNames ? 'Image (media, alt text)' : 'image';
@@ -781,7 +785,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 );
                 break;
         }
-        
+
         return $fields;
     }
 
