@@ -94,6 +94,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         }
 
         elToolbar = (_ckEditorConfigs.hasOwnProperty($el.data('editor-mode'))) ? _ckEditorConfigs[$el.data('editor-mode')] : _ckEditorConfigs['kumaDefault'];
+        customConfigFile = customConfigFile || '';
 
         // Place CK
         CKEDITOR.replace(elId, {
@@ -115,6 +116,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             shiftEnterMode: elShiftEnterMode,
 
             toolbar: elToolbar
+            customConfig: customConfigFile
         });
 
         $el.addClass('js-rich-editor--enabled');
