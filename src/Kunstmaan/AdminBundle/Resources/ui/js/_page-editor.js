@@ -141,14 +141,18 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
                     // Check if drag is allowed
                     $('.js-sortable-container').on('dragover', function(e) {
-                        var $this = $(this),
-                            allowedPageParts = $this.data('scope').split(' ');
+                        var $element = $(this);
 
-                        if(allowedPageParts.indexOf(elScope) > -1) {
-                            $el.removeClass('sortable-item--error');
-                        } else {
-                            $el.addClass('sortable-item--error');
+                        if ($element.data('scope')) {
+                            var allowedPageParts = $element.data('scope').split(' ');
+
+                            if(allowedPageParts.indexOf(elScope) > -1) {
+                                $el.removeClass('sortable-item--error');
+                            } else {
+                                $el.addClass('sortable-item--error');
+                            }
                         }
+
                     });
                 },
 
