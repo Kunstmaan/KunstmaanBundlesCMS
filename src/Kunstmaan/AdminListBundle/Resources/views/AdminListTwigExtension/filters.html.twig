@@ -8,7 +8,7 @@
 
                 <fieldset id="filter-holder" class="form__fieldset--padded-full">
                     <!-- Start Filter -->
-                    <div id="first-filter-line" class="js-filter-line app__filter__line{% if filter.currentfilters|length >0 %} hidden{% endif %}">
+                    <div id="first-filter-line" class="js-filter-line app__filter__line {% if filter.currentfilters|length >0 %} hidden{% endif %}">
                         <div class="form-group">
                             <select id="add-first-filter" class="form-control js-filter-select">
                                 <option>{{ "form.choosetypefilter"|trans }}</option>
@@ -64,7 +64,7 @@
 
                 <fieldset class="form__fieldset--padded-full">
                     <!-- Add filter -->
-                    <button type="button" id="add-filter" class="js-create-filter-btn btn btn-default btn--no-border btn--no-hor-padding hidden" data-first="false">
+                    <button type="button" id="add-filter" class="js-create-filter-btn btn btn-default btn--no-border btn--no-hor-padding" data-first="false">
                         <i class="fa fa-plus-circle btn__icon"></i>
                         {{ "form.addfilter"|trans }}
                     </button>
