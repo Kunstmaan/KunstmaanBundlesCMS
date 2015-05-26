@@ -58,8 +58,9 @@ class SearchFixtures extends AbstractFixture implements OrderedFixtureInterface,
 
             $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use($title) {
                 $translation->setTitle($title);
-                $translation->setSlug(Slugifier::slugify($title));
                 $translation->setWeight(50);
+                $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
+                $translation->setSlug($slugifier->slugify($title));
             });
         }
 

@@ -55,6 +55,7 @@ class TabPane
         $this->identifier = $identifier;
         $this->formFactory = $formFactory;
 
+        $this->slugifier = new Slugifier();
         if ($request->request->get('currenttab')) {
             $this->activeTab = $request->request->get('currenttab');
         } elseif ($request->get('currenttab')) {
@@ -107,7 +108,7 @@ class TabPane
      */
     private function generateIdentifier(TabInterface $tab)
     {
-        return Slugifier::slugify($tab->getTitle());
+        return $this->slugifier->slugify($tab->getTitle());
     }
 
     /**
@@ -276,5 +277,4 @@ class TabPane
 
         return $extraParams;
     }
-
 }

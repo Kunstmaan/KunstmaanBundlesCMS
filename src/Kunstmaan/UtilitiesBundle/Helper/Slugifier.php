@@ -5,7 +5,7 @@ namespace Kunstmaan\UtilitiesBundle\Helper;
 /**
  * Sulgifier is a helper to slugify a certain string
  */
-class Slugifier
+class Slugifier implements SlugifierInterface
 {
     /**
      * Slugify a string
@@ -15,7 +15,7 @@ class Slugifier
      *
      * @return string
      */
-    public static function slugify($text, $default = 'n-a', $replace = array("'"), $delimiter = '-')
+    public function slugify($text, $default = 'n-a', $replace = array("'"), $delimiter = '-')
     {
         if (!empty($replace)) {
             $text = str_replace($replace, ' ', $text);

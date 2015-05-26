@@ -1,4 +1,5 @@
 parameters:
+    kunstmaan_utilities.slugifier.class: 'Kunstmaan\UtilitiesBundle\Helper\Slugifier'
     kunstmaan_utilities.shell.class: 'Kunstmaan\UtilitiesBundle\Helper\Shell\Shell'
     kunstmaan_utilities.cipher.class: 'Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher'
     kunstmaan_utilities.cipher.secret: ''
@@ -11,7 +12,13 @@ services:
         class: "%kunstmaan_utilities.cipher.class%"
         arguments: ["%kunstmaan_utilities.cipher.secret%"]
 
+    kunstmaan_utilities.slugifier:
+        class: "%kunstmaan_utilities.slugifier.class%"
+
     kunstmaan_utilities.twig.extension:
         class: Kunstmaan\UtilitiesBundle\Twig\UtilitiesTwigExtension
+        arguments: [ "@kunstmaan_utilities.slugifier" ]
         tags:
             - { name: twig.extension }
+
+

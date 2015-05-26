@@ -11,6 +11,7 @@ use Kunstmaan\NodeBundle\Entity\Node,
 
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -26,14 +27,20 @@ class NodeTranslationListener
     private $nodeTranslations;
 
     /**
+     * @var SlugifierInterface
+     */
+    private $slugifier;
+
+    /**
      * @param Session $session The session
      * @param Logger  $logger  The logger
      */
-    public function __construct(Session $session, $logger)
+    public function __construct(Session $session, $logger, SlugifierInterface $slugifier)
     {
         $this->nodeTranslations = array();
         $this->session = $session;
         $this->logger = $logger;
+        $this->slugifier = $slugifier;
     }
 
     /**
@@ -200,7 +207,7 @@ class NodeTranslationListener
 
         if (count($translations) > 0) {
             $oldUrl = $translation->getFullSlug();
-            $translation->setSlug($this->IncrementString($translation->getSlug()));
+            $translation->setSlug($this->slugifier->slugify($this->IncrementString($translation->getSlug())));
             $newUrl = $translation->getFullSlug();
 
             $message = 'The URL of the page has been changed from ' . $oldUrl . ' to ' . $newUrl . ' since another page already uses this URL.';

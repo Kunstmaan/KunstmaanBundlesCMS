@@ -5,7 +5,7 @@ parameters:
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: ["@session", "@kunstmaan_admin.logger"]
+        arguments: ["@session", "@kunstmaan_admin.logger" , "@kunstmaan_utilities.slugifier"]
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
             - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }

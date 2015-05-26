@@ -296,7 +296,7 @@ class NodeTranslationRepository extends EntityRepository
             ->setNode($node)
             ->setLang($lang)
             ->setTitle($hasNode->getTitle())
-            ->setSlug(Slugifier::slugify(!$hasNode->isStructureNode() ? $hasNode->getTitle(): null, ''))
+            ->setSlug(!$hasNode->isStructureNode() ? $hasNode->getTitle(): null)
             ->setOnline(false)
             ->setWeight(0);
 

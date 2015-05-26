@@ -57,8 +57,9 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
 	    $title = '{{ entity_class }}';
 	    $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title) {
                 $translation->setTitle($title);
-                $translation->setSlug(Slugifier::slugify($title));
                 $translation->setWeight(30);
+                $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
+                $translation->setSlug($slugifier->slugify($title));
             });
         }
 
@@ -99,8 +100,9 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
 
 		$translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title, $i) {
                     $translation->setTitle($title);
-                    $translation->setSlug(Slugifier::slugify($title));
                     $translation->setWeight(100 + $i);
+                    $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
+                    $translation->setSlug($slugifier->slugify($title));
                 });
             }
 
