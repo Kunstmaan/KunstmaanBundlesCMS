@@ -115,7 +115,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             enterMode: elEnterMode,
             shiftEnterMode: elShiftEnterMode,
 
-            toolbar: elToolbar
+            toolbar: elToolbar,
             customConfig: customConfigFile
         });
 
