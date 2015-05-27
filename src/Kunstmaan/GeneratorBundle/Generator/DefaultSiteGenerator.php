@@ -57,9 +57,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
         $this->generateControllers($parameters);
         $this->generateAdminLists($parameters);
-        if ($this->isMultiLangEnvironment()) {
-            $this->generateDefaultLocaleFallbackCode($parameters);
-        }
         $this->generateEntities($parameters);
         $this->generateFormTypes($parameters);
         $this->generateMenuAdaptors($parameters);
@@ -105,24 +102,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
 
             $this->assistant->writeLine('Generating admin lists : <info>OK</info>');
         }
-    }
-
-    /**
-     * Generate event listener class.
-     *
-     * @param array $parameters
-     */
-    public function generateDefaultLocaleFallbackCode(array $parameters)
-    {
-        $relPath = '/EventListener/';
-        $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
-
-        $relPath = '/Resources/config/';
-        $sourceDir = $this->skeletonDir.$relPath;
-        $targetDir = $this->bundle->getPath().$relPath;
-        $this->renderSingleFile($sourceDir, $targetDir, 'services.yml', $parameters, true);
-
-        $this->assistant->writeLine('Generating code for defaultlocale fallback : <info>OK</info>');
     }
 
     /**
