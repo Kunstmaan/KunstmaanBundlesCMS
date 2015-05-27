@@ -41,6 +41,8 @@ class FormMailer implements FormMailerInterface
      */
     public function sendContactMail(FormSubmission $submission, $from, $to, $subject)
     {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+
         $toArr = explode("\r\n", $to);
         /* @var $message Swift_Mime_Message */
         $message = Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);

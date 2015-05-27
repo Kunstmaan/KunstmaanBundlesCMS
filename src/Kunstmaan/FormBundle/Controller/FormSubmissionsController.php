@@ -89,11 +89,14 @@ class FormSubmissionsController extends Controller
      */
     public function editAction($nodeTranslationId, $submissionId)
     {
-        $em              = $this->getDoctrine()->getManager();
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $formSubmission  = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
+        $em                   = $this->getDoctrine()->getManager();
+        $nodeTranslation      = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $formSubmission       = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
 
-        return array('nodetranslation' => $nodeTranslation, 'formsubmission' => $formSubmission);
+        return array(
+            'nodetranslation' => $nodeTranslation,
+            'formsubmission' => $formSubmission
+        );
     }
 
     /**

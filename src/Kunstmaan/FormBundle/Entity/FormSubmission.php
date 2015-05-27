@@ -61,6 +61,7 @@ class FormSubmission implements EntityInterface
      * The extra fields with their value, which where configured on the form which created this submission
      *
      * @ORM\OneToMany(targetEntity="FormSubmissionField", mappedBy="formSubmission")
+     * @ORM\OrderBy({"sequence" = "ASC"})
      */
     protected $fields;
 
