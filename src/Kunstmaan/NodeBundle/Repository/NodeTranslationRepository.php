@@ -10,7 +10,6 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 /**
  * NodeRepository
@@ -296,7 +295,6 @@ class NodeTranslationRepository extends EntityRepository
             ->setNode($node)
             ->setLang($lang)
             ->setTitle($hasNode->getTitle())
-            ->setSlug(!$hasNode->isStructureNode() ? $hasNode->getTitle(): null)
             ->setOnline(false)
             ->setWeight(0);
 
