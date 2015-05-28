@@ -9,6 +9,8 @@ services:
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
             - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
+            - { name: 'doctrine.event_listener', event: 'prePersist', method: 'prePersist' }
+            - { name: 'doctrine.event_listener', event: 'preUpdate', method: 'preUpdate' }
 
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
