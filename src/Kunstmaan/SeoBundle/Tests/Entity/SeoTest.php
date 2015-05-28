@@ -105,10 +105,21 @@ class SeoTest extends \PHPUnit_Framework_TestCase
      * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgImage
      * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgImage
      */
-    public function testGetSetOgImage()
+    public function testGetSetOgImageWithImage()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete('This test has not been implemented yet.');
+        $media = $this->getMock('Kunstmaan\MediaBundle\Entity\Media');
+        $this->object->setOgImage($media);
+        $this->assertEquals($media, $this->object->getOgImage());
+    }
+
+    /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgImage
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgImage
+     */
+    public function testGetSetOgImageWithNullValue()
+    {
+        $this->object->setOgImage(null);
+        $this->assertEquals(null, $this->object->getOgImage());
     }
 
     /**
