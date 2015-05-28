@@ -59,6 +59,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->generateAdminLists($parameters);
         $this->generateEntities($parameters);
         $this->generateFormTypes($parameters);
+        $this->generateTwigExtensions($parameters);
         $this->generateMenuAdaptors($parameters);
         $this->generateFixtures($parameters);
         $this->generatePagepartConfigs($parameters);
@@ -66,7 +67,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         $this->generateConfig();
         $this->generateRouting($parameters);
         $this->generateTemplates($parameters);
-	$this->generateTwigExtensions($parameters);
     }
 
     /**
@@ -404,10 +404,15 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generateTwigExtensions($parameters)
     {
-	if ($this->demosite) {
-	    $relPath = '/Twig/';
-	    $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
-	}
+        if ($this->demosite) {
+            $relPath = '/Twig/';
+            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+        }
+
+        $relPath = '/Resources/config/';
+        $sourceDir = $this->skeletonDir.$relPath;
+        $targetDir = $this->bundle->getPath().$relPath;
+        $this->renderSingleFile($sourceDir, $targetDir, 'services.yml', $parameters, true);
     }
 
     /**
