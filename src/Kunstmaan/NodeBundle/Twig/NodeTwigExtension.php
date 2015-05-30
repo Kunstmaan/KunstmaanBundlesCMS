@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Twig;
 
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
 
@@ -48,7 +49,18 @@ class NodeTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction('get_node_by_internal_name', array($this, 'getNodeByInternalName')),
             new \Twig_SimpleFunction('get_url_by_internal_name', array($this, 'getUrlByInternalName')),
             new \Twig_SimpleFunction('get_path_by_internal_name', array($this, 'getPathByInternalName')),
+            new \Twig_SimpleFunction('get_page_by_node_translation', array($this, 'getPageByNodeTranslation')),
         );
+    }
+
+    /**
+     * @param NodeTranslation $nt
+     *
+     * @return null|object
+     */
+    public function getPageByNodeTranslation(NodeTranslation $nt)
+    {
+        return $nt->getRef($this->em);
     }
 
     /**
