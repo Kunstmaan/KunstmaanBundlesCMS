@@ -46,7 +46,10 @@
                             {{ media.name }}
                         </figcaption>
                     {% else %}
-                        <i class="fa fa-file-o"></i>
+                        <i class="fa fa-file-o media-thumbnail__icon"></i>
+                        <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
+                            {{ media.name }}
+                        </figcaption>
                     {% endif %}
                 {% else %}
                     <img src="/" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
