@@ -4,7 +4,7 @@ namespace Kunstmaan\SitemapBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
+use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemapInterface;
 
 /**
  * ContentPage
@@ -12,7 +12,7 @@ use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_sitemap_pages")
  */
-class SitemapPage extends AbstractPage implements HiddenFromSitemap
+class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface
 {
     /**
      * @return array
