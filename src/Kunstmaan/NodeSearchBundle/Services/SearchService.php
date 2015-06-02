@@ -1,0 +1,203 @@
+<?php
+
+namespace Kunstmaan\NodeSearchBundle\Services;
+
+use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearcherRequestAdapter;
+use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
+use Pagerfanta\Exception\NotValidCurrentPageException;
+use Pagerfanta\Pagerfanta;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+/**
+ * Class SearchService
+ * @package Kunstmaan\NodeSearchBundle\Services
+ */
+class SearchService
+{
+    /**
+     * @var RenderContext
+     *
+     */
+    protected $renderContect;
+
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * @var Request
+     *
+     */
+    protected $request;
+
+
+    /**
+     * @var int
+     */
+    protected $defaultPerPage;
+
+    /**
+     * @param $container
+     * @param $request
+     * @param $defaultPerPage
+     */
+    public function __construct($container, $request, $defaultPerPage = 10)
+    {
+        $this->container        = $container;
+        $this->request          = $request;
+        $this->defaultPerPage   = $defaultPerPage;
+        $this->renderContect    = new RenderContext();
+    }
+
+    /**
+     * @param int $defaultPerPage
+     *
+     */
+    public function setDefaultPerPage($defaultPerPage)
+    {
+        $this->defaultPerPage = $defaultPerPage;
+    }
+
+    /**
+     * @return RenderContext
+     */
+    public function getRenderContect()
+    {
+        return $this->renderContect;
+    }
+
+    /**
+     * @param RenderContext $renderContect
+     */
+    public function setRenderContect($renderContect)
+    {
+        $this->renderContect = $renderContect;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultPerPage()
+    {
+        return $this->defaultPerPage;
+    }
+
+    /**
+     * @return Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * @param Container $container
+     */
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @return Pagerfanta
+     */
+    public function search()
+    {
+        // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
+        $entity = $this->request->attributes->get('_entity');
+
+        $pageNumber = $this->getRequestedPage($this->request);
+        $searcher   = $this->container->get($entity->getSearcher());
+        $this->applySearchParams($searcher, $this->request, $this->renderContect);
+
+        $adapter    = new SearcherRequestAdapter($searcher);
+        $pagerfanta = new Pagerfanta($adapter);
+        try {
+            $pagerfanta
+                ->setMaxPerPage($this->getDefaultPerPage())
+                ->setCurrentPage($pageNumber);
+        } catch (NotValidCurrentPageException $e) {
+            throw new NotFoundHttpException();
+        }
+
+        return $pagerfanta;
+    }
+
+    /**
+     * @param AbstractElasticaSearcher $searcher
+     * @param Request                  $request
+     * @param RenderContext            $context
+     */
+    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext $context)
+    {
+        // Retrieve the search parameters
+        $queryString = trim($request->query->get('query'));
+        $queryType   = $request->query->get('type');
+        $lang        = $request->getLocale();
+
+        $context['q_query'] = $queryString;
+        $context['q_type']  = $queryType;
+
+        $searcher
+            ->setData($this->sanitizeSearchQuery($queryString))
+            ->setContentType($queryType)
+            ->setLanguage($lang);
+
+
+        // Facets
+        $query      = $searcher->getQuery();
+        $facetTerms = new \Elastica\Facet\Terms('type');
+
+        $facetTerms->setField('type');
+
+        $query->addFacet($facetTerms);
+    }
+
+    /**
+     * Currently we just search for a complete match...
+     *
+     * @param string $query
+     *
+     * @return string
+     */
+    protected function sanitizeSearchQuery($query)
+    {
+        return '"' . $query . '"';
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return int
+     */
+    private function getRequestedPage(Request $request)
+    {
+        $pageNumber = $request->query->getInt('page', 1);
+        if (!$pageNumber || $pageNumber < 1) {
+            $pageNumber = 1;
+        }
+
+        return $pageNumber;
+    }
+}
+

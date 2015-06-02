@@ -104,3 +104,9 @@ to the admintests.
 the nodemenu variable has been removed from the renderContext, so to acces it in a twig file just add
 
     {% set nodemenu = get_node_menu(htmlLocale,nodetranslation.getNode()) %}
+    
+## Refactored search to seperate service
+
+    A lot of the functionality from the AbstractSearchPageController has been moved to the SearchService class. So if you have extended the AbstractSearchPageController 
+    to change some of the functionality, you have to change this to the new SearchService instead. The service is parmeterized so can be overridden easily.
+    
