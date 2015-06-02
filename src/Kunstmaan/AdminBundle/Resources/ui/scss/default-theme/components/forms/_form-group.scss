@@ -11,3 +11,13 @@
 .form-group--no-max-width {
     max-width: none;
 }
+
+
+/* Select 2 Fix
+   ========================================================================== */
+.form-group {
+
+    .select2-container {
+        width: 100% !important;
+    }
+}
