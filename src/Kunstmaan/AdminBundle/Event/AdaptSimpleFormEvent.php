@@ -2,12 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Event;
 
-use Kunstmaan\AdminBundle\Entity\User;
-use Kunstmaan\AdminBundle\Form\UserType;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

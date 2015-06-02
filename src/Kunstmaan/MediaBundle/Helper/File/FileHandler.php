@@ -9,7 +9,6 @@ use Kunstmaan\MediaBundle\Form\File\FileType;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -47,6 +46,8 @@ class FileHandler extends AbstractMediaHandler
 
     /**
      * Constructor
+     * @param int $priority
+     * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
      */
     public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
