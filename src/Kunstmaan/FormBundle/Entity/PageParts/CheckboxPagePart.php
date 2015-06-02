@@ -98,12 +98,15 @@ class CheckboxPagePart extends AbstractFormPagePart
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
+     * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $bfsf = new BooleanFormSubmissionField();
         $bfsf->setFieldName("field_" . $this->getUniqueId());
         $bfsf->setLabel($this->getLabel());
+        $bfsf->setSequence($sequence);
+
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $bfsf;
         $constraints = array();

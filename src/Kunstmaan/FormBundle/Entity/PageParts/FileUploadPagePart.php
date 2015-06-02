@@ -39,12 +39,15 @@ class FileUploadPagePart extends AbstractFormPagePart
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
+     * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $ffsf = new FileFormSubmissionField();
         $ffsf->setFieldName("field_" . $this->getUniqueId());
         $ffsf->setLabel($this->getLabel());
+        $ffsf->setSequence($sequence);
+
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $ffsf;
 

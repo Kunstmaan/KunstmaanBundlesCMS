@@ -1,21 +1,7 @@
-# UPGRADE FROM 3.1 to 3.2
+Upgrade Instructions
+====================
 
-## Manual upgrade needed in app/routes to refactor sitemaps
-
-### WHAT
-This feature generates one central sitemap.xml file at your document root to define a sub sitemap for each language available.
-You can now have up to 50000 urls for each language you define.
-As a bonus, you only have to register the sitemap index (/sitemap.xml) at the search engines to register all available languages.
-
-### HOW
-In order to upgrade, you need a new route in your app/config/routes.yml.
-```yml
-KunstmaanSitemapBundle_sitemapIndex:
-    resource: "@KunstmaanSitemapBundle/Controller/SitemapController.php"
-    type:     annotation
-```
-
-## Form submission field order support
+## To v3.2 with form submission field order support
 
 To upgrade from a previous version, you have to copy the Doctrine migrations file from this bundle (Resources/DoctrineMigrations/Version20150527162434.php)
 to your app/DoctrineMigrations/ folder and run it: ```app/console doctrine:migrations:migrate```

@@ -60,6 +60,11 @@ abstract class FormSubmissionField
     protected $formSubmission;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $sequence;
+
+    /**
      * Get id
      *
      * @return integer
@@ -151,6 +156,30 @@ abstract class FormSubmissionField
     public function setSubmission(FormSubmission $formSubmission)
     {
         $this->formSubmission = $formSubmission;
+
+        return $this;
+    }
+
+    /**
+     * Get sequence
+     *
+     * @return integer
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * Set sequence
+     *
+     * @param string $sequence
+     *
+     * @return FormSubmissionField
+     */
+    public function setSequence($sequence)
+    {
+        $this->sequence = $sequence;
 
         return $this;
     }

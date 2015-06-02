@@ -163,12 +163,15 @@ class SingleLineTextPagePart extends AbstractFormPagePart
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
+     * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $sfsf = new StringFormSubmissionField();
         $sfsf->setFieldName("field_" . $this->getUniqueId());
         $sfsf->setLabel($this->getLabel());
+        $sfsf->setSequence($sequence);
+
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $sfsf;
 

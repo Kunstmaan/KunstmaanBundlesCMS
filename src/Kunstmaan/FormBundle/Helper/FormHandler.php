@@ -52,9 +52,9 @@ class FormHandler implements FormHandlerInterface
         /* @var $fields ArrayObject */
         $fields = new ArrayObject();
         $pageParts = $em->getRepository('KunstmaanPagePartBundle:PagePartRef')->getPageParts($page, $page->getFormElementsContext());
-        foreach ($pageParts as $pagePart) {
+        foreach ($pageParts as $sequence => $pagePart) {
             if ($pagePart instanceof FormAdaptorInterface) {
-                $pagePart->adaptForm($formBuilder, $fields);
+                $pagePart->adaptForm($formBuilder, $fields, $sequence);
             }
         }
 
