@@ -8,7 +8,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 
@@ -47,7 +49,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
+        $questionHelper = $this->getQuestionHelper();
 
         GeneratorUtils::ensureOptionsProvided($input, array('entity'));
 
@@ -58,16 +60,16 @@ EOT
         $metadata    = $this->getEntityMetadata($entityClass);
         $bundle      = $this->getContainer()->get('kernel')->getBundle($bundle);
 
-        $dialog->writeSection($output, 'AdminList Generation');
+        $questionHelper->writeSection($output, 'AdminList Generation');
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
-        $generator->setDialog($dialog);
+        $generator->setQuestion($questionHelper);
         $generator->generate($bundle, $entityClass, $metadata[0], $output);
 
         $parts = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
-        $this->updateRouting($dialog, $input, $output, $bundle, $entityClass);
+        $this->updateRouting($questionHelper, $input, $output, $bundle, $entityClass);
     }
 
     /**
@@ -78,15 +80,15 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Kunstmaan admin list generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Kunstmaan admin list generator');
 
         // entity
         $entity = null;
         try {
             $entity = $input->getOption('entity') ? Validators::validateEntityName($input->getOption('entity')) : null;
         } catch (\Exception $error) {
-            $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
         }
 
         if (is_null($entity)) {
@@ -98,27 +100,31 @@ EOT
                 '',
             ));
 
-            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('The entity shortcut name', $entity), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'), false, $entity);
+            $question = new Question($questionHelper->getQuestion('The entity shortcut name', $entity), $entity);
+            $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
+            $entity = $questionHelper->ask($input, $output, $question);
             $input->setOption('entity', $entity);
         }
     }
 
     /**
-     * @param DialogHelper    $dialog      The dialog helper
-     * @param InputInterface  $input       The command input
-     * @param OutputInterface $output      The command output
-     * @param Bundle          $bundle      The bundle
-     * @param string          $entityClass The classname of the entity
+     * @param QuestionHelper    $questionHelper The question helper
+     * @param InputInterface    $input          The command input
+     * @param OutputInterface   $output         The command output
+     * @param Bundle            $bundle         The bundle
+     * @param string            $entityClass    The classname of the entity
      *
      * @return void
      */
-    protected function updateRouting(DialogHelper $dialog, InputInterface $input, OutputInterface $output, Bundle $bundle, $entityClass)
+    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, Bundle $bundle, $entityClass)
     {
         $auto = true;
         $multilang = false;
         if ($input->isInteractive()) {
-            $multilang = $dialog->askConfirmation($output, $dialog->getQuestion('Is it a multilanguage site', 'yes', '?'), true);
-            $auto = $dialog->askConfirmation($output, $dialog->getQuestion('Do you want to update the routing automatically', 'yes', '?'), true);
+            $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Is it a multilanguage site', 'yes', '?'), true);
+            $multilang = $questionHelper->ask($input, $output, $confirmationQuestion);
+            $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to update the routing automatically', 'yes', '?'), true);
+            $auto = $questionHelper->ask($input, $output, $confirmationQuestion);
         }
 
         $prefix = $multilang ? '/{_locale}' : '';
@@ -146,7 +152,7 @@ EOT
             $content .= $code;
 
             if (false === file_put_contents($file, $content)) {
-                $output->writeln($dialog->getHelperSet()->get('formatter')->formatBlock("Failed adding the content automatically", 'error'));
+                $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock("Failed adding the content automatically", 'error'));
             } else {
                 return;
             }

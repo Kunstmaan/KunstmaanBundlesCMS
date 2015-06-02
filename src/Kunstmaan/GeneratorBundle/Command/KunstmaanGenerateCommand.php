@@ -61,7 +61,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         if (is_null($this->assistant)) {
             $this->assistant = new CommandAssistant();
-            $this->assistant->setDialog($this->getDialogHelper());
+            $this->assistant->setQuestionHelper($this->getQuestionHelper());
             $this->assistant->setKernel($this->getApplication()->getKernel());
         }
         $this->assistant->setOutput($output);
@@ -536,6 +536,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
                 }
             } else $data = array('name' => $fieldName, 'type' => $typeStrings[$typeId], 'extra' => $extra);
+
             $fields[$fieldName] = $data;
         }
 
@@ -590,6 +591,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         return $types;
     }
 
+
     /**
      * Get all the entity fields for a specific type.
      *
@@ -598,9 +600,13 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      * @param                 $prefix
      * @param                 $name
      * @param                 $type
-     * @param string|null     $extra
+     * @param null            $extra
+     * @param null            $minHeight
+     * @param null            $maxHeight
+     * @param null            $minWidth
+     * @param null            $maxWidth
+     * @param null            $mimeTypes
      * @param bool            $allNullable
-     *
      * @return array
      */
     protected function getEntityFields(
@@ -636,14 +642,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'nullable'  => $allNullable
                 );
                 break;
-        case 'wysiwyg':
-        $fields[$type][] = array(
-            'fieldName' => lcfirst(Container::camelize($name)),
-            'type'      => 'text',
-            'formType'  => 'wysiwyg',
-            'nullable'  => $allNullable
-        );
-        break;
+            case 'wysiwyg':
+                $fields[$type][] = array(
+                'fieldName' => lcfirst(Container::camelize($name)),
+                'type'      => 'text',
+                'formType'  => 'wysiwyg',
+                'nullable'  => $allNullable
+                );
+                break;
             case 'link':
                 foreach (array('url', 'text') as $subField) {
                     $fields[$type][$subField] = array(
@@ -885,11 +891,11 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      */
     protected function canGenerateBehatTests(BundleInterface $bundle)
     {
-    $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/') . '/behat.yml';
-    $pagePartContext = $bundle->getPath() . '/Features/Context/PagePartContext.php';
-    $behatTestPage = $bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
+        $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/') . '/behat.yml';
+        $pagePartContext = $bundle->getPath() . '/Features/Context/PagePartContext.php';
+        $behatTestPage = $bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
 
-    // Make sure behat is configured and the PagePartContext and BehatTestPage exits
-    return (file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage));
+        // Make sure behat is configured and the PagePartContext and BehatTestPage exits
+        return (file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage));
     }
 }

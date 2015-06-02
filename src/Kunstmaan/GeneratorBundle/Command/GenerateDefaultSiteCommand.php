@@ -83,48 +83,49 @@ EOT
         $this->demosite = $this->assistant->getOption('demosite');
 
         // First we generate the layout if it is not yet generated
-	$command = $this->getApplication()->find('kuma:generate:layout');
-	$arguments = array(
-	    'command'      => 'kuma:generate:layout',
-	    '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-	    '--demosite'   => $this->demosite,
-	    '--subcommand' => true
-	);
-	$input = new ArrayInput($arguments);
-	$command->run($input, $this->assistant->getOutput());
+        $command = $this->getApplication()->find('kuma:generate:layout');
+        $arguments = array(
+            'command'      => 'kuma:generate:layout',
+            '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
+            '--demosite'   => $this->demosite,
+            '--subcommand' => true
+        );
+        $input = new ArrayInput($arguments);
+        $command->run($input, $this->assistant->getOutput());
 
-	$rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
-	$this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
+        $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
+        $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
 
-	// Generate the default pageparts
-	$command = $this->getApplication()->find('kuma:generate:default-pageparts');
-	$arguments = array(
-	    'command'      => 'kuma:generate:default-pageparts',
-	    '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-	    '--prefix'     => $this->prefix,
-	    '--contexts'   => 'main',
-	    '--quiet'      => true
-	);
-	$output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
-	$input = new ArrayInput($arguments);
-	$command->run($input, $output);
-	$this->assistant->writeLine('Generating default pageparts : <info>OK</info>');
 
-	if ($this->demosite) {
-	    // Generate a blog
-	    $command = $this->getApplication()->find('kuma:generate:article');
+        // Generate the default pageparts
+        $command = $this->getApplication()->find('kuma:generate:default-pageparts');
+        $arguments = array(
+            'command'      => 'kuma:generate:default-pageparts',
+            '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
+            '--prefix'     => $this->prefix,
+            '--contexts'   => 'main',
+            '--quiet'      => true
+        );
+        $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
+        $input = new ArrayInput($arguments);
+        $command->run($input, $output);
+        $this->assistant->writeLine('Generating default pageparts : <info>OK</info>');
+
+        if ($this->demosite) {
+            // Generate a blog
+            $command = $this->getApplication()->find('kuma:generate:article');
             $arguments = array(
-		'command'      => 'kuma:generate:article',
+                'command'      => 'kuma:generate:article',
                 '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-		'--prefix'     => $this->prefix,
-		'--entity'     => 'Blog',
-		'--dummydata'  => true,
-		'--quiet'      => true
+                '--prefix'     => $this->prefix,
+                '--entity'     => 'Blog',
+                '--dummydata'  => true,
+                '--quiet'      => true
             );
-	    $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
+            $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
             $input = new ArrayInput($arguments);
-	    $command->run($input, $output);
-	    $this->assistant->writeLine('Generating blog : <info>OK</info>');
+            $command->run($input, $output);
+            $this->assistant->writeLine('Generating blog : <info>OK</info>');
         }
 
         $this->assistant->writeSection('Site successfully created', 'bg=green;fg=black');

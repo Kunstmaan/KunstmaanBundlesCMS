@@ -39,7 +39,7 @@ class GeneratePageCommand extends KunstmaanGenerateCommand
     /**
      * @var array
      */
-    private $sections;
+    private $sections = array();
 
     /**
      * @var array
