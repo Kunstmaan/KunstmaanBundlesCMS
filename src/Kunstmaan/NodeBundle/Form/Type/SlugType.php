@@ -2,13 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\Form\Type;
 
-use Proxies\__CG__\Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Form\FormInterface;
-
 use Symfony\Component\Form\FormView;
-
 use Symfony\Component\Form\AbstractType;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 /**
  * Sype

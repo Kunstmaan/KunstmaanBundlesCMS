@@ -3,7 +3,6 @@
 namespace Kunstmaan\LiveReloadBundle\EventListener;
 
 use Guzzle\Http\Client;
-use Guzzle\Http\Exception\ClientErrorResponseException;
 use Guzzle\Http\Exception\CurlException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\SeoBundle\Controller;
 
-use Kunstmaan\SeoBundle\Entity\Robots;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
