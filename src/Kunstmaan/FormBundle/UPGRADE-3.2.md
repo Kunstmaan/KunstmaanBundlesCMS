@@ -1,13 +1,12 @@
 Upgrade Instructions
 ====================
 
-## To v3.1.2 with form submission field order support
+## To v3.2 with form submission field order support
 
 To upgrade from a previous version, you have to copy the Doctrine migrations file from this bundle (Resources/DoctrineMigrations/Version20150527162434.php)
 to your app/DoctrineMigrations/ folder and run it: ```app/console doctrine:migrations:migrate```
 
-This migration will:
-* create a new columns in the `kuma_form_submission_fields` table
+This migration will create a new column in the `kuma_form_submission_fields` table.
 
 In case you made any custom FormSubmissionFieldPageParts you'll need to adapt them to fit the new requirements of the FormAdaptorInterface.
 
@@ -24,7 +23,6 @@ The new sequence field will be used to order the form submission fields.
 To take advantage of the new $sequence variable, pass it on to the FormSubmissionField.
 
     # src/Kunstmaan/FormBundle/Entity/PageParts/SingleLineTextPagePart.php
-
     /**
      * Modify the form with the fields of the current page part
      *
