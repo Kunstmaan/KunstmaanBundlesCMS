@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\GeneratorBundle\Helper;
 
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -20,9 +23,9 @@ class CommandAssistant
     private $output;
 
     /**
-     * @var DialogHelper
+     * @var QuestionHelper
      */
-    private $dialog;
+    private $questionHelper;
 
     /**
      * @var Kernel
@@ -54,11 +57,11 @@ class CommandAssistant
     }
 
     /**
-     * @param $dialog DialogHelper
+     * @param $questionHelper QuestionHelper
      */
-    public function setDialog(DialogHelper $dialog)
+    public function setQuestionHelper(QuestionHelper $questionHelper)
     {
-        $this->dialog = $dialog;
+	$this->questionHelper = $questionHelper;
     }
 
     /**
@@ -79,15 +82,15 @@ class CommandAssistant
 
     public function writeSection($text, $style = 'bg=blue;fg=white')
     {
-        $this->getDialog()->writeSection($this->output, $text, $style);
+	$this->getQuestionHelper()->writeSection($this->output, $text, $style);
     }
 
     /**
-     * @return DialogHelper
+     * @return Questionhelper
      */
-    private function getDialog()
+    private function getQuestionHelper()
     {
-        return $this->dialog;
+	return $this->questionHelper;
     }
 
     public function writeLine($text, $type = OutputInterface::OUTPUT_NORMAL)
@@ -102,7 +105,7 @@ class CommandAssistant
 
     public function writeError($message, $exit = false)
     {
-        $this->output->writeln($this->getDialog()->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
+    $this->output->writeln($this->getQuestionHelper()->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
         if ($exit) {
             exit;
         }
@@ -110,23 +113,40 @@ class CommandAssistant
 
     public function askAndValidate($question, $validator, $defaultValue = null, array $autoComplete = null)
     {
-        return $this->getDialog()->askAndValidate($this->output, $this->getDialog()->getQuestion($question, $defaultValue), $validator, false, $defaultValue, $autoComplete);
+	$validationQuestion = new Question($this->getQuestionHelper()->getQuestion($question, $defaultValue), $defaultValue);
+	$validationQuestion->setAutocompleterValues($autoComplete);
+	$validationQuestion->setValidator($validator);
+	return $this->getQuestionHelper()->ask($this->input, $this->output, $validationQuestion);
     }
 
     public function askConfirmation($question, $defaultString, $separator = '?', $defaultValue = true)
     {
-        return $this->getDialog()->askConfirmation($this->output, $this->getDialog()->getQuestion($question, $defaultString, $separator), $defaultValue);
+	$confirmationQuestion = new ConfirmationQuestion($this->getQuestionHelper()->getQuestion($question, $defaultString, $separator), $defaultValue);
+	return $this->getQuestionHelper()->ask($this->input, $this->output, $confirmationQuestion);
     }
 
     public function ask($question, $default = null, array $autoComplete = null)
     {
-        return $this->getDialog()->ask($this->output, $this->getDialog()->getQuestion($question, $default), $default, $autoComplete);
+	$askQuestion = new Question($this->questionHelper->getQuestion($question, $default), $default);
+	$askQuestion->setAutocompleterValues($autoComplete);
+	return $this->getQuestionHelper()->ask($this->input, $this->output, $askQuestion);
     }
 
     public function askSelect($question, $choices, $default = null, $multiSelect = false, $errorMessage = 'Value "%s" is invalid')
     {
-        $bundleQuestion = $this->dialog->getQuestion($question, $default);
-        return $this->dialog->select($this->output, $bundleQuestion, $choices, $default, false, $errorMessage, $multiSelect);
+	$bundleQuestion = new ChoiceQuestion($this->getQuestionHelper()->getQuestion($question, $default), $choices);
+	$bundleQuestion->setErrorMessage($errorMessage);
+	$bundleQuestion->setMultiselect($multiSelect);
+	if($multiSelect) {
+	    $toReturn = array();
+	    foreach($this->getQuestionHelper()->ask($this->input, $this->output, $bundleQuestion) as $each) {
+	    array_push($toReturn, array_search($each, $bundleQuestion->getChoices()));
+	}
+	return $toReturn;
+	} else {
+	    $value = $this->getQuestionHelper()->ask($this->input, $this->output, $bundleQuestion);
+	    return array_search($value, $bundleQuestion->getChoices());
+	}
     }
 
     public function setOption($name, $value)

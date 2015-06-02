@@ -6,6 +6,7 @@ use Kunstmaan\GeneratorBundle\Generator\ArticleGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Symfony\Component\Console\Input\InputOption;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
@@ -55,8 +56,8 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Article Generation');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Article Generation');
 
         GeneratorUtils::ensureOptionsProvided($input, array('namespace', 'entity'));
 
@@ -89,10 +90,10 @@ EOT
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Kunstmaan Article generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Kunstmaan Article generator');
 
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
 
         $inputAssistant->askForNamespace(array(
             '',
@@ -118,14 +119,16 @@ EOT
             $entityValidation = function ($entity) {
                 if (empty($entity)) {
                     throw new \RuntimeException('You have to provide a entity name!');
-		        } elseif (!preg_match('/^[a-zA-Z][a-zA-Z_0-9]+$/', $entity)) {
-		            throw new \InvalidArgumentException(sprintf("%s".' contains invalid characters', $entity));
+                } elseif (!preg_match('/^[a-zA-Z][a-zA-Z_0-9]+$/', $entity)) {
+                    throw new \InvalidArgumentException(sprintf("%s".' contains invalid characters', $entity));
                 } else {
                     return $entity;
                 }
             };
 
-            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('Name', $entity), $entityValidation, false, $entity);
+            $question = new Question($questionHelper->getQuestion('Name', $entity), $entity);
+            $question->setValidator($entityValidation);
+            $entity = $questionHelper->ask($input, $output, $question);
             $input->setOption('entity', $entity);
         }
 
