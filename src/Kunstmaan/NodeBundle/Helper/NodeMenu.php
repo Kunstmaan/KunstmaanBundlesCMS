@@ -17,8 +17,6 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class NodeMenu
 {
 
-    /***** constructor arguments *****/
-
     /**
      * @var EntityManager
      */
@@ -58,9 +56,6 @@ class NodeMenu
      * @var bool
      */
     private $includeHiddenFromNav = false;
-
-
-    /***** temporary storage variables *****/
 
     /**
      * @var NodeMenuItem[]

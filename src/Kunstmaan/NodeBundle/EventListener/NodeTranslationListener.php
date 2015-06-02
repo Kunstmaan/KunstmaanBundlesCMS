@@ -80,7 +80,7 @@ class NodeTranslationListener
         /**
          * If no slug is set and no structure node, apply title as slug
          */
-        if ($nodeTranslation->getSlug() == null && $nodeTranslation->getNode()->getParent() != null) {
+        if ($nodeTranslation->getSlug() === null && $nodeTranslation->getNode()->getParent() !== null) {
             $nodeTranslation->setSlug($this->slugifier->slugify($nodeTranslation->getTitle()));
         }
     }
