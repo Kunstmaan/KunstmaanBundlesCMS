@@ -23,7 +23,7 @@ class RobotsController extends Controller
         $entity = $this->get('doctrine')->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
         $robots = $this->container->getParameter('robots_default');
 
-        if ($entity and $entity->getRobotsTxt()) {
+        if ($entity && $entity->getRobotsTxt()) {
             $robots = $entity->getRobotsTxt();
         } else {
             $file = $request->getBasePath() . "robots.txt";
