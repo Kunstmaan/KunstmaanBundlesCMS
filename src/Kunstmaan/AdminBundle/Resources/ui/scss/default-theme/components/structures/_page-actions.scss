@@ -19,7 +19,8 @@
     text-align: right;
 
     @media (min-width: $screen-xs-min) {
-        float:right;
+        float: right;
+        margin: -1rem 0 1rem;
 
         &.page-main-actions--no-tabs {
             float: none;
@@ -72,20 +73,23 @@
 /* Sub actions
    ========================================================================== */
 .page-sub-actions {
+    margin: 1rem 0;
+
     text-align: right;
 
     a:not(:first-child) {
         margin-left: 1rem;
     }
 
-    @media (min-width: $screen-sm) {
-        margin-top: -2.2rem;
+    @media (min-width: $screen-xs-min) {
+        margin: -2.2rem 0 2.2rem;
     }
 }
 
 
 .page-sub-actions--has-buttons {
-    @media (min-width: $screen-sm) {
-        margin-top: -3.8rem;
+
+    @media (min-width: $screen-xs-min) {
+        margin: -3.8rem 0 3.8rem;
     }
 }
