@@ -191,28 +191,16 @@ EOT
             $input->setArgument('locale', $locale);
         }
 
-    $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
+        $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
 
         if (!$input->getOption('group')) {
+            $question = "Please enter the group(s) the user should be a member of (multiple possible, separated by comma):";
+            $error = "Group(s) must be of type integer and can not be empty";
 
-        $output->writeln('<info>available groups:</info>');
+            // Group has to be imploded because $input->setOption expects a string
+            $group = $this->getHelper('dialog')->select($output, $question, $groups, null, false, $error, true);
+            $group = implode(",", $group);
 
-        for($i = 0 ; $i < count($groups); $i++){
-        $output->writeln('[<info>' . $i . '</info>] ' . $groups[$i]);
-        }
-
-            $group = $this->getHelper('dialog')->askAndValidate(
-                $output,
-        'Please enter the group(s) the user should be a member of (multiple possible, separated by comma):',
-
-                function($group) {
-                    if (empty($group)) {
-                        throw new \InvalidArgumentException('Groups can not be empty');
-                    }
-
-                    return $group;
-                }
-            );
             $input->setOption('group', $group);
         }
     }
