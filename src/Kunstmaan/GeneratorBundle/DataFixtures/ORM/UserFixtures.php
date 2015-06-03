@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\AdminBundle\DataFixtures\ORM;
+namespace Kunstmaan\GeneratorBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Fixture for creating the admin and guest user
@@ -36,17 +37,31 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function load(ObjectManager $manager)
     {
+        $tokenGenerator = $this->container->get('fos_user.util.token_generator');
+        $password = substr($tokenGenerator->generateToken(), 0, 8);
+
         $user1 = $this->createUser(
             $manager,
             'admin',
-            'admin',
+            $password,
             'admin@domain.com',
             $this->container->getParameter('kunstmaan_admin.default_admin_locale'),
             array('ROLE_SUPER_ADMIN'),
             array($manager->merge($this->getReference('superadmins-group'))),
-            true
+            true,
+            false
         );
         $manager->flush();
+
+        $output = new ConsoleOutput();
+        $output->writeln(array(
+            "<comment>  > User 'admin' created with password '$password'</comment>",
+        ));
+
+        $file = $this->container->get('kernel')->getRootDir().'/config/config.yml';
+        $contents = file_get_contents($file);
+        $contents = str_replace('-adminpwd-', $password, $contents);
+        file_put_contents($file, $contents);
 
         $this->setReference('adminuser', $user1);
     }
@@ -62,6 +77,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
      * @param array         $roles The roles the user has
      * @param array         $groups The groups the user belongs to
      * @param bool          $enabled Enable login for the user
+     * @param bool          $changed Disable password changed for the user
      *
      * @return User
      */
@@ -73,7 +89,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $locale,
         array $roles = array(),
         array $groups = array(),
-        $enabled = false
+        $enabled = false,
+        $changed = false
     ) {
         $user = new User();
         $user->setUsername($username);
@@ -82,6 +99,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $user->setEmail($email);
         $user->setEnabled($enabled);
         $user->setAdminLocale($locale);
+        $user->setPasswordChanged($changed);
         foreach ($groups as $group) {
             $user->addGroup($group);
         }

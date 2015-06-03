@@ -26,6 +26,11 @@ class FeatureContext extends AbstractContext
     private $lang;
 
     /**
+     * The generated password for the default admin user
+     */
+    private $adminPassword = '-adminpwd-';
+
+    /**
      * @param array $parameters
      */
     public function __construct(array $parameters)
@@ -83,6 +88,14 @@ class FeatureContext extends AbstractContext
     }
 
     /**
+     * @Given /^I log in for the first time as "([^"]*)"$/
+     */
+    public function iLogInForTheFirstTimeAs($username)
+    {
+        return $this->iTryToLogInWith($username, $this->adminPassword);
+    }
+
+    /**
      * @param string $username
      *
      * @return string
@@ -113,6 +126,24 @@ class FeatureContext extends AbstractContext
             new Step\When("I press \"_submit\"")
         );
     }
+
+    /**
+     * @param string $newPassword
+     *
+     * @When /^I change the password to "([^"]*)"$/
+     *
+     * @return array
+     */
+    public function iChangeThePasswordTo($newPassword)
+    {
+        return array(
+            new Step\Given("I fill in \"fos_user_change_password_form_current_password\" with \"". $this->adminPassword . "\""),
+            new Step\Given("I fill in \"fos_user_change_password_form_plainPassword_first\" with \"" . $newPassword . "\""),
+            new Step\Given("I fill in \"fos_user_change_password_form_plainPassword_second\" with \"" . $newPassword . "\""),
+            new Step\When("I press \"Change password\"")
+        );
+    }
+
 
     /**
      * @Given /^I log out$/

@@ -31,6 +31,11 @@ abstract class BaseUser extends AbstractUser
     protected $adminLocale;
 
     /**
+     * @ORM\Column(type="boolean", name="password_changed", nullable=true)
+     */
+    protected $passwordChanged;
+
+    /**
      * Construct a new user
      */
     public function __construct()
@@ -113,6 +118,30 @@ abstract class BaseUser extends AbstractUser
     public function setAdminLocale($adminLocale)
     {
         $this->adminLocale = $adminLocale;
+
+        return $this;
+    }
+
+    /**
+     * is passwordChanged
+     *
+     * @return boolean
+     */
+    public function isPasswordChanged()
+    {
+        return $this->passwordChanged;
+    }
+
+    /**
+     * Set passwordChanged
+     *
+     * @param boolean $passwordChanged
+     *
+     * @return User
+     */
+    public function setPasswordChanged($passwordChanged)
+    {
+        $this->passwordChanged = $passwordChanged;
 
         return $this;
     }

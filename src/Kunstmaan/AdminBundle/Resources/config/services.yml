@@ -7,6 +7,8 @@ parameters:
     kunstmaan_admin.acl.native.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper'
     kunstmaan_admin.clone.listener.class: 'Kunstmaan\AdminBundle\EventListener\CloneListener'
     kunstmaan_admin.session_security.class: 'Kunstmaan\AdminBundle\EventListener\SessionSecurityListener'
+    kunstmaan_admin.password_resetting.listener.class: 'Kunstmaan\AdminBundle\EventListener\PasswordResettingListener'
+    kunstmaan_admin.password_check.listener.class: 'Kunstmaan\AdminBundle\EventListener\PasswordCheckListener'
     kunstmaan_admin.firewall.provider_key: 'main'
 
 services:
@@ -149,3 +151,15 @@ services:
         class: Kunstmaan\AdminBundle\Form\WysiwygType
         tags:
             - { name: form.type, alias: wysiwyg }
+
+    kunstmaan_admin.password_resetting.listener:
+        class: "%kunstmaan_admin.password_resetting.listener.class%"
+        arguments: ['@fos_user.user_manager']
+        tags:
+            - { name: kernel.event_listener, event: fos_user.change_password.edit.completed, method: onPasswordResettingSuccess }
+
+    kunstmaan_admin.password_check.listener:
+        class: "%kunstmaan_admin.password_check.listener.class%"
+        arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }

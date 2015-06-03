@@ -113,8 +113,9 @@ EOT
             }
         }
 
-        // Set admin interface locale
+        // Set admin interface locale and enable password changed
         $user->setAdminLocale($locale);
+        $user->setPasswordChanged(true);
 
         // Persist
         $em->persist($user);

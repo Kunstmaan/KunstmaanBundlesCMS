@@ -39,6 +39,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         if (array_key_exists('dashboard_route', $config)) {
             $container->setParameter('kunstmaan_admin.dashboard_route', $config['dashboard_route']);
         }
+        if (array_key_exists('admin_password', $config)) {
+            $container->setParameter('kunstmaan_admin.admin_password', $config['admin_password']);
+        }
         $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
         $container->setParameter('kunstmaan_admin.default_admin_locale', $config['default_admin_locale']);
 
