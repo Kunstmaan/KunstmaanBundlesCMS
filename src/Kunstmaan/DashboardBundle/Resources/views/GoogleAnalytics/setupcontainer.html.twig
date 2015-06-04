@@ -9,7 +9,8 @@
 {% block extracss %}
     {% stylesheets
     "@KunstmaanDashboardBundle/Resources/ui/scss/_dashboard.scss"
-    filter="scss"
+        output='KunstmaanDashboardBundleAssets/css/DashboardStyle.min.css'
+        filter="scss"
     %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
