@@ -1,0 +1,3 @@
+{% for popup in popups %}
+    {{ render_esi(controller(popup.controllerAction, {'popup': popup.id})) }}
+{% endfor %}

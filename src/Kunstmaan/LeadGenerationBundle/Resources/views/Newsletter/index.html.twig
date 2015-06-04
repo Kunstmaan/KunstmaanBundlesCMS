@@ -1,0 +1,29 @@
+<style>
+    .popup--hide {
+        display: none;
+    }
+    .popup--show {
+        display: block;
+    }
+</style>
+
+<div id="{{ popup.htmlId }}" class="popup--hide">
+    <div id="{{ popup.htmlId }}--content">
+        {% include 'KunstmaanLeadGenerationBundle:Newsletter:form.html.twig' %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener(BEFORE_SHOWING, function(event) {
+        if (event.detail.popup == '{{ popup.name }}') {
+            // Do slide in animation + add extra classes if needed
+            console.log('show event ' + event.detail.popup);
+        }
+    }, true);
+    document.addEventListener(BEFORE_CLOSING, function(event) {
+        if (event.detail.popup == '{{ popup.name }}') {
+            // Do slide out animation + remove extra classes if needed
+            console.log('close event ' + event.detail.popup);
+        }
+    }, true);
+</script>

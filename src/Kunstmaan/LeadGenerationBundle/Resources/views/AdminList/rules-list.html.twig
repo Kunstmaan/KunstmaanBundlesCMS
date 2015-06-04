@@ -1,0 +1,87 @@
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block admin_page_title %}
+    <div class="col-sm-6 col-md-8">
+        <h1 class="app__content__header__title">
+           Rules for {{ adminlistconfigurator.popup.name }}
+        </h1>
+    </div>
+{% endblock %}
+
+{% block extra_actions_header %}
+    {% if adminlist.canAdd() %}
+        <div class="col-sm-6 col-md-4">
+            <!-- Main-actions -->
+            <div class="page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+                <div class="btn-group">
+                    {% block actions %}
+                        <a type="button" data-target="#add-rule-modal" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
+                            Add Rule
+                        </a>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal - Add Rule -->
+        <div id="add-rule-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3>
+                            Add Rule
+                        </h3>
+                    </div>
+
+                    <form action="{{ path('kunstmaanleadgenerationbundle_admin_rule_abstractrule_add', {'popup': adminlistconfigurator.popupId }) }}" method="GET" novalidate="novalidate">
+                        <!-- Body -->
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input type="hidden" name="popup" value="{{ adminlistconfigurator.popupId }}"/>
+                                <select class="form-control"  name="type">
+                                    {% set rules = get_available_rule_types(adminlistconfigurator.popup) %}
+                                    {% for key,value in rules %}
+                                        <option value="{{ value }}">{{ key }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer">
+                            <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                                Add
+                            </button>
+                            <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb app__content__breadcrumb">
+        <li>
+            <a href="{{ path('KunstmaanAdminBundle_modules') }}">
+                Modules
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('kunstmaanleadgenerationbundle_admin_popup_abstractpopup') }}">
+                Popups
+            </a>
+        </li>
+        <li class="active">
+            Rules
+        </li>
+    </ul>
+{% endblock %}

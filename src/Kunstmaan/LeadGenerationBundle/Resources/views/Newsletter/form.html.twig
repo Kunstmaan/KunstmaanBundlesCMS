@@ -1,0 +1,17 @@
+<button class="{{ popup.htmlId }}--close">X</button>
+
+<h6>{{ popup.name }}</h6>
+
+{{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+    {{ form_errors(form) }}
+
+    {{ form_label(form.email, 'kuma_lead_generation.newsletter_popup.label.email') }}
+    {{ form_widget(form.email, {'attr': {'class': (form.email.vars.errors|length > 0 ? 'error' : ''), 'placeholder': 'kuma_lead_generation.newsletter_popup.label.email'}}) }}
+    {{ form_errors(form.email) }}
+
+    {{ form_widget(form.submit, {'label': 'kuma_lead_generation.newsletter_popup.button.subscribe', 'attr': {'class': popup.htmlId ~ '--submit'}}) }}
+
+{{ form_end(form) }}
+
+<a href="#" class="{{ popup.htmlId }}--no-thanks">{{ 'kuma_lead_generation.newsletter_popup.button.no_thanks'|trans }}</a>

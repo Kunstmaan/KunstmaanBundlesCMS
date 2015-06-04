@@ -1,0 +1,11 @@
+<button class="{{ popup.htmlId }}--close">X</button>
+
+<h6>{{ popup.name }}</h6>
+
+<p>{{ 'kuma_lead_generation.newsletter_popup.message.thanks'|trans }}</p>
+
+<script>
+    // Register the conversion (no need to wait for the READY event, because this gets loaded via an ajax call)
+    $event = new CustomEvent(window.kunstmaan.leadGeneration.events.DO_CONVERSION, { detail: {popup: '{{ popup.name }}'} });
+    document.dispatchEvent($event);
+</script>

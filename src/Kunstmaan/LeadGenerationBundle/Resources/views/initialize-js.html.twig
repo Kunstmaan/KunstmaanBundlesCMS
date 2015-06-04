@@ -1,0 +1,18 @@
+<script>
+    window.onload = function() {
+        kunstmaan.leadGeneration.DEBUG = false;
+        var manager = new kunstmaan.leadGeneration.PopupManager();
+        manager.init();
+
+        {% for popup in popups %}
+            var popup = new kunstmaan.leadGeneration.Popup('{{ popup.name }}', '{{ popup.htmlId }}');
+            {% for rule in popup.rules %}
+                var rule = new kunstmaan.leadGeneration.rules['{{ rule.jsObjectClass }}']({{ rule.id }}, {{ lead_generation_get_rule_properties(rule)|json_encode|raw }});
+                popup.addRule(rule);
+            {% endfor %}
+            manager.registerPopup(popup);
+        {% endfor %}
+
+        manager.activate();
+    };
+</script>
