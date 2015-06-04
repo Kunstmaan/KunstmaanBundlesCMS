@@ -97,3 +97,8 @@ and the -adminpwd- placeholder will be replaced by the generated password.
 Note that al Kunstmaan fixtures have been relocated from the AdminBundle to the GeneratorBundle. An extra 'AdminLoginFirstTime.feature' has been added
 to the admintests.
 
+## Nodemenu parameter no longer available in twigfiles
+
+the nodemenu variable has been removed from the renderContext, so to acces it in a twig file just add
+
+    {% set nodemenu = get_node_menu(htmlLocale,nodetranslation.getNode()) %}
