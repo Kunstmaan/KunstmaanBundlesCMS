@@ -88,7 +88,7 @@ services:
 
     kunstmaan_node.node.twig.extension:
         class: Kunstmaan\NodeBundle\Twig\NodeTwigExtension
-        arguments: ["@doctrine.orm.entity_manager", "@router"]
+        arguments: ["@doctrine.orm.entity_manager", "@router", "@security.context", "@kunstmaan_admin.acl.helper"]
         tags:
             - { name: twig.extension }
 

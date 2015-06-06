@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -18,7 +18,7 @@ class NodeMenu
 {
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -83,7 +83,7 @@ class NodeMenu
     private $nodesByInternalName = array();
 
     /**
-     * @param EntityManager            $em                   The entity manager
+     * @param EntityManagerInterface   $em                   The entity manager
      * @param SecurityContextInterface $securityContext      The security context
      * @param AclHelper                $aclHelper            The ACL helper
      * @param string                   $lang                 The language
@@ -92,22 +92,30 @@ class NodeMenu
      * @param bool                     $includeOffline       Include offline pages
      * @param bool                     $includeHiddenFromNav Include hidden pages
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $securityContext, AclHelper $aclHelper, $lang, Node $currentNode = null, $permission = PermissionMap::PERMISSION_VIEW, $includeOffline = false, $includeHiddenFromNav = false)
-    {
-        $this->em = $em;
-        $this->securityContext = $securityContext;
-        $this->aclHelper = $aclHelper;
-        $this->lang = $lang;
-        $this->includeOffline = $includeOffline;
+    public function __construct(
+        EntityManagerInterface $em,
+        SecurityContextInterface $securityContext,
+        AclHelper $aclHelper,
+        $lang,
+        Node $currentNode = null,
+        $permission = PermissionMap::PERMISSION_VIEW,
+        $includeOffline = false,
+        $includeHiddenFromNav = false
+    ) {
+        $this->em                   = $em;
+        $this->securityContext      = $securityContext;
+        $this->aclHelper            = $aclHelper;
+        $this->lang                 = $lang;
+        $this->includeOffline       = $includeOffline;
         $this->includeHiddenFromNav = $includeHiddenFromNav;
-        $this->permission = $permission;
-        $this->currentNode = $currentNode;
+        $this->permission           = $permission;
+        $this->currentNode          = $currentNode;
 
         /* @var NodeRepository $repo */
         $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
         // Get all possible menu items in one query (also fetch offline nodes)
-        $nodes = $repo->getChildNodes(false, $this->lang, $permission, $this->aclHelper, true);
+        $nodes = $repo->getChildNodes(false, $this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
         foreach ($nodes as $node) {
             $this->allNodes[$node->getId()] = $node;
 
@@ -369,7 +377,7 @@ class NodeMenu
     }
 
     /**
-     * @return EntityManager
+     * @return EntityManagerInterface
      */
     public function getEntityManager()
     {

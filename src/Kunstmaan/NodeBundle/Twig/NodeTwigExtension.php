@@ -2,12 +2,15 @@
 
 namespace Kunstmaan\NodeBundle\Twig;
 
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
-
 use Doctrine\ORM\EntityManager;
-
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 /**
@@ -27,13 +30,26 @@ class NodeTwigExtension extends Twig_Extension
     private $generator;
 
     /**
-     * @param EntityManager         $em
-     * @param UrlGeneratorInterface $generator
+     * @var SecurityContextInterface
      */
-    public function __construct(EntityManager $em, UrlGeneratorInterface $generator)
-    {
-        $this->em        = $em;
-        $this->generator = $generator;
+    private $securityContext;
+
+    /**
+     * @param EntityManager $em
+     * @param UrlGeneratorInterface $generator
+     * @param SecurityContextInterface $securityContext
+     * @param AclHelper $aclHelper
+     */
+    public function __construct(
+        EntityManager $em,
+        UrlGeneratorInterface $generator,
+        SecurityContextInterface $securityContext,
+        AclHelper $aclHelper
+    ) {
+        $this->em              = $em;
+        $this->generator       = $generator;
+        $this->securityContext = $securityContext;
+        $this->aclHelper       = $aclHelper;
     }
 
     /**
@@ -50,6 +66,7 @@ class NodeTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction('get_url_by_internal_name', array($this, 'getUrlByInternalName')),
             new \Twig_SimpleFunction('get_path_by_internal_name', array($this, 'getPathByInternalName')),
             new \Twig_SimpleFunction('get_page_by_node_translation', array($this, 'getPageByNodeTranslation')),
+            new \Twig_SimpleFunction('get_node_menu', array($this, 'getNodeMenu')),
         );
     }
 
@@ -137,6 +154,34 @@ class NodeTwigExtension extends Twig_Extension
         );
     }
 
+    /**
+     * @param string $locale
+     * @param Node   $node
+     * @param bool   $includeHiddenFromNav
+     *
+     * @return NodeMenu
+     */
+    public function getNodeMenu($locale, Node $node = null, $includeHiddenFromNav = false)
+    {
+        $nodeMenu = new NodeMenu(
+            $this->em,
+            $this->securityContext,
+            $this->aclHelper,
+            $locale,
+            $node,
+            PermissionMap::PERMISSION_VIEW,
+            false,
+            $includeHiddenFromNav
+        );
+        return $nodeMenu;
+    }
+
+    /**
+     * @param $internalName
+     * @param $locale
+     * @param array $parameters
+     * @return array
+     */
     private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
     {
         $url         = '';

@@ -412,4 +412,24 @@ class NodeTranslationRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getParentNodeTranslation(NodeTranslation $nodeTranslation)
+    {
+        $parent = $nodeTranslation->getNode()->getParent();
+        if (is_null($parent)) {
+            return null;
+        }
+
+        $qb = $this->createQueryBuilder('nt')
+            ->select('nt,n')
+            ->innerJoin('nt.publicNodeVersion', 'nv')
+            ->innerJoin('nt.node', 'n')
+            ->where('nt.node = :parent')
+            ->andWhere('n.deleted = 0')
+            ->andWhere('nt.lang = :lang')
+            ->setParameter('parent', $parent)
+            ->setParameter('lang', $nodeTranslation->getLang());
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }
