@@ -1,0 +1,65 @@
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block extra_actions_header %}
+        {% if adminlist.canAdd() %}
+            <div class="col-sm-6 col-md-4">
+                <!-- Main-actions -->
+                <div class="page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+                    <div class="btn-group">
+                        {% block actions %}
+                            <button type="button" data-target="#add-popup-modal" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
+                                Add Popup
+                            </button>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal - Add Popup -->
+            <div id="add-popup-modal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Header -->
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <h3>
+                                Add Popup
+                            </h3>
+                        </div>
+
+                        <form action="{{ path('kunstmaanleadgenerationbundle_admin_popup_abstractpopup_add') }}" method="get" novalidate="novalidate">
+                            <!-- Body -->
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="popup_type">
+                                        Type
+                                    </label>
+
+                                    <select class="form-control"  name="type">
+                                        {% set popupTypes = get_available_popup_types() %}
+                                        {% for key,value in popupTypes %}
+                                            <option value="{{ value }}">{{ key }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                                    Add
+                                </button>
+                                <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+{% endblock %}
+

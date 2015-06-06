@@ -1,0 +1,13 @@
+kunstmaanleadgenerationbundle_popups_admin_list:
+    resource: @KunstmaanLeadGenerationBundle/Controller/PopupsAdminListController.php
+    type:     annotation
+    prefix:   /admin/popups/
+    requirements:
+         _locale: %requiredlocales%
+
+kunstmaanleadgenerationbundle_rules_admin_list:
+    resource: @KunstmaanLeadGenerationBundle/Controller/RulesAdminListController.php
+    type:     annotation
+    prefix:   /admin/popups/
+    requirements:
+         _locale: %requiredlocales%
