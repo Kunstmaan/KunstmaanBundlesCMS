@@ -10,6 +10,7 @@ action:
     delete: "Delete"
     addsubpage: "Add subpage"
     duplicate: "Duplicate"
+    save_and_publish: "Save and publish"
 
 pages:
     copynotavailable: "Please translate the parent page first"
