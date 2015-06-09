@@ -3,6 +3,7 @@ parameters:
     kunstmaan_node_search.indexname: "nodeindex"
     kunstmaan_node_search.indextype: "page"
     kunstmaan_node_search.search.node.class: Kunstmaan\NodeSearchBundle\Search\NodeSearcher
+    kunstmaan_node_search.search_service.class: Kunstmaan\NodeSearchBundle\Services\SearchService
 
 services:
     kunstmaan_node_search.search.abstract_elastica_searcher:
@@ -37,3 +38,8 @@ services:
             - [ setIndexablePagePartsService, ["@kunstmaan_node_search.service.indexable_pageparts"]]
         tags:
             - { name: kunstmaan_search.search_configuration, alias: Node }
+
+    kunstmaan_node_search.search.service:
+        class: %kunstmaan_node_search.search_service.class%
+        arguments: ["@service_container", "@request"]
+        scope: request
