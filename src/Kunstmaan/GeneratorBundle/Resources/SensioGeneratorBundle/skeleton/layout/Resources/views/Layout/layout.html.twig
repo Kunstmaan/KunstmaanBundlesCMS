@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
+    {% set nodemenu = get_node_menu(htmlLocale,nodetranslation.getNode()) %}
     {{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}
     </title>
 
