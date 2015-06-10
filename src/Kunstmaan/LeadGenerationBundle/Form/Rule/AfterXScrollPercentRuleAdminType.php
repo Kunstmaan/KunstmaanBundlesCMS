@@ -20,11 +20,6 @@ class AfterXScrollPercentRuleAdminType extends AbstractRuleAdminType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('percentage', 'integer');
-        /*
-        $builder->add('percentage', 'range', array(
-            'attr' => array('min' => 0, 'max' => 100)
-        ));
-        */
     }
 
     /**
