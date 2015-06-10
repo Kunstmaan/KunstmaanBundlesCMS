@@ -11,6 +11,7 @@ destination: ../../../../../../web/frontend/styleguide/
 # footer.html, etc)
 # You may put doc related assets here too: images, css, etc.
 documentation_assets: ./doc_assets
+custom_markdown: ./doc_assets/static/KumaMarkdownRenderer.rb
 
 # Any other asset folders that need to be copied to the destination
 # folder. Typically this will include the css that you are trying to
@@ -18,6 +19,7 @@ documentation_assets: ./doc_assets
 dependencies:
   - ../../../../../../web/frontend/css/
   - ../../../../../../web/frontend/js/
+  - ./doc_assets/views
 
 # Mark which category should be the index page
 # Alternatively, you may have an index.md in the documentation assets

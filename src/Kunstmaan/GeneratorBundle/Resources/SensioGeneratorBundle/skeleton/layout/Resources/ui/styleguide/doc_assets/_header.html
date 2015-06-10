@@ -11,8 +11,9 @@
     <title>{{ bundle.getName() }} - <%= title %></title>
 
     <!-- Styleguide styles -->
-    <link rel="stylesheet" href="./static/hologram--kunstmaan.css">
-    <link rel="stylesheet" href="./static/code-highlighting--github.css">
+    <link rel="stylesheet" href="./static/css/toggle.css">
+    <link rel="stylesheet" href="./static/css/hologram--kunstmaan.css">
+    <link rel="stylesheet" href="./static/css/code-highlighting--monokai.css">
 
     <!-- Project styles -->
     <link rel="stylesheet" href="./css/style.min.css">
@@ -22,9 +23,9 @@
     <!-- Main header -->
     <header role="header" id="headroomHeader" class="headroom">
     <div class="styleguide__header">
-        <h1 class="styleguide__header__head">
-        {{ bundle.getName() }}
-        </h1>
+        <div class="logo">
+            <img src="./static/site-logo.svg" alt="Corona Direct">
+        </div>
         <nav role="navigation" class="styleguide__header__main-nav">
         <% @categories.each do |category, file_name| %>
             <% current_category = title.downcase %>
@@ -55,4 +56,4 @@
         </nav>
     </div>
 
-    <div class="styleguide__content-container">
+    <div class="container styleguide__content-container">
