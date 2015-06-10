@@ -103,7 +103,11 @@ to the admintests.
 
 the nodemenu variable has been removed from the renderContext, so to acces it in a twig file just add
 
-    {% set nodemenu = get_node_menu(htmlLocale,nodetranslation.getNode()) %}
+    {% set node = null %}
+    {% if nodetranslation is defined %}
+       {% set node = nodetranslation.node %}
+    {% endif %}
+    {% set nodemenu = get_node_menu(app.request.locale, node) %}
     
 ## Refactored search to seperate service
 
