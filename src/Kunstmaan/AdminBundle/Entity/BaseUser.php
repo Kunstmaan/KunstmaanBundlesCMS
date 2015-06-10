@@ -165,6 +165,19 @@ abstract class BaseUser extends AbstractUser
         )));
     }
 
-    abstract protected function getFormTypeClass();
-    abstract protected function getAdminListConfiguratorClass();
+    /**
+     * Return class name of form type used to add & edit users
+     *
+     * @return string
+     */
+    abstract public function getFormTypeClass();
+
+    /**
+     * Return class name of admin list configurator used for users
+     *
+     * @return string
+     *
+     * @deprecated Use the kunstmaan_user_management.user_admin_list_configurator.class parameter instead!
+     */
+    abstract public function getAdminListConfiguratorClass();
 }
