@@ -9,15 +9,15 @@
 We will get started by downloading the Kunstmaan Bundles Standard Edition to get the CMS and all it's dependencies.
 
 ```sh
-composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname
+composer create-project kunstmaan/bundles-standard-edition myprojectname
 ```
 
-![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/composer-create.png)
+![composer create](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/composer-create.png)
 
 
 It will then ask you some questions to configure Symfony and the CMS system. At this point just fill in the database_name like so:
 
-![composer create-project -s dev kunstmaan/bundles-standard-edition myprojectname](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/composer-parameters.png)
+![composer parameters](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/composer-parameters.png)
 
 > Since our project is named myproject, the websitetitle, session_prefix, searchindexname and searchindexprefix are all ok. In a real project they probably aren't.
 
