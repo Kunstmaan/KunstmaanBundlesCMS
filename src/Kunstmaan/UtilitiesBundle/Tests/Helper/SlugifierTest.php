@@ -54,6 +54,7 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
             array('à partir d\'aujourd\'hui', null, 'a-partir-d-aujourd-hui'),
             array('CaPs ShOulD be LoweRCasEd', null, 'caps-should-be-lowercased'),
             array('áàäåéèëíìïóòöúùüñßæ', null, 'aaaaeeeiiiooouuunssae'),
+            array('polish-ążśźęćńół', null, 'polish-azszecnol'),
         );
     }
 

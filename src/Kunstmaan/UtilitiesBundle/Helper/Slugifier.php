@@ -25,7 +25,7 @@ class Slugifier implements SlugifierInterface
         if (class_exists('Transliterator')) {
             $text = mb_convert_encoding((string)$text, 'UTF-8', mb_list_encodings());
 
-            $transliterator = \Transliterator::create('Accents-Any');
+            $transliterator = \Transliterator::create('Any-Latin; Latin-ASCII');
             $text = $transliterator->transliterate($text);
         }
 
