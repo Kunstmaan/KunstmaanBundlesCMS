@@ -198,7 +198,7 @@ class PermissionAdmin
      */
     public function bindRequest(Request $request)
     {
-        $changes = $request->request->get('permissionChanges');
+        $changes = $request->request->get('permission-hidden-fields');
 
         if (empty($changes)) {
             return true;
