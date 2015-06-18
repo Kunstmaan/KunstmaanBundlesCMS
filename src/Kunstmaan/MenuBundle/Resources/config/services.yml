@@ -1,0 +1,16 @@
+parameters:
+    kunstmaan_menu.menu.adaptor.class: Kunstmaan\MenuBundle\Service\MenuAdaptor
+    kunstmaan_menu.menu.twig.extension.class: Kunstmaan\MenuBundle\Twig\MenuTwigExtension
+
+services:
+    kunstmaan_menu.menu.adaptor:
+        class: %kunstmaan_menu.menu.adaptor.class%
+        arguments: ["%kunstmaan_menu.menus%"]
+        tags:
+            - { name: kunstmaan_admin.menu.adaptor }
+
+    kunstmaan_menu.menu.twig.extension:
+        class: %kunstmaan_menu.menu.twig.extension.class%
+        arguments: ["@doctrine.orm.entity_manager", "@router"]
+        tags:
+            - { name: twig.extension }
