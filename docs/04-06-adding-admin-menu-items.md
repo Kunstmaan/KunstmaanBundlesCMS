@@ -6,7 +6,7 @@ So, you installed the basic Kunstmaan CMS but you want to add your own functions
 
 ## Preparing the menu adapter
 First thing to do is to look if there's a menu adaptor present.
-Have a look at `Resources/config/services.yml`, there should be a entry that looks like this one:
+Have a look at `Resources/config/services.yml`, there should be an entry that looks like this one:
 
 ```yml 	
 websitebundle.admin_menu_adaptor:
@@ -18,9 +18,9 @@ websitebundle.admin_menu_adaptor:
 This will make sure the provided menu adaptor class will be loaded into your application and passes the security context as optional argument with it. (See adding security rules)
 At Kunstmaan we have the convention to place our menu adaptors at `ACME\WebsiteBundle\Helper\Menu\AdminMenuAdaptor.php`.
 
-> If you generated your bundle using the `--default-site` option, there will already be a AdminMenuAdaptor.
+> If you generated your bundle using the `--default-site` option, there will already be an AdminMenuAdaptor.
 
-## Add a item to the admin modules menu
+## Add an item to the admin modules menu
 The most common place to add a menu item is the modules menu.
 Lucky for us, it is quite easy to do so.
 
@@ -57,21 +57,21 @@ class AdminMenuAdaptor implements MenuAdaptorInterface
             ...
 
 ```
-Note the `$menuItem = new TopMenuItem` class instansiation. This will generate a item in the **top menu**.
+Note the `$menuItem = new TopMenuItem` class instantiation. This will generate an item in the **top menu**.
 
-You can add as many items to the list as you want. Just make sure the setRoute method points to a existing admin route of your application. Like a indexAction of a adminlist controller.
+You can add as many items to the list as you want. Just make sure the setRoute method points to an existing admin route of your application. Like an indexAction of an adminlist controller.
 
 > When you add a custom adminlist to the system, you have to manually add a link in the cms admin modules menu using this technique.
 
-## Add a item to the admin main menu
+## Add an item to the admin main menu
 
-Adding a item to the top menu works the same way as adding a item to the modules menu. The only difference is using `if (is_null($parent)) {}`
+Adding an item to the top menu works the same way as adding an item to the modules menu. The only difference is using `if (is_null($parent)) {}`
 
-## Add a item to the side menu
+## Add an item to the side menu
 If you want to add a menu item to the side menu, you can do so by adding the following codesnippet to your adminMenuAdaptor
 
 ```PHP
-        if (!is_null($parent) and ('ACMEWebsiteBundle_settings' == $parent->getRoute())) {
+        if (!is_null($parent) && ('ACMEWebsiteBundle_settings' == $parent->getRoute())) {
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('ACMEWebsiteBundle_settings_project_list')
@@ -86,4 +86,4 @@ If you want to add a menu item to the side menu, you can do so by adding the fol
         }
 ```
 
-Note the `$menuItem = new MenuItem` class instansiation. This will generate a item in the **side menu**.
+Note the `$menuItem = new MenuItem` class instansiation. This will generate an item in the **side menu**.
