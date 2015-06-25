@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->fixXmlConfig('admin_locale')
+            ->fixXmlConfig('menu_item')
             ->children()
                 ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
@@ -40,6 +41,18 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
                 ->booleanNode('enable_console_exception_listener')->defaultTrue()->end()
+                ->arrayNode('menu_items')
+                    ->defaultValue([])
+                    ->useAttributeAsKey('route', false)
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('route')->isRequired()->end()
+                            ->scalarNode('label')->isRequired()->end()
+                            ->arrayNode('params')->defaultValue([])->prototype('scalar')->end()->end()
+                            ->scalarNode('parent')->defaultValue('KunstmaanAdminBundle_modules')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

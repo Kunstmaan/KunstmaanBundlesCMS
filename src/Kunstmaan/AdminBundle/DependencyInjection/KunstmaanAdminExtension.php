@@ -6,6 +6,7 @@ use InvalidArgumentException;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -54,6 +55,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {
             $loader->load('console_listener.yml');
         }
+
+        if (0 !== sizeof($config['menu_items'])) {
+            $this->addSimpleMenuAdaptor($container, $config['menu_items']);
+        }
     }
 
     public function prepend(ContainerBuilder $container)
@@ -74,7 +79,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $fosUserConfig['resetting']['email']['template']    = 'FOSUserBundle:Resetting:email.txt.twig';
         $fosUserConfig['resetting']['form']['type']                 = 'fos_user_resetting';
         $fosUserConfig['resetting']['form']['name']                 = 'fos_user_resetting_form';
-        $fosUserConfig['resetting']['form']['validation_groups']    = array('ResetPassword');
+        $fosUserConfig['resetting']['form']['validation_groups']    = ['ResetPassword'];
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
         $monologConfig['handlers']['main']['type']  = 'rotating_file';
@@ -100,5 +105,13 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
     public function getXsdValidationBasePath()
     {
         return __DIR__.'/../Resources/config/schema';
+    }
+
+    private function addSimpleMenuAdaptor(ContainerBuilder $container, array $menuItems)
+    {
+        $definition = new Definition('Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor', [$menuItems]);
+        $definition->addTag('kunstmaan_admin.menu.adaptor');
+
+        $container->setDefinition('kunstmaan_admin.menu.adaptor.simple', $definition);
     }
 }
