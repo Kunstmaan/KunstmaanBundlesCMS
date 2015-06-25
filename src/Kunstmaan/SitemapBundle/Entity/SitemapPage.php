@@ -4,7 +4,9 @@ namespace Kunstmaan\SitemapBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemapInterface;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
 
 /**
  * ContentPage
@@ -12,7 +14,7 @@ use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemapInterface;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_sitemap_pages")
  */
-class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface
+class SitemapPage extends AbstractPage implements HiddenFromSitemap, HasPagePartsInterface
 {
     /**
      * @return array
@@ -48,5 +50,13 @@ class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface
     public function isChildrenHiddenFromSitemap()
     {
         return true;
+    }
+
+    /**
+     * @return AbstractPagePartAdminConfigurator[]
+     */
+    public function getPagePartAdminConfigurations()
+    {
+        return array();
     }
 }
