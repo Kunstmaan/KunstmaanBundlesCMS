@@ -1,11 +1,9 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.pagepartEditor = (function(window, undefined) {
+kunstmaanbundles.pagepartEditor = (function(window) {
 
     var init,
         addPagePart, editPagePart, deletePagePart;
-
-    var $body = $('body');
 
     init = function() {
         var $body = $('body');
@@ -105,7 +103,10 @@ kunstmaanbundles.pagepartEditor = (function(window, undefined) {
         // Add edit active class
         $('#pp-' + targetId).addClass('pp--edit-active');
 
-        // Set Active Edit
+	    // Reinit custom selects
+	    kunstmaanbundles.advancedSelect.init();
+
+	    // Set Active Edit
         window.activeEdit = targetId;
     };
 
