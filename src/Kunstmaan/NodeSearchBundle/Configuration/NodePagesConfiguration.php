@@ -32,37 +32,37 @@ use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
 class NodePagesConfiguration implements SearchConfigurationInterface
 {
     /** @var string */
-    private $indexName;
+    protected $indexName;
 
     /** @var string */
-    private $indexType;
+    protected $indexType;
 
     /** @var SearchProviderInterface */
-    private $searchProvider;
+    protected $searchProvider;
 
     /** @var array */
-    private $locales = array();
+    protected $locales = array();
 
     /** @var array */
-    private $analyzerLanguages;
+    protected $analyzerLanguages;
 
     /** @var EntityManager */
-    private $em;
+    protected $em;
 
     /** @var array */
-    private $documents = array();
+    protected $documents = array();
 
     /** @var ContainerInterface */
-    private $container;
+    protected $container;
 
     /** @var AclProviderInterface */
-    private $aclProvider = null;
+    protected $aclProvider = null;
 
     /** @var LoggerInterface */
-    private $logger = null;
+    protected $logger = null;
 
     /** @var IndexablePagePartsService */
-    private $indexablePagePartsService;
+    protected $indexablePagePartsService;
 
     /**
      * @param ContainerInterface      $container
@@ -678,7 +678,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      *
      * @return \DateTime
      */
-    private function getUTCDateTime(\DateTime $dateTime)
+    protected function getUTCDateTime(\DateTime $dateTime)
     {
         $result = clone $dateTime;
         $result->setTimezone(new \DateTimeZone('UTC'));
