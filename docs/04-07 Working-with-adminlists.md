@@ -4,7 +4,7 @@ The default adminlist allows you to add a new item to the list. It also allows y
 
 ## Adding or removing default actions
 
-There are some simple methods build into the Kunstmaan CMS give you control over the default action buttons. Your can disable them for your adminlist by overriding them in the adminlistConfigurator to false or true.
+There are some simple methods build into the Kunstmaan CMS give you control over the default action buttons. You can disable them for your adminlist by overriding them in the adminlistConfigurator to false or true.
 
 ```
 canAdd() 
@@ -38,7 +38,9 @@ There are actually three different approaches. The choice depends on the nature 
 * Bulk actions: applies an action to multiple rows at once
 
 ### Adding an adminlist list action
-Global list actions can be easily configured like this:Open the needed file in your projects `Adminlist` folder and add the following method in the AdminlistConfigurator file:
+Global list actions can be easily configured like this:
+
+Open the needed file in your projects `Adminlist` folder and add the following method in the AdminlistConfigurator file:
 
 ```PHP
     public function buildListActions()
@@ -53,7 +55,9 @@ Global list actions can be easily configured like this:Open the needed file in
 
 `$listRoute` contains the name of the route you want to call. It has an array of parameters that will be posted to that route if you call the action. The second parameter is a string containing the name of the button. The third parameter contains the icon. 
 
-> The CMS uses [Font Awesome](http://fortawesome.github.io/Font-Awesome/icons/) as icon provider. Just pick a name from their list to use the icon on your action buttons. ### Adding an adminlist item action
+> The CMS uses [Font Awesome](https://fortawesome.github.io/Font-Awesome/icons/) as icon provider. Just pick a name from their list to use the icon on your action buttons. 
+
+### Adding an adminlist item action
 Sometimes you need to apply a specific action to a row of an adminlist. This is where item actions come to the rescue.
 
 Item actions can be configured by adding a method to the AdminlistConfigurator file:
