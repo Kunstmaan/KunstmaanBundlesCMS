@@ -15,6 +15,7 @@ class Media extends Constraint
     const EMPTY_ERROR = 3;
     const INVALID_MIME_TYPE_ERROR = 5;
     const TOO_WIDE_ERROR = 11;
+    const TOO_NARROW_ERROR = 12;
     const TOO_HIGH_ERROR = 13;
     const TOO_LOW_ERROR = 14;
 
@@ -26,6 +27,7 @@ class Media extends Constraint
     	self::TOO_HIGH_ERROR => 'TOO_HIGH_ERROR',
     	self::TOO_LOW_ERROR => 'TOO_LOW_ERROR',
     	self::TOO_WIDE_ERROR => 'TOO_WIDE_ERROR',
+    	self::TOO_NARROW_ERROR => 'TOO_NARROW_ERROR',
     );
 
     public $minHeight;
