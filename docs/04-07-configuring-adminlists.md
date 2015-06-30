@@ -1,4 +1,4 @@
-# Working with adminlists
+# Configuring adminlists
 
 The default adminlist allows you to add a new item to the list. It also allows you to modify or delete each item. If you want to customize your adminlist, you have to modify the adminlistConfigurator file of that adminlist. 
 
@@ -6,7 +6,7 @@ The default adminlist allows you to add a new item to the list. It also allows y
 
 There are some simple methods build into the Kunstmaan CMS give you control over the default action buttons. You can disable them for your adminlist by overriding them in the adminlistConfigurator to false or true.
 
-```
+```PHP
 canAdd() 
 { 
 	return true; 
@@ -88,11 +88,10 @@ Bulk actions are actions that can be applied to multiple adminlist items at once
 
 To add a bulk action, add the following lines to your adminlistConfigurator `__construct` method
 
-```
+```PHP
 public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
-		...
-
+        ...
         $bulkPath = array('path' => 'acmewebsitebundle_route_name', 'params' => array());
         $this->addBulkAction(new SimpleBulkAction($bulkPath, "Action_name", "Action_icon"));
     }
@@ -103,7 +102,7 @@ It's possible to export your adminlists. At this moment, you can export to a csv
 
 Its also possible to define custom export fields by adding the following to your adminlistConfigurator:
 
-```
+```PHP
     public function buildExportFields()
     {
        /**
