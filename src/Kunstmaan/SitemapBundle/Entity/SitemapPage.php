@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
-use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
+use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemapInterface;
 
 /**
  * ContentPage
@@ -14,7 +14,7 @@ use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemap;
  * @ORM\Entity()
  * @ORM\Table(name="kuma_sitemap_pages")
  */
-class SitemapPage extends AbstractPage implements HiddenFromSitemap, HasPagePartsInterface
+class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface, HasPagePartsInterface
 {
     /**
      * @return array
