@@ -6,6 +6,23 @@
    ========================================================================== */
 .page-main-tabs{
 
+    .error-label {
+        display: inline-block;
+        width: 1.75rem;
+        height: 1.75rem;
+        margin-left: .25rem;
+
+        background: $red;
+        color: $white;
+
+        font-size: 1.11rem;
+        line-height: 1.65;
+        text-align: center;
+        font-weight: bold;
+
+        border-radius: $default-border-radius;
+    }
+
     @media (min-width: $screen-xs-min) {
         margin: 2rem 0 0;
     }

@@ -12,12 +12,8 @@
         <a href="#{{ tabIdentifier }}" data-toggle="tab">
             {{ tab.title }}
             {% if formErrors|length > 0 %}
-                <span class="label label-important">
-                    {% if formErrors|length >1 %}
-                        {{formErrors|length}} {{ "Errors" | trans }}
-                    {% else %}
-                        {{ "1 Error" | trans }}
-                    {% endif %}
+                <span class="error-label">
+                    {{formErrors|length}}
                 </span>
             {% endif %}
         </a>
