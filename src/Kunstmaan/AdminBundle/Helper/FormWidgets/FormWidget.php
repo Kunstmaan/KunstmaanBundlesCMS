@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
-
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormWidget implements FormWidgetInterface
 {
-
     /**
      * @var string
      */
@@ -37,6 +35,11 @@ class FormWidget implements FormWidgetInterface
     private $formHelper = null;
 
     /**
+     * @var string
+     */
+    protected $template;
+
+    /**
      * @param array $types The types
      * @param array $data  The data attached to the types
      */
@@ -44,6 +47,8 @@ class FormWidget implements FormWidgetInterface
     {
         $this->types = $types;
         $this->data = $data;
+
+        $this->template = 'KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig';
     }
 
     /**
@@ -109,11 +114,19 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
      * @return string
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig';
+        return $this->template;
     }
 
     /**
