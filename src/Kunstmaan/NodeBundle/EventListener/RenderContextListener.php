@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -12,12 +13,15 @@ class RenderContextListener
      */
     protected $templating;
 
+    protected $em;
+
     /**
      * @param EngineInterface $templating
      */
-    public function __construct(EngineInterface $templating)
+    public function __construct(EngineInterface $templating, EntityManager $em)
     {
         $this->templating = $templating;
+        $this->em = $em;
     }
 
     /**
@@ -33,6 +37,16 @@ class RenderContextListener
             $url             = $request->attributes->get('url');
             $nodeMenu        = $request->attributes->get('_nodeMenu');
             $parameters      = $request->attributes->get('_renderContext');
+
+            if ($request->get('preview') == true) {
+                $version = $request->get('version');
+                if (!empty($version) && is_numeric($version)) {
+                    $nodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
+                    if (!is_null($nodeVersion)) {
+                        $entity = $nodeVersion->getRef($this->em);
+                    }
+                }
+            }
 
             $renderContext = array(
                 'nodetranslation'   => $nodeTranslation,
