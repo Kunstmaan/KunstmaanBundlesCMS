@@ -63,6 +63,9 @@ class PagePartConfigurationReader
                 }
             } else {
                 $types[$type['name']] = array('name' => $type['name'], 'class' => $type['class']);
+                if (isset($type['pagelimit'])) {
+                    $types[$type['name']]['pagelimit'] = $type['pagelimit'];
+                }
             }
         }
 
