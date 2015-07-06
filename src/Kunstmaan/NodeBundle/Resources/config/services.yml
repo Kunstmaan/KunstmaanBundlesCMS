@@ -137,6 +137,6 @@ services:
 
     kunstmaan_node.render.context.listener:
         class: Kunstmaan\NodeBundle\EventListener\RenderContextListener
-        arguments: ["@templating"]
+        arguments: ["@templating", @doctrine.orm.entity_manager]
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
