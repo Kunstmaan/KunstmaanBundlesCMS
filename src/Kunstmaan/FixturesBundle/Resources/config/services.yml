@@ -1,0 +1,86 @@
+services:
+    kunstmaan_fixtures.builder.builder:
+        class: Kunstmaan\FixturesBundle\Builder\BuildingSupervisor
+        arguments:
+            - @kunstmaan_fixtures.parser.parser
+            - @kunstmaan_fixtures.populator.populator
+
+    kunstmaan_fixtures.builder.page:
+        class: Kunstmaan\FixturesBundle\Builder\PageBuilder
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @kunstmaan_node.acl_permission_creator_service
+            - @kunstmaan_fixtures.populator.populator
+            - @kunstmaan_utilities.slugifier
+        tags:
+            - { name: kunstmaan_fixtures.builder, alias: PageBuilder }
+
+    kunstmaan_fixtures.builder.pagepart:
+        class: Kunstmaan\FixturesBundle\Builder\PagePartBuilder
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @kunstmaan_fixtures.populator.populator
+        tags:
+            - { name: kunstmaan_fixtures.builder, alias: PagePartBuilder }
+
+    kunstmaan_fixtures.builder.media:
+        class: Kunstmaan\FixturesBundle\Builder\MediaBuilder
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @kunstmaan_media.media_handlers.file
+            - @kunstmaan_media.mimetype_guesser.factory
+        tags:
+            - { name: kunstmaan_fixtures.builder, alias: MediaBuilder }
+
+    kunstmaan_fixtures.parser.parser:
+        class: Kunstmaan\FixturesBundle\Parser\Parser
+
+    kunstmaan_fixtures.parser.property.method:
+        class: Kunstmaan\FixturesBundle\Parser\Property\Method
+        tags:
+            - { name: kunstmaan_fixtures.parser.property, alias: PropertyMethod }
+
+    kunstmaan_fixtures.parser.property.reference:
+        class: Kunstmaan\FixturesBundle\Parser\Property\Reference
+        tags:
+            - { name: kunstmaan_fixtures.parser.property, alias: PropertyReference }
+
+    kunstmaan_fixtures.parser.spec.range:
+        class: Kunstmaan\FixturesBundle\Parser\Spec\Range
+        tags:
+            - { name: kunstmaan_fixtures.parser.spec, alias: SpecRange }
+
+    kunstmaan_fixtures.parser.spec.listed:
+        class: Kunstmaan\FixturesBundle\Parser\Spec\Listed
+        tags:
+            - { name: kunstmaan_fixtures.parser.spec, alias: SpecListed }
+
+    kunstmaan_fixtures.populator.populator:
+        class: Kunstmaan\FixturesBundle\Populator\Populator
+
+    kunstmaan_fixtures.populator.method.property:
+        class: Kunstmaan\FixturesBundle\Populator\Methods\Property
+        tags:
+            - { name: kunstmaan_fixtures.populator, alias: Property }
+
+    kunstmaan_fixtures.populator.method.setter:
+        class: Kunstmaan\FixturesBundle\Populator\Methods\Setter
+        tags:
+            - { name: kunstmaan_fixtures.populator, alias: Setter }
+
+    kunstmaan_fixtures.populator.method.array:
+        class: Kunstmaan\FixturesBundle\Populator\Methods\ArrayAdd
+        tags:
+            - { name: kunstmaan_fixtures.populator, alias: Array }
+
+    kunstmaan_fixtures.provider.spec:
+        class: Kunstmaan\FixturesBundle\Provider\Spec
+        tags:
+            - { name: kunstmaan_fixtures.provider, alias: Spec }
+
+    kunstmaan_fixtures.provider.nodetranslation:
+        class: Kunstmaan\FixturesBundle\Provider\NodeTranslation
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: kunstmaan_fixtures.provider, alias: NodeTranslation }
