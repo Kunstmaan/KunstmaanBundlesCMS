@@ -8,7 +8,7 @@ You can now have up to 50000 urls for each language you define.
 As a bonus, you only have to register the sitemap index (/sitemap.xml) at the search engines to register all available languages.
 
 #### HOW
-In order to upgrade, you need a new route in your app/config/routes.yml.
+In order to upgrade, you need a new route in your app/config/routing.yml.
 ```yml
 KunstmaanSitemapBundle_sitemapIndex:
     resource: "@KunstmaanSitemapBundle/Controller/SitemapController.php"
@@ -23,7 +23,7 @@ Make sure you update the interface names and namespaces if you used them in your
 
 ## Form submission field order support
 
-To upgrade from a previous version, you have to copy the Doctrine migrations file from this bundle (Resources/DoctrineMigrations/Version20150527162434.php)
+To upgrade from a previous version, you have to copy the Doctrine migrations file from the Kunstmaan/FormBundle (Resources/DoctrineMigrations/Version20150527162434.php)
 to your app/DoctrineMigrations/ folder and run it: ```app/console doctrine:migrations:migrate```
 
 This migration will create a new column in the `kuma_form_submission_fields` table.
@@ -86,6 +86,8 @@ The default admin user with username 'admin' now has a randomly generated, 8 cha
 To accomplish this, a new field password_changed has been added to the user entity. The user will be asked to change this password until he actually changes it.
 
 #### HOW
+First update your database by adding the new field 'password_changed'. To do this run ```app/console doctrine:schema:update```.
+
 Before generating this user, a placeholder for the generated password should be added to the app/resources/config.yml file. 
 
     kunstmaan_admin:
@@ -111,6 +113,6 @@ the nodemenu variable has been removed from the renderContext, so to acces it in
     
 ## Refactored search to seperate service
 
-    A lot of the functionality from the AbstractSearchPageController has been moved to the SearchService class. So if you have extended the AbstractSearchPageController 
-    to change some of the functionality, you have to change this to the new SearchService instead. The service is parmeterized so can be overridden easily.
+A lot of the functionality from the AbstractSearchPageController has been moved to the SearchService class. So if you have extended the AbstractSearchPageController
+to change some of the functionality, you have to change this to the new SearchService instead. The service is parmeterized so can be overridden easily.
     
