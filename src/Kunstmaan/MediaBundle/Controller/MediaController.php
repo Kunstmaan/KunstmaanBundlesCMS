@@ -311,7 +311,7 @@ class MediaController extends Controller
      *
      * @return array
      */
-    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = array())
+    protected function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = array())
     {
         $em = $this->getDoctrine()->getManager();
 
