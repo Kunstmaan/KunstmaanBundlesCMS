@@ -57,8 +57,9 @@ class AdminLocaleListener implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event)
     {
         $url = $event->getRequest()->getRequestUri();
-        if ($this->isAdminToken($this->context->getToken(), $this->providerKey) && $this->isAdminRoute($url)) {
-            $token = $this->context->getToken();
+        $token = $this->context->getToken();
+
+        if ($token && $this->isAdminToken($token, $this->providerKey) && $this->isAdminRoute($url)) {
             $locale = $token->getUser()->getAdminLocale();
 
             if (!$locale) {
