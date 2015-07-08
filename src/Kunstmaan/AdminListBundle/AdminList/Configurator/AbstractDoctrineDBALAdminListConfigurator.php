@@ -97,8 +97,8 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
                 $this->getUseDistinctCount()
             );
             $this->pagerfanta = new Pagerfanta($adapter);
-            $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());
+            $this->pagerfanta->setCurrentPage($this->getPage());
         }
 
         return $this->pagerfanta;
