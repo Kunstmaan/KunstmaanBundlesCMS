@@ -23,9 +23,9 @@
         "symfony/symfony": "~2.3",
         "white-october/pagerfanta-bundle": "1.0.*",
         "ruflin/elastica": "~1.0",
-        "kunstmaan/node-bundle": "~3.0.0",
-        "kunstmaan/pagepart-bundle": "~3.0.0",
-        "kunstmaan/search-bundle": "~3.0.0",
+        "kunstmaan/node-bundle": "~3.2",
+        "kunstmaan/pagepart-bundle": "~3.2",
+        "kunstmaan/search-bundle": "~3.2",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
