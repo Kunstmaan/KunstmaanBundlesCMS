@@ -47,6 +47,28 @@ Extend the AbstractSearchPage and add your new class as a possible child to a pa
     }
 ```
 
+### Custom mapping
+
+You may configure the index mapping via Symfony config. For example:
+
+```
+# config.yml
+kunstmaan_node_search:
+    mapping:
+        average_score:
+            type: float
+            index: not_analyzed
+        tags:
+            type: string
+            index: analyzed
+```
+
+Please notice that this *does not* index any data.
+
+## Adding data to index
+
+Pages can implement `HasCustomSearchDataInterface` to dynamically add more data to the document while indexing. For more complex scenarios a service can listen on the `kunstmaan_node_search.onIndexNode` event.
+
 ## Documentation
 
 Find more documentation on how it works [here](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle/tree/master/Resources/doc/NodeSearchBundle.md)

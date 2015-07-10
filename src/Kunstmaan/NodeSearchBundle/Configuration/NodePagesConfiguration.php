@@ -3,8 +3,11 @@
 namespace Kunstmaan\NodeSearchBundle\Configuration;
 
 use Doctrine\ORM\EntityManager;
+use Elastica\Index;
+use Elastica\Type\Mapping;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
@@ -28,6 +31,7 @@ use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 class NodePagesConfiguration implements SearchConfigurationInterface
 {
@@ -64,6 +68,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /** @var IndexablePagePartsService */
     protected $indexablePagePartsService;
 
+    private $properties = [];
+
     /**
      * @param ContainerInterface      $container
      * @param SearchProviderInterface $searchProvider
@@ -95,6 +101,11 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     public function setIndexablePagePartsService(IndexablePagePartsService $indexablePagePartsService)
     {
         $this->indexablePagePartsService = $indexablePagePartsService;
+    }
+
+    public function setDefaultProperties(array $properties)
+    {
+        $this->properties = array_merge($this->properties, $properties);
     }
 
     /**
@@ -267,10 +278,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Apply the analysis factory to the index
      *
-     * @param \Elastica\Index          $index
+     * @param Index          $index
      * @param AnalysisFactoryInterface $analysis
      */
-    public function setAnalysis(\Elastica\Index $index, AnalysisFactoryInterface $analysis)
+    public function setAnalysis(Index $index, AnalysisFactoryInterface $analysis)
     {
         $index->create(
             array(
@@ -284,90 +295,19 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Return default search fields mapping for node translations
      *
-     * @param \Elastica\Index $index
+     * @param Index $index
      * @param string          $lang
      *
-     * @return \Elastica\Type\Mapping
+     * @return Mapping
      */
-    protected function getMapping(\Elastica\Index $index, $lang = 'en')
+    protected function getMapping(Index $index, $lang = 'en')
     {
-        $mapping = new \Elastica\Type\Mapping();
+        $mapping = new Mapping();
         $mapping->setType($index->getType($this->indexType . '_' . $lang));
         $mapping->setParam('analyzer', 'index_analyzer_' . $lang);
         $mapping->setParam('_boost', array('name' => '_boost', 'null_value' => 1.0));
 
-        $mapping->setProperties(
-            array(
-                'node_id'            => array(
-                    'type'           => 'integer',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'nodetranslation_id' => array(
-                    'type'           => 'integer',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'nodeversion_id'     => array(
-                    'type'           => 'integer',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'title'              => array(
-                    'type'           => 'string',
-                    'include_in_all' => true
-                ),
-                'lang'               => array(
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed'
-                ),
-                'slug'               => array(
-                    'type'           => 'string',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'type'               => array(
-                    'type'           => 'string',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'page_class'         => array(
-                    'type'           => 'string',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'contentanalyzer'    => array(
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed'
-                ),
-                'content'            => array(
-                    'type'           => 'string',
-                    'include_in_all' => true
-                ),
-                'created'            => array(
-                    'type'           => 'date',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'updated'            => array(
-                    'type'           => 'date',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'view_roles'         => array(
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed',
-                    'index_name'     => 'view_role'
-                ),
-                '_boost'             => array(
-                    'type'           => 'float',
-                    'include_in_all' => false
-                )
-            )
-        );
+        $mapping->setProperties($this->properties);
 
         return $mapping;
     }
@@ -375,10 +315,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Initialize the index with the default search fields mapping
      *
-     * @param \Elastica\Index $index
+     * @param Index $index
      * @param string          $lang
      */
-    protected function setMapping(\Elastica\Index $index, $lang = 'en')
+    protected function setMapping(Index $index, $lang = 'en')
     {
         $mapping = $this->getMapping($index, $lang);
         $mapping->send();
@@ -453,7 +393,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function addPermissions(Node $node, &$doc)
     {
-        $roles = array();
         if (!is_null($this->aclProvider)) {
             $roles = $this->getAclPermissions($node);
         } else {
@@ -586,13 +525,13 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Render a custom search view
      *
-     * @param NodeTranslation $nodeTranslation
-     * @param                 $page
-     * @param                 $renderer
+     * @param NodeTranslation             $nodeTranslation
+     * @param SearchViewTemplateInterface $page
+     * @param EngineInterface             $renderer
      *
      * @return string
      */
-    protected function renderCustomSearchView(NodeTranslation $nodeTranslation, $page, $renderer)
+    protected function renderCustomSearchView(NodeTranslation $nodeTranslation, SearchViewTemplateInterface $page, EngineInterface $renderer)
     {
         $view    = $page->getSearchView();
         $content = $this->removeHtml(
@@ -612,13 +551,13 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Render default search view (all indexable pageparts in the main context of the page)
      *
-     * @param NodeTranslation $nodeTranslation
-     * @param                 $page
-     * @param                 $renderer
+     * @param NodeTranslation       $nodeTranslation
+     * @param HasPagePartsInterface $page
+     * @param EngineInterface       $renderer
      *
      * @return string
      */
-    protected function renderDefaultSearchView(NodeTranslation $nodeTranslation, $page, $renderer)
+    protected function renderDefaultSearchView(NodeTranslation $nodeTranslation, HasPagePartsInterface $page, EngineInterface $renderer)
     {
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page);
         $view      = 'KunstmaanNodeSearchBundle:PagePart:view.html.twig';
@@ -668,7 +607,14 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
-        // You can add custom data to be added to the document index array ($doc) here if you inherit from this class...
+        $event = new IndexNodeEvent($page, $doc);
+        $this->container->get('event_dispatcher')->dispatch(IndexNodeEvent::EVENT_INDEX_NODE, $event);
+
+        $doc = $event->doc;
+
+        if ($page instanceof HasCustomSearchDataInterface) {
+            $doc += $page->getCustomSearchData($doc);
+        }
     }
 
     /**
@@ -688,6 +634,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * Removes all HTML markup & decode HTML entities
+     *
+     * @param $text
+     *
+     * @return string
      */
     protected function removeHtml($text)
     {

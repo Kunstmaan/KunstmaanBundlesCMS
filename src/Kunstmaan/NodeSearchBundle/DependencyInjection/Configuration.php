@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -21,12 +22,27 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode    = $treeBuilder->root('kunstmaan_node_search');
 
-        $rootNode
-            ->children()
-                ->booleanNode('enable_update_listener')
-                    ->defaultTrue()
-                ->end()
-            ->end();
+        $rootNode->children()->booleanNode('enable_update_listener')->defaultTrue();
+
+        /** @var ArrayNodeDefinition $properties */
+        $properties = $rootNode->children()->arrayNode('mapping')->prototype('array');
+        $properties->children()->scalarNode('type')->beforeNormalization()->ifNotInArray($types = [
+            'string', 'token_count',
+            'float', 'double', 'byte', 'short', 'integer', 'long',
+            'date',
+            'boolean',
+            'binary',
+        ])->thenInvalid('type must be one of: ' . implode(', ', $types));
+        $properties->children()->scalarNode('index')->beforeNormalization()->ifNotInArray(['analyzed', 'not_analyzed', 'no'])
+            ->thenInvalid("index must be one of: analyzed, not_analyzed, no");
+        $properties->children()->booleanNode('include_in_all')->defaultFalse();
+        $properties->children()->booleanNode('store')->defaultFalse();
+        $properties->children()->floatNode('boost');
+        $properties->children()->scalarNode('null_value');
+        $properties->children()->scalarNode('analyzer');
+        $properties->children()->scalarNode('index_analyzer');
+        $properties->children()->scalarNode('index_name');
+
 
         return $treeBuilder;
     }
