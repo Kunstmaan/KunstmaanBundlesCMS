@@ -6,13 +6,17 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use DoctrineExtensions\Taggable\Taggable;
 
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TagsListener
 {
 
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
