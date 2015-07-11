@@ -92,7 +92,7 @@ class PagesConfiguration
             return $default;
         }
 
-        $page = is_object($ref) ? $ref : new $refName;
+        $page = is_string($ref) ? new $refName : $ref;
         $result = $default($page);
         unset($page);
 

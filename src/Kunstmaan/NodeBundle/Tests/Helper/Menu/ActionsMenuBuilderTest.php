@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Integration\Symfony\RoutingExtension;
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
+use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
@@ -48,7 +49,8 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         /* @var SecurityContextInterface $context */
-        $this->builder = new ActionsMenuBuilder($factory, $em, $router, $dispatcher, $context);
+        $this->builder = new ActionsMenuBuilder($factory, $em, $router, $dispatcher, $context,
+            new PagesConfiguration([]));
     }
 
     /**
@@ -58,13 +60,14 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockedEntityManager()
     {
-        $emMock  = $this->getMock('\Doctrine\ORM\EntityManager', array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
+        $emMock = $this->getMock('\Doctrine\ORM\EntityManager',
+            array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
         $emMock->expects($this->any())
             ->method('getRepository')
             ->will($this->returnValue(new TestRepository()));
         $emMock->expects($this->any())
             ->method('getClassMetadata')
-            ->will($this->returnValue((object) array('name' => 'aClass')));
+            ->will($this->returnValue((object)array('name' => 'aClass')));
         $emMock->expects($this->any())
             ->method('persist')
             ->will($this->returnValue(null));
@@ -100,7 +103,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->builder->createSubActionsMenu();
         $this->assertNotNull($menu->getChild('subaction.versions'));
 
-	$this->assertEquals('page-sub-actions',$menu->getChildrenAttribute('class'));
+        $this->assertEquals('page-sub-actions', $menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -125,7 +128,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.save'));
         $this->assertNull($menu->getChild('action.delete'));;
 
-	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -160,7 +163,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.unpublish'));
         $this->assertNull($menu->getChild('action.delete'));
 
-	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -187,7 +190,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
 
-	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
     /**
@@ -201,14 +204,12 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $nodeVersion = new NodeVersion();
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
-        $testEntity = new \Kunstmaan\NodeBundle\Tests\Entity\TestEntity();
-
         $this->builder->setActiveNodeVersion($nodeVersion);
 
 
         $menu = $this->builder->createTopActionsMenu();
-	$this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
-	$this->assertEquals('page-main-actions-top', $menu->getChildrenAttribute('id'));
+        $this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
+        $this->assertEquals('page-main-actions-top', $menu->getChildrenAttribute('id'));
     }
 
     /**
@@ -242,7 +243,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.delete'));
 
-	$this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
 
 }
