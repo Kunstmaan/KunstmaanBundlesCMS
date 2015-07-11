@@ -21,7 +21,7 @@ class PagesConfiguration
 
     public function getName($refName)
     {
-        return $this->getValue($refName, 'name');
+        return $this->getValue($refName, 'name', substr($refName, strrpos($refName, '\\')+1));
     }
 
     public function getIcon($refName)
