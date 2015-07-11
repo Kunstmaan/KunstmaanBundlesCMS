@@ -11,10 +11,8 @@ use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
-use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
 use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -241,8 +239,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function isIndexable(HasNodeInterface $page)
     {
-        // If the page doesn't implement IndexableInterface interface or it returns true on isIndexable, index the page
-        return (!($page instanceof IndexableInterface) || $page->isIndexable());
+        return $this->container->get('kunstmaan_node.pages_configuration')->isIndexable($page);
     }
 
     /**
@@ -473,12 +470,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function addSearchType($page, &$doc)
     {
-        // Type
-        $type = ClassLookup::getClassName($page);
-        if ($page instanceof SearchTypeInterface) {
-            $type = $page->getSearchType();
-        }
-        $doc['type'] = $type;
+        $doc['type'] = $this->container->get('kunstmaan_node.pages_configuration')->getSearchType($page);
     }
 
     /**

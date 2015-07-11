@@ -3,16 +3,15 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
 
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 
+use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 use Knp\Menu\ItemInterface;
@@ -54,6 +53,11 @@ class ActionsMenuBuilder
      */
     private $context;
 
+    /**
+     * @var PagesConfiguration
+     */
+    private $pagesConfiguration;
+
     private $isEditableNode = true;
 
 
@@ -63,31 +67,35 @@ class ActionsMenuBuilder
      * @param RouterInterface          $router     The router
      * @param EventDispatcherInterface $dispatcher The event dispatcher
      * @param SecurityContextInterface $context    The security context
+     * @param PagesConfiguration       $pagesConfiguration
      */
-    public function __construct(FactoryInterface $factory, EntityManager $em, RouterInterface $router, EventDispatcherInterface $dispatcher, SecurityContextInterface $context)
+    public function __construct(
+        FactoryInterface $factory,
+        EntityManager $em,
+        RouterInterface $router,
+        EventDispatcherInterface $dispatcher,
+        SecurityContextInterface $context,
+        PagesConfiguration $pagesConfiguration)
     {
         $this->factory = $factory;
         $this->em      = $em;
         $this->router  = $router;
         $this->dispatcher = $dispatcher;
         $this->context = $context;
+        $this->pagesConfiguration = $pagesConfiguration;
     }
 
     /**
-     * @param Request $request
-     *
      * @return ItemInterface
      */
-    public function createSubActionsMenu(/** @noinspection PhpUnusedParameterInspection */Request $request = null)
+    public function createSubActionsMenu()
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
         $menu              = $this->factory->createItem('root');
-	$menu->setChildrenAttribute('class', 'page-sub-actions');
+        $menu->setChildrenAttribute('class', 'page-sub-actions');
 
-        if (!is_null($activeNodeVersion)) {
-            if ($this->isEditableNode) {
-                $menu->addChild('subaction.versions', array('linkAttributes' => array('data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#versions')));
-            }
+        if (null !== $activeNodeVersion && $this->isEditableNode) {
+            $menu->addChild('subaction.versions', array('linkAttributes' => array('data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#versions')));
         }
 
         $this->dispatcher->dispatch(Events::CONFIGURE_SUB_ACTION_MENU, new ConfigureActionMenuEvent($this->factory, $menu, $activeNodeVersion));
@@ -96,63 +104,72 @@ class ActionsMenuBuilder
     }
 
     /**
-     * @param Request $request
-     *
      * @return ItemInterface
      */
-    public function createActionsMenu(Request $request = null)
+    public function createActionsMenu()
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
         $menu              = $this->factory->createItem('root');
-	$menu->setChildrenAttribute('class', 'page-main-actions js-auto-collapse-buttons');
+        $menu->setChildrenAttribute('class', 'page-main-actions js-auto-collapse-buttons');
 
 
-        if (!is_null($activeNodeVersion)) {
-            $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
-            $node = $activeNodeTranslation->getNode();
-            $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findOneBy(array('nodeTranslation' => $activeNodeTranslation));
+        if (null === $activeNodeVersion) {
+            $this->dispatcher->dispatch(Events::CONFIGURE_ACTION_MENU, new ConfigureActionMenuEvent($this->factory, $menu, $activeNodeVersion));
 
-            $isFirst = true;
-            if (('draft' == $activeNodeVersion->getType()) && $this->isEditableNode) {
-                if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
-		    $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'js-save-btn btn btn--raise-on-hover' . ($isFirst ? ' btn-primary' : ' btn-default'), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
-                    $isFirst = false;
-                }
-		$menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl(), 'version' => $activeNodeVersion->getId())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn btn-default btn--raise-on-hover')));
-                if (empty($queuedNodeTranslationAction) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
-		    $menu->addChild('action.publish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#pub', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'))));
-                }
-            } else {
-                if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
-		    $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'class' => 'js-save-btn btn btn--raise-on-hover' . ($isFirst ? ' btn-primary' : ' btn-default'), 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
-                    $isFirst = false;
-                }
-                if ($this->isEditableNode) {
-		    $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn btn-default btn--raise-on-hover')));
-                    if (empty($queuedNodeTranslationAction) && $activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
-			$menu->addChild('action.unpublish', array('linkAttributes' => array('class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#unpub')));
-                    } elseif (empty($queuedNodeTranslationAction) && !$activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
-			$menu->addChild('action.publish', array('linkAttributes' => array('class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#pub')));
-                    }
-                    if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
-			$menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'), 'value' => 'saveasdraft', 'name' => 'saveasdraft'), 'extras' => array('renderType' => 'button')));
-                    }
-                }
+            return $menu;
+        }
+
+        $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
+        $node = $activeNodeTranslation->getNode();
+        $queuedNodeTranslationAction = $this->em->getRepository('KunstmaanNodeBundle:QueuedNodeTranslationAction')->findOneBy(array('nodeTranslation' => $activeNodeTranslation));
+
+        $isFirst = true;
+        $canEdit = $this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node);
+        $canPublish = $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node);
+
+        if ($activeNodeVersion->isDraft() && $this->isEditableNode) {
+            if ($canEdit) {
+                $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'js-save-btn btn btn--raise-on-hover btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
+                $isFirst = false;
             }
 
-            $page = $activeNodeVersion->getRef($this->em);
-            if (!is_null($page) && $page instanceof PageInterface) {
-                $possibleChildPages = $page->getPossibleChildTypes();
-                if (!empty($possibleChildPages)) {
-		    $menu->addChild('action.addsubpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
+            $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl(), 'version' => $activeNodeVersion->getId())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn btn-default btn--raise-on-hover')));
+
+            if (empty($queuedNodeTranslationAction) && $canPublish) {
+                $menu->addChild('action.publish', array('linkAttributes' => array('data-toggle' => 'modal', 'data-target' => '#pub', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'))));
+            }
+
+        } else {
+            if ($canEdit && $canPublish) {
+                $menu->addChild('action.save', array('linkAttributes' => array('type' => 'submit', 'class' => 'js-save-btn btn btn--raise-on-hover btn-primary', 'value' => 'save', 'name' => 'save'), 'extras' => array('renderType' => 'button')));
+                $isFirst = false;
+            }
+
+            if ($this->isEditableNode) {
+                $menu->addChild('action.preview', array('uri' => $this->router->generate('_slug_preview', array('url' => $activeNodeTranslation->getUrl())), 'linkAttributes' => array('target' => '_blank', 'class' => 'btn btn-default btn--raise-on-hover')));
+
+                if (empty($queuedNodeTranslationAction) && $activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
+                    $menu->addChild('action.unpublish', array('linkAttributes' => array('class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#unpub')));
+                } elseif (empty($queuedNodeTranslationAction) && !$activeNodeTranslation->isOnline() && $canPublish) {
+                    $menu->addChild('action.publish', array('linkAttributes' => array('class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#pub')));
+                }
+
+                if ($canEdit) {
+                    $menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'), 'value' => 'saveasdraft', 'name' => 'saveasdraft'), 'extras' => array('renderType' => 'button')));
                 }
             }
-            if (!is_null($node->getParent()) && ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node))) {
-                $menu->addChild('action.duplicate', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#duplicate-page-modal'), 'extras' => array('renderType' => 'button')));
-            }
-            if (!is_null($node->getParent()) && ($this->context->isGranted(PermissionMap::PERMISSION_DELETE, $node))) {
-		$menu->addChild('action.delete', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'onClick' => 'oldEdited = isEdited; isEdited=false', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#delete-page-modal'), 'extras' => array('renderType' => 'button')));
-            }
+        }
+
+        if ($this->pagesConfiguration->getPossibleChildTypes($node->getRefEntityName())) {
+            $menu->addChild('action.addsubpage', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#add-subpage-modal'), 'extras' => array('renderType' => 'button')));
+        }
+
+        if (null !== $node->getParent() && $canEdit) {
+            $menu->addChild('action.duplicate', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#duplicate-page-modal'), 'extras' => array('renderType' => 'button')));
+        }
+
+        if (null !== $node->getParent() && $this->context->isGranted(PermissionMap::PERMISSION_DELETE, $node)) {
+            $menu->addChild('action.delete', array('linkAttributes' => array('type' => 'button', 'class' => 'btn btn-default btn--raise-on-hover', 'onClick' => 'oldEdited = isEdited; isEdited=false', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#delete-page-modal'), 'extras' => array('renderType' => 'button')));
         }
 
         $this->dispatcher->dispatch(Events::CONFIGURE_ACTION_MENU, new ConfigureActionMenuEvent($this->factory, $menu, $activeNodeVersion));
@@ -161,15 +178,13 @@ class ActionsMenuBuilder
     }
 
     /**
-     * @param Request $request
-     *
      * @return ItemInterface
      */
-    public function createTopActionsMenu(Request $request = null)
+    public function createTopActionsMenu()
     {
-        $menu = $this->createActionsMenu($request);
-	$menu->setChildrenAttribute('id', 'page-main-actions-top');
-	$menu->setChildrenAttribute('class', 'page-main-actions page-main-actions--top');
+        $menu = $this->createActionsMenu();
+        $menu->setChildrenAttribute('id', 'page-main-actions-top');
+        $menu->setChildrenAttribute('class', 'page-main-actions page-main-actions--top');
 
         return $menu;
     }

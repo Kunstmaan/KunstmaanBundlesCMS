@@ -3,16 +3,34 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.sidebartree = (function($, window, undefined) {
 
     var init,
+        canBeMoved,
         buildTree, searchTree,
         $sidebar = $('#app__sidebar'),
         $sidebarNavContainer = $('#app__sidebar__navigation'),
-        $searchField = $('#app__sidebar__search');
+        $searchField = $('#app__sidebar__search'),
+        movingConfirmation = $sidebarNavContainer.data('moving-confirmation') || "You sure?";
 
     init = function() {
         if($sidebarNavContainer !== 'undefined' && $sidebarNavContainer !== null) {
             buildTree();
             searchTree();
         }
+    };
+
+    canBeMoved = function (node, parent) {
+        if (!node.data.page || !node.data.page.class || !parent.data.page || !parent.data.page.children) {
+            return false;
+        }
+
+
+        for (var i = parent.data.page.children.length, e; e = parent.data.page.children[--i]; ) {
+            if (e.class === node.data.page.class) {
+                return true;
+            }
+        }
+
+        return false;
+
     };
 
     buildTree = function() {
@@ -56,11 +74,19 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                 params.nodes.push(newId);
             });
 
+            if (data.old_parent !== data.parent) {
+                params.parent = {};
+                params.parent[data.node.id.replace(/node-/, '')] = data.parent.replace(/node-/, '');
+                if (0 === params.nodes.length) {
+                    params.nodes.push(data.node.id.replace(/node-/, ''));
+                }
+            }
+
             //; Save
             $.post(
                 reorderUrl,
                 params,
-                function(result){
+                function(){
                     console.log('move_node saved');
                 }
             );
@@ -86,8 +112,10 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                             return true;
                         }
 
-                        // Nope
-                        return false;
+                        return canBeMoved(node, node_parent) && !(more && more.core && !confirm(movingConfirmation
+                            .replace('%title%', node.text.replace(/^\s+|\s+$/g, ''))
+                            .replace('%target%', node_parent.text.replace(/^\s+|\s+$/g, ''))
+                        ));
 
                     } else {
 

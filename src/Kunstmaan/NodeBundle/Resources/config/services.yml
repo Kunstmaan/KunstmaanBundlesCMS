@@ -14,7 +14,7 @@ services:
 
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.acl.native.helper"]
+        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.acl.native.helper", "@kunstmaan_node.pages_configuration" ]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
@@ -34,7 +34,7 @@ services:
 
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder
-        arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager", "@router", "@event_dispatcher", "@security.context"]
+        arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager", "@router", "@event_dispatcher", "@security.context", "@kunstmaan_node.pages_configuration" ]
 
     kunstmaan_node.menu.sub_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
@@ -89,6 +89,13 @@ services:
     kunstmaan_node.node.twig.extension:
         class: Kunstmaan\NodeBundle\Twig\NodeTwigExtension
         arguments: ["@doctrine.orm.entity_manager", "@router", "@security.context", "@kunstmaan_admin.acl.helper"]
+        tags:
+            - { name: twig.extension }
+
+    kunstmaan_node.pages_configuration.twig_extension:
+        class: Kunstmaan\NodeBundle\Twig\PagesConfigurationTwigExtension
+        public: false
+        arguments: [ @kunstmaan_node.pages_configuration ]
         tags:
             - { name: twig.extension }
 
