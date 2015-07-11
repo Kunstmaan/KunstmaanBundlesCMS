@@ -56,9 +56,11 @@ You may configure the index mapping via Symfony config. For example:
 kunstmaan_node_search:
     mapping:
         average_score:
+            name: average_score
             type: float
             index: not_analyzed
         tags:
+            name: tags
             type: string
             index: analyzed
 ```
