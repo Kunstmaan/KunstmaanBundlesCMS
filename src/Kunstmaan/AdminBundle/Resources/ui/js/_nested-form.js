@@ -9,7 +9,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
 
     var newButtonHtml = '<button type="button" class="js-nested-form__add-btn btn btn-primary btn--raise-on-hover nested-form__add-btn">Add</button>';
-    var delButtonHtml = '<button type="button" class="js-nested-form__del-btn btn--raise-on-hover nested-form__item__header__actions__action nested-form__item__header__actions__action--del"><i class="fa fa-trash-o"></i></button>'
+    var delButtonHtml = '<button type="button" class="js-nested-form__del-btn btn--raise-on-hover nested-form__item__header__actions__action nested-form__item__header__actions__action--del"><i class="fa fa-trash-o"></i></button>';
 
 
     init = function() {
@@ -31,12 +31,11 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
             allowNew = $form.data('allow-new'),
             allowDelete = $form.data('allow-delete'),
             minItems = $form.data('min-items'),
-            maxItems = $form.data('max-items'),
-            $currentItems = $form.find('.js-nested-form__item');
+            $currentItems = $form.find('> .js-nested-form__item');
 
         // Set index
         var totalItems = $currentItems.length;
-            $form.data('index', totalItems);
+        $form.data('index', totalItems);
 
         // Add "New" button
         if(allowNew) {
@@ -77,16 +76,16 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
             allowDelete = $form.data('allow-delete'),
             minItems = $form.data('min-items'),
             maxItems = $form.data('max-items'),
-            totalItems = $form.find('.js-nested-form__item').length;
+            totalItems = $form.find('> .js-nested-form__item').length;
 
-        var $newBtn = $form.find('.js-nested-form__add-btn'),
-            $delBtn = $form.find('.js-nested-form__del-btn');
+        var $newBtn = $form.find('.js-nested-form__add-btn').last(),
+            $delBtn = $form.find('.js-nested-form__del-btn').first();
 
         // "New" button
         if(allowNew && (maxItems === false || totalItems < maxItems)) {
             $newBtn.removeClass('hidden');
         } else {
-            $delBtn.addClass('hidden');
+            $newBtn.addClass('hidden');
         }
 
         // "Delete" button
@@ -112,7 +111,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
     // Add "Delete" button
     addDelBtn = function($item, $form) {
-        var $actionBar = $item.find('.js-nested-form__item__header__actions'),
+        var $actionBar = $item.find('.js-nested-form__item__header__actions').first(),
             $delBtn = $(delButtonHtml);
 
         $actionBar.append($delBtn);
@@ -127,7 +126,8 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
     addNewItem = function($form) {
         var prototype = $form.data('prototype'),
             currentIndex = $form.data('index'),
-            sortable = $form.data('sortable');
+            sortable = $form.data('sortable'),
+            $newItem;
 
         // Update prototype with new index
         prototype = prototype.replace(/__name__/g, currentIndex);
@@ -138,23 +138,28 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
         // Make item template
         if(sortable) {
             var sortKey = $form.data('sortkey').replace(/__name__/g, currentIndex);
-            var $newItem = $('<div class="js-nested-form__item nested-form__item js-sortable-item sortable-item" data-sortkey="' + sortKey + '"><header class="js-sortable-item__handle nested-form__item__header"><i class="fa fa-arrows nested-form__item__header__move-icon"></i><div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div></header><div class="js-nested-form__item__view nested-form__item__view"></div></div>');
+            $newItem = $('<div class="js-nested-form__item nested-form__item js-sortable-item sortable-item" data-sortkey="' + sortKey + '"><header class="js-sortable-item__handle nested-form__item__header"><i class="fa fa-arrows nested-form__item__header__move-icon"></i><div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div></header><div class="js-nested-form__item__view nested-form__item__view"></div></div>');
         } else {
-            var $newItem = $('<div class="js-nested-form__item nested-form__item"><header class="nested-form__item__header"><div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div></header><div class="js-nested-form__item__view nested-form__item__view"></div></div>');
+            $newItem = $('<div class="js-nested-form__item nested-form__item"><header class="nested-form__item__header"><div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div></header><div class="js-nested-form__item__view nested-form__item__view"></div></div>');
         }
 
         $newItem.find('.js-nested-form__item__view').append(prototype);
 
         // Append before "New" button
-        var $newBtn = $form.find('.js-nested-form__add-btn');
+        var $newBtn = $form.find('.js-nested-form__add-btn').last();
 
         $newBtn.before($newItem);
 
         // Add "Delete" button
         addDelBtn($newItem, $form);
 
+        showOrHideActions($form);
+
         // Init new rich editors
         kunstmaanbundles.richEditor.init();
+
+        kunstmaanbundles.nestedForm.init();
+        kunstmaanbundles.advancedSelect.init();
 
         // Init new tooltips
         kunstmaanbundles.tooltip.init();
@@ -198,7 +203,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
     // Update Sortkeys
     updateSortkeys = function($form) {
         var key = 0,
-            $currentItems = $form.find('.js-nested-form__item');
+            $currentItems = $form.find('> .js-nested-form__item');
 
         $currentItems.each(function() {
             var fieldId = $(this).data('sortkey');
