@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -109,7 +110,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
     private function addSimpleMenuAdaptor(ContainerBuilder $container, array $menuItems)
     {
-        $definition = new Definition('Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor', [$menuItems]);
+        $definition = new Definition('Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor', [
+            new Reference('security.context'),
+            $menuItems
+        ]);
         $definition->addTag('kunstmaan_admin.menu.adaptor');
 
         $container->setDefinition('kunstmaan_admin.menu.adaptor.simple', $definition);

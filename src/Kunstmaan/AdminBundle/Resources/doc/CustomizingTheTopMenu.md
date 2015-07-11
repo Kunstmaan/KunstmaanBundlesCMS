@@ -27,5 +27,6 @@ kunstmaan_admin:
         label: FooBaring Module
         parent: ~                        # attach it under specified menu item, default: KunstmaanAdminBundle_modules
         params: { source: "menuitem" }   # optional, array with custom route parameters
+        role: ROLE_ADMIN                 # optional, only show for users with this role
 
 ```

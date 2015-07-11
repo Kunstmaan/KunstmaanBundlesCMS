@@ -3,14 +3,24 @@
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class SimpleMenuAdaptor implements MenuAdaptorInterface
 {
 
+    /**
+     * @var SecurityContext
+     */
+    private $securityContext;
+
+    /**
+     * @var array
+     */
     private $menuItems;
 
-    public function __construct(array $menuItems)
+    public function __construct(SecurityContext $securityContext, array $menuItems)
     {
+        $this->securityContext = $securityContext;
         $this->menuItems = $menuItems;
     }
 
@@ -30,22 +40,27 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
         }
 
         foreach ($this->menuItems as $item) {
-            if ($item['parent'] == $parent->getRoute()) {
-
-                $menuItem = new TopMenuItem($menu);
-                $menuItem
-                    ->setRoute($item['route'], $item['params'])
-                    ->setLabel($item['label'])
-                    ->setUniqueId($item['route'])
-                    ->setParent($parent);
-
-                if ($request && stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                    $menuItem->setActive(true);
-                    $parent->setActive(true);
-                }
-
-                $children[] = $menuItem;
+            if ($item['parent'] != $parent->getRoute()) {
+                continue;
             }
+
+            if ($item['role'] && false === $this->securityContext->isGranted($item['role'])) {
+                continue;
+            }
+
+            $menuItem = new TopMenuItem($menu);
+            $menuItem
+                ->setRoute($item['route'], $item['params'])
+                ->setLabel($item['label'])
+                ->setUniqueId($item['route'])
+                ->setParent($parent);
+
+            if ($request && stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+                $parent->setActive(true);
+            }
+
+            $children[] = $menuItem;
         }
     }
 }

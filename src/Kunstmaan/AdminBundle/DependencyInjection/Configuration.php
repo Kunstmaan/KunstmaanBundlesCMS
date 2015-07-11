@@ -48,6 +48,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('route')->isRequired()->end()
                             ->scalarNode('label')->isRequired()->end()
+                            ->scalarNode('role')->defaultNull()->end()
                             ->arrayNode('params')->defaultValue([])->prototype('scalar')->end()->end()
                             ->scalarNode('parent')->defaultValue('KunstmaanAdminBundle_modules')->end()
                         ->end()
