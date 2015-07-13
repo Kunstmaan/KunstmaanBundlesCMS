@@ -21,9 +21,9 @@
         "liip/imagine-bundle": "v0.20.2",
         "knplabs/knp-gaufrette-bundle": "0.1.*",
         "sensio/framework-extra-bundle": ">=2.3.0,<4.0.0",
-        "kunstmaan/admin-bundle": "~3.0.0",
-        "kunstmaan/adminlist-bundle": "~3.0.0",
-        "kunstmaan/utilities-bundle": "~3.0.0",
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/utilities-bundle": "~3.2",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "suggest": {

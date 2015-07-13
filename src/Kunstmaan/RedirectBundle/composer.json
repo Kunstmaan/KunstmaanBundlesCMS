@@ -16,8 +16,8 @@
         "php": ">=5.4.0",
         "symfony/symfony": "~2.3",
         "symfony-cmf/routing-bundle": "~1.1.1",
-        "kunstmaan/adminlist-bundle": "~3.0.0",
-        "kunstmaan/admin-bundle": "~3.0.0",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/admin-bundle": "~3.2",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "minimum-stability": "dev",

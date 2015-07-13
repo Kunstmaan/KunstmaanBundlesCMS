@@ -20,10 +20,10 @@
         "gedmo/doctrine-extensions": "2.3.*",
         "symfony/swiftmailer-bundle": "~2.3",
         "sensio/framework-extra-bundle": ">=2.3.0,<4.0.0",
-        "kunstmaan/adminlist-bundle": "~3.0.0",
-        "kunstmaan/node-bundle": "~3.0.0",
-        "kunstmaan/admin-bundle": "~3.0.0",
-        "kunstmaan/pagepart-bundle": "~3.0.0",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2",
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/pagepart-bundle": "~3.2",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
