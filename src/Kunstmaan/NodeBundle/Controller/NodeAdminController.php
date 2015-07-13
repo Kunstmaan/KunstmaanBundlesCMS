@@ -592,6 +592,12 @@ class NodeAdminController extends Controller
             $page = $nodeVersion->getRef($this->em);
         }
 
+        $saveandpublish =$request->get('saveandpublish');
+
+        if($saveandpublish){
+            $this->get('kunstmaan_node.admin_node.publisher')->publish($nodeTranslation);
+        }
+
         $isStructureNode = $page->isStructureNode();
 
         $menubuilder = $this->get('kunstmaan_node.actions_menu_builder');

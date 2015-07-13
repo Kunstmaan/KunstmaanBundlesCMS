@@ -133,6 +133,9 @@ class ActionsMenuBuilder
 			$menu->addChild('action.unpublish', array('linkAttributes' => array('class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#unpub')));
                     } elseif (empty($queuedNodeTranslationAction) && !$activeNodeTranslation->isOnline() &&  $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
 			$menu->addChild('action.publish', array('linkAttributes' => array('class' => 'btn btn-default btn--raise-on-hover', 'data-toggle' => 'modal', 'data-keyboard' => 'true', 'data-target' => '#pub')));
+                        if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node) && $this->context->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
+                            $menu->addChild('action.save_and_publish', array('linkAttributes' => array('type' => 'submit', 'class' => 'js-save-btn btn btn--raise-on-hover' . ($isFirst ? ' btn-primary' : ' btn-default'), 'value' => 'saveandpublish', 'name' => 'saveandpublish'), 'extras' => array('renderType' => 'button')));
+                        }
                     }
                     if ($this->context->isGranted(PermissionMap::PERMISSION_EDIT, $node)) {
 			$menu->addChild('action.saveasdraft', array('linkAttributes' => array('type' => 'submit', 'class' => 'btn btn--raise-on-hover' . ($isFirst ? ' btn-primary btn-save' : ' btn-default'), 'value' => 'saveasdraft', 'name' => 'saveasdraft'), 'extras' => array('renderType' => 'button')));
