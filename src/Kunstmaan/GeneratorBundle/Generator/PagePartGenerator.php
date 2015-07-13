@@ -185,7 +185,7 @@ class PagePartGenerator extends KunstmaanGenerator
 
         // Get a list of page templates that use this context
         $templateFinder = new Finder();
-        $templateFinder->files()->in($configDir.'/pagetemplates/*.yml');
+        $templateFinder->files()->in($configDir.'/pagetemplates')->name('*.yml');
 
         $contextTemplates = array();
         foreach ($templateFinder as $templatePath) {
@@ -259,7 +259,7 @@ class PagePartGenerator extends KunstmaanGenerator
 
         // Get all the available pages
         $finder = new Finder();
-        $finder->files()->in($this->bundle->getPath().'/Entity/Pages/*.php');
+        $finder->files()->in($this->bundle->getPath().'/Entity/Pages')->name('*.php');
 
         $pages = array();
         foreach ($finder as $pageFile) {
