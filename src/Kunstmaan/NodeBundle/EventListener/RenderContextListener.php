@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -29,8 +30,13 @@ class RenderContextListener
      */
     public function onKernelView(GetResponseForControllerResultEvent $event)
     {
-        $request    = $event->getRequest();
-        $nodeTranslation = $request->attributes->get('_nodeTranslation');
+        $response = $event->getControllerResult();
+        if ($response instanceof Response) { //if its a response, just continue
+            return;
+        }
+
+        $request            = $event->getRequest();
+        $nodeTranslation    = $request->attributes->get('_nodeTranslation');
 
         if ($nodeTranslation) {
             $entity          = $request->attributes->get('_entity');
@@ -62,8 +68,14 @@ class RenderContextListener
                 $parameters = $renderContext;
             }
 
-            // Sent the response here, another option is to let the symfony kernel.view listener handle it
-            $event->setResponse($this->templating->renderResponse($entity->getDefaultView(), $parameters));
+            if (is_array($response)) { //if the response is an array, merge with rendercontext
+                $parameters = array_merge($parameters, $response);
+            }
+
+            //set the rendercontext with all params as response, plus the template in the request attribs
+            //the SensioFrameworkExtraBundle kernel.view will handle everything else
+            $event->setControllerResult((array)$parameters);
+            $request->attributes->set('_template', $entity->getDefaultView());
         }
     }
 }
