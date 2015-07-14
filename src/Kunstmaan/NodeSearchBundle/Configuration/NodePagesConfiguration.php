@@ -205,21 +205,25 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function indexNodeTranslation(NodeTranslation $nodeTranslation, $add = false)
     {
-        // Only index online NodeTranslations
-        if (!$nodeTranslation->isOnline()) {
-            return false;
-        }
-
         // Retrieve the public NodeVersion
         $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
         if (is_null($publicNodeVersion)) {
             return false;
         }
-        $node = $nodeTranslation->getNode();
 
         // Retrieve the referenced entity from the public NodeVersion
         $page = $publicNodeVersion->getRef($this->em);
 
+        if ($page->isStructureNode()) {
+            return true;
+        }
+
+        // Only index online NodeTranslations
+        if (!$nodeTranslation->isOnline()) {
+            return false;
+        }
+
+        $node = $nodeTranslation->getNode();
         if ($this->isIndexable($page)) {
             $this->addPageToIndex($nodeTranslation, $node, $publicNodeVersion, $page);
             if ($add) {
