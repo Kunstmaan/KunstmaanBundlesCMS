@@ -3,6 +3,8 @@
    ========================================================================== */
 
    .date-time-group {
+       @extend %clearfix;
+       
        #form_main_date {
            @extend %clearfix;
        }
