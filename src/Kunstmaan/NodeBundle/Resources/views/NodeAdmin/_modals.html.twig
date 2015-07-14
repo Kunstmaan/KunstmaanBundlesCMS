@@ -208,7 +208,7 @@
 
 
 <!-- Modal - Add subpage -->
-{% set pagePossibleChildPages = page.possibleChildTypes %}
+{% set pagePossibleChildPages = get_possible_child_types(page) %}
 {% if pagePossibleChildPages is not empty %}
     <div id="add-subpage-modal" class="modal fade">
     <div class="modal-dialog">
@@ -238,7 +238,7 @@
                 </label>
                 <select name="type" id="addpage_type" class="form-control">
                 {% for pageType in pagePossibleChildPages %}
-                    <option value="{{ pageType.class }}">{{ pageType.name }}</option>
+                    <option value="{{ pageType.class }}">{{ pageType.name|trans }}</option>
                 {% endfor %}
                 </select>
             </div>

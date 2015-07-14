@@ -482,6 +482,7 @@ class NodeAdminController extends Controller
         $this->init();
         $nodes = array();
         $nodeIds = $request->get('nodes');
+        $changeParents = $request->get('parent');
 
         foreach($nodeIds as $id){
             /* @var Node $node */
@@ -492,6 +493,16 @@ class NodeAdminController extends Controller
 
         $weight = 0;
         foreach($nodes as $node){
+
+            $newParentId = isset($changeParents[$node->getId()]) ? $changeParents[$node->getId()] : null;
+            if ($newParentId) {
+                $parent = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($newParentId);
+                $this->checkPermission($parent, PermissionMap::PERMISSION_EDIT);
+                $node->setParent($parent);
+                $this->em->persist($node);
+                $this->em->flush($node);
+            }
+
 
             /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $node->getNodeTranslation($this->locale, true);

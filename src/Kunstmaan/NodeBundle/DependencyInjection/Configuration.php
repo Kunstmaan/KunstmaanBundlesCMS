@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -18,11 +19,23 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_node');
+        $root = $treeBuilder->root('kunstmaan_node');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        /** @var ArrayNodeDefinition $pages */
+        $pages = $root->children()->arrayNode('pages')->prototype('array');
+        $pages->children()->scalarNode('name')->isRequired();
+        $pages->children()->scalarNode('search_type');
+        $pages->children()->booleanNode('structure_node');
+        $pages->children()->booleanNode('indexable');
+        $pages->children()->scalarNode('icon')->defaultNull();
+        $pages->children()->scalarNode('hidden_from_tree');
+
+        /** @var ArrayNodeDefinition $children */
+        $children = $pages->children()->arrayNode('allowed_children')->prototype('array');
+        $children->beforeNormalization()->ifString()->then(function ($v) { return ["class" => $v]; });
+        $children->children()->scalarNode('class')->isRequired();
+        $children->children()->scalarNode('name');
+
         return $treeBuilder;
     }
 }

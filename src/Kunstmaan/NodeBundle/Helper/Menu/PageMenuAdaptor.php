@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
@@ -10,10 +9,9 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-use Kunstmaan\NodeBundle\Entity\HideFromNodeTreeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
+use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -40,15 +38,21 @@ class PageMenuAdaptor implements MenuAdaptorInterface
      * @var array
      */
     private $activeNodeIds = null;
+    /**
+     * @var PagesConfiguration
+     */
+    private $pagesConfiguration;
 
     /**
      * @param EntityManagerInterface $em              The entity manager
      * @param AclNativeHelper        $aclNativeHelper The acl helper
+     * @param PagesConfiguration     $pagesConfiguration
      */
-    public function __construct(EntityManagerInterface $em, AclNativeHelper $aclNativeHelper)
+    public function __construct(EntityManagerInterface $em, AclNativeHelper $aclNativeHelper, PagesConfiguration $pagesConfiguration)
     {
         $this->em              = $em;
         $this->aclNativeHelper = $aclNativeHelper;
+        $this->pagesConfiguration = $pagesConfiguration;
     }
 
     /**
@@ -113,7 +117,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $allNodes = $repo->getAllMenuNodes($lang, $permission, $aclNativeHelper, $includeHiddenFromNav);
             /** @var Node $nodeInfo */
             foreach ($allNodes as $nodeInfo) {
-                if ($this->isHiddenFromNodeTree($nodeInfo['ref_entity_name'])) {
+                $refEntityName = $nodeInfo['ref_entity_name'];
+                if ($this->pagesConfiguration->isHiddenFromTree($refEntityName)) {
                     continue;
                 }
                 $parent_id = is_null($nodeInfo['parent']) ? 0 : $nodeInfo['parent'];
@@ -124,44 +129,6 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         }
 
         return $this->treeNodes;
-    }
-
-    /**
-     * Determine if current node should be hidden from the node tree
-     *
-     * @param string $refEntityName
-     *
-     * @return bool
-     */
-    private function isHiddenFromNodeTree($refEntityName)
-    {
-        $isHidden = false;
-        if (class_exists($refEntityName)) {
-            $page     = new $refEntityName();
-            $isHidden = ($page instanceof HideFromNodeTreeInterface);
-            unset($page);
-        }
-
-        return $isHidden;
-    }
-
-    /**
-     * Determine if current node is a structure node.
-     *
-     * @param string $refEntityName
-     *
-     * @return bool
-     */
-    private function isStructureNode($refEntityName)
-    {
-        $structureNode = false;
-        if (class_exists($refEntityName)) {
-            $page     = new $refEntityName();
-            $structureNode = ($page instanceof StructureNode);
-            unset($page);
-        }
-
-        return $structureNode;
     }
 
     /**
@@ -205,15 +172,24 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     ) {
         foreach ($nodes as $child) {
             $menuItem = new MenuItem($menu);
+            $refName = $child['ref_entity_name'];
+
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes_edit')
                 ->setRouteparams(array('id' => $child['id']))
                 ->setUniqueId('node-' . $child['id'])
                 ->setLabel($child['title'])
                 ->setParent($parent)
-                ->setOffline(!$child['online'] && !$this->isStructureNode($child['ref_entity_name']))
+                ->setOffline(!$child['online'] && !$this->pagesConfiguration->isStructureNode($refName))
                 ->setRole('page')
-                ->setWeight($child['weight']);
+                ->setWeight($child['weight'])
+                ->addAttributes([
+                    'page' => [
+                        'class' => $refName,
+                        'children' => $this->pagesConfiguration->getPossibleChildTypes($refName),
+                        'icon' => $this->pagesConfiguration->getIcon($refName)
+                    ]
+                ]);
 
             if (in_array($child['id'], $activeNodeIds)) {
                 $menuItem->setActive(true);

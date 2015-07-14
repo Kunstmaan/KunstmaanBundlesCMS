@@ -6,6 +6,7 @@ pages:
   pagenottranslated: This page is not translated
   copyfrom: Copy from language
   createemptypage: Create as an empty page
+  movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 
 # Modules
 modules:
