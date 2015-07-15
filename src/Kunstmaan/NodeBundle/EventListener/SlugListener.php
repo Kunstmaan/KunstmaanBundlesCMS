@@ -65,6 +65,11 @@ class SlugListener
 
             // Do security check by firing an event that gets handled by the SlugSecurityListener
             $securityEvent = new SlugSecurityEvent();
+            $securityEvent->setNode($nodeTranslation->getNode())
+                ->setEntity($entity)
+                ->setRequest($request)
+                ->setNodeTranslation($nodeTranslation);
+
             $this->eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
 
             // Set the right controller
