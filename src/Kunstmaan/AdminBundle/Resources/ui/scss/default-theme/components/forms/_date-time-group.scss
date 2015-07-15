@@ -4,8 +4,9 @@
 
    .date-time-group {
        @extend %clearfix;
-       
-       #form_main_date {
+
+       #form_main_date,
+       > div {
            @extend %clearfix;
        }
        .form--double-widget__col {
