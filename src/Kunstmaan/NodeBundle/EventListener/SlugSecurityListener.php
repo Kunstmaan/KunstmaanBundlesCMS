@@ -4,11 +4,15 @@ namespace Kunstmaan\NodeBundle\EventListener;
 
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+
 /**
  * Class SlugSecurityListener
  * @package Kunstmaan\NodeBundle\EventListener
@@ -36,15 +40,13 @@ class SlugSecurityListener
     protected $acl;
 
     /**
-     * @param RequestStack $requestStack
      * @param EntityManager $entityManager
      * @param $securityContext
      * @param $acl
      */
-    public function __construct(RequestStack $requestStack,EntityManager $entityManager, SecurityContext $securityContext, $acl)
+    public function __construct(EntityManager $entityManager, SecurityContext $securityContext, $acl)
     {
         $this->securityContext = $securityContext;
-        $this->request = $requestStack->getCurrentRequest();
         $this->em = $entityManager;
         $this->acl = $acl;
     }
@@ -52,20 +54,27 @@ class SlugSecurityListener
     /**
      *
      */
-    public function onSlugSecurityEvent()
+    public function onSlugSecurityEvent(SlugSecurityEvent $event)
     {
-        $node = $this->request->attributes->get('_nodeTranslation')->getNode();
+        $node               = $event->getNode();
+        $nodeTranslation    = $event->getNodeTranslation();
+        $request            = $event->getRequest();
 
         /* @var SecurityContextInterface $securityContext */
         if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
             throw new AccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
-        $locale = $this->request->attributes->get('_locale');
-        $preview = $this->request->attributes->get('preview');
+        $locale = $request->attributes->get('_locale');
+        $preview = $request->attributes->get('preview');
 
-        $nodeMenu       = new NodeMenu($this->em, $this->securityContext, $this->acl, $locale , $node, PermissionMap::PERMISSION_VIEW, $preview);
+        // check if the requested node is online, else throw a 404 exception (only when not previewing!)
+        if (!$preview && !$nodeTranslation->isOnline()) {
+            throw new NotFoundHttpException("The requested page is not online");
+        }
 
-        $this->request->attributes->set('_nodeMenu', $nodeMenu);
+        $nodeMenu = new NodeMenu($this->em, $this->securityContext, $this->acl, $locale , $node, PermissionMap::PERMISSION_VIEW, $preview);
+
+        $request->attributes->set('_nodeMenu', $nodeMenu);
     }
 }
