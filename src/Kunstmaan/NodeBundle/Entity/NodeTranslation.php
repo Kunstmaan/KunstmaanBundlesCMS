@@ -317,6 +317,10 @@ class NodeTranslation extends AbstractEntity
      */
     public function getNodeVersion($type)
     {
+        if($type == 'public') {
+            return $this->publicNodeVersion;
+        }
+
         $nodeVersions = $this->getNodeVersions();
 
         $max = count($nodeVersions);
@@ -343,6 +347,10 @@ class NodeTranslation extends AbstractEntity
     {
         $this->nodeVersions[] = $nodeVersion;
         $nodeVersion->setNodeTranslation($this);
+
+        if($nodeVersion->getType() == 'public') {
+            $this->publicNodeVersion = $nodeVersion;
+        }
 
         return $this;
     }
