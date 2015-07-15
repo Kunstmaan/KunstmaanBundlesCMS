@@ -86,3 +86,5 @@ media:
   widget:
     choose: Choose
     delete: Delete
+    media_chooser: Media-chooser
+    icon_chooser: Icon-chooser
