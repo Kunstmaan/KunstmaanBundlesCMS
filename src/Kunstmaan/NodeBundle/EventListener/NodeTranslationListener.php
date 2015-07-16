@@ -53,6 +53,7 @@ class NodeTranslationListener
 
         if ($entity instanceof NodeTranslation) {
             $this->setSlugWhenEmpty($entity, $args->getEntityManager());
+            $this->ensureSlugIsSlugified($entity);
         }
     }
 
@@ -65,6 +66,7 @@ class NodeTranslationListener
 
         if ($entity instanceof NodeTranslation) {
             $this->setSlugWhenEmpty($entity, $args->getEntityManager());
+            $this->ensureSlugIsSlugified($entity);
         }
     }
 
@@ -83,6 +85,10 @@ class NodeTranslationListener
         if ($nodeTranslation->getSlug() === null && $nodeTranslation->getNode()->getParent() !== null) {
             $nodeTranslation->setSlug($this->slugifier->slugify($nodeTranslation->getTitle()));
         }
+    }
+
+    private function ensureSlugIsSlugified(NodeTranslation $nodeTranslation) {
+        $nodeTranslation->setSlug($this->slugifier->slugify($nodeTranslation->getSlug()));
     }
 
 
