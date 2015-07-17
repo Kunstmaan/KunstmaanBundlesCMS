@@ -1,6 +1,37 @@
 # Changelog
 
-## 3.2.0 / 2015-06-30
+## 3.2.1 / 2015-07-16
+
+* [NodeBundle] Possible to create a page type which is default hidden from navigation [#559](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/559) ([@krispypen](https://github.com/krispypen)) 
+* [NodeBundle] Slugify the slug when saving the page [#558](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/558) ([@krispypen](https://github.com/krispypen)) 
+* [NodeBundle] Do not load all nodes when you are not in the page section [#557](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/557) ([@krispypen](https://github.com/krispypen)) 
+* [MediaBundle] Don't fail outright on bad pdf [#555](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/555) ([@mwoynarski](https://github.com/mwoynarski)) 
+* [AdminBundle] Fix the datepickers not overflowing their containers [#554](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/554) ([@Sambego](https://github.com/Sambego)) 
+* [NodeBundle] Fix the possibility to publish and unpublish today [#553](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/553) ([@Sambego](https://github.com/Sambego)) 
+* [AdminBundle,MediaBundle] Fix the icon-chooser [#552](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/552) ([@Sambego](https://github.com/Sambego)) 
+* [NodeBundle] Fix not checking on online status in some cases [#551](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/551) ([@kimausloos](https://github.com/kimausloos)) 
+* [NodeSearchBundle] Fix indexing children of StructureNodes [#549](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/549) ([@Devolicious](https://github.com/Devolicious)) 
+* [NodeBundle] Minor performance tweak on loading the page [#548](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/548) ([@krispypen](https://github.com/krispypen)) 
+* [AdminBundle] Clear floats datetime group | html structure bootstrap radio buttons [#546](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/546) ([@FVKVN](https://github.com/FVKVN)) 
+* [NodeBundle] Allow more flexible entity controller handling [#544](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/544) ([@kimausloos](https://github.com/kimausloos)) 
+* [AdminBundle] simple menu adaptor [#542](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/542) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [TaggingBundle] lazy-load tags [#541](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/541) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [AdminBundle] allow nesting non-compound forms [#540](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/540) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [AdminBundle] allow nested forms in nested forms in nested forms… [#539](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/539) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [AdminBundle, NodeBundle] allow changing nodes parent in sidebar tree [#538](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/538) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [NodeSearchBundle] move mapping to symfony config and allow custom data to be indexed [#537](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/537) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [AdminBundle] fix admin locale listener on RememberMe token [#536](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/536) ([@mlebkowski](https://github.com/mlebkowski)) 
+* Bundle specific kunstmaan dependencies always require 3.0 [#535](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/535) ([@yoshz](https://github.com/yoshz)) 
+* [NodeBundle] Allow custom route loaders in combination with SlugActionInterface [#534](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/534) ([@jockri](https://github.com/jockri)) 
+* [AdminListBundle] Fix pagination issue for DBAL adminlists [#532](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/532) ([@jockri](https://github.com/jockri)) 
+* Add check for presence of security token in AdminLocaleListener [#531](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/531) ([@bureaublauwgeel](https://github.com/bureaublauwgeel)) 
+* [GeneratorBundle] finder->in(dir) not ->in(dir/glob) [#529](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/529) ([@tarjei](https://github.com/tarjei)) 
+* [MediaBundle] Change MediaController createAndRedirect() from private to protected [#526](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/526) ([@mwoynarski](https://github.com/mwoynarski)) 
+* [GeneratorBundle] Increase the version of Gulp [#525](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/525) ([@Devolicious](https://github.com/Devolicious)) 
+* [Documentation] improved upgrade guide [#524](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/524) ([@mennowame](https://github.com/mennowame)) 
+
+
+## 3.2.0 / 2015-07-06
 
 * [PagepartBundle] Pagepart limits [#523](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/523) ([@bureaublauwgeel](https://github.com/bureaublauwgeel)) 
 * [NodeBundle] Fix admin preview when controller as a service is used [#522](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/522) ([@Devolicious](https://github.com/Devolicious)) 
