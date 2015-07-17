@@ -19,7 +19,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class SlugRouter implements RouterInterface
 {
-
     /** @var RequestContext */
     private $context;
 
@@ -45,7 +44,7 @@ class SlugRouter implements RouterInterface
         $multilanguage = $this->container->getParameter('multilanguage');
         $defaultlocale = $this->container->getParameter('defaultlocale');
 
-        if ($multilanguage) {
+        if ($multilanguage && !$this->container->hasParameter('localedomains')) {
             // the website is multilingual so the language is the first parameter
             $requiredLocales = $this->container->getParameter('requiredlocales');
 
@@ -99,9 +98,15 @@ class SlugRouter implements RouterInterface
                         '_controller' => 'KunstmaanNodeBundle:Slug:slug',
                         'preview'     => false,
                         'url'         => '',
-                        '_locale'     => $defaultlocale
+                        '_locale'     => $defaultlocale,
+                        'host'        => '',
                     ),
-                    array('url' => "[a-zA-Z0-9\-_\/]*")
+                    array(
+                        'url' => "[a-zA-Z0-9\-_\/]*",
+                        'host' => '.*'
+                    ),
+                    array(),
+                    '{host}'
                 )
             );
         }
@@ -123,6 +128,16 @@ class SlugRouter implements RouterInterface
         $result = $urlMatcher->match($pathinfo);
 
         if (!empty($result)) {
+            if ($this->container->hasParameter('localedomains')) {
+                $localedomains = $this->container->getParameter('localedomains');
+                $host = $this->getContext()->getHost();
+                foreach ($localedomains as $domain => $locale) {
+                    if (strpos($host, $domain) !== false) {
+                        $result['_locale'] = $locale;
+                    }
+                }
+            }
+
             // The route matches, now check if it actually exists (needed for proper chain router chaining!)
             $em = $this->container->get('doctrine.orm.entity_manager');
 
@@ -184,6 +199,16 @@ class SlugRouter implements RouterInterface
     public function generate($name, $parameters = array(), $absolute = false)
     {
         $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->context);
+
+        if ($name === '_slug') {
+            $parameters['host'] = $this->getContext()->getHost();
+            if (!empty($parameters['_locale']) && $this->container->hasParameter('localedomains')) {
+                $localedomains = $this->container->getParameter('localedomains');
+                if ($host = array_search($parameters['_locale'], $localedomains)) {
+                    $parameters['host'] = $host;
+                }
+            }
+        }
 
         return $this->urlGenerator->generate($name, $parameters, $absolute);
     }
