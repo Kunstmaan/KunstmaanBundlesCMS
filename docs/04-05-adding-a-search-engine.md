@@ -176,7 +176,9 @@ public function getPossibleChildTypes()
 }
 ```
 
-To override the template, simply create a view.html.twig in the 'app/Resources/KunstmaanNodeSearchBundle/views/SearchPage/' folder.
+## Modifying the search templates
+
+You can find the template in the normal place where you find your other templates from generated pages.
 
 ## Search configurations
 

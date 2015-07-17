@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use \ImagickException;
 
 class CreatePdfPreviewCommand extends ContainerAwareCommand
 {
@@ -25,8 +26,16 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         );
         /** @var Media $media */
         foreach ($medias as $media) {
-            $pdfTransformer->apply($webPath . $media->getUrl());
+            try
+            {
+                $pdfTransformer->apply($webPath . $media->getUrl());
+            }
+            catch(ImagickException $e)
+            {
+                $output->writeln('<comment>'.$e->getMessage().'</comment>');
+            }
         }
+        
         $output->writeln('<info>PDF preview images have been created.</info>');
     }
 

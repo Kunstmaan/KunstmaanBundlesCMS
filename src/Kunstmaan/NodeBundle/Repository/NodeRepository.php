@@ -12,6 +12,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\NodeBundle\Helper\HiddenFromNavInterface;
 
 /**
  * NodeRepository
@@ -165,6 +166,9 @@ class NodeRepository extends NestedTreeRepository
             if ($parentNodeVersion) {
                 $node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
             }
+        }
+        if ($hasNode instanceof HiddenFromNavInterface) {
+            $node->setHiddenFromNav($hasNode->isHiddenFromNav());
         }
         $em->persist($node);
         $em->flush();
