@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.1.1 / 2015-07-17
+
+* Don't ensure slug for root nodes (broken after #558) [#567](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/567) ([@yoshz](https://github.com/yoshz)) 
+* [Documentation] Minimal typofix. al -> all [#565](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/565) ([@tarjei](https://github.com/tarjei)) 
+* [Documentation] Update the search docs [#564](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/564) ([@tarjei](https://github.com/tarjei)) 
+* [Tests] Use new travis config for submodules and bring them in line with eachother [#563](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/563) ([@krispypen](https://github.com/krispypen)) 
+* [GeneratorBundle] Fix for page generation when there are no Page entities available in a bundle. [#562](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/562) ([@tentwofour](https://github.com/tentwofour)) 
+
+
 ## 3.2.1 / 2015-07-16
 
 * [NodeBundle] Possible to create a page type which is default hidden from navigation [#559](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/559) ([@krispypen](https://github.com/krispypen)) 
