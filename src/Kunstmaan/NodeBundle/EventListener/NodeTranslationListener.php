@@ -87,8 +87,11 @@ class NodeTranslationListener
         }
     }
 
-    private function ensureSlugIsSlugified(NodeTranslation $nodeTranslation) {
-        $nodeTranslation->setSlug($this->slugifier->slugify($nodeTranslation->getSlug()));
+    private function ensureSlugIsSlugified(NodeTranslation $nodeTranslation)
+    {
+        if ($nodeTranslation->getSlug() !== null) {
+            $nodeTranslation->setSlug($this->slugifier->slugify($nodeTranslation->getSlug()));
+        }
     }
 
 
