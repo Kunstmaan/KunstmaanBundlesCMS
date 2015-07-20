@@ -2,13 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface as TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface as AuthorizationChecker;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -42,7 +40,7 @@ class PasswordCheckListener
      * @param Router               $router
      * @param Session              $session
      */
-    function __construct(AuthorizationChecker $authorizationChecker, TokenStorage $tokenStorage, Router $router, Session $session)
+    public function __construct(AuthorizationChecker $authorizationChecker, TokenStorage $tokenStorage, Router $router, Session $session)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
