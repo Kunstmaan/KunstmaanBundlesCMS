@@ -56,9 +56,9 @@ Comment out the default locale listener in your bundle's `service.yml`
 #        arguments: [%defaultlocale%]
 ```
 
-## 6) Change parameters.yml
+## 6) Change parameters.yml.dist and parameters.yml
 
-Configure the parameters.yml file like so:
+Configure the parameters.yml.dist (part of the repo) and parameters.yml (your local settings) files like so:
 
 ```
     requiredlocales: en
