@@ -19,8 +19,8 @@ matrix:
 
 before_script:
   - composer selfupdate
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;'
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
-  - composer --prefer-source install
   - mkdir -p ~/build/Kunstmaan/KunstmaanTranslatorBundle/Tests/app/cache/phpunit/translations/
   - chmod 755 ~/build/Kunstmaan/KunstmaanTranslatorBundle/Tests/app/cache/phpunit/translations/
 

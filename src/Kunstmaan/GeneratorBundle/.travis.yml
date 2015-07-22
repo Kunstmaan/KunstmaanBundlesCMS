@@ -19,6 +19,7 @@ matrix:
 
 before_script:
   - composer selfupdate
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;'
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
 
 script: phpunit --debug

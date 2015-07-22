@@ -32,6 +32,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.slugChooser.init();
         kunstmaanbundles.urlChooser.init();
         kunstmaanbundles.mediaChooser.init();
+        kunstmaanbundles.iconChooser.init();
         kunstmaanbundles.bulkActions.init();
         kunstmaanbundles.nestedForm.init();
         kunstmaanbundles.appLoading.init();
