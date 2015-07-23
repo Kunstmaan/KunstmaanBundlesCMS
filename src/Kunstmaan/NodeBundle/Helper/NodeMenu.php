@@ -115,7 +115,7 @@ class NodeMenu
         $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
         // Get all possible menu items in one query (also fetch offline nodes)
-        $nodes = $repo->getChildNodes(false, $this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
+        $nodes = $repo->getChildNodes(false, $this->lang, $permission, $this->aclHelper, $includeHiddenFromNav, true);
         foreach ($nodes as $node) {
             $this->allNodes[$node->getId()] = $node;
 
