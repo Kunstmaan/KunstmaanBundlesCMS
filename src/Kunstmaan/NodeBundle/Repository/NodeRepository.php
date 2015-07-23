@@ -43,7 +43,7 @@ class NodeRepository extends NestedTreeRepository
      *
      * @return Node[]
      */
-    public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
+    public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false, $includeHiddenWithInternalName = false)
     {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 't', 'v')
@@ -55,7 +55,11 @@ class NodeRepository extends NestedTreeRepository
             ->addOrderBy('t.title', 'ASC');
 
         if (!$includeHiddenFromNav) {
-            $qb->andWhere('b.hiddenFromNav != true');
+        	if ($includeHiddenWithInternalName) {
+        		$qb->andWhere('(b.hiddenFromNav != true OR b.internalName IS NOT NULL)');
+        	} else {
+        		$qb->andWhere('b.hiddenFromNav != true');
+        	}
         }
 
         if (is_null($parentId)) {
