@@ -3,11 +3,13 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,7 +82,12 @@ class SlugController extends Controller
             throw new AccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
+        /* @var AclHelper $aclHelper */
+        $aclHelper      = $this->container->get('kunstmaan_admin.acl.helper');
+        $includeOffline = $preview;
+        $nodeMenu       = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, PermissionMap::PERMISSION_VIEW, $includeOffline);
         unset($securityContext);
+        unset($aclHelper);
 
         //render page
         $renderContext = new RenderContext(
@@ -89,6 +96,7 @@ class SlugController extends Controller
                 'slug'            => $url,
                 'page'            => $entity,
                 'resource'        => $entity,
+                'nodemenu'        => $nodeMenu,
             )
         );
         if (method_exists($entity, 'getDefaultView')) {
