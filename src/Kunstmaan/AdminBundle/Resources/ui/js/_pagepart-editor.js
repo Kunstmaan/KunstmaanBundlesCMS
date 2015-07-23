@@ -81,6 +81,9 @@ kunstmaanbundles.pagepartEditor = (function(window) {
 
                 // Rest ajax-modals
                 kunstmaanbundles.ajaxModal.resetAjaxModals();
+
+                // Reinitialise the datepickers
+                kunstmaanbundles.datepicker.reInitialise();
             }
         });
 
@@ -103,10 +106,10 @@ kunstmaanbundles.pagepartEditor = (function(window) {
         // Add edit active class
         $('#pp-' + targetId).addClass('pp--edit-active');
 
-	    // Reinit custom selects
-	    kunstmaanbundles.advancedSelect.init();
+        // Reinit custom selects
+        kunstmaanbundles.advancedSelect.init();
 
-	    // Set Active Edit
+        // Set Active Edit
         window.activeEdit = targetId;
     };
 
