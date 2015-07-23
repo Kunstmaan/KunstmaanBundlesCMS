@@ -101,16 +101,6 @@ and the -adminpwd- placeholder will be replaced by the generated password.
 Note that all Kunstmaan fixtures have been relocated from the AdminBundle to the GeneratorBundle. An extra 'AdminLoginFirstTime.feature' has been added
 to the admintests.
 
-## Nodemenu parameter no longer available in twigfiles
-
-the nodemenu variable has been removed from the renderContext, so to acces it in a twig file just add
-
-    {% set node = null %}
-    {% if nodetranslation is defined %}
-       {% set node = nodetranslation.node %}
-    {% endif %}
-    {% set nodemenu = get_node_menu(app.request.locale, node) %}
-    
 ## Refactored search to seperate service
 
 A lot of the functionality from the AbstractSearchPageController has been moved to the SearchService class. So if you have extended the AbstractSearchPageController
