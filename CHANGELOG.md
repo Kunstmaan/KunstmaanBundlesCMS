@@ -1,8 +1,22 @@
 # Changelog
 
+## 3.2.2 / 2015-07-23
+
+* [NodeBundle] fix loading hidden nodes with internalnames [#582](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/582) ([@krispypen](https://github.com/krispypen)) 
+* [NodeBundle] Re-add the nodemenu again and make it lazy loading [#581](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/581) ([@krispypen](https://github.com/krispypen)) 
+* [AdminBundle] Fix the datepicker with new added fields [#578](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/578) ([@Sambego](https://github.com/Sambego)) 
+* [Documentation] Update the single language documentation [#577](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/577) ([@timhc22](https://github.com/timhc22)) 
+* [AdminBundle] use `AuthorizationChecker` interface instead of a concrete implementation [#576](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/576) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [Travis] Remove the memory limit on all travis tests [#574](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/574) ([@roderik](https://github.com/roderik)) 
+* [MediaBundle] Empty media preview is resulting in a request to homepage [#573](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/573) ([@yoshz](https://github.com/yoshz)) 
+* [AdminBundle] Added missing assetic dependency for icon-chooser.js [#572](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/572) ([@yoshz](https://github.com/yoshz)) 
+* [TaggingBundle] Change parameter type to BaseTaggable [#571](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/571) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [AdminBundle, MediaBundle] Fix the iconchooser [#569](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/569) ([@Sambego](https://github.com/Sambego)) 
+
+
 ## 3.2.1.1 / 2015-07-17
 
-* Don't ensure slug for root nodes (broken after #558) [#567](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/567) ([@yoshz](https://github.com/yoshz)) 
+* [NodeBundle] Don't ensure slug for root nodes (broken after #558) [#567](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/567) ([@yoshz](https://github.com/yoshz)) 
 * [Documentation] Minimal typofix. al -> all [#565](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/565) ([@tarjei](https://github.com/tarjei)) 
 * [Documentation] Update the search docs [#564](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/564) ([@tarjei](https://github.com/tarjei)) 
 * [Tests] Use new travis config for submodules and bring them in line with eachother [#563](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/563) ([@krispypen](https://github.com/krispypen)) 
