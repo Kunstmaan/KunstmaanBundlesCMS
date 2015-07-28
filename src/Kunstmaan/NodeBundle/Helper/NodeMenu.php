@@ -269,6 +269,76 @@ class NodeMenu
     }
 
     /**
+     * @param \Kunstmaan\NodeBundle\Entity\Node $node
+     * @param bool $includeHiddenFromNav
+     *
+     * @return array|\Kunstmaan\NodeBundle\Helper\NodeMenuItem[]
+     */
+    public function getSiblings(Node $node, $includeHiddenFromNav = true)
+    {
+        $this->init();
+        $siblings = array();
+
+        if (false !== $parent = $this->getParent($node)) {
+            $siblings = $this->getChildren($parent, $includeHiddenFromNav);
+
+            foreach($siblings as $index => $child) {
+                if ($child === $node) {
+                    unset($siblings[$index]);
+                }
+            }
+        }
+
+        return $siblings;
+    }
+
+    /**
+     * @param \Kunstmaan\NodeBundle\Entity\Node $node
+     * @param bool $includeHiddenFromNav
+     *
+     * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
+     */
+    public function getPreviousSibling(Node $node, $includeHiddenFromNav = true)
+    {
+        $this->init();
+
+        if (false !== $parent = $this->getParent($node)) {
+            $siblings = $this->getChildren($parent, $includeHiddenFromNav);
+
+            foreach($siblings as $index => $child) {
+                if ($child->getNode() === $node && ($index - 1 >= 0)) {
+                    return $siblings[$index - 1];
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Kunstmaan\NodeBundle\Entity\Node $node
+     * @param bool $includeHiddenFromNav
+     *
+     * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
+     */
+    public function getNextSibling(Node $node, $includeHiddenFromNav = true)
+    {
+        $this->init();
+
+        if (false !== $parent = $this->getParent($node)) {
+            $siblings = $this->getChildren($parent, $includeHiddenFromNav);
+
+            foreach($siblings as $index => $child) {
+                if ($child->getNode() === $node && (($index+1) < count($siblings))) {
+                    return $siblings[$index + 1];
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param Node $node
      *
      * @return NodeMenuItem
