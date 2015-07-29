@@ -303,4 +303,17 @@ class NodeTranslationListener
             return $string . $append . '1';
         }
     }
+    
+    /**
+     * @param \Symfony\Component\HttpFoundation\Session\Session $session
+     *
+     * @return $this
+     */
+    public function setSession($session)
+    {
+        $this->session = $session;
+
+        return $this;
+    }
+    
 }
