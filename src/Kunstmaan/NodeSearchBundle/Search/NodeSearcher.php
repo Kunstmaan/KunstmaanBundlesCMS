@@ -31,6 +31,8 @@ class NodeSearcher extends AbstractElasticaSearcher
      */
     public function defineSearch($query, $lang, $type)
     {
+        $query = \Elastica\Util::escapeTerm($query);
+
         $elasticaQueryLang = new \Elastica\Query\Term();
         $elasticaQueryLang->setTerm('lang', $lang);
 
@@ -79,7 +81,7 @@ class NodeSearcher extends AbstractElasticaSearcher
     /**
      * Filter search results so only documents that are viewable by the current user will be returned...
      *
-     * @param $elasticaQueryBool
+     * @param \Elastica\Query\Bool $elasticaQueryBool
      */
     protected function applySecurityContext($elasticaQueryBool)
     {
