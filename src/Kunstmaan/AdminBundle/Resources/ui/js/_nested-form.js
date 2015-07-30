@@ -15,11 +15,14 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
     init = function() {
         $('.js-nested-form').each(function() {
             var $form = $(this),
-                initialized = $form.data('initialized');
+                initialized = $form.data('initialized'),
+                initializing = $form.data('initializing');
 
-            if(!initialized) {
+            if(!initialized && !initializing) {
+                $form.data('initializing', true);
                 setupForm($form);
                 $form.data('initialized', true);
+                $form.data('initializing', false);
             }
         });
     };
