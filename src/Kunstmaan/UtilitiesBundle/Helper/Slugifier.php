@@ -15,7 +15,7 @@ class Slugifier implements SlugifierInterface
      *
      * @return string
      */
-    public function slugify($text, $default = 'n-a', $replace = array("'"), $delimiter = '-')
+    public function slugify($text, $default = '', $replace = array("'"), $delimiter = '-')
     {
         if (!empty($replace)) {
             $text = str_replace($replace, ' ', $text);
