@@ -43,8 +43,9 @@ class SlugRouter implements RouterInterface
 
         $multilanguage = $this->container->getParameter('multilanguage');
         $defaultlocale = $this->container->getParameter('defaultlocale');
+        $localedomains = $this->container->hasParameter('localedomains') ? $this->container->getParameter('localedomains') : null;
 
-        if ($multilanguage && !$this->container->hasParameter('localedomains')) {
+        if ($multilanguage || $localedomains) {
             // the website is multilingual so the language is the first parameter
             $requiredLocales = $this->container->getParameter('requiredlocales');
 
@@ -63,18 +64,6 @@ class SlugRouter implements RouterInterface
                     ) // override default validation of url to accept /, - and _
                 )
             );
-            $this->routeCollection->add(
-                '_slug',
-                new Route(
-                    '/{_locale}/{url}',
-                    array(
-                        '_controller' => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'     => false,
-                        'url'         => ''
-                    ),
-                    array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*")
-                )
-            );
         } else {
             // the website is not multilingual, _locale must do a fallback to the default locale
             $this->routeCollection->add(
@@ -90,6 +79,9 @@ class SlugRouter implements RouterInterface
                     array('url' => "[a-zA-Z0-9\-_\/]*")
                 )
             );
+        }
+
+        if ($localedomains) {
             $this->routeCollection->add(
                 '_slug',
                 new Route(
@@ -107,6 +99,33 @@ class SlugRouter implements RouterInterface
                     ),
                     array(),
                     '{host}'
+                )
+            );
+        } elseif ($multilanguage) {
+            $this->routeCollection->add(
+                '_slug',
+                new Route(
+                    '/{_locale}/{url}',
+                    array(
+                        '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+                        'preview'     => false,
+                        'url'         => ''
+                    ),
+                    array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*")
+                )
+            );
+        } else {
+            $this->routeCollection->add(
+                '_slug',
+                new Route(
+                    '/{url}',
+                    array(
+                        '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+                        'preview'     => false,
+                        'url'         => '',
+                        '_locale'     => $defaultlocale,
+                    ),
+                    array('url' => "[a-zA-Z0-9\-_\/]*")
                 )
             );
         }
@@ -128,8 +147,8 @@ class SlugRouter implements RouterInterface
         $result = $urlMatcher->match($pathinfo);
 
         if (!empty($result)) {
-            if ($this->container->hasParameter('localedomains')) {
-                $localedomains = $this->container->getParameter('localedomains');
+            $localedomains = $this->container->hasParameter('localedomains') ? $this->container->getParameter('localedomains') : null;
+            if ($localedomains) {
                 $host = $this->getContext()->getHost();
                 foreach ($localedomains as $domain => $locale) {
                     if (strpos($host, $domain) !== false) {
@@ -201,11 +220,13 @@ class SlugRouter implements RouterInterface
         $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->context);
 
         if ($name === '_slug') {
-            $parameters['host'] = $this->getContext()->getHost();
-            if (!empty($parameters['_locale']) && $this->container->hasParameter('localedomains')) {
-                $localedomains = $this->container->getParameter('localedomains');
-                if ($host = array_search($parameters['_locale'], $localedomains)) {
-                    $parameters['host'] = $host;
+            $localedomains = $this->container->hasParameter('localedomains') ? $this->container->getParameter('localedomains') : null;
+            if ($localedomains) {
+                $parameters['host'] = $this->getContext()->getHost();
+                if (!empty($parameters['_locale'])) {
+                    if ($host = array_search($parameters['_locale'], $localedomains)) {
+                        $parameters['host'] = $host;
+                    }
                 }
             }
         }
