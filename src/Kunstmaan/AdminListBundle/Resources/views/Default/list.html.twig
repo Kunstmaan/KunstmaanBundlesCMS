@@ -77,7 +77,7 @@
                             {% else %}
                                 <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}" class="btn">
                                     {% if action.getIcon() is not null %}
-                                        <i class="fa fa-{{ action.getIcon() }} }}"></i>
+                                        <i class="fa fa-{{ action.getIcon() }}"></i>
                                         {{ action.getLabel() }}
                                     {% else %}
                                         {{ action.getLabel() }}
