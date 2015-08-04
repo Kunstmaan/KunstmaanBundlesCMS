@@ -66,7 +66,6 @@ class MenuTwigExtension extends \Twig_Extension
             ->setParameter('name', $name)
             ->andWhere('(nt.online = 1 OR nt.online IS NULL)')
             ->andWhere('(n.deleted = 0 OR n.deleted IS NULL)')
-            ->andWhere('(n.hiddenFromNav = 0 OR n.hiddenFromNav IS NULL)')
             ->getQuery();
         $arrayResult = $query->getArrayResult();
 
