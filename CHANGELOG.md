@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.2.3 / 2015-08-05
+
+* [Travis] Add test DB [#609](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/609) ([@roderik](https://github.com/roderik)) 
+* [Composer] Update some dependencies [#608](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/608) ([@roderik](https://github.com/roderik)) 
+* [AdminListBundle] Remove bad twig markup [#606](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/606) ([@mwoynarski](https://github.com/mwoynarski)) 
+* [MenuBundle] Make it possible to show hidden from nav menu nodes via the menu bundle twig extension [#605](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/605) ([@jockri](https://github.com/jockri)) 
+* [Tests] Do not use n-a as default slugified text [#603](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/603) ([@krispypen](https://github.com/krispypen)) 
+* [AdminBundle] Fix admin locale listener for >= Symfony 2.6 [#601](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/601) ([@Devolicious](https://github.com/Devolicious)) 
+* [Dependencies] Support for symfony2.7 [#600](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/600) ([@krispypen](https://github.com/krispypen)) 
+* [AdminBundle] fixed nested-form multiple add buttons [#596](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/596) ([@jeroenjans](https://github.com/jeroenjans)) 
+* [NodeSearchBundle] fix escaping the search query [#592](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/592) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [NodeBundle] Added 3 new helper methods [#590](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/590) ([@tentwofour](https://github.com/tentwofour)) 
+* [PagePartBundle] fix for pageparts containing bootstrap3 columns [#588](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/588) ([@wimvds](https://github.com/wimvds)) 
+* [NodeSearchBundle] `indexType` needs to have language appended [#587](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/587) ([@mlebkowski](https://github.com/mlebkowski)) 
+
+
 ## 3.2.2 / 2015-07-23
 
 * [NodeBundle] fix loading hidden nodes with internalnames [#582](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/582) ([@krispypen](https://github.com/krispypen)) 
