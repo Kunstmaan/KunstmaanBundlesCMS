@@ -37,6 +37,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
 
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
+
         $kernel = new \AppKernel('phpunit', true);
         $kernel->boot();
 
