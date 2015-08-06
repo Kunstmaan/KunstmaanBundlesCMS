@@ -1,3 +1,4 @@
+{% if is_granted('ROLE_SUPER_ADMIN') %}
 <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
 <p>
     {{ 'dashboard.ga.setup.content' | trans }} <a href="{{ 'dashboard.ga.setup.docs_url' | trans }}">{{ 'dashboard.ga.setup.docs' | trans }}</a>.
@@ -12,4 +13,5 @@
     <p>
         {{ 'dashboard.ga.setup.refresh' | trans }}
     </p>
+{% endif %}
 {% endif %}
