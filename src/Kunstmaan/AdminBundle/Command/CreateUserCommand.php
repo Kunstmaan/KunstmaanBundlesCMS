@@ -101,13 +101,11 @@ EOT
 
         // Attach groups
         $groupNames = explode(',', $groupOption);
-    $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
-
-    $groupOutput = "";
+        $groupOutput = "";
 
         foreach ($groupNames as $groupName) {
-        $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
-        $groupOutput .= $groups[$groupName] . ", ";
+        $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
+        $groupOutput .= $groupName . ", ";
             if (!empty($group)) {
                 $user->getGroups()->add($group);
             }
