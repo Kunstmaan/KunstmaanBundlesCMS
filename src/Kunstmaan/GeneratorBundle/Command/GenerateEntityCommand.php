@@ -120,7 +120,7 @@ EOT
         $questionHelper->writeGeneratorSummary($output, array());
 
         $output->writeln(array(
-                'Make sure you update your database first before you test the pagepart:',
+                'Make sure you update your database first before you test the entity/adminlist:',
                 '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
                 '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
                 '')
