@@ -22,19 +22,33 @@ class Configuration implements ConfigurationInterface
         $root = $treeBuilder->root('kunstmaan_node');
 
         /** @var ArrayNodeDefinition $pages */
-        $pages = $root->children()->arrayNode('pages')->prototype('array');
-        $pages->children()->scalarNode('name')->isRequired();
-        $pages->children()->scalarNode('search_type');
-        $pages->children()->booleanNode('structure_node');
-        $pages->children()->booleanNode('indexable');
-        $pages->children()->scalarNode('icon')->defaultNull();
-        $pages->children()->scalarNode('hidden_from_tree');
-
-        /** @var ArrayNodeDefinition $children */
-        $children = $pages->children()->arrayNode('allowed_children')->prototype('array');
-        $children->beforeNormalization()->ifString()->then(function ($v) { return ["class" => $v]; });
-        $children->children()->scalarNode('class')->isRequired();
-        $children->children()->scalarNode('name');
+        $root
+            ->children()
+                ->arrayNode('pages')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->isRequired()->end()
+                            ->scalarNode('search_type')->end()
+                            ->booleanNode('structure_node')->end()
+                            ->booleanNode('indexable')->end()
+                            ->scalarNode('icon')->defaultNull()->end()
+                            ->scalarNode('hidden_from_tree')->end()
+                            ->booleanNode('is_homepage')->defaultFalse()->end()
+                            ->arrayNode('allowed_children')
+                                ->prototype('array')
+                                    ->beforeNormalization()
+                                        ->ifString()->then(function ($v) { return ["class" => $v]; })
+                                    ->end()
+                                    ->children()
+                                        ->scalarNode('class')->isRequired()->end()
+                                        ->scalarNode('name')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

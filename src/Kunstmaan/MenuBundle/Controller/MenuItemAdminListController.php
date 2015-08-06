@@ -30,8 +30,9 @@ class MenuItemAdminListController extends AdminListController
     {
         if (!isset($this->configurator)) {
             $menu = $this->getDoctrine()->getManager()->getRepository('KunstmaanMenuBundle:Menu')->find($menuid);
+            $rootNode = $this->get('kunstmaan_node.domain_configuration')->getRootNode();
             $this->configurator = new MenuItemAdminListConfigurator($this->getEntityManager(), null, $menu);
-            $this->configurator->setAdminType(new MenuItemAdminType($request->getLocale(), $menu, $entityId));
+            $this->configurator->setAdminType(new MenuItemAdminType($request->getLocale(), $menu, $entityId, $rootNode));
         }
 
         return $this->configurator;
@@ -44,11 +45,6 @@ class MenuItemAdminListController extends AdminListController
      */
     public function indexAction(Request $request, $menuid)
     {
-        $result = $this->checkMenuLocale($request, $menuid, 'kunstmaanmenubundle_admin_menuitem');
-        if ($result) {
-            return $result;
-        }
-
         return parent::doIndexAction($this->getAdminListConfigurator($request, $menuid), $request);
     }
 
@@ -61,11 +57,6 @@ class MenuItemAdminListController extends AdminListController
      */
     public function addAction(Request $request, $menuid)
     {
-        $result = $this->checkMenuLocale($request, $menuid, 'kunstmaanmenubundle_admin_menuitem_add');
-        if ($result) {
-            return $result;
-        }
-
         return parent::doAddAction($this->getAdminListConfigurator($request, $menuid), null, $request);
     }
 
@@ -81,11 +72,6 @@ class MenuItemAdminListController extends AdminListController
      */
     public function editAction(Request $request, $menuid, $id)
     {
-        $result = $this->checkMenuLocale($request, $menuid, 'kunstmaanmenubundle_admin_menuitem_edit', $id);
-        if ($result) {
-            return $result;
-        }
-
         return parent::doEditAction($this->getAdminListConfigurator($request, $menuid, $id), $id, $request);
     }
 
@@ -101,33 +87,6 @@ class MenuItemAdminListController extends AdminListController
      */
     public function deleteAction(Request $request, $menuid, $id)
     {
-        $result = $this->checkMenuLocale($request, $menuid, 'kunstmaanmenubundle_admin_menuitem_delete', $id);
-        if ($result) {
-            return $result;
-        }
-
         return parent::doDeleteAction($this->getAdminListConfigurator($request, $menuid), $id, $request);
-    }
-
-    /**
-     * @param Request $request
-     * @param int $menuid
-     * @return RedirectResponse|null
-     */
-    private function checkMenuLocale($request, $menuid, $routeName, $id = null)
-    {
-        // We need to make sure the menu locale matches the admin locale
-        $menu = $this->getEntityManager()->getRepository('KunstmaanMenuBundle:Menu')->find($menuid);
-        if ($menu && $menu->getLocale() != $request->getLocale()) {
-            $url = $this->generateUrl($routeName, array(
-                'menuid' => $menuid,
-                '_locale' => $menu->getLocale(),
-                'id' => $id
-            ));
-
-            return new RedirectResponse($url);
-        }
-
-        return null;
     }
 }

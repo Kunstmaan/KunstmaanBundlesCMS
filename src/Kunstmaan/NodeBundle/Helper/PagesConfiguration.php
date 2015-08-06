@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Helper;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use /** @noinspection PhpDeprecationInspection */
     Kunstmaan\NodeBundle\Entity\HideFromNodeTreeInterface;
+use Kunstmaan\NodeBundle\Entity\HomePageInterface;
 use /** @noinspection PhpDeprecationInspection */
     Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
@@ -71,6 +72,27 @@ class PagesConfiguration
         return array_map(function ($type) {
             return $type + ['name' => $this->getName($type['class'])]; // add if not set
         }, $types);
+    }
+
+    public function isHomePage($refName)
+    {
+        return $this->getValue($refName, 'is_homepage', function ($page) {
+            /** @noinspection PhpDeprecationInspection */
+            return $page instanceof HomePageInterface;
+        });
+    }
+
+    public function getHomepageTypes()
+    {
+        $pageTypes = array_keys($this->configuration);
+        $homePageTypes = array();
+        foreach ($pageTypes as $pageType) {
+            if ($this->isHomePage($pageType)) {
+                $homePageTypes[$pageType] = $this->getName($pageType);
+            }
+        }
+
+        return $homePageTypes;
     }
 
     /**

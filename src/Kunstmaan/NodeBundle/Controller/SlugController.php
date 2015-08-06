@@ -9,6 +9,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
+use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -55,39 +56,22 @@ class SlugController extends Controller
             throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
-        // check if the requested node is online, else throw a 404 exception (only when not previewing!)
-        if (!$preview && !$nodeTranslation->isOnline()) {
-            throw $this->createNotFoundException("The requested page is not online");
-        }
+        $entity = $this->getPageEntity(
+            $request,
+            $preview,
+            $em,
+            $nodeTranslation
+        );
 
-        /* @var HasNodeInterface $entity */
-        $entity = null;
-        $node   = $nodeTranslation->getNode();
-        if ($preview) {
-            $version = $request->get('version');
-            if (!empty($version) && is_numeric($version)) {
-                $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
-                if (!is_null($nodeVersion)) {
-                    $entity = $nodeVersion->getRef($em);
-                }
-            }
-        }
-        if (is_null($entity)) {
-            $entity = $nodeTranslation->getPublicNodeVersion()->getRef($em);
-        }
+        $securityEvent = new SlugSecurityEvent();
+        $securityEvent
+            ->setNode($nodeTranslation->getNode())
+            ->setEntity($entity)
+            ->setRequest($request)
+            ->setNodeTranslation($nodeTranslation);
 
-        /* @var SecurityContextInterface $securityContext */
-        $securityContext = $this->get('security.context');
-        if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
-            throw new AccessDeniedException('You do not have sufficient rights to access this page.');
-        }
-
-        /* @var AclHelper $aclHelper */
-        $aclHelper      = $this->container->get('kunstmaan_admin.acl.helper');
-        $includeOffline = $preview;
-        $nodeMenu       = new NodeMenu($em, $securityContext, $aclHelper, $locale, $node, PermissionMap::PERMISSION_VIEW, $includeOffline);
-        unset($securityContext);
-        unset($aclHelper);
+        $eventDispatcher = $this->get('event_dispatcher');
+        $eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
 
         //render page
         $renderContext = new RenderContext(
@@ -96,7 +80,6 @@ class SlugController extends Controller
                 'slug'            => $url,
                 'page'            => $entity,
                 'resource'        => $entity,
-                'nodemenu'        => $nodeMenu,
             )
         );
         if (method_exists($entity, 'getDefaultView')) {
@@ -104,14 +87,14 @@ class SlugController extends Controller
             $renderContext->setView($entity->getDefaultView());
         }
         $preEvent = new SlugEvent(null, $renderContext);
-        $this->container->get('event_dispatcher')->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
+        $eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
         $renderContext = $preEvent->getRenderContext();
 
         /** @noinspection PhpUndefinedMethodInspection */
         $response = $entity->service($this->container, $request, $renderContext);
 
-        $postEvent = new SlugEvent($response,$renderContext);
-        $this->container->get('event_dispatcher')->dispatch(Events::POST_SLUG_ACTION, $postEvent);
+        $postEvent = new SlugEvent($response, $renderContext);
+        $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
 
         $response = $postEvent->getResponse();
         $renderContext = $postEvent->getRenderContext();
@@ -128,5 +111,41 @@ class SlugController extends Controller
         $request->attributes->set('_template', $view);
 
         return $renderContext->getArrayCopy();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param                                           $preview
+     * @param                                           $em
+     * @param                                           $nodeTranslation
+     *
+     * @return \Kunstmaan\NodeBundle\Entity\HasNodeInterface
+     */
+    private function getPageEntity(
+        Request $request,
+        $preview,
+        $em,
+        $nodeTranslation
+    ) {
+        /* @var HasNodeInterface $entity */
+        $entity = null;
+        if ($preview) {
+            $version = $request->get('version');
+            if (!empty($version) && is_numeric($version)) {
+                $nodeVersion = $em->getRepository(
+                    'KunstmaanNodeBundle:NodeVersion'
+                )->find($version);
+                if (!is_null($nodeVersion)) {
+                    $entity = $nodeVersion->getRef($em);
+                }
+            }
+        }
+        if (is_null($entity)) {
+            $entity = $nodeTranslation->getPublicNodeVersion()->getRef($em);
+
+            return $entity;
+        }
+
+        return $entity;
     }
 }

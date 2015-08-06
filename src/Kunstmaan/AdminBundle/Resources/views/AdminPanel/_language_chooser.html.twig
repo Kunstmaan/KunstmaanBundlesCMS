@@ -1,0 +1,4 @@
+{% set route = app.request.attributes.get('_route') %}
+{% set attribs = app.request.attributes.all %}
+
+{{ localeswitcher_widget(get_backend_locales(), route) }}

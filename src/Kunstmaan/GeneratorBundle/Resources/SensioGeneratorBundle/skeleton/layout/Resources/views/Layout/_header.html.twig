@@ -89,24 +89,22 @@
 
 
                 {# Language nav #}
-                {% if requiredlocales is defined %}
-                    {% set langs = requiredlocales|split('|') %}
-                    {% if langs|length> 0 %}
-                        <div class="language-nav">
-                            <span class="language-nav__active-lang">
-                                {{ app.request.locale }}
-                                <i class="icon icon--triangle-down language-nav__icon"></i>
-                            </span>
-                            <nav role="navigation" class="language-nav__nav">
-                            {% for lang in langs %}
-                            {% if lang != app.request.locale %}
-                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
-                                    {{ lang }}
-                                </a>
-                            {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                {% set langs = get_locales() %}
+                {% if langs|length > 1 %}
+                    <div class="language-nav">
+                        <span class="language-nav__active-lang">
+                            {{ app.request.locale }}
+                            <i class="icon icon--triangle-down language-nav__icon"></i>
+                        </span>
+                        <nav role="navigation" class="language-nav__nav">
+                        {% for lang in langs %}
+                        {% if lang != app.request.locale %}
+                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
+                                {{ lang }}
+                            </a>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
                 {% endif %}
             </div>
         </header>
@@ -157,24 +155,22 @@
 
 
             {# Language nav #}
-            {% if requiredlocales is defined %}
-                {% set langs = requiredlocales|split('|') %}
-                {% if langs|length> 0 %}
-                    <div class="language-nav">
-                        <span class="language-nav__active-lang">
-                            {{ app.request.locale }}
-                        </span>
-                        <nav role="navigation">
-                            {% for lang in langs %}
-                            {% if lang != app.request.locale %}
-                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
-                                    {{ lang }}
-                                </a>
-                            {% endif %}
-                            {% endfor %}
-                        </nav>
-                    </div>
-                {% endif %}
+            {% set langs = get_locales() %}
+            {% if langs|length > 1 %}
+                <div class="language-nav">
+                    <span class="language-nav__active-lang">
+                        {{ app.request.locale }}
+                    </span>
+                    <nav role="navigation">
+                        {% for lang in langs %}
+                        {% if lang != app.request.locale %}
+                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
+                                {{ lang }}
+                            </a>
+                        {% endif %}
+                        {% endfor %}
+                    </nav>
+                </div>
             {% endif %}
         </div>
     </header>

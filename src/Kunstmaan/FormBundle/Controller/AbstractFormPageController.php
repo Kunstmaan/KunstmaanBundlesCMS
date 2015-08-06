@@ -22,7 +22,6 @@ class AbstractFormPageController extends Controller
             'slug'            => $request->attributes->get('url'),
             'page'            => $entity,
             'resource'        => $entity,
-            'nodemenu'        => $request->attributes->get('_nodeMenu'),
         );
 
         if (!empty($thanksParam)) {

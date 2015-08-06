@@ -1,13 +1,9 @@
 kunstmaanmenubundle_menu_admin_list:
     resource: @KunstmaanMenuBundle/Controller/MenuAdminListController.php
     type:     annotation
-    prefix:   /{_locale}/admin/menu/
-    requirements:
-         _locale: %requiredlocales%
+    prefix:   /admin/menu/
 
 kunstmaanmenubundle_menuitem_admin_list:
     resource: @KunstmaanMenuBundle/Controller/MenuItemAdminListController.php
     type:     annotation
-    prefix:   /{_locale}/admin/menu/
-    requirements:
-         _locale: %requiredlocales%
+    prefix:   /admin/menu/

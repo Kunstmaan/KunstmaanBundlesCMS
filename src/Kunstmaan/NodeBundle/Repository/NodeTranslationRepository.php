@@ -25,13 +25,18 @@ class NodeTranslationRepository extends EntityRepository
      */
     public function getChildren(Node $node)
     {
-        return $this->findBy(array('parent' => $node->getId()), array('weight' => 'ASC'));
+        return $this->findBy(
+            array('parent' => $node->getId()),
+            array('weight' => 'ASC')
+        );
     }
 
     /**
-     * QueryBuilder to fetch node translations (ignoring nodes that have been deleted)
+     * QueryBuilder to fetch node translations (ignoring nodes that have been
+     * deleted)
      *
-     * @param string $lang (optional) Only return NodeTranslations for the given language
+     * @param string $lang (optional) Only return NodeTranslations for the
+     *                     given language
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -40,7 +45,12 @@ class NodeTranslationRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('nt')
             ->select('nt,n,v')
             ->innerJoin('nt.node', 'n')
-            ->leftJoin('nt.publicNodeVersion', 'v', 'WITH', 'nt.publicNodeVersion = v.id')
+            ->leftJoin(
+                'nt.publicNodeVersion',
+                'v',
+                'WITH',
+                'nt.publicNodeVersion = v.id'
+            )
             ->where('n.deleted = false')
             ->orderBy('nt.weight')
             ->addOrderBy('nt.weight');
@@ -55,9 +65,11 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * QueryBuilder to fetch node translations that are currently published (ignoring nodes that have been deleted)
+     * QueryBuilder to fetch node translations that are currently published
+     * (ignoring nodes that have been deleted)
      *
-     * @param string $lang (optional) Only return NodeTranslations for the given language
+     * @param string $lang (optional) Only return NodeTranslations for the
+     *                     given language
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -68,7 +80,8 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * QueryBuilder to fetch immediate child NodeTranslations for a specific node and (optional) language
+     * QueryBuilder to fetch immediate child NodeTranslations for a specific
+     * node and (optional) language
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -80,8 +93,8 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * QueryBuilder to fetch immediate child NodeTranslations for a specific node and (optional) language
-     * that are currently published
+     * QueryBuilder to fetch immediate child NodeTranslations for a specific
+     * node and (optional) language that are currently published
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -92,10 +105,12 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * Get all online child node translations for a given node and (optional) language
+     * Get all online child node translations for a given node and (optional)
+     * language
      *
      * @param Node   $parent
-     * @param string $lang (optional, if not specified all languages will be returned)
+     * @param string $lang (optional, if not specified all languages will be
+     *                     returned)
      *
      * @return array
      */
@@ -117,7 +132,12 @@ class NodeTranslationRepository extends EntityRepository
         return $this->createQueryBuilder('b')
             ->select('b', 'v')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
+            ->leftJoin(
+                'b.publicNodeVersion',
+                'v',
+                'WITH',
+                'b.publicNodeVersion = v.id'
+            )
             ->where('n.deleted != 1 AND b.online = 1');
     }
 
@@ -150,8 +170,10 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return NodeTranslation|null
      */
-    public function getNodeTranslationForSlug($slug, NodeTranslation $parentNode = null)
-    {
+    public function getNodeTranslationForSlug(
+        $slug,
+        NodeTranslation $parentNode = null
+    ) {
         if (empty($slug)) {
             return $this->getNodeTranslationForSlugPart(null, $slug);
         }
@@ -173,12 +195,19 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return NodeTranslation|null
      */
-    private function getNodeTranslationForSlugPart(NodeTranslation $parentNode = null, $slugPart = '')
-    {
+    private function getNodeTranslationForSlugPart(
+        NodeTranslation $parentNode = null,
+        $slugPart = ''
+    ) {
         $qb = $this->createQueryBuilder('t')
             ->select('t', 'v', 'n')
             ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
-            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->leftJoin(
+                't.publicNodeVersion',
+                'v',
+                'WITH',
+                't.publicNodeVersion = v.id'
+            )
             ->where('n.deleted != 1')
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
@@ -209,7 +238,10 @@ class NodeTranslationRepository extends EntityRepository
      * @param string          $urlSlug        The full url
      * @param string          $locale         The locale
      * @param boolean         $includeDeleted Include deleted nodes
-     * @param NodeTranslation $toExclude      Optional NodeTranslation instance you wish to exclude
+     * @param NodeTranslation $toExclude      Optional NodeTranslation instance
+     *                                        you wish to exclude
+     * @param Node            $rootNode       Optional Root node of the tree you
+     *                                        wish to use
      *
      * @return NodeTranslation|null
      */
@@ -217,12 +249,18 @@ class NodeTranslationRepository extends EntityRepository
         $urlSlug,
         $locale = '',
         $includeDeleted = false,
-        NodeTranslation $toExclude = null
+        NodeTranslation $toExclude = null,
+        Node $rootNode = null
     ) {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 'v')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
+            ->leftJoin(
+                'b.publicNodeVersion',
+                'v',
+                'WITH',
+                'b.publicNodeVersion = v.id'
+            )
             ->addOrderBy('b.online', 'DESC')
             ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
@@ -249,6 +287,13 @@ class NodeTranslationRepository extends EntityRepository
                 ->setParameter('exclude_id', $toExclude->getId());
         }
 
+        if ($rootNode) {
+            $qb->andWhere('n.lft >= :left')
+                ->andWhere('n.rgt <= :right')
+                ->setParameter('left', $rootNode->getLeft())
+                ->setParameter('right', $rootNode->getRight());
+        }
+
         return $qb->getQuery()->getOneOrNullResult();
     }
 
@@ -262,7 +307,12 @@ class NodeTranslationRepository extends EntityRepository
         $qb = $this->createQueryBuilder('b')
             ->select('b', 'v')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->leftJoin('b.publicNodeVersion', 'v', 'WITH', 'b.publicNodeVersion = v.id')
+            ->leftJoin(
+                'b.publicNodeVersion',
+                'v',
+                'WITH',
+                'b.publicNodeVersion = v.id'
+            )
             ->where('n.parent IS NULL')
             ->andWhere('n.deleted != 1');
 
@@ -281,13 +331,19 @@ class NodeTranslationRepository extends EntityRepository
      *
      * @return NodeTranslation
      */
-    public function createNodeTranslationFor(HasNodeInterface $hasNode, $lang, Node $node, BaseUser $owner)
-    {
+    public function createNodeTranslationFor(
+        HasNodeInterface $hasNode,
+        $lang,
+        Node $node,
+        BaseUser $owner
+    ) {
         $em        = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \InvalidArgumentException("The entity of class " . $className .
-                " has no id, maybe you forgot to flush first");
+            throw new \InvalidArgumentException(
+                "The entity of class ".$className.
+                " has no id, maybe you forgot to flush first"
+            );
         }
 
         $nodeTranslation = new NodeTranslation();
@@ -300,12 +356,13 @@ class NodeTranslationRepository extends EntityRepository
 
         $em->persist($nodeTranslation);
 
-        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor(
-            $hasNode,
-            $nodeTranslation,
-            $owner,
-            null
-        );
+        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')
+            ->createNodeVersionFor(
+                $hasNode,
+                $nodeTranslation,
+                $owner,
+                null
+            );
 
         $nodeTranslation->setPublicNodeVersion($nodeVersion);
         $em->persist($nodeTranslation);
@@ -329,7 +386,10 @@ class NodeTranslationRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $rsm = new ResultSetMappingBuilder($em);
-        $rsm->addRootEntityFromClassMetadata('Kunstmaan\NodeBundle\Entity\NodeTranslation', 'nt');
+        $rsm->addRootEntityFromClassMetadata(
+            'Kunstmaan\NodeBundle\Entity\NodeTranslation',
+            'nt'
+        );
 
         $query = $em
             ->createNativeQuery(
@@ -349,20 +409,29 @@ class NodeTranslationRepository extends EntityRepository
 
 
     /**
-     * Test if all parents of the specified NodeTranslation have a node translation for the specified language
+     * Test if all parents of the specified NodeTranslation have a node
+     * translation for the specified language
      *
      * @param NodeTranslation $nodeTranslation The node translation
      * @param string          $language        The locale
      *
      * @return bool
      */
-    public function hasParentNodeTranslationsForLanguage(NodeTranslation $nodeTranslation, $language)
-    {
+    public function hasParentNodeTranslationsForLanguage(
+        NodeTranslation $nodeTranslation,
+        $language
+    ) {
         $parentNode = $nodeTranslation->getNode()->getParent();
         if ($parentNode !== null) {
-            $parentNodeTranslation = $parentNode->getNodeTranslation($language, true);
+            $parentNodeTranslation = $parentNode->getNodeTranslation(
+                $language,
+                true
+            );
             if ($parentNodeTranslation !== null) {
-                return $this->hasParentNodeTranslationsForLanguage($parentNodeTranslation, $language);
+                return $this->hasParentNodeTranslationsForLanguage(
+                    $parentNodeTranslation,
+                    $language
+                );
             } else {
                 return false;
             }
@@ -373,19 +442,28 @@ class NodeTranslationRepository extends EntityRepository
 
     /**
      * This will return 1 NodeTranslation by default (if one exists).
-     * Just give it the internal name as defined on the Node in the database and the language.
+     * Just give it the internal name as defined on the Node in the database
+     * and the language.
      *
-     * It'll only return the latest version. It'll also hide deleted & offline nodes.
+     * It'll only return the latest version. It'll also hide deleted & offline
+     * nodes.
      *
      * @param $language
      * @param $internalName
      */
-    public function getNodeTranslationByLanguageAndInternalName($language, $internalName)
-    {
+    public function getNodeTranslationByLanguageAndInternalName(
+        $language,
+        $internalName
+    ) {
         $qb = $this->createQueryBuilder('nt')
             ->select('nt', 'v')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
-            ->leftJoin('nt.publicNodeVersion', 'v', 'WITH', 'nt.publicNodeVersion = v.id')
+            ->leftJoin(
+                'nt.publicNodeVersion',
+                'v',
+                'WITH',
+                'nt.publicNodeVersion = v.id'
+            )
             ->where('n.deleted != 1')
             ->andWhere('nt.online = 1')
             ->addOrderBy('n.sequenceNumber', 'DESC')

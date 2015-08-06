@@ -3,12 +3,18 @@
 namespace Kunstmaan\MenuBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 
 class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
+    /**
+     * @var string
+     */
+    private $locale;
+
     /**
      * @param EntityManager $em        The entity manager
      * @param AclHelper     $aclHelper The acl helper
@@ -19,12 +25,19 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
      * Configure the visible columns
      */
     public function buildFields()
     {
         $this->addField('name', 'Name', true);
-        $this->addField('locale', 'Locale', true);
     }
 
     /**
@@ -33,7 +46,6 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFilters()
     {
         $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
-        $this->addFilter('locale', new ORM\StringFilterType('locale'), 'Locale');
     }
 
     /**
@@ -84,5 +96,13 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function canDelete($item)
     {
         return false;
+    }
+
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        parent::adaptQueryBuilder($queryBuilder);
+        $queryBuilder
+            ->andWhere('b.locale = :locale')
+            ->setParameter('locale', $this->locale);
     }
 }

@@ -61,7 +61,7 @@ class CommandAssistant
      */
     public function setQuestionHelper(QuestionHelper $questionHelper)
     {
-	$this->questionHelper = $questionHelper;
+        $this->questionHelper = $questionHelper;
     }
 
     /**
@@ -82,7 +82,7 @@ class CommandAssistant
 
     public function writeSection($text, $style = 'bg=blue;fg=white')
     {
-	$this->getQuestionHelper()->writeSection($this->output, $text, $style);
+        $this->getQuestionHelper()->writeSection($this->output, $text, $style);
     }
 
     /**
@@ -90,7 +90,7 @@ class CommandAssistant
      */
     private function getQuestionHelper()
     {
-	return $this->questionHelper;
+        return $this->questionHelper;
     }
 
     public function writeLine($text, $type = OutputInterface::OUTPUT_NORMAL)
@@ -98,55 +98,118 @@ class CommandAssistant
         $this->output->writeln($text, $type);
     }
 
-    public function write($text, $newLine = false, $type = OutputInterface::OUTPUT_NORMAL)
-    {
+    public function write(
+        $text,
+        $newLine = false,
+        $type = OutputInterface::OUTPUT_NORMAL
+    ) {
         $this->output->write($text, $newLine, $type);
     }
 
     public function writeError($message, $exit = false)
     {
-    $this->output->writeln($this->getQuestionHelper()->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
+        $this->output->writeln(
+            $this->getQuestionHelper()
+                ->getHelperSet()
+                ->get('formatter')
+                ->formatBlock($message, 'error')
+        );
         if ($exit) {
             exit;
         }
     }
 
-    public function askAndValidate($question, $validator, $defaultValue = null, array $autoComplete = null)
-    {
-	$validationQuestion = new Question($this->getQuestionHelper()->getQuestion($question, $defaultValue), $defaultValue);
-	$validationQuestion->setAutocompleterValues($autoComplete);
-	$validationQuestion->setValidator($validator);
-	return $this->getQuestionHelper()->ask($this->input, $this->output, $validationQuestion);
+    public function askAndValidate(
+        $question,
+        $validator,
+        $defaultValue = null,
+        array $autoComplete = null
+    ) {
+        $validationQuestion = new Question(
+            $this->getQuestionHelper()->getQuestion($question, $defaultValue),
+            $defaultValue
+        );
+        $validationQuestion->setAutocompleterValues($autoComplete);
+        $validationQuestion->setValidator($validator);
+
+        return $this->getQuestionHelper()->ask(
+            $this->input,
+            $this->output,
+            $validationQuestion
+        );
     }
 
-    public function askConfirmation($question, $defaultString, $separator = '?', $defaultValue = true)
-    {
-	$confirmationQuestion = new ConfirmationQuestion($this->getQuestionHelper()->getQuestion($question, $defaultString, $separator), $defaultValue);
-	return $this->getQuestionHelper()->ask($this->input, $this->output, $confirmationQuestion);
+    public function askConfirmation(
+        $question,
+        $defaultString,
+        $separator = '?',
+        $defaultValue = true
+    ) {
+        $confirmationQuestion = new ConfirmationQuestion(
+            $this->getQuestionHelper()->getQuestion(
+                $question,
+                $defaultString,
+                $separator
+            ), $defaultValue
+        );
+
+        return $this->getQuestionHelper()->ask(
+            $this->input,
+            $this->output,
+            $confirmationQuestion
+        );
     }
 
     public function ask($question, $default = null, array $autoComplete = null)
     {
-	$askQuestion = new Question($this->questionHelper->getQuestion($question, $default), $default);
-	$askQuestion->setAutocompleterValues($autoComplete);
-	return $this->getQuestionHelper()->ask($this->input, $this->output, $askQuestion);
+        $askQuestion = new Question(
+            $this->questionHelper->getQuestion($question, $default), $default
+        );
+        $askQuestion->setAutocompleterValues($autoComplete);
+
+        return $this->getQuestionHelper()->ask(
+            $this->input,
+            $this->output,
+            $askQuestion
+        );
     }
 
-    public function askSelect($question, $choices, $default = null, $multiSelect = false, $errorMessage = 'Value "%s" is invalid')
-    {
-	$bundleQuestion = new ChoiceQuestion($this->getQuestionHelper()->getQuestion($question, $default), $choices);
-	$bundleQuestion->setErrorMessage($errorMessage);
-	$bundleQuestion->setMultiselect($multiSelect);
-	if($multiSelect) {
-	    $toReturn = array();
-	    foreach($this->getQuestionHelper()->ask($this->input, $this->output, $bundleQuestion) as $each) {
-	    array_push($toReturn, array_search($each, $bundleQuestion->getChoices()));
-	}
-	return $toReturn;
-	} else {
-	    $value = $this->getQuestionHelper()->ask($this->input, $this->output, $bundleQuestion);
-	    return array_search($value, $bundleQuestion->getChoices());
-	}
+    public function askSelect(
+        $question,
+        $choices,
+        $default = null,
+        $multiSelect = false,
+        $errorMessage = 'Value "%s" is invalid'
+    ) {
+        $bundleQuestion = new ChoiceQuestion(
+            $this->getQuestionHelper()->getQuestion($question, $default),
+            $choices
+        );
+        $bundleQuestion->setErrorMessage($errorMessage);
+        $bundleQuestion->setMultiselect($multiSelect);
+        if ($multiSelect) {
+            $toReturn = array();
+            foreach ($this->getQuestionHelper()->ask(
+                $this->input,
+                $this->output,
+                $bundleQuestion
+            ) as $each) {
+                array_push(
+                    $toReturn,
+                    array_search($each, $bundleQuestion->getChoices())
+                );
+            }
+
+            return $toReturn;
+        } else {
+            $value = $this->getQuestionHelper()->ask(
+                $this->input,
+                $this->output,
+                $bundleQuestion
+            );
+
+            return array_search($value, $bundleQuestion->getChoices());
+        }
     }
 
     public function setOption($name, $value)
@@ -171,6 +234,8 @@ class CommandAssistant
 
     public function getOptionOrDefault($option, $default = null)
     {
-        return $this->input->hasOption($option) ? $this->input->getOption($option) : $default;
+        return $this->input->hasOption($option) ? $this->input->getOption(
+            $option
+        ) : $default;
     }
 }
