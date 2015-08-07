@@ -125,6 +125,8 @@ class SlugController extends Controller
             throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
-        return $this->render($view, $renderContext->getArrayCopy());
+        $request->attributes->set('_template', $view);
+
+        return $renderContext->getArrayCopy();
     }
 }

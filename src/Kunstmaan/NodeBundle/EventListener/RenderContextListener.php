@@ -35,9 +35,12 @@ class RenderContextListener
             return;
         }
 
-        $request            = $event->getRequest();
-        $nodeTranslation    = $request->attributes->get('_nodeTranslation');
+        $request = $event->getRequest();
+        if ($request->attributes->has('_template')) { //template is already set
+            return;
+        }
 
+        $nodeTranslation    = $request->attributes->get('_nodeTranslation');
         if ($nodeTranslation) {
             $entity          = $request->attributes->get('_entity');
             $url             = $request->attributes->get('url');
