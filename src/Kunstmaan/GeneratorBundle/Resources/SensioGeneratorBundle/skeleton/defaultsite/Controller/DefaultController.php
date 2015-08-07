@@ -17,7 +17,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return new RedirectResponse('/' . $this->container->getParameter('locale'));
+        return new RedirectResponse($this->generateUrl('_slug', array('url'=>'', '_locale'=>$this->container->getParameter('locale'))));
     }
     {% endif %}
 
