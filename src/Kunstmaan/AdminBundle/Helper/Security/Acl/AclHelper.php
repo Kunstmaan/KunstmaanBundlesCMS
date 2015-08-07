@@ -148,6 +148,7 @@ class AclHelper
         /* @var $token TokenInterface */
         $token     = $this->securityContext->getToken();
         $userRoles = array();
+        $user = null;
         if (!is_null($token)) {
             $user      = $token->getUser();
             $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
