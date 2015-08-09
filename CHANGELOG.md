@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.4.1 / 2015-08-09
+
+* [TranslatorBundle] Don't load database translations if the database does not exist. [#621](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/621) ([@roderik](https://github.com/roderik)) 
+* [TranslatorBundle] Don't warm up the database translations. [#620](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/620) ([@roderik](https://github.com/roderik)) 
+
+
 ## 3.2.4 / 2015-08-09
 
 * [GeneratorBundle] Preserve environment in defaultController:indexAction redirect [#619](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/619) ([@mwoynarski](https://github.com/mwoynarski)) 
