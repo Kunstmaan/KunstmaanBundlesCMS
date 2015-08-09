@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.2.4 / 2015-08-09
+
+* [GeneratorBundle] Preserve environment in defaultController:indexAction redirect [#619](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/619) ([@mwoynarski](https://github.com/mwoynarski)) 
+* [AdminBundle] Fixed warning in acl helper on exception handling [#617](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/617) ([@dannyvw](https://github.com/dannyvw)) 
+* [MediaBundle] Fixed 404 slideshare embed code [#616](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/616) ([@dannyvw](https://github.com/dannyvw)) 
+* [NodeBundle] Let SlugController fall through to kernel.view [#615](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/615) ([@kimausloos](https://github.com/kimausloos)) 
+* [AdminBundle] Fix CreateUserCommand with --group option [#614](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/614) ([@jverdeyen](https://github.com/jverdeyen)) 
+* [FixturesBundle] When a value holds a Fixture, it should get the entity of the fixture. [#613](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/613) ([@jverdeyen](https://github.com/jverdeyen)) 
+* [GeneratorBundle] Fix minor typo [#612](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/612) ([@jverdeyen](https://github.com/jverdeyen)) 
+* sensio/generator-bundle >=2.5.0 [#611](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/611) ([@jverdeyen](https://github.com/jverdeyen)) 
+
+
 ## 3.2.3 / 2015-08-05
 
 * [Travis] Add test DB [#609](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/609) ([@roderik](https://github.com/roderik)) 
