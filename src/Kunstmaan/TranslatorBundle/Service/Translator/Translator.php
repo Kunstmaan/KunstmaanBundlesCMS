@@ -31,6 +31,14 @@ class Translator extends SymfonyTranslator
             $this->addResourcesFromDatabaseAndCacheThem();
         }
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function warmUp($cacheDir)
+    {
+        return;
+    }
 
     /**
      * Add resources to the Translator from the cache
