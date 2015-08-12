@@ -23,7 +23,11 @@ class Populator
         foreach ($data as $property => $value) {
             foreach ($this->populators as $populator) {
                 if ($populator->canSet($entity, $property, $value)) {
-                    $populator->set($entity, $property, $value);
+                    if ($value instanceof \Kunstmaan\FixturesBundle\Loader\Fixture) {
+                        $populator->set($entity, $property, $value->getEntity());
+                    } else {
+                        $populator->set($entity, $property, $value);
+                    }
                     break;
                 }
             }

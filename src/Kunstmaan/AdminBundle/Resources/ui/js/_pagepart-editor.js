@@ -27,6 +27,10 @@ kunstmaanbundles.pagepartEditor = (function(window) {
 
     // Add
     addPagePart = function($select) {
+        if (!$select.val()) {
+            return false;
+        }
+
         var $targetContainer = $select.closest('.js-pp-container'),
             requestUrl = $select.data('url');
 

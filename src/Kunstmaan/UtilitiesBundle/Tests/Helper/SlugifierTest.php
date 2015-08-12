@@ -48,7 +48,7 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('', '', ''),
-            array('', null, 'n-a'),
+            array('', null, ''),
             array('test', '', 'test'),
             array('een titel met spaties', '', 'een-titel-met-spaties'),
             array('à partir d\'aujourd\'hui', null, 'a-partir-d-aujourd-hui'),
