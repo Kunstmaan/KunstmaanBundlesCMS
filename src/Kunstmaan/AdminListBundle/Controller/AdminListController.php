@@ -115,10 +115,23 @@ abstract class AdminListController extends Controller
         $classname = $classMetaData->getName();
         $helper    = new $classname();
         $helper    = $configurator->decorateNewEntity($helper);
-        $form      = $this->createForm($configurator->getAdminType($helper), $helper);
+
+        $formType = $configurator->getAdminType($helper);
+
+        $event = new AdaptSimpleFormEvent($request, $formType, $helper);
+        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
+        $tabPane = $event->getTabPane();
+
+        $form = $this->createForm($formType, $helper);
 
         if ($request->isMethod('POST')) {
-            $form->submit($request);
+            if ($tabPane) {
+                $tabPane->bindRequest($request);
+                $form = $tabPane->getForm();
+            } else {
+                $form->submit($request);
+            }
+
             if ($form->isValid()) {
                 $em->persist($helper);
                 $em->flush();
@@ -130,11 +143,14 @@ abstract class AdminListController extends Controller
             }
         }
 
+        $params = array('form' => $form->createView(), 'adminlistconfigurator' => $configurator);
+
+        if ($tabPane) {
+            $params = array_merge($params, array('tabPane' => $tabPane));
+        }
+
         return new Response(
-            $this->renderView(
-                $configurator->getAddTemplate(),
-                array('form' => $form->createView(), 'adminlistconfigurator' => $configurator)
-            )
+            $this->renderView($configurator->getAddTemplate(), $params)
         );
     }
 
