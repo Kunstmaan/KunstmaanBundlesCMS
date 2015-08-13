@@ -155,7 +155,9 @@
                 {# Items #}
                 {% for obj in form %}
                     <div class="js-nested-form__item nested-form__item{% if sortable %} js-sortable-item sortable-item{% endif %}"
-                            data-delete-key="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{% if obj.vars.compound %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}"
+                            {% if attr['nested_deletable'] is not defined or attr['nested_deletable'] != false %}
+                                data-delete-key="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{% if obj.vars.compound %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}"
+                            {% endif %}
                             {% if sortable %}data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
                         {# Header #}
                         <header class="{% if sortable %}js-sortable-item__handle{% endif %} nested-form__item__header">
@@ -173,6 +175,8 @@
                             {% else %}
                                 {% for child in obj.children %}
                                     {{ form_row(child) }}
+                                {% else %}
+                                    {{ form_widget(obj) }}
                                 {% endfor %}
                             {% endif %}
                         </div>
