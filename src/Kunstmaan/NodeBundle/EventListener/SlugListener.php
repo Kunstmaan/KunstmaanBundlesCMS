@@ -42,6 +42,7 @@ class SlugListener
 
     /**
      * @param FilterControllerEvent $event
+     * @throws \Exception
      */
     public function onKernelController(FilterControllerEvent $event)
     {
@@ -53,9 +54,8 @@ class SlugListener
         }
 
         $nodeTranslation = $request->attributes->get('_nodeTranslation');
-        if (!($nodeTranslation instanceof NodeTranslation)) {
-            $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslation);
-            $request->attributes->set('_nodeTranslation', $nodeTranslation);
+        if (! ($nodeTranslation instanceof NodeTranslation)) {
+            throw new \Exception('Invalid _nodeTranslation value found in request attributes');
         }
         $entity = $nodeTranslation->getRef($this->em);
 

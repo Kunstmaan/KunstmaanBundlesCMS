@@ -61,3 +61,10 @@ Refer to the DefaultAdminPanelAdaptor source to see how this is done.
 - ```get_backend_locales()``` - returns the admin (back-end) locales for the current host
 
 For multi-site / multi-domain you should make sure you no longer use the requiredlocales
+`
+
+## Custom route loaders not possible anymore when they use a page controller (BC breaking)
+
+It is not possible anymore to use custom route loaders (`LoaderInterface`) for defining extra routes
+that are handled via the controller of a `Page`. You should use a custom router (`RouterInterface`) instead
+to define the route, and put the `_nodeTranslation` variable in the `_route_params` in the match function.
