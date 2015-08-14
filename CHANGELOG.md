@@ -1,8 +1,56 @@
 # Changelog
 
+## 3.2.4.1 / 2015-08-09
+
+* [TranslatorBundle] Don't load database translations if the database does not exist. [#621](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/621) ([@roderik](https://github.com/roderik)) 
+* [TranslatorBundle] Don't warm up the database translations. [#620](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/620) ([@roderik](https://github.com/roderik)) 
+
+
+## 3.2.4 / 2015-08-09
+
+* [GeneratorBundle] Preserve environment in defaultController:indexAction redirect [#619](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/619) ([@mwoynarski](https://github.com/mwoynarski)) 
+* [AdminBundle] Fixed warning in acl helper on exception handling [#617](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/617) ([@dannyvw](https://github.com/dannyvw)) 
+* [MediaBundle] Fixed 404 slideshare embed code [#616](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/616) ([@dannyvw](https://github.com/dannyvw)) 
+* [NodeBundle] Let SlugController fall through to kernel.view [#615](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/615) ([@kimausloos](https://github.com/kimausloos)) 
+* [AdminBundle] Fix CreateUserCommand with --group option [#614](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/614) ([@jverdeyen](https://github.com/jverdeyen)) 
+* [FixturesBundle] When a value holds a Fixture, it should get the entity of the fixture. [#613](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/613) ([@jverdeyen](https://github.com/jverdeyen)) 
+* [GeneratorBundle] Fix minor typo [#612](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/612) ([@jverdeyen](https://github.com/jverdeyen)) 
+* sensio/generator-bundle >=2.5.0 [#611](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/611) ([@jverdeyen](https://github.com/jverdeyen)) 
+
+
+## 3.2.3 / 2015-08-05
+
+* [Travis] Add test DB [#609](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/609) ([@roderik](https://github.com/roderik)) 
+* [Composer] Update some dependencies [#608](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/608) ([@roderik](https://github.com/roderik)) 
+* [AdminListBundle] Remove bad twig markup [#606](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/606) ([@mwoynarski](https://github.com/mwoynarski)) 
+* [MenuBundle] Make it possible to show hidden from nav menu nodes via the menu bundle twig extension [#605](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/605) ([@jockri](https://github.com/jockri)) 
+* [Tests] Do not use n-a as default slugified text [#603](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/603) ([@krispypen](https://github.com/krispypen)) 
+* [AdminBundle] Fix admin locale listener for >= Symfony 2.6 [#601](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/601) ([@Devolicious](https://github.com/Devolicious)) 
+* [Dependencies] Support for symfony2.7 [#600](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/600) ([@krispypen](https://github.com/krispypen)) 
+* [AdminBundle] fixed nested-form multiple add buttons [#596](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/596) ([@jeroenjans](https://github.com/jeroenjans)) 
+* [NodeSearchBundle] fix escaping the search query [#592](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/592) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [NodeBundle] Added 3 new helper methods [#590](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/590) ([@tentwofour](https://github.com/tentwofour)) 
+* [PagePartBundle] fix for pageparts containing bootstrap3 columns [#588](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/588) ([@wimvds](https://github.com/wimvds)) 
+* [NodeSearchBundle] `indexType` needs to have language appended [#587](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/587) ([@mlebkowski](https://github.com/mlebkowski)) 
+
+
+## 3.2.2 / 2015-07-23
+
+* [NodeBundle] fix loading hidden nodes with internalnames [#582](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/582) ([@krispypen](https://github.com/krispypen)) 
+* [NodeBundle] Re-add the nodemenu again and make it lazy loading [#581](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/581) ([@krispypen](https://github.com/krispypen)) 
+* [AdminBundle] Fix the datepicker with new added fields [#578](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/578) ([@Sambego](https://github.com/Sambego)) 
+* [Documentation] Update the single language documentation [#577](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/577) ([@timhc22](https://github.com/timhc22)) 
+* [AdminBundle] use `AuthorizationChecker` interface instead of a concrete implementation [#576](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/576) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [Travis] Remove the memory limit on all travis tests [#574](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/574) ([@roderik](https://github.com/roderik)) 
+* [MediaBundle] Empty media preview is resulting in a request to homepage [#573](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/573) ([@yoshz](https://github.com/yoshz)) 
+* [AdminBundle] Added missing assetic dependency for icon-chooser.js [#572](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/572) ([@yoshz](https://github.com/yoshz)) 
+* [TaggingBundle] Change parameter type to BaseTaggable [#571](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/571) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [AdminBundle, MediaBundle] Fix the iconchooser [#569](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/569) ([@Sambego](https://github.com/Sambego)) 
+
+
 ## 3.2.1.1 / 2015-07-17
 
-* Don't ensure slug for root nodes (broken after #558) [#567](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/567) ([@yoshz](https://github.com/yoshz)) 
+* [NodeBundle] Don't ensure slug for root nodes (broken after #558) [#567](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/567) ([@yoshz](https://github.com/yoshz)) 
 * [Documentation] Minimal typofix. al -> all [#565](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/565) ([@tarjei](https://github.com/tarjei)) 
 * [Documentation] Update the search docs [#564](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/564) ([@tarjei](https://github.com/tarjei)) 
 * [Tests] Use new travis config for submodules and bring them in line with eachother [#563](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/563) ([@krispypen](https://github.com/krispypen)) 

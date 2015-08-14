@@ -265,7 +265,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     public function deleteNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $uid = 'nodetranslation_' . $nodeTranslation->getId();
-        $this->searchProvider->deleteDocument($this->indexName, $this->indexType, $uid);
+        $indexType = $this->indexType . '_' . $nodeTranslation->getLang();
+        $this->searchProvider->deleteDocument($this->indexName, $indexType, $uid);
     }
 
     /**

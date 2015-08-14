@@ -31,6 +31,14 @@ class Translator extends SymfonyTranslator
             $this->addResourcesFromDatabaseAndCacheThem();
         }
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function warmUp($cacheDir)
+    {
+        return;
+    }
 
     /**
      * Add resources to the Translator from the cache
@@ -55,13 +63,16 @@ class Translator extends SymfonyTranslator
      */
     public function addResourcesFromDatabaseAndCacheThem($cacheResources = true)
     {
-        $resources = $this->translationRepository->getAllDomainsByLocale();
-        $this->addResources($resources);
+        try {
+            $resources = $this->translationRepository->getAllDomainsByLocale();
+            $this->addResources($resources);
 
-        if ($cacheResources === true) {
-            $this->resourceCacher->cacheResources($resources);
+            if ($cacheResources === true) {
+                $this->resourceCacher->cacheResources($resources);
+            }
+        } catch (\Exception $ex){
+            // don't load if the database doesn't work
         }
-
     }
 
     /**

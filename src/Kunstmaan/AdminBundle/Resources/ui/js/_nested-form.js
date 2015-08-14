@@ -15,11 +15,14 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
     init = function() {
         $('.js-nested-form').each(function() {
             var $form = $(this),
-                initialized = $form.data('initialized');
+                initialized = $form.data('initialized'),
+                initializing = $form.data('initializing');
 
-            if(!initialized) {
+            if(!initialized && !initializing) {
+                $form.data('initializing', true);
                 setupForm($form);
                 $form.data('initialized', true);
+                $form.data('initializing', false);
             }
         });
     };
@@ -130,14 +133,16 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
             $newItem;
 
         // Update prototype with new index
-        prototype = prototype.replace(/__name__/g, currentIndex);
+        var nestedLevelProtoName = prototype.match(/__[a-z]+__/g)[0];
+        var regExpName = new RegExp(nestedLevelProtoName, 'g');
+        prototype = prototype.replace(regExpName, currentIndex);
 
         // Increase the index with one for the next item
         $form.data('index', currentIndex + 1);
 
         // Make item template
         if(sortable) {
-            var sortKey = $form.data('sortkey').replace(/__name__/g, currentIndex);
+            var sortKey = $form.data('sortkey').replace(regExpName, currentIndex);
             $newItem = $('<div class="js-nested-form__item nested-form__item js-sortable-item sortable-item" data-sortkey="' + sortKey + '"><header class="js-sortable-item__handle nested-form__item__header"><i class="fa fa-arrows nested-form__item__header__move-icon"></i><div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div></header><div class="js-nested-form__item__view nested-form__item__view"></div></div>');
         } else {
             $newItem = $('<div class="js-nested-form__item nested-form__item"><header class="nested-form__item__header"><div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div></header><div class="js-nested-form__item__view nested-form__item__view"></div></div>');

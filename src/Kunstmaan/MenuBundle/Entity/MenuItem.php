@@ -398,7 +398,7 @@ class MenuItem extends AbstractEntity
     {
         if ($this->getType() == self::TYPE_URL_LINK) {
            return true;
-        } elseif ($this->getNodeTranslation()->isOnline() && !$this->getNodeTranslation()->getNode()->isDeleted() && !$this->getNodeTranslation()->getNode()->getHiddenFromNav()) {
+        } elseif ($this->getNodeTranslation()->isOnline() && !$this->getNodeTranslation()->getNode()->isDeleted()) {
             return true;
         }
 

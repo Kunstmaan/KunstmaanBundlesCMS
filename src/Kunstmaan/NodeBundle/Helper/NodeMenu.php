@@ -83,6 +83,11 @@ class NodeMenu
     private $nodesByInternalName = array();
 
     /**
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
      * @param EntityManagerInterface   $em                   The entity manager
      * @param SecurityContextInterface $securityContext      The security context
      * @param AclHelper                $aclHelper            The ACL helper
@@ -110,24 +115,32 @@ class NodeMenu
         $this->includeHiddenFromNav = $includeHiddenFromNav;
         $this->permission           = $permission;
         $this->currentNode          = $currentNode;
+    }
 
-        /* @var NodeRepository $repo */
-        $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
+    /**
+     * This method initializes the nodemenu only once, the method may be executed multiple times
+     */
+    private function init() {
+        if (!$this->initialized) {
+            /* @var NodeRepository $repo */
+            $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
-        // Get all possible menu items in one query (also fetch offline nodes)
-        $nodes = $repo->getChildNodes(false, $this->lang, $permission, $this->aclHelper, $includeHiddenFromNav);
-        foreach ($nodes as $node) {
-            $this->allNodes[$node->getId()] = $node;
+            // Get all possible menu items in one query (also fetch offline nodes)
+            $nodes = $repo->getChildNodes(false, $this->lang, $this->permission, $this->aclHelper, $this->includeHiddenFromNav, true);
+            foreach ($nodes as $node) {
+                $this->allNodes[$node->getId()] = $node;
 
-            if ($node->getParent()) {
-                $this->childNodes[$node->getParent()->getId()][] = $node;
-            } else {
-                $this->childNodes[0][] = $node;
+                if ($node->getParent()) {
+                    $this->childNodes[$node->getParent()->getId()][] = $node;
+                } else {
+                    $this->childNodes[0][] = $node;
+                }
+
+                if ($node->getInternalName()) {
+                    $this->nodesByInternalName[$node->getInternalName()][] = $node;
+                }
             }
-
-            if ($node->getInternalName()) {
-                $this->nodesByInternalName[$node->getInternalName()][] = $node;
-            }
+            $this->initialized = true;
         }
     }
 
@@ -136,6 +149,7 @@ class NodeMenu
      */
     public function getTopNodes()
     {
+        $this->init();
         if (!is_array($this->topNodeMenuItems)) {
             $this->topNodeMenuItems = array();
 
@@ -229,6 +243,7 @@ class NodeMenu
      */
     public function getChildren(Node $node, $includeHiddenFromNav = true)
     {
+        $this->init();
         $children = array();
 
         if (array_key_exists($node->getId(), $this->childNodes)) {
@@ -254,12 +269,83 @@ class NodeMenu
     }
 
     /**
+     * @param \Kunstmaan\NodeBundle\Entity\Node $node
+     * @param bool $includeHiddenFromNav
+     *
+     * @return array|\Kunstmaan\NodeBundle\Helper\NodeMenuItem[]
+     */
+    public function getSiblings(Node $node, $includeHiddenFromNav = true)
+    {
+        $this->init();
+        $siblings = array();
+
+        if (false !== $parent = $this->getParent($node)) {
+            $siblings = $this->getChildren($parent, $includeHiddenFromNav);
+
+            foreach($siblings as $index => $child) {
+                if ($child === $node) {
+                    unset($siblings[$index]);
+                }
+            }
+        }
+
+        return $siblings;
+    }
+
+    /**
+     * @param \Kunstmaan\NodeBundle\Entity\Node $node
+     * @param bool $includeHiddenFromNav
+     *
+     * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
+     */
+    public function getPreviousSibling(Node $node, $includeHiddenFromNav = true)
+    {
+        $this->init();
+
+        if (false !== $parent = $this->getParent($node)) {
+            $siblings = $this->getChildren($parent, $includeHiddenFromNav);
+
+            foreach($siblings as $index => $child) {
+                if ($child->getNode() === $node && ($index - 1 >= 0)) {
+                    return $siblings[$index - 1];
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Kunstmaan\NodeBundle\Entity\Node $node
+     * @param bool $includeHiddenFromNav
+     *
+     * @return bool|\Kunstmaan\NodeBundle\Helper\NodeMenuItem
+     */
+    public function getNextSibling(Node $node, $includeHiddenFromNav = true)
+    {
+        $this->init();
+
+        if (false !== $parent = $this->getParent($node)) {
+            $siblings = $this->getChildren($parent, $includeHiddenFromNav);
+
+            foreach($siblings as $index => $child) {
+                if ($child->getNode() === $node && (($index+1) < count($siblings))) {
+                    return $siblings[$index + 1];
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param Node $node
      *
      * @return NodeMenuItem
      */
     public function getParent(Node $node)
     {
+        $this->init();
         if ($node->getParent() && array_key_exists($node->getParent()->getId(), $this->allNodes)) {
             return $this->allNodes[$node->getParent()->getId()];
         }
@@ -287,6 +373,7 @@ class NodeMenu
      */
     public function getNodeByInternalName($internalName, $parent = null, $includeOffline = null)
     {
+        $this->init();
         $resultNode = null;
 
         if (is_null($includeOffline)) {
@@ -433,6 +520,14 @@ class NodeMenu
         }
 
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInitialized()
+    {
+        return $this->initialized;
     }
 
 }
