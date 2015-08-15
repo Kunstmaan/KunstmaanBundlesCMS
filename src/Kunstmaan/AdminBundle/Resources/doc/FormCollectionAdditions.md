@@ -79,6 +79,19 @@ class MySubAdminType extends AbstractType
 If you don't set the nested_sortable_field attribute, a default of "weight" will be used (so you must make sure your
 form type has a getter and setter for a weight field if you don't set it).
 
+## Many to Many relations
+
+If you have a many-to-many relation, you wouldn’t want to delete the related entity when removing it from page part.
+In order to skip this, set 'nested_deletable => false` attribute, i.e.:
+
+```
+'attr' => array(
+    'nested_form'           => true,
+    'nested_deletable'      => false,
+)
+```                
+
+
 ## References
 
 - [Using sub entities in pageparts](http://bundles.kunstmaan.be/news/using-sub-entities-in-pageparts)
