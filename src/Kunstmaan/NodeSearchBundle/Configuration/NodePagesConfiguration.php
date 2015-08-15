@@ -508,6 +508,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             $request = new Request();
             $request->setLocale($lang);
 
+            $context = $this->container->get('router')->getContext();
+            $context->setParameter('_locale', $lang);
+
             $major = Kernel::MAJOR_VERSION;
             $minor = Kernel::MINOR_VERSION;
             if ((int)$major > 2 || ((int)$major == 2 && (int)$minor >= 4)) {
