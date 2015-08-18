@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\NodeSearchBundle\Search;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -17,9 +19,25 @@ class NodeSearcher extends AbstractElasticaSearcher
     /** @var SecurityContextInterface */
     private $securityContext = null;
 
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var DomainConfigurationInterface */
+    private $domainConfiguration;
+
     public function setSecurityContext(SecurityContextInterface $securityContext)
     {
         $this->securityContext = $securityContext;
+    }
+
+    public function setEntityManager(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
+    {
+        $this->domainConfiguration = $domainConfiguration;
     }
 
     /**
@@ -62,6 +80,13 @@ class NodeSearcher extends AbstractElasticaSearcher
             $elasticaQueryBool->addMust($elasticaQueryType);
         }
 
+        $rootNode = $this->domainConfiguration->getRootNode();
+        if (!is_null($rootNode)) {
+            $elasticaQueryRoot = new \Elastica\Query\Term();
+            $elasticaQueryRoot->setTerm('root_id', $rootNode->getId());
+            $elasticaQueryBool->addMust($elasticaQueryRoot);
+        }
+
         $this->query->setQuery($elasticaQueryBool);
         $this->query->setHighlight(
             array(
@@ -79,7 +104,8 @@ class NodeSearcher extends AbstractElasticaSearcher
     }
 
     /**
-     * Filter search results so only documents that are viewable by the current user will be returned...
+     * Filter search results so only documents that are viewable by the current
+     * user will be returned...
      *
      * @param \Elastica\Query\Bool $elasticaQueryBool
      */

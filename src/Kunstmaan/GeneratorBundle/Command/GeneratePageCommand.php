@@ -175,6 +175,10 @@ EOT
          * Ask which default page template we need to use
          */
         $templateSelect = $this->getTemplateList();
+        if (empty($templateSelect)) {
+            throw new \RuntimeException('You need to define at least one page template before running the page generator!');
+        }
+
         $this->assistant->writeLine('');
         $templateId = $this->assistant->askSelect('Which page template do you want to use', $templateSelect);
         $templateConfigs = $this->getAvailableTemplates($this->bundle);

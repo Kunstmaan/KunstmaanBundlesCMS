@@ -5,3 +5,9 @@
         {{ "This list contains all the pages, chronologically ordered by updated date." | trans }}
     </small>
 {% endblock %}
+
+{% block content %}
+    {{ parent() }}
+
+    {% include 'KunstmaanNodeBundle:Admin:_add_homepage_modal.html.twig' %}
+{% endblock %}

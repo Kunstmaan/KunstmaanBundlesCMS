@@ -30,33 +30,38 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'localeswitcher_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
+            'localeswitcher_widget' => new \Twig_Function_Method(
+                $this,
+                'renderWidget',
+                array('is_safe' => array('html'))
+            ),
         );
     }
 
     /**
      * Render locale switcher widget.
      *
-     * @param string $localeSwitcher The locale switcher
-     * @param string $route          The route
-     * @param array  $parameters     The route parameters
+     * @param array  $locales    The locales
+     * @param string $route      The route
+     * @param array  $parameters The route parameters
      *
      * @return string
      */
-    public function renderWidget($localeSwitcher, $route, array $parameters = array())
+    public function renderWidget($locales, $route, array $parameters = array())
     {
-        $template = $this->environment->loadTemplate("KunstmaanAdminBundle:LocaleSwitcherTwigExtension:widget.html.twig");
-        $locales=array();
-        $help=strtok($localeSwitcher, "|");
-        while ($help !== false) {
-            $locales[] = $help;
-            $help = strtok("|");
-        }
+        $template = $this->environment->loadTemplate(
+            "KunstmaanAdminBundle:LocaleSwitcherTwigExtension:widget.html.twig"
+        );
 
-        return $template->render(array_merge($parameters, array(
-            'locales'   => $locales,
-            'route'		=> $route
-        )));
+        return $template->render(
+            array_merge(
+                $parameters,
+                array(
+                    'locales' => $locales,
+                    'route'   => $route
+                )
+            )
+        );
     }
 
     /**

@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
+        {% if pagerfanta is defined %}
             {% set searchResults = pagerfanta.currentPageResults() %}
             {% set facets = pagerfanta.getAdapter().getFacets() %}
             {% if facets is not empty %}
@@ -23,6 +24,7 @@
                     </ul>
                 {% endif %}
             {% endif %}
+        {% endif %}
         </div>
 
         <div class="col-md-9 col--padded">

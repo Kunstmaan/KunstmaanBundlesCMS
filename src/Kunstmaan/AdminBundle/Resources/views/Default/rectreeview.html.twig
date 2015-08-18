@@ -7,7 +7,7 @@
             {% endif %}
             data-page="{{ menuitem.attributes.page|json_encode }}"
         {% endif %}
-    class="{% if menuitem.active or nodeId == 'node-1' %}jstree-open{% endif %}{% if menuitem.offline %} jstree-node--offline{% endif %}"{% if menuitem.role %} rel="{{menuitem.role}}"{% endif %}>
+    class="{% if menuitem.active or treeLevel == 1 %}jstree-open{% endif %}{% if menuitem.offline %} jstree-node--offline{% endif %}"{% if menuitem.role %} rel="{{menuitem.role}}"{% endif %}>
     {% if menuitem.route %}
         <a href="{{ path(menuitem.route, menuitem.routeparams) }}" class="{% if currentMenuItem is not null and currentMenuItem.uniqueId == menuitem.uniqueId %}active{% endif %}">
             {{ menuitem.label }}
@@ -17,8 +17,10 @@
     {% endif %}
 
     <ul>
+    {% set treeLevel = treeLevel + 1 %}
     {% for menuitem in menuitem.navigationChildren %}
         {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
     {% endfor %}
+    {% set treeLevel = treeLevel - 1 %}
     </ul>
 </li>

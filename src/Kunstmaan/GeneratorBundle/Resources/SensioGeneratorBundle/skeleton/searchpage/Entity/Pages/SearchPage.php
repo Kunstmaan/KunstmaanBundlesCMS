@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Entity\Pages\Search;
+namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
@@ -16,7 +16,6 @@ class SearchPage extends AbstractSearchPage
      */
     public function getDefaultView()
     {
-        return "{{ bundle.getName() }}:Pages\Search\SearchPage:view.html.twig";
+        return '{{ bundle.getName() }}:Pages\SearchPage:view.html.twig';
     }
-
 }

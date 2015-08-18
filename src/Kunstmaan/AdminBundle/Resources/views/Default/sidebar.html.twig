@@ -25,6 +25,7 @@
             </a>
             <ul>
     {% endif %}
+    {% set treeLevel = 1 %}
     {% for menuitem in navigationChildren %}
         {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
     {% endfor %}

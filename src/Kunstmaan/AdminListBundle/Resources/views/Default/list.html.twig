@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block extra_actions_header %}
-    {% if adminlist.canAdd() or adminlist.canExport() %}
+    {% if adminlist.canAdd() or adminlist.canExport() or adminlist.hasListActions() %}
         <div class="col-sm-6 col-md-4">
             <div class="app__content__header__extra-actions">
                 <div class="btn-group">
@@ -70,7 +70,7 @@
                         </div>
                     {% endif %}
 
-                    {% if adminlist.hasListActions %}
+                    {% if adminlist.hasListActions() %}
                         {% for action in adminlist.getListActions() %}
                             {% if action.template is not null %}
                                 {% include action.template with {'action': action} %}

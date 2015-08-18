@@ -2,9 +2,12 @@
 
 namespace Kunstmaan\NodeBundle\Router;
 
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -14,23 +17,29 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * The SlugRouter takes care of routing the paths for slugs. It should have the lowest priority as it's a
- * catch-all router that routes (almost) all requests to the SlugController
+ * The SlugRouter takes care of routing the paths for slugs. It should have the
+ * lowest priority as it's a catch-all router that routes (almost) all requests
+ * to the SlugController
  */
 class SlugRouter implements RouterInterface
 {
-
     /** @var RequestContext */
-    private $context;
+    protected $context;
 
     /** @var RouteCollection */
-    private $routeCollection;
+    protected $routeCollection;
 
     /** @var UrlGenerator */
-    private $urlGenerator;
+    protected $urlGenerator;
 
     /** @var ContainerInterface */
-    private $container;
+    protected $container;
+
+    /** @var string */
+    protected $slugPattern;
+
+    /** @var DomainConfigurationInterface */
+    protected $domainConfiguration;
 
     /**
      * The constructor for this service
@@ -39,100 +48,36 @@ class SlugRouter implements RouterInterface
      */
     public function __construct($container)
     {
-        $this->container       = $container;
-        $this->routeCollection = new RouteCollection();
-
-        $multilanguage = $this->container->getParameter('multilanguage');
-        $defaultlocale = $this->container->getParameter('defaultlocale');
-
-        if ($multilanguage) {
-            // the website is multilingual so the language is the first parameter
-            $requiredLocales = $this->container->getParameter('requiredlocales');
-
-            $this->routeCollection->add(
-                '_slug_preview',
-                new Route(
-                    '/{_locale}/admin/preview/{url}',
-                    array(
-                        '_controller' => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'     => true,
-                        'url'         => ''
-                    ),
-                    array(
-                        '_locale' => $requiredLocales,
-                        'url'     => "[a-zA-Z0-9\-_\/]*"
-                    ) // override default validation of url to accept /, - and _
-                )
-            );
-            $this->routeCollection->add(
-                '_slug',
-                new Route(
-                    '/{_locale}/{url}',
-                    array(
-                        '_controller' => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'     => false,
-                        'url'         => ''
-                    ),
-                    array('_locale' => $requiredLocales, 'url' => "[a-zA-Z0-9\-_\/]*")
-                )
-            );
-        } else {
-            // the website is not multilingual, _locale must do a fallback to the default locale
-            $this->routeCollection->add(
-                '_slug_preview',
-                new Route(
-                    '/admin/preview/{url}',
-                    array(
-                        '_controller' => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'     => true,
-                        'url'         => '',
-                        '_locale'     => $defaultlocale
-                    ),
-                    array('url' => "[a-zA-Z0-9\-_\/]*")
-                )
-            );
-            $this->routeCollection->add(
-                '_slug',
-                new Route(
-                    '/{url}',
-                    array(
-                        '_controller' => 'KunstmaanNodeBundle:Slug:slug',
-                        'preview'     => false,
-                        'url'         => '',
-                        '_locale'     => $defaultlocale
-                    ),
-                    array('url' => "[a-zA-Z0-9\-_\/]*")
-                )
-            );
-        }
+        $this->container           = $container;
+        $this->slugPattern         = "[a-zA-Z0-9\-_\/]*";
+        $this->domainConfiguration = $container->get('kunstmaan_node.domain_configuration');
     }
-
 
     /**
      * Match given urls via the context to the routes we defined.
-     * This functionality re-uses the default Symfony way of routing and its components
+     * This functionality re-uses the default Symfony way of routing and its
+     * components
      *
      * @param string $pathinfo
+     *
      * @throws ResourceNotFoundException
      *
      * @return array
      */
     public function match($pathinfo)
     {
-        $urlMatcher = new UrlMatcher($this->routeCollection, $this->getContext());
-        $result = $urlMatcher->match($pathinfo);
+        $urlMatcher = new UrlMatcher(
+            $this->getRouteCollection(),
+            $this->getContext()
+        );
+        $result     = $urlMatcher->match($pathinfo);
 
         if (!empty($result)) {
-            // The route matches, now check if it actually exists (needed for proper chain router chaining!)
-            $em = $this->container->get('doctrine.orm.entity_manager');
-
-            /* @var NodeTranslationRepository $nodeTranslationRepo */
-            $nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
-            /* @var NodeTranslation $nodeTranslation */
-            $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl($result['url'], $result['_locale']);
-
+            $nodeTranslation = $this->getNodeTranslation($result);
             if (is_null($nodeTranslation)) {
-                throw new ResourceNotFoundException('No page found for slug ' . $pathinfo);
+                throw new ResourceNotFoundException(
+                    'No page found for slug ' . $pathinfo
+                );
             }
             $result['_nodeTranslation'] = $nodeTranslation;
         }
@@ -150,8 +95,8 @@ class SlugRouter implements RouterInterface
     public function getContext()
     {
         if (!isset($this->context)) {
-            /* @var Request $request */
-            $request = $this->container->get('request');
+            /** @var Request $request */
+            $request = $this->getMasterRequest();
 
             $this->context = new RequestContext();
             $this->context->fromRequest($request);
@@ -183,7 +128,10 @@ class SlugRouter implements RouterInterface
      */
     public function generate($name, $parameters = array(), $absolute = false)
     {
-        $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->context);
+        $this->urlGenerator = new UrlGenerator(
+            $this->getRouteCollection(),
+            $this->context
+        );
 
         return $this->urlGenerator->generate($name, $parameters, $absolute);
     }
@@ -195,6 +143,220 @@ class SlugRouter implements RouterInterface
      */
     public function getRouteCollection()
     {
+        if (is_null($this->routeCollection)) {
+            $this->routeCollection = new RouteCollection();
+
+            $this->addPreviewRoute();
+            $this->addSlugRoute();
+        }
+
         return $this->routeCollection;
+    }
+
+    /**
+     * @return null|\Symfony\Component\HttpFoundation\Request
+     */
+    protected function getMasterRequest()
+    {
+        /** @var RequestStack $requestStack */
+        $requestStack = $this->container->get('request_stack');
+        if (is_null($requestStack)) {
+            return null;
+        }
+
+        return $requestStack->getMasterRequest();
+    }
+
+    /**
+     * Add the preview route to the route collection
+     */
+    protected function addPreviewRoute()
+    {
+        $routeParameters = $this->getPreviewRouteParameters();
+        $this->addRoute('_slug_preview', $routeParameters);
+    }
+
+    /**
+     * Add the slug route to the route collection
+     */
+    protected function addSlugRoute()
+    {
+        $routeParameters = $this->getSlugRouteParameters();
+        $this->addRoute('_slug', $routeParameters);
+    }
+
+    /**
+     * Return preview route parameters
+     *
+     * @return array
+     */
+    protected function getPreviewRouteParameters()
+    {
+        $previewPath         = '/admin/preview/{url}';
+        $previewDefaults     = array(
+            '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+            'preview'     => true,
+            'url'         => '',
+            '_locale'     => $this->getDefaultLocale()
+        );
+        $previewRequirements = array(
+            'url' => $this->getSlugPattern()
+        );
+
+        if ($this->isMultiLanguage()) {
+            $previewPath = '/{_locale}'.$previewPath;
+            unset($previewDefaults['_locale']);
+            $previewRequirements['_locale'] = $this->getEscapedLocales($this->getBackendLocales());
+        }
+
+        return array(
+            'path'         => $previewPath,
+            'defaults'     => $previewDefaults,
+            'requirements' => $previewRequirements
+        );
+    }
+
+    /**
+     * Return slug route parameters
+     *
+     * @return array
+     */
+    protected function getSlugRouteParameters()
+    {
+        $slugPath         = '/{url}';
+        $slugDefaults     = array(
+            '_controller' => 'KunstmaanNodeBundle:Slug:slug',
+            'preview'     => false,
+            'url'         => '',
+            '_locale'     => $this->getDefaultLocale()
+        );
+        $slugRequirements = array(
+            'url' => $this->getSlugPattern()
+        );
+
+        if ($this->isMultiLanguage()) {
+            $slugPath = '/{_locale}'.$slugPath;
+            unset($slugDefaults['_locale']);
+            $slugRequirements['_locale'] = $this->getEscapedLocales($this->getFrontendLocales());
+        }
+
+        return array(
+            'path'         => $slugPath,
+            'defaults'     => $slugDefaults,
+            'requirements' => $slugRequirements
+        );
+    }
+
+    /**
+     * @return boolean
+     */
+    protected function isMultiLanguage()
+    {
+        return $this->domainConfiguration->isMultiLanguage();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFrontendLocales()
+    {
+        return $this->domainConfiguration->getFrontendLocales();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBackendLocales()
+    {
+        return $this->domainConfiguration->getBackendLocales();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultLocale()
+    {
+        return $this->domainConfiguration->getDefaultLocale();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getHost()
+    {
+        return $this->domainConfiguration->getHost();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSlugPattern()
+    {
+        return $this->slugPattern;
+    }
+
+    /**
+     * @param string $name
+     * @param array  $parameters
+     */
+    protected function addRoute($name, array $parameters = array())
+    {
+        $this->routeCollection->add(
+            $name,
+            new Route(
+                $parameters['path'],
+                $parameters['defaults'],
+                $parameters['requirements']
+            )
+        );
+    }
+
+    /**
+     * @param array $matchResult
+     *
+     * @return \Kunstmaan\NodeBundle\Entity\NodeTranslation
+     */
+    protected function getNodeTranslation($matchResult)
+    {
+        // The route matches, now check if it actually exists (needed for proper chain router chaining!)
+        $nodeTranslationRepo = $this->getNodeTranslationRepository();
+
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl(
+            $matchResult['url'],
+            $matchResult['_locale']
+        );
+
+        return $nodeTranslation;
+    }
+
+    /**
+     * @return \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository
+     */
+    protected function getNodeTranslationRepository()
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+
+        /* @var NodeTranslationRepository $nodeTranslationRepo */
+        $nodeTranslationRepo = $em->getRepository(
+            'KunstmaanNodeBundle:NodeTranslation'
+        );
+
+        return $nodeTranslationRepo;
+    }
+
+    /**
+     * @param array $locales
+     *
+     * @return string
+     */
+    protected function getEscapedLocales($locales)
+    {
+        $escapedLocales = array();
+        foreach ($locales as $locale) {
+            $escapedLocales[] = str_replace('-', '\-', $locale);
+        }
+
+        return join('|', $escapedLocales);
     }
 }

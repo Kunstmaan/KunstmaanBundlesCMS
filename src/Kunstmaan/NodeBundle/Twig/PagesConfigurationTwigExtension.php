@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Twig;
 
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 
 class PagesConfigurationTwigExtension extends \Twig_Extension
@@ -26,12 +27,32 @@ class PagesConfigurationTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'get_possible_child_types' => new \Twig_SimpleFunction('get_possible_child_types', function ($ref) {
-                return $this->pagesConfiguration->getPossibleChildTypes($ref);
-            })
+            'get_possible_child_types' => new \Twig_SimpleFunction(
+                'get_possible_child_types', [$this, 'getPossibleChildTypes']
+            ),
+            'get_homepage_types'       => new \Twig_SimpleFunction(
+                'get_homepage_types', [$this, 'getHomepageTypes']
+            ),
         ];
     }
 
+    /**
+     * @param string|HasNodeInterface $reference
+     *
+     * @return array
+     */
+    public function getPossibleChildTypes($reference)
+    {
+        return $this->pagesConfiguration->getPossibleChildTypes($reference);
+    }
+
+    /**
+     * @return array
+     */
+    public function getHomepageTypes()
+    {
+        return $this->pagesConfiguration->getHomepageTypes();
+    }
 
     /**
      * Returns the name of the extension.

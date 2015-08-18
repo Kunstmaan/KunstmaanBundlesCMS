@@ -1,5 +1,6 @@
 parameters:
     kunstmaan_admin.menubuilder.class: 'Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder'
+    kunstmaan_admin.admin_panel.class: 'Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel'
     kunstmaan_admin.apply_acl_changeset.listener.class: 'Kunstmaan\AdminBundle\EventListener\ApplyAclChangesetListener'
     kunstmaan_admin.login.listener.class: 'Kunstmaan\AdminBundle\EventListener\LoginListener'
     kunstmaan_admin.admin_locale.listener.class: 'Kunstmaan\AdminBundle\EventListener\AdminLocaleListener'
@@ -15,6 +16,9 @@ services:
     kunstmaan_admin.menubuilder:
         class: "%kunstmaan_admin.menubuilder.class%"
         arguments: ["@translator", "@service_container"]
+
+    kunstmaan_admin.admin_panel:
+        class: "%kunstmaan_admin.admin_panel.class%"
 
     kunstmaan_admin.menu.adaptor.modules:
         class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
@@ -41,7 +45,7 @@ services:
 
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
-        arguments: ["@kunstmaan_admin.menubuilder"]
+        arguments: ["@kunstmaan_admin.menubuilder", "@kunstmaan_admin.admin_panel"]
         tags:
             -  { name: 'twig.extension' }
 
@@ -163,3 +167,9 @@ services:
         arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
+
+    kunstmaan_admin.admin_panel.adaptor:
+        class: Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor
+        arguments: ["@security.context"]
+        tags:
+            -  { name: 'kunstmaan_admin.admin_panel.adaptor' }

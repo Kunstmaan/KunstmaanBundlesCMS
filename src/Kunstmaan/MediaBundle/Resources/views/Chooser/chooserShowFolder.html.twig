@@ -59,7 +59,7 @@
                     <!-- Navigation - Right -->
                     <ul class="nav navbar-nav navbar-right">
                         {% set route = app.request.attributes.get('_route') %}
-                        {{ localeswitcher_widget(requiredlocales, route) }}
+                        {{ localeswitcher_widget(get_backend_locales(), route) }}
                     </ul>
                 </div>
             </div>

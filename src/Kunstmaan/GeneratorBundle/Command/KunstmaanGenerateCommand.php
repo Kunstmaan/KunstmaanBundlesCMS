@@ -601,12 +601,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      * @param                 $name
      * @param                 $type
      * @param null            $extra
+     * @param bool            $allNullable
      * @param null            $minHeight
      * @param null            $maxHeight
      * @param null            $minWidth
      * @param null            $maxWidth
      * @param null            $mimeTypes
-     * @param bool            $allNullable
      * @return array
      */
     protected function getEntityFields(
@@ -616,12 +616,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         $name,
         $type,
         $extra = null,
+        $allNullable = false,
         $minHeight = null,
         $maxHeight = null,
         $minWidth = null,
         $maxWidth = null,
-        $mimeTypes = null,
-        $allNullable = false
+        $mimeTypes = null
     ) {
         $fields = array();
         switch ($type) {

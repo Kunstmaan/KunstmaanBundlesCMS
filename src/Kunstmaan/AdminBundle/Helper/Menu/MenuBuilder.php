@@ -192,5 +192,4 @@ class MenuBuilder
             $this->sorted = call_user_func_array('array_merge', $this->adaptors);
         }
     }
-
 }

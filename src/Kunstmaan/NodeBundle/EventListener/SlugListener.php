@@ -47,7 +47,7 @@ class SlugListener
     {
         $request = $event->getRequest();
 
-        // Check if the event has anything to do with nodeTranslations, if not this method can be skipped
+        // Check if the event has a nodeTranslation, if not this method can be skipped
         if (!$request->attributes->has('_nodeTranslation')) {
             return;
         }
@@ -59,13 +59,14 @@ class SlugListener
         }
         $entity = $nodeTranslation->getRef($this->em);
 
-        // If the entity is an instance of the SlugControllerActionInterface, change the controller
+        // If the entity is an instance of the SlugActionInterface, change the controller
         if ($entity instanceof SlugActionInterface) {
             $request->attributes->set('_entity', $entity);
 
             // Do security check by firing an event that gets handled by the SlugSecurityListener
             $securityEvent = new SlugSecurityEvent();
-            $securityEvent->setNode($nodeTranslation->getNode())
+            $securityEvent
+                ->setNode($nodeTranslation->getNode())
                 ->setEntity($entity)
                 ->setRequest($request)
                 ->setNodeTranslation($nodeTranslation);

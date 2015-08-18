@@ -24,7 +24,7 @@ class WidgetsController extends Controller
      */
     public function ckSelectLinkAction()
     {
-        $params = $this->getTemplateParameters();
+        $params        = $this->getTemplateParameters();
         $params['cke'] = true;
 
         return $params;
@@ -40,64 +40,59 @@ class WidgetsController extends Controller
      */
     public function selectLinkAction()
     {
-        $params = $this->getTemplateParameters();
+        $params        = $this->getTemplateParameters();
         $params['cke'] = false;
 
         return $params;
     }
 
     /**
-     * Get the parameters needed in the template. This is common for the default link chooser and the cke link chooser.
+     * Get the parameters needed in the template. This is common for the
+     * default link chooser and the cke link chooser.
      *
      * @return array
      */
     private function getTemplateParameters()
     {
         /* @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em     = $this->getDoctrine()->getManager();
         $locale = $this->getRequest()->getLocale();
 
-        $qb = $em->getConnection()->createQueryBuilder();
-        $qb->select('n.id, n.parent_id, t.weight, t.title, t.online, t.url, n.ref_entity_name')
-            ->from('kuma_nodes', 'n')
-            ->leftJoin('n', 'kuma_node_translations', 't', "(t.node_id = n.id AND t.lang = ?)")
-            ->where('n.deleted = 0')
-            ->andWhere('t.online IN (0, 1)')
-            ->addOrderBy('parent_id', 'ASC')
-            ->addOrderBy('weight', 'ASC')
-            ->addOrderBy('title', 'ASC');
-
-        $permissionDef = new PermissionDefinition(array(PermissionMap::PERMISSION_VIEW));
-        $permissionDef->setEntity('Kunstmaan\NodeBundle\Entity\Node');
-        $permissionDef->setAlias('n');
-        $qb = $this->get('kunstmaan_admin.acl.native.helper')->apply($qb, $permissionDef);
-
-        $stmt = $em->getConnection()->prepare($qb->getSQL());
-        $stmt->bindValue(1, $locale);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $em->getRepository('KunstmaanNodeBundle:Node')
+            ->getAllMenuNodes(
+                $locale,
+                PermissionMap::PERMISSION_VIEW,
+                $this->get('kunstmaan_admin.acl.native.helper'),
+                true,
+                $this->get('kunstmaan_node.domain_configuration')->getRootNode()
+            );
 
         $simpleTreeView = new SimpleTreeView();
         foreach ($result as $data) {
             if ($this->isStructureNode($data['ref_entity_name'])) {
                 $data['online'] = true;
             }
-            $simpleTreeView->addItem($data['parent_id'], $data);
+            $simpleTreeView->addItem($data['parent'], $data);
         }
 
         // When the media bundle is available, we show a link in the header to the media chooser
         $allBundles = $this->container->getParameter('kernel.bundles');
+        $mediaChooserLink = null;
+
         if (array_key_exists('KunstmaanMediaBundle', $allBundles)) {
-            $params = array('linkChooser' => 1);
+            $params          = array('linkChooser' => 1);
             $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
             }
-            $mediaChooserLink = $this->generateUrl('KunstmaanMediaBundle_chooser', $params);
+            $mediaChooserLink = $this->generateUrl(
+                'KunstmaanMediaBundle_chooser',
+                $params
+            );
         }
 
         return array(
-            'tree' => $simpleTreeView,
+            'tree'             => $simpleTreeView,
             'mediaChooserLink' => $mediaChooserLink
         );
     }
@@ -113,7 +108,7 @@ class WidgetsController extends Controller
     {
         $structureNode = false;
         if (class_exists($refEntityName)) {
-            $page     = new $refEntityName();
+            $page          = new $refEntityName();
             $structureNode = ($page instanceof StructureNode);
             unset($page);
         }

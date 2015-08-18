@@ -22,12 +22,15 @@ class MenuAdminListController extends AdminListController
 
     /**
      * @param Request $request
+     *
      * @return AbstractAdminListConfigurator
      */
     public function getAdminListConfigurator(Request $request)
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new MenuAdminListConfigurator($this->getEntityManager());
+            $this->configurator = new MenuAdminListConfigurator(
+                $this->getEntityManager()
+            );
 
             $create_route = function ($item) {
                 return array(
@@ -35,7 +38,10 @@ class MenuAdminListController extends AdminListController
                     'params' => array('menuid' => $item->getId())
                 );
             };
-            $this->configurator->addItemAction(new SimpleItemAction($create_route, 'th-list', 'Manage'));
+            $this->configurator->addItemAction(
+                new SimpleItemAction($create_route, 'th-list', 'Manage')
+            );
+            $this->configurator->setLocale($request->getLocale());
         }
 
         return $this->configurator;
@@ -45,6 +51,7 @@ class MenuAdminListController extends AdminListController
      * @Route("/", name="kunstmaanmenubundle_admin_menu")
      *
      * @param Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -52,7 +59,10 @@ class MenuAdminListController extends AdminListController
         // Make sure we have a menu for each possible locale
         $this->makeSureMenusExist();
 
-        return parent::doIndexAction($this->getAdminListConfigurator($request), $request);
+        return parent::doIndexAction(
+            $this->getAdminListConfigurator($request),
+            $request
+        );
     }
 
     /**
@@ -61,17 +71,21 @@ class MenuAdminListController extends AdminListController
     private function makeSureMenusExist()
     {
         $menuNames = $this->container->getParameter('kunstmaan_menu.menus');
-        $locales = explode('|', $this->container->getParameter('requiredlocales'));
-        $required = array();
+        $locales   = $this->getLocales();
+        $required  = array();
         foreach ($menuNames as $name) {
             $required[$name] = $locales;
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $menuObjects = $em->getRepository('KunstmaanMenuBundle:Menu')->findAll();
+        $em          = $this->getDoctrine()->getManager();
+        $menuObjects = $em->getRepository('KunstmaanMenuBundle:Menu')->findAll(
+        );
         foreach ($menuObjects as $menu) {
             if (array_key_exists($menu->getName(), $required)) {
-                $index = array_search($menu->getLocale(), $required[$menu->getName()]);
+                $index = array_search(
+                    $menu->getLocale(),
+                    $required[$menu->getName()]
+                );
                 if ($index !== false) {
                     unset($required[$menu->getName()][$index]);
                 }
@@ -88,5 +102,11 @@ class MenuAdminListController extends AdminListController
         }
 
         $em->flush();
+    }
+
+    private function getLocales()
+    {
+        return $this->get('kunstmaan_node.domain_configuration')
+            ->getBackendLocales();
     }
 }

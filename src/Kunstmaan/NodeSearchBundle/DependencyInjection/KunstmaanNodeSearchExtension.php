@@ -43,6 +43,11 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
     {
         $container->prependExtensionConfig('kunstmaan_node_search', [
             'mapping' => [
+                'root_id'            => [
+                    'type'           => 'integer',
+                    'include_in_all' => false,
+                    'index'          => 'not_analyzed'
+                ],
                 'node_id'            => [
                     'type'           => 'integer',
                     'include_in_all' => false,

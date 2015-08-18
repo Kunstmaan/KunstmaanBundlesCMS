@@ -1,6 +1,6 @@
 {% if not hide_from_sitemap(entry) %}
     <url>
-        <loc>{{ url('_slug', { 'url': entry.slug }) }}</loc>
+        <loc>{{ url('_slug', { '_locale': locale, 'url': entry.slug }) }}</loc>
         <lastmod>{{ entry.nodeTranslation.getPublicNodeVersion().getUpdated()|date('Y-m-d') }}</lastmod>
         <priority>{{ "0." ~ priority }}</priority>
     </url>
