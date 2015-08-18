@@ -48,7 +48,7 @@ class FormWidget implements FormWidgetInterface
         $this->types = $types;
         $this->data = $data;
 
-        $this->template = 'KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig';
+        $this->setTemplate('KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig');
     }
 
     /**
