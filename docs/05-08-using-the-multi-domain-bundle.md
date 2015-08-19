@@ -75,6 +75,33 @@ The ```extra``` parameters specified in the configuration will be available in t
 accessing the ```_extra``` key.
 
 
+### Enable the multi domain logout handler in security.yml
+
+If you intend to use the host override functionality, you have to enable the ```kunstmaan_multi_domain.host_override_cleanup```
+logout handler in app/conf/security.yml. If you don't do this the host override will be active until you close the
+current browser session.
+
+```
+    firewalls:
+        main:
+            pattern: ^/([^/]*)/admin
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                provider: fos_userbundle
+            logout:
+                path:   fos_user_security_logout
+                target: KunstmaanAdminBundle_homepage
+                handlers: ['kunstmaan_multi_domain.host_override_cleanup']
+            anonymous:    true
+            remember_me:
+                key:      %secret%
+                lifetime: 604800
+                path:     /
+                domain:   ~
+```
+
+
 ### Accessing the back-end
 
 If you were used to working with the older versions of the bundles CMS there's one thing to note : the admin

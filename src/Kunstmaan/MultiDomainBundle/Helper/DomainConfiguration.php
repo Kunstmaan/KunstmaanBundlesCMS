@@ -17,18 +17,12 @@ class DomainConfiguration extends BaseDomainConfiguration
     private $hosts;
 
     /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
         $this->hosts   = $container->getParameter('kunstmaan_multi_domain.hosts');
-        $this->session = $container->get('session');
     }
 
     /**
@@ -36,10 +30,8 @@ class DomainConfiguration extends BaseDomainConfiguration
      */
     public function getHost()
     {
-        if ($this->session->isStarted() &&
-            $this->session->has(self::OVERRIDE_HOST)
-        ) {
-            return $this->session->get(self::OVERRIDE_HOST);
+        if ($this->hasHostOverride()) {
+            return $this->getHostOverride();
         }
 
         return parent::getHost();
@@ -146,5 +138,23 @@ class DomainConfiguration extends BaseDomainConfiguration
         }
 
         return $this->hosts[$host]['extra'];
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasHostOverride()
+    {
+        $request = $this->getMasterRequest();
+
+        return !is_null($request) && $request->cookies->has(self::OVERRIDE_HOST);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getHostOverride()
+    {
+        return $this->getMasterRequest()->cookies->get(self::OVERRIDE_HOST);
     }
 }
