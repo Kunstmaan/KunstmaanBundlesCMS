@@ -31,6 +31,14 @@ class AppKernel extends Kernel
 }
 ```
 
+### Include the routing configuration in your main routing.yml
+
+```yml
+KunstmaanMultiDomainBundle:
+    resource: "@KunstmaanMultiDomainBundle/Resources/config/routing.yml"
+    requirements:
+        _locale: %requiredlocales%
+```
 
 ### Add the multi domain configuration in your config.yml :
 
@@ -70,9 +78,6 @@ This will define 2 node trees for 3 domains.
 The first tree is mapped to 2 single language domains, the second is mapped as a multi language site.
 
 *Note*: You will not be able to use a locale as both single and multi language for the same root.
-
-The ```extra``` parameters specified in the configuration will be available in the request parameter bag by
-accessing the ```_extra``` key.
 
 
 ### Accessing the back-end

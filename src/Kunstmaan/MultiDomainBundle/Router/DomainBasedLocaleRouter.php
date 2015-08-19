@@ -54,8 +54,8 @@ class DomainBasedLocaleRouter extends SlugRouter
             $this->getRouteCollection(),
             $this->getContext()
         );
-        $result     = $urlMatcher->match($pathinfo);
 
+        $result     = $urlMatcher->match($pathinfo);
         if (!empty($result)) {
             // Remap locale for front-end requests
             if ($this->isMultiDomainHost() &&
@@ -64,14 +64,7 @@ class DomainBasedLocaleRouter extends SlugRouter
             ) {
                 $localeMap                 = $this->getLocaleMap();
                 $locale                    = $result['_locale'];
-                $result['_request_locale'] = $locale;
                 $result['_locale']         = $localeMap[$locale];
-            }
-
-            // Add extra parameters to parameter bag
-            $extraData = $this->domainConfiguration->getExtraData();
-            if (!empty($extraData)) {
-                $result['_extra'] = $extraData;
             }
 
             $nodeTranslation = $this->getNodeTranslation($result);
