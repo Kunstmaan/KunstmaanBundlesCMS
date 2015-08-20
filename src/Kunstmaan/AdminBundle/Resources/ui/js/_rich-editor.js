@@ -3,49 +3,35 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.richEditor = (function(window, undefined) {
 
     var _ckEditorConfigs = {
-        'kumaDefault': [
-            {
-                name: 'basicstyles',
-                items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
-            },
-            {
-                name: 'lists',
-                items : ['NumberedList', 'BulletedList']
-            },
-            {
-                name: 'dents',
-                items : ['Outdent', 'Indent']
-            },
-            {
-                name: 'links',
-                items : ['Link','Unlink', 'Anchor']
-            },
-            {
-                name: 'insert',
-                items : ['Image', 'Table', 'SpecialChar']
-            },
-            {
-                name: 'clipboard',
-                items : ['SelectAll', 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
-            },
-            {
-                name: 'editing',
-                items : []
-            },
-            {
-                name: 'document',
-                items : ['Source']
-            }
-        ]
+        'kumaDefault': {
+            skin: 'bootstrapck',
+            startupFocus: false,
+            height: 300,
+            bodyClass: 'CKEditor',
+            filebrowserWindowWidth: 970,
+            filebrowserImageWindowWidth: 970,
+            filebrowserImageUploadUrl: '',
+            toolbar: [
+                { name: 'basicstyles', items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat'] },
+                { name: 'lists', items : ['NumberedList', 'BulletedList'] },
+                { name: 'dents', items : ['Outdent', 'Indent'] },
+                { name: 'links', items : ['Link','Unlink', 'Anchor'] },
+                { name: 'insert', items : ['Image', 'Table', 'SpecialChar'] },
+                { name: 'clipboard', items : ['SelectAll', 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] },
+                { name: 'editing', items : [] },
+                { name: 'document', items : ['Source'] }
+            ]
+        }
     };
 
     var init,
         enableRichEditor, destroyAllRichEditors, destroySpecificRichEditor,
-        _collectEditorConfigs;
+        _collectEditorConfigs, _collectExternalPlugins;
 
     // First Init
     init = function() {
-        // This object is declared global in _ckeditor_configs.html.twig
+        // These objects are declared global in _ckeditor_configs.html.twig
+        _collectExternalPlugins(window.externalPlugins);
         _collectEditorConfigs(window.ckEditorConfigs);
 
         $('.js-rich-editor').each(function() {
@@ -62,7 +48,26 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             if (key === 'kumaDefault') {
                 throw new Error('kumaDefault is a reserved name for the default Kunstmaan ckeditor configuration. Please choose another name.');
             } else {
-                _ckEditorConfigs[key] = customConfigs[key];
+                // v3.3.0 breaking: Thse whole config is now configurable, instead of just the toolbar.
+                // This means we require an object instead of an array.
+                if (customConfigs[key].constructor === Array) {
+                    throw new Error('Since v3.3.0 the whole rich editor config is editable. This means a custom config should be an object instead of an array.');
+                } else {
+                    _ckEditorConfigs[key] = customConfigs[key];
+                }
+            }
+        }
+    };
+
+    _collectExternalPlugins = function(plugins) {
+        if (plugins !== undefined && plugins.length > 0 && CKEDITOR !== undefined && CKEDITOR.plugins !== undefined) {
+            var i = 0;
+            for(; i < plugins.length; i++) {
+                if (plugins[i].constructor === Array) {
+                    CKEDITOR.plugins.addExternal.apply(CKEDITOR.plugins, plugins[i]);
+                } else {
+                    throw new Error('Plugins should be configured as an Array with the following values: [names, path, fileName] (Filename optional.)')
+                }
             }
         }
     };
@@ -70,54 +75,29 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
     // PUBLIC
     enableRichEditor = function($el) {
         var $body = $('body'),
-            fileBrowseUrl = $body.data('file-browse-url'),
-            imageBrowseUrl = $body.data('image-browse-url'),
-            elId = $el.attr('id'),
-            elHeight, elEnterMode, elShiftEnterMode, elToolbar;
+            elementId = $el.attr('id'),
+            editorConfig;
 
-
-        // Set Height
-        if ($el.attr('height')) {
-            elHeight = $el.attr('height');
-        } else {
-            elHeight = 300;
+        var dataAttrConfiguration = {
+            'height': $el.attr('height') || 300,
+            'filebrowserBrowseUrl': $body.data('file-browse-url'),
+            'filebrowserImageBrowseUrl': $body.data('image-browse-url'),
+            'filebrowserImageBrowseLinkUrl': $body.data('image-browse-url'),
+            'enterMode': $el.attr('noparagraphs') ? CKEDITOR.ENTER_BR : CKEDITOR.ENTER_P,
+            'shiftEnterMode': $el.attr('noparagraphs') ? CKEDITOR.ENTER_P : CKEDITOR.ENTER_BR,
         }
 
+        editorConfig = (_ckEditorConfigs.hasOwnProperty($el.data('editor-mode'))) ? _ckEditorConfigs[$el.data('editor-mode')] : _ckEditorConfigs['kumaDefault'];
 
-        // Paragraphs allowed?
-        if ($el.attr('noparagraphs')) {
-            elEnterMode = CKEDITOR.ENTER_BR;
-            elShiftEnterMode = CKEDITOR.ENTER_P;
-        } else {
-            elEnterMode = CKEDITOR.ENTER_P;
-            elShiftEnterMode = CKEDITOR.ENTER_BR;
+        // Load the data from data attrs, but don't override the ones in the config if they're set.
+        for (key in dataAttrConfiguration) {
+            if (editorConfig[key] === undefined) {
+                editorConfig[key] = dataAttrConfiguration[key];
+            }
         }
-
-        elToolbar = (_ckEditorConfigs.hasOwnProperty($el.data('editor-mode'))) ? _ckEditorConfigs[$el.data('editor-mode')] : _ckEditorConfigs['kumaDefault'];
-        customConfigFile = customConfigFile || '';
 
         // Place CK
-        CKEDITOR.replace(elId, {
-            skin: 'bootstrapck',
-            startupFocus: false,
-            height: elHeight,
-            bodyClass: 'CKEditor',
-
-            filebrowserBrowseUrl: fileBrowseUrl,
-            filebrowserWindowWidth: 970,
-
-            filebrowserImageBrowseUrl: imageBrowseUrl,
-            filebrowserImageBrowseLinkUrl: imageBrowseUrl,
-            filebrowserImageWindowWidth: 970,
-
-            filebrowserImageUploadUrl: '',
-
-            enterMode: elEnterMode,
-            shiftEnterMode: elShiftEnterMode,
-
-            toolbar: elToolbar,
-            customConfig: customConfigFile
-        });
+        CKEDITOR.replace(elementId, editorConfig);
 
         $el.addClass('js-rich-editor--enabled');
 
@@ -125,17 +105,16 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         // Add id on iframe so that behat tests can interact
         var checkExist = setInterval(function() {
 
-            if($('#cke_' + elId + ' iframe').length === 1) {
-                var parts = elId.split("_"),
+            if($('#cke_' + elementId + ' iframe').length === 1) {
+                var parts = elementId.split("_"),
                     name = parts[parts.length-1];
 
-                $('#cke_' + elId + ' iframe').attr('id', 'cke_iframe_' + name);
+                $('#cke_' + elementId + ' iframe').attr('id', 'cke_iframe_' + name);
 
                 clearInterval(checkExist);
             }
         }, 250);
     };
-
 
     // Destroy All
     destroyAllRichEditors = function() {
@@ -150,11 +129,10 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         }
     };
 
-
     // Destroy Specific
     destroySpecificRichEditor = function($el) {
-        var elId = $el.attr('id'),
-            editor = CKEDITOR.instances[elId];
+        var elementId = $el.attr('id'),
+            editor = CKEDITOR.instances[elementId];
 
         if(editor) {
             editor.destroy(true);

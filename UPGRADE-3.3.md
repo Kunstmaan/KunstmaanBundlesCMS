@@ -68,3 +68,14 @@ For multi-site / multi-domain you should make sure you no longer use the require
 It is not possible anymore to use custom route loaders (`LoaderInterface`) for defining extra routes
 that are handled via the controller of a `Page`. You should use a custom router (`RouterInterface`) instead
 to define the route, and put the `_nodeTranslation` variable in the `_route_params` in the match function.
+
+## Custom configuration for ckEditors (BC breaking)
+It is now possible (again) to override the complete configuration of a ckEditor where in previous versions you could only override the toolbar. This means that a custom config should now be an object, instead of an array.
+
+## Add extra plugins to ckEditor
+It is now possible to add extra plugins to ckEditor. These are also defined in `_ckeditor_configs.html.twig`
+In order to add extra plugins you can add arrays to the externalPlugins array like this:  
+``externalPlugins = [  
+	['names', 'path-to-plugin(s)', 'optional-filename']
+];``   
+These will then be loaded on ckEditor's plugins.addExternal method and become available for configuration.
