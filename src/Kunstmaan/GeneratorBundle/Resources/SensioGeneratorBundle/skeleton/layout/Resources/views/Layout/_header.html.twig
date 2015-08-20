@@ -12,7 +12,7 @@
 
 
             {# Logo #}
-            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+            {% set homepagePageNode = nodemenu.getRootNodeMenuItem() %}
             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
                 <img src="/frontend/img/demosite/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img">
             </a>
