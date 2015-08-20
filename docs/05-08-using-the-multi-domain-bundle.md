@@ -126,9 +126,6 @@ Homepages should implement the HomePageInterface in order to be visible in the h
 
 In the back-end you will be able to switch to the different domains.
 
-There's one side-effect to site switching you should be aware of : while logged in and switched to a different
-site in the back-end you might be able to see that other site's content if you access the front-end.
-
 
 ## Extra Twig functions
 

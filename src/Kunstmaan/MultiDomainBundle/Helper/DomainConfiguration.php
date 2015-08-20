@@ -22,7 +22,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
-        $this->hosts   = $container->getParameter('kunstmaan_multi_domain.hosts');
+        $this->hosts = $container->getParameter('kunstmaan_multi_domain.hosts');
     }
 
     /**
@@ -147,7 +147,9 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $request = $this->getMasterRequest();
 
-        return !is_null($request) && $request->cookies->has(self::OVERRIDE_HOST);
+        return !is_null($request) &&
+            $this->isAdminRoute($request->getRequestUri()) &&
+            $request->cookies->has(self::OVERRIDE_HOST);
     }
 
     /**
@@ -156,5 +158,26 @@ class DomainConfiguration extends BaseDomainConfiguration
     protected function getHostOverride()
     {
         return $this->getMasterRequest()->cookies->get(self::OVERRIDE_HOST);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isAdminRoute($url)
+    {
+        preg_match(
+            '/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/',
+            $url,
+            $matches
+        );
+
+        // Check if path is part of admin area
+        if (count($matches) === 0) {
+            return false;
+        }
+
+        return true;
     }
 }
