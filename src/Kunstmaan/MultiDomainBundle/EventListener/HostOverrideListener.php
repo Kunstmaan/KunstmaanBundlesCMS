@@ -3,8 +3,10 @@
 namespace Kunstmaan\MultiDomainBundle\EventListener;
 
 use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -33,15 +35,24 @@ class HostOverrideListener
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param FilterResponseEvent $event
      */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
 
+        $response = $event->getResponse();
+        if ($response instanceof RedirectResponse) {
+            return;
+        }
+
         $request = $event->getRequest();
+        if ($request->isXmlHttpRequest()) {
+            return;
+        }
+
         if (!$this->isAdminRoute($request->getRequestUri())) {
             return;
         }

@@ -34,6 +34,7 @@ class SiteSwitchController extends Controller
             throw $this->createNotFoundException('Invalid host specified');
         }
 
+        $request->cookies->set(DomainConfiguration::OVERRIDE_HOST, $host);
         $defaultLocale = $this->get('kunstmaan_node.domain_configuration')->getDefaultLocale();
 
         $response = new RedirectResponse(
