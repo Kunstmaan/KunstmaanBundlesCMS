@@ -47,7 +47,7 @@
 	    "sensio/generator-bundle": ">=2.5.0",
         "twig/extensions": "~1.0",
         "egulias/email-validator": "~1.2",
-        "kriswallsmith/spork": "~0.3"
+        "kriswallsmith/spork": "~0.2.0"
     },
     "require-dev": {
         "behat/behat": "~2.5.0",
