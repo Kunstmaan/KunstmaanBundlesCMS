@@ -19,6 +19,7 @@
         "php": ">=5.4.0",
         "symfony/symfony": "~2.5,<2.8.0",
         "doctrine/orm": "~2.5.0",
+        "doctrine/dbal": "~2.5.0",
         "doctrine/doctrine-bundle": "~1.4",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
@@ -45,7 +46,8 @@
         "fpn/doctrine-extensions-taggable": "~0.9",
 	    "sensio/generator-bundle": ">=2.5.0",
         "twig/extensions": "~1.0",
-        "egulias/email-validator": "~1.2"
+        "egulias/email-validator": "~1.2",
+        "kriswallsmith/spork": "~0.3"
     },
     "require-dev": {
         "behat/behat": "~2.5.0",
