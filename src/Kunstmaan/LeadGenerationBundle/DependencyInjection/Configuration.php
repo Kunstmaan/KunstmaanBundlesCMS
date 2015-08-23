@@ -22,11 +22,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('popup_types')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->prototype('scalar')->end()
-                ->end()
+            ->arrayNode('popup_types')
+            ->isRequired()
+            ->requiresAtLeastOneElement()
+            ->prototype('scalar')->end()
+            ->end()
             ->end();
 
         return $treeBuilder;

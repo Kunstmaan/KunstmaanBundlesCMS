@@ -99,7 +99,7 @@ class RecurringEveryXTimeRule extends AbstractRule
 
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -135,9 +135,9 @@ class RecurringEveryXTimeRule extends AbstractRule
     {
         return array(
             'minutes' => $this->getMinutes(),
-            'hours'   => $this->getHours(),
-            'days'    => $this->getDays(),
-            'times'   => $this->getTimes()
+            'hours' => $this->getHours(),
+            'days' => $this->getDays(),
+            'times' => $this->getTimes()
         );
     }
 

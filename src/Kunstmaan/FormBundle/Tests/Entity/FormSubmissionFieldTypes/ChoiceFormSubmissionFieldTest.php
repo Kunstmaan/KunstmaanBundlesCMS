@@ -45,7 +45,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);

@@ -92,6 +92,6 @@ class PopupsAdminListController extends AdminListController
     {
         $type = $request->get('type');
 
-        return parent::doAddAction($this->getAdminListConfigurator(), $type , $request);
+        return parent::doAddAction($this->getAdminListConfigurator(), $type, $request);
     }
 }

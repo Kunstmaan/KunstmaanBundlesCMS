@@ -39,7 +39,7 @@ class AdaptSimpleFormEvent extends Event
      * @param AbstractType $formType
      * @param $data
      */
-    public function __construct(Request $request , AbstractType $formType , $data)
+    public function __construct(Request $request, AbstractType $formType, $data)
     {
         $this->request = $request;
         $this->formType = $formType;

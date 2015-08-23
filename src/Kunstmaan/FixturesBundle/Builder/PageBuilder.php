@@ -77,9 +77,9 @@ class PageBuilder implements BuilderInterface
                 $translationNode->setOnline(isset($fixtureParams['set_online']) ? $fixtureParams['set_online'] : true);
             }
 
-            $fixture->addAdditional($fixture->getName().'_'.$language, $page);
-            $fixture->addAdditional('translationNode_'.$language, $translationNode);
-            $fixture->addAdditional('nodeVersion_'.$language, $translationNode->getPublicNodeVersion());
+            $fixture->addAdditional($fixture->getName() . '_' . $language, $page);
+            $fixture->addAdditional('translationNode_' . $language, $translationNode);
+            $fixture->addAdditional('nodeVersion_' . $language, $translationNode->getPublicNodeVersion());
             $fixture->addAdditional('rootNode', $rootNode);
 
             $this->populator->populate($translationNode, $data);
@@ -104,12 +104,12 @@ class PageBuilder implements BuilderInterface
 
         foreach ($fixture->getTranslations() as $language => $data) {
             /** @var HasNodeInterface $page */
-            $page = $entities[$fixture->getName().'_'.$language];
+            $page = $entities[$fixture->getName() . '_' . $language];
             /** @var NodeTranslation $translationNode */
-            $translationNode = $entities['translationNode_'.$language];
+            $translationNode = $entities['translationNode_' . $language];
 
             $pagecreator = array_key_exists('creator', $fixtureParams) ? $fixtureParams['creator'] : 'pagecreator';
-            $creator     = $this->userRepo->findOneBy(array('username' => $pagecreator));
+            $creator = $this->userRepo->findOneBy(array('username' => $pagecreator));
 
             $nodeVersion = new NodeVersion();
             $nodeVersion->setNodeTranslation($translationNode);
@@ -202,7 +202,7 @@ class PageBuilder implements BuilderInterface
         preg_match($finalDigitGrabberRegex, $string, $matches);
 
         if (count($matches) > 0) {
-            $digit = (int) $matches[0];
+            $digit = (int)$matches[0];
             ++$digit;
 
             // Replace the integer with the new digit.
@@ -211,4 +211,4 @@ class PageBuilder implements BuilderInterface
             return $string . $append . '1';
         }
     }
-}
+} 
