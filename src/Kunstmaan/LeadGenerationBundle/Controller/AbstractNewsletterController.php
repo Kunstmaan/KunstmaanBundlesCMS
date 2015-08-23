@@ -64,7 +64,7 @@ abstract class AbstractNewsletterController extends Controller
             'action' => $this->generateUrl('popup_newsletter_subscribe', array('popup' => $popup->getId())),
         ));
         $form->add('submit', 'submit', array(
-            'attr' => array('class' => $popup->getHtmlId().'--submit')
+            'attr' => array('class' => $popup->getHtmlId() . '--submit')
         ));
 
         return $form;

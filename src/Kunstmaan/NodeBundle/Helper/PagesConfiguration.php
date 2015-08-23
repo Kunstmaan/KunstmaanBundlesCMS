@@ -22,7 +22,7 @@ class PagesConfiguration
 
     public function getName($refName)
     {
-        return $this->getValue($refName, 'name', substr($refName, strrpos($refName, '\\')+1));
+        return $this->getValue($refName, 'name', substr($refName, strrpos($refName, '\\') + 1));
     }
 
     public function getIcon($refName)
@@ -96,8 +96,8 @@ class PagesConfiguration
     }
 
     /**
-     * @param string         $ref
-     * @param string         $name
+     * @param string $ref
+     * @param string $name
      * @param Callable|mixed $default
      *
      * @return mixed

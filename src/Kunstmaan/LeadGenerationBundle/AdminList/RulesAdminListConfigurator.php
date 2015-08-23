@@ -17,9 +17,9 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     protected $popupId;
 
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
-     * @param int           $id        The if of the popup
+     * @param EntityManager $em The entity manager
+     * @param AclHelper $aclHelper The acl helper
+     * @param int $id The if of the popup
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null, $id)
     {
@@ -50,7 +50,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     public function getIndexUrl()
     {
         return array(
-            'path'   => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail',
+            'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail',
             'params' => array('popup' => $this->getPopupId())
         );
     }
@@ -68,7 +68,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit',
+            'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_edit',
             'params' => $params
         );
     }
@@ -86,7 +86,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete',
+            'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_delete',
             'params' => $params
         );
     }

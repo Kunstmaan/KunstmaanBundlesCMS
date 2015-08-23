@@ -24,7 +24,7 @@ class KunstmaanLeadGenerationExtension extends Extension
 
         $container->setParameter('kunstmaan_lead_generation.popup_types', $config['popup_types']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
     }
 }

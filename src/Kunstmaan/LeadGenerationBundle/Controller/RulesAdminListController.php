@@ -51,7 +51,7 @@ class RulesAdminListController extends AdminListController
     {
         $type = $request->get('type');
 
-        return parent::doAddAction($this->getAdminListConfigurator($popup), $type , $request);
+        return parent::doAddAction($this->getAdminListConfigurator($popup), $type, $request);
     }
 
     /**

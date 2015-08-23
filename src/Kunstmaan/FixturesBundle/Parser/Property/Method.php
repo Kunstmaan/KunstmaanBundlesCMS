@@ -38,7 +38,7 @@ class Method implements PropertyParserInterface
             preg_match_all('/[^,\(\)<>]+/', $pattern, $arguments);
             $arguments = $arguments[0];
             $method = array_shift($arguments);
-            $arguments = array_map(function($arg) {
+            $arguments = array_map(function ($arg) {
                 return trim(trim($arg), '\'""');
             }, $arguments);
 

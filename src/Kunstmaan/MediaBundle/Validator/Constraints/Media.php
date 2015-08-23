@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class Media extends Constraint
 
-{	
+{
     const NOT_FOUND_ERROR = 1;
     const NOT_READABLE_ERROR = 2;
     const EMPTY_ERROR = 3;
@@ -24,10 +24,10 @@ class Media extends Constraint
         self::NOT_READABLE_ERROR => 'NOT_READABLE_ERROR',
         self::EMPTY_ERROR => 'EMPTY_ERROR',
         self::INVALID_MIME_TYPE_ERROR => 'INVALID_MIME_TYPE_ERROR',
-    	self::TOO_HIGH_ERROR => 'TOO_HIGH_ERROR',
-    	self::TOO_LOW_ERROR => 'TOO_LOW_ERROR',
-    	self::TOO_WIDE_ERROR => 'TOO_WIDE_ERROR',
-    	self::TOO_NARROW_ERROR => 'TOO_NARROW_ERROR',
+        self::TOO_HIGH_ERROR => 'TOO_HIGH_ERROR',
+        self::TOO_LOW_ERROR => 'TOO_LOW_ERROR',
+        self::TOO_WIDE_ERROR => 'TOO_WIDE_ERROR',
+        self::TOO_NARROW_ERROR => 'TOO_NARROW_ERROR',
     );
 
     public $minHeight;
@@ -36,7 +36,7 @@ class Media extends Constraint
     public $maxWidth;
     public $binaryFormat;
     public $mimeTypes = array();
-    
+
     public $notFoundMessage = 'The file could not be found.';
     public $notReadableMessage = 'The file is not readable.';
     public $mimeTypesMessage = 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.';
@@ -51,10 +51,9 @@ class Media extends Constraint
     public $uploadCantWriteErrorMessage = 'Cannot write temporary file to disk.';
     public $uploadExtensionErrorMessage = 'A PHP extension caused the upload to fail.';
     public $uploadErrorMessage = 'The file could not be uploaded.';
-	
-	public function __construct($options = null)
-	{
-		parent::__construct($options);
-	
-	}
+
+    public function __construct($options = null)
+    {
+        parent::__construct($options);
+    }
 }
