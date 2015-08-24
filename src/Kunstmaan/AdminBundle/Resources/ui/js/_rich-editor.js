@@ -6,7 +6,6 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         'kumaDefault': {
             skin: 'bootstrapck',
             startupFocus: false,
-            height: 300,
             bodyClass: 'CKEditor',
             filebrowserWindowWidth: 970,
             filebrowserImageWindowWidth: 970,
