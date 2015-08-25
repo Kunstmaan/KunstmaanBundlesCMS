@@ -31,7 +31,7 @@
         <header class="js-sortable-item__handle pp__header {% if not form['pagepartadmin_'~id].count %}pp__header--no-edit{% endif %}">
             <i class="fa fa-arrows pp__header__move-icon"></i>
             <h5 class="pp__header__head">
-                {{pagepartadmin.getType(pagepart)}}
+                {{pagepartadmin.getType(pagepart)|trans}}
             </h5>
         </header>
 
@@ -78,7 +78,7 @@
         <select class="js-add-pp-select form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
             <option value="">Add a pagepart</option>
             {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-                <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+                <option value="{{pagePartType.class}}">{{pagePartType.name|trans}}</option>
             {% endfor %}
         </select>
     </div>
