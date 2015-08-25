@@ -24,7 +24,7 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
     initTabLogic = function () {
         // If there is a tab defined in the url, we activate it
         var currentTabElement = $('#currenttab');
-        if (currentTabElement && currentTabElement.val().length > 0) {
+        if (typeof(currentTabElement) != 'undefined' && currentTabElement != null && currentTabElement.val() && currentTabElement.val().length > 0) {
             $('.js-auto-collapse-tabs.nav-tabs a[href="' + $('#currenttab').val() + '"]').tab('show');
         }
 
@@ -37,8 +37,8 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
                 window.history.pushState({}, null, replaceUrlParam(window.location.href, 'currenttab', activeTab));
             }
 
-            if ($('#currenttab').length > 0) {
-                $('#currenttab').val(activeTab);
+            if (typeof(currentTabElement) != 'undefined' && currentTabElement != null) {
+                currentTabElement.val(activeTab);
             }
         });
 
