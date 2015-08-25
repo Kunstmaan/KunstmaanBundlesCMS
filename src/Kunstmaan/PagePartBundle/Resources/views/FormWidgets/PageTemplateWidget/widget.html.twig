@@ -62,7 +62,7 @@
                                 <input type="radio" id="pagetemplate_template_choice_{{ loop.index }}" class="choice-block__input" name="pagetemplate_template_choice" value="{{ pagetemplate.name }}"{% if resource.pagetemplate.name == pagetemplate.name %} checked="checked"{% endif %}>
                                 <label for="pagetemplate_template_choice_{{ loop.index }}" class="choice-block__item">
                                     <h5 class="choice-block__item__head">
-                                        {{ pagetemplate.name }}
+                                        {{ pagetemplate.name|trans }}
                                         {% if resource.pagetemplate.name == pagetemplate.name %}
                                             <small>(Current)</small>
                                         {% endif %}
