@@ -135,21 +135,22 @@
 }
 
 .pp__actions__action--del {
-
-
     &:hover {
         background: $brand-danger;
     }
 }
 
 .pp__actions__action--edit {
-
     &:hover {
         background: $blue;
     }
 }
 
-
+.pp__actions__action--up, .pp__actions__action--down {
+    &:hover {
+        background: $gray-light;
+    }
+}
 
 /* View
    ========================================================================== */
