@@ -67,6 +67,14 @@ class FolderType extends AbstractType
                         return $er->selectFolderQueryBuilder($folder);
                     }
                 )
+            )
+            ->add(
+                'internalName',
+                'text',
+                array(
+                    'label' => 'Internal name',
+                    'required' => false
+                )
             );
     }
 
