@@ -74,6 +74,7 @@ class PagePartBuilder implements BuilderInterface
             $page = $additionalEntities[$key];
             $this->populator->populate($pp, $data);
             $this->em->persist($pp);
+            $this->em->flush();
 
             // Find latest position.
             $position = array_key_exists('position', $params) ? $params['position'] : null;
