@@ -960,28 +960,23 @@ class NodeAdminController extends Controller
         $tabPane->addTab(new Tab('Properties', $propertiesWidget));
 
         // Menu tab
-        if (!$isStructureNode) {
-            $menuWidget = new FormWidget();
-            $menuWidget->addType(
-                'menunodetranslation',
-                new NodeMenuTabTranslationAdminType(),
-                $nodeTranslation
-            );
-            $menuWidget->addType('menunode', new NodeMenuTabAdminType(), $node);
-            $tabPane->addTab(new Tab('Menu', $menuWidget));
+        $menuWidget = new FormWidget();
+        $menuWidget->addType('menunodetranslation', new NodeMenuTabTranslationAdminType($isStructureNode), $nodeTranslation);
+        $menuWidget->addType('menunode', new NodeMenuTabAdminType($isStructureNode), $node);
+        $tabPane->addTab(new Tab('Menu', $menuWidget));
 
-            $this->get('event_dispatcher')->dispatch(
-                Events::ADAPT_FORM,
-                new AdaptFormEvent(
-                    $request,
-                    $tabPane,
-                    $page,
-                    $node,
-                    $nodeTranslation,
-                    $nodeVersion
-                )
-            );
-        }
+        $this->get('event_dispatcher')->dispatch(
+            Events::ADAPT_FORM,
+            new AdaptFormEvent(
+                $request,
+                $tabPane,
+                $page,
+                $node,
+                $nodeTranslation,
+                $nodeVersion
+            )
+        );
+
         $tabPane->buildForm();
 
         if ($request->getMethod() == 'POST') {

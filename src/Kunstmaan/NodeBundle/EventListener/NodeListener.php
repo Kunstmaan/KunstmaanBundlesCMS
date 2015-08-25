@@ -7,16 +7,11 @@ use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
-/**
- * NodeListener
- */
 class NodeListener
 {
-
     /**
      * SecurityContextInterface
      */
@@ -49,12 +44,11 @@ class NodeListener
      */
     public function adaptForm(AdaptFormEvent $event)
     {
-    	if($event->getPage() instanceof HasNodeInterface) {
-    		if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
-    			$tabPane = $event->getTabPane();
-    			$tabPane->addTab(new Tab('Permissions', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
-    		}
-    	}
+        if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
+            if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
+                $tabPane = $event->getTabPane();
+                $tabPane->addTab(new Tab('Permissions', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
+            }
+        }
     }
-
 }
