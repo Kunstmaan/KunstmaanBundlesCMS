@@ -6,18 +6,30 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-/**
- * NodeMenuTabAdminType
- */
 class NodeMenuTabAdminType extends AbstractType
 {
+    /**
+     * @var bool
+     */
+    private $isStructureNode;
+
+    /**
+     * @param bool $isStructureNode
+     */
+    public function __construct($isStructureNode = false)
+    {
+        $this->isStructureNode = $isStructureNode;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('hiddenFromNav', 'checkbox', array('label' => 'Hidden from menu', 'required' => false));
+        if (!$this->isStructureNode) {
+            $builder->add('hiddenFromNav', 'checkbox', array('label' => 'Hidden from menu', 'required' => false));
+        }
         $builder->add('internalName', 'text', array('label' => 'Internal name', 'required' => false));
     }
 
