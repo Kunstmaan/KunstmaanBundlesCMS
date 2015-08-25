@@ -107,7 +107,7 @@ EOT
         foreach ($groupNames as $groupName) {
             if (is_int($groupName)) {
                 $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
-                $groupOutput .= $groups[$groupName] . ", ";
+                $groupOutput .= $groups[$groupName]->getName() . ", ";
             } else {
                 $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
                 $groupOutput .= $groupName . ", ";
