@@ -48,7 +48,9 @@
         {% endblock %}
     </div>
 
-    <img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_white.svg" class="login__logo">
+    {% block login_logo %}
+        <img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_white.svg" class="login__logo">
+    {% endblock %}
 
     {% block footer %}{% endblock %}
 {% endblock %}
