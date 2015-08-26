@@ -13,6 +13,8 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 
 class PageBuilder implements BuilderInterface
 {
@@ -118,6 +120,14 @@ class PageBuilder implements BuilderInterface
             $nodeVersion->setRef($page);
 
             $translationNode->setPublicNodeVersion($nodeVersion);
+
+            if (isset($fixtureParams['template'])) {
+                $pageTemplateConfiguration = new PageTemplateConfiguration();
+                $pageTemplateConfiguration->setPageId($page->getId());
+                $pageTemplateConfiguration->setPageEntityName(ClassLookup::getClass($page));
+                $pageTemplateConfiguration->setPageTemplate($fixtureParams['template']);
+                $this->manager->persist($pageTemplateConfiguration);
+            }
 
             $this->manager->persist($nodeVersion);
             $this->manager->persist($translationNode);
