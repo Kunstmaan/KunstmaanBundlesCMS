@@ -12,7 +12,7 @@
                     <div class="page-template__region">
                         <header>
                             <h5 class="page-template__region__header">
-                            {{ region.name|replace({'_':' '})|title }}
+                            {{ region.name|trans|replace({'_':' '})|title }}
                             </h5>
                         </header>
 
@@ -72,7 +72,7 @@
                                             {% for region in row.regions %}
                                                 <div class="col-md-{{ region.span }}">
                                                     <div class="choice-block__item__col">
-                                                        {{ region.name|replace({'_':' '})|title }}
+                                                        {{ region.name|trans|replace({'_':' '})|title }}
                                                     </div>
                                                 </div>
                                             {% endfor %}
