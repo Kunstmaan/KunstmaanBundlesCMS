@@ -80,7 +80,13 @@ class MenuTwigExtension extends \Twig_Extension
             }
         }
 
-        $options = array_merge($this->getDefaultOptions(), $options);
+        $activeClass = false;
+
+        if (isset($options['activeClass'])) {
+            $activeClass = $options['activeClass'];
+        }
+
+        $options = array_merge($this->getDefaultOptions($activeClass), $options);
         $html = $repo->buildTree($arrayResult, $options);
 
         return $html;
@@ -91,7 +97,7 @@ class MenuTwigExtension extends \Twig_Extension
      *
      * @return array
      */
-    private function getDefaultOptions()
+    private function getDefaultOptions($activeClass)
     {
         $router = $this->router;
 
@@ -101,9 +107,15 @@ class MenuTwigExtension extends \Twig_Extension
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-            'nodeDecorator' => function($node) use ($router) {
+            'nodeDecorator' => function($node) use ($router, $activeClass) {
+                $active = false;
+
                 if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
                     $url = $router->generate('_slug', array('url' => $node['nodeTranslation']['url']));
+
+                    if ($activeClass && $router->getContext()->getPathInfo() == $url) {
+                        $active = true;
+                    }
                 } else {
                     $url = $node['url'];
                 }
@@ -118,7 +130,7 @@ class MenuTwigExtension extends \Twig_Extension
                     $title = $node['title'];
                 }
 
-                return '<a href="' . $url . '"' . ($node['newWindow'] ? ' target="_blank"' : '') . '>' . $title . '</a>';
+                return '<a href="' . $url . '"' . ($active ? ' class="' . $activeClass . '"' : '') . ($node['newWindow'] ? ' target="_blank"' : '') . '>' . $title . '</a>';
             }
         );
     }
