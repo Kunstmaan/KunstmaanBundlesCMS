@@ -96,6 +96,8 @@ class PageTemplateWidget extends FormWidget
         $this->page = $page;
         $this->em = $em;
         $this->request = $request;
+        $this->formFactory = $formFactory;
+        $this->pagePartAdminFactory = $pagePartAdminFactory;
         $pageTemplateConfigurationReader = new PageTemplateConfigurationReader($kernel);
         $this->pageTemplates = $pageTemplateConfigurationReader->getPageTemplates($page);
         $pagePartConfigurationReader = new PagePartConfigurationReader($kernel);
@@ -106,17 +108,39 @@ class PageTemplateWidget extends FormWidget
 
         foreach ($this->getPageTemplate()->getRows() as $row) {
             foreach ($row->getRegions() as $region) {
-                $pagePartAdminConfiguration = null;
-                foreach ($this->pagePartAdminConfigurations as $ppac) {
-                    if ($ppac->getContext() == $region->getName()) {
-                        $pagePartAdminConfiguration = $ppac;
-                    }
-                }
-                if ($pagePartAdminConfiguration !== null) {
-                    $pagePartWidget = new PagePartWidget($page, $this->request, $this->em, $pagePartAdminConfiguration, $formFactory, $pagePartAdminFactory);
-                    $this->widgets[$region->getName()] = $pagePartWidget;
-                }
+                $this->processRegion($region);
             }
+        }
+    }
+
+    /**
+     * @param Region $region The region
+     */
+    private function processRegion($region)
+    {
+        if (count($region->getChildren())) {
+            foreach ($region->getChildren() as $child) {
+                $this->processRegion($child);
+            }
+        } else {
+            $this->loadWidgets($region);
+        }
+    }
+
+    /**
+     * @param Region $region The region
+     */
+    private function loadWidgets($region)
+    {
+        $pagePartAdminConfiguration = null;
+        foreach ($this->pagePartAdminConfigurations as $ppac) {
+            if ($ppac->getContext() == $region->getName()) {
+                $pagePartAdminConfiguration = $ppac;
+            }
+        }
+        if ($pagePartAdminConfiguration !== null) {
+            $pagePartWidget = new PagePartWidget($this->page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory);
+            $this->widgets[$region->getName()] = $pagePartWidget;
         }
     }
 

@@ -5,28 +5,11 @@
 
 
     <!-- Regions -->
+    {% import _self as macros %}
     {% for row in resource.pagetemplate.rows %}
         <div class="row">
             {% for region in row.regions %}
-                <div class="col-md-{{ region.span }}">
-                    <div class="page-template__region">
-                        <header>
-                            <h5 class="page-template__region__header">
-                            {{ region.name|trans|replace({'_':' '})|title }}
-                            </h5>
-                        </header>
-
-                        {% set widget = resource.getFormWidget(region.name) %}
-                        {% if widget is not null %}
-                            {% set pagepartadmin = widget.pagepartadmin %}
-                            {{ pagepartadmin_widget(pagepartadmin, formView) }}
-                        {% elseif region.template is defined and region.template %}
-                            {% include region.template with {'page': resource.page} %}
-                        {% else %}
-                            NO ADMIN FOUND for {{ region.name }}
-                        {% endif %}
-                    </div>
-                </div>
+                {{ macros.render_region(formView, resource, region) }}
             {% endfor %}
         </div>
     {% endfor %}
@@ -97,3 +80,35 @@
     {% endif %}
 
 </article>
+
+{% macro render_region(formView, resource, region) %}
+    {% if region.children %}
+        <div class="col-md-{{ region.span }}">
+            <div class="row">
+                {% for child in region.children %}
+                    {{ _self.render_region(formView, resource, child) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="col-md-{{ region.span }}">
+            <div class="page-template__region">
+                <header>
+                    <h5 class="page-template__region__header">
+                    {{ region.name|trans|replace({'_':' '})|title }}
+                    </h5>
+                </header>
+
+                {% set widget = resource.getFormWidget(region.name) %}
+                {% if widget is not null %}
+                    {% set pagepartadmin = widget.pagepartadmin %}
+                    {{ pagepartadmin_widget(pagepartadmin, formView) }}
+                {% elseif region.template is defined and region.template %}
+                    {% include region.template with {'page': resource.page} %}
+                {% else %}
+                    NO ADMIN FOUND for {{ region.name }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
