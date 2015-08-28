@@ -3,7 +3,6 @@
 namespace Kunstmaan\FixturesBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\FixturesBundle\Populator\Populator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -26,8 +25,12 @@ class PageBuilder implements BuilderInterface
     private $populator;
     private $slugifier;
 
-    public function __construct(EntityManager $em, ACLPermissionCreatorService $aclPermissionCreatorService, Populator $populator, Slugifier $slugifier)
-    {
+    public function __construct(
+        EntityManager $em,
+        ACLPermissionCreatorService $aclPermissionCreatorService,
+        Populator $populator,
+        Slugifier $slugifier
+    ) {
         $this->manager = $em;
         $this->nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         $this->nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
@@ -60,7 +63,9 @@ class PageBuilder implements BuilderInterface
             throw new \Exception('No translations detected for page fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')');
         }
 
-        $internalName = array_key_exists('page_internal_name', $fixtureParams) ? $fixtureParams['page_internal_name'] : null;
+        $internalName = array_key_exists('page_internal_name', $fixtureParams) ?
+            $fixtureParams['page_internal_name'] : null;
+
         $rootNode = null;
         foreach ($fixture->getTranslations() as $language => $data) {
             if ($rootNode == null) {
@@ -138,7 +143,7 @@ class PageBuilder implements BuilderInterface
     private function getParentNode($params, $language)
     {
         if (!isset($params['parent'])) {
-            return null;
+            return;
         }
 
         $parent = $params['parent'];
@@ -146,7 +151,7 @@ class PageBuilder implements BuilderInterface
             $additionals = $parent->getAdditionalEntities();
             $parent = $additionals['rootNode'];
         } elseif (is_string($parent)) {
-            $nodes = $this->nodeRepo->getNodesByInternalName($parent, $language);
+            $nodes = $this->nodeRepo->getNodesByInternalName($parent, $language, false, true);
             if (count($nodes) > 0) {
                 $parent = $nodes[0];
             }
@@ -161,7 +166,9 @@ class PageBuilder implements BuilderInterface
         $rootNode->setRef($page);
         $rootNode->setDeleted(false);
         $rootNode->setInternalName($internalName);
-        $rootNode->setHiddenFromNav(isset($fixtureParams['hidden_from_nav']) ? $fixtureParams['hidden_from_nav'] : false);
+        $rootNode->setHiddenFromNav(
+            isset($fixtureParams['hidden_from_nav']) ? $fixtureParams['hidden_from_nav'] : false
+        );
         $parent = $this->getParentNode($fixtureParams, $language);
         if ($parent instanceof Node) {
             $rootNode->setParent($parent);
@@ -188,6 +195,7 @@ class PageBuilder implements BuilderInterface
         if ($page instanceof StructureNode) {
             $translation->setSlug('');
             $translation->setUrl($translation->getFullSlug());
+
             return $translation;
         }
 
@@ -212,7 +220,7 @@ class PageBuilder implements BuilderInterface
         preg_match($finalDigitGrabberRegex, $string, $matches);
 
         if (count($matches) > 0) {
-            $digit = (int)$matches[0];
+            $digit = (int) $matches[0];
             ++$digit;
 
             // Replace the integer with the new digit.
@@ -221,4 +229,4 @@ class PageBuilder implements BuilderInterface
             return $string . $append . '1';
         }
     }
-} 
+}
