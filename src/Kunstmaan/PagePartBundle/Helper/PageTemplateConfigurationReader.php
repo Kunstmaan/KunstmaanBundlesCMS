@@ -41,21 +41,40 @@ class PageTemplateConfigurationReader
         $name = substr($name, $pos + 1);
         $result = new PageTemplate();
         $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
-	$rawData = Yaml::parse($path);
-	$result->setName($rawData['name']);
+        $rawData = Yaml::parse($path);
+        $result->setName($rawData['name']);
         $rows = array();
-	foreach ($rawData['rows'] as $rawRow) {
+        foreach ($rawData['rows'] as $rawRow) {
             $regions = array();
-	    foreach ($rawRow['regions'] as $rawRegion) {
-		$region = new Region($rawRegion['name'], $rawRegion['span'], array_key_exists('template', $rawRegion) ? $rawRegion['template'] : null);
-		$regions[] = $region;
+            foreach ($rawRow['regions'] as $rawRegion) {
+                $region = $this->buildRegion($rawRegion);
+                $regions[] = $region;
             }
             $rows[] = new Row($regions);
         }
         $result->setRows($rows);
-	$result->setTemplate($rawData["template"]);
+        $result->setTemplate($rawData["template"]);
 
         return $result;
+    }
+
+    /**
+     * This builds a Region out of the rawRegion from the Yaml
+     *
+     * @param array $rawRegion
+     * @return Region
+     */
+    private function buildRegion($rawRegion)
+    {
+        $children = array();
+
+        if (isset($rawRegion['regions']) && count($rawRegion['regions'])) {
+            foreach ($rawRegion['regions'] as $child) {
+                $children[] = $this->buildRegion($child);
+            }
+        }
+
+        return new Region(array_key_exists('name', $rawRegion) ? $rawRegion['name'] : null, $rawRegion['span'], array_key_exists('template', $rawRegion) ? $rawRegion['template'] : null, $children);
     }
 
     /**
