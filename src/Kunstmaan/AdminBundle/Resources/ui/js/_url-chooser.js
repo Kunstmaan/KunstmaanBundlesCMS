@@ -99,7 +99,7 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
                 parentModalId = $parentModal.attr('id');
 
             // Set val
-            parent.$('#' + linkedInputId).val(itemUrl);
+            parent.$('#' + linkedInputId).val(itemUrl).change();
 
             // Close modal
             parent.$('#' + parentModalId).modal('hide');
@@ -124,7 +124,7 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
                 parentModalId = $parentModal.attr('id');
 
                 // Set val
-                parent.$('#' + linkedInputId).val(itemId);
+                parent.$('#' + linkedInputId).val(itemId).change();
 
                 // Update preview
                 var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
