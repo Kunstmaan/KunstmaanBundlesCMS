@@ -58,14 +58,20 @@ class SlugController extends Controller
             $em,
             $nodeTranslation
         );
+        $node = $nodeTranslation->getNode();
 
         $securityEvent = new SlugSecurityEvent();
         $securityEvent
-            ->setNode($nodeTranslation->getNode())
+            ->setNode($node)
             ->setEntity($entity)
             ->setRequest($request)
             ->setNodeTranslation($nodeTranslation);
 
+        $nodeMenu = $this->container->get('kunstmaan_node.node_menu');
+        $nodeMenu->setLocale($locale);
+        $nodeMenu->setCurrentNode($node);
+        $nodeMenu->setIncludeOffline($preview);
+        
         $eventDispatcher = $this->get('event_dispatcher');
         $eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
 
@@ -76,6 +82,7 @@ class SlugController extends Controller
                 'slug'            => $url,
                 'page'            => $entity,
                 'resource'        => $entity,
+                'nodemenu'        => $nodeMenu,
             )
         );
         if (method_exists($entity, 'getDefaultView')) {
