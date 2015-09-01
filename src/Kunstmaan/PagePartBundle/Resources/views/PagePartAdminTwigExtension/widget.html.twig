@@ -1,5 +1,6 @@
 <div class="js-pp-container pp-container" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
 
+    {% if pagepartadmin.possiblePagePartTypes | length > 0 %}
     <!-- First New PP select -->
     <div class="pp-container__add">
         <select class="js-add-pp-select js-add-pp-select--first form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
@@ -9,6 +10,7 @@
             {% endfor %}
         </select>
     </div>
+    {% endif %}
 
     <!-- Sortable container -->
     <div id="parts-{{ pagepartadmin.context }}" class="js-sortable-container sortable-container" data-scope="{% spaceless %}{% for type in pagepartadmin.possiblePagePartTypes %}{{ type.class|replace({'\\':""})~' ' }}{% endfor %}{% endspaceless %}">

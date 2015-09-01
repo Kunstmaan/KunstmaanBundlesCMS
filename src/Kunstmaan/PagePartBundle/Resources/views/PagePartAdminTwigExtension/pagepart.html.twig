@@ -72,7 +72,7 @@
     </section>
 
 
-
+    {% if pagepartadmin.possiblePagePartTypes | length > 0 %}
     <!-- New PP select -->
     <div class="pp-container__add">
         <select class="js-add-pp-select form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
@@ -82,6 +82,7 @@
             {% endfor %}
         </select>
     </div>
+    {% endif %}
 
 
 
