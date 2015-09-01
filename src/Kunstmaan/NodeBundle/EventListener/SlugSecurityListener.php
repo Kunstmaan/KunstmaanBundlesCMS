@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 
 /**
  * Class SlugSecurityListener
@@ -27,6 +28,11 @@ class SlugSecurityListener
      * @var EntityManager
      */
     protected $em;
+    
+    /**
+     * @var NodeMenu
+     */
+    protected $nodeMenu;
 
     /**
      * @param EntityManager   $entityManager
@@ -34,10 +40,12 @@ class SlugSecurityListener
      */
     public function __construct(
         EntityManager $entityManager,
-        SecurityContext $securityContext
+        SecurityContext $securityContext,
+        NodeMenu $nodeMenu
     ) {
         $this->em              = $entityManager;
         $this->securityContext = $securityContext;
+        $this->nodeMenu        = $nodeMenu;
     }
 
     /**
@@ -66,5 +74,12 @@ class SlugSecurityListener
         if (!$isPreview && !$nodeTranslation->isOnline()) {
             throw new NotFoundHttpException('The requested page is not online');
         }
+        
+        $nodeMenu = $this->nodeMenu;
+        $nodeMenu->setLocale($nodeTranslation->getLang());
+        $nodeMenu->setCurrentNode($node);
+        $nodeMenu->setIncludeOffline($isPreview);
+        
+        $request->attributes->set('_nodeMenu', $nodeMenu);
     }
 }

@@ -52,6 +52,7 @@ class RenderContextListener
         if ($nodeTranslation) {
             $entity     = $request->attributes->get('_entity');
             $url        = $request->attributes->get('url');
+            $nodeMenu   = $request->attributes->get('_nodeMenu');
             $parameters = $request->attributes->get('_renderContext');
 
             if ($request->get('preview') == true) {
@@ -71,6 +72,7 @@ class RenderContextListener
                 'slug'            => $url,
                 'page'            => $entity,
                 'resource'        => $entity,
+                'nodemenu'        => $nodeMenu,
             );
 
             if (is_array($parameters) || $parameters instanceof \ArrayObject) {

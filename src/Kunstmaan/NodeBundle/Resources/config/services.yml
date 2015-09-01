@@ -138,7 +138,7 @@ services:
 
     kunstmaan_node.slug.security.listener:
         class: Kunstmaan\NodeBundle\EventListener\SlugSecurityListener
-        arguments: ["@doctrine.orm.entity_manager", "@security.context"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_node.node_menu"]
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.slug.security, method: onSlugSecurityEvent }
 
