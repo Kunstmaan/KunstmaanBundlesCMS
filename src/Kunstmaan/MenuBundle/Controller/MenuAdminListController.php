@@ -9,8 +9,6 @@ use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\MenuBundle\Entity\Menu;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class MenuAdminListController extends AdminListController
@@ -34,8 +32,8 @@ class MenuAdminListController extends AdminListController
 
             $create_route = function ($item) {
                 return array(
-                    'path'   => 'kunstmaanmenubundle_admin_menuitem',
-                    'params' => array('menuid' => $item->getId())
+                    'path' => 'kunstmaanmenubundle_admin_menuitem',
+                    'params' => array('menuid' => $item->getId()),
                 );
             };
             $this->configurator->addItemAction(
@@ -57,56 +55,11 @@ class MenuAdminListController extends AdminListController
     public function indexAction(Request $request)
     {
         // Make sure we have a menu for each possible locale
-        $this->makeSureMenusExist();
+        $this->get('kunstmaan_menu.menu.service')->makeSureMenusExist();
 
         return parent::doIndexAction(
             $this->getAdminListConfigurator($request),
             $request
         );
-    }
-
-    /**
-     * Make sure the menu objects exist in the database for each locale.
-     */
-    private function makeSureMenusExist()
-    {
-        $menuNames = $this->container->getParameter('kunstmaan_menu.menus');
-        $locales   = $this->getLocales();
-        $required  = array();
-        foreach ($menuNames as $name) {
-            $required[$name] = $locales;
-        }
-
-        $em          = $this->getDoctrine()->getManager();
-        $menuObjects = $em->getRepository('KunstmaanMenuBundle:Menu')->findAll(
-        );
-        foreach ($menuObjects as $menu) {
-            if (array_key_exists($menu->getName(), $required)) {
-                $index = array_search(
-                    $menu->getLocale(),
-                    $required[$menu->getName()]
-                );
-                if ($index !== false) {
-                    unset($required[$menu->getName()][$index]);
-                }
-            }
-        }
-
-        foreach ($required as $name => $locales) {
-            foreach ($locales as $locale) {
-                $menu = new Menu();
-                $menu->setName($name);
-                $menu->setLocale($locale);
-                $em->persist($menu);
-            }
-        }
-
-        $em->flush();
-    }
-
-    private function getLocales()
-    {
-        return $this->get('kunstmaan_node.domain_configuration')
-            ->getBackendLocales();
     }
 }
