@@ -29,7 +29,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     protected $defaultLocale;
 
     /** @var Node */
-    protected $rootNode;
+    protected $rootNode = null;
 
     public function __construct(ContainerInterface $container)
     {
@@ -110,7 +110,7 @@ class DomainConfiguration implements DomainConfigurationInterface
      */
     public function getRootNode()
     {
-        return null;
+        return $this->rootNode;
     }
 
     /**

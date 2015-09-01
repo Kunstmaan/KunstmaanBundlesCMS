@@ -14,7 +14,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @var array
      */
-    private $hosts;
+    protected $hosts;
 
     /**
      * @param ContainerInterface $container
@@ -118,13 +118,15 @@ class DomainConfiguration extends BaseDomainConfiguration
             return parent::getRootNode();
         }
 
-        $host         = $this->getHost();
-        $internalName = $this->hosts[$host]['root'];
-        $em           = $this->container->get('doctrine.orm.entity_manager');
-        $nodeRepo     = $em->getRepository('KunstmaanNodeBundle:Node');
-        $rootNode     = $nodeRepo->getNodeByInternalName($internalName);
+        if (is_null($this->rootNode)) {
+            $host           = $this->getHost();
+            $internalName   = $this->hosts[$host]['root'];
+            $em             = $this->container->get('doctrine.orm.entity_manager');
+            $nodeRepo       = $em->getRepository('KunstmaanNodeBundle:Node');
+            $this->rootNode = $nodeRepo->getNodeByInternalName($internalName);
+        }
 
-        return $rootNode;
+        return $this->rootNode;
     }
 
     /**
