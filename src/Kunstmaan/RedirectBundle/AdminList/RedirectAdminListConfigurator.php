@@ -3,26 +3,30 @@
 namespace Kunstmaan\RedirectBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 
-/**
- * The admin list configurator for Redirect
- */
 class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
+    /**
+     * @var DomainConfigurationInterface
+     */
+    private $domainConfiguration;
 
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
+     * @param EntityManager $em The entity manager
+     * @param AclHelper $aclHelper The acl helper
+     * @param DomainConfigurationInterface $domainConfiguration
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null)
+    public function __construct(EntityManager $em, AclHelper $aclHelper = null, DomainConfigurationInterface $domainConfiguration)
     {
         parent::__construct($em, $aclHelper);
-        $this->setAdminType(new RedirectAdminType());
+
+        $this->domainConfiguration = $domainConfiguration;
+        $this->setAdminType(new RedirectAdminType($domainConfiguration));
     }
 
     /**
@@ -30,10 +34,12 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function buildFields()
     {
+        if ($this->domainConfiguration->isMultiDomainHost()) {
+            $this->addField('domain', 'Domain', true);
+        }
         $this->addField('origin', 'Origin', true);
         $this->addField('target', 'Target', true);
         $this->addField('permanent', 'Permanent?', true);
-
     }
 
     /**
@@ -41,9 +47,30 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function buildFilters()
     {
+        if ($this->domainConfiguration->isMultiDomainHost()) {
+            $hosts = $this->domainConfiguration->getHosts();
+            $domains = array_combine($hosts, $hosts);
+            $domains = array_merge(array('' => 'redirect.all'), $domains);
+            $this->addFilter('domain', new ORM\EnumerationFilterType('domain'), 'Domain', $domains);
+        }
         $this->addFilter('origin', new ORM\StringFilterType('origin'), 'Origin');
         $this->addFilter('target', new ORM\StringFilterType('target'), 'Target');
         $this->addFilter('permanent', new ORM\BooleanFilterType('permanent'), 'Permanent');
+    }
+
+    /**
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
+     *
+     * @return string
+     */
+    public function getValue($item, $columnName)
+    {
+        if ($columnName == 'domain' && !$item->getDomain()) {
+            return 'All domains';
+        }
+
+        return parent::getValue($item, $columnName);
     }
 
     /**
@@ -65,5 +92,4 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     {
         return 'Redirect';
     }
-
 }

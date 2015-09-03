@@ -189,7 +189,7 @@
                 <div class="input-group">
                     {{ form_widget(form) }}
                     <span class="input-group-addon">
-                        <strong class="input-group-addon--tooltip" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text'] }}" id="{{ id }}_info_text">?</strong>
+                        <strong class="input-group-addon--tooltip" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text']|trans }}" id="{{ id }}_info_text">?</strong>
                     </span>
                 </div>
             {% else %}

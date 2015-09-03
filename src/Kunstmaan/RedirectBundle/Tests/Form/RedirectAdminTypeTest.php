@@ -12,7 +12,12 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * @var RedirectAdminType
      */
-    protected $object;
+    protected $objectMultiDomain;
+
+    /**
+     * @var RedirectAdminType
+     */
+    protected $objectSingleDomain;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -20,7 +25,18 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new RedirectAdminType();
+        $multiDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+            ->disableOriginalConstructor()->getMock();
+        $multiDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->will($this->returnValue(true));
+        $multiDomainConfiguration->expects($this->any())->method('getHosts')->will($this->returnValue(array('domain.com', 'domain.be')));
+
+        $singleDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+            ->disableOriginalConstructor()->getMock();
+        $singleDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->will($this->returnValue(false));
+        $singleDomainConfiguration->expects($this->any())->method('getHosts')->will($this->returnValue(array()));
+
+        $this->objectMultiDomain = new RedirectAdminType($multiDomainConfiguration);
+        $this->objectSingleDomain = new RedirectAdminType($singleDomainConfiguration);
     }
 
     /**
@@ -50,7 +66,27 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
             ->method('add')
             ->with('permanent');
 
-        $this->object->buildForm($builder, array());
+        $this->objectSingleDomain->buildForm($builder, array());
+
+        $builder = $this->getMock('Symfony\Component\Form\Test\FormBuilderInterface');
+        $builder
+            ->expects($this->at(0))
+            ->method('add')
+            ->with('domain');
+        $builder
+            ->expects($this->at(1))
+            ->method('add')
+            ->with('origin');
+        $builder
+            ->expects($this->at(2))
+            ->method('add')
+            ->with('target');
+        $builder
+            ->expects($this->at(3))
+            ->method('add')
+            ->with('permanent');
+
+        $this->objectMultiDomain->buildForm($builder, array());
     }
 
     /**
@@ -58,6 +94,6 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('redirect_form', $this->object->getName());
+        $this->assertEquals('redirect_form', $this->objectMultiDomain->getName());
     }
 }
