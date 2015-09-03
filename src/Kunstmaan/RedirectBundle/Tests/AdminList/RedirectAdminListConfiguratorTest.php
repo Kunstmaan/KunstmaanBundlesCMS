@@ -33,12 +33,15 @@ class RedirectAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $domainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+            ->disableOriginalConstructor()->getMock();
+
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()->getMock();
         $this->aclHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper')
             ->disableOriginalConstructor()->getMock();
 
-        $this->object = new RedirectAdminListConfigurator($this->em, $this->aclHelper);
+        $this->object = new RedirectAdminListConfigurator($this->em, $this->aclHelper, $domainConfiguration);
     }
 
     /**

@@ -2,14 +2,24 @@
 
 namespace Kunstmaan\RedirectBundle\Form;
 
+use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
-/**
- * The type for Redirect
- */
 class RedirectAdminType extends AbstractType
 {
+    /**
+     * @var DomainConfigurationInterface
+     */
+    private $domainConfiguration;
+
+    /**
+     * @param DomainConfigurationInterface $domainConfiguration
+     */
+    public function __construct(DomainConfigurationInterface $domainConfiguration)
+    {
+        $this->domainConfiguration = $domainConfiguration;
+    }
 
     /**
      * Builds the form.
@@ -24,9 +34,37 @@ class RedirectAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('origin');
-        $builder->add('target');
-        $builder->add('permanent');
+        if ($this->domainConfiguration->isMultiDomainHost()) {
+            $hosts = $this->domainConfiguration->getHosts();
+            $domains = array_combine($hosts, $hosts);
+            $domains = array_merge(array('' => 'redirect.all'), $domains);
+
+            $builder->add('domain', 'choice', array(
+                'choices' => $domains,
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
+                'attr' => array(
+                    'info_text' => 'redirect.origin_info'
+                )
+            ));
+        }
+
+        $builder->add('origin', 'text', array(
+            'required' => true,
+            'attr' => array(
+                'info_text' => 'redirect.origin_info'
+            )
+        ));
+        $builder->add('target', 'text', array(
+            'required' => true,
+            'attr' => array(
+                'info_text' => 'redirect.target_info'
+            )
+        ));
+        $builder->add('permanent', 'checkbox', array(
+            'required' => false
+        ));
     }
 
     /**
@@ -38,5 +76,4 @@ class RedirectAdminType extends AbstractType
     {
         return 'redirect_form';
     }
-
 }

@@ -1,10 +1,11 @@
 <?php
+
 namespace Kunstmaan\RedirectBundle\Router;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -22,15 +23,18 @@ class RedirectRouter implements RouterInterface
     /** @var ObjectRepository */
     private $redirectRepository;
 
+    /** @var DomainConfigurationInterface */
+    private $domainConfiguration;
+
     /**
-     * The constructor for this service
-     *
-     * @param ContainerInterface $container
+     * @param ObjectRepository $redirectRepository
+     * @param DomainConfigurationInterface $domainConfiguration
      */
-    public function __construct(ObjectRepository $redirectRepository, RequestContext $context = null)
+    public function __construct(ObjectRepository $redirectRepository, DomainConfigurationInterface $domainConfiguration)
     {
         $this->redirectRepository = $redirectRepository;
-        $this->context = $context ?: new RequestContext();
+        $this->domainConfiguration = $domainConfiguration;
+        $this->context = new RequestContext();
     }
 
     /**
@@ -107,18 +111,21 @@ class RedirectRouter implements RouterInterface
     private function initRoutes()
     {
         $redirects = $this->redirectRepository->findAll();
+        $domain = $this->domainConfiguration->getHost();
 
+        /** @var Redirect $redirect */
         foreach ($redirects as $redirect) {
-            /** @var Redirect $redirect */
-
-            $this->routeCollection->add(
-                '_redirect_route_' . $redirect->getId(),
-                new Route($redirect->getOrigin(), array(
-                    '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
-                    'path' => $redirect->getTarget(),
-                    'permanent' => $redirect->isPermanent(),
-                ))
-            );
+            // Only add the route when the domain matches or the domain is empty
+            if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
+                $this->routeCollection->add(
+                    '_redirect_route_' . $redirect->getId(),
+                    new Route($redirect->getOrigin(), array(
+                        '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                        'path' => $redirect->getTarget(),
+                        'permanent' => $redirect->isPermanent(),
+                    ))
+                );
+            }
         }
     }
 

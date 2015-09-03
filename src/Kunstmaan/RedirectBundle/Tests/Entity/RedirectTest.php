@@ -32,6 +32,16 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::getDomain
+     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::setDomain
+     */
+    public function testGetSetDomain()
+    {
+        $this->object->setDomain('domain.com');
+        $this->assertEquals('domain.com', $this->object->getDomain());
+    }
+
+    /**
      * @covers Kunstmaan\RedirectBundle\Entity\Redirect::getOrigin
      * @covers Kunstmaan\RedirectBundle\Entity\Redirect::setOrigin
      */

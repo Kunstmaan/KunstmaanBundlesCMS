@@ -9,9 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * The admin list controller for Redirect
- */
 class RedirectAdminListController extends AdminListController
 {
     /**
@@ -25,7 +22,7 @@ class RedirectAdminListController extends AdminListController
     public function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager());
+            $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->get('kunstmaan_node.domain_configuration'));
         }
 
         return $this->configurator;

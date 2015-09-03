@@ -15,7 +15,12 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
     /**
      * @var RedirectRouter
      */
-    protected $object;
+    protected $firstObject;
+
+    /**
+     * @var RedirectRouter
+     */
+    protected $secondObject;
 
     /**
      * @var ObjectRepository
@@ -33,8 +38,19 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->repository = $this->getRedirectRepository();
-        $this->object     = new RedirectRouter($this->repository);
+        $firstDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+            ->disableOriginalConstructor()->getMock();
+        $firstDomainConfiguration->expects($this->any())->method('getHost')->will($this->returnValue('sub.domain.com'));
+
+        $secondDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+            ->disableOriginalConstructor()->getMock();
+        $secondDomainConfiguration->expects($this->any())->method('getHost')->will($this->returnValue('other.domain.com'));
+
+        $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->repository->expects($this->any())->method('findAll')->will($this->returnValue($this->getRedirects()));
+
+        $this->firstObject     = new RedirectRouter($this->repository, $firstDomainConfiguration);
+        $this->secondObject     = new RedirectRouter($this->repository, $secondDomainConfiguration);
     }
 
     /**
@@ -45,10 +61,11 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
      *
      * @return Redirect
      */
-    private function getRedirect($id, $origin, $target, $permanent)
+    private function getRedirect($id, $origin, $target, $permanent, $domain)
     {
         $redirect = new Redirect();
         $redirect
+            ->setDomain($domain)
             ->setOrigin($origin)
             ->setTarget($target)
             ->setPermanent($permanent)
@@ -64,19 +81,13 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
     {
         if (!isset($this->redirects)) {
             $this->redirects   = array();
-            $this->redirects[] = $this->getRedirect(1, 'test', '/target1', false);
-            $this->redirects[] = $this->getRedirect(2, 'test2', '/target2', true);
+            $this->redirects[] = $this->getRedirect(1, 'test1', '/target1', false, null);
+            $this->redirects[] = $this->getRedirect(2, 'test2', '/target2', true, null);
+            $this->redirects[] = $this->getRedirect(3, 'test3', '/target3', true, 'sub.domain.com');
+            $this->redirects[] = $this->getRedirect(4, 'test4', '/target4', true, 'other.domain.com');
         }
 
         return $this->redirects;
-    }
-
-    protected function getRedirectRepository()
-    {
-        $repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
-        $repository->expects($this->any())->method('findAll')->will($this->returnValue($this->getRedirects()));
-
-        return $repository;
     }
 
     /**
@@ -94,8 +105,8 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
     public function testGetSetContext()
     {
         $context = new RequestContext();
-        $this->object->setContext($context);
-        $this->assertEquals($context, $this->object->getContext());
+        $this->firstObject->setContext($context);
+        $this->assertEquals($context, $this->firstObject->getContext());
     }
 
     /**
@@ -103,8 +114,23 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRouteCollection()
     {
-        $collection = $this->object->getRouteCollection();
-        $this->assertEquals(2, $collection->count());
+        $collection = $this->firstObject->getRouteCollection();
+        $this->assertEquals(3, $collection->count());
+
+        $collection = $this->secondObject->getRouteCollection();
+        $this->assertEquals(3, $collection->count());
+    }
+
+    /**
+     * @covers Kunstmaan\RedirectBundle\Router\RedirectRouter::getRouteCollection
+     */
+    public function testGetRouteCollectionf()
+    {
+        $collection = $this->firstObject->getRouteCollection();
+        $this->assertEquals(3, $collection->count());
+
+        $collection = $this->secondObject->getRouteCollection();
+        $this->assertEquals(3, $collection->count());
     }
 
     /**
@@ -113,7 +139,7 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerate()
     {
-        $this->object->generate('test');
+        $this->firstObject->generate('test');
     }
 
     /**
@@ -121,13 +147,52 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatch()
     {
-        $redirect = $this->object->match('/test2');
+        $redirect = $this->firstObject->match('/test1');
+        $this->assertEquals(
+            array(
+                '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                'path'        => '/target1',
+                'permanent'   => false,
+                '_route'      => '_redirect_route_1'
+            ),
+            $redirect
+        );
+
+        $redirect = $this->firstObject->match('/test2');
         $this->assertEquals(
             array(
                 '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                 'path'        => '/target2',
                 'permanent'   => true,
                 '_route'      => '_redirect_route_2'
+            ),
+            $redirect
+        );
+
+        $redirect = $this->firstObject->match('/test3');
+        $this->assertEquals(
+            array(
+                '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                'path'        => '/target3',
+                'permanent'   => true,
+                '_route'      => '_redirect_route_3'
+            ),
+            $redirect
+        );
+
+        $this->setExpectedException('Symfony\Component\Routing\Exception\ResourceNotFoundException');
+        $this->firstObject->match('/testnotfound');
+
+        $this->setExpectedException('Symfony\Component\Routing\Exception\ResourceNotFoundException');
+        $this->firstObject->match('/test4');
+
+        $redirect = $this->secondObject->match('/test4');
+        $this->assertEquals(
+            array(
+                '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                'path'        => '/target4',
+                'permanent'   => true,
+                '_route'      => '_redirect_route_4'
             ),
             $redirect
         );

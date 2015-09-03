@@ -9,7 +9,6 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 
 class RedirectMenuAdaptor implements MenuAdaptorInterface
 {
-
     /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
@@ -20,9 +19,7 @@ class RedirectMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (is_null($parent)) {
-
-        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        if (!is_null($parent) &&'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('kunstmaanredirectbundle_admin_redirect')
@@ -37,5 +34,4 @@ class RedirectMenuAdaptor implements MenuAdaptorInterface
             $children[] = $menuItem;
         }
     }
-
 }
