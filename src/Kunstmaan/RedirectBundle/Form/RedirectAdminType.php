@@ -44,9 +44,6 @@ class RedirectAdminType extends AbstractType
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'attr' => array(
-                    'info_text' => 'redirect.origin_info'
-                )
             ));
         }
 
