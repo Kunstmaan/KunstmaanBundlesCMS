@@ -6,6 +6,8 @@ use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class HostOverrideCleanupHandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,16 +39,12 @@ class HostOverrideCleanupHandlerTest extends \PHPUnit_Framework_TestCase
     public function testLogoutWithoutOverride()
     {
         $request = Request::create('/');
-
-        $headerBag = $this->getMock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
-        $headerBag->expects($this->never())
-            ->method('clearCookie')
-            ->with($this->equalTo(DomainConfiguration::OVERRIDE_HOST));
-
-        $response = $this->getMockResponse($headerBag);
+        $response = new Response();
         $token    = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
 
         $this->object->logout($request, $response, $token);
+
+        $this->assertFalse($request->hasSession());
     }
 
     /**
@@ -54,25 +52,18 @@ class HostOverrideCleanupHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testLogoutWithOverride()
     {
+        $session = new Session(new MockArraySessionStorage());
+        $session->set(DomainConfiguration::OVERRIDE_HOST, 'domain.tld');
+
         $request = Request::create('/');
-        $request->cookies->set(DomainConfiguration::OVERRIDE_HOST, 'domain.tld');
+        $request->setSession($session);
+        $request->cookies->set($session->getName(), null);
 
-        $headerBag = $this->getMock('Symfony\Component\HttpFoundation\ResponseHeaderBag');
-        $headerBag->expects($this->once())
-            ->method('clearCookie')
-            ->with($this->equalTo(DomainConfiguration::OVERRIDE_HOST));
-
-        $response = $this->getMockResponse($headerBag);
+        $response = new Response();
         $token    = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
 
         $this->object->logout($request, $response, $token);
-    }
 
-    private function getMockResponse($headerBag)
-    {
-        $response          = new Response();
-        $response->headers = $headerBag;
-
-        return $response;
+        $this->assertNull($session->get(DomainConfiguration::OVERRIDE_HOST));
     }
 }
