@@ -4,6 +4,7 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Process\Exception\RuntimeException;
+use Symfony\Component\Finder\Finder;
 
 /**
  * ResourceCacher is used to cache all the resource into a file
@@ -74,11 +75,10 @@ class ResourceCacher
      */
     public function flushCache()
     {
-        $command = sprintf('rm -f %s/*.php', $this->cacheDir);
-        exec($command, $ouput, $return);
+        $finder = new Finder();
 
-        if ((string) $return != '0') {
-            throw new RuntimeException('Flushing translation cache failed');
+        foreach ($finder->files()->in($this->cacheDir)->name('*.php') as $file) {
+            unlink($file->getRealpath());
         }
 
         return true;
