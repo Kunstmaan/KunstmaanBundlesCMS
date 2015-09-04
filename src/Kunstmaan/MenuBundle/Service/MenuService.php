@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\MenuBundle\Service;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\MenuBundle\Entity\Menu;
+use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 
 class MenuService
 {
@@ -12,25 +14,22 @@ class MenuService
     private $menuNames;
 
     /**
-     * @var \Kunstmaan\NodeBundle\Helper\DomainConfiguration
+     * @var DomainConfigurationInterface
      */
     private $domainConfiguration;
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
     /**
      * @param array  $menuNames
-     * @param \Kunstmaan\NodeBundle\Helper\DomainConfiguration $domainConfiguration
-     * @param \Doctrine\ORM\EntityManager $em
+     * @param DomainConfigurationInterface $domainConfiguration
+     * @param EntityManager $em
      */
-    public function __construct(
-        array $menuNames,
-        $domainConfiguration,
-        $em
-    ) {
+    public function __construct(array $menuNames, DomainConfigurationInterface $domainConfiguration, EntityManager $em)
+    {
         $this->menuNames = $menuNames;
         $this->domainConfiguration = $domainConfiguration;
         $this->em = $em;
@@ -52,10 +51,7 @@ class MenuService
 
         foreach ($menuObjects as $menu) {
             if (array_key_exists($menu->getName(), $required)) {
-                $index = array_search(
-                    $menu->getLocale(),
-                    $required[$menu->getName()]
-                );
+                $index = array_search($menu->getLocale(), $required[$menu->getName()]);
                 if ($index !== false) {
                     unset($required[$menu->getName()][$index]);
                 }
@@ -74,9 +70,11 @@ class MenuService
         $this->em->flush();
     }
 
+    /**
+     * @return array
+     */
     private function getLocales()
     {
-        return $this->domainConfiguration
-            ->getBackendLocales();
+        return $this->domainConfiguration->getBackendLocales();
     }
 }
