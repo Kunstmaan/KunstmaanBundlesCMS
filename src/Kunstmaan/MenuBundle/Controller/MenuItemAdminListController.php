@@ -3,6 +3,7 @@
 namespace Kunstmaan\MenuBundle\Controller;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\MenuBundle\AdminList\MenuItemAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
@@ -45,7 +46,31 @@ class MenuItemAdminListController extends AdminListController
      */
     public function indexAction(Request $request, $menuid)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator($request, $menuid), $request);
+        $configurator = $this->getAdminListConfigurator($request, $menuid);
+
+        $itemRoute = function ($item) use ($menuid) {
+            return array(
+                'path'   => 'kunstmaanmenubundle_admin_menuitem_move_up',
+                'params' => array(
+                    'menuid' => $menuid,
+                    'item' => $item->getId()
+                )
+            );
+        };
+        $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-up', 'Move up'));
+
+        $itemRoute = function ($item) use ($menuid) {
+            return array(
+                'path'   => 'kunstmaanmenubundle_admin_menuitem_move_down',
+                'params' => array(
+                    'menuid' => $menuid,
+                    'item' => $item->getId()
+                )
+            );
+        };
+        $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-down', 'Move down'));
+
+        return parent::doIndexAction($configurator, $request);
     }
 
     /**
@@ -88,5 +113,45 @@ class MenuItemAdminListController extends AdminListController
     public function deleteAction(Request $request, $menuid, $id)
     {
         return parent::doDeleteAction($this->getAdminListConfigurator($request, $menuid), $id, $request);
+    }
+
+    /**
+     * Move an item up in the list.
+     *
+     * @Route("{menuid}/items/{item}/move-up", name="kunstmaanmenubundle_admin_menuitem_move_up")
+     * @Method({"GET"})
+     * @return RedirectResponse
+     */
+    public function moveUpAction(Request $request, $menuid, $item)
+    {
+        $em = $this->getEntityManager();
+        $repo = $em->getRepository('KunstmaanMenuBundle:MenuItem');
+        $item = $repo->find($item);
+
+        if ($item) {
+            $repo->moveUp($item);
+        }
+
+        return new RedirectResponse($this->generateUrl('kunstmaanmenubundle_admin_menuitem', array('menuid' => $menuid)));
+    }
+
+    /**
+     * Move an item down in the list.
+     *
+     * @Route("{menuid}/items/{item}/move-down", name="kunstmaanmenubundle_admin_menuitem_move_down")
+     * @Method({"GET"})
+     * @return RedirectResponse
+     */
+    public function moveDownAction(Request $request, $menuid, $item)
+    {
+        $em = $this->getEntityManager();
+        $repo = $em->getRepository('KunstmaanMenuBundle:MenuItem');
+        $item = $repo->find($item);
+
+        if ($item) {
+            $repo->moveDown($item);
+        }
+
+        return new RedirectResponse($this->generateUrl('kunstmaanmenubundle_admin_menuitem', array('menuid' => $menuid)));
     }
 }
