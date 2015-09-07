@@ -2,7 +2,7 @@
 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
 
 {% block header %}
-    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+    <form action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
     {{ parent() }}
 {% endblock %}
 

@@ -92,6 +92,8 @@ class AdminListTwigExtension extends \Twig_Extension
      * Emulating the symfony 2.1.x $request->attributes->get('_route_params') feature.
      * Code based on PagerfantaBundle's twig extension.
      *
+     * @deprecated: you should use _route_params from the request attributes param bag now
+     *
      * @return array
      */
     public function routerParams()
