@@ -41,7 +41,7 @@ To support multi-site, we added the root_id field to the default node search ind
 site's root page which makes it easier to filter search results for every site separately. The default search has
 been modified so only search results from the current site are shown.
 
-*Note*: If you are using search at the moment you should run ```app/console kuma:search:populate --full``` after
+*Note*: If you are using search at the moment you should run ```app/console kuma:search:populate full``` after
 upgrading to make sure your search index is updated accordingly!
 
 
