@@ -1,5 +1,12 @@
 {% extends 'KunstmaanAdminListBundle:Default:add_or_edit.html.twig' %}
 
+{% block header %}
+    {{ parent() }}
+    {% if type is defined and type %}
+        <input type="hidden" name="type" value="{{ type }}" />
+    {% endif %}
+{% endblock %}
+
 {% block admin_page_title %}
     <div class="col-sm-6 col-md-8">
         <h1 class="app__content__header__title">
