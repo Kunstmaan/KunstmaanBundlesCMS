@@ -38,6 +38,9 @@ class SlugRouter implements RouterInterface
     /** @var string */
     protected $slugPattern;
 
+    /** @var string */
+    protected $hostPattern;
+
     /** @var DomainConfigurationInterface */
     protected $domainConfiguration;
 
@@ -50,6 +53,7 @@ class SlugRouter implements RouterInterface
     {
         $this->container           = $container;
         $this->slugPattern         = "[a-zA-Z0-9\-_\/]*";
+        $this->hostPattern         = "[a-zA-Z0-9\-\.]+";
         $this->domainConfiguration = $container->get('kunstmaan_node.domain_configuration');
     }
 
@@ -70,6 +74,7 @@ class SlugRouter implements RouterInterface
             $this->getRouteCollection(),
             $this->getContext()
         );
+
         $result     = $urlMatcher->match($pathinfo);
 
         if (!empty($result)) {
@@ -132,6 +137,10 @@ class SlugRouter implements RouterInterface
             $this->getRouteCollection(),
             $this->context
         );
+
+        if ('_slug' === $name && !isset($parameters['host'])) {
+            $parameters['host'] = $this->getMasterRequest() ? $this->getMasterRequest()->getHost() : '';
+        }
 
         return $this->urlGenerator->generate($name, $parameters, $absolute);
     }
@@ -230,8 +239,10 @@ class SlugRouter implements RouterInterface
             'url'         => '',
             '_locale'     => $this->getDefaultLocale()
         );
+
         $slugRequirements = array(
-            'url' => $this->getSlugPattern()
+            'url'  => $this->getSlugPattern(),
+            'host' => $this->getHostPattern(),
         );
 
         if ($this->isMultiLanguage()) {
@@ -243,7 +254,8 @@ class SlugRouter implements RouterInterface
         return array(
             'path'         => $slugPath,
             'defaults'     => $slugDefaults,
-            'requirements' => $slugRequirements
+            'requirements' => $slugRequirements,
+            'host'         => '{host}',
         );
     }
 
@@ -296,6 +308,14 @@ class SlugRouter implements RouterInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getHostPattern()
+    {
+        return $this->hostPattern;
+    }
+
+    /**
      * @param string $name
      * @param array  $parameters
      */
@@ -306,7 +326,9 @@ class SlugRouter implements RouterInterface
             new Route(
                 $parameters['path'],
                 $parameters['defaults'],
-                $parameters['requirements']
+                $parameters['requirements'],
+                isset($parameters['options']) ? $parameters['options'] : array(),
+                isset($parameters['host']) ? $parameters['host'] : ''
             )
         );
     }

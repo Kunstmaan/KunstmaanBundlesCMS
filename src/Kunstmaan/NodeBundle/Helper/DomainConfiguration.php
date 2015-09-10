@@ -66,6 +66,16 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
+     * @param string $locale
+     *
+     * @return string
+     */
+    public function getTranslationHost($locale)
+    {
+        return $this->getHost();
+    }
+
+    /**
      * @return string
      */
     public function getDefaultLocale()
