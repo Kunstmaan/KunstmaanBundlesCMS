@@ -17,12 +17,22 @@ class DomainConfiguration extends BaseDomainConfiguration
     protected $hosts;
 
     /**
+     * @var array
+     */
+    protected $aliases = array();
+
+    /**
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
         $this->hosts = $container->getParameter('kunstmaan_multi_domain.hosts');
+        foreach ($this->hosts as $host => $hostInfo) {
+            foreach ($hostInfo['aliases'] as $alias) {
+                $this->aliases[$alias] = $host;
+            }
+        }
     }
 
     /**
@@ -34,7 +44,12 @@ class DomainConfiguration extends BaseDomainConfiguration
             return $this->getHostOverride();
         }
 
-        return parent::getHost();
+        $host = parent::getHost();
+        if (isset($this->aliases[$host])) {
+            $host = $this->aliases[$host];
+        }
+
+        return $host;
     }
 
     /**
