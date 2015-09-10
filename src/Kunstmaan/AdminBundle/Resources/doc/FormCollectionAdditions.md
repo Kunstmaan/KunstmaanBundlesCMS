@@ -82,7 +82,7 @@ form type has a getter and setter for a weight field if you don't set it).
 ## Many to Many relations
 
 If you have a many-to-many relation, you wouldn’t want to delete the related entity when removing it from page part.
-In order to skip this, set 'nested_deletable => false` attribute, i.e.:
+In order to skip this, set `nested_deletable => false` attribute, i.e.:
 
 ```
 'attr' => array(
