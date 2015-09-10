@@ -9,6 +9,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Helper\LocaleServiceInterface;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
+use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
@@ -101,6 +102,10 @@ class NodeTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction(
                 'get_node_menu',
                 array($this, 'getNodeMenu')
+            ),
+            new \Twig_SimpleFunction(
+                'get_translation_url',
+                array($this, 'getTranslationUrl')
             ),
             new \Twig_SimpleFunction('get_locales', array($this, 'getLocales')),
             new \Twig_SimpleFunction('get_backend_locales', array($this, 'getBackendLocales')),
@@ -281,6 +286,49 @@ class NodeTwigExtension extends Twig_Extension
             ),
             $parameters
         );
+    }
+
+    /**
+     * Return absolute url for a node translation or root translation
+     *
+     * @param string $input
+     * @param string $locale
+     *
+     * @return string
+     */
+    public function getTranslationUrl($input, $locale)
+    {
+        /** @var Node $node */
+        if ($input instanceof Node) {
+            $node = $input;
+        } elseif ($input instanceof NodeTranslation) {
+            $node = $input->getNode();
+        } elseif ($input instanceof AbstractPage) {
+            $node = $this->getNodeFor($input);
+        } elseif ($input instanceof NodeMenuItem) {
+            $node = $input->getNode();
+        }
+
+        if (!empty($node)) {
+            $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+                ->findOneBy(array('node' => $node, 'lang' => $locale));
+        }
+        if (empty($nodeTranslation)) {
+            $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+                ->findOneBy(array('node' => $this->domainConfiguration->getRootNode(), 'lang' => $locale));
+        }
+        if (!empty($nodeTranslation)) {
+            return $this->generator->generate(
+                '_slug',
+                array(
+                    'url' => $nodeTranslation->getUrl(),
+                    '_locale' => $nodeTranslation->getLang(),
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            );
+        }
+
+        return '';
     }
 
     /**

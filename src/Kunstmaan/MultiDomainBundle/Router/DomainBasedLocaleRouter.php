@@ -37,6 +37,8 @@ class DomainBasedLocaleRouter extends SlugRouter
                 if (isset($reverseLocaleMap[$locale])) {
                     $parameters['_locale'] = $reverseLocaleMap[$locale];
                 }
+            } elseif ($this->isMultiDomainHost() && isset($parameters['_locale']) && !isset($parameters['host'])) {
+                $parameters['host'] = $this->domainConfiguration->getTranslationHost($parameters['_locale']);
             }
         }
 

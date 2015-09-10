@@ -21,6 +21,15 @@ interface DomainConfigurationInterface
     public function getHosts();
 
     /**
+     * Return host for a specific locale
+     *
+     * @param string $locale
+     *
+     * @return string
+     */
+    public function getTranslationHost($locale);
+
+    /**
      * Get the default locale for the current host.
      *
      * @return string

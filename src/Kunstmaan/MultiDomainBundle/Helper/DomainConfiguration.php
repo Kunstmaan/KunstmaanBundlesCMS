@@ -110,6 +110,32 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string $locale
+     *
+     * @return string
+     */
+    public function getTranslationHost($locale)
+    {
+        $host = $this->getHost();
+
+        if ($this->isMultiDomainHost() && !$this->isMultiLanguage()) {
+            $internalName = $this->hosts[$host]['root'];
+            foreach ($this->hosts as $hostName => $hostInfo) {
+                if ($hostName !== $host && $hostInfo['root'] === $internalName
+                    && (
+                        'single_lang' === $hostInfo['type'] && $hostInfo['default_locale'] === $locale
+                        || 'multi_lang' === $hostInfo['type'] && isset($hostInfo['locales'][$locale])
+                    )
+                ) {
+                    return $hostName;
+                }
+            }
+        }
+
+        return $host;
+    }
+
+    /**
      * Fetch the root node for the current host
      */
     public function getRootNode()

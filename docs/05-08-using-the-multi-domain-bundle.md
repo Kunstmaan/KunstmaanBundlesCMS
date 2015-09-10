@@ -133,3 +133,17 @@ The following extra Twig functions are available when you enable the multi domai
 
 - ```get_multi_domain_hosts()``` - returns the hosts that are defined in the multi domain configuration
 - ```get_current_host()``` - returns the current host (either the real one or the current override)
+
+
+## Translate url generation
+
+If you want to generate an absolute url for a translated page you can use the `get_translation_url()` twig function.
+
+This function will check if for a given node, nodemenuitem, nodetranslation or page a translation is available in a 
+different locale. If it is not available it will try to find a translation on the root node.
+An absolute url (with scheme and hostname) will be returned for the found translation node. Otherwise a empty string
+will be returned.
+
+```
+    <a href="{{ get_translation_url(nodemenu.current, 'nl') }}">View Dutch website</a>
+```
