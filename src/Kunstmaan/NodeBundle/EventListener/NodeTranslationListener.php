@@ -16,6 +16,7 @@ use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -33,6 +34,10 @@ class NodeTranslationListener
      * @var SlugifierInterface
      */
     private $slugifier;
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
 
     /**
      * @var DomainConfigurationInterface
@@ -54,6 +59,11 @@ class NodeTranslationListener
         $this->logger              = $logger;
         $this->slugifier           = $slugifier;
         $this->domainConfiguration = $domainConfiguration;
+    }
+    
+    public function setRequestStack(RequestStack $requestStack) 
+    {
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -329,9 +339,8 @@ class NodeTranslationListener
             $flashes[] = $message;
 
             $this->ensureUniqueUrl($translation, $em, $flashes);
-        } elseif (count($flashes) > 0) {
+        } elseif (count($flashes) > 0 && $this->isInRequestScope()) {
             // No translations found so we're certain we can show this message.
-            $flash = end($flashes);
             $flash = current(array_slice($flashes, -1));
             $this->session->getFlashBag()->add('warning', $flash);
         }
@@ -366,5 +375,10 @@ class NodeTranslationListener
         } else {
             return $string.$append.'1';
         }
+    }
+    
+    private function isInRequestScope()
+    {
+        return $this->requestStack && $this->requestStack->getCurrentRequest();        
     }
 }
