@@ -8,8 +8,8 @@ services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
         arguments: ["@session", "@kunstmaan_admin.logger" , "@kunstmaan_utilities.slugifier", "@kunstmaan_node.domain_configuration"]
-        calls: 
-            - [ "setRequestStack", @request_stack ]
+        calls:
+            - [ "setRequestStack", [@request_stack] ]
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
             - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
