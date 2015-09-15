@@ -47,6 +47,8 @@ kunstmaan_multi_domain:
     hosts:
         main_nl_be:
             host: demo-nl.dev.kunstmaan.be
+            aliases:
+              - demo-nl.prod.kunstmaan.be
             type: single_lang
             default_locale: nl_BE
             locales:
@@ -55,6 +57,8 @@ kunstmaan_multi_domain:
 
         main_fr_be:
             host: demo-fr.dev.kunstmaan.be
+            aliases:
+              - demo-fr.prod.kunstmaan.be
             type: single_lang
             default_locale: fr_BE
             locales:
@@ -63,6 +67,8 @@ kunstmaan_multi_domain:
 
         subsite_be:
             host: subsite.dev.kunstmaan.be
+            aliases:
+              - subsite.prod.kunstmaan.be
             type: multi_lang
             default_locale: nl_BE
             locales:
