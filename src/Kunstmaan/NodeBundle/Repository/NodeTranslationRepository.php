@@ -32,6 +32,27 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
+     * Get max children weight
+     *
+     * @param Node $parentNode
+     * @param string $lang (optional) Only return max weight for the
+     *                     given language
+     *
+     * @return int
+     */
+    public function getMaxChildrenWeight(Node $parentNode = null, $lang = null)
+    {
+        $maxWeight = $this->getNodeTranslationsQueryBuilder($lang)
+            ->select('max(nt.weight)')
+            ->andWhere('n.parent = :parentNode')
+            ->setParameter('parentNode', $parentNode)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return (int)$maxWeight;
+    }
+
+    /**
      * QueryBuilder to fetch node translations (ignoring nodes that have been
      * deleted)
      *

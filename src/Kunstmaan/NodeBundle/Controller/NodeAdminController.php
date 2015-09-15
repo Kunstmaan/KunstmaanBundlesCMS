@@ -654,10 +654,15 @@ class NodeAdminController extends Controller
             $this->locale,
             true
         );
+        $weight          = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+            ->getMaxChildrenWeight($parentNode, $this->locale) + 1;
+        $nodeTranslation->setWeight($weight);
+
         if ($newPage->isStructureNode()) {
             $nodeTranslation->setSlug('');
-            $this->em->persist($nodeTranslation);
         }
+
+        $this->em->persist($nodeTranslation);
         $this->em->flush();
 
         $this->updateAcl($parentNode, $nodeNewPage);
