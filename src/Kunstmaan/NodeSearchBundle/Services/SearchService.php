@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Services;
 
+use Elastica\Aggregation\Terms;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearcherRequestAdapter;
 use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
@@ -171,6 +172,12 @@ class SearchService
         $facetTerms->setField('type');
 
         $query->addFacet($facetTerms);
+
+        // Aggregations
+        $termsAggregation = new Terms('type');
+        $termsAggregation->setField('type');
+
+        $query->addAggregation($termsAggregation);
     }
 
     /**
