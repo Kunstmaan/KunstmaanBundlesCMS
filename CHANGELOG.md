@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* [NodeSearchBundle] Deprecated getFacets in SearcherRequestAdapterInterface after the migration to Elastica 2.3
+
 ## 3.3.0 / 2015-09-06
 
 * Clear translation cache without exec but with native unlink function [#694](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/694) ([@jverdeyen](https://github.com/jverdeyen)) 

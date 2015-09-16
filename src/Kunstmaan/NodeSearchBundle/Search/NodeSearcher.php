@@ -65,7 +65,7 @@ class NodeSearcher extends AbstractElasticaSearcher
             ->setBoost(2.0)
             ->setQuery($query);
 
-        $elasticaQueryBool = new \Elastica\Query\Bool();
+        $elasticaQueryBool = new \Elastica\Query\BoolQuery();
         $elasticaQueryBool
             ->addMust($elasticaQueryLang)
             ->addShould($elasticaQueryTitle)
@@ -107,7 +107,7 @@ class NodeSearcher extends AbstractElasticaSearcher
      * Filter search results so only documents that are viewable by the current
      * user will be returned...
      *
-     * @param \Elastica\Query\Bool $elasticaQueryBool
+     * @param \Elastica\Query\BoolQuery $elasticaQueryBool
      */
     protected function applySecurityContext($elasticaQueryBool)
     {
