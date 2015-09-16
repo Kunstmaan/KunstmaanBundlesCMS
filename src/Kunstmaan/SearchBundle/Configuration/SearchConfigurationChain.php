@@ -37,7 +37,7 @@ class SearchConfigurationChain
      */
     public function getConfiguration($alias)
     {
-        if (array_key_exists($alias, $this->searchConfiguration)) {
+        if (array_key_exists($alias, $this->searchConfigurations)) {
             return $this->searchConfigurations[$alias];
         }
 
