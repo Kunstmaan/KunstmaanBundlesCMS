@@ -46,11 +46,11 @@ class SeoTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_seo_metadata_for'  => new \Twig_Function_Method($this, 'renderSeoMetadataFor', array('is_safe' => array('html'), 'needs_environment' => true)),
-            'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor'),
-            'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor'),
-            'get_title_for_page_or_default' => new \Twig_Function_Method($this, 'getTitleForPageOrDefault'),
-            'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('render_seo_metadata_for', array($this, 'renderSeoMetadataFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('get_seo_for', array($this, 'getSeoFor')),
+            new \Twig_SimpleFunction('get_title_for', array($this, 'getTitleFor')),
+            new \Twig_SimpleFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
+            new \Twig_SimpleFunction('get_social_widget_for', array($this, 'getSocialWidgetFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
 

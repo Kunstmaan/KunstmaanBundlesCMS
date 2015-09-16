@@ -28,7 +28,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'pagepartadmin_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('pagepartadmin_widget', array($this, 'renderWidget'), array('is_safe' => array('html'))),
         );
     }
 

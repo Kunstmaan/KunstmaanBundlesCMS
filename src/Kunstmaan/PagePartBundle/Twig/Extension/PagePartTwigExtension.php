@@ -42,8 +42,8 @@ class PagePartTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_pageparts'  => new \Twig_Function_Method($this, 'renderPageParts', array('needs_context' => true, 'is_safe' => array('html'))),
-            'getpageparts'  => new \Twig_Function_Method($this, 'getPageParts'),
+            new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_context' => true,'is_safe' => array('html'))),
+            new \Twig_SimpleFunction('getpageparts', array($this, 'getPageParts')),
         );
     }
 

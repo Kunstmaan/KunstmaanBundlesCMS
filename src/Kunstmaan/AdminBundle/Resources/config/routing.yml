@@ -15,25 +15,24 @@ KunstmaanAdminBundle_settings:
 
 # Change user password route
 KunstmaanAdminBundle_user_change_password:
-    pattern: /admin/settings/users/{id}/edit
+    path: /admin/settings/users/{id}/edit
     defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
-    requirements:
-        _method: GET|POST
+    methods: [GET, POST]
 
 ###########################
 ## fos_userbundle routes ##
 ###########################
 
 fos_user_security_login:
-    pattern: /admin/login
+    path: /admin/login
     defaults: { _controller: FOSUserBundle:Security:login }
 
 fos_user_security_check:
-    pattern: /admin/login_check
+    path: /admin/login_check
     defaults: { _controller: FOSUserBundle:Security:check }
         
 fos_user_security_logout:
-    pattern: /admin/logout
+    path: /admin/logout
     defaults: { _controller: FOSUserBundle:Security:logout }
 
 fos_user_profile:
@@ -45,7 +44,6 @@ fos_user_resetting:
     prefix: /admin/resetting
 
 fos_user_change_password:
-    pattern: /admin/profile/change-password
+    path: /admin/profile/change-password
     defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
-    requirements:
-        _method: GET|POST
+    methods: [GET, POST]

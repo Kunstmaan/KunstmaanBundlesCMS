@@ -53,6 +53,7 @@
 
 
 {% block content %}
+    {{ form_start(form, {'attr': {'class': 'form'}}) }}
     <form id="pageadminform" class="form" action="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
 
         {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}

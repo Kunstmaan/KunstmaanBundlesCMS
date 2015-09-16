@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_groups")
- * @Assert\Callback(methods={"isGroupValid"})
+ * @Assert\Callback(callback="isGroupValid")
  */
 class Group implements RoleInterface, GroupInterface
 {

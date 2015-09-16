@@ -50,8 +50,8 @@ class PageTemplateTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_pagetemplate'  => new \Twig_Function_Method($this, 'renderPageTemplate', array('needs_context' => true, 'is_safe' => array('html'))),
-            'getpagetemplate'  => new \Twig_Function_Method($this, 'getPageTemplate')
+            new \Twig_SimpleFunction('render_pagetemplate', array($this, 'renderPageTemplate'), array('needs_context' => true,'is_safe' => array('html'))),
+            new \Twig_SimpleFunction('getpagetemplate', array($this, 'getPageTemplate')),
         );
     }
 

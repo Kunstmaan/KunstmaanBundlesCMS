@@ -27,12 +27,8 @@ class MultiDomainTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_multi_domain_hosts' => new \Twig_Function_Method(
-                $this, 'getMultiDomainHosts'
-            ),
-            'get_current_host' => new \Twig_Function_Method(
-                $this, 'getCurrentHost'
-            ),
+            new \Twig_SimpleFunction('get_multi_domain_hosts', array($this, 'getMultiDomainHosts')),
+            new \Twig_SimpleFunction('get_current_host', array($this, 'getCurrentHost')),
         );
     }
 

@@ -52,11 +52,11 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::setDefaultOptions
+     * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $this->object->setDefaultOptions($this->resolver);
+        $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
         $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart');
     }

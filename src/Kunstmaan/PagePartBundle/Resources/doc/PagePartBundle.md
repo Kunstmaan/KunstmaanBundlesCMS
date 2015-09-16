@@ -99,7 +99,7 @@ class ContactPagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
 namespace Kunstmaan\WebsiteBundle\Form\PageParts;
 
 use Kunstmaan\WebsiteBundle\Form\ContactInfoAdminType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -140,9 +140,9 @@ class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\WebsiteBundle\Entity\PageParts\ContactPagePart',
@@ -224,7 +224,7 @@ class ContactInfo extends AbstractEntity
 
 namespace Kunstmaan\WebsiteBundle\Form;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -258,9 +258,9 @@ class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\WebsiteBundle\Entity\ContactInfo'

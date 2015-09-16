@@ -42,12 +42,8 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_admin_menu' => new \Twig_Function_Method(
-                $this, 'getAdminMenu'
-            ),
-            'get_admin_panel_actions' => new \Twig_Function_Method(
-                $this, 'getAdminPanelActions'
-            ),
+            new \Twig_SimpleFunction('get_admin_menu', array($this, 'getAdminMenu')),
+            new \Twig_SimpleFunction('get_admin_panel_actions', array($this, 'getAdminPanelActions')),
         );
     }
 

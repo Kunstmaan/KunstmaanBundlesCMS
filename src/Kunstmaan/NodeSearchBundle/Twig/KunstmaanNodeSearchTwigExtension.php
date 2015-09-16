@@ -52,12 +52,7 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('get_parent_page', array($this, 'getParentPage')),
-            'render_indexable_pageparts' => new \Twig_Function_Method(
-                $this, 'renderIndexablePageParts', array(
-                    'needs_context' => true,
-                    'is_safe'       => array('html')
-                )
-            ),
+            new \Twig_SimpleFunction('render_indexable_pageparts', array($this, 'renderIndexablePageParts'), array('needs_context' => true, 'is_safe'       => array('html'))),
         );
     }
 

@@ -36,7 +36,7 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_menu' => new \Twig_Function_Method($this, 'getMenu', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('get_menu', array($this, 'getMenu'), array('is_safe' => array('html'))),
         );
     }
 

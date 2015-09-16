@@ -84,7 +84,7 @@ class TabPane
      */
     public function bindRequest(Request $request)
     {
-        $this->form->bind($request);
+        $this->form->handleRequest($request);
 
         foreach ($this->tabs as $tab) {
             $tab->bindRequest($request);

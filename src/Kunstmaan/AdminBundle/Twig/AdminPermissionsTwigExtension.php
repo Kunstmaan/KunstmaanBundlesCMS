@@ -38,7 +38,7 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'permissionsadmin_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('permissionsadmin_widget', array($this, 'renderWidget'), array('is_safe' => array('html'))),
         );
     }
 

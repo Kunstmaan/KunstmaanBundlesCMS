@@ -30,8 +30,8 @@ class BikesTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
 	return array(
-	    'get_bikes' => new \Twig_Function_Method($this, 'getBikes'),
-	    'get_submenu_items' => new \Twig_Function_Method($this, 'getSubmenuItems'),
+        new \Twig_SimpleFunction('get_bikes', array($this, 'getBikes')),
+        new \Twig_SimpleFunction('get_submenu_items', array($this, 'getSubmenuItems')),
 	);
     }
 

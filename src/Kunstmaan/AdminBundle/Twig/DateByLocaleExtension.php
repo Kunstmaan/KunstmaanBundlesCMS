@@ -17,7 +17,7 @@ class DateByLocaleExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'localeDate' => new \Twig_Filter_Function('\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter')
+            new \Twig_SimpleFilter('localeDate', '\Kunstmaan\AdminBundle\Twig\DateByLocaleExtension::localeDateFilter'),
         );
     }
 

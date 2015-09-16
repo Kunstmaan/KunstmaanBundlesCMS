@@ -34,8 +34,8 @@ class FormToolsExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'form_errors_recursive'      => new \Twig_Function_Method($this, 'getErrorMessages'),
-            'form_has_errors_recursive'  => new \Twig_Function_Method($this, 'hasErrorMessages'),
+            new \Twig_SimpleFunction('form_errors_recursive', array($this, 'getErrorMessages')),
+            new \Twig_SimpleFunction('form_has_errors_recursive', array($this, 'hasErrorMessages')),
         );
     }
 

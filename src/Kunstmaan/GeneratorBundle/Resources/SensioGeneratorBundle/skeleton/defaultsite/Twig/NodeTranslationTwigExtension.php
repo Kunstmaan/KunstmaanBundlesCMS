@@ -30,7 +30,7 @@ class NodeTranslationTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_node_trans_by_node_id' => new \Twig_Function_Method($this, 'getNodeTranslationByNodeId')
+            new \Twig_SimpleFunction('get_node_trans_by_node_id', array($this, 'getNodeTranslationByNodeId')),
         );
     }
 
