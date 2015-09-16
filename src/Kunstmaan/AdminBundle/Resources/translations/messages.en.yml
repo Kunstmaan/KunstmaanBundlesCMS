@@ -68,3 +68,11 @@ omnext:
   welcome: Welcome.
   information: <strong>Information.</strong> There are no new notifications.
 
+permissions:
+  you_made_changes: You have made changes to the permissions on this page.
+  apply_recursively: Apply these changes recursively on all child pages
+  review_changes: Review your changes
+  changes: Permission changes
+  permissions_added: 'The following permissions will be <strong>added</strong>:'
+  permissions_removed: 'The following permissions will be <strong>removed</strong>:'
+  role_name: Role name
