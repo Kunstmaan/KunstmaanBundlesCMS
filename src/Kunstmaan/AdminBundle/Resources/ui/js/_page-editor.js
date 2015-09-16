@@ -245,7 +245,7 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
 
             // Add hidden fields
             var hiddenfieldsContainer = $("#permission-hidden-fields"),
-                hiddenfields;
+                hiddenfields = '';
 
             if (changes['add'].length > 0) {
                 for (var i=0; i<changes['add'].length; i++) {
