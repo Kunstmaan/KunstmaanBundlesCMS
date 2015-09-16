@@ -60,7 +60,7 @@ class FormHandler implements FormHandlerInterface
 
         $form = $formBuilder->getForm();
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $formSubmission = new FormSubmission();
                 $formSubmission->setIpAddress($request->getClientIp());

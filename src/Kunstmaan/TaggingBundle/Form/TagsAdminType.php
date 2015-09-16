@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 use Kunstmaan\TaggingBundle\Form\DataTransformer\TagsTransformer;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TagsAdminType extends AbstractType
 {
@@ -25,7 +25,7 @@ class TagsAdminType extends AbstractType
         $builder->addViewTransformer($transformer, true);
     }
 
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults($this->getDefaultOptions(array()));
 	}

@@ -29,7 +29,7 @@ class UtilitiesTwigExtension extends Twig_Extension
     public function getFilters()
     {
         return array(
-            'slugify' => new \Twig_Filter_Method($this, 'slugify'),
+            new \Twig_SimpleFilter('slugify', array($this, 'slugify')),
         );
     }
 

@@ -47,9 +47,9 @@ class AdminListTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'adminlist_widget'              => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html'))),
-            'my_router_params'              => new \Twig_Function_Method($this, 'routerParams'),
-            'supported_export_extensions'   => new \Twig_Function_Method($this, 'getSupportedExtensions')
+            new \Twig_SimpleFunction('adminlist_widget', array($this, 'renderWidget'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('my_router_params', array($this, 'routerParams')),
+            new \Twig_SimpleFunction('supported_export_extensions', array($this, 'getSupportedExtensions')),
         );
     }
 

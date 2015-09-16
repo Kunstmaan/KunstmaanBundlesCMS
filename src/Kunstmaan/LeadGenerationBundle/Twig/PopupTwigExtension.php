@@ -45,21 +45,12 @@ class PopupTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'lead_generation_render_js_includes' => new \Twig_Function_Method($this, 'renderJsIncludes', array(
-                'is_safe' => array('html'),
-                'needs_environment' => true
-            )),
-            'lead_generation_render_popups_html' => new \Twig_Function_Method($this, 'renderPopupsHtml', array(
-                'is_safe' => array('html'),
-                'needs_environment' => true
-            )),
-            'lead_generation_render_initialize_js' => new \Twig_Function_Method($this, 'renderInitializeJs', array(
-                'is_safe' => array('html'),
-                'needs_environment' => true
-            )),
-            'lead_generation_get_rule_properties' => new \Twig_Function_Method($this, 'getRuleProperties'),
-            'get_available_popup_types' => new \Twig_Function_Method($this, 'getAvailablePopupTypes'),
-            'get_available_rule_types' => new \Twig_Function_Method($this, 'getAvailableRuleTypes'),
+            new \Twig_SimpleFunction('lead_generation_render_js_includes', array($this, 'renderJsIncludes'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('lead_generation_render_popups_html', array($this, 'renderPopupsHtml'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('lead_generation_render_initialize_js', array($this, 'renderInitializeJs'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('lead_generation_get_rule_properties', array($this, 'getRuleProperties')),
+            new \Twig_SimpleFunction('get_available_popup_types', array($this, 'getAvailablePopupTypes')),
+            new \Twig_SimpleFunction('get_available_rule_types', array($this, 'getAvailableRuleTypes')),
         );
     }
 

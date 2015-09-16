@@ -23,6 +23,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
@@ -72,13 +73,16 @@ class NodeAdminController extends Controller
      */
     protected $aclHelper;
 
+
     /**
      * init
+     *
+     * @param Request $request
      */
-    protected function init()
+    protected function init(Request $request)
     {
         $this->em              = $this->getDoctrine()->getManager();
-        $this->locale          = $this->getRequest()->getLocale();
+        $this->locale          = $request->getLocale();
         $this->securityContext = $this->container->get('security.context');
         $this->user            = $this->securityContext->getToken()->getUser();
         $this->aclHelper       = $this->container->get(
@@ -96,7 +100,7 @@ class NodeAdminController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $this->init();
+        $this->init($request);
 
         $nodeAdminListConfigurator = new NodeAdminListConfigurator(
             $this->em,
@@ -125,9 +129,10 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/copyfromotherlanguage",
-     *      requirements={"_method" = "GET", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_copyfromotherlanguage"
      * )
+     * @Method("GET")
      * @Template()
      *
      * @param Request $request
@@ -138,7 +143,7 @@ class NodeAdminController extends Controller
      */
     public function copyFromOtherLanguageAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
@@ -190,19 +195,21 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/createemptypage",
-     *      requirements={"_method" = "GET", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_createemptypage"
      * )
+     * @Method("GET")
      * @Template()
      *
+     * @param Request $request
      * @param int $id
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
      */
-    public function createEmptyPageAction($id)
+    public function createEmptyPageAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
@@ -242,18 +249,20 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route("/{id}/publish", requirements={"_method" = "GET|POST", "id" =
+     * @Route("/{id}/publish", requirements={"id" =
      *                         "\d+"},
      *                         name="KunstmaanNodeBundle_nodes_publish")
+     * @Method({"GET", "POST"})
      *
+     * @param Request $request
      * @param int $id
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
      */
-    public function publishAction($id)
+    public function publishAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
@@ -293,18 +302,20 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/unpublish",
-     *      requirements={"_method" = "GET|POST", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_unpublish"
      * )
+     * @Method({"GET", "POST"})
      *
+     * @param Request $request
      * @param int $id
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
      */
-    public function unPublishAction($id)
+    public function unPublishAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
@@ -344,18 +355,20 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/unschedulepublish",
-     *      requirements={"_method" = "GET|POST", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_unschedule_publish"
      * )
+     * @Method({"GET", "POST"})
      *
+     * @param Request $request
      * @param int $id
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
      */
-    public function unSchedulePublishAction($id)
+    public function unSchedulePublishAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
 
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
@@ -381,19 +394,21 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/delete",
-     *      requirements={"_method" = "POST", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_delete"
      * )
      * @Template()
+     * @Method("POST")
      *
+     * @param Request $request
      * @param int $id
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
@@ -442,19 +457,21 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/duplicate",
-     *      requirements={"_method" = "POST", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_duplicate"
      * )
      * @Template()
+     * @Method("POST")
      *
+     * @param Request $request
      * @param int $id
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
      */
-    public function duplicateAction($id)
+    public function duplicateAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $parentNode */
         $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
             ->find($id);
@@ -527,11 +544,12 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/revert",
-     *      requirements={"_method" = "GET", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      defaults={"subaction" = "public"},
      *      name="KunstmaanNodeBundle_nodes_revert"
      * )
      * @Template()
+     * @Method("GET")
      *
      * @param Request $request
      * @param int     $id The node id
@@ -542,7 +560,7 @@ class NodeAdminController extends Controller
      */
     public function revertAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
@@ -614,11 +632,13 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/add",
-     *      requirements={"_method" = "POST", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_add"
      * )
      * @Template()
+     * @Method("POST")
      *
+     * @param Request $request
      * @param int $id
      *
      * @return RedirectResponse
@@ -627,7 +647,7 @@ class NodeAdminController extends Controller
      */
     public function addAction(Request $request, $id)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $parentNode */
         $parentNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
             ->find($id);
@@ -655,7 +675,7 @@ class NodeAdminController extends Controller
             true
         );
         $weight          = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
-            ->getMaxChildrenWeight($parentNode, $this->locale) + 1;
+                ->getMaxChildrenWeight($parentNode, $this->locale) + 1;
         $nodeTranslation->setWeight($weight);
 
         if ($newPage->isStructureNode()) {
@@ -685,12 +705,9 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route(
-     *      "/add-homepage",
-     *      requirements={"_method" = "POST"},
-     *      name="KunstmaanNodeBundle_nodes_add_homepage"
-     * )
+     * @Route("/add-homepage", name="KunstmaanNodeBundle_nodes_add_homepage")
      * @Template()
+     * @Method("POST")
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
@@ -698,7 +715,7 @@ class NodeAdminController extends Controller
      */
     public function addHomepageAction(Request $request)
     {
-        $this->init();
+        $this->init($request);
 
         // Check with Acl
         if (false === $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
@@ -740,11 +757,8 @@ class NodeAdminController extends Controller
     }
 
     /**
-     * @Route(
-     *      "/reorder",
-     *      requirements={"_method" = "POST"},
-     *      name="KunstmaanNodeBundle_nodes_reorder"
-     * )
+     * @Route("/reorder", name="KunstmaanNodeBundle_nodes_reorder")
+     * @Method("POST")
      *
      * @param Request $request
      *
@@ -753,7 +767,7 @@ class NodeAdminController extends Controller
      */
     public function reorderAction(Request $request)
     {
-        $this->init();
+        $this->init($request);
         $nodes         = array();
         $nodeIds       = $request->get('nodes');
         $changeParents = $request->get('parent');
@@ -784,7 +798,7 @@ class NodeAdminController extends Controller
 
             /* @var NodeTranslation $nodeTranslation */
             $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-            
+
             if ($nodeTranslation) {
                 $nodeVersion     = $nodeTranslation->getPublicNodeVersion();
                 $page            = $nodeVersion->getRef($this->em);
@@ -817,27 +831,28 @@ class NodeAdminController extends Controller
     /**
      * @Route(
      *      "/{id}/{subaction}",
-     *      requirements={"_method" = "GET|POST", "id" = "\d+"},
+     *      requirements={"id" = "\d+"},
      *      defaults={"subaction" = "public"},
      *      name="KunstmaanNodeBundle_nodes_edit"
      * )
      * @Template()
+     * @Method({"GET", "POST"})
      *
-     * @param int    $id        The node id
+     * @param Request $request
+     * @param int $id The node id
      * @param string $subaction The subaction (draft|public)
      *
      * @return RedirectResponse|array
      * @throws AccessDeniedException
      */
-    public function editAction($id, $subaction)
+    public function editAction(Request $request, $id, $subaction)
     {
-        $this->init();
+        $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
-        $request = $this->getRequest();
         $tabPane = new TabPane(
             'todo',
             $request,

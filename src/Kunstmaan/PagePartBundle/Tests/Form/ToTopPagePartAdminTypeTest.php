@@ -49,11 +49,11 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::setDefaultOptions
+     * @covers Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $this->object->setDefaultOptions($this->resolver);
+        $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
         $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart');
     }

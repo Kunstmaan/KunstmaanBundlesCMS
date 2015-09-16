@@ -113,7 +113,7 @@
 {# Labels #}
 {% block form_label %}
 {% spaceless %}
-    {% if 'checkbox' not in block_prefixes and label is not sameas(false) %}
+    {% if 'checkbox' not in block_prefixes and label is not same as(false) %}
         {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
@@ -121,7 +121,7 @@
         {% if required %}
             {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
         {% endif %}
-        {% if label is not sameas(false) %}
+        {% if label is not same as(false) %}
             {% if label is empty %}
                 {% set label = name|humanize %}
             {% endif %}

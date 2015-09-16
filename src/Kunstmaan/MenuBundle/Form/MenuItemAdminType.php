@@ -69,7 +69,7 @@ class MenuItemAdminType extends AbstractType
             'entity',
             array(
                 'class'         => 'KunstmaanMenuBundle:MenuItem',
-                'property'      => 'selectTitle',
+                'choice_label'      => 'selectTitle',
                 'query_builder' => function (EntityRepository $er) use (
                     $entityId,
                     $menu
@@ -115,7 +115,7 @@ class MenuItemAdminType extends AbstractType
             'entity',
             array(
                 'class'         => 'KunstmaanNodeBundle:NodeTranslation',
-                'property'      => 'title',
+                'choice_label'  => 'title',
                 'query_builder' => function (EntityRepository $er) use (
                     $locale,
                     $rootNode

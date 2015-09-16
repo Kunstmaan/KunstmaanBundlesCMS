@@ -3,7 +3,7 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use {{ namespace }}\Entity\PageParts\ServicePagePart;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -66,9 +66,9 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\ServicePagePart'

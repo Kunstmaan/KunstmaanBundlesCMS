@@ -23,8 +23,8 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'google_analytics_initialize' => new \Twig_Function_Method($this, 'renderInitialize', array('is_safe' => array('html'), 'needs_environment' => true)),
-            'google_analytics_track_order' => new \Twig_Function_Method($this, 'renderECommerceTracking', array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('google_analytics_initialize', array($this, 'renderInitialize'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('google_analytics_track_order', array($this, 'renderECommerceTracking'), array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
 

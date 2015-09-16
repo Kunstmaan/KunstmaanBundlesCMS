@@ -4,7 +4,7 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * This class represents the type for the ChoiceFormSubmissionField
@@ -33,7 +33,7 @@ class ChoiceFormSubmissionType extends AbstractType
         return 'kunstmaan_formbundle_choiceformsubmissiontype';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField',

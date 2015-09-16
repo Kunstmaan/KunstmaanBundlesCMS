@@ -4,7 +4,7 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The type for the EmailFormSubmissionField
@@ -24,7 +24,7 @@ class EmailFormSubmissionType extends AbstractType
         $builder->add('value', 'email', $fieldOptions);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField',
