@@ -27,3 +27,13 @@ Nodes can be published on a specified date, you have to configure a cronjob for 
 ```cron
 * * * * * /....../app/console kuma:nodes:cron
 ```
+
+## Structure nodes
+
+Structure nodes are used to group other nodes and as such they don’t need to have a published version, they don’t need to be online themselves, etc. This may cause problems for some (see [#701](https://github.com/Kunstmaan/KunstmaanBundlesCMS/issues/701) for example). If you’d like your StructureNodes always online, hidden from nav and with empty URL, enable it in config:
+
+```yaml
+# config.yml
+kunstmaan_node:
+    fix_structure_nodes: true
+```

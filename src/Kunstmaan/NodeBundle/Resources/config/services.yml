@@ -150,6 +150,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
 
+    kunstmaan_node.event_listener.structure_node_listener:
+        class: Kunstmaan\NodeBundle\EventListener\StructureNodeSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
     kunstmaan_node.node_menu:
         class: Kunstmaan\NodeBundle\Helper\NodeMenu
         arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper", "@kunstmaan_node.domain_configuration"]

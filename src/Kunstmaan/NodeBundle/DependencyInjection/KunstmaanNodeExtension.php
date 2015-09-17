@@ -35,6 +35,10 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
             'Kunstmaan\NodeBundle\Helper\PagesConfiguration', [$config['pages']]
         ));
 
+        if (false === $config['fix_structure_nodes']) {
+            $container->removeDefinition('kunstmaan_node.event_listener.structure_node_listener');
+        }
+
         $loader->load('services.yml');
     }
 

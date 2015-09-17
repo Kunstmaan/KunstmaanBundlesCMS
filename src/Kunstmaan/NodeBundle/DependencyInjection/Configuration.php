@@ -50,6 +50,8 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
+        $root->children()->booleanNode('fix_structure_nodes')->defaultFalse();
+
         return $treeBuilder;
     }
 }
