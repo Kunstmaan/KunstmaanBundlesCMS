@@ -27,7 +27,7 @@
     </div>
 
     <!-- Tree -->
-    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanMediaBundle_folder_reorder') }}">
         <ul>
             {% set parentIds = foldermanager.getParentIds(folder) %}
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}

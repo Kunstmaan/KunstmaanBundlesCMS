@@ -10,9 +10,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * FolderController.
@@ -188,4 +191,42 @@ class FolderController extends Controller
             )
         );
     }
+
+    /**
+     * @Route("/reorder", name="KunstmaanMediaBundle_folder_reorder")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function reorderAction(Request $request)
+    {
+        $folders         = array();
+        $nodeIds       = $request->get('nodes');
+
+        $em              = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('KunstmaanMediaBundle:Folder');
+
+        foreach ($nodeIds as $id) {
+            /* @var Folder $folder */
+            $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find(
+                $id
+            );
+            $folders[] = $folder;
+        }
+
+        $previousFolder = null;
+
+        foreach ($folders as $id => $folder) {
+            $repository->moveDown($folder, true);
+        }
+
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'Success' => 'The node-translations for have got new weight values'
+            )
+        );
+    }
+
 }
