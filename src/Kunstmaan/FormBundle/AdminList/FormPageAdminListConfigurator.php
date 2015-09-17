@@ -67,7 +67,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         };
         $ia           = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction(
             $create_route,
-            'eye-open',
+            'eye',
             'View'
         );
         $this->addItemAction($ia);
