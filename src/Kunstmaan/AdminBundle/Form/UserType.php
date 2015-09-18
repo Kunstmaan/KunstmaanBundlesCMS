@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * UserType defines the form used for {@link User}
@@ -110,5 +111,12 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
             'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
         ));
         $resolver->addAllowedValues(array('password_required' => array(true, false)));
+    }
+
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

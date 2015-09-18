@@ -4,6 +4,7 @@ namespace {{ namespace }}\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UspItemAdminType extends AbstractType
@@ -50,6 +51,13 @@ class UspItemAdminType extends AbstractType
 	    'data_class' => '\{{ namespace }}\Entity\UspItem'
 	));
     }
+
+
+	// BC for SF < 2.7
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$this->configureOptions($resolver);
+	}
 
     /**
      * Returns the name of this type.

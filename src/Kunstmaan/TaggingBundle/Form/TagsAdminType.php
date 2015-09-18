@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 use Kunstmaan\TaggingBundle\Form\DataTransformer\TagsTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TagsAdminType extends AbstractType
 {
@@ -29,6 +30,12 @@ class TagsAdminType extends AbstractType
 	{
 		$resolver->setDefaults($this->getDefaultOptions(array()));
 	}
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
 
     public function getDefaultOptions(array $options)
     {

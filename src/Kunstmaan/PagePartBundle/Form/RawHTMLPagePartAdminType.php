@@ -4,6 +4,7 @@ namespace Kunstmaan\PagePartBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * class to add content to a raw html pagepart
@@ -38,5 +39,11 @@ class RawHTMLPagePartAdminType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart',
         ));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

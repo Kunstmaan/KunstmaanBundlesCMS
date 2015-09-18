@@ -7,6 +7,7 @@ use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * FolderType
@@ -61,7 +62,7 @@ class FolderType extends AbstractType
                 'entity',
                 array(
                     'class' => 'KunstmaanMediaBundle:Folder',
-                    'choice_label' => 'optionLabel',
+                    'property' => 'optionLabel',
                     'required' => true,
                     'query_builder' => function (FolderRepository $er) use ($folder) {
                         return $er->selectFolderQueryBuilder($folder);
@@ -100,5 +101,11 @@ class FolderType extends AbstractType
                 'data_class' => 'Kunstmaan\MediaBundle\Entity\Folder',
             )
         );
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

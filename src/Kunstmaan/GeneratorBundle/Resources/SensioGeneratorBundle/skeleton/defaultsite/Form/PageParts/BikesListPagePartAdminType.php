@@ -3,6 +3,7 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -45,5 +46,11 @@ class BikesListPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\BikesListPagePart'
 	));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

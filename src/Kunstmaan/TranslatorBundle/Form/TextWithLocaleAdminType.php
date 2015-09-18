@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TextWithLocaleAdminType extends AbstractType
 {
@@ -50,5 +51,11 @@ class TextWithLocaleAdminType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\TextWithLocale',
         ));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

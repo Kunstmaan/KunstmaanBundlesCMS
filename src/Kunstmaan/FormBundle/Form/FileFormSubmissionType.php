@@ -5,6 +5,7 @@ namespace Kunstmaan\FormBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * This class represents the type for the file FileFormSubmissionField
@@ -30,6 +31,11 @@ class FileFormSubmissionType extends AbstractType
         ));
     }
 
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
 
     /**
      * @return string

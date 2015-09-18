@@ -5,6 +5,7 @@ namespace Kunstmaan\ArticleBundle\Form;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The admin type for abstract article pages
@@ -47,6 +48,12 @@ class AbstractArticlePageAdminType extends PageAdminType
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage'
         ));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

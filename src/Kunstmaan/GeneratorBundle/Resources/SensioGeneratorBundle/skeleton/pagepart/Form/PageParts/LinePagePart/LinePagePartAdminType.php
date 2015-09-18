@@ -3,6 +3,7 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -46,5 +47,11 @@ class {{ pagepart }}AdminType extends AbstractType
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
 	));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

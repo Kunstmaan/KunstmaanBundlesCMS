@@ -5,6 +5,7 @@ namespace {{ namespace }}\Form\Pages;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The admin type for home pages
@@ -39,6 +40,12 @@ class HomePageAdminType extends PageAdminType
         $resolver->setDefaults(array(
             'data_class' => '{{ namespace }}\Entity\Pages\HomePage'
         ));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

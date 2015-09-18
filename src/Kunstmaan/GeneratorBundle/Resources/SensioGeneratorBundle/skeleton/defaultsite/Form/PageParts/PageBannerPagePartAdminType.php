@@ -3,6 +3,7 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -68,4 +69,10 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\PageBannerPagePart'
 	));
     }
+
+	// BC for SF < 2.7
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$this->configureOptions($resolver);
+	}
 }
