@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.2 / 2015-09-18
+
+* [AllBundles] revert bc breaks [#722](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/722) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [FolderBundle] refactor reorderAction [#721](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/721) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [MediaBundle] add parsing youtu.be urls [#720](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/720) ([@piotrbelina](https://github.com/piotrbelina)) 
+
+
 ## 3.3.1 / 2015-09-18
 
 * [FormBundle] fix view icon [#719](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/719) ([@piotrbelina](https://github.com/piotrbelina)) 
