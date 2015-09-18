@@ -1,8 +1,26 @@
 # Changelog
 
-## Unreleased
+## 3.3.1 / 2015-09-18
 
-* [NodeSearchBundle] Deprecated getFacets in SearcherRequestAdapterInterface after the migration to Elastica 2.3
+* [FormBundle] fix view icon [#719](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/719) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [MediaBundle] fix folder position saving via drag and drop [#718](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/718) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [AdminBundle] Improve submenu caret alignment [#717](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/717) ([@wimvds](https://github.com/wimvds)) 
+* [AdminBundle] fix annotation autoloading for tests [#716](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/716) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [All Bundles] removed deprecated notices [#715](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/715) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [AdminBundle] fix JS undefined issue & add translations in permissions widget [#714](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/714) ([@wimvds](https://github.com/wimvds)) 
+* [SearchBundle] fixed typo in SearchConfigurationChain::getConfiguration [#713](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/713) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [NodeSearch][SearchBundle] upgrade Elastica to 2.3 version [#712](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/712) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [GeneratorBundle] fixed exception for top level search results [#711](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/711) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [NodeBundle] performance fixes [#710](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/710) ([@wimvds](https://github.com/wimvds)) 
+* [GeneratorBundle] moved NodeTranslationTwigExtension to separate extension [#708](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/708) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [NodeBundle] Set default weight for new subpage [#707](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/707) ([@mdxpl](https://github.com/mdxpl)) 
+* [Nodebundle] [critical] Fix services.yml error in NodeBundle [#706](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/706) ([@jverdeyen](https://github.com/jverdeyen)) 
+* [MultiDomainBundle] Added host aliases support [#704](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/704) ([@yoshz](https://github.com/yoshz)) 
+* [LeadGenerationBundle] Add required type parameters as hidden form field [#698](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/698) ([@kimausloos](https://github.com/kimausloos)) 
+* [AdminListBundle] Deprecated twig function my_router_params() [#697](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/697) ([@kimausloos](https://github.com/kimausloos)) 
+* [Documentation] Fix upgrade to 3.3 command [#696](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/696) ([@kimausloos](https://github.com/kimausloos)) 
+* [NodeBundle] don’t use session if not in request scope [#637](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/637) ([@mlebkowski](https://github.com/mlebkowski)) 
+
 
 ## 3.3.0 / 2015-09-06
 
