@@ -5,6 +5,7 @@ namespace Kunstmaan\FormBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * An abstract Form Page Admin Type
@@ -29,6 +30,12 @@ class AbstractFormPageAdminType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\FormBundle\Entity\AbstractFormPage',
         ));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 
     /**

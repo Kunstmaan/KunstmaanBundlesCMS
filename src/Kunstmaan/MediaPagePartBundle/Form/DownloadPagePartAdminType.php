@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaPagePartBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * DownloadPagePartAdminType
@@ -49,4 +50,9 @@ class DownloadPagePartAdminType extends AbstractType
         ));
     }
 
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
 }

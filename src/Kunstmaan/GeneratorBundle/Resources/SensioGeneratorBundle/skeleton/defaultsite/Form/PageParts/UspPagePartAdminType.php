@@ -5,6 +5,7 @@ namespace {{ namespace }}\Form\PageParts;
 use {{ namespace }}\Form\UspItemAdminType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UspPagePartAdminType extends AbstractType
@@ -50,6 +51,12 @@ class UspPagePartAdminType extends AbstractType
 	    'cascade_validation' => true,
 	));
     }
+
+	// BC for SF < 2.7
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$this->configureOptions($resolver);
+	}
 
     /**
      * Returns the name of this type.

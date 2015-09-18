@@ -5,6 +5,7 @@ namespace Kunstmaan\FormBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * This class represents the type for the EmailPagePart
@@ -38,5 +39,11 @@ class EmailPagePartAdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart'));
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

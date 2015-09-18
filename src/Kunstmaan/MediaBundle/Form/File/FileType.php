@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -94,7 +95,7 @@ class FileType extends AbstractType
                         'entity',
                         array(
                             'class' => 'KunstmaanMediaBundle:Folder',
-                            'choice_label' => 'optionLabel',
+                            'property' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
                                 return $er->selectFolderQueryBuilder()
                                     ->andWhere('f.parent IS NOT NULL');
@@ -129,5 +130,11 @@ class FileType extends AbstractType
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
             )
         );
+    }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
     }
 }

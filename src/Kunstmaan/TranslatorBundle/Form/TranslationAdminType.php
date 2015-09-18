@@ -62,4 +62,10 @@ class TranslationAdminType extends AbstractType
             'cascade_validation' => true,
         ));
     }
+
+    // BC for SF < 2.7
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
 }
