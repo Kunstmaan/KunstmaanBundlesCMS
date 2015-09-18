@@ -208,13 +208,9 @@ class FolderController extends Controller
 
         foreach ($nodeIds as $id) {
             /* @var Folder $folder */
-            $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find(
-                $id
-            );
+            $folder = $repository->find($id);
             $folders[] = $folder;
         }
-
-        $previousFolder = null;
 
         foreach ($folders as $id => $folder) {
             $repository->moveDown($folder, true);
