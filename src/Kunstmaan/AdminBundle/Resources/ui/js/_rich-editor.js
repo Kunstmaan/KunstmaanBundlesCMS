@@ -2,6 +2,8 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.richEditor = (function(window, undefined) {
 
+    var editor; // Holds the editor var when overriding the dialog's onOk method.
+
     var _ckEditorConfigs = {
         'kumaDefault': {
             skin: 'bootstrapck',
@@ -10,6 +12,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             filebrowserWindowWidth: 970,
             filebrowserImageWindowWidth: 970,
             filebrowserImageUploadUrl: '',
+            extraAllowedContent: 'div(*)',
             toolbar: [
                 { name: 'basicstyles', items : ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat'] },
                 { name: 'lists', items : ['NumberedList', 'BulletedList'] },
@@ -71,6 +74,138 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         }
     };
 
+    // This is a slightly dirty hack to enable us to make nicer responsive tables.
+    // Basically we override the onOk method from the tables plugin from ckSource, and add a wrapper div.
+    // By adding a wrapper div we can overflow:scroll; on smaller screens which is a lot nicer.
+    _customOkFunctionForTables = function() {
+
+        var makeElement = function( name ) {
+            return new CKEDITOR.dom.element( name, editor.document );
+        };
+
+        var selection = editor.getSelection(),
+            bms = this._.selectedElement && selection.createBookmarks();
+
+        var data = {},
+            table = this._.selectedElement || makeElement('table'),
+            wrapper = makeElement('div');
+
+        wrapper.setAttribute('class', 'table-wrapper');
+        editor.insertElement(wrapper);
+
+        this.commitContent( data, table );
+
+        if ( data.info ) {
+            var info = data.info;
+
+            // Generate the rows and cols.
+            if ( !this._.selectedElement ) {
+                var tbody = table.append( makeElement( 'tbody' ) ),
+                    rows = parseInt( info.txtRows, 10 ) || 0,
+                    cols = parseInt( info.txtCols, 10 ) || 0;
+
+                for ( var i = 0; i < rows; i++ ) {
+                    var row = tbody.append( makeElement( 'tr' ) );
+                    for ( var j = 0; j < cols; j++ ) {
+                        var cell = row.append( makeElement( 'td' ) );
+                        cell.appendBogus();
+                    }
+                }
+            }
+
+            // Modify the table headers. Depends on having rows and cols generated
+            // correctly so it can't be done in commit functions.
+
+            // Should we make a <thead>?
+            var headers = info.selHeaders;
+            if ( !table.$.tHead && ( headers == 'row' || headers == 'both' ) ) {
+                var thead = new CKEDITOR.dom.element( table.$.createTHead() );
+                tbody = table.getElementsByTag( 'tbody' ).getItem( 0 );
+                var theRow = tbody.getElementsByTag( 'tr' ).getItem( 0 );
+
+                // Change TD to TH:
+                for ( i = 0; i < theRow.getChildCount(); i++ ) {
+                    var th = theRow.getChild( i );
+                    // Skip bookmark nodes. (#6155)
+                    if ( th.type == CKEDITOR.NODE_ELEMENT && !th.data( 'cke-bookmark' ) ) {
+                        th.renameNode( 'th' );
+                        th.setAttribute( 'scope', 'col' );
+                    }
+                }
+                thead.append( theRow.remove() );
+            }
+
+            if ( table.$.tHead !== null && !( headers == 'row' || headers == 'both' ) ) {
+                // Move the row out of the THead and put it in the TBody:
+                thead = new CKEDITOR.dom.element( table.$.tHead );
+                tbody = table.getElementsByTag( 'tbody' ).getItem( 0 );
+
+                var previousFirstRow = tbody.getFirst();
+                while ( thead.getChildCount() > 0 ) {
+                    theRow = thead.getFirst();
+                    for ( i = 0; i < theRow.getChildCount(); i++ ) {
+                        var newCell = theRow.getChild( i );
+                        if ( newCell.type == CKEDITOR.NODE_ELEMENT ) {
+                            newCell.renameNode( 'td' );
+                            newCell.removeAttribute( 'scope' );
+                        }
+                    }
+                    theRow.insertBefore( previousFirstRow );
+                }
+                thead.remove();
+            }
+
+            // Should we make all first cells in a row TH?
+            if ( !this.hasColumnHeaders && ( headers == 'col' || headers == 'both' ) ) {
+                for ( row = 0; row < table.$.rows.length; row++ ) {
+                    newCell = new CKEDITOR.dom.element( table.$.rows[ row ].cells[ 0 ] );
+                    newCell.renameNode( 'th' );
+                    newCell.setAttribute( 'scope', 'row' );
+                }
+            }
+
+            // Should we make all first TH-cells in a row make TD? If 'yes' we do it the other way round :-)
+            if ( ( this.hasColumnHeaders ) && !( headers == 'col' || headers == 'both' ) ) {
+                for ( i = 0; i < table.$.rows.length; i++ ) {
+                    row = new CKEDITOR.dom.element( table.$.rows[ i ] );
+                    if ( row.getParent().getName() == 'tbody' ) {
+                        newCell = new CKEDITOR.dom.element( row.$.cells[ 0 ] );
+                        newCell.renameNode( 'td' );
+                        newCell.removeAttribute( 'scope' );
+                    }
+                }
+            }
+
+            // Set the width and height.
+            info.txtHeight ? table.setStyle( 'height', info.txtHeight ) : table.removeStyle( 'height' );
+            info.txtWidth ? table.setStyle( 'width', info.txtWidth ) : table.removeStyle( 'width' );
+
+            if ( !table.getAttribute( 'style' ) )
+                table.removeAttribute( 'style' );
+        }
+
+        // Insert the table element if we're creating one.
+        if ( !this._.selectedElement ) {
+            wrapper.append(table);
+            // Override the default cursor position after insertElement to place
+            // cursor inside the first cell (#7959), IE needs a while.
+            setTimeout( function() {
+                var firstCell = new CKEDITOR.dom.element( table.$.rows[ 0 ].cells[ 0 ] );
+                var range = editor.createRange();
+                range.moveToPosition( firstCell, CKEDITOR.POSITION_AFTER_START );
+                range.select();
+            }, 0 );
+        }
+        // Properly restore the selection, (#4822) but don't break
+        // because of this, e.g. updated table caption.
+        else {
+            try {
+                selection.selectBookmarks( bms );
+            } catch ( er ) {
+            }
+        }
+    };
+
     // PUBLIC
     enableRichEditor = function($el) {
         var $body = $('body'),
@@ -97,6 +232,12 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
 
         // Place CK
         CKEDITOR.replace(elementId, editorConfig);
+        CKEDITOR.on('dialogDefinition', function(e) {
+            if (e.data.name === 'table') {
+                editor = e.editor;
+                e.data.definition.onOk = _customOkFunctionForTables;
+            }
+        });
 
         $el.addClass('js-rich-editor--enabled');
 
