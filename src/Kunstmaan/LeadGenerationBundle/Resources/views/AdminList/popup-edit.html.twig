@@ -5,6 +5,9 @@
     {% if type is defined and type %}
         <input type="hidden" name="type" value="{{ type }}" />
     {% endif %}
+    {% if app.request.get('type') %}
+        <input type="hidden" name="type" value="{{ app.request.get('type') }}" />
+    {% endif %}
 {% endblock %}
 
 {% block admin_page_title %}
