@@ -73,7 +73,6 @@ class MediaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
         $resolver->setDefaults(
             array(
                 'compound'                => false,

@@ -38,11 +38,11 @@ class RedirectRouterTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $firstDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+        $firstDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
         $firstDomainConfiguration->expects($this->any())->method('getHost')->will($this->returnValue('sub.domain.com'));
 
-        $secondDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+        $secondDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
         $secondDomainConfiguration->expects($this->any())->method('getHost')->will($this->returnValue('other.domain.com'));
 

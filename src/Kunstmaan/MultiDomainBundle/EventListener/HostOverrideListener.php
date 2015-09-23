@@ -2,12 +2,10 @@
 
 namespace Kunstmaan\MultiDomainBundle\EventListener;
 
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class HostOverrideListener

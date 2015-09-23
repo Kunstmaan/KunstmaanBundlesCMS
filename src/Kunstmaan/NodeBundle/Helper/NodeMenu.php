@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;

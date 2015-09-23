@@ -33,7 +33,7 @@ class RedirectAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $domainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+        $domainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
 
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')

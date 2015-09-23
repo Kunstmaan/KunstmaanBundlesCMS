@@ -1,10 +1,8 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Helper;
+namespace Kunstmaan\AdminBundle\Helper;
 
-use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -12,7 +10,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *
  * Default (single domain) configuration handling
  *
- * @package Kunstmaan\NodeBundle\Helper
+ * @package Kunstmaan\AdminBundle\Helper
  */
 class DomainConfiguration implements DomainConfigurationInterface
 {
@@ -27,9 +25,6 @@ class DomainConfiguration implements DomainConfigurationInterface
 
     /** @var string */
     protected $defaultLocale;
-
-    /** @var Node */
-    protected $rootNode = null;
 
     public function __construct(ContainerInterface $container)
     {
@@ -106,11 +101,11 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @return Node
+     * @return null
      */
     public function getRootNode()
     {
-        return $this->rootNode;
+        return null;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MultiDomainBundle\Twig;
 
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 
 class MultiDomainTwigExtension extends \Twig_Extension
 {

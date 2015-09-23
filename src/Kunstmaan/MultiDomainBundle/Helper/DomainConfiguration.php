@@ -3,13 +3,17 @@
 namespace Kunstmaan\MultiDomainBundle\Helper;
 
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Helper\DomainConfiguration as BaseDomainConfiguration;
+use Kunstmaan\AdminBundle\Helper\DomainConfiguration as BaseDomainConfiguration;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class DomainConfiguration extends BaseDomainConfiguration
 {
     const OVERRIDE_HOST = '_override_host';
+
+    /**
+     * @var Node
+     */
+    protected $rootNode = null;
 
     /**
      * @var array

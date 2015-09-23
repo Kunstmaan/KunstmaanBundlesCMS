@@ -49,7 +49,7 @@ class KunstmaanMultiDomainExtension extends Extension
          * setting kunstmaan_multi_domain.domain_configuration.class to your own implementation.
          */
         $container->setParameter(
-            'kunstmaan_node.domain_configuration.class',
+            'kunstmaan_admin.domain_configuration.class',
             $container->getParameter('kunstmaan_multi_domain.domain_configuration.class')
         );
     }

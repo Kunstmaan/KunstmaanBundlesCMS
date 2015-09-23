@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Form;
 
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 

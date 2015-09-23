@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeSearchBundle\Search;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**

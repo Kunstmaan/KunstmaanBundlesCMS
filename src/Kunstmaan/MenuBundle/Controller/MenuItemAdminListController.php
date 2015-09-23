@@ -31,7 +31,7 @@ class MenuItemAdminListController extends AdminListController
     {
         if (!isset($this->configurator)) {
             $menu = $this->getDoctrine()->getManager()->getRepository('KunstmaanMenuBundle:Menu')->find($menuid);
-            $rootNode = $this->get('kunstmaan_node.domain_configuration')->getRootNode();
+            $rootNode = $this->get('kunstmaan_admin.domain_configuration')->getRootNode();
             $this->configurator = new MenuItemAdminListConfigurator($this->getEntityManager(), null, $menu);
             $this->configurator->setAdminType(new MenuItemAdminType($request->getLocale(), $menu, $entityId, $rootNode));
         }
