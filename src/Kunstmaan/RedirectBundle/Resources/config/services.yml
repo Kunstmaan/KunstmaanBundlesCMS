@@ -17,6 +17,6 @@ services:
 
     kunstmaan_redirect.redirectrouter:
         class: Kunstmaan\RedirectBundle\Router\RedirectRouter
-        arguments: ["@kunstmaan_redirect.repositories.redirect", "@kunstmaan_node.domain_configuration"]
+        arguments: ["@kunstmaan_redirect.repositories.redirect", "@kunstmaan_admin.domain_configuration"]
         tags:
             - { name: router, priority: 1 }

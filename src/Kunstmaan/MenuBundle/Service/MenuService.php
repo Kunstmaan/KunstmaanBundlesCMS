@@ -3,8 +3,8 @@
 namespace Kunstmaan\MenuBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\MenuBundle\Entity\Menu;
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 
 class MenuService
 {

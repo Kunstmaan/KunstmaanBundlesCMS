@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Router;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,7 +50,7 @@ class SlugRouter implements RouterInterface
     {
         $this->container           = $container;
         $this->slugPattern         = "[a-zA-Z0-9\-_\/]*";
-        $this->domainConfiguration = $container->get('kunstmaan_node.domain_configuration');
+        $this->domainConfiguration = $container->get('kunstmaan_admin.domain_configuration');
     }
 
     /**

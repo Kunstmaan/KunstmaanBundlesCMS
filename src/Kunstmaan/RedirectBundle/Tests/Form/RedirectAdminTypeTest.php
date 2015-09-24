@@ -25,12 +25,12 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $multiDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+        $multiDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
         $multiDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->will($this->returnValue(true));
         $multiDomainConfiguration->expects($this->any())->method('getHosts')->will($this->returnValue(array('domain.com', 'domain.be')));
 
-        $singleDomainConfiguration = $this->getMockBuilder('Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface')
+        $singleDomainConfiguration = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface')
             ->disableOriginalConstructor()->getMock();
         $singleDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->will($this->returnValue(false));
         $singleDomainConfiguration->expects($this->any())->method('getHosts')->will($this->returnValue(array()));

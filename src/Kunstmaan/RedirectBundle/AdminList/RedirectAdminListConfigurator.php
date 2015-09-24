@@ -5,8 +5,8 @@ namespace Kunstmaan\RedirectBundle\AdminList;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 
 class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator

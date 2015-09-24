@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\AdminList;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
@@ -10,11 +13,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 use Kunstmaan\NodeBundle\Entity\Node;
-
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * NodeAdminListConfigurator
@@ -48,16 +46,8 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      * @param string                       $locale              The current
      *                                                          locale
      * @param string                       $permission          The permission
-     * @param DomainConfigurationInterface $domainConfiguration The current
-     *                                                          domain
-     *                                                          configuration
      */
-    public function __construct(
-        EntityManager $em,
-        AclHelper $aclHelper,
-        $locale,
-        $permission
-    )
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;
@@ -71,7 +61,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * @param \Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface $domainConfiguration
+     * @param \Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface $domainConfiguration
      */
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
     {
@@ -133,20 +123,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField(
-            'title',
-            'Title',
-            true,
-            'KunstmaanNodeBundle:Admin:title.html.twig'
-        )
+        $this
+            ->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
             ->addField('created', 'Created At', true)
             ->addField('updated', 'Updated At', true)
-            ->addField(
-                'online',
-                'Online',
-                true,
-                'KunstmaanNodeBundle:Admin:online.html.twig'
-            );
+            ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
     /**
@@ -252,6 +233,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
             ->andWhere('n.deleted = 0')
             ->addOrderBy('b.updated', 'DESC')
             ->setParameter('lang', $this->locale);
+
+        if (!$this->domainConfiguration) {
+            return;
+        }
 
         $rootNode = $this->domainConfiguration->getRootNode();
         if (!is_null($rootNode)) {

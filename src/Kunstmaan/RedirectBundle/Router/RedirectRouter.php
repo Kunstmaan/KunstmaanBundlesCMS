@@ -3,7 +3,7 @@
 namespace Kunstmaan\RedirectBundle\Router;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;

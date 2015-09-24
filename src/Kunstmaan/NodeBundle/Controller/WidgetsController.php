@@ -64,7 +64,7 @@ class WidgetsController extends Controller
                 PermissionMap::PERMISSION_VIEW,
                 $this->get('kunstmaan_admin.acl.native.helper'),
                 true,
-                $this->get('kunstmaan_node.domain_configuration')->getRootNode()
+                $this->get('kunstmaan_admin.domain_configuration')->getRootNode()
             );
 
         $simpleTreeView = new SimpleTreeView();

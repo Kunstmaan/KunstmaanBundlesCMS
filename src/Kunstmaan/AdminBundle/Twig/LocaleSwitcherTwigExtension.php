@@ -2,15 +2,30 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+
 /**
  * LocaleSwitcherTwigExtension
  */
 class LocaleSwitcherTwigExtension extends \Twig_Extension
 {
     /**
+     * @var DomainConfigurationInterface
+     */
+    private $domainConfiguration;
+
+    /**
      * @var \Twig_Environment
      */
     protected $environment;
+
+    /**
+     * @param DomainConfigurationInterface $domainConfiguration
+     */
+    public function __construct(DomainConfigurationInterface $domainConfiguration)
+    {
+        $this->domainConfiguration = $domainConfiguration;
+    }
 
     /**
      * Initializes the runtime environment.
@@ -31,6 +46,8 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('localeswitcher_widget', array($this, 'renderWidget'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('get_locales', array($this, 'getLocales')),
+            new \Twig_SimpleFunction('get_backend_locales', array($this, 'getBackendLocales')),
         );
     }
 
@@ -58,6 +75,22 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
                 )
             )
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getLocales()
+    {
+        return $this->domainConfiguration->getFrontendLocales();
+    }
+
+    /**
+     * @return array
+     */
+    public function getBackendLocales()
+    {
+        return $this->domainConfiguration->getBackendLocales();
     }
 
     /**

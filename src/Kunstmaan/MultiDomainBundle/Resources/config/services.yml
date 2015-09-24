@@ -10,13 +10,13 @@ services:
 
     kunstmaan_multi_domain.twig.extension:
         class: Kunstmaan\MultiDomainBundle\Twig\MultiDomainTwigExtension
-        arguments: ["@kunstmaan_node.domain_configuration"]
+        arguments: ["@kunstmaan_admin.domain_configuration"]
         tags:
               -  { name: 'twig.extension' }
 
     kunstmaan_multi_domain.host_override_listener:
         class: Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener
-        arguments: ["@session", "@kunstmaan_node.domain_configuration"]
+        arguments: ["@session", "@kunstmaan_admin.domain_configuration"]
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 

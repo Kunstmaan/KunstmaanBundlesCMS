@@ -55,7 +55,7 @@ class SitemapController extends Controller
      */
     public function sitemapIndexAction(Request $request)
     {
-        $locales = $this->get('kunstmaan_node.domain_configuration')
+        $locales = $this->get('kunstmaan_admin.domain_configuration')
             ->getBackendLocales();
 
         return array(

@@ -2,12 +2,11 @@ parameters:
     kunstmaan_node.version_timeout: 3600
     kunstmaan_node.slugrouter.class: 'Kunstmaan\NodeBundle\Router\SlugRouter'
     kunstmaan_node.sluglistener.class: 'Kunstmaan\NodeBundle\EventListener\SlugListener'
-    kunstmaan_node.domain_configuration.class: 'Kunstmaan\NodeBundle\Helper\DomainConfiguration'
 
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: ["@session", "@kunstmaan_admin.logger" , "@kunstmaan_utilities.slugifier", "@kunstmaan_node.domain_configuration"]
+        arguments: ["@session", "@kunstmaan_admin.logger" , "@kunstmaan_utilities.slugifier", "@kunstmaan_admin.domain_configuration"]
         calls:
             - [ "setRequestStack", [@request_stack] ]
         tags:
@@ -18,7 +17,7 @@ services:
 
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.acl.native.helper", "@kunstmaan_node.pages_configuration", "@kunstmaan_node.domain_configuration"]
+        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.acl.native.helper", "@kunstmaan_node.pages_configuration", "@kunstmaan_admin.domain_configuration"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
@@ -84,10 +83,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    kunstmaan_node.domain_configuration:
-        class: "%kunstmaan_node.domain_configuration.class%"
-        arguments: ["@service_container"]
-
     kunstmaan_node.slugrouter:
         class: "%kunstmaan_node.slugrouter.class%"
         arguments: ["@service_container"]
@@ -97,7 +92,7 @@ services:
     kunstmaan_node.pages_configuration.twig_extension:
         class: Kunstmaan\NodeBundle\Twig\PagesConfigurationTwigExtension
         public: false
-        arguments: [ @kunstmaan_node.pages_configuration ]
+        arguments: [ "@kunstmaan_node.pages_configuration" ]
         tags:
             - { name: twig.extension }
 
@@ -152,10 +147,10 @@ services:
 
     kunstmaan_node.node_menu:
         class: Kunstmaan\NodeBundle\Helper\NodeMenu
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper", "@kunstmaan_node.domain_configuration"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@kunstmaan_admin.acl.helper", "@kunstmaan_admin.domain_configuration"]
 
     kunstmaan_node.node.twig.extension:
         class: Kunstmaan\NodeBundle\Twig\NodeTwigExtension
-        arguments: ["@doctrine.orm.entity_manager", "@router", "@kunstmaan_node.domain_configuration", "@kunstmaan_node.node_menu", "@request_stack"]
+        arguments: ["@doctrine.orm.entity_manager", "@router", "@kunstmaan_node.node_menu", "@request_stack"]
         tags:
             - { name: twig.extension }

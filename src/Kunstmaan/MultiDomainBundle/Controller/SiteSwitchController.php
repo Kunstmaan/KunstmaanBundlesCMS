@@ -27,7 +27,7 @@ class SiteSwitchController extends Controller
      */
     public function switchAction(Request $request)
     {
-        $domainConfiguration = $this->get('kunstmaan_node.domain_configuration');
+        $domainConfiguration = $this->get('kunstmaan_admin.domain_configuration');
         $host = $request->query->get('host');
         $hosts = $domainConfiguration->getHosts();
         if (!in_array($host, $hosts)) {
@@ -35,7 +35,7 @@ class SiteSwitchController extends Controller
         }
 
         $request->cookies->set(DomainConfiguration::OVERRIDE_HOST, $host);
-        $defaultLocale = $this->get('kunstmaan_node.domain_configuration')->getDefaultLocale();
+        $defaultLocale = $this->get('kunstmaan_admin.domain_configuration')->getDefaultLocale();
 
         $response = new RedirectResponse(
             $this->get('router')->generate('KunstmaanAdminBundle_homepage', array('_locale' => $defaultLocale))
