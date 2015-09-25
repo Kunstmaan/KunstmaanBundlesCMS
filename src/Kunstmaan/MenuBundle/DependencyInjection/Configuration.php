@@ -26,7 +26,13 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array())
                     ->prototype('scalar')->end()
                 ->end()
-            ->end();
+		->scalarNode('menu_entity')->defaultValue('Kunstmaan\MenuBundle\Entity\Menu')->end()
+		->scalarNode('menuitem_entity')->defaultValue('Kunstmaan\MenuBundle\Entity\MenuItem')->end()
+		->scalarNode('menu_adminlist')->defaultValue('Kunstmaan\MenuBundle\AdminList\MenuAdminListConfigurator')->end()
+		->scalarNode('menuitem_adminlist')->defaultValue('Kunstmaan\MenuBundle\AdminList\MenuItemAdminListConfigurator')->end()
+		->scalarNode('menu_form')->defaultValue('Kunstmaan\MenuBundle\Form\MenuAdminType')->end()
+		->scalarNode('menuitem_form')->defaultValue('Kunstmaan\MenuBundle\Form\MenuItemAdminType')->end()
+	    ->end();
 
         return $treeBuilder;
     }

@@ -2,6 +2,8 @@ parameters:
     kunstmaan_menu.menu.adaptor.class: Kunstmaan\MenuBundle\Service\MenuAdaptor
     kunstmaan_menu.menu.service.class: Kunstmaan\MenuBundle\Service\MenuService
     kunstmaan_menu.menu.twig.extension.class: Kunstmaan\MenuBundle\Twig\MenuTwigExtension
+    kunstmaan_menu.menu.repository.class: Kunstmaan\MenuBundle\Repository\MenuItemRepository
+
 
 services:
     kunstmaan_menu.menu.adaptor:
@@ -15,11 +17,17 @@ services:
         class: %kunstmaan_menu.menu.service.class%
         arguments:
             - "%kunstmaan_menu.menus%"
-            - "@kunstmaan_admin.domain_configuration"
-            - "@doctrine.orm.entity_manager"
+	    - "@kunstmaan_admin.domain_configuration"
+	    - "@doctrine.orm.entity_manager"
+
+    kunstmaan_menu.menu.repository:
+       class:            %kunstmaan_menu.menu.repository.class%
+       factory_service:  "doctrine.orm.entity_manager"
+       factory_method:   getRepository
+       arguments:        ["%kunstmaan_menu.entity.menuitem.class%"]
 
     kunstmaan_menu.menu.twig.extension:
-        class: %kunstmaan_menu.menu.twig.extension.class%
-        arguments: ["@doctrine.orm.entity_manager", "@router"]
-        tags:
-            - { name: twig.extension }
+	class: %kunstmaan_menu.menu.twig.extension.class%
+	arguments: ["@kunstmaan_menu.menu.repository", "@router"]
+	tags:
+	    - { name: twig.extension }

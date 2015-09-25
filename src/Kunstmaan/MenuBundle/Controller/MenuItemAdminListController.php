@@ -7,6 +7,7 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\MenuBundle\AdminList\MenuItemAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
+use Kunstmaan\MenuBundle\Entity\BaseMenuItem;
 use Kunstmaan\MenuBundle\Form\MenuItemAdminType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -30,10 +31,14 @@ class MenuItemAdminListController extends AdminListController
     public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
     {
         if (!isset($this->configurator)) {
-            $menu = $this->getDoctrine()->getManager()->getRepository('KunstmaanMenuBundle:Menu')->find($menuid);
+	    $menu = $this->getDoctrine()->getManager()->getRepository($this->getParameter('kunstmaan_menu.entity.menu.class'))->find($menuid);
             $rootNode = $this->get('kunstmaan_admin.domain_configuration')->getRootNode();
-            $this->configurator = new MenuItemAdminListConfigurator($this->getEntityManager(), null, $menu);
-            $this->configurator->setAdminType(new MenuItemAdminType($request->getLocale(), $menu, $entityId, $rootNode));
+
+	    $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
+	    $this->configurator = new $configuratorClass($this->getEntityManager(), null, $menu);
+
+	    $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
+	    $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode));
         }
 
         return $this->configurator;
@@ -125,7 +130,7 @@ class MenuItemAdminListController extends AdminListController
     public function moveUpAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-        $repo = $em->getRepository('KunstmaanMenuBundle:MenuItem');
+	$repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {
@@ -145,7 +150,7 @@ class MenuItemAdminListController extends AdminListController
     public function moveDownAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-        $repo = $em->getRepository('KunstmaanMenuBundle:MenuItem');
+	$repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {

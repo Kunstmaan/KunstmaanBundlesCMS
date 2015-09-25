@@ -69,7 +69,7 @@ class MenuItemAdminType extends AbstractType
             'entity',
             array(
                 'class'         => 'KunstmaanMenuBundle:MenuItem',
-                'property'      => 'selectTitle',
+		'property'      => 'displayTitle',
                 'query_builder' => function (EntityRepository $er) use (
                     $entityId,
                     $menu

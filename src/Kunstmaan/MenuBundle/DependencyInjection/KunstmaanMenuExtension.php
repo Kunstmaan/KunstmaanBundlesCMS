@@ -23,8 +23,14 @@ class KunstmaanMenuExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('kunstmaan_menu.menus', $config['menus']);
+	$container->setParameter('kunstmaan_menu.entity.menu.class', $config['menu_entity']);
+	$container->setParameter('kunstmaan_menu.entity.menuitem.class', $config['menuitem_entity']);
+	$container->setParameter('kunstmaan_menu.adminlist.menu_configurator.class', $config['menu_adminlist']);
+	$container->setParameter('kunstmaan_menu.adminlist.menuitem_configurator.class', $config['menuitem_adminlist']);
+	$container->setParameter('kunstmaan_menu.form.menu_admintype.class', $config['menu_form']);
+	$container->setParameter('kunstmaan_menu.form.menuitem_admintype.class', $config['menuitem_form']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+	$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
 }
