@@ -14,7 +14,7 @@
 <!-- Tree -->
 {% set currentMenuItem = adminmenu.current %}
 <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation"
-    data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}"
+    data-reorder-url="{% if nodebundleisactive is defined %}{{ path('KunstmaanNodeBundle_nodes_reorder') }}{% endif %}"
     data-moving-confirmation="{{ "pages.movingconfirmation"|trans }}">
     {% set currentMenuItem = adminmenu.current %}
     <ul>
