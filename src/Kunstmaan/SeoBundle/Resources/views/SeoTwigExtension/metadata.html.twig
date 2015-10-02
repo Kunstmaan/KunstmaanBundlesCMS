@@ -32,7 +32,7 @@
 {% endif %}
 {% if seo.getOgImage() is defined and seo.getOgImage() is not null %}
     <meta property="og:image" content="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}">
-    <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}" / >
+    <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}">
 {% endif %}
 {% if seo.getExtraMetadata() %}
     {{ seo.getExtraMetadata() | raw }}
