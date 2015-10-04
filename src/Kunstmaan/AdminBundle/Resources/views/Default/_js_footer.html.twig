@@ -5,14 +5,6 @@
 </script>
 
 {% javascripts
-    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/ckeditor.js"
-    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/adapters/jquery.js"
-    output="KunstmaanAdminBundleAssets/js/ckeditor.js"
-%}
-    <script src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
-{% javascripts
     "@KunstmaanAdminBundle/Resources/ui/vendor_bower/jquery/dist/jquery.js"
     "@KunstmaanAdminBundle/Resources/ui/vendor_bower/bootstrap-sass-official/assets/javascripts/bootstrap.min.js"
     "@KunstmaanAdminBundle/Resources/ui/vendor_bower/jstree/dist/jstree.min.js"
@@ -50,6 +42,14 @@
     "@KunstmaanAdminBundle/Resources/ui/js/_colorpicker.js"
     "@KunstmaanAdminBundle/Resources/ui/js/app.js"
     output="KunstmaanAdminBundleAssets/js/footer.min.js" filter="?uglifyjs2"
+%}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts
+    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/ckeditor.js"
+    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/adapters/jquery.js"
+    output="KunstmaanAdminBundleAssets/js/ckeditor.js"
 %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
