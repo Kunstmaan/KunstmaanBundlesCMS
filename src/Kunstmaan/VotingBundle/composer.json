@@ -25,7 +25,7 @@
     "target-dir": "Kunstmaan/VotingBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }
