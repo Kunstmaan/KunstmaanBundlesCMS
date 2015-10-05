@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.4.0 / 2015-10-05
+
+* upgrade doc v3.3 -> v3.4 [#742](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/742) ([@wimvds](https://github.com/wimvds)) 
+* [AdminBundle] Make PagePartEditor emit events on add, edit and delete [#740](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/740) ([@tarjei](https://github.com/tarjei)) 
+* [AdminBundle] Jquery is required before CKEditor [#739](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/739) ([@tarjei](https://github.com/tarjei)) 
+* [AdminBundle] Document what extending the editor may look like. [#738](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/738) ([@tarjei](https://github.com/tarjei)) 
+* [SeoBundle] Remove incorrect slash from image_src tag [#737](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/737) ([@waaghals](https://github.com/waaghals)) 
+* [AdminBundle] Fix admin sidebar when NodeBundle is not used [#731](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/731) ([@jockri](https://github.com/jockri)) 
+* [TranslatorBundle] add missing use statement [#728](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/728) ([@piotrbelina](https://github.com/piotrbelina)) 
+* [KunstmaanAdminBundle] Refactor DomainConfiguration [#726](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/726) ([@wimvds](https://github.com/wimvds)) 
+* [MediaBundle] Fixed image file extension [#725](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/725) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] add div wrapper to tables [#724](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/724) ([@diskwriter](https://github.com/diskwriter)) 
+* [LeadGenerationBundle] Handle type via request url as fallback [#723](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/723) ([@kimausloos](https://github.com/kimausloos)) 
+
+
 ## 3.3.2 / 2015-09-18
 
 * [AllBundles] revert bc breaks [#722](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/722) ([@piotrbelina](https://github.com/piotrbelina)) 
