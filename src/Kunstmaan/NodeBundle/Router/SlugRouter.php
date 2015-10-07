@@ -130,7 +130,7 @@ class SlugRouter implements RouterInterface
     {
         $this->urlGenerator = new UrlGenerator(
             $this->getRouteCollection(),
-            $this->context
+            $this->getContext()
         );
 
         return $this->urlGenerator->generate($name, $parameters, $absolute);
