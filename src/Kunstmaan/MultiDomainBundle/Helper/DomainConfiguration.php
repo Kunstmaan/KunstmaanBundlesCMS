@@ -33,8 +33,10 @@ class DomainConfiguration extends BaseDomainConfiguration
         parent::__construct($container);
         $this->hosts = $container->getParameter('kunstmaan_multi_domain.hosts');
         foreach ($this->hosts as $host => $hostInfo) {
-            foreach ($hostInfo['aliases'] as $alias) {
-                $this->aliases[$alias] = $host;
+            if (isset($hostInfo['aliases'])) {
+                foreach ($hostInfo['aliases'] as $alias) {
+                    $this->aliases[$alias] = $host;
+                }
             }
         }
     }

@@ -26,10 +26,14 @@
 
     <filter>
         <whitelist>
-            <directory>./</directory>
+            <directory suffix=".php">./</directory>
             <exclude>
                 <directory>./Resources</directory>
                 <directory>./vendor</directory>
+                <directory>./src/Kunstmaan/*/Resources</directory>
+                <directory>./src/Kunstmaan/*/vendor</directory>
+                <directory>./src/Kunstmaan/*/Twig</directory>
+                <directory>./src/Kunstmaan/*/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
