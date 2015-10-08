@@ -16,11 +16,6 @@ class MigrateTranslationsCommand extends ContainerAwareCommand
      */
     private $em = null;
 
-    /**
-     * @var Connection
-     */
-    private $db;
-
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Migrating translations...');
@@ -65,7 +60,6 @@ class MigrateTranslationsCommand extends ContainerAwareCommand
     public function setEntityManager(EntityManager $em)
     {
         $this->em = $em;
-        $this->db = $em->getConnection();
     }
 
     protected function configure()

@@ -65,7 +65,7 @@ class FormHandler implements FormHandlerInterface
                 $formSubmission = new FormSubmission();
                 $formSubmission->setIpAddress($request->getClientIp());
                 $formSubmission->setNode($em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page));
-                $formSubmission->setLang($locale = $request->getLocale());
+                $formSubmission->setLang($request->getLocale());
                 $em->persist($formSubmission);
 
                 /* @var $field FormSubmissionField */

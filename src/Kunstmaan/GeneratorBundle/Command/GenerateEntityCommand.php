@@ -302,10 +302,9 @@ EOT
 
         while (true) {
             $output->writeln('');
-            $self = $this;
             $generator = $this->getGenerator();
             $question = new Question($questionHelper->getQuestion('New field name (enter empty name to stop adding fields)', null));
-            $question->setValidator(function ($name) use ($fields, $self, $generator) {
+            $question->setValidator(function ($name) use ($fields, $generator) {
                 if (isset($fields[$name]) || 'id' == $name) {
                     throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                 }

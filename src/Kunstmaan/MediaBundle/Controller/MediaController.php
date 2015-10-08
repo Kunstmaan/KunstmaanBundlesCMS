@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MediaController extends Controller
 {
-
     /**
      * @param Request $request
      * @param int     $mediaId
@@ -50,10 +49,12 @@ class MediaController extends Controller
                 $media = $helper->getMedia();
                 $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-                return new RedirectResponse($this->generateUrl(
-                    'KunstmaanMediaBundle_media_show',
-                    array('mediaId' => $media->getId())
-                ));
+                return new RedirectResponse(
+                    $this->generateUrl(
+                        'KunstmaanMediaBundle_media_show',
+                        array('mediaId' => $media->getId())
+                    )
+                );
             }
         }
         $showTemplate = $mediaManager->getHandler($media)->getShowTemplate($media);
@@ -61,13 +62,13 @@ class MediaController extends Controller
         return $this->render(
             $showTemplate,
             array(
-                'handler'      => $handler,
+                'handler'       => $handler,
                 'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
-                'mediamanager' => $this->get('kunstmaan_media.media_manager'),
-                'editform'     => $form->createView(),
-                'media'        => $media,
-                'helper'       => $helper,
-                'folder'       => $folder
+                'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
+                'editform'      => $form->createView(),
+                'media'         => $media,
+                'helper'        => $helper,
+                'folder'        => $folder
             )
         );
     }
@@ -95,7 +96,8 @@ class MediaController extends Controller
 
         // If the redirect url is passed via the url we use it
         $redirectUrl = $request->query->get('redirectUrl');
-        if (empty($redirectUrl) || (strpos($redirectUrl, $request->getSchemeAndHttpHost()) !== 0 && strpos($redirectUrl, '/') !== 0)) {
+        if (empty($redirectUrl) ||
+            (strpos($redirectUrl, $request->getSchemeAndHttpHost()) !== 0 && strpos($redirectUrl, '/') !== 0)) {
             $redirectUrl = $this->generateUrl(
                 'KunstmaanMediaBundle_folder_show',
                 array('folderId' => $folder->getId())
@@ -124,9 +126,10 @@ class MediaController extends Controller
     }
 
     /**
-     * @param int     $folderId
+     * @param int $folderId
      *
-     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit")
+     * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"},
+     *                                       name="KunstmaanMediaBundle_media_bulk_upload_submit")
      * @Template()
      *
      * @return array|RedirectResponse
@@ -169,9 +172,12 @@ class MediaController extends Controller
         // Remove old temp files
         if ($cleanupTargetDir) {
             if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+                $response = new Response(
+                    '{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}'
+                );
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
             }
 
             while (($file = readdir($dir)) !== false) {
@@ -192,29 +198,41 @@ class MediaController extends Controller
 
         // Open temp file
         if (!$out = @fopen("{$filePath}.part", $chunks ? "ab" : "wb")) {
-	    $response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
-	    $response->headers->set('Content-Type', 'application/json');
-	    return $response;
+            $response = new Response(
+                '{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}'
+            );
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
         }
 
         if (!empty($_FILES)) {
             if ($_FILES["file"]["error"] || !is_uploaded_file($_FILES["file"]["tmp_name"])) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+                $response = new Response(
+                    '{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}'
+                );
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
             }
 
             // Read binary input stream and append it to temp file
             if (!$in = @fopen($_FILES["file"]["tmp_name"], "rb")) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+                $response = new Response(
+                    '{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}'
+                );
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
             }
         } else {
             if (!$in = @fopen("php://input", "rb")) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+                $response = new Response(
+                    '{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}'
+                );
+                $response->headers->set('Content-Type', 'application/json');
+
+                return $response;
             }
         }
 
@@ -241,11 +259,13 @@ class MediaController extends Controller
         $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
         // Return Success JSON-RPC response
-        return new JsonResponse(array(
-            'jsonrpc' => '2.0',
-            'result'  => '',
-            'id'      => 'id'
-        ));
+        return new JsonResponse(
+            array(
+                'jsonrpc' => '2.0',
+                'result'  => '',
+                'id'      => 'id'
+            )
+        );
     }
 
     /**
@@ -268,10 +288,12 @@ class MediaController extends Controller
 
         if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0) {
             $drop = $request->files->get('files');
-	} else if ($request->files->get('file')) {
-	    $drop = $request->files->get('file');
         } else {
-            $drop = $request->get('text');
+            if ($request->files->get('file')) {
+                $drop = $request->files->get('file');
+            } else {
+                $drop = $request->get('text');
+            }
         }
         $media = $this->get('kunstmaan_media.media_manager')->createNew($drop);
         if ($media) {
@@ -281,7 +303,7 @@ class MediaController extends Controller
             return new Response(json_encode(array('status' => 'File was uploaded successfuly!')));
         }
 
-	$request->getSession()->getFlashBag()->add('danger', 'Could not recognize what you dropped!');
+        $request->getSession()->getFlashBag()->add('danger', 'Could not recognize what you dropped!');
 
         return new Response(json_encode(array('status' => 'Could not recognize anything!')));
     }
@@ -291,7 +313,8 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
+     * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"},
+     *                                    name="KunstmaanMediaBundle_media_create")
      * @Method({"GET", "POST"})
      * @Template()
      *
@@ -357,7 +380,8 @@ class MediaController extends Controller
      * @param int     $folderId The folder id
      * @param string  $type     The type
      *
-     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create")
+     * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"},
+     *                                          name="KunstmaanMediaBundle_media_modal_create")
      * @Method({"GET", "POST"})
      * @Template()
      *
@@ -395,18 +419,17 @@ class MediaController extends Controller
      */
     public function moveMedia(Request $request)
     {
-        $mediaId = $request->request->get('mediaId');
+        $mediaId  = $request->request->get('mediaId');
         $folderId = $request->request->get('folderId');
 
-        $response = array();
         if (empty($mediaId) || empty($folderId)) {
             return new JsonResponse(array('error' => array('title' => 'Missing media id or folder id')), 400);
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em        = $this->getDoctrine()->getManager();
         $mediaRepo = $em->getRepository('KunstmaanMediaBundle:Media');
 
-        $media = $mediaRepo->getMedia($mediaId);
+        $media  = $mediaRepo->getMedia($mediaId);
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
         $media->setFolder($folder);

@@ -16,7 +16,7 @@ parameters:
 services:
     kunstmaan_admin.menubuilder:
         class: "%kunstmaan_admin.menubuilder.class%"
-        arguments: ["@translator", "@service_container"]
+        arguments: ["@service_container"]
 
     kunstmaan_admin.admin_panel:
         class: "%kunstmaan_admin.admin_panel.class%"

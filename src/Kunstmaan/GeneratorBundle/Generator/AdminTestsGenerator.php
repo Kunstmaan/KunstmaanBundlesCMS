@@ -61,19 +61,6 @@ class AdminTestsGenerator extends Generator
         );
 
         $this->generateBehatTests($bundle, $output, $parameters);
-        $this->generateUnitTests($bundle, $output);
-    }
-
-    /**
-     * @param Bundle          $bundle
-     * @param OutputInterface $output
-     */
-    public function generateUnitTests(Bundle $bundle, OutputInterface $output)
-    {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Tests';
-
-        $output->writeln('Generating Unit Tests : <info>OK</info>');
     }
 
     /**

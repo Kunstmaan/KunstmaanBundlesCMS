@@ -20,8 +20,6 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class GenerateBundleCommand extends GeneratorCommand
 {
-    private $generator;
-
     /**
      * @see Command
      */
@@ -269,6 +267,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new BundleGenerator($this->getContainer()->get('filesystem'));
+        return new BundleGenerator();
     }
 }

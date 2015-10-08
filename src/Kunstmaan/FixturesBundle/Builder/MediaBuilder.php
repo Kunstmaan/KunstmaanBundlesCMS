@@ -70,7 +70,7 @@ class MediaBuilder implements BuilderInterface
             $media->setOriginalFilename($data->getFilename());
         }
 
-        if ($media->getName() == null) {
+        if ($media->getName() === null) {
             $media->setName($media->getOriginalFilename());
         }
 

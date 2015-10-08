@@ -129,13 +129,12 @@ EOT
             'The name of your Page: For example: <comment>SponsorPage</comment>, <comment>NewsOverviewPage</comment>',
             '',
         ));
-        $self = $this;
         $generator = $this->getGenerator();
-        $bundlePath = $self->bundle->getPath();
+        $bundlePath = $this->bundle->getPath();
 
         $name = $this->assistant->askAndValidate(
             'Page name',
-            function ($name) use ($self, $generator, $bundlePath) {
+            function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
                 if ($generator->isReservedKeyword($name)){
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));

@@ -42,6 +42,6 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
         $twigConfig['globals']['form_submission_webdir'] = $container->getParameter('form_submission_webdir');
         $container->prependExtensionConfig('twig', $twigConfig);
         $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->processConfiguration(new Configuration(), $configs);
     }
 }

@@ -130,13 +130,12 @@ EOT
             'The name of your FormPage: For example: <comment>ContactPage</comment>, <comment>OrderPage</comment>',
             '',
         ));
-        $self = $this;
         $generator = $this->getGenerator();
-        $bundlePath = $self->bundle->getPath();
+        $bundlePath = $this->bundle->getPath();
 
         $name = $this->assistant->askAndValidate(
             'FormPage name',
-            function ($name) use ($self, $generator, $bundlePath) {
+            function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
                 if ($generator->isReservedKeyword($name)){
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
@@ -197,22 +196,5 @@ EOT
         $registry = $this->getContainer()->get('doctrine');
 
         return new FormPageGenerator($filesystem, $registry, '/page', $this->assistant);
-    }
-
-    /**
-     * Get all the available default templates.
-     *
-     * @return array
-     */
-    private function getTemplateList()
-    {
-        $templates = $this->getAvailableTemplates($this->bundle);
-
-        $types = array();
-        foreach ($templates as $key => $template) {
-            $types[$key] = $template['name'];
-        }
-
-        return $types;
     }
 }

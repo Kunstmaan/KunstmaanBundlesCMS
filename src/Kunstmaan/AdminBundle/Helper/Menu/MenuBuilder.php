@@ -12,11 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 class MenuBuilder
 {
     /**
-     * @var TranslatorInterface $translator
-     */
-    private $translator;
-
-    /**
      * @var MenuAdaptorInterface[] $adaptors
      */
     private $adaptors = array();
@@ -45,13 +40,11 @@ class MenuBuilder
     /**
      * Constructor
      *
-     * @param TranslatorInterface $translator The translator
-     * @param ContainerInterface  $container  The container
+     * @param ContainerInterface $container The container
      */
-    public function __construct(TranslatorInterface $translator, ContainerInterface $container)
+    public function __construct(ContainerInterface $container)
     {
-        $this->translator = $translator;
-        $this->container  = $container;
+        $this->container = $container;
     }
 
     /**
@@ -139,7 +132,7 @@ class MenuBuilder
     {
         if (is_null($this->topMenuItems)) {
             /* @var $request Request */
-            $request = $this->container->get('request');
+            $request            = $this->container->get('request');
             $this->topMenuItems = array();
             foreach ($this->getAdaptors() as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
@@ -163,7 +156,7 @@ class MenuBuilder
         }
         /* @var $request Request */
         $request = $this->container->get('request');
-        $result = array();
+        $result  = array();
         foreach ($this->getAdaptors() as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }

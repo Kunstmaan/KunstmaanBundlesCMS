@@ -19,18 +19,26 @@ use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
  */
 class GenerateAdminListCommand extends GenerateDoctrineCommand
 {
-
-
     /**
      * @see Command
      */
     protected function configure()
     {
         $this
-            ->setDefinition(array(new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The entity class name to create an admin list for (shortcut notation)'),))
+            ->setDefinition(
+                array(
+                    new InputOption(
+                        'entity',
+                        '',
+                        InputOption::VALUE_REQUIRED,
+                        'The entity class name to create an admin list for (shortcut notation)'
+                    ),
+                )
+            )
             ->setDescription('Generates a KunstmaanAdminList')
-            ->setHelp(<<<EOT
-The <info>kuma:generate:adminlist</info> command generates an AdminList for a Doctrine ORM entity.
+            ->setHelp(
+                <<<EOT
+                The <info>kuma:generate:adminlist</info> command generates an AdminList for a Doctrine ORM entity.
 
 <info>php app/console kuma:generate:adminlist Bundle:Entity</info>
 EOT
@@ -56,7 +64,7 @@ EOT
         $entity = Validators::validateEntityName($input->getOption('entity'));
         list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
-        $entityClass = $this->getContainer()->get('doctrine')->getAliasNamespace($bundle).'\\'.$entity;
+        $entityClass = $this->getContainer()->get('doctrine')->getAliasNamespace($bundle) . '\\' . $entity;
         $metadata    = $this->getEntityMetadata($entityClass);
         $bundle      = $this->getContainer()->get('kernel')->getBundle($bundle);
 
@@ -66,7 +74,7 @@ EOT
         $generator->setQuestion($questionHelper);
         $generator->generate($bundle, $entityClass, $metadata[0], $output);
 
-        $parts = explode('\\', $entity);
+        $parts       = explode('\\', $entity);
         $entityClass = array_pop($parts);
 
         $this->updateRouting($questionHelper, $input, $output, $bundle, $entityClass);
@@ -88,17 +96,21 @@ EOT
         try {
             $entity = $input->getOption('entity') ? Validators::validateEntityName($input->getOption('entity')) : null;
         } catch (\Exception $error) {
-            $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error'));
+            $output->writeln(
+                $questionHelper->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error')
+            );
         }
 
         if (is_null($entity)) {
-            $output->writeln(array(
-                '',
-                'This command helps you to generate an admin list for your entity.',
-                '',
-                'You must use the shortcut notation like <comment>AcmeBlogBundle:Post</comment>.',
-                '',
-            ));
+            $output->writeln(
+                array(
+                    '',
+                    'This command helps you to generate an admin list for your entity.',
+                    '',
+                    'You must use the shortcut notation like <comment>AcmeBlogBundle:Post</comment>.',
+                    '',
+                )
+            );
 
             $question = new Question($questionHelper->getQuestion('The entity shortcut name', $entity), $entity);
             $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
@@ -108,23 +120,32 @@ EOT
     }
 
     /**
-     * @param QuestionHelper    $questionHelper The question helper
-     * @param InputInterface    $input          The command input
-     * @param OutputInterface   $output         The command output
-     * @param Bundle            $bundle         The bundle
-     * @param string            $entityClass    The classname of the entity
+     * @param QuestionHelper  $questionHelper The question helper
+     * @param InputInterface  $input          The command input
+     * @param OutputInterface $output         The command output
+     * @param Bundle          $bundle         The bundle
+     * @param string          $entityClass    The classname of the entity
      *
      * @return void
      */
-    protected function updateRouting(QuestionHelper $questionHelper, InputInterface $input, OutputInterface $output, Bundle $bundle, $entityClass)
-    {
-        $auto = true;
+    protected function updateRouting(
+        QuestionHelper $questionHelper,
+        InputInterface $input,
+        OutputInterface $output,
+        Bundle $bundle,
+        $entityClass
+    ) {
+        $auto      = true;
         $multilang = false;
         if ($input->isInteractive()) {
-            $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Is it a multilanguage site', 'yes', '?'), true);
-            $multilang = $questionHelper->ask($input, $output, $confirmationQuestion);
-            $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to update the routing automatically', 'yes', '?'), true);
-            $auto = $questionHelper->ask($input, $output, $confirmationQuestion);
+            $confirmationQuestion = new ConfirmationQuestion(
+                $questionHelper->getQuestion('Is it a multilanguage site', 'yes', '?'), true
+            );
+            $multilang            = $questionHelper->ask($input, $output, $confirmationQuestion);
+            $confirmationQuestion = new ConfirmationQuestion(
+                $questionHelper->getQuestion('Do you want to update the routing automatically', 'yes', '?'), true
+            );
+            $auto                 = $questionHelper->ask($input, $output, $confirmationQuestion);
         }
 
         $prefix = $multilang ? '/{_locale}' : '';
@@ -139,7 +160,7 @@ EOT
         }
 
         if ($auto) {
-            $file = $bundle->getPath() . '/Resources/config/routing.yml';
+            $file    = $bundle->getPath() . '/Resources/config/routing.yml';
             $content = '';
 
             if (file_exists($file)) {
@@ -152,7 +173,12 @@ EOT
             $content .= $code;
 
             if (false === file_put_contents($file, $content)) {
-                $output->writeln($questionHelper->getHelperSet()->get('formatter')->formatBlock("Failed adding the content automatically", 'error'));
+                $output->writeln(
+                    $questionHelper->getHelperSet()->get('formatter')->formatBlock(
+                        "Failed adding the content automatically",
+                        'error'
+                    )
+                );
             } else {
                 return;
             }
@@ -166,15 +192,15 @@ EOT
 
     /**
      * KunstmaanTestBundle_TestEntity:
-    resource: "@KunstmaanTestBundle/Controller/TestEntityAdminListController.php"
-    type:     annotation
-    prefix:   /{_locale}/admin/testentity/
-    requirements:
-    _locale: %requiredlocales%
+     * resource: "@KunstmaanTestBundle/Controller/TestEntityAdminListController.php"
+     * type:     annotation
+     * prefix:   /{_locale}/admin/testentity/
+     * requirements:
+     * _locale: %requiredlocales%
      */
 
     protected function createGenerator()
     {
-        return new AdminListGenerator($this->getContainer()->get('filesystem'), GeneratorUtils::getFullSkeletonPath('adminlist'));
+        return new AdminListGenerator(GeneratorUtils::getFullSkeletonPath('adminlist'));
     }
 }
