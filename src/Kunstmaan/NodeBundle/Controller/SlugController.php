@@ -3,22 +3,18 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * This controller is for showing frontend pages based on slugs
@@ -58,7 +54,7 @@ class SlugController extends Controller
             $em,
             $nodeTranslation
         );
-        $node = $nodeTranslation->getNode();
+        $node   = $nodeTranslation->getNode();
 
         $securityEvent = new SlugSecurityEvent();
         $securityEvent
@@ -71,7 +67,7 @@ class SlugController extends Controller
         $nodeMenu->setLocale($locale);
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($preview);
-        
+
         $eventDispatcher = $this->get('event_dispatcher');
         $eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
 
@@ -99,10 +95,10 @@ class SlugController extends Controller
         $postEvent = new SlugEvent($response, $renderContext);
         $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
 
-        $response = $postEvent->getResponse();
+        $response      = $postEvent->getResponse();
         $renderContext = $postEvent->getRenderContext();
 
-        if ($response instanceof Response){
+        if ($response instanceof Response) {
             return $response;
         }
 
@@ -117,27 +113,21 @@ class SlugController extends Controller
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param                                           $preview
-     * @param                                           $em
-     * @param                                           $nodeTranslation
+     * @param Request                $request
+     * @param boolean                $preview
+     * @param EntityManagerInterface $em
+     * @param NodeTranslation        $nodeTranslation
      *
      * @return \Kunstmaan\NodeBundle\Entity\HasNodeInterface
      */
-    private function getPageEntity(
-        Request $request,
-        $preview,
-        $em,
-        $nodeTranslation
-    ) {
+    private function getPageEntity(Request $request, $preview, EntityManagerInterface $em, NodeTranslation $nodeTranslation)
+    {
         /* @var HasNodeInterface $entity */
         $entity = null;
         if ($preview) {
             $version = $request->get('version');
             if (!empty($version) && is_numeric($version)) {
-                $nodeVersion = $em->getRepository(
-                    'KunstmaanNodeBundle:NodeVersion'
-                )->find($version);
+                $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->find($version);
                 if (!is_null($nodeVersion)) {
                     $entity = $nodeVersion->getRef($em);
                 }

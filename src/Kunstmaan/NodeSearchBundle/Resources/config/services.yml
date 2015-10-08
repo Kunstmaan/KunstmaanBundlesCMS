@@ -19,7 +19,6 @@ services:
             - [ setIndexName, ["%kunstmaan_node_search.indexname%"]]
             - [ setIndexType, ["%kunstmaan_node_search.indextype%"]]
             - [ setSecurityContext, ["@security.context"]]
-            - [ setEntityManager, ["@doctrine.orm.entity_manager"]]
             - [ setDomainConfiguration, ["@kunstmaan_admin.domain_configuration"]]
 
     kunstmaan_node_search.service.indexable_pageparts:

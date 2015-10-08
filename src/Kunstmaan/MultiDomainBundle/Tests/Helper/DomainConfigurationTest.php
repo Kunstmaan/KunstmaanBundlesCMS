@@ -2,10 +2,8 @@
 
 namespace Kunstmaan\MultiDomainBundle\Tests\Helper;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class DomainConfigurationTest extends \PHPUnit_Framework_TestCase

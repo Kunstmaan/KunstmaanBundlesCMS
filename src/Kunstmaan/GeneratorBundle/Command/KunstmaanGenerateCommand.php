@@ -397,7 +397,6 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
         }
 
         $fields          = array();
-        $self            = $this;
         $typeStrings     = $this->getTypes();
         $mediaTypeSelect = $this->getMediaTypes();
         $generator       = $this->getGenerator();
@@ -408,7 +407,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
 
             $fieldName = $this->assistant->askAndValidate(
                 'New field name (press <return> to stop adding fields)',
-                function ($name) use ($fields, $self, $reservedFields, $generator, $container) {
+                function ($name) use ($fields, $reservedFields, $generator) {
                     // The fields cannot exist in the reserved field list
                     if (in_array($name, $reservedFields)) {
                         throw new \InvalidArgumentException(sprintf(
@@ -449,7 +448,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $question   = "Reference entity name (eg. $bundleName:FaqItem, $bundleName:Blog/Comment)";
                 $name       = $this->assistant->askAndValidate(
                     $question,
-                    function ($name) use ($fields, $self, $bundle, $generator, $container) {
+                    function ($name) use ($generator, $container) {
                         $parts = explode(':', $name);
 
                         // Should contain colon

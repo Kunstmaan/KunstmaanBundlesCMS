@@ -5,10 +5,8 @@ namespace Kunstmaan\FormBundle\Helper;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_Mime_Message;
-
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 
 /**
@@ -16,9 +14,13 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
  */
 class FormMailer implements FormMailerInterface
 {
-
+    /** @var \Swift_Mailer */
     private $mailer;
+
+    /** @var \Symfony\Bundle\TwigBundle\TwigEngine */
     private $templating;
+
+    /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
     private $container;
 
     /**
@@ -28,9 +30,9 @@ class FormMailer implements FormMailerInterface
      */
     public function __construct(Swift_Mailer $mailer, TwigEngine $templating, ContainerInterface $container)
     {
-        $this->mailer = $mailer;
+        $this->mailer     = $mailer;
         $this->templating = $templating;
-        $this->container = $container;
+        $this->container  = $container;
     }
 
     /**
@@ -41,18 +43,19 @@ class FormMailer implements FormMailerInterface
      */
     public function sendContactMail(FormSubmission $submission, $from, $to, $subject)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
         $toArr = explode("\r\n", $to);
         /* @var $message Swift_Mime_Message */
         $message = Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
         $message->setBody(
             $this->templating->render(
-                'KunstmaanFormBundle:Mailer:mail.html.twig', array(
+                'KunstmaanFormBundle:Mailer:mail.html.twig',
+                array(
                     'submission' => $submission,
-                    'host' => $this->container->get('request')->getScheme().'://'.$this->container->get('request')->getHttpHost()
+                    'host'       => $this->container->get('request')->getScheme() . '://' . $this->container->get('request')->getHttpHost()
                 )
-            ), 'text/html');
+            ),
+            'text/html'
+        );
         $this->mailer->send($message);
     }
 }

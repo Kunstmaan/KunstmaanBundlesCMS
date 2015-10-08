@@ -111,12 +111,11 @@ EOT
             'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
             '',
         ));
-        $self = $this;
         $generator = $this->getGenerator();
-        $bundlePath = $self->bundle->getPath();
+        $bundlePath = $this->bundle->getPath();
         $name = $this->assistant->askAndValidate(
             'PagePart name',
-            function ($name) use ($self, $generator, $bundlePath) {
+            function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
                 if ($generator->isReservedKeyword($name)){
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));

@@ -83,8 +83,6 @@ class UsersController extends BaseSettingsController
     public function addAction(Request $request)
     {
         $this->checkPermission();
-        /* @var $em EntityManager */
-        $em                = $this->getDoctrine()->getManager();
         $user              = $this->getUserClassInstance();
         $formTypeClassName = $user->getFormTypeClass();
         $formType          = new $formTypeClassName();
