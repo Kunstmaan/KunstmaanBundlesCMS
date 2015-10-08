@@ -44,6 +44,7 @@ class NodeListener
 
             $socialWidget = new FormWidget();
             $socialWidget->addType('social', new SocialType(), $seo);
+            $socialWidget->setTemplate('KunstmaanSeoBundle:Admin\Social:social.html.twig');
             $event->getTabPane()->addTab(new Tab('Social', $socialWidget));
         }
     }

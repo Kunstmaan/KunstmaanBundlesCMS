@@ -19,14 +19,73 @@ class SocialType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // OPEN GRAPH
         $builder->add('id', 'hidden')
-            ->add('ogType', null, array('label' => 'OG type'))
-            ->add('ogTitle', null, array('label' => 'OG title'))
-            ->add('ogDescription', null, array('label' => 'OG description'))
-            ->add('ogImage', 'media', array('mediatype' => 'image', 'label' => 'OG image', 'required' => false))
-            ->add('ogUrl', null, array('label' => 'OG Url'))
-            ->add('linkedInRecommendLink', "text", array("required" => false, 'label' => 'LinkedIn Recommend Link'))
-            ->add('linkedInRecommendProductID', "text", array("required" => false, 'label' => 'LinkedIn Product ID'));
+            ->add('ogTitle', 'text', array(
+                'label'     => 'seo.form.og.title',
+                'required'  => false,
+                'attr'      => array(
+                    'info_text'     => "Open Graph (OG) is a standard way of representing online objects. It's used, as example, by Facebook or other social media to build share links."
+                )
+            ))
+            ->add('ogDescription', 'textarea', array(
+                'label' => 'seo.form.og.description',
+                'required'  => false,
+            ))
+            ->add('ogUrl', 'urlchooser', array(
+                'label' => 'seo.form.og.url',
+                'required'  => false,
+            ))
+            ->add('ogType', 'choice', array(
+                'label'     => 'seo.form.og.type',
+                'required'  => false,
+                'choices'   => array(
+                    "website"       => "Website",
+                    "article"       => "Article",
+                    "profile"       => "Profile",
+                    "book"          => "Book",
+                    "video.other"   => "Video",
+                    "music.song"    => "Music"
+                )
+            ))
+            ->add('ogImage', 'media', array(
+                'label' => 'seo.form.og.image',
+                'required'  => false
+            ));
+
+        // TWITTER
+        $builder->add('twitterTitle', 'text', array(
+            'label' => 'seo.form.twitter.title',
+            'required'  => false,
+            'attr'      => array(
+                'info_text'     => "The title of your twitter card. Falls back to SEO Meta title"
+            )
+        ))
+            ->add('twitterDescription', 'textarea', array(
+                'label' => 'seo.form.twitter.description',
+                'required'  => false,
+                'attr'      => array(
+                    'info_text'     => "The description of your twitter card. Falls back to SEO Meta description"
+                )
+            ))
+            ->add('twitterSite', 'text', array(
+                'label' => 'seo.form.twitter.sitehandle',
+                'required'  => false,
+                'attr'      => array(
+                    'info_text'     => "Twitter handle of your website organisation. This value is required for twitter cards to work."
+                )
+            ))
+            ->add('twitterCreator', 'text', array(
+                'label' => 'seo.form.twitter.creatorhandle',
+                'required'  => false,
+                'attr'      => array(
+                    'info_text'     => "Twitter handle of your page publisher."
+                )
+            ))
+            ->add('twitterImage', 'media', array(
+                'label' => 'seo.form.twitter.image',
+                'required' => false,
+            ));
     }
 
     /**
