@@ -54,11 +54,11 @@ class PasswordCheckListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         $url = $event->getRequest()->getRequestUri();
-        if($this->isAdminRoute($url)) {
+        if ($this->tokenStorage->getToken() && $this->isAdminRoute($url)) {
             $route = $event->getRequest()->get('_route');
-            if($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $route != 'fos_user_change_password'){
+            if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $route != 'fos_user_change_password') {
                 $user = $this->tokenStorage->getToken()->getUser();
-                if($user->isPasswordChanged() == false) {
+                if ($user->isPasswordChanged() === false) {
                     $response = new RedirectResponse($this->router->generate('fos_user_change_password'));
                     $this->session->getFlashBag()->add('error', 'Your password has not yet been changed');
                     $event->setResponse($response);
