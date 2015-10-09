@@ -10,11 +10,6 @@ use Symfony\Component\Finder\Finder;
 class CacheValidator
 {
     /**
-     * @var boolean
-     */
-    private $debug;
-
-    /**
      * Where to store cache files
      * @var string
      */
@@ -73,11 +68,6 @@ class CacheValidator
         return null;
     }
 
-    public function setDebug($debug)
-    {
-        $this->debug = $debug;
-    }
-
     public function setCacheDir($cacheDir)
     {
         $this->cacheDir = $cacheDir;
@@ -92,5 +82,4 @@ class CacheValidator
     {
         $this->translationRepository = $translationRepository;
     }
-
 }

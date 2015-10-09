@@ -2,11 +2,8 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
-use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 abstract class AbstractRedirectController extends Controller
 {

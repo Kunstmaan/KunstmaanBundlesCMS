@@ -5,9 +5,6 @@ use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 
 class LoaderTest extends BaseTestCase
 {
-
-    private $translationRepository;
-
     public function setUp()
     {
         parent::setUp();
@@ -21,5 +18,4 @@ class LoaderTest extends BaseTestCase
         $this->assertEquals($messages['validation.ok'], 'Everything ok');
         $this->assertEquals($catalogue->getLocale(), 'en');
     }
-
 }

@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\TranslatorBundle\Command;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,11 +21,10 @@ class MigrateTranslationsCommand extends ContainerAwareCommand
         $output->writeln('Migrating translations...');
         $this->setEntityManager($this->getContainer()->get('doctrine.orm.entity_manager'));
 
-        /* @var EntityRepository $repo */
+        /** @var TranslationRepository $repo */
         $repo = $this->em->getRepository('KunstmaanTranslatorBundle:Translation');
-        /**
-         * @var QueryBuilder $qb
-         */
+
+        /** @var QueryBuilder $qb */
         $qb = $repo->createQueryBuilder('t');
         $uniqueTranslations = $qb->select('t.domain,t.keyword')
             ->distinct()

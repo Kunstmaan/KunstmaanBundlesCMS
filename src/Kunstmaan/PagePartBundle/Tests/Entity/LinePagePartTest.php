@@ -34,7 +34,7 @@ class LinePagePartTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\PagePartBundle\Entity\LinePagePart::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals('LinePagePart', $this->object->__toString());
     }

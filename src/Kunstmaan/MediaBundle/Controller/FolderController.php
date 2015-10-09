@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\FolderType;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,8 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * FolderController.
@@ -224,5 +223,4 @@ class FolderController extends Controller
             )
         );
     }
-
 }

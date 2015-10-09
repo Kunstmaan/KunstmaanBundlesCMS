@@ -10,11 +10,6 @@ class TestListener implements \PHPUnit_Framework_TestListener
     {
     }
 
-    protected function _printError($error)
-    {
-
-    }
-
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
     }

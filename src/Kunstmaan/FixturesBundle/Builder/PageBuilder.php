@@ -205,14 +205,14 @@ class PageBuilder implements BuilderInterface
         $translationWithSameUrl = $this->nodeTranslationRepo->getNodeTranslationForUrl($translation->getUrl(), $translation->getLang(), false, $translation);
 
         if ($translationWithSameUrl instanceof NodeTranslation) {
-            $translation->setSlug($this->slugifier->slugify($this->IncrementString($translation->getSlug())));
+            $translation->setSlug($this->slugifier->slugify($this->incrementString($translation->getSlug())));
             $this->ensureUniqueUrl($translation, $page);
         }
 
         return $translation;
     }
 
-    private static function IncrementString($string, $append = '-v')
+    private static function incrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
         $matches = array();
