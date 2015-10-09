@@ -4,17 +4,21 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
 
     var init, createMoreDropdown,
         buttonsVisible,
-        $autoCollapseButtons, $btnGroup, $buttonsRedundant, $moreButtonContainer, $moreButton, $caret, $dropdownList;
+        $autoCollapseButtons, $btnGroup, $allButtons, $buttonsRedundant, $moreButtonContainer, $moreButton, $caret, $dropdownList;
 
     init = function() {
         buttonsVisible = 2;
 
         $autoCollapseButtons = $('.js-auto-collapse-buttons');
         $btnGroup = $autoCollapseButtons.find('.btn-group');
-        $buttonsRedundant = $btnGroup.children('button:nth-of-type(n+'+ buttonsVisible +'), a:nth-of-type(n+'+ buttonsVisible +')'); // select only anchors and buttons
+        if ($btnGroup.parent().attr('data-visible-buttons')) {
+            buttonsVisible = $btnGroup.parent().data('visible-buttons');
+        }
+        $allButtons = $btnGroup.children('button, a'); // select only anchors and buttons
 
         // add more-dropdown when there are at least 2 buttons for dropdown
-        if($buttonsRedundant.size() > 1) {
+        if ($allButtons.length > (buttonsVisible + 1)) {
+            $buttonsRedundant = $allButtons.slice(buttonsVisible);
             createMoreDropdown();
         }
     };
@@ -33,7 +37,7 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
             $(this).removeClass().addClass('btn-dropdown-menu').appendTo($li);
             $li.appendTo($dropdownList);
         });
-    }
+    };
 
     return {
         init: init

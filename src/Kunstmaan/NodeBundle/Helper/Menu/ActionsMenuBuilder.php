@@ -132,7 +132,10 @@ class ActionsMenuBuilder
             'class',
             'page-main-actions js-auto-collapse-buttons'
         );
-
+        $menu->setChildrenAttribute(
+            'data-visible-buttons',
+            '3'
+        );
 
         if (null === $activeNodeVersion) {
             $this->dispatcher->dispatch(
