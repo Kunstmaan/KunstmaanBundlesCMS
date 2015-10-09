@@ -10,12 +10,6 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 class TranslatorMenuAdaptor implements MenuAdaptorInterface
 {
     /**
-     * Is the bundle enabled?
-     * @var boolean
-     */
-    private $translatorBundleEnabled;
-
-    /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
      * @param MenuBuilder $menu      The MenuBuilder
@@ -66,10 +60,5 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuItem;
         }
-    }
-
-    public function setTranslatorBundleEnabled($translatorBundleEnabled)
-    {
-        $this->translatorBundleEnabled = $translatorBundleEnabled;
     }
 }

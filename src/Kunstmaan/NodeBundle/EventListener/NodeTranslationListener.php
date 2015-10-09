@@ -327,7 +327,7 @@ class NodeTranslationListener
             $oldUrl = $translation->getFullSlug();
             $translation->setSlug(
                 $this->slugifier->slugify(
-                    $this->IncrementString($translation->getSlug())
+                    $this->incrementString($translation->getSlug())
                 )
             );
             $newUrl = $translation->getFullSlug();
@@ -357,7 +357,7 @@ class NodeTranslationListener
      *
      * @return string Incremented string.
      */
-    private static function IncrementString($string, $append = '-v')
+    private static function incrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
         $matches                = array();

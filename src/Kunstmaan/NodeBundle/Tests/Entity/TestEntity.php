@@ -84,7 +84,7 @@ class TestEntity extends AbstractEntity implements HasNodeInterface
     /**
      * @return boolean
      */
-    public function IsStructureNode()
+    public function isStructureNode()
     {
         return false;
     }

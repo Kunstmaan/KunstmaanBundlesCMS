@@ -39,7 +39,6 @@ class RadioButtonSubContext extends BehatContext
         if (null === $radioButton) {
             throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $radioLabel);
         }
-        $value = $radioButton->getAttribute('value');
         $this->getSession()->getDriver()->click($radioButton->getXPath());
     }
 }

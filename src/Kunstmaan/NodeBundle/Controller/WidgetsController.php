@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\Menu\SimpleTreeView;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;

@@ -3,7 +3,6 @@
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Symfony\Component\Config\ConfigCache;
-use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Finder\Finder;
 
 /**

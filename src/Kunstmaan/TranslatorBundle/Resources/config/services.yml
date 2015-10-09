@@ -2,18 +2,15 @@ parameters:
     kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
 
 services:
-
     kunstmaan.data_collector.translator:
         class: Kunstmaan\TranslatorBundle\Component\HttpKernel\DataCollector\TranslatorDataCollector
         tags:
-            - { name: data_collector,  template: "KunstmaanTranslatorBundle:DataCollector:translator", id: "translator", priority: "1" }
+            - { name: data_collector, template: "KunstmaanTranslatorBundle:DataCollector:translator", id: "translator", priority: "1" }
 
     kunstmaan_translator.menu.adaptor:
         class: "%kunstmaan_translator.menu.adaptor.class%"
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
-        calls:
-            - [setTranslatorBundleEnabled, [%kuma_translator.enabled%]]
 
     kunstmaan_translator.service.abstract_command_handler:
         abstract: true
@@ -60,11 +57,6 @@ services:
         calls:
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
 
-    kunstmaan_translator.service.translation:
-        class: "Kunstmaan\TranslatorBundle\Service\TranslationService"
-        calls:
-            - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
-
     kunstmaan_translator.service.translator.loader:
         class: Kunstmaan\TranslatorBundle\Service\Translator\Loader
         tags:
@@ -82,7 +74,6 @@ services:
     kunstmaan_translator.service.translator.cache_validator:
         class: Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator
         calls:
-            - [setDebug, [%kuma_translator.debug%]]
             - [setCacheDir, [%kuma_translator.cache_dir%]]
             - [setTranslationRepository, [@kunstmaan_translator.repository.translation]]
 
@@ -106,5 +97,3 @@ services:
 
     kunstmaan_translator.service.command.diff:
         class: "Kunstmaan\TranslatorBundle\Service\Command\DiffCommand"
-        calls:
-            - [setMigrationsService, [@kunstmaan_translator.service.migrations.migrations]]

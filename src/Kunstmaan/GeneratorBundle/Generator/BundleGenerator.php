@@ -1,8 +1,8 @@
 <?php
+
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 
 /**

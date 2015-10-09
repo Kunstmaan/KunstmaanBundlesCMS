@@ -3,10 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Console\Output\OutputInterface;
 

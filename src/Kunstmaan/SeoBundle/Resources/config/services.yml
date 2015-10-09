@@ -1,6 +1,3 @@
-parameters:
-#    kunstmaan_seo.example.class: Kunstmaan\SeoBundle\Example
-
 services:
     kunstmaan_seo.twig.extension:
         class: Kunstmaan\SeoBundle\Twig\SeoTwigExtension

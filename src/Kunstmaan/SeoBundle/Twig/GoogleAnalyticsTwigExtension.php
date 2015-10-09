@@ -14,6 +14,15 @@ use Twig_Extension,
  */
 class GoogleAnalyticsTwigExtension extends Twig_Extension
 {
+    protected $accountVarName = 'account_id';
+
+    protected $accountId;
+
+    /** @var OrderPreparer */
+    protected $orderPreparer;
+
+    /** @var OrderConverter */
+    protected $orderConverter;
 
     /**
      * Returns a list of functions to add to the existing list.
@@ -23,15 +32,19 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('google_analytics_initialize', array($this, 'renderInitialize'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('google_analytics_track_order', array($this, 'renderECommerceTracking'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction(
+                'google_analytics_initialize',
+                array($this, 'renderInitialize'),
+                array('is_safe' => array('html'), 'needs_environment' => true)
+            ),
+            new \Twig_SimpleFunction(
+                'google_analytics_track_order',
+                array($this, 'renderECommerceTracking'),
+                array('is_safe' => array('html'), 'needs_environment' => true)
+            ),
         );
     }
 
-
-    protected $accountVarName = 'account_id';
-
-    protected $accountId;
 
     /**
      * @param string $id The Google Analytics Account ID.
@@ -41,9 +54,6 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         $this->accountId = $id;
     }
 
-    /** @var OrderPreparer */
-    protected $orderPreparer;
-
     /**
      * @param OrderPreparer $preparer
      */
@@ -52,9 +62,6 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         $this->orderConverter = $preparer;
     }
 
-    /** @var OrderConverter */
-    protected $orderConverter;
-
     /**
      * @param OrderConverter $converter
      */
@@ -62,7 +69,6 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     {
         $this->orderConverter = $converter;
     }
-
 
     /**
      * Renders the default Google Analytics JavaScript.
@@ -86,13 +92,14 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         $defaults = array();
 
         $this->setOptionIfNotSet($defaults, $this->accountVarName, $this->accountId);
-        // $this->setOptionIfNotSet($defaults, $this->accountVarName, $this->getGlobal($environment, 'ga_code')); // Global logic not working.
 
         // Things set in $options will override things set in $defaults.
         $options = array_merge($defaults, $options);
 
         if (!$this->isOptionSet($options, $this->accountVarName)) {
-            throw new \Twig_Error_Runtime("The google_analytics_initialize function depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'.");
+            throw new \Twig_Error_Runtime(
+                "The google_analytics_initialize function depends on a Google Analytics account ID. You can either pass this along in the initialize_google_analytics function ($this->accountVarName), provide a variable under 'parameters.google.analytics.account_id'."
+            );
         }
 
         $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:init.html.twig');
@@ -102,16 +109,18 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
 
 
     /**
-     * @param Twig_Environment  $environment
-     * @param Order             $order
+     * @param Twig_Environment $environment
+     * @param Order            $order
      *
      * @return string The HTML rendered.
      */
     public function renderECommerceTracking(\Twig_Environment $environment, Order $order)
     {
-        $order = $this->orderPreparer->prepare($order);
-        $options = $this->orderConverter->convert($order);
-        $template = $environment->loadTemplate('KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:ecommerce_tracking.html.twig');
+        $order    = $this->orderPreparer->prepare($order);
+        $options  = $this->orderConverter->convert($order);
+        $template = $environment->loadTemplate(
+            'KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:ecommerce_tracking.html.twig'
+        );
 
         return $template->render($options);
     }
@@ -123,7 +132,6 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     {
         return 'kuma_google_analytics_twig_extension';
     }
-
 
 
     /**
@@ -151,25 +159,5 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     private function isOptionSet($arr, $option)
     {
         return (!isset($arr[$option]) || !empty($arr[$option]));
-    }
-
-    /**
-     * Not sure if this works ... doesn't appear to see all the globals.
-     * If this works we could search the globals for a Google Analytics ID as well.
-     *
-     * @param Twig_Environment $environment
-     * @param string           $name
-     *
-     * @return null
-     */
-    private function getGlobal(\Twig_Environment $environment, $name)
-    {
-        foreach ($environment->getGlobals() as $k => $v) {
-            if ($k == $name) {
-                return $v;
-            }
-        }
-
-        return null;
     }
 }

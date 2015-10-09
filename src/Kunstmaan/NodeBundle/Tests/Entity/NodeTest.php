@@ -222,7 +222,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\NodeBundle\Entity\Node::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->object->setId(1);
         $this->object->setRef(new TestEntity());

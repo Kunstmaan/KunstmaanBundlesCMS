@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 

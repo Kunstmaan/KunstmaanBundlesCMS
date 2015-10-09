@@ -34,7 +34,7 @@ class TocPagePartTest extends \PHPUnit_Framework_TestCase
      *
      * @covers                Kunstmaan\PagePartBundle\Entity\TocPagePart::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals('TocPagePart', $this->object->__toString());
     }

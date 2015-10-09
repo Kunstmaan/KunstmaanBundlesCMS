@@ -44,7 +44,7 @@ class TextPagePartTest extends \PHPUnit_Framework_TestCase
      *
      * @covers                Kunstmaan\PagePartBundle\Entity\TextPagePart::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals("TextPagePart " . $this->object->getContent(), $this->object->__toString());
     }
