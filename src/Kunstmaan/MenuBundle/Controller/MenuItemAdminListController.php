@@ -4,11 +4,8 @@ namespace Kunstmaan\MenuBundle\Controller;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\MenuBundle\AdminList\MenuItemAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-use Kunstmaan\MenuBundle\Entity\BaseMenuItem;
-use Kunstmaan\MenuBundle\Form\MenuItemAdminType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
