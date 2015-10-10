@@ -24,7 +24,7 @@ class MenuService
     private $em;
 
     /**
-     * @param array  $menuNames
+     * @param array $menuNames
      * @param DomainConfigurationInterface $domainConfiguration
      * @param EntityManager $em
      */

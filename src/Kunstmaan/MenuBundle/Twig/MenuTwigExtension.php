@@ -4,28 +4,29 @@ namespace Kunstmaan\MenuBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
+use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class MenuTwigExtension extends \Twig_Extension
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
     /**
      * @var RouterInterface
      */
     private $router;
 
     /**
-     * @param EntityManager $em
+     * @var MenuItemRepositoryInterface
+     */
+    private $repository;
+
+    /**
+     * @param MenuItemRepositoryInterface $repository
      * @param RouterInterface $router
      */
-    public function __construct(EntityManager $em, RouterInterface $router)
+    public function __construct(MenuItemRepositoryInterface $repository, RouterInterface $router)
     {
-        $this->em = $em;
-        $this->router = $router;
+	$this->router = $router;
+	$this->repository = $repository;
     }
 
     /**
@@ -50,44 +51,30 @@ class MenuTwigExtension extends \Twig_Extension
      */
     public function getMenu($name, $lang, $options = array())
     {
-        $repo = $this->em->getRepository('KunstmaanMenuBundle:MenuItem');
-        $query = $this->em
-            ->createQueryBuilder()
-            ->select('mi, nt, p')
-            ->from('KunstmaanMenuBundle:MenuItem', 'mi')
-            ->innerJoin('mi.menu', 'm')
-            ->leftJoin('mi.parent', 'p')
-            ->leftJoin('mi.nodeTranslation', 'nt')
-            ->leftJoin('nt.node', 'n')
-            ->orderBy('mi.lft', 'ASC')
-            ->where('m.locale = :locale')
-            ->setParameter('locale', $lang)
-            ->andWhere('m.name = :name')
-            ->setParameter('name', $name)
-            ->andWhere('(nt.online = 1 OR nt.online IS NULL)')
-            ->andWhere('(n.deleted = 0 OR n.deleted IS NULL)')
-            ->getQuery();
-        $arrayResult = $query->getArrayResult();
+	/** @var MenuItem $menuRepo */
+	$arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
 
-        // Make sure the parent item is not offline
-        $foundIds = array();
+	// Make sure the parent item is not offline
+	$foundIds = array();
         foreach ($arrayResult as $array) {
             $foundIds[] = $array['id'];
         }
         foreach ($arrayResult as $key => $array) {
-            if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds))  {
+	    if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds)) {
                 unset($arrayResult[$key]);
             }
         }
 
+	// SET OPTIONS
+	// Class for active item
         $activeClass = false;
-
         if (isset($options['activeClass'])) {
             $activeClass = $options['activeClass'];
         }
 
         $options = array_merge($this->getDefaultOptions($activeClass), $options);
-        $html = $repo->buildTree($arrayResult, $options);
+
+	$html = $menuRepo->buildTree($arrayResult, $options);
 
         return $html;
     }
@@ -107,7 +94,7 @@ class MenuTwigExtension extends \Twig_Extension
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-            'nodeDecorator' => function($node) use ($router, $activeClass) {
+	    'nodeDecorator' => function ($node) use ($router, $activeClass) {
                 $active = false;
 
                 if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
@@ -130,8 +117,8 @@ class MenuTwigExtension extends \Twig_Extension
                     $title = $node['title'];
                 }
 
-                return '<a href="' . $url . '"' . ($active ? ' class="' . $activeClass . '"' : '') . ($node['newWindow'] ? ' target="_blank"' : '') . '>' . $title . '</a>';
-            }
+		return '<a href="'.$url.'"'.($active ? ' class="'.$activeClass.'"' : '').($node['newWindow'] ? ' target="_blank"' : '').'>'.$title.'</a>';
+	    },
         );
     }
 
