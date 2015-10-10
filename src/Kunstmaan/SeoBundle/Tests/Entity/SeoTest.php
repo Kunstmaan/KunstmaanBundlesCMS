@@ -31,6 +31,7 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     {
     }
 
+    // META DATA TESTS
     /**
      * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaAuthor
      * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaAuthor
@@ -52,16 +53,6 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaKeywords
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaKeywords
-     */
-    public function testGetSetMetaKeywords()
-    {
-        $this->object->setMetaKeywords('Meta Keywords');
-        $this->assertEquals('Meta Keywords', $this->object->getMetaKeywords());
-    }
-
-    /**
      * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaRobots
      * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaRobots
      */
@@ -69,16 +60,6 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     {
         $this->object->setMetaRobots('noindex, nofollow');
         $this->assertEquals('noindex, nofollow', $this->object->getMetaRobots());
-    }
-
-    /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaRevised
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaRevised
-     */
-    public function testGetSetMetaRevised()
-    {
-        $this->object->setMetaRevised('18/09/2012');
-        $this->assertEquals('18/09/2012', $this->object->getMetaRevised());
     }
 
     /**
@@ -91,6 +72,7 @@ class SeoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Extra Metadata', $this->object->getExtraMetadata());
     }
 
+    // OPEN GRAPH TESTS
     /**
      * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgDescription
      * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgDescription
@@ -142,6 +124,69 @@ class SeoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('website', $this->object->getOgType());
     }
 
+    // TWITTER CARD TESTS
+    /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterTitle
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterTitle
+     */
+    public function testGetSetTwitterTitle()
+    {
+        $this->object->setTwitterTitle('twitter title');
+        $this->assertEquals('twitter title', $this->object->getTwitterTitle());
+    }
+
+    /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterDescription
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterDescription
+     */
+    public function testGetSetTwitterDescription()
+    {
+        $this->object->setTwitterDescription('twitter description');
+        $this->assertEquals('twitter description', $this->object->getTwitterDescription());
+    }
+
+    /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterSite
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterSite
+     */
+    public function testGetSetTwitterSite()
+    {
+        $this->object->setTwitterSite('@kunstmaan');
+        $this->assertEquals('@kunstmaan', $this->object->getTwitterSite());
+    }
+
+    /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterCreator
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterCreator
+     */
+    public function testGetSetTwitterCreator()
+    {
+        $this->object->setTwitterCreator('@denbatte');
+        $this->assertEquals('@denbatte', $this->object->getTwitterCreator());
+    }
+
+    /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterImage
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterImage
+     */
+    public function testGetSetTwitterImageWithImage()
+    {
+        $media = $this->getMock('Kunstmaan\MediaBundle\Entity\Media');
+        $this->object->setTwitterImage($media);
+        $this->assertEquals($media, $this->object->getTwitterImage());
+    }
+
+    /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterImage
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterImage
+     */
+    public function testGetSetTwitterImageWithNullValue()
+    {
+        $this->object->setTwitterImage(null);
+        $this->assertEquals(null, $this->object->getTwitterImage());
+    }
+
+    // HELPERS
     /**
      * @covers Kunstmaan\SeoBundle\Entity\Seo::getDefaultAdminType
      */

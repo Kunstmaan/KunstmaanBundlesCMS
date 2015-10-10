@@ -50,7 +50,6 @@ class SeoTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction('get_seo_for', array($this, 'getSeoFor')),
             new \Twig_SimpleFunction('get_title_for', array($this, 'getTitleFor')),
             new \Twig_SimpleFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
-            new \Twig_SimpleFunction('get_social_widget_for', array($this, 'getSocialWidgetFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
         );
     }
 
@@ -103,52 +102,6 @@ class SeoTwigExtension extends Twig_Extension
         $arr[] = $entity->getTitle();
 
         return $this->getPreferredValue($arr);
-    }
-
-    /**
-     * @param \Twig_Environment $environment
-     * @param AbstractPage      $entity      The page
-     * @param string            $platform    The platform like facebook or linkedin.
-     *
-     * @throws \InvalidArgumentException
-     * @return boolean|string
-     */
-    public function getSocialWidgetFor(\Twig_Environment $environment, AbstractPage $entity, $platform)
-    {
-        $seo = $this->getSeoFor($entity);
-
-        if (is_null($seo)) {
-            return false;
-        }
-
-        $arguments = array();
-        if ($platform == 'linkedin') {
-            $arguments = array(
-                'productid' => $seo->getLinkedInRecommendProductID(),
-                'url' => $seo->getLinkedInRecommendLink()
-            );
-
-            if (empty($arguments['url'])) {
-                $arguments['url'] = $seo->getOgUrl();
-            }
-        } elseif ($platform == 'facebook') {
-            $arguments = array(
-                'url' => $seo->getOgUrl()
-            );
-        } else {
-            throw new \InvalidArgumentException('Only linkedin and facebook are supported for now.');
-        }
-
-        // If not a single argument is present we can be sure the button will be useless.
-        // This is just a catchall. For more specific behaviour you can return false sooner in the platform specific check.
-        if (!array_filter($arguments)) {
-            return false;
-        }
-
-        $template = 'KunstmaanSeoBundle:SeoTwigExtension:' . $platform . '_widget.html.twig';
-        $template = $environment->loadTemplate($template);
-
-        return $template->render($arguments);
     }
 
     /**

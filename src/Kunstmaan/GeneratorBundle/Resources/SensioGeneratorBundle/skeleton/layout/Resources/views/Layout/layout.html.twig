@@ -85,6 +85,8 @@
     {% include '<%= bundle.getName() %>:Layout:_js_footer.html.twig' %}
 <% if demosite %>
     </div>
+
+{% block footerscripts %}{% endblock %}
 <% endif %>
 </body>
 </html>
