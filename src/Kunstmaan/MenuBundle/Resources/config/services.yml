@@ -28,6 +28,6 @@ services:
 
     kunstmaan_menu.menu.twig.extension:
         class: %kunstmaan_menu.menu.twig.extension.class%
-	    arguments: ["@kunstmaan_menu.menu.repository", "@router"]
-	    tags:
-	        - { name: twig.extension }
+        arguments: ["@kunstmaan_menu.menu.repository", "@router"]
+        tags:
+            - { name: twig.extension }
