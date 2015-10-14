@@ -51,11 +51,10 @@ class MenuTwigExtension extends \Twig_Extension
      */
     public function getMenu($name, $lang, $options = array())
     {
-	/** @var MenuItem $menuRepo */
-	$arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
+        $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
 
 	// Make sure the parent item is not offline
-	$foundIds = array();
+        $foundIds = array();
         foreach ($arrayResult as $array) {
             $foundIds[] = $array['id'];
         }
@@ -80,7 +79,7 @@ class MenuTwigExtension extends \Twig_Extension
             $options
         );
 
-        $html = $repo->buildTree($arrayResult, $options);
+        $html = $this->repository->buildTree($arrayResult, $options);
 
         return $html;
     }
