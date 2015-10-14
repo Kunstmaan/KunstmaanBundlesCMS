@@ -72,9 +72,15 @@ class MenuTwigExtension extends \Twig_Extension
             $activeClass = $options['activeClass'];
         }
 
-        $options = array_merge($this->getDefaultOptions($activeClass), $options);
+        $options = array_merge(
+            $this->getDefaultOptions(
+                isset($options['linkClass']) ? $options['linkClass'] : false,
+                isset($options['activeClass']) ? $options['activeClass'] : false
+            ),
+            $options
+        );
 
-	$html = $menuRepo->buildTree($arrayResult, $options);
+        $html = $repo->buildTree($arrayResult, $options);
 
         return $html;
     }
@@ -94,14 +100,14 @@ class MenuTwigExtension extends \Twig_Extension
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-	    'nodeDecorator' => function ($node) use ($router, $activeClass) {
-                $active = false;
+            'nodeDecorator' => function($node) use ($router, $linkClass, $activeClass) {
+                $class = explode(' ', $linkClass);
 
                 if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
                     $url = $router->generate('_slug', array('url' => $node['nodeTranslation']['url']));
 
                     if ($activeClass && $router->getContext()->getPathInfo() == $url) {
-                        $active = true;
+                        $class[] = $activeClass;
                     }
                 } else {
                     $url = $node['url'];
@@ -117,8 +123,12 @@ class MenuTwigExtension extends \Twig_Extension
                     $title = $node['title'];
                 }
 
-		return '<a href="'.$url.'"'.($active ? ' class="'.$activeClass.'"' : '').($node['newWindow'] ? ' target="_blank"' : '').'>'.$title.'</a>';
-	    },
+                // Format attributes.
+                $attributes = empty($class) ? '' : ' class="' . implode(' ', $class) . '"';
+                $attributes .= $node['newWindow'] ? ' target="_blank"' : '';
+
+                return sprintf('<a href="%s"%s>%s</a>', $url, $attributes, $title);
+            },
         );
     }
 
