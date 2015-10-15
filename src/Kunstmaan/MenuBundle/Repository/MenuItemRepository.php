@@ -28,9 +28,7 @@ class MenuItemRepository extends NestedTreeRepository implements MenuItemReposit
             ->andWhere('nt.online = 1');
 
         $query = $query->getQuery();
-
-        $sql = $query->getSQL();
-
+        
         return $query->getArrayResult();
     }
 }
