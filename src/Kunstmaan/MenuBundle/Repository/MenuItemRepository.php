@@ -14,24 +14,23 @@ class MenuItemRepository extends NestedTreeRepository implements MenuItemReposit
      */
     public function getMenuItemsForLanguage($menuName, $locale)
     {
-	$em = $this->getEntityManager();
+        $query = $this->createQueryBuilder('mi')
+            ->select('mi, nt, p')
+            ->innerJoin('mi.menu', 'm')
+            ->leftJoin('mi.parent', 'p')
+            ->leftJoin('mi.nodeTranslation', 'nt')
+            ->leftJoin('nt.node', 'n')
+            ->orderBy('mi.lft', 'ASC')
+            ->where('m.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->andWhere('m.name = :name')
+            ->setParameter('name', $menuName)
+            ->andWhere('nt.online = 1');
 
-	$query = $em
-	    ->createQueryBuilder('mi')
-	    ->select('mi, nt, p')
-	    ->innerJoin('mi.menu', 'm')
-	    ->leftJoin('mi.parent', 'p')
-	    ->leftJoin('mi.nodeTranslation', 'nt')
-	    ->leftJoin('nt.node', 'n')
-	    ->orderBy('mi.lft', 'ASC')
-	    ->where('m.locale = :locale')
-	    ->setParameter('locale', $locale)
-	    ->andWhere('m.name = :name')
-	    ->setParameter('name', $menuName)
-	    ->andWhere('(nt.online = 1 OR nt.online IS NULL)')
-	    ->andWhere('(n.deleted = 0 OR n.deleted IS NULL)')
-	    ->getQuery();
+        $query = $query->getQuery();
 
-	return $query->getArrayResult();
+        $sql = $query->getSQL();
+
+        return $query->getArrayResult();
     }
 }

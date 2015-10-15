@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MenuBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -25,8 +24,8 @@ class MenuTwigExtension extends \Twig_Extension
      */
     public function __construct(MenuItemRepositoryInterface $repository, RouterInterface $router)
     {
-	$this->router = $router;
-	$this->repository = $repository;
+        $this->router = $router;
+        $this->repository = $repository;
     }
 
     /**
@@ -51,22 +50,22 @@ class MenuTwigExtension extends \Twig_Extension
      */
     public function getMenu($name, $lang, $options = array())
     {
-	/** @var MenuItem $menuRepo */
-	$arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
+        /** @var MenuItem $menuRepo */
+        $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
 
-	// Make sure the parent item is not offline
-	$foundIds = array();
+        // Make sure the parent item is not offline
+        $foundIds = array();
         foreach ($arrayResult as $array) {
             $foundIds[] = $array['id'];
         }
         foreach ($arrayResult as $key => $array) {
-	    if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds)) {
+            if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds)) {
                 unset($arrayResult[$key]);
             }
         }
 
-	// SET OPTIONS
-	// Class for active item
+        // SET OPTIONS
+        // Class for active item
         $activeClass = false;
         if (isset($options['activeClass'])) {
             $activeClass = $options['activeClass'];
@@ -74,7 +73,7 @@ class MenuTwigExtension extends \Twig_Extension
 
         $options = array_merge($this->getDefaultOptions($activeClass), $options);
 
-	$html = $menuRepo->buildTree($arrayResult, $options);
+        $html = $this->repository->buildTree($arrayResult, $options);
 
         return $html;
     }
@@ -94,7 +93,7 @@ class MenuTwigExtension extends \Twig_Extension
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-	    'nodeDecorator' => function ($node) use ($router, $activeClass) {
+            'nodeDecorator' => function ($node) use ($router, $activeClass) {
                 $active = false;
 
                 if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
@@ -117,8 +116,8 @@ class MenuTwigExtension extends \Twig_Extension
                     $title = $node['title'];
                 }
 
-		return '<a href="'.$url.'"'.($active ? ' class="'.$activeClass.'"' : '').($node['newWindow'] ? ' target="_blank"' : '').'>'.$title.'</a>';
-	    },
+                return '<a href="'.$url.'"'.($active ? ' class="'.$activeClass.'"' : '').($node['newWindow'] ? ' target="_blank"' : '').'>'.$title.'</a>';
+            },
         );
     }
 

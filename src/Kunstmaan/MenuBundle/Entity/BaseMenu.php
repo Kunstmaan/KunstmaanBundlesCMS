@@ -7,6 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class BaseMenu
+ * @package Kunstmaan\MenuBundle\Entity
+ *
+ * @ORM\MappedSuperclass()
+ */
 class BaseMenu extends AbstractEntity
 {
     /**
@@ -37,7 +43,7 @@ class BaseMenu extends AbstractEntity
      */
     public function __construct()
     {
-	$this->items = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     /**
@@ -45,7 +51,7 @@ class BaseMenu extends AbstractEntity
      */
     public function getName()
     {
-	return $this->name;
+        return $this->name;
     }
 
     /**
@@ -55,9 +61,9 @@ class BaseMenu extends AbstractEntity
      */
     public function setName($name)
     {
-	$this->name = $name;
+        $this->name = $name;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -65,7 +71,7 @@ class BaseMenu extends AbstractEntity
      */
     public function getLocale()
     {
-	return $this->locale;
+        return $this->locale;
     }
 
     /**
@@ -75,9 +81,9 @@ class BaseMenu extends AbstractEntity
      */
     public function setLocale($locale)
     {
-	$this->locale = $locale;
+        $this->locale = $locale;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -85,7 +91,7 @@ class BaseMenu extends AbstractEntity
      */
     public function getItems()
     {
-	return $this->items;
+        return $this->items;
     }
 
     /**
@@ -95,9 +101,9 @@ class BaseMenu extends AbstractEntity
      */
     public function setItems($items)
     {
-	$this->items = $items;
+        $this->items = $items;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -105,9 +111,9 @@ class BaseMenu extends AbstractEntity
      */
     public function addItem(MenuItem $item)
     {
-	$item->setMenu($this);
+        $item->setMenu($this);
 
-	$this->items->add($item);
+        $this->items->add($item);
     }
 
     /**
@@ -115,6 +121,6 @@ class BaseMenu extends AbstractEntity
      */
     public function removeItem(MenuItem $item)
     {
-	$this->items->removeElement($item);
+        $this->items->removeElement($item);
     }
 }
