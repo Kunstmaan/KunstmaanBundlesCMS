@@ -80,11 +80,11 @@ class MenuTwigExtension extends \Twig_Extension
     /**
      * Get the default options to render the html.
      *
-     * @param $activeClass
-     * @param $linkClass
+     * @param string $linkClass
+     * @param string $activeClass
      * @return array
      */
-    private function getDefaultOptions($activeClass, $linkClass)
+    private function getDefaultOptions($linkClass, $activeClass)
     {
         $router = $this->router;
 
