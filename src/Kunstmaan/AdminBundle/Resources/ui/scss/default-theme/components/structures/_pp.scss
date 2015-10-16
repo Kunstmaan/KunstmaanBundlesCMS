@@ -164,6 +164,8 @@
 }
 
 .pp__view__block {
+    @include clearfix;
+
     .container {
         max-width: 100%!important;
     }
