@@ -107,6 +107,21 @@ class Seo extends AbstractEntity
     protected $ogUrl;
 
     /**
+     * @ORM\Column(type="string", length=100, nullable=true, name="og_article_author")
+     */
+    protected $ogArticleAuthor;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true, name="og_article_publisher")
+     */
+    protected $ogArticlePublisher;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true, name="og_article_section")
+     */
+    protected $ogArticleSection;
+
+    /**
      * @var string $twitterTitle
      *
      * @ORM\Column(name="twitter_title", type="string", length=255, nullable=true)
@@ -340,6 +355,54 @@ class Seo extends AbstractEntity
     public function getOgType()
     {
         return $this->ogType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOgArticleAuthor()
+    {
+        return $this->ogArticleAuthor;
+    }
+
+    /**
+     * @param mixed $ogArticleAuthor
+     */
+    public function setOgArticleAuthor($ogArticleAuthor)
+    {
+        $this->ogArticleAuthor = $ogArticleAuthor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOgArticlePublisher()
+    {
+        return $this->ogArticlePublisher;
+    }
+
+    /**
+     * @param mixed $ogArticlePublisher
+     */
+    public function setOgArticlePublisher($ogArticlePublisher)
+    {
+        $this->ogArticlePublisher = $ogArticlePublisher;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOgArticleSection()
+    {
+        return $this->ogArticleSection;
+    }
+
+    /**
+     * @param mixed $ogArticleSection
+     */
+    public function setOgArticleSection($ogArticleSection)
+    {
+        $this->ogArticleSection = $ogArticleSection;
     }
 
     /**
