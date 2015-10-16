@@ -28,6 +28,7 @@ services:
 
     kunstmaan_node.form.type.slug:
         class: Kunstmaan\NodeBundle\Form\Type\SlugType
+        arguments: ["@kunstmaan_utilities.slugifier"]
         tags:
             - { name: 'form.type', alias: 'slug' }
 
