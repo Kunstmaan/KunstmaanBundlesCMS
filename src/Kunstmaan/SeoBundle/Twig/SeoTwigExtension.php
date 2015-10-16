@@ -50,7 +50,33 @@ class SeoTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction('get_seo_for', array($this, 'getSeoFor')),
             new \Twig_SimpleFunction('get_title_for', array($this, 'getTitleFor')),
             new \Twig_SimpleFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
-        );
+            new \Twig_SimpleFunction('get_absolute_url', array($this, 'getAbsoluteUrl')),
+            );
+    }
+
+    /**
+     * Validates the $url value as URL (according to » http://www.faqs.org/rfcs/rfc2396), optionally with required components.
+     * It will just return the url if it's valid. If it starts with '/', the $host will be prepended.
+     *
+     * @param string $url
+     * @param string $host
+     * @return string
+     */
+    public function getAbsoluteUrl($url, $host = null)
+    {
+        $validUrl = filter_var($url, FILTER_VALIDATE_URL);
+        $host = rtrim($host, '/');
+
+        if (!$validUrl === false) {
+            // The url is valid
+            return $url;
+        } else {
+            // Prepend with $host if $url starts with "/"
+            if ($url[0] == '/' ) {
+                return $url = $host.$url;
+            }
+            return false;
+        }
     }
 
     /**
