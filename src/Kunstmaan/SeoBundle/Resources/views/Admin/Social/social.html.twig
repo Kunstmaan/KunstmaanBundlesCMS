@@ -1,3 +1,30 @@
+<script>
+    window.onload = function() {
+        var object = document.getElementById('form_social_ogType');
+        object.addEventListener('change', doCheckboxToggle);
+        doCheckboxToggle();
+    };
+
+    function doCheckboxToggle() {
+        var object = document.getElementById('form_social_ogType');
+        var value = object.options[object.selectedIndex].value;
+
+
+        var author = document.getElementById('form_social_ogArticleAuthor');
+        var publisher = document.getElementById('form_social_ogArticlePublisher');
+        var section = document.getElementById('form_social_ogArticleSection');
+        if (value == 'article') {
+            author.parentElement.style.display = 'block';
+            publisher.parentElement.style.display = 'block';
+            section.parentElement.style.display = 'block';
+        } else {
+            author.parentElement.style.display = 'none';
+            publisher.parentElement.style.display = 'none';
+            section.parentElement.style.display = 'none';
+        }
+    }
+</script>
+
 {% if resource.types is not empty %}
     <fieldset class="panel panel-default form-properties">
         <div class="panel-body">
@@ -13,6 +40,11 @@
                         {{ form_row(formView[typeName].ogDescription) }}
                         {{ form_row(formView[typeName].ogUrl) }}
                         {{ form_row(formView[typeName].ogType) }}
+                        {# These fields are contitional by ogType == article #}
+                        {{ form_row(formView[typeName].ogArticleAuthor) }}
+                        {{ form_row(formView[typeName].ogArticlePublisher) }}
+                        {{ form_row(formView[typeName].ogArticleSection) }}
+                        {# End conditional #}
                         {{ form_row(formView[typeName].ogImage) }}
                     </div>
                     <div class="tab-pane" id="twitter">
