@@ -25,8 +25,8 @@ class MenuAdminListController extends AdminListController
     public function getAdminListConfigurator(Request $request)
     {
         if (!isset($this->configurator)) {
-	    $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menu_configurator.class');
-	    $this->configurator = new $configuratorClass(
+            $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menu_configurator.class');
+            $this->configurator = new $configuratorClass(
                 $this->getEntityManager()
             );
 

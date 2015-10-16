@@ -28,14 +28,16 @@ class MenuItemAdminListController extends AdminListController
     public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
     {
         if (!isset($this->configurator)) {
-	    $menu = $this->getDoctrine()->getManager()->getRepository($this->getParameter('kunstmaan_menu.entity.menu.class'))->find($menuid);
+            $menu = $this->getDoctrine()->getManager()->getRepository(
+                $this->getParameter('kunstmaan_menu.entity.menu.class')
+            )->find($menuid);
             $rootNode = $this->get('kunstmaan_admin.domain_configuration')->getRootNode();
 
-	    $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
-	    $this->configurator = new $configuratorClass($this->getEntityManager(), null, $menu);
+            $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
+            $this->configurator = new $configuratorClass($this->getEntityManager(), null, $menu);
 
-	    $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
-	    $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode));
+            $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
+            $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode));
         }
 
         return $this->configurator;
@@ -52,22 +54,22 @@ class MenuItemAdminListController extends AdminListController
 
         $itemRoute = function ($item) use ($menuid) {
             return array(
-                'path'   => 'kunstmaanmenubundle_admin_menuitem_move_up',
+                'path' => 'kunstmaanmenubundle_admin_menuitem_move_up',
                 'params' => array(
                     'menuid' => $menuid,
-                    'item' => $item->getId()
-                )
+                    'item' => $item->getId(),
+                ),
             );
         };
         $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-up', 'Move up'));
 
         $itemRoute = function ($item) use ($menuid) {
             return array(
-                'path'   => 'kunstmaanmenubundle_admin_menuitem_move_down',
+                'path' => 'kunstmaanmenubundle_admin_menuitem_move_down',
                 'params' => array(
                     'menuid' => $menuid,
-                    'item' => $item->getId()
-                )
+                    'item' => $item->getId(),
+                ),
             );
         };
         $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-down', 'Move down'));
@@ -127,14 +129,16 @@ class MenuItemAdminListController extends AdminListController
     public function moveUpAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-	$repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
+        $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {
             $repo->moveUp($item);
         }
 
-        return new RedirectResponse($this->generateUrl('kunstmaanmenubundle_admin_menuitem', array('menuid' => $menuid)));
+        return new RedirectResponse(
+            $this->generateUrl('kunstmaanmenubundle_admin_menuitem', array('menuid' => $menuid))
+        );
     }
 
     /**
@@ -147,13 +151,15 @@ class MenuItemAdminListController extends AdminListController
     public function moveDownAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-	$repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
+        $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {
             $repo->moveDown($item);
         }
 
-        return new RedirectResponse($this->generateUrl('kunstmaanmenubundle_admin_menuitem', array('menuid' => $menuid)));
+        return new RedirectResponse(
+            $this->generateUrl('kunstmaanmenubundle_admin_menuitem', array('menuid' => $menuid))
+        );
     }
 }

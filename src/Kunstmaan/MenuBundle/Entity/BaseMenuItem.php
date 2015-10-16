@@ -25,8 +25,8 @@ abstract class BaseMenuItem extends AbstractEntity
      * @var array
      */
     public static $types = array(
-	self::TYPE_PAGE_LINK,
-	self::TYPE_URL_LINK,
+        self::TYPE_PAGE_LINK,
+        self::TYPE_URL_LINK,
     );
 
     /**
@@ -121,7 +121,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function __construct()
     {
-	$this->children = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -129,7 +129,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getMenu()
     {
-	return $this->menu;
+        return $this->menu;
     }
 
     /**
@@ -139,9 +139,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setMenu($menu)
     {
-	$this->menu = $menu;
+        $this->menu = $menu;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getType()
     {
-	return $this->type;
+        return $this->type;
     }
 
     /**
@@ -159,9 +159,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setType($type)
     {
-	$this->type = $type;
+        $this->type = $type;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -169,7 +169,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getNodeTranslation()
     {
-	return $this->nodeTranslation;
+        return $this->nodeTranslation;
     }
 
     /**
@@ -179,9 +179,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setNodeTranslation($nodeTranslation)
     {
-	$this->nodeTranslation = $nodeTranslation;
+        $this->nodeTranslation = $nodeTranslation;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -189,7 +189,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getTitle()
     {
-	return $this->title;
+        return $this->title;
     }
 
     /**
@@ -199,9 +199,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setTitle($title)
     {
-	$this->title = $title;
+        $this->title = $title;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -209,7 +209,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getUrl()
     {
-	return $this->url;
+        return $this->url;
     }
 
     /**
@@ -219,9 +219,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setUrl($url)
     {
-	$this->url = $url;
+        $this->url = $url;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -229,7 +229,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function isNewWindow()
     {
-	return $this->newWindow;
+        return $this->newWindow;
     }
 
     /**
@@ -239,9 +239,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setNewWindow($newWindow)
     {
-	$this->newWindow = $newWindow;
+        $this->newWindow = $newWindow;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -249,7 +249,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getLft()
     {
-	return $this->lft;
+        return $this->lft;
     }
 
     /**
@@ -259,9 +259,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setLft($lft)
     {
-	$this->lft = $lft;
+        $this->lft = $lft;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -269,7 +269,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getLvl()
     {
-	return $this->lvl;
+        return $this->lvl;
     }
 
     /**
@@ -279,9 +279,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setLvl($lvl)
     {
-	$this->lvl = $lvl;
+        $this->lvl = $lvl;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -289,7 +289,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getRgt()
     {
-	return $this->rgt;
+        return $this->rgt;
     }
 
     /**
@@ -299,9 +299,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setRgt($rgt)
     {
-	$this->rgt = $rgt;
+        $this->rgt = $rgt;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -309,7 +309,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getParent()
     {
-	return $this->parent;
+        return $this->parent;
     }
 
     /**
@@ -319,9 +319,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setParent($parent)
     {
-	$this->parent = $parent;
+        $this->parent = $parent;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -329,7 +329,7 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getChildren()
     {
-	return $this->children;
+        return $this->children;
     }
 
     /**
@@ -339,9 +339,9 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function setChildren($children)
     {
-	$this->children = $children;
+        $this->children = $children;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -349,15 +349,15 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getDisplayTitle()
     {
-	if ($this->getType() == self::TYPE_PAGE_LINK) {
-	    if (!is_null($this->getTitle())) {
-		return $this->getTitle();
-	    } else {
-		return $this->getNodeTranslation()->getTitle();
-	    }
-	} else {
-	    return $this->getTitle();
-	}
+        if ($this->getType() == self::TYPE_PAGE_LINK) {
+            if (!is_null($this->getTitle())) {
+                return $this->getTitle();
+            } else {
+                return $this->getNodeTranslation()->getTitle();
+            }
+        } else {
+            return $this->getTitle();
+        }
     }
 
     /**
@@ -365,11 +365,11 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function getDisplayUrl()
     {
-	if ($this->getType() == self::TYPE_PAGE_LINK) {
-	    return $this->getNodeTranslation()->getUrl();
-	} else {
-	    return $this->getUrl();
-	}
+        if ($this->getType() == self::TYPE_PAGE_LINK) {
+            return $this->getNodeTranslation()->getUrl();
+        } else {
+            return $this->getUrl();
+        }
     }
 
     /**
@@ -377,13 +377,13 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function isOnline()
     {
-	if ($this->getType() == self::TYPE_URL_LINK) {
-	    return true;
-	} elseif ($this->getNodeTranslation()->isOnline() && !$this->getNodeTranslation()->getNode()->isDeleted()) {
-	    return true;
-	}
+        if ($this->getType() == self::TYPE_URL_LINK) {
+            return true;
+        } elseif ($this->getNodeTranslation()->isOnline() && !$this->getNodeTranslation()->getNode()->isDeleted()) {
+            return true;
+        }
 
-	return false;
+        return false;
     }
 
     /**
@@ -391,15 +391,15 @@ abstract class BaseMenuItem extends AbstractEntity
      */
     public function validateEntity(ExecutionContextInterface $context)
     {
-	if ($this->getType() == self::TYPE_PAGE_LINK && !$this->getNodeTranslation()) {
-	    $context->addViolationAt('nodeTranslation', 'Please select a page');
-	} elseif ($this->getType() == self::TYPE_URL_LINK) {
-	    if (strlen($this->getTitle()) == 0) {
-		$context->addViolationAt('title', 'Please set the link title');
-	    }
-	    if (strlen($this->getUrl()) == 0) {
-		$context->addViolationAt('url', 'Please set the link URL');
-	    }
-	}
+        if ($this->getType() == self::TYPE_PAGE_LINK && !$this->getNodeTranslation()) {
+            $context->addViolationAt('nodeTranslation', 'Please select a page');
+        } elseif ($this->getType() == self::TYPE_URL_LINK) {
+            if (strlen($this->getTitle()) == 0) {
+                $context->addViolationAt('title', 'Please set the link title');
+            }
+            if (strlen($this->getUrl()) == 0) {
+                $context->addViolationAt('url', 'Please set the link URL');
+            }
+        }
     }
 }
