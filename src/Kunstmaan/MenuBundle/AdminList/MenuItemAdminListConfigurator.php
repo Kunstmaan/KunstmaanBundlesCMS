@@ -38,6 +38,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function buildFields()
     {
         $this->addField('title', 'Title', false, 'KunstmaanMenuBundle:AdminList:menu-item-title.html.twig');
+        $this->addField('online', 'Online', false, 'KunstmaanMenuBundle:AdminList:menu-item-online.html.twig');
         $this->addField('type', 'Type', false);
         $this->addField('url', 'Url', false, 'KunstmaanMenuBundle:AdminList:menu-item-url.html.twig');
         $this->addField('newWindow', 'New window', false);
