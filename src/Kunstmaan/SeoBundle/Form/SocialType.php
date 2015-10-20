@@ -52,6 +52,24 @@ class SocialType extends AbstractType
                 'label' => 'seo.form.og.image',
                 'required'  => false
             ));
+        $builder
+            ->add('ogArticleAuthor', 'text',
+                array(
+                    'label' => 'OG Article Author',
+                    'required' => false
+                ))
+            ->add('ogArticlePublisher', 'text',
+                array(
+                    'label' => 'OG Article Publisher',
+                    'required' => false
+                ))
+            ->add('ogArticleSection', 'text',
+                array(
+                    'label' => 'OG Article Section',
+                    'required' => false
+                ));
+
+
 
         // TWITTER
         $builder->add('twitterTitle', 'text', array(

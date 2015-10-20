@@ -9,3 +9,14 @@ Upgrade instructions :
 
 - replace all occurrences of ```kunstmaan_node.domain_configuration``` with ```kunstmaan_admin.domain_configuration```
 - replace all references to ```Kunstmaan\NodeBundle\Helper\DomainConfigurationInterface``` in your code with ```Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface```
+
+## Updates to Social and Seo tabs of pages.
+
+We updated and simplified the seo an social tab of pages. Also support for Twitter cards has been added.
+Therefor we made several changes in the seo table of the database. 
+You should generate a migration and run it on all your databases (dev/production).
+
+```
+app/console doctrine:migrations:diff
+app/console doctrine:migrations:migrate
+```

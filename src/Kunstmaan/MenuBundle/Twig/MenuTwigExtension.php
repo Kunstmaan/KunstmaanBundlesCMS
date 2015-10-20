@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MenuBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -25,8 +24,8 @@ class MenuTwigExtension extends \Twig_Extension
      */
     public function __construct(MenuItemRepositoryInterface $repository, RouterInterface $router)
     {
-	$this->router = $router;
-	$this->repository = $repository;
+        $this->router = $router;
+        $this->repository = $repository;
     }
 
     /**
@@ -51,30 +50,29 @@ class MenuTwigExtension extends \Twig_Extension
      */
     public function getMenu($name, $lang, $options = array())
     {
-	/** @var MenuItem $menuRepo */
-	$arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
+        /** @var MenuItem $menuRepo */
+        $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
 
-	// Make sure the parent item is not offline
-	$foundIds = array();
+        // Make sure the parent item is not offline
+        $foundIds = array();
         foreach ($arrayResult as $array) {
             $foundIds[] = $array['id'];
         }
         foreach ($arrayResult as $key => $array) {
-	    if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds)) {
+            if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds)) {
                 unset($arrayResult[$key]);
             }
         }
 
-	// SET OPTIONS
-	// Class for active item
-        $activeClass = false;
-        if (isset($options['activeClass'])) {
-            $activeClass = $options['activeClass'];
-        }
+        $options = array_merge(
+            $this->getDefaultOptions(
+                isset($options['linkClass']) ? $options['linkClass'] : false,
+                isset($options['activeClass']) ? $options['activeClass'] : false
+            ),
+            $options
+        );
 
-        $options = array_merge($this->getDefaultOptions($activeClass), $options);
-
-	$html = $menuRepo->buildTree($arrayResult, $options);
+        $html = $this->repository->buildTree($arrayResult, $options);
 
         return $html;
     }
@@ -82,9 +80,11 @@ class MenuTwigExtension extends \Twig_Extension
     /**
      * Get the default options to render the html.
      *
+     * @param string $linkClass
+     * @param string $activeClass
      * @return array
      */
-    private function getDefaultOptions($activeClass)
+    private function getDefaultOptions($linkClass, $activeClass)
     {
         $router = $this->router;
 
@@ -94,14 +94,14 @@ class MenuTwigExtension extends \Twig_Extension
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-	    'nodeDecorator' => function ($node) use ($router, $activeClass) {
-                $active = false;
+            'nodeDecorator' => function($node) use ($router, $linkClass, $activeClass) {
+                $class = explode(' ', $linkClass);
 
                 if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
                     $url = $router->generate('_slug', array('url' => $node['nodeTranslation']['url']));
 
                     if ($activeClass && $router->getContext()->getPathInfo() == $url) {
-                        $active = true;
+                        $class[] = $activeClass;
                     }
                 } else {
                     $url = $node['url'];
@@ -117,8 +117,12 @@ class MenuTwigExtension extends \Twig_Extension
                     $title = $node['title'];
                 }
 
-		return '<a href="'.$url.'"'.($active ? ' class="'.$activeClass.'"' : '').($node['newWindow'] ? ' target="_blank"' : '').'>'.$title.'</a>';
-	    },
+                // Format attributes.
+                $attributes = empty($class) ? '' : ' class="' . implode(' ', $class) . '"';
+                $attributes .= $node['newWindow'] ? ' target="_blank"' : '';
+
+                return sprintf('<a href="%s"%s>%s</a>', $url, $attributes, $title);
+            },
         );
     }
 

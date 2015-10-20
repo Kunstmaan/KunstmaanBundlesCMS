@@ -23,10 +23,9 @@
                         {% for itemAction in adminlistconfigurator.getItemActions() %}
                             <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
                                 {% if itemAction.getIconFor(entity) is not null %}
-                                    <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}">
-                                {% else %}
-                                    {{ itemAction.getLabelFor(entity) }}
+                                    <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
                                 {% endif %}
+                                {{ itemAction.getLabelFor(entity) }}
                             </a>
                         {% endfor %}
                     {% endif %}
