@@ -214,7 +214,7 @@ class FileHandler extends AbstractMediaHandler
     private function getFilePath(Media $media)
     {
         $filename = $media->getOriginalFilename();
-        $filename = str_replace(array('/', '\\'), '', $filename);
+        $filename = str_replace(array('/', '\\', '%'), '', $filename);
 
         if (!empty($this->blacklistedExtensions)) {
             $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
