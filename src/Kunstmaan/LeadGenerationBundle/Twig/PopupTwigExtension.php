@@ -26,15 +26,22 @@ class PopupTwigExtension extends \Twig_Extension
     private $popupTypes;
 
     /**
+     * @var bool
+     */
+    private $debug;
+
+    /**
      * @param PopupManager $popupManager
      * @param ContainerInterface $container
      * @param array $popupTypes
+     * @param bool $debug
      */
-    public function __construct(PopupManager $popupManager, ContainerInterface $container, array $popupTypes)
+    public function __construct(PopupManager $popupManager, ContainerInterface $container, array $popupTypes, $debug)
     {
         $this->popupManager = $popupManager;
         $this->container = $container;
         $this->popupTypes = $popupTypes;
+        $this->debug = $debug;
     }
 
     /**
@@ -81,7 +88,7 @@ class PopupTwigExtension extends \Twig_Extension
     {
         $popups = $this->popupManager->getPopups();
 
-        return $environment->render('KunstmaanLeadGenerationBundle::initialize-js.html.twig', array('popups' => $popups));
+        return $environment->render('KunstmaanLeadGenerationBundle::initialize-js.html.twig', array('popups' => $popups, 'debug' => $this->debug));
     }
 
     /**

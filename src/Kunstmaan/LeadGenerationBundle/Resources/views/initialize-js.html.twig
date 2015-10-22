@@ -1,6 +1,6 @@
 <script>
     window.onload = function() {
-        kunstmaan.leadGeneration.DEBUG = false;
+        kunstmaan.leadGeneration.DEBUG = {{ debug ? 'true' : 'false' }};
         var manager = new kunstmaan.leadGeneration.PopupManager();
         manager.init();
 
