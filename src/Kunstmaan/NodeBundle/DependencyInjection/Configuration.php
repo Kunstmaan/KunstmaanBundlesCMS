@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
         /** @var ArrayNodeDefinition $pages */
         $root
             ->children()
+                ->scalarNode('connection')->defaultValue('default')->end()
                 ->arrayNode('pages')
                     ->prototype('array')
                         ->children()

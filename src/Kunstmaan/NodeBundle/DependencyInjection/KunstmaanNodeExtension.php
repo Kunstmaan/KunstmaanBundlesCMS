@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -34,6 +35,14 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $container->setDefinition('kunstmaan_node.pages_configuration', new Definition(
             'Kunstmaan\NodeBundle\Helper\PagesConfiguration', [$config['pages']]
         ));
+
+        $gedmoTreeListener = new Definition('Gedmo\Tree\TreeListener');
+        $gedmoTreeListener->addTag('doctrine.event_subscriber', ['connection' => $config['connection']]);
+        $gedmoTreeListener->addMethodCall('setAnnotationReader', [new Reference('annotation_reader')]);
+
+        $container->addDefinitions([
+            'gedmo.listener.tree' => $gedmoTreeListener,
+        ]);
 
         $loader->load('services.yml');
     }
