@@ -10,7 +10,11 @@ services:
 
     kunstmaan_lead_generation.popup.twig.extension:
         class: %kunstmaan_lead_generation.popup.twig.extension.class%
-        arguments: ["@kunstmaan_lead_generation.popup.manager", "@service_container", "%kunstmaan_lead_generation.popup_types%"]
+        arguments:
+            - "@kunstmaan_lead_generation.popup.manager"
+            - "@service_container"
+            - "%kunstmaan_lead_generation.popup_types%"
+            - "%kunstmaan_lead_generation.debug%"
         tags:
             - { name: twig.extension }
 

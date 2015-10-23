@@ -14,7 +14,7 @@
 
 {% block content %}
     {% for widget in widgets %}
-        {{ render_esi(url(widget.resolvedController, {'id' : id})) }}
+        {{ render_esi(path(widget.resolvedController, {'id' : id})) }}
     {% endfor %}
 {% endblock %}
 

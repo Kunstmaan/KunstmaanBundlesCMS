@@ -34,7 +34,7 @@ class BaseMenu extends AbstractEntity
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Kunstmaan\MenuBundle\Entity\BaseMenuItem", mappedBy="menu", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Kunstmaan\MenuBundle\Entity\MenuItem", mappedBy="menu", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $items;
 
