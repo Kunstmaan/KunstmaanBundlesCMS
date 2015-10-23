@@ -18,7 +18,7 @@
         "gedmo/doctrine-extensions": "2.3.*",
         "doctrine/doctrine-fixtures-bundle": "~2.2.0",
         "stof/doctrine-extensions-bundle": "1.1.*@dev",
-        "liip/imagine-bundle": "v0.20.2",
+        "liip/imagine-bundle": "^1.0",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "sensio/framework-extra-bundle": ">=2.3.0,<4.0.0",
         "kunstmaan/admin-bundle": "~3.2",
