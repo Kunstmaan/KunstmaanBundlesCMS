@@ -105,13 +105,9 @@ EOT
         $groupOutput = "";
 
         foreach ($groupNames as $groupName) {
-            if (is_int($groupName)) {
+
                 $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
                 $groupOutput .= $groups[$groupName]->getName() . ", ";
-            } else {
-                $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
-                $groupOutput .= $groupName . ", ";
-            }
 
             if (!empty($group)) {
                 $user->getGroups()->add($group);
