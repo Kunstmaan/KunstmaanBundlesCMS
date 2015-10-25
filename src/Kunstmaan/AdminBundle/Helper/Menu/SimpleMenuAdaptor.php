@@ -35,12 +35,8 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (null === $parent) {
-            return;
-        }
-
         foreach ($this->menuItems as $item) {
-            if ($item['parent'] != $parent->getRoute()) {
+            if (false === $this->parentMatches($parent, $item)) {
                 continue;
             }
 
@@ -62,5 +58,20 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
 
             $children[] = $menuItem;
         }
+    }
+
+    /**
+     * @param MenuItem $parent
+     * @param array    $item
+     *
+     * @return bool
+     */
+    private function parentMatches(MenuItem $parent = null, $item)
+    {
+        if (null === $parent) {
+            return null === $item['parent'];
+        }
+
+        return $item['parent'] === $parent->getRoute();
     }
 }
