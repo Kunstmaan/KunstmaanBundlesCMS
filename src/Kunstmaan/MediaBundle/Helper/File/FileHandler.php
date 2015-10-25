@@ -11,6 +11,7 @@ use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 /**
  * FileHandler
