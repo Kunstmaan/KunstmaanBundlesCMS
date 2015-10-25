@@ -1,5 +1,40 @@
 # Changelog
 
+## 3.4.1 / 2015-10-25
+
+* [MediaBundle] Create web safe filenames [#780](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/780) ([@tentwofour](https://github.com/tentwofour)) 
+* [LeadGenerationBundle] Added extra lead generation rule: on exit intent [#778](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/778) ([@jockri](https://github.com/jockri)) 
+* [AdminBundle] Allow `SimpleMenuAdaptor` to create items in main menu [#777](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/777) ([@mlebkowski](https://github.com/mlebkowski)) 
+* [AdminBundle] Fix assigning groups to user in kuma:user:create command [#776](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/776) ([@denbatte](https://github.com/denbatte)) 
+* [MultiDomainBundle] Get Extra Multi Domain data twig extension [#775](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/775) ([@denbatte](https://github.com/denbatte)) 
+* [MediaBundle] Update required KnpGaufretteBundle version in MediaBundle [#773](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/773) ([@joker806](https://github.com/joker806)) 
+* [AdminBundle] Update required Symfony version in AdminBundle [#772](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/772) ([@joker806](https://github.com/joker806)) 
+* [LeadGenerationBundle] Improved in the documentation and twig demo templates + added debug configuration parameter [#771](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/771) ([@jockri](https://github.com/jockri)) 
+* [Documentation] Add info for admin list configurator buttons from image to icon [#770](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/770) ([@aistis-](https://github.com/aistis-)) 
+* [DashboardBundle] Fix https render_esi() dashboard problem [#769](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/769) ([@jockri](https://github.com/jockri)) 
+* [MediaBundle] fix remove percent sign from filename when uploading [#768](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/768) ([@bakie](https://github.com/bakie)) 
+* [SeoBundle] Check for older bundles version [#767](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/767) ([@denbatte](https://github.com/denbatte)) 
+* [MenuBundle] Define a proper MenuItem entity class [#766](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/766) ([@aistis-](https://github.com/aistis-)) 
+* [Documentation] Added documentation for Social and Seo update [#763](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/763) ([@denbatte](https://github.com/denbatte)) 
+* [MenuBundle] Swap default options paramers [#762](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/762) ([@aistis-](https://github.com/aistis-)) 
+* [SeoBundle] Extra article seo meta tags [#761](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/761) ([@denbatte](https://github.com/denbatte)) 
+* [NodeBundle] fix slug refresh button behaviour [#760](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/760) ([@bakie](https://github.com/bakie)) 
+* [SeoBundle] Improved ogUrl tag handling [#759](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/759) ([@denbatte](https://github.com/denbatte)) 
+* [SeoBundle] Add extra tags OG tags [#758](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/758) ([@denbatte](https://github.com/denbatte)) 
+* [AdminBundle] pp view block overflow clearfix fix [#757](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/757) ([@indrikenens](https://github.com/indrikenens)) 
+* [MenuBundle] fix last PR mistakes in the menuBundle and corrected styling issues f… [#756](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/756) ([@denbatte](https://github.com/denbatte)) 
+* [AdminListBundle] Change image button image to icon [#755](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/755) ([@aistis-](https://github.com/aistis-)) 
+* [MenuBundle] Let define extra link classes to decorator [#754](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/754) ([@aistis-](https://github.com/aistis-)) 
+* [NodeBundle] Show publish button when editing a page [#752](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/752) ([@jockri](https://github.com/jockri)) 
+* [All Bundles] PSR-1 fixes, Removed unused [#751](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/751) ([@wimvds](https://github.com/wimvds)) 
+* [SeoBundle] Seo and social tab update [#750](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/750) ([@denbatte](https://github.com/denbatte)) 
+* [All bundles] SensioInsights & code cleanup [#748](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/748) ([@wimvds](https://github.com/wimvds)) 
+* [MediaBundle] Refactor remote media types [#747](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/747) ([@wimvds](https://github.com/wimvds)) 
+* [AdminBundle] fix admin 404 (#169) [#746](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/746) ([@wimvds](https://github.com/wimvds)) 
+* [Tests] unit tests + small fixes [#744](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/744) ([@wimvds](https://github.com/wimvds)) 
+* [MenuBundle] Some refactoring of the menuBundle - Make it extendable [#729](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/729) ([@denbatte](https://github.com/denbatte)) 
+
+
 ## 3.4.0 / 2015-10-05
 
 * upgrade doc v3.3 -> v3.4 [#742](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/742) ([@wimvds](https://github.com/wimvds)) 
