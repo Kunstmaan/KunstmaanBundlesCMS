@@ -2,7 +2,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.checkIfEdited = (function($, window, undefined) {
 
-    var init, _doUnload;
+    var init, edited, _doUnload;
 
     var NeedCheck = $('body').hasClass('js-check-if-edited'),
         isEdited = false,
