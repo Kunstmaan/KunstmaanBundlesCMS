@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 /**
  * FileHandler
@@ -212,12 +213,17 @@ class FileHandler extends AbstractMediaHandler
      */
     private function getFilePath(Media $media)
     {
-        $filename = $media->getOriginalFilename();
-        $filename = str_replace(array('/', '\\'), '', $filename);
+        $filename  = $media->getOriginalFilename();
+        $filename  = str_replace(array('/', '\\', '%'), '', $filename);
+        $slugifier = new Slugifier();
 
         if (!empty($this->blacklistedExtensions)) {
             $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
         }
+
+        $parts    = pathinfo($filename);
+        $filename = $slugifier->slugify($parts['filename']);
+        $filename .= '.'.$parts['extension'];
 
         return sprintf(
             '%s/%s',
