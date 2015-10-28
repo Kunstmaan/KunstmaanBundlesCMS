@@ -11,7 +11,8 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
         defaultCollapse = true,
         defaultKeepOpen = false,
         defaultMinDate = false,
-        defaultShowDefaultDate = false;
+        defaultShowDefaultDate = false,
+        defaultStepping = 1;
 
 
     init = function() {
@@ -47,7 +48,8 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             elCollapse = $el.data('collapse'),
             elKeepOpen = $el.data('keep-open'),
             elMinDate = $el.data('min-date'),
-            elShowDefaultDate = $el.data('default-date');
+            elShowDefaultDate = $el.data('default-date'),
+            elStepping = $el.data('stepping');
 
 
         // Set Settings
@@ -55,7 +57,8 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             collapse = (elCollapse !== undefined) ? elCollapse : defaultCollapse,
             keepOpen = (elKeepOpen !== undefined) ? elKeepOpen : defaultKeepOpen,
             minDate = (elMinDate === 'tomorrow') ? _tomorrow : (elMinDate === 'today') ? _today : defaultMinDate,
-            defaultDate = (elShowDefaultDate) ? _setDefaultDate(elMinDate) : defaultShowDefaultDate;
+            defaultDate = (elShowDefaultDate) ? _setDefaultDate(elMinDate) : defaultShowDefaultDate,
+            stepping = (elStepping !== undefined) ? elStepping : defaultStepping;
 
 
         // Setup
@@ -82,7 +85,8 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
                 next: 'fa fa-arrow-right',
                 today: 'fa fa-crosshairs',
                 clear: 'fa fa-trash-o'
-            }
+            },
+            stepping: stepping
         });
 
         $el.addClass('datepicker--enabled');
