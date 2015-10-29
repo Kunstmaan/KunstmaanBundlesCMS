@@ -37,6 +37,7 @@ class MenuTwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('get_menu', array($this, 'getMenu'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('get_menu_items', array($this, 'getMenuItems')),
         );
     }
 
@@ -49,6 +50,30 @@ class MenuTwigExtension extends \Twig_Extension
      * @return string
      */
     public function getMenu($name, $lang, $options = array())
+    {
+        $arrayResult = $this->getMenuItems($name, $lang);
+
+        $options = array_merge(
+            $this->getDefaultOptions(
+                isset($options['linkClass']) ? $options['linkClass'] : false,
+                isset($options['activeClass']) ? $options['activeClass'] : false
+            ),
+            $options
+        );
+
+        $html = $this->repository->buildTree($arrayResult, $options);
+
+        return $html;
+    }
+
+    /**
+     * Get an array with menu items of a menu.
+     *
+     * @param string $name
+     * @param string $lang
+     * @return array
+     */
+    public function getMenuItems($name, $lang)
     {
         /** @var MenuItem $menuRepo */
         $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
@@ -64,17 +89,7 @@ class MenuTwigExtension extends \Twig_Extension
             }
         }
 
-        $options = array_merge(
-            $this->getDefaultOptions(
-                isset($options['linkClass']) ? $options['linkClass'] : false,
-                isset($options['activeClass']) ? $options['activeClass'] : false
-            ),
-            $options
-        );
-
-        $html = $this->repository->buildTree($arrayResult, $options);
-
-        return $html;
+        return $arrayResult;
     }
 
     /**

@@ -32,7 +32,9 @@
 {% if seo.getOgDescription() %}
     <meta property="og:description" content="{{ seo.getOgDescription() }}">
 {% endif %}
+{% if app.request.locale matches '{^[a-z]{2}_[A-Z]{2}$}' %}
     <meta property="og:locale" content="{{ app.request.locale }}">
+{% endif %}
     <meta property="og:site_name" content="{{ websitetitle }}">
 {% if seo.getOgUrl() and get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) %}
     <meta property="og:url" content="{{ get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) }}">
