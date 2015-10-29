@@ -32,7 +32,9 @@
 {% if seo.getOgDescription() %}
     <meta property="og:description" content="{{ seo.getOgDescription() }}">
 {% endif %}
+{% if app.request.locale matches '{^[a-z]{2}_[A-Z]{2}$}' %}
     <meta property="og:locale" content="{{ app.request.locale }}">
+{% endif %}
     <meta property="og:site_name" content="{{ websitetitle }}">
 {% if seo.getOgUrl() and get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) %}
     <meta property="og:url" content="{{ get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) }}">
@@ -57,8 +59,8 @@
     {% else %}
     <meta property="og:image" content="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}">
     <meta property="og:image:type" content="{{ seo.ogImage.contentType }}">
-    {% if seo.ogImage.metaData.original_height is defined %}<meta property="og:image:height" content="{{ seo.ogImage.metaData.height }}">{% endif %}
-    {% if seo.ogImage.metaData.original_width is defined %}<meta property="og:image:width" content="{{ seo.ogImage.metaData.width }}">{% endif %}
+    {% if seo.ogImage.metaData.original_height is defined %}<meta property="og:image:height" content="{{ seo.ogImage.metaData.original_height }}">{% endif %}
+    {% if seo.ogImage.metaData.original_width is defined %}<meta property="og:image:width" content="{{ seo.ogImage.metaData.original_width }}">{% endif %}
     <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}" />
     {% endif %}
 {% endif %}
