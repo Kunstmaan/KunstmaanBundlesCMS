@@ -18,7 +18,6 @@ use Kunstmaan\SeoBundle\Entity\Seo;
  */
 class SeoTwigExtension extends Twig_Extension
 {
-
     /**
      * @var EntityManager
      */
@@ -29,6 +28,13 @@ class SeoTwigExtension extends Twig_Extension
      * @var string
      */
     private $websiteTitle;
+
+    /**
+     * Saves querying the db multiple times, if you happen to use any of the defined
+     * functions more than once in your templates
+     * @var array
+     */
+    private $seoCache = [];
 
     /**
      * @param EntityManager $em
@@ -61,7 +67,15 @@ class SeoTwigExtension extends Twig_Extension
      */
     public function getSeoFor(AbstractPage $entity)
     {
-        return $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
+        $key = md5(get_class($entity).$entity->getId());
+
+        if (!array_key_exists($key, $this->seoCache))
+        {
+            $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
+            $this->seoCache[$key] = $seo;
+        }
+
+        return $this->seoCache[$key];
     }
 
     /**
