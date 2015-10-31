@@ -20,9 +20,9 @@ class HostOverrideCleanupHandler implements LogoutHandlerInterface
      */
     public function logout(Request $request, Response $response, TokenInterface $token)
     {
-        // Remove host override cookie
-        if ($request->cookies->has(DomainConfiguration::OVERRIDE_HOST)) {
-            $response->headers->clearCookie(DomainConfiguration::OVERRIDE_HOST);
+        // Remove host override
+        if ($request->hasPreviousSession() && $request->getSession()->has(DomainConfiguration::OVERRIDE_HOST)) {
+            $request->getSession()->remove(DomainConfiguration::OVERRIDE_HOST);
         }
     }
 }

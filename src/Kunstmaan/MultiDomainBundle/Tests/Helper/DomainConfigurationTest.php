@@ -5,6 +5,8 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Helper;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
 {
@@ -373,8 +375,12 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
 
     private function getRequestWithOverride($uri)
     {
+        $session = new Session(new MockArraySessionStorage());
+        $session->set(DomainConfiguration::OVERRIDE_HOST, 'singlelangdomain.tld');
+
         $request = Request::create('http://multilangdomain.tld' . $uri);
-        $request->cookies->set(DomainConfiguration::OVERRIDE_HOST, 'singlelangdomain.tld');
+        $request->setSession($session);
+        $request->cookies->set($session->getName(), null);
 
         return $request;
     }
