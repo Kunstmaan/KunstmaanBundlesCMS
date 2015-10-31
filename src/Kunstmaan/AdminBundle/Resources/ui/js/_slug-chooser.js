@@ -16,7 +16,7 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
 
     // Slug-Chooser
     slugChooser = function($widget) {
-        var resetValue = $widget.data('reset')
+        var resetValue = $widget.data('reset'),
             urlprefix = $widget.data('url-prefix');
 
         // Setup url prefix
