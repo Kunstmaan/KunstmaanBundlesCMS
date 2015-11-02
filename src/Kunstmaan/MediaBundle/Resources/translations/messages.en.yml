@@ -19,6 +19,8 @@ media:
     propertiestab:
       title: Properties
     title: Media
+    add:
+      action: Add media
     edit:
       action: Edit
     download:
