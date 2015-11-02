@@ -12,7 +12,7 @@ parameters:
 
 services:
     liip_imagine.data.loader.stream.profile_photos:
-        class: "%liip_imagine.data.loader.stream.class%"
+        class: "%liip_imagine.binary.loader.stream.class%"
         arguments:
             - "@liip_imagine"
             - ''
