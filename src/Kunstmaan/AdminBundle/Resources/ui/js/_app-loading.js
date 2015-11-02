@@ -3,7 +3,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.appLoading = (function($, window, undefined) {
 
     var init,
-        addLoading, removeLoading;
+        addLoading, addLoadingForms, removeLoading;
 
     var $body = $('body');
 

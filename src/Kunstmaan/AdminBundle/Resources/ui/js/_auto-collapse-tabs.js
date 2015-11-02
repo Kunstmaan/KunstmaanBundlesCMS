@@ -5,7 +5,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
 
     var $tabs, $btnMore, $dropdown,
-        dropdownItems, tabsHeight, children, singleTabHeight, initTabLogic, replaceUrlParam;
+        init, dropdownItems, tabsHeight, children, singleTabHeight, initTabLogic, replaceUrlParam, doCheck;
 
     init = function() {
         $tabs = $('.js-auto-collapse-tabs');

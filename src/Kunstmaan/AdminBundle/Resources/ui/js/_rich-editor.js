@@ -28,7 +28,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
 
     var init,
         enableRichEditor, destroyAllRichEditors, destroySpecificRichEditor,
-        _collectEditorConfigs, _collectExternalPlugins;
+        _collectEditorConfigs, _collectExternalPlugins, _customOkFunctionForTables;
 
     // First Init
     init = function() {

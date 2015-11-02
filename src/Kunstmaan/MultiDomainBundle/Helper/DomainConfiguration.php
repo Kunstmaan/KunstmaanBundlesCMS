@@ -172,15 +172,20 @@ class DomainConfiguration extends BaseDomainConfiguration
 
         return !is_null($request) &&
             $this->isAdminRoute($request->getRequestUri()) &&
-            $request->cookies->has(self::OVERRIDE_HOST);
+            $request->hasPreviousSession() &&
+            $request->getSession()->has(self::OVERRIDE_HOST);
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     protected function getHostOverride()
     {
-        return $this->getMasterRequest()->cookies->get(self::OVERRIDE_HOST);
+        if (null !== ($request = $this->getMasterRequest()) && $request->hasPreviousSession()) {
+            return $request->getSession()->get(self::OVERRIDE_HOST);
+        }
+
+        return null;
     }
 
     /**
