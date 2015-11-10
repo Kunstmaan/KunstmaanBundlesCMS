@@ -32,6 +32,11 @@ services:
         tags:
             - { name: kunstmaan_fixtures.builder, alias: MediaBuilder }
 
+    kunstmaan_fixtures.builder.menuitem:
+        class: Kunstmaan\FixturesBundle\Builder\MenuItemBuilder
+        tags:
+            - { name: kunstmaan_fixtures.builder, alias: MenuItemBuilder }
+
     kunstmaan_fixtures.parser.parser:
         class: Kunstmaan\FixturesBundle\Parser\Parser
 
