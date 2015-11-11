@@ -4,14 +4,15 @@ namespace Kunstmaan\MenuBundle\Twig;
 
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
+use Kunstmaan\MenuBundle\Service\RenderService;
 use Symfony\Component\Routing\RouterInterface;
 
 class MenuTwigExtension extends \Twig_Extension
 {
     /**
-     * @var RouterInterface
+     * @var RenderService $renderService
      */
-    private $router;
+    private $renderService;
 
     /**
      * @var MenuItemRepositoryInterface
@@ -20,11 +21,11 @@ class MenuTwigExtension extends \Twig_Extension
 
     /**
      * @param MenuItemRepositoryInterface $repository
-     * @param RouterInterface $router
+     * @param RenderService $renderService
      */
-    public function __construct(MenuItemRepositoryInterface $repository, RouterInterface $router)
+    public function __construct(MenuItemRepositoryInterface $repository, RenderService $renderService)
     {
-        $this->router = $router;
+        $this->renderService = $renderService;
         $this->repository = $repository;
     }
 
@@ -36,7 +37,14 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_menu', array($this, 'getMenu'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction(
+                'get_menu',
+                array($this, 'getMenu'),
+                array(
+                    'is_safe' => array('html'),
+                    'needs_environment' => true,
+                )
+            ),
             new \Twig_SimpleFunction('get_menu_items', array($this, 'getMenuItems')),
         );
     }
@@ -49,18 +57,16 @@ class MenuTwigExtension extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function getMenu($name, $lang, $options = array())
+    public function getMenu(\Twig_Environment $environment, $name, $lang, $options = array())
     {
+        $options = array_merge($this->getDefaultOptions(), $options);
+
+        $renderService = $this->renderService;
+        $options['nodeDecorator'] = function ($node) use ($environment, $renderService, $options) {
+            return $renderService->renderMenuItemTemplate($environment, $node, $options);
+        };
+
         $arrayResult = $this->getMenuItems($name, $lang);
-
-        $options = array_merge(
-            $this->getDefaultOptions(
-                isset($options['linkClass']) ? $options['linkClass'] : false,
-                isset($options['activeClass']) ? $options['activeClass'] : false
-            ),
-            $options
-        );
-
         $html = $this->repository->buildTree($arrayResult, $options);
 
         return $html;
@@ -95,49 +101,16 @@ class MenuTwigExtension extends \Twig_Extension
     /**
      * Get the default options to render the html.
      *
-     * @param string $linkClass
-     * @param string $activeClass
      * @return array
      */
-    private function getDefaultOptions($linkClass, $activeClass)
+    private function getDefaultOptions()
     {
-        $router = $this->router;
-
         return array(
             'decorate' => true,
             'rootOpen' => '<ul>',
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-            'nodeDecorator' => function($node) use ($router, $linkClass, $activeClass) {
-                $class = explode(' ', $linkClass);
-
-                if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
-                    $url = $router->generate('_slug', array('url' => $node['nodeTranslation']['url']));
-
-                    if ($activeClass && $router->getContext()->getPathInfo() == $url) {
-                        $class[] = $activeClass;
-                    }
-                } else {
-                    $url = $node['url'];
-                }
-
-                if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
-                    if ($node['title']) {
-                        $title = $node['title'];
-                    } else {
-                        $title = $node['nodeTranslation']['title'];
-                    }
-                } else {
-                    $title = $node['title'];
-                }
-
-                // Format attributes.
-                $attributes = empty($class) ? '' : ' class="' . implode(' ', $class) . '"';
-                $attributes .= $node['newWindow'] ? ' target="_blank"' : '';
-
-                return sprintf('<a href="%s"%s>%s</a>', $url, $attributes, $title);
-            },
         );
     }
 

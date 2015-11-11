@@ -1,0 +1,1 @@
+<a href="{{ url }}" class="{% if options['linkClass'] is defined %}{{ options['linkClass'] }}{% endif %}{% if active and options['activeClass'] is defined %} {{ options['activeClass'] }}{% endif %}" {% if options['newWindow'] is defined and options['newWindow']%}target="_blank"{% endif %}>{{ title }}</a>
