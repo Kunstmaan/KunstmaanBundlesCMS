@@ -52,6 +52,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('uri_locale')->isRequired()->end()
                                         ->scalarNode('locale')->isRequired()->end()
+                                        ->variableNode('extra')->end()
                                     ->end()
                                 ->end()
                             ->end()

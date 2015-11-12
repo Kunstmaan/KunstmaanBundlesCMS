@@ -28,3 +28,22 @@ You should generate a migration and run it on all your databases (dev/production
 app/console doctrine:migrations:diff
 app/console doctrine:migrations:migrate
 ```
+
+## Add extra method to the DomainConfigurationInterface.
+
+The `getLocalesExtraData` method was added. If you have created your own DomainConfiguration class you will need
+to implement the extra method.
+
+This extra method will allow you to retrieve the extra parameters defined for each domain locale.
+
+```
+kunstmaan_multi_domain:
+    hosts:
+        general:
+            host: domain.com
+            type: multi_lang
+            default_locale: en
+            locales:
+                - { uri_locale: 'en', locale: 'en', extra: {country: 'UK', code: 'abc'} }
+                - { uri_locale: 'fr', locale: 'fr', extra: {country: 'FR', code: 'xyz'} }
+```

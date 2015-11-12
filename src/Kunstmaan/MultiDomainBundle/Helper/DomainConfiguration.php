@@ -31,6 +31,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
+
         $this->hosts = $container->getParameter('kunstmaan_multi_domain.hosts');
         foreach ($this->hosts as $host => $hostInfo) {
             if (isset($hostInfo['aliases'])) {
@@ -161,6 +162,19 @@ class DomainConfiguration extends BaseDomainConfiguration
         }
 
         return $this->hosts[$host]['extra'];
+    }
+
+    /**
+     * Return (optional) extra config settings for the locales for the current host
+     */
+    public function getLocalesExtraData()
+    {
+        $host = $this->getHost();
+        if (!isset($this->hosts[$host]['locales_extra'])) {
+            return parent::getLocalesExtraData();
+        }
+
+        return $this->hosts[$host]['locales_extra'];
     }
 
     /**
