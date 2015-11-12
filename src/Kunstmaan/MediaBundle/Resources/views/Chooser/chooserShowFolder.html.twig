@@ -126,7 +126,7 @@
             {% block actions %}
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-                        Add media <i class="fa fa-caret-down"></i>
+                        {{ 'media.media.add.action' | trans }} <i class="fa fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
                         {% for addaction in mediamanager.getFolderAddActions() %}
