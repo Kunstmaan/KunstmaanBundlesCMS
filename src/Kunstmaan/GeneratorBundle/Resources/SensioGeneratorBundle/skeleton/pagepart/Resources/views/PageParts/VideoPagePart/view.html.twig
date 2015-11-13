@@ -8,12 +8,21 @@
         {% set handler = mediamanager.getHandler(resource.video) %}
         {% set helper = handler.getFormHelper(resource.video) %}
 
+        {% if helper.type == 'youtube' %}
+            {% set videoEmbedUrl = "//www.youtube.com/embed/" ~ helper.code %}
+        {% elseif helper.type == 'vimeo' %}
+            {% set videoEmbedUrl = "//player.vimeo.com/video/" ~ helper.code %}
+        {% elseif helper.type == 'dailymotion' %}
+            {% set videoEmbedUrl = "//www.dailymotion.com/embed/video/" ~ helper.code %}
+        {% endif %}
+
         <div class="videolink">
-            <a href="//www.youtube.com/embed/{{ helper.code }}" target="_blank" class="js-videolink-play-link videolink__video-link" data-video-provider="{{ helper.type }}" data-video-id="{{ helper.code }}" data-make-fluid="true">
+            <a href="{{ videoEmbedUrl }}" target="_blank" class="js-videolink-play-link videolink__video-link" data-video-provider="{{ helper.type }}" data-video-id="{{ helper.code }}" data-make-fluid="true">
                 <img src="{{ videoImage }}" alt="{% if resource.caption %}{{ resource.caption }}{% endif %}" class="videolink__video-link__image" />
             </a>
             <div class="js-videolink-container videolink__video-container"></div>
         </div>
+
         {% if resource.caption %}
             <div class="caption">{{ resource.caption }}</div>
         {% endif %}
