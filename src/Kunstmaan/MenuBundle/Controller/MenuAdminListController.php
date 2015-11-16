@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\MenuBundle\Controller;
 
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\MenuBundle\AdminList\MenuAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,7 +30,7 @@ class MenuAdminListController extends AdminListController
                 $this->getEntityManager()
             );
 
-            $create_route = function ($item) {
+            $create_route = function (EntityInterface $item) {
                 return array(
                     'path' => 'kunstmaanmenubundle_admin_menuitem',
                     'params' => array('menuid' => $item->getId()),
