@@ -37,7 +37,8 @@ class MenuItemAdminListController extends AdminListController
             $this->configurator = new $configuratorClass($this->getEntityManager(), null, $menu);
 
             $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
-            $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode));
+            $menuItemClass = $this->getParameter('kunstmaan_menu.entity.menuitem.class');
+            $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode, $menuItemClass));
         }
 
         return $this->configurator;

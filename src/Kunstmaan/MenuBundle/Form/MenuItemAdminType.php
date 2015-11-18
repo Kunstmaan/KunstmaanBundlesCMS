@@ -31,22 +31,27 @@ class MenuItemAdminType extends AbstractType
      */
     private $rootNode;
 
+    private $menuItemClass;
+
     /**
-     * @param string    $locale
-     * @param Menu      $menu
-     * @param int|null  $entityId
+     * @param string $locale
+     * @param Menu $menu
+     * @param int|null $entityId
      * @param Node|null $rootNode
+     * @param $menuItemClass
      */
     public function __construct(
         $locale,
         $menu,
         $entityId = null,
-        Node $rootNode = null
+        Node $rootNode = null,
+        $menuItemClass
     ) {
         $this->locale   = $locale;
         $this->menu     = $menu;
         $this->entityId = $entityId;
         $this->rootNode = $rootNode;
+        $this->menuItemClass = $menuItemClass;
     }
 
     /**
@@ -64,12 +69,14 @@ class MenuItemAdminType extends AbstractType
     {
         $entityId = $this->entityId;
         $menu     = $this->menu;
+        $menuItemclass = $this->menuItemClass;
+
         $builder->add(
             'parent',
             'entity',
             array(
-                'class'         => 'KunstmaanMenuBundle:MenuItem',
-		'property'      => 'displayTitle',
+                'class'         => $menuItemclass,
+                'property'      => 'displayTitle',
                 'query_builder' => function (EntityRepository $er) use (
                     $entityId,
                     $menu
