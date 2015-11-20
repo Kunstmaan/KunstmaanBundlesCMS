@@ -292,7 +292,7 @@ class NodeRepository extends NestedTreeRepository
         };
 
         $sql = <<<SQL
-n.id, n.parent_id AS parent, t.url,
+n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
 {$createIfStatement('t.weight IS NULL', 'v.weight', 't.weight')} AS weight,
 {$createIfStatement('t.title IS NULL', 'v.title', 't.title')} AS title,
 {$createIfStatement('t.online IS NULL', '0', 't.online')} AS online,
