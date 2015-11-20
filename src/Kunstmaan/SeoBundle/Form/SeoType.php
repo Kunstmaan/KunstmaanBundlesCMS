@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class SeoType extends AbstractType
 {
     const ROBOTS_NOINDEX = "noindex";
-    const ROBOTS_NOFOLLOW = "noindex";
+    const ROBOTS_NOFOLLOW = "nofollow";
     const ROBOTS_NOARCHIVE = "noarchive";
     const ROBOTS_NOSNIPPET = "nosnippet";
     const ROBOTS_NOTRANSLATE = "notranslate";
