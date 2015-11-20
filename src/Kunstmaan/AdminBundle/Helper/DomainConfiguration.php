@@ -117,6 +117,14 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
+     * @return array
+     */
+    public function getLocalesExtraData()
+    {
+        return array();
+    }
+
+    /**
      * @return null|\Symfony\Component\HttpFoundation\Request
      */
     protected function getMasterRequest()

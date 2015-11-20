@@ -24,6 +24,7 @@ class KunstmaanMultiDomainExtension extends Extension
         $config        = $this->processConfiguration($configuration, $configs);
 
         $hostConfigurations = $this->getHostConfigurations($config['hosts']);
+
         $container->setParameter(
             'kunstmaan_multi_domain.hosts',
             $hostConfigurations
@@ -66,11 +67,12 @@ class KunstmaanMultiDomainExtension extends Extension
         $hostConfigurations = array();
         foreach ($hosts as $name => $settings) {
             $host = $settings['host'];
+
             foreach ($settings as $setting => $data) {
                 if ($setting === 'locales') {
+                    $hostConfigurations[$host]['locales_extra'] = $this->getLocalesExtra($data);
                     $data = $this->getHostLocales($data);
-                    $hostConfigurations[$host]['reverse_locales'] =
-                        array_flip($data);
+                    $hostConfigurations[$host]['reverse_locales'] = array_flip($data);
                 }
                 $hostConfigurations[$host][$setting] = $data;
             }
@@ -94,5 +96,22 @@ class KunstmaanMultiDomainExtension extends Extension
         }
 
         return $hostLocales;
+    }
+
+    /**
+     * Return the extra data configured for each locale
+     *
+     * @param $localeSettings
+     *
+     * @return array
+     */
+    private function getLocalesExtra($localeSettings)
+    {
+        $localesExtra = array();
+        foreach ($localeSettings as $key => $localeMapping) {
+            $localesExtra[$localeMapping['locale']] = array_key_exists('extra', $localeMapping) ? $localeMapping['extra'] : array();
+        }
+
+        return $localesExtra;
     }
 }

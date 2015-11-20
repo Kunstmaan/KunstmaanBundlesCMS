@@ -68,4 +68,12 @@ interface DomainConfigurationInterface
      * @return mixed
      */
     public function getExtraData();
+
+    /**
+     * Return optional extra locales data for the current host from the multi domain
+     * configuration. Returns an empty array if no data was defined...
+     *
+     * @return mixed
+     */
+    public function getLocalesExtraData();
 }
