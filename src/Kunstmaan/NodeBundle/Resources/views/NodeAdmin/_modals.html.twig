@@ -186,12 +186,12 @@
                 <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
                 <td>{{ nodeVersion.owner }}</td>
                 <td class="table__actions">
-                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item">
+                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item table__actions__item--block">
                     <i class="fa fa-eye"></i>
                     Preview
                 </a>
                 {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
-                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item">
+                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item table__actions__item--block">
                     <i class="fa fa-refresh"></i>
                     Revert
                     </a>
