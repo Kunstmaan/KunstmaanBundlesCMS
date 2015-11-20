@@ -82,17 +82,15 @@
                 <!-- Actions -->
                 <td class="table__actions">
                     {% if adminlist.canEdit(item) %}
-                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item">
+                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item" title="Edit">
                             <i class="fa fa-pencil-square-o"></i>
-                            Edit
                         </a>
                     {% endif %}
 
                     {% if adminlist.canDelete(item) %}
                         {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
-                        <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item">
+                        <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item" title="Delete">
                             <i class="fa fa-trash-o"></i>
-                            Delete
                         </a>
                     {% endif %}
 
@@ -103,11 +101,10 @@
                             {% else %}
                                 {% set url = itemAction.getUrlFor(item) %}
                                 {% if url %}
-                                    <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item">
+                                    <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item" title="{{ itemAction.getLabelFor(item) }}">
                                         {% if itemAction.getIconFor(item) is not null %}
                                             <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
                                         {% endif %}
-                                        {{ itemAction.getLabelFor(item) }}
                                     </a>
                                 {% endif %}
                             {% endif %}
