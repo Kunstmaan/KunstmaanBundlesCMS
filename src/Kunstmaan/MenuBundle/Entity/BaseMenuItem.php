@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MenuBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
@@ -98,31 +97,6 @@ abstract class BaseMenuItem extends AbstractEntity
      * @ORM\Column(name="rgt", type="integer")
      */
     protected $rgt;
-
-    /**
-     * @var MenuItem
-     *
-     * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="MenuItem", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $parent;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="MenuItem", mappedBy="parent")
-     * @ORM\OrderBy({"lft" = "ASC"})
-     */
-    protected $children;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->children = new ArrayCollection();
-    }
 
     /**
      * @return Menu
@@ -300,46 +274,6 @@ abstract class BaseMenuItem extends AbstractEntity
     public function setRgt($rgt)
     {
         $this->rgt = $rgt;
-
-        return $this;
-    }
-
-    /**
-     * @return MenuItem
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param MenuItem $parent
-     *
-     * @return MenuItem
-     */
-    public function setParent($parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * @param ArrayCollection $children
-     *
-     * @return MenuItem
-     */
-    public function setChildren($children)
-    {
-        $this->children = $children;
 
         return $this;
     }

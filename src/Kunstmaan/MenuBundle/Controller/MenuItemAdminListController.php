@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\MenuBundle\Controller;
 
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +37,8 @@ class MenuItemAdminListController extends AdminListController
             $this->configurator = new $configuratorClass($this->getEntityManager(), null, $menu);
 
             $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
-            $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode));
+            $menuItemClass = $this->getParameter('kunstmaan_menu.entity.menuitem.class');
+            $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode, $menuItemClass));
         }
 
         return $this->configurator;
@@ -52,7 +53,7 @@ class MenuItemAdminListController extends AdminListController
     {
         $configurator = $this->getAdminListConfigurator($request, $menuid);
 
-        $itemRoute = function ($item) use ($menuid) {
+        $itemRoute = function (EntityInterface $item) use ($menuid) {
             return array(
                 'path' => 'kunstmaanmenubundle_admin_menuitem_move_up',
                 'params' => array(
@@ -63,7 +64,7 @@ class MenuItemAdminListController extends AdminListController
         };
         $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-up', 'Move up'));
 
-        $itemRoute = function ($item) use ($menuid) {
+        $itemRoute = function (EntityInterface $item) use ($menuid) {
             return array(
                 'path' => 'kunstmaanmenubundle_admin_menuitem_move_down',
                 'params' => array(
