@@ -226,6 +226,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 ->setLabel($child['title'])
                 ->setParent($parent)
                 ->setOffline(!$child['online'] && !$this->pagesConfiguration->isStructureNode($refName))
+                ->setFolder($this->pagesConfiguration->isStructureNode($refName))
                 ->setRole('page')
                 ->setWeight($child['weight'])
                 ->addAttributes(

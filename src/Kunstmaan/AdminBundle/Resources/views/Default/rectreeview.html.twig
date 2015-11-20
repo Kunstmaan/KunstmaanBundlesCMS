@@ -1,12 +1,17 @@
 {% set nodeId = menuitem.uniqueId %}
 
-<li id="{{ nodeId }}"{% if menuitem.offline %} data-jstree='{"type":"offline"}'{% endif %}
-        {% if menuitem.attributes.page is defined %}
-            {% if menuitem.attributes.page.icon is defined %}
-                data-jstree='{{ {"icon": menuitem.attributes.page.icon}|json_encode }}'
-            {% endif %}
-            data-page="{{ menuitem.attributes.page|json_encode }}"
+<li id="{{ nodeId }}"
+    {% if menuitem.folder %}
+        data-jstree='{"type":"folder"}'
+    {% elseif menuitem.offline %}
+        data-jstree='{"type":"offline"}'
+    {% endif %}
+    {% if menuitem.attributes.page is defined %}
+        {% if menuitem.attributes.page.icon is defined %}
+            data-jstree='{{ {"icon": menuitem.attributes.page.icon}|json_encode }}'
         {% endif %}
+        data-page="{{ menuitem.attributes.page|json_encode }}"
+    {% endif %}
     class="{% if menuitem.active or treeLevel == 1 %}jstree-open{% endif %}{% if menuitem.offline %} jstree-node--offline{% endif %}"{% if menuitem.role %} rel="{{menuitem.role}}"{% endif %}>
     {% if menuitem.route %}
         <a href="{{ path(menuitem.route, menuitem.routeparams) }}" class="{% if currentMenuItem is not null and currentMenuItem.uniqueId == menuitem.uniqueId %}active{% endif %}">

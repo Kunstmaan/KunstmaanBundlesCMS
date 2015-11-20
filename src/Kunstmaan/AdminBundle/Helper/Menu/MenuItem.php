@@ -397,6 +397,30 @@ class MenuItem
     }
 
     /**
+     * Get menu item folder state
+     *
+     * @return bool
+     */
+    public function getFolder()
+    {
+        return $this->folder;
+    }
+
+    /**
+     * Set menu item folder state
+     *
+     * @param bool $folder
+     *
+     * @return MenuItem
+     */
+    public function setFolder($folder)
+    {
+        $this->folder = $folder;
+
+        return $this;
+    }
+
+    /**
      * Get appearInNavigation flag
      *
      * @return bool
