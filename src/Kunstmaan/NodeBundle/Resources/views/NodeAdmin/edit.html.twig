@@ -36,12 +36,16 @@
         {% endif %}
 
         {% if draft %}
-            <small class="app__content__header__title__small">
-                Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
+            <small class="app__content__header__title__small app__content__header__title__small--offline">
+                Offline / Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
             </small>
         {% else %}
-            <small class="app__content__header__title__small">
-                Public version
+            <small class="app__content__header__title__small {% if nodeTranslation.online %}app__content__header__title__small--online{% else %}app__content__header__title__small--offline{% endif %}">
+                {% if nodeTranslation.online %}
+                    Online / Public version
+                {% else %}
+                    Offline
+                {% endif %}
                 {% if draftNodeVersion is not null %}
                     (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
                 {% endif %}
