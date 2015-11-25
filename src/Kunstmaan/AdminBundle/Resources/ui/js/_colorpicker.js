@@ -2,9 +2,9 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.colorpicker = (function(window, undefined) {
 
-    var init, initColorpicker;
+    var init, reInit, initColorpicker;
 
-    init = function() {
+    init = reInit = function() {
         $('.js-colorpicker').each(function() {
             if(!$(this).hasClass('js-colorpicker--enabled')) {
                 initColorpicker($(this));
@@ -21,7 +21,8 @@ kunstmaanbundles.colorpicker = (function(window, undefined) {
 
 
     return {
-        init: init
+        init: init,
+        reInit: reInit
     };
 
 }(window));

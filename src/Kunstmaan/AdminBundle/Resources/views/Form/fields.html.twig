@@ -1,7 +1,7 @@
 {# Widgets #}
 {% block color_widget %}
 {% spaceless %}
-    <div class="js-colorpicker input-group">
+    <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]'>
         <input {{ block('widget_attributes') }} class="form-control" value="{{ value }}"/>
         <span class="input-group-addon"><i></i></span>
     </div>
@@ -55,8 +55,8 @@
 
 {% block textarea_widget %}
 {% spaceless %}
-    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
-    <textarea {{ block('widget_attributes') }} rows="5">{{ value }}</textarea>
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+    <textarea {{ block('widget_attributes') }} rows="5"{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}>{{ value }}</textarea>
 {% endspaceless %}
 {% endblock textarea_widget %}
 
@@ -150,7 +150,7 @@
                 {% set sortableField = attr['nested_sortable_field']|default('weight') %}
             {% endif %}
 
-            <div id="{{ form.vars.id }}__nested-form" class="js-nested-form nested-form{% if sortable %} js-sortable-container sortable-container nested-form--sortable{% endif %}" data-sortable="{% if sortable %}true{% else %}false{% endif %}" data-allow-new="{{ form.vars.allow_add|default('0') }}" data-allow-delete="{{ form.vars.allow_delete|default('0') }}" data-min-items="{{ attr['nested_form_min']|default('0') }}" data-max-items="{{ attr['nested_form_max']|default('false') }}" data-sortable="{{ attr['nested_sortable']|default('false') }}" {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %} data-initialized="false" data-initializing="false">
+            <div id="{{ form.vars.id }}__nested-form" class="js-nested-form nested-form {% if sortable %} js-sortable-container sortable-container nested-form--sortable{% endif %}" data-sortable="{% if sortable %}true{% else %}false{% endif %}" data-allow-new="{{ form.vars.allow_add|default('0') }}" data-allow-delete="{{ form.vars.allow_delete|default('0') }}" data-min-items="{{ attr['nested_form_min']|default('0') }}" data-max-items="{{ attr['nested_form_max']|default('false') }}" data-sortable="{{ attr['nested_sortable']|default('false') }}" {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %} data-initialized="false" data-initializing="false" data-reinit-js='["nestedForm"]'>
 
                 {# Items #}
                 {% for obj in form %}
@@ -186,7 +186,7 @@
         {% else %}
             {% if attr['info_text'] is defined %}
                 {# Info text #}
-                <div class="input-group">
+                <div class="input-group" data-reinit-js='["tooltip"]'>
                     {{ form_widget(form) }}
                     <span class="input-group-addon">
                         <strong class="input-group-addon--tooltip" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text']|trans }}" id="{{ id }}_info_text">?</strong>
@@ -221,7 +221,7 @@
 {% block date_widget %}
     <div class="form--double-widget__col">
         {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
-        <div class="js-datepicker" data-format="DD/MM/YYYY">
+        <div class="js-datepicker" data-format="DD/MM/YYYY" data-reinit-js='["datepicker"]'>
             {{ block('base_date_widget') }}
         </div>
     </div>
@@ -233,7 +233,7 @@
     <div class="form--double-widget__col">
         {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
         {% set type = 'text' %}
-        <div class="js-datepicker" data-format="HH:mm">
+        <div class="js-datepicker" data-format="HH:mm" data-reinit-js='["datepicker"]'>
             {{ block('base_time_widget') }}
         </div>
     </div>
