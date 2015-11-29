@@ -110,13 +110,6 @@ services:
             - [ setAclProvider, [ "@security.acl.provider" ] ]
             - [ setObjectIdentityRetrievalStrategy, [ "@security.acl.object_identity_retrieval_strategy" ] ]
 
-    gedmo.listener.tree:
-        class: Gedmo\Tree\TreeListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
-
     kunstmaan_node.doctrine_mapping.listener:
         class: Kunstmaan\NodeBundle\EventListener\MappingListener
         arguments: ["%fos_user.model.user.class%"]
