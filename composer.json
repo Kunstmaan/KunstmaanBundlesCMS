@@ -39,7 +39,7 @@
         "lunetics/locale-bundle": "~2.4",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "liip/imagine-bundle": "v0.20.2",
+        "liip/imagine-bundle": "^1.0",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "~1.3",
         "ruflin/elastica": "~2.3",

@@ -1,7 +1,12 @@
 liip_imagine:
-    cache_prefix: uploads/cache
     driver: imagick
-    data_loader: kunstmaan_media_thumbloader
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: uploads/cache
+    loaders:
+        kunstmaan_media_thumbloader:
+            filesystem: ~
     #cache: no_cache
     filter_sets:
         media_list_thumbnail:
