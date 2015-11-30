@@ -62,7 +62,7 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
         return newUrl;
     };
 
-    doCheck= function() {
+    doCheck = function() {
         tabsHeight = $tabs.innerHeight();
         children = $tabs.children('li:not(:last-child):not(:first-child)'); // Don't count the 'more' tab and always show first tab
 
@@ -91,7 +91,7 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
             }
 
             if (tabsHeight > singleTabHeight) { // double chk height again
-                this.doCheck();
+                doCheck();
             }
         }
 
