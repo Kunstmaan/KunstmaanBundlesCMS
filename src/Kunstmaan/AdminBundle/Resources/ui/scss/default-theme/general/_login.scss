@@ -76,20 +76,32 @@
 /* FOS - User change password overwrites
    ========================================================================== */
 .fos_user_change_password {
-    
+
     label {
         @extend .label--lighter;
     }
-    
-    input[type="text"], input[type="password"] {
+
+    .form-group > input[type="text"], input[type="password"] {
         @extend .form-control;
-        
+
+        padding-left: 3rem !important;
         margin-bottom: 1rem;
     }
-    
+
+    .form-group.has-error > input[type="text"], input[type="password"] {
+        margin-bottom: .4rem;
+    }
+
     input[type="submit"] {
         @extend .btn;
         @extend .btn-primary;
         @extend .btn-block;
+    }
+
+    .form__errors ul {
+        padding: 0;
+        margin: 0;
+
+        list-style: none;
     }
 }
