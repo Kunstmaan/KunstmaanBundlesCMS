@@ -5,7 +5,7 @@ namespace Kunstmaan\NodeBundle\Form\Type;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
 /**
  * Sype
@@ -14,15 +14,15 @@ class SlugType extends AbstractType
 {
 
     /**
-     * @var Slugifier
+     * @var SlugifierInterface
      */
 	private $slugifier;
 
     /**
      *
-     * @param Slugifier $slugifier The slugifier
+     * @param SlugifierInterface $slugifier The slugifier
      */
-    public function __construct(Slugifier $slugifier)
+    public function __construct(SlugifierInterface $slugifier)
     {
         $this->slugifier = $slugifier;
     }
