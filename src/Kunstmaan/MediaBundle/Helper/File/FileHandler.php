@@ -224,7 +224,7 @@ class FileHandler extends AbstractMediaHandler
 
         $parts    = pathinfo($filename);
         $filename = $slugifier->slugify($parts['filename']);
-        $filename .= '.'.$parts['extension'];
+        $filename .= '.'.strtolower($parts['extension']);
 
         return sprintf(
             '%s/%s',
