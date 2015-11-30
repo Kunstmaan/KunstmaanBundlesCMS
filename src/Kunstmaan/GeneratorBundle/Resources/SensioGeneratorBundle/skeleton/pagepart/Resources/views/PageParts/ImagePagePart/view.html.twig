@@ -6,6 +6,8 @@
 
             {% if resource.media.name|lower|split('.')|last == 'svg' or 'image/svg' in resource.media.contentType %}
                 {% set imgUrl = baseUrl ~ asset(resource.media.url) %}
+            {% elseif resource.media.name|lower|split('.')|last == 'gif' or 'image/gif' in resource.media.contentType %}
+                {% set imgUrl = baseUrl ~ asset(resource.media.url) %}
             {% elseif resource.media.name|lower|split('.')|last == 'png' %}
                 {% set imgUrl = baseUrl ~ asset(resource.media.url)|imagine_filter('optimpng') %}
             {% else %}
