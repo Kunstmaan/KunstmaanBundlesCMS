@@ -53,6 +53,11 @@ class MenuItem
     private $offline = false;
 
     /**
+     * @var boolean
+     */
+    private $folder = false;
+
+    /**
      * @var MenuItem[]
      */
     private $children = null;
