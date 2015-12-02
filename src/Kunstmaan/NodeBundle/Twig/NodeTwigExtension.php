@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -88,6 +89,10 @@ class NodeTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction(
                 'get_node_menu',
                 array($this, 'getNodeMenu')
+            ),
+            new \Twig_SimpleFunction(
+                'is_structure_node',
+                array($this, 'isStructureNode')
             ),
         );
     }
@@ -194,6 +199,11 @@ class NodeTwigExtension extends Twig_Extension
         $this->nodeMenu->setIncludeHiddenFromNav($includeHiddenFromNav);
 
         return $this->nodeMenu;
+    }
+
+    public function isStructureNode($page)
+    {
+        return $page instanceof StructureNode;
     }
 
     /**
