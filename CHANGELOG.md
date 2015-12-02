@@ -1,8 +1,43 @@
 # Changelog
 
-## Upcoming
+## 3.4.2 / 2015-12-02
 
+* [NodeBundle] Hide page status indicator if it's a StructureNode page [#851](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/851) ([@dbeerten](https://github.com/dbeerten))
+* [AdminBundle] Make sure folder is always a property [#850](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/850) ([@wesleylancel](https://github.com/wesleylancel))
+* [AdminBundle] Fix -is not a function- bug [#848](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/848) ([@dbeerten](https://github.com/dbeerten))
+* [NodeBundle] Make SlugType accept SlugifierInterface [#845](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/845) ([@joker806](https://github.com/joker806))
+* [GeneratorBundle] Add check for GIF's in image-pp [#841](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/841) ([@dbeerten](https://github.com/dbeerten))
+* [GeneratorBundle] Add woff2 to Ground Control [#840](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/840) ([@dbeerten](https://github.com/dbeerten))
+* [Documentation] Cookbook items containing some documentation [#839](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/839) ([@denbatte](https://github.com/denbatte))
+* [MediaBundle] Fixed uppercase extension (again) [#838](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/838) ([@yoshz](https://github.com/yoshz))
+* [AdminBundle] Correct styling for Change password form errors [#837](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/837) ([@dbeerten](https://github.com/dbeerten))
+* [SeoBundle] Fix bad NOFOLLOW value in SeoType [#834](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/834) ([@joker806](https://github.com/joker806))
+* [AdminBundle] Add indication that page is online/offline [#833](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/833) ([@dbeerten](https://github.com/dbeerten))
+* [MultiDomainBundle] Use url locale to link extra parameters  [#832](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/832) ([@jockri](https://github.com/jockri))
+* [AdminBundle] Show only icons of table actions [#831](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/831) ([@dbeerten](https://github.com/dbeerten))
+* [NodeBundle] StructureNode now have a folder icon in the pages tree [#830](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/830) ([@dbeerten](https://github.com/dbeerten))
+* [NodeBundle] Also expose the NodeTranslation id in link chooser template [#829](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/829) ([@jockri](https://github.com/jockri))
+* [MenuBundle] Fix parent menu item in menu edit form [#827](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/827) ([@denbatte](https://github.com/denbatte))
+* [FormBundle - Insights] PHP code should follow PSR-1 basic coding standard [#826](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/826) ([@denbatte](https://github.com/denbatte))
+* [Lead-, Seo-, MenuBundle] Fix codestyle issues [#825](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/825) ([@denbatte](https://github.com/denbatte))
+* [MenuBundle, LeadgenerationBundle] Removed unused use statements and add typehints [#824](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/824) ([@denbatte](https://github.com/denbatte))
+* [GeneratorBundle] Spaceless in layout twig [#820](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/820) ([@morenonaitana](https://github.com/morenonaitana))
+* [GeneratorBundle] Favicons [#819](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/819) ([@morenonaitana](https://github.com/morenonaitana))
+* [GeneratorBundle] Made validateTargetDir a local function [#815](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/815) ([@mbosgraaf-wirelab](https://github.com/mbosgraaf-wirelab))
+* [MultiDomainBundle] Allows to configure/retrieve extra parameters for each domain locale [#814](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/814) ([@jockri](https://github.com/jockri))
+* [MediaBundle] Add 'Add media' button translation [#813](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/813) ([@joker806](https://github.com/joker806))
+* [GeneratorBundle] Fixed wrong dependency for sensio/generator-bundle  [#812](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/812) ([@yoshz](https://github.com/yoshz))
+* [SeoBundle] Closed article meta tags [#809](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/809) ([@denbatte](https://github.com/denbatte))
+* [AdminListBundle] Add validation for invalid filter value [#808](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/808) ([@aistis-](https://github.com/aistis-))
+* [MenuBundle] Add templating possibilities for menuItems [#798](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/798) ([@denbatte](https://github.com/denbatte))
+* [FixturesBundle] Add MenuItemBuilder for MenuItem fixtures [#797](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/797) ([@wesleylancel](https://github.com/wesleylancel))
+* [DashboardBundle] Added german dashboard translation [#795](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/795) ([@virtualize](https://github.com/virtualize))
+* [AdminBundle] Fix missing variables in app scripts [#790](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/790) ([@joker806](https://github.com/joker806))
+* [SeoBundle] Idea for fix for possible multiple db-query issues [#788](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/788) ([@tentwofour](https://github.com/tentwofour))
+* [AdminListBundle] Fix for ORM adminlist to allow setting a custom number of items per page [#787](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/787) ([@wimvds](https://github.com/wimvds))
+* [MenuBundle] Add separate function to get menu items [#786](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/786) ([@wesleylancel](https://github.com/wesleylancel))
 * [SeoBundle] Facebook only accepts locales in format xx_XX [#781](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/781) ([@jockri](https://github.com/jockri))
+* [MultiDomainBundle] Replaced host override cookie with session [#688](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/688) ([@yoshz](https://github.com/yoshz))
 
 
 ## 3.4.1 / 2015-10-25
