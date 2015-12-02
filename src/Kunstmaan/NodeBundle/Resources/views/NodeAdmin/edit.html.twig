@@ -39,7 +39,7 @@
             <small class="app__content__header__title__small app__content__header__title__small--offline">
                 Offline / Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
             </small>
-        {% else %}
+        {% elseif not is_structure_node(page) %}
             <small class="app__content__header__title__small {% if nodeTranslation.online %}app__content__header__title__small--online{% else %}app__content__header__title__small--offline{% endif %}">
                 {% if nodeTranslation.online %}
                     Online / Public version
