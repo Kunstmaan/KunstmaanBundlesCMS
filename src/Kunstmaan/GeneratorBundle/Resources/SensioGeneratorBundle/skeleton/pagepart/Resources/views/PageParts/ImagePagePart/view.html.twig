@@ -1,28 +1,48 @@
 {% if resource.media is not empty %}
     <div class="image-pp">
+
         {% set imgUrl = '' %}
+
         {% if app.request %}
             {% set baseUrl = app.request.schemeandhttphost ~ app.request.basePath %}
 
+            {% if resource.link is defined and resource.link != '' %}
+                <a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}>
+            {% endif %}
+
             {% if resource.media.name|lower|split('.')|last == 'svg' or 'image/svg' in resource.media.contentType %}
                 {% set imgUrl = baseUrl ~ asset(resource.media.url) %}
+                <img src="{{ imgUrl }}"{% if resource.altText %} alt="{{ resource.altText }}"{% endif %} />
+
             {% elseif resource.media.name|lower|split('.')|last == 'gif' or 'image/gif' in resource.media.contentType %}
                 {% set imgUrl = baseUrl ~ asset(resource.media.url) %}
+                    <img src="{{ imgUrl }}"{% if resource.altText %} alt="{{ resource.altText }}"{% endif %} />
+
             {% elseif resource.media.name|lower|split('.')|last == 'png' %}
-                {% set imgUrl = baseUrl ~ asset(resource.media.url)|imagine_filter('optimpng') %}
+                {% set imgUrl_huge =    baseUrl ~ asset(resource.media.url | imagine_filter('image_huge_png')) %}
+                {% set imgUrl_big =     baseUrl ~ asset(resource.media.url | imagine_filter('image_big_png')) %}
+                {% set imgUrl_medium =  baseUrl ~ asset(resource.media.url | imagine_filter('image_medium_png')) %}
+                {% set imgUrl_small =   baseUrl ~ asset(resource.media.url | imagine_filter('image_small_png')) %}
+                <img srcset="{{ imgUrl_huge }} 2400w, {{ imgUrl_big }} 1200w, {{ imgUrl_medium }} 600w, {{ imgUrl_small }} 400w" sizes="100vw" {% if resource.altText %} alt="{{ resource.altText }}"{% endif %}>
+                <noscript>
+                    <img src="{{ imgUrl_big }}"{% if resource.altText %} alt="{{ resource.altText }}"{% endif %} />
+                </noscript>
+
             {% else %}
-                {% set imgUrl = baseUrl ~ asset(resource.media.url)|imagine_filter('optimjpg') %}
+                {% set imgUrl_huge =    baseUrl ~ asset(resource.media.url | imagine_filter('image_huge_jpg')) %}
+                {% set imgUrl_big =     baseUrl ~ asset(resource.media.url | imagine_filter('image_big_jpg')) %}
+                {% set imgUrl_medium =  baseUrl ~ asset(resource.media.url | imagine_filter('image_medium_jpg')) %}
+                {% set imgUrl_small =   baseUrl ~ asset(resource.media.url | imagine_filter('image_small_jpg')) %}
+                <img srcset="{{ imgUrl_huge }} 2400w, {{ imgUrl_big }} 1200w, {{ imgUrl_medium }} 600w, {{ imgUrl_small }} 400w" sizes="100vw" {% if resource.altText %} alt="{{ resource.altText }}"{% endif %}>
+                <noscript>
+                    <img src="{{ imgUrl_big }}"{% if resource.altText %} alt="{{ resource.altText }}"{% endif %} />
+                </noscript>
+
             {% endif %}
-        {% endif %}
 
-        {% if resource.link is defined and resource.link != '' %}
-            <a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}>
-        {% endif %}
-
-        <img src="{{ imgUrl }}"{% if resource.altText %} alt="{{ resource.altText }}"{% endif %} />
-
-        {% if resource.link is defined and resource.link != '' %}
-        </a>
+            {% if resource.link is defined and resource.link != '' %}
+            </a>
+            {% endif %}
         {% endif %}
 
         {% if resource.caption %}
