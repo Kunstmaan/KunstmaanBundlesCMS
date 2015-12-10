@@ -70,3 +70,10 @@
     {% include 'KunstmaanNodeBundle:NodeAdmin:_modals.html.twig' %}
 
 {% endblock %}
+
+{% block extracss %}
+    {% set cssPath = 'frontend/css/admin-style.min.css' %}
+    {% if file_exists(cssPath) %}
+        <link rel="stylesheet" href="{{ asset('/' ~ cssPath) }}">
+    {% endif %}
+{% endblock %}

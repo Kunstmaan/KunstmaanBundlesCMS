@@ -94,6 +94,10 @@ class NodeTwigExtension extends Twig_Extension
                 'is_structure_node',
                 array($this, 'isStructureNode')
             ),
+            new \Twig_SimpleFunction(
+                'file_exists',
+                array($this, 'fileExists')
+            ),
         );
     }
 
@@ -204,6 +208,11 @@ class NodeTwigExtension extends Twig_Extension
     public function isStructureNode($page)
     {
         return $page instanceof StructureNode;
+    }
+
+    public function fileExists($filename)
+    {
+        return file_exists($filename);
     }
 
     /**
