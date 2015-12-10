@@ -49,7 +49,6 @@
 }
 
 .header-visual__content__inner {
-    @extend .container;
 }
 
 .header-visual__title {
@@ -101,7 +100,7 @@ category: Structures
 <figure class="header-visual">
     <img src="http://placehold.it/1600x1000" class="header-visual__img">
     <figcaption class="header-visual__content">
-    <div class="header-visual__content__inner">
+    <div class="container header-visual__content__inner">
         <h1 class="header-visual__title">
         Title
         </h1>
