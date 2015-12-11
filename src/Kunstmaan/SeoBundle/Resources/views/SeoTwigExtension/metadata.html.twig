@@ -2,6 +2,9 @@
 {% if seo.getMetaDescription() %}
     <meta name="description" content="{{ seo.getMetaDescription() }}">
 {% endif %}
+{% if seo.getMetaKeywords() %}
+    <meta name="keywords" content="{{ seo.getMetaKeywords() }}">
+{% endif %}
 {% if seo.getMetaAuthor() %}
     <meta name="author" content="{{ seo.getMetaAuthor() }}">
 {% endif %}
