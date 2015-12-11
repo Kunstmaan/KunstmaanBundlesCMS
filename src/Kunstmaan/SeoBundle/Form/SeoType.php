@@ -38,7 +38,8 @@ class SeoType extends AbstractType
                 'attr' => array(
                     'maxlength' => 155
                 )
-            ));
+            ))
+            ->add('metaKeywords', null, array('label' => 'Meta keywords'));
 
         $builder->add('metaRobots', ChoiceType::class, array(
             'choices' => array(

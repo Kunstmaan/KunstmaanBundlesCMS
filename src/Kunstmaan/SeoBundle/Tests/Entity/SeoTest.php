@@ -53,6 +53,16 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaKeywords
+     * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaKeywords
+     */
+    public function testGetSetMetaKeywords()
+    {
+        $this->object->setMetaKeywords('Meta Keywords');
+        $this->assertEquals('Meta Keywords', $this->object->getMetaKeywords());
+    }
+
+    /**
      * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaRobots
      * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaRobots
      */
