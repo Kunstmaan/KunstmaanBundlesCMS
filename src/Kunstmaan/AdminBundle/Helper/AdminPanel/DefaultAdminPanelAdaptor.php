@@ -24,6 +24,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
         return array(
             $this->getLanguageChooserAction(),
             $this->getChangePasswordAction(),
+            $this->getSettingsAction(),
             $this->getLogoutAction()
         );
     }
@@ -35,6 +36,18 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
             '',
             '',
             'KunstmaanAdminBundle:AdminPanel:_language_chooser.html.twig'
+        );
+    }
+
+    protected function getSettingsAction()
+    {
+        return new AdminPanelAction(
+            array(
+                'path' => 'KunstmaanAdminBundle_settings',
+                'attrs' => array('id' => 'app__settings', 'title' => 'Settings'),
+            ),
+            '',
+            'gear'
         );
     }
 

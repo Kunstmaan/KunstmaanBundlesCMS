@@ -40,17 +40,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (is_null($parent)) {
-            $menuItem = new TopMenuItem($menu);
-            $menuItem
-                ->setRoute('KunstmaanAdminBundle_settings')
-                ->setLabel('Settings')
-                ->setUniqueId('settings')
-                ->setParent($parent)
-                ->setRole('settings');
-            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                $menuItem->setActive(true);
-            }
-            $children[] = $menuItem;
+            // Do nothing
         } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             if ($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
                 if ($this->container->getParameter('version_checker.enabled')) {
