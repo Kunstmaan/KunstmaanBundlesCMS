@@ -195,7 +195,7 @@ class PagePartRefRepository extends EntityRepository
         $ppRef->setContext($context);
         $ppRef->setSequenceNumber($sequenceNumber);
         $this->getEntityManager()->persist($ppRef);
-        $this->getEntityManager()->flush();
+        $this->getEntityManager()->flush($ppRef);
 
         return $this->getEntityManager()->getRepository($ppRef->getPagePartEntityName())->find($ppRef->getPagePartId());
 
