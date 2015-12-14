@@ -2,7 +2,7 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.datepicker = (function($, window, undefined) {
 
-    var init, reInitialise, _setDefaultDate, _initDatepicker;
+    var init, reInit, _setDefaultDate, _initDatepicker;
 
     var _today = window.moment(),
         _tomorrow = window.moment(_today).add(1, 'days');
@@ -20,7 +20,7 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
         });
     };
 
-    reInitialise = function(el) {
+    reInit = function(el) {
         if (el) {
             _initDatepicker($(el));
         } else {
@@ -95,7 +95,7 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
 
     return {
         init: init,
-        reInitialise: reInitialise
+        reInit: reInit
     };
 
 }(jQuery, window));

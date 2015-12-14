@@ -2,9 +2,9 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.tooltip = (function(window, undefined) {
 
-    var init, initTooltip;
+    var init, reInit, initTooltip;
 
-    init = function() {
+    init = reInit = function() {
         $('[data-toggle="tooltip"]').each(function() {
             if(!$(this).hasClass('js-tooltip--enabled')) {
                 initTooltip($(this));
@@ -21,7 +21,8 @@ kunstmaanbundles.tooltip = (function(window, undefined) {
 
 
     return {
-        init: init
+        init: init,
+        reInit: reInit
     };
 
 }(window));

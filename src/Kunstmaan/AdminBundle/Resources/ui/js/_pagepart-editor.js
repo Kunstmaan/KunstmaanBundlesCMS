@@ -78,32 +78,37 @@ kunstmaanbundles.pagepartEditor = (function(window) {
                     elem = $select.closest('.js-sortable-item').after(data);
                 }
 
+                // Create a temporary node of the new PP
+                var $temp = $('<div>');
+                $temp.append(data);
+
+                // Check if some javascript needs to be reinitialised for this PP
+                $temp.find('*[data-reinit-js]').each(function() {
+                    // Get modules from data attribute
+                    var modules = $(this).data('reinit-js');
+
+                    if (modules) {
+                        for (var i = 0; i < modules.length; i++) {
+                            // Check if there really is a module with the given name and it if has a public reInit function
+                            if (typeof kunstmaanbundles[modules[i]] === 'object' && typeof kunstmaanbundles[modules[i]].reInit === 'function') {
+                                kunstmaanbundles[modules[i]].reInit();
+                            }
+                        }
+                    }
+                });
+
                 // Remove Loading
                 kunstmaanbundles.appLoading.removeLoading();
 
                 // Enable leave-page modal
                 kunstmaanbundles.checkIfEdited.edited();
 
-                // Enable new Rich Editors
-                kunstmaanbundles.richEditor.init();
-
-                // Init new tooltips
-                kunstmaanbundles.tooltip.init();
-
-                // Init new colorpickers
-                kunstmaanbundles.colorpicker.init();
-
                 // Reinit custom selects
                 kunstmaanbundles.advancedSelect.init();
 
-                // Reinit nested forms
-                kunstmaanbundles.nestedForm.init();
-
-                // Rest ajax-modals
+                // Reset ajax-modals
                 kunstmaanbundles.ajaxModal.resetAjaxModals();
 
-                // Reinitialise the datepickers
-                kunstmaanbundles.datepicker.reInitialise();
                 executeEvent('add')
             }
         });

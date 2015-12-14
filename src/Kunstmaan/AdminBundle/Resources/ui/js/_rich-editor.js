@@ -26,12 +26,12 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         }
     };
 
-    var init,
+    var init, reInit,
         enableRichEditor, destroyAllRichEditors, destroySpecificRichEditor,
         _collectEditorConfigs, _collectExternalPlugins, _customOkFunctionForTables;
 
     // First Init
-    init = function() {
+    init = reInit = function() {
         // These objects are declared global in _ckeditor_configs.html.twig
         _collectExternalPlugins(window.externalPlugins);
         _collectEditorConfigs(window.ckEditorConfigs);
@@ -283,6 +283,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
     // Returns
     return {
         init: init,
+        reInit: reInit,
         enableRichEditor: enableRichEditor,
         destroyAllRichEditors: destroyAllRichEditors,
         destroySpecificRichEditor: destroySpecificRichEditor
