@@ -1,6 +1,6 @@
 # Using PuPHPet and Vagrant
 
-<img align="right"  width="200" alt="PuPHPet" src="images/wizard.png" />
+<img align="right"  width="200" alt="PuPHPet" src="https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/wizard.png" />
 
 For the sake of clarity we will perform this installation in a Vagrant box built with [PuPHPet](https://puphpet.com). PuPHPet is a web application that allows you to easily and quickly generate [Vagrant](http://vagrantup.com/) and [Puppet](https://puppetlabs.com/) controlled virtual machines. It's a perfect replacement for local development environments like XAMPP, WAMPP, MAMPP, etc
 
