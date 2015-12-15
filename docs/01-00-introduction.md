@@ -20,7 +20,7 @@ Starting fresh has a lot of advantages and going further we defined the basic pr
 
 * It should use **proven technology**. We chose MySQL, PHP, Symfony 2, Doctrine, etc. While there are valid use cases for emerging technologies (e.g. NoSQL), in most cases there is no need, nor advantage to using them. And if there is, a bespoke application might be better.
 
-> It is here we make the difference compared with other content management solutions. Building on the strong shoulders of Symfony and the commuity, our user experience and interaction designers were able to use their years of experience crafting user-centric online experiences to produce the most user-friendly, yet advanced interface for managing multilingual content online.
+> It is here we make the difference compared with other content management solutions. Building on the strong shoulders of Symfony and the community, our user experience and interaction designers were able to use their years of experience crafting user-centric online experiences to produce the most user-friendly, yet advanced interface for managing multilingual content online.
 
 # A three tier solution
 
