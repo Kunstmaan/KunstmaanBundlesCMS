@@ -172,6 +172,9 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
         // Init new colorpickers
         kunstmaanbundles.colorpicker.init();
 
+        // Init new datepickers
+        kunstmaanbundles.datepicker.reInit();
+
         // Init Ajax Modals
         kunstmaanbundles.ajaxModal.resetAjaxModals();
 
