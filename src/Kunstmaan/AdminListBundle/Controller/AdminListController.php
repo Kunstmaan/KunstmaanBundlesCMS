@@ -118,6 +118,10 @@ abstract class AdminListController extends Controller
 
         $formType = $configurator->getAdminType($helper);
 
+        if (!is_object($formType) && is_string($formType)) {
+            $formType = $this->container->get($formType);
+        }
+
         $event = new AdaptSimpleFormEvent($request, $formType, $helper);
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
         $tabPane = $event->getTabPane();
@@ -182,6 +186,10 @@ abstract class AdminListController extends Controller
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
         $formType = $configurator->getAdminType($helper);
+
+        if (!is_object($formType) && is_string($formType)) {
+            $formType = $this->container->get($formType);
+        }
 
         $event = new AdaptSimpleFormEvent($request, $formType, $helper);
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
