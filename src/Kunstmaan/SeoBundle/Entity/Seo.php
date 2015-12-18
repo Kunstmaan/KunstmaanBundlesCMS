@@ -40,6 +40,13 @@ class Seo extends AbstractEntity
     /**
      * @var string
      *
+     * @ORM\Column(name="meta_keywords", type="string", nullable=true)
+     */
+    protected $metaKeywords;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="meta_author", type="string", nullable=true)
      */
     protected $metaAuthor;
@@ -235,6 +242,22 @@ class Seo extends AbstractEntity
         $this->metaDescription = $meta;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * @param string $meta
+     */
+    public function setMetaKeywords($meta)
+    {
+        $this->metaKeywords = $meta;
     }
 
     /**
