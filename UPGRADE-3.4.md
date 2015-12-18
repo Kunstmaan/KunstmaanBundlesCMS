@@ -29,6 +29,13 @@ app/console doctrine:migrations:diff
 app/console doctrine:migrations:migrate
 ```
 
+## Removed keywords meta tags
+
+Most of the major search engines don't use the keywords meta tag anymore.(see
+http://googlewebmastercentral.blogspot.be/2009/09/google-does-not-use-keywords-meta-tag.html as example)
+Therefore we decided to remove the fields because it added to the complexity of the CMS and gave our customers a false sense of SEO optimalisation.
+If you do want to use keywords, you can do so by extending the SEOBundle with your own class and adding the needed property.
+
 ## Add extra method to the DomainConfigurationInterface.
 
 The `getLocalesExtraData` method was added. If you have created your own DomainConfiguration class you will need
