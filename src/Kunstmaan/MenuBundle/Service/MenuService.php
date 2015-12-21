@@ -40,7 +40,7 @@ class MenuService
      */
     public function makeSureMenusExist()
     {
-        $locales = $this->getLocales();
+        $locales = array_unique($this->getLocales());
         $required = array();
 
         foreach ($this->menuNames as $name) {
