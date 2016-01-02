@@ -5,18 +5,18 @@ parameters:
 
 services:
     kunstmaan_redirect.menu.adaptor:
-        class: "%kunstmaan_redirect.menu.adaptor.class%"
+        class: '%kunstmaan_redirect.menu.adaptor.class%'
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_redirect.repositories.redirect:
-        class:            "%kunstmaan_redirect.redirect_repository.class%"
-        factory_service:  "doctrine.orm.entity_manager"
+        class:            '%kunstmaan_redirect.redirect_repository.class%'
+        factory_service:  'doctrine.orm.entity_manager'
         factory_method:   getRepository
-        arguments:        ["%kunstmaan_redirect.redirect.class%"]
+        arguments:        ['%kunstmaan_redirect.redirect.class%']
 
     kunstmaan_redirect.redirectrouter:
         class: Kunstmaan\RedirectBundle\Router\RedirectRouter
-        arguments: ["@kunstmaan_redirect.repositories.redirect", "@kunstmaan_admin.domain_configuration"]
+        arguments: ['@kunstmaan_redirect.repositories.redirect', '@kunstmaan_admin.domain_configuration']
         tags:
             - { name: router, priority: 1 }

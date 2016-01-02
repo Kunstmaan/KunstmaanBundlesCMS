@@ -3,8 +3,8 @@ parameters:
 
 services:
     kunstmaan_node_search.node_index_update.listener:
-        class: %kunstmaan_node_search.node_index_update.listener.class%
-        arguments: ["@service_container"]
+        class: '%kunstmaan_node_search.node_index_update.listener.class%'
+        arguments: ['@service_container']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.postPublish,   method: onPostPublish }
             - { name: kernel.event_listener, event: kunstmaan_node.postPersist,   method: onPostPersist }

@@ -1,15 +1,15 @@
 KunstmaanAdminBundle_default:
-    resource: "@KunstmaanAdminBundle/Controller/DefaultController.php"
+    resource: '@KunstmaanAdminBundle/Controller/DefaultController.php'
     type:     annotation
     prefix:   /admin  
 
 KunstmaanAdminBundle_modules:
-    resource: "@KunstmaanAdminBundle/Controller/ModulesController.php"
+    resource: '@KunstmaanAdminBundle/Controller/ModulesController.php'
     type:     annotation
     prefix:   /admin/modules
         
 KunstmaanAdminBundle_settings:
-    resource: "@KunstmaanAdminBundle/Controller/SettingsController.php"
+    resource: '@KunstmaanAdminBundle/Controller/SettingsController.php'
     type:     annotation
     prefix:   /admin/settings      
 
@@ -36,11 +36,11 @@ fos_user_security_logout:
     defaults: { _controller: FOSUserBundle:Security:logout }
 
 fos_user_profile:
-    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    resource: '@FOSUserBundle/Resources/config/routing/profile.xml'
     prefix: /admin/profile
 
 fos_user_resetting:
-    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    resource: '@FOSUserBundle/Resources/config/routing/resetting.xml'
     prefix: /admin/resetting
 
 fos_user_change_password:

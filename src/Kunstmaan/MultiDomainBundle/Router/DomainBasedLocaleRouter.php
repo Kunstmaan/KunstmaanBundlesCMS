@@ -6,6 +6,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class DomainBasedLocaleRouter
@@ -17,13 +18,13 @@ class DomainBasedLocaleRouter extends SlugRouter
     /**
      * Generate an url for a supplied route
      *
-     * @param string $name       The path
-     * @param array  $parameters The route parameters
-     * @param bool   $absolute   Absolute url or not
+     * @param string   $name          The path
+     * @param array    $parameters    The route parameters
+     * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
      * @return null|string
      */
-    public function generate($name, $parameters = array(), $absolute = false)
+    public function generate($name, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         if ('_slug' === $name) {
             if ($this->isMultiLanguage() && $this->isMultiDomainHost()) {
@@ -36,7 +37,7 @@ class DomainBasedLocaleRouter extends SlugRouter
             }
         }
 
-        return parent::generate($name, $parameters, $absolute);
+        return parent::generate($name, $parameters, $referenceType);
     }
 
     /**

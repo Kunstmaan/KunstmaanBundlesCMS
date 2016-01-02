@@ -6,20 +6,23 @@ use Kunstmaan\MediaBundle\Entity\Media as MediaObject;
 use Kunstmaan\MediaBundle\Validator\Constraints\Media;
 use Kunstmaan\MediaBundle\Validator\Constraints\MediaValidator;
 use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Tests\Constraints\AbstractConstraintValidatorTest;
 
-class MediaValidatorTest extends \PHPUnit_Framework_TestCase
+class MediaValidatorTest extends AbstractConstraintValidatorTest
 {
-
+    protected function createValidator()
+    {
+        return new MediaValidator();
+    }
 
     public function testMimeTypeIsIgnoredWhenNotSpecified()
     {
         $constraint = new Media();
         $media = new MediaObject;
 
-        $validator = $this->getValidator($this->noViolation());
+        $this->validator->validate($media, $constraint);
 
-        $validator->validate($media, $constraint);
-        // no exception
+        $this->assertNoViolation();
     }
 
     /**
@@ -30,16 +33,21 @@ class MediaValidatorTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider dataMimeTypes
      */
-    public function testMimeTypeMatches($contentType, $allowed, $message = null, $code = null)
+    public function testMimeTypeMatches($contentType, $allowed, $message = null, array $parameters = [], $code = null)
     {
         $constraint = new Media(['mimeTypes' => $allowed]);
         $media = (new MediaObject)->setContentType($contentType);
 
-        $validator = $this->getValidator(($message && $code) ? $this->thisViolation($message, $code) : $this->noViolation());
+        $this->validator->validate($media, $constraint);
 
-        $validator->validate($media, $constraint);
-
-        // expect
+        if ($message && $code) {
+            $this->buildViolation($message)
+                ->setCode($code)
+                ->setParameters($parameters)
+                ->assertRaised();
+        } else {
+            $this->assertNoViolation();
+        }
     }
 
     public function testSvgIsNotTestedForDimensions()
@@ -47,10 +55,9 @@ class MediaValidatorTest extends \PHPUnit_Framework_TestCase
         $constraint = new Media(['minHeight' => 100]);
         $media = (new MediaObject)->setContentType('image/svg+xml');
 
-        $validator = $this->getValidator($this->noViolation());
-        $validator->validate($media, $constraint);
+        $this->validator->validate($media, $constraint);
 
-        // no violation
+        $this->assertNoViolation();
     }
 
     /**
@@ -61,7 +68,7 @@ class MediaValidatorTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider dataDimensions
      */
-    public function testDimensionsAreChecked($dimension, $value, $message = null, $code = null)
+    public function testDimensionsAreChecked($dimension, $value, $message = null, array $parameters = [], $code = null)
     {
         $constraint = new Media([$dimension => $value]);
         $media = (new MediaObject)
@@ -69,73 +76,43 @@ class MediaValidatorTest extends \PHPUnit_Framework_TestCase
             ->setMetadataValue('original_height', 100)
             ->setContentType('image/png');
 
-        $validator = $this->getValidator(($message && $code) ? $this->thisViolation($message, $code) : $this->noViolation());
+        $this->validator->validate($media, $constraint);
 
-        $validator->validate($media, $constraint);
-
-        // expect
+        if ($message && $code) {
+            $this->buildViolation($message)
+                ->setCode($code)
+                ->setParameters($parameters)
+                ->assertRaised();
+        } else {
+            $this->assertNoViolation();
+        }
     }
 
     public function dataMimeTypes()
     {
-        $errors = new Media;
-
         return [
             ['image/png', ['image/png']],
             ['image/png', ['image/jpg', 'image/png']],
             ['image/png', ['image/*']],
             ['image/PNG', ['image/png']],
             ['image/png', ['image/PNG']],
-            ['image/png', ['image/jpg'], $errors->mimeTypesMessage, $errors::INVALID_MIME_TYPE_ERROR],
-            ['image/png', ['application/*'], $errors->mimeTypesMessage, $errors::INVALID_MIME_TYPE_ERROR],
+            ['image/png', ['image/jpg'], 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.', ['{{ type }}' => '"image/png"', '{{ types }}' => '"image/jpg"'], Media::INVALID_MIME_TYPE_ERROR],
+            ['image/png', ['application/*'], 'The type of the file is invalid ({{ type }}). Allowed types are {{ types }}.', ['{{ type }}' => '"image/png"', '{{ types }}' => '"application/*"'], Media::INVALID_MIME_TYPE_ERROR],
         ];
     }
 
     public function dataDimensions()
     {
-        $errors = new Media;
-
-
         // image size is 100x100
         return [
             ['minHeight', 100],
             ['maxHeight', 100],
             ['minWidth', 100],
             ['maxWidth', 100],
-            ['minWidth', 200, $errors->minWidthMessage, $errors::TOO_NARROW_ERROR],
-            ['maxWidth', 50, $errors->maxWidthMessage, $errors::TOO_WIDE_ERROR],
-            ['minHeight', 200, $errors->minHeightMessage, $errors::TOO_LOW_ERROR],
-            ['maxHeight', 50, $errors->maxHeightMessage, $errors::TOO_HIGH_ERROR],
+            ['minWidth', 200, 'The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.', ['{{ width }}' => 100, '{{ min_width }}' => 200], Media::TOO_NARROW_ERROR],
+            ['maxWidth', 50, 'The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.', ['{{ width }}' => 100, '{{ max_width }}' => 50], Media::TOO_WIDE_ERROR],
+            ['minHeight', 200, 'The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.', ['{{ height }}' => 100, '{{ min_height }}' => 200], Media::TOO_LOW_ERROR],
+            ['maxHeight', 50, 'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.', ['{{ height }}' => 100, '{{ max_height }}' => 50], Media::TOO_HIGH_ERROR],
         ];
-    }
-
-    private function getValidator(callable $mockCallback = null)
-    {
-        $builder = $this->getMockBuilder('\Symfony\Component\Validator\ExecutionContextInterface');
-
-        /** @var ExecutionContextInterface $mock */
-        $mock = $builder->getMock();
-        $mockCallback && $mockCallback($mock);
-
-        $validator = new MediaValidator();
-        $validator->initialize($mock);
-
-        return $validator;
-    }
-
-    private function thisViolation($message, $code)
-    {
-        return function (\PHPUnit_Framework_MockObject_MockObject $mock) use ($message, $code) {
-            $mock->expects($this->once())->method('addViolation')->with(
-                $this->equalTo($message), $this->anything(), $this->anything(), $this->anything(), $this->equalTo($code)
-            );
-        };
-    }
-
-    private function noViolation()
-    {
-        return function (\PHPUnit_Framework_MockObject_MockObject $mock) {
-            $mock->expects($this->never())->method('addViolation');
-        };
     }
 }

@@ -34,7 +34,7 @@ class MediaValidator extends ConstraintValidator
 
             if (false === $this->validateMimeType($value, $mimeTypes)) {
 
-                $this->buildViolation($constraint->mimeTypesMessage)
+                $this->context->buildViolation($constraint->mimeTypesMessage)
                     ->setParameter('{{ type }}', $this->formatValue($mimeType))
                     ->setParameter('{{ types }}', $this->formatValues($mimeTypes))
                     ->setCode(Media::INVALID_MIME_TYPE_ERROR)
@@ -88,7 +88,7 @@ class MediaValidator extends ConstraintValidator
             }
 
             if ($height < $constraint->minHeight) {
-                $this->buildViolation($constraint->minHeightMessage)
+                $this->context->buildViolation($constraint->minHeightMessage)
                     ->setParameter('{{ height }}', $height)
                     ->setParameter('{{ min_height }}', $constraint->minHeight)
                     ->setCode(Media::TOO_LOW_ERROR)
@@ -109,7 +109,7 @@ class MediaValidator extends ConstraintValidator
             }
 
             if ($height > $constraint->maxHeight) {
-                $this->buildViolation($constraint->maxHeightMessage)
+                $this->context->buildViolation($constraint->maxHeightMessage)
                     ->setParameter('{{ height }}', $height)
                     ->setParameter('{{ max_height }}', $constraint->maxHeight)
                     ->setCode(Media::TOO_HIGH_ERROR)
@@ -130,7 +130,7 @@ class MediaValidator extends ConstraintValidator
             }
 
             if ($width < $constraint->minWidth) {
-                $this->buildViolation($constraint->minWidthMessage)
+                $this->context->buildViolation($constraint->minWidthMessage)
                     ->setParameter('{{ width }}', $width)
                     ->setParameter('{{ min_width }}', $constraint->minWidth)
                     ->setCode(Media::TOO_NARROW_ERROR)
@@ -151,7 +151,7 @@ class MediaValidator extends ConstraintValidator
             }
 
             if ($width > $constraint->maxWidth) {
-                $this->buildViolation($constraint->maxWidthMessage)
+                $this->context->buildViolation($constraint->maxWidthMessage)
                     ->setParameter('{{ width }}', $width)
                     ->setParameter('{{ max_width }}', $constraint->maxWidth)
                     ->setCode(Media::TOO_WIDE_ERROR)

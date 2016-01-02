@@ -1,15 +1,15 @@
 KunstmaanUserManagementBundle_user_settings:
-    resource: "@KunstmaanUserManagementBundle/Controller/UsersController.php"
+    resource: '@KunstmaanUserManagementBundle/Controller/UsersController.php'
     type:     annotation
     prefix:   /admin/settings/users
 
 KunstmaanUserManagementBundle_group_settings:
-    resource: "@KunstmaanUserManagementBundle/Controller/GroupsController.php"
+    resource: '@KunstmaanUserManagementBundle/Controller/GroupsController.php'
     type:     annotation
     prefix:   /admin/settings/groups
 
 KunstmaanUserManagementBundle_role_settings:
-    resource: "@KunstmaanUserManagementBundle/Controller/RolesController.php"
+    resource: '@KunstmaanUserManagementBundle/Controller/RolesController.php'
     type:     annotation
     prefix:   /admin/settings/roles
 

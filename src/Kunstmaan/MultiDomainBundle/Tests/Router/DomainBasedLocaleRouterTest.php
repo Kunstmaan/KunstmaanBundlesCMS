@@ -5,6 +5,7 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Router;
 use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,10 +36,10 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
         $request   = $this->getRequest();
         $container = $this->getContainer($request);
         $object    = new DomainBasedLocaleRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), true);
+        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/en/some-uri', $url);
 
-        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), false);
+        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_PATH);
         $this->assertEquals('/en/some-uri', $url);
     }
 
@@ -54,10 +55,10 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
         $request->setLocale('nl_BE');
         $container = $this->getContainer($request);
         $object    = new DomainBasedLocaleRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri'), true);
+        $url       = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
 
-        $url = $object->generate('_slug', array('url' => 'some-uri'), false);
+        $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_PATH);
         $this->assertEquals('/nl/some-uri', $url);
     }
 

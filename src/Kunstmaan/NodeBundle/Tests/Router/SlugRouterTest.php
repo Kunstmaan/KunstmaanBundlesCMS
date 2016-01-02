@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Tests\Router;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SlugRouterTest extends \PHPUnit_Framework_TestCase
 {
@@ -46,10 +47,10 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
         $request   = $this->getRequest();
         $container = $this->getContainer($request, true);
         $object    = new SlugRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), true);
+        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/en/some-uri', $url);
 
-        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), false);
+        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), UrlGeneratorInterface::ABSOLUTE_PATH);
         $this->assertEquals('/en/some-uri', $url);
     }
 
@@ -63,10 +64,10 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
         $request   = $this->getRequest();
         $container = $this->getContainer($request);
         $object    = new SlugRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), true);
+        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/some-uri', $url);
 
-        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), false);
+        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), UrlGeneratorInterface::ABSOLUTE_PATH);
         $this->assertEquals('/some-uri', $url);
     }
 
