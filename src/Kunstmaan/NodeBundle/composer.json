@@ -24,9 +24,8 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Kunstmaan\\NodeBundle": "" }
+        "psr-4": { "Kunstmaan\\NodeBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/NodeBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

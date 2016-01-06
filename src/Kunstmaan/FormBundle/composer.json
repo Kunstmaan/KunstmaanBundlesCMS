@@ -27,9 +27,8 @@
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\FormBundle": "" }
+        "psr-4": { "Kunstmaan\\FormBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/FormBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

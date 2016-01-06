@@ -16,12 +16,11 @@
     "require": {
         "php": ">=5.4.0",
         "symfony/symfony": "~2.3",
-        "lunetics/locale-bundle": "*"
+        "lunetics/locale-bundle": "~2.0"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\LanguageChooserBundle": "" }
+        "psr-4": { "Kunstmaan\\LanguageChooserBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/LanguageChooserBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

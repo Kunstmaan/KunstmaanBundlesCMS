@@ -22,9 +22,8 @@
         "kunstmaan/node-bundle": "~3.2"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\TaggingBundle": "" }
+        "psr-4": { "Kunstmaan\\TaggingBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/TaggingBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {

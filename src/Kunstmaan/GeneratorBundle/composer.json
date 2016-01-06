@@ -16,8 +16,8 @@
     "require": {
         "php": ">=5.4.0",
         "symfony/symfony": "~2.3",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "sensio/generator-bundle": ">=2.5.0",
+        "doctrine/orm": "^2.2.3",
+        "sensio/generator-bundle": "~2.5|~3.0",
         "fzaninotto/faker": "~1.4.0",
         "kunstmaan/utilities-bundle": "~3.2"
     },
@@ -31,9 +31,8 @@
         "kunstmaan/pagepart-bundle": "~3.2"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
+        "psr-4": { "Kunstmaan\\GeneratorBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/GeneratorBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"
