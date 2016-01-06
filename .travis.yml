@@ -6,6 +6,10 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
+env:
+  global:
+    - SYMFONY_DEPRECATIONS_HELPER=16
+
 php:
   - 5.4
   - 5.5
