@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Tests\Validator\Constraints;
 use Kunstmaan\MediaBundle\Entity\Media as MediaObject;
 use Kunstmaan\MediaBundle\Validator\Constraints\Media;
 use Kunstmaan\MediaBundle\Validator\Constraints\MediaValidator;
+use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Tests\Constraints\AbstractConstraintValidatorTest;
 
@@ -114,5 +115,10 @@ class MediaValidatorTest extends AbstractConstraintValidatorTest
             ['minHeight', 200, 'The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.', ['{{ height }}' => 100, '{{ min_height }}' => 200], Media::TOO_LOW_ERROR],
             ['maxHeight', 50, 'The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.', ['{{ height }}' => 100, '{{ max_height }}' => 50], Media::TOO_HIGH_ERROR],
         ];
+    }
+
+    protected function getApiVersion()
+    {
+        return Validation::API_VERSION_2_5;
     }
 }
