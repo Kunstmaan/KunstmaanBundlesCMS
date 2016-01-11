@@ -4,7 +4,7 @@ parameters:
 
 services:
     kunstmaan_user_management.menu.adaptor:
-        class: "%kunstmaan_user_management.menu.adaptor.class%"
-        arguments: ["@security.context"]
+        class: '%kunstmaan_user_management.menu.adaptor.class%'
+        arguments: ['@security.context']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 100 }

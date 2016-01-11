@@ -12,21 +12,21 @@ parameters:
 
 services:
     liip_imagine.data.loader.stream.profile_photos:
-        class: "%liip_imagine.data.loader.stream.class%"
+        class: '%liip_imagine.data.loader.stream.class%'
         arguments:
-            - "@liip_imagine"
+            - '@liip_imagine'
             - ''
         tags:
             - { name: 'liip_imagine.data.loader', loader: 'kunstmaan_media_thumbloader' }
 
     kunstmaan_media.media_manager:
-        class: "%kunstmaan_media.media_manager.class%"
+        class: '%kunstmaan_media.media_manager.class%'
         calls:
-            - [ setDefaultHandler, [ "@kunstmaan_media.media_handlers.file" ] ]
+            - [ setDefaultHandler, [ '@kunstmaan_media.media_handlers.file' ] ]
 
     kunstmaan_media.listener.doctrine:
-        class: "%kunstmaan_media.listener.doctrine.class%"
-        arguments: ["@kunstmaan_media.media_manager"]
+        class: '%kunstmaan_media.listener.doctrine.class%'
+        arguments: ['@kunstmaan_media.media_manager']
         tags:
             - { name: 'doctrine.event_listener', event: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate' }
@@ -35,59 +35,59 @@ services:
             - { name: 'doctrine.event_listener', event: 'preRemove' }
 
     form.type.media:
-        class: "%kunstmaan_media.form.type.media.class%"
+        class: '%kunstmaan_media.form.type.media.class%'
         arguments:
-            - "@kunstmaan_media.media_manager"
-            - "@doctrine.orm.entity_manager"
+            - '@kunstmaan_media.media_manager'
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: form.type, alias: media }
 
     form.type.iconfont:
-        class: "%kunstmaan_media.form.type.iconfont.class%"
-        arguments: ["@kunstmaan_media.icon_font_manager"]
+        class: '%kunstmaan_media.form.type.iconfont.class%'
+        arguments: ['@kunstmaan_media.icon_font_manager']
         tags:
             - { name: form.type, alias: iconfont }
 
     kunstmaan_media.icon_font_manager:
-        class: "%kunstmaan_media.icon_font_manager.class%"
+        class: '%kunstmaan_media.icon_font_manager.class%'
         calls:
-            - [ setDefaultLoader, [ "@kunstmaan_media.icon_font.default_loader" ] ]
+            - [ setDefaultLoader, [ '@kunstmaan_media.icon_font.default_loader' ] ]
 
     kunstmaan_media.icon_font.default_loader:
-        class: "%kunstmaan_media.icon_font.default_loader.class%"
-        arguments: ["@kernel"]
+        class: '%kunstmaan_media.icon_font.default_loader.class%'
+        arguments: ['@kernel']
         tags:
             -  { name: 'kunstmaan_media.icon_font.loader' }
 
     kunstmaan_media.media_creator_service:
-        class: "%kunstmaan_media.media_creator_service.class%"
-        arguments: ["@service_container"]
+        class: '%kunstmaan_media.media_creator_service.class%'
+        arguments: ['@service_container']
 
     kunstmaan_media.repository.folder:
         class:            Kunstmaan\MediaBundle\Repository\FolderRepository
-        factory_service:  "doctrine.orm.entity_manager"
+        factory_service:  'doctrine.orm.entity_manager'
         factory_method:   getRepository
-        arguments:        ["KunstmaanMediaBundle:Folder"]
+        arguments:        ['KunstmaanMediaBundle:Folder']
 
     kunstmaan_media.menu.adaptor:
-        class: "%kunstmaan_media.menu.adaptor.class%"
-        arguments: ["@kunstmaan_media.repository.folder"]
+        class: '%kunstmaan_media.menu.adaptor.class%'
+        arguments: ['@kunstmaan_media.repository.folder']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_media.folder_manager:
-        class: "%kunstmaan_media.folder_manager.class%"
-        arguments: ["@kunstmaan_media.repository.folder"]
+        class: '%kunstmaan_media.folder_manager.class%'
+        arguments: ['@kunstmaan_media.repository.folder']
 
     kunstmaan_media.mimetype_guesser.factory:
-        class: "%kunstmaan_media.mimetype_guesser.factory.class%"
+        class: '%kunstmaan_media.mimetype_guesser.factory.class%'
 
     kunstmaan_media.command.migratename:
         class: Kunstmaan\MediaBundle\Command\MigrateNameCommand
         calls:
-            - [setContainer, ["@service_container"] ]
+            - [setContainer, ['@service_container'] ]
 
     kunstmaan_media.command.rebuildfoldertree:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
         calls:
-            - [setContainer, ["@service_container"] ]
+            - [setContainer, ['@service_container'] ]

@@ -21,9 +21,8 @@
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\MediaPagePartBundle": "" }
+        "psr-4": { "Kunstmaan\\MediaPagePartBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/MediaPagePartBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

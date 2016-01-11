@@ -75,8 +75,8 @@ class KunstmaanTranslatorExtension extends Extension
         $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
 
         $dirs = array();
-        if (class_exists('Symfony\Component\Validator\Validator')) {
-            $r = new \ReflectionClass('Symfony\Component\Validator\Validator');
+        if (class_exists('Symfony\Component\Validator\Validation')) {
+            $r = new \ReflectionClass('Symfony\Component\Validator\Validation');
 
             $dirs[] = dirname($r->getFilename()).'/Resources/translations';
         }

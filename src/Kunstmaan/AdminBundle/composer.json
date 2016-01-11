@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/symfony": "~2.5,<2.8.0",
+        "symfony/symfony": "~2.5",
         "doctrine/orm": "~2.2,>=2.2.3",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "~2.0",
@@ -31,9 +31,8 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Kunstmaan\\AdminBundle": "" }
+        "psr-4": { "Kunstmaan\\AdminBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/AdminBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

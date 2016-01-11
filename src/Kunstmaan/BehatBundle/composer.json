@@ -26,9 +26,8 @@
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\BehatBundle": "" }
+        "psr-0": { "Kunstmaan\\BehatBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/BehatBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {

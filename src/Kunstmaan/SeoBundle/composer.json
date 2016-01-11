@@ -23,9 +23,8 @@
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\SeoBundle": "" }
+        "psr-4": { "Kunstmaan\\SeoBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/SeoBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

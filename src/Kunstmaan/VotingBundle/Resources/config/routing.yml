@@ -1,4 +1,4 @@
 KunstmaanVotingBundle_default:
-    resource: "@KunstmaanVotingBundle/Controller/VotingController.php"
+    resource: '@KunstmaanVotingBundle/Controller/VotingController.php'
     type:     annotation
     prefix:   /

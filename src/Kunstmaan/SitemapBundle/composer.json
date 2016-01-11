@@ -21,9 +21,8 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Kunstmaan\\SitemapBundle": "" }
+        "psr-4": { "Kunstmaan\\SitemapBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/SitemapBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

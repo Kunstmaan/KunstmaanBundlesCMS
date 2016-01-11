@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/symfony": "~2.5,<2.8.0",
+        "symfony/symfony": "^2.5.5",
         "doctrine/orm": "~2.5.0",
         "doctrine/dbal": "~2.5.0",
         "doctrine/doctrine-bundle": "~1.4",
@@ -25,7 +25,7 @@
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~4.0",
-        "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
+        "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
 
         "friendsofsymfony/user-bundle": "2.0.*@dev",
@@ -57,6 +57,7 @@
         "behat/mink-selenium2-driver": "*",
         "behat/mink-goutte-driver": "*",
         "behat/mink-sahi-driver": "*",
+        "symfony/phpunit-bridge": "~2.7",
         "phpunit/phpunit": "~4.4",
         "fzaninotto/faker": "~1.5",
         "nelmio/alice": "~1.6"
@@ -89,7 +90,6 @@
     "autoload": {
         "psr-4": {"Kunstmaan\\": "src/Kunstmaan/"}
     },
-    "minimum-stability": "stable",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

@@ -27,9 +27,8 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Kunstmaan\\AdminListBundle": "" }
+        "psr-4": { "Kunstmaan\\AdminListBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/AdminListBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

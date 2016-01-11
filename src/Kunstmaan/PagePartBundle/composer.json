@@ -22,9 +22,8 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Kunstmaan\\PagePartBundle": "" }
+        "psr-4": { "Kunstmaan\\PagePartBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/PagePartBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

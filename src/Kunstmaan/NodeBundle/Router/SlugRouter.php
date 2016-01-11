@@ -118,22 +118,22 @@ class SlugRouter implements RouterInterface
     }
 
     /**
-     * Generate an url for a supplied route
+     * Generate an url for a supplied route.
      *
-     * @param string $name       The path
-     * @param array  $parameters The route parameters
-     * @param bool   $absolute   Absolute url or not
+     * @param string   $name          The path
+     * @param array    $parameters    The route parameters
+     * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
      * @return null|string
      */
-    public function generate($name, $parameters = array(), $absolute = false)
+    public function generate($name, $parameters = array(), $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
         $this->urlGenerator = new UrlGenerator(
             $this->getRouteCollection(),
             $this->getContext()
         );
 
-        return $this->urlGenerator->generate($name, $parameters, $absolute);
+        return $this->urlGenerator->generate($name, $parameters, $referenceType);
     }
 
     /**

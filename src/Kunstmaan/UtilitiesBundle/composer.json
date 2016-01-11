@@ -22,9 +22,8 @@
         "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\UtilitiesBundle": "" }
+        "psr-4": { "Kunstmaan\\UtilitiesBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/UtilitiesBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"

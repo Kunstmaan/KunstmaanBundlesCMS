@@ -4,69 +4,69 @@ parameters:
 services:
 #    kunstmaan_voting_list.example:
 #        class: %kunstmaan_voting_list.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+#        arguments: [@service_id, 'plain_value', %parameter%]
 
     ## UP VOTE
 
     kunstmaan_voting.upvote:
         class: Kunstmaan\VotingBundle\EventListener\UpDown\UpVoteEventListener
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.upVote, method: onUpVote }
 
     kunstmaan_voting.helper.upvote:
         class: Kunstmaan\VotingBundle\Helper\UpDown\UpVoteHelper
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']
 
     ## Down VOTE
 
     kunstmaan_voting.downvote:
         class: Kunstmaan\VotingBundle\EventListener\UpDown\DownVoteEventListener
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.downVote, method: onDownVote }
 
     kunstmaan_voting.helper.downvote:
         class: Kunstmaan\VotingBundle\Helper\UpDown\DownVoteHelper
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']
 
     ## FACEBOOK LIKE
 
     kunstmaan_voting.facebooklike:
         class: Kunstmaan\VotingBundle\EventListener\Facebook\FacebookLikeEventListener
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.facebookLike, method: onFacebookLike }
 
     kunstmaan_voting.helper.facebook.like:
         class: Kunstmaan\VotingBundle\Helper\Facebook\FacebookLikeHelper
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']
 
     ## FACEBOOK SEND
 
     kunstmaan_voting.facebooksend:
         class: Kunstmaan\VotingBundle\EventListener\Facebook\FacebookSendEventListener
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.facebookSend, method: onFacebookSend }
 
     kunstmaan_voting.helper.facebook.send:
         class: Kunstmaan\VotingBundle\Helper\Facebook\FacebookSendHelper
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']
 
     ## LINKEDIN SHARE
 
     kunstmaan_voting.linkedinshare:
         class: Kunstmaan\VotingBundle\EventListener\LinkedIn\LinkedInShareEventListener
-        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_voting.linkedInShare, method: onLinkedInShare }
 
     kunstmaan_voting.helper.linkedin.share:
         class: Kunstmaan\VotingBundle\Helper\LinkedIn\LinkedInShareHelper
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']
 
     # SERVICES
     kunstmaan_voting.services.repository_resolver:
         class: Kunstmaan\VotingBundle\Services\RepositoryResolver
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ['@doctrine.orm.entity_manager']

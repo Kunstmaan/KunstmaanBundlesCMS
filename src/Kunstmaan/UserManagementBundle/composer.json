@@ -21,9 +21,8 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Kunstmaan\\UserManagementBundle": "" }
+        "psr-4": { "Kunstmaan\\UserManagementBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/UserManagementBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "3.5-dev"
