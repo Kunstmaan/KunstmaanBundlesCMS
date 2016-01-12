@@ -34,7 +34,7 @@ class ChooserController extends Controller
         $session  = $request->getSession();
         $folderId = false;
 
-        $type            = $request->get('type');
+        $type            = $request->get('type', 'all');
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
         $linkChooser     = $request->get('linkChooser');
 
