@@ -4,7 +4,11 @@
 
 {% block body %}
     <h2 class="login__title">
+        {% if admin_logo is defined %}
+        <img class="app__header__brand__img" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
+        {% else %}
         {{ websitetitle | trans }}
+        {% endif %}
     </h2>
 
     <div class="login__form">
