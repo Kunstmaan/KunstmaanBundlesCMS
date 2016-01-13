@@ -5,9 +5,9 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface as TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface as AuthorizationChecker;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * PasswordCheckListener to check if the user has to change his password
@@ -15,32 +15,32 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class PasswordCheckListener
 {
     /**
-     * @var $authorizationChecker
+     * @var AuthorizationCheckerInterface
      */
     private $authorizationChecker;
 
     /**
-     * @var $tokenStorage
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
     /**
-     * @var $router
+     * @var Router
      */
     private $router;
 
     /**
-     * @var $session
+     * @var Session
      */
     private $session;
 
     /**
-     * @param AuthorizationChecker $authorizationChecker
-     * @param TokenStorage         $tokenStorage
-     * @param Router               $router
-     * @param Session              $session
+     * @param AuthorizationCheckerInterface  $authorizationChecker
+     * @param TokenStorageInterface          $tokenStorage
+     * @param Router                         $router
+     * @param Session                        $session
      */
-    public function __construct(AuthorizationChecker $authorizationChecker, TokenStorage $tokenStorage, Router $router, Session $session)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;

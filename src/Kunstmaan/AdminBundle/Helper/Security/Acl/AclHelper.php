@@ -3,19 +3,16 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
 use InvalidArgumentException;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\Parameter;
-
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
@@ -32,9 +29,9 @@ class AclHelper
     private $em = null;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    private $securityContext = null;
+    private $tokenStorage = null;
 
     /**
      * @var QuoteStrategy
@@ -50,13 +47,13 @@ class AclHelper
      * Constructor.
      *
      * @param EntityManager            $em The entity manager
-     * @param SecurityContextInterface $sc The security context
+     * @param TokenStorageInterface    $tokenStorage The security token storage
      * @param RoleHierarchyInterface   $rh The role hierarchies
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $sc, RoleHierarchyInterface $rh)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
     {
         $this->em              = $em;
-        $this->securityContext = $sc;
+        $this->tokenStorage    = $tokenStorage;
         $this->quoteStrategy   = $em->getConfiguration()->getQuoteStrategy();
         $this->roleHierarchy   = $rh;
     }
@@ -146,7 +143,7 @@ class AclHelper
         $rootEntity     = '"' . str_replace('\\', '\\\\', $query->getHint('acl.root.entity')) . '"';
 
         /* @var $token TokenInterface */
-        $token     = $this->securityContext->getToken();
+        $token     = $this->tokenStorage->getToken();
         $userRoles = array();
         $user = null;
         if (!is_null($token)) {
@@ -232,10 +229,10 @@ SELECTQUERY;
     }
 
     /**
-     * @return null|SecurityContextInterface
+     * @return null|TokenStorageInterface
      */
-    public function getSecurityContext()
+    public function getTokenStorage()
     {
-        return $this->securityContext;
+        return $this->tokenStorage;
     }
 }

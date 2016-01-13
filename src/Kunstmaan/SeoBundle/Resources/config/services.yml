@@ -36,6 +36,6 @@ services:
 
     kunstmaanseobundle.seo_management_menu_adaptor:
         class: Kunstmaan\SeoBundle\Helper\Menu\SeoManagementMenuAdaptor
-        arguments: ['@security.context']
+        arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }

@@ -4,28 +4,36 @@ namespace Kunstmaan\NodeSearchBundle\Search;
 
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class NodeSearcher
- *
  * Default node searcher implementation
  *
  * @package Kunstmaan\NodeSearchBundle\Search
  */
 class NodeSearcher extends AbstractElasticaSearcher
 {
-    /** @var SecurityContextInterface */
-    private $securityContext = null;
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage = null;
 
-    /** @var DomainConfigurationInterface */
+    /**
+     * @var DomainConfigurationInterface
+     */
     private $domainConfiguration;
 
-    public function setSecurityContext(SecurityContextInterface $securityContext)
+    /**
+     * @param TokenStorageInterface $tokenStorage
+     */
+    public function setTokenStorage(TokenStorageInterface $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * @param DomainConfigurationInterface $domainConfiguration
+     */
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
     {
         $this->domainConfiguration = $domainConfiguration;
@@ -63,7 +71,7 @@ class NodeSearcher extends AbstractElasticaSearcher
             ->addShould($elasticaQueryString)
             ->setMinimumNumberShouldMatch(1);
 
-        $this->applySecurityContext($elasticaQueryBool);
+        $this->applySecurityFilter($elasticaQueryBool);
 
         if (!is_null($type)) {
             $elasticaQueryType = new \Elastica\Query\Term();
@@ -100,7 +108,7 @@ class NodeSearcher extends AbstractElasticaSearcher
      *
      * @param \Elastica\Query\BoolQuery $elasticaQueryBool
      */
-    protected function applySecurityContext($elasticaQueryBool)
+    protected function applySecurityFilter($elasticaQueryBool)
     {
         $roles = $this->getCurrentUserRoles();
 
@@ -117,8 +125,8 @@ class NodeSearcher extends AbstractElasticaSearcher
     protected function getCurrentUserRoles()
     {
         $roles = array();
-        if (!is_null($this->securityContext)) {
-            $user = $this->securityContext->getToken()->getUser();
+        if (!is_null($this->tokenStorage)) {
+            $user = $this->tokenStorage->getToken()->getUser();
             if ($user instanceof BaseUser) {
                 $roles = $user->getRoles();
             }

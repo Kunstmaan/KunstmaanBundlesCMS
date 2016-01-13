@@ -10,11 +10,8 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Repository\NodeRepository;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * NodeMenu
- */
 class NodeMenu
 {
     /**
@@ -23,9 +20,9 @@ class NodeMenu
     private $em;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * @var AclHelper
@@ -98,24 +95,19 @@ class NodeMenu
     private $domainConfiguration = null;
 
     /**
-     * @param EntityManagerInterface       $em                  The entity
-     *                                                          manager
-     * @param SecurityContextInterface     $securityContext     The security
-     *                                                          context
-     * @param AclHelper                    $aclHelper           The ACL helper
-     *                                                          pages
-     * @param DomainConfigurationInterface $domainConfiguration The current
-     *                                                          domain
-     *                                                          configuration
+     * @param EntityManagerInterface       $em                  The entity manager
+     * @param TokenStorageInterface        $tokenStorage        The security token storage
+     * @param AclHelper                    $aclHelper           The ACL helper pages
+     * @param DomainConfigurationInterface $domainConfiguration The current domain configuration
      */
     public function __construct(
         EntityManagerInterface $em,
-        SecurityContextInterface $securityContext,
+        TokenStorageInterface $tokenStorage,
         AclHelper $aclHelper,
         DomainConfigurationInterface $domainConfiguration
     ) {
         $this->em                  = $em;
-        $this->securityContext     = $securityContext;
+        $this->tokenStorage     = $tokenStorage;
         $this->aclHelper           = $aclHelper;
         $this->domainConfiguration = $domainConfiguration;
     }
@@ -607,7 +599,7 @@ class NodeMenu
      */
     public function getUser()
     {
-        return $this->securityContext->getToken()->getUser();
+        return $this->tokenStorage->getToken()->getUser();
     }
 
     /**
@@ -619,11 +611,11 @@ class NodeMenu
     }
 
     /**
-     * @return SecurityContextInterface
+     * @return TokenStorageInterface
      */
-    public function getSecurityContext()
+    public function getTokenStorage()
     {
-        return $this->securityContext;
+        return $this->tokenStorage;
     }
 
     /**

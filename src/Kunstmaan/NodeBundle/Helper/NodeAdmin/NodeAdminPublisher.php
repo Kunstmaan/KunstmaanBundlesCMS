@@ -13,25 +13,27 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * NodeAdminPublisher
- */
 class NodeAdminPublisher
 {
-
     /**
      * @var EntityManager
      */
     private $em;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    private $securityContext;
+    private $tokenStorage;
+
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
 
     /**
      * @var EventDispatcherInterface
@@ -44,20 +46,24 @@ class NodeAdminPublisher
     private $cloneHelper;
 
     /**
-     * @param EntityManager            $em              The entity manager
-     * @param SecurityContextInterface $securityContext The security context
-     * @param EventDispatcherInterface $eventDispatcher The Event dispatcher
+     * @param EntityManager                  $em                    The entity manager
+     * @param TokenStorageInterface          $tokenStorage          The security token storage
+     * @param AuthorizationCheckerInterface  $authorizationChecker  The security authorization checker
+     * @param EventDispatcherInterface       $eventDispatcher       The Event dispatcher
+     * @param CloneHelper                    $cloneHelper           The clone helper
      */
     public function __construct(
         EntityManager $em,
-        SecurityContextInterface $securityContext,
+        TokenStorageInterface $tokenStorage,
+        AuthorizationCheckerInterface $authorizationChecker,
         EventDispatcherInterface $eventDispatcher,
-        $cloneHelper
+        CloneHelper $cloneHelper
     ) {
-        $this->em              = $em;
-        $this->securityContext = $securityContext;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->cloneHelper     = $cloneHelper;
+        $this->em                   = $em;
+        $this->tokenStorage         = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->eventDispatcher      = $eventDispatcher;
+        $this->cloneHelper          = $cloneHelper;
     }
 
     /**
@@ -69,12 +75,12 @@ class NodeAdminPublisher
      */
     public function publish(NodeTranslation $nodeTranslation, $user = null)
     {
-        if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_PUBLISH,$nodeTranslation->getNode())) {
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_PUBLISH,$nodeTranslation->getNode())) {
             throw new AccessDeniedException();
         }
 
         if (is_null($user)) {
-            $user = $this->securityContext->getToken()->getUser();
+            $user = $this->tokenStorage->getToken()->getUser();
         }
 
         $node = $nodeTranslation->getNode();
@@ -120,14 +126,14 @@ class NodeAdminPublisher
     public function publishLater(NodeTranslation $nodeTranslation, \DateTime $date)
     {
         $node = $nodeTranslation->getNode();
-        if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_PUBLISH, $node)) {
             throw new AccessDeniedException();
         }
 
         //remove existing first
         $this->unSchedulePublish($nodeTranslation);
 
-        $user                        = $this->securityContext->getToken()->getUser();
+        $user                        = $this->tokenStorage->getToken()->getUser();
         $queuedNodeTranslationAction = new QueuedNodeTranslationAction();
         $queuedNodeTranslationAction
             ->setNodeTranslation($nodeTranslation)
@@ -145,7 +151,7 @@ class NodeAdminPublisher
      */
     public function unPublish(NodeTranslation $nodeTranslation)
     {
-        if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_UNPUBLISH,$nodeTranslation->getNode())) {
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_UNPUBLISH,$nodeTranslation->getNode())) {
             throw new AccessDeniedException();
         }
 
@@ -179,13 +185,13 @@ class NodeAdminPublisher
     public function unPublishLater(NodeTranslation $nodeTranslation, \DateTime $date)
     {
         $node = $nodeTranslation->getNode();
-        if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_UNPUBLISH, $node)) {
             throw new AccessDeniedException();
         }
 
         //remove existing first
         $this->unSchedulePublish($nodeTranslation);
-        $user                        = $this->securityContext->getToken()->getUser();
+        $user                        = $this->tokenStorage->getToken()->getUser();
         $queuedNodeTranslationAction = new QueuedNodeTranslationAction();
         $queuedNodeTranslationAction
             ->setNodeTranslation($nodeTranslation)

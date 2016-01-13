@@ -2,18 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-
 /**
- * adds the user information to the context of the record which will be logged
+ * Adds the user information to the context of the record which will be logged
  */
 class UserProcessor
 {
-
     /**
      * Use container else we have a continous loop in our dependency
      *
@@ -47,15 +44,10 @@ class UserProcessor
     public function processRecord(array $record)
     {
         if (is_null($this->user)) {
-            /* @var SecurityContextInterface $securityContext */
-            $securityContext = null;
-            try {
-                $this->container->get("security.context");
-            } catch (ServiceCircularReferenceException $e) {
-                //since the securitycontext is deprecated getting the context from the container results in a log line which tries to use this method again....
-            }
-            if (($securityContext !== null) && ($securityContext->getToken() !== null) && ($securityContext->getToken()->getUser() instanceof \Symfony\Component\Security\Core\User\AdvancedUserInterface)) {
-                $this->user = $securityContext->getToken()->getUser();
+            /* @var TokenStorageInterface $securityTokenStorage */
+            $securityTokenStorage = $this->container->get('security.token_storage');
+            if (($securityTokenStorage !== null) && ($securityTokenStorage->getToken() !== null) && ($securityTokenStorage->getToken()->getUser() instanceof \Symfony\Component\Security\Core\User\AdvancedUserInterface)) {
+                $this->user = $securityTokenStorage->getToken()->getUser();
                 $this->record['extra']['user']['username'] = $this->user->getUsername();
                 $this->record['extra']['user']['roles'] = $this->user->getRoles();
                 $this->record['extra']['user']['is_account_non_expired'] = $this->user->isAccountNonExpired();
@@ -67,5 +59,4 @@ class UserProcessor
 
         return array_merge($record, $this->record);
     }
-
 }
