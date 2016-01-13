@@ -3,7 +3,7 @@
 {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
 
 {% if adminlist.pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
+    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_admin_list') }}
 {% endif %}
 
 {% if adminlist.hasBulkActions %}
@@ -136,5 +136,5 @@
 {% endif %}
 
 {% if adminlist.pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap') }}
+    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_admin_list') }}
 {% endif %}
