@@ -20,7 +20,7 @@
         "knplabs/knp-menu-bundle": "~2.0",
         "sensio/framework-extra-bundle": "*",
         "kunstmaan/utilities-bundle": "~3.2",
-        "guzzle/guzzle": "3.8.*"
+        "guzzle/guzzle": "~3.9"
     },
     "suggests": {
         "kunstmaan/user-management-bundle": "~3.2"
