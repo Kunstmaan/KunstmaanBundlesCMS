@@ -190,8 +190,8 @@
                     {% set counter = 1 %}
                     {% for media in folder.media %}
                         {% if not handler or handler.canHandle(media) %}
-                            {% set handler = mediamanager.getHandler(media) %}
-                            {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                            {% set usedHandler = mediamanager.getHandler(media) %}
+                            {% set imageurl =  usedHandler.getImageUrl(media, app.request.basePath) %}
                             {% if imageurl is not empty and media.location == 'local' %}
                                 {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
                                     {% set imageurl = imageurl %}
