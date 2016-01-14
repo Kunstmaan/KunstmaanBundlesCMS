@@ -58,6 +58,24 @@
 
     @media (min-width: $screen-sm) {
 
+        .nav > li > a {
+            padding: 1.3rem 0.6rem;
+
+            font-size: 1.3rem;
+        }
+
+        .nav > li:first-child > a {
+            padding-left: 1.6rem;
+        }
+    }
+
+    @media (min-width: $screen-md) {
+        .nav > li > a {
+            padding: 1.3rem 1rem;
+
+            font-size: 1.4rem;
+        }
+
         .nav > li:first-child > a {
             padding-left: 2.4rem;
         }
