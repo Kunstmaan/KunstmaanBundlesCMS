@@ -88,7 +88,6 @@
                     {% endif %}
 
                     {% if adminlist.canDelete(item) %}
-                        {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
                         <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item" title="Delete">
                             <i class="fa fa-trash-o"></i>
                         </a>
@@ -138,3 +137,9 @@
 {% if adminlist.pagerfanta.haveToPaginate() %}
     {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_admin_list') }}
 {% endif %}
+
+{% for item in adminlist.items(extraparams) %}
+    {% if adminlist.canDelete(item) %}
+        {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
+    {% endif %}
+{% endfor %}
