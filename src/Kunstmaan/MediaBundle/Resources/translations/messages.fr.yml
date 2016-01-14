@@ -30,6 +30,7 @@ media:
   folder:
     addsub:
       action: Ajouter un sous-dossier
+      action_short: Ajouter
       modal:
         title: Ajouter un sous-dossier
         save: Ajouter
@@ -37,6 +38,7 @@ media:
       no: Pas encore de sous-dossiers.
     delete:
       action: Supprimer ce dossier
+      action_short: Supprimer
       modal:
         title: Supprimer le dossier
         text: Etes-vous certain de vouloir supprimer "%folder%"?

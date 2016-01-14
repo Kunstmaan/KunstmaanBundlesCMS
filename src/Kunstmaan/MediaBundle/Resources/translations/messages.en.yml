@@ -38,6 +38,7 @@ media:
   folder:
     addsub:
       action: Add subfolder
+      action_short: Add
       modal:
         title: Add subfolder
         save: Add
@@ -45,6 +46,7 @@ media:
       no: No subfolders yet.
     delete:
       action: Delete this folder
+      action_short: Delete
       modal:
         title: Delete folder
         text: Are you sure you want to delete "%folder%"?
