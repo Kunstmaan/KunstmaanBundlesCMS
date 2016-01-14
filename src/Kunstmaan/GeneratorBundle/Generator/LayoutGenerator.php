@@ -20,6 +20,11 @@ class LayoutGenerator extends KunstmaanGenerator
     private $rootDir;
 
     /**
+     * @var string
+     */
+    private $shortBundleName;
+
+    /**
      * @var bool
      */
     private $demosite;
@@ -35,6 +40,8 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->bundle   = $bundle;
         $this->rootDir  = $rootDir;
         $this->demosite = $demosite;
+
+        $this->shortBundleName = '@'.str_replace('Bundle', '', $bundle->getName());
 
         $this->generateBowerFiles();
         $this->generateGulpFiles();
@@ -189,7 +196,7 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $this->skeletonDir . $relPath,
             $this->bundle->getPath() . $relPath,
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'shortBundleName' => $this->shortBundleName),
             true
         );
 
