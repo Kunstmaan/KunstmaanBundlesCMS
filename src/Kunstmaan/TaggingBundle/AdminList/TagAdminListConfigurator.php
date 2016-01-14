@@ -28,8 +28,8 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFields()
     {
         $this->addField('name', 'Name', true);
-        $this->addField('createdat', 'Created at', true);
-        $this->addField('updatedat', 'Updated at', true);
+        $this->addField('createdAt', 'Created at', true);
+        $this->addField('updatedAt', 'Updated at', true);
     }
 
     /**
