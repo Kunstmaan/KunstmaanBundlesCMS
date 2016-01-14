@@ -64,11 +64,12 @@
                         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
                             {% set imageurl = imageurl %}
                         {% else %}
+                            {% set imageurlretina = imageurl | imagine_filter('media_list_thumbnail_retina') %}
                             {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
                         {% endif %}
                     {% endif %}
                     {% if imageurl %}
-                        <img src="{{ imageurl }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                        <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina }} 2x" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                         <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
                             {{ media.name }}
                         </figcaption>
