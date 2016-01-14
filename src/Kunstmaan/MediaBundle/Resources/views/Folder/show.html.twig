@@ -94,10 +94,12 @@
                     </ul>
                 </div>
                 <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
-                    {{ 'media.folder.addsub.action' |trans }}
+                    <span class="large-screen">{{ 'media.folder.addsub.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.addsub.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
                 <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
-                    {{ 'media.folder.delete.action' |trans }}
+                    <span class="large-screen">{{ 'media.folder.delete.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.delete.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
             {% endblock %}
         </div>
