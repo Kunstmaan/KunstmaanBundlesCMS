@@ -1,6 +1,6 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.pagepartEditor = (function(window) {
+kunstmaanbundles.pagepartEditor = function (window) {
 
     var events = {
         add: [],
@@ -10,38 +10,48 @@ kunstmaanbundles.pagepartEditor = (function(window) {
 
     var init, addPagePart, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent;
 
-    init = function() {
+    init = function () {
         var $body = $('body');
 
         // Add
-        $body.on('change', '.js-add-pp-select', function() {
+        $body.on('change', '.js-add-pp-select', function () {
             addPagePart($(this));
         });
 
         // Edit
-        $body.on('click', '.js-edit-pp-btn', function() {
+        $body.on('click', '.js-edit-pp-btn', function () {
             editPagePart($(this));
         });
 
         // Del
-        $body.on('click', '.js-delete-pp-btn', function() {
+        $body.on('click', '.js-delete-pp-btn', function () {
             deletePagePart($(this));
         });
 
         // Move up
-        $body.on('click', '.js-move-up-pp-btn', function() {
+        $body.on('click', '.js-move-up-pp-btn', function () {
             movePagePartUp($(this));
         });
 
         // Move down
-        $body.on('click', '.js-move-down-pp-btn', function() {
+        $body.on('click', '.js-move-down-pp-btn', function () {
             movePagePartDown($(this));
+        });
+
+        $body.on('click', '.js-resize-pp-view-btn', function () {
+            resizePagePartView($(this));
+        });
+
+        $body.on('click', '.js-resize-all-pp', function (e) {
+            resizeAllRegionPp($(this));
+
+            e.preventDefault();
         });
     };
 
 
     // Add
-    addPagePart = function($select) {
+    addPagePart = function ($select) {
         if (!$select.val()) {
             return false;
         }
@@ -83,7 +93,7 @@ kunstmaanbundles.pagepartEditor = (function(window) {
                 $temp.append(data);
 
                 // Check if some javascript needs to be reinitialised for this PP
-                $temp.find('*[data-reinit-js]').each(function() {
+                $temp.find('*[data-reinit-js]').each(function () {
                     // Get modules from data attribute
                     var modules = $(this).data('reinit-js');
 
@@ -119,7 +129,7 @@ kunstmaanbundles.pagepartEditor = (function(window) {
 
 
     // Edit
-    editPagePart = function($btn) {
+    editPagePart = function ($btn) {
         var targetId = $btn.data('target-id');
 
         // Enable "leave page" modal
@@ -144,7 +154,7 @@ kunstmaanbundles.pagepartEditor = (function(window) {
 
 
     // Delete
-    deletePagePart = function($btn) {
+    deletePagePart = function ($btn) {
         var targetId = $btn.data('target-id'),
             $container = $('#' + targetId + '-pp-container');
 
@@ -169,7 +179,7 @@ kunstmaanbundles.pagepartEditor = (function(window) {
 
 
     // Move up
-    movePagePartUp = function($btn) {
+    movePagePartUp = function ($btn) {
         var targetId = $btn.data('target-id');
 
         var currentPp = $('#' + targetId + '-pp-container');
@@ -181,13 +191,19 @@ kunstmaanbundles.pagepartEditor = (function(window) {
             kunstmaanbundles.checkIfEdited.edited();
         }
 
+        currentPp.velocity('scroll', {
+            duration: 500,
+            offset: -200,
+            easing: 'ease-in-out'
+        });
+
         // Set Active Edit
         window.activeEdit = targetId;
     };
 
 
     // Move down
-    movePagePartDown = function($btn) {
+    movePagePartDown = function ($btn) {
         var targetId = $btn.data('target-id');
 
         var currentPp = $('#' + targetId + '-pp-container');
@@ -199,24 +215,84 @@ kunstmaanbundles.pagepartEditor = (function(window) {
             kunstmaanbundles.checkIfEdited.edited();
         }
 
+        currentPp.velocity('scroll', {
+            duration: 500,
+            offset: -200,
+            easing: 'ease-in-out'
+        });
+
         // Set Active Edit
         window.activeEdit = targetId;
     };
+
+    //Resize
+    resizePagePartView = function ($btn) {
+        var targetId = $btn.data('target-id');
+
+        var parentEl = $("#" + targetId);
+        var target = $('#' + targetId + '-preview-view');
+        var resizeTarget = target.parent();
+
+        resizeTarget.toggleClass('action--maximize');
+        $btn.toggleClass('pp__actions__action--resize-max');
+
+        if (resizeTarget.hasClass('action--maximize')) {
+             $btn.find('i').removeClass('fa-minus').addClass('fa-plus');
+             resizeTarget.velocity({"height": "7rem"}, {duration: 400, easing: 'ease-in-out'});
+        } else {
+             $btn.find('i').removeClass('fa-plus').addClass('fa-minus');
+             resizeTarget.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
+        }
+
+    };
+
+    resizeAllRegionPp = function ($btn) {
+        var target = $btn.data('target');
+
+        var parentEl = $("#" + target);
+        var resizeTargets = parentEl.find('.pp__view');
+
+        resizePp($btn, resizeTargets, parentEl);
+    };
+
+    resizePp = function ($btn, $target, $parent) {
+        //$btn.toggleClass('pp__actions__action--resize-max');
+        var resizeBtn = $parent.find('button.pp__actions__action--resize');
+
+        console.log($target);
+
+        if($btn.hasClass('region__actions__min')) {
+            if($target.hasClass('action--maximize') == false) {
+                $target.addClass('action--maximize');
+                $target.velocity({"height": "7rem"}, {duration: 400, easing: 'ease-in-out'});
+                resizeBtn.find('i').removeClass('fa-minus').addClass('fa-plus');
+                resizeBtn.addClass('pp__actions__action--resize-max');
+            }
+        }else if($btn.hasClass('region__actions__max')) {
+            $target.removeClass('action--maximize');
+            $target.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
+            resizeBtn.find('i').removeClass('fa-plus').addClass('fa-minus');
+            resizeBtn.removeClass('pp__actions__action--resize-max');
+        }
+    }
+
     // subsribe to an event.
-    subscribeToEvent = function(eventName, callBack) {
+    subscribeToEvent = function (eventName, callBack) {
         if (!events.hasOwnProperty(eventName)) {
             throw new Error("PagePartEditor: I cannot let you subscribe to the unknown event named: " + eventName);
         }
         events[eventName].push(callBack);
     };
-    unSubscribeToEvent = function(eventName, callback) {
+    unSubscribeToEvent = function (eventName, callback) {
         if (!events.hasOwnProperty(eventName)) {
             throw new Error("PagePartEditor: I cannot let you unSubscribe to the unknown event named: " + eventName);
         }
-        events = events.filter(function(cb) { return cb !== callback});
+        events = events.filter(function (cb) {
+            return cb !== callback
+        });
     };
-    executeEvent = function(eventName, target) {
-        events[eventName].forEach(function(cb) {
+    executeEvent = function (eventName, target) {
+        events[eventName].forEach(function (cb) {
             cb({target: target})
         })
     };
@@ -226,4 +302,4 @@ kunstmaanbundles.pagepartEditor = (function(window) {
         unSubscribeToEvent: unSubscribeToEvent
     };
 
-}(window));
+}(window);
