@@ -167,7 +167,8 @@ class InputAssistant
      */
     private function fixNamespace($namespace)
     {
-        return str_replace('\\', '/', $namespace);
+
+        return strtr($namespace, array('\\Bundle\\' => '/', '\\' => '/'));
     }
 
     /**

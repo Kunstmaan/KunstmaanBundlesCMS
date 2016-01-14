@@ -145,7 +145,11 @@ EOT
         $input->setOption('namespace', $namespace);
 
         // bundle name
-        $bundle = $input->getOption('bundle-name') ?: strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
+        if ($input->getOption('bundle-name')) {
+            $bundle = $input->getOption('bundle-name');
+        } else {
+            $bundle = strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
+        }
         $output
             ->writeln(
                 array('', 'In your code, a bundle is often referenced by its name. It can be the', 'concatenation of all namespace parts but it\'s really up to you to come',
