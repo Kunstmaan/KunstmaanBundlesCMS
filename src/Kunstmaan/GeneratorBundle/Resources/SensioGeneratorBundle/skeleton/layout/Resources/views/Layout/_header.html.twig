@@ -43,7 +43,7 @@
 {# Desktop header #}
 {# DemositeMessage #}
 {% block cookieconsent %}
-    {% include '<%= bundle.getName() %>:Layout:_demositemessage.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_demositemessage.html.twig' %}
 {% endblock %}
 
 {% if nodemenu is defined %}

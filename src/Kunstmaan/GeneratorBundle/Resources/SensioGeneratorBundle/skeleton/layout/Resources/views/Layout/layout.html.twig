@@ -21,16 +21,16 @@
     {% endif %}
 
     {# Favicons #}
-    {% include '<%= bundle.getName() %>:Layout:_favicons.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_favicons.html.twig' %}
 
     {# Webfonts #}
     <link href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
 
     {# CSS #}
-    {% include '<%= bundle.getName() %>:Layout:_css.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_css.html.twig' %}
 
     {# JS #}
-    {% include '<%= bundle.getName() %>:Layout:_js_header.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_js_header.html.twig' %}
 </head>
 
 <body id="sidebar-toggle-container" class="sidebar-toggle-container{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
@@ -38,15 +38,15 @@
 <div class="emulate-pulldown">
 <% endif %>
     {# Google Tagmanager #}
-    {% include '<%= bundle.getName() %>:Layout:_googletagmanager.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_googletagmanager.html.twig' %}
 
     {# Outdated browser message #}
-    {% include '<%= bundle.getName() %>:Layout:_outdatedbrowser.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_outdatedbrowser.html.twig' %}
 
 <% if demosite %>
     <div id="sidebar-toggle__sidebar" class="sidebar-toggle__sidebar sidebar-toggle__sidebar--left main-nav main-nav--mobile">
         {# Mobile nav #}
-        {% include '<%= bundle.getName() %>:Layout:_mobile-nav.html.twig' %}
+        {% include '<%= shortBundleName %>/Layout/_mobile-nav.html.twig' %}
     </div>
 
     <div id="sidebar-toggle__content" class="sidebar-toggle__content">
@@ -54,12 +54,12 @@
 
     {# Header #}
     {% block header %}
-        {% include '<%= bundle.getName() %>:Layout:_header.html.twig' %}
+        {% include '<%= shortBundleName %>/Layout/_header.html.twig' %}
     {% endblock %}
 
     {# Breadcrumbs #}
     {% block breadcrumbs %}
-        {% include '<%= bundle.getName() %>:Layout:_breadcrumbs.html.twig' %}
+        {% include '<%= shortBundleName %>/Layout/_breadcrumbs.html.twig' %}
     {% endblock %}
 
     {# Content #}
@@ -69,7 +69,7 @@
 
     {# Footer #}
     {% block footer %}
-        {% include '<%= bundle.getName() %>:Layout:_footer.html.twig' %}
+        {% include '<%= shortBundleName %>/Layout/_footer.html.twig' %}
     {% endblock %}
 
 <% if demosite %>
@@ -78,11 +78,11 @@
 
     {# Cookieconsent #}
     {% block cookieconsent %}
-        {% include '<%= bundle.getName() %>:Layout:_cookieconsent.html.twig' %}
+        {% include '<%= shortBundleName %>/Layout/_cookieconsent.html.twig' %}
     {% endblock %}
 
     {# JS Footer #}
-    {% include '<%= bundle.getName() %>:Layout:_js_footer.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
 <% if demosite %>
     </div>
 
