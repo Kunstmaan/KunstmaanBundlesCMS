@@ -7,7 +7,13 @@ liip_imagine:
         media_list_thumbnail:
             quality: 75
             filters:
-                thumbnail: { size: [210, 150], mode: inset }
+                thumbnail: { size: [210, 150], mode: outbound }
+                relative_resize: { widen: 210 }
+        media_list_thumbnail_retina:
+            quality: 85
+            filters:
+                thumbnail: { size: [420, 300], mode: outbound }
+                relative_resize: { widen: 420 }
         media_detail_thumbnail:
             quality: 75
             filters:
