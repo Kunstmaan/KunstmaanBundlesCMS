@@ -12,6 +12,8 @@
 /* Regions
    ========================================================================== */
 .page-template__region {
+    position: relative;
+
     margin: 2rem 0;
     padding: 1rem;
 
@@ -28,4 +30,34 @@
     border-bottom: 1px solid $gray-lighter;
     border-radius: $border-radius-base $border-radius-base 0 0;
     background: $white;
+}
+
+.region__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.region__actions__max,
+.region__actions__min{
+    @extend .pp__actions__action;
+
+    height: 2.6rem !important;
+
+    i {
+        vertical-align: text-top;
+    }
+
+}
+
+.region__actions__max {
+    &:hover {
+        background: $green;
+    }
+}
+
+.region__actions__min {
+    &:hover {
+        background: $orangy;
+    }
 }
