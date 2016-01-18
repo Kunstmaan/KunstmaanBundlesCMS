@@ -191,7 +191,7 @@
                     {% for field in adminlist.configurator.fields %}
                         {{ field.header }}
                          <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': 'ASC'})) }}">asc</a>
-                         <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': 'ASC'})) }}">desc</a>
+                         <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': 'DESC'})) }}">desc</a>
                         <br>
                     {% endfor %}
 
