@@ -189,14 +189,24 @@
                         </p>
                     {% endif %}
                 {% else %}
-                    <b>Sort by: </b>:
-                    {% for field in adminlist.configurator.fields %}
-                        {% if app.request.query.get('orderDirection') != 'DESC' %}
-                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': 'DESC'})) }}">{{ field.header }}</a>&nbsp;
-                        {% else %}
-                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': 'ASC'})) }}">{{ field.header }}</a>&nbsp;
-                        {% endif %}
-                    {% endfor %}
+                    <div class="row list-group">
+                        <div class="col-xs-12">
+                            <div class="btn-group pull-right btn-group-md" role="group">
+                                <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                                    {{ 'media.folder.sortby' | trans }} <i class="fa fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    {% for field in adminlist.configurator.fields %}
+                                        <li>
+                                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': app.request.get('orderDirection') != 'DESC' ? 'DESC': 'ASC'})) }}">
+                                                {{ field.header }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     {% if adminlist.count > 0 %}
                         <div class="row">
                             {% for media in adminlist.items %}
