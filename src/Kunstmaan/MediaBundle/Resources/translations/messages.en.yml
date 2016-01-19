@@ -55,6 +55,7 @@ media:
       title: Content
     propertiestab:
       title: Properties
+    sortby: Sort by
 
   bulkupload:
     upload: Upload
