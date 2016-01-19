@@ -3,24 +3,27 @@
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SimpleMenuAdaptor implements MenuAdaptorInterface
 {
-
     /**
-     * @var SecurityContext
+     * @var AuthorizationCheckerInterface
      */
-    private $securityContext;
+    private $authorizationChecker;
 
     /**
      * @var array
      */
     private $menuItems;
 
-    public function __construct(SecurityContext $securityContext, array $menuItems)
+    /**
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param array $menuItems
+     */
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, array $menuItems)
     {
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
         $this->menuItems = $menuItems;
     }
 
@@ -40,7 +43,7 @@ class SimpleMenuAdaptor implements MenuAdaptorInterface
                 continue;
             }
 
-            if ($item['role'] && false === $this->securityContext->isGranted($item['role'])) {
+            if ($item['role'] && false === $this->authorizationChecker->isGranted($item['role'])) {
                 continue;
             }
 

@@ -3,9 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 

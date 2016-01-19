@@ -211,7 +211,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             }
             $ymlData .= "\n\n    ".strtolower($this->bundle->getName()).".admin_menu_adaptor:";
             $ymlData .= "\n        class: ".$this->bundle->getNamespace()."\Helper\Menu\AdminMenuAdaptor";
-            $ymlData .= "\n        arguments: [\"@security.context\"]";
             $ymlData .= "\n        tags:";
             $ymlData .= "\n            -  { name: 'kunstmaan_admin.menu.adaptor' }\n";
             file_put_contents($file, $ymlData, FILE_APPEND);

@@ -189,9 +189,17 @@
                         </p>
                     {% endif %}
                 {% else %}
+                    <b>Sort by: </b>:
+                    {% for field in adminlist.configurator.fields %}
+                        {% if app.request.query.get('orderDirection') != 'DESC' %}
+                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': 'DESC'})) }}">{{ field.header }}</a>&nbsp;
+                        {% else %}
+                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': 'ASC'})) }}">{{ field.header }}</a>&nbsp;
+                        {% endif %}
+                    {% endfor %}
                     {% if adminlist.count > 0 %}
                         <div class="row">
-                            {% for media in folder.media %}
+                            {% for media in adminlist.items %}
                                 {% set handler = mediamanager.getHandler(media) %}
                                 {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                                 {% if imageurl is not empty and media.location == 'local' %}

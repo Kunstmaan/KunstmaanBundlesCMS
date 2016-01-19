@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/symfony": "~2.3",
+        "symfony/symfony": "~2.6",
         "white-october/pagerfanta-bundle": "1.0.*",
         "kunstmaan/admin-bundle": "~3.2",
         "kunstmaan/adminlist-bundle": "~3.2",

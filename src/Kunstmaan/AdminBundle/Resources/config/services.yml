@@ -40,7 +40,7 @@ services:
 
     kunstmaan_admin.admin_locale.listener:
         class: '%kunstmaan_admin.admin_locale.listener.class%'
-        arguments: ['@security.context', '@translator', '%kunstmaan_admin.default_admin_locale%', '%kunstmaan_admin.firewall.provider_key%']
+        arguments: ['@security.token_storage', '@translator', '%kunstmaan_admin.default_admin_locale%', '%kunstmaan_admin.firewall.provider_key%']
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
 
@@ -74,15 +74,15 @@ services:
 
     kunstmaan_admin.acl.helper:
         class: '%kunstmaan_admin.acl.helper.class%'
-        arguments: ['@doctrine.orm.entity_manager', '@security.context', '@security.role_hierarchy']
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
 
     kunstmaan_admin.acl.native.helper:
         class: '%kunstmaan_admin.acl.native.helper.class%'
-        arguments: ['@doctrine.orm.entity_manager', '@security.context', '@security.role_hierarchy']
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
 
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
-        arguments: ['@doctrine.orm.entity_manager', '@security.context', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@event_dispatcher', '@kunstmaan_utilities.shell', '@kernel']
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@event_dispatcher', '@kunstmaan_utilities.shell', '@kernel']
 
     kunstmaan_admin.clone.helper:
         class: Kunstmaan\AdminBundle\Helper\CloneHelper
@@ -172,7 +172,7 @@ services:
 
     kunstmaan_admin.admin_panel.adaptor:
         class: Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor
-        arguments: ['@security.context']
+        arguments: ['@security.token_storage']
         tags:
             -  { name: 'kunstmaan_admin.admin_panel.adaptor' }
 

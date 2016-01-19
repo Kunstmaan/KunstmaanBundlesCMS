@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * The AdminList controller for the AbstractArticleAuthor
@@ -29,11 +28,6 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
      * @var string $locale
      */
     protected $locale;
-
-    /**
-     * @var SecurityContextInterface $securityContext
-     */
-    protected $securityContext;
 
     /**
      * @var User $user
@@ -67,8 +61,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     {
         $this->em = $this->getEntityManager();
         $this->locale = $this->getRequest()->getLocale();
-        $this->securityContext = $this->container->get('security.context');
-        $this->user = $this->securityContext->getToken()->getUser();
+        $this->user = $this->container->get('security.token_storage')->getToken()->getUser();
         $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
     }
 

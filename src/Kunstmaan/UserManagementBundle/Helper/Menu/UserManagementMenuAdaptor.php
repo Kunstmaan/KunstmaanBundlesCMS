@@ -6,18 +6,21 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class UserManagementMenuAdaptor implements MenuAdaptorInterface
 {
     /**
-     * @var SecurityContextInterface
+     * @var AuthorizationCheckerInterface
      */
-    protected $securityContext;
+    protected $authorizationChecker;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    /**
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     */
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -34,7 +37,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
             return;
         }
         else if ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
-            if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
                 $menuItem = new MenuItem($menu);
                 $menuItem
                     ->setRoute('KunstmaanUserManagementBundle_settings_users')
@@ -74,7 +77,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
             }
         } else {
             if ('KunstmaanUserManagementBundle_settings_users' == $parent->getRoute()) {
-                if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+                if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
                     $menuItem = new MenuItem($menu);
                     $menuItem
                         ->setRoute('KunstmaanUserManagementBundle_settings_users_add')
@@ -101,7 +104,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                 }
             } else {
                 if ('KunstmaanUserManagementBundle_settings_groups' == $parent->getRoute()) {
-                    if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+                    if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
                         $menuItem = new MenuItem($menu);
                         $menuItem
                             ->setRoute('KunstmaanUserManagementBundle_settings_groups_add')
@@ -128,7 +131,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                     }
                 } else {
                     if ('KunstmaanUserManagementBundle_settings_roles' == $parent->getRoute()) {
-                        if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+                        if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
                             $menuItem = new MenuItem($menu);
                             $menuItem
                                 ->setRoute('KunstmaanUserManagementBundle_settings_roles_add')
