@@ -10,25 +10,12 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 class PagePartAdminTwigExtension extends \Twig_Extension
 {
     /**
-     * @var \Twig_Environment
-     */
-    protected $environment;
-
-    /**
-     * @param \Twig_Environment $environment
-     */
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
-    /**
      * @return array
      */
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('pagepartadmin_widget', array($this, 'renderWidget'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('pagepartadmin_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
         );
     }
 
@@ -45,15 +32,16 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
-     * @param PagePartAdmin $ppAdmin    The pagepart admin to render
-     * @param Form          $form       The form
-     * @param array         $parameters Additional variables passed to the template
+     * @param \Twig_Environment $env
+     * @param PagePartAdmin     $ppAdmin    The pagepart admin to render
+     * @param Form              $form       The form
+     * @param array             $parameters Additional variables passed to the template
      *
      * @return string The html markup
      */
-    public function renderWidget(PagePartAdmin $ppAdmin , $form = null , array $parameters = array())
+    public function renderWidget(\Twig_Environment $env, PagePartAdmin $ppAdmin , $form = null , array $parameters = array())
     {
-        $template = $this->environment->loadTemplate("KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig");
+        $template = $env->loadTemplate("KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig");
 
         return $template->render(array_merge($parameters, array(
             'pagepartadmin' => $ppAdmin,

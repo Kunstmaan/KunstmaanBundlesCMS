@@ -21,11 +21,6 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     private $indexablePagePartsService;
 
     /**
-     * @var \Twig_Environment
-     */
-    protected $environment;
-
-    /**
      * @param EntityManager             $em
      * @param IndexablePagePartsService $indexablePagePartsService
      */
@@ -33,14 +28,6 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     {
         $this->em                        = $em;
         $this->indexablePagePartsService = $indexablePagePartsService;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
     }
 
     /**
@@ -52,7 +39,7 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('get_parent_page', array($this, 'getParentPage')),
-            new \Twig_SimpleFunction('render_indexable_pageparts', array($this, 'renderIndexablePageParts'), array('needs_context' => true, 'is_safe'       => array('html'))),
+            new \Twig_SimpleFunction('render_indexable_pageparts', array($this, 'renderIndexablePageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
         );
     }
 
@@ -74,6 +61,7 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     }
 
     /**
+     * @param \Twig_Environment     $env
      * @param array                 $twigContext The twig context
      * @param HasPagePartsInterface $page        The page
      * @param string                $contextName The pagepart context
@@ -82,12 +70,13 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
      * @return string
      */
     public function renderIndexablePageParts(
+        \Twig_Environment $env,
         array $twigContext,
         HasPagePartsInterface $page,
         $contextName = 'main',
         array $parameters = array()
     ) {
-        $template       = $this->environment->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
+        $template       = $env->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
         $pageparts      = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
         $newTwigContext = array_merge(
             $parameters,

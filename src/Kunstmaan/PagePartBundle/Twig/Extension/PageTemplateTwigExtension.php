@@ -22,11 +22,6 @@ class PageTemplateTwigExtension extends \Twig_Extension
     protected $kernel;
 
     /**
-     * @var \Twig_Environment
-     */
-    protected $environment;
-
-    /**
      * @param EntityManager   $em     The entity manager
      * @param KernelInterface $kernel The kernel
      */
@@ -37,21 +32,13 @@ class PageTemplateTwigExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
-    /**
      * @return array
      */
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_pagetemplate', array($this, 'renderPageTemplate'), array('needs_context' => true,'is_safe' => array('html'))),
-            new \Twig_SimpleFunction('getpagetemplate', array($this, 'getPageTemplate')),
+            new \Twig_SimpleFunction('render_pagetemplate', array($this, 'renderPageTemplate'), array('needs_environment' => true, 'needs_context' => true,'is_safe' => array('html'))),
+            new \Twig_SimpleFunction('getpagetemplate', array('needs_environment' => true, $this, 'getPageTemplate')),
         );
     }
 
@@ -62,7 +49,7 @@ class PageTemplateTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderPageTemplate(array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
+    public function renderPageTemplate(\Twig_Environment $env, array $twigContext, HasPageTemplateInterface $page, array $parameters = array())
     {
         $pageTemplateConfigurationReader = new PageTemplateConfigurationReader($this->kernel);
         $pageTemplates = $pageTemplateConfigurationReader->getPageTemplates($page);
@@ -70,7 +57,7 @@ class PageTemplateTwigExtension extends \Twig_Extension
         /* @var $pageTemplate PageTemplate */
         $pageTemplate = $pageTemplates[$this->getPageTemplate($page)];
 
-        $template = $this->environment->loadTemplate($pageTemplate->getTemplate());
+        $template = $env->loadTemplate($pageTemplate->getTemplate());
 
         return $template->render(array_merge($parameters, $twigContext));
     }
