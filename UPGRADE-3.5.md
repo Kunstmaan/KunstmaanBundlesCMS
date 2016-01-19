@@ -15,3 +15,12 @@ services:
         calls:
             - [ setAnnotationReader, [ @annotation_reader ] ]
 ```
+
+
+## The deprecated `security.context` service was replaced
+
+The `security.context` service was replaced with the `security.token_storage` and `security.authorization_checker` service.
+More information about this change: http://symfony.com/blog/new-in-symfony-2-6-security-component-improvements
+
+You will only need to make changes when your code extends some functionality of the CMS that used the `security.context` service.
+

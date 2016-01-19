@@ -90,7 +90,7 @@ class UsersController extends BaseSettingsController
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
+            $formType->setCanEditAllFields($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'));
         }
 
         $form = $this->createForm(
@@ -139,7 +139,7 @@ class UsersController extends BaseSettingsController
     public function editAction(Request $request, $id)
     {
         // The logged in user should be able to change his own password/username/email and not for other users
-        if ($id == $this->get('security.context')->getToken()->getUser()->getId()) {
+        if ($id == $this->get('security.token_storage')->getToken()->getUser()->getId()) {
             $requiredRole = 'ROLE_ADMIN';
         } else {
             $requiredRole = 'ROLE_SUPER_ADMIN';
@@ -156,7 +156,7 @@ class UsersController extends BaseSettingsController
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
+            $formType->setCanEditAllFields($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'));
         }
 
         $event = new AdaptSimpleFormEvent($request, $formType, $user);
@@ -233,8 +233,6 @@ class UsersController extends BaseSettingsController
     }
 
     /**
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function changePasswordAction()
@@ -244,7 +242,7 @@ class UsersController extends BaseSettingsController
             $this->generateUrl(
                 'KunstmaanUserManagementBundle_settings_users_edit',
                 array(
-                    'id' => $this->get('security.context')->getToken()->getUser()->getId()
+                    'id' => $this->get('security.token_storage')->getToken()->getUser()->getId()
                 )
             )
         );
