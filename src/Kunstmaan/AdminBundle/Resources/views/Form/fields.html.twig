@@ -48,15 +48,22 @@
 {% spaceless %}
     {% set type = type|default('text') %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %}>
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} data-reinit-js='["charactersLeft"]' {% if attr['maxlength'] is defined %}data-target="#counter-for-{{ form.vars.id }}"{% endif %}>
+    {% if attr['maxlength'] is defined %}
+        <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
+    {% endif %}
 {% endspaceless %}
 {% endblock form_widget_simple %}
 
 
 {% block textarea_widget %}
 {% spaceless %}
-    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
-    <textarea {{ block('widget_attributes') }} rows="5"{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}>{{ value }}</textarea>
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? 'js-max-length-input' : ''))|trim }) %}
+     <textarea {{ block('widget_attributes') }} rows="5"{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor", charactersLeft"]'{% endif %} {% if attr['maxlength'] is defined %}data-target="#counter-for-{{ form.vars.id }}"{% endif %}>{{ value }}</textarea>
+
+    {% if attr['maxlength'] is defined %}
+        <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
+    {% endif %}
 {% endspaceless %}
 {% endblock textarea_widget %}
 
@@ -66,7 +73,10 @@
     {% if attr['maxlength'] is defined %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
     {% endif %}
-    <textarea {{ block('widget_attributes') }}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} data-reinit-js='["richEditor"]' rows="10" cols="600">{{ value|raw }}</textarea>
+    <textarea {{ block('widget_attributes') }}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} data-reinit-js='["richEditor", charactersLeft"]' rows="10" cols="600" {% if attr['maxlength'] is defined %}data-target="#counter-for-{{ form.vars.id }}"{% endif %}>{{ value|raw }}</textarea>
+    {% if attr['maxlength'] is defined %}
+        <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
+    {% endif %}
 {% endspaceless %}
 {% endblock wysiwyg_widget %}
 
