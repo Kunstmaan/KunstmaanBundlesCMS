@@ -8,7 +8,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         delete: []
     };
 
-    var init, addPagePart, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent;
+    var init, addPagePart, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent, reInit, updateDisplayOrder;
 
     init = function () {
         var $body = $('body');
@@ -184,6 +184,9 @@ kunstmaanbundles.pagepartEditor = function (window) {
 
         var currentPp = $('#' + targetId + '-pp-container');
         var previousPp = currentPp.prevAll('.sortable-item:first');
+        // ReInit the modules. This is needed for a known bug in CKEDITOR. When moving a element with a ckeditor in
+        // The DOM, the ckeditor needs to be reinitialized.
+        reInit(currentPp);
         if (previousPp.length) {
             $(previousPp).before(currentPp);
 
@@ -197,6 +200,9 @@ kunstmaanbundles.pagepartEditor = function (window) {
             easing: 'ease-in-out'
         });
 
+        // Update display order.
+        updateDisplayOrder(previousPp, currentPp);
+
         // Set Active Edit
         window.activeEdit = targetId;
     };
@@ -208,6 +214,9 @@ kunstmaanbundles.pagepartEditor = function (window) {
 
         var currentPp = $('#' + targetId + '-pp-container');
         var nextPp = currentPp.nextAll('.sortable-item:first');
+        // ReInit the modules. This is needed for a known bug in CKEDITOR. When moving a element with a ckeditor in
+        // The DOM, the ckeditor needs to be reinitialized.
+        reInit(currentPp);
         if (nextPp.length) {
             $(nextPp).after(currentPp);
 
@@ -220,6 +229,9 @@ kunstmaanbundles.pagepartEditor = function (window) {
             offset: -200,
             easing: 'ease-in-out'
         });
+
+        // Update display order.
+        updateDisplayOrder(currentPp, nextPp);
 
         // Set Active Edit
         window.activeEdit = targetId;
@@ -256,10 +268,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
     };
 
     resizePp = function ($btn, $target, $parent) {
-        //$btn.toggleClass('pp__actions__action--resize-max');
         var resizeBtn = $parent.find('button.pp__actions__action--resize');
-
-        console.log($target);
 
         if($btn.hasClass('region__actions__min')) {
             if($target.hasClass('action--maximize') == false) {
@@ -274,7 +283,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
             resizeBtn.find('i').removeClass('fa-plus').addClass('fa-minus');
             resizeBtn.removeClass('pp__actions__action--resize-max');
         }
-    }
+    };
 
     // subsribe to an event.
     subscribeToEvent = function (eventName, callBack) {
@@ -295,6 +304,28 @@ kunstmaanbundles.pagepartEditor = function (window) {
         events[eventName].forEach(function (cb) {
             cb({target: target})
         })
+    };
+    reInit = function($el) {
+        $($el).find('*[data-reinit-js]').each(function() {
+            // Get modules from data attribute
+            var modules = $(this).data('reinit-js');
+
+            if (modules) {
+                for (var i = 0; i < modules.length; i++) {
+                    // Check if there really is a module with the given name and it if has a public reInit function
+                    if (typeof kunstmaanbundles[modules[i]] === 'object' && typeof kunstmaanbundles[modules[i]].reInit === 'function') {
+                        kunstmaanbundles[modules[i]].reInit();
+                    }
+                }
+            }
+        });
+    };
+    updateDisplayOrder = function($firstEl, $secondEl) {
+        $secondSortEl = $($secondEl).find('#' + $($secondEl).data('sortkey'));
+        $firstSortEl = $($firstEl).find('#' + $($firstEl).data('sortkey'));
+
+        $secondSortEl.val(parseInt($secondSortEl.val()) -1);
+        $firstSortEl.val(parseInt($firstSortEl.val()) +1);
     };
     return {
         init: init,
