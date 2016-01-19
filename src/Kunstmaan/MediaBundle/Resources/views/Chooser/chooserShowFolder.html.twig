@@ -196,9 +196,9 @@
                             {% set imageurl =  usedHandler.getImageUrl(media, app.request.basePath) %}
                             {% if imageurl is not empty and media.location == 'local' %}
                                 {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                                    {% set imageurl = imageurl %}
+                                    {% set imageurlretina = imageurl %}
                                 {% else %}
-                                    {% set imageuretina = imageurl | imagine_filter('media_list_thumbnail_retina') %}
+                                    {% set imageurlretina = imageurl | imagine_filter('media_list_thumbnail_retina') %}
                                     {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
                                 {% endif %}
                             {% endif %}
