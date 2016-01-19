@@ -7,7 +7,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class BaseSettingsController extends Controller
 {
-
     /**
      * Check permission
      *
@@ -15,9 +14,8 @@ class BaseSettingsController extends Controller
      */
     protected function checkPermission($roleToCheck = 'ROLE_SUPER_ADMIN')
     {
-        if (false === $this->container->get('security.context')->isGranted($roleToCheck)) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted($roleToCheck)) {
             throw new AccessDeniedException();
         }
     }
-
 }

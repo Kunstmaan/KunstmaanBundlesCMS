@@ -89,7 +89,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function setTokenAction(Request $request)
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -120,7 +120,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function configAction(Request $request)
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -169,7 +169,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function resetProfileAction()
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -185,7 +185,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function resetPropertyAction()
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 

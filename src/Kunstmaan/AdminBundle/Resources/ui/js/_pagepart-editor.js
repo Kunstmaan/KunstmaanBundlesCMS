@@ -268,10 +268,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
     };
 
     resizePp = function ($btn, $target, $parent) {
-        //$btn.toggleClass('pp__actions__action--resize-max');
         var resizeBtn = $parent.find('button.pp__actions__action--resize');
-
-        console.log($target);
 
         if($btn.hasClass('region__actions__min')) {
             if($target.hasClass('action--maximize') == false) {

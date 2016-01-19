@@ -6,22 +6,16 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
 
-/**
- * Class SlugSecurityListener
- *
- * @package Kunstmaan\NodeBundle\EventListener
- */
 class SlugSecurityListener
 {
     /**
-     * @var SecurityContext
+     * @var AuthorizationCheckerInterface
      */
-    protected $securityContext;
+    protected $authorizationChecker;
 
     /**
      * @var EntityManager
@@ -34,17 +28,18 @@ class SlugSecurityListener
     protected $nodeMenu;
 
     /**
-     * @param EntityManager   $entityManager
-     * @param SecurityContext $securityContext
+     * @param EntityManager                 $entityManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param NodeMenu                      $nodeMenu
      */
     public function __construct(
         EntityManager $entityManager,
-        SecurityContext $securityContext,
+        AuthorizationCheckerInterface $authorizationChecker,
         NodeMenu $nodeMenu
     ) {
-        $this->em              = $entityManager;
-        $this->securityContext = $securityContext;
-        $this->nodeMenu        = $nodeMenu;
+        $this->em                   = $entityManager;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->nodeMenu             = $nodeMenu;
     }
 
     /**
@@ -61,8 +56,7 @@ class SlugSecurityListener
         $nodeTranslation = $event->getNodeTranslation();
         $request         = $event->getRequest();
 
-        /* @var SecurityContextInterface $securityContext */
-        if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
             throw new AccessDeniedException(
                 'You do not have sufficient rights to access this page.'
             );

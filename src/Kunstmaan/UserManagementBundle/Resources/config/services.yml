@@ -5,6 +5,6 @@ parameters:
 services:
     kunstmaan_user_management.menu.adaptor:
         class: '%kunstmaan_user_management.menu.adaptor.class%'
-        arguments: ['@security.context']
+        arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 100 }
