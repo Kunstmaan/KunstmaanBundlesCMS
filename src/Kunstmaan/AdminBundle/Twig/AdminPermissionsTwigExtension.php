@@ -38,7 +38,7 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
      */
     public function renderWidget(Twig_Environment $env, PermissionAdmin $permissionAdmin, FormView $form , array $parameters = array())
     {
-        $template = $this->environment->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
+        $template = $env->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
 
         return $template->render(array_merge(array(
             'form'              => $form,

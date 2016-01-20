@@ -68,7 +68,7 @@ class TabPane
      */
     public function buildForm()
     {
-        $builder = $this->formFactory->createBuilder('form', null, array('cascade_validation'=>true));
+        $builder = $this->formFactory->createBuilder('Symfony\Component\Form\Extension\Core\Type\FormType', null);
 
         foreach ($this->tabs as $tab) {
             $tab->buildForm($builder);
