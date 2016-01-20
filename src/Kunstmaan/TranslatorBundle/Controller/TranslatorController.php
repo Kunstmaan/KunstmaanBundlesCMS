@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
@@ -33,10 +34,11 @@ class TranslatorController extends AdminListController
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
      * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $request = $this->getRequest();
         $configurator = $this->getAdminListConfigurator();
 
         /* @var AdminList $adminList */
@@ -64,16 +66,16 @@ class TranslatorController extends AdminListController
      * @Method({"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $keyword
      * @param string $domain
      * @param string $locale
      * @return array|RedirectResponse
      */
-    public function addAction($keyword = '', $domain = '', $locale = '')
+    public function addAction(Request $request, $keyword = '', $domain = '', $locale = '')
     {
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         $configurator = $this->getAdminListConfigurator();
         $translator = $this->get('translator');
 
@@ -127,14 +129,14 @@ class TranslatorController extends AdminListController
      * @Method({"GET", "POST"})
      * @Template("KunstmaanTranslatorBundle:Translator:editTranslation.html.twig")
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param $id
      * @throws \InvalidArgumentException
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->getRequest();
         $configurator = $this->getAdminListConfigurator();
 
 
