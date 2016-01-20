@@ -321,6 +321,8 @@ abstract class BaseMenuItem extends AbstractEntity
     }
 
     /**
+     * @Assert\Callback
+     *
      * @param ExecutionContextInterface $context
      */
     public function validateEntity(ExecutionContextInterface $context)
