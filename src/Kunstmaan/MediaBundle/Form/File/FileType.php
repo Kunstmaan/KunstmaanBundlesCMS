@@ -95,7 +95,7 @@ class FileType extends AbstractType
                         'entity',
                         array(
                             'class' => 'KunstmaanMediaBundle:Folder',
-                            'property' => 'optionLabel',
+                            'choice_label' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
                                 return $er->selectFolderQueryBuilder()
                                     ->andWhere('f.parent IS NOT NULL');
