@@ -33,7 +33,7 @@ class NodeMenuTabTranslationAdminType extends AbstractType
         }
         $builder->add('weight', 'choice', array(
             'choices'     => array_combine(range(-50, 50), range(-50, 50)),
-            'empty_value' => false,
+            'placeholder' => false,
             'required'    => false,
             'attr'        => array('title' => 'Used to reorder the pages.')
         ));
