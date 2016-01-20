@@ -326,13 +326,19 @@ abstract class BaseMenuItem extends AbstractEntity
     public function validateEntity(ExecutionContextInterface $context)
     {
         if ($this->getType() == self::TYPE_PAGE_LINK && !$this->getNodeTranslation()) {
-            $context->addViolationAt('nodeTranslation', 'Please select a page');
+            $context->buildViolation('Please select a page')
+              ->atPath('nodeTranslation')
+              ->addViolation();
         } elseif ($this->getType() == self::TYPE_URL_LINK) {
             if (strlen($this->getTitle()) == 0) {
-                $context->addViolationAt('title', 'Please set the link title');
+                $context->buildViolation('Please set the link title')
+                  ->atPath('title')
+                  ->addViolation();
             }
             if (strlen($this->getUrl()) == 0) {
-                $context->addViolationAt('url', 'Please set the link URL');
+                $context->buildViolation('Please set the link URL')
+                  ->atPath('url')
+                  ->addViolation();
             }
         }
     }
