@@ -25,7 +25,7 @@ The choice page part can be used to add single or multiple choice form elements 
 * **expanded**: If set to true, radio buttons or checkboxes will be rendered (depending on the multiple value). If false, a select element will be rendered.
 * **multiple**: If true, the user will be able to select multiple options (as opposed to choosing just one option). Depending on the value of the expanded option, this will render either a select tag or checkboxes if true and a select tag or radio buttons if false. The returned value will be an array.
 * **choices**: The list of possible options the user can choose from. The choices can be entered separated by a new line.
-* **empty value**: This option determines whether or not a special "empty" option (e.g. "Choose an option") will appear at the top of a select widget. This option only applies if both the expanded and multiple options are set to false.
+* **placeholder**: This option determines whether or not a special "empty" option (e.g. "Choose an option") will appear at the top of a select widget. This option only applies if both the expanded and multiple options are set to false.
 
 #### FileUploadPagePart
 The file upload page part adds the possibility to upload files. When adding a this kind of page part there are a few configuration options available:
