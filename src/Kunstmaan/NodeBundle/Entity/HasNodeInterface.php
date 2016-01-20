@@ -41,7 +41,6 @@ interface HasNodeInterface extends EntityInterface
 
     /**
      * @return array
-     * @deprecated — use PagesConfiguration
      */
     public function getPossibleChildTypes();
 

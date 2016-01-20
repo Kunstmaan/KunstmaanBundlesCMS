@@ -4,7 +4,6 @@ namespace Kunstmaan\NodeSearchBundle\Helper;
 
 /**
  * Implement this interface to override the default 'type' (class name) to be indexed for this class.
- * @deprecated — use PagesConfiguration
  */
 interface SearchTypeInterface
 {
