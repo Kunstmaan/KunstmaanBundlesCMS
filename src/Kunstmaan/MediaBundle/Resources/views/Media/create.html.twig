@@ -8,7 +8,7 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    <form action="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type } ) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type }), 'attr': {'novalidate': 'novalidate'}}) }}
 
         <!-- Header -->
         <header class="app__content__header">
@@ -50,5 +50,5 @@
         <fieldset class="form__fieldset--padded">
             {{ form_widget(form) }}
         </fieldset>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}
