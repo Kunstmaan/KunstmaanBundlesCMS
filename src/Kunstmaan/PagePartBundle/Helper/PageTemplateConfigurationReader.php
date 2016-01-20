@@ -41,7 +41,7 @@ class PageTemplateConfigurationReader
         $name = substr($name, $pos + 1);
         $result = new PageTemplate();
         $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
-        $rawData = Yaml::parse($path);
+        $rawData = Yaml::parse(file_get_contents($path));
         $result->setName($rawData['name']);
         $rows = array();
         foreach ($rawData['rows'] as $rawRow) {

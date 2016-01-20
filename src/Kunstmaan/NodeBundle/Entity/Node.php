@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Node as GedmoNode;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Node
@@ -81,7 +82,7 @@ class Node extends AbstractEntity implements GedmoNode
 
     /**
      * @var ArrayCollection
-     *
+     * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeTranslation", mappedBy="node")
      */
     protected $nodeTranslations;

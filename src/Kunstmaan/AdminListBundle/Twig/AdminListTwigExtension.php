@@ -14,11 +14,6 @@ use Kunstmaan\AdminListBundle\AdminList\AdminList;
 class AdminListTwigExtension extends \Twig_Extension
 {
     /**
-     * @var \Twig_Environment
-     */
-    protected $environment;
-
-    /**
      * @var ContainerInterface
      */
     protected $container;
@@ -32,14 +27,6 @@ class AdminListTwigExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
-    /**
      * Returns a list of functions to add to the existing list.
      *
      * @return array An array of functions
@@ -47,7 +34,7 @@ class AdminListTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('adminlist_widget', array($this, 'renderWidget'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('adminlist_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
             new \Twig_SimpleFunction('my_router_params', array($this, 'routerParams')),
             new \Twig_SimpleFunction('supported_export_extensions', array($this, 'getSupportedExtensions')),
         );
@@ -66,16 +53,17 @@ class AdminListTwigExtension extends \Twig_Extension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param AdminList $view      The view to render
-     * @param string    $basepath  The base path
-     * @param array     $urlparams Additional url params
-     * @param array     $addparams Add params
+     * @param \Twig_Environment $env
+     * @param AdminList         $view      The view to render
+     * @param string            $basepath  The base path
+     * @param array             $urlparams Additional url params
+     * @param array             $addparams Add params
      *
      * @return string The html markup
      */
-    public function renderWidget(AdminList $view, $basepath, array $urlparams = array(), array $addparams = array())
+    public function renderWidget(\Twig_Environment $env, AdminList $view, $basepath, array $urlparams = array(), array $addparams = array())
     {
-        $template = $this->environment->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
+        $template = $env->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
 
         $filterBuilder  = $view->getFilterBuilder();
 
