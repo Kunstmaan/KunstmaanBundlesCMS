@@ -110,7 +110,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
         array('password_required' => false,
             'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
         ));
-        $resolver->addAllowedValues(array('password_required' => array(true, false)));
+        $resolver->addAllowedValues('password_required', array(true, false));
     }
 
 
