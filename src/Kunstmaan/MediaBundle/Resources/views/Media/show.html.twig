@@ -135,7 +135,7 @@
         <div class="tab-pane" id="properties">
 
             {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-            <form action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(editform) }}>
+            {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id }) }) }}
                 <fieldset class="panel panel-default form-properties">
                     <div class="panel-body">
 
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </form>
+            {{ form_end(editform) }}
         </div>
     </div>
 

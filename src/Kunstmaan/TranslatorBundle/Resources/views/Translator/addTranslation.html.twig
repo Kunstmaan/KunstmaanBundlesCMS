@@ -2,7 +2,7 @@
 
 {% block content %}
     {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-    <form action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" method="post" {{ form_enctype(form) }} novalidate>
+    {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
         <fieldset class="form__fieldset--padded">
             {{ form_rest(form) }}
 
@@ -15,5 +15,5 @@
                 </a>
             </div>
         </fieldset>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

@@ -15,7 +15,7 @@
                 </div>
 
                 {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-                <form action="{{ path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': type})) }}" method="post" {{ form_enctype(form) }}>
+                {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': type}))}) }}
                     <!-- Body -->
                     <div class="modal-body">
                         {{ form_widget(form) }}
@@ -31,7 +31,7 @@
                             {{ 'form.cancel' | trans }}
                         </button>
                     </div>
-                </form>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
