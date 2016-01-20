@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="kuma_menu_item")
  * @ORM\Entity(repositoryClass="Kunstmaan\MenuBundle\Repository\MenuItemRepository")
  * @Gedmo\Tree(type="nested")
- * @Assert\Callback(methods={"validateEntity"})
  */
 class MenuItem extends BaseMenuItem
 {
