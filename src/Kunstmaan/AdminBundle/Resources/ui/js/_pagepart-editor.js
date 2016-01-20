@@ -182,8 +182,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
     movePagePartUp = function ($btn) {
         var targetId = $btn.data('target-id');
 
-        var currentPp = $('#' + targetId + '-pp-container');
-        var previousPp = currentPp.prevAll('.sortable-item:first');
+        $currentPp = $('#' + targetId + '-pp-container');
+        $previousPp = $currentPp.prevAll('.sortable-item:first');
         // ReInit the modules. This is needed for a known bug in CKEDITOR. When moving a element with a ckeditor in
         // The DOM, the ckeditor needs to be reinitialized.
         reInit(currentPp);
@@ -306,7 +306,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         })
     };
     reInit = function($el) {
-        $($el).find('*[data-reinit-js]').each(function() {
+        $el.find('*[data-reinit-js]').each(function() {
             // Get modules from data attribute
             var modules = $(this).data('reinit-js');
 
