@@ -477,7 +477,7 @@ class Media extends AbstractEntity
      */
     public function getUrl()
     {
-        return $this->url;
+        return urlencode($this->url);
     }
 
     /**
