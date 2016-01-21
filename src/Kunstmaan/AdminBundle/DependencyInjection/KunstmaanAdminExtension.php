@@ -111,7 +111,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
     private function addSimpleMenuAdaptor(ContainerBuilder $container, array $menuItems)
     {
         $definition = new Definition('Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor', [
-            new Reference('security.context'),
+            new Reference('security.authorization_checker'),
             $menuItems
         ]);
         $definition->addTag('kunstmaan_admin.menu.adaptor');

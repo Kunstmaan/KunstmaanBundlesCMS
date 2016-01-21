@@ -9,7 +9,6 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * The AdminList controller for the AbstractArticlePage
@@ -30,11 +29,6 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      * @var string $locale
      */
     protected $locale;
-
-    /**
-     * @var SecurityContextInterface $securityContext
-     */
-    protected $securityContext;
 
     /**
      * @var BaseUser $user
@@ -68,8 +62,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
     {
         $this->em              = $this->getEntityManager();
         $this->locale          = $this->getRequest()->getLocale();
-        $this->securityContext = $this->container->get('security.context');
-        $this->user            = $this->securityContext->getToken()->getUser();
+        $this->user            = $this->container->get('security.token_storage')->getToken()->getUser();
         $this->aclHelper       = $this->container->get('kunstmaan_admin.acl.helper');
     }
 

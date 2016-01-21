@@ -9,7 +9,7 @@
         </h1>
     </header>
 
-    <form action="{{ path('KunstmaanAdminBundle_homepage_admin') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanAdminBundle_homepage_admin')}) }}
         <fieldset class="form__fieldset--padded">
             {{ form_errors(form) }}
             {{ form_row(form.title) }}
@@ -25,5 +25,5 @@
                 </a>
             </div>
         </fieldset>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

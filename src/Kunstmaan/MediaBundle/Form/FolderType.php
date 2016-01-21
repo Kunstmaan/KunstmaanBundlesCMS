@@ -62,7 +62,7 @@ class FolderType extends AbstractType
                 'entity',
                 array(
                     'class' => 'KunstmaanMediaBundle:Folder',
-                    'property' => 'optionLabel',
+                    'choice_label' => 'optionLabel',
                     'required' => true,
                     'query_builder' => function (FolderRepository $er) use ($folder) {
                         return $er->selectFolderQueryBuilder($folder);

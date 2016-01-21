@@ -5,6 +5,10 @@
 /* General
    ========================================================================== */
 .form-group {
+    @extend %clearfix;
+
+    position: relative;
+
     max-width: 40rem;
 }
 

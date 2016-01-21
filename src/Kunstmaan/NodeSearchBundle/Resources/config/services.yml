@@ -18,7 +18,7 @@ services:
         calls:
             - [ setIndexName, ['%kunstmaan_node_search.indexname%']]
             - [ setIndexType, ['%kunstmaan_node_search.indextype%']]
-            - [ setSecurityContext, ['@security.context']]
+            - [ setTokenStorage, ['@security.token_storage']]
             - [ setDomainConfiguration, ['@kunstmaan_admin.domain_configuration']]
 
     kunstmaan_node_search.service.indexable_pageparts:

@@ -38,6 +38,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.appLoading.init();
         kunstmaanbundles.tooltip.init();
         kunstmaanbundles.colorpicker.init();
+        kunstmaanbundles.charactersLeft.init();
     };
 
 

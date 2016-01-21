@@ -2,18 +2,21 @@
 
 namespace Kunstmaan\AdminBundle\Helper\AdminPanel;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
 {
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    protected $securityContext;
+    protected $tokenStorage;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    /**
+     * @param TokenStorageInterface $tokenStorage
+     */
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -40,7 +43,7 @@ class DefaultAdminPanelAdaptor implements AdminPanelAdaptorInterface
 
     protected function getChangePasswordAction()
     {
-        $user = $this->securityContext->getToken()->getUser();
+        $user = $this->tokenStorage->getToken()->getUser();
 
         return new AdminPanelAction(
             array(

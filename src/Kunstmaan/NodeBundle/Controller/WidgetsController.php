@@ -9,6 +9,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * WidgetsController
@@ -19,11 +20,12 @@ class WidgetsController extends Controller
      * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
      * @Template("KunstmaanNodeBundle:Widgets:selectLink.html.twig")
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
-    public function ckSelectLinkAction()
+    public function ckSelectLinkAction(Request $request)
     {
-        $params        = $this->getTemplateParameters();
+        $params        = $this->getTemplateParameters($request);
         $params['cke'] = true;
 
         return $params;
@@ -35,11 +37,12 @@ class WidgetsController extends Controller
      * @Route   ("/selecturl", name="KunstmaanNodeBundle_selecturl")
      * @Template("KunstmaanNodeBundle:Widgets:selectLink.html.twig")
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
-    public function selectLinkAction()
+    public function selectLinkAction(Request $request)
     {
-        $params        = $this->getTemplateParameters();
+        $params        = $this->getTemplateParameters($request);
         $params['cke'] = false;
 
         return $params;
@@ -49,13 +52,14 @@ class WidgetsController extends Controller
      * Get the parameters needed in the template. This is common for the
      * default link chooser and the cke link chooser.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
-    private function getTemplateParameters()
+    private function getTemplateParameters(Request $request)
     {
         /* @var EntityManager $em */
         $em     = $this->getDoctrine()->getManager();
-        $locale = $this->getRequest()->getLocale();
+        $locale = $request->getLocale();
 
         $result = $em->getRepository('KunstmaanNodeBundle:Node')
             ->getAllMenuNodes(
@@ -80,7 +84,7 @@ class WidgetsController extends Controller
 
         if (array_key_exists('KunstmaanMediaBundle', $allBundles)) {
             $params          = array('linkChooser' => 1);
-            $cKEditorFuncNum = $this->getRequest()->get('CKEditorFuncNum');
+            $cKEditorFuncNum = $request->get('CKEditorFuncNum');
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
             }

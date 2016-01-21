@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * NodeTranslation
@@ -75,7 +76,7 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @var ArrayCollection
-     *
+     * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
      * @ORM\OrderBy({"created" = "ASC"})
      */

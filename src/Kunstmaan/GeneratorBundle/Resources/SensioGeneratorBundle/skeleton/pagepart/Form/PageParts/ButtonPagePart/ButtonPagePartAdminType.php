@@ -38,17 +38,17 @@ class {{ pagepart }}AdminType extends AbstractType
 	));
 	$builder->add('type', 'choice', array(
 	    'choices' => array_combine({{ pagepart }}::$types, {{ pagepart }}::$types),
-	    'empty_value' => false,
+	    'placeholder' => false,
 	    'required' => true
 	));
 	$builder->add('size', 'choice', array(
 	    'choices' => array_combine({{ pagepart }}::$sizes, {{ pagepart }}::$sizes),
-	    'empty_value' => false,
+	    'placeholder' => false,
 	    'required' => true
 	));
 	$builder->add('position', 'choice', array(
 	    'choices' => array_combine({{ pagepart }}::$positions, {{ pagepart }}::$positions),
-	    'empty_value' => false,
+	    'placeholder' => false,
 	    'required' => true
 	));
     }

@@ -3,23 +3,17 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
-
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\FactoryInterface;
 
-/**
- * ActionsMenuBuilder
- */
 class ActionsMenuBuilder
 {
     /**
@@ -48,9 +42,9 @@ class ActionsMenuBuilder
     private $dispatcher;
 
     /**
-     * @var SecurityContextInterface
+     * @var AuthorizationCheckerInterface
      */
-    private $context;
+    private $authorizationChecker;
 
     /**
      * @var PagesConfiguration
@@ -64,27 +58,27 @@ class ActionsMenuBuilder
 
 
     /**
-     * @param FactoryInterface         $factory    The factory
-     * @param EntityManager            $em         The entity manager
-     * @param RouterInterface          $router     The router
-     * @param EventDispatcherInterface $dispatcher The event dispatcher
-     * @param SecurityContextInterface $context    The security context
-     * @param PagesConfiguration       $pagesConfiguration
+     * @param FactoryInterface              $factory               The factory
+     * @param EntityManager                 $em                    The entity manager
+     * @param RouterInterface               $router                The router
+     * @param EventDispatcherInterface      $dispatcher            The event dispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker  The security authorization checker
+     * @param PagesConfiguration            $pagesConfiguration
      */
     public function __construct(
         FactoryInterface $factory,
         EntityManager $em,
         RouterInterface $router,
         EventDispatcherInterface $dispatcher,
-        SecurityContextInterface $context,
+        AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration
     ) {
-        $this->factory            = $factory;
-        $this->em                 = $em;
-        $this->router             = $router;
-        $this->dispatcher         = $dispatcher;
-        $this->context            = $context;
-        $this->pagesConfiguration = $pagesConfiguration;
+        $this->factory              = $factory;
+        $this->em                   = $em;
+        $this->router               = $router;
+        $this->dispatcher           = $dispatcher;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->pagesConfiguration   = $pagesConfiguration;
     }
 
     /**
@@ -157,14 +151,8 @@ class ActionsMenuBuilder
         )->findOneBy(array('nodeTranslation' => $activeNodeTranslation));
 
         $isFirst    = true;
-        $canEdit    = $this->context->isGranted(
-            PermissionMap::PERMISSION_EDIT,
-            $node
-        );
-        $canPublish = $this->context->isGranted(
-            PermissionMap::PERMISSION_PUBLISH,
-            $node
-        );
+        $canEdit    = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $node);
+        $canPublish = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_PUBLISH, $node);
 
         if ($activeNodeVersion->isDraft() && $this->isEditableNode) {
             if ($canEdit) {
@@ -247,7 +235,7 @@ class ActionsMenuBuilder
 
                 if (empty($queuedNodeTranslationAction)
                     && $activeNodeTranslation->isOnline()
-                    && $this->context->isGranted(
+                    && $this->authorizationChecker->isGranted(
                         PermissionMap::PERMISSION_UNPUBLISH,
                         $node
                     )
@@ -333,7 +321,7 @@ class ActionsMenuBuilder
         }
 
         if (null !== $node->getParent()
-            && $this->context->isGranted(
+            && $this->authorizationChecker->isGranted(
                 PermissionMap::PERMISSION_DELETE,
                 $node
             )

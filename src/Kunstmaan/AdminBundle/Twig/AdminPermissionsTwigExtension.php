@@ -13,22 +13,6 @@ use Symfony\Component\Form\FormView;
  */
 class AdminPermissionsTwigExtension extends \Twig_Extension
 {
-    /**
-     * @var Twig_Environment
-     */
-    protected $environment;
-
-    /**
-     * Initializes the runtime environment.
-     *
-     * This is where you can load some file that contains filter functions for instance.
-     *
-     * @param Twig_Environment $environment The current Twig_Environment instance
-     */
-    public function initRuntime(Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
 
     /**
      * Returns a list of functions to add to the existing list.
@@ -38,22 +22,23 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('permissionsadmin_widget', array($this, 'renderWidget'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('permissionsadmin_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
         );
     }
 
     /**
      * Renders the permission admin widget.
      *
-     * @param PermissionAdmin $permissionAdmin The permission admin
-     * @param FormView        $form            The form
-     * @param array           $parameters      Extra parameters
+     * @param \Twig_Environment $env
+     * @param PermissionAdmin   $permissionAdmin The permission admin
+     * @param FormView          $form            The form
+     * @param array             $parameters      Extra parameters
      *
      * @return string
      */
-    public function renderWidget(PermissionAdmin $permissionAdmin, FormView $form , array $parameters = array())
+    public function renderWidget(Twig_Environment $env, PermissionAdmin $permissionAdmin, FormView $form , array $parameters = array())
     {
-        $template = $this->environment->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
+        $template = $env->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
 
         return $template->render(array_merge(array(
             'form'              => $form,

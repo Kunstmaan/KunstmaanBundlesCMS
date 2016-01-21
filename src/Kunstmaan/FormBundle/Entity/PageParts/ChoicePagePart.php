@@ -119,7 +119,7 @@ class ChoicePagePart extends AbstractFormPagePart
                 'expanded'    => $this->getExpanded(),
                 'multiple'    => $this->getMultiple(),
                 'choices'     => $choices,
-                'empty_value' => $this->getEmptyValue(),
+                'placeholder' => $this->getEmptyValue(),
                 'constraints' => $constraints,
             )
         );

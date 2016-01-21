@@ -11,7 +11,7 @@ Have a look at `Resources/config/services.yml`, there should be an entry that lo
 ```yml 	
 websitebundle.admin_menu_adaptor:
     class: ACME\WebsiteBundle\Helper\Menu\AdminMenuAdaptor
-    arguments: ["@security.context"]
+    arguments: ["@security.authorization_checker"]
     tags:
         -  { name: 'kunstmaan_admin.menu.adaptor' }
 ```

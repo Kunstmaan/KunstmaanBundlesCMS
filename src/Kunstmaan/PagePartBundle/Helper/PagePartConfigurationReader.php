@@ -41,7 +41,7 @@ class PagePartConfigurationReader
 
         list($namespace, $name) = $nameParts;
         $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pageparts/'.$name.'.yml');
-        $rawData = Yaml::parse($path);
+        $rawData = Yaml::parse(file_get_contents($path));
         if (!array_key_exists('types', $rawData)) {
             $rawData['types'] = array();
         }

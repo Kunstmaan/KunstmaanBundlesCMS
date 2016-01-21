@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GoogleAnalyticsController extends Controller
@@ -22,7 +23,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function widgetAction(Request $request)
     {
-        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), true);
+        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), UrlGeneratorInterface::ABSOLUTE_URL);
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
         // if token not set
@@ -89,7 +90,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function setTokenAction(Request $request)
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -120,7 +121,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function configAction(Request $request)
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -169,7 +170,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function resetProfileAction()
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 
@@ -185,7 +186,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function resetPropertyAction()
     {
-        if (false === $this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException();
         }
 

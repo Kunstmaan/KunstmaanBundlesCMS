@@ -39,3 +39,41 @@
 input[type=file].form-control {
     height: auto;
 }
+
+/* counter
+   ========================================================================== */
+.form-control__character-counter {
+    padding: .5rem 0 0 0;
+    display: inline-block;
+
+    line-height: 1;
+    color: $gray;
+
+    &--warning {
+        color: $warning;
+    }
+
+    @media (min-width: $screen-sm) {
+        position: absolute;
+        left: 40rem;
+        top: calc(50% + 1rem);
+
+        padding: .5rem;
+
+        transform: translate3d(0, -50%, 0);
+    }
+}
+
+.rich-editor + .form-control__character-counter {
+    position: static;
+
+    @media (min-width: $screen-sm) {
+        position: static;
+        left: 0;
+        top: 0;
+
+        padding: .5rem;
+
+        transform: none;
+    }
+}

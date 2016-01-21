@@ -4,7 +4,7 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    <form action="{{ path('KunstmaanUserManagementBundle_settings_users_add') }}" method="post" {{ form_enctype(form) }} novalidate autocomplete="off">
+    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanUserManagementBundle_settings_users_add'), 'attr': {'novalidate': 'novalidate', 'autocomplete': 'off'}}) }}
 
         <!-- Header -->
         <header class="app__content__header">
@@ -49,5 +49,5 @@
         <fieldset class="form__fieldset--padded">
             {{ form_rest(form) }}
         </fieldset>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}
