@@ -40,13 +40,13 @@ services:
             - '@kunstmaan_media.media_manager'
             - '@doctrine.orm.entity_manager'
         tags:
-            - { name: form.type, alias: media }
+            - { name: form.type}
 
     form.type.iconfont:
         class: '%kunstmaan_media.form.type.iconfont.class%'
         arguments: ['@kunstmaan_media.icon_font_manager']
         tags:
-            - { name: form.type, alias: iconfont }
+            - { name: form.type }
 
     kunstmaan_media.icon_font_manager:
         class: '%kunstmaan_media.icon_font_manager.class%'
