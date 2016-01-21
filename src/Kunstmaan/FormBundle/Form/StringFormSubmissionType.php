@@ -3,9 +3,9 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The type for the StringFormSubmissionField
@@ -21,7 +21,7 @@ class StringFormSubmissionType extends AbstractType
     {
         $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
         $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
-        $builder->add('value', 'text', $fieldOptions);
+        $builder->add('value', TextType::class, $fieldOptions);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -31,16 +31,10 @@ class StringFormSubmissionType extends AbstractType
         ));
     }
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_formbundle_stringformsubmissiontype';
     }

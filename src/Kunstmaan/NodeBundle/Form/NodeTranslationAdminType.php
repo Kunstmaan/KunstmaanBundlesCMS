@@ -3,9 +3,9 @@
 namespace Kunstmaan\NodeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * NodeTranslationAdminType
@@ -18,13 +18,13 @@ class NodeTranslationAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
+        $builder->add('id', HiddenType::class);
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'nodetranslation';
     }
@@ -34,11 +34,5 @@ class NodeTranslationAdminType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\NodeBundle\Entity\NodeTranslation',
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

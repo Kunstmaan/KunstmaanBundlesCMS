@@ -1,10 +1,11 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Form;
+
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * HeaderPagePartAdminType
@@ -17,7 +18,7 @@ class HeaderPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('niv', 'choice', array('label' => 'pagepart.header.type', 'choices' => array('1' => 'Header 1', '2' => 'Header 2', '3' => 'Header 3', '4' => 'Header 4', '5' => 'Header 5', '6' => 'Header 6'), 'required' => true,));
+        $builder->add('niv', ChoiceType::class, array('label' => 'pagepart.header.type', 'choices' => array('1' => 'Header 1', '2' => 'Header 2', '3' => 'Header 3', '4' => 'Header 4', '5' => 'Header 5', '6' => 'Header 6'), 'required' => true,));
         $builder->add('title', null, array('label' => 'pagepart.header.title', 'required' => true));
     }
 
@@ -26,7 +27,7 @@ class HeaderPagePartAdminType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_pagepartbundle_headerpageparttype';
     }
@@ -39,11 +40,5 @@ class HeaderPagePartAdminType extends AbstractType
         $resolver->setDefaults(array(
                                'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
                                ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

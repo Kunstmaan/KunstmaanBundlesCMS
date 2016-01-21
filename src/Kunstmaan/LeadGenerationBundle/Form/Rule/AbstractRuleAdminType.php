@@ -11,5 +11,5 @@ abstract class AbstractRuleAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    abstract function getName();
+    abstract function getBlockPrefix();
 }

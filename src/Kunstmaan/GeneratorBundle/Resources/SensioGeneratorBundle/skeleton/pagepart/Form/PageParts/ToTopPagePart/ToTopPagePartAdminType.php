@@ -3,7 +3,6 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -32,7 +31,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -47,11 +46,5 @@ class {{ pagepart }}AdminType extends AbstractType
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
 	));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

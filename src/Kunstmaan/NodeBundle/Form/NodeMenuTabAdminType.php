@@ -3,9 +3,10 @@
 namespace Kunstmaan\NodeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class NodeMenuTabAdminType extends AbstractType
 {
@@ -29,15 +30,15 @@ class NodeMenuTabAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if (!$this->isStructureNode) {
-            $builder->add('hiddenFromNav', 'checkbox', array('label' => 'Hidden from menu', 'required' => false));
+            $builder->add('hiddenFromNav', CheckboxType::class, array('label' => 'Hidden from menu', 'required' => false));
         }
-        $builder->add('internalName', 'text', array('label' => 'Internal name', 'required' => false));
+        $builder->add('internalName', TextType::class, array('label' => 'Internal name', 'required' => false));
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'menu';
     }
@@ -47,11 +48,5 @@ class NodeMenuTabAdminType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\NodeBundle\Entity\Node',
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

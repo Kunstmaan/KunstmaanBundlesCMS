@@ -3,9 +3,9 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * An abstract Form Page Admin Type
@@ -19,7 +19,7 @@ class AbstractFormPageAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
-	$builder->add('thanks', 'textarea', array('required' => false, 'attr' => array('class' => 'js-rich-editor rich-editor')));
+	$builder->add('thanks', TextareaType::class, array('required' => false, 'attr' => array('class' => 'js-rich-editor rich-editor')));
         $builder->add('subject');
         $builder->add('from_email');
         $builder->add('to_email');
@@ -32,16 +32,10 @@ class AbstractFormPageAdminType extends AbstractType
         ));
     }
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'formpage';
     }

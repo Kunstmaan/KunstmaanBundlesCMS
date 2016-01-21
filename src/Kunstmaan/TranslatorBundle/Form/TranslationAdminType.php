@@ -3,9 +3,10 @@
 namespace Kunstmaan\TranslatorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TranslationAdminType extends AbstractType
 {
@@ -35,9 +36,9 @@ class TranslationAdminType extends AbstractType
             $options = array('read_only' => true);
         }
 
-        $builder->add('domain', 'text', $options);
-        $builder->add('keyword', 'text', $options);
-        $builder->add('texts', 'collection', array(
+        $builder->add('domain', TextType::class, $options);
+        $builder->add('keyword', TextType::class, $options);
+        $builder->add('texts', CollectionType::class, array(
             'type' => new TextWithLocaleAdminType(),
             'label' => 'translator.translations',
             'by_reference' => false,
@@ -51,7 +52,7 @@ class TranslationAdminType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'translation';
     }
@@ -62,11 +63,5 @@ class TranslationAdminType extends AbstractType
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\Translation',
             'cascade_validation' => true,
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

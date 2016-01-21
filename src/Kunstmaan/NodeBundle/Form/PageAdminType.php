@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * PageAdminType
@@ -18,7 +18,7 @@ class PageAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
+        $builder->add('id', HiddenType::class);
 	$builder->add('title', null, array('label' => 'Navigation title'));
 	$builder->add('pageTitle', null, array(
 	    'attr' => array(
@@ -34,16 +34,10 @@ class PageAdminType extends AbstractType
         ));
     }
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'page';
     }

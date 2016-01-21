@@ -3,9 +3,9 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The type for the BooleanFormSubmissionField
@@ -24,7 +24,7 @@ class BooleanFormSubmissionType extends AbstractType
             return isset($v);
         });
 
-        $builder->add('value', 'checkbox', $fieldOptions);
+        $builder->add('value', CheckboxType::class, $fieldOptions);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -34,16 +34,10 @@ class BooleanFormSubmissionType extends AbstractType
         ));
     }
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_formbundle_booleanformsubmissiontype';
     }

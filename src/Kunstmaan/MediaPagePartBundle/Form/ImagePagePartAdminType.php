@@ -2,12 +2,14 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form;
 
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * ImagePagePartAdminType
@@ -27,10 +29,10 @@ class ImagePagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser', 'label' => 'mediapagepart.image.choosefile'));
+        $builder->add('media', MediaType::class, array('pattern' => 'KunstmaanMediaBundle_chooser', 'label' => 'mediapagepart.image.choosefile'));
         $builder->add('alttext', null, array('required' => false, 'label' => 'mediapagepart.image.alttext'));
-        $builder->add('link', 'urlchooser', array('required' => false, 'label' => 'mediapagepart.image.link'));
-        $builder->add('openinnewwindow', 'checkbox', array('required' => false, 'label' => 'mediapagepart.image.openinnewwindow'));
+        $builder->add('link', URLChooserType::class, array('required' => false, 'label' => 'mediapagepart.image.link'));
+        $builder->add('openinnewwindow', CheckboxType::class, array('required' => false, 'label' => 'mediapagepart.image.openinnewwindow'));
     }
 
     /**
@@ -38,7 +40,7 @@ class ImagePagePartAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_imagepageparttype';
     }
@@ -53,11 +55,5 @@ class ImagePagePartAdminType extends AbstractType
         $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart',
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

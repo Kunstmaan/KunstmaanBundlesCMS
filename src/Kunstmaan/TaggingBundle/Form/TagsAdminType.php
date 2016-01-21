@@ -3,12 +3,12 @@
 namespace Kunstmaan\TaggingBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 use Kunstmaan\TaggingBundle\Form\DataTransformer\TagsTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TagsAdminType extends AbstractType
 {
@@ -26,15 +26,9 @@ class TagsAdminType extends AbstractType
         $builder->addViewTransformer($transformer, true);
     }
 
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults($this->getDefaultOptions(array()));
-	}
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->configureOptions($resolver);
+        $resolver->setDefaults($this->getDefaultOptions(array()));
     }
 
     public function getDefaultOptions(array $options)
@@ -46,18 +40,18 @@ class TagsAdminType extends AbstractType
         }
 
         return array(
-            'choices' => $result,
-            'multiple' => TRUE,
-            'required' => false,
-            'attr' => array(
-		'class' => 'js-advanced-select form-control advanced-select'
-            )
+          'choices' => $result,
+          'multiple' => true,
+          'required' => false,
+          'attr' => array(
+            'class' => 'js-advanced-select form-control advanced-select',
+          ),
         );
     }
 
     public function getParent()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
 
     /**
@@ -65,7 +59,7 @@ class TagsAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_taggingbundle_tags';
     }
