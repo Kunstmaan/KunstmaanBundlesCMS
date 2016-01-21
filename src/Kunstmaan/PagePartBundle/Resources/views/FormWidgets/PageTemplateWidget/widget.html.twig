@@ -92,17 +92,17 @@
         </div>
     {% else %}
         <div class="col-md-{{ region.span }}">
-            <div class="page-template__region" id="{{ region.name|trans|replace({'_':' '})|title }}">
+            <div class="page-template__region" id="{{ region.name|trans|title }}">
                 <header>
                     <h5 class="page-template__region__header">
                     {{ region.name|trans|replace({'_':' '})|title }}
                     </h5>
                 </header>
                 <div class="region__actions">
-                    <button class="js-resize-all-pp btn--raise-on-hover region__actions__min" data-target="{{ region.name|trans|replace({'_':' '})|title }}" title="{{ 'region.button.min'|trans }}">
+                    <button class="js-resize-all-pp btn--raise-on-hover region__actions__min" data-target="{{ region.name|trans|title }}" title="{{ 'region.button.min'|trans }}">
                         <i class="fa fa-minus"></i>
                     </button>
-                    <button class="js-resize-all-pp btn--raise-on-hover region__actions__max" data-target="{{ region.name|trans|replace({'_':' '})|title }}" title="{{ 'region.button.max'|trans }}">
+                    <button class="js-resize-all-pp btn--raise-on-hover region__actions__max" data-target="{{ region.name|trans|title }}" title="{{ 'region.button.max'|trans }}">
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>

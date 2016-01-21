@@ -130,32 +130,32 @@ kunstmaanbundles.pagepartEditor = function (window) {
 
     // Edit
     editPagePart = function ($btn) {
-        var targetId = $btn.data('target-id');
+        var $targetId = $btn.data('target-id');
 
         // Enable "leave page" modal
         kunstmaanbundles.checkIfEdited.edited();
 
         // Show edit view and hide preview
-        $('#' + targetId + '-edit-view').removeClass('pp__view__block--hidden');
-        $('#' + targetId + '-preview-view').addClass('pp__view__block--hidden');
+        $('#' + $targetId + '-edit-view').removeClass('pp__view__block--hidden');
+        $('#' + $targetId + '-preview-view').addClass('pp__view__block--hidden');
 
         // Add edit active class
-        var container = $('#pp-' + targetId);
-        container.addClass('pp--edit-active');
+        var $container = $('#pp-' + $targetId);
+        $container.addClass('pp--edit-active');
 
         // Reinit custom selects
         kunstmaanbundles.advancedSelect.init();
 
         // Set Active Edit
-        window.activeEdit = targetId;
+        window.activeEdit = $targetId;
 
-        executeEvent('edit', container);
+        executeEvent('edit', $container);
     };
 
 
     // Delete
     deletePagePart = function ($btn) {
-        var targetId = $btn.data('target-id'),
+        var $targetId = $btn.data('target-id'),
             $container = $('#' + targetId + '-pp-container');
 
         // Enable "leave page" modal
@@ -169,10 +169,10 @@ kunstmaanbundles.pagepartEditor = function (window) {
         $container.empty();
 
         // Check is-deleted checkbox
-        $('#' + targetId + '-is-deleted').prop('checked', true);
+        $('#' + $targetId + '-is-deleted').prop('checked', true);
 
         // Hide delete modal
-        $('#delete-pagepart-modal-' + targetId).modal('hide');
+        $('#delete-pagepart-modal-' + $targetId).modal('hide');
         $('body').removeClass('modal-open');
         executeEvent('delete', $container);
     };
@@ -180,98 +180,85 @@ kunstmaanbundles.pagepartEditor = function (window) {
 
     // Move up
     movePagePartUp = function ($btn) {
-        var targetId = $btn.data('target-id');
+        var $targetId = $btn.data('target-id');
 
-        var currentPp = $('#' + targetId + '-pp-container');
-        var previousPp = currentPp.prevAll('.sortable-item:first');
-        if (previousPp.length) {
-            $(previousPp).before(currentPp);
+        var $currentPp = $('#' + $targetId + '-pp-container');
+        var $previousPp = $currentPp.prevAll('.sortable-item:first');
+        if ($previousPp.length) {
+            $($previousPp).before($currentPp);
 
             // Enable "leave page" modal
             kunstmaanbundles.checkIfEdited.edited();
         }
 
-        currentPp.velocity('scroll', {
+        $currentPp.velocity('scroll', {
             duration: 500,
             offset: -200,
             easing: 'ease-in-out'
         });
 
         // Set Active Edit
-        window.activeEdit = targetId;
+        window.activeEdit = $targetId;
     };
 
 
     // Move down
     movePagePartDown = function ($btn) {
-        var targetId = $btn.data('target-id');
+        var $targetId = $btn.data('target-id');
 
-        var currentPp = $('#' + targetId + '-pp-container');
-        var nextPp = currentPp.nextAll('.sortable-item:first');
-        if (nextPp.length) {
-            $(nextPp).after(currentPp);
+        var $currentPp = $('#' + $targetId + '-pp-container');
+        var $nextPp = $currentPp.nextAll('.sortable-item:first');
+        if ($nextPp.length) {
+            $($nextPp).after($currentPp);
 
-            // Enable "leave page" modal
             kunstmaanbundles.checkIfEdited.edited();
         }
 
-        currentPp.velocity('scroll', {
+        $currentPp.velocity('scroll', {
             duration: 500,
             offset: -200,
             easing: 'ease-in-out'
         });
 
         // Set Active Edit
-        window.activeEdit = targetId;
+        window.activeEdit = $targetId;
     };
 
     //Resize
     resizePagePartView = function ($btn) {
-        var targetId = $btn.data('target-id');
+        var $targetId = $btn.data('target-id');
 
-        var parentEl = $("#" + targetId);
-        var target = $('#' + targetId + '-preview-view');
-        var resizeTarget = target.parent();
+        var $parentEl = $("#" + $targetId);
+        var $target = $('#' + $targetId + '-preview-view');
+        var $resizeTarget = $target.parent();
 
-        resizeTarget.toggleClass('action--maximize');
+        $resizeTarget.toggleClass('action--maximize');
         $btn.toggleClass('pp__actions__action--resize-max');
 
-        if (resizeTarget.hasClass('action--maximize')) {
+        if ($resizeTarget.hasClass('action--maximize')) {
              $btn.find('i').removeClass('fa-minus').addClass('fa-plus');
-             resizeTarget.velocity({"height": "7rem"}, {duration: 400, easing: 'ease-in-out'});
+             $resizeTarget.velocity({"height": "7rem"}, {duration: 400, easing: 'ease-in-out'});
         } else {
              $btn.find('i').removeClass('fa-plus').addClass('fa-minus');
-             resizeTarget.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
+             $resizeTarget.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
         }
 
     };
 
     resizeAllRegionPp = function ($btn) {
-        var target = $btn.data('target');
+        var $target = $btn.data('target');
 
-        var parentEl = $("#" + target);
-        var resizeTargets = parentEl.find('.pp__view');
-
-        resizePp($btn, resizeTargets, parentEl);
-    };
-
-    resizePp = function ($btn, $target, $parent) {
-        var resizeBtn = $parent.find('button.pp__actions__action--resize');
+        var $parentEl = $("#" + $target);
+        var $resizeTargets = $parentEl.find('.pp__view');
 
         if($btn.hasClass('region__actions__min')) {
-            if($target.hasClass('action--maximize') == false) {
-                $target.addClass('action--maximize');
-                $target.velocity({"height": "7rem"}, {duration: 400, easing: 'ease-in-out'});
-                resizeBtn.find('i').removeClass('fa-minus').addClass('fa-plus');
-                resizeBtn.addClass('pp__actions__action--resize-max');
-            }
+            $parentEl.velocity({"height": "11.8rem"}, {duration: 400, easing: 'ease-in-out'});
+            $parentEl.addClass('action--maximize');
         }else if($btn.hasClass('region__actions__max')) {
-            $target.removeClass('action--maximize');
-            $target.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
-            resizeBtn.find('i').removeClass('fa-plus').addClass('fa-minus');
-            resizeBtn.removeClass('pp__actions__action--resize-max');
+            $parentEl.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
+            $parentEl.removeClass('action--maximize');
         }
-    }
+    };
 
     // subsribe to an event.
     subscribeToEvent = function (eventName, callBack) {
