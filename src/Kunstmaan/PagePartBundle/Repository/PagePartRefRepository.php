@@ -29,7 +29,7 @@ class PagePartRefRepository extends EntityRepository
     public function addPagePart(HasPagePartsInterface $page, PagePartInterface $pagepart, $sequencenumber, $context = "main", $pushOtherPageParts = true)
     {
         if ($pushOtherPageParts) {
-            $pagepartrefs = $this->getPagePartRefs($page);
+            $pagepartrefs = $this->getPagePartRefs($page, $context);
             foreach ($pagepartrefs as $pagepartref) {
                 if ($pagepartref->getSequencenumber() >= $sequencenumber) {
                     $pagepartref->setSequencenumber($pagepartref->getSequencenumber() + 1);
