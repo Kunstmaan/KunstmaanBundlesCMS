@@ -25,7 +25,7 @@ class TranslationAdminType extends AbstractType
         $builder->add('domain', TextType::class, $options);
         $builder->add('keyword', TextType::class, $options);
         $builder->add('texts', CollectionType::class, array(
-            'type' => new TextWithLocaleAdminType(),
+            'entry_type' => TextWithLocaleAdminType::class,
             'label' => 'translator.translations',
             'by_reference' => false,
             'required' => false,

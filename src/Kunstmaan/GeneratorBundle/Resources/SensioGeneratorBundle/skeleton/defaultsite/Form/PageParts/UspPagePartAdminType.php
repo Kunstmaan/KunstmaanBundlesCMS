@@ -25,7 +25,7 @@ class UspPagePartAdminType extends AbstractType
 	parent::buildForm($builder, $options);
 
 	$builder->add('items', CollectionType::class, array(
-	    'type' => new UspItemAdminType(),
+	    'entry_type' => UspItemAdminType::class,
 	    'allow_add' => true,
 	    'allow_delete' => true,
 	    'by_reference' => false,
