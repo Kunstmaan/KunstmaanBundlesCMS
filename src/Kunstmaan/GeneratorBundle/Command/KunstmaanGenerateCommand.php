@@ -2,13 +2,24 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -629,7 +640,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type'      => 'string',
                     'length'    => '255',
-                    'formType'  => 'text',
+                    'formType'  => TextType::class,
                     'nullable'  => $allNullable
                 );
                 break;
@@ -637,7 +648,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type'      => 'text',
-                    'formType'  => 'textarea',
+                    'formType'  => TextareaType::class,
                     'nullable'  => $allNullable
                 );
                 break;
@@ -645,7 +656,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                 'fieldName' => lcfirst(Container::camelize($name)),
                 'type'      => 'text',
-                'formType'  => 'wysiwyg',
+                'formType'  => WysiwygType::class,
                 'nullable'  => $allNullable
                 );
                 break;
@@ -654,7 +665,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     $fields[$type][$subField] = array(
                         'fieldName' => lcfirst(Container::camelize($name . '_' . $subField)),
                         'type'      => 'string',
-                        'formType'  => $subField == 'url' ? 'urlchooser' : 'text',
+                        'formType'  => $subField == 'url' ? URLChooserType::class: TextType::class,
                         'nullable'  => $allNullable
                     );
                 }
@@ -662,14 +673,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'fieldName' => lcfirst(Container::camelize($name . '_new_window')),
                     'type'      => 'boolean',
                     'nullable'  => true,
-                    'formType'  => 'checkbox'
+                    'formType'  => CheckboxType::class
                 );
                 break;
             case 'image':
                 $fields[$type]['image']    = array(
                     'fieldName'    => lcfirst(Container::camelize($name)),
                     'type'         => 'image',
-                    'formType'     => 'media',
+                    'formType'     => MediaType::class,
                     'mediaType'    => $extra,
                     'minHeight'    => $minHeight,
                     'maxHeight'    => $maxHeight,
@@ -687,14 +698,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'fieldName' => lcfirst(Container::camelize($name . '_alt_text')),
                     'type'      => 'text',
                     'nullable'  => true,
-                    'formType'  => 'text'
+                    'formType'  => TextType::class
                 );
                 break;
             case 'media':
                 $fields[$type][] = array(
                     'fieldName'    => lcfirst(Container::camelize($name)),
                     'type'         => 'media',
-                    'formType'     => 'media',
+                    'formType'     => MediaType::class,
                     'mediaType'    => $extra,
                     'mimeTypes'    => $mimeTypes,
                     'targetEntity' => 'Kunstmaan\MediaBundle\Entity\Media',
@@ -711,7 +722,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                     'fieldName'    => lcfirst(Container::camelize($name)),
                     'type'         => 'entity',
-                    'formType'     => 'entity',
+                    'formType'     => EntityType::class,
                     'targetEntity' => $entityName,
                     'joinColumn'   => array(
                         'name'                 => str_replace('.', '_', Container::underscore($name . '_id')),
@@ -732,7 +743,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                     'fieldName'    => lcfirst(Container::camelize($name)),
                     'type'         => 'entity',
-                    'formType'     => 'entity',
+                    'formType'     => EntityType::class,
                     'targetEntity' => $entityName,
                     'joinTable'    => array(
                         'name'               => $joinTableName,
@@ -759,7 +770,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type'      => 'boolean',
-                    'formType'  => 'checkbox',
+                    'formType'  => CheckboxType::class,
                     'nullable'  => $allNullable
                 );
                 break;
@@ -767,7 +778,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type'      => 'integer',
-                    'formType'  => 'integer',
+                    'formType'  => IntegerType::class,
                     'nullable'  => $allNullable
                 );
                 break;
@@ -777,7 +788,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'type'      => 'decimal',
                     'precision' => 10,
                     'scale'     => 2,
-                    'formType'  => 'number',
+                    'formType'  => NumberType::class,
                     'nullable'  => $allNullable
                 );
                 break;
@@ -785,7 +796,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $fields[$type][] = array(
                     'fieldName' => lcfirst(Container::camelize($name)),
                     'type'      => 'datetime',
-                    'formType'  => 'datetime',
+                    'formType'  => DateTimeType::class,
                     'nullable'  => $allNullable
                 );
                 break;
