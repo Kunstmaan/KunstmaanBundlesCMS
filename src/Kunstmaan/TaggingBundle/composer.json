@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "symfony/symfony": "~2.8",
         "fpn/doctrine-extensions-taggable": "0.9.0",
         "kunstmaan/admin-bundle": "~3.2",
