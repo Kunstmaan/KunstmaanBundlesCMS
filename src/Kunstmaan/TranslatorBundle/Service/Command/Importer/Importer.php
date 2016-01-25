@@ -94,7 +94,7 @@ class Importer
         $this->translationRepository = $translationRepository;
     }
 
-    public function setTranslationGroupManager($translationGroupManager)
+    public function setTranslationGroupManager(TranslationGroupManager $translationGroupManager)
     {
         $this->translationGroupManager = $translationGroupManager;
     }
