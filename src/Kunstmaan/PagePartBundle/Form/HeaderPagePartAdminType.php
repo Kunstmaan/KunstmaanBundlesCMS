@@ -23,8 +23,6 @@ class HeaderPagePartAdminType extends AbstractType
     }
 
     /**
-     * @assert () == 'kunstmaan_pagepartbundle_headerpageparttype'
-     *
      * @return string
      */
     public function getBlockPrefix()
@@ -37,8 +35,10 @@ class HeaderPagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-                               ));
+        $resolver->setDefaults(
+          array(
+            'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+          )
+        );
     }
 }

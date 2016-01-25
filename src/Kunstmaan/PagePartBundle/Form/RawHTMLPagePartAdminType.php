@@ -22,8 +22,6 @@ class RawHTMLPagePartAdminType extends AbstractType
     }
 
     /**
-     * @assert () == 'kunstmaan_pagepartbundle_rawhtmlpageparttype'
-     *
      * @return string
      */
     public function getBlockPrefix()

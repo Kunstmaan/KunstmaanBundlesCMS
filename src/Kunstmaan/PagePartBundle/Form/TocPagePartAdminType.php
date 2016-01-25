@@ -20,8 +20,6 @@ class TocPagePartAdminType extends AbstractType
     }
 
     /**
-     * @assert () == 'kunstmaan_pagepartbundle_tocpageparttype'
-     *
      * @return string
      */
     public function getBlockPrefix()

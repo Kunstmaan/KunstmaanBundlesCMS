@@ -24,8 +24,6 @@ class LinkPagePartAdminType extends AbstractType
     }
 
     /**
-     * @assert () == 'kunstmaan_pagepartbundle_linkpageparttype'
-     *
      * @return string
      */
     public function getBlockPrefix()

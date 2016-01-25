@@ -94,6 +94,6 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('redirect_form', $this->objectMultiDomain->getName());
+        $this->assertEquals(RedirectAdminType::class, $this->objectMultiDomain->getName());
     }
 }

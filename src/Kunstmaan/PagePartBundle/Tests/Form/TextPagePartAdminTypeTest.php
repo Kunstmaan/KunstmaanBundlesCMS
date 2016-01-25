@@ -31,13 +31,11 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_textpageparttype'.
-     *
      * @covers Kunstmaan\PagePartBundle\Form\TextPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_textpageparttype', $this->object->getName());
+        $this->assertEquals(TextPagePartAdminType::class, $this->object->getName());
     }
 
     /**
