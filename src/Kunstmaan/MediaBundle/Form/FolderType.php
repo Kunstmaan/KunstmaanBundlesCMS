@@ -17,19 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FolderType extends AbstractType
 {
     /**
-     * @var Folder
-     */
-    public $folder;
-
-    /**
-     * @param Folder $folder The folder
-     */
-    public function __construct(Folder $folder = null)
-    {
-        $this->folder = $folder;
-    }
-
-    /**
      * Builds the form.
      *
      * This method is called for each type in the hierarchy starting form the
@@ -44,7 +31,7 @@ class FolderType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $folder = $this->folder;
+        $folder = $options['folder'];
         $builder
             ->add('name')
             ->add(
@@ -101,6 +88,7 @@ class FolderType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => 'Kunstmaan\MediaBundle\Entity\Folder',
+                'folder' => null
             )
         );
     }

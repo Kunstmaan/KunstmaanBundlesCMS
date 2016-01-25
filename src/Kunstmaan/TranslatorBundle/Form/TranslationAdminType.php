@@ -11,28 +11,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TranslationAdminType extends AbstractType
 {
     /**
-     * @var string
-     */
-    private $intention;
-
-    /**
-     * Constructor
-     *
-     * @param string $intention
-     */
-    public function __construct($intention = 'add')
-    {
-        $this->intention = $intention;
-    }
-
-    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $intention = $options['intention'];
         $options = array();
-        if ($this->intention == 'edit') {
+        if ($intention == 'edit') {
             $options = array('read_only' => true);
         }
 
@@ -61,6 +47,7 @@ class TranslationAdminType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\Translation',
+            'intention' => null
         ));
     }
 }
