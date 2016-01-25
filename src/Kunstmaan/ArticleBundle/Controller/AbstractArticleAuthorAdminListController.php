@@ -60,7 +60,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     protected function initAdminListConfigurator()
     {
         $this->em = $this->getEntityManager();
-        $this->locale = $this->getRequest()->getLocale();
+        $this->locale = $this->get('request_stack')->getCurrentRequest()->getLocale();
         $this->user = $this->container->get('security.token_storage')->getToken()->getUser();
         $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
     }

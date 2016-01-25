@@ -41,7 +41,7 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         if (is_null($request)) {
-            $request = $this->getRequest();
+            $request = $this->get('request_stack')->getCurrentRequest();
         }
         /* @var AdminList $adminList */
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
@@ -101,7 +101,7 @@ abstract class AdminListController extends Controller
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
         if (is_null($request)) {
-            $request = $this->getRequest();
+            $request = $this->get('request_stack')->getCurrentRequest();
         }
         $entityName = null;
         if (isset($type)) {
@@ -175,7 +175,7 @@ abstract class AdminListController extends Controller
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
         if (is_null($request)) {
-            $request = $this->getRequest();
+            $request = $this->get('request_stack')->getCurrentRequest();
         }
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper === null) {
@@ -248,7 +248,7 @@ abstract class AdminListController extends Controller
         /* @var $em EntityManager */
         $em = $this->getEntityManager();
         if (is_null($request)) {
-            $request = $this->getRequest();
+            $request = $this->get('request_stack')->getCurrentRequest();
         }
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper === null) {
