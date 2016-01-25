@@ -16,10 +16,10 @@ class TranslationAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $intention = $options['intention'];
+        $intention = $options['csrf_token_id'];
         $options = array();
         if ($intention == 'edit') {
-            $options = array('read_only' => true);
+            $options = array('attr' => array('readonly' => true));
         }
 
         $builder->add('domain', TextType::class, $options);
@@ -47,7 +47,6 @@ class TranslationAdminType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\Translation',
-            'intention' => null
         ));
     }
 }

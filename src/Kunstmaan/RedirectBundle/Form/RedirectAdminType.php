@@ -40,13 +40,14 @@ class RedirectAdminType extends AbstractType
         if ($this->domainConfiguration->isMultiDomainHost()) {
             $hosts = $this->domainConfiguration->getHosts();
             $domains = array_combine($hosts, $hosts);
-            $domains = array_merge(array('' => 'redirect.all'), $domains);
+            $domains = array_merge(array('redirect.all' => ''), $domains);
 
             $builder->add('domain', ChoiceType::class, array(
                 'choices' => $domains,
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
+                'choices_as_values' => true,
             ));
         }
 

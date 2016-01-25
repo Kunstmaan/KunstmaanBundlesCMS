@@ -85,7 +85,7 @@ class TranslatorController extends AdminListController
             $translation->addText($locale, '');
         }
 
-        $form = $this->createForm(TranslationAdminType::class, $translation, array('intention' => 'add'));
+        $form = $this->createForm(TranslationAdminType::class, $translation, array('csrf_token_id' => 'add'));
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
 
