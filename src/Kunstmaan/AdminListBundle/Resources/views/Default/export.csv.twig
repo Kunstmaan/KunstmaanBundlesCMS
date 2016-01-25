@@ -3,13 +3,10 @@
 {{- quote|raw -}}{{- column.header | trans -}}{{- quote|raw -}}
 {%- if not loop.last -%},{%- endif -%}
 {%- endfor -%}
+{% set counter = 0 %}
 {% for item in iterator %}
-{% if item[0] is defined %}
-{% set item = item[0] %}
-{% else %}
-{% set item = item %}
-{% endif %}
-
+{% set item = item[counter] %}
+{% set counter = counter + 1 %}
 {% for column in adminlist.exportColumns -%}
 {%- set columnName = column.name -%}
 {%- set template = column.template -%}

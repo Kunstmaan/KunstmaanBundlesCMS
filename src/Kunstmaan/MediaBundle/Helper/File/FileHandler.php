@@ -46,6 +46,11 @@ class FileHandler extends AbstractMediaHandler
     private $blacklistedExtensions = array();
 
     /**
+     * @var Slugifier
+     */
+    private $slugifier;
+
+    /**
      * Constructor
      * @param int $priority
      * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
@@ -54,6 +59,14 @@ class FileHandler extends AbstractMediaHandler
     {
         parent::__construct($priority);
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
+    }
+
+    /**
+     * @param Slugifier $slugifier
+     */
+    public function setSlugifier(Slugifier $slugifier)
+    {
+        $this->slugifier = $slugifier;
     }
 
     /**
@@ -153,7 +166,8 @@ class FileHandler extends AbstractMediaHandler
             $media->setContent($file);
         }
         if ($content instanceof UploadedFile) {
-            $media->setOriginalFilename($content->getClientOriginalName());
+            $pathInfo = pathinfo($content->getClientOriginalName());
+            $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
             $name = $media->getName();
             if (empty($name)) {
                 $media->setName($media->getOriginalFilename());

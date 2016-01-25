@@ -11,14 +11,6 @@ parameters:
     kunstmaan_media.mimetype_guesser.factory.class: 'Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory'
 
 services:
-    liip_imagine.data.loader.stream.profile_photos:
-        class: '%liip_imagine.data.loader.stream.class%'
-        arguments:
-            - '@liip_imagine'
-            - ''
-        tags:
-            - { name: 'liip_imagine.data.loader', loader: 'kunstmaan_media_thumbloader' }
-
     kunstmaan_media.media_manager:
         class: '%kunstmaan_media.media_manager.class%'
         calls:
