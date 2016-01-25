@@ -3,7 +3,6 @@
 namespace {{ namespace }}\Form\{{ entity_prefix }};
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Kunstmaan\MediaBundle\Validator\Constraints as Assert;
 
@@ -82,7 +81,7 @@ class {{ className }} extends {{ extend_class }}
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return '{{ name }}';
     }
@@ -97,11 +96,5 @@ class {{ className }} extends {{ extend_class }}
         $resolver->setDefaults(array(
             'data_class' => '{{ entity }}'
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

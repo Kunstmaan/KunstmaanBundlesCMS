@@ -3,6 +3,7 @@
 namespace Kunstmaan\LeadGenerationBundle\Form\Rule;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class LocaleBlackListAdminType extends AbstractRuleAdminType
@@ -28,7 +29,7 @@ class LocaleBlackListAdminType extends AbstractRuleAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('locale', 'choice', array(
+        $builder->add('locale', ChoiceType::class, array(
             'attr'      => array('info_text' => 'Defines the locale that should be blacklisted'),
             'choices'   => $this->locales
         ));
@@ -39,7 +40,7 @@ class LocaleBlackListAdminType extends AbstractRuleAdminType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'locale_blacklist_form';
     }

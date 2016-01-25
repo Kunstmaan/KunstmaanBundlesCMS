@@ -4,11 +4,11 @@ namespace Kunstmaan\MediaBundle\Form\Type;
 
 use Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * IconFontType
@@ -33,13 +33,13 @@ class IconFontType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
+        return TextType::class;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'iconfont';
     }
@@ -57,12 +57,6 @@ class IconFontType extends AbstractType
                 'loader_data' => null
             )
         );
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**

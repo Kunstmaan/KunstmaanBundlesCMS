@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form;
 
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * VideoPagePartAdminType
@@ -25,7 +25,7 @@ class VideoPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser', 'mediatype' => 'video', 'label' => 'mediapagepart.video.choose'));
+        $builder->add('media', MediaType::class, array('pattern' => 'KunstmaanMediaBundle_chooser', 'mediatype' => 'video', 'label' => 'mediapagepart.video.choose'));
     }
 
     /**
@@ -33,7 +33,7 @@ class VideoPagePartAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_videopageparttype';
     }
@@ -48,11 +48,5 @@ class VideoPagePartAdminType extends AbstractType
         $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart',
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

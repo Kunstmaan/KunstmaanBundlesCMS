@@ -128,7 +128,6 @@ class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
-            'cascade_validation' => true,
             'attr' => array(
                 'nested_form' => true,
                 'nested_form_min' => 1,
@@ -146,7 +145,6 @@ class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\WebsiteBundle\Entity\PageParts\ContactPagePart',
-            'cascade_validation' => true,
         ));
     }
 

@@ -20,7 +20,6 @@ class MyAdminType extends AbstractType
                 'allow_add'          => true,
                 'allow_delete'       => true,
                 'by_reference'       => false,
-                'cascade_validation' => true,
                 'attr'               => array(
                     'nested_form'           => true,
                 )
@@ -53,7 +52,6 @@ class MyAdminType extends AbstractType
                 'allow_add'          => true,
                 'allow_delete'       => true,
                 'by_reference'       => false,
-                'cascade_validation' => true,
                 'attr'               => array(
                     'nested_form'           => true,
                     'nested_sortable'       => true,

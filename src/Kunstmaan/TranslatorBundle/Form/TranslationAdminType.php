@@ -3,42 +3,29 @@
 namespace Kunstmaan\TranslatorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TranslationAdminType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $intention;
-
-    /**
-     * Constructor
-     *
-     * @param string $intention
-     */
-    public function __construct($intention = 'add')
-    {
-        $this->intention = $intention;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $intention = $options['intention'];
         $options = array();
-        if ($this->intention == 'edit') {
+        if ($intention == 'edit') {
             $options = array('read_only' => true);
         }
 
-        $builder->add('domain', 'text', $options);
-        $builder->add('keyword', 'text', $options);
-        $builder->add('texts', 'collection', array(
-            'type' => new TextWithLocaleAdminType(),
+        $builder->add('domain', TextType::class, $options);
+        $builder->add('keyword', TextType::class, $options);
+        $builder->add('texts', CollectionType::class, array(
+            'entry_type' => TextWithLocaleAdminType::class,
             'label' => 'translator.translations',
             'by_reference' => false,
             'required' => false,
@@ -51,7 +38,7 @@ class TranslationAdminType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'translation';
     }
@@ -60,13 +47,7 @@ class TranslationAdminType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\Translation',
-            'cascade_validation' => true,
+            'intention' => null
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

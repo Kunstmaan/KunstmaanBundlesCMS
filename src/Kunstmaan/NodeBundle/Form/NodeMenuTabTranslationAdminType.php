@@ -2,10 +2,11 @@
 
 namespace Kunstmaan\NodeBundle\Form;
 
+use Kunstmaan\NodeBundle\Form\Type\SlugType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class NodeMenuTabTranslationAdminType extends AbstractType
 {
@@ -29,9 +30,9 @@ class NodeMenuTabTranslationAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if (!$this->isStructureNode) {
-            $builder->add('slug', 'slug', array('required' => false));
+            $builder->add('slug', SlugType::class, array('required' => false));
         }
-        $builder->add('weight', 'choice', array(
+        $builder->add('weight', ChoiceType::class, array(
             'choices'     => array_combine(range(-50, 50), range(-50, 50)),
             'placeholder' => false,
             'required'    => false,
@@ -42,7 +43,7 @@ class NodeMenuTabTranslationAdminType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'menutranslation';
     }
@@ -52,11 +53,5 @@ class NodeMenuTabTranslationAdminType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\NodeBundle\Entity\NodeTranslation',
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

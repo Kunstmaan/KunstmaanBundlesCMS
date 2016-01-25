@@ -14,8 +14,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.6",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "gedmo/doctrine-extensions": "2.3.*",
         "kunstmaan/admin-bundle": "~3.2",
         "kunstmaan/media-bundle": "~3.2",

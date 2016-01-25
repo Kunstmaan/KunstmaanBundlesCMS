@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form;
 
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * AudioPagePartAdminType
@@ -27,7 +27,7 @@ class AudioPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser', 'mediatype' => 'audio', 'label' => 'mediapagepart.audio.choose'));
+        $builder->add('media', MediaType::class, array('pattern' => 'KunstmaanMediaBundle_chooser', 'mediatype' => 'audio', 'label' => 'mediapagepart.audio.choose'));
     }
 
     /**
@@ -35,7 +35,7 @@ class AudioPagePartAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_audiopageparttype';
     }
@@ -50,11 +50,5 @@ class AudioPagePartAdminType extends AbstractType
         $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\AudioPagePart',
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

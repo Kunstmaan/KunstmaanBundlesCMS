@@ -35,4 +35,4 @@ services:
         class: Kunstmaan\TaggingBundle\Form\TagsAdminType
         arguments: ['@kuma_tagging.tag_manager']
         tags:
-            - { name: form.type, alias: kunstmaan_taggingbundle_tags }
+            - { name: form.type }

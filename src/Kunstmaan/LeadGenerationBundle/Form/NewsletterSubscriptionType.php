@@ -3,6 +3,7 @@
 namespace Kunstmaan\LeadGenerationBundle\Form;
 
 use Kunstmaan\LeadGenerationBundle\Form\Popup\AbstractPopupAdminType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -26,7 +27,7 @@ class NewsletterSubscriptionType extends AbstractPopupAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'email', array(
+        $builder->add('email', EmailType::class, array(
             'constraints' => array(
                 new NotBlank(),
                 new Email(array('checkMX' => false)),
@@ -39,7 +40,7 @@ class NewsletterSubscriptionType extends AbstractPopupAdminType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'newslettersubscription_form';
     }

@@ -5,7 +5,6 @@ namespace {{ namespace }}\Form\Pages;
 use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The admin type for {{ entity_class }} pages
@@ -40,16 +39,10 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
     }
 
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ entity_class|lower }}_page_type';
     }

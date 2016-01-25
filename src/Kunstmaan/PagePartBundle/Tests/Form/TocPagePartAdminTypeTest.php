@@ -32,13 +32,11 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_tocpageparttype'.
-     *
      * @covers                Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_tocpageparttype', $this->object->getName());
+        $this->assertEquals(TocPagePartAdminType::class, $this->object->getName());
     }
 
     /**

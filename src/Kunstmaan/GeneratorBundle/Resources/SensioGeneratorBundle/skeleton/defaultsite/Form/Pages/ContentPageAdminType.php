@@ -5,7 +5,8 @@ namespace {{ namespace }}\Form\Pages;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * The admin type for content pages
@@ -29,12 +30,12 @@ class ContentPageAdminType extends PageAdminType
     {
         parent::buildForm($builder, $options);
 {% if demosite %}
-	$builder->add('menuImage', 'media', array(
+	$builder->add('menuImage', MediaType::class, array(
 	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => false
 	));
-	$builder->add('menuDescription', 'textarea', array(
+	$builder->add('menuDescription', TextAreaType::class, array(
 	    'attr' => array('rows' => 3, 'cols' => 600),
 	    'required' => false
 	));
@@ -53,18 +54,12 @@ class ContentPageAdminType extends PageAdminType
         ));
     }
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * Returns the name of this type.
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return 'contentpage';
     }

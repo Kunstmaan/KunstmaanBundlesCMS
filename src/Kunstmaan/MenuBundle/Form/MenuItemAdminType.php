@@ -6,6 +6,9 @@ use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MenuBundle\Entity\Menu;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -73,7 +76,7 @@ class MenuItemAdminType extends AbstractType
 
         $builder->add(
             'parent',
-            'entity',
+            EntityType::class,
             array(
                 'class'         => $menuItemclass,
                 'choice_label'  => 'displayTitle',
@@ -104,7 +107,7 @@ class MenuItemAdminType extends AbstractType
         );
         $builder->add(
             'type',
-            'choice',
+            ChoiceType::class,
             array(
                 'choices'     => array_combine(
                     MenuItem::$types,
@@ -119,7 +122,7 @@ class MenuItemAdminType extends AbstractType
 
         $builder->add(
             'nodeTranslation',
-            'entity',
+            EntityType::class,
             array(
                 'class'         => 'KunstmaanNodeBundle:NodeTranslation',
                 'choice_label'  => 'title',
@@ -156,14 +159,14 @@ class MenuItemAdminType extends AbstractType
         );
         $builder->add(
             'title',
-            'text',
+            TextType::class,
             array(
                 'required' => false
             )
         );
         $builder->add(
             'url',
-            'text',
+            TextType::class,
             array(
                 'required' => true
             )
@@ -176,7 +179,7 @@ class MenuItemAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'menuitem_form';
     }

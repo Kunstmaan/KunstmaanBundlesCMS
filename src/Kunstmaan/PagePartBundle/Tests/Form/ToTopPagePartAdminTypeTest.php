@@ -31,13 +31,11 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_totoppageparttype'.
-     *
      * @covers                Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_totoppageparttype', $this->object->getName());
+        $this->assertEquals(ToTopPagePartAdminType::class, $this->object->getName());
     }
 
     /**
