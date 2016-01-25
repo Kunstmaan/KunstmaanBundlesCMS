@@ -29,7 +29,6 @@ class UspPagePartAdminType extends AbstractType
 	    'allow_add' => true,
 	    'allow_delete' => true,
 	    'by_reference' => false,
-	    'cascade_validation' => true,
 	    'attr' => array(
 		'nested_form' => true,
 		'nested_sortable' => true,
@@ -48,7 +47,6 @@ class UspPagePartAdminType extends AbstractType
     {
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\UspPagePart',
-	    'cascade_validation' => true,
 	));
     }
 

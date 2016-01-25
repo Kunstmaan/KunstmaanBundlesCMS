@@ -17,6 +17,7 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
     /**
      * @var ArrayCollection
      *
+     * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="\{{ namespace }}\Entity\UspItem", mappedBy="uspPagePart", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"weight" = "ASC"})
      **/

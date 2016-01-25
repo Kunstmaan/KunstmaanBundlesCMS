@@ -61,7 +61,6 @@ class TranslationAdminType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\Translation',
-            'cascade_validation' => true,
         ));
     }
 }
