@@ -8,8 +8,8 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * HTML5 range type field
@@ -24,12 +24,6 @@ class RangeType extends AbstractType
         $resolver->setDefaults(array('attr' => array('min' => 0, 'max' => 100, 'step' => 1)));
     }
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * Get parent
      *
@@ -37,7 +31,7 @@ class RangeType extends AbstractType
      */
     public function getParent()
     {
-        return 'integer';
+        return IntegerType::class;
     }
 
     /**
@@ -45,7 +39,7 @@ class RangeType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'range';
     }

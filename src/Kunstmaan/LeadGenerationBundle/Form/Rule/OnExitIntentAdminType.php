@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Form\Rule;
 
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class OnExitIntentAdminType extends AbstractRuleAdminType
@@ -19,20 +20,20 @@ class OnExitIntentAdminType extends AbstractRuleAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('sensitivity', 'integer', array(
+        $builder->add('sensitivity', IntegerType::class, array(
             'required' => false,
             'attr' => array(
                 'info_text' => 'kuma_lead_generation.on_exit_intent.sensitivity_info'
             )
         ));
-        $builder->add('timer', 'integer', array(
+        $builder->add('timer', IntegerType::class, array(
             'label' => 'Timer (milliseconds)',
             'required' => false,
             'attr' => array(
                 'info_text' => 'kuma_lead_generation.on_exit_intent.timer_info'
             )
         ));
-        $builder->add('delay', 'integer', array(
+        $builder->add('delay', IntegerType::class, array(
             'label' => 'Delay (milliseconds)',
             'required' => false,
             'attr' => array(
@@ -46,7 +47,7 @@ class OnExitIntentAdminType extends AbstractRuleAdminType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'on_exit_intent_form';
     }

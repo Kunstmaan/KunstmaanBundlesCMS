@@ -3,9 +3,9 @@
 namespace Kunstmaan\MediaBundle\Form\RemoteAudio;
 
 use Kunstmaan\MediaBundle\Form\AbstractRemoteType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -32,7 +32,7 @@ class RemoteAudioType extends AbstractRemoteType
         $builder
             ->add(
                 'type',
-                'choice',
+                ChoiceType::class,
                 array(
                     'choices'     => array('soundcloud' => 'soundcloud'),
                     'constraints' => array(new NotBlank()),
@@ -46,7 +46,7 @@ class RemoteAudioType extends AbstractRemoteType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_audiotype';
     }
@@ -63,11 +63,5 @@ class RemoteAudioType extends AbstractRemoteType
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHelper',
             )
         );
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

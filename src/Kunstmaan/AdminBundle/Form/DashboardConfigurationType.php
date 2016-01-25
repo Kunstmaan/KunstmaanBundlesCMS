@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * DashboardConfigurationType
@@ -17,7 +18,7 @@ class DashboardConfigurationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
-        $builder->add('content', 'textarea', array(
+        $builder->add('content', TextareaType::class, array(
             'label' => 'Content (raw html)',
             'required' => false,
             'attr' => array(
@@ -30,7 +31,7 @@ class DashboardConfigurationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'dashboardconfiguration';
     }

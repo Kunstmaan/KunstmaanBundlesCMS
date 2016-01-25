@@ -4,9 +4,12 @@ namespace {{ namespace }}\Form\PageParts;
 
 use {{ namespace }}\Entity\PageParts\{{ pagepart }};
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * {{ pagepart }}AdminType
@@ -27,26 +30,26 @@ class {{ pagepart }}AdminType extends AbstractType
     {
 	parent::buildForm($builder, $options);
 
-	$builder->add('linkUrl', 'urlchooser', array(
+	$builder->add('linkUrl', URLChooserType::class, array(
 	    'required' => true
 	));
-	$builder->add('linkText', 'text', array(
+	$builder->add('linkText', TextType::class, array(
 	    'required' => true
 	));
-	$builder->add('linkNewWindow', 'checkbox', array(
+	$builder->add('linkNewWindow', CheckboxType::class, array(
 	    'required' => false,
 	));
-	$builder->add('type', 'choice', array(
+	$builder->add('type', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$types, {{ pagepart }}::$types),
 	    'placeholder' => false,
 	    'required' => true
 	));
-	$builder->add('size', 'choice', array(
+	$builder->add('size', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$sizes, {{ pagepart }}::$sizes),
 	    'placeholder' => false,
 	    'required' => true
 	));
-	$builder->add('position', 'choice', array(
+	$builder->add('position', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$positions, {{ pagepart }}::$positions),
 	    'placeholder' => false,
 	    'required' => true
@@ -58,7 +61,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -74,10 +77,4 @@ class {{ pagepart }}AdminType extends AbstractType
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
 	));
     }
-
-	// BC for SF < 2.7
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$this->configureOptions($resolver);
-	}
 }

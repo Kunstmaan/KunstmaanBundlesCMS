@@ -31,13 +31,11 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_linkpageparttype'.
-     *
      * @covers Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_linkpageparttype', $this->object->getName());
+        $this->assertEquals(LinkPagePartAdminType::class, $this->object->getName());
     }
 
     /**

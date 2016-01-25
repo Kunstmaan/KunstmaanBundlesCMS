@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Form\Rule;
 
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class MaxXTimeAdminType extends AbstractRuleAdminType
@@ -19,7 +20,7 @@ class MaxXTimeAdminType extends AbstractRuleAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('times', 'integer');
+        $builder->add('times', IntegerType::class);
     }
 
     /**
@@ -27,7 +28,7 @@ class MaxXTimeAdminType extends AbstractRuleAdminType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'max_x_times_form';
     }

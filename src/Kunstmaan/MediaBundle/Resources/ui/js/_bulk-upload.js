@@ -14,7 +14,6 @@ kunstmaanMediaBundle.bulkUpload = (function(window, undefined) {
         var $uploader = $('#bulk-upload'),
             url = $uploader.data('url');
 
-
         var $fileList = $('#bulk-upload__file-list'),
             $uploadWrapper = $('#bulk-button-wrapper--upload'),
             $completedWrapper = $('#bulk-button-wrapper--completed'),

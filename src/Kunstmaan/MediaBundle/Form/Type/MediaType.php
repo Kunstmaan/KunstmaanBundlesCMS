@@ -5,11 +5,11 @@ namespace Kunstmaan\MediaBundle\Form\Type;
 use Doctrine\Common\Persistence\ObjectManager;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * MediaType
@@ -63,7 +63,7 @@ class MediaType extends AbstractType
      */
     public function getParent()
     {
-        return 'form';
+        return FormType::class;
     }
 
     /**
@@ -83,18 +83,12 @@ class MediaType extends AbstractType
         );
     }
 
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * Returns the name of this type.
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'media';
     }

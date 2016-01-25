@@ -3,7 +3,11 @@
 namespace Kunstmaan\MediaBundle\Form;
 
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -30,7 +34,7 @@ abstract class AbstractRemoteType extends AbstractType
         $builder
             ->add(
                 'name',
-                'text',
+                TextType::class,
                 array(
                     'constraints' => array(new NotBlank()),
                     'required' => true
@@ -38,7 +42,7 @@ abstract class AbstractRemoteType extends AbstractType
             )
             ->add(
                 'code',
-                'text',
+                TextType::class,
                 array(
                     'constraints' => array(new NotBlank()),
                     'required' => true
@@ -46,7 +50,7 @@ abstract class AbstractRemoteType extends AbstractType
             )
             ->add(
                 'type',
-                'choice',
+                ChoiceType::class,
                 array(
                     'choices' => array(),
                     'constraints' => array(new NotBlank()),
@@ -55,14 +59,14 @@ abstract class AbstractRemoteType extends AbstractType
             )
             ->add(
                 'copyright',
-                'text',
+                TextType::class,
                 array(
                     'required' => false
                 )
             )
             ->add(
                 'description',
-                'textarea',
+                TextareaType::class,
                 array(
                     'required' => false
                 )
@@ -79,7 +83,7 @@ abstract class AbstractRemoteType extends AbstractType
                     // Allow changing folder on edit
                     $form->add(
                         'folder',
-                        'entity',
+                        EntityType::class,
                         array(
                             'class' => 'KunstmaanMediaBundle:Folder',
                             'choice_label' => 'optionLabel',

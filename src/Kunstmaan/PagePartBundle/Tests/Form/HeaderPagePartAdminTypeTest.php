@@ -32,13 +32,11 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_headerpageparttype'.
-     *
      * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_headerpageparttype', $this->object->getName());
+        $this->assertEquals(HeaderPagePartAdminType::class, $this->object->getName());
     }
 
     /**

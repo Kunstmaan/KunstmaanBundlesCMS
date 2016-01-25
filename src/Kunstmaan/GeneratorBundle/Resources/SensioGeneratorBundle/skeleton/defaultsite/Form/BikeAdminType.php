@@ -5,6 +5,9 @@ namespace {{ namespace }}\Form;
 use {{ namespace }}\Entity\Bike;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class BikeAdminType extends AbstractType
 {
@@ -21,18 +24,18 @@ class BikeAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	$builder->add('type', 'choice', array(
+	$builder->add('type', ChoiceType::class, array(
 	    'choices' => array_combine(Bike::$types, Bike::$types),
 	    'placeholder' => false,
 	    'required' => true
 	));
-	$builder->add('brand', 'text', array(
+	$builder->add('brand', TextType::class, array(
 	    'required' => true
 	));
-	$builder->add('model', 'text', array(
+	$builder->add('model', TextType::class, array(
 	    'required' => true
 	));
-	$builder->add('price', 'money', array(
+	$builder->add('price', MoneyType::class, array(
 	    'required' => true
 	));
     }
@@ -42,7 +45,7 @@ class BikeAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return 'bike';
     }

@@ -3,8 +3,12 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
  * PageBannerPagePartAdminType
@@ -25,25 +29,25 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
     {
 	parent::buildForm($builder, $options);
 
-	$builder->add('title', 'text', array(
+	$builder->add('title', TextType::class, array(
 	    'required' => true
 	));
-	$builder->add('description', 'textarea', array(
+	$builder->add('description', TextAreaType::class, array(
 	    'attr' => array('rows' => 4, 'cols' => 600),
 	    'required' => false,
 	));
-	$builder->add('backgroundImage', 'media', array(
+	$builder->add('backgroundImage', MediaType::class, array(
 	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => false,
 	));
-	$builder->add('buttonUrl', 'urlchooser', array(
+	$builder->add('buttonUrl', UrlChooserType::class, array(
 	    'required' => false,
 	));
-	$builder->add('buttonText', 'text', array(
+	$builder->add('buttonText', TextType::class, array(
 	    'required' => false,
 	));
-	$builder->add('buttonNewWindow', 'checkbox', array(
+	$builder->add('buttonNewWindow', CheckboxType::class, array(
 	    'required' => false,
 	));
     }
@@ -53,7 +57,7 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return 'pagebannerpageparttype';
     }
@@ -69,10 +73,4 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\PageBannerPagePart'
 	));
     }
-
-	// BC for SF < 2.7
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$this->configureOptions($resolver);
-	}
 }

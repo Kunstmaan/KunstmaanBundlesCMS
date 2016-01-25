@@ -3,9 +3,10 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class {{ pagepart }}AdminType extends AbstractType
 {
@@ -21,17 +22,17 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	$builder->add('video', 'media', array(
+	$builder->add('video', MediaType::class, array(
 	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'video',
 	    'required' => true
 	));
-	$builder->add('thumbnail', 'media', array(
+	$builder->add('thumbnail', MediaType::class, array(
 	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => false
 	));
-	$builder->add('caption', 'text', array(
+	$builder->add('caption', TextType::class, array(
 	    'required' => false
 	));
     }
@@ -41,7 +42,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -57,10 +58,4 @@ class {{ pagepart }}AdminType extends AbstractType
 	    'data_class' => '{{ namespace }}\Entity\PageParts\{{ pagepart }}',
 	));
     }
-
-	// BC for SF < 2.7
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$this->configureOptions($resolver);
-	}
 }

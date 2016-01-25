@@ -33,7 +33,7 @@ class {{ entity_class }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return '{{ entity_class|lower }}_form';
     }
