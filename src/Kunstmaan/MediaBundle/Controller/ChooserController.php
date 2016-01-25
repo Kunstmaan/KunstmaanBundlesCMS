@@ -115,7 +115,7 @@ class ChooserController extends Controller
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm  = $this->createForm(new FolderType($sub), $sub);
+        $subForm  = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
 
         $linkChooserLink = null;
         if (!empty($linkChooser)) {
