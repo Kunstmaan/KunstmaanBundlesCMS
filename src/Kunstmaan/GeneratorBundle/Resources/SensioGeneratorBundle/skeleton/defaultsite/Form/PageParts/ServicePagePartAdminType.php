@@ -49,7 +49,7 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
 	));
 	$builder->add('imagePosition', 'choice', array(
 	    'choices' => array_combine(ServicePagePart::$imagePositions, ServicePagePart::$imagePositions),
-	    'empty_value' => false,
+	    'placeholder' => false,
 	    'required' => true
 	));
     }

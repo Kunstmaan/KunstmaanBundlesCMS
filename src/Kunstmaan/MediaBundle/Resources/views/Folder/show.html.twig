@@ -278,7 +278,7 @@
         <div class="tab-pane" id="properties">
 
             {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-            <form action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}#properties" method="post" {{ form_enctype(editform) }}>
+            {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) ~ '#properties'}) }}
                 <fieldset class="panel panel-default form-properties">
                     <div class="panel-body">
                         {{ form_widget(editform) }}
@@ -293,7 +293,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </form>
+            {{ form_end(editform) }}
         </div>
     </div>
 

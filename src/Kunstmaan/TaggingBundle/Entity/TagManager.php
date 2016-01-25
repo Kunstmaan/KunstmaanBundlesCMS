@@ -29,7 +29,7 @@ class TagManager extends BaseTagManager
 
     public function saveTagging(BaseTaggable $resource)
     {
-        $tags = $resource->getTags();
+        $tags = clone $resource->getTags();
         parent::saveTagging($resource);
         if (sizeof($tags) !== sizeof($resource->getTags())) {
             // parent::saveTagging uses getTags by reference and removes elements, so it ends up empty :-/

@@ -17,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_groups")
- * @Assert\Callback(callback="isGroupValid")
  */
 class Group implements RoleInterface, GroupInterface
 {
@@ -229,6 +228,8 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
+     * @Assert\Callback
+     *
      * @param ExecutionContextInterface $context
      */
     public function isGroupValid(ExecutionContextInterface $context)

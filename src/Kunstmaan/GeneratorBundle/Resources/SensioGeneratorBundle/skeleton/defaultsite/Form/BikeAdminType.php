@@ -23,7 +23,7 @@ class BikeAdminType extends AbstractType
     {
 	$builder->add('type', 'choice', array(
 	    'choices' => array_combine(Bike::$types, Bike::$types),
-	    'empty_value' => false,
+	    'placeholder' => false,
 	    'required' => true
 	));
 	$builder->add('brand', 'text', array(

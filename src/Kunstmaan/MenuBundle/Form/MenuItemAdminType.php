@@ -110,7 +110,7 @@ class MenuItemAdminType extends AbstractType
                     MenuItem::$types,
                     MenuItem::$types
                 ),
-                'empty_value' => false,
+                'placeholder' => false,
                 'required'    => true
             )
         );

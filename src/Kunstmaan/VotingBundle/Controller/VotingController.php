@@ -20,12 +20,13 @@ class VotingController extends Controller
     /**
      * @Route("/voting-upvote", name="voting_upvote")
      * @Template("KunstmaanVotingBundle:UpDown:voted.html.twig")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function upVoteAction(Request $request)
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::VOTE_UP, new UpVoteEvent($this->getRequest(), $reference, $value));
+        $this->get('event_dispatcher')->dispatch(Events::VOTE_UP, new UpVoteEvent($request, $reference, $value));
 
         return;
     }
@@ -33,44 +34,48 @@ class VotingController extends Controller
     /**
      * @Route("/voting-downvote", name="voting_downvote")
      * @Template("KunstmaanVotingBundle:UpDown:voted.html.twig")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function downVoteAction(Request $request)
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::VOTE_DOWN, new DownVoteEvent($this->getRequest(), $reference, $value));
+        $this->get('event_dispatcher')->dispatch(Events::VOTE_DOWN, new DownVoteEvent($request, $reference, $value));
 
         return;
     }
 
     /**
      * @Route("/voting-facebooklike", name="voting_facebooklike")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function facebookLikeAction(Request $request)
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_LIKE, new FacebookLikeEvent($this->getRequest(), $response, $value));
+        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_LIKE, new FacebookLikeEvent($request, $response, $value));
     }
 
     /**
      * @Route("/voting-facebooksend", name="voting_facebooksend")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function facebookSendAction(Request $request)
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_SEND, new FacebookSendEvent($this->getRequest(), $response, $value));
+        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_SEND, new FacebookSendEvent($request, $response, $value));
     }
 
     /**
      * @Route("/voting-linkedinshare", name="voting_linkedinshare")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function linkedInShareAction(Request $request)
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::LINKEDIN_SHARE, new LinkedInShareEvent($this->getRequest(), $reference, $value));
+        $this->get('event_dispatcher')->dispatch(Events::LINKEDIN_SHARE, new LinkedInShareEvent($request, $reference, $value));
     }
 
 }
