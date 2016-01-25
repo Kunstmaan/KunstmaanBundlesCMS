@@ -6,7 +6,6 @@ use Kunstmaan\MediaBundle\Entity\Media as MediaObject;
 use Kunstmaan\MediaBundle\Validator\Constraints\Media;
 use Kunstmaan\MediaBundle\Validator\Constraints\MediaValidator;
 use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Tests\Constraints\AbstractConstraintValidatorTest;
 
 class MediaValidatorTest extends AbstractConstraintValidatorTest
@@ -30,6 +29,7 @@ class MediaValidatorTest extends AbstractConstraintValidatorTest
      * @param $contentType
      * @param $allowed
      * @param $message
+     * @param $parameters
      * @param $code
      *
      * @dataProvider dataMimeTypes
@@ -65,6 +65,7 @@ class MediaValidatorTest extends AbstractConstraintValidatorTest
      * @param string $dimension
      * @param int    $value
      * @param string $message
+     * @param array $parameters
      * @param int    $code
      *
      * @dataProvider dataDimensions

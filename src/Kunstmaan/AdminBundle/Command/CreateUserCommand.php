@@ -18,9 +18,6 @@ use Symfony\Component\Console\Question\Question;
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
-    /**
-     * Configures the current command.
-     */
     protected function configure()
     {
         parent::configure();
@@ -169,7 +166,6 @@ EOT
         if (!$input->getArgument('email')) {
             $question = New Question('Please choose an email:');
             $question->setValidator(function ($email) {
-                //TODO: we might want to check if its an actual email address ..?
                 if (null === $email) {
                     throw new \InvalidArgumentException('Email can not be empty');
                 }

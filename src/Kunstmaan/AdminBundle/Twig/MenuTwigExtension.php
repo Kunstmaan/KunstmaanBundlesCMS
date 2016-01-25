@@ -6,9 +6,6 @@ use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel;
 use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelActionInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 
-/**
- * MenuTwigExtension
- */
 class MenuTwigExtension extends \Twig_Extension
 {
     /**
@@ -22,14 +19,11 @@ class MenuTwigExtension extends \Twig_Extension
     protected $adminPanel;
 
     /**
-     * Constructor
-     *
      * @param MenuBuilder $menuBuilder
+     * @param AdminPanel $adminPanel
      */
-    public function __construct(
-        MenuBuilder $menuBuilder,
-        AdminPanel $adminPanel
-    ) {
+    public function __construct(MenuBuilder $menuBuilder, AdminPanel $adminPanel)
+    {
         $this->menuBuilder = $menuBuilder;
         $this->adminPanel  = $adminPanel;
     }

@@ -4,7 +4,6 @@ namespace Kunstmaan\MenuBundle\Service;
 
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
 
 class RenderService
 {

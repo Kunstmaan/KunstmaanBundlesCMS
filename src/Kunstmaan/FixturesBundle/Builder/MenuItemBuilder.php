@@ -2,9 +2,7 @@
 
 namespace Kunstmaan\FixturesBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
-use Kunstmaan\FixturesBundle\Populator\Populator;
 use Kunstmaan\MenuBundle\Entity\BaseMenuItem;
 
 class MenuItemBuilder implements BuilderInterface
