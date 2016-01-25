@@ -29,6 +29,6 @@ class ExporterTest extends BaseTestCase
      */
     public function testGetExporterByExtensionNonFound()
     {
-        $exporter = $this->exporter->getExporterByExtension('exotic');
+        $this->exporter->getExporterByExtension('exotic');
     }
 }

@@ -3,10 +3,14 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * UserType defines the form used for {@link User}
@@ -52,8 +56,8 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
             $languages[$lang] = $lang;
         }
 
-        $builder->add('username', 'text', array ('required' => true, 'label' => 'settings.user.username'))
-                ->add('plainPassword', 'repeated', array(
+        $builder->add('username', TextType::class, array ('required' => true, 'label' => 'settings.user.username'))
+                ->add('plainPassword', RepeatedType::class, array(
                     'type' => 'password',
                     'required' => $options['password_required'],
                     'invalid_message' => "errors.password.dontmatch",
@@ -65,7 +69,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     )
                     )
                 )
-                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
+                ->add('email', EmailType::class, array ('required' => true, 'label' => 'settings.user.email'))
                 ->add('adminLocale', 'choice', array(
                     'choices'     => $languages,
                     'label'       => 'settings.user.adminlang',
@@ -74,8 +78,8 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                 ));
 
         if ($this->canEditAllFields) {
-            $builder->add('enabled', 'checkbox', array('required' => false, 'label' => 'settings.user.enabled'))
-                    ->add('groups', 'entity', array(
+            $builder->add('enabled', CheckboxType::class, array('required' => false, 'label' => 'settings.user.enabled'))
+                    ->add('groups', EntityType::class, array(
                             'label' => 'settings.user.roles',
                             'class' => 'KunstmaanAdminBundle:Group',
                             'query_builder' => function(EntityRepository $er) {
@@ -96,7 +100,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'user';
     }
@@ -111,12 +115,5 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
             'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
         ));
         $resolver->addAllowedValues('password_required', array(true, false));
-    }
-
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

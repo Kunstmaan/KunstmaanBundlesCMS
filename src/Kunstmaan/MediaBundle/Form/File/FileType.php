@@ -3,14 +3,17 @@
 namespace Kunstmaan\MediaBundle\Form\File;
 
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
 
 /**
  * FileType
@@ -33,14 +36,14 @@ class FileType extends AbstractType
     {
         $builder->add(
             'name',
-            'text',
+            TextType::class,
             array(
                 'required' => false
             )
         );
         $builder->add(
             'file',
-            'file',
+            BaseFileType::class,
             array(
                 'constraints' => array(new File()),
                 'required' => false
@@ -48,14 +51,14 @@ class FileType extends AbstractType
         );
         $builder->add(
             'copyright',
-            'text',
+            TextType::class,
             array(
                 'required' => false
             )
         );
         $builder->add(
             'description',
-            'textarea',
+            TextareaType::class,
             array(
                 'required' => false
             )
@@ -71,7 +74,7 @@ class FileType extends AbstractType
                 if (!$helper || null === $helper->getMedia()->getId()) {
                     $form->add(
                         'file',
-                        'file',
+                        BaseFileType::class,
                         array(
                             'constraints' => array(new NotBlank(), new File()),
                             'required' => true
@@ -81,7 +84,7 @@ class FileType extends AbstractType
                     // Display original filename only for persisted objects
                     $form->add(
                         'originalFilename',
-                        'text',
+                        TextType::class,
                         array(
                             'required' => false,
                             'attr' => array(
@@ -92,7 +95,7 @@ class FileType extends AbstractType
                     // Allow changing folder on edit
                     $form->add(
                         'folder',
-                        'entity',
+                        EntityType::class,
                         array(
                             'class' => 'KunstmaanMediaBundle:Folder',
                             'choice_label' => 'optionLabel',
@@ -113,7 +116,7 @@ class FileType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_filetype';
     }
@@ -130,11 +133,5 @@ class FileType extends AbstractType
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\File\FileHelper',
             )
         );
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

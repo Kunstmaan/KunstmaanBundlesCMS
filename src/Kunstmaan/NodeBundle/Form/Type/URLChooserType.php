@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * URLChooserType
@@ -15,13 +16,13 @@ class URLChooserType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
+        return TextType::class;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'urlchooser';
     }

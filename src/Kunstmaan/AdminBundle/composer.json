@@ -13,8 +13,8 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.6",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "doctrine/orm": "~2.2,>=2.2.3",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "~2.0",

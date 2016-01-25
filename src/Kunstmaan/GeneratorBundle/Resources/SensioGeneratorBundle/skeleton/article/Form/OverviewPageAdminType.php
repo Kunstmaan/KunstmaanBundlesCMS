@@ -4,7 +4,6 @@ namespace {{ namespace }}\Form\Pages;
 
 use Kunstmaan\ArticleBundle\Form\AbstractArticleOverviewPageAdminType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * The admin type for {{ entity_class }}overview pages
@@ -23,17 +22,10 @@ class {{ entity_class }}OverviewPageAdminType extends AbstractArticleOverviewPag
         ));
     }
 
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ entity_class|lower }}_overview_page_type';
     }

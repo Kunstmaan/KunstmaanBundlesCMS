@@ -3,9 +3,9 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * This class represents the type for the ChoiceFormSubmissionField
@@ -23,13 +23,13 @@ class ChoiceFormSubmissionType extends AbstractType
         $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
         $fieldOptions['empty_data'] = null;
 
-        $builder->add('value', 'choice', $fieldOptions);
+        $builder->add('value', ChoiceType::class, $fieldOptions);
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_formbundle_choiceformsubmissiontype';
     }
@@ -43,11 +43,5 @@ class ChoiceFormSubmissionType extends AbstractType
                 'expanded' => null,
                 'multiple' => null,
         ));
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

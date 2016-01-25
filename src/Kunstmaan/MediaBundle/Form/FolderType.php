@@ -4,29 +4,18 @@ namespace Kunstmaan\MediaBundle\Form;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * FolderType
  */
 class FolderType extends AbstractType
 {
-    /**
-     * @var Folder
-     */
-    public $folder;
-
-    /**
-     * @param Folder $folder The folder
-     */
-    public function __construct(Folder $folder = null)
-    {
-        $this->folder = $folder;
-    }
-
     /**
      * Builds the form.
      *
@@ -42,12 +31,12 @@ class FolderType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $folder = $this->folder;
+        $folder = $options['folder'];
         $builder
             ->add('name')
             ->add(
                 'rel',
-                'choice',
+                ChoiceType::class,
                 array(
                     'choices' => array(
                         'media' => 'media',
@@ -59,7 +48,7 @@ class FolderType extends AbstractType
             )
             ->add(
                 'parent',
-                'entity',
+                EntityType::class,
                 array(
                     'class' => 'KunstmaanMediaBundle:Folder',
                     'choice_label' => 'optionLabel',
@@ -71,7 +60,7 @@ class FolderType extends AbstractType
             )
             ->add(
                 'internalName',
-                'text',
+                TextType::class,
                 array(
                     'label' => 'Internal name',
                     'required' => false
@@ -84,7 +73,7 @@ class FolderType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_FolderType';
     }
@@ -99,13 +88,8 @@ class FolderType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => 'Kunstmaan\MediaBundle\Entity\Folder',
+                'folder' => null
             )
         );
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }

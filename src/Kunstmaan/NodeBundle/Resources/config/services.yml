@@ -24,13 +24,13 @@ services:
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
         tags:
-            - { name: 'form.type', alias: 'urlchooser' }
+            - { name: 'form.type' }
 
     kunstmaan_node.form.type.slug:
         class: Kunstmaan\NodeBundle\Form\Type\SlugType
         arguments: ['@kunstmaan_utilities.slugifier']
         tags:
-            - { name: 'form.type', alias: 'slug' }
+            - { name: 'form.type' }
 
     kunstmaan_node.admin_node.publisher:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher

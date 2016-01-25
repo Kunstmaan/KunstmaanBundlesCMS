@@ -31,13 +31,11 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_rawhtmlpageparttype'.
-     *
      * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_rawhtmlpageparttype', $this->object->getName());
+        $this->assertEquals(RawHTMLPagePartAdminType::class, $this->object->getName());
     }
 
     /**

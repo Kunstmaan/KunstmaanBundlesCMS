@@ -3,9 +3,12 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
  * {{ pagepart }}AdminType
@@ -26,24 +29,24 @@ class {{ pagepart }}AdminType extends AbstractType
     {
 	parent::buildForm($builder, $options);
 
-	$builder->add('media', 'media', array(
+	$builder->add('media', MediaType::class, array(
 	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'label' => 'mediapagepart.image.choosefile',
 	    'mediatype' => 'image',
 	    'required' => true
 	));
-	$builder->add('caption', 'text', array(
+	$builder->add('caption', TextType::class, array(
 	    'required' => false
 	));
-	$builder->add('altText', 'text', array(
+	$builder->add('altText', TextType::class, array(
 	    'required' => false,
 	    'label' => 'mediapagepart.image.alttext'
 	));
-	$builder->add('link', 'urlchooser', array(
+	$builder->add('link', URLChooserType::class, array(
 	    'required' => false,
 	    'label' => 'mediapagepart.image.link'
 	));
-	$builder->add('openInNewWindow', 'checkbox', array(
+	$builder->add('openInNewWindow', CheckboxType::class, array(
 	    'required' => false,
 	    'label' => 'mediapagepart.image.openinnewwindow'
 	));
@@ -54,7 +57,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -70,10 +73,4 @@ class {{ pagepart }}AdminType extends AbstractType
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}',
 	));
     }
-
-	// BC for SF < 2.7
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$this->configureOptions($resolver);
-	}
 }

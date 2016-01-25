@@ -72,7 +72,7 @@ abstract class AbstractNewsletterController extends Controller
 
     protected function getSubscriptionFormType()
     {
-        return new NewsletterSubscriptionType();
+        return NewsletterSubscriptionType::class;
     }
 
     protected function getIndexTemplate()

@@ -253,14 +253,10 @@ class GoogleAnalyticsAJAXController extends Controller
             return new JsonResponse();
         }
 
-        $propertyId = $config->getPropertyId();
-        $profileId  = $config->getPropertyId();
-
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-        $accounts     = $configHelper->getAccounts();
-        $properties   = $configHelper->getProperties();
-        $profiles     = $configHelper->getProfiles();
-
+        $configHelper->getAccounts();
+        $configHelper->getProperties();
+        $configHelper->getProfiles();
     }
 
     /* =============================== SEGMENT =============================== */

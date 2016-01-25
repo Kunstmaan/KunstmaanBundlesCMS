@@ -133,7 +133,7 @@ services:
     kunstmaan_admin.form.type.color:
         class: Kunstmaan\AdminBundle\Form\ColorType
         tags:
-            - { name: form.type, alias: color }
+            - { name: form.type }
 
     kunstmaan_admin.doctrine_mapping.listener:
         class: Kunstmaan\AdminBundle\EventListener\MappingListener
@@ -144,7 +144,7 @@ services:
     kunstmaan_admin.form.type.range:
         class: Kunstmaan\AdminBundle\Form\RangeType
         tags:
-            - { name: form.type, alias: range }
+            - { name: form.type }
 
     kunstmaan_admin.session_security:
         class: '%kunstmaan_admin.session_security.class%'
@@ -156,7 +156,7 @@ services:
     kunstmaan_form.type.wysiwyg:
         class: Kunstmaan\AdminBundle\Form\WysiwygType
         tags:
-            - { name: form.type, alias: wysiwyg }
+            - { name: form.type }
 
     kunstmaan_admin.password_resetting.listener:
         class: '%kunstmaan_admin.password_resetting.listener.class%'

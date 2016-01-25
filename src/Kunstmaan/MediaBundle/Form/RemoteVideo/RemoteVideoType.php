@@ -3,9 +3,9 @@
 namespace Kunstmaan\MediaBundle\Form\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Form\AbstractRemoteType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -47,7 +47,7 @@ class RemoteVideoType extends AbstractRemoteType
         $builder
             ->add(
                 'type',
-                'choice',
+                ChoiceType::class,
                 array(
                     'choices'     => $this->getRemoteVideoChoices(),
                     'constraints' => array(new NotBlank()),
@@ -76,7 +76,7 @@ class RemoteVideoType extends AbstractRemoteType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_videotype';
     }
@@ -93,11 +93,5 @@ class RemoteVideoType extends AbstractRemoteType
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
             )
         );
-    }
-
-    // BC for SF < 2.7
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 }
