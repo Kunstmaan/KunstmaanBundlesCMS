@@ -47,6 +47,14 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         if ($config['enable_pdf_preview'] === true) {
             $loader->load('pdf_preview.yml');
         }
+
+        $container->setParameter('liip_imagine.filter.loader.background.class', 'Kunstmaan\MediaBundle\Helper\Imagine\BackgroundFilterLoader');
+        $container->setParameter('liip_imagine.cache.manager.class', 'Kunstmaan\MediaBundle\Helper\Imagine\CacheManager');
+        $container->setParameter('liip_imagine.cache.resolver.web_path.class', 'Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver');
+        $container->setParameter('liip_imagine.controller.class', 'Kunstmaan\MediaBundle\Helper\Imagine\ImagineController');
+
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('imagine.xml');
     }
 
     public function prepend(ContainerBuilder $container)
@@ -62,7 +70,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $twigConfig['globals']['mediamanager']        = "@kunstmaan_media.media_manager";
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/liip_imagine.yml'));
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());
