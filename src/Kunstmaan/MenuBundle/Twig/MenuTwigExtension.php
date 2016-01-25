@@ -5,7 +5,6 @@ namespace Kunstmaan\MenuBundle\Twig;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
 use Kunstmaan\MenuBundle\Service\RenderService;
-use Symfony\Component\Routing\RouterInterface;
 
 class MenuTwigExtension extends \Twig_Extension
 {
