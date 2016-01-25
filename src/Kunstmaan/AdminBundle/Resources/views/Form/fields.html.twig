@@ -77,7 +77,10 @@
 {% block wysiwyg_widget %}
 {% spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-rich-editor rich-editor form-control')|trim }) %}
-    <textarea {{ block('widget_attributes') }}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} data-reinit-js='["richEditor"]' rows="10" cols="600">{{ value|raw }}</textarea>
+    {% if attr['maxlength'] is defined %}
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
+    {% endif %}
+    <textarea {{ block('widget_attributes') }}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
 {% endspaceless %}
 {% endblock wysiwyg_widget %}
 
@@ -165,7 +168,7 @@
 
                 {# Items #}
                 {% for obj in form %}
-                    <div class="js-nested-form__item nested-form__item{% if sortable %} js-sortable-item sortable-item{% endif %}"
+                    <div id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}-pp-container" class="js-nested-form__item nested-form__item{% if sortable %} js-sortable-item sortable-item{% endif %}"
                             {% if attr['nested_deletable'] is not defined or attr['nested_deletable'] != false %}
                                 data-delete-key="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}"
                             {% endif %}
@@ -177,6 +180,12 @@
                             {% endif %}
 
                             <div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div>
+                            <button type="button" class="js-move-up-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--up" title="{{ 'pagepart.buttons.move_up'|trans }}" data-target-id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}">
+                                <i class="fa fa-chevron-up"></i>
+                            </button>
+                            <button type="button" class="js-move-down-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--down" title="{{ 'pagepart.buttons.move_down'|trans }}" data-target-id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}">
+                                <i class="fa fa-chevron-down"></i>
+                            </button>
                         </header>
 
                         {# View #}

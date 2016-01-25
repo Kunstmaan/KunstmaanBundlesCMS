@@ -31,7 +31,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         _collectEditorConfigs, _collectExternalPlugins, _customOkFunctionForTables;
 
     // First Init
-    init = reInit = function() {
+    init = function() {
         // These objects are declared global in _ckeditor_configs.html.twig
         _collectExternalPlugins(window.externalPlugins);
         _collectEditorConfigs(window.ckEditorConfigs);
@@ -41,6 +41,12 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
                 enableRichEditor($(this));
             }
         });
+    };
+
+    // Needs extra destroy of existing rich editors.
+    reInit = function() {
+        destroyAllRichEditors();
+        init();
     };
 
     // PRIVATE
