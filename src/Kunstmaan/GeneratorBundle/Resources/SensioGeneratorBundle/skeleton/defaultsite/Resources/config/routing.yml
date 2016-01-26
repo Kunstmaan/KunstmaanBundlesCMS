@@ -1,11 +1,11 @@
 {{ bundle.name|lower }}_default:
-    resource: "@{{ bundle.name }}/Controller/DefaultController.php"
+    resource: '@{{ bundle.name }}/Controller/DefaultController.php'
     type:     annotation
     prefix:   /
 
 {% if demosite %}
 {{ bundle.name|lower }}_bike_admin_list:
-    resource: @{{ bundle.name }}/Controller/BikeAdminListController.php
+    resource: '@{{ bundle.name }}/Controller/BikeAdminListController.php'
     type:     annotation
     prefix:   /{_locale}/admin/bike/
     requirements:
