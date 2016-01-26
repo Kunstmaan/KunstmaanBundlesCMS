@@ -62,7 +62,7 @@ class FileUploadPagePart extends AbstractFormPagePart
 
         $formBuilder->add(
             'formwidget_' . $this->getUniqueId(),
-            new FileFormSubmissionType(),
+            FileFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,

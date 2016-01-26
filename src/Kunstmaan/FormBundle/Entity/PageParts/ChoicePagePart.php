@@ -112,7 +112,7 @@ class ChoicePagePart extends AbstractFormPagePart
 
         $formBuilder->add(
             'formwidget_' . $this->getUniqueId(),
-            new ChoiceFormSubmissionType(),
+            ChoiceFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'required'    => $this->getRequired(),

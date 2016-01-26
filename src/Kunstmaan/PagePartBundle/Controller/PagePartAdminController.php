@@ -2,11 +2,13 @@
 
 namespace Kunstmaan\PagePartBundle\Controller;
 
+use Doctrine\Common\Util\ClassUtils;
 use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -51,17 +53,16 @@ class PagePartAdminController extends Controller
         $pagePart      = new $pagePartClass();
 
         $formFactory = $this->container->get('form.factory');
-        $formBuilder = $formFactory->createBuilder('form');
+        $formBuilder = $formFactory->createBuilder(FormType::class);
         $pagePartAdmin->adaptForm($formBuilder);
         $id = 'newpp_' . time();
 
         $data                         = $formBuilder->getData();
         $data['pagepartadmin_' . $id] = $pagePart;
         $adminType                    = $pagePart->getDefaultAdminType();
-        if (!is_object($adminType) && is_string($adminType)) {
-            $adminType = $this->container->get($adminType);
-        }
-        $formBuilder->add('pagepartadmin_' . $id, $adminType);
+        $adminTypeFqn                 = ClassUtils::getClass($adminType);
+
+        $formBuilder->add('pagepartadmin_' . $id, $adminTypeFqn);
         $formBuilder->setData($data);
         $form     = $formBuilder->getForm();
         $formview = $form->createView();

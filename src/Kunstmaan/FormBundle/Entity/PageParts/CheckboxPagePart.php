@@ -118,7 +118,7 @@ class CheckboxPagePart extends AbstractFormPagePart
             $constraints[] = new NotBlank($options);
         }
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            new BooleanFormSubmissionType(),
+            BooleanFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
@@ -117,6 +118,7 @@ abstract class AdminListController extends Controller
         $helper    = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
+        $formFqn  = ClassUtils::getClass($formType);
 
         if (!is_object($formType) && is_string($formType)) {
             $formType = $this->container->get($formType);
@@ -126,7 +128,7 @@ abstract class AdminListController extends Controller
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formType, $helper);
+        $form = $this->createForm($formFqn, $helper);
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
@@ -186,6 +188,7 @@ abstract class AdminListController extends Controller
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
         $formType = $configurator->getAdminType($helper);
+        $formFqn  = ClassUtils::getClass($formType);
 
         if (!is_object($formType) && is_string($formType)) {
             $formType = $this->container->get($formType);
@@ -195,7 +198,7 @@ abstract class AdminListController extends Controller
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formType , $helper);
+        $form = $this->createForm($formFqn , $helper);
 
         if ($request->isMethod('POST')) {
             if($tabPane){

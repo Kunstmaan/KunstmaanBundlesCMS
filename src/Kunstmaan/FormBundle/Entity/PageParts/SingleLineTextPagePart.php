@@ -192,7 +192,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            new StringFormSubmissionType(),
+            StringFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,

@@ -69,7 +69,7 @@ class TabPane
      */
     public function buildForm()
     {
-        $builder = $this->formFactory->createBuilder('form', null);
+        $builder = $this->formFactory->createBuilder(FormType::class, null);
 
         foreach ($this->tabs as $tab) {
             $tab->buildForm($builder);

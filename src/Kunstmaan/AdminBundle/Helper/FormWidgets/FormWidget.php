@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
 use Symfony\Component\Form\FormView;
@@ -59,7 +60,7 @@ class FormWidget implements FormWidgetInterface
         $data = $builder->getData();
 
         foreach ($this->types as $name => $type) {
-            $builder->add($name, $type);
+            $builder->add($name, ClassUtils::getClass($type));
             $data[$name] = $this->data[$name];
         }
 

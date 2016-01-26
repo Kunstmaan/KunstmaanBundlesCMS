@@ -192,7 +192,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
 
         $formBuilder->add(
             'formwidget_' . $this->getUniqueId(),
-            new TextFormSubmissionType(),
+            TextFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,

@@ -225,9 +225,9 @@ The add method's first parameter is the fieldname, the second one is the [field 
 ```PHP
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text', array("required" => true));
-        $builder->add('type', 'text', array("required" => true));
-        $builder->add('reviewed', 'checkbox', array("required" => false));
+        $builder->add('title', TextType::class, array("required" => true));
+        $builder->add('type', TextType::class, array("required" => true));
+        $builder->add('reviewed', CheckboxType::class, array("required" => false));
     }
 ```
 
