@@ -114,20 +114,19 @@ abstract class AdminListController extends Controller
         $helper    = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
-        $formFqn  = ClassUtils::getClass($formType);
-
         if (!is_object($formType) && is_string($formType)) {
             $formType = $this->container->get($formType);
         }
+        $formFqn = get_class($formType);
 
         $event = new AdaptSimpleFormEvent($request, $formType, $helper);
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
+        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm(
-          $formFqn,
-          $helper,
-          $configurator->getAdminTypeOptions()
+            $formFqn,
+            $helper,
+            $configurator->getAdminTypeOptions()
         );
 
         if ($request->isMethod('POST')) {
@@ -185,20 +184,19 @@ abstract class AdminListController extends Controller
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
         $formType = $configurator->getAdminType($helper);
-        $formFqn  = ClassUtils::getClass($formType);
-
         if (!is_object($formType) && is_string($formType)) {
             $formType = $this->container->get($formType);
         }
+        $formFqn = get_class($formType);
 
         $event = new AdaptSimpleFormEvent($request, $formType, $helper);
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
+        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm(
-          $formFqn,
-          $helper,
-          $configurator->getAdminTypeOptions()
+            $formFqn,
+            $helper,
+            $configurator->getAdminTypeOptions()
         );
 
         if ($request->isMethod('POST')) {
