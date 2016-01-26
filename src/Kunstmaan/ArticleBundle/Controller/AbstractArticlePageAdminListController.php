@@ -43,9 +43,9 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
     /**
      * @return AdminListConfiguratorInterface
      */
-    public function getAdminListConfigurator()
+    public function getAdminListConfigurator(Request $request)
     {
-        $this->initAdminListConfigurator();
+        $this->initAdminListConfigurator($request);
         if (!isset($this->configurator)) {
             $this->configurator = $this->createAdminListConfigurator();
         }
@@ -58,10 +58,10 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      */
     abstract public function createAdminListConfigurator();
 
-    protected function initAdminListConfigurator()
+    protected function initAdminListConfigurator(Request $request)
     {
         $this->em              = $this->getEntityManager();
-        $this->locale          = $this->getRequest()->getLocale();
+        $this->locale          = $request->getLocale();
         $this->user            = $this->container->get('security.token_storage')->getToken()->getUser();
         $this->aclHelper       = $this->container->get('kunstmaan_admin.acl.helper');
     }
@@ -71,7 +71,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      */
     public function indexAction(Request $request)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
+        return parent::doIndexAction($this->getAdminListConfigurator($request), $request);
     }
 
     /**
@@ -79,7 +79,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      */
     public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
+        return parent::doAddAction($this->getAdminListConfigurator($request), null, $request);
     }
 
     /**
@@ -87,7 +87,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      */
     public function editAction(Request $request, $id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doEditAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
@@ -95,7 +95,7 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      */
     public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doDeleteAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
@@ -103,6 +103,6 @@ abstract class AbstractArticlePageAdminListController extends AdminListControlle
      */
     public function exportAction(Request $request, $_format)
     {
-        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+        return parent::doExportAction($this->getAdminListConfigurator($request), $_format, $request);
     }
 }
