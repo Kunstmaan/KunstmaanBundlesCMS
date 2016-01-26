@@ -279,8 +279,9 @@ class GoogleAnalyticsAJAXController extends Controller
         // add the segment to the config
         $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
         $segment->setConfig($config);
-        $segments   = $config->getSegments();
+        $segments = $config->getSegments();
         $segments[] = $segment;
+        $config->setSegments($segments);
 
         $em->persist($config);
         $em->flush();
@@ -295,7 +296,6 @@ class GoogleAnalyticsAJAXController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // remove the segment
         $id = $request->query->get('id');
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->deleteSegment($id);
 
@@ -309,7 +309,6 @@ class GoogleAnalyticsAJAXController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // remove the segment
         $id      = $request->query->get('id');
         $query   = $request->query->get('query');
         $name    = $request->query->get('name');

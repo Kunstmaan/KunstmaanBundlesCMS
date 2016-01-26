@@ -149,7 +149,7 @@ class SearchService
      * @param Request                  $request
      * @param RenderContext            $context
      */
-    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext $context)
+    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext &$context)
     {
         // Retrieve the search parameters
         $queryString = trim($request->query->get('query'));
@@ -164,13 +164,10 @@ class SearchService
             ->setContentType($queryType)
             ->setLanguage($lang);
 
-
         // Facets
-        $query      = $searcher->getQuery();
         $facetTerms = new \Elastica\Facet\Terms('type');
-
         $facetTerms->setField('type');
-
+        $query      = $searcher->getQuery();
         $query->addFacet($facetTerms);
 
         // Aggregations

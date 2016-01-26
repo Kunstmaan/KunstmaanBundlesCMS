@@ -3,17 +3,13 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
-
 
 /**
  * The single-line text page part can be used to create forms with text input fields
@@ -23,7 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SingleLineTextPagePart extends AbstractFormPagePart
 {
-
     /**
      * If set to true, you are obligated to fill in this page part
      *
@@ -168,7 +163,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $sfsf = new StringFormSubmissionField();
-        $sfsf->setFieldName("field_" . $this->getUniqueId());
+        $sfsf->setFieldName('field_' . $this->getUniqueId());
         $sfsf->setLabel($this->getLabel());
         $sfsf->setSequence($sequence);
 
@@ -201,7 +196,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
         );
         $formBuilder->setData($data);
 
-        $fields[] = $sfsf;
+        $fields->append($sfsf);
     }
 
     /**
@@ -213,5 +208,4 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     {
         return new SingleLineTextPagePartAdminType();
     }
-
 }
