@@ -18,7 +18,7 @@ services:
     kunstmaan_fixtures.builder.pagepart:
         class: Kunstmaan\FixturesBundle\Builder\PagePartBuilder
         arguments:
-            - '@doctrine.orm.entity_manager
+            - '@doctrine.orm.entity_manager'
             - '@kunstmaan_fixtures.populator.populator'
         tags:
             - { name: kunstmaan_fixtures.builder, alias: PagePartBuilder }
