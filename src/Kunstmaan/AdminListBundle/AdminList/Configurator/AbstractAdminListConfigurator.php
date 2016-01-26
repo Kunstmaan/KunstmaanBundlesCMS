@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
