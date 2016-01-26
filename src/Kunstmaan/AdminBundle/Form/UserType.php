@@ -6,7 +6,9 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,11 +25,6 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     private $canEditAllFields = false;
 
     /**
-     * @var array
-     */
-    private $langs = array();
-
-    /**
      * Setter to check if we can display all form fields
      *
      * @param $canEditAllFields
@@ -39,26 +36,20 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     }
 
     /**
-     * @param array $langs
-     */
-    public function setLangs(array $langs)
-    {
-        $this->langs = $langs;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $languages = array();
-        foreach ($this->langs as $lang) {
+        foreach ($options['langs'] as $lang) {
             $languages[$lang] = $lang;
         }
 
+        $this->canEditAllFields = $options['can_edit_all_fields'];
+
         $builder->add('username', TextType::class, array ('required' => true, 'label' => 'settings.user.username'))
                 ->add('plainPassword', RepeatedType::class, array(
-                    'type' => 'password',
+                    'type' => PasswordType::class,
                     'required' => $options['password_required'],
                     'invalid_message' => "errors.password.dontmatch",
                     'first_options' => array(
@@ -70,11 +61,12 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     )
                 )
                 ->add('email', EmailType::class, array ('required' => true, 'label' => 'settings.user.email'))
-                ->add('adminLocale', 'choice', array(
+                ->add('adminLocale', ChoiceType::class, array(
                     'choices'     => $languages,
                     'label'       => 'settings.user.adminlang',
                     'required'    => true,
-                    'placeholder' => false
+                    'placeholder' => false,
+                    'choices_as_values' => true,
                 ));
 
         if ($this->canEditAllFields) {
@@ -111,9 +103,13 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-        array('password_required' => false,
+          array(
+            'password_required' => false,
             'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
-        ));
+            'langs' => null,
+            'can_edit_all_fields' => null,
+          )
+        );
         $resolver->addAllowedValues('password_required', array(true, false));
     }
 }

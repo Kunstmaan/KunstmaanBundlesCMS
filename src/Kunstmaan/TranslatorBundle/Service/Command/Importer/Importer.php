@@ -13,8 +13,6 @@ class Importer
      */
     private $loaders = array();
 
-    private $translationRepository;
-
     /**
      * @var TranslationGroupManager
      */
@@ -87,11 +85,6 @@ class Importer
     public function setLoaders(array $loaders)
     {
         $this->loaders = $loaders;
-    }
-
-    public function setTranslationRepository($translationRepository)
-    {
-        $this->translationRepository = $translationRepository;
     }
 
     public function setTranslationGroupManager(TranslationGroupManager $translationGroupManager)

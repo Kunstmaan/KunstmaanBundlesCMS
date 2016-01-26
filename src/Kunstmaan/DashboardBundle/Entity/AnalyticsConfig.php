@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * AnalyticsToken
- *
  * @ORM\Table(name="kuma_analytics_config")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository")
  */

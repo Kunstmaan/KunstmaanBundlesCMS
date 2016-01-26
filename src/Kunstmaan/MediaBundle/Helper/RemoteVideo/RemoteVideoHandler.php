@@ -102,9 +102,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         //update thumbnail
         switch ($video->getType()) {
             case 'youtube':
-                //this can either throw an exception, or return false
-                $return = @file_get_contents('http://img.youtube.com/vi/' . $code . '/maxresdefault.jpg');
-                if (!$return){
+                if (fopen('http://img.youtube.com/vi/' . $code . '/maxresdefault.jpg', 'r') === false) {
                     $video->setThumbnailUrl('http://img.youtube.com/vi/' . $code . '/0.jpg');
                 } else {
                     $video->setThumbnailUrl('http://img.youtube.com/vi/' . $code . '/maxresdefault.jpg');
