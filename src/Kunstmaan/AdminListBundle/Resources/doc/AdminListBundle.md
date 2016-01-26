@@ -147,7 +147,7 @@ The add action method will build the form to add a new entity.
      */
     public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator(), $request);
+        return parent::doAddAction($this->getAdminListConfigurator($request), $request);
     }
 ```
 

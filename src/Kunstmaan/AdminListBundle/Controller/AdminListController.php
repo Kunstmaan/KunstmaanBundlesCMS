@@ -8,6 +8,8 @@ use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\MenuBundle\Entity\MenuItem;
+use Kunstmaan\MenuBundle\Form\MenuItemAdminType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -122,7 +124,11 @@ abstract class AdminListController extends Controller
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn, $helper);
+        $form = $this->createForm(
+          $formFqn,
+          $helper,
+          $configurator->getAdminTypeOptions()
+        );
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
@@ -189,7 +195,11 @@ abstract class AdminListController extends Controller
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn , $helper);
+        $form = $this->createForm(
+          $formFqn,
+          $helper,
+          $configurator->getAdminTypeOptions()
+        );
 
         if ($request->isMethod('POST')) {
             if($tabPane){

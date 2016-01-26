@@ -79,3 +79,12 @@ _liip_imagine:
 In the AdminListController actions we have removed the default value for the request attribute. This needs to be passed
 from the correct AbstractAdminListController.
 
+
+
+## Passing arguments to form type is deprecated
+
+In older symfony versions, the first argument of the createForm
+function allowed a form type with extra parameters. As of symfony 2.7 we need to pass the fully qualified class name of a form as
+the first argument. Therefore we added a new option to the AbstractAdminListConfigurator class named $typeOptions. In your AdminListController
+ you can use the setAdminTypeOptions function to pass extra parameters to the form defaults options.
+

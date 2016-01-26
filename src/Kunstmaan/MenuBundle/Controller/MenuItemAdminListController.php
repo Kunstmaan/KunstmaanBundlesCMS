@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MenuBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
@@ -39,6 +40,7 @@ class MenuItemAdminListController extends AdminListController
             $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
             $menuItemClass = $this->getParameter('kunstmaan_menu.entity.menuitem.class');
             $this->configurator->setAdminType(new $adminType($request->getLocale(), $menu, $entityId, $rootNode, $menuItemClass));
+            $this->configurator->setAdminTypeOptions(new ArrayCollection(array('menu' => $menu, 'rootNode' => $rootNode, 'menuItemClass' => $menuItemClass, 'entityId' => $entityId, 'locale' => $request->getLocale())));
         }
 
         return $this->configurator;

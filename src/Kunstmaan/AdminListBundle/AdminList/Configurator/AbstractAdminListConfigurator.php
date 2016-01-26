@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
@@ -54,6 +55,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      * @var AbstractType
      */
     private $type = null;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $typeOptions = null;
 
     /**
      * @var string
@@ -262,6 +268,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * @param ArrayCollection $typeOptions
+     *
+     * @return AbstractAdminListConfigurator
+     */
+    public function setAdminTypeOptions(ArrayCollection $typeOptions)
+    {
+        $this->typeOptions = $typeOptions;
+
+        return $this;
+    }
+
+    /**
+     * Returns the options for the form admin type
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getAdminTypeOptions() {
+        return isset($this->typeOptions) ? $this->typeOptions->toArray() : array();
     }
 
     /**
