@@ -3,15 +3,12 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField;
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EmailPagePart extends AbstractFormPagePart
 {
-
     /**
      * If set to true, you are obligated to fill in this page part
      *
@@ -116,7 +112,6 @@ class EmailPagePart extends AbstractFormPagePart
         return $this->errorMessageInvalid;
     }
 
-
     /**
      * Returns the frontend view
      *
@@ -167,7 +162,8 @@ class EmailPagePart extends AbstractFormPagePart
             )
         );
         $formBuilder->setData($data);
-        $fields[] = $efsf;
+
+        $fields->append($efsf);
     }
 
     /**
@@ -179,5 +175,4 @@ class EmailPagePart extends AbstractFormPagePart
     {
         return new EmailPagePartAdminType();
     }
-
 }
