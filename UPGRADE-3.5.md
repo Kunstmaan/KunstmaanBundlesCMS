@@ -72,3 +72,10 @@ with
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
 ```
+
+
+## getRequest() is marked as deprecated since version 2.4
+
+In the AdminListController actions we have removed the default value for the request attribute. This needs to be passed
+from the correct AbstractAdminListController.
+
