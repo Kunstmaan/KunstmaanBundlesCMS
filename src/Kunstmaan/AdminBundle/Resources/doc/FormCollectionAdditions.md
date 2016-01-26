@@ -14,7 +14,7 @@ class MyAdminType extends AbstractType
         ...
         $builder->add(
             'prices',
-            'collection',
+            CollectionType::class,
             array(
                 'type'               => new SeriesPriceAdminType(),
                 'allow_add'          => true,
@@ -46,7 +46,7 @@ class MyAdminType extends AbstractType
         ...
         $builder->add(
             'prices',
-            'collection',
+            CollectionType::class,
             array(
                 'type'               => new MySubAdminType(),
                 'allow_add'          => true,
@@ -68,7 +68,7 @@ class MySubAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         ...
-        $builder->add('displayOrder', 'hidden');
+        $builder->add('displayOrder', HiddenType::class);
         ...
     }
 }

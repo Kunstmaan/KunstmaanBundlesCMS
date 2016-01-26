@@ -154,7 +154,7 @@ class EmailPagePart extends AbstractFormPagePart
         $constraints[] = new Email($options);
 
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            new EmailFormSubmissionType(),
+            EmailFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,

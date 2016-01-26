@@ -121,9 +121,9 @@ class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('comment', 'text');
+        $builder->add('comment', TextType::class);
 
-        $builder->add('contacts', 'collection', array(
+        $builder->add('contacts', CollectionType::class, array(
             'type' => new ContactInfoAdminType(),
             'allow_add' => true,
             'allow_delete' => true,
@@ -244,11 +244,11 @@ class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'max_length' => 35,
         ));
 
-        $builder->add('email', 'text', array(
+        $builder->add('email', TextType::class, array(
             'attr' => array('title' => 'Publicly visible on the website'),
         ));
     }

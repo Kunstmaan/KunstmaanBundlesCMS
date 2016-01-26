@@ -11,6 +11,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,7 +47,7 @@ class FormHandler implements FormHandlerInterface
         /* @var $em EntityManager */
         $em = $this->container->get('doctrine.orm.entity_manager');
         /* @var $formBuilder FormBuilderInterface */
-        $formBuilder = $this->container->get('form.factory')->createBuilder('form');
+        $formBuilder = $this->container->get('form.factory')->createBuilder(FormType::class);
         /* @var $router RouterInterface */
         $router = $this->container->get('router');
         /* @var $fields ArrayObject */
