@@ -57,9 +57,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     private $type = null;
 
     /**
-     * @var ArrayCollection
+     * @var array
      */
-    private $typeOptions = null;
+    private $typeOptions = array();
 
     /**
      * @var string
@@ -271,11 +271,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param ArrayCollection $typeOptions
+     * @param array $typeOptions
      *
      * @return AbstractAdminListConfigurator
      */
-    public function setAdminTypeOptions(ArrayCollection $typeOptions)
+    public function setAdminTypeOptions($typeOptions)
     {
         $this->typeOptions = $typeOptions;
 
@@ -283,12 +283,12 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Returns the options for the form admin type
+     * Return the default form admin type options
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return array
      */
     public function getAdminTypeOptions() {
-        return isset($this->typeOptions) ? $this->typeOptions->toArray() : array();
+        return $this->typeOptions;
     }
 
     /**
