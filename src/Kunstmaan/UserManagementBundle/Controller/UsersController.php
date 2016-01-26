@@ -84,22 +84,20 @@ class UsersController extends BaseSettingsController
     {
         $this->checkPermission();
         $user              = $this->getUserClassInstance();
+
+        $options           = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'));
         $formTypeClassName = $user->getFormTypeClass();
         $formType          = new $formTypeClassName();
-        $formType->setLangs($this->container->getParameter('kunstmaan_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $formType->setCanEditAllFields($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'));
+            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $form = $this->createForm(
-            $formType,
+            $formTypeClassName,
             $user,
-            array(
-                'password_required' => true,
-                'validation_groups' => array('Registration')
-            )
+            $options
         );
 
         if ($request->isMethod('POST')) {
@@ -150,20 +148,20 @@ class UsersController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
 
         $user              = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $options           = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'));
         $formTypeClassName = $user->getFormTypeClass();
         $formType          = new $formTypeClassName();
-        $formType->setLangs($this->container->getParameter('kunstmaan_admin.admin_locales'));
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $formType->setCanEditAllFields($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN'));
+            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $event = new AdaptSimpleFormEvent($request, $formType, $user);
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formType, $user, array('password_required' => false));
+        $form = $this->createForm($formTypeClassName, $user, $options);
 
         if ($request->isMethod('POST')) {
 
@@ -178,7 +176,7 @@ class UsersController extends BaseSettingsController
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
-                
+
                 $this->get('session')->getFlashBag()->add(
                     'success',
                     'User \'' . $user->getUsername() . '\' has been edited!'

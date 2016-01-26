@@ -19,7 +19,6 @@ use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
  */
 class FileUploadPagePart extends AbstractFormPagePart
 {
-
     /**
      * If set to true, you are obligated to fill in this page part
      *
@@ -44,7 +43,7 @@ class FileUploadPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $ffsf = new FileFormSubmissionField();
-        $ffsf->setFieldName("field_" . $this->getUniqueId());
+        $ffsf->setFieldName('field_' . $this->getUniqueId());
         $ffsf->setLabel($this->getLabel());
         $ffsf->setSequence($sequence);
 
@@ -71,7 +70,7 @@ class FileUploadPagePart extends AbstractFormPagePart
         );
         $formBuilder->setData($data);
 
-        $fields[] = $ffsf;
+        $fields->append($ffsf);
     }
 
     /**
@@ -141,5 +140,4 @@ class FileUploadPagePart extends AbstractFormPagePart
     {
         return new FileUploadPagePartAdminType();
     }
-
 }
