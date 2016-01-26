@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\MenuBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
