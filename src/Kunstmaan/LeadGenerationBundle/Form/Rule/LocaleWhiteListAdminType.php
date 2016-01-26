@@ -31,7 +31,8 @@ class LocaleWhiteListAdminType extends AbstractRuleAdminType
     {
         $builder->add('locale', ChoiceType::class, array(
             'attr'      => array('info_text' => 'Defines the locale that should be whitelisted'),
-            'choices'   => $this->locales
+            'choices'   => $this->locales,
+            'choices_as_values' => true
         ));
     }
 

@@ -36,13 +36,14 @@ class TagsAdminType extends AbstractType
         $result = array();
 
         foreach ($this->tagManager->findAll() as $tag) {
-            $result[$tag->getId()] = $tag->getName();
+            $result[$tag->getName()] = $tag->getId();
         }
 
         return array(
           'choices' => $result,
           'multiple' => true,
           'required' => false,
+          'choices_as_values' => true,
           'attr' => array(
             'class' => 'js-advanced-select form-control advanced-select',
           ),
