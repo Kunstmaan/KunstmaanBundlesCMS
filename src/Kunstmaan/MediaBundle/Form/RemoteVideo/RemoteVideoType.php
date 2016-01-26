@@ -51,7 +51,8 @@ class RemoteVideoType extends AbstractRemoteType
                 array(
                     'choices'     => $this->getRemoteVideoChoices(),
                     'constraints' => array(new NotBlank()),
-                    'required'    => true
+                    'required'    => true,
+                    'choices_as_values' => true
                 )
             );
     }

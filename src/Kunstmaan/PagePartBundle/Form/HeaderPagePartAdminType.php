@@ -18,7 +18,16 @@ class HeaderPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('niv', ChoiceType::class, array('label' => 'pagepart.header.type', 'choices' => array('1' => 'Header 1', '2' => 'Header 2', '3' => 'Header 3', '4' => 'Header 4', '5' => 'Header 5', '6' => 'Header 6'), 'required' => true,));
+        $builder->add(
+          'niv',
+          ChoiceType::class,
+          array(
+            'label' => 'pagepart.header.type',
+            'choices' => array('Header 1' => '1', 'Header 2' => '2', 'Header 3' => '3', 'Header 4' => '4', 'Header 5' => '5', 'Header 6' => '6'),
+            'required' => true,
+            'choices_as_values' => true
+          )
+        );
         $builder->add('title', null, array('label' => 'pagepart.header.title', 'required' => true));
     }
 

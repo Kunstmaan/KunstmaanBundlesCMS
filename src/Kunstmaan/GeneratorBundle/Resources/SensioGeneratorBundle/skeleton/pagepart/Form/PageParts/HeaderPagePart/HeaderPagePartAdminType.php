@@ -33,8 +33,9 @@ class {{ pagepart }}AdminType extends AbstractType
 
 	$builder->add('niv', ChoiceType::class, array(
 	    'label' => 'pagepart.header.type',
-	    'choices' => array_combine({{ pagepart }}::$supportedHeaders, $names),
-	    'required' => true
+	    'choices' => array_combine($names, {{ pagepart }}::$supportedHeaders),
+	    'required' => true,
+		'choices_as_values' => true
 	));
 	$builder->add('title', TextType::class, array(
 	    'label' => 'pagepart.header.title',

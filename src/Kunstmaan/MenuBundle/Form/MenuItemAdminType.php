@@ -114,7 +114,8 @@ class MenuItemAdminType extends AbstractType
                     MenuItem::$types
                 ),
                 'placeholder' => false,
-                'required'    => true
+                'required'    => true,
+                'choices_as_values' => true
             )
         );
         $locale   = $this->locale;
