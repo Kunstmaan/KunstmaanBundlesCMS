@@ -42,8 +42,7 @@ services:
 
     kunstmaan_node.menu.sub_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_node.actions_menu_builder
-        factory_method: createSubActionsMenu
+        factory: ['@kunstmaan_node.actions_menu_builder', createSubActionsMenu]
         arguments: ['@request']
         scope: request # needed as we have the request as a dependency here
         tags:
@@ -51,8 +50,7 @@ services:
 
     kunstmaan_node.menu.actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_node.actions_menu_builder
-        factory_method: createActionsMenu
+        factory: ['@kunstmaan_node.actions_menu_builder', createActionsMenu]
         arguments: ['@request']
         scope: request # needed as we have the request as a dependency here
         tags:
@@ -60,8 +58,7 @@ services:
 
     kunstmaan_node.menu.top_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_node.actions_menu_builder
-        factory_method: createTopActionsMenu
+        factory: ['@kunstmaan_node.actions_menu_builder', createTopActionsMenu]
         arguments: ['@request']
         scope: request # needed as we have the request as a dependency here
         tags:

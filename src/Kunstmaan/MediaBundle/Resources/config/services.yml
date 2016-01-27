@@ -57,8 +57,7 @@ services:
 
     kunstmaan_media.repository.folder:
         class:            Kunstmaan\MediaBundle\Repository\FolderRepository
-        factory_service:  'doctrine.orm.entity_manager'
-        factory_method:   getRepository
+        factory:          ['@doctrine.orm.entity_manager', getRepository]
         arguments:        ['KunstmaanMediaBundle:Folder']
 
     kunstmaan_media.menu.adaptor:
