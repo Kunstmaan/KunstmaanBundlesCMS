@@ -471,7 +471,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                             throw new \InvalidArgumentException(sprintf('"%s" contains a reserved word', $name));
                         }
 
-                        $em = $container->get('doctrine')->getEntityManager();
+                        $em = $container->get('doctrine')->getManager();
                         try {
                             $em->getClassMetadata($name);
                         } catch (\Exception $e) {
@@ -716,8 +716,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 );
                 break;
             case 'single_ref':
-                $em              = $this->getContainer()->get('doctrine')->getEntityManager();
-                $entityName      = $em->getClassMetadata($extra)->name;
+                $em              = $this->getContainer()->get('doctrine')->getManager();
+                $entityName      = $em->getClassMetadata($extra)->getName();
                 $fields[$type][] = array(
                     'fieldName'    => lcfirst(Container::camelize($name)),
                     'type'         => 'entity',
@@ -731,8 +731,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 );
                 break;
             case 'multi_ref':
-                $em              = $this->getContainer()->get('doctrine')->getEntityManager();
-                $entityName      = $em->getClassMetadata($extra)->name;
+                $em              = $this->getContainer()->get('doctrine')->getManager();
+                $entityName      = $em->getClassMetadata($extra)->getName();
                 $parts           = explode("\\", $entityName);
                 $joinTableName   = strtolower(
                     $prefix . Container::underscore($objectName) . '_' . Container::underscore(
