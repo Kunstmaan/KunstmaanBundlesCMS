@@ -36,7 +36,7 @@ abstract class AdminListController extends Controller
      * Shows the list of entities
      *
      * @param AbstractAdminListConfigurator $configurator
-     * @param null|Request                  $request
+     * @param null|Request $request
      *
      * @return array
      */
@@ -59,8 +59,8 @@ abstract class AdminListController extends Controller
      * Export a list of Entities
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string                        $_format      The format to export to
-     * @param null|Request                  $request
+     * @param string $_format The format to export to
+     * @param null|Request $request
      *
      * @throws AccessDeniedHttpException
      *
@@ -85,8 +85,8 @@ abstract class AdminListController extends Controller
      * Creates and processes the form to add a new Entity
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string                        $type         The type to add
-     * @param null|Request                  $request
+     * @param string $type The type to add
+     * @param null|Request $request
      *
      * @throws AccessDeniedHttpException
      *
@@ -110,8 +110,8 @@ abstract class AdminListController extends Controller
         $classMetaData = $em->getClassMetadata($entityName);
         // Creates a new instance of the mapped class, without invoking the constructor.
         $classname = $classMetaData->getName();
-        $helper    = new $classname();
-        $helper    = $configurator->decorateNewEntity($helper);
+        $helper = new $classname();
+        $helper = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
         if (!is_object($formType) && is_string($formType)) {
@@ -119,15 +119,11 @@ abstract class AdminListController extends Controller
         }
         $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formType, $helper);
+        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm(
-            $formFqn,
-            $helper,
-            $configurator->getAdminTypeOptions()
-        );
+        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
@@ -163,8 +159,8 @@ abstract class AdminListController extends Controller
      * Creates and processes the edit form for an Entity using its ID
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string                        $entityId     The id of the entity that will be edited
-     * @param null|Request                  $request
+     * @param string $entityId The id of the entity that will be edited
+     * @param null|Request $request
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException
@@ -183,24 +179,21 @@ abstract class AdminListController extends Controller
         if (!$configurator->canEdit($helper)) {
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
+
         $formType = $configurator->getAdminType($helper);
         if (!is_object($formType) && is_string($formType)) {
             $formType = $this->container->get($formType);
         }
         $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formType, $helper);
+        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm(
-            $formFqn,
-            $helper,
-            $configurator->getAdminTypeOptions()
-        );
+        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
-            if($tabPane){
+            if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
@@ -220,15 +213,16 @@ abstract class AdminListController extends Controller
 
         $configurator->buildItemActions();
 
-    $params =  array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator);
+        $params = array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator);
 
-    if($tabPane) {
-        $params = array_merge($params, array('tabPane' => $tabPane));
-    }
+        if ($tabPane) {
+            $params = array_merge($params, array('tabPane' => $tabPane));
+        }
 
         return new Response(
             $this->renderView(
-            $configurator->getEditTemplate(), $params
+                $configurator->getEditTemplate(),
+                $params
             )
         );
     }
@@ -237,8 +231,8 @@ abstract class AdminListController extends Controller
      * Delete the Entity using its ID
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param integer                       $entityId     The id to delete
-     * @param null|Request                  $request
+     * @param integer $entityId The id to delete
+     * @param null|Request $request
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedHttpException

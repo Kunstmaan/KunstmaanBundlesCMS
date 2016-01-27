@@ -88,3 +88,27 @@ function allowed a form type with extra parameters. As of symfony 2.7 we need to
 the first argument. Therefore we added a new option to the AbstractAdminListConfigurator class named $typeOptions. In your AdminListController
  you can use the setAdminTypeOptions function to pass extra parameters to the form defaults options.
 
+
+
+## AdaptSimpleFormEvent changes
+
+We have made some changes to the AdaptSimpleFormEvent to allow the needed fully qualified form class names.
+The second parameter now requires a string instead of a AbstractType. There is also a possibilty now to add a fourth parameter
+with the default options you would like to pass to your form.
+
+Here is a updated example of how to implement an AdaptSimpleFormEvent:
+
+```
+public function onAdaptSimpleFormEvent(AdaptSimpleFormEvent $event)
+{
+    $tabPane = new TabPane('TabPane', $event->getRequest(), $this->formFactory);
+
+    $widget = new FormWidget();
+    $widget->addType('Tab',$event->getFormType(),$event->getData(), $event->getOptions());
+
+    $tabPane->addTab(new Tab('User', $widget));
+    $tabPane->buildForm();
+
+    $event->setTabPane($tabPane);
+}
+```

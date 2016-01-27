@@ -142,6 +142,7 @@ class MenuItemAdminType extends AbstractType
     {
         $resolver->setDefaults(
           array(
+              'data_class' => MenuItem::class,
               'menu' => null,
               'entityId' => null,
               'rootNode' => null,
