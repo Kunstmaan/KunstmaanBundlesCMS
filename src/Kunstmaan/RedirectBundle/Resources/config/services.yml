@@ -11,8 +11,7 @@ services:
 
     kunstmaan_redirect.repositories.redirect:
         class:            '%kunstmaan_redirect.redirect_repository.class%'
-        factory_service:  'doctrine.orm.entity_manager'
-        factory_method:   getRepository
+        factory:          ['@doctrine.orm.entity_manager', getRepository]
         arguments:        ['%kunstmaan_redirect.redirect.class%']
 
     kunstmaan_redirect.redirectrouter:

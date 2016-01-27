@@ -27,8 +27,7 @@ services:
 
     kunstmaan_menu.menu.repository:
         class:            '%kunstmaan_menu.menu.repository.class%'
-        factory_service:  'doctrine.orm.entity_manager'
-        factory_method:   getRepository
+        factory:          ['@doctrine.orm.entity_manager', getRepository]
         arguments:        ['%kunstmaan_menu.entity.menuitem.class%']
 
     kunstmaan_menu.menu.twig.extension:
