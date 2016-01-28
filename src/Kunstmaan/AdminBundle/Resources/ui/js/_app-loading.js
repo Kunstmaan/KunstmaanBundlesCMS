@@ -34,4 +34,4 @@ kunstmaanbundles.appLoading = (function($, window, undefined) {
         removeLoading: removeLoading
     };
 
-}(jQuery, window));
+})(jQuery, window);

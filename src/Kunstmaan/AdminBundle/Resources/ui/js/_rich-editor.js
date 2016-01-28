@@ -289,4 +289,4 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
         destroySpecificRichEditor: destroySpecificRichEditor
     };
 
-}(window));
+})(window);

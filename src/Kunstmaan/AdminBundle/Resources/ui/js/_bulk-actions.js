@@ -76,4 +76,4 @@ kunstmaanbundles.bulkActions = (function($, window, undefined) {
         init: init
     };
 
-}(jQuery, window));
+})(jQuery, window);

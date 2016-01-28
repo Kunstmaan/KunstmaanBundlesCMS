@@ -64,4 +64,4 @@ kunstmaanbundles.slugChooser = (function(window, undefined) {
         init: init
     };
 
-}(window));
+})(window);

@@ -67,4 +67,4 @@ kunstmaanbundles.iconChooser = (function(window, undefined) {
         chooseIcon: chooseIcon
     };
 
-}(window));
+})(window);

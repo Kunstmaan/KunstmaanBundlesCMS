@@ -163,4 +163,4 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
         init: init
     };
 
-}(window));
+})(window);

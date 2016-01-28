@@ -19,4 +19,4 @@ kunstmaanbundles.mainActions = (function(window, undefined) {
         updateScroll: updateScroll
     };
 
-}(window));
+})(window);

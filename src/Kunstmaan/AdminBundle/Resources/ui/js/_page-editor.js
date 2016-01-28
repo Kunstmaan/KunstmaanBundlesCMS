@@ -334,4 +334,4 @@ kunstmaanbundles.pageEditor = (function(window, undefined) {
         init: init
     };
 
-}(window));
+})(window);
