@@ -45,7 +45,7 @@ as follows:
 /* The outer container of the dialog. */
 .cke_dialog {
     /* Mandatory: Because the dialog.css file is loaded on demand, we avoid
-	showing an unstyled dialog by hidding it. Here, we restore its visibility. */
+        showing an unstyled dialog by hidding it. Here, we restore its visibility. */
     visibility: visible;
 }
 
@@ -224,7 +224,7 @@ a.cke_dialog_tab_disabled
 /* selectbox inside tabs container */
 .cke_dialog_tabs {
     .cke_dialog_ui_input_select {
-	top: -7px !important;
+        top: -7px !important;
     }
 }
 
@@ -323,7 +323,7 @@ It is possible to have nested V/H-Boxes.
 
 .cke_dialog_ui_vbox, .cke_dialog_ui_hbox {
     table {
-	margin: auto;
+        margin: auto;
     }
 }
 .cke_dialog_ui_vbox {
@@ -347,7 +347,7 @@ It is possible to have nested V/H-Boxes.
 .cke_dialog_ui_hbox_first,
 .cke_dialog_ui_hbox_last {
     > .cke_dialog_ui_labeled_label, > .cke_dialog_ui_html {
-	line-height: 30px;
+        line-height: 30px;
     }
 }
 
@@ -379,7 +379,7 @@ It is possible to have nested V/H-Boxes.
     &.cke_dialog_ui_input_textarea,
     &.cke_dialog_ui_input_select,
     &.cke_dialog_ui_input_file {
-	border: 1px solid;
+        border: 1px solid;
     }
 }
 
@@ -475,21 +475,21 @@ a.cke_dialog_ui_button {
     background: #fff;
 
     &:hover, &:focus, &:active {
-	border-color: $gray;
-	background-color: $gray-lighter;
-	text-decoration: none;
+        border-color: $gray;
+        background-color: $gray-lighter;
+        text-decoration: none;
     }
 }
 
 /* Buttons inside the content */
 .cke_dialog_page_contents {
     a.cke_dialog_ui_button {
-	height: 22px;
-	line-height: 22px;
-	background-color: #f4f4f4;
-	&:hover, &:focus, &:active {
-	    background-color: $gray-lighter;
-	}
+        height: 22px;
+        line-height: 22px;
+        background-color: #f4f4f4;
+        &:hover, &:focus, &:active {
+            background-color: $gray-lighter;
+        }
     }
 }
 
@@ -499,14 +499,14 @@ span.cke_dialog_ui_button {
 
 .cke_hc a.cke_dialog_ui_button {
     &:hover, &:focus, &:active {
-	border: 3px solid;
-	padding-top: 1px;
-	padding-bottom: 1px;
+        border: 3px solid;
+        padding-top: 1px;
+        padding-bottom: 1px;
 
-	span {
-	    padding-left: 10px;
-	    padding-right: 10px;
-	}
+        span {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
     }
 }
 
@@ -530,8 +530,8 @@ a.cke_dialog_ui_button_ok {
     border-color: $success-border;
     background: $success;
     &:hover, &:focus, &:active {
-	border-color: $success-border-hover;
-	background: $success-hover;
+        border-color: $success-border-hover;
+        background: $success-hover;
     }
 }
 
@@ -539,7 +539,7 @@ a.cke_dialog_ui_button_ok {
 a.cke_dialog_ui_button_cancel {
     background-color: #fff;
     &:focus {
-	outline: none;
+        outline: none;
     }
 }
 
@@ -586,9 +586,9 @@ select.cke_dialog_ui_input_select {
 
 .cke_hc .cke_dialog_ui_labeled_content {
     input, select, textarea {
-	&:focus {
-	    outline: 1px dotted;
-	}
+        &:focus {
+            outline: 1px dotted;
+        }
     }
 }
 
@@ -597,70 +597,70 @@ select.cke_dialog_ui_input_select {
  */
 .cke_dialog {
     .cke_dark_background {
-	background-color: $gray-lighter;
+        background-color: $gray-lighter;
     }
     .cke_light_background {
-	background-color: $gray-lighter;
+        background-color: $gray-lighter;
     }
     .cke_centered {
-	text-align: center;
+        text-align: center;
     }
 
     a.cke_btn_reset {
-	float: right;
-	background: url(images/refresh.png) top left no-repeat;
-	width: 16px;
-	height: 16px;
-	border: 1px none;
-	font-size: 1px;
+        float: right;
+        background: url(images/refresh.png) top left no-repeat;
+        width: 16px;
+        height: 16px;
+        border: 1px none;
+        font-size: 1px;
     }
 
     a.cke_btn_locked, a.cke_btn_unlocked {
-	float: left;
-	width: 16px;
-	height: 16px;
-	background-repeat: no-repeat;
-	border: none 1px;
-	font-size: 1px;
+        float: left;
+        width: 16px;
+        height: 16px;
+        background-repeat: no-repeat;
+        border: none 1px;
+        font-size: 1px;
     }
     a.cke_btn_locked {
-	background-image: url(images/lock.png);
-	.cke_icon {
-	    display: none;
-	}
+        background-image: url(images/lock.png);
+        .cke_icon {
+            display: none;
+        }
     }
     a.cke_btn_unlocked {
-	background-image: url(images/lock-open.png);
+        background-image: url(images/lock-open.png);
     }
 
     .cke_btn_over {
-	border: outset 1px;
-	cursor: pointer;
+        border: outset 1px;
+        cursor: pointer;
     }
 }
 
 .cke_hidpi .cke_dialog {
     a.cke_btn_reset {
-	background-size: 16px;
-	background-image: url(images/hidpi/refresh.png);
+        background-size: 16px;
+        background-image: url(images/hidpi/refresh.png);
     }
     a.cke_btn_unlocked, a.cke_btn_locked {
-	background-size: 16px;
+        background-size: 16px;
     }
     a.cke_btn_locked {
-	background-image: url(images/hidpi/lock.png);
+        background-image: url(images/hidpi/lock.png);
     }
     a.cke_btn_unlocked {
-	background-image: url(images/hidpi/lock-open.png);
+        background-image: url(images/hidpi/lock-open.png);
     }
 }
 
 .cke_rtl .cke_dialog {
     a.cke_btn_reset {
-	float: left;
+        float: left;
     }
     a.cke_btn_locked, a.cke_btn_unlocked {
-	float: right;
+        float: right;
     }
 }
 
@@ -671,57 +671,57 @@ tendency that these will be moved to the plugins code in the future.
 
 .cke_dialog {
     .ImagePreviewBox, .FlashPreviewBox {
-	border: 1px solid $gray;
-	border-radius: $border-radius;
-	padding: 6px 10px;
-	margin-top: 5px;
-	background-color: white;
+        border: 1px solid $gray;
+        border-radius: $border-radius;
+        padding: 6px 10px;
+        margin-top: 5px;
+        background-color: white;
     }
     .ImagePreviewBox {
-	overflow: scroll;
-	height: 205px;
-	width: 300px;
-	table td {
-	    white-space: normal;
-	}
+        overflow: scroll;
+        height: 205px;
+        width: 300px;
+        table td {
+            white-space: normal;
+        }
     }
     .FlashPreviewBox {
-	white-space: normal;
-	overflow: auto;
-	height: 160px;
-	width: 390px;
+        white-space: normal;
+        overflow: auto;
+        height: 160px;
+        width: 390px;
     }
     .ImagePreviewLoader {
-	position: absolute;
-	white-space: normal;
-	overflow: hidden;
-	height: 160px;
-	width: 230px;
-	margin: 2px;
-	padding: 2px;
-	opacity: 0.9;
-	filter: alpha(opacity = 90);
+        position: absolute;
+        white-space: normal;
+        overflow: hidden;
+        height: 160px;
+        width: 230px;
+        margin: 2px;
+        padding: 2px;
+        opacity: 0.9;
+        filter: alpha(opacity = 90);
 
-	background-color: #e4e4e4;
+        background-color: #e4e4e4;
     }
     .cke_pastetext {
-	width: 346px;
-	height: 170px;
-	textarea {
-	    width: 340px;
-	    height: 170px;
-	    resize: none;
-	}
+        width: 346px;
+        height: 170px;
+        textarea {
+            width: 340px;
+            height: 170px;
+            resize: none;
+        }
     }
     iframe.cke_pasteframe {
-	width: 346px;
-	height: 130px;
-	background-color: white;
-	border: 1px solid #aeb3b9;
-	border-radius: $border-radius;
+        width: 346px;
+        height: 130px;
+        background-color: white;
+        border: 1px solid #aeb3b9;
+        border-radius: $border-radius;
     }
     .cke_hand {
-	cursor: pointer;
+        cursor: pointer;
     }
 }
 
@@ -731,15 +731,15 @@ tendency that these will be moved to the plugins code in the future.
 
 .cke_dialog_body {
     .cke_label {
-	display: none;
+        display: none;
     }
     label {
-	display: inline-block;
-	margin-bottom: 3px;
-	cursor: default;
-	&.cke_required {
-	    font-weight: bold;
-	}
+        display: inline-block;
+        margin-bottom: 3px;
+        cursor: default;
+        &.cke_required {
+            font-weight: bold;
+        }
     }
 }
 
@@ -753,7 +753,7 @@ a.cke_smile {
     text-align: center;
     padding: 0.3em 0;
     img {
-	vertical-align: middle;
+        vertical-align: middle;
     }
 }
 
@@ -771,14 +771,14 @@ a.cke_specialchar {
     border: 1px solid transparent;
     vertical-align: top;
     &:hover, &:focus, &:active {
-	background: #fff;
-	outline: 0;
+        background: #fff;
+        outline: 0;
     }
     &:hover {
-	border-color: $gray;
+        border-color: $gray;
     }
     &:focus, &:active {
-	border-color: $primary;
+        border-color: $primary;
     }
 }
 

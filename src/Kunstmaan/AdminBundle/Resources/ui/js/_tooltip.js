@@ -25,4 +25,4 @@ kunstmaanbundles.tooltip = (function(window, undefined) {
         reInit: reInit
     };
 
-}(window));
+})(window);

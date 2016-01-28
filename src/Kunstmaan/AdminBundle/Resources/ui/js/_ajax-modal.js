@@ -34,4 +34,4 @@ kunstmaanbundles.ajaxModal = (function($, window, undefined) {
         resetAjaxModals: resetAjaxModals
     };
 
-}(jQuery, window));
+})(jQuery, window);

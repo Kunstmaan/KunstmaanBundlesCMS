@@ -38,4 +38,4 @@ kunstmaanbundles.checkIfEdited = (function($, window, undefined) {
         edited: edited
     };
 
-}(jQuery, window));
+})(jQuery, window);

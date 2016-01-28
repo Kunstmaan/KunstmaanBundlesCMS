@@ -73,13 +73,13 @@ Special outer level classes used in this file:
     border: none;
 
     .cke_inner {
-	/* As we don't have blocks following top (toolbar) we suppress the padding
-	   as the toolbar defines its own margin. */
-	padding-bottom: 0;
+        /* As we don't have blocks following top (toolbar) we suppress the padding
+           as the toolbar defines its own margin. */
+        padding-bottom: 0;
     }
 
     .cke_top {
-	border: 1px solid $hr-border;
+        border: 1px solid $hr-border;
     }
 }
 
@@ -139,7 +139,7 @@ Special outer level classes used in this file:
     margin-top: 6px;
 
     /*  A margin in case of no other element in the same container
-	to keep a distance to the bottom edge. */
+        to keep a distance to the bottom edge. */
     margin-bottom: 2px;
 }
 

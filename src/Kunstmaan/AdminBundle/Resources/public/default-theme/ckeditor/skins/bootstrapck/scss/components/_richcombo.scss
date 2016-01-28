@@ -67,18 +67,18 @@ The visual representation of a rich combo widget looks as follows:
 /* Different states of the container. */
 .cke_combo_off {
     a.cke_combo_button {
-	&:hover, &:focus {
-	    outline: none;
-	}
-	&:active {
-	    border-color: $gray-darker;
-	}
+        &:hover, &:focus {
+            outline: none;
+        }
+        &:active {
+            border-color: $gray-darker;
+        }
     }
 }
 
 .cke_combo_on {
     a.cke_combo_button {
-	border-color: $gray-darker;
+        border-color: $gray-darker;
     }
 }
 
@@ -98,8 +98,8 @@ The visual representation of a rich combo widget looks as follows:
 }
 .cke_hc .cke_combo_off a.cke_combo_button {
     &:hover, &:focus, &:active {
-	border-width: 3px;
-	padding: 1px;
+        border-width: 3px;
+        padding: 1px;
     }
 }
 
@@ -169,6 +169,6 @@ The visual representation of a rich combo widget looks as follows:
 /* Disabled combo button styles. */
 .cke_combo_disabled {
     .cke_combo_inlinelabel, .cke_combo_open {
-	opacity: 0.3;
+        opacity: 0.3;
     }
 }
