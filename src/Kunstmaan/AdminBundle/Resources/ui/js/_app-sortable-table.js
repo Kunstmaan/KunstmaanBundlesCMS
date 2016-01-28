@@ -21,4 +21,4 @@ kunstmaanbundles.sortableTable = (function(window, undefined) {
         init: init
     };
 
-}(window));
+})(window);

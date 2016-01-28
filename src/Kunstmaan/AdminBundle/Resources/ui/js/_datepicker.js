@@ -98,4 +98,4 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
         reInit: reInit
     };
 
-}(jQuery, window));
+})(jQuery, window);
