@@ -11,52 +11,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuItemAdminType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * @var Menu
-     */
-    private $menu;
-
-    /**
-     * @var int
-     */
-    private $entityId;
-
-    /**
-     * @var Node
-     */
-    private $rootNode;
-
-    private $menuItemClass;
-
-    /**
-     * @param string $locale
-     * @param Menu $menu
-     * @param int|null $entityId
-     * @param Node|null $rootNode
-     * @param $menuItemClass
-     */
-    public function __construct(
-        $locale,
-        $menu,
-        $entityId = null,
-        Node $rootNode = null,
-        $menuItemClass
-    ) {
-        $this->locale   = $locale;
-        $this->menu     = $menu;
-        $this->entityId = $entityId;
-        $this->rootNode = $rootNode;
-        $this->menuItemClass = $menuItemClass;
-    }
-
     /**
      * Builds the form.
      *
@@ -70,9 +28,9 @@ class MenuItemAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entityId = $this->entityId;
-        $menu     = $this->menu;
-        $menuItemclass = $this->menuItemClass;
+        $entityId = $options['entityId'];
+        $menu     = $options['menu'];
+        $menuItemclass = $options['menuItemClass'];
 
         $builder->add(
             'parent',
@@ -118,8 +76,8 @@ class MenuItemAdminType extends AbstractType
                 'choices_as_values' => true
             )
         );
-        $locale   = $this->locale;
-        $rootNode = $this->rootNode;
+        $locale   = $options['locale'];
+        $rootNode = $options['rootNode'];
 
         $builder->add(
             'nodeTranslation',
@@ -173,6 +131,25 @@ class MenuItemAdminType extends AbstractType
             )
         );
         $builder->add('newWindow');
+    }
+
+    /**
+     * Configures the options for this type.
+     *
+     * @param OptionsResolver $resolver The resolver for the options.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+          array(
+              'data_class' => MenuItem::class,
+              'menu' => null,
+              'entityId' => null,
+              'rootNode' => null,
+              'menuItemClass' => null,
+              'locale' => null,
+          )
+        );
     }
 
     /**

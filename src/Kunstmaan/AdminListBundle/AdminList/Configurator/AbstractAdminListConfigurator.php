@@ -56,6 +56,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     private $type = null;
 
     /**
+     * @var array
+     */
+    private $typeOptions = array();
+
+    /**
      * @var string
      */
     private $listTemplate = 'KunstmaanAdminListBundle:Default:list.html.twig';
@@ -262,6 +267,27 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * @param array $typeOptions
+     *
+     * @return AbstractAdminListConfigurator
+     */
+    public function setAdminTypeOptions($typeOptions)
+    {
+        $this->typeOptions = $typeOptions;
+
+        return $this;
+    }
+
+    /**
+     * Return the default form admin type options
+     *
+     * @return array
+     */
+    public function getAdminTypeOptions() {
+        return $this->typeOptions;
     }
 
     /**
