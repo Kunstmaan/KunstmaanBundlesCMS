@@ -43,7 +43,7 @@
         "imagine/imagine": "v0.5.0",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "~1.4.0-RC1",
-        "symfony-cmf/routing": "~1.4.0-RC2",
+        "symfony-cmf/routing": "~1.4.0-RC2@dev",
         "ruflin/elastica": "~2.3",
         "fpn/doctrine-extensions-taggable": "~0.9",
         "sensio/generator-bundle": "~2.5",
