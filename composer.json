@@ -21,7 +21,7 @@
         "doctrine/orm": "~2.5.0",
         "doctrine/dbal": "~2.5.0",
         "doctrine/doctrine-bundle": "~1.4",
-        "symfony/assetic-bundle": "~2.3",
+        "symfony/assetic-bundle": "~2.7.1",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~5.0",
