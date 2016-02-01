@@ -32,8 +32,12 @@ class DateTimeFilterType extends AbstractDBALFilterType
             /** @var DateTime $datetime */
             $date = empty($data['value']['date']) ? date('d/m/Y') : $data['value']['date'];
             $time = empty($data['value']['time']) ? date('H:i')   : $data['value']['time'];
-            $datetime = DateTime::createFromFormat('d/m/Y H:i', $date . ' ' . $time)->format('Y-m-d H:i');
+            $dateTime = DateTime::createFromFormat('d/m/Y H:i', $date . ' ' . $time);
 
+            if (false === $dateTime) {
+                // Failed to create DateTime object.
+                return;
+            }
             switch ($data['comparator']) {
                 case 'before':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
@@ -42,7 +46,7 @@ class DateTimeFilterType extends AbstractDBALFilterType
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
                     break;
             }
-            $this->queryBuilder->setParameter('var_' . $uniqueId, $datetime);
+            $this->queryBuilder->setParameter('var_' . $uniqueId, $dateTime->format('Y-m-d H:i'));
         }
     }
 
