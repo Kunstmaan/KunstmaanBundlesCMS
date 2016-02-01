@@ -1,4 +1,4 @@
-{% extends 'KunstmaanNodeBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanNode/Default/layout.html.twig' %}
 {% set form = tabPane.getFormView() %}
 
 
@@ -66,7 +66,7 @@
         {{ tabs_widget(tabPane) }}
     {{ form_end(form) }}
 
-    {% include 'KunstmaanNodeBundle:NodeAdmin:_modals.html.twig' %}
+    {% include '@KunstmaanNode/NodeAdmin/_modals.html.twig' %}
 
 {% endblock %}
 

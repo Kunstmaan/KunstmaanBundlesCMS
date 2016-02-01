@@ -1,6 +1,6 @@
 {% set extraparams = extraparams|merge(filter.currentparameters) %}
 
-{% include 'KunstmaanAdminListBundle:AdminListTwigExtension:filters.html.twig' %}
+{% include '@KunstmaanAdminList/AdminListTwigExtension/filters.html.twig' %}
 
 {% if adminlist.pagerfanta.haveToPaginate() %}
     {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_admin_list') }}
@@ -140,6 +140,6 @@
 
 {% for item in adminlist.items(extraparams) %}
     {% if adminlist.canDelete(item) %}
-        {% include 'KunstmaanAdminListBundle:AdminListTwigExtension:sure-modal.html.twig' %}
+        {% include '@KunstmaanAdminList/AdminListTwigExtension/sure-modal.html.twig' %}
     {% endif %}
 {% endfor %}

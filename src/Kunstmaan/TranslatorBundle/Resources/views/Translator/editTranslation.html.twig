@@ -1,7 +1,7 @@
-{% extends 'KunstmaanTranslatorBundle::Default/layout.html.twig' %}
+{% extends '@KunstmaanTranslator/Default/layout.html.twig' %}
 
 {% block content %}
-    {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+    {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
     {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
         <fieldset class="form__fieldset--padded">
             {{ form_rest(form) }}

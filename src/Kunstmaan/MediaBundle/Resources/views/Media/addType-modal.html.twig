@@ -14,7 +14,7 @@
                     </h3>
                 </div>
 
-                {% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+                {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
                 {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': type}))}) }}
                     <!-- Body -->
                     <div class="modal-body">

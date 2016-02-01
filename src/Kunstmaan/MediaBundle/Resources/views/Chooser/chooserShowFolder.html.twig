@@ -1,4 +1,4 @@
-{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+{% extends '@KunstmaanAdminList/Default/list.html.twig' %}
 
 {% set urlParams = {'type': type} %}
 {% if cKEditorFuncNum %}
@@ -248,9 +248,9 @@
 
     <!-- Modals -->
     {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
-    {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Media/addType-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
 
 {% endblock %}
 
