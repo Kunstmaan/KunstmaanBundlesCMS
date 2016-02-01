@@ -6,7 +6,7 @@
     {% if mediaFolder.__children is not empty %}
         <ul>
             {% for mediaFolder in mediaFolder.__children %}
-                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% include '@KunstmaanMedia/Folder/foldertreeview.html.twig' %}
             {% endfor %}
         </ul>
     {% endif %}

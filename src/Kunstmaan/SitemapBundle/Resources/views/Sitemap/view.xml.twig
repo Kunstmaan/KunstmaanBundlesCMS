@@ -10,7 +10,7 @@
                 </url>
             {% endif %}
             {% for node in topNode.getChildren() %}
-                {% include 'KunstmaanSitemapBundle:Sitemap:entry.xml.twig' with {'entry' : node, 'priority' : 9 } %}
+                {% include '@KunstmaanSitemap/Sitemap/entry.xml.twig' with {'entry' : node, 'priority' : 9 } %}
             {% endfor %}
         {% endfor %}
     {% endif %}
