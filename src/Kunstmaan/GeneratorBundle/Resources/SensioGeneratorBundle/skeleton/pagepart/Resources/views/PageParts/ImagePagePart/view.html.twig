@@ -9,9 +9,9 @@
             {% elseif resource.media.name|lower|split('.')|last == 'gif' or 'image/gif' in resource.media.contentType %}
                 {% set imgUrl = baseUrl ~ asset(resource.media.url) %}
             {% elseif resource.media.name|lower|split('.')|last == 'png' %}
-                {% set imgUrl = baseUrl ~ asset(resource.media.url)|imagine_filter('optimpng') %}
+                {% set imgUrl = resource.media.url|imagine_filter('optimpng') %}
             {% else %}
-                {% set imgUrl = baseUrl ~ asset(resource.media.url)|imagine_filter('optimjpg') %}
+                {% set imgUrl = resource.media.url|imagine_filter('optimjpg') %}
             {% endif %}
         {% endif %}
 
