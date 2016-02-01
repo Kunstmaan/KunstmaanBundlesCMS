@@ -57,11 +57,13 @@
     <meta property="og:video:width" content="640">
     <meta property="og:video:height" content="360">
     {% else %}
-    <meta property="og:image" content="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}">
-    <meta property="og:image:type" content="{{ seo.ogImage.contentType }}">
-    {% if seo.ogImage.metaData.original_height is defined %}<meta property="og:image:height" content="{{ seo.ogImage.metaData.original_height }}">{% endif %}
-    {% if seo.ogImage.metaData.original_width is defined %}<meta property="og:image:width" content="{{ seo.ogImage.metaData.original_width }}">{% endif %}
-    <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}" />
+        {% set imageUrl = seo.getOgImage().getUrl() | imagine_filter('fb_og_image') %}
+        {% set dimensions = get_image_dimensions(imageUrl) %}
+        <meta property="og:image" content="{{ asset(imageUrl) }}">
+        <meta property="og:image:type" content="{{ seo.ogImage.contentType }}">
+        <meta property="og:image:height" content="{{ dimensions.height }}">
+        <meta property="og:image:width" content="{{ dimensions.width }}">
+        <link rel="image_src" href="{{ asset(imageUrl) }}"/>
     {% endif %}
 {% endif %}
 
@@ -100,7 +102,7 @@
         <meta name="twitter:player:height" content="540">
         <meta name="twitter:image:src" content="{{ app.request.schemeandhttphost ~ asset(seo.twitterImage.metaData.thumbnail_url) }}" />
         {% else %}
-        <meta name="twitter:image:src" content="{{ app.request.schemeandhttphost ~ asset(seo.twitterImage.url) }}" />
+        <meta name="twitter:image:src" content="{{ asset(seo.twitterImage.url | imagine_filter('tw_card_image')) }}" />
         {% endif %}
     {% endif %}
 {% endif %}
