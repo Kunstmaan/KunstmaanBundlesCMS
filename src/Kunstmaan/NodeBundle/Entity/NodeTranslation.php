@@ -56,6 +56,7 @@ class NodeTranslation extends AbstractEntity
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex("/^[a-zA-Z0-9\-_\/]+$/")
      */
     protected $slug;
 
