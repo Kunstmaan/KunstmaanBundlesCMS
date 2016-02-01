@@ -24,7 +24,7 @@
     <ul>
     {% set treeLevel = treeLevel + 1 %}
     {% for menuitem in menuitem.navigationChildren %}
-        {% include 'KunstmaanAdminBundle:Default:rectreeview.html.twig' %}
+        {% include '@KunstmaanAdmin/Default/rectreeview.html.twig' %}
     {% endfor %}
     {% set treeLevel = treeLevel - 1 %}
     </ul>

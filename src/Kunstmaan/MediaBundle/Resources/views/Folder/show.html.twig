@@ -1,4 +1,4 @@
-{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+{% extends '@KunstmaanAdminList/Default/list.html.twig' %}
 
 
 {% block body %}
@@ -33,7 +33,7 @@
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% include '@KunstmaanMedia/Folder/foldertreeview.html.twig' %}
             {% endfor %}
         </ul>
     </nav>
@@ -42,7 +42,7 @@
 
 
 {% block breadcrumb %}
-    {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/breadcrumbs.html.twig' %}
 {% endblock %}
 
 
@@ -277,7 +277,7 @@
         <!-- TAB - Properties -->
         <div class="tab-pane" id="properties">
 
-            {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+            {% form_theme editform '@KunstmaanAdmin/Form/fields.html.twig' %}
             {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) ~ '#properties'}) }}
                 <fieldset class="panel panel-default form-properties">
                     <div class="panel-body">
@@ -299,8 +299,8 @@
 
 
     <!-- Modals -->
-    {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
 
 {% endblock %}
 

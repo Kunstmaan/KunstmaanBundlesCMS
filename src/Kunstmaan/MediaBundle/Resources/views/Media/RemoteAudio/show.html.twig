@@ -1,5 +1,5 @@
-{% extends 'KunstmaanMediaBundle:Media:show.html.twig' %}
+{% extends '@KunstmaanMedia/Media/show.html.twig' %}
 
 {% block preview %}
-    {% include 'KunstmaanMediaBundle:Media\\RemoteAudio:preview.html.twig' with {'media': media} %}
+    {% include '@KunstmaanMedia/Media/RemoteAudio/preview.html.twig' with {'media': media} %}
 {% endblock %}

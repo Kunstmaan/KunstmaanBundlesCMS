@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanMedia/Default/layout.html.twig' %}
 
 
 {% block body %}
@@ -32,7 +32,7 @@
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% include '@KunstmaanMedia/Folder/foldertreeview.html.twig' %}
             {% endfor %}
         </ul>
     </nav>
@@ -41,7 +41,7 @@
 
 
 {% block breadcrumb %}
-    {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/breadcrumbs.html.twig' %}
 {% endblock %}
 
 

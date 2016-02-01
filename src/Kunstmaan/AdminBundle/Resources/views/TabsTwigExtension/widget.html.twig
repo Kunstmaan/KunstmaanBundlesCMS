@@ -1,7 +1,7 @@
 {% set formView = tabPane.formView %}
 {% set activeTab = tabPane.activeTab %}
 
-{% form_theme formView 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+{% form_theme formView '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 <ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
 {% for tab in tabPane.tabs %}

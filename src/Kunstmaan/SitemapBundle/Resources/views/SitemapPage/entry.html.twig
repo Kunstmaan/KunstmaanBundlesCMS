@@ -8,7 +8,7 @@
     {% if children|length > 0 %}
         {% if not hidden %}<ul>{% endif %}
             {% for subNode in entry.getChildren() %}
-                {% include 'KunstmaanSitemapBundle:SitemapPage:entry.html.twig' with {'entry' : subNode} %}
+                {% include '@KunstmaanSitemap/SitemapPage/entry.html.twig' with {'entry' : subNode} %}
             {% endfor %}
             {% if not hidden %}</ul>{% endif %}
     {% endif %}
