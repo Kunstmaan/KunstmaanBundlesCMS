@@ -28,7 +28,7 @@ class ChoicePagePartAdminType extends AbstractType
             ->add('expanded', CheckboxType::class, array('required' => false))
             ->add('multiple', CheckboxType::class, array('required' => false))
             ->add('choices', TextareaType::class, array('required' => false))
-            ->add('placeholder', TextType::class, array('required' => false));
+            ->add('empty_value', TextType::class, array('required' => false));
     }
 
     /**
