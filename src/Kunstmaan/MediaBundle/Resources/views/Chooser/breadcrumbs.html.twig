@@ -9,7 +9,7 @@
             {% else %}
                 <li>
                     {% set params = { 'folderId': breadcrumbitem.id } %}
-                    <a href="{{ path('KunstmaanMediaBundle_folder_show', urlParams is defined ? urlParams|merge(params) : params ) }}">
+                    <a href="{{ path('KunstmaanMediaBundle_chooser_show_folder', urlParams is defined ? urlParams|merge(params) : params ) }}">
                         {{ breadcrumbitem.name }}
                     </a>
                 </li>
