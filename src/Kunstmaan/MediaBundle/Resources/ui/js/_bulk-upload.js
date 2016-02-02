@@ -73,7 +73,7 @@ kunstmaanMediaBundle.bulkUpload = (function(window, undefined) {
                     $fileLine.addClass('list-group-item-success');
 
                     var obj = null;
-                    obj = JSON.parse(jsonString);
+                    obj = JSON.parse(res.response);
 
                     if (obj.error) {
                         $fileLine.addClass('list-group-item-danger');
