@@ -17,6 +17,9 @@
     {{ parent() }}
 {% endblock %}
 
+{% block breadcrumb %}
+    {% include '@KunstmaanMedia/Folder/breadcrumbs.html.twig' %}
+{% endblock %}
 
 {% block appHeader %}
     <header role="banner">
