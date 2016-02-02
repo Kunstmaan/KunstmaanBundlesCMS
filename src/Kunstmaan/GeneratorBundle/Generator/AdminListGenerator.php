@@ -37,12 +37,13 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      * @param string          $entity   The entity name
      * @param ClassMetadata   $metadata The meta data
      * @param OutputInterface $output
+     * @param string          $sortField
      *
      * @internal param bool $generateAdminType True if we need to specify the admin type
      *
      * @return void
      */
-    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, OutputInterface $output)
+    public function generate(Bundle $bundle, $entity, ClassMetadata $metadata, OutputInterface $output, $sortField)
     {
         $parts             = explode('\\', $entity);
         $entityName        = array_pop($parts);
@@ -61,7 +62,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
         }
 
         try {
-            $this->generateConfiguration($bundle, $entityName, $metadata, $generateAdminType);
+            $this->generateConfiguration($bundle, $entityName, $metadata, $generateAdminType, $sortField);
             $output->writeln('Generating the Configuration code: <info>OK</info>');
         } catch (\Exception $error) {
             $output->writeln(
@@ -72,7 +73,7 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
 
 
         try {
-            $this->generateController($bundle, $entityName, $metadata);
+            $this->generateController($bundle, $entityName, $sortField);
             $output->writeln('Generating the Controller code: <info>OK</info>');
         } catch (\Exception $error) {
             $output->writeln(
@@ -87,11 +88,12 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
      * @param string        $entityName        The entity name
      * @param ClassMetadata $metadata          The meta data
      * @param boolean       $generateAdminType True if we need to specify the admin type
+     * @param string        $sortField         The name of the sort field
      *
      * @throws \RuntimeException
      * @return void
      */
-    public function generateConfiguration(Bundle $bundle, $entityName, ClassMetadata $metadata, $generateAdminType)
+    public function generateConfiguration(Bundle $bundle, $entityName, ClassMetadata $metadata, $generateAdminType, $sortField)
     {
         $className = sprintf("%sAdminListConfigurator", $entityName);
         $dirPath   = sprintf("%s/AdminList", $bundle->getPath());
@@ -115,7 +117,8 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
                 'bundle'              => $bundle,
                 'entity_class'        => $entityName,
                 'fields'              => $this->getFieldsWithFilterTypeFromMetadata($metadata),
-                'generate_admin_type' => $generateAdminType
+                'generate_admin_type' => $generateAdminType,
+                'sortField'           => $sortField
             )
         );
     }
@@ -123,10 +126,11 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
     /**
      * @param Bundle $bundle     The bundle
      * @param string $entityName The entity name
+     * @param string        $sortField         The name of the sort field
      *
      * @throws \RuntimeException
      */
-    public function generateController(Bundle $bundle, $entityName)
+    public function generateController(Bundle $bundle, $entityName, $sortField)
     {
         $className  = sprintf("%sAdminListController", $entityName);
         $dirPath    = sprintf("%s/Controller", $bundle->getPath());
@@ -154,7 +158,8 @@ class AdminListGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Genera
                 'namespace'         => $bundle->getNamespace(),
                 'bundle'            => $bundle,
                 'entity_class'      => $entityName,
-                'export_extensions' => $extensions
+                'export_extensions' => $extensions,
+                'sortField'         => $sortField
             )
         );
 

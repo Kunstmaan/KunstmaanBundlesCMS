@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
@@ -20,8 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface, ExportListConfiguratorInterface
 {
-    const SUFFIX_ADD    = 'add';
-    const SUFFIX_EDIT   = 'edit';
+    const SUFFIX_ADD = 'add';
+    const SUFFIX_EDIT = 'edit';
     const SUFFIX_EXPORT = 'export';
     const SUFFIX_DELETE = 'delete';
 
@@ -136,6 +137,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function buildItemActions()
     {
+        $this->buildSortableFieldActions();
     }
 
     /**
@@ -172,11 +174,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function resetBuilds()
     {
-        $this->fields        = array();
-        $this->exportFields  = array();
+        $this->fields = array();
+        $this->exportFields = array();
         $this->filterBuilder = null;
-        $this->itemActions   = array();
-        $this->listActions   = array();
+        $this->itemActions = array();
+        $this->listActions = array();
     }
 
     /**
@@ -190,17 +192,17 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = array_merge($params, $this->getExtraParameters());
 
-        $friendlyName      = explode("\\", $this->getEntityName());
-        $friendlyName      = array_pop($friendlyName);
-        $re                = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
-        $a                 = preg_split($re, $friendlyName);
+        $friendlyName = explode("\\", $this->getEntityName());
+        $friendlyName = array_pop($friendlyName);
+        $re = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
+        $a = preg_split($re, $friendlyName);
         $superFriendlyName = implode(' ', $a);
 
         return array(
             $superFriendlyName => array(
-                'path'   => $this->getPathByConvention($this::SUFFIX_ADD),
-                'params' => $params
-            )
+                'path' => $this->getPathByConvention($this::SUFFIX_ADD),
+                'params' => $params,
+            ),
         );
     }
 
@@ -214,8 +216,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $params = $this->getExtraParameters();
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_EXPORT),
-            'params' => array_merge(array('_format' => 'csv'), $params)
+            'path' => $this->getPathByConvention($this::SUFFIX_EXPORT),
+            'params' => array_merge(array('_format' => 'csv'), $params),
         );
     }
 
@@ -229,8 +231,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $params = $this->getExtraParameters();
 
         return array(
-            'path'   => $this->getPathByConvention(),
-            'params' => $params
+            'path' => $this->getPathByConvention(),
+            'params' => $params,
         );
     }
 
@@ -252,8 +254,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         }
 
         throw new InvalidArgumentException(
-            'You need to implement the getAdminType method in ' .
-            get_class($this) . ' or ' . get_class($entity)
+            'You need to implement the getAdminType method in '.
+            get_class($this).' or '.get_class($entity)
         );
     }
 
@@ -286,7 +288,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @return array
      */
-    public function getAdminTypeOptions() {
+    public function getAdminTypeOptions()
+    {
         return $this->typeOptions;
     }
 
@@ -333,9 +336,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $name     The field name
-     * @param string $header   The header title
-     * @param string $sort     Sortable column or not
+     * @param string $name The field name
+     * @param string $header The header title
+     * @param string $sort Sortable column or not
      * @param string $template The template
      *
      * @return AbstractAdminListConfigurator
@@ -348,8 +351,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $name     The field name
-     * @param string $header   The header title
+     * @param string $name The field name
+     * @param string $header The header title
      * @param string $template The template
      *
      * @return AbstractAdminListConfigurator
@@ -362,10 +365,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string              $columnName The column name
-     * @param FilterTypeInterface $type       The filter type
-     * @param string              $filterName The name of the filter
-     * @param array               $options    Options
+     * @param string $columnName The column name
+     * @param FilterTypeInterface $type The filter type
+     * @param string $filterName The name of the filter
+     * @param array $options Options
      *
      * @return AbstractAdminListConfigurator
      */
@@ -424,11 +427,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string   $label          The label, only used when the template equals null
+     * @param string $label The label, only used when the template equals null
      * @param callable $routeGenerator The generator used to generate the url of an item, when generating the item will
      *                                 be provided
-     * @param string   $icon           The icon, only used when the template equals null
-     * @param string   $template       The template, when not specified the label is shown
+     * @param string $icon The icon, only used when the template equals null
+     * @param string $template The template, when not specified the label is shown
      *
      * @return AbstractAdminListConfigurator
      */
@@ -542,8 +545,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param array|object $item       The item
-     * @param string       $columnName The column name
+     * @param array|object $item The item
+     * @param string $columnName The column name
      *
      * @return mixed
      */
@@ -560,15 +563,15 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         if (method_exists($item, $methodName)) {
             $result = $item->$methodName();
         } else {
-            $methodName = 'get' . $columnName;
+            $methodName = 'get'.$columnName;
             if (method_exists($item, $methodName)) {
                 $result = $item->$methodName();
             } else {
-                $methodName = 'is' . $columnName;
+                $methodName = 'is'.$columnName;
                 if (method_exists($item, $methodName)) {
                     $result = $item->$methodName();
                 } else {
-                    $methodName = 'has' . $columnName;
+                    $methodName = 'has'.$columnName;
                     if (method_exists($item, $methodName)) {
                         $result = $item->$methodName();
                     } else {
@@ -582,8 +585,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param array|object $item       The item
-     * @param string       $columnName The column name
+     * @param array|object $item The item
+     * @param string $columnName The column name
      *
      * @return string
      */
@@ -720,14 +723,14 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function bindRequest(Request $request)
     {
-        $query   = $request->query;
+        $query = $request->query;
         $session = $request->getSession();
 
-        $adminListName = 'listconfig_' . $request->get('_route');
+        $adminListName = 'listconfig_'.$request->get('_route');
 
         $this->page = $request->query->getInt('page', 1);
         // Allow alphanumeric, _ & . in order by parameter!
-        $this->orderBy        = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
+        $this->orderBy = preg_replace('/[^[a-zA-Z0-9\_\.]]/', '', $request->query->get('orderBy', ''));
         $this->orderDirection = $request->query->getAlpha('orderDirection', '');
 
         // there is a session and the filter param is not set
@@ -750,8 +753,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $session->set(
             $adminListName,
             array(
-                'page'           => $this->page,
-                'orderBy'        => $this->orderBy,
+                'page' => $this->page,
+                'orderBy' => $this->orderBy,
                 'orderDirection' => $this->orderDirection,
             )
         );
@@ -825,4 +828,41 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         return array();
     }
+
+    public function buildSortableFieldActions() {
+
+        // Check if sortable is used
+        if ($sort = $this->getSortableField()) {
+            $route = function (EntityInterface $item) {
+                return array(
+                    'path' => $this->getPathByConvention() . '_move_up',
+                    'params' => array('id' => $item->getId()),
+                );
+            };
+
+            $action = new SimpleItemAction($route, 'arrow-up', 'Move up');
+            $this->addItemAction($action);
+
+            $route = function (EntityInterface $item) {
+                return array(
+                    'path' => $this->getPathByConvention() . '_move_down',
+                    'params' => array('id' => $item->getId()),
+                );
+            };
+
+            $action = new SimpleItemAction($route, 'arrow-down', 'Move down');
+            $this->addItemAction($action);
+        }
+    }
+
+    /**
+     * Returns the name of the field when making entities sortable
+     *
+     * @return string
+     */
+    public function getSortableField()
+    {
+        return null;
+    }
+
 }

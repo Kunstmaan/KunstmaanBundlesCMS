@@ -90,4 +90,34 @@ class BikeAdminListController extends AdminListController
     {
 	return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
+
+    /**
+     * The move up action
+     *
+     * @param int $id
+     *
+     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_move_up")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function moveUpAction(Request $request, $id)
+    {
+        return parent::doMoveUpAction($this->getAdminListConfigurator(), $id, $request);
+    }
+
+    /**
+     * The move down action
+     *
+     * @param int $id
+     *
+     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle_name|lower }}_admin_bike_move_down")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function moveDownAction(Request $request, $id)
+    {
+        return parent::doMoveDownAction($this->getAdminListConfigurator(), $id, $request);
+    }
 }
