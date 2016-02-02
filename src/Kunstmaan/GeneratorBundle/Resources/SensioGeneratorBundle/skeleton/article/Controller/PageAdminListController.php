@@ -31,7 +31,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      */
     public function indexAction(Request $request)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
+        return parent::doIndexAction($this->getAdminListConfigurator($request), $request);
     }
 
     /**
@@ -43,7 +43,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      */
     public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator(), $request);
+        return parent::doAddAction($this->getAdminListConfigurator($request), $request);
     }
 
     /**
@@ -58,7 +58,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      */
     public function editAction(Request $request, $id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doEditAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
@@ -73,7 +73,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      */
     public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doDeleteAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
@@ -88,6 +88,6 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      */
     public function exportAction(Request $request, $_format)
     {
-        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+        return parent::doExportAction($this->getAdminListConfigurator($request), $_format, $request);
     }
 }
