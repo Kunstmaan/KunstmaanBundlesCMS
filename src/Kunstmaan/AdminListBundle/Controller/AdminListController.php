@@ -8,6 +8,8 @@ use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\Event\AdminListEvent;
+use Kunstmaan\AdminListBundle\Event\AdminListEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -132,8 +134,10 @@ abstract class AdminListController extends Controller
             }
 
             if ($form->isValid()) {
+                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_ADD, new AdminListEvent($helper));
                 $em->persist($helper);
                 $em->flush();
+                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_ADD, new AdminListEvent($helper));
                 $indexUrl = $configurator->getIndexUrl();
 
                 return new RedirectResponse(
@@ -199,8 +203,10 @@ abstract class AdminListController extends Controller
             }
 
             if ($form->isValid()) {
+                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_EDIT, new AdminListEvent($helper));
                 $em->persist($helper);
                 $em->flush();
+                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_EDIT, new AdminListEvent($helper));
                 $indexUrl = $configurator->getIndexUrl();
 
                 return new RedirectResponse(
@@ -251,8 +257,10 @@ abstract class AdminListController extends Controller
 
         $indexUrl = $configurator->getIndexUrl();
         if ($request->isMethod('POST')) {
+            $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_DELETE, new AdminListEvent($helper));
             $em->remove($helper);
             $em->flush();
+            $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_DELETE, new AdminListEvent($helper));
         }
 
         return new RedirectResponse(
