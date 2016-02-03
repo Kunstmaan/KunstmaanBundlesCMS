@@ -17,6 +17,9 @@
     {{ parent() }}
 {% endblock %}
 
+{% block breadcrumb %}
+    {% include '@KunstmaanMedia/Chooser/breadcrumbs.html.twig' %}
+{% endblock %}
 
 {% block appHeader %}
     <header role="banner">
