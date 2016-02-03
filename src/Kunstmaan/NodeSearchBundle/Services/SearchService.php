@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeSearchBundle\Services;
 
+use Elastica\Aggregation\Terms;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\PagerFanta\Adapter\SearcherRequestAdapter;
 use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
@@ -148,7 +149,7 @@ class SearchService
      * @param Request                  $request
      * @param RenderContext            $context
      */
-    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext $context)
+    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext &$context)
     {
         // Retrieve the search parameters
         $queryString = trim($request->query->get('query'));
@@ -163,14 +164,17 @@ class SearchService
             ->setContentType($queryType)
             ->setLanguage($lang);
 
-
         // Facets
-        $query      = $searcher->getQuery();
         $facetTerms = new \Elastica\Facet\Terms('type');
-
         $facetTerms->setField('type');
-
+        $query      = $searcher->getQuery();
         $query->addFacet($facetTerms);
+
+        // Aggregations
+        $termsAggregation = new Terms('type');
+        $termsAggregation->setField('type');
+
+        $query->addAggregation($termsAggregation);
     }
 
     /**

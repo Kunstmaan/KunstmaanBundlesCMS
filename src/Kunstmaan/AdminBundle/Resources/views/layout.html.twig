@@ -1,10 +1,14 @@
-{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
 {% block extrabodyclasses %}login{% endblock %}
 
 {% block body %}
     <h2 class="login__title">
+        {% if admin_logo is defined %}
+        <img class="app__header__brand__img" src="{{ asset(admin_logo) }}" alt="{{ websitetitle | trans }}">
+        {% else %}
         {{ websitetitle | trans }}
+        {% endif %}
     </h2>
 
     <div class="login__form">
@@ -48,7 +52,9 @@
         {% endblock %}
     </div>
 
-    <img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_white.svg" class="login__logo">
+    {% block login_logo %}
+        <img src="/bundles/kunstmaanadmin/default-theme/img/kunstmaan/kunstmaan_white.svg" class="login__logo">
+    {% endblock %}
 
     {% block footer %}{% endblock %}
 {% endblock %}

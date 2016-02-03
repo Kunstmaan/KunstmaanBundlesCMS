@@ -23,14 +23,13 @@ html {
 body {
     background-color: $white;
     min-height: 100%;
-
-    {% if demosite %}
-    background-color: $blue;
-    {% endif %}
-}
-
 {% if demosite %}
-    .emulate-pulldown {
-        background-color: $white;
-    }
+    background-color: $blue;
+{% endif %}
+}
+{% if demosite %}
+
+.emulate-pulldown {
+    background-color: $white;
+}
 {% endif %}

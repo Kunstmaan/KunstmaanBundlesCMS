@@ -41,7 +41,9 @@ class SettingsController extends BaseSettingsController
             $isSaved = false;
         }
 
-        $form = $this->createForm(new RobotsType(), $robot);
+        $form = $this->createForm(RobotsType::class, $robot, array(
+            'action' => $this->generateUrl('KunstmaanSeoBundle_settings_robots')
+        ));
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {

@@ -2,10 +2,10 @@ var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.datepicker = (function($, window, undefined) {
 
-    var init;
+    var init, reInit, _setDefaultDate, _initDatepicker;
 
-    var _today = moment(),
-        _tomorrow = moment(_today).add(1, 'days');
+    var _today = window.moment(),
+        _tomorrow = window.moment(_today).add(1, 'days');
 
     var defaultFormat = 'DD-MM-YYYY',
         defaultCollapse = true,
@@ -16,10 +16,21 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
 
     init = function() {
         $('.js-datepicker').each(function() {
-            initDatepicker($(this));
+            _initDatepicker($(this));
         });
     };
 
+    reInit = function(el) {
+        if (el) {
+            _initDatepicker($(el));
+        } else {
+            $('.js-datepicker').each(function() {
+                if (!$(this).hasClass('datepicker--enabled')) {
+                    _initDatepicker($(this));
+                }
+            });
+        }
+    };
 
     _setDefaultDate = function(elMinDate) {
         if(elMinDate === 'tomorrow') {
@@ -30,7 +41,7 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
     };
 
 
-    initDatepicker = function($el) {
+    _initDatepicker = function($el) {
         // Get Settings
         var elFormat = $el.data('format'),
             elCollapse = $el.data('collapse'),
@@ -48,8 +59,7 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
 
 
         // Setup
-        var $container = $el.find('.input-group'),
-            $input = $el.find('input'),
+        var $input = $el.find('input'),
             $addon = $el.find('.input-group-addon');
 
         $input.datetimepicker({
@@ -60,7 +70,7 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             defaultDate: defaultDate,
             widgetPositioning: {
                 horizontal: 'left',
-                vertical: 'bottom'
+                vertical: 'auto'
             },
             widgetParent: $el,
             icons: {
@@ -75,6 +85,8 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
             }
         });
 
+        $el.addClass('datepicker--enabled');
+
         $addon.on('click', function() {
             $input.focus();
         });
@@ -82,7 +94,8 @@ kunstmaanbundles.datepicker = (function($, window, undefined) {
 
 
     return {
-        init: init
+        init: init,
+        reInit: reInit
     };
 
-}(jQuery, window));
+})(jQuery, window);

@@ -72,7 +72,7 @@ class Events
     const ADAPT_FORM = 'kunstmaan_node.adaptForm';
 
     /**
-     * The postPersist event occurs for a given node, before the node is persisted.
+     * The prePersist event occurs for a given node, before the node is persisted.
      *
      * @var string
      */

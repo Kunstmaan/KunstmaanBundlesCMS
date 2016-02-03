@@ -5,6 +5,13 @@
 
 .dropdown-menu__item--has-submenu {
     position: relative;
+    @extend %clearfix;
+
+    i.fa {
+        float: right;
+        margin-top: 3px;
+        margin-right: -5px;
+    }
 }
 
 .dropdown-toggle--submenu {

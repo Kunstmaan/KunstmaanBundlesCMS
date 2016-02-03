@@ -5,21 +5,22 @@ namespace Kunstmaan\SeoBundle\Helper\Menu;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SeoManagementMenuAdaptor implements MenuAdaptorInterface
 {
-    /** @var  SecurityContextInterface */
-    private $security;
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
 
     /**
-     * @param SecurityContextInterface $security
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(SecurityContextInterface $security)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->security = $security;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -32,7 +33,7 @@ class SeoManagementMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (!is_null($parent) and ('KunstmaanAdminBundle_settings' == $parent->getRoute()) and $this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        if (!is_null($parent) && ('KunstmaanAdminBundle_settings' == $parent->getRoute()) && $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanSeoBundle_settings_robots')

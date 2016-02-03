@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:Media\\File:show.html.twig' %}
+{% extends '@KunstmaanMedia/Media/File/show.html.twig' %}
 
 {% block extraactions %}
 
@@ -43,7 +43,7 @@
         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
             {% set imageurl = imageurl %}
         {% else %}
-            {% set imageurl = imageurl | imagine_filter('media_detail_thumbnail') %}
+            {% set imageurl = asset(imageurl | imagine_filter('media_detail_thumbnail')) %}
         {% endif %}
     {% endif %}
     <img id="editimage" class="img-thumbnail" src="{{ imageurl }}" alt="{{ media.name }}">

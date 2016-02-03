@@ -26,10 +26,10 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $em = $this->getMockedEntityManager();
-        $securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $tokenStorage = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         $roleHierarchy = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
           ->getMock();
-        $aclHelper = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper', array(), array($em, $securityContext, $roleHierarchy));
+        $aclHelper = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper', array(), array($em, $tokenStorage, $roleHierarchy));
 
         $this->object = new FormPageAdminListConfigurator($em, $aclHelper, self::PERMISSION_VIEW);
     }

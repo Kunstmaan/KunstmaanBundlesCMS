@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UserManagementBundle\Controller;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
@@ -33,8 +34,8 @@ class UsersController extends BaseSettingsController
     public function listAction(Request $request)
     {
         $this->checkPermission();
-        $em                    = $this->getDoctrine()->getManager();
-        $userObject            = $this->getUserClassInstance();
+        $em = $this->getDoctrine()->getManager();
+        $userObject = $this->getUserClassInstance();
         $configuratorClassName = '';
         if ($this->container->hasParameter('kunstmaan_user_management.user_admin_list_configurator.class')) {
             $configuratorClassName = $this->container->getParameter(
@@ -83,25 +84,21 @@ class UsersController extends BaseSettingsController
     public function addAction(Request $request)
     {
         $this->checkPermission();
-        /* @var $em EntityManager */
-        $em                = $this->getDoctrine()->getManager();
-        $user              = $this->getUserClassInstance();
+        $user = $this->getUserClassInstance();
+
+        $options = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'));
         $formTypeClassName = $user->getFormTypeClass();
-        $formType          = new $formTypeClassName();
-        $formType->setLangs($this->container->getParameter('kunstmaan_admin.admin_locales'));
+        $formType = new $formTypeClassName();
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
+            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $form = $this->createForm(
-            $formType,
+            $formTypeClassName,
             $user,
-            array(
-                'password_required' => true,
-                'validation_groups' => array('Registration')
-            )
+            $options
         );
 
         if ($request->isMethod('POST')) {
@@ -114,7 +111,7 @@ class UsersController extends BaseSettingsController
 
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    'User \'' . $user->getUsername() . '\' has been created!'
+                    'User \''.$user->getUsername().'\' has been created!'
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
@@ -141,7 +138,7 @@ class UsersController extends BaseSettingsController
     public function editAction(Request $request, $id)
     {
         // The logged in user should be able to change his own password/username/email and not for other users
-        if ($id == $this->get('security.context')->getToken()->getUser()->getId()) {
+        if ($id == $this->get('security.token_storage')->getToken()->getUser()->getId()) {
             $requiredRole = 'ROLE_ADMIN';
         } else {
             $requiredRole = 'ROLE_SUPER_ADMIN';
@@ -151,25 +148,25 @@ class UsersController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
-        $user              = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
-        $formTypeClassName = $user->getFormTypeClass();
-        $formType          = new $formTypeClassName();
-        $formType->setLangs($this->container->getParameter('kunstmaan_admin.admin_locales'));
+        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $options = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'));
+        $formFqn = $user->getFormTypeClass();
+        $formType = new $formFqn();
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $formType->setCanEditAllFields($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN'));
+            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
         }
 
-        $event = new AdaptSimpleFormEvent($request, $formType, $user);
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM , $event);
+        $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
+        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formType, $user, array('password_required' => false));
+        $form = $this->createForm($formFqn, $user, $options);
 
         if ($request->isMethod('POST')) {
 
-            if($tabPane){
+            if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
@@ -180,29 +177,31 @@ class UsersController extends BaseSettingsController
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
-                
+
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    'User \'' . $user->getUsername() . '\' has been edited!'
+                    'User \''.$user->getUsername().'\' has been edited!'
                 );
 
-                return new RedirectResponse($this->generateUrl(
-                    'KunstmaanUserManagementBundle_settings_users_edit',
-                    array('id' => $id)
-                ));
+                return new RedirectResponse(
+                    $this->generateUrl(
+                        'KunstmaanUserManagementBundle_settings_users_edit',
+                        array('id' => $id)
+                    )
+                );
             }
         }
 
-    $params = array(
-        'form' => $form->createView(),
-        'user' => $user,
+        $params = array(
+            'form' => $form->createView(),
+            'user' => $user,
         );
 
-    if($tabPane) {
-        $params = array_merge($params, array('tabPane' => $tabPane));
-    }
+        if ($tabPane) {
+            $params = array_merge($params, array('tabPane' => $tabPane));
+        }
 
-    return $params;
+        return $params;
     }
 
     /**
@@ -228,15 +227,13 @@ class UsersController extends BaseSettingsController
             $username = $user->getUsername();
             $em->remove($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'User \'' . $username . '\' has been deleted!');
+            $this->get('session')->getFlashBag()->add('success', 'User \''.$username.'\' has been deleted!');
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
     }
 
     /**
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function changePasswordAction()
@@ -246,7 +243,7 @@ class UsersController extends BaseSettingsController
             $this->generateUrl(
                 'KunstmaanUserManagementBundle_settings_users_edit',
                 array(
-                    'id' => $this->get('security.context')->getToken()->getUser()->getId()
+                    'id' => $this->get('security.token_storage')->getToken()->getUser()->getId(),
                 )
             )
         );

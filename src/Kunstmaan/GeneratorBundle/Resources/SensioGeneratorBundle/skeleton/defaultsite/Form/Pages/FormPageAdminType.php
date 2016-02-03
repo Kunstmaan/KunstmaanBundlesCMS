@@ -4,7 +4,10 @@ namespace {{ namespace }}\Form\Pages;
 
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * The admin type for form pages
@@ -28,16 +31,16 @@ class FormPageAdminType extends PageAdminType
     {
         parent::buildForm($builder, $options);
 
-	$builder->add('subject', 'text', array(
+	$builder->add('subject', TextType::class, array(
 	    'required' => false,
 	));
-	$builder->add('fromEmail', 'email', array(
+	$builder->add('fromEmail', EmailType::class, array(
 	    'required' => false,
 	));
-	$builder->add('toEmail', 'email', array(
+	$builder->add('toEmail', EmailType::class, array(
 	    'required' => false,
 	));
-        $builder->add('thanks', 'textarea', array(
+        $builder->add('thanks', TextareaType::class, array(
 	    'required' => false,
 	    'attr' => array(
 		'class' => 'js-rich-editor rich-editor'
@@ -48,9 +51,9 @@ class FormPageAdminType extends PageAdminType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '{{ namespace }}\Entity\Pages\FormPage'
@@ -60,7 +63,7 @@ class FormPageAdminType extends PageAdminType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'formpage';
     }

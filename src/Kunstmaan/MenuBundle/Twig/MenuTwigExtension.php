@@ -2,30 +2,30 @@
 
 namespace Kunstmaan\MenuBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
-use Symfony\Component\Routing\RouterInterface;
+use Kunstmaan\MenuBundle\Repository\MenuItemRepositoryInterface;
+use Kunstmaan\MenuBundle\Service\RenderService;
 
 class MenuTwigExtension extends \Twig_Extension
 {
     /**
-     * @var EntityManager
+     * @var RenderService $renderService
      */
-    private $em;
+    private $renderService;
 
     /**
-     * @var RouterInterface
+     * @var MenuItemRepositoryInterface
      */
-    private $router;
+    private $repository;
 
     /**
-     * @param EntityManager $em
-     * @param RouterInterface $router
+     * @param MenuItemRepositoryInterface $repository
+     * @param RenderService $renderService
      */
-    public function __construct(EntityManager $em, RouterInterface $router)
+    public function __construct(MenuItemRepositoryInterface $repository, RenderService $renderService)
     {
-        $this->em = $em;
-        $this->router = $router;
+        $this->renderService = $renderService;
+        $this->repository = $repository;
     }
 
     /**
@@ -36,7 +36,15 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'get_menu' => new \Twig_Function_Method($this, 'getMenu', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction(
+                'get_menu',
+                array($this, 'getMenu'),
+                array(
+                    'is_safe' => array('html'),
+                    'needs_environment' => true,
+                )
+            ),
+            new \Twig_SimpleFunction('get_menu_items', array($this, 'getMenuItems')),
         );
     }
 
@@ -48,27 +56,32 @@ class MenuTwigExtension extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function getMenu($name, $lang, $options = array())
+    public function getMenu(\Twig_Environment $environment, $name, $lang, $options = array())
     {
-        $repo = $this->em->getRepository('KunstmaanMenuBundle:MenuItem');
-        $query = $this->em
-            ->createQueryBuilder()
-            ->select('mi, nt, p')
-            ->from('KunstmaanMenuBundle:MenuItem', 'mi')
-            ->innerJoin('mi.menu', 'm')
-            ->leftJoin('mi.parent', 'p')
-            ->leftJoin('mi.nodeTranslation', 'nt')
-            ->leftJoin('nt.node', 'n')
-            ->orderBy('mi.lft', 'ASC')
-            ->where('m.locale = :locale')
-            ->setParameter('locale', $lang)
-            ->andWhere('m.name = :name')
-            ->setParameter('name', $name)
-            ->andWhere('(nt.online = 1 OR nt.online IS NULL)')
-            ->andWhere('(n.deleted = 0 OR n.deleted IS NULL)')
-            ->andWhere('(n.hiddenFromNav = 0 OR n.hiddenFromNav IS NULL)')
-            ->getQuery();
-        $arrayResult = $query->getArrayResult();
+        $options = array_merge($this->getDefaultOptions(), $options);
+
+        $renderService = $this->renderService;
+        $options['nodeDecorator'] = function ($node) use ($environment, $renderService, $options) {
+            return $renderService->renderMenuItemTemplate($environment, $node, $options);
+        };
+
+        $arrayResult = $this->getMenuItems($name, $lang);
+        $html = $this->repository->buildTree($arrayResult, $options);
+
+        return $html;
+    }
+
+    /**
+     * Get an array with menu items of a menu.
+     *
+     * @param string $name
+     * @param string $lang
+     * @return array
+     */
+    public function getMenuItems($name, $lang)
+    {
+        /** @var MenuItem $menuRepo */
+        $arrayResult = $this->repository->getMenuItemsForLanguage($name, $lang);
 
         // Make sure the parent item is not offline
         $foundIds = array();
@@ -76,15 +89,12 @@ class MenuTwigExtension extends \Twig_Extension
             $foundIds[] = $array['id'];
         }
         foreach ($arrayResult as $key => $array) {
-            if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds))  {
+            if (!is_null($array['parent']) && !in_array($array['parent']['id'], $foundIds)) {
                 unset($arrayResult[$key]);
             }
         }
 
-        $options = array_merge($this->getDefaultOptions(), $options);
-        $html = $repo->buildTree($arrayResult, $options);
-
-        return $html;
+        return $arrayResult;
     }
 
     /**
@@ -94,33 +104,12 @@ class MenuTwigExtension extends \Twig_Extension
      */
     private function getDefaultOptions()
     {
-        $router = $this->router;
-
         return array(
             'decorate' => true,
             'rootOpen' => '<ul>',
             'rootClose' => '</ul>',
             'childOpen' => '<li>',
             'childClose' => '</li>',
-            'nodeDecorator' => function($node) use ($router) {
-                if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
-                    $url = $router->generate('_slug', array('url' => $node['nodeTranslation']['url']));
-                } else {
-                    $url = $node['url'];
-                }
-
-                if ($node['type'] == MenuItem::TYPE_PAGE_LINK) {
-                    if ($node['title']) {
-                        $title = $node['title'];
-                    } else {
-                        $title = $node['nodeTranslation']['title'];
-                    }
-                } else {
-                    $title = $node['title'];
-                }
-
-                return '<a href="' . $url . '"' . ($node['newWindow'] ? ' target="_blank"' : '') . '>' . $title . '</a>';
-            }
         );
     }
 

@@ -13,7 +13,7 @@ class TagAdminType extends AbstractType
         $builder->add('name');
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'tag_admin_form';
     }

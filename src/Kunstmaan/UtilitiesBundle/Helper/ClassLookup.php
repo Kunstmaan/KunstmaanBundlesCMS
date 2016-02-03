@@ -24,13 +24,14 @@ class ClassLookup
     /**
      * Get class name of object (ie. class name without namespace)
      *
-     * @param mixed $object
+     * @param string|object $reference
      *
      * @return string
      */
-    public static function getClassName($object)
+    public static function getClassName($reference)
     {
-        $className = explode('\\', ClassLookup::getClass($object));
+        $reference = is_string($reference) ? $reference : ClassLookup::getClass($reference);
+        $className = explode('\\', $reference);
 
         return array_pop($className);
     }

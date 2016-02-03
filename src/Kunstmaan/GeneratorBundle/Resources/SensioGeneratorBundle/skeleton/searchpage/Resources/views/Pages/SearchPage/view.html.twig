@@ -1,0 +1,85 @@
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {% if pagerfanta is defined %}
+                {% set searchResults = pagerfanta.currentPageResults() %}
+                {% set aggregations = pagerfanta.getAdapter().getAggregations() %}
+                {% if aggregations is not empty %}
+                    {% if aggregations['type']['buckets'] is defined and aggregations['type']['buckets']|length > 0 %}
+                        <p>{{ 'search.filter'|trans }}</p>
+                        <ul class="list-reset">
+                            {% for type in aggregations['type']['buckets'] %}
+                                <li>
+                                    {% if type['key'] != q_type %}
+                                    <a href="?query={{ q_query }}&amp;type={{ type['key'] }}">
+                                        {% endif %}
+                                        {{ type['key'] }}
+                                        {% if type['key'] != q_type %}
+                                        ({{ type['doc_count'] }})</a>
+                                {% else %}
+                                    <a href="?query={{ q_query }}">(-)</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="col-md-9 col--padded">
+            <form method="get" action="" class="search-results__wrapper">
+                <div class="search-results__form-group">
+                    <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search.search'|trans }}" class="form-control search-results__input">
+                    <button type="submit" name="search" id="search" value="{{ 'search.search'|trans|title }}" class="btn btn--secondary search-results__button">
+                        <i class="icon--search"></i>
+                    </button>
+                </div>
+
+                {% if q_query is defined and q_query != '' %}
+                    <p class="search-results__text">
+                        {% set nrResults = pagerfanta.getNbResults() %}
+                        <strong>{{ nrResults }} {% if nrResults == 1 %}{{ 'search.result'|trans }}{% else %}{{ 'search.results'|trans }}{% endif %}</strong> {{ 'search.for'|trans }} <strong>{{ q_query }}</strong>
+                    </p>
+                {% endif %}
+            </form>
+
+            {% if q_query is defined and q_query != '' %}
+                <h1>{{ 'search.results'|trans }}</h1>
+                {% if nrResults > 0 %}
+                    {% for searchresult in pagerfanta.currentPageResults %}
+                        {% if not loop.first %}<hr />{% endif %}
+                        <h4><a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}">{{ searchresult['_source']['title'] }}</a></h4>
+                        <p>
+                            {% if searchresult['highlight'] is defined %}
+                                {{ searchresult['highlight']['content'][0] | raw }}
+                            {% else %}
+                                {{ searchresult['_source']['content'] | truncate(300) | escape('html') }}
+                            {% endif %}
+                        </p>
+                        <nav role="navigation" class="breadcrumb">
+                            {% if searchresult['_source']['ancestors'] is defined %}
+                                {% for node_id in searchresult['_source']['ancestors']|reverse %}
+                                    {% set nt = get_node_trans_by_node_id(node_id, app.request.locale) %}
+                                    {% if nt %}
+                                        <a href="{{ path('_slug', { 'url': nt.url }) }}" class="breadcrumb__item">{{ nt.title }}</a>
+                                        <i class="icon icon--arrow-right breadcrumb__icon"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}" class="breadcrumb__item breadcrumb__item--current search-results__breadcrumb__item--current">{{ searchresult['_source']['title'] }}</a>
+                        </nav>
+                    {% endfor %}
+
+                    {% if pagerfanta.getNbPages() > 1 %}
+                        {{ pagerfanta(pagerfanta, null, {'prev_message': 'pagerfanta.prev'|trans, 'next_message': 'pagerfanta.next'|trans}) }}
+                    {% endif %}
+                {% else %}
+                    <p>{{ 'search.no_results'|trans }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

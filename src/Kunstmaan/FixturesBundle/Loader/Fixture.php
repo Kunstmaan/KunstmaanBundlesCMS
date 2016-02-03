@@ -23,7 +23,7 @@ class Fixture
         $this->setName($name);
         $this->setClass($class);
 
-        foreach($specs as $spec => $data) {
+        foreach ($specs as $spec => $data) {
             if ($spec != 'translations' && $spec != 'parameters') {
                 $this->addProperty($spec, $data);
             } elseif ($spec == 'translations') {

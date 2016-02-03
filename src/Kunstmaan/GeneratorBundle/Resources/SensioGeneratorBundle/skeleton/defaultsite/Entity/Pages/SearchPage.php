@@ -16,27 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchPage extends AbstractSearchPage implements HasPageTemplateInterface
 {
     /**
-     * @param AbstractElasticaSearcher $searcher
-     * @param Request                  $request
-     * @param RenderContext            $context
-     */
-    protected function applySearchParams(AbstractElasticaSearcher $searcher, Request $request, RenderContext $context)
-    {
-	parent::applySearchParams($searcher, $request, $context);
-
-	// Facets
-	$query = $searcher->getQuery();
-	$facetTerms = new \Elastica\Facet\Terms('type');
-	$facetTerms->setField('type');
-	$query->addFacet($facetTerms);
-    }
-
-    /**
      * return string
      */
     public function getDefaultView()
     {
-	return "{{ bundle.getName() }}:Pages:SearchPage/view.html.twig";
+        return '{{ bundle.getName() }}:Pages:SearchPage/view.html.twig';
     }
 
     /**
@@ -44,7 +28,7 @@ class SearchPage extends AbstractSearchPage implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-	return array("{{ bundle.getName() }}:main");
+        return array('{{ bundle.getName() }}:main');
     }
 
     /**
@@ -52,6 +36,6 @@ class SearchPage extends AbstractSearchPage implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-	return array("{{ bundle.getName() }}:searchpage");
+        return array('{{ bundle.getName() }}:searchpage');
     }
 }

@@ -1,4 +1,4 @@
-{% extends 'KunstmaanNodeBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanNode/Default/layout.html.twig' %}
 {% set form = tabPane.getFormView() %}
 
 
@@ -36,12 +36,16 @@
         {% endif %}
 
         {% if draft %}
-            <small class="app__content__header__title__small">
-                Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
+            <small class="app__content__header__title__small app__content__header__title__small--offline">
+                Offline / Draft version (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id}) }}">public version</a>)
             </small>
-        {% else %}
-            <small class="app__content__header__title__small">
-                Public version
+        {% elseif not is_structure_node(page) %}
+            <small class="app__content__header__title__small {% if nodeTranslation.online %}app__content__header__title__small--online{% else %}app__content__header__title__small--offline{% endif %}">
+                {% if nodeTranslation.online %}
+                    Online / Public version
+                {% else %}
+                    Offline
+                {% endif %}
                 {% if draftNodeVersion is not null %}
                     (Go to <a href="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': 'draft'}) }}">draft version</a>)
                 {% endif %}
@@ -53,15 +57,22 @@
 
 
 {% block content %}
-    <form id="pageadminform" class="form" action="{{ path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': subaction}) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': subaction }), 'attr': {'novalidate': 'novalidate', 'id': 'pageadminform', 'class': 'form'}}) }}
 
         {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
         {{ knp_menu_render('actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
         {{ knp_menu_render('top_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
 
         {{ tabs_widget(tabPane) }}
-    </form>
+    {{ form_end(form) }}
 
-    {% include 'KunstmaanNodeBundle:NodeAdmin:_modals.html.twig' %}
+    {% include '@KunstmaanNode/NodeAdmin/_modals.html.twig' %}
 
+{% endblock %}
+
+{% block extracss %}
+    {% set cssPath = 'frontend/css/admin-style.min.css' %}
+    {% if file_exists(cssPath) %}
+        <link rel="stylesheet" href="{{ asset('/' ~ cssPath) }}">
+    {% endif %}
 {% endblock %}

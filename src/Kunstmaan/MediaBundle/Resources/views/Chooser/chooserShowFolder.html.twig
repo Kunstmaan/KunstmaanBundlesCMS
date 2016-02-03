@@ -1,4 +1,4 @@
-{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+{% extends '@KunstmaanAdminList/Default/list.html.twig' %}
 
 {% set urlParams = {'type': type} %}
 {% if cKEditorFuncNum %}
@@ -59,7 +59,7 @@
                     <!-- Navigation - Right -->
                     <ul class="nav navbar-nav navbar-right">
                         {% set route = app.request.attributes.get('_route') %}
-                        {{ localeswitcher_widget(requiredlocales, route) }}
+                        {{ localeswitcher_widget(get_backend_locales(), route) }}
                     </ul>
                 </div>
             </div>
@@ -126,7 +126,7 @@
             {% block actions %}
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-                        Add media <i class="fa fa-caret-down"></i>
+                        {{ 'media.media.add.action' | trans }} <i class="fa fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
                         {% for addaction in mediamanager.getFolderAddActions() %}
@@ -138,12 +138,14 @@
                         {% endfor %}
                     </ul>
                 </div>
-            <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
-                {{ 'media.folder.addsub.action' |trans }}
-            </button>
-            <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
-                {{ 'media.folder.delete.action' |trans }}
-            </button>
+                <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
+                    <span class="large-screen">{{ 'media.folder.addsub.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.addsub.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                </button>
+                <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
+                    <span class="large-screen">{{ 'media.folder.delete.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.delete.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                </button>
             {% endblock %}
         </div>
     </div>
@@ -190,13 +192,14 @@
                     {% set counter = 1 %}
                     {% for media in folder.media %}
                         {% if not handler or handler.canHandle(media) %}
-                            {% set handler = mediamanager.getHandler(media) %}
-                            {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
+                            {% set usedHandler = mediamanager.getHandler(media) %}
+                            {% set imageurl =  usedHandler.getImageUrl(media, app.request.basePath) %}
                             {% if imageurl is not empty and media.location == 'local' %}
                                 {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                                    {% set imageurl = imageurl %}
+                                    {% set imageurlretina = imageurl %}
                                 {% else %}
-                                    {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                                    {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
+                                    {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
                                 {% endif %}
                             {% endif %}
 
@@ -205,7 +208,7 @@
                                 <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
                                     <figure>
                                         {% if imageurl %}
-                                            <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">
+                                            <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina }} 2x" alt="{{ media.name }}" class="media-thumbnail__img">
                                         {% else %}
                                             <i class="fa fa-file-o media-thumbnail__icon"></i>
                                         {% endif %}
@@ -245,9 +248,9 @@
 
     <!-- Modals -->
     {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
-    {% include 'KunstmaanMediaBundle:Media:addType-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Media/addType-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
 
 {% endblock %}
 

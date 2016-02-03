@@ -20,8 +20,6 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class GenerateBundleCommand extends GeneratorCommand
 {
-    private $generator;
-
     /**
      * @see Command
      */
@@ -30,8 +28,8 @@ class GenerateBundleCommand extends GeneratorCommand
         $this
             ->setDefinition(
                 array(new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace of the bundle to create'),
-                new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the bundle'),
-                new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The optional bundle name'),))
+                    new InputOption('dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the bundle'),
+                    new InputOption('bundle-name', '', InputOption::VALUE_REQUIRED, 'The optional bundle name'),))
             ->setHelp(
                 <<<EOT
             The <info>generate:bundle</info> command helps you generates new bundles.
@@ -59,7 +57,7 @@ EOT
     /**
      * Executes the command.
      *
-     * @param InputInterface  $input  An InputInterface instance
+     * @param InputInterface $input An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
      * @throws \RuntimeException
@@ -85,7 +83,7 @@ EOT
             $bundle = strtr($namespace, array('\\' => ''));
         }
         $bundle = Validators::validateBundleName($bundle);
-        $dir = Validators::validateTargetDir($input->getOption('dir'), $bundle, $namespace);
+        $dir = $this::validateTargetDir($input->getOption('dir'), $bundle, $namespace);
         $format = 'yml';
 
         $questionHelper->writeSection($output, 'Bundle generation');
@@ -121,7 +119,7 @@ EOT
     /**
      * Executes the command.
      *
-     * @param InputInterface  $input  An InputInterface instance
+     * @param InputInterface $input An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
      * @return void
@@ -135,35 +133,41 @@ EOT
         $output
             ->writeln(
                 array('', 'Your application code must be written in <comment>bundles</comment>. This command helps', 'you generate them easily.', '',
-                'Each bundle is hosted under a namespace (like <comment>Acme/Bundle/BlogBundle</comment>).',
-                'The namespace should begin with a "vendor" name like your company name, your', 'project name, or your client name, followed by one or more optional category',
-                'sub-namespaces, and it should end with the bundle name itself', '(which must have <comment>Bundle</comment> as a suffix).', '',
-                'See http://symfony.com/doc/current/cookbook/bundles/best_practices.html#index-1 for more', 'details on bundle naming conventions.', '',
-                'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problems.', '',));
+                    'Each bundle is hosted under a namespace (like <comment>Acme/Bundle/BlogBundle</comment>).',
+                    'The namespace should begin with a "vendor" name like your company name, your', 'project name, or your client name, followed by one or more optional category',
+                    'sub-namespaces, and it should end with the bundle name itself', '(which must have <comment>Bundle</comment> as a suffix).', '',
+                    'See http://symfony.com/doc/current/cookbook/bundles/best_practices.html#index-1 for more', 'details on bundle naming conventions.', '',
+                    'Use <comment>/</comment> instead of <comment>\\ </comment>for the namespace delimiter to avoid any problems.', '',));
 
         $question = new Question($questionHelper->getQuestion('Bundle namespace', $input->getOption('namespace')), $input->getOption('namespace'));
-        $question->setValidator( array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'));
+        $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'));
         $namespace = $questionHelper->ask($input, $output, $question);
         $input->setOption('namespace', $namespace);
 
         // bundle name
-        $bundle = $input->getOption('bundle-name') ? : strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
+        if ($input->getOption('bundle-name')) {
+            $bundle = $input->getOption('bundle-name');
+        } else {
+            $bundle = strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
+        }
         $output
             ->writeln(
                 array('', 'In your code, a bundle is often referenced by its name. It can be the', 'concatenation of all namespace parts but it\'s really up to you to come',
-                'up with a unique name (a good practice is to start with the vendor name).', 'Based on the namespace, we suggest <comment>' . $bundle . '</comment>.', '',));
+                    'up with a unique name (a good practice is to start with the vendor name).', 'Based on the namespace, we suggest <comment>' . $bundle . '</comment>.', '',));
         $question = new Question($questionHelper->getQuestion('Bundle name', $bundle), $bundle);
         $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleName'));
         $bundle = $questionHelper->ask($input, $output, $question);
         $input->setOption('bundle-name', $bundle);
 
         // target dir
-        $dir = $input->getOption('dir') ? : dirname($this
-            ->getContainer()
-            ->getParameter('kernel.root_dir')) . '/src';
+        $dir = $input->getOption('dir') ?: dirname($this
+                ->getContainer()
+                ->getParameter('kernel.root_dir')) . '/src';
         $output->writeln(array('', 'The bundle can be generated anywhere. The suggested default directory uses', 'the standard conventions.', '',));
         $question = new Question($questionHelper->getQuestion('Target directory', $dir), $dir);
-        $question->setValidator(function ($dir) use ($bundle, $namespace) { return Validators::validateTargetDir($dir, $bundle, $namespace); });
+        $question->setValidator(function ($dir) use ($bundle, $namespace) {
+            return $this::validateTargetDir($dir, $bundle, $namespace);
+        });
         $dir = $questionHelper->ask($input, $output, $question);
         $input->setOption('dir', $dir);
 
@@ -183,9 +187,9 @@ EOT
     }
 
     /**
-     * @param OutputInterface $output    The output
-     * @param string          $namespace The namespace
-     * @param string          $bundle    The bundle name
+     * @param OutputInterface $output The output
+     * @param string $namespace The namespace
+     * @param string $bundle The bundle name
      *
      * @return array
      */
@@ -198,12 +202,12 @@ EOT
     }
 
     /**
-     * @param QuestionHelper  $questionHelper The question helper
-     * @param InputInterface  $input          The command input
-     * @param OutputInterface $output         The command output
-     * @param KernelInterface $kernel         The kernel
-     * @param string          $namespace      The namespace
-     * @param string          $bundle         The bundle
+     * @param QuestionHelper $questionHelper The question helper
+     * @param InputInterface $input The command input
+     * @param OutputInterface $output The command output
+     * @param KernelInterface $kernel The kernel
+     * @param string $namespace The namespace
+     * @param string $bundle The bundle
      *
      * @return array
      */
@@ -232,11 +236,11 @@ EOT
     }
 
     /**
-     * @param QuestionHelper  $questionHelper The question helper
-     * @param InputInterface  $input          The command input
-     * @param OutputInterface $output         The command output
-     * @param string          $bundle         The bundle name
-     * @param string          $format         The format
+     * @param QuestionHelper $questionHelper The question helper
+     * @param InputInterface $input The command input
+     * @param OutputInterface $output The command output
+     * @param string $bundle The bundle name
+     * @param string $format The format
      *
      * @return array
      */
@@ -250,8 +254,8 @@ EOT
 
         $output->write('Importing the bundle routing resource: ');
         $routing = new RoutingManipulator($this
-            ->getContainer()
-            ->getParameter('kernel.root_dir') . '/config/routing.yml');
+                ->getContainer()
+                ->getParameter('kernel.root_dir') . '/config/routing.yml');
         try {
             $ret = $auto ? $routing->addResource($bundle, $format) : false;
             if (!$ret) {
@@ -267,6 +271,21 @@ EOT
 
     protected function createGenerator()
     {
-        return new BundleGenerator($this->getContainer()->get('filesystem'));
+        return new BundleGenerator();
     }
+
+    /**
+     * Validation function taken from <3.0 release of Sensio Generator bundle
+     *
+     * @param string $dir The target directory
+     * @param string $bundle The bundle name
+     * @param string $namespace The namespace
+     *
+     * @return string
+     */
+    public static function validateTargetDir($dir, $bundle, $namespace)
+    {
+        // add trailing / if necessary
+        return '/' === substr($dir, -1, 1) ? $dir : $dir.'/';
+    }    
 }

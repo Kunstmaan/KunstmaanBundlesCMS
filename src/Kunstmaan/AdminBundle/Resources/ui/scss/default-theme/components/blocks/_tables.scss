@@ -61,7 +61,7 @@
 
 
 .table__actions__item {
-    display: block;
+    display: inline-block;
     margin: 0 .8rem 0 0;
 
     white-space: nowrap;
@@ -71,7 +71,8 @@
         text-decoration: none;
     }
 
-    & + .table__actions__item {
-        margin-bottom: .8rem;
+    &.table__actions__item--block {
+        display: block;
+        margin: 0 0 .4rem;
     }
 }

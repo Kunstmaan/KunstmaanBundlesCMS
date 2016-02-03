@@ -32,11 +32,14 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.slugChooser.init();
         kunstmaanbundles.urlChooser.init();
         kunstmaanbundles.mediaChooser.init();
+        kunstmaanbundles.iconChooser.init();
         kunstmaanbundles.bulkActions.init();
         kunstmaanbundles.nestedForm.init();
         kunstmaanbundles.appLoading.init();
         kunstmaanbundles.tooltip.init();
         kunstmaanbundles.colorpicker.init();
+        kunstmaanbundles.charactersLeft.init();
+        kunstmaanbundles.rangeslider.init();
     };
 
 
@@ -78,7 +81,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         init: init
     };
 
-}(jQuery, window));
+})(jQuery, window);
 
 $(function() {
     kunstmaanbundles.app.init();

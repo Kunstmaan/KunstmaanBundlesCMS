@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -10,14 +11,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
-
-/**
- * Class SlugListener
- * @package Kunstmaan\NodeBundle\EventListener
- */
 class SlugListener
 {
-
     /**
      * @var EntityManager
      */
@@ -27,7 +22,6 @@ class SlugListener
      * @var ControllerResolver
      */
     protected $resolver;
-
 
     /**
      * @var EventDispatcher
@@ -48,28 +42,38 @@ class SlugListener
 
     /**
      * @param FilterControllerEvent $event
+     * @throws \Exception
      */
     public function onKernelController(FilterControllerEvent $event)
     {
         $request = $event->getRequest();
 
-        //check if the event has anything to do with nodeTranslations, if not this method can be skipped
+        // Check if the event has a nodeTranslation, if not this method can be skipped
         if (!$request->attributes->has('_nodeTranslation')) {
             return;
         }
 
         $nodeTranslation = $request->attributes->get('_nodeTranslation');
+        if (! ($nodeTranslation instanceof NodeTranslation)) {
+            throw new \Exception('Invalid _nodeTranslation value found in request attributes');
+        }
         $entity = $nodeTranslation->getRef($this->em);
 
-        //if the entity is an instance of the SlugControllerActionInterface, change the controller
+        // If the entity is an instance of the SlugActionInterface, change the controller
         if ($entity instanceof SlugActionInterface) {
             $request->attributes->set('_entity', $entity);
 
-            //do security check by firing an event that gets handled by the SlugSecurityListener
+            // Do security check by firing an event that gets handled by the SlugSecurityListener
             $securityEvent = new SlugSecurityEvent();
+            $securityEvent
+                ->setNode($nodeTranslation->getNode())
+                ->setEntity($entity)
+                ->setRequest($request)
+                ->setNodeTranslation($nodeTranslation);
+
             $this->eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
 
-           //set the right controller
+            // Set the right controller
             $request->attributes->set('_controller', $entity->getControllerAction());
             $event->setController($this->resolver->getController($request));
         }

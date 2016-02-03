@@ -9,7 +9,7 @@ kunstmaanbundles.filter = (function($, window, undefined) {
     var $appFilter = $('#app__filter'),
         $clearAllFiltersBtn, $applyAllFiltersBtn,
         $addFirstFilterSelect, $addFilterBtn, $removeFilterBtn,
-        $filterDummyLine, $filterHolder;
+        $filterDummyLine, $filterHolder, $filterSelect;
 
     var $body = $('body');
 
@@ -183,4 +183,4 @@ kunstmaanbundles.filter = (function($, window, undefined) {
         init: init
     };
 
-}(jQuery, window));
+})(jQuery, window);

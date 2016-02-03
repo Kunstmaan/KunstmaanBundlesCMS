@@ -3,8 +3,9 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * This class represents the type for the ChoiceFormSubmissionField
@@ -18,27 +19,29 @@ class ChoiceFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $keys = array_fill_keys(array('label', 'required', 'expanded', 'multiple', 'choices', 'empty_value', 'constraints'), null);
+        $keys = array_fill_keys(array('label', 'required', 'expanded', 'multiple', 'choices', 'placeholder', 'constraints'), null);
         $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
+        $fieldOptions['choices'] = array_flip($fieldOptions['choices']);
         $fieldOptions['empty_data'] = null;
+        $fieldOptions['choices_as_values'] = true;
 
-        $builder->add('value', 'choice', $fieldOptions);
+        $builder->add('value', ChoiceType::class, $fieldOptions);
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_formbundle_choiceformsubmissiontype';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField',
                 'choices' => array(),
-                'empty_value' => null,
+                'placeholder' => null,
                 'expanded' => null,
                 'multiple' => null,
         ));

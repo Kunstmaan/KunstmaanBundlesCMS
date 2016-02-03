@@ -12,7 +12,7 @@
 
 
             {# Logo #}
-            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+            {% set homepagePageNode = nodemenu.getRootNodeMenuItem() %}
             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
                 <img src="/frontend/img/demosite/logo-thecrew.svg" alt="The Crew" class="main-header__logo__img">
             </a>
@@ -43,7 +43,7 @@
 {# Desktop header #}
 {# DemositeMessage #}
 {% block cookieconsent %}
-    {% include '<%= bundle.getName() %>:Layout:_demositemessage.html.twig' %}
+    {% include '<%= shortBundleName %>/Layout/_demositemessage.html.twig' %}
 {% endblock %}
 
 {% if nodemenu is defined %}
@@ -89,24 +89,22 @@
 
 
                 {# Language nav #}
-                {% if requiredlocales is defined %}
-                    {% set langs = requiredlocales|split('|') %}
-                    {% if langs|length> 0 %}
-                        <div class="language-nav">
-                            <span class="language-nav__active-lang">
-                                {{ app.request.locale }}
-                                <i class="icon icon--triangle-down language-nav__icon"></i>
-                            </span>
-                            <nav role="navigation" class="language-nav__nav">
-                            {% for lang in langs %}
-                            {% if lang != app.request.locale %}
-                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
-                                    {{ lang }}
-                                </a>
-                            {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                {% set langs = get_locales() %}
+                {% if langs|length > 1 %}
+                    <div class="language-nav">
+                        <span class="language-nav__active-lang">
+                            {{ app.request.locale }}
+                            <i class="icon icon--triangle-down language-nav__icon"></i>
+                        </span>
+                        <nav role="navigation" class="language-nav__nav">
+                        {% for lang in langs %}
+                        {% if lang != app.request.locale %}
+                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
+                                {{ lang }}
+                            </a>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
                 {% endif %}
             </div>
         </header>
@@ -157,24 +155,22 @@
 
 
             {# Language nav #}
-            {% if requiredlocales is defined %}
-                {% set langs = requiredlocales|split('|') %}
-                {% if langs|length> 0 %}
-                    <div class="language-nav">
-                        <span class="language-nav__active-lang">
-                            {{ app.request.locale }}
-                        </span>
-                        <nav role="navigation">
-                            {% for lang in langs %}
-                            {% if lang != app.request.locale %}
-                                <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
-                                    {{ lang }}
-                                </a>
-                            {% endif %}
-                            {% endfor %}
-                        </nav>
-                    </div>
-                {% endif %}
+            {% set langs = get_locales() %}
+            {% if langs|length > 1 %}
+                <div class="language-nav">
+                    <span class="language-nav__active-lang">
+                        {{ app.request.locale }}
+                    </span>
+                    <nav role="navigation">
+                        {% for lang in langs %}
+                        {% if lang != app.request.locale %}
+                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
+                                {{ lang }}
+                            </a>
+                        {% endif %}
+                        {% endfor %}
+                    </nav>
+                </div>
             {% endif %}
         </div>
     </header>

@@ -84,7 +84,7 @@ it :
 	    ),
 	    array(
 		'name' => 'Search Page',
-		'class'=> 'MyProject\WebsiteBundle\Entity\Pages\Search\SearchPage'
+		'class'=> 'MyProject\WebsiteBundle\Entity\Pages\SearchPage'
 	    )
 	);
     }
@@ -117,20 +117,20 @@ or some content).
 
 ### Indexing
 
-All the top Nodes will be loaded from the NodeRepository, after wich it will recursively load all child Nodes. The configuration will then index each Node's NodeTranslations. From each NodeTranslation, the public NodeVersion will be loaded. Which means only online available pages will be indexed.
+All the root nodes will be loaded from the NodeRepository, after which it will recursively load all child Nodes. The configuration will then index each Node's NodeTranslations. From each NodeTranslation, the public NodeVersion will be loaded. Which means only online available pages will be indexed.
 
 From each public NodeVersion, the following information will be indexed :
 
 ```PHP
 $doc = array(
-    "node_id" => $node->getId(),
-    "nodetranslation_id" => $nodeTranslation->getId(),
-    "nodeversion_id" => $publicNodeVersion->getId(),
-    "title" => $nodeTranslation->getTitle(),
-    "lang" => $nodeTranslation->getLang(),
-    "slug" => $nodeTranslation->getFullSlug(),
-    "type" => ClassLookup::getClassName($page),
-
+    'root_id'            => rootNode->getId(),
+    'node_id'            => $node->getId(),
+    'nodetranslation_id' => $nodeTranslation->getId(),
+    'nodeversion_id'     => $publicNodeVersion->getId(),
+    'title'              => $nodeTranslation->getTitle(),
+    'lang'               => $nodeTranslation->getLang(),
+    'slug'               => $nodeTranslation->getFullSlug(),
+    'type'               => ClassLookup::getClassName($page),
 );
 ```
 
@@ -161,22 +161,26 @@ When a page is being updated, an event will be triggered to update the index wit
 ### Searching
 
 Extend the AbstractSearchPage and add your new class as a possible child to a page in your website :
-```PHP
-/**
- * @return array
- */
-public function getPossibleChildTypes()
-{
-    return array(
-	array(
-	    'name' => 'Search page',
-	    'class'=> "Acme\DemoBundle\Entity\SearchPage"
-	)
-    );
-}
+```php
+    /**
+     * @return array
+     */
+    public function getPossibleChildTypes()
+    {
+        return array(
+            ...
+            ),
+            array(
+                'name'  => 'Search Page',
+                'class' => 'MyProject\WebsiteBundle\Entity\Pages\SearchPage'
+            )
+        );
+    }
 ```
 
-To override the template, simply create a view.html.twig in the 'app/Resources/KunstmaanNodeSearchBundle/views/SearchPage/' folder.
+## Modifying the search templates
+
+You can find the template in the normal place where you find your other templates from generated pages.
 
 ## Search configurations
 

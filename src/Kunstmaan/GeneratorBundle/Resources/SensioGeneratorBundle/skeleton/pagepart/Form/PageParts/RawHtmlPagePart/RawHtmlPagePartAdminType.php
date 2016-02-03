@@ -2,9 +2,10 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * {{ pagepart }}AdminType
@@ -25,7 +26,7 @@ class {{ pagepart }}AdminType extends AbstractType
     {
 	parent::buildForm($builder, $options);
 
-	$builder->add('content', 'textarea', array(
+	$builder->add('content', TextareaType::class, array(
 	    'label' => 'pagepart.html.content',
 	    'required' => true,
 	    'attr' => array('rows' => 5)
@@ -37,7 +38,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -45,9 +46,9 @@ class {{ pagepart }}AdminType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'

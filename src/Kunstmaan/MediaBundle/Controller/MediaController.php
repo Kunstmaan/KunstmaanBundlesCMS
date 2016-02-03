@@ -178,9 +178,8 @@ class MediaController extends Controller
         // Remove old temp files
         if ($cleanupTargetDir) {
             if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
-                $response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
-                $response->headers->set('Content-Type', 'application/json');
-                return $response;
+
+                return $this->returnJsonError('100', 'Failed to open temp directory.');
             }
 
             while (($file = readdir($dir)) !== false) {
@@ -188,6 +187,7 @@ class MediaController extends Controller
 
                 // If temp file is current file proceed to the next
                 if ($tmpFilePath === "{$filePath}.part") {
+
                     continue;
                 }
 
@@ -205,38 +205,34 @@ class MediaController extends Controller
 
         // Open temp file
         if (!$out = @fopen("{$filePath}.part", $chunks ? 'ab' : 'wb')) {
-            $response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+
+            return $this->returnJsonError('102', 'Failed to open output stream.');
         }
 
         if (0 !== count($_FILES)) {
             if ($_FILES['file']['error'] || !is_uploaded_file($_FILES['file']['tmp_name'])) {
-                $response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
-                $response->headers->set('Content-Type', 'application/json');
-                return $response;
+
+                return $this->returnJsonError('103', 'Failed to move uploaded file.');
             }
 
             // Read binary input stream and append it to temp file
-            if (!$in = @fopen($_FILES['file']['tmp_name'], 'rb')) {
-                $response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-                $response->headers->set('Content-Type', 'application/json');
-                return $response;
+            if (!$input = @fopen($_FILES['file']['tmp_name'], 'rb')) {
+
+                return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         } else {
-            if (!$in = @fopen('php://input', 'rb')) {
-                $response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-                $response->headers->set('Content-Type', 'application/json');
-                return $response;
+            if (!$input = @fopen('php://input', 'rb')) {
+
+                return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         }
 
-        while ($buff = fread($in, 4096)) {
+        while ($buff = fread($input, 4096)) {
             fwrite($out, $buff);
         }
 
         @fclose($out);
-        @fclose($in);
+        @fclose($input);
 
         // Check if file has been uploaded
         if (!$chunks || $chunk === $chunks - 1) {

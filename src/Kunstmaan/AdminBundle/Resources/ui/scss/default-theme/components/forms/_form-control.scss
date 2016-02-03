@@ -39,3 +39,122 @@
 input[type=file].form-control {
     height: auto;
 }
+
+/* counter
+   ========================================================================== */
+.form-control__character-counter {
+    padding: .5rem 0 0 0;
+    display: inline-block;
+
+    line-height: 1;
+    color: $gray;
+
+    &--warning {
+        color: $warning;
+    }
+
+    @media (min-width: $screen-sm) {
+        position: absolute;
+        left: 40rem;
+        top: calc(50% + 1rem);
+
+        padding: .5rem;
+
+        transform: translate3d(0, -50%, 0);
+    }
+}
+
+.rich-editor + .form-control__character-counter {
+    position: static;
+
+    @media (min-width: $screen-sm) {
+        position: static;
+        left: 0;
+        top: 0;
+
+        padding: .5rem;
+
+        transform: none;
+    }
+}
+
+/* Range slider
+   ===========================================================================*/
+
+input[type=range] {
+    display: inline-block;
+    width: 88% !important;
+    height: 0.5rem;
+    padding: 0.3rem 0;
+    margin-top: 1rem;
+
+    background-color: $grey--light;
+
+    -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+
+    background-color: $accent-color;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    -webkit-appearance: none;
+}
+
+input[type=range]::-ms-thumb {
+    width: 15px;
+    height: 15px;
+
+    background-color: $accent-color;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    -webkit-appearance: none;
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+
+    background-color: $accent-color;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.range + .input-group-addon {
+    margin-left: 0.4rem;
+
+    border-left: 1px solid $ddd;
+}
+
+.range--value {
+    width: 10%;
+    height: 2.8rem;
+    display: inline-block;
+    margin-left: 2%;
+    padding-top: 0.4rem;
+
+    text-align: center;
+    color: white;
+    border-radius: 0.3rem;
+
+    background-color: $accent-color;
+}
+
+

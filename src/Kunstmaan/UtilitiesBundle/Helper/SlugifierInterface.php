@@ -7,7 +7,8 @@ namespace Kunstmaan\UtilitiesBundle\Helper;
  * Interface SlugifierInterface
  * @package Kunstmaan\UtilitiesBundle\Helper
  */
-interface SlugifierInterface {
+interface SlugifierInterface
+{
 
     /**
      * @param $text

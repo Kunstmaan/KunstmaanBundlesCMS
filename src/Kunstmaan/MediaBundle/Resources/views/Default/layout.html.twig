@@ -1,10 +1,11 @@
-{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
 {% block extrajavascript %}
     {{ parent() }}
 
     {% javascripts
     "@KunstmaanMediaBundle/Resources/ui/vendor_bower/plupload/js/plupload.full.min.js"
+    "@KunstmaanMediaBundle/Resources/ui/vendor_bower/picturefill/dist/picturefill.min.js"
     "@KunstmaanMediaBundle/Resources/ui/js/_bulk-upload.js"
     "@KunstmaanMediaBundle/Resources/ui/js/_dnd-upload.js"
     "@KunstmaanMediaBundle/Resources/ui/js/app.js"

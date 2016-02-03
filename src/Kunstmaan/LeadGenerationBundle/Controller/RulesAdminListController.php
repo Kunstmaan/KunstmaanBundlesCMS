@@ -6,7 +6,6 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\LeadGenerationBundle\AdminList\RulesAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -51,7 +50,7 @@ class RulesAdminListController extends AdminListController
     {
         $type = $request->get('type');
 
-        return parent::doAddAction($this->getAdminListConfigurator($popup), $type , $request);
+        return parent::doAddAction($this->getAdminListConfigurator($popup), $type, $request);
     }
 
     /**

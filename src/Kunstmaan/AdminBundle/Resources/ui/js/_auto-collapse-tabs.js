@@ -1,9 +1,11 @@
+
+
 var kunstmaanbundles = kunstmaanbundles || {};
 
 kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
 
     var $tabs, $btnMore, $dropdown,
-        dropdownItems, tabsHeight, children, singleTabHeight;
+        init, dropdownItems, tabsHeight, children, singleTabHeight, initTabLogic, replaceUrlParam, doCheck;
 
     init = function() {
         $tabs = $('.js-auto-collapse-tabs');
@@ -11,6 +13,7 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
         $dropdown = $('#collapsed');
         singleTabHeight = $tabs.find('li:first-child').innerHeight(); // get single height
 
+        initTabLogic();
         doCheck();
 
         $(window).on('resize', function() {
@@ -18,7 +21,48 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
         }); // when window is resized
     };
 
-    doCheck= function() {
+    initTabLogic = function () {
+        // If there is a tab defined in the url, we activate it
+        var currentTabElement = $('#currenttab');
+        if (typeof(currentTabElement) != 'undefined' && currentTabElement != null && currentTabElement.val() && currentTabElement.val().length > 0) {
+            $('.js-auto-collapse-tabs.nav-tabs a[href="' + $('#currenttab').val() + '"]').tab('show');
+        }
+
+        // When tab click, add the current tab in the url
+        $('.js-auto-collapse-tabs.nav-tabs a').click(function (e) {
+            $(this).tab('show');
+
+            var activeTab = this.hash.substr(1);
+            if (history.pushState) {
+                window.history.pushState({}, null, replaceUrlParam(window.location.href, 'currenttab', activeTab));
+            }
+
+            if (typeof(currentTabElement) != 'undefined' && currentTabElement != null) {
+                currentTabElement.val(activeTab);
+            }
+        });
+
+        // When the form get ssubmitted, change the action url
+        $('#pageadminform .js-save-btn').on('click', function() {
+            var form = $('#pageadminform');
+            form.attr('action', window.location.href);
+        });
+    };
+
+    replaceUrlParam = function (url, paramName, paramValue) {
+        var pattern = new RegExp('(' + paramName + '=).*?(&|$)'),
+            newUrl = url;
+
+        if (url.search(pattern) >= 0) {
+            newUrl = url.replace(pattern, '$1' + paramValue + '$2');
+        } else {
+            newUrl = newUrl + (newUrl.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+        }
+
+        return newUrl;
+    };
+
+    doCheck = function() {
         tabsHeight = $tabs.innerHeight();
         children = $tabs.children('li:not(:last-child):not(:first-child)'); // Don't count the 'more' tab and always show first tab
 
@@ -47,7 +91,7 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
             }
 
             if (tabsHeight > singleTabHeight) { // double chk height again
-                this.doCheck();
+                doCheck();
             }
         }
 
@@ -72,4 +116,4 @@ kunstmaanbundles.autoCollapseTabs = (function($, window, undefined) {
         init: init
     };
 
-}(jQuery, window));
+})(jQuery, window);

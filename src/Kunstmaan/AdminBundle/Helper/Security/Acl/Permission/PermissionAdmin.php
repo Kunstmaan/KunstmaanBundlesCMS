@@ -18,9 +18,9 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Helper to manage the permissions on a certain entity
@@ -41,9 +41,9 @@ class PermissionAdmin
     protected $em = null;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    protected $securityContext = null;
+    protected $tokenStorage = null;
 
     /**
      * @var MutableAclProviderInterface
@@ -84,7 +84,7 @@ class PermissionAdmin
      * Constructor
      *
      * @param EntityManager                            $em                   The EntityManager
-     * @param SecurityContextInterface                 $securityContext      The security context
+     * @param TokenStorageInterface                    $tokenStorage         The token storage
      * @param AclProviderInterface                     $aclProvider          The ACL provider
      * @param ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy The object retrieval strategy
      * @param EventDispatcherInterface                 $eventDispatcher      The event dispatcher
@@ -93,7 +93,7 @@ class PermissionAdmin
      */
     public function __construct(
         EntityManager $em,
-        SecurityContextInterface $securityContext,
+        TokenStorageInterface $tokenStorage,
         AclProviderInterface $aclProvider,
         ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy,
         EventDispatcherInterface $eventDispatcher,
@@ -102,7 +102,7 @@ class PermissionAdmin
     )
     {
         $this->em                   = $em;
-        $this->securityContext      = $securityContext;
+        $this->tokenStorage         = $tokenStorage;
         $this->aclProvider          = $aclProvider;
         $this->oidRetrievalStrategy = $oidRetrievalStrategy;
         $this->eventDispatcher      = $eventDispatcher;
@@ -211,7 +211,7 @@ class PermissionAdmin
         $applyRecursive = $request->request->get('applyRecursive');
         if ($applyRecursive) {
             // Serialize changes & store them in DB
-            $user = $this->securityContext->getToken()->getUser();
+            $user = $this->tokenStorage->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
 
             $cmd = 'php ' . $this->kernel->getRootDir() . '/console kuma:acl:apply';
@@ -351,5 +351,4 @@ class PermissionAdmin
 
         return false;
     }
-
 }

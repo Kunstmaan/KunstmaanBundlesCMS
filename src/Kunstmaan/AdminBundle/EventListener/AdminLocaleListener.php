@@ -5,10 +5,11 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * AdminLocaleListener to override default locale if user-specific locale is set in database
@@ -16,9 +17,9 @@ use Symfony\Component\Security\Core\SecurityContext;
 class AdminLocaleListener implements EventSubscriberInterface
 {
     /**
-     * @var SecurityContext
+     * @var TokenStorageInterface
      */
-    private $context;
+    private $tokenStorage;
 
     /**
      * @var TranslatorInterface
@@ -36,15 +37,15 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $providerKey;
 
     /**
-     * @param SecurityContext     $context
-     * @param TranslatorInterface $translator
-     * @param string              $defaultAdminLocale
-     * @param string              $providerKey          Firewall name to check against
+     * @param TokenStorageInterface $tokenStorage
+     * @param TranslatorInterface   $translator
+     * @param string                $defaultAdminLocale
+     * @param string                $providerKey          Firewall name to check against
      */
-    public function __construct(SecurityContext $context, TranslatorInterface $translator, $defaultAdminLocale, $providerKey = 'main')
+    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, $defaultAdminLocale, $providerKey = 'main')
     {
         $this->translator         = $translator;
-        $this->context            = $context;
+        $this->tokenStorage       = $tokenStorage;
         $this->defaultAdminLocale = $defaultAdminLocale;
         $this->providerKey        = $providerKey;
     }
@@ -57,8 +58,9 @@ class AdminLocaleListener implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event)
     {
         $url = $event->getRequest()->getRequestUri();
-        if ($this->isAdminToken($this->context->getToken(), $this->providerKey) && $this->isAdminRoute($url)) {
-            $token = $this->context->getToken();
+        $token = $this->tokenStorage->getToken();
+
+        if ($token && $this->isAdminToken($this->providerKey, $token) && $this->isAdminRoute($url)) {
             $locale = $token->getUser()->getAdminLocale();
 
             if (!$locale) {
@@ -75,9 +77,9 @@ class AdminLocaleListener implements EventSubscriberInterface
      *
      * @return bool
      */
-    private function isAdminToken(TokenInterface $token, $providerKey)
+    private function isAdminToken($providerKey, TokenInterface $token = null)
     {
-        return $token instanceof UsernamePasswordToken && $token->getProviderKey() === $providerKey;
+        return ($token instanceof UsernamePasswordToken || $token instanceof RememberMeToken) && $token->getProviderKey() === $providerKey;
     }
 
     /**

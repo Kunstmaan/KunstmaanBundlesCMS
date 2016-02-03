@@ -42,7 +42,7 @@ class Listed implements SpecParserInterface
             return $fixtures;
         }
 
-        $keys = array_map(function($key) {
+        $keys = array_map(function ($key) {
             return trim($key);
         }, $keys[0]);
         foreach ($keys as $item) {

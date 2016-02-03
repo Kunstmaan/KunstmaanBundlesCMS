@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,6 +31,11 @@ class FormWidget implements FormWidgetInterface
     protected $data;
 
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * @var FormHelper
      */
     private $formHelper = null;
@@ -43,12 +49,13 @@ class FormWidget implements FormWidgetInterface
      * @param array $types The types
      * @param array $data  The data attached to the types
      */
-    public function __construct(array $types = array(), array $data = array())
+    public function __construct(array $types = array(), array $data = array(), array $options = array())
     {
         $this->types = $types;
         $this->data = $data;
+        $this->options = $options;
 
-        $this->template = 'KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig';
+        $this->setTemplate('KunstmaanAdminBundle:FormWidgets\FormWidget:widget.html.twig');
     }
 
     /**
@@ -59,7 +66,7 @@ class FormWidget implements FormWidgetInterface
         $data = $builder->getData();
 
         foreach ($this->types as $name => $type) {
-            $builder->add($name, $type);
+            $builder->add($name, $type, $this->options[$name]);
             $data[$name] = $this->data[$name];
         }
 
@@ -151,15 +158,21 @@ class FormWidget implements FormWidgetInterface
 
     /**
      * @param string       $name
-     * @param AbstractType $type
+     * @param string       $type
      * @param null         $data
+     * @param array        $options
      *
      * @return FormWidget
      */
-    public function addType($name, AbstractType $type, $data = null)
+    public function addType($name, $type, $data = null, $options = array())
     {
+        // Get fully qualified class name of form if not provided as string
+        if ($type instanceof AbstractType) {
+            $type = get_class($type);
+        }
         $this->types[$name] = $type;
         $this->data[$name] = $data;
+        $this->options[$name] = $options;
 
         return $this;
     }
@@ -188,5 +201,13 @@ class FormWidget implements FormWidgetInterface
     public function getExtraParams(Request $request)
     {
         return array();
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 }

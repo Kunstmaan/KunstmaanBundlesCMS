@@ -10,20 +10,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class TranslatorDataCollector extends DataCollector
 {
-
-    private $translator;
-
-    public function __construct($translator)
-    {
-        $this->translator = $translator;
-    }
-
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-
-        $this->data = array(
-            'translations' => $request->get('usedTranslations'),
-        );
+        $this->data = array('translations' => $request->get('usedTranslations'));
     }
 
     public function getTotalTranslations()
@@ -51,10 +40,5 @@ class TranslatorDataCollector extends DataCollector
     public function getName()
     {
         return 'translator';
-    }
-
-    public function setTranslator($translator)
-    {
-        $this->translator = $translator;
     }
 }

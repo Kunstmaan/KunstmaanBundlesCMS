@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Form\Rule;
 
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class AfterXScrollPercentRuleAdminType extends AbstractRuleAdminType
@@ -15,11 +16,11 @@ class AfterXScrollPercentRuleAdminType extends AbstractRuleAdminType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('percentage', 'integer');
+        $builder->add('percentage', IntegerType::class);
     }
 
     /**
@@ -27,7 +28,7 @@ class AfterXScrollPercentRuleAdminType extends AbstractRuleAdminType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'after_x_percent_form';
     }

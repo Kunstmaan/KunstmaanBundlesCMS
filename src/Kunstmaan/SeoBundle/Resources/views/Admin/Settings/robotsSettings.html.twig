@@ -1,11 +1,10 @@
-{% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
-{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+{% extends '@KunstmaanAdmin/Settings/index.html.twig' %}
+{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 {% block header %}{% endblock %}
 
 {% block content %}
-    <form action="{{ path('KunstmaanSeoBundle_settings_robots') }}" method="post" {{ form_enctype(form) }} novalidate>
-
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
         <!-- Header -->
         <header class="app__content__header">
             <div class="row">
@@ -54,6 +53,8 @@
 
     </form>
 
+    {% block cookbook_information %}
     <strong>{{ 'seo.robots.tip' |trans }}</strong> {{ 'seo.robots.moreinfo' |trans }} <a href="http://bundles.kunstmaan.be/documentation/cookbook" target="_blank">cookbook</a>
+    {% endblock %}
 
 {% endblock %}

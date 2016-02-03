@@ -3,7 +3,6 @@
 namespace Kunstmaan\FixturesBundle\Builder;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\FixturesBundle\Populator\Populator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -13,6 +12,8 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 
 class PageBuilder implements BuilderInterface
 {
@@ -24,8 +25,12 @@ class PageBuilder implements BuilderInterface
     private $populator;
     private $slugifier;
 
-    public function __construct(EntityManager $em, ACLPermissionCreatorService $aclPermissionCreatorService, Populator $populator, Slugifier $slugifier)
-    {
+    public function __construct(
+        EntityManager $em,
+        ACLPermissionCreatorService $aclPermissionCreatorService,
+        Populator $populator,
+        Slugifier $slugifier
+    ) {
         $this->manager = $em;
         $this->nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
         $this->nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
@@ -58,10 +63,12 @@ class PageBuilder implements BuilderInterface
             throw new \Exception('No translations detected for page fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')');
         }
 
-        $internalName = array_key_exists('page_internal_name', $fixtureParams) ? $fixtureParams['page_internal_name'] : null;
+        $internalName = array_key_exists('page_internal_name', $fixtureParams) ?
+            $fixtureParams['page_internal_name'] : null;
+
         $rootNode = null;
         foreach ($fixture->getTranslations() as $language => $data) {
-            if ($rootNode == null) {
+            if ($rootNode === null) {
                 $page = $entity;
                 $rootNode = $this->createRootNode($page, $language, $internalName, $fixtureParams);
                 $this->manager->persist($rootNode);
@@ -77,14 +84,14 @@ class PageBuilder implements BuilderInterface
                 $translationNode->setOnline(isset($fixtureParams['set_online']) ? $fixtureParams['set_online'] : true);
             }
 
-            $fixture->addAdditional($fixture->getName().'_'.$language, $page);
-            $fixture->addAdditional('translationNode_'.$language, $translationNode);
-            $fixture->addAdditional('nodeVersion_'.$language, $translationNode->getPublicNodeVersion());
+            $fixture->addAdditional($fixture->getName() . '_' . $language, $page);
+            $fixture->addAdditional('translationNode_' . $language, $translationNode);
+            $fixture->addAdditional('nodeVersion_' . $language, $translationNode->getPublicNodeVersion());
             $fixture->addAdditional('rootNode', $rootNode);
 
             $this->populator->populate($translationNode, $data);
             $this->populator->populate($page, $data);
-            if ($translationNode->getSlug() == null && $rootNode->getParent() !== null) {
+            if ($translationNode->getSlug() === null && $rootNode->getParent() !== null) {
                 $translationNode->setSlug($this->slugifier->slugify($translationNode->getTitle()));
             }
             $this->ensureUniqueUrl($translationNode, $page);
@@ -104,12 +111,12 @@ class PageBuilder implements BuilderInterface
 
         foreach ($fixture->getTranslations() as $language => $data) {
             /** @var HasNodeInterface $page */
-            $page = $entities[$fixture->getName().'_'.$language];
+            $page = $entities[$fixture->getName() . '_' . $language];
             /** @var NodeTranslation $translationNode */
-            $translationNode = $entities['translationNode_'.$language];
+            $translationNode = $entities['translationNode_' . $language];
 
             $pagecreator = array_key_exists('creator', $fixtureParams) ? $fixtureParams['creator'] : 'pagecreator';
-            $creator     = $this->userRepo->findOneBy(array('username' => $pagecreator));
+            $creator = $this->userRepo->findOneBy(array('username' => $pagecreator));
 
             $nodeVersion = new NodeVersion();
             $nodeVersion->setNodeTranslation($translationNode);
@@ -118,6 +125,14 @@ class PageBuilder implements BuilderInterface
             $nodeVersion->setRef($page);
 
             $translationNode->setPublicNodeVersion($nodeVersion);
+
+            if (isset($fixtureParams['template'])) {
+                $pageTemplateConfiguration = new PageTemplateConfiguration();
+                $pageTemplateConfiguration->setPageId($page->getId());
+                $pageTemplateConfiguration->setPageEntityName(ClassLookup::getClass($page));
+                $pageTemplateConfiguration->setPageTemplate($fixtureParams['template']);
+                $this->manager->persist($pageTemplateConfiguration);
+            }
 
             $this->manager->persist($nodeVersion);
             $this->manager->persist($translationNode);
@@ -128,7 +143,7 @@ class PageBuilder implements BuilderInterface
     private function getParentNode($params, $language)
     {
         if (!isset($params['parent'])) {
-            return null;
+            return;
         }
 
         $parent = $params['parent'];
@@ -136,7 +151,7 @@ class PageBuilder implements BuilderInterface
             $additionals = $parent->getAdditionalEntities();
             $parent = $additionals['rootNode'];
         } elseif (is_string($parent)) {
-            $nodes = $this->nodeRepo->getNodesByInternalName($parent, $language);
+            $nodes = $this->nodeRepo->getNodesByInternalName($parent, $language, false, true);
             if (count($nodes) > 0) {
                 $parent = $nodes[0];
             }
@@ -151,7 +166,9 @@ class PageBuilder implements BuilderInterface
         $rootNode->setRef($page);
         $rootNode->setDeleted(false);
         $rootNode->setInternalName($internalName);
-        $rootNode->setHiddenFromNav(isset($fixtureParams['hidden_from_nav']) ? $fixtureParams['hidden_from_nav'] : false);
+        $rootNode->setHiddenFromNav(
+            isset($fixtureParams['hidden_from_nav']) ? $fixtureParams['hidden_from_nav'] : false
+        );
         $parent = $this->getParentNode($fixtureParams, $language);
         if ($parent instanceof Node) {
             $rootNode->setParent($parent);
@@ -178,6 +195,7 @@ class PageBuilder implements BuilderInterface
         if ($page instanceof StructureNode) {
             $translation->setSlug('');
             $translation->setUrl($translation->getFullSlug());
+
             return $translation;
         }
 
@@ -187,14 +205,14 @@ class PageBuilder implements BuilderInterface
         $translationWithSameUrl = $this->nodeTranslationRepo->getNodeTranslationForUrl($translation->getUrl(), $translation->getLang(), false, $translation);
 
         if ($translationWithSameUrl instanceof NodeTranslation) {
-            $translation->setSlug($this->slugifier->slugify($this->IncrementString($translation->getSlug())));
+            $translation->setSlug($this->slugifier->slugify($this->incrementString($translation->getSlug())));
             $this->ensureUniqueUrl($translation, $page);
         }
 
         return $translation;
     }
 
-    private static function IncrementString($string, $append = '-v')
+    private static function incrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
         $matches = array();

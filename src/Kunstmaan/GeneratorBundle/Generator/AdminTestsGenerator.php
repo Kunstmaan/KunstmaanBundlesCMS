@@ -14,7 +14,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class AdminTestsGenerator extends Generator
 {
-
     /**
      * @var ContainerInterface
      */
@@ -28,8 +27,6 @@ class AdminTestsGenerator extends Generator
     /**
      * @var string
      */
-    private $skeletonDir;
-
     private $fullSkeletonDir;
 
     /**
@@ -39,9 +36,8 @@ class AdminTestsGenerator extends Generator
      */
     public function __construct(ContainerInterface $container, Filesystem $filesystem, $skeletonDir)
     {
-        $this->container = $container;
-        $this->filesystem = $filesystem;
-        $this->skeletonDir = $skeletonDir;
+        $this->container       = $container;
+        $this->filesystem      = $filesystem;
         $this->fullSkeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
     }
 
@@ -56,24 +52,11 @@ class AdminTestsGenerator extends Generator
         $this->setSkeletonDirs(array($this->fullSkeletonDir));
 
         $parameters = array(
-            'namespace'         => $bundle->getNamespace(),
-            'bundle'            => $bundle
+            'namespace' => $bundle->getNamespace(),
+            'bundle'    => $bundle
         );
 
         $this->generateBehatTests($bundle, $output, $parameters);
-        $this->generateUnitTests($bundle, $output);
-    }
-
-    /**
-     * @param Bundle          $bundle
-     * @param OutputInterface $output
-     */
-    public function generateUnitTests(Bundle $bundle, OutputInterface $output)
-    {
-        $dirPath = $bundle->getPath();
-        $fullSkeletonDir = $this->skeletonDir . '/Tests';
-
-        $output->writeln('Generating Unit Tests : <info>OK</info>');
     }
 
     /**
@@ -83,7 +66,7 @@ class AdminTestsGenerator extends Generator
      */
     public function generateBehatTests(Bundle $bundle, OutputInterface $output, array $parameters)
     {
-        $dirPath = sprintf("%s/Features", $bundle->getPath());
+        $dirPath     = sprintf("%s/Features", $bundle->getPath());
         $skeletonDir = sprintf("%s/Features", $this->fullSkeletonDir);
 
         // First copy all the content
@@ -104,12 +87,15 @@ class AdminTestsGenerator extends Generator
         }
 
         $featureContext = $dirPath . "/Context/FeatureContext.php";
-        if($this->filesystem->exists($featureContext)) {
+        if ($this->filesystem->exists($featureContext)) {
             $contents = file_get_contents($featureContext);
-            $contents = str_replace('-adminpwd-', $this->container->getParameter('kunstmaan_admin.admin_password'), $contents);
+            $contents = str_replace(
+                '-adminpwd-',
+                $this->container->getParameter('kunstmaan_admin.admin_password'),
+                $contents
+            );
             file_put_contents($featureContext, $contents);
         }
-
 
         $output->writeln('Generating Behat Tests : <info>OK</info>');
     }

@@ -95,6 +95,8 @@ In the example below we extend from the `AbstractNewsletterController` and overw
 namespace Company\YourBundle\Controller;
 
 use Kunstmaan\LeadGenerationBundle\Controller\AbstractNewsletterController;
+use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
+use Symfony\Component\HttpFoundation\Request;
 
 class NewsletterPopupController extends AbstractNewsletterController
 {
@@ -146,8 +148,9 @@ An administrator can only add popups from one of the defined types.
 
 ```yml
 kunstmaan_lead_generation:
+    debug: false
     popup_types:
-        - CompanyYourBundle\Entity\Popup\NewsletterPopup
+        - Company\YourBundle\Entity\Popup\NewsletterPopup
 ```
 
 

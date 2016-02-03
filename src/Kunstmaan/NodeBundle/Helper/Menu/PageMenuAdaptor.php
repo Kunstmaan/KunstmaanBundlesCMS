@@ -2,18 +2,17 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-use Kunstmaan\NodeBundle\Entity\HideFromNodeTreeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
+use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,25 +41,48 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $activeNodeIds = null;
 
     /**
-     * @param EntityManagerInterface $em              The entity manager
-     * @param AclNativeHelper        $aclNativeHelper The acl helper
+     * @var PagesConfiguration
      */
-    public function __construct(EntityManagerInterface $em, AclNativeHelper $aclNativeHelper)
-    {
-        $this->em              = $em;
-        $this->aclNativeHelper = $aclNativeHelper;
+    private $pagesConfiguration;
+
+    /**
+     * @var DomainConfigurationInterface
+     */
+    private $domainConfiguration;
+
+    /**
+     * @param EntityManagerInterface       $em              The entity manager
+     * @param AclNativeHelper              $aclNativeHelper The acl helper
+     * @param PagesConfiguration           $pagesConfiguration
+     * @param DomainConfigurationInterface $domainConfiguration
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        AclNativeHelper $aclNativeHelper,
+        PagesConfiguration $pagesConfiguration,
+        DomainConfigurationInterface $domainConfiguration
+    ) {
+        $this->em                  = $em;
+        $this->aclNativeHelper     = $aclNativeHelper;
+        $this->pagesConfiguration  = $pagesConfiguration;
+        $this->domainConfiguration = $domainConfiguration;
     }
 
     /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * In this method you can add children for a specific parent, but also
+     * remove and change the already created children
      *
      * @param MenuBuilder $menu      The menu builder
      * @param MenuItem[]  &$children The children array that may be adapted
      * @param MenuItem    $parent    The parent menu item
      * @param Request     $request   The request
      */
-    public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
-    {
+    public function adaptChildren(
+        MenuBuilder $menu,
+        array &$children,
+        MenuItem $parent = null,
+        Request $request = null
+    ) {
         if (is_null($parent)) {
             $menuItem = new TopMenuItem($menu);
             $menuItem
@@ -72,7 +94,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 $menuItem->setActive(true);
             }
             $children[] = $menuItem;
-        } else {
+        } elseif (stripos($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes') === 0) {
             $treeNodes     = $this->getTreeNodes(
                 $request->getLocale(),
                 PermissionMap::PERMISSION_EDIT,
@@ -82,12 +104,24 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $activeNodeIds = $this->getActiveNodeIds($request);
 
             if ('KunstmaanNodeBundle_nodes' == $parent->getRoute() && isset($treeNodes[0])) {
-                $this->processNodes($menu, $children, $treeNodes[0], $parent, $activeNodeIds);
+                $this->processNodes(
+                    $menu,
+                    $children,
+                    $treeNodes[0],
+                    $parent,
+                    $activeNodeIds
+                );
             } elseif ('KunstmaanNodeBundle_nodes_edit' == $parent->getRoute()) {
                 $parentRouteParams = $parent->getRouteparams();
                 $parent_id         = $parentRouteParams['id'];
                 if (array_key_exists($parent_id, $treeNodes)) {
-                    $this->processNodes($menu, $children, $treeNodes[$parent_id], $parent, $activeNodeIds);
+                    $this->processNodes(
+                        $menu,
+                        $children,
+                        $treeNodes[$parent_id],
+                        $parent,
+                        $activeNodeIds
+                    );
                 }
             }
         }
@@ -103,17 +137,30 @@ class PageMenuAdaptor implements MenuAdaptorInterface
      *
      * @return array
      */
-    private function getTreeNodes($lang, $permission, AclNativeHelper $aclNativeHelper, $includeHiddenFromNav)
-    {
+    private function getTreeNodes(
+        $lang,
+        $permission,
+        AclNativeHelper $aclNativeHelper,
+        $includeHiddenFromNav
+    ) {
         if (is_null($this->treeNodes)) {
             $repo            = $this->em->getRepository('KunstmaanNodeBundle:Node');
             $this->treeNodes = array();
 
+            $rootNode = $this->domainConfiguration->getRootNode();
+
             // Get all nodes that should be shown in the menu
-            $allNodes = $repo->getAllMenuNodes($lang, $permission, $aclNativeHelper, $includeHiddenFromNav);
+            $allNodes = $repo->getAllMenuNodes(
+                $lang,
+                $permission,
+                $aclNativeHelper,
+                $includeHiddenFromNav,
+                $rootNode
+            );
             /** @var Node $nodeInfo */
             foreach ($allNodes as $nodeInfo) {
-                if ($this->isHiddenFromNodeTree($nodeInfo['ref_entity_name'])) {
+                $refEntityName = $nodeInfo['ref_entity_name'];
+                if ($this->pagesConfiguration->isHiddenFromTree($refEntityName)) {
                     continue;
                 }
                 $parent_id = is_null($nodeInfo['parent']) ? 0 : $nodeInfo['parent'];
@@ -127,45 +174,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
-     * Determine if current node should be hidden from the node tree
-     *
-     * @param string $refEntityName
-     *
-     * @return bool
-     */
-    private function isHiddenFromNodeTree($refEntityName)
-    {
-        $isHidden = false;
-        if (class_exists($refEntityName)) {
-            $page     = new $refEntityName();
-            $isHidden = ($page instanceof HideFromNodeTreeInterface);
-            unset($page);
-        }
-
-        return $isHidden;
-    }
-
-    /**
-     * Determine if current node is a structure node.
-     *
-     * @param string $refEntityName
-     *
-     * @return bool
-     */
-    private function isStructureNode($refEntityName)
-    {
-        $structureNode = false;
-        if (class_exists($refEntityName)) {
-            $page     = new $refEntityName();
-            $structureNode = ($page instanceof StructureNode);
-            unset($page);
-        }
-
-        return $structureNode;
-    }
-
-    /**
-     * Get an array with the id's off all nodes in the tree that should be expanded.
+     * Get an array with the id's off all nodes in the tree that should be
+     * expanded.
      *
      * @param $request
      *
@@ -191,10 +201,12 @@ class PageMenuAdaptor implements MenuAdaptorInterface
 
     /**
      * @param MenuBuilder    $menu          The menu builder
-     * @param MenuItem[]     &$children     The children array that may be adapted
+     * @param MenuItem[]     &$children     The children array that may be
+     *                                      adapted
      * @param NodeMenuItem[] $nodes         The nodes
      * @param MenuItem       $parent        The parent menu item
-     * @param array          $activeNodeIds List with id's of all nodes that should be expanded in the tree
+     * @param array          $activeNodeIds List with id's of all nodes that
+     *                                      should be expanded in the tree
      */
     private function processNodes(
         MenuBuilder $menu,
@@ -205,15 +217,27 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     ) {
         foreach ($nodes as $child) {
             $menuItem = new MenuItem($menu);
+            $refName  = $child['ref_entity_name'];
+
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes_edit')
                 ->setRouteparams(array('id' => $child['id']))
                 ->setUniqueId('node-' . $child['id'])
                 ->setLabel($child['title'])
                 ->setParent($parent)
-                ->setOffline(!$child['online'] && !$this->isStructureNode($child['ref_entity_name']))
+                ->setOffline(!$child['online'] && !$this->pagesConfiguration->isStructureNode($refName))
+                ->setFolder($this->pagesConfiguration->isStructureNode($refName))
                 ->setRole('page')
-                ->setWeight($child['weight']);
+                ->setWeight($child['weight'])
+                ->addAttributes(
+                    [
+                        'page' => [
+                            'class'    => $refName,
+                            'children' => $this->pagesConfiguration->getPossibleChildTypes($refName),
+                            'icon'     => $this->pagesConfiguration->getIcon($refName)
+                        ]
+                    ]
+                );
 
             if (in_array($child['id'], $activeNodeIds)) {
                 $menuItem->setActive(true);

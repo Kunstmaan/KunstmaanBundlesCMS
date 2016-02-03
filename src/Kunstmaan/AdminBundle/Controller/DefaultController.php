@@ -61,7 +61,7 @@ class DefaultController extends Controller
         if (is_null($dashboardConfiguration)) {
             $dashboardConfiguration = new DashboardConfiguration();
         }
-        $form = $this->createForm(new DashboardConfigurationType(), $dashboardConfiguration);
+        $form = $this->createForm(DashboardConfigurationType::class, $dashboardConfiguration);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

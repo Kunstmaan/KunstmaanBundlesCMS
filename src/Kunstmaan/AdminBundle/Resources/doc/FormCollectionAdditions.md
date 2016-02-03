@@ -14,13 +14,12 @@ class MyAdminType extends AbstractType
         ...
         $builder->add(
             'prices',
-            'collection',
+            CollectionType::class,
             array(
                 'type'               => new SeriesPriceAdminType(),
                 'allow_add'          => true,
                 'allow_delete'       => true,
                 'by_reference'       => false,
-                'cascade_validation' => true,
                 'attr'               => array(
                     'nested_form'           => true,
                 )
@@ -47,13 +46,12 @@ class MyAdminType extends AbstractType
         ...
         $builder->add(
             'prices',
-            'collection',
+            CollectionType::class,
             array(
                 'type'               => new MySubAdminType(),
                 'allow_add'          => true,
                 'allow_delete'       => true,
                 'by_reference'       => false,
-                'cascade_validation' => true,
                 'attr'               => array(
                     'nested_form'           => true,
                     'nested_sortable'       => true,
@@ -70,7 +68,7 @@ class MySubAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         ...
-        $builder->add('displayOrder', 'hidden');
+        $builder->add('displayOrder', HiddenType::class);
         ...
     }
 }
@@ -78,6 +76,19 @@ class MySubAdminType extends AbstractType
 
 If you don't set the nested_sortable_field attribute, a default of "weight" will be used (so you must make sure your
 form type has a getter and setter for a weight field if you don't set it).
+
+## Many to Many relations
+
+If you have a many-to-many relation, you wouldn’t want to delete the related entity when removing it from page part.
+In order to skip this, set 'nested_deletable => false` attribute, i.e.:
+
+```
+'attr' => array(
+    'nested_form'           => true,
+    'nested_deletable'      => false,
+)
+```                
+
 
 ## References
 

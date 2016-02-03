@@ -13,22 +13,21 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.3",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "fpn/doctrine-extensions-taggable": "0.9.0",
-        "kunstmaan/admin-bundle": "~3.0.0",
-        "kunstmaan/adminlist-bundle": "~3.0.0",
-        "kunstmaan/media-bundle": "~3.0.0",
-        "kunstmaan/node-bundle": "~3.0.0"
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/media-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\TaggingBundle": "" }
+        "psr-4": { "Kunstmaan\\TaggingBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/TaggingBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

@@ -84,26 +84,10 @@
 
                 <!-- Navigation - Right -->
                 <ul class="nav navbar-nav navbar-right">
-                    {% set route = app.request.attributes.get('_route') %}
-                    {% set attribs = app.request.attributes.all %}
-
-                    {{ localeswitcher_widget(requiredlocales, route) }}
-
-                    <!-- Logged in as -->
-                    <li>
-                        <a href="{{ path('KunstmaanAdminBundle_user_change_password', { 'id':app.user.id }) }}">
-                            <i class="fa fa-user"></i>
-                            &nbsp;
-                            {{ app.user.username|capitalize }}
-                        </a>
-                    </li>
-
-                    <!-- Logout -->
-                    <li>
-                        <a href="{{ path('fos_user_security_logout') }}" id="app__logout" title="logout">
-                            <i class="fa fa-sign-out"></i>
-                        </a>
-                    </li>
+                    {% set actions = get_admin_panel_actions() %}
+                    {% for action in actions %}
+                        {% include action.template with {'action': action} %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>

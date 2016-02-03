@@ -120,7 +120,7 @@ EOT
         $questionHelper->writeGeneratorSummary($output, array());
 
         $output->writeln(array(
-                'Make sure you update your database first before you test the pagepart:',
+                'Make sure you update your database first before you test the entity/adminlist:',
                 '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
                 '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
                 '')
@@ -302,10 +302,9 @@ EOT
 
         while (true) {
             $output->writeln('');
-            $self = $this;
             $generator = $this->getGenerator();
             $question = new Question($questionHelper->getQuestion('New field name (enter empty name to stop adding fields)', null));
-            $question->setValidator(function ($name) use ($fields, $self, $generator) {
+            $question->setValidator(function ($name) use ($fields, $generator) {
                 if (isset($fields[$name]) || 'id' == $name) {
                     throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                 }

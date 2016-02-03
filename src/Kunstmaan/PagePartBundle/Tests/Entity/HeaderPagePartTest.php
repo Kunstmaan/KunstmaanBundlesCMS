@@ -76,7 +76,7 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->object->setTitle('A test title');
         $this->assertEquals('HeaderPagePart A test title', $this->object->__toString());

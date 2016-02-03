@@ -3,9 +3,13 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use {{ namespace }}\Entity\PageParts\{{ pagepart }};
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * {{ pagepart }}AdminType
@@ -26,29 +30,32 @@ class {{ pagepart }}AdminType extends AbstractType
     {
 	parent::buildForm($builder, $options);
 
-	$builder->add('linkUrl', 'urlchooser', array(
+	$builder->add('linkUrl', URLChooserType::class, array(
 	    'required' => true
 	));
-	$builder->add('linkText', 'text', array(
+	$builder->add('linkText', TextType::class, array(
 	    'required' => true
 	));
-	$builder->add('linkNewWindow', 'checkbox', array(
+	$builder->add('linkNewWindow', CheckboxType::class, array(
 	    'required' => false,
 	));
-	$builder->add('type', 'choice', array(
+	$builder->add('type', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$types, {{ pagepart }}::$types),
-	    'empty_value' => false,
-	    'required' => true
+	    'placeholder' => false,
+	    'required' => true,
+		'choices_as_values' => true
 	));
-	$builder->add('size', 'choice', array(
+	$builder->add('size', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$sizes, {{ pagepart }}::$sizes),
-	    'empty_value' => false,
-	    'required' => true
+	    'placeholder' => false,
+	    'required' => true,
+		'choices_as_values' => true
 	));
-	$builder->add('position', 'choice', array(
+	$builder->add('position', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$positions, {{ pagepart }}::$positions),
-	    'empty_value' => false,
-	    'required' => true
+	    'placeholder' => false,
+	    'required' => true,
+		'choices_as_values' => true
 	));
     }
 
@@ -57,7 +64,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -65,9 +72,9 @@ class {{ pagepart }}AdminType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'

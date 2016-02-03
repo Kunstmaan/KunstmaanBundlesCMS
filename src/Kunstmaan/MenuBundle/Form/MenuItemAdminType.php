@@ -5,38 +5,16 @@ namespace Kunstmaan\MenuBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MenuBundle\Entity\Menu;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuItemAdminType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
-     * @var Menu
-     */
-    private $menu;
-
-    /**
-     * @var int
-     */
-    private $entityId;
-
-    /**
-     * @param string $locale
-     * @param Menu $menu
-     * @param int|null $entityId
-     */
-    public function __construct($locale, $menu, $entityId = null)
-    {
-        $this->locale = $locale;
-        $this->menu = $menu;
-        $this->entityId = $entityId;
-    }
-
     /**
      * Builds the form.
      *
@@ -50,67 +28,128 @@ class MenuItemAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $entityId = $this->entityId;
-        $menu = $this->menu;
-        $builder->add('parent', 'entity', array(
-            'class' => 'KunstmaanMenuBundle:MenuItem',
-            'property' => 'selectTitle',
-            'query_builder' => function(EntityRepository $er) use ($entityId, $menu) {
-                $qb = $er->createQueryBuilder('mi')
-                    ->where('mi.menu = :menu')
-                    ->setParameter('menu', $menu)
-                    ->orderBy('mi.lft', 'ASC');
-                if ($entityId) {
-                    $qb->andWhere('mi.id != :id')
-                        ->setParameter('id', $entityId);
-                }
+        $entityId = $options['entityId'];
+        $menu     = $options['menu'];
+        $menuItemclass = $options['menuItemClass'];
 
-                return $qb;
-            },
-            'attr' => array(
-                'class' => 'js-advanced-select',
-                'data-placeholder' => 'Select the parent menu item...'
-            ),
-            'multiple' => false,
-            'expanded' => false,
-            'required' => false,
-            'label' => 'Parent menu item'
-        ));
-        $builder->add('type', 'choice', array(
-            'choices' => array_combine(MenuItem::$types, MenuItem::$types),
-            'empty_value' => false,
-            'required' => true
-        ));
-        $locale = $this->locale;
-        $builder->add('nodeTranslation', 'entity', array(
-            'class' => 'KunstmaanNodeBundle:NodeTranslation',
-            'property' => 'title',
-            'query_builder' => function(EntityRepository $er) use ($locale) {
-                return $er->createQueryBuilder('nt')
-                    ->innerJoin('nt.publicNodeVersion', 'nv')
-                    ->innerJoin('nt.node', 'n')
-                    ->where('n.deleted = 0')
-                    ->andWhere('nt.lang = :lang')
-                    ->setParameter('lang', $locale)
-                    ->andWhere('nt.online = 1')
-                    ->orderBy('nt.title', 'ASC');
-            },
-            'attr' => array(
-                'class' => 'js-advanced-select',
-                'data-placeholder' => 'Select the page to link to...'
-            ),
-            'multiple' => false,
-            'expanded' => false,
-            'required' => true,
-            'label' => 'Link page'
-        ));
-        $builder->add('title', 'text', array(
-            'required' => false
-        ));
-        $builder->add('url', 'text', array(
-            'required' => true
-        ));
+        $builder->add(
+            'parent',
+            EntityType::class,
+            array(
+                'class'         => $menuItemclass,
+                'choice_label'  => 'displayTitle',
+                'query_builder' => function (EntityRepository $er) use (
+                    $entityId,
+                    $menu
+                ) {
+                    $qb = $er->createQueryBuilder('mi')
+                        ->where('mi.menu = :menu')
+                        ->setParameter('menu', $menu)
+                        ->orderBy('mi.lft', 'ASC');
+                    if ($entityId) {
+                        $qb->andWhere('mi.id != :id')
+                            ->setParameter('id', $entityId);
+                    }
+
+                    return $qb;
+                },
+                'attr'          => array(
+                    'class'            => 'js-advanced-select',
+                    'data-placeholder' => 'Select the parent menu item...'
+                ),
+                'multiple'      => false,
+                'expanded'      => false,
+                'required'      => false,
+                'label'         => 'Parent menu item'
+            )
+        );
+        $builder->add(
+            'type',
+            ChoiceType::class,
+            array(
+                'choices'     => array_combine(
+                    MenuItem::$types,
+                    MenuItem::$types
+                ),
+                'placeholder' => false,
+                'required'    => true,
+                'choices_as_values' => true
+            )
+        );
+        $locale   = $options['locale'];
+        $rootNode = $options['rootNode'];
+
+        $builder->add(
+            'nodeTranslation',
+            EntityType::class,
+            array(
+                'class'         => 'KunstmaanNodeBundle:NodeTranslation',
+                'choice_label'  => 'title',
+                'query_builder' => function (EntityRepository $er) use (
+                    $locale,
+                    $rootNode
+                ) {
+                    $qb = $er->createQueryBuilder('nt')
+                        ->innerJoin('nt.publicNodeVersion', 'nv')
+                        ->innerJoin('nt.node', 'n')
+                        ->where('n.deleted = 0')
+                        ->andWhere('nt.lang = :lang')
+                        ->setParameter('lang', $locale)
+                        ->andWhere('nt.online = 1')
+                        ->orderBy('nt.title', 'ASC');
+                    if ($rootNode) {
+                        $qb->andWhere('n.lft >= :left')
+                            ->andWhere('n.rgt <= :right')
+                            ->setParameter('left', $rootNode->getLeft())
+                            ->setParameter('right', $rootNode->getRight());
+                    }
+
+                    return $qb;
+                },
+                'attr'          => array(
+                    'class'            => 'js-advanced-select',
+                    'data-placeholder' => 'Select the page to link to...'
+                ),
+                'multiple'      => false,
+                'expanded'      => false,
+                'required'      => true,
+                'label'         => 'Link page'
+            )
+        );
+        $builder->add(
+            'title',
+            TextType::class,
+            array(
+                'required' => false
+            )
+        );
+        $builder->add(
+            'url',
+            TextType::class,
+            array(
+                'required' => true
+            )
+        );
         $builder->add('newWindow');
+    }
+
+    /**
+     * Configures the options for this type.
+     *
+     * @param OptionsResolver $resolver The resolver for the options.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+          array(
+              'data_class' => MenuItem::class,
+              'menu' => null,
+              'entityId' => null,
+              'rootNode' => null,
+              'menuItemClass' => null,
+              'locale' => null,
+          )
+        );
     }
 
     /**
@@ -118,7 +157,7 @@ class MenuItemAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'menuitem_form';
     }

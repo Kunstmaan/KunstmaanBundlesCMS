@@ -1,0 +1,14 @@
+{% set currentHost = get_current_host() %}
+<li class="dropdown">
+    <a href="#site" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        {{ currentHost }}
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        {% for host in get_multi_domain_hosts() %}
+            <li class="{% if currentHost == host %} active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                <a href="{{ path(action.getUrl()[("path")], { 'host': host }) }}">{{ host }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</li>

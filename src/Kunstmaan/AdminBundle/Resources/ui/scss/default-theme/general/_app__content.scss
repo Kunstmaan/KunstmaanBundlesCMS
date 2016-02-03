@@ -64,13 +64,52 @@
     }
 }
 
+// Page status indicators
+.app__content__header__title__small--online,
+.app__content__header__title__small--offline {
+    position: relative;
+
+    display: inline-block;
+    padding-left: 2.5rem;
+
+    &:before {
+        content: ' ';
+
+        position: absolute;
+        top: 50%;
+        left: 1rem;
+
+        display: inline-block;
+        width: .8rem;
+        height: .8rem;
+        margin: -.4rem 0 0;
+
+        border-radius: 100%;
+        border: 1px solid;
+    }
+}
+
+.app__content__header__title__small--online {
+
+    &:before {
+        background: #29CE6B;
+        border-color: darken(#29CE6B, 7);
+    }
+}
+
+.app__content__header__title__small--offline {
+
+    &:before {
+        background: #D5412A;
+        border-color: darken(#D5412A, 7);
+    }
+}
+
 
 // Actions
 .app__content__header__extra-actions {
     text-align: right;
 }
-
-
 
 
 /* Breadcrumb

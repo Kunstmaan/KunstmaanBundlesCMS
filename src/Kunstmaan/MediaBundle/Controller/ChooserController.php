@@ -34,7 +34,7 @@ class ChooserController extends Controller
         $session  = $request->getSession();
         $folderId = false;
 
-        $type            = $request->get('type');
+        $type            = $request->get('type', 'all');
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
         $linkChooser     = $request->get('linkChooser');
 
@@ -115,7 +115,7 @@ class ChooserController extends Controller
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm  = $this->createForm(new FolderType($sub), $sub);
+        $subForm  = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
 
         $linkChooserLink = null;
         if (!empty($linkChooser)) {

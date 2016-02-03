@@ -34,7 +34,7 @@
 
                         <!-- Date -->
                         <div class="form-group">
-                            <div class="js-datepicker input-group" data-default-date="true">
+                            <div class="js-datepicker input-group" data-min-date="today" data-default-date="true">
                                 <input id="unpub_date" type="text" name="unpub_date" class="form-control">
                                 <span class="input-group-addon input-group-addon--has-action">
                                     <i class="fa fa-calendar-o"></i>
@@ -44,7 +44,7 @@
 
                         <!-- Time -->
                         <div class="form-group">
-                            <div class="js-datepicker input-group" data-format="HH:mm" data-default-date="true">
+                            <div class="js-datepicker input-group" data-format="HH:mm" data-min-date="today" data-default-date="true">
                                 <input id="unpub_tmpckr" type="text" name="unpub_time" class="form-control">
                                 <span class="input-group-addon input-group-addon--has-action">
                                     <i class="fa fa-clock-o"></i>
@@ -186,12 +186,12 @@
                 <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
                 <td>{{ nodeVersion.owner }}</td>
                 <td class="table__actions">
-                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item">
+                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item table__actions__item--block">
                     <i class="fa fa-eye"></i>
                     Preview
                 </a>
                 {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
-                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item">
+                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item table__actions__item--block">
                     <i class="fa fa-refresh"></i>
                     Revert
                     </a>
@@ -208,7 +208,7 @@
 
 
 <!-- Modal - Add subpage -->
-{% set pagePossibleChildPages = page.possibleChildTypes %}
+{% set pagePossibleChildPages = get_possible_child_types(page) %}
 {% if pagePossibleChildPages is not empty %}
     <div id="add-subpage-modal" class="modal fade">
     <div class="modal-dialog">
@@ -238,7 +238,7 @@
                 </label>
                 <select name="type" id="addpage_type" class="form-control">
                 {% for pageType in pagePossibleChildPages %}
-                    <option value="{{ pageType.class }}">{{ pageType.name }}</option>
+                    <option value="{{ pageType.class }}">{{ pageType.name|trans }}</option>
                 {% endfor %}
                 </select>
             </div>

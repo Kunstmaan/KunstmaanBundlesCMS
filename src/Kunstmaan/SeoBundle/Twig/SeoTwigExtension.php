@@ -31,6 +31,13 @@ class SeoTwigExtension extends Twig_Extension
     private $websiteTitle;
 
     /**
+     * Saves querying the db multiple times, if you happen to use any of the defined
+     * functions more than once in your templates
+     * @var array
+     */
+    private $seoCache = [];
+
+    /**
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
@@ -46,12 +53,37 @@ class SeoTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_seo_metadata_for'  => new \Twig_Function_Method($this, 'renderSeoMetadataFor', array('is_safe' => array('html'), 'needs_environment' => true)),
-            'get_seo_for'  => new \Twig_Function_Method($this, 'getSeoFor'),
-            'get_title_for'  => new \Twig_Function_Method($this, 'getTitleFor'),
-            'get_title_for_page_or_default' => new \Twig_Function_Method($this, 'getTitleForPageOrDefault'),
-            'get_social_widget_for'  => new \Twig_Function_Method($this, 'getSocialWidgetFor', array('is_safe' => array('html'), 'needs_environment' => true)),
-        );
+            new \Twig_SimpleFunction('render_seo_metadata_for', array($this, 'renderSeoMetadataFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
+            new \Twig_SimpleFunction('get_seo_for', array($this, 'getSeoFor')),
+            new \Twig_SimpleFunction('get_title_for', array($this, 'getTitleFor')),
+            new \Twig_SimpleFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
+            new \Twig_SimpleFunction('get_absolute_url', array($this, 'getAbsoluteUrl')),
+            );
+    }
+
+    /**
+     * Validates the $url value as URL (according to » http://www.faqs.org/rfcs/rfc2396), optionally with required components.
+     * It will just return the url if it's valid. If it starts with '/', the $host will be prepended.
+     *
+     * @param string $url
+     * @param string $host
+     * @return string
+     */
+    public function getAbsoluteUrl($url, $host = null)
+    {
+        $validUrl = filter_var($url, FILTER_VALIDATE_URL);
+        $host = rtrim($host, '/');
+
+        if (!$validUrl === false) {
+            // The url is valid
+            return $url;
+        } else {
+            // Prepend with $host if $url starts with "/"
+            if ($url[0] == '/' ) {
+                return $url = $host.$url;
+            }
+            return false;
+        }
     }
 
     /**
@@ -61,7 +93,15 @@ class SeoTwigExtension extends Twig_Extension
      */
     public function getSeoFor(AbstractPage $entity)
     {
-        return $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
+        $key = md5(get_class($entity).$entity->getId());
+
+        if (!array_key_exists($key, $this->seoCache))
+        {
+            $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($entity);
+            $this->seoCache[$key] = $seo;
+        }
+
+        return $this->seoCache[$key];
     }
 
     /**
@@ -103,52 +143,6 @@ class SeoTwigExtension extends Twig_Extension
         $arr[] = $entity->getTitle();
 
         return $this->getPreferredValue($arr);
-    }
-
-    /**
-     * @param \Twig_Environment $environment
-     * @param AbstractPage      $entity      The page
-     * @param string            $platform    The platform like facebook or linkedin.
-     *
-     * @throws \InvalidArgumentException
-     * @return boolean|string
-     */
-    public function getSocialWidgetFor(\Twig_Environment $environment, AbstractPage $entity, $platform)
-    {
-        $seo = $this->getSeoFor($entity);
-
-        if (is_null($seo)) {
-            return false;
-        }
-
-        $arguments = array();
-        if ($platform == 'linkedin') {
-            $arguments = array(
-                'productid' => $seo->getLinkedInRecommendProductID(),
-                'url' => $seo->getLinkedInRecommendLink()
-            );
-
-            if (empty($arguments['url'])) {
-                $arguments['url'] = $seo->getOgUrl();
-            }
-        } elseif ($platform == 'facebook') {
-            $arguments = array(
-                'url' => $seo->getOgUrl()
-            );
-        } else {
-            throw new \InvalidArgumentException('Only linkedin and facebook are supported for now.');
-        }
-
-        // If not a single argument is present we can be sure the button will be useless.
-        // This is just a catchall. For more specific behaviour you can return false sooner in the platform specific check.
-        if (!array_filter($arguments)) {
-            return false;
-        }
-
-        $template = 'KunstmaanSeoBundle:SeoTwigExtension:' . $platform . '_widget.html.twig';
-        $template = $environment->loadTemplate($template);
-
-        return $template->render($arguments);
     }
 
     /**

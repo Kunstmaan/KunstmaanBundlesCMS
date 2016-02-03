@@ -43,5 +43,4 @@ class FixUserPasswordCommand extends ContainerAwareCommand
         $em->flush();
         $output->writeln('<info>The password changed value has been set to true successfully for all users.</info>');
     }
-
 }

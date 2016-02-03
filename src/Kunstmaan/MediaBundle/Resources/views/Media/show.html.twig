@@ -1,4 +1,4 @@
-{% extends 'KunstmaanMediaBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanMedia/Default/layout.html.twig' %}
 
 
 {% block body %}
@@ -26,13 +26,13 @@
     </div>
 
     <!-- Tree -->
-    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanMediaBundle_folder_reorder') }}">
         <ul>
             {% set parentIds = foldermanager.getParentIds(folder) %}
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% include '@KunstmaanMedia/Folder/foldertreeview.html.twig' %}
             {% endfor %}
         </ul>
     </nav>
@@ -41,7 +41,7 @@
 
 
 {% block breadcrumb %}
-    {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/breadcrumbs.html.twig' %}
 {% endblock %}
 
 
@@ -111,16 +111,16 @@
             <div class="row row--padded">
                 <div class="col-md-6 col-lg-5">
                     <dl>
-                    {% block mediainfo %}
-                        <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
-                        <dd>{{ media.name }}</dd>
-                        <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
-                        <dd>{{ media.contentType }}</dd>
-                        <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
-                        <dd>{{ media.createdat|date|escape }}</dd>
-                        <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
-                        <dd>{{ media.updatedat|date|escape }}</dd>
-                    {% endblock %}
+                        {% block mediainfo %}
+                            <dt>{{ 'media.media.mediainfo.name'|trans }}:</dt>
+                            <dd>{{ media.name }}</dd>
+                            <dt>{{ 'media.media.mediainfo.contenttype'|trans }}:</dt>
+                            <dd>{{ media.contentType }}</dd>
+                            <dt>{{ 'media.media.mediainfo.createdat'|trans }}:</dt>
+                            <dd>{{ media.createdat|date|escape }}</dd>
+                            <dt>{{ 'media.media.mediainfo.updatedat'|trans }}:</dt>
+                            <dd>{{ media.updatedat|date|escape }}</dd>
+                        {% endblock %}
                     </dl>
                 </div>
 
@@ -135,7 +135,7 @@
         <div class="tab-pane" id="properties">
 
             {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-            <form action="{{ path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id } ) }}" method="post" {{ form_enctype(editform) }}>
+            {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_show', { 'mediaId' : media.id }) }) }}
                 <fieldset class="panel panel-default form-properties">
                     <div class="panel-body">
 
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </form>
+            {{ form_end(editform) }}
         </div>
     </div>
 

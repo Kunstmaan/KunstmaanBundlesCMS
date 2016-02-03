@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   Extra Stylesheet for admin
+   ========================================================================== */
+
+/* Config (necessary only)
+   ========================================================================== */
+@import "config/general/colors",
+        "config/general/typography/fonts",
+        "config/general/typography/bodycopy",
+        "config/general/sizes",
+        "config/general/paths";
+
+/* Vendors - only vars!
+   ========================================================================== */
+@import "config/vendors/bootstrap-vars",
+        "config/vendors/cargobay-vars";
+
+/* General
+   ========================================================================== */
+@import "general/typography/iconfont";
+
+/* Helpers
+   ========================================================================== */
+@import "helpers/helpers";
+
+
+/* Use these styling only in the pagepart previews
+   ========================================================================== */
+.page-template__region .admin-region,
+.pp__view .pp__view__block:first-child {
+
+    /* General
+       ========================================================================== */
+    @import "general/typography/bodycopy";
+
+    /* Blocks
+       ========================================================================== */
+    @import "blocks/img",
+            "blocks/hr",
+            "blocks/lists",
+            "blocks/links",
+            "blocks/buttons",
+            "blocks/tables";
+
+    /* Structures
+       ========================================================================== */
+{% if demosite %}
+    @import "structures/header-visual",
+            "structures/submenu";
+{% else %}
+    // @import "structures/..";
+{% endif %}
+
+    /* Pageparts
+       ========================================================================== */
+    @import "pageparts/button-pp",
+            "pageparts/download-pp",
+            "pageparts/header-pp",
+            "pageparts/image-pp",
+            "pageparts/introtext-pp",
+            "pageparts/link-pp",
+{% if demosite %}
+            "pageparts/service-pp",
+{% endif %}
+            "pageparts/text-pp",
+            "pageparts/totop-pp",
+            "pageparts/video-pp";
+}

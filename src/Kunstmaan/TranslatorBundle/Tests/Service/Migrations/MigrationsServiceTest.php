@@ -5,14 +5,11 @@ use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 
 class MigrationsServiceTest extends BaseTestCase
 {
-
-    private $translationRepository;
     private $migrationsService;
 
     public function setUp()
     {
         parent::setUp();
-        $this->translationRepository = $this->getContainer()->get('kunstmaan_translator.repository.translation');
         $this->migrationsService = $this->getContainer()->get('kunstmaan_translator.service.migrations.migrations');
     }
 

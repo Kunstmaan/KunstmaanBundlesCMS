@@ -31,13 +31,11 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_totoppageparttype'.
-     *
      * @covers                Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_totoppageparttype', $this->object->getName());
+        $this->assertEquals(ToTopPagePartAdminType::class, $this->object->getName());
     }
 
     /**
@@ -49,11 +47,11 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::setDefaultOptions
+     * @covers Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $this->object->setDefaultOptions($this->resolver);
+        $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
         $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart');
     }

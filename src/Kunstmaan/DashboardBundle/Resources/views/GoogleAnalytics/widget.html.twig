@@ -15,18 +15,18 @@
 
         <div id="data_overview" class="dashboard__content--loading">
             <!-- TABS -->
-            {% include 'KunstmaanDashboardBundle:GoogleAnalytics:tabs.html.twig' with {'overviews' : overviews} %}
+            {% include '@KunstmaanDashboard/GoogleAnalytics/tabs.html.twig' with {'overviews' : overviews} %}
             <!-- end TABS -->
 
             <!-- TAB CONTENT -->
             <section class="dashboard__content">
                 <!-- CHART -->
-                {% include 'KunstmaanDashboardBundle:GoogleAnalytics:chart.html.twig' %}
+                {% include '@KunstmaanDashboard/GoogleAnalytics/chart.html.twig' %}
                 <!-- end CHART -->
 
                 {% for overview in overviews %}
                     <!-- GOALS -->
-                    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:goals.html.twig' with {'overview':overview} %}
+                    {% include '@KunstmaanDashboard/GoogleAnalytics/goals.html.twig' with {'overview':overview} %}
                     <!-- end GOALS -->
                 {% endfor %}
             </section>
@@ -64,5 +64,5 @@
     <input type="hidden" id="disable-goals" data-disable-goals="{{disableGoals}}" />
 
 {% else %}
-    {% include 'KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig' with {'authUrl' : authUrl} %}
+    {% include '@KunstmaanDashboard/GoogleAnalytics/connect.html.twig' with {'authUrl' : authUrl} %}
 {% endif %}

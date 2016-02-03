@@ -2,25 +2,23 @@
 
 namespace Kunstmaan\NodeBundle\Twig;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 /**
  * Extension to fetch node / translation by page in Twig templates
  */
 class NodeTwigExtension extends Twig_Extension
 {
-
     /**
-     * @var EntityManager $em
+     * @var EntityManagerInterface $em
      */
     private $em;
 
@@ -30,26 +28,31 @@ class NodeTwigExtension extends Twig_Extension
     private $generator;
 
     /**
-     * @var SecurityContextInterface
+     * @var NodeMenu
      */
-    private $securityContext;
+    private $nodeMenu;
 
     /**
-     * @param EntityManager $em
-     * @param UrlGeneratorInterface $generator
-     * @param SecurityContextInterface $securityContext
-     * @param AclHelper $aclHelper
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface                       $em
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
+     * @param \Kunstmaan\NodeBundle\Helper\NodeMenu                      $nodeMenu
+     * @param \Symfony\Component\HttpFoundation\RequestStack             $requestStack
      */
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         UrlGeneratorInterface $generator,
-        SecurityContextInterface $securityContext,
-        AclHelper $aclHelper
+        NodeMenu $nodeMenu,
+        RequestStack $requestStack
     ) {
-        $this->em              = $em;
-        $this->generator       = $generator;
-        $this->securityContext = $securityContext;
-        $this->aclHelper       = $aclHelper;
+        $this->em           = $em;
+        $this->generator    = $generator;
+        $this->nodeMenu     = $nodeMenu;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -60,42 +63,70 @@ class NodeTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_node_for', array($this, 'getNodeFor')),
-            new \Twig_SimpleFunction('get_node_translation_for', array($this, 'getNodeTranslationFor')),
-            new \Twig_SimpleFunction('get_node_by_internal_name', array($this, 'getNodeByInternalName')),
-            new \Twig_SimpleFunction('get_url_by_internal_name', array($this, 'getUrlByInternalName')),
-            new \Twig_SimpleFunction('get_path_by_internal_name', array($this, 'getPathByInternalName')),
-            new \Twig_SimpleFunction('get_page_by_node_translation', array($this, 'getPageByNodeTranslation')),
-            new \Twig_SimpleFunction('get_node_menu', array($this, 'getNodeMenu')),
+            new \Twig_SimpleFunction(
+                'get_node_for', array($this, 'getNodeFor')
+            ),
+            new \Twig_SimpleFunction(
+                'get_node_translation_for',
+                array($this, 'getNodeTranslationFor')
+            ),
+            new \Twig_SimpleFunction(
+                'get_node_by_internal_name',
+                array($this, 'getNodeByInternalName')
+            ),
+            new \Twig_SimpleFunction(
+                'get_url_by_internal_name',
+                array($this, 'getUrlByInternalName')
+            ),
+            new \Twig_SimpleFunction(
+                'get_path_by_internal_name',
+                array($this, 'getPathByInternalName')
+            ),
+            new \Twig_SimpleFunction(
+                'get_page_by_node_translation',
+                array($this, 'getPageByNodeTranslation')
+            ),
+            new \Twig_SimpleFunction(
+                'get_node_menu',
+                array($this, 'getNodeMenu')
+            ),
+            new \Twig_SimpleFunction(
+                'is_structure_node',
+                array($this, 'isStructureNode')
+            ),
+            new \Twig_SimpleFunction(
+                'file_exists',
+                array($this, 'fileExists')
+            ),
         );
     }
 
     /**
-     * @param NodeTranslation $nt
+     * @param NodeTranslation $nodeTranslation
      *
      * @return null|object
      */
-    public function getPageByNodeTranslation(NodeTranslation $nt)
+    public function getPageByNodeTranslation(NodeTranslation $nodeTranslation)
     {
-        return $nt->getRef($this->em);
+        return $nodeTranslation->getRef($this->em);
     }
 
     /**
-     * @param AbstractPage $page
+     * @param PageInterface $page
      *
      * @return Node
      */
-    public function getNodeFor(AbstractPage $page)
+    public function getNodeFor(PageInterface $page)
     {
         return $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
     }
 
     /**
-     * @param AbstractPage $page
+     * @param PageInterface $page
      *
      * @return NodeTranslation
      */
-    public function getNodeTranslationFor(AbstractPage $page)
+    public function getNodeTranslationFor(PageInterface $page)
     {
         return $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationFor($page);
     }
@@ -104,11 +135,12 @@ class NodeTwigExtension extends Twig_Extension
      * @param string $internalName
      * @param string $locale
      *
-     * @return Node
+     * @return Node|null
      */
     public function getNodeByInternalName($internalName, $locale)
     {
-        $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodesByInternalName($internalName, $locale);
+        $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')
+            ->getNodesByInternalName($internalName, $locale);
         if (!empty($nodes)) {
             return $nodes[0];
         }
@@ -163,23 +195,31 @@ class NodeTwigExtension extends Twig_Extension
      */
     public function getNodeMenu($locale, Node $node = null, $includeHiddenFromNav = false)
     {
-        $nodeMenu = new NodeMenu(
-            $this->em,
-            $this->securityContext,
-            $this->aclHelper,
-            $locale,
-            $node,
-            PermissionMap::PERMISSION_VIEW,
-            false,
-            $includeHiddenFromNav
-        );
-        return $nodeMenu;
+        $request   = $this->requestStack->getMasterRequest();
+        $isPreview = $request->attributes->has('preview') && $request->attributes->get('preview') === true;
+        $this->nodeMenu->setLocale($locale);
+        $this->nodeMenu->setCurrentNode($node);
+        $this->nodeMenu->setIncludeOffline($isPreview);
+        $this->nodeMenu->setIncludeHiddenFromNav($includeHiddenFromNav);
+
+        return $this->nodeMenu;
+    }
+
+    public function isStructureNode($page)
+    {
+        return $page instanceof StructureNode;
+    }
+
+    public function fileExists($filename)
+    {
+        return file_exists($filename);
     }
 
     /**
-     * @param $internalName
-     * @param $locale
-     * @param array $parameters
+     * @param string $internalName
+     * @param string $locale
+     * @param array  $parameters
+     *
      * @return array
      */
     private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
@@ -208,5 +248,4 @@ class NodeTwigExtension extends Twig_Extension
     {
         return 'node_twig_extension';
     }
-
 }

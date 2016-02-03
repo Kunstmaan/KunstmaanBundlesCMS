@@ -14,16 +14,16 @@
 </div>
 
 <script>
-    document.addEventListener(BEFORE_SHOWING, function(event) {
+    document.addEventListener(window.kunstmaan.leadGeneration.events.BEFORE_SHOWING, function(event) {
         if (event.detail.popup == '{{ popup.name }}') {
             // Do slide in animation + add extra classes if needed
-            console.log('show event ' + event.detail.popup);
+            window.kunstmaan.leadGeneration.log('show event ' + event.detail.popup);
         }
     }, true);
-    document.addEventListener(BEFORE_CLOSING, function(event) {
+    document.addEventListener(window.kunstmaan.leadGeneration.events.BEFORE_CLOSING, function(event) {
         if (event.detail.popup == '{{ popup.name }}') {
             // Do slide out animation + remove extra classes if needed
-            console.log('close event ' + event.detail.popup);
+            window.kunstmaan.leadGeneration.log('close event ' + event.detail.popup);
         }
     }, true);
 </script>

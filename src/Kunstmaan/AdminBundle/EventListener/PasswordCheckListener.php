@@ -2,14 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * PasswordCheckListener to check if the user has to change his password
@@ -17,32 +15,32 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class PasswordCheckListener
 {
     /**
-     * @var $authorizationChecker
+     * @var AuthorizationCheckerInterface
      */
     private $authorizationChecker;
 
     /**
-     * @var $tokenStorage
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
     /**
-     * @var $router
+     * @var Router
      */
     private $router;
 
     /**
-     * @var $session
+     * @var Session
      */
     private $session;
 
     /**
-     * @param AuthorizationChecker $authorizationChecker
-     * @param TokenStorage         $tokenStorage
-     * @param Router               $router
-     * @param Session              $session
+     * @param AuthorizationCheckerInterface  $authorizationChecker
+     * @param TokenStorageInterface          $tokenStorage
+     * @param Router                         $router
+     * @param Session                        $session
      */
-    function __construct(AuthorizationChecker $authorizationChecker, TokenStorage $tokenStorage, Router $router, Session $session)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
@@ -56,11 +54,11 @@ class PasswordCheckListener
     public function onKernelRequest(GetResponseEvent $event)
     {
         $url = $event->getRequest()->getRequestUri();
-        if($this->isAdminRoute($url)) {
+        if ($this->tokenStorage->getToken() && $this->isAdminRoute($url)) {
             $route = $event->getRequest()->get('_route');
-            if($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $route != 'fos_user_change_password'){
+            if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $route != 'fos_user_change_password') {
                 $user = $this->tokenStorage->getToken()->getUser();
-                if($user->isPasswordChanged() == false) {
+                if ($user->isPasswordChanged() === false) {
                     $response = new RedirectResponse($this->router->generate('fos_user_change_password'));
                     $this->session->getFlashBag()->add('error', 'Your password has not yet been changed');
                     $event->setResponse($response);

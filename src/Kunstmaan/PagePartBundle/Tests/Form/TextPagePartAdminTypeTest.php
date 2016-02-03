@@ -31,13 +31,11 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_textpageparttype'.
-     *
      * @covers Kunstmaan\PagePartBundle\Form\TextPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_textpageparttype', $this->object->getName());
+        $this->assertEquals(TextPagePartAdminType::class, $this->object->getName());
     }
 
     /**
@@ -50,11 +48,11 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\TextPagePartAdminType::setDefaultOptions
+     * @covers Kunstmaan\PagePartBundle\Form\TextPagePartAdminType::configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $this->object->setDefaultOptions($this->resolver);
+        $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
         $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\TextPagePart');
     }

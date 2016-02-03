@@ -1,19 +1,46 @@
 {% block iconfont_widget %}
     {% spaceless %}
-        <div id="{{ id }}_widget" class="clearfix {{ attr.class|default('') }}" style="{{ attr.style|default('') }}">
-            <input type="hidden" name="{{ full_name }}" value="{{ value|default('') }}"/>
+        <!-- Icon Chooser -->
+        <div id="{{ id }}_widget" class="icon-chooser media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %} js-icon-chooser" data-css-link="{{ loader_object.cssLink }}" data-widget-id="{{id}}">
+            <input type="hidden" name="{{ full_name }}" value="{{ value|default('') }}" class="js-icon-chooser__input"/>
 
-            <div class="input_media hasnomedia">
-                <div class="preview"></div>
-                <button class="choose">{{ 'media.widget.choose' | trans }}</button>
+            <!-- Icon Chooser Preview -->
+            <div class="media-chooser__preview">
+                <figure class="thumbnail">
+                    <div class="icon-chooser__preview js-icon-chooser__preview {{ value|default('') }}"></div>
+                </figure>
+
+                <!-- Icon Chooser delete button -->
+                <button type="button" class="btn media-chooser__preview__del-btn js-icon-chooser__close">
+                    <i class="fa fa-trash-o"></i>
+                </button>
             </div>
 
-            <div class="input_media hasmedia">
-                <div class="iconpreview" style="float:left;">
-                    <div class="{{ value|default('') }}" style="font-size:60px;"></div>
+            <!-- Icon Chooser choose button -->
+            <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn js-icon-chooser__choose" data-toggle="modal" data-target="#{{ id }}_iconChooserModal" data-link="{{ path('KunstmaanMediaBundle_icon_font_chooser', {'loader': loader, 'loader_data': loader_data }) }}">
+                <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
+                {{ 'media.widget.choose' | trans }}
+            </button>
+        </div>
+
+        <!-- Icon Chooser Modal -->
+        <div class="js-ajax-modal modal fade" id="{{ id }}_iconChooserModal" role="dialog" aria-labelledby="iconhooserModal" aria-hidden="true" data-loaded="false" data-widget-id="{{ id }}">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3 class="modal-title">
+                            {{ 'media.widget.icon_chooser' | trans }}
+                        </h3>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
                 </div>
-                <button class="del">{{ 'media.widget.delete' | trans }}</button>
-                <p class="title" style="clear:both">{{ value|default('') }}</p>
             </div>
         </div>
     {% endspaceless %}
@@ -35,13 +62,14 @@
                     {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                     {% if imageurl is not empty and media.location == 'local' %}
                         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                            {% set imageurl = imageurl %}
+                            {% set imageurlretina = imageurl %}
                         {% else %}
-                            {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                            {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
+                            {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
                         {% endif %}
                     {% endif %}
                     {% if imageurl %}
-                        <img src="{{ imageurl }}" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                        <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina }} 2x" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                         <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
                             {{ media.name }}
                         </figcaption>
@@ -52,7 +80,7 @@
                         </figcaption>
                     {% endif %}
                 {% else %}
-                    <img src="/" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                    <img id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
                     <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
                 {% endif %}
             </figure>
@@ -82,7 +110,7 @@
                         <i class="fa fa-times"></i>
                     </button>
                     <h3 class="modal-title">
-                        Media-Chooser
+                        {{ 'media.widget.media_chooser' | trans }}
                     </h3>
                 </div>
 

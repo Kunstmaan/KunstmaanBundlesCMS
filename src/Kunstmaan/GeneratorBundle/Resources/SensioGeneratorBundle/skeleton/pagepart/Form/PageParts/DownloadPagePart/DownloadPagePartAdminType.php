@@ -2,9 +2,10 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
 
 /**
  * {{ pagepart }}AdminType
@@ -23,7 +24,7 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	$builder->add('media', 'media', array(
+	$builder->add('media', MediaType::class, array(
 	    'pattern' => 'KunstmaanMediaBundle_chooser_filechooser',
 	    'label' => 'mediapagepart.download.choosefile'
 	));
@@ -34,7 +35,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -42,13 +43,12 @@ class {{ pagepart }}AdminType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 	$resolver->setDefaults(array(
 	    'data_class' => '{{ namespace }}\Entity\PageParts\{{ pagepart }}',
 	));
     }
-
 }

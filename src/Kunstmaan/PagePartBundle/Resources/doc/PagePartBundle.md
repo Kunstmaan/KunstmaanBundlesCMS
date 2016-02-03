@@ -99,7 +99,7 @@ class ContactPagePart extends \Kunstmaan\PagePartBundle\Entity\AbstractPagePart
 namespace Kunstmaan\WebsiteBundle\Form\PageParts;
 
 use Kunstmaan\WebsiteBundle\Form\ContactInfoAdminType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -121,14 +121,13 @@ class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('comment', 'text');
+        $builder->add('comment', TextType::class);
 
-        $builder->add('contacts', 'collection', array(
+        $builder->add('contacts', CollectionType::class, array(
             'type' => new ContactInfoAdminType(),
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
-            'cascade_validation' => true,
             'attr' => array(
                 'nested_form' => true,
                 'nested_form_min' => 1,
@@ -140,13 +139,12 @@ class ContactPagePartAdminType extends \Symfony\Component\Form\AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\WebsiteBundle\Entity\PageParts\ContactPagePart',
-            'cascade_validation' => true,
         ));
     }
 
@@ -224,7 +222,7 @@ class ContactInfo extends AbstractEntity
 
 namespace Kunstmaan\WebsiteBundle\Form;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -246,11 +244,11 @@ class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'max_length' => 35,
         ));
 
-        $builder->add('email', 'text', array(
+        $builder->add('email', TextType::class, array(
             'attr' => array('title' => 'Publicly visible on the website'),
         ));
     }
@@ -258,9 +256,9 @@ class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\WebsiteBundle\Entity\ContactInfo'

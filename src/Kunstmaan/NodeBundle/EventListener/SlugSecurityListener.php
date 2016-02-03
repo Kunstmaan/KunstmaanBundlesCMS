@@ -2,70 +2,77 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Security\Core\SecurityContext;
-/**
- * Class SlugSecurityListener
- * @package Kunstmaan\NodeBundle\EventListener
- */
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
+
 class SlugSecurityListener
 {
     /**
-     * @var SecurityContext
+     * @var AuthorizationCheckerInterface
      */
-    protected $securityContext;
-
-    /**
-     * @var null|\Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
+    protected $authorizationChecker;
 
     /**
      * @var EntityManager
      */
     protected $em;
+    
+    /**
+     * @var NodeMenu
+     */
+    protected $nodeMenu;
 
     /**
-     * @var
+     * @param EntityManager                 $entityManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param NodeMenu                      $nodeMenu
      */
-    protected $acl;
-
-    /**
-     * @param RequestStack $requestStack
-     * @param EntityManager $entityManager
-     * @param $securityContext
-     * @param $acl
-     */
-    public function __construct(RequestStack $requestStack,EntityManager $entityManager, SecurityContext $securityContext, $acl)
-    {
-        $this->securityContext = $securityContext;
-        $this->request = $requestStack->getCurrentRequest();
-        $this->em = $entityManager;
-        $this->acl = $acl;
+    public function __construct(
+        EntityManager $entityManager,
+        AuthorizationCheckerInterface $authorizationChecker,
+        NodeMenu $nodeMenu
+    ) {
+        $this->em                   = $entityManager;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->nodeMenu             = $nodeMenu;
     }
 
     /**
+     * Perform basic security checks
      *
+     * @param SlugSecurityEvent $event
+     *
+     * @throws AccessDeniedException
+     * @throws NotFoundHttpException
      */
-    public function onSlugSecurityEvent()
+    public function onSlugSecurityEvent(SlugSecurityEvent $event)
     {
-        $node = $this->request->attributes->get('_nodeTranslation')->getNode();
+        $node            = $event->getNode();
+        $nodeTranslation = $event->getNodeTranslation();
+        $request         = $event->getRequest();
 
-        /* @var SecurityContextInterface $securityContext */
-        if (false === $this->securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
-            throw new AccessDeniedException('You do not have sufficient rights to access this page.');
+        if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
+            throw new AccessDeniedException(
+                'You do not have sufficient rights to access this page.'
+            );
         }
 
-        $locale = $this->request->attributes->get('_locale');
-        $preview = $this->request->attributes->get('preview');
+        $isPreview = $request->attributes->get('preview');
 
-        $nodeMenu       = new NodeMenu($this->em, $this->securityContext, $this->acl, $locale , $node, PermissionMap::PERMISSION_VIEW, $preview);
-
-        $this->request->attributes->set('_nodeMenu', $nodeMenu);
+        if (!$isPreview && !$nodeTranslation->isOnline()) {
+            throw new NotFoundHttpException('The requested page is not online');
+        }
+        
+        $nodeMenu = $this->nodeMenu;
+        $nodeMenu->setLocale($nodeTranslation->getLang());
+        $nodeMenu->setCurrentNode($node);
+        $nodeMenu->setIncludeOffline($isPreview);
+        
+        $request->attributes->set('_nodeMenu', $nodeMenu);
     }
 }

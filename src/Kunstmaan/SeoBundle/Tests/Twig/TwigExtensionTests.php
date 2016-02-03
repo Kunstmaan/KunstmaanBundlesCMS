@@ -32,8 +32,8 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
     {
         $name = 'OK';
 
-        $this->EntityWithName($name);
-        $this->NoSeoFound();
+        $this->entityWithName($name);
+        $this->noSeoFound();
 
         $object = new SeoTwigExtension($this->emMock);
 
@@ -52,8 +52,8 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
         $nokName = 'NOK';
         $name = 'OK';
 
-        $this->EntityWithName($nokName);
-        $this->SeoFoundWithTitle($name);
+        $this->entityWithName($nokName);
+        $this->seoFoundWithTitle($name);
 
         $object = new SeoTwigExtension($this->emMock);
 
@@ -67,7 +67,7 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
     /**
      * @param string $name
      */
-    protected function EntityWithName($name)
+    protected function entityWithName($name)
     {
         $this->entityMock = $this->getMock('Kunstmaan\NodeBundle\Entity\AbstractPage');
         $this->entityMock->expects($this->once())->method('getTitle')->will($this->returnValue($name));
@@ -76,7 +76,7 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
     /**
      * NoSeoFound
      */
-    protected function NoSeoFound()
+    protected function noSeoFound()
     {
         $this->ensureSeoRepoMock();
         $this->seoRepoMock->expects($this->once())
@@ -110,7 +110,7 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
     /**
      * @param string $title
      */
-    protected function SeoFoundWithTitle($title)
+    protected function seoFoundWithTitle($title)
     {
         $this->ensureSeoRepoMock();
 

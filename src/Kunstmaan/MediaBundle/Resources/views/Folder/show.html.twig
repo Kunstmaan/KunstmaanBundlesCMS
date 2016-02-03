@@ -1,4 +1,4 @@
-{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+{% extends '@KunstmaanAdminList/Default/list.html.twig' %}
 
 
 {% block body %}
@@ -27,13 +27,13 @@
     </div>
 
     <!-- Tree -->
-    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+    <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanMediaBundle_folder_reorder') }}">
         <ul>
             {% set parentIds = foldermanager.getParentIds(folder) %}
             {% set rootFolder = foldermanager.getRootFolderFor(folder) %}
             {% set folders = foldermanager.getFolderHierarchy(rootFolder) %}
             {% for mediaFolder in folders %}
-                {% include 'KunstmaanMediaBundle:Folder:foldertreeview.html.twig' %}
+                {% include '@KunstmaanMedia/Folder/foldertreeview.html.twig' %}
             {% endfor %}
         </ul>
     </nav>
@@ -42,7 +42,7 @@
 
 
 {% block breadcrumb %}
-    {% include 'KunstmaanMediaBundle:Folder:breadcrumbs.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/breadcrumbs.html.twig' %}
 {% endblock %}
 
 
@@ -94,10 +94,12 @@
                     </ul>
                 </div>
                 <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
-                    {{ 'media.folder.addsub.action' |trans }}
+                    <span class="large-screen">{{ 'media.folder.addsub.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.addsub.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
                 <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
-                    {{ 'media.folder.delete.action' |trans }}
+                    <span class="large-screen">{{ 'media.folder.delete.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.delete.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
             {% endblock %}
         </div>
@@ -187,16 +189,35 @@
                         </p>
                     {% endif %}
                 {% else %}
+                    <div class="row list-group">
+                        <div class="col-xs-12">
+                            <div class="btn-group pull-right btn-group-md" role="group">
+                                <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                                    {{ 'media.folder.sortby' | trans }} <i class="fa fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    {% for field in adminlist.configurator.fields %}
+                                        <li>
+                                            <a href="{{ path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')|merge({'orderBy': field.name})|merge({'orderDirection': app.request.get('orderDirection') != 'DESC' ? 'DESC': 'ASC'})) }}">
+                                                {{ field.header }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     {% if adminlist.count > 0 %}
                         <div class="row">
-                            {% for media in folder.media %}
+                            {% for media in adminlist.items %}
                                 {% set handler = mediamanager.getHandler(media) %}
                                 {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                                 {% if imageurl is not empty and media.location == 'local' %}
                                     {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                                        {% set imageurl = imageurl %}
+                                        {% set imageurlretina = imageurl %}
                                     {% else %}
-                                        {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                                        {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
+                                        {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
                                     {% endif %}
                                 {% endif %}
 
@@ -204,7 +225,7 @@
                                     <a class="thumbnail media-thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                         <figure>
                                             {% if imageurl %}
-                                                <img src="{{ imageurl }}" alt="{{ media.name }}" class="media-thumbnail__img">
+                                                <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina }} 2x" alt="{{ media.name }}" class="media-thumbnail__img">
                                             {% else %}
                                                 <i class="fa fa-file-o media-thumbnail__icon"></i>
                                             {% endif %}
@@ -256,8 +277,8 @@
         <!-- TAB - Properties -->
         <div class="tab-pane" id="properties">
 
-            {% form_theme editform 'KunstmaanAdminBundle:Form:fields.html.twig' %}
-            <form action="{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}#properties" method="post" {{ form_enctype(editform) }}>
+            {% form_theme editform '@KunstmaanAdmin/Form/fields.html.twig' %}
+            {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) ~ '#properties'}) }}
                 <fieldset class="panel panel-default form-properties">
                     <div class="panel-body">
                         {{ form_widget(editform) }}
@@ -272,14 +293,14 @@
                         </div>
                     </div>
                 </fieldset>
-            </form>
+            {{ form_end(editform) }}
         </div>
     </div>
 
 
     <!-- Modals -->
-    {% include 'KunstmaanMediaBundle:Folder:addsub-modal.html.twig' %}
-    {% include 'KunstmaanMediaBundle:Folder:delete-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
 
 {% endblock %}
 
@@ -289,6 +310,7 @@
 
     {% javascripts
     "@KunstmaanMediaBundle/Resources/ui/vendor_bower/plupload/js/plupload.full.min.js"
+    "@KunstmaanMediaBundle/Resources/ui/vendor_bower/picturefill/dist/picturefill.min.js"
     "@KunstmaanMediaBundle/Resources/ui/js/_bulk-upload.js"
     "@KunstmaanMediaBundle/Resources/ui/js/_dnd-upload.js"
     "@KunstmaanMediaBundle/Resources/ui/js/app.js"

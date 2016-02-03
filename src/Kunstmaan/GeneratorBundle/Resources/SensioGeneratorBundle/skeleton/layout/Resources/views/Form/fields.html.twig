@@ -22,7 +22,7 @@
 {# Form label #}
 {% block form_label %}
 {% spaceless %}
-    {% if label is not sameas(false) %}
+    {% if label is not same as(false) %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
         {% endif %}
@@ -74,8 +74,8 @@
     <div {{ block('widget_container_attributes') }} class="form-widget--select">
         <i class="icon icon--triangle-down select__icon"></i>
         <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
-            {% if empty_value is not none %}
-                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+            {% if placeholder is not none %}
+                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain) }}</option>
             {% endif %}
             {% if preferred_choices|length > 0 %}
                 {% set options = preferred_choices %}

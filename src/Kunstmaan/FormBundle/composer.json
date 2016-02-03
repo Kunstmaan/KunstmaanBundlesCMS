@@ -14,25 +14,24 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.3",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "ddeboer/data-import-bundle": "0.1.*",
         "gedmo/doctrine-extensions": "2.3.*",
         "symfony/swiftmailer-bundle": "~2.3",
         "sensio/framework-extra-bundle": ">=2.3.0,<4.0.0",
-        "kunstmaan/adminlist-bundle": "~3.0.0",
-        "kunstmaan/node-bundle": "~3.0.0",
-        "kunstmaan/admin-bundle": "~3.0.0",
-        "kunstmaan/pagepart-bundle": "~3.0.0",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2",
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/pagepart-bundle": "~3.2",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\FormBundle": "" }
+        "psr-4": { "Kunstmaan\\FormBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/FormBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

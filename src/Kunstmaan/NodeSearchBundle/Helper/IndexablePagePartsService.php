@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\NodeSearchBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 
 /**
@@ -26,12 +25,12 @@ class IndexablePagePartsService
     /**
      * Returns all indexable pageparts for the specified page and context
      *
-     * @param HasNodeInterface $page
-     * @param string           $context
+     * @param HasPagePartsInterface $page
+     * @param string                $context
      *
      * @return array
      */
-    public function getIndexablePageParts(HasNodeInterface $page, $context = 'main')
+    public function getIndexablePageParts(HasPagePartsInterface $page, $context = 'main')
     {
         $pageparts = $this->em
             ->getRepository('KunstmaanPagePartBundle:PagePartRef')

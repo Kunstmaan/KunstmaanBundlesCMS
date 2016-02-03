@@ -10,8 +10,8 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
+     * @param EntityManager $em The entity manager
+     * @param AclHelper $aclHelper The acl helper
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {

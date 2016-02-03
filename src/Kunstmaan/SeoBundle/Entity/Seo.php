@@ -4,6 +4,7 @@ namespace Kunstmaan\SeoBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\SeoBundle\Form\SeoType;
@@ -22,6 +23,8 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
+     * @Assert\Length(max=55)
+     *
      */
     protected $metaTitle;
 
@@ -29,6 +32,8 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
+     * @Assert\Length(max=155)
+     *
      */
     protected $metaDescription;
 
@@ -42,23 +47,9 @@ class Seo extends AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_keywords", type="string", nullable=true)
-     */
-    protected $metaKeywords;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="meta_robots", type="string", nullable=true)
      */
     protected $metaRobots;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="meta_revised", type="string", nullable=true)
-     */
-    protected $metaRevised;
 
     /**
      * @var string
@@ -111,19 +102,60 @@ class Seo extends AbstractEntity
     protected $refEntityName;
 
     /**
-     * @ORM\Column(type="string", nullable=true, name="linked_in_recommend_link")
-     */
-    protected $linkedInRecommendLink;
-
-    /**
-     * @ORM\Column(type="string", nullable=true, name="linked_in_recommend_product_id")
-     */
-    protected $linkedInRecommendProductID;
-
-    /**
      * @ORM\Column(type="string", nullable=true, name="og_url")
      */
     protected $ogUrl;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true, name="og_article_author")
+     */
+    protected $ogArticleAuthor;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true, name="og_article_publisher")
+     */
+    protected $ogArticlePublisher;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true, name="og_article_section")
+     */
+    protected $ogArticleSection;
+
+    /**
+     * @var string $twitterTitle
+     *
+     * @ORM\Column(name="twitter_title", type="string", length=255, nullable=true)
+     */
+    protected $twitterTitle;
+
+    /**
+     * @var string $twitterTitle
+     *
+     * @ORM\Column(name="twitter_description", type="text", nullable=true)
+     */
+    protected $twitterDescription;
+
+    /**
+     * @var string $twitterTitle
+     *
+     * @ORM\Column(name="twitter_site", type="string", length=255, nullable=true)
+     */
+    protected $twitterSite;
+
+    /**
+     * @var string $twitterTitle
+     *
+     * @ORM\Column(name="twitter_creator", type="string", length=255, nullable=true)
+     */
+    protected $twitterCreator;
+
+    /**
+     * @var Media
+     *
+     * @ORM\ManyToOne(targetEntity="Kunstmaan\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="twitter_image_id", referencedColumnName="id")
+     */
+    protected $twitterImage;
 
     /**
      * @param string $url
@@ -143,46 +175,6 @@ class Seo extends AbstractEntity
     public function getOgUrl()
     {
         return $this->ogUrl;
-    }
-
-    /**
-     * @param string $var
-     *
-     * @return Seo
-     */
-    public function setLinkedInRecommendProductID($var)
-    {
-        $this->linkedInRecommendProductID = $var;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLinkedInRecommendProductID()
-    {
-        return $this->linkedInRecommendProductID;
-    }
-
-    /**
-     * @param string $var
-     *
-     * @return Seo
-     */
-    public function setLinkedInRecommendLink($var)
-    {
-        $this->linkedInRecommendLink = $var;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLinkedInRecommendLink()
-    {
-        return $this->linkedInRecommendLink;
     }
 
     /**
@@ -248,26 +240,6 @@ class Seo extends AbstractEntity
     /**
      * @return string
      */
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
-    }
-
-    /**
-     * @param string $meta
-     *
-     * @return Seo
-     */
-    public function setMetaKeywords($meta)
-    {
-        $this->metaKeywords = $meta;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getMetaRobots()
     {
         return $this->metaRobots;
@@ -281,26 +253,6 @@ class Seo extends AbstractEntity
     public function setMetaRobots($meta)
     {
         $this->metaRobots = $meta;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetaRevised()
-    {
-        return $this->metaRevised;
-    }
-
-    /**
-     * @param string $meta
-     *
-     * @return Seo
-     */
-    public function setMetaRevised($meta)
-    {
-        $this->metaRevised = $meta;
 
         return $this;
     }
@@ -406,6 +358,134 @@ class Seo extends AbstractEntity
     }
 
     /**
+     * @return mixed
+     */
+    public function getOgArticleAuthor()
+    {
+        return $this->ogArticleAuthor;
+    }
+
+    /**
+     * @param mixed $ogArticleAuthor
+     */
+    public function setOgArticleAuthor($ogArticleAuthor)
+    {
+        $this->ogArticleAuthor = $ogArticleAuthor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOgArticlePublisher()
+    {
+        return $this->ogArticlePublisher;
+    }
+
+    /**
+     * @param mixed $ogArticlePublisher
+     */
+    public function setOgArticlePublisher($ogArticlePublisher)
+    {
+        $this->ogArticlePublisher = $ogArticlePublisher;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOgArticleSection()
+    {
+        return $this->ogArticleSection;
+    }
+
+    /**
+     * @param mixed $ogArticleSection
+     */
+    public function setOgArticleSection($ogArticleSection)
+    {
+        $this->ogArticleSection = $ogArticleSection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwitterTitle()
+    {
+        return $this->twitterTitle;
+    }
+
+    /**
+     * @param string $twitterTitle
+     */
+    public function setTwitterTitle($twitterTitle)
+    {
+        $this->twitterTitle = $twitterTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwitterDescription()
+    {
+        return $this->twitterDescription;
+    }
+
+    /**
+     * @param string $twitterDescription
+     */
+    public function setTwitterDescription($twitterDescription)
+    {
+        $this->twitterDescription = $twitterDescription;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwitterSite()
+    {
+        return $this->twitterSite;
+    }
+
+    /**
+     * @param string $twitterSite
+     */
+    public function setTwitterSite($twitterSite)
+    {
+        $this->twitterSite = $twitterSite;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwitterCreator()
+    {
+        return $this->twitterCreator;
+    }
+
+    /**
+     * @param string $twitterCreator
+     */
+    public function setTwitterCreator($twitterCreator)
+    {
+        $this->twitterCreator = $twitterCreator;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getTwitterImage()
+    {
+        return $this->twitterImage;
+    }
+
+    /**
+     * @param Media $twitterImage
+     */
+    public function setTwitterImage($twitterImage)
+    {
+        $this->twitterImage = $twitterImage;
+    }
+
+    /**
      * Get refId
      *
      * @return int
@@ -483,5 +563,4 @@ class Seo extends AbstractEntity
     {
         return new SeoType();
     }
-
 }

@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
+        {% if pagerfanta is defined %}
             {% set searchResults = pagerfanta.currentPageResults() %}
             {% set facets = pagerfanta.getAdapter().getFacets() %}
             {% if facets is not empty %}
@@ -23,6 +24,7 @@
                     </ul>
                 {% endif %}
             {% endif %}
+        {% endif %}
         </div>
 
         <div class="col-md-9 col--padded">
@@ -56,13 +58,15 @@
                             {% endif %}
                         </p>
                         <nav role="navigation" class="breadcrumb">
-                            {% for node_id in searchresult['_source']['ancestors']|reverse %}
-                                {% set nt = get_node_trans_by_node_id(node_id, app.request.locale) %}
-                                {% if nt %}
-                                    <a href="{{ path('_slug', { 'url': nt.url }) }}" class="breadcrumb__item">{{ nt.title }}</a>
-                                    <i class="icon icon--arrow-right breadcrumb__icon"></i>
-                                {% endif %}
-                            {% endfor %}
+                            {% if searchresult['_source']['ancestors'] is defined %}
+                                {% for node_id in searchresult['_source']['ancestors']|reverse %}
+                                    {% set nt = get_node_trans_by_node_id(node_id, app.request.locale) %}
+                                    {% if nt %}
+                                        <a href="{{ path('_slug', { 'url': nt.url }) }}" class="breadcrumb__item">{{ nt.title }}</a>
+                                        <i class="icon icon--arrow-right breadcrumb__icon"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                             <a href="{{ path('_slug', { 'url': searchresult['_source']['slug'] }) }}" class="breadcrumb__item breadcrumb__item--current search-results__breadcrumb__item--current">{{ searchresult['_source']['title'] }}</a>
                         </nav>
                     {% endfor %}

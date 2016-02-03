@@ -1,5 +1,6 @@
 {% set items = get_submenu_items(page, app.request.locale) %}
 {% if items|length > 0 %}
+<div class="admin-region">
     <nav role="navigation" class="submenu">
         <div class="row">
             {% for item in items %}
@@ -24,4 +25,5 @@
             {% endfor %}
         </div>
     </nav>
+</div>
 {% endif %}

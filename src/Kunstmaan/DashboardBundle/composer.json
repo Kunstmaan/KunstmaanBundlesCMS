@@ -14,20 +14,17 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/symfony": "~2.3",
-        "doctrine/orm": "~2.2,>=2.2.3",
+        "symfony/symfony": "~2.6",
+        "doctrine/orm": "^2.2.3",
         "alchemy/google-plus-api-client": "~0.6.5"
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": {
-            "Kunstmaan\\DashboardBundle": ""
-        }
+        "psr-4": { "Kunstmaan\\DashboardBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/DashboardBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

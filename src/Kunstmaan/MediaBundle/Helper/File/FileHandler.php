@@ -11,6 +11,7 @@ use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 /**
  * FileHandler
@@ -45,6 +46,11 @@ class FileHandler extends AbstractMediaHandler
     private $blacklistedExtensions = array();
 
     /**
+     * @var Slugifier
+     */
+    private $slugifier;
+
+    /**
      * Constructor
      * @param int $priority
      * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
@@ -53,6 +59,14 @@ class FileHandler extends AbstractMediaHandler
     {
         parent::__construct($priority);
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
+    }
+
+    /**
+     * @param Slugifier $slugifier
+     */
+    public function setSlugifier(Slugifier $slugifier)
+    {
+        $this->slugifier = $slugifier;
     }
 
     /**
@@ -152,7 +166,8 @@ class FileHandler extends AbstractMediaHandler
             $media->setContent($file);
         }
         if ($content instanceof UploadedFile) {
-            $media->setOriginalFilename($content->getClientOriginalName());
+            $pathInfo = pathinfo($content->getClientOriginalName());
+            $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
             $name = $media->getName();
             if (empty($name)) {
                 $media->setName($media->getOriginalFilename());
@@ -213,12 +228,17 @@ class FileHandler extends AbstractMediaHandler
      */
     private function getFilePath(Media $media)
     {
-        $filename = $media->getOriginalFilename();
-        $filename = str_replace(array('/', '\\'), '', $filename);
+        $filename  = $media->getOriginalFilename();
+        $filename  = str_replace(array('/', '\\', '%'), '', $filename);
+        $slugifier = new Slugifier();
 
         if (!empty($this->blacklistedExtensions)) {
             $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
         }
+
+        $parts    = pathinfo($filename);
+        $filename = $slugifier->slugify($parts['filename']);
+        $filename .= '.'.strtolower($parts['extension']);
 
         return sprintf(
             '%s/%s',

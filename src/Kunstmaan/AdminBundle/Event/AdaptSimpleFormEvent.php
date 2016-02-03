@@ -20,7 +20,7 @@ class AdaptSimpleFormEvent extends Event
     protected $request;
 
     /**
-     * @var AbstractType
+     * @var string
      */
     protected $formType;
 
@@ -35,15 +35,21 @@ class AdaptSimpleFormEvent extends Event
     protected $data;
 
     /**
+     * @var array
+     */
+    protected $options = array();
+
+    /**
      * @param Request $request
-     * @param AbstractType $formType
+     * @param string $formType
      * @param $data
      */
-    public function __construct(Request $request , AbstractType $formType , $data)
+    public function __construct(Request $request, $formType, $data, $options = array())
     {
         $this->request = $request;
         $this->formType = $formType;
         $this->data = $data;
+        $this->options = $options;
     }
 
     /**
@@ -79,7 +85,7 @@ class AdaptSimpleFormEvent extends Event
     }
 
     /**
-     * @return AbstractType
+     * @return string
      */
     public function getFormType()
     {
@@ -87,9 +93,9 @@ class AdaptSimpleFormEvent extends Event
     }
 
     /**
-     * @param AbstractType $type
+     * @param string $type
      */
-    public function setFormType(AbstractType $type)
+    public function setFormType($type)
     {
         $this->formType = $type;
     }
@@ -108,5 +114,21 @@ class AdaptSimpleFormEvent extends Event
     public function setData($data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param $options
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
     }
 }

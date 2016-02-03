@@ -52,7 +52,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuItem;
         } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
-            if ($this->container->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            if ($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
                 if ($this->container->getParameter('version_checker.enabled')) {
                     $menuItem = new MenuItem($menu);
                     $menuItem

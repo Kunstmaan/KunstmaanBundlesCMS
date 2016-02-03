@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\LeadGenerationBundle\AdminList\PopupAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class PopupsAdminListController extends AdminListController
 {
@@ -27,7 +27,7 @@ class PopupsAdminListController extends AdminListController
             $this->configurator = new PopupAdminListConfigurator($this->getEntityManager());
 
             if ($listAction) {
-                $create_route = function ($item) {
+                $create_route = function (EntityInterface $item) {
                     return array(
                         'path' => 'kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail',
                         'params' => array('popup' => $item->getId())
@@ -92,6 +92,6 @@ class PopupsAdminListController extends AdminListController
     {
         $type = $request->get('type');
 
-        return parent::doAddAction($this->getAdminListConfigurator(), $type , $request);
+        return parent::doAddAction($this->getAdminListConfigurator(), $type, $request);
     }
 }

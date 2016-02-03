@@ -2,38 +2,109 @@
 {% if seo.getMetaDescription() %}
     <meta name="description" content="{{ seo.getMetaDescription() }}">
 {% endif %}
-{% if seo.getMetaKeywords() %}
-    <meta name="keywords" content="{{ seo.getMetaKeywords() }}">
-{% endif %}
 {% if seo.getMetaAuthor() %}
     <meta name="author" content="{{ seo.getMetaAuthor() }}">
 {% endif %}
 {% if seo.getMetaRobots() %}
     <meta name="robots" content="{{ seo.getMetaRobots() }}">
+{% else %}
+    <meta name="robots" content="all">
 {% endif %}
-{% if seo.getMetaRevised() %}
-    <meta name="revised" content="{{ seo.getMetaRevised() }}">
-{% endif %}
+
+<!-- Open Graph -->
 {% if seo.getOgType() %}
     <meta property="og:type" content="{{ seo.getOgType() }}">
 {% endif %}
+{% if seo.ogArticleAuthor %}
+    <meta property="article:author" content="{{ seo.ogArticleAuthor }}">
+{% endif %}
+{% if seo.ogArticlePublisher %}
+    <meta property="article:publisher" content="{{ seo.ogArticlePublisher }}">
+{% endif %}
+{% if seo.ogArticleSection %}
+    <meta property="article:section" content="{{ seo.ogArticleSection }}">
+{% endif %}
 {% if seo.getOgTitle() %}
     <meta property="og:title" content="{{ seo.getOgTitle() }}">
+{% else %}
+    <meta property="og:title" content="{{ seo.metaTitle }}">
 {% endif %}
 {% if seo.getOgDescription() %}
     <meta property="og:description" content="{{ seo.getOgDescription() }}">
 {% endif %}
-{% if seo.getOgUrl() %}
-   <meta property="og:url" content="{{ seo.getOgUrl() }}">
+{% if app.request.locale matches '{^[a-z]{2}_[A-Z]{2}$}' %}
+    <meta property="og:locale" content="{{ app.request.locale }}">
+{% endif %}
+    <meta property="og:site_name" content="{{ websitetitle }}">
+{% if seo.getOgUrl() and get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) %}
+    <meta property="og:url" content="{{ get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) }}">
 {% else %}
-    {% if currentNode %}
-        <meta property="og:url" content="{{ url('_slug', { 'url': currentNode.slug, '_locale': app.request.locale }) }}"/>
-    {% endif %}
+{% if currentNode %}
+    <meta property="og:url" content="{{ url('_slug', { 'url': currentNode.slug, '_locale': app.request.locale }) }}"/>
+{% endif %}
 {% endif %}
 {% if seo.getOgImage() is defined and seo.getOgImage() is not null %}
+    {% if seo.ogImage.contentType == "remote/video" %}
+        {% if seo.ogImage.metaData.type == "youtube" %}
+            {% set videoUrl = "youtube.com/embed/"~seo.ogImage.metaData.code %}
+        {% elseif seo.ogImage.metaData.type == "dailymotion" %}
+            {% set videoUrl = "www.dailymotion.com/embed/video/"~seo.ogImage.metaData.code %}
+        {% else %}
+            {% set videoUrl = "player.vimeo.com/video/"~seo.ogImage.metaData.code %}
+        {% endif %}
+    <meta property="og:video" content="http://{{ videoUrl }}">
+    <meta property="og:video:secure_url" content="https://{{ videoUrl }}">
+    <meta property="og:video:width" content="640">
+    <meta property="og:video:height" content="360">
+    {% else %}
     <meta property="og:image" content="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}">
-    <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}" / >
+    <meta property="og:image:type" content="{{ seo.ogImage.contentType }}">
+    {% if seo.ogImage.metaData.original_height is defined %}<meta property="og:image:height" content="{{ seo.ogImage.metaData.original_height }}">{% endif %}
+    {% if seo.ogImage.metaData.original_width is defined %}<meta property="og:image:width" content="{{ seo.ogImage.metaData.original_width }}">{% endif %}
+    <link rel="image_src" href="{{ app.request.schemeandhttphost ~ asset(seo.getOgImage().getUrl()) }}" />
+    {% endif %}
 {% endif %}
+
+{# Make sure twitter site is set because otherwise twitter cards are not possible #}
+{% if seo.twitterSite %}
+<!-- Twitter Cards -->
+        <meta name="twitter:card" content="{% if seo.twitterImage.contentType == "remote/video" %}player{% else %}summary{% if seo.twitterImage %}_large_image{% endif %}{% endif %}" />
+    {% if seo.twitterSite %}
+        <meta name="twitter:site" content="{{ seo.twitterSite }}" />
+    {% endif %}
+    {% if seo.twitterCreator %}
+        <meta name="twitter:creator" content="{{ seo.twitterCreator }}" />
+    {% endif %}
+    {% if seo.twitterTitle %}
+        <meta name="twitter:title" content="{{ seo.twitterTitle }}" />
+    {% else %}
+        <meta name="twitter:title" content="{{ seo.metaTitle }}" />
+    {% endif %}
+    {% if seo.twitterDescription %}
+        <meta name="twitter:description" content="{{ seo.twitterDescription }}" />
+    {% else %}
+        <meta name="twitter:description" content="{{ seo.getMetaDescription() }}" />
+    {% endif %}
+    {# MAKE THE CARD 'SPECIAL' #}
+    {% if seo.twitterImage %}
+        {% if seo.twitterImage.contentType == "remote/video" %}
+            {% if seo.twitterImage.metaData.type == "youtube" %}
+                {% set videoUrl = "https://youtube.com/embed/"~seo.twitterImage.metaData.code %}
+            {% elseif seo.twitterImage.metaData.type == "dailymotion" %}
+                {% set videoUrl = "https://www.dailymotion.com/embed/video/"~seo.twitterImage.metaData.code %}
+            {% else %}
+                {% set videoUrl = "https://player.vimeo.com/video/"~seo.twitterImage.metaData.code %}
+            {% endif %}
+        <meta name="twitter:player" content="{{ videoUrl }}" />
+        <meta name="twitter:player:width" content="960">
+        <meta name="twitter:player:height" content="540">
+        <meta name="twitter:image:src" content="{{ app.request.schemeandhttphost ~ asset(seo.twitterImage.metaData.thumbnail_url) }}" />
+        {% else %}
+        <meta name="twitter:image:src" content="{{ app.request.schemeandhttphost ~ asset(seo.twitterImage.url) }}" />
+        {% endif %}
+    {% endif %}
+{% endif %}
+
 {% if seo.getExtraMetadata() %}
     {{ seo.getExtraMetadata() | raw }}
 {% endif %}

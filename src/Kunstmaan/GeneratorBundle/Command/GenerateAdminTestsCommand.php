@@ -49,7 +49,7 @@ EOT
         GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
 
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
-        $bundle = strtr($namespace, array('\\' => ''));
+        $bundle = strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
 
         $bundle = $this
             ->getApplication()

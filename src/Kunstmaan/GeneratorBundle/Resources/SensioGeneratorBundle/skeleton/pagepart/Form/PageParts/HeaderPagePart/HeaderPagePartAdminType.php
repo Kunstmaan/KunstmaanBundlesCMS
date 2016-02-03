@@ -3,9 +3,11 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use {{ namespace }}\Entity\PageParts\{{ pagepart }};
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * {{ pagepart }}AdminType
@@ -29,12 +31,13 @@ class {{ pagepart }}AdminType extends AbstractType
 	$names = {{ pagepart }}::$supportedHeaders;
 	array_walk($names, function(&$item) { $item = 'Header ' . $item; });
 
-	$builder->add('niv', 'choice', array(
+	$builder->add('niv', ChoiceType::class, array(
 	    'label' => 'pagepart.header.type',
-	    'choices' => array_combine({{ pagepart }}::$supportedHeaders, $names),
-	    'required' => true
+	    'choices' => array_combine($names, {{ pagepart }}::$supportedHeaders),
+	    'required' => true,
+		'choices_as_values' => true
 	));
-	$builder->add('title', 'text', array(
+	$builder->add('title', TextType::class, array(
 	    'label' => 'pagepart.header.title',
 	    'required' => true
 	));
@@ -45,7 +48,7 @@ class {{ pagepart }}AdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return '{{ pagepart|lower }}type';
     }
@@ -53,9 +56,9 @@ class {{ pagepart }}AdminType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'

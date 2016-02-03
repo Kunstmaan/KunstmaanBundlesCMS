@@ -12,6 +12,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\NodeBundle\Helper\HiddenFromNavInterface;
 
 /**
  * NodeRepository
@@ -22,13 +23,24 @@ class NodeRepository extends NestedTreeRepository
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
      * @param AclHelper $aclHelper            The acl helper
-     * @param bool      $includeHiddenFromNav include the hiddenfromnav nodes or not
+     * @param bool      $includeHiddenFromNav include the hiddenfromnav nodes
+     *                                        or not
      *
      * @return Node[]
      */
-    public function getTopNodes($lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
-    {
-        $result = $this->getChildNodes(null, $lang, $permission, $aclHelper, $includeHiddenFromNav);
+    public function getTopNodes(
+        $lang,
+        $permission,
+        AclHelper $aclHelper,
+        $includeHiddenFromNav = false
+    ) {
+        $result = $this->getChildNodes(
+            null,
+            $lang,
+            $permission,
+            $aclHelper,
+            $includeHiddenFromNav
+        );
 
         return $result;
     }
@@ -38,23 +50,43 @@ class NodeRepository extends NestedTreeRepository
      * @param string    $lang                 The locale
      * @param string    $permission           The permission (read, write, ...)
      * @param AclHelper $aclHelper            The acl helper
-     * @param bool      $includeHiddenFromNav Include nodes hidden from navigation or not
+     * @param bool      $includeHiddenFromNav Include nodes hidden from
+     *                                        navigation or not
+     * @param Node      $rootNode             Root node of the current tree
      *
      * @return Node[]
      */
-    public function getChildNodes($parentId, $lang, $permission, AclHelper $aclHelper, $includeHiddenFromNav = false)
-    {
+    public function getChildNodes(
+        $parentId,
+        $lang,
+        $permission,
+        AclHelper $aclHelper,
+        $includeHiddenFromNav = false,
+        $includeHiddenWithInternalName = false,
+        $rootNode = null
+    ) {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 't', 'v')
             ->leftJoin('b.nodeTranslations', 't', 'WITH', 't.lang = :lang')
-            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->leftJoin(
+                't.publicNodeVersion',
+                'v',
+                'WITH',
+                't.publicNodeVersion = v.id'
+            )
             ->where('b.deleted = 0')
             ->setParameter('lang', $lang)
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
 
         if (!$includeHiddenFromNav) {
-            $qb->andWhere('b.hiddenFromNav != true');
+            if ($includeHiddenWithInternalName) {
+                $qb->andWhere(
+                    '(b.hiddenFromNav != true OR b.internalName IS NOT NULL)'
+                );
+            } else {
+                $qb->andWhere('b.hiddenFromNav != true');
+            }
         }
 
         if (is_null($parentId)) {
@@ -63,8 +95,17 @@ class NodeRepository extends NestedTreeRepository
             $qb->andWhere('b.parent = :parent')
                 ->setParameter('parent', $parentId);
         }
+        if ($rootNode) {
+            $qb->andWhere('b.lft >= :left')
+                ->andWhere('b.rgt <= :right')
+                ->setParameter('left', $rootNode->getLeft())
+                ->setParameter('right', $rootNode->getRight());
+        }
 
-        $query = $aclHelper->apply($qb, new PermissionDefinition(array($permission)));
+        $query = $aclHelper->apply(
+            $qb,
+            new PermissionDefinition(array($permission))
+        );
 
         return $query->getResult();
     }
@@ -77,7 +118,9 @@ class NodeRepository extends NestedTreeRepository
     public function getNodeFor(HasNodeInterface $hasNode)
     {
         /* @var NodeVersion $nodeVersion */
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor(
+        $nodeVersion = $this->getEntityManager()->getRepository(
+            'KunstmaanNodeBundle:NodeVersion'
+        )->getNodeVersionFor(
             $hasNode
         );
         if (!is_null($nodeVersion)) {
@@ -100,7 +143,9 @@ class NodeRepository extends NestedTreeRepository
     public function getNodeForIdAndEntityname($id, $entityName)
     {
         /* @var NodeVersion $nodeVersion */
-        $nodeVersion = $this->getEntityManager()->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(
+        $nodeVersion = $this->getEntityManager()->getRepository(
+            'KunstmaanNodeBundle:NodeVersion'
+        )->findOneBy(
             array('refId' => $id, 'refEntityName' => $entityName)
         );
         if ($nodeVersion) {
@@ -122,7 +167,13 @@ class NodeRepository extends NestedTreeRepository
         $result    = null;
         foreach ($slugParts as $slugPart) {
             if ($parentNode) {
-                if ($r = $this->findOneBy(array('slug' => $slugPart, 'parent.parent' => $parentNode->getId()))) {
+                if ($r = $this->findOneBy(
+                    array(
+                        'slug'          => $slugPart,
+                        'parent.parent' => $parentNode->getId()
+                    )
+                )
+                ) {
                     $result = $r;
                 }
             } else {
@@ -145,57 +196,89 @@ class NodeRepository extends NestedTreeRepository
      *
      * @return Node
      */
-    public function createNodeFor(HasNodeInterface $hasNode, $lang, BaseUser $owner, $internalName = null)
-    {
+    public function createNodeFor(
+        HasNodeInterface $hasNode,
+        $lang,
+        BaseUser $owner,
+        $internalName = null
+    ) {
         $em   = $this->getEntityManager();
         $node = new Node();
         $node->setRef($hasNode);
         if (!$hasNode->getId() > 0) {
-            throw new \InvalidArgumentException("the entity of class " .
-                $node->getRefEntityName() . " has no id, maybe you forgot to flush first");
+            throw new \InvalidArgumentException(
+                "the entity of class ".
+                $node->getRefEntityName(
+                )." has no id, maybe you forgot to flush first"
+            );
         }
         $node->setDeleted(false);
         $node->setInternalName($internalName);
         $parent = $hasNode->getParent();
         if ($parent) {
             /* @var NodeVersion $parentNodeVersion */
-            $parentNodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')->findOneBy(
-                array('refId' => $parent->getId(), 'refEntityName' => ClassLookup::getClass($parent))
+            $parentNodeVersion = $em->getRepository(
+                'KunstmaanNodeBundle:NodeVersion'
+            )->findOneBy(
+                array(
+                    'refId'         => $parent->getId(),
+                    'refEntityName' => ClassLookup::getClass($parent)
+                )
             );
             if ($parentNodeVersion) {
-                $node->setParent($parentNodeVersion->getNodeTranslation()->getNode());
+                $node->setParent(
+                    $parentNodeVersion->getNodeTranslation()->getNode()
+                );
             }
+        }
+        if ($hasNode instanceof HiddenFromNavInterface) {
+            $node->setHiddenFromNav($hasNode->isHiddenFromNav());
         }
         $em->persist($node);
         $em->flush();
         $em->refresh($node);
-        $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->createNodeTranslationFor(
-            $hasNode,
-            $lang,
-            $node,
-            $owner
-        );
+        $em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+            ->createNodeTranslationFor(
+                $hasNode,
+                $lang,
+                $node,
+                $owner
+            );
 
         return $node;
     }
 
     /**
      * Get all the information needed to build a menu tree with one query.
-     * We only fetch the fields we need, instead of fetching full objects to limit the memory usage.
+     * We only fetch the fields we need, instead of fetching full objects to
+     * limit the memory usage.
      *
      * @param string          $lang                 The locale
-     * @param string          $permission           The permission (read, write, ...)
+     * @param string          $permission           The permission (read,
+     *                                              write, ...)
      * @param AclNativeHelper $aclNativeHelper      The acl helper
-     * @param bool            $includeHiddenFromNav Include nodes hidden from navigation or not
+     * @param bool            $includeHiddenFromNav Include nodes hidden from
+     *                                              navigation or not
+     * @param Node            $rootNode             The root node of the
+     *                                              current site
      *
      * @return array
      */
-    public function getAllMenuNodes($lang, $permission, AclNativeHelper $aclNativeHelper, $includeHiddenFromNav = false)
-    {
-        $connection = $this->_em->getConnection();
-        $qb = $connection->createQueryBuilder();
+    public function getAllMenuNodes(
+        $lang,
+        $permission,
+        AclNativeHelper $aclNativeHelper,
+        $includeHiddenFromNav = false,
+        Node $rootNode = null
+    ) {
+        $connection           = $this->_em->getConnection();
+        $qb                   = $connection->createQueryBuilder();
         $databasePlatformName = $connection->getDatabasePlatform()->getName();
-        $createIfStatement = function ($expression, $trueValue, $falseValue) use ($databasePlatformName) {
+        $createIfStatement    = function (
+            $expression,
+            $trueValue,
+            $falseValue
+        ) use ($databasePlatformName) {
             switch ($databasePlatformName) {
                 case 'sqlite':
                     $statement = 'CASE WHEN %s THEN %s ELSE %s END';
@@ -209,7 +292,7 @@ class NodeRepository extends NestedTreeRepository
         };
 
         $sql = <<<SQL
-n.id, n.parent_id AS parent, t.url,
+n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
 {$createIfStatement('t.weight IS NULL', 'v.weight', 't.weight')} AS weight,
 {$createIfStatement('t.title IS NULL', 'v.title', 't.title')} AS title,
 {$createIfStatement('t.online IS NULL', '0', 't.online')} AS online,
@@ -220,12 +303,17 @@ SQL;
 
         $qb->select($sql)
             ->from('kuma_nodes', 'n')
-            ->leftJoin('n', 'kuma_node_translations', 't', '(t.node_id = n.id AND t.lang = ?)')
+            ->leftJoin(
+                'n',
+                'kuma_node_translations',
+                't',
+                '(t.node_id = n.id AND t.lang = :lang)'
+            )
             ->leftJoin(
                 'n',
                 '(SELECT lang, title, weight, node_id, url FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)',
                 'v',
-                '(v.node_id = n.id AND v.lang <> ?)'
+                '(v.node_id = n.id AND v.lang <> :lang)'
             )
             ->where('n.deleted = 0')
             ->addGroupBy('n.id')
@@ -236,14 +324,22 @@ SQL;
             $qb->andWhere('n.hidden_from_nav <> 0');
         }
 
+        if (!is_null($rootNode)) {
+            $qb->andWhere('n.lft >= :left')
+                ->andWhere('n.rgt <= :right');
+        }
+
         $permissionDef = new PermissionDefinition(array($permission));
         $permissionDef->setEntity('Kunstmaan\NodeBundle\Entity\Node');
         $permissionDef->setAlias('n');
         $qb = $aclNativeHelper->apply($qb, $permissionDef);
 
         $stmt = $this->_em->getConnection()->prepare($qb->getSQL());
-        $stmt->bindValue(1, $lang);
-        $stmt->bindValue(2, $lang);
+        $stmt->bindValue(':lang', $lang);
+        if (!is_null($rootNode)) {
+            $stmt->bindValue(':left', $rootNode->getLeft());
+            $stmt->bindValue(':right', $rootNode->getRight());
+        }
         $stmt->execute();
 
         return $stmt->fetchAll();
@@ -268,7 +364,12 @@ SQL;
         // Directly hydrate the nodeTranslation and nodeVersion
         $qb->select('node', 't', 'v')
             ->innerJoin('node.nodeTranslations', 't')
-            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->leftJoin(
+                't.publicNodeVersion',
+                'v',
+                'WITH',
+                't.publicNodeVersion = v.id'
+            )
             ->where('node.deleted = 0');
 
         if ($lang) {
@@ -289,6 +390,49 @@ SQL;
     }
 
     /**
+     * Get the root node of a given node.
+     *
+     * @param Node   $node
+     * @param string $lang
+     *
+     * @return Node
+     */
+    public function getRootNodeFor(Node $node = null, $lang = null)
+    {
+        if (is_null($node)) {
+            return null;
+        }
+
+        $qb = $this->createQueryBuilder('node');
+
+        // Directly hydrate the nodeTranslation and nodeVersion
+        $qb->select('node', 't', 'v')
+            ->innerJoin('node.nodeTranslations', 't')
+            ->leftJoin(
+                't.publicNodeVersion',
+                'v',
+                'WITH',
+                't.publicNodeVersion = v.id'
+            )
+            ->where('node.deleted = 0')
+            ->andWhere('node.parent IS NULL');
+
+        if ($lang) {
+            $qb->andWhere('t.lang = :lang')
+                ->setParameter('lang', $lang);
+        }
+
+        $qb->andWhere(
+            $qb->expr()->andX(
+                $qb->expr()->lte('node.lft', $node->getLeft()),
+                $qb->expr()->gte('node.rgt', $node->getRight())
+            )
+        );
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * @return Node[]
      */
     public function getAllTopNodes()
@@ -296,7 +440,12 @@ SQL;
         $qb = $this->createQueryBuilder('b')
             ->select('b', 't', 'v')
             ->leftJoin('b.nodeTranslations', 't')
-            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->leftJoin(
+                't.publicNodeVersion',
+                'v',
+                'WITH',
+                't.publicNodeVersion = v.id'
+            )
             ->where('b.deleted = 0')
             ->andWhere('b.parent IS NULL');
 
@@ -315,12 +464,21 @@ SQL;
      *
      * @return Node[]
      */
-    public function getNodesByInternalName($internalName, $lang, $parentId = false, $includeOffline = false)
-    {
+    public function getNodesByInternalName(
+        $internalName,
+        $lang,
+        $parentId = false,
+        $includeOffline = false
+    ) {
         $qb = $this->createQueryBuilder('n')
             ->select('n', 't', 'v')
             ->innerJoin('n.nodeTranslations', 't')
-            ->leftJoin('t.publicNodeVersion', 'v', 'WITH', 't.publicNodeVersion = v.id')
+            ->leftJoin(
+                't.publicNodeVersion',
+                'v',
+                'WITH',
+                't.publicNodeVersion = v.id'
+            )
             ->where('n.deleted = 0')
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName)
@@ -345,5 +503,23 @@ SQL;
         $query = $qb->getQuery();
 
         return $query->getResult();
+    }
+
+    /**
+     * Get a single node by internal name.
+     *
+     * @param string $internalName The internal name of the node
+     *
+     * @return Node
+     */
+    public function getNodeByInternalName($internalName)
+    {
+        $qb = $this->createQueryBuilder('n')
+            ->select('n')
+            ->where('n.deleted = 0')
+            ->andWhere('n.internalName = :internalName')
+            ->setParameter('internalName', $internalName);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

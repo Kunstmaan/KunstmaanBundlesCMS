@@ -4,11 +4,9 @@ namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
-
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
@@ -26,9 +24,9 @@ class AclNativeHelper
     private $em = null;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    private $securityContext = null;
+    private $tokenStorage = null;
 
     /**
      * @var RoleHierarchyInterface
@@ -39,13 +37,13 @@ class AclNativeHelper
      * Constructor.
      *
      * @param EntityManager            $em The entity manager
-     * @param SecurityContextInterface $sc The security context
+     * @param TokenStorageInterface    $tokenStorage The security context
      * @param RoleHierarchyInterface   $rh The role hierarchies
      */
-    public function __construct(EntityManager $em, SecurityContextInterface $sc, RoleHierarchyInterface $rh)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
     {
         $this->em              = $em;
-        $this->securityContext = $sc;
+        $this->tokenStorage    = $tokenStorage;
         $this->roleHierarchy   = $rh;
     }
 
@@ -78,7 +76,7 @@ class AclNativeHelper
         $mask = $builder->get();
 
         /* @var $token TokenInterface */
-        $token     = $this->securityContext->getToken();
+        $token     = $this->tokenStorage->getToken();
         $userRoles = array();
         if (!is_null($token)) {
             $user      = $token->getUser();
@@ -127,10 +125,10 @@ SELECTQUERY;
     }
 
     /**
-     * @return null|SecurityContextInterface
+     * @return null|TokenStorageInterface
      */
-    public function getSecurityContext()
+    public function getTokenStorage()
     {
-        return $this->securityContext;
+        return $this->tokenStorage;
     }
 }

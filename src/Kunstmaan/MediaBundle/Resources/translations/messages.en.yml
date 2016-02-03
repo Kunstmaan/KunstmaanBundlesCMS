@@ -19,6 +19,8 @@ media:
     propertiestab:
       title: Properties
     title: Media
+    add:
+      action: Add media
     edit:
       action: Edit
     download:
@@ -36,6 +38,7 @@ media:
   folder:
     addsub:
       action: Add subfolder
+      action_short: Add
       modal:
         title: Add subfolder
         save: Add
@@ -43,6 +46,7 @@ media:
       no: No subfolders yet.
     delete:
       action: Delete this folder
+      action_short: Delete
       modal:
         title: Delete folder
         text: Are you sure you want to delete "%folder%"?
@@ -51,6 +55,7 @@ media:
       title: Content
     propertiestab:
       title: Properties
+    sortby: Sort by
 
   bulkupload:
     upload: Upload
@@ -86,3 +91,5 @@ media:
   widget:
     choose: Choose
     delete: Delete
+    media_chooser: Media-chooser
+    icon_chooser: Icon-chooser

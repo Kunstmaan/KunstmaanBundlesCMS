@@ -5,6 +5,7 @@
     * JSON needs to be enabled
     * ctype needs to be enabled
     * curl needs to be enabled
+    * pcntl need to be enabled
     * imagick and gd needs to be enabled (if you wish to use the KunstmaanMediaBundle)
     * memcached needs to be enabled
     * you need to have the PHP-XML module installed

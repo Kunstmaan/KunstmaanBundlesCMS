@@ -102,7 +102,13 @@ class RemoteVideoHandler extends AbstractMediaHandler
         //update thumbnail
         switch ($video->getType()) {
             case 'youtube':
-                $video->setThumbnailUrl('http://img.youtube.com/vi/' . $code . '/0.jpg');
+                try {
+                    if (fopen('http://img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'r') === false) {
+                        $video->setThumbnailUrl('http://img.youtube.com/vi/'.$code.'/0.jpg');
+                    } else {
+                        $video->setThumbnailUrl('http://img.youtube.com/vi/'.$code.'/maxresdefault.jpg');
+                    }
+                } catch (\Exception $e) {}
                 break;
             case 'vimeo':
                 try {
@@ -197,6 +203,16 @@ class RemoteVideoHandler extends AbstractMediaHandler
             }
             $parsedUrl = parse_url($data);
             switch ($parsedUrl['host']) {
+                case 'youtu.be':
+                    $code = substr($parsedUrl['path'], 1); // remove slash
+                    $result = new Media();
+                    $video = new RemoteVideoHelper($result);
+                    $video->setType('youtube');
+                    $video->setCode($code);
+                    $result = $video->getMedia();
+                    $result->setName('Youtube ' . $code);
+                    break;
+
                 case 'www.youtube.com':
                 case 'youtube.com':
                     parse_str($parsedUrl['query'], $queryFields);

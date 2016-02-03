@@ -1,8 +1,10 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -14,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TabPane
 {
-
     /**
      * @var string
      */
@@ -68,7 +69,7 @@ class TabPane
      */
     public function buildForm()
     {
-        $builder = $this->formFactory->createBuilder('form', null, array('cascade_validation'=>true));
+        $builder = $this->formFactory->createBuilder(FormType::class, null);
 
         foreach ($this->tabs as $tab) {
             $tab->buildForm($builder);
@@ -84,7 +85,7 @@ class TabPane
      */
     public function bindRequest(Request $request)
     {
-        $this->form->bind($request);
+        $this->form->handleRequest($request);
 
         foreach ($this->tabs as $tab) {
             $tab->bindRequest($request);

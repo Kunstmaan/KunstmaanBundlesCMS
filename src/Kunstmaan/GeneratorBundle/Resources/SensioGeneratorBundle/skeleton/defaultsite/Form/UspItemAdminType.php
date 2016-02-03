@@ -3,8 +3,13 @@
 namespace {{ namespace }}\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class UspItemAdminType extends AbstractType
 {
@@ -22,19 +27,19 @@ class UspItemAdminType extends AbstractType
     {
 	parent::buildForm($builder, $options);
 
-	$builder->add('icon', 'media', array(
+	$builder->add('icon', MediaType::class, array(
 	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => true
 	));
-	$builder->add('title', 'text', array(
+	$builder->add('title', TextType::class, array(
 	    'required' => true
 	));
-	$builder->add('description', 'textarea', array(
+	$builder->add('description', TextareaType::class, array(
 	    'attr' => array('rows' => 4, 'cols' => 600),
 	    'required' => false
 	));
-	$builder->add('weight', 'hidden', array(
+	$builder->add('weight', HiddenType::class, array(
 	    'required' => true,
 	));
     }
@@ -42,9 +47,9 @@ class UspItemAdminType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
 	$resolver->setDefaults(array(
 	    'data_class' => '\{{ namespace }}\Entity\UspItem'
@@ -56,7 +61,7 @@ class UspItemAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
 	return 'uspitemtype';
     }

@@ -13,17 +13,17 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.5,<2.7",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "doctrine/orm": "~2.2,>=2.2.3",
         "friendsofsymfony/user-bundle": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "~2.0",
         "sensio/framework-extra-bundle": "*",
-        "kunstmaan/utilities-bundle": "~3.0.0",
-        "guzzle/guzzle": "3.8.*"
+        "kunstmaan/utilities-bundle": "~3.2",
+        "guzzle/guzzle": "~3.9"
     },
     "suggests": {
-        "kunstmaan/user-management-bundle": "~3.0.0"
+        "kunstmaan/user-management-bundle": "~3.2"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "~2.2.0",
@@ -31,12 +31,11 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Kunstmaan\\AdminBundle": "" }
+        "psr-4": { "Kunstmaan\\AdminBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/AdminBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

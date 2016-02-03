@@ -135,24 +135,38 @@
 }
 
 .pp__actions__action--del {
-
-
     &:hover {
         background: $brand-danger;
     }
 }
 
 .pp__actions__action--edit {
-
     &:hover {
         background: $blue;
     }
 }
 
+.pp__actions__action--up, .pp__actions__action--down {
+    &:hover {
+        background: $gray-light;
+    }
+}
+
+.pp__actions__action--resize {
+    &:hover {
+        background: $orangy;
+    }
+
+    &.pp__actions__action--resize-max {
+        &:hover {
+            background: $green;
+        }
+    }
+}
 
 
 /* View
-   ========================================================================== */
+========================================================================== */
 .pp__view {
     padding: 1em;
 
@@ -162,8 +176,18 @@
     }
 }
 
-.pp__view__block {
+.action--maximize {
     overflow: hidden;
+}
+
+.pp__view__block {
+    @include clearfix;
+
+    &.action--transition {
+        -webkit-transition: max-height 0.8s;
+        -moz-transition: max-height 0.8s;
+        transition: max-height 0.8s;
+    }
 
     .container {
         max-width: 100%!important;

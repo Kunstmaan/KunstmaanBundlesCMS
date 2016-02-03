@@ -7,13 +7,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * Redirect
- *
  * @ORM\Table(name="kuma_redirects")
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
  */
 class Redirect extends AbstractEntity
 {
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="domain", type="string", length=255, nullable=true)
+     */
+    private $domain;
+
     /**
      * @var string
      *
@@ -37,6 +42,28 @@ class Redirect extends AbstractEntity
      */
     private $permanent;
 
+    /**
+     * Get domain
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+        return $this->domain;
+    }
+
+    /**
+     * Set domain
+     *
+     * @param string $domain
+     * @return Redirect
+     */
+    public function setDomain($domain)
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
 
     /**
      * Set origin

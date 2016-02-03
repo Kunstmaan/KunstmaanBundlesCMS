@@ -3,7 +3,10 @@
    ========================================================================== */
 
    .date-time-group {
-       #form_main_date {
+       @extend %clearfix;
+
+       #form_main_date,
+       > div {
            @extend %clearfix;
        }
        .form--double-widget__col {

@@ -5,16 +5,32 @@ parameters:
 
 services:
     kunstmaan_lead_generation.popup.manager:
-        class: %kunstmaan_lead_generation.popup.manager.class%
-        arguments: ["@doctrine.orm.entity_manager"]
+        class: '%kunstmaan_lead_generation.popup.manager.class%'
+        arguments: ['@doctrine.orm.entity_manager']
 
     kunstmaan_lead_generation.popup.twig.extension:
-        class: %kunstmaan_lead_generation.popup.twig.extension.class%
-        arguments: ["@kunstmaan_lead_generation.popup.manager", "@service_container", "%kunstmaan_lead_generation.popup_types%"]
+        class: '%kunstmaan_lead_generation.popup.twig.extension.class%'
+        arguments:
+            - '@kunstmaan_lead_generation.popup.manager'
+            - '@service_container'
+            - '%kunstmaan_lead_generation.popup_types%'
+            - '%kunstmaan_lead_generation.debug%'
         tags:
             - { name: twig.extension }
 
     kunstmaan_lead_generation.menu.adaptor:
-        class: %kunstmaan_lead_generation.menu.adaptor.class%
+        class: '%kunstmaan_lead_generation.menu.adaptor.class%'
         tags:
             - { name: kunstmaan_admin.menu.adaptor }
+
+    kunstmaan_lead_generation.rule.form.localewhitelistrule:
+        class: Kunstmaan\LeadGenerationBundle\Form\Rule\LocaleWhiteListAdminType
+        arguments: ['@kunstmaan_admin.domain_configuration']
+
+    kunstmaan_lead_generation.rule.form.localeblacklistrule:
+        class: Kunstmaan\LeadGenerationBundle\Form\Rule\LocaleBlackListAdminType
+        arguments: ['@kunstmaan_admin.domain_configuration']
+
+    kunstmaan_lead_generation.rule.service.localeruleservice:
+        class: Kunstmaan\LeadGenerationBundle\Service\Rule\LocaleRuleService
+        arguments: ['@request_stack']

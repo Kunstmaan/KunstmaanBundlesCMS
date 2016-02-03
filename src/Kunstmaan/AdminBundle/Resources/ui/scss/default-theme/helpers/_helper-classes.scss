@@ -20,3 +20,17 @@
         clear: both;
     }
 }
+
+.small-screen {
+    @media(min-width: $screen-sm-min) {
+        display: none;
+    }
+}
+
+.large-screen {
+    display: none;
+
+    @media(min-width: $screen-sm-min) {
+        display: inline;
+    }
+}

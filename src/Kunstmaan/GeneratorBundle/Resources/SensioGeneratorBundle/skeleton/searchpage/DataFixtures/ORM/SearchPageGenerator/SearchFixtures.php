@@ -11,7 +11,7 @@ use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use {{ namespace }}\Entity\Pages\Search\SearchPage;
+use {{ namespace }}\Entity\Pages\SearchPage;
 
 /**
  * SearchFixtures

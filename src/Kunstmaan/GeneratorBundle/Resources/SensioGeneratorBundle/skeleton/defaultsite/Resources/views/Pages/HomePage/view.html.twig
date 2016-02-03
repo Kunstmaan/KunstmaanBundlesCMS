@@ -11,3 +11,18 @@
     {{ render_pagetemplate(page) }}
 {% endblock %}
 
+{% block footerscripts %}
+    <!-- Google search integration -->
+    <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "url": "{{ url("_slug", {url: '/'}) }}",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ get_url_by_internal_name('search', app.request.locale) }}?query={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+    </script>
+{% endblock %}

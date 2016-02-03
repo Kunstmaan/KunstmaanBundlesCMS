@@ -102,7 +102,7 @@ var addAsyncTag = function (filepath, file, i, length) {
 /* Styles
    ========================================================================== */
 gulp.task('styles', function() {
-    return gulp.src(config.scss)
+    return gulp.src([config.scss, '!' + config.scssFolder + 'admin-style.scss'])
         // Sass
         .pipe(plugins.rubySass({
             loadPath: './',
@@ -132,6 +132,43 @@ gulp.task('styles', function() {
         // Show total size of css
         .pipe(plugins.size({
             title: 'css'
+        }));
+});
+
+
+/* Admin styles
+   ========================================================================== */
+gulp.task('admin-styles', function() {
+    return gulp.src([config.scss, '!' + config.scssFolder + 'style.scss'])
+        // Sass
+        .pipe(plugins.rubySass({
+            loadPath: './',
+            bundleExec: true,
+        }))
+        .on('error', function (err) {
+            errorLogger('SASS Compilation Error', err.message);
+        })
+
+        // Combine Media Queries
+        .pipe(plugins.combineMq())
+
+        // Prefix where needed
+        .pipe(plugins.autoprefixer(config.browserSupport))
+
+        // Minify output
+        .pipe(plugins.minifyCss())
+
+        // Rename the file to respect naming covention.
+        .pipe(plugins.rename(function(path){
+            path.basename += '.min';
+        }))
+
+        // Write to output
+        .pipe(gulp.dest(config.dist.css))
+
+        // Show total size of css
+        .pipe(plugins.size({
+            title: 'admin-css'
         }));
 });
 
@@ -358,7 +395,7 @@ gulp.task('watch', function() {
 gulp.task('build', function(done) {
     runSequence(
         'clean',
-        ['clear-symfony-cache', 'styles', 'inject-prod-scripts', 'images', 'fonts'],
+        ['clear-symfony-cache', 'styles', 'admin-styles', 'inject-prod-scripts', 'images', 'fonts'],
         'styleguide',
         'styleguide-prod-js',
     done);
@@ -377,7 +414,7 @@ gulp.task('build-deploy', function(done) {
 gulp.task('default', function(done) {
     runSequence(
         'clean',
-        ['clear-symfony-cache', 'styles', 'inject-dev-scripts', 'images', 'fonts'],
+        ['clear-symfony-cache', 'styles', 'admin-styles', 'inject-dev-scripts', 'images', 'fonts'],
         ['styleguide', 'watch'],
         'styleguide-dev-js',
     done);

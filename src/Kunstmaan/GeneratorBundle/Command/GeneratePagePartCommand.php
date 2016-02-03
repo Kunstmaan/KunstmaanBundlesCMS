@@ -111,12 +111,11 @@ EOT
             'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
             '',
         ));
-        $self = $this;
         $generator = $this->getGenerator();
-        $bundlePath = $self->bundle->getPath();
+        $bundlePath = $this->bundle->getPath();
         $name = $this->assistant->askAndValidate(
             'PagePart name',
-            function ($name) use ($self, $generator, $bundlePath) {
+            function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
                 if ($generator->isReservedKeyword($name)){
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
@@ -151,13 +150,13 @@ EOT
         foreach ($fields as $fieldInfo) {
             if($fieldInfo['type'] == 'image') {
                 $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
-                    $fieldInfo['extra'], $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes'], true);
+                    $fieldInfo['extra'], true, $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes']);
             }
             elseif($fieldInfo['type'] == 'media') {
                 $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
-                    $fieldInfo['extra'], null, null, null, null, $fieldInfo['mimeTypes'], true);
+                    $fieldInfo['extra'], true, null, null, null, null, $fieldInfo['mimeTypes']);
             }
-            else $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], null, null, null, null, null, true);
+            else $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
         }
 
         /**
@@ -188,5 +187,4 @@ EOT
 
         return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant, $this->getContainer());
     }
-
 }

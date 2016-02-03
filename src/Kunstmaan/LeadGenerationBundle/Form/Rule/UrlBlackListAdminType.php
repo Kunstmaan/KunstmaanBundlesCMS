@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Form\Rule;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class UrlBlackListAdminType extends AbstractRuleAdminType
@@ -15,11 +16,11 @@ class UrlBlackListAdminType extends AbstractRuleAdminType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      */
-    public function buildForm(FormBuilderInterface  $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('urls', 'textarea', array(
+        $builder->add('urls', TextareaType::class, array(
             'attr' => array('info_text' => 'Define a list of blacklist url (patterns).
                                             Each url on a separate line.
                                             You can also use regex expressions.
@@ -32,7 +33,7 @@ class UrlBlackListAdminType extends AbstractRuleAdminType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'url_blacklist_form';
     }

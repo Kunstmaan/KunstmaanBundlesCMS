@@ -3,18 +3,20 @@
 namespace Kunstmaan\NodeSearchBundle\Configuration;
 
 use Doctrine\ORM\EntityManager;
+use Elastica\Index;
+use Elastica\Type\Mapping;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
-use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
 use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -28,6 +30,7 @@ use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 class NodePagesConfiguration implements SearchConfigurationInterface
 {
@@ -64,6 +67,14 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /** @var IndexablePagePartsService */
     protected $indexablePagePartsService;
 
+    /** @var DomainConfigurationInterface */
+    protected $domainConfiguration;
+
+    private $properties = [];
+
+    /** @var Node */
+    private $currentTopNode = null;
+
     /**
      * @param ContainerInterface      $container
      * @param SearchProviderInterface $searchProvider
@@ -72,13 +83,14 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function __construct($container, $searchProvider, $name, $type)
     {
-        $this->container         = $container;
-        $this->indexName         = $name;
-        $this->indexType         = $type;
-        $this->searchProvider    = $searchProvider;
-        $this->locales           = explode('|', $this->container->getParameter('requiredlocales'));
-        $this->analyzerLanguages = $this->container->getParameter('analyzer_languages');
-        $this->em                = $this->container->get('doctrine')->getManager();
+        $this->container           = $container;
+        $this->indexName           = $name;
+        $this->indexType           = $type;
+        $this->searchProvider      = $searchProvider;
+        $this->domainConfiguration = $this->container->get('kunstmaan_admin.domain_configuration');
+        $this->locales             = $this->domainConfiguration->getBackendLocales();
+        $this->analyzerLanguages   = $this->container->getParameter('analyzer_languages');
+        $this->em                  = $this->container->get('doctrine')->getManager();
     }
 
     /**
@@ -98,6 +110,14 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * @param array $properties
+     */
+    public function setDefaultProperties(array $properties)
+    {
+        $this->properties = array_merge($this->properties, $properties);
+    }
+
+    /**
      * @param LoggerInterface $logger
      */
     public function setLogger(LoggerInterface $logger)
@@ -114,7 +134,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $index = $this->searchProvider->createIndex($this->indexName);
 
         //create analysis
-        $analysis = $this->container->get('kunstmaan_search.search.factory.analysis');
+        $analysis = $this->container->get(
+            'kunstmaan_search.search.factory.analysis'
+        );
         foreach ($this->locales as $locale) {
             $analysis
                 ->addIndexAnalyzer($locale)
@@ -139,6 +161,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $nodes          = $nodeRepository->getAllTopNodes();
 
         foreach ($nodes as $node) {
+            $this->currentTopNode = $node;
             foreach ($this->locales as $lang) {
                 $this->createNodeDocuments($node, $lang);
             }
@@ -183,7 +206,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
-     * Index all children of the specified node (only for the specified language)
+     * Index all children of the specified node (only for the specified
+     * language)
      *
      * @param Node   $node
      * @param string $lang
@@ -205,21 +229,25 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function indexNodeTranslation(NodeTranslation $nodeTranslation, $add = false)
     {
-        // Only index online NodeTranslations
-        if (!$nodeTranslation->isOnline()) {
-            return false;
-        }
-
         // Retrieve the public NodeVersion
         $publicNodeVersion = $nodeTranslation->getPublicNodeVersion();
         if (is_null($publicNodeVersion)) {
             return false;
         }
-        $node = $nodeTranslation->getNode();
 
         // Retrieve the referenced entity from the public NodeVersion
         $page = $publicNodeVersion->getRef($this->em);
 
+        if ($page->isStructureNode()) {
+            return true;
+        }
+
+        // Only index online NodeTranslations
+        if (!$nodeTranslation->isOnline()) {
+            return false;
+        }
+
+        $node = $nodeTranslation->getNode();
         if ($this->isIndexable($page)) {
             $this->addPageToIndex($nodeTranslation, $node, $publicNodeVersion, $page);
             if ($add) {
@@ -232,8 +260,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
-     * Return if the page is indexable - by default all pages are indexable, you can override this by implementing
-     * the IndexableInterface on your page entity and returning false in the isIndexable method.
+     * Return if the page is indexable - by default all pages are indexable,
+     * you can override this by implementing the IndexableInterface on your
+     * page entity and returning false in the isIndexable method.
      *
      * @param HasNodeInterface $page
      *
@@ -241,8 +270,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function isIndexable(HasNodeInterface $page)
     {
-        // If the page doesn't implement IndexableInterface interface or it returns true on isIndexable, index the page
-        return (!($page instanceof IndexableInterface) || $page->isIndexable());
+        return $this->container->get('kunstmaan_node.pages_configuration')->isIndexable($page);
     }
 
     /**
@@ -252,8 +280,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function deleteNodeTranslation(NodeTranslation $nodeTranslation)
     {
-        $uid = 'nodetranslation_' . $nodeTranslation->getId();
-        $this->searchProvider->deleteDocument($this->indexName, $this->indexType, $uid);
+        $uid       = 'nodetranslation_' . $nodeTranslation->getId();
+        $indexType = $this->indexType . '_' . $nodeTranslation->getLang();
+        $this->searchProvider->deleteDocument($this->indexName, $indexType, $uid);
     }
 
     /**
@@ -267,10 +296,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Apply the analysis factory to the index
      *
-     * @param \Elastica\Index          $index
+     * @param Index                    $index
      * @param AnalysisFactoryInterface $analysis
      */
-    public function setAnalysis(\Elastica\Index $index, AnalysisFactoryInterface $analysis)
+    public function setAnalysis(Index $index, AnalysisFactoryInterface $analysis)
     {
         $index->create(
             array(
@@ -284,90 +313,22 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Return default search fields mapping for node translations
      *
-     * @param \Elastica\Index $index
-     * @param string          $lang
+     * @param Index  $index
+     * @param string $lang
      *
-     * @return \Elastica\Type\Mapping
+     * @return Mapping
      */
-    protected function getMapping(\Elastica\Index $index, $lang = 'en')
+    protected function getMapping(Index $index, $lang = 'en')
     {
-        $mapping = new \Elastica\Type\Mapping();
+        $mapping = new Mapping();
         $mapping->setType($index->getType($this->indexType . '_' . $lang));
         $mapping->setParam('analyzer', 'index_analyzer_' . $lang);
-        $mapping->setParam('_boost', array('name' => '_boost', 'null_value' => 1.0));
-
-        $mapping->setProperties(
-            array(
-                'node_id'            => array(
-                    'type'           => 'integer',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'nodetranslation_id' => array(
-                    'type'           => 'integer',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'nodeversion_id'     => array(
-                    'type'           => 'integer',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'title'              => array(
-                    'type'           => 'string',
-                    'include_in_all' => true
-                ),
-                'lang'               => array(
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed'
-                ),
-                'slug'               => array(
-                    'type'           => 'string',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'type'               => array(
-                    'type'           => 'string',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'page_class'         => array(
-                    'type'           => 'string',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'contentanalyzer'    => array(
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed'
-                ),
-                'content'            => array(
-                    'type'           => 'string',
-                    'include_in_all' => true
-                ),
-                'created'            => array(
-                    'type'           => 'date',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'updated'            => array(
-                    'type'           => 'date',
-                    'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ),
-                'view_roles'         => array(
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed',
-                    'index_name'     => 'view_role'
-                ),
-                '_boost'             => array(
-                    'type'           => 'float',
-                    'include_in_all' => false
-                )
-            )
+        $mapping->setParam(
+            '_boost',
+            array('name' => '_boost', 'null_value' => 1.0)
         );
+
+        $mapping->setProperties($this->properties);
 
         return $mapping;
     }
@@ -375,10 +336,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Initialize the index with the default search fields mapping
      *
-     * @param \Elastica\Index $index
-     * @param string          $lang
+     * @param Index  $index
+     * @param string $lang
      */
-    protected function setMapping(\Elastica\Index $index, $lang = 'en')
+    protected function setMapping(Index $index, $lang = 'en')
     {
         $mapping = $this->getMapping($index, $lang);
         $mapping->send();
@@ -399,7 +360,17 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         NodeVersion $publicNodeVersion,
         HasNodeInterface $page
     ) {
+        $rootNode = $this->currentTopNode;
+        if (!$rootNode) {
+            // Fetch main parent of current node...
+            $rootNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->getRootNodeFor(
+                $node,
+                $nodeTranslation->getLang()
+            );
+        }
+
         $doc = array(
+            'root_id'             => $rootNode->getId(),
             'node_id'             => $node->getId(),
             'node_translation_id' => $nodeTranslation->getId(),
             'node_version_id'     => $publicNodeVersion->getId(),
@@ -407,8 +378,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             'lang'                => $nodeTranslation->getLang(),
             'slug'                => $nodeTranslation->getFullSlug(),
             'page_class'          => ClassLookup::getClass($page),
-            'created'             => $this->getUTCDateTime($nodeTranslation->getCreated())->format(\DateTime::ISO8601),
-            'updated'             => $this->getUTCDateTime($nodeTranslation->getUpdated())->format(\DateTime::ISO8601)
+            'created'             => $this->getUTCDateTime(
+                $nodeTranslation->getCreated()
+            )->format(\DateTime::ISO8601),
+            'updated'             => $this->getUTCDateTime(
+                $nodeTranslation->getUpdated()
+            )->format(\DateTime::ISO8601)
         );
         if ($this->logger) {
             $this->logger->info('Indexing document : ' . implode(', ', $doc));
@@ -453,7 +428,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function addPermissions(Node $node, &$doc)
     {
-        $roles = array();
         if (!is_null($this->aclProvider)) {
             $roles = $this->getAclPermissions($node);
         } else {
@@ -473,12 +447,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function addSearchType($page, &$doc)
     {
-        // Type
-        $type = ClassLookup::getClassName($page);
-        if ($page instanceof SearchTypeInterface) {
-            $type = $page->getSearchType();
-        }
-        $doc['type'] = $type;
+        $doc['type'] = $this->container->get('kunstmaan_node.pages_configuration')->getSearchType($page);
     }
 
     /**
@@ -505,8 +474,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function addParentAndAncestors($node, &$doc)
     {
-        $parent                = $node->getParent();
-        $parentNodeTranslation = null;
+        $parent = $node->getParent();
 
         if ($parent) {
             $doc['parent'] = $parent->getId();
@@ -567,14 +535,16 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function enterRequestScope($lang)
     {
-        if (!$this->container->isScopeActive('request')) {
-            $this->container->enterScope('request');
+        if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
             $request = new Request();
             $request->setLocale($lang);
 
+            $context = $this->container->get('router')->getContext();
+            $context->setParameter('_locale', $lang);
+
             $major = Kernel::MAJOR_VERSION;
             $minor = Kernel::MINOR_VERSION;
-            if ((int)$major > 2 || ((int)$major == 2 && (int)$minor >= 4)) {
+            if ((int) $major > 2 || ((int) $major == 2 && (int) $minor >= 4)) {
                 $requestStack = $this->container->get('request_stack');
                 $requestStack->push($request);
             }
@@ -586,14 +556,17 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Render a custom search view
      *
-     * @param NodeTranslation $nodeTranslation
-     * @param                 $page
-     * @param                 $renderer
+     * @param NodeTranslation             $nodeTranslation
+     * @param SearchViewTemplateInterface $page
+     * @param EngineInterface             $renderer
      *
      * @return string
      */
-    protected function renderCustomSearchView(NodeTranslation $nodeTranslation, $page, $renderer)
-    {
+    protected function renderCustomSearchView(
+        NodeTranslation $nodeTranslation,
+        SearchViewTemplateInterface $page,
+        EngineInterface $renderer
+    ) {
         $view    = $page->getSearchView();
         $content = $this->removeHtml(
             $renderer->render(
@@ -610,16 +583,20 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
-     * Render default search view (all indexable pageparts in the main context of the page)
+     * Render default search view (all indexable pageparts in the main context
+     * of the page)
      *
-     * @param NodeTranslation $nodeTranslation
-     * @param                 $page
-     * @param                 $renderer
+     * @param NodeTranslation       $nodeTranslation
+     * @param HasPagePartsInterface $page
+     * @param EngineInterface       $renderer
      *
      * @return string
      */
-    protected function renderDefaultSearchView(NodeTranslation $nodeTranslation, $page, $renderer)
-    {
+    protected function renderDefaultSearchView(
+        NodeTranslation $nodeTranslation,
+        HasPagePartsInterface $page,
+        EngineInterface $renderer
+    ) {
         $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page);
         $view      = 'KunstmaanNodeSearchBundle:PagePart:view.html.twig';
         $content   = $this->removeHtml(
@@ -653,22 +630,29 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         // Check if page is boosted
-        $nodeSearch = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')
-            ->findOneByNode($node);
+        $nodeSearch = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findOneByNode($node);
         if ($nodeSearch !== null) {
             $doc['_boost'] += $nodeSearch->getBoost();
         }
     }
 
     /**
-     * Add custom data to index document (you can override to add custom fields to the search index)
+     * Add custom data to index document (you can override to add custom fields
+     * to the search index)
      *
      * @param HasNodeInterface $page
      * @param array            $doc
      */
     protected function addCustomData(HasNodeInterface $page, &$doc)
     {
-        // You can add custom data to be added to the document index array ($doc) here if you inherit from this class...
+        $event = new IndexNodeEvent($page, $doc);
+        $this->container->get('event_dispatcher')->dispatch(IndexNodeEvent::EVENT_INDEX_NODE, $event);
+
+        $doc = $event->doc;
+
+        if ($page instanceof HasCustomSearchDataInterface) {
+            $doc += $page->getCustomSearchData($doc);
+        }
     }
 
     /**
@@ -688,6 +672,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * Removes all HTML markup & decode HTML entities
+     *
+     * @param $text
+     *
+     * @return string
      */
     protected function removeHtml($text)
     {

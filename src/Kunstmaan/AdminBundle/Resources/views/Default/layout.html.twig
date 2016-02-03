@@ -1,4 +1,4 @@
-{% set adminmenu = admin_menu_get() %}
+{% set adminmenu = get_admin_menu() %}
 {% set extraclasshtml %}{% block extraclasshtml %}{% endblock %}{% endset %}
 
 <!DOCTYPE html>
@@ -12,19 +12,19 @@
     <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
 
     <!-- Favicons -->
-    {% include "KunstmaanAdminBundle:Default:_favicons.html.twig" %}
+    {% include "@KunstmaanAdmin/Default/_favicons.html.twig" %}
 
     <!-- Styles -->
-    {% include "KunstmaanAdminBundle:Default:_css.html.twig" %}
+    {% include "@KunstmaanAdmin/Default/_css.html.twig" %}
 
     <!-- Extra CSS -->
     {% block extracss %}{% endblock %}
 
     <!-- JS -->
-    {% include "KunstmaanAdminBundle:Default:_js_header.html.twig" %}
+    {% include "@KunstmaanAdmin/Default/_js_header.html.twig" %}
 </head>
 
-<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
+<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined and nodebundleisactive %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
 
 <!-- Body block -->
 {% block body %}

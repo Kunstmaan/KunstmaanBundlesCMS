@@ -38,7 +38,7 @@ class Method implements PropertyParserInterface
             preg_match_all('/[^,\(\)<>]+/', $pattern, $arguments);
             $arguments = $arguments[0];
             $method = array_shift($arguments);
-            $arguments = array_map(function($arg) {
+            $arguments = array_map(function ($arg) {
                 return trim(trim($arg), '\'""');
             }, $arguments);
 
@@ -65,7 +65,7 @@ class Method implements PropertyParserInterface
                     $value = $this->processValue($pattern, $refl->invokeArgs($provider, $arguments), $value, $matches[0]);
                     break;
                 } elseif (is_callable([$provider, $method])) {
-                    $value = $this->processValue($pattern, $provider->$method(), $value, $matches[0]);
+                    $value = $this->processValue($pattern, call_user_func_array(array($provider, $method), $arguments), $value, $matches[0]);
                     break;
                 }
             }

@@ -3,15 +3,12 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
-
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
-
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * The choice page part can be used to create forms with single or multiple choices. This can be
@@ -22,7 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ChoicePagePart extends AbstractFormPagePart
 {
-
     /**
      * If set to true, radio buttons or checkboxes will be rendered (depending on the multiple value). If false,
      * a select element will be rendered.
@@ -112,19 +108,20 @@ class ChoicePagePart extends AbstractFormPagePart
 
         $formBuilder->add(
             'formwidget_' . $this->getUniqueId(),
-            new ChoiceFormSubmissionType(),
+            ChoiceFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'required'    => $this->getRequired(),
                 'expanded'    => $this->getExpanded(),
                 'multiple'    => $this->getMultiple(),
                 'choices'     => $choices,
-                'empty_value' => $this->getEmptyValue(),
+                'placeholder' => $this->getEmptyValue(),
                 'constraints' => $constraints,
             )
         );
         $formBuilder->setData($data);
-        $fields[] = $cfsf;
+
+        $fields->append($cfsf);
     }
 
     /**
@@ -280,5 +277,4 @@ class ChoicePagePart extends AbstractFormPagePart
     {
         return $this->errorMessageRequired;
     }
-
 }

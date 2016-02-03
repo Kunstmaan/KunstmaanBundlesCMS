@@ -1,8 +1,8 @@
-{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
-{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 {% block header %}
-    <form action="{{ path(app.request.attributes.get('_route'), my_router_params()) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+    {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
     {{ parent() }}
 {% endblock %}
 
@@ -23,10 +23,9 @@
                         {% for itemAction in adminlistconfigurator.getItemActions() %}
                             <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
                                 {% if itemAction.getIconFor(entity) is not null %}
-                                    <img src="{{ asset(itemAction.getIconFor(entity)) }}" alt="{{ itemAction.getLabelFor(entity) }}">
-                                {% else %}
-                                    {{ itemAction.getLabelFor(entity) }}
+                                    <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
                                 {% endif %}
+                                {{ itemAction.getLabelFor(entity) }}
                             </a>
                         {% endfor %}
                     {% endif %}

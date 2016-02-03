@@ -14,8 +14,9 @@ class SitemapTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'hide_from_sitemap' => new \Twig_Function_Method($this, 'isHiddenFromSitemap'),
-            'hide_children_from_sitemap' => new \Twig_Function_Method($this, 'isHiddenChildrenFromSitemap'),
+            new \Twig_SimpleFunction('hide_from_sitemap', array($this, 'isHiddenFromSitemap')),
+            new \Twig_SimpleFunction('hide_children_from_sitemap', array($this, 'isHiddenChildrenFromSitemap')),
+
         );
     }
 

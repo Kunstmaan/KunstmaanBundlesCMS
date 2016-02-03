@@ -1,4 +1,4 @@
-{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 {% set context = pagepartadmin.context %}
 
 <!-- Hidden Field - Deleted -->
@@ -31,23 +31,32 @@
         <header class="js-sortable-item__handle pp__header {% if not form['pagepartadmin_'~id].count %}pp__header--no-edit{% endif %}">
             <i class="fa fa-arrows pp__header__move-icon"></i>
             <h5 class="pp__header__head">
-                {{pagepartadmin.getType(pagepart)}}
+                {{pagepartadmin.getType(pagepart)|trans}}
             </h5>
         </header>
 
         <!-- PP - actions -->
         <div class="pp__actions">
-            <button type="button" class="btn--raise-on-hover pp__actions__action pp__actions__action--del" data-keyboard="true" data-toggle="modal" data-target="#delete-pagepart-modal-{{id}}">
+            <button type="button" class="btn--raise-on-hover pp__actions__action pp__actions__action--del" data-keyboard="true" data-toggle="modal" title="{{ 'pagepart.buttons.delete'|trans }}" data-target="#delete-pagepart-modal-{{id}}">
                 <i class="fa fa-trash-o"></i>
             </button>
             {% if editable %}
-                <button type="button" class="js-edit-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--edit" data-target-id="{{id}}">
+                <button type="button" class="js-edit-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--edit" title="{{ 'pagepart.buttons.edit'|trans }}" data-target-id="{{id}}">
                     <i class="fa fa-pencil-square-o"></i>
                 </button>
             {% endif %}
+            <button type="button" class="js-move-up-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--up" title="{{ 'pagepart.buttons.move_up'|trans }}" data-target-id="{{id}}">
+                <i class="fa fa-chevron-up"></i>
+            </button>
+            <button type="button" class="js-move-down-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--down" title="{{ 'pagepart.buttons.move_down'|trans }}" data-target-id="{{id}}">
+                <i class="fa fa-chevron-down"></i>
+            </button>
+            <button type="button" class="js-resize-pp-view-btn btn--raise-on-hover pp__actions__action pp__actions__action--resize" data-keyboard="true" data-toggle="modal" title="{{ 'pagepart.buttons.resize'|trans }}" data-target-id="{{id}}">
+                <i class="fa fa-minus"></i>
+            </button>
         </div>
 
-        <div class="pp__view">
+        <div class="pp__view clearfix">
             <!-- PP - View - Preview -->
             <div id="{{id}}-preview-view" class="pp__view__block{% if editmode %} pp__view__block--hidden{% endif %}">
                 {% include pagepart.adminview with {'resource': pagepart, 'pagepartadmin': pagepartadmin} %}
@@ -66,16 +75,17 @@
     </section>
 
 
-
+    {% if pagepartadmin.possiblePagePartTypes | length > 0 %}
     <!-- New PP select -->
     <div class="pp-container__add">
         <select class="js-add-pp-select form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
             <option value="">Add a pagepart</option>
             {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-                <option value="{{pagePartType.class}}">{{pagePartType.name}}</option>
+                <option value="{{pagePartType.class}}">{{pagePartType.name|trans}}</option>
             {% endfor %}
         </select>
     </div>
+    {% endif %}
 
 
 

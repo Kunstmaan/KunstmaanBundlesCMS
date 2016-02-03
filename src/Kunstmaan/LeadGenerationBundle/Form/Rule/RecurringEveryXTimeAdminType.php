@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Form\Rule;
 
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RecurringEveryXTimeAdminType extends AbstractRuleAdminType
@@ -15,20 +16,20 @@ class RecurringEveryXTimeAdminType extends AbstractRuleAdminType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('days', 'integer', array(
+        $builder->add('days', IntegerType::class, array(
             'required' => false
         ));
-        $builder->add('hours', 'integer', array(
+        $builder->add('hours', IntegerType::class, array(
             'required' => false
         ));
-        $builder->add('minutes', 'integer', array(
+        $builder->add('minutes', IntegerType::class, array(
             'required' => false
         ));
-        $builder->add('times', 'integer');
+        $builder->add('times', IntegerType::class);
     }
 
     /**
@@ -36,7 +37,7 @@ class RecurringEveryXTimeAdminType extends AbstractRuleAdminType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'recurring_every_x_time_form';
     }

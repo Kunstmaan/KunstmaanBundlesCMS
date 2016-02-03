@@ -1,10 +1,10 @@
-{% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
-{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+{% extends '@KunstmaanAdmin/Settings/index.html.twig' %}
+{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 {% block header %}{% endblock %}
 
 {% block content %}
-    <form action="{{ path('KunstmaanUserManagementBundle_settings_groups_add') }}" method="post" {{ form_enctype(form) }} novalidate >
+    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanUserManagementBundle_settings_groups_add'), 'attr': {'novalidate': 'novalidate'}}) }}
 
         <!-- Header -->
         <header class="app__content__header">
@@ -49,5 +49,5 @@
         <fieldset class="form__fieldset--padded">
             {{ form_rest(form) }}
         </fieldset>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}

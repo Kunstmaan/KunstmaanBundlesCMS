@@ -3,6 +3,7 @@
 namespace Kunstmaan\LeadGenerationBundle\Form\Popup;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 abstract class AbstractPopupAdminType extends AbstractType
@@ -16,14 +17,14 @@ abstract class AbstractPopupAdminType extends AbstractType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array(
+        $builder->add('name', TextType::class, array(
             'attr' => array('info_text' => 'Warning: if you change this value, the people who already saw this popup, or the people who were already converted will see the popup again.')
         ));
-        $builder->add('htmlId', 'text');
+        $builder->add('htmlId', TextType::class);
     }
 
     /**
@@ -31,5 +32,5 @@ abstract class AbstractPopupAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    abstract function getName();
+    abstract function getBlockPrefix();
 }

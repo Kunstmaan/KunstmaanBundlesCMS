@@ -1,24 +1,24 @@
 KunstmaanMediaBundle_media:
-    resource: "@KunstmaanMediaBundle/Controller/MediaController.php"
+    resource: '@KunstmaanMediaBundle/Controller/MediaController.php'
     type:     annotation
     prefix:   /admin/media
         
 KunstmaanMediaBundle_aviary:
-    resource: "@KunstmaanMediaBundle/Controller/AviaryController.php"
+    resource: '@KunstmaanMediaBundle/Controller/AviaryController.php'
     type:     annotation
     prefix:   /
         
 KunstmaanMediaBundle_media_chooser:
-    resource: "@KunstmaanMediaBundle/Controller/ChooserController.php"
+    resource: '@KunstmaanMediaBundle/Controller/ChooserController.php'
     type:     annotation
     prefix:   /admin/media
         
 KunstmaanMediaBundle_media_folder:
-    resource: "@KunstmaanMediaBundle/Controller/FolderController.php"
+    resource: '@KunstmaanMediaBundle/Controller/FolderController.php'
     type:     annotation
     prefix:   /admin/media/folder
 
 KunstmaanMediaBundle_icon_font:
-    resource: "@KunstmaanMediaBundle/Controller/IconFontController.php"
+    resource: '@KunstmaanMediaBundle/Controller/IconFontController.php'
     type:     annotation
     prefix:   /admin/media/icon-font

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 abstract class AbstractNewsletterController extends Controller
 {
@@ -63,8 +64,8 @@ abstract class AbstractNewsletterController extends Controller
             'method' => 'POST',
             'action' => $this->generateUrl('popup_newsletter_subscribe', array('popup' => $popup->getId())),
         ));
-        $form->add('submit', 'submit', array(
-            'attr' => array('class' => $popup->getHtmlId().'--submit')
+        $form->add('submit', SubmitType::class, array(
+            'attr' => array('class' => $popup->getHtmlId() . '--submit')
         ));
 
         return $form;
@@ -72,7 +73,7 @@ abstract class AbstractNewsletterController extends Controller
 
     protected function getSubscriptionFormType()
     {
-        return new NewsletterSubscriptionType();
+        return NewsletterSubscriptionType::class;
     }
 
     protected function getIndexTemplate()

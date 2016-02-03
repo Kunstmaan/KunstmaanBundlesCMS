@@ -1,8 +1,8 @@
 <?php
+
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -10,19 +10,6 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class BundleGenerator extends Generator
 {
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @param Filesystem $filesystem The filesystem
-     */
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->filesystem = $filesystem;
-    }
-
     /**
      * @param string $namespace The namespace
      * @param string $bundle    The bundle name
@@ -53,6 +40,5 @@ class BundleGenerator extends Generator
 
         $this->renderFile('/bundle/services.yml', $dir . '/Resources/config/services.yml', $parameters);
         $this->renderFile('/bundle/routing.yml', $dir . '/Resources/config/routing.yml', $parameters);
-
     }
 }

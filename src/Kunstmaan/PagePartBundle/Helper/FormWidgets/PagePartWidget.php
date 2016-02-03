@@ -3,7 +3,6 @@
 namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,12 +14,8 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
-/**
- * PagePartWidget
- */
 class PagePartWidget extends FormWidget
 {
-
     /**
      * @var AbstractPagePartAdminConfigurator
      */
@@ -57,7 +52,7 @@ class PagePartWidget extends FormWidget
     protected $request;
 
     /**
-     * @param HasNodeInterface                  $page                      The page
+     * @param HasPagePartsInterface             $page                      The page
      * @param Request                           $request                   The request
      * @param EntityManager                     $em                        The entity manager
      * @param AbstractPagePartAdminConfigurator $pagePartAdminConfigurator The page part admin configurator
@@ -76,6 +71,7 @@ class PagePartWidget extends FormWidget
         $this->request = $request;
 
         $this->pagePartAdmin = $pagePartAdminFactory->createList($pagePartAdminConfigurator, $em, $page, null);
+        $this->setTemplate('KunstmaanPagePartBundle:FormWidgets\PagePartWidget:widget.html.twig');
     }
 
     /**
@@ -128,14 +124,6 @@ class PagePartWidget extends FormWidget
     }
 
     /**
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return 'KunstmaanPagePartBundle:FormWidgets\PagePartWidget:widget.html.twig';
-    }
-
-    /**
      * @return PagePartAdmin
      */
     public function getPagePartAdmin()
@@ -158,5 +146,4 @@ class PagePartWidget extends FormWidget
 
         return $params;
     }
-
 }

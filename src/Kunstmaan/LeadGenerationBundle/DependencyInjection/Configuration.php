@@ -27,6 +27,9 @@ class Configuration implements ConfigurationInterface
                     ->requiresAtLeastOneElement()
                     ->prototype('scalar')->end()
                 ->end()
+                ->booleanNode('debug')
+                    ->defaultFalse()
+                ->end()
             ->end();
 
         return $treeBuilder;

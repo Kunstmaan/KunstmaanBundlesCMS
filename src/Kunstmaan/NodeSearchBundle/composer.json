@@ -19,13 +19,13 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0",
-        "symfony/symfony": "~2.3",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "white-october/pagerfanta-bundle": "1.0.*",
-        "ruflin/elastica": "~1.0",
-        "kunstmaan/node-bundle": "~3.0.0",
-        "kunstmaan/pagepart-bundle": "~3.0.0",
-        "kunstmaan/search-bundle": "~3.0.0",
+        "ruflin/elastica": "~2.3",
+        "kunstmaan/node-bundle": "~3.2",
+        "kunstmaan/pagepart-bundle": "~3.2",
+        "kunstmaan/search-bundle": "~3.2",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
@@ -33,7 +33,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

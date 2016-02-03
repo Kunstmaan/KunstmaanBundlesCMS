@@ -1,0 +1,43 @@
+framework:
+    secret:          secret
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true, enabled: true }
+    templating:
+        engines: ['twig']
+    default_locale:  nl
+    trusted_proxies: ~
+    session:         ~
+    fragments:       ~
+
+kunstmaan_translator:
+    managed_locales: ['nl','en','de']
+    cache_dir: "%kernel.cache_dir%/translations"
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_sqlite
+                path:     %kernel.cache_dir%/test.db
+    orm:
+        default_entity_manager:   default
+        entity_managers:
+            default:
+                connection:       default
+                mappings:
+                    KunstmaanTranslatorBundle: ~
+
+
+white_october_pagerfanta:
+    default_view: twitter_bootstrap

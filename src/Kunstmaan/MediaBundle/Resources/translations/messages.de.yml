@@ -30,6 +30,7 @@ media:
   folder:
     addsub:
       action: Unterverzeichnis Erstellen
+      action_short: Erstellen
       modal:
         title: Unterverzeichnis Erstellen
         save: Erstellen
@@ -37,6 +38,7 @@ media:
       no: Noch keine Unterverzeichnisse vorhanden.
     delete:
       action: Verzeichnis Löschen
+      action_short: Löschen
       modal:
         title: Verzeichnis Löschen
         text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden?

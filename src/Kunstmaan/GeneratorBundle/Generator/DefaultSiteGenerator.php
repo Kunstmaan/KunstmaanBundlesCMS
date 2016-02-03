@@ -211,7 +211,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
             }
             $ymlData .= "\n\n    ".strtolower($this->bundle->getName()).".admin_menu_adaptor:";
             $ymlData .= "\n        class: ".$this->bundle->getNamespace()."\Helper\Menu\AdminMenuAdaptor";
-            $ymlData .= "\n        arguments: [\"@security.context\"]";
             $ymlData .= "\n        tags:";
             $ymlData .= "\n            -  { name: 'kunstmaan_admin.menu.adaptor' }\n";
             file_put_contents($file, $ymlData, FILE_APPEND);
@@ -297,8 +296,9 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     public function generateConfig()
     {
         $configFile = $this->rootDir.'/app/config/config.yml';
+        $config = file_get_contents($configFile);
 
-        $data = Yaml::parse($configFile);
+        $data = Yaml::parse($config);
         if (!array_key_exists('white_october_pagerfanta', $data)) {
             $ymlData = "\n\nwhite_october_pagerfanta:";
             $ymlData .= "\n    default_view: twitter_bootstrap\n";
@@ -404,9 +404,10 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      */
     public function generateTwigExtensions($parameters)
     {
+        $relPath = '/Twig/';
+        $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'NodeTranslationTwigExtension.php', $parameters, true);
         if ($this->demosite) {
-            $relPath = '/Twig/';
-            $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
+            $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'BikesTwigExtension.php', $parameters, true);
         }
 
         $relPath = '/Resources/config/';
