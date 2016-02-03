@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Helper;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * MediaManager
@@ -47,7 +48,7 @@ class MediaManager
     /**
      * Returns handler with the highest priority to handle the Media item which can handle the item. If no handler is found, it returns FileHandler
      *
-     * @param Media $media
+     * @param Media|File $media
      *
      * @return AbstractMediaHandler
      */
