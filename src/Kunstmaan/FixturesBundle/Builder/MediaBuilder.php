@@ -48,6 +48,11 @@ class MediaBuilder implements BuilderInterface
         }
 
         $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => $properties['folder']));
+
+        if (!$this->folder instanceof Folder) {
+            $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('internalName' => $properties['folder']));
+        }
+
         if (!$this->folder instanceof Folder) {
             throw new \Exception('Could not find the specified folder for media fixture ' . $fixture->getName());
         }
