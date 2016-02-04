@@ -41,7 +41,7 @@ class SlugController extends Controller
         $locale = $request->getLocale();
 
         /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $request->get('_nodeTranslation');
+        $nodeTranslation = $request->attributes->get('_nodeTranslation');
 
         // If no node translation -> 404
         if (!$nodeTranslation) {
