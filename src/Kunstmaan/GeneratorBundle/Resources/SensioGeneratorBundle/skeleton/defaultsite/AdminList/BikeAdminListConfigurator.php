@@ -20,6 +20,7 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 	parent::__construct($em, $aclHelper);
 
 	$this->setAdminType(new BikeAdminType());
+
     }
 
     /**
@@ -62,5 +63,15 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function getEntityName()
     {
 	return 'Bike';
+    }
+
+    /**
+     * Get sortable field name
+     *
+     * @return string
+     */
+    public function getSortableField()
+    {
+        return 'weight';
     }
 }

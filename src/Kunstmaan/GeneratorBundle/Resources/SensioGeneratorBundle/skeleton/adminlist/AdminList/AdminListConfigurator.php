@@ -67,4 +67,17 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
     {
         return '{{ entity_class }}';
     }
+
+{% if sortField %}
+    /**
+     * Get sortable field name
+     *
+     * @return string
+     */
+    public function getSortableField()
+    {
+        return "{{ sortField }}";
+    }
+{% endif %}
+
 }

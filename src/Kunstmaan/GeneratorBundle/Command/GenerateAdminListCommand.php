@@ -33,6 +33,12 @@ class GenerateAdminListCommand extends GenerateDoctrineCommand
                         InputOption::VALUE_REQUIRED,
                         'The entity class name to create an admin list for (shortcut notation)'
                     ),
+                    new InputOption(
+                        'sortfield',
+                        '',
+                        InputOption::VALUE_OPTIONAL,
+                        'The name of the sort field if entity needs to be sortable'
+                    ),
                 )
             )
             ->setDescription('Generates a KunstmaanAdminList')
@@ -72,7 +78,8 @@ EOT
 
         $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
         $generator->setQuestion($questionHelper);
-        $generator->generate($bundle, $entityClass, $metadata[0], $output);
+        $generator->generate($bundle, $entityClass, $metadata[0], $output, $input->getOption('sortfield'));
+
 
         $parts       = explode('\\', $entity);
         $entityClass = array_pop($parts);
@@ -116,6 +123,10 @@ EOT
             $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
             $entity = $questionHelper->ask($input, $output, $question);
             $input->setOption('entity', $entity);
+
+            $question = new Question($questionHelper->getQuestion('The name of the sort field if entity needs to be sortable', false, '?'), false);
+            $sortfield = $questionHelper->ask($input, $output, $question);
+            $input->setOption('sortfield', $sortfield);
         }
     }
 

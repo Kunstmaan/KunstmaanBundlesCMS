@@ -58,6 +58,14 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     private $price;
 
     /**
+     * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\Type(type = "numeric")
+     *
+     * @var integer
+     */
+    private $weight;
+
+    /**
      * @return string
      */
     public function getType()
@@ -135,5 +143,29 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
 	$this->price = $price;
 
 	return $this;
+    }
+
+    /**
+     * Set weight
+     *
+     * @param integer $weight
+     *
+     * @return Bike
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }

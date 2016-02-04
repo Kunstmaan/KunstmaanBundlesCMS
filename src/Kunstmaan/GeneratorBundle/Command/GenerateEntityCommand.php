@@ -35,7 +35,6 @@ class GenerateEntityCommand extends GenerateDoctrineCommand
             ->addOption('fields', null, InputOption::VALUE_REQUIRED, 'The fields to create with the new entity')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->addOption('with-repository', null, InputOption::VALUE_NONE, 'Whether to generate the entity repository or not')
-            ->addOption('with-adminlist', null, InputOption::VALUE_NONE, 'Whether to generate the entity AdminList or not')
             ->setHelp(<<<EOT
 The <info>kuma:generate:entity</info> task generates a new Doctrine
 entity inside a bundle:
@@ -55,11 +54,6 @@ The command can also generate the corresponding entity repository class with the
 
 <info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-repository</info>
 
-The command can also generate the corresponding entity AdminList with the
-<comment>--with-adminlist</comment> option:
-
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-adminlist</info>
-
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
 <info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --prefix=demo_</info>
@@ -67,7 +61,7 @@ Use the <info>--prefix</info> option to add a prefix to the table names of the g
 To deactivate the interaction mode, simply use the `--no-interaction` option
 without forgetting to pass all needed options:
 
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --with-adminlist --no-interaction</info>
+<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --no-interaction</info>
 EOT
             );
     }
@@ -105,17 +99,6 @@ EOT
         $generator->generate($bundle, $entity, $format, array_values($fields), $input->getOption('with-repository'), $prefix);
 
         $output->writeln('Generating the entity code: <info>OK</info>');
-
-        $withAdminlist = $input->getOption('with-adminlist');
-        if ($withAdminlist) {
-            $command = $this->getApplication()->find('kuma:generate:adminlist');
-            $arguments = array(
-                'command' => 'doctrine:fixtures:load',
-                '--entity' => $entityInput
-            );
-            $input = new ArrayInput($arguments);
-            $command->run($input, $output);
-        }
 
         $questionHelper->writeGeneratorSummary($output, array());
 
@@ -194,12 +177,6 @@ EOT
         $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to generate an empty repository class', $input->getOption('with-repository') ? 'yes' : 'no', '?'), $input->getOption('with-repository'));
         $withRepository = $questionHelper->ask($input, $output, $confirmationQuestion);
         $input->setOption('with-repository', $withRepository);
-
-        // repository?
-        $output->writeln('');
-        $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to generate an AdminList for your entity', $input->getOption('with-adminlist') ? 'yes' : 'no', '?'), $input->getOption('with-adminlist'));
-        $withAdminList = $questionHelper->ask($input, $output, $confirmationQuestion);
-        $input->setOption('with-adminlist', $withAdminList);
 
         // summary
         $output->writeln(array(

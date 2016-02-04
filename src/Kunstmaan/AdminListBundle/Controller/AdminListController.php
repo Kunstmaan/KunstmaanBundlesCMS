@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
@@ -100,6 +101,7 @@ abstract class AdminListController extends Controller
 
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
+        $repo = $em->getRepository($configurator->getRepositoryName());
         $entityName = null;
         if (isset($type)) {
             $entityName = $type;
@@ -135,6 +137,14 @@ abstract class AdminListController extends Controller
 
             if ($form->isValid()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_ADD, new AdminListEvent($helper));
+
+                // Check if sortable is used.
+                if ($sort = $configurator->getSortableField()) {
+                    $weight = $this->getMaxSortableField($repo, $sort);
+                    $setter = "set".ucfirst($sort);
+                    $helper->$setter($weight + 1);
+                }
+
                 $em->persist($helper);
                 $em->flush();
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_ADD, new AdminListEvent($helper));
@@ -266,5 +276,74 @@ abstract class AdminListController extends Controller
         return new RedirectResponse(
             $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
         );
+    }
+
+    /**
+     * Move an item up in the list.
+     *
+     * @return RedirectResponse
+     */
+    protected function doMoveUpAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
+    {
+        $em = $this->getEntityManager();
+        $sortableField = $configurator->getSortableField();
+        $repo = $em->getRepository($configurator->getRepositoryName());
+        $item = $repo->find($entityId);
+
+        $setter = "set".ucfirst($sortableField);
+        $getter = "get".ucfirst($sortableField);
+
+        $nextItem = $repo->createQueryBuilder('i')->where('i.'.$sortableField.' < :weight')->setParameter('weight', $item->$getter())->orderBy('i.'.$sortableField, 'DESC')->setMaxResults(1)->getQuery()->getOneOrNullResult();
+        if ($nextItem) {
+            $nextItem->$setter($item->$getter());
+            $em->persist($nextItem);
+        }
+        $item->$setter($item->$getter() - 1);
+
+        $em->persist($item);
+        $em->flush();
+
+        $indexUrl = $configurator->getIndexUrl();
+
+        return new RedirectResponse(
+            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+        );
+    }
+
+    protected function doMoveDownAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
+    {
+        $em = $this->getEntityManager();
+        $sortableField = $configurator->getSortableField();
+        $repo = $em->getRepository($configurator->getRepositoryName());
+        $item = $repo->find($entityId);
+
+        $setter = "set".ucfirst($sortableField);
+        $getter = "get".ucfirst($sortableField);
+
+        $nextItem = $repo->createQueryBuilder('i')->where('i.'.$sortableField.' > :weight')->setParameter('weight', $item->$getter())->orderBy('i.'.$sortableField, 'ASC')->setMaxResults(1)->getQuery()->getOneOrNullResult();
+        if ($nextItem) {
+            $nextItem->$setter($item->$getter());
+            $em->persist($nextItem);
+        }
+        $item->$setter($item->$getter() + 1);
+
+        $em->persist($item);
+        $em->flush();
+
+        $indexUrl = $configurator->getIndexUrl();
+
+        return new RedirectResponse(
+            $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+        );
+    }
+
+    private function getMaxSortableField($repo, $sort)
+    {
+        $maxWeight = $repo->createQueryBuilder('i')
+            ->select('max(i.'.$sort.')')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return (int)$maxWeight;
     }
 }
