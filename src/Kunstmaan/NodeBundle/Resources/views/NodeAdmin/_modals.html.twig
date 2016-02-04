@@ -79,76 +79,75 @@
 </div>
 
 
-
 <!-- Modal - Publish -->
 <div id="pub" class="modal fade">
     <div class="modal-dialog">
-    <div class="modal-content">
+        <div class="modal-content">
 
-        <!-- Header -->
-        <div class="modal-header">
-        <button class="close" data-dismiss="modal">
-            <i class="fa fa-times"></i>
-        </button>
-        <h3>
-            Publish
-        </h3>
-        </div>
+            <!-- Header -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    Publish
+                </h3>
+            </div>
 
-        <form action="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+            <form action="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
 
-        <!-- Body -->
-        <div class="modal-body">
-            <p>
-            Are you sure you want to publish this page? If you do this, the page will be online!
-            </p>
+                <!-- Body -->
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to publish this page? If you do this, the page will be online!
+                    </p>
 
-            <div class="form-group">
-            <label>
-                <input id="publish-later__check" type="checkbox">
-                Publish later
-            </label>
+                    <div class="form-group">
+                        <label>
+                            <input id="publish-later__check" type="checkbox">
+                            Publish later
+                        </label>
                     </div>
 
-            <div id="publish-later">
-            <!-- Date -->
-            <div class="form-group">
-                <div class="js-datepicker input-group" data-default-date="true">
-                <input id="pub_date" type="text" name="pub_date" class="form-control">
+                    <div id="publish-later">
+                        <!-- Date -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-default-date="true">
+                                <input id="pub_date" type="text" name="pub_date" class="form-control">
                 <span class="input-group-addon input-group-addon--has-action">
                     <i class="fa fa-calendar-o"></i>
                 </span>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
-            <!-- Time -->
-            <div class="form-group">
-                <div class="js-datepicker input-group" data-format="HH:mm" data-default-date="true">
-                <input id="pub_tmpckr" type="text" name="pub_time" class="form-control">
+                        <!-- Time -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-format="HH:mm" data-default-date="true">
+                                <input id="pub_tmpckr" type="text" name="pub_time" class="form-control">
                 <span class="input-group-addon input-group-addon--has-action">
                     <i class="fa fa-clock-o"></i>
                 </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="modal-footer">
-            <div id="publish-later-action">
-            <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
-                Publish later
-            </button>
-            <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
-            </div>
-            <div id="publish-action">
-            <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
-                Publish
-            </a>
-            <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-        </form>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div id="publish-later-action">
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            Publish later
+                        </button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div id="publish-action">
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
+                            Publish
+                        </a>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -157,50 +156,50 @@
 <!-- Modal - Versions -->
 <div id="versions" class="modal fade">
     <div class="modal-dialog">
-    <div class="modal-content">
+        <div class="modal-content">
 
-        <!-- Head -->
-        <div class="modal-header">
-        <button class="close" data-dismiss="modal">
-            <i class="fa fa-times"></i>
-        </button>
-        <h3>Versions</h3>
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Versions</h3>
             </div>
 
-        <!-- Body -->
-        <div class="modal-body">
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Last modified</th>
-                <th>User</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% set publicVersion = nodeTranslation.getPublicNodeVersion() %}
-            {% for nodeVersion in nodeVersions %}
-            <tr>
-                <td>{{ nodeVersion.type }}</td>
-                <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
-                <td>{{ nodeVersion.owner }}</td>
-                <td class="table__actions">
-                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item table__actions__item--block">
-                    <i class="fa fa-eye"></i>
-                    Preview
-                </a>
-                {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
-                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item table__actions__item--block">
-                    <i class="fa fa-refresh"></i>
-                    Revert
-                    </a>
-                {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+            <!-- Body -->
+            <div class="modal-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Last modified</th>
+                        <th>User</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set publicVersion = nodeTranslation.getPublicNodeVersion() %}
+                    {% for nodeVersion in nodeVersions %}
+                        <tr>
+                            <td>{{ nodeVersion.type }}</td>
+                            <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
+                            <td>{{ nodeVersion.owner }}</td>
+                            <td class="table__actions">
+                                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item table__actions__item--block">
+                                    <i class="fa fa-eye"></i>
+                                    Preview
+                                </a>
+                                {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
+                                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item table__actions__item--block">
+                                        <i class="fa fa-refresh"></i>
+                                        Revert
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -211,47 +210,47 @@
 {% set pagePossibleChildPages = get_possible_child_types(page) %}
 {% if pagePossibleChildPages is not empty %}
     <div id="add-subpage-modal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-        <!-- Head -->
-        <div class="modal-header">
-            <button class="close" data-dismiss="modal">
-            <i class="fa fa-times"></i>
-            </button>
-            <h3>Add subpage</h3>
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3>Add subpage</h3>
                 </div>
 
-        <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+                <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': node.id }) }}" method="post" novalidate="novalidate">
 
-            <!-- body -->
-            <div class="modal-body">
-            <div class="form-group">
-                <label for="addpage_title">
-                Title
-                </label>
-                <input name="title" type="text" id="addpage_title" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="addpage_type">
-                Type
-                </label>
-                <select name="type" id="addpage_type" class="form-control">
-                {% for pageType in pagePossibleChildPages %}
-                    <option value="{{ pageType.class }}">{{ pageType.name|trans }}</option>
-                {% endfor %}
-                </select>
-            </div>
-            </div>
+                    <!-- body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="addpage_title">
+                                Title
+                            </label>
+                            <input name="title" type="text" id="addpage_title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="addpage_type">
+                                Type
+                            </label>
+                            <select name="type" id="addpage_type" class="form-control">
+                                {% for pageType in pagePossibleChildPages %}
+                                    <option value="{{ pageType.class }}">{{ pageType.name|trans }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
 
-            <!-- Footer -->
-            <div class="modal-footer">
-            <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">Add</button>
-            <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">Add</button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
             </div>
-        </form>
-            </div>
-    </div>
+        </div>
     </div>
 {% endif %}
 
@@ -259,28 +258,28 @@
 <!-- Modal - Delete page -->
 <div id="delete-page-modal" class="modal fade">
     <div class="modal-dialog">
-    <div class="modal-content">
+        <div class="modal-content">
 
-        <!-- Head -->
-        <div class="modal-header">
-        <button class="close" data-dismiss="modal">
-            <i class="fa fa-times"></i>
-        </button>
-        <h3>Delete page '{{ page.title }}'</h3>
-        </div>
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>Delete page '{{ page.title }}'</h3>
+            </div>
 
-        <!-- Body -->
-        <div class="modal-body">
-        <p>This will remove the page completely! Are you really sure about this?</p>
-        </div>
+            <!-- Body -->
+            <div class="modal-body">
+                <p>This will remove the page completely! Are you really sure about this?</p>
+            </div>
 
-        <!-- Footer -->
-        <div class="modal-footer">
-        <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-            <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Delete</button>
-            <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
-        </form>
-        </div>
+            <!-- Footer -->
+            <div class="modal-footer">
+                <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Delete</button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -313,10 +312,61 @@
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                        <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Duplicate</button>
-                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Duplicate</button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<!-- Check if there are any node translations other then the current language -->
+{% set translationOptions = {} %}
+{% if node.nodeTranslations(true) is not empty %}
+    {% for translation in node.nodeTranslations(true) %}
+        {% if translation.lang != nodeVersion.nodeTranslation.lang %}
+            {% set translationOptions = translationOptions|merge({(translation.lang): translation.id}) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if translationOptions is not empty %}
+    <!-- Modal - Reopy content from other language -->
+    <div id="recopy" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3>{{ 'action.recopyfromlanguage' | trans }}</h3>
+                </div>
+
+                <form action="{{ path('KunstmaanNodeBundle_nodes_recopyfromotherlanguage', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="recopy_source">
+                                {{ 'modal.sourcelanguage' | trans }}
+                            </label>
+                            <select name="source" id="recopy_source" class="form-control">
+                                {% for value, option in translationOptions %}
+                                    <option value="{{ option }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Copy</button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}

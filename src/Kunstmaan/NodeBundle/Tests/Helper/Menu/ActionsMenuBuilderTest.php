@@ -117,6 +117,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
+        $this->assertNull($menu->getChild('action.recopyfromlanguage'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.save'));
@@ -143,6 +144,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
+        $this->assertNull($menu->getChild('action.recopyfromlanguage'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
@@ -152,6 +154,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
+        $this->assertNull($menu->getChild('action.recopyfromlanguage'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.unpublish'));
@@ -180,6 +183,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save')); // We want to save.
         $this->assertNull($menu->getChild('action.saveasdraft'));
+        $this->assertNull($menu->getChild('action.recopyfromlanguage'));
         $this->assertNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
@@ -236,6 +240,40 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.delete'));
+
+        $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
+    }
+
+    /**
+     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
+     */
+    public function testShouldShowRecopyButtonWhenTheNodeHasTranslations()
+    {
+        $node = new Node();
+        $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setLang('en');
+
+        $node->addNodeTranslation($nodeTranslation);
+
+        $nodeVersion = new NodeVersion();
+        $nodeVersion->setType("public");
+        $nodeVersion->setNodeTranslation($nodeTranslation);
+
+        $this->builder->setActiveNodeVersion($nodeVersion);
+
+        $nodeTranslation = new NodeTranslation();
+        $nodeTranslation->setLang('nl');
+
+        $node->addNodeTranslation($nodeTranslation);
+
+        $nodeVersion = new NodeVersion();
+        $nodeVersion->setType("public");
+        $nodeVersion->setNodeTranslation($nodeTranslation);
+
+        $this->builder->setActiveNodeVersion($nodeVersion);
+
+        $menu = $this->builder->createActionsMenu();
+        $this->assertNotNull($menu->getChild('action.recopyfromlanguage'));
 
         $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }

@@ -3,12 +3,16 @@ subaction:
 
 action:
     saveasdraft: "Salva come bozza"
+    recopyfromlanguage: "Copy content from other language"
     publish: "Pubblica"
     unpublish: "Sospendi"
     preview: "Anteprima"
     save: "Salva"
     delete: "Cancella"
     addsubpage: "Aggiungi sotto pagina"
+
+modal:
+    sourcelanguage: "Source language"
 
 pages:
     copynotavailable: "Per favore traduci prima la pagina padre"
