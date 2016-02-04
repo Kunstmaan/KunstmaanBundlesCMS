@@ -225,7 +225,7 @@
                                     <a class="thumbnail media-thumbnail" href="{{ path('KunstmaanMediaBundle_media_show',  { 'mediaId' : media.id }) }}" data-media-id="{{ media.id }}">
                                         <figure>
                                             {% if imageurl %}
-                                                <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina }} 2x" alt="{{ media.name }}" class="media-thumbnail__img">
+                                                <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">
                                             {% else %}
                                                 <i class="fa fa-file-o media-thumbnail__icon"></i>
                                             {% endif %}
