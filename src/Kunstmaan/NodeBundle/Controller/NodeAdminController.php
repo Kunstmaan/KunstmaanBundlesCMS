@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use InvalidArgumentException;
@@ -104,8 +105,24 @@ class NodeAdminController extends Controller
             $this->em,
             $this->aclHelper,
             $this->locale,
-            PermissionMap::PERMISSION_EDIT
+            PermissionMap::PERMISSION_VIEW,
+            $this->authorizationChecker
+
         );
+
+        $locale = $this->locale;
+        $acl = $this->authorizationChecker;
+        $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
+
+            if ($acl->isGranted(PermissionMap::PERMISSION_VIEW, $item->getNode())) {
+                return array(
+                    'path'   => '_slug_preview',
+                    'params' => ['_locale' => $locale, 'url' => $item->getUrl()]
+                );
+            }
+        };
+        $nodeAdminListConfigurator->addSimpleItemAction('Preview', $itemRoute, 'eye');
+
         $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
         $nodeAdminListConfigurator->setShowAddHomepage($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN'));
 

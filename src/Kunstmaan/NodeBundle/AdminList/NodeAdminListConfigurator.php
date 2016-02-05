@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
@@ -13,6 +14,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * NodeAdminListConfigurator
@@ -40,6 +42,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     protected $showAddHomepage;
 
     /**
+     * @var AuthorizationCheckerInterface $authorizationChecker
+     */
+    protected $authorizationChecker;
+
+    /**
      * @param EntityManager                $em                  The entity
      *                                                          manager
      * @param AclHelper                    $aclHelper           The ACL helper
@@ -47,10 +54,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      *                                                          locale
      * @param string                       $permission          The permission
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission, AuthorizationCheckerInterface $authorizationChecker)
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;
+        $this->authorizationChecker = $authorizationChecker;
         $this->setPermissionDefinition(
             new PermissionDefinition(
                 array($permission),
@@ -152,6 +160,11 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function canAdd()
     {
         return false;
+    }
+
+    public function canEdit($item)
+    {
+        return $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $item->getNode());
     }
 
     /**
