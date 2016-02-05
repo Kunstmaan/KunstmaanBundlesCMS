@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
-use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
@@ -137,7 +136,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function buildItemActions()
     {
-        $this->buildSortableFieldActions();
     }
 
     /**
@@ -828,41 +826,4 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         return array();
     }
-
-    public function buildSortableFieldActions() {
-
-        // Check if sortable is used
-        if ($sort = $this->getSortableField()) {
-            $route = function (EntityInterface $item) {
-                return array(
-                    'path' => $this->getPathByConvention() . '_move_up',
-                    'params' => array('id' => $item->getId()),
-                );
-            };
-
-            $action = new SimpleItemAction($route, 'arrow-up', 'Move up');
-            $this->addItemAction($action);
-
-            $route = function (EntityInterface $item) {
-                return array(
-                    'path' => $this->getPathByConvention() . '_move_down',
-                    'params' => array('id' => $item->getId()),
-                );
-            };
-
-            $action = new SimpleItemAction($route, 'arrow-down', 'Move down');
-            $this->addItemAction($action);
-        }
-    }
-
-    /**
-     * Returns the name of the field when making entities sortable
-     *
-     * @return string
-     */
-    public function getSortableField()
-    {
-        return null;
-    }
-
 }

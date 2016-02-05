@@ -242,7 +242,7 @@ To make your Entities sortable, there's the move up and down action method. (aut
 }
 ```
 
-Add the sortablefield name to your configurator. You can use your own field name of course.
+Add the sortablefield name to your configurator by implementing to SortableInterface. You can use your own field name of course.
 
 ```PHP
         /**
