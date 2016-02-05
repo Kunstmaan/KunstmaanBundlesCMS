@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -61,6 +62,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     {
         return array(
             Events::COPY_PAGE_TRANSLATION => 'onCopyPageTranslation',
+            Events::RECOPY_PAGE_TRANSLATION => 'onRecopyPageTranslation',
             Events::ADD_EMPTY_PAGE_TRANSLATION => 'onAddEmptyPageTranslation',
             Events::POST_PUBLISH => 'postPublish',
             Events::POST_UNPUBLISH => 'postUnPublish',
@@ -91,6 +93,14 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     public function onCopyPageTranslation(CopyPageTranslationNodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just copied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
+    }
+
+    /**
+     * @param RecopyPageTranslationNodeEvent $event
+     */
+    public function onRecopyPageTranslation(RecopyPageTranslationNodeEvent $event)
+    {
+        $this->logger->addInfo(sprintf('%s just recopied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
     }
 
     /**

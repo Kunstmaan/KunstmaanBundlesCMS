@@ -121,6 +121,15 @@ class ActionsMenuBuilder
     public function createActionsMenu()
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
+
+        $translations = $activeNodeVersion->getNodeTranslation()->getNode()->getNodeTranslations(true);
+        $canRecopy = false;
+        foreach ($translations as $translation) {
+            if ($translation->getLang() != $activeNodeVersion->getNodeTranslation()->getLang()) {
+                $canRecopy = true;
+            }
+        }
+
         $menu              = $this->factory->createItem('root');
         $menu->setChildrenAttribute(
             'class',
@@ -168,6 +177,19 @@ class ActionsMenuBuilder
                         'extras'         => array('renderType' => 'button')
                     )
                 );
+                if ($canRecopy) {
+                    $menu->addChild(
+                        'action.recopyfromlanguage',
+                        array(
+                            'linkAttributes' => array(
+                                'class' => 'btn btn-default btn--raise-on-hover',
+                                'data-toggle' => 'modal',
+                                'data-keyboard' => 'true',
+                                'data-target' => '#recopy'
+                            ),
+                        )
+                    );
+                }
                 $isFirst = false;
             }
 
@@ -281,6 +303,19 @@ class ActionsMenuBuilder
                             'extras'         => array('renderType' => 'button')
                         )
                     );
+                    if ($canRecopy) {
+                        $menu->addChild(
+                            'action.recopyfromlanguage',
+                            array(
+                                'linkAttributes' => array(
+                                    'class' => 'btn btn-default btn--raise-on-hover',
+                                    'data-toggle' => 'modal',
+                                    'data-keyboard' => 'true',
+                                    'data-target' => '#recopy'
+                                ),
+                            )
+                        );
+                    }
                 }
             }
         }

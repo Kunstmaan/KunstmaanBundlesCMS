@@ -3,6 +3,7 @@ subaction:
 
 action:
     saveasdraft: "Save as draft"
+    recopyfromlanguage: "Copy content from other language"
     publish: "Publish"
     unpublish: "Unpublish"
     preview: "Preview"
@@ -10,6 +11,9 @@ action:
     delete: "Delete"
     addsubpage: "Add subpage"
     duplicate: "Duplicate"
+
+modal:
+    sourcelanguage: "Source language"
 
 pages:
     copynotavailable: "Please translate the parent page first"

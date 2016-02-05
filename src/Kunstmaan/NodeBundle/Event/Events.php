@@ -107,6 +107,13 @@ class Events
     const COPY_PAGE_TRANSLATION = 'kunstmaan_node.copyPageTranslation';
 
     /**
+     * The recopyPageTranslation event occurs for a given node, when a recopy from a language as being asked.
+     *
+     * @var string
+     */
+    const RECOPY_PAGE_TRANSLATION = 'kunstmaan_node.recopyPageTranslation';
+
+    /**
      * The emptyPageTranslation event occurs for a given node, after a new page translation is created.
      *
      * @var string

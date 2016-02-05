@@ -395,6 +395,50 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
+     * Add a draft node version for a given node
+     *
+     * @param HasNodeInterface $hasNode The hasNode
+     * @param string           $lang    The locale
+     * @param Node             $node    The node
+     * @param BaseUser         $owner   The user
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return NodeTranslation
+     */
+    public function addDraftNodeVersionFor(
+        HasNodeInterface $hasNode,
+        $lang,
+        Node $node,
+        BaseUser $owner
+    ) {
+        $em        = $this->getEntityManager();
+        $className = ClassLookup::getClass($hasNode);
+        if (!$hasNode->getId() > 0) {
+            throw new \InvalidArgumentException(
+                "The entity of class ".$className.
+                " has no id, maybe you forgot to flush first"
+            );
+        }
+
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->findOneBy(array('lang' => $lang, 'node' => $node));
+
+        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')
+            ->createNodeVersionFor(
+                $hasNode,
+                $nodeTranslation,
+                $owner,
+                null,
+                NodeVersion::DRAFT_VERSION
+            );
+
+        $em->refresh($nodeTranslation);
+        $em->refresh($node);
+
+        return $nodeTranslation;
+    }
+
+    /**
      * Find best match for given URL and locale
      *
      * @param string $urlSlug The slug

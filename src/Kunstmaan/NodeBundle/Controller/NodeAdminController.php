@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 use DateTime;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use InvalidArgumentException;
@@ -185,6 +186,57 @@ class NodeAdminController extends Controller
         );
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
+    }
+
+    /**
+     * @Route(
+     *      "/{id}/recopyfromotherlanguage",
+     *      requirements={"id" = "\d+"},
+     *      name="KunstmaanNodeBundle_nodes_recopyfromotherlanguage"
+     * )
+     * @Method("POST")
+     * @Template()
+     *
+     * @param Request $request
+     * @param int     $id The node id
+     *
+     * @return RedirectResponse
+     * @throws AccessDeniedException
+     */
+    public function recopyFromOtherLanguageAction(Request $request, $id)
+    {
+        $this->init($request);
+        /* @var Node $node */
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+
+        $otherLanguageNodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($request->get('source'));
+        $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
+        $otherLanguagePage            = $otherLanguageNodeNodeVersion->getRef($this->em);
+        $myLanguagePage               = $this->get('kunstmaan_admin.clone.helper')
+            ->deepCloneAndSave($otherLanguagePage);
+
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+            ->addDraftNodeVersionFor($myLanguagePage, $this->locale, $node, $this->user);
+        $nodeVersion     = $nodeTranslation->getPublicNodeVersion();
+
+        $this->get('event_dispatcher')->dispatch(
+            Events::RECOPY_PAGE_TRANSLATION,
+            new RecopyPageTranslationNodeEvent(
+                $node,
+                $nodeTranslation,
+                $nodeVersion,
+                $myLanguagePage,
+                $otherLanguageNodeTranslation,
+                $otherLanguageNodeNodeVersion,
+                $otherLanguagePage,
+                $otherLanguageNodeTranslation->getLang()
+            )
+        );
+
+        return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id, 'subaction' => NodeVersion::DRAFT_VERSION)));
     }
 
     /**
@@ -982,6 +1034,7 @@ class NodeAdminController extends Controller
             'nodeTranslation'             => $nodeTranslation,
             'draft'                       => $draft,
             'draftNodeVersion'            => $draftNodeVersion,
+            'nodeVersion'                 => $nodeVersion,
             'subaction'                   => $subaction,
             'tabPane'                     => $tabPane,
             'editmode'                    => true,
