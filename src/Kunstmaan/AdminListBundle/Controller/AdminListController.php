@@ -2,13 +2,15 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
+use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +49,8 @@ abstract class AdminListController extends Controller
         /* @var AdminList $adminList */
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
         $adminList->bindRequest($request);
+
+        $this->buildSortableFieldActions($configurator);
 
         return new Response(
             $this->renderView(
@@ -138,8 +142,9 @@ abstract class AdminListController extends Controller
             if ($form->isValid()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_ADD, new AdminListEvent($helper));
 
-                // Check if sortable is used.
-                if ($sort = $configurator->getSortableField()) {
+                // Check if Sortable interface is implemented
+                if ($configurator instanceof SortableInterface) {
+                    $sort = $configurator->getSortableField();
                     $weight = $this->getMaxSortableField($repo, $sort);
                     $setter = "set".ucfirst($sort);
                     $helper->$setter($weight + 1);
@@ -345,5 +350,32 @@ abstract class AdminListController extends Controller
             ->getSingleScalarResult();
 
         return (int)$maxWeight;
+    }
+
+
+    protected function buildSortableFieldActions(AbstractAdminListConfigurator $configurator)
+    {
+        // Check if Sortable interface is implemented
+        if ($configurator instanceof SortableInterface) {
+            $route = function (EntityInterface $item) use ($configurator){
+                return array(
+                    'path' => $configurator->getPathByConvention() . '_move_up',
+                    'params' => array('id' => $item->getId()),
+                );
+            };
+
+            $action = new SimpleItemAction($route, 'arrow-up', 'Move up');
+            $configurator->addItemAction($action);
+
+            $route = function (EntityInterface $item) use ($configurator){
+                return array(
+                    'path' => $configurator->getPathByConvention() . '_move_down',
+                    'params' => array('id' => $item->getId()),
+                );
+            };
+
+            $action = new SimpleItemAction($route, 'arrow-down', 'Move down');
+            $configurator->addItemAction($action);
+        }
     }
 }
