@@ -5,8 +5,8 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Behat\Mink\Exception\ElementNotFoundException;
-use Kodeus\Bundle\Entity\Pages\ContentPage;
-use Kodeus\Bundle\Entity\Pages\FormPage;
+use {{ namespace }}\Entity\Pages\ContentPage;
+use {{ namespace }}\Entity\Pages\FormPage;
 
 /**
  * PageContext
