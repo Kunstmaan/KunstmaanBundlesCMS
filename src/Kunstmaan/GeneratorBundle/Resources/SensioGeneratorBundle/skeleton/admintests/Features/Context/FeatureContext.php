@@ -162,7 +162,7 @@ class FeatureContext extends AbstractContext
      */
     public function iShouldSeeTheDashboard()
     {
-        $this->assertSession()->pageTextContains("Dashboard");
+        $this->assertSession()->pageTextContains("Settings");
     }
 
     /**
@@ -170,7 +170,7 @@ class FeatureContext extends AbstractContext
      */
     public function iShouldNotSeeTheDashboard()
     {
-        $this->assertSession()->pageTextNotContains("Dashboard");
+        $this->assertSession()->pageTextNotContains("Settings");
     }
 
     /**

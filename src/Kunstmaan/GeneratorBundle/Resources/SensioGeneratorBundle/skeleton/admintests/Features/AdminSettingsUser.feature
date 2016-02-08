@@ -80,7 +80,8 @@ Feature: AdminSettingsUser
 
   @javascript @resetBrowserAfter
   Scenario: Try to log in as the previously disabled test user
-    Given I log in as "test"
+    Given I log out
+    And I log in as "test"
     Then I should not see the dashboard
 
   @javascript

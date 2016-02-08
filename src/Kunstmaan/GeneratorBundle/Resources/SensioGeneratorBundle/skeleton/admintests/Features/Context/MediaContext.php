@@ -150,7 +150,7 @@ class MediaContext extends BehatContext
         $records = array(
             "kunstmaan_mediabundle_FolderType[name]" => $this->getMainContext()->fixStepArgument($folderName),
             "kunstmaan_mediabundle_FolderType[rel]" => "media",
-            "kunstmaan_mediabundle_FolderType[parent]" => "Media"
+            "kunstmaan_mediabundle_FolderType[parent]" => "1"
         );
 
         $this->getMainContext()->pressButton("Add subfolder");

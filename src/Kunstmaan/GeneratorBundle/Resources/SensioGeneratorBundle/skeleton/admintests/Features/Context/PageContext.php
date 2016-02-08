@@ -5,6 +5,8 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Behat\Mink\Exception\ElementNotFoundException;
+use Kodeus\Bundle\Entity\Pages\ContentPage;
+use Kodeus\Bundle\Entity\Pages\FormPage;
 
 /**
  * PageContext
@@ -26,7 +28,7 @@ class PageContext extends BehatContext
     }
 
     /**
-     * @param string $pageType The type of the page - contentpage, formpage
+     * @param string $pageType The type of the page - ContentPage, FormPage
      * @param string $pageName The name of the page
      *
      * @Given /^I add ([a-zA-Z0-9]*) "([^"]*)"$/
@@ -35,6 +37,14 @@ class PageContext extends BehatContext
      */
     public function iAddPage($pageType, $pageName)
     {
+        switch ($pageType) {
+            case 'ContentPage':
+                $pageType = ContentPage::class;
+                break;
+            case 'FormPage':
+                $pageType = FormPage::class;
+                break;
+        }
         $records = array(
             "addpage_title" => $this->getMainContext()->fixStepArgument($pageName),
             "addpage_type" => $this->getMainContext()->fixStepArgument($pageType)
