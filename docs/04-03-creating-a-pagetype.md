@@ -66,7 +66,7 @@ Since we don't really need any subpages for our Employees page, we can just retu
 
 If you do that and reload the Employees page you created in the backend, you should see the "Add subpage" button disappear.
 
-The next function that needs or attention is `getDefaultView` :
+The next function that needs our attention is `getDefaultView` :
 
 ```php
     /**
