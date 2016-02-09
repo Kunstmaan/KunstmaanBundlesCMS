@@ -17,21 +17,6 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class NodeTranslationRepository extends EntityRepository
 {
     /**
-     * Get all childs of a given node
-     *
-     * @param Node $node
-     *
-     * @return array
-     */
-    public function getChildren(Node $node)
-    {
-        return $this->findBy(
-            array('parent' => $node->getId()),
-            array('weight' => 'ASC')
-        );
-    }
-
-    /**
      * Get max children weight
      *
      * @param Node $parentNode
