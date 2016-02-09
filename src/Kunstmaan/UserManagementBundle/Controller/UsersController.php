@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\UserManagementBundle\Controller;
 
-use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
