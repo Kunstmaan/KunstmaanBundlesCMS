@@ -11,7 +11,7 @@ use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
 /**
  * FileHandler
@@ -46,7 +46,7 @@ class FileHandler extends AbstractMediaHandler
     private $blacklistedExtensions = array();
 
     /**
-     * @var Slugifier
+     * @var SlugifierInterface
      */
     private $slugifier;
 
@@ -62,9 +62,9 @@ class FileHandler extends AbstractMediaHandler
     }
 
     /**
-     * @param Slugifier $slugifier
+     * @param SlugifierInterface $slugifier
      */
-    public function setSlugifier(Slugifier $slugifier)
+    public function setSlugifier(SlugifierInterface $slugifier)
     {
         $this->slugifier = $slugifier;
     }
@@ -230,14 +230,13 @@ class FileHandler extends AbstractMediaHandler
     {
         $filename  = $media->getOriginalFilename();
         $filename  = str_replace(array('/', '\\', '%'), '', $filename);
-        $slugifier = new Slugifier();
 
         if (!empty($this->blacklistedExtensions)) {
             $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
         }
 
         $parts    = pathinfo($filename);
-        $filename = $slugifier->slugify($parts['filename']);
+        $filename = $this->slugifier->slugify($parts['filename']);
         $filename .= '.'.strtolower($parts['extension']);
 
         return sprintf(
