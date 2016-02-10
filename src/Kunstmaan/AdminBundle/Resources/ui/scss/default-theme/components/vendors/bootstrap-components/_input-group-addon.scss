@@ -10,3 +10,18 @@
 .input-group-addon--has-action {
     cursor: pointer;
 }
+
+
+/* Select 2 Fix (overwrite bootstrap for select2)
+   ========================================================================== */
+.input-group {
+
+    .select2-container--default .select2-selection--multiple {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .select2-hidden-accessible {
+        position: absolute;
+    }
+}
