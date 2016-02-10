@@ -9,7 +9,9 @@ use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -30,11 +32,10 @@ class SearchService
     protected $container;
 
     /**
-     * @var Request
+     * @var RequestStack
      *
      */
-    protected $request;
-
+    protected $requestStack;
 
     /**
      * @var int
@@ -42,16 +43,16 @@ class SearchService
     protected $defaultPerPage;
 
     /**
-     * @param $container
-     * @param $request
-     * @param $defaultPerPage
+     * @param ContainerInterface $container
+     * @param RequestStack $requestStack
+     * @param int $defaultPerPage
      */
-    public function __construct($container, $request, $defaultPerPage = 10)
+    public function __construct(ContainerInterface $container, RequestStack $requestStack, $defaultPerPage = 10)
     {
-        $this->container        = $container;
-        $this->request          = $request;
-        $this->defaultPerPage   = $defaultPerPage;
-        $this->renderContect    = new RenderContext();
+        $this->container = $container;
+        $this->requestStack = $requestStack;
+        $this->defaultPerPage = $defaultPerPage;
+        $this->renderContect = new RenderContext();
     }
 
     /**
@@ -108,15 +109,7 @@ class SearchService
      */
     public function getRequest()
     {
-        return $this->request;
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function setRequest($request)
-    {
-        $this->request = $request;
+        return $this->requestStack->getCurrentRequest();
     }
 
     /**
@@ -124,12 +117,14 @@ class SearchService
      */
     public function search()
     {
-        // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
-        $entity = $this->request->attributes->get('_entity');
+        $request = $this->requestStack->getCurrentRequest();
 
-        $pageNumber = $this->getRequestedPage($this->request);
+        // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
+        $entity = $request->attributes->get('_entity');
+
+        $pageNumber = $this->getRequestedPage($request);
         $searcher   = $this->container->get($entity->getSearcher());
-        $this->applySearchParams($searcher, $this->request, $this->renderContect);
+        $this->applySearchParams($searcher, $request, $this->renderContect);
 
         $adapter    = new SearcherRequestAdapter($searcher);
         $pagerfanta = new Pagerfanta($adapter);

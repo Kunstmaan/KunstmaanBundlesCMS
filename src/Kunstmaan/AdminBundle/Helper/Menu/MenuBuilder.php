@@ -131,7 +131,7 @@ class MenuBuilder
     {
         if (is_null($this->topMenuItems)) {
             /* @var $request Request */
-            $request            = $this->container->get('request');
+            $request            = $this->container->get('request_stack')->getCurrentRequest();
             $this->topMenuItems = array();
             foreach ($this->getAdaptors() as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
@@ -154,7 +154,7 @@ class MenuBuilder
             return $this->getTopChildren();
         }
         /* @var $request Request */
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $result  = array();
         foreach ($this->getAdaptors() as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);

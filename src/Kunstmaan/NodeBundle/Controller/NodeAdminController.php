@@ -301,7 +301,7 @@ class NodeAdminController extends Controller
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $request         = $this->get('request');
+        $request         = $this->get('request_stack')->getCurrentRequest();
 
         if ($request->get('pub_date')) {
             $date = new \DateTime(
@@ -349,7 +349,7 @@ class NodeAdminController extends Controller
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $request         = $this->get('request');
+        $request         = $this->get('request_stack')->getCurrentRequest();
 
         if ($request->get('unpub_date')) {
             $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
@@ -472,7 +472,7 @@ class NodeAdminController extends Controller
         // Check with Acl
         $this->checkPermission($originalNode, PermissionMap::PERMISSION_EDIT);
 
-        $request = $this->get('request');
+        $request = $this->get('request_stack')->getCurrentRequest();
 
         $originalNodeTranslations = $originalNode->getNodeTranslation($this->locale, true);
         $originalRef              = $originalNodeTranslations->getPublicNodeVersion()->getRef($this->em);

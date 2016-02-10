@@ -113,7 +113,7 @@ class Translator extends SymfonyTranslator
             return parent::trans($id, $parameters, $domain, $locale);
         }
 
-        $showTranslationsSource = $this->container->get('request')->get('transSource');
+        $showTranslationsSource = $this->request->get('transSource');
         if ($showTranslationsSource !== null) {
             $trans = sprintf('%s (%s)', $id, $domain);
         } else {
@@ -128,12 +128,12 @@ class Translator extends SymfonyTranslator
     public function profileTranslation($id, $parameters, $domain, $locale, $trans)
     {
 
-        if ($this->container->getParameter('kuma_translator.profiler') === false) {
+        if (!$this->request || $this->container->getParameter('kuma_translator.profiler') === false) {
             return;
         }
 
         if ($locale === null) {
-            $locale = $this->container->get('request')->get('_locale');
+            $locale = $this->request->get('_locale');
         }
 
         $translation = new Translation;
@@ -142,7 +142,7 @@ class Translator extends SymfonyTranslator
         $translation->setLocale($locale);
         $translation->setText($trans);
 
-        $translationCollection = $this->container->get('request')->request->get('usedTranslations');
+        $translationCollection = $this->request->request->get('usedTranslations');
 
         if (!$translationCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
             $translationCollection = new ArrayCollection;
@@ -150,7 +150,7 @@ class Translator extends SymfonyTranslator
 
         $translationCollection->set($domain . $id . $locale, $translation);
 
-        $this->container->get('request')->request->set('usedTranslations', $translationCollection);
+        $this->request->request->set('usedTranslations', $translationCollection);
 
     }
 

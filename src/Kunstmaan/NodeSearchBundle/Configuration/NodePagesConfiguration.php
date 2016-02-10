@@ -535,21 +535,15 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function enterRequestScope($lang)
     {
-        if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
+        $requestStack = $this->container->get('request_stack');
+        if (!$requestStack->getCurrentRequest()) {
             $request = new Request();
             $request->setLocale($lang);
 
             $context = $this->container->get('router')->getContext();
             $context->setParameter('_locale', $lang);
 
-            $major = Kernel::MAJOR_VERSION;
-            $minor = Kernel::MINOR_VERSION;
-            if ((int) $major > 2 || ((int) $major == 2 && (int) $minor >= 4)) {
-                $requestStack = $this->container->get('request_stack');
-                $requestStack->push($request);
-            }
-
-            $this->container->set('request', $request, 'request');
+            $requestStack->push($request);
         }
     }
 

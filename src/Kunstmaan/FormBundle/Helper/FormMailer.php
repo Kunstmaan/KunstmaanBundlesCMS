@@ -43,6 +43,8 @@ class FormMailer implements FormMailerInterface
      */
     public function sendContactMail(FormSubmission $submission, $from, $to, $subject)
     {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+
         $toArr = explode("\r\n", $to);
         /* @var $message Swift_Mime_Message */
         $message = Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
@@ -51,7 +53,7 @@ class FormMailer implements FormMailerInterface
                 'KunstmaanFormBundle:Mailer:mail.html.twig',
                 array(
                     'submission' => $submission,
-                    'host'       => $this->container->get('request')->getScheme() . '://' . $this->container->get('request')->getHttpHost()
+                    'host'       => $request->getScheme() . '://' . $request->getHttpHost()
                 )
             ),
             'text/html'
