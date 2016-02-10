@@ -3,9 +3,7 @@
 namespace Kunstmaan\MenuBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\MenuBundle\Entity\Menu;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
-use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

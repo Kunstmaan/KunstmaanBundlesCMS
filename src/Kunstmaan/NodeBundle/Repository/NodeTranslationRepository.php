@@ -408,7 +408,7 @@ class NodeTranslationRepository extends EntityRepository
 
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->findOneBy(array('lang' => $lang, 'node' => $node));
 
-        $nodeVersion = $em->getRepository('KunstmaanNodeBundle:NodeVersion')
+        $em->getRepository('KunstmaanNodeBundle:NodeVersion')
             ->createNodeVersionFor(
                 $hasNode,
                 $nodeTranslation,

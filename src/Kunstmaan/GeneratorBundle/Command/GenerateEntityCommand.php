@@ -4,7 +4,6 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Symfony\Component\Console\Input\ArrayInput;
 use Kunstmaan\GeneratorBundle\Generator\DoctrineEntityGenerator;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;

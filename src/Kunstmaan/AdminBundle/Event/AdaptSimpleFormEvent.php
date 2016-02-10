@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle\Event;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
