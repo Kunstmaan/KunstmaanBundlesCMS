@@ -1,0 +1,23 @@
+parameters:
+    kunstmaan_adminlist.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
+
+services:
+    kunstmaan_adminlist.factory:
+        class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
+
+    kunstmaan_adminlist.service.export:
+        class:  '%kunstmaan_adminlist.service.export.class%'
+        calls:
+            -  [ setRenderer, [ '@templating' ] ]
+
+    pagerfanta.view.adminlist:
+        class: Kunstmaan\AdminListBundle\Service\Pager\TwitterBootstrapAdminListView
+        tags:
+            - { name: pagerfanta.view, alias: twitter_bootstrap_admin_list }
+
+    kunstmaan_adminlist.twig.extension:
+        class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
+        tags:
+            -  { name: twig.extension }
+        arguments:
+            -  '@service_container'

@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Forms - Form group
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.form-group {
+    position: relative;
+
+    width: 100%;
+    padding: 0;
+    margin: 1.5rem 0;
+
+    &:first-child {
+        padding-top: 0;
+        margin-top: 0;
+    }
+}
+
+
+/* Errors
+   ========================================================================== */
+.form-group--has-error {
+
+    .form-control {
+        border-color: $red;
+    }
+
+    .help-block {
+        font-size: .8rem;
+        font-weight: 400;
+        color: $red;
+    }
+}
+
+
+/*doc
+---
+title: Form Group
+name: 01_group
+category: Forms
+---
+
+<strong>General</strong>
+
+```html_example
+<div class="form-group">
+    <label for="fg1" class="form-control-label">
+    Name
+    </label>
+    <input type="text" id="fg1" name="fg1" class="{% if demosite %}js-form__input{% endif %} form-control form-control--input">
+</div>
+```
+
+<strong>Has error</strong>
+
+```html_example
+<div class="form-group form-group--has-error">
+    <label for="fg2" class="form-control-label">
+    Name
+    </label>
+    <input type="text" id="fg2" name="fg2" class="{% if demosite %}js-form__input{% endif %} form-control form-control--input">
+</div>
+```
+*/

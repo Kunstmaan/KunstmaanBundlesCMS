@@ -1,0 +1,33 @@
+{
+    "name": "kunstmaan/article-bundle",
+    "type": "symfony-bundle",
+    "description": "Add articles to your website. Use the KunstmaanGeneratorBundle to generate a new Overview/Detail article section for your website",
+    "keywords": [ "kunstmaan", "cms", "article", "news"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanArticleBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
+        "white-october/pagerfanta-bundle": "1.0.*",
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-4": { "Kunstmaan\\ArticleBundle\\": "" }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    }
+}

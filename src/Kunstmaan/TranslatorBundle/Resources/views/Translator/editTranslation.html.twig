@@ -1,0 +1,19 @@
+{% extends '@KunstmaanTranslator/Default/layout.html.twig' %}
+
+{% block content %}
+    {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
+    {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
+        <fieldset class="form__fieldset--padded">
+            {{ form_rest(form) }}
+
+            <div class="form-actions form-actions--padded">
+                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                    {{ 'settings.translator.edit' | trans }}
+                </button>
+                <a href="{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}" class="btn btn-default btn--raise-on-hover">
+                    {{ 'form.cancel' | trans }}
+                </a>
+            </div>
+        </fieldset>
+    {{ form_end(form) }}
+{% endblock %}

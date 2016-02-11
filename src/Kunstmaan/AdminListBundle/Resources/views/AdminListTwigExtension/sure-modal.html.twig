@@ -1,0 +1,33 @@
+{% if adminlist.getDeleteUrlFor(item) %}
+<div id="sure-modal-{{ item.id }}" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'form.delete' | trans }}
+                </h3>
+            </div>
+            <form action="{{ path(adminlist.getDeleteUrlFor(item)["path"], adminlist.getDeleteUrlFor(item)[("params")] ) }}" method="POST">
+                <!-- Body -->
+                <div class="modal-body">
+                    {{ 'form.deletesure' | trans }}
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" name="delete" class="btn btn-danger btn--raise-on-hover">
+                        {{ 'form.delete' | trans }}
+                    </button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'form.cancel' | trans }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}

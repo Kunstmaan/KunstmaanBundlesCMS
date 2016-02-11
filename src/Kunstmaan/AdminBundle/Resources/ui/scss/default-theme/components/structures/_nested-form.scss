@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Page Part
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.nested-form--sortable {
+
+    .nested-form__item__header {
+
+        &:hover {
+            cursor: move;
+        }
+    }
+}
+
+
+
+/* Item
+   ========================================================================== */
+.nested-form__item {
+    margin-bottom: 2rem;
+
+    background: $white;
+    border: 1px solid $gray-lighter;
+    border-radius: $border-radius-base;
+
+    &:hover {
+        border-color: $gray-lighter;
+    }
+}
+
+
+
+/* Header
+   ========================================================================== */
+// General
+.nested-form__item__header {
+    position: relative;
+
+    width: 100%;
+    height: 3rem;
+
+    background: #f7f7f7;
+    border-bottom: 1px solid $gray-lighter;
+
+    &:hover {
+
+        .nested-form__item__header__move-icon {
+            color: $blue;
+        }
+    }
+}
+
+
+// Move icon
+.nested-form__item__header__move-icon {
+    position: absolute;
+    top: .8rem;
+    left: .8rem;
+
+    color: $gray-lighter;
+
+    transition: color .3s ease;
+}
+
+
+// Actions
+.nested-form__item__header__actions {
+    float: right;
+}
+
+.nested-form__item__header__actions__action {
+    position: relative;
+
+    float: right;
+    display: block;
+    height: 3rem;
+    padding: 0 1rem;
+
+    line-height: 3rem;
+    border: 0;
+    border-left: 1px solid $gray-lighter;
+    border-radius: 0;
+    background: transparent;
+    color: $gray-light;
+
+    transition: background .3s ease, color .3s ease;
+
+    &:hover {
+        z-index: 1;
+
+        color: $white;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+.nested-form__item__header__actions__action--del {
+
+    &:hover {
+        background: $brand-danger;
+    }
+}
+
+
+
+/* View
+   ========================================================================== */
+.nested-form__item__view {
+    padding: 1em;
+}

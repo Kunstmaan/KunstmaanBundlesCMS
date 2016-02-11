@@ -1,0 +1,8 @@
+{% for box in pageparts %}
+    {% set resource = box %}
+    {% if box.searchView is defined %}
+        {% include box.getSearchView() %}
+    {% else %}
+        {% include box.getView(page) %}
+    {% endif %}
+{% endfor %}

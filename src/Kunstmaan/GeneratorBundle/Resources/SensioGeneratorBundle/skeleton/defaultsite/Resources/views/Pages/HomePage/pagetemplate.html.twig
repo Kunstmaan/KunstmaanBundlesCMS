@@ -1,0 +1,40 @@
+<% if demosite %>
+    <div class="container-fluid">
+        <header>
+            {{ render_pageparts(page, 'header') }}
+        </header>
+
+        <section class="text--center">
+            {{ render_pageparts(page, 'section1') }}
+        </section>
+
+        <section class="splash splash--gray-lighter">
+            <div class="container">
+                {{ render_pageparts(page, 'section2') }}
+            </div>
+        </section>
+
+        <section class="splash">
+            <div class="container">
+                {{ render_pageparts(page, 'section3') }}
+            </div>
+        </section>
+
+        <section class="splash splash--gray-lighter text--center splash--smaller-margin">
+            <div class="container">
+                {{ render_pageparts(page, 'section4') }}
+            </div>
+        </section>
+
+        <section class="container text--center">
+            {{ render_pageparts(page, 'section5') }}
+        </section>
+    </div>
+
+<% else %>
+
+    <div class="container">
+        {{ render_pageparts(page, 'main') }}
+    </div>
+
+<% endif %>

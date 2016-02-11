@@ -1,0 +1,33 @@
+<div class="{{ pagepart }}">
+{% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}
+{% if key == 'single_line' or key == 'multi_line' %}
+    <p>{{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ " }}" }}</p>
+{% elseif key == 'rich_text' %}
+    {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|raw }}" }}
+{% elseif key == 'wysiwyg' %}
+    {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|raw }}" }}
+{% elseif key == 'link' %}
+    <a href="{{ "{{ resource." ~ fieldArray['url']['fieldName'] ~ " }}" }}" {{ "{% if resource." ~ fieldArray['new_window']['fieldName'] ~ " %}target=\"_blank\"{% endif %}" }}>{{ "{{ resource." ~ fieldArray['text']['fieldName'] ~ " }}" }}</a>
+{% elseif key == 'image' %}
+    {{ "{% if resource." ~ fieldArray['image']['fieldName'] ~ " is not empty %}" }}<img src="{{ "{{ asset(resource." ~ fieldArray['image']['fieldName'] ~ ".url) }}" }}" {{ "{% if resource." ~ fieldArray['alt_text']['fieldName'] ~ " is not empty %}" }}alt="{{ "{{ resource." ~ fieldArray['alt_text']['fieldName'] ~ " }}" }}"{{ "{% endif %}" }} />{{ "{% endif %}" }}
+{% elseif key == 'media' %}
+    {{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " is not empty %}" }}<a href="{{ "{{ asset(resource." ~ fieldArray[0]['fieldName'] ~ ".url) }}" }}">{{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ ".name }}" }}</a>{{ "{% endif %}" }}
+{% elseif key == 'single_ref' %}
+    {{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " is not empty %}" }}<div>{{ fieldArray[0]['targetEntity'] }}: {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ " }}" }}</div>{{ "{% endif %}" }}
+{% elseif key == 'multi_ref' %}
+    {{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " is not empty %}" }}
+    <ul>
+        {{ "{% for item in resource." ~ fieldArray[0]['fieldName'] ~ " %}" }}
+            <li>{{ fieldArray[0]['targetEntity'] }}: {{ "{{ item }}" }}</li>
+        {{ "{% endfor %}" }}
+    </ul>
+    {{ "{% endif %}" }}
+{% elseif key == 'boolean' %}
+    <div>{{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " %}yes{% else %}no{% endif %}" }}</div>
+{% elseif key == 'integer' or key == 'decimal' %}
+    <div>{{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " %}{{ resource." ~ fieldArray[0]['fieldName'] ~ " }}{% endif %}" }}</div>
+{% elseif key == 'datetime' %}
+    <div>{{ "{% if resource." ~ fieldArray[0]['fieldName'] ~ " %}{{ resource." ~ fieldArray[0]['fieldName'] ~ "|date(\"Y-m-d H:i:s\") }}{% endif %}" }}</div>
+{% endif %}
+{% endfor %}{% endfor %}
+</div>

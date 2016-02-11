@@ -1,0 +1,41 @@
+{
+    "name": "kunstmaan/admin-bundle",
+    "type": "symfony-bundle",
+    "description": "The Kunstmaan Admin bundle supplies your project with a basic, elegant backend interface you can modify and extend so you can make your perfect admin module. The clean interface makes it straightforward for you and the people working with it to change settings and modify content.",
+    "keywords": ["kunstmaan", "cms", "admin"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanAdminBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "knplabs/knp-menu-bundle": "~2.0",
+        "sensio/framework-extra-bundle": "*",
+        "kunstmaan/utilities-bundle": "~3.2",
+        "guzzle/guzzle": "~3.9"
+    },
+    "suggests": {
+        "kunstmaan/user-management-bundle": "~3.2"
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "~2.2.0",
+        "white-october/pagerfanta-bundle": "1.0.*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": { "Kunstmaan\\AdminBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    }
+}

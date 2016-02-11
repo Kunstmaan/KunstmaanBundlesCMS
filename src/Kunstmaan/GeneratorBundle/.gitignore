@@ -1,0 +1,10 @@
+.DS_Store
+.idea
+vendor/*
+composer.lock
+composer.phar
+.project
+.buildpath
+.settings
+
+*.orig

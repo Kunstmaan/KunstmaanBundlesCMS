@@ -1,0 +1,33 @@
+{
+    "name": "kunstmaan/tagging-bundle",
+    "type": "symfony-bundle",
+    "description": "Uses FabienPennequin/DoctrineExtensions-Taggable to add tagging to the Kunstmaan bundles",
+    "keywords": [ "kunstmaan", "cms", "tag", "tagging"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanTaggingBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
+        "fpn/doctrine-extensions-taggable": "0.9.0",
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/media-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2"
+    },
+    "autoload": {
+        "psr-4": { "Kunstmaan\\TaggingBundle\\": "" }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    }
+}

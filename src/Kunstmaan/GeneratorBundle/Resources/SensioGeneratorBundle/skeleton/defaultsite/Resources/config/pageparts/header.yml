@@ -1,0 +1,4 @@
+name: "Header"
+context: "header"
+types:
+    - { name: "PageBanner", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\PageBannerPagePart" }

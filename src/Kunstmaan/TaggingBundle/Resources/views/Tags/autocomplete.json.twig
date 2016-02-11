@@ -1,0 +1,6 @@
+[
+  {% for tag in tags %}
+      { "label": "{{ tag.name }}",
+        "value": "{{ tag.id }}" } {{ loop.last ? '' : ',' }}
+  {% endfor %}
+]

@@ -1,0 +1,41 @@
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+
+{% block header %}
+    <header class="page-header">
+        <h1>{{ 'dashboard.ga.setup.title' | trans }}</h1>
+    </header>
+{% endblock %}
+
+{% block extracss %}
+    {% stylesheets
+    "@KunstmaanDashboardBundle/Resources/ui/scss/_dashboard.scss"
+        output='KunstmaanDashboardBundleAssets/css/DashboardStyle.min.css'
+        filter="scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    {% include '@KunstmaanDashboard/GoogleAnalytics/setup.html.twig'
+        with {
+            'accountId' : accountId,
+            'propertyId' : propertyId,
+            'properties' : properties,
+            'profileId' : profileId,
+            'profiles' : profiles,
+            'accounts' : accounts,
+            'segments' : segments,
+            'disableGoals' : disableGoals
+        }
+    %}
+{% endblock %}
+
+{% block extrajavascript %}
+    {% javascripts
+    '@KunstmaanDashboardBundle/Resources/ui/js/setup/setup.js'
+    output='KunstmaanDashboardBundleAssets/js/ga-widget-setup.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

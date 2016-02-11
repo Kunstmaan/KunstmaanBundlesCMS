@@ -1,0 +1,19 @@
+{% if resource.items|length > 0 %}
+    <div class="row">
+        {% for uspItem in resource.items %}
+            <div class="col-sm-4 col--padded usp-pp text--center">
+                <figure class="img-icon">
+                    <img src="{{ uspItem.icon.url }}" alt="{{ uspItem.title }}" class="img-icon__img">
+                </figure>
+                <h5>
+                    {{ uspItem.title }}
+                </h5>
+                {% if uspItem.description %}
+                    <p>
+                        {{ uspItem.description }}
+                    </p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

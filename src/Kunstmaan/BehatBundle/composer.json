@@ -1,0 +1,37 @@
+{
+    "name": "kunstmaan/behat-bundle",
+    "type": "symfony-bundle",
+    "description": "Extends the MinkContext and adds some additional (sub)contexts like creating a screenshot when a step fails or wait for Ajax to finish before continuing assertPageContainsText()",
+    "keywords": [ "kunstmaan", "cms", "behat"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanBehatBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/symfony": "~2.3",
+        "behat/behat": "~2.5.0",
+        "behat/mink": "*",
+        "behat/symfony2-extension": "*",
+        "behat/mink-extension": "*",
+        "behat/mink-browserkit-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-sahi-driver": "*",
+        "phpunit/phpunit": "~3.7"
+    },
+    "autoload": {
+        "psr-0": { "Kunstmaan\\BehatBundle\\": "" }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    }
+}

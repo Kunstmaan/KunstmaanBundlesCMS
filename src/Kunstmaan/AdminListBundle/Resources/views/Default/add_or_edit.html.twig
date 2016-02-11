@@ -1,0 +1,60 @@
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
+
+{% block header %}
+    {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
+    {{ parent() }}
+{% endblock %}
+
+{% block extra_actions_header %}
+    <div class="col-sm-6 col-md-4">
+        <!-- Main-actions -->
+        <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
+            <div class="btn-group">
+                {% block actions %}
+                    <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                        {{ 'Save' | trans }}
+                    </button>
+                    <a href="{{ path(adminlistconfigurator.getIndexUrl()["path"], adminlistconfigurator.getIndexUrl()["params"]) }}" class="btn btn-default btn--raise-on-hover">
+                        {{ 'form.cancel' | trans }}
+                    </a>
+
+                    {% if adminlistconfigurator.hasItemActions() %}
+                        {% for itemAction in adminlistconfigurator.getItemActions() %}
+                            <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                                {% if itemAction.getIconFor(entity) is not null %}
+                                    <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
+                                {% endif %}
+                                {{ itemAction.getLabelFor(entity) }}
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll-actions -->
+    <div class="page-main-actions page-main-actions--top" id="page-main-actions-top">
+        <div class="btn-group">
+            {{ block('actions') }}
+            <button type="button" class="js-scroll-to-top btn btn-default btn--raise-on-hover">
+                <i class="fa fa-caret-up"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+        <!-- Fields -->
+        <fieldset class="form__fieldset--padded">
+            {% block form_content %}
+                {% if tabPane is defined %}
+                    {{ tabs_widget(tabPane) }}
+                {% else %}
+                    {{ form_rest(form) }}
+                {% endif %}
+            {% endblock %}
+        </fieldset>
+    </form>
+{% endblock %}

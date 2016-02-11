@@ -1,0 +1,43 @@
+/* ==========================================================================
+   Blocks - Image icon
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.img-icon {
+    position: relative;
+
+    width: 5rem;
+    height: 5rem;
+    margin: 0 auto;
+
+    background: $blue;
+    border-radius: 100%;
+}
+
+.img-icon__img {
+    transform: translateY(-50%);
+
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+
+    width: 2rem;
+}
+
+
+
+/*doc
+---
+title: Img Icon
+name: 07_img-icon
+category: Blocks
+---
+
+```html_example
+<figure class="img-icon">
+    <img src="http://placehold.it/50x50" alt="" class="img-icon__img">
+</figure>
+```
+
+*/

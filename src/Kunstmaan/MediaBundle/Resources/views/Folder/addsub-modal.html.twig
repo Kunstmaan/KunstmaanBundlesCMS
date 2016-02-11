@@ -1,0 +1,35 @@
+<div id="addsub-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'media.folder.addsub.modal.title' | trans }}
+                </h3>
+            </div>
+
+            {% form_theme subform '@KunstmaanAdmin/Form/fields.html.twig' %}
+            {{ form_start(subform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_sub_create', { 'folderId' : folder.id , 'type' : type }), 'attr': {'id': 'addsub-modal-form'}}) }}
+
+                <!-- Body -->
+                <div class="modal-body">
+                    {{ form_widget(subform) }}
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="js-add-app-loading--forms btn btn-primary btn--raise-on-hover">
+                        {{ 'media.folder.addsub.modal.save' | trans }}
+                    </button>
+                    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'form.cancel' | trans }}
+                    </button>
+                </div>
+            {{ form_end(subform) }}
+        </div>
+    </div>
+</div>

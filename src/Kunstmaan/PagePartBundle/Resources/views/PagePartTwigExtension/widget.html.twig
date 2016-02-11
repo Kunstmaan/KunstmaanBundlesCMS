@@ -1,0 +1,4 @@
+{% for box in pageparts %}
+    {% set resource = box %}
+    {% include box.getView(page) %}
+{% endfor %}

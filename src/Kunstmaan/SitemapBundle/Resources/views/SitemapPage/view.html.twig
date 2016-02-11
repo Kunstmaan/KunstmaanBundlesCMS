@@ -1,0 +1,9 @@
+<ul class="sitemap">
+    {% if nodemenu is defined %}
+        {% for topNode in nodemenu.getTopNodes() %}
+            {% for node in topNode.getChildren() %}
+                {% include '@KunstmaanSitemap/SitemapPage/entry.html.twig' with {'entry' : node} %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+<ul>

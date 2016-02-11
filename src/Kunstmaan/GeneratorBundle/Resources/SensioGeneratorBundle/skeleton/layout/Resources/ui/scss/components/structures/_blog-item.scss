@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Structures - Blog item
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.blog-item--summary {
+
+    border-bottom: 1px solid $grey--light;
+    padding-bottom: 2em;
+
+    .blog-item__head__title {
+        margin-bottom: .5rem;
+        text-transform: none;
+        font-weight: 400;
+    }
+}
+
+
+/* Title
+   ========================================================================== */
+.blog-item__head {
+    margin-top: 2rem;
+}
+
+.blog-item__head__meta {
+    font-size: .6rem;
+    text-transform: uppercase;
+    color: $grey;
+}
+
+.blog-item__head__title {
+    margin-top: 0;
+}
+
+
+/* Read more
+   ========================================================================== */
+.blog-item__read-more {
+    margin: 0;
+}
+
+
+/*doc
+---
+title: Blog Item
+name: 05_blogitem
+category: Structures
+---
+
+<strong>General</strong>
+
+```html_example
+<article class="blog-item">
+    <header class="blog-item__head">
+    <time class="blog-item__head__meta">
+        23/03/2015 | <strong>John Doe</strong>
+    </time>
+    <h3 class="blog-item__head__title">
+        <a href="#">
+        Blog title
+        </a>
+    </h3>
+    </header>
+
+    <p>
+    Enim ipsum aut nobis corrupti ad aut molestiae. Nisi illo rerum doloribus.
+    Consequuntur est quis quis aperiam voluptas dolores. Non modi asperiores vel.
+    Cum sit asperiores cupiditate incidunt quos dolores. Est quia aut neque architecto corrupti laudantium non.
+    Cupiditate autem ut at unde sit.
+    </p>
+</article>
+```
+
+<strong>Summary</strong>
+
+```html_example
+<article class="blog-item blog-item--summary">
+    <header class="blog-item__head">
+    <time class="blog-item__head__meta">
+        23/03/2015 | <strong>John Doe</strong>
+    </time>
+    <h3 class="blog-item__head__title">
+        <a href="#">
+        Blog title
+        </a>
+    </h3>
+    </header>
+
+    <p>
+    Enim ipsum aut nobis corrupti ad aut molestiae. Nisi illo rerum doloribus.
+    Consequuntur est quis quis aperiam voluptas dolores. Non modi asperiores vel.
+    Cum sit asperiores cupiditate incidunt quos dolores. Est quia aut neque architecto corrupti laudantium non.
+    Cupiditate autem ut at unde sit.
+    </p>
+
+    <p class="text--right blog-item__read-more">
+    <a href="#" class="blog-item__read-more__link">
+        Read more
+    </a>
+    </p>
+</article>
+```
+
+*/

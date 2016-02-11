@@ -1,0 +1,35 @@
+{
+  "name": "kunstmaan/lead-generation-bundle",
+  "type": "symfony-bundle",
+  "description": "This bundle makes it easy to create lead generation popups for your website.",
+  "keywords": [
+    "kunstmaan",
+    "lead generation",
+    "leads",
+    "popup",
+    "modal"
+  ],
+  "homepage": "https://github.com/Kunstmaan/KunstmaanLeadGenerationBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kunstmaan Team",
+      "homepage": "http://www.kunstmaan.be/",
+      "email": "support@kunstmaan.be"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.5.0",
+    "symfony/symfony": "~2.8",
+    "kunstmaan/adminlist-bundle": "~3.2"
+  },
+  "autoload": {
+    "psr-4": { "Kunstmaan\\KunstmaanLeadGenerationBundle\\": "" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.5-dev"
+    }
+  }
+}

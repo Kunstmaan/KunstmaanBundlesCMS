@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cargo Bay Full Image Background</title>
+
+    <meta name="description" content="Cargo Bay Full Image Background">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type='text/css' />
+    <link rel="stylesheet" href="../styles/css/full-img-bg.css" type='text/css' />
+
+    <script src="js/modernizr.custom.min.js"></script>
+</head>
+<body class="full-img-bg" style="background-image: url(http://placehold.it/1440x900/&amp;text=Background);" data-backstretch-img="http://placehold.it/1440x900/&amp;text=Background">
+    <div class="container">
+	<header>
+	    <h1>Cargo Bay Full Image Background</h1>
+	</header>
+
+	<main role="main">
+	    <p>
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, temporibus, quibusdam cumque labore molestiae odit expedita animi qui perferendis aliquam quis ipsa quae dolor. Tenetur, esse, expedita, sit aperiam voluptate laborum sunt deserunt enim quas voluptates impedit fuga pariatur ratione perspiciatis doloribus nam itaque eaque repellendus est ab id a consectetur totam delectus eius! Quae, itaque rerum aliquam cum illum veritatis magnam incidunt quos dignissimos quisquam placeat officiis architecto tenetur. Debitis, error animi excepturi alias earum?
+	    </p>
+	</main>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+	$(function(){
+	    Modernizr.load({
+	      test: Modernizr.backgroundsize,
+	      nope: ['http://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js', '../js/full-img-bg.js'],
+	      callback: function(url, result, key) {
+		  if(key == 1) { // when second file in array is loaded, execute the init
+		    cargobay.backstretch.init();
+		  }
+	      }
+	    });
+	})
+    </script>
+</body>
+</html>

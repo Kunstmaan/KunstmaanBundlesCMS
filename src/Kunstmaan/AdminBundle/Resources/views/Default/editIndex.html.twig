@@ -1,0 +1,29 @@
+{% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
+
+{% form_theme form 'KunstmaanAdminBundle:Form:fields.html.twig' %}
+
+{% block content %}
+    <header class="page-header">
+        <h1>
+            {{ 'Edit dashboard' | trans | raw }}
+        </h1>
+    </header>
+
+    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanAdminBundle_homepage_admin')}) }}
+        <fieldset class="form__fieldset--padded">
+            {{ form_errors(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.content) }}
+            {{ form_rest(form) }}
+
+            <div class="form-actions form-actions--padded">
+                <button type="submit" class="btn btn-primary btn--raise-on-hover">
+                    {{ 'form.save' | trans }}
+                </button>
+                <a href="{{ path('KunstmaanAdminBundle_homepage') }}" class="btn btn-default btn--raise-on-hover">
+                    {{ 'form.cancel' | trans }}
+                </a>
+            </div>
+        </fieldset>
+    {{ form_end(form) }}
+{% endblock %}

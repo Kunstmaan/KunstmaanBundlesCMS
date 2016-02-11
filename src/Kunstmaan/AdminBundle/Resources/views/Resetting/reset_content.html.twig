@@ -1,0 +1,16 @@
+<p>
+    {{ 'Choose a new password' |trans }}
+</p>
+
+{{ form_start(form, {'method': 'POST', 'action': path('fos_user_resetting_reset', { 'token' : token })}) }}
+    <div class="form-group">
+        {{ form_widget(form) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary btn--raise-on-hover">
+        {{ 'Reset password' | trans }}
+    </button>
+    <a href="{{ path('fos_user_security_login' ) }}" class="btn btn-default btn--raise-on-hover">
+        {{ 'form.cancel' | trans }}
+    </a>
+{{ form_end(form) }}

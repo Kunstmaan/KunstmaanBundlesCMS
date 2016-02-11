@@ -1,0 +1,78 @@
+{% block content %}
+    <h2>{{ page.title }}</h2>
+    <form method="get" action="" class="well form-search">
+        <input type="text" name="query" id="query" class="input-medium search-query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" />
+    <input type="submit" name="search" id="search" value="{{ 'search.search'|trans }}" class="btn" />
+    &nbsp;&nbsp;{% if q_query is defined and q_query != '' %}{{ 'search.looking_for'|trans({'%query%': q_query}) }}{% endif %}
+    </form>
+    {% if q_query is defined and q_query != '' %}
+        <h3>{{ 'search.results'|trans }}</h3>
+        <div class="span12" style="margin-left: 0">
+            <div class="span9" style="margin-left: 0">
+                <div class="span9" style="margin-left: 0">
+                    {% for searchresult in pagerfanta.currentPageResults %}
+                        {% if not loop.first %}<hr />{% endif %}
+                        <div style=" margin-right: 20px;">
+                            <h4><a href="{{ searchresult['_source']['slug'] }}">{{ searchresult['_source']['title'] }}</a></h4>
+                            {% if searchresult['highlight'] is defined %}
+                                <p>{{ searchresult['highlight']['content'][0] | raw }}</p>
+                            {% else %}
+                                <p>{{ searchresult['_source']['content'] | truncate(300) | escape('html') }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {# Pagination #}
+                {% if pagerfanta.haveToPaginate() %}
+                    {{ pagerfanta(pagerfanta, 'twitter_bootstrap3_translated', { 'prev_message': '<i class="icon icon--caret--left"></i>', 'next_message': '<i class="icon icon--caret--right"></i>', 'active_suffix': '' }) }}
+                {% endif %}
+            </div>
+
+            {% set facets = pagerfanta.getAdapter().getFacets() %}
+            {% if facets is not empty %}
+                <div class="span3 well-small" style="margin: 0; border-left:1px solid #E3E3E3;">
+                    {% if facets['tag']['terms']|length > 0 %}
+                        <p><strong>Tags</strong></p>
+                        <ul>
+                            {% for tag in facets['tag']['terms'] %}
+                                <li>
+                                    {% if tag['term'] not in s_tags %}
+                                    {% set tags = tag['term'] %}
+                                    {% if q_tags %}
+                                        {% set tags = tags ~ ',' ~ q_tags %}
+                                    {% endif %}
+                                    <a href="?query={{ q_query }}&tag={{ tags }}">
+                                        {% endif %}
+                                        {{ tag['term'] }}
+                                        {% if tag['term'] not in s_tags %}
+                                        ({{ tag['count'] }})</a>
+                                {% else %}
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&rtag={{ tag['term'] }}">(-)</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if facets['type']['terms']|length > 0 %}
+                        <p><strong>Types</strong></p>
+                        <ul>
+                            {% for type in facets['type']['terms'] %}
+                                <li>
+                                    {% if type['term'] != q_type %}
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&type={{ type['term'] }}">
+                                        {% endif %}
+                                        {{ type['term'] }}
+                                        {% if type['term'] != q_type %}
+                                        ({{ type['count'] }})</a>
+                                {% else %}
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}">(-)</a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

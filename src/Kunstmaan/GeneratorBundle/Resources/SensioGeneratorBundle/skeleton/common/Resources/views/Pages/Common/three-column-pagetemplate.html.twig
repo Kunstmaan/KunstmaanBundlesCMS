@@ -1,0 +1,16 @@
+<div class="row-fluid">
+    <div class="span3">
+        {{ render_pageparts(page, 'left_sidebar') }}
+    </div>
+    <div class="span6">
+        {{ render_pageparts(page, 'main') }}
+    </div>
+    <div class="span3">
+        {{ render_pageparts(page, 'right_sidebar') }}
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        {{ render_pageparts(page, 'footer') }}
+    </div>
+</div>

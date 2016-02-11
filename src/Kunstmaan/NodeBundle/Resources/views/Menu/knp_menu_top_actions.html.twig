@@ -1,0 +1,16 @@
+{% extends '@KunstmaanNode/Menu/knp_menu_actions.html.twig' %}
+
+{% block list %}
+    {% import 'knp_menu.html.twig' as macros %}
+
+    {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        <div {{ macros.attributes(listAttributes) }}>
+            <div class="btn-group">
+                {{ block('children') }}
+                <button type="button" class="js-scroll-to-top btn btn-default">
+                    <i class="fa fa-caret-up"></i>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

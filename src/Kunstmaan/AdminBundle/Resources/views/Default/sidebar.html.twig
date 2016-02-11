@@ -1,0 +1,37 @@
+<!-- Search -->
+<button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
+    <i class="fa fa-search"></i>
+</button>
+<div id="sidebar-search-toggle" class="toggle-item">
+    <div class="toggle-item__content">
+        <div class="app__sidebar__search-toggle-item">
+            <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+            <hr>
+        </div>
+    </div>
+</div>
+
+<!-- Tree -->
+{% set currentMenuItem = adminmenu.current %}
+<nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation"
+    data-reorder-url="{% if nodebundleisactive is defined %}{{ path('KunstmaanNodeBundle_nodes_reorder') }}{% endif %}"
+    data-moving-confirmation="{{ "pages.movingconfirmation"|trans }}">
+    {% set currentMenuItem = adminmenu.current %}
+    <ul>
+    {% if lowestTopChild.appearInSidebar %}
+        <li class="jstree-open {% if lowestTopChild.internalname == currentMenuItem.internalname %}active{% endif %}" {% if lowestTopChild.role %} rel="{{lowestTopChild.role}}" {% endif %}>
+            <a href="{{ path(lowestTopChild.route, lowestTopChild.routeparams) }}" class="{% if lowestTopChild.internalname == currentMenuItem.internalname %}jstree-anchor--active{% endif %}">
+                {{ lowestTopChild.internalname | trans }}
+            </a>
+            <ul>
+    {% endif %}
+    {% set treeLevel = 1 %}
+    {% for menuitem in navigationChildren %}
+        {% include '@KunstmaanAdmin/Default/rectreeview.html.twig' %}
+    {% endfor %}
+    {% if lowestTopChild.appearInSidebar %}
+            </ul>
+        </li>
+    {% endif %}
+    </ul>
+</nav>

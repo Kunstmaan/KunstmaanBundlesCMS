@@ -1,0 +1,156 @@
+/* ==========================================================================
+   Media Thumbnail
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.media-thumbnail {
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+    min-height: 20rem;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    @media (min-width: $screen-lg) {
+
+        &:hover {
+            .media-thumbnail__helper {
+                opacity: 1;
+            }
+
+            & + .media-thumbnail-del-btn {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+
+/* Image
+   ========================================================================== */
+.media-thumbnail__img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+
+
+/* Icon
+   ========================================================================== */
+.media-thumbnail__icon {
+    display: block;
+    margin: 2rem 0;
+
+    color: $gray-light;
+    font-size: 6rem;
+    text-align: center;
+}
+
+
+
+/* Caption
+   ========================================================================== */
+.media-thumbnail__caption {
+    position: relative;
+
+    display: block;
+    width: 100%;
+    margin: 1rem 0 0;
+    overflow: hidden;
+
+    font-size: 1.2rem;
+    color: $gray-light;
+
+    text-align: center;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        display: block;
+        width: 5%;
+        height: 100%;
+
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) ,rgba(255, 255, 255, 1) 100%);
+    }
+}
+
+
+
+/* Helper
+   ========================================================================== */
+.media-thumbnail__helper {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+
+    font-size: 1.2rem;
+    color: $blue;
+
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+
+        transition: opacity .3s ease;
+    }
+}
+
+
+
+/* Delete
+   ========================================================================== */
+.media-thumbnail-del-btn {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
+
+    padding: .2em .5em;
+    border-radius: 0 $default-border-radius 0 $default-border-radius;
+
+    &, &:hover {
+        background: $red;
+        color: $white;
+    }
+
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+
+        transition: opacity .3s ease;
+
+    &:hover {
+        opacity: 1;
+
+        + .media-thumbnail-del-helper {
+            opacity: 1;
+        }
+    }
+    }
+}
+
+.media-thumbnail-del-helper {
+    z-index: 2;
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2rem;
+
+    display: none;
+
+    font-size: 1.2rem;
+    color: $red;
+
+    @media (min-width: $screen-lg) {
+        display: block;
+        opacity: 0;
+
+        transition: opacity .3s ease;
+    }
+}

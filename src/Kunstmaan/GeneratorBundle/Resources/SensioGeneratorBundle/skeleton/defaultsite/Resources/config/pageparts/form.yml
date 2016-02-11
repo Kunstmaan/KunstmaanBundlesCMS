@@ -1,0 +1,9 @@
+name: "Form"
+context: "main"
+types:
+    - { name: "Single Line text input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\SingleLineTextPagePart" }
+    - { name: "Multi Line text input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\MultiLineTextPagePart" }
+    - { name: "Email input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\EmailPagePart" }
+    - { name: "File upload", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\FileUploadPagePart" }
+    - { name: "Choice input", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\ChoicePagePart" }
+    - { name: "Submit button", class: "Kunstmaan\\FormBundle\\Entity\\PageParts\\SubmitButtonPagePart" }

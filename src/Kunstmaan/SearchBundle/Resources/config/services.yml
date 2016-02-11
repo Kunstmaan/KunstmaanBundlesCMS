@@ -1,0 +1,47 @@
+parameters:
+    kunstmaan_search.hostname: 'localhost'
+    kunstmaan_search.port: 9200
+    kunstmaan_search.search_provider: 'Elastica'
+    kunstmaan_search.search_configuration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
+    kunstmaan_search.search_provider_chain.class: Kunstmaan\SearchBundle\Provider\SearchProviderChain
+    kunstmaan_search.search.class: Kunstmaan\SearchBundle\Search\Search
+    kunstmaan_search.search.factory.analysis.class: Kunstmaan\SearchBundle\Search\AnalysisFactory
+    kunstmaan_search.search_provider.elastica.class: Kunstmaan\SearchBundle\Provider\ElasticaProvider
+
+services:
+    kunstmaan_search.search:
+        class: '%kunstmaan_search.search.class%'
+        arguments: ['@kunstmaan_search.search_provider_chain', '%searchindexprefix%', '%kunstmaan_search.search_provider%']
+
+    kunstmaan_search.search.factory.analysis:
+        class: '%kunstmaan_search.search.factory.analysis.class%'
+
+    # Providers
+    kunstmaan_search.search_provider_chain:
+        class: '%kunstmaan_search.search_provider_chain.class%'
+
+    kunstmaan_search.search_provider.elastica:
+        class: '%kunstmaan_search.search_provider.elastica.class%'
+        calls:
+            - [ addNode, ['%kunstmaan_search.hostname%', '%kunstmaan_search.port%'] ]
+        tags:
+            - { name: kunstmaan_search.search_provider, alias: Elastica }
+
+    # Configurations
+    kunstmaan_search.search_configuration_chain:
+        class: '%kunstmaan_search.search_configuration_chain.class%'
+
+    kunstmaan_search.command.setup:
+        class: Kunstmaan\SearchBundle\Command\SetupIndexCommand
+        calls:
+            - [setContainer, ['@service_container'] ]
+
+    kunstmaan_search.command.delete:
+        class: Kunstmaan\SearchBundle\Command\DeleteIndexCommand
+        calls:
+            - [setContainer, ['@service_container'] ]
+
+    kunstmaan_search.command.populate:
+        class: Kunstmaan\SearchBundle\Command\PopulateIndexCommand
+        calls:
+            - [setContainer, ['@service_container'] ]

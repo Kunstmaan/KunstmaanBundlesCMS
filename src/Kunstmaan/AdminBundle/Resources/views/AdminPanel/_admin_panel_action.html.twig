@@ -1,0 +1,13 @@
+{% set params = action.getUrl()[("params")]|default([]) %}
+{% set attributes = action.getUrl()[("attrs")]|default(null) %}
+<li>
+    <a href="{{ path(action.getUrl()[("path")], params) }}" {% if attributes is not empty %}{% for key,value in attributes %}{{ key }}="{{ value }}" {% endfor %}{% endif %}>
+    {% if action.getIcon() is not null %}
+        <i class="fa fa-{{ action.getIcon() }}"></i>
+    {% endif %}
+    {% if (action.getLabel()) is not empty %}
+        &nbsp;
+        {{ action.getLabel() }}
+    {% endif %}
+    </a>
+</li>

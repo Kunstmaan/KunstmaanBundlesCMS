@@ -1,0 +1,220 @@
+@import "config";
+
+/* ==========================================================================
+   Custom Audioplayer
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.audioplayer {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    max-width: $audioplayer-max-width;
+    height: $audioplayer-height;
+    background: $audioplayer-background;
+}
+
+
+/* Default Player
+   ========================================================================== */
+.audioplayer__defaultplayer {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+
+/* Play-Pause
+   ========================================================================== */
+.audioplayer__playpause {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $audioplayer-playpause-width;
+    height: $audioplayer-playpause-height;
+    padding: 0;
+    background: $audioplayer-playpause-background;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: $audioplayer-playpause-color;
+}
+.audioplayer__playpause__icon-play {
+    display: block;
+}
+.audioplayer__playpause__icon-pause {
+    display: none;
+}
+
+.audioplayer--playing {
+    .audioplayer__playpause {
+	background: $audioplayer-playpause-playing-background;
+	color: $audioplayer-playpause-playing-color;
+    }
+    .audioplayer__playpause__icon-play {
+	display: none;
+    }
+    .audioplayer__playpause__icon-pause {
+	display: block;
+    }
+}
+
+
+/* Bar
+   ========================================================================== */
+.audioplayer__bar, .audioplayer__bar--loaded, .audioplayer__bar--played {
+    position: absolute;
+}
+.audioplayer__bar {
+    z-index: 1;
+    top: 50%;
+    right: 1em;
+    left: 3.5em;
+    height: .75em;
+    margin-top: -0.375em;
+    background-color: $audioplayer-bar-background;
+    cursor: pointer;
+    @media (min-width: $audioplayer-breakpoint-mobile-version) {
+	right: 6em;
+	left: 6em;
+    }
+}
+.audioplayer__bar--loaded, .audioplayer__bar--played {
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+}
+.audioplayer__bar--loaded {
+    background-color: $audioplayer-bar-loaded-background;
+    z-index: 1;
+}
+.audioplayer__bar--played {
+    background-color: $audioplayer-bar-played-background;
+    z-index: 2;
+}
+
+
+/* Time
+   ========================================================================== */
+.audioplayer__time {
+    float: left;
+    margin-top: ($audioplayer-height + 1.5);
+    color: $audioplayer-time-mobile-color;
+    font-size: $audioplayer-time-font-size;
+    line-height: 100%;
+    @media (min-width: $audioplayer-breakpoint-mobile-version) {
+	position: absolute;
+	top: 50%;
+	margin: -.5em 0 0;
+	color: $audioplayer-time-color;
+    }
+}
+.audioplayer__time--current {
+    left: 0;
+    &:after {
+	content: '-';
+	margin: 0 .5em;
+    }
+    @media (min-width: $audioplayer-breakpoint-mobile-version) {
+	left: 5em;
+	&:after {
+	    display: none;
+	}
+    }
+}
+.audioplayer__time--duration {
+    left: 4em;
+    @media (min-width: $audioplayer-breakpoint-mobile-version) {
+	left: auto;
+	right: 5em;
+    }
+}
+
+
+/* Volume
+   ========================================================================== */
+.audioplayer__volume {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    width: $audioplayer-volume-width;
+    height: $audioplayer-volume-height;
+    &:hover {
+	.audioplayer__volume__adjust {
+	    display: block;
+	}
+    }
+    @media (min-width: $audioplayer-breakpoint-mobile-version) {
+	display: block;
+    }
+}
+.audioplayer__volume__button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    line-height: 2.5em;
+    background: $audioplayer-volume-button-background;
+    color: $audioplayer-volume-button-color;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+.audioplayer__volume__button__icon-volume-up {
+    display: block;
+}
+.audioplayer__volume__button__icon-volume-off {
+    display: none;
+}
+.audioplayer--muted {
+    .audioplayer__volume__button__icon-volume-up {
+	display: none;
+    }
+    .audioplayer__volume__button__icon-volume-off {
+	display: block;
+    }
+}
+.audioplayer__volume__adjust {
+    position: absolute;
+    top: auto;
+    bottom: 100%;
+    display: none;
+    width: 100%;
+    height: $audioplayer-volume-adjust-height;
+    cursor: default;
+    background: $audioplayer-volume-adjust-background;
+}
+.audioplayer__volume__adjust__control {
+    z-index: 1;
+    position: relative;
+    width: 40%;
+    height: 80%;
+    margin: 30% auto 0;
+    background-color: $audioplayer-volume-adjust-control-background;
+    cursor: pointer;
+}
+.audioplayer__volume__adjust__control__state {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $audioplayer-volume-adjust-control-state-background;
+}
+
+
+/* Mini fallback player
+   ========================================================================== */
+.audioplayer--mini {
+    width: 2.5em;
+}
+.audioplayer--mini .audioplayer__playpause {
+    width: 100%;
+}

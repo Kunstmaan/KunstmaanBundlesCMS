@@ -1,0 +1,69 @@
+# Pages
+pages:
+  title: Pages
+  parts: PageParts
+  draft: Brouillon
+  pagenottranslated: "Cette page n'est pas traduite"
+  copyfrom: Copier à partir de la langue
+  createemptypage: Créer une page vide
+
+# Modules
+modules:
+  title: Modules
+
+# Settings
+settings:
+  title: Paramètres
+  maintanance: Maintenance
+  scheduled: Tâches plannifiées
+  version:
+      bundle: Versions des Bundles
+      composer_lock_not_found: Pas de composer.lock trouvé dans le root du projet
+      error_parsing_composer: Erreur dans composer.lock, json pas valide
+      error: Something went wrong while fetching the version information. Please try again later.
+      moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+      uptodate: à jour
+      toupdate: peut être mis à jour vers
+      unknown: version information unknown
+
+# Tools
+tools:
+  title: Outils
+  clear_frontend_cache: Vider le cache frontend
+  clear_backend_cache: Vider le cache backend
+  clear_all_caches: Vider tous les caches
+  shutdown: Shutdown
+
+# Forms
+form:
+  cancel: Annuler
+  delete: Supprimer
+  deletesure: Êtes-vous sûr de vouloir supprimer ce ?
+  edit: Modifier
+  add: Ajouter nouveau
+  save: Sauver
+  publish: Publier
+  unpublish: Dé-publier
+  saveasdraft: Sauver comme brouillon
+  name: Nom
+  type: Type
+  error: Erreur
+  warning: Avertissement
+  headsup: Attention
+  forgot:
+    password: Mot de passe oublié.
+  permissions: Permissions
+  properties: Propriétés
+  createdat: Créé le
+  updatedat: Modifié le
+  actions: Actions
+  addfilter: Ajouter un filtre
+  choosetypefilter: Filtrer sur
+  versions: Versions
+
+omnext:
+  home: Accueil
+  title: Bienvenue!
+  welcome: Bienvenue.
+  information: <strong>Information.</strong> Il n'y a pas de nouvelles notifications.
+

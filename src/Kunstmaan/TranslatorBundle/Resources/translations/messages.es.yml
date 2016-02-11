@@ -1,0 +1,15 @@
+translator:
+    translator:
+        title: Traducciones
+
+settings:
+    translator:
+        add: Agregar traducción
+        edit: Editar traducción
+        refresh_live: Actualizar en vivo
+        import_translations: Importar
+        import_translations_forced: Forzar importación
+        not_live_warning: "Las traducciones en el sitio en vivo no están actualizadas, haga click en 'Actualizar en vivo' para actulizar a las últimas traducciones."
+        choose_language: "Elegir lenguage"
+        succesful_added: "Traducción creada correctamente"
+        succesful_edited: "Traducción editada correctamente"

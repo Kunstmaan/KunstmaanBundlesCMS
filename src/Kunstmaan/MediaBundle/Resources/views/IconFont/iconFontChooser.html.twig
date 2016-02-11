@@ -1,0 +1,20 @@
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+
+{% block extracss %}
+    <link rel="stylesheet" type="text/css" href="{{ loader.cssLink }}">
+{% endblock %}
+
+{% block extraparamsinbody %}
+    id="smallWindow"
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <!--=========Content=========-->
+        <div class="content iconfont-list">
+            {% for class in loader.cssClasses %}
+                <div class="js-icon-chooser__icon {{ class }}" data-icon-class="{{ class }}" style="font-size:30px;padding:15px;cursor:pointer;margin: 5px;border: 1px solid #ccc;display: inline-block;"></div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

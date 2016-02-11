@@ -1,0 +1,31 @@
+{
+    "name": "kunstmaan/sitemap-bundle",
+    "type": "symfony-bundle",
+    "description": "A sitemap bundle to generate a sitemap for your Kunstmaan bundles website based on its Nodes",
+    "keywords": [ "kunstmaan", "cms", "sitemap"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanSitemapBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2",
+        "friendsofsymfony/user-bundle": "2.0.*@dev"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": { "Kunstmaan\\SitemapBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    }
+}

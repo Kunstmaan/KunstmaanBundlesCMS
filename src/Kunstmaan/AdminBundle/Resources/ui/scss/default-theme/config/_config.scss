@@ -1,0 +1,26 @@
+/* ==========================================================================
+   Config
+
+   This file is exclusively intended for setting up imports
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+@import "general/colors",
+        "general/border-radius",
+        "general/z-index",
+        "general/typography/fonts",
+        "general/typography/headings",
+        "general/typography/bodycopy";
+
+
+/* Vendors
+   ========================================================================== */
+@import "vendors/bourbon/bourbon-imports",
+        "vendors/font-awesome/font-awesome-vars",
+        "vendors/font-awesome/font-awesome-imports",
+        "vendors/bootstrap/bootstrap-vars",
+        "vendors/bootstrap/bootstrap-imports",
+        "vendors/cargobay/cargobay-vars",
+        "vendors/cargobay/cargobay-imports";

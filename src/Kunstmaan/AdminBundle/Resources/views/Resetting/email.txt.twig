@@ -1,0 +1,25 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block subject %}
+{% autoescape false %}
+    {{ 'resetting.email.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
+{% endautoescape %}
+{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+Hello {{ user.username }},
+
+We received a request to change the password associated with your account via the Forgot Password form on our website.
+
+If you made this request and wish to complete this process, please visit the link below:
+{{ confirmationUrl }}
+
+If you did not make this request, please ignore this email.
+
+Thanks
+
+{% endautoescape %}
+{% endblock %}
+
+{% block body_html %}{% endblock %}

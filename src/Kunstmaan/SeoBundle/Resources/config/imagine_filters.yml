@@ -1,0 +1,18 @@
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: uploads/cache
+    driver: imagick
+    data_loader: default
+    filter_sets:
+        fb_og_image:
+            quality: 85
+            filters:
+              relative_resize: { widen: 1200 }
+              strip: ~
+        tw_card_image:
+            quality: 85
+            filters:
+              relative_resize: { widen: 435 }
+              strip: ~

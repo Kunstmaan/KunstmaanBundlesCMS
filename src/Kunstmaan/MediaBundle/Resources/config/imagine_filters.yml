@@ -1,0 +1,22 @@
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: uploads/cache
+    driver: imagick
+    data_loader: default
+    filter_sets:
+        media_list_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [210, 150], mode: outbound }
+                relative_resize: { widen: 210 }
+        media_list_thumbnail_retina:
+            quality: 85
+            filters:
+                thumbnail: { size: [420, 300], mode: outbound }
+                relative_resize: { widen: 420 }
+        media_detail_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [700, 500], mode: inset }

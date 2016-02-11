@@ -1,0 +1,13 @@
+# Form Submissions
+formsubmissions:
+  index:
+    title: Form pages with submissions
+  menu:
+    title: Submissions
+  list:
+    title: Form submissions for page
+  edit:
+    title: Form submission for page
+
+subaction:
+    formsubmissions: "Submissions"

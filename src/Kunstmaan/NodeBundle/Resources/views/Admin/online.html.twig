@@ -1,0 +1,14 @@
+{% set online = adminlist.getValue(row, columnName) %}
+{% if online == false %}
+    <i class="fa fa-square-o"></i>
+    <span class="text--muted">
+        {{ ' (Offline)' | trans }}
+    </span>
+{% elseif online == true %}
+    <i class="fa fa-check-square-o"></i>
+    <span class="text--muted">
+        {{ ' (Online)' | trans }}
+    </span>
+{% else %}
+    {{ online }}
+{% endif %}

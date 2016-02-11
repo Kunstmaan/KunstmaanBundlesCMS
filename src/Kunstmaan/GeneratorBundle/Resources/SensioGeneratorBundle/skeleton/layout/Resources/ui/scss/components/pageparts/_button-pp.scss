@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Pageparts - Button pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.btn-pp {
+    margin: $default-margin 0;
+}
+
+
+/* Alignment
+   ========================================================================== */
+.btn-pp--left {
+    text-align: left;
+}
+
+.btn-pp--center {
+    text-align: center;
+}
+
+.btn-pp--right {
+    text-align: right;
+}
+
+.btn-pp--block {
+
+    .btn {
+        display: block;
+    }
+}
+
+/*doc
+---
+title: button-pp
+name: 02_button-pp
+category: Pageparts
+---
+
+```html_example
+<p class="btn-pp btn-pp--left">
+    <a href="/" class="btn btn--primary  btn--left">
+        button text
+    </a>
+</p>
+
+
+<p class="btn-pp btn-pp--center">
+    <a href="/" class="btn btn--secondary btn--xl btn--center">
+        button text
+    </a>
+</p>
+
+
+<p class="btn-pp btn-pp--right">
+    <a href="/" class="btn btn--tertiary btn--lg btn--right">
+        button text
+    </a>
+</p>
+
+
+<p class="btn-pp btn-pp--block">
+    <a href="/" class="btn btn--quaternary btn--sm btn--block">
+        button text
+    </a>
+</p>
+
+
+<p class="btn-pp btn-pp--center">
+    <a href="/" class="btn btn--primary btn--xs btn--center">
+        button text
+    </a>
+</p>
+```
+
+*/

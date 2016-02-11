@@ -1,0 +1,68 @@
+{% if token %}
+    <div class="dashboard">
+    {% if segments | length > 0 %}
+        <nav id="segment-menu" class="segment-menu">
+            <select class="form-control">
+                    <option data-segment-id="#" data-config-id="{% if configId is defined %}{{configId}}{% endif %}"{% if segmentId is null %} selected{% endif %}>Default</option>
+                    {% for segment in segments %}
+                        <option data-segment-id="{{segment.id}}" data-config-id="{{segment.config.id}}"{% if segment.id == segmentId %} selected{% endif %}>
+                            {{segment.name}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </nav>
+        {% endif %}
+
+        <div id="data_overview" class="dashboard__content--loading">
+            <!-- TABS -->
+            {% include '@KunstmaanDashboard/GoogleAnalytics/tabs.html.twig' with {'overviews' : overviews} %}
+            <!-- end TABS -->
+
+            <!-- TAB CONTENT -->
+            <section class="dashboard__content">
+                <!-- CHART -->
+                {% include '@KunstmaanDashboard/GoogleAnalytics/chart.html.twig' %}
+                <!-- end CHART -->
+
+                {% for overview in overviews %}
+                    <!-- GOALS -->
+                    {% include '@KunstmaanDashboard/GoogleAnalytics/goals.html.twig' with {'overview':overview} %}
+                    <!-- end GOALS -->
+                {% endfor %}
+            </section>
+            <!-- end TAB CONTENT -->
+
+            <div id="data_no_overview" style="display:none">
+                <section class="dashboard__content">
+                    <p>{{ 'dashboard.ga.unavailable' | trans}}</p>
+                    {% if configId is not defined %}
+                        <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'segmentId':segmentId}) }}" class="dashboard_update btn btn-primary">Update</button>
+                    {% else %}
+                        <button data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'configId':configId, 'segmentId':segmentId}) }}" class="dashboard_update btn btn-primary">Update</button>
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+
+        <section id="dashboard_footer">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                {% if configId is not defined %}
+                    <a href="{{ path('KunstmaanDashboardBundle_Config') }}">
+                        {{ 'dashboard.ga.setup.link' | trans }}</a> |
+                {% endif %}
+                <a href="#" class="dashboard_update" data-path="{{ path('KunstmaanDashboardBundle_analytics_update', {'segmentId':segmentId}) }}">
+                    {{ 'dashboard.ga.last_update' | trans }} {{last_update}}
+                </a>
+            {% else %}
+                <span>
+                    {{ 'dashboard.ga.last_update' | trans }} {{last_update}}
+                </span>
+            {% endif %}
+        </section>
+    </div>
+
+    <input type="hidden" id="disable-goals" data-disable-goals="{{disableGoals}}" />
+
+{% else %}
+    {% include '@KunstmaanDashboard/GoogleAnalytics/connect.html.twig' with {'authUrl' : authUrl} %}
+{% endif %}

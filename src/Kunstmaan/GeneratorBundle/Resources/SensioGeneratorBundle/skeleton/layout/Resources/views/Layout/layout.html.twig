@@ -1,0 +1,90 @@
+{% spaceless %}<!DOCTYPE html>
+{% set htmlLocale = app.request.locale|default(defaultlocale)|slice(0,2) %}
+<!--[if lte IE 9]> <html class="no-js lt-ie9" lang="{{ htmlLocale }}"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="{{ htmlLocale }}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+    {% set node = null %}
+    {% if nodetranslation is defined %}
+        {% set node = nodetranslation.node %}
+    {% endif %}
+    {% set nodemenu = get_node_menu(app.request.locale, node) %}
+    {{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}
+    </title>
+
+    {% if page is defined %}
+        {{ render_seo_metadata_for(page) }}
+    {% endif %}
+
+    {# Favicons #}
+    {% include '<%= shortBundleName %>/Layout/_favicons.html.twig' %}
+
+    {# Webfonts #}
+    {% include '<%= bundle.getName() %>:Layout:_webfonts.html.twig' %}
+
+    {# CSS #}
+    {% include '<%= shortBundleName %>/Layout/_css.html.twig' %}
+</head>
+
+<body id="sidebar-toggle-container" class="sidebar-toggle-container{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
+<% if demosite %>
+<div class="emulate-pulldown">
+<% endif %>
+    {# Google Tagmanager #}
+    {% include '<%= shortBundleName %>/Layout/_googletagmanager.html.twig' %}
+
+    {# Outdated browser message #}
+    {% include '<%= shortBundleName %>/Layout/_outdatedbrowser.html.twig' %}
+
+<% if demosite %>
+    <div id="sidebar-toggle__sidebar" class="sidebar-toggle__sidebar sidebar-toggle__sidebar--left main-nav main-nav--mobile">
+        {# Mobile nav #}
+        {% include '<%= shortBundleName %>/Layout/_mobile-nav.html.twig' %}
+    </div>
+
+    <div id="sidebar-toggle__content" class="sidebar-toggle__content">
+<% endif %>
+
+    {# Header #}
+    {% block header %}
+        {% include '<%= shortBundleName %>/Layout/_header.html.twig' %}
+    {% endblock %}
+
+    {# Breadcrumbs #}
+    {% block breadcrumbs %}
+        {% include '<%= shortBundleName %>/Layout/_breadcrumbs.html.twig' %}
+    {% endblock %}
+
+    {# Content #}
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    {# Footer #}
+    {% block footer %}
+        {% include '<%= shortBundleName %>/Layout/_footer.html.twig' %}
+    {% endblock %}
+
+<% if demosite %>
+    </div>
+<% endif %>
+
+    {# Cookieconsent #}
+    {% block cookieconsent %}
+        {% include '<%= shortBundleName %>/Layout/_cookieconsent.html.twig' %}
+    {% endblock %}
+
+    {# JS Footer #}
+    {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
+<% if demosite %>
+    </div>
+
+{% block footerscripts %}{% endblock %}
+<% endif %>
+</body>
+</html>
+{% endspaceless %}

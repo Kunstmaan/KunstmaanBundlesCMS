@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {% if nodemenu is defined %}
+        {% for topNode in nodemenu.getTopNodes() %}
+            {% if not hide_from_sitemap(topNode) %}
+                <url>
+                    <loc>{{ url('_slug', { '_locale': locale, 'url': topNode.slug }) }}</loc>
+                    <lastmod>{{ topNode.nodeTranslation.getPublicNodeVersion().getUpdated()|date('Y-m-d') }}</lastmod>
+                    <priority>{{ "0.9" }}</priority>
+                </url>
+            {% endif %}
+            {% for node in topNode.getChildren() %}
+                {% include '@KunstmaanSitemap/Sitemap/entry.xml.twig' with {'entry' : node, 'priority' : 9 } %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+</urlset>

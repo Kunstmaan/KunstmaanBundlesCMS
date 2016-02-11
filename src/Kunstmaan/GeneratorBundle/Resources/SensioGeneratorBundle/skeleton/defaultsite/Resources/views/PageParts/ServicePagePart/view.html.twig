@@ -1,0 +1,26 @@
+<div class="row service-pp service-pp--{{resource.imagePosition}}">
+    <div class="col-sm-6 service-pp__text">
+        <header>
+            <h2 class="service-pp__head">
+                {{ resource.title }}
+            </h2>
+        </header>
+
+        {% if resource.description %}
+            {{ resource.description|raw }}
+        {% endif %}
+
+        {% if resource.linkUrl and resource.linkText %}
+            <a href="{{ resource.linkUrl }}" class="link-pp__link" {% if resource.linkNewWindow %}target="_blank"{% endif %}>
+                {{ resource.linkText }}
+                <i class="icon icon--arrow-right icon--small"></i>
+            </a>
+        {% endif %}
+    </div>
+
+    <figure class="col-sm-6 service-pp__image">
+        {% if resource.image is not empty %}
+            <img src="{{ asset(resource.image.url|imagine_filter('optimpng')) }}" alt="{{ resource.title }}">
+        {% endif %}
+    </figure>
+</div>

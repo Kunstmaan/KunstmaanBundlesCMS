@@ -1,0 +1,18 @@
+subaction:
+    versions: "Versionen"
+
+action:
+    saveasdraft: "Entwurf Speichern"
+    recopyfromlanguage: "Inhalte kopieren von anderen Sprach"
+    publish: "Publizieren"
+    unpublish: "Depublizieren"
+    preview: "Vorschau"
+    save: "Speichern"
+    delete: "Löschen"
+    addsubpage: "Unterseite Erstellen"
+
+modal:
+    sourcelanguage: "Source language"
+
+pages:
+    copynotavailable: "Bitte zuerst die übergeordnete Seite übersetzen."

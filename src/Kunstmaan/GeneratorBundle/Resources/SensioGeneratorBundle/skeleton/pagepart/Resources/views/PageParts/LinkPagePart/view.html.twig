@@ -1,0 +1,6 @@
+<p class="link-pp">
+    <a href="{{ resource.url }}" {% if resource.openInNewWindow %}target="_blank"{% endif %}>
+        {{ resource.text|default(resource.url) }}
+        <i class="icon icon--arrow-right icon--small"></i>
+    </a>
+</p>

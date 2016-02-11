@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Forms - Form control label
+   ========================================================================== */
+
+
+/* General
+   ========================================================================== */
+.form-control-label {
+{% if demosite %}
+    color: $grey;
+    font-size: .9rem;
+
+    pointer-events: none;
+{% endif %}
+}
+
+
+
+/*doc
+---
+title: Label
+name: 03_label
+category: Forms
+---
+
+
+```html_example
+<label class="form-control-label">
+    Name
+</label>
+```
+*/

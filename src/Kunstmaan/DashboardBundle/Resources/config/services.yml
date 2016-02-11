@@ -1,0 +1,47 @@
+parameters:
+    kunstmaan_dashboard.widget.googleanalytics.command: Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand
+    kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
+    kunstmaan_dashboard.googleclient.class: 'Google_Client'
+    kunstmaan_dashboard.googleclienthelper.class: 'Kunstmaan\DashboardBundle\Helper\GoogleClientHelper'
+    google.api.app_name: 'Kuma Analytics Dashboard'
+
+services:
+    kunstmaan_dashboard.manager.widgets:
+        class: Kunstmaan\DashboardBundle\Manager\WidgetManager
+
+    kunstmaan_dashboard.widget.googleanalytics:
+        class: Kunstmaan\DashboardBundle\Widget\DashboardWidget
+        arguments: ['%kunstmaan_dashboard.widget.googleanalytics.command%', '%kunstmaan_dashboard.widget.googleanalytics.controller%', '@service_container']
+        tags:
+            - { name: kunstmaan_dashboard.widget, priority: 1 }
+
+    # google client
+    kunstmaan_dashboard.googleclient:
+        class: '%kunstmaan_dashboard.googleclient.class%'
+        calls:
+          - [ 'setApplicationName', [ '%google.api.app_name%' ] ]
+          - [ 'setClientId', [ '%google.api.client_id%' ] ]
+          - [ 'setClientSecret', [ '%google.api.client_secret%' ] ]
+          - [ 'setDeveloperKey', [ '%google.api.dev_key%' ] ]
+          - [ 'setScopes', [ 'https://www.googleapis.com/auth/analytics.readonly' ] ]
+          - [ 'setUseObjects', [ true ] ]
+
+    # client helper
+    kunstmaan_dashboard.helper.google.client:
+        class: 'Kunstmaan\DashboardBundle\Helper\Google\ClientHelper'
+        arguments: ['@kunstmaan_dashboard.googleclient', '@router', 'KunstmaanDashboardBundle_setToken']
+
+    # service helper
+    kunstmaan_dashboard.helper.google.analytics.service:
+        class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper'
+        arguments: ['@kunstmaan_dashboard.helper.google.client']
+
+    # config helper
+    kunstmaan_dashboard.helper.google.analytics.config:
+        class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper'
+        arguments: ['@kunstmaan_dashboard.helper.google.analytics.service', '@doctrine.orm.entity_manager']
+
+    # query helper
+    kunstmaan_dashboard.helper.google.analytics.query:
+        class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\QueryHelper'
+        arguments: ['@kunstmaan_dashboard.helper.google.analytics.service', '@kunstmaan_dashboard.helper.google.analytics.config']

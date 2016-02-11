@@ -1,0 +1,98 @@
+/* ==========================================================================
+   Forms - Radio buttons | Checkboxes
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.radio, .checkbox {
+{% if demosite %}
+    position: relative;
+
+    input {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        opacity: 0;
+    }
+
+    label {
+        position: relative;
+
+        display: inline-block;
+        padding-left: 1.5rem;
+
+        &:before {
+            content: " ";
+
+            position: absolute;
+            top: .35rem;
+            left: 0;
+
+            width: 1rem;
+            height: 1rem;
+            border: 1px solid $hr-color;
+        }
+    }
+
+    input:checked ~ label {
+
+        &:before {
+            background: $theme-color;
+            box-shadow:inset 0 0 0 4px $white;
+        }
+    }
+{% endif %}
+}
+
+
+/* Checkbox
+   ========================================================================== */
+.checkbox {}
+
+
+/* Radiobuttons
+   ========================================================================== */
+.radio {
+{% if demosite %}
+    label {
+
+        &:before {
+            border-radius: 100%;
+        }
+    }
+{% endif %}
+}
+
+
+/*doc
+---
+title: Checkboxes & Radiobuttons
+name: 04_checkradio
+category: Forms
+---
+
+```html_example
+<div class="form-group">
+    <div class="checkbox">
+    <input id="examplecheckbox" type="checkbox">
+    <label for="examplecheckbox">
+        Check me out
+    </label>
+    </div>
+</div>
+```
+
+```html_example
+<div class="form-group">
+    <div class="radio">
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+    <label for="optionsRadios1">Option one is this and that&mdash;be sure to include why it's great</label>
+    </div>
+    <div class="radio">
+    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+    <label for="optionsRadios2">Option two can be something else and selecting it will deselect option one</label>
+    </div>
+</div>
+```
+*/

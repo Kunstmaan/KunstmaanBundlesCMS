@@ -1,0 +1,10 @@
+kuma_lead_generation:
+    newsletter_popup:
+        button:
+            close: Sluiten
+            subscribe: Inschrijven
+            no_thanks: Nee, dank u!
+        label:
+            email: E-mail
+        message:
+            thanks: Dank u!

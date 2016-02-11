@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Structures - Demosite msg
+   ========================================================================== */
+
+.demosite-msg__wrapper {
+    position: relative;
+    z-index: 100;
+
+    margin-bottom: -1.7rem;
+
+    text-align: center;
+    transform: translate3d(0,0,0);
+
+    &:hover,
+    &:focus,
+    &:active {
+        .demosite-msg {
+            background: lighten($blue, 5%);
+        }
+
+        .demosite-msg__btn {
+            &:after {
+                border-color: lighten($blue, 5%) transparent transparent transparent;
+            }
+        }
+    }
+
+    @media(min-width: $screen-md-min) {
+        margin-bottom: -1.2rem;
+    }
+}
+
+.demosite-msg {
+    background: $blue;
+
+    p {
+        color: $white;
+        font-size: .8rem;
+    }
+
+    a {
+        color: $white;
+        text-decoration: underline;
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: $blue--dark;
+        }
+    }
+
+    .toggle-item__content {
+        padding: 1.5rem;
+
+        p {
+            padding: 0;
+            margin: 0;
+        }
+    }
+}
+
+.demosite-msg__btn {
+    position: relative;
+
+    width: 4rem;
+    height: 1.4rem;
+    margin-top: -.6rem;
+
+    background: none;
+    box-shadow: none;
+
+    color: $white;
+    text-align: center;
+    font-size: .5rem;
+
+    border: none;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -5;
+
+        border-style: solid;
+        border-width: 26px 36px 0 36px;
+        border-color: $blue transparent transparent transparent;
+        border-style: solid inset inset inset;
+
+        transform:rotate(360deg);
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: none;
+
+        color: $white;
+    }
+}
+
+/*doc
+---
+title: Demosite msg
+name: 10_demositeMsg
+category: Structures
+---
+
+```html_example
+<div style="position:relative; height: 20rem; width: 100%;">
+    <div class="demosite-msg__wrapper">
+    <section id="demosite-msg" class="demosite-msg toggle-item">
+        <div class="toggle-item__content">
+        <p>Deze website is gemaakt met de Kunstmaan CMS Bundles.</p>
+        </div>
+    </section>
+    <button type="button" class="js-toggle-btn toggle-button btn demosite-msg__btn" data-target="#demosite-msg" data-duration="200">
+        <i class="toggle-btn__icon--show icon icon--arrow-down"></i>
+        <i class="toggle-btn__icon--hide icon icon--arrow-up"></i>
+    </button>
+    </div>
+</div>
+```
+
+*/

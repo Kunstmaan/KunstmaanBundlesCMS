@@ -1,0 +1,69 @@
+# Pages
+pages:
+  title: Pagine
+  parts: Parte delle Pagine
+  draft: Bozza
+  pagenottranslated: Questa pagina non è tradotta
+  copyfrom: Copia dalla lingua
+  createemptypage: Crea come pagina vuota
+
+# Modules
+modules:
+  title: Moduli
+
+# Settings
+settings:
+  title: Impostazioni
+  maintanance: Manutenzione
+  scheduled: Lavori Pianificati
+  version:
+      bundle: Versioni dei Bundle
+      composer_lock_not_found: Il file composer.lock non è stato trovato nella root del tuo progetto
+      error_parsing_composer: Errore in composer.lock, non è un json valido
+      error: Qualcosa è andato storto leggendo le informazioni sulla versione. Per favore riprova nuovamente.
+      moreinfo: Per aggiornare i bundle esegui composer update. Se hai conflitti è probabile che devi aggiornare altri bundle.
+      uptodate: è aggiornato
+      toupdate: può essere aggiornato a
+      unknown: informazioni sulla versione sconosciute
+
+# Tools
+tools:
+  title: Accessori
+  clear_frontend_cache: Cancella la cache frontend
+  clear_backend_cache: Cancella la cache frontend backend
+  clear_all_caches: Cancella tutte le cache
+  shutdown: Speghi
+
+# Forms
+form:
+  cancel: Cancella
+  delete: Elimina
+  deletesure: Sei sicuro di voler eliminare questo ?
+  edit: Modifica
+  add: Aggiungi nuovo
+  save: Salva
+  publish: Pubblica
+  unpublish: Sospendi
+  saveasdraft: Salva come bozza
+  name: Nome
+  type: Tipo
+  error: Errore
+  warning: Avvertimento
+  headsup: Avviso
+  forgot:
+    password: Password dimenticata.
+  permissions: Permessi
+  properties: Proprietà
+  createdat: Creato il
+  updatedat: Modificato il
+  actions: Azioni
+  addfilter: Aggiungi filtro
+  choosetypefilter: Filtro su
+  versions: Versioni
+
+omnext:
+  home: Home
+  title: Benvenuto!
+  welcome: Benvenuto.
+  information: <strong>Informazione.</strong> Non ci sono nuove notifiche.
+

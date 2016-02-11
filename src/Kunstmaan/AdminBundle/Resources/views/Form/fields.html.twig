@@ -1,0 +1,285 @@
+{# Widgets #}
+{% block color_widget %}
+{% spaceless %}
+    <div class="js-colorpicker input-group" data-reinit-js='["colorpicker"]'>
+        <input {{ block('widget_attributes') }} class="form-control" value="{{ value }}"/>
+        <span class="input-group-addon"><i></i></span>
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <div class="form-group">
+                {{ form_label(child) }}
+                {{ form_widget(child) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+
+{% block choice_widget_collapsed %}
+{% spaceless %}
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if placeholder is not none %}
+            <option value="" {% if required and value is empty %}selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain) }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('choice_widget_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('choice_widget_options') }}
+    </select>
+{% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} {% if attr['maxlength'] is defined %}data-reinit-js='["charactersLeft"]' data-target="#counter-for-{{ form.vars.id }}"{% endif %}>
+    {% if attr['maxlength'] is defined %}
+        <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+
+{% block textarea_widget %}
+{% spaceless %}
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control ' ~ (attr['maxlength'] is defined ? ' js-max-length-input' : ''))|trim }) %}
+    {% set reInitMethods = [] %}
+    {% if attr['maxlength'] is defined %}
+        {% set reInitMethods = reInitMethods|merge(['"charactersLeft"']) %}
+    {% endif %}
+    {% if 'js-rich-editor' in attr.class %}
+        {% set reInitMethods = reInitMethods|merge(['"richEditor"']) %}
+    {% endif %}
+
+    <textarea {{ block('widget_attributes') }} {% if reInitMethods|length > 0 %}data-reinit-js="[{{ reInitMethods|join(',') }}]"{% endif %} rows="5" {% if attr['maxlength'] is defined %} data-target="#counter-for-{{ form.vars.id }}" {% endif %}>{{ value }}</textarea>
+    {% if attr['maxlength'] is defined %}
+        <span id="counter-for-{{ form.vars.id }}" class="form-control__character-counter js-max-length-counter"></span>
+    {% endif %}
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+{% block wysiwyg_widget %}
+{% spaceless %}
+    {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-rich-editor rich-editor form-control')|trim }) %}
+    {% if attr['maxlength'] is defined %}
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' js-max-length-input')|trim }) %}
+    {% endif %}
+    <textarea {{ block('widget_attributes') }}{% if 'js-rich-editor' in attr.class %} data-reinit-js='["richEditor"]'{% endif %}{% if attr['type'] is defined %} data-editor-mode="{{ attr['type'] }}"{% endif %} rows="10" cols="600">{{ value|raw }}</textarea>
+{% endspaceless %}
+{% endblock wysiwyg_widget %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+    <div class="checkbox">
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+            {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-icon">*</span>{% endif %}
+        </label>
+    </div>
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+
+{% block radio_widget %}
+{% spaceless %}
+    <div class="radio">
+        {% if required and not compound %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+
+
+        <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+	    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>
+            {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-icon">*</span>{% endif %}
+        </label>
+    </div>
+{% endspaceless %}
+{% endblock radio_widget %}
+
+
+
+
+{# Labels #}
+{% block form_label %}
+{% spaceless %}
+    {% if 'checkbox' not in block_prefixes and label is not same as(false) %}
+        {% set label_attr = label_attr|merge({'class': label_attr.class|default('')|trim}) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is not same as(false) %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+            </label>
+        {% endif %}
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+
+
+
+
+{# Rows #}
+{% block form_row %}
+{% spaceless %}
+    <div class="form-group{% if errors|length > 0 %} has-error{% endif %}{% if attr['nested_form'] is defined and attr['nested_form'] == true or 'textarea' in block_prefixes %} form-group--no-max-width{% endif %}">
+        {{ form_label(form) }}
+
+        {% if attr['nested_form'] is defined and attr['nested_form'] == true %}
+            {# Nested forms #}
+            {% set sortable = false %}
+            {% if attr['nested_sortable'] is defined and attr['nested_sortable'] == true %}
+                {% set sortable = true %}
+                {% set sortableField = attr['nested_sortable_field']|default('weight') %}
+            {% endif %}
+
+            <div id="{{ form.vars.id }}__nested-form" class="js-nested-form nested-form {% if sortable %} js-sortable-container sortable-container nested-form--sortable{% endif %}" data-sortable="{% if sortable %}true{% else %}false{% endif %}" data-allow-new="{{ form.vars.allow_add|default('0') }}" data-allow-delete="{{ form.vars.allow_delete|default('0') }}" data-min-items="{{ attr['nested_form_min']|default('0') }}" data-max-items="{{ attr['nested_form_max']|default('false') }}" data-sortable="{{ attr['nested_sortable']|default('false') }}" {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %} data-initialized="false" data-initializing="false" data-reinit-js='["nestedForm"]'>
+
+                {# Items #}
+                {% for obj in form %}
+                    <div id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}-pp-container" class="js-nested-form__item nested-form__item{% if sortable %} js-sortable-item sortable-item{% endif %}"
+                            {% if attr['nested_deletable'] is not defined or attr['nested_deletable'] != false %}
+                                data-delete-key="{{ form.vars.id|replace({'form_': 'delete_'}) }}_{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}"
+                            {% endif %}
+                            {% if sortable %}data-sortkey="{{ obj.children[sortableField].vars.id }}"{% endif %}>
+                        {# Header #}
+                        <header class="{% if sortable %}js-sortable-item__handle{% endif %} nested-form__item__header">
+                            {% if sortable %}
+                                <i class="fa fa-arrows nested-form__item__header__move-icon"></i>
+                            {% endif %}
+
+                            <div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div>
+                            <button type="button" class="js-move-up-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--up" title="{{ 'pagepart.buttons.move_up'|trans }}" data-target-id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}">
+                                <i class="fa fa-chevron-up"></i>
+                            </button>
+                            <button type="button" class="js-move-down-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--down" title="{{ 'pagepart.buttons.move_down'|trans }}" data-target-id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}">
+                                <i class="fa fa-chevron-down"></i>
+                            </button>
+                        </header>
+
+                        {# View #}
+                        <div class="js-nested-form__item__view nested-form__item__view">
+                            {% if obj.vars.compound %}
+                                {{ form_widget(obj) }}
+                            {% else %}
+                                {% for child in obj.children %}
+                                    {{ form_row(child) }}
+                                {% else %}
+                                    {{ form_widget(obj) }}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {% if attr['info_text'] is defined %}
+                {# Info text #}
+                <div class="input-group" data-reinit-js='["tooltip"]'>
+                    {{ form_widget(form) }}
+                    <span class="input-group-addon">
+                        <strong class="input-group-addon--tooltip" data-toggle="tooltip" data-container="body" data-placement="top" title="{{ attr['info_text']|trans }}" id="{{ id }}_info_text">?</strong>
+                    </span>
+                </div>
+            {% else %}
+                {# Default #}
+                {{ form_widget(form) }}
+            {% endif %}
+        {% endif %}
+
+        {% if max_length %}{% endif %}
+        {% if attr['title'] is defined %}{% endif %}
+
+        {{ form_errors(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+
+
+
+{# Misc #}
+{% block datetime_widget %}
+    {% use 'form_div_layout.html.twig' with datetime_widget as base_datetime_widget %}
+    <div class="form-group date-time-group">
+        {{ block('base_datetime_widget') }}
+    </div>
+{% endblock %}
+
+
+{% block date_widget %}
+    <div class="form--double-widget__col">
+        {% use 'form_div_layout.html.twig' with date_widget as base_date_widget %}
+        <div class="js-datepicker" data-format="DD/MM/YYYY" data-reinit-js='["datepicker"]'>
+            {{ block('base_date_widget') }}
+        </div>
+    </div>
+
+{% endblock date_widget %}
+
+
+{% block time_widget %}
+    <div class="form--double-widget__col">
+        {% use 'form_div_layout.html.twig' with time_widget as base_time_widget %}
+        {% set type = 'text' %}
+        <div class="js-datepicker" data-format="HH:mm" data-reinit-js='["datepicker"]'>
+            {{ block('base_time_widget') }}
+        </div>
+    </div>
+{% endblock time_widget %}
+
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+            <span class="help-block text-danger">{{
+                error.messagePluralization is null
+                ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                }}</span>
+        {% endfor %}
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+
+{% block range_widget %}
+{% spaceless %}
+    <div class="range">
+        {{ form_widget(form, {'type' : 'range', 'attr' : attr }) }}
+        <span class="range--value"></span>
+    </div>
+{% endspaceless %}
+{% endblock %}

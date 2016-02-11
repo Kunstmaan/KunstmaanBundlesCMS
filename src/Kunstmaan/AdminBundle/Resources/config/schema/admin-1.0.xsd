@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://bundles.kunstmaan.be/schema/dic/admin"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://bundles.kunstmaan.be/schema/dic/admin"
+    elementFormDefault="qualified">
+
+    <xsd:element name="config" type="config" />
+
+    <xsd:complexType name="config">
+        <xsd:sequence>
+            <xsd:element name="admin-locale" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="admin-locale" type="xsd:string" />
+        <xsd:attribute name="default-admin-locale" type="xsd:string" />
+    </xsd:complexType>
+
+</xsd:schema>

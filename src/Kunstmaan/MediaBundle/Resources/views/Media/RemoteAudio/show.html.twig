@@ -1,0 +1,5 @@
+{% extends '@KunstmaanMedia/Media/show.html.twig' %}
+
+{% block preview %}
+    {% include '@KunstmaanMedia/Media/RemoteAudio/preview.html.twig' with {'media': media} %}
+{% endblock %}

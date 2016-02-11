@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Media Chooser
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.media-chooser {
+    position: relative;
+
+    width: 100%;
+    max-width: 40rem;
+
+    .media-chooser__preview {
+        display: none;
+    }
+}
+
+.media-chooser--choosen {
+
+    .media-chooser__preview {
+        display: block;
+    }
+
+    .media-chooser__choose-btn {
+        display: none;
+    }
+}
+
+
+
+/* Choose btn
+   ========================================================================== */
+.media-chooser__choose-btn {
+    position: relative;
+
+    padding-left: 2.5em;
+
+    text-align: left;
+}
+
+.media-chooser__choose-btn__icon {
+    position: absolute;
+    top: .8rem;
+    left: 1.2rem;
+}
+
+.has-error {
+
+    .media-chooser__choose-btn {
+        border-color: $red;
+    }
+}
+
+
+
+/* Preview
+   ========================================================================== */
+// General
+.media-chooser__preview {
+    position: relative;
+
+    &:hover {
+
+        .media-chooser__preview__del-btn {
+            opacity: 1;
+        }
+    }
+}
+
+
+// Image
+// .media-chooser__preview__img {
+
+// }
+
+
+// Title
+.media-chooser__preview__title {
+    padding: .5em 0;
+
+    font-size: 1rem;
+    color: $gray-light;
+    text-align: center;
+}
+
+
+// Del button
+.media-chooser__preview__del-btn {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    padding: .2em .5em;
+    border-radius: 0 $default-border-radius 0 $default-border-radius;
+
+    &, &:hover {
+        background: $red;
+        color: $white;
+    }
+
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+        transition: opacity .3s ease;
+
+        &:hover {
+            opacity: 1;
+
+            + .media-thumbnail-del-helper {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+/* Icon Preview
+   ========================================================================== */
+.icon-chooser__preview {
+    font-size: 6rem;
+}

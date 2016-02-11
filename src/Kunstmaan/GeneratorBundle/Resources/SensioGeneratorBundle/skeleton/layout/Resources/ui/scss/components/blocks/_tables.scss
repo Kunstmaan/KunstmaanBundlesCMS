@@ -1,0 +1,116 @@
+/* ==========================================================================
+   Blocks - Tables
+   ========================================================================== */
+
+/* Default
+   ========================================================================== */
+.table-overflow-container {
+    max-width: 100%;
+    overflow-x: scroll;
+}
+
+{% if demosite %}
+table {
+    margin: $default-margin 0;
+    width: 100%;
+
+    @media(min-width: $screen-md-min) {
+        width: 70%;
+    }
+}
+
+tr {
+    border-bottom: 1px solid $hr-color;
+}
+
+th, td {
+    padding: .5em 1.5em .5em .1em;
+    text-align: left;
+}
+
+th {
+    font-weight: 600;
+    color: $theme-color;
+}
+
+td {
+    font-weight: 300;
+    text-align: left;
+}
+{% endif %}
+
+
+
+
+/*doc
+---
+title: Tables
+name: 06_tables
+category: Blocks
+---
+
+<strong>Default</strong>
+
+```html_example
+
+<table>
+    <thead>
+    <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+    </tr>
+    <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+    </tr>
+    <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+    </tr>
+    </tbody>
+</table>
+```
+
+<strong>Overflow container</strong>
+
+```html_example
+<div class="table-overflow-container">
+    <table>
+    <thead>
+        <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        </tr>
+        <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        </tr>
+        <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+```
+*/

@@ -1,0 +1,10 @@
+.DS_Store
+.idea
+vendor/*
+composer.lock
+composer.phar
+Tests/app/cache/
+build/logs/
+build/coverage/
+Tests/app/logs/
+*.sublime-workspace

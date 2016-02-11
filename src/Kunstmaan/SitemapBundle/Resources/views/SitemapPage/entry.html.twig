@@ -1,0 +1,18 @@
+{% set hidden = hide_from_sitemap(entry) %}
+{% if not hidden %}
+    <li>
+        <a href="{{ url('_slug', { 'url': entry.slug }) }}">{{ entry.title }}</a>
+{% endif %}
+{% if not hide_children_from_sitemap(entry) %}
+    {% set children = entry.getChildren() %}
+    {% if children|length > 0 %}
+        {% if not hidden %}<ul>{% endif %}
+            {% for subNode in entry.getChildren() %}
+                {% include '@KunstmaanSitemap/SitemapPage/entry.html.twig' with {'entry' : subNode} %}
+            {% endfor %}
+            {% if not hidden %}</ul>{% endif %}
+    {% endif %}
+{% endif %}
+{% if not hidden %}
+</li>
+{% endif %}

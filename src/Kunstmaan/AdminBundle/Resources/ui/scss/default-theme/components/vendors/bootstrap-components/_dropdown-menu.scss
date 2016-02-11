@@ -1,0 +1,34 @@
+/* ==========================================================================
+   Bootstrap dropdown menu adjustments
+   ========================================================================== */
+
+
+.dropdown-menu__item--has-submenu {
+    position: relative;
+    @extend %clearfix;
+
+    i.fa {
+        float: right;
+        margin-top: 3px;
+        margin-right: -5px;
+    }
+}
+
+.dropdown-toggle--submenu {
+
+    &:hover {
+
+        + .dropdown-menu--submenu {
+            display: block;
+        }
+    }
+}
+
+.dropdown-menu--submenu {
+    top: 0;
+    left: calc(100% - 10px);
+
+    &:hover {
+        display: block;
+    }
+}

@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+/* Sortable
+   ========================================================================== */
+.table--sortable__th {
+    position: relative;
+
+    transition: background .3s ease;
+    cursor: pointer;
+
+    &:before {
+        @extend .fa;
+
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    &:not(.table--sortable__th--up), &:not(.table--sortable__th--down) {
+
+        &:hover {
+            background: $gray-ultralight;
+
+            &:before {
+                @extend .fa-sort;
+            }
+        }
+    }
+}
+
+.table--sortable__th--up, .table--sortable__th--down {
+    background: $gray-ultralight;
+}
+
+.table--sortable__th--up {
+
+    &:before {
+        @extend .fa-caret-up;
+    }
+}
+
+.table--sortable__th--down {
+
+    &:before {
+        @extend .fa-caret-down;
+    }
+}
+
+
+
+/* Table actions
+   ========================================================================== */
+.table--no-actions {
+
+    .table__actions {
+        display: none;
+    }
+}
+
+
+.table__actions__item {
+    display: inline-block;
+    margin: 0 .8rem 0 0;
+
+    white-space: nowrap;
+    transition: color .3s ease;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &.table__actions__item--block {
+        display: block;
+        margin: 0 0 .4rem;
+    }
+}

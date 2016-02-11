@@ -1,0 +1,37 @@
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+
+{% block admin_page_title %}
+    <div class="col-sm-6 col-md-8">
+        {% if dashboardConfiguration %}
+            <h1 class="app__content__header__title">
+                {{ dashboardConfiguration.title }}
+            </h1>
+        {% else %}
+            <h1 class="app__content__header__title">
+                {{ 'omnext.welcome' | trans | raw }}
+            </h1>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block extra_actions_header %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="col-sm-6 col-md-4">
+            <div class="app__content__header__extra-actions">
+                <div class="btn-group">
+                    <a href="{{ path('KunstmaanAdminBundle_homepage_admin') }}" class="btn btn-default">
+                        {{ 'Edit dashboard' | trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if dashboardConfiguration %}
+        <div style="margin-top:25px">
+            {{ dashboardConfiguration.content | raw }}
+        </div>
+    {% endif %}
+{% endblock %}

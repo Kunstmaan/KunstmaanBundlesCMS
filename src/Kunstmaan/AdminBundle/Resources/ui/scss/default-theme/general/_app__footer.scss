@@ -1,0 +1,18 @@
+/* ==========================================================================
+   App Footer
+   ========================================================================== */
+
+.app__footer {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.app__footer__kunstmaan-link {
+    opacity: .3;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    @include transition(opacity .3s ease);
+}

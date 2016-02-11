@@ -1,0 +1,38 @@
+{% for type, form in forms %}
+    <div id="add{{ type }}-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    {% set title = 'media.' ~ type ~ '.modal.title' %}
+                    <h3>
+                        {{ title | trans }}
+                    </h3>
+                </div>
+
+                {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
+                {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': type}))}) }}
+                    <!-- Body -->
+                    <div class="modal-body">
+                        {{ form_widget(form) }}
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        {% set save = 'media.' ~ type ~ '.modal.save' %}
+                        <button type="submit" class="js-add-app-loading--forms btn btn-primary btn--raise-on-hover">
+                            {{ save | trans }}
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'form.cancel' | trans }}
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endfor %}

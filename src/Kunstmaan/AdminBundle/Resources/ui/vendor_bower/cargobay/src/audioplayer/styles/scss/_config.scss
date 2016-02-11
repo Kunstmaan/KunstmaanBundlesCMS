@@ -1,0 +1,44 @@
+// Audio player config
+
+// General
+$audioplayer-height:                            2.5em!default;
+$audioplayer-background:                        #1D3037!default;
+
+$audioplayer-max-width:                         30em!default;
+$audioplayer-breakpoint-mobile-version:         30em!default;
+
+
+// Play-Pause
+$audioplayer-playpause-width:                   2.5em!default;
+$audioplayer-playpause-height:                  100%!default;
+$audioplayer-playpause-color:                   #fff!default;
+$audioplayer-playpause-background:              #0bd789!default;
+
+$audioplayer-playpause-playing-background:      #000!default;
+$audioplayer-playpause-playing-color:           #fff!default;
+
+
+// Bar
+$audioplayer-bar-background:                    #333!default;
+$audioplayer-bar-loaded-background:             #000!default;
+$audioplayer-bar-played-background:             #0bd789!default;
+
+
+// Time
+$audioplayer-time-font-size:                    .7em!default;
+$audioplayer-time-color:                        #fff!default;
+$audioplayer-time-mobile-color:                 #000!default;
+
+
+// Volume
+$audioplayer-volume-width:                      2.5em!default;
+$audioplayer-volume-height:                     100%!default;
+
+$audioplayer-volume-button-background:          #0bd789!default;
+$audioplayer-volume-button-color:               #fff!default;
+
+$audioplayer-volume-adjust-height:              6.25em!default;
+$audioplayer-volume-adjust-background:          #1D3037!default;
+
+$audioplayer-volume-adjust-control-background:        #000!default;
+$audioplayer-volume-adjust-control-state-background:  #0bd789!default;

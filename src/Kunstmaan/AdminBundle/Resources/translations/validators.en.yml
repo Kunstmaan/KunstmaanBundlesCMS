@@ -1,0 +1,10 @@
+errors:
+  password:
+    dontmatch: The passwords you entered don't match
+
+  user:
+    loginexists: This username is already in use
+    emailexists: This email address is already in use
+
+  group:
+    selectone: At least one option must be selected

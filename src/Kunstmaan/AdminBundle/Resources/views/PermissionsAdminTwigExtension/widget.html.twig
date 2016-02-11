@@ -1,0 +1,68 @@
+<div class="form-properties">
+    {% if recursiveSupport %}
+        <!-- Info container -->
+        <div id="permission-changes-info-container" class="alert alert-info hidden">
+            <h5>
+                {{ "permissions.you_made_changes"|trans|raw }}
+            </h5>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="apply-recursive" name="applyRecursive" value="1">
+                    {{ "permissions.apply_recursively"|trans|raw }}
+                    (<a href="#permission-changes-modal" data-toggle="modal">
+                        {{ "permissions.review_changes"|trans|raw }}
+                    </a>)
+                </label>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="permission-changes-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3>
+                            {{ "permissions.changes"|trans }}
+                        </h3>
+                    </div>
+                    <div class="modal-body" id="permission-changes-modal__body"></div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div id="permissions-container" class="permissionscontainer" data-recursive="{% if recursiveSupport %}true{% else %}false{% endif %}" data-trans-perms-added='{{ "permissions.permissions_added"|trans|raw }}' data-trans-perms-removed='{{ "permissions.permissions_removed"|trans|raw }}'>
+        <div id="permission-hidden-fields"></div>
+
+        {% spaceless %}
+        <table class="table table-bordered table-striped">
+            <thead>
+               <tr>
+                   <th>{{ "permissions.role_name"|trans }}</th>
+                    {% for permissionName in permissionadmin.getPossiblePermissions() %}
+                        <th>{{ permissionName }}</th>
+                    {% endfor %}
+               </tr>
+            </thead>
+            <tbody>
+                {% for role in permissionadmin.getAllRoles() %}
+                    <tr>
+                        <td>
+                            {{ role.getRole() }}
+                        </td>
+                        {% set permission = permissionadmin.getPermission(role) %}
+                        {% for permissionName in permissionadmin.getPossiblePermissions() %}
+                        <td>
+                            <input type="checkbox" name="permissions[{{ role.getRole() }}][{{ permissionName }}]" {% if permission is not null and permission.has(permissionName) %}checked="checked"{% endif %} class="js-permission-checkbox" data-role="{{ role.getRole() }}" data-permission="{{ permissionName }}" data-original-value="{% if permission is not null and permission.has(permissionName) %}true{% else %}false{% endif %}">
+                        </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endspaceless %}
+    </div>
+</div>

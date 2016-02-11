@@ -1,0 +1,17 @@
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+<h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
+<p>
+    {{ 'dashboard.ga.setup.content' | trans }} <a href="{{ 'dashboard.ga.setup.docs_url' | trans }}">{{ 'dashboard.ga.setup.docs' | trans }}</a>.
+</p>
+<p>
+    {{ 'dashboard.ga.setup.redirect' | trans }} {{ redirect_uri }}
+</p>
+{% if authUrl is defined %}
+    <h3>{{ 'dashboard.ga.setup.connect' | trans }}</h3>
+    <a class='btn btn-primary' href='{{ authUrl }}'>{{ 'dashboard.ga.setup.confirm' | trans }}</a>
+{% else %}
+    <p>
+        {{ 'dashboard.ga.setup.refresh' | trans }}
+    </p>
+{% endif %}
+{% endif %}

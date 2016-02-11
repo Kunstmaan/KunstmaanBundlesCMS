@@ -1,0 +1,32 @@
+{
+    "name": "kunstmaan/utilities-bundle",
+    "type": "symfony-bundle",
+    "description": "The KunstmaanUtilitiesBundle makes your life easier by providing a couple of small but usefull helper services you can use and re-use in your applications. We already implemented an easy to use cipher service and a shell helper service for you but feel free to send in a pull request with your additions. The shell helper allows you to run apps in the background, see if a process is running and has a method to kill a running process. The cipher service allow you to encode and decode strings using the Rijndael 256 cipher",
+    "keywords": [ "kunstmaan", "cms", "utilities", "cipher"],
+    "homepage": "https://github.com/Kunstmaan/KunstmaanUtilitiesBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kunstmaan Team",
+            "homepage": "http://www.kunstmaan.be/",
+            "email": "support@kunstmaan.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
+        "doctrine/orm": "~2.2,>=2.2.3"
+    },
+    "suggest": {
+        "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
+    },
+    "autoload": {
+        "psr-4": { "Kunstmaan\\UtilitiesBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    }
+}

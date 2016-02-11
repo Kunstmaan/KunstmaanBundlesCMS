@@ -1,0 +1,27 @@
+{% extends '@KunstmaanAdmin/Settings/index.html.twig' %}
+
+{% block content %}
+    {% if data is iterable %}
+        <ul class="list-group margin-top">
+        {% for bundle in data %}
+            {% if bundle.status == 'UP_TO_DATE' %}
+                {% set color = '#4F8A10' %}
+                {% set txt = 'settings.version.uptodate'|trans %}
+            {% elseif bundle.status == 'TO_UPDATE' %}
+                {% set color = '#9F6000' %}
+                {% set txt = 'settings.version.toupdate'|trans ~ ' (' ~ bundle.new_version ~ (bundle.version != bundle.reference ? ' ' ~  bundle.new_reference|slice(0, 7) : '') ~ ', updated on ' ~ bundle.new_date|date('Y-m-d H:i') ~ ')' %}
+            {% else %}
+                {% set color = '#00529B' %}
+                {% set txt = 'settings.version.unknown'|trans %}
+            {% endif %}
+
+            <li class="list-group-item" style="color: {{ color }}">
+                {{ bundle.name }} ({{ bundle.version }}{% if bundle.version != bundle.reference %} {{ bundle.reference|slice(0, 7) }}{% endif %}) {{ txt }}
+            </li>
+        {% endfor %}
+        </ul>
+        <p>{{ 'settings.version.moreinfo'|trans }}</p>
+    {% else %}
+        <div class="alert-error">{{ 'settings.version.error'|trans }}</div>
+    {% endif %}
+{% endblock %}

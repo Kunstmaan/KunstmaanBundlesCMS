@@ -1,0 +1,91 @@
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
+
+{% block body %}
+    <header role="banner">
+
+        <!-- App Header -->
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+
+                <!-- Header -->
+                <div class="navbar-header">
+
+                    <!--Header - Toggle -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <!-- Navigation -->
+                <div class="collapse navbar-collapse" id="main-nav-bar">
+
+                    <!-- Navigation - Left -->
+                    <ul class="nav navbar-nav">
+                        {% if mediaChooserLink is defined and mediaChooserLink %}
+                            <li class="active">
+                                <a href="javascript:void(0)">
+                                    Pages
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ mediaChooserLink }}">
+                                    Media
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Navigation - Right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% set route = app.request.attributes.get('_route') %}
+                        {{ localeswitcher_widget(get_backend_locales(), route) }}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- Main Content -->
+    <main role="main" id="app__main" class="container-fluid app__main url-chooser">
+
+        <!-- Modal Sidebar -->
+        <aside id="app__sidebar" class="app__sidebar app__sidebar--static url-chooser__tree">
+            <!-- Tree Search -->
+            <div class="form-group app__sidebar__module app__sidebar__search">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+                </div>
+                <hr>
+            </div>
+
+            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+                <ul>
+                    {% for item in tree.rootItems %}
+                        {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </aside>
+
+
+        <!-- Content -->
+        <div class="url-chooser__link-select">
+            <p id="url-chooser__selection-preview">
+                Selection: empty
+            </p>
+            <button type="button" id="save-url-chooser-modal" class="btn btn-primary btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
+                Ok
+            </button>
+            <button type="button" id="cancel-url-chooser-modal" class="btn btn-default btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
+                Cancel
+            </button>
+        </div>
+    </main>
+{% endblock %}
