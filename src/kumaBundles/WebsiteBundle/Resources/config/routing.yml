@@ -1,0 +1,4 @@
+kumabundleswebsitebundle_default:
+    resource: "@kumaBundlesWebsiteBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /
