@@ -90,10 +90,10 @@ a.cke_colorbox {
 /* Different states of the a.cke_colorbox wrapper. */
 a {
     &:hover, &:focus, &:active {
-	&.cke_colorbox {
-	    border: 1px solid $hr-border;
-	    background-color: $gray-lighter;
-	}
+        &.cke_colorbox {
+            border: 1px solid $hr-border;
+            background-color: $gray-lighter;
+        }
     }
 }
 
@@ -111,9 +111,9 @@ a.cke_colorauto, a.cke_colormore {
 /* Different states of cke_colorauto/cke_colormore buttons. */
 a {
     &:hover, &:focus, &:active {
-	&.cke_colorauto, &.cke_colormore {
-	    border: 1px solid $hr-border;
-	    background-color: $gray-lighter;
-	}
+        &.cke_colorauto, &.cke_colormore {
+            border: 1px solid $hr-border;
+            background-color: $gray-lighter;
+        }
     }
 }

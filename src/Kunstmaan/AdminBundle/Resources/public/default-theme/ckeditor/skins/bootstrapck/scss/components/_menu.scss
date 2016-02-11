@@ -65,16 +65,16 @@ Special outer level classes used in this file:
 
 .cke_menubutton {
     &:hover, &:focus, &:active {
-	background-color: #D3D3D3;
-	display: block;
+        background-color: #D3D3D3;
+        display: block;
     }
 }
 
 .cke_hc .cke_menubutton {
     padding: 2px;
     &:hover, &:focus, &:active {
-	border: 2px solid;
-	padding: 0;
+        border: 2px solid;
+        padding: 0;
     }
 }
 
@@ -104,19 +104,19 @@ Special outer level classes used in this file:
 
 .cke_menubutton {
     &:hover, &:focus, &:active {
-	.cke_menubutton_icon {
-	    background-color: #D0D2D0;
-	}
+        .cke_menubutton_icon {
+            background-color: #D0D2D0;
+        }
     }
 }
 
 .cke_menubutton_disabled {
     &:hover, &:focus, &:active {
-	.cke_menubutton_icon {
-	    /* The icon will get opacity as well when hovered. */
-	    opacity: 0.3;
-	    filter: alpha(opacity=30);
-	}
+        .cke_menubutton_icon {
+            /* The icon will get opacity as well when hovered. */
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+        }
     }
 }
 
@@ -138,13 +138,13 @@ Special outer level classes used in this file:
     border: 1px solid #dedede;
     background-color: #f2f2f2;
     .cke_menubutton_icon {
-	padding-right: 3px;
+        padding-right: 3px;
     }
 }
 
 .cke_menubutton {
     &:hover, &:focus, &:active {
-	background-color: #EFF0EF;
+        background-color: #EFF0EF;
     }
 }
 
@@ -167,7 +167,7 @@ Special outer level classes used in this file:
     background-repeat: no-repeat;
     padding: 0 5px;
     span {
-	display: none;
+        display: none;
     }
 }
 

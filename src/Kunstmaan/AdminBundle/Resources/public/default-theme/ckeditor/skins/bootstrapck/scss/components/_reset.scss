@@ -76,32 +76,32 @@ http://docs.cksource.com/CKEditor_4.x/Skin_SDK/Reset
 
 .cke_reset_all {
     .cke_rtl * {
-	text-align: right;
+        text-align: right;
     }
     /* Defaults for some elements. */
     iframe {
-	vertical-align: inherit;    /** For IE */
+        vertical-align: inherit;    /** For IE */
     }
     textarea {
-	white-space: pre;
+        white-space: pre;
     }
     textarea, input[type="text"], input[type="password"] {
-	cursor: text;
+        cursor: text;
     }
     textarea[disabled], input[type="text"][disabled], input[type="password"][disabled] {
-	cursor: default;
+        cursor: default;
     }
     fieldset {
-	padding: 10px;
-	margin-top: 10px;
-	border: 1px solid $hr-border;
-	legend {
-	    padding: 0 5px;
-	}
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid $hr-border;
+        legend {
+            padding: 0 5px;
+        }
     }
     select {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
     }
 }

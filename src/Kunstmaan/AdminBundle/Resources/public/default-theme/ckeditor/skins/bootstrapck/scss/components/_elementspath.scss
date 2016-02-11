@@ -45,22 +45,22 @@ The following is a visual representation of its main elements:
 
 .cke_rtl {
     .cke_path, .cke_path_item, .cke_path_empty {
-	float: right;
+        float: right;
     }
 }
 
 /* The items are <a> elements, so we define its hover states here. */
 a.cke_path_item {
     &:hover, &:focus, &:active {
-	background-color: #bfbfbf;
-	color: #333;
-	border-radius: 2px;
+        background-color: #bfbfbf;
+        color: #333;
+        border-radius: 2px;
     }
 }
 
 .cke_hc a.cke_path_item {
     &:hover, &:focus, &:active {
-	border: 2px solid;
-	padding: 1px 2px;
+        border: 2px solid;
+        padding: 1px 2px;
     }
 }
