@@ -24,15 +24,21 @@ class MenuService
     private $em;
 
     /**
+     * @var string
+     */
+    private $menuEntityClass;
+
+    /**
      * @param array $menuNames
      * @param DomainConfigurationInterface $domainConfiguration
      * @param EntityManager $em
      */
-    public function __construct(array $menuNames, DomainConfigurationInterface $domainConfiguration, EntityManager $em)
+    public function __construct(array $menuNames, DomainConfigurationInterface $domainConfiguration, EntityManager $em, $menuEntityClass)
     {
         $this->menuNames = $menuNames;
         $this->domainConfiguration = $domainConfiguration;
         $this->em = $em;
+        $this->menuEntityClass = $menuEntityClass;
     }
 
     /**
@@ -47,7 +53,7 @@ class MenuService
             $required[$name] = $locales;
         }
 
-        $menuObjects = $this->em->getRepository('KunstmaanMenuBundle:Menu')->findAll();
+        $menuObjects = $this->em->getRepository($this->menuEntityClass)->findAll();
 
         foreach ($menuObjects as $menu) {
             if (array_key_exists($menu->getName(), $required)) {
@@ -60,7 +66,8 @@ class MenuService
 
         foreach ($required as $name => $locales) {
             foreach ($locales as $locale) {
-                $menu = new Menu();
+                $className = $this->menuEntityClass;
+                $menu = new $className();
                 $menu->setName($name);
                 $menu->setLocale($locale);
                 $this->em->persist($menu);
