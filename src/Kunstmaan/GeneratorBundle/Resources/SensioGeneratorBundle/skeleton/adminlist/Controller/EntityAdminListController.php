@@ -70,6 +70,21 @@ class {{ entity_class }}AdminListController extends AdminListController
     }
 
     /**
+     * The edit action
+     *
+     * @param int $id
+     *
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function viewAction(Request $request, $id)
+    {
+        return parent::doViewAction($this->getAdminListConfigurator(), $id, $request);
+    }
+
+    /**
      * The delete action
      *
      * @param int $id

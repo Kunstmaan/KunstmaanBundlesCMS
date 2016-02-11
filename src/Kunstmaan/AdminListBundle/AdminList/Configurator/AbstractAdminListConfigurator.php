@@ -24,6 +24,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     const SUFFIX_EDIT   = 'edit';
     const SUFFIX_EXPORT = 'export';
     const SUFFIX_DELETE = 'delete';
+    const SUFFIX_VIEW = 'view';
 
     /**
      * @var Field[]
@@ -69,6 +70,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      * @var string
      */
     private $editTemplate = 'KunstmaanAdminListBundle:Default:add_or_edit.html.twig';
+
+    /**
+     * @var string
+     */
+    private $viewTemplate = 'KunstmaanAdminListBundle:Default:view.html.twig';
 
     /**
      * @var string
@@ -214,6 +220,22 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         );
     }
 
+    public function getViewUrlFor($item)
+    {
+        if (is_object($item)){
+            $id = $item->getid();
+        } else {
+            $id = $item['id'];
+        }
+        $params = array('id' => $id);
+        $params = array_merge($params, $this->getExtraParameters());
+
+        return array(
+            'path'   => $this->getPathByConvention($this::SUFFIX_VIEW),
+            'params' => $params
+        );
+    }
+
     /**
      * Return the url to list all the items
      *
@@ -294,6 +316,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function canAdd()
     {
         return true;
+    }
+
+    public function canView($item)
+    {
+        return false;
     }
 
     /**
@@ -617,6 +644,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     public function getEditTemplate()
     {
         return $this->editTemplate;
+    }
+
+    public function getViewTemplate()
+    {
+        return $this->viewTemplate;
     }
 
     /**

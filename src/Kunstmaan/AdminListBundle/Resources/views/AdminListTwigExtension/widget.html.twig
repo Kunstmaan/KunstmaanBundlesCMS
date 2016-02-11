@@ -57,6 +57,9 @@
                     {% endif %}
                 {% endfor %}
                 <td class="actions">
+                    {% if adminlist.canView(item) %}
+                        <a href="{{ path(adminlist.getViewUrlFor(item)["path"], adminlist.getViewUrlFor(item)[("params")] ) }}"><i class="icon-eye"></i>View</a>
+                    {% endif %}
                     {% if adminlist.canEdit(item) %}
                         {% set itemActionsPossible = true %}
                         <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}"><i class="icon-edit"></i>Edit</a>

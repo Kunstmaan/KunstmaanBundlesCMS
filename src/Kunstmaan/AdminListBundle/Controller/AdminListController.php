@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * AdminListController
@@ -184,6 +185,39 @@ abstract class AdminListController extends Controller
             $this->renderView(
                 $configurator->getEditTemplate(),
                 array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator)
+            )
+        );
+    }
+
+
+    protected function doViewAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request = null)
+    {
+        /* @var EntityManager $em */
+        $em = $this->getEntityManager();
+        if (is_null($request)) {
+            $request = $this->getRequest();
+        }
+        $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
+        if ($helper === null) {
+            throw new NotFoundHttpException("Entity not found.");
+        }
+
+        if (!$configurator->canView($helper)) {
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+        }
+
+        $MetaData = $em->getClassMetadata($configurator->getRepositoryName());
+        $fields = array();
+        $accessor = PropertyAccess::createPropertyAccessor();
+        foreach ($MetaData->fieldNames as $value) {
+            $fields[$value] = $accessor->getValue($helper, $value);
+        }
+
+
+        return new Response(
+            $this->renderView(
+                $configurator->getViewTemplate(),
+                array('entity' => $helper, 'adminlistconfigurator' => $configurator, 'fields' => $fields)
             )
         );
     }
