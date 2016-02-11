@@ -1,0 +1,51 @@
+/* ==========================================================================
+   App Filter
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.app__filter {
+    margin-bottom: 2rem;
+
+    border-top: 1px solid $gray-lighter;
+
+    .toggle-item--active {
+        overflow: visible;
+    }
+
+    @media (min-width: $screen-sm) {
+
+        & + .pagination {
+            margin-top: -3rem;
+        }
+    }
+}
+
+.app__content__header + .app__filter {
+    border-top: 0;
+}
+
+
+
+/* Content
+   ========================================================================== */
+.app__filter__content {
+    border: 1px solid $gray-lighter;
+    border-top: 0;
+}
+
+
+
+/* Toggle
+   ========================================================================== */
+// .app__filter__toggle {
+
+// }
+
+
+
+/* Line
+   ========================================================================== */
+.app__filter__line {
+    padding: .5em 0;
+}

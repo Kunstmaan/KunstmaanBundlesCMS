@@ -33,7 +33,7 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
     /**
      * @var array
      */
-    private $sections;
+    private $sections = array();
 
     /**
      * @var bool
@@ -111,12 +111,11 @@ EOT
             'The name of your PagePart: For example: <comment>ContentBoxPagePart</comment>',
             '',
         ));
-        $self = $this;
         $generator = $this->getGenerator();
-        $bundlePath = $self->bundle->getPath();
+        $bundlePath = $this->bundle->getPath();
         $name = $this->assistant->askAndValidate(
             'PagePart name',
-            function ($name) use ($self, $generator, $bundlePath) {
+            function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
                 if ($generator->isReservedKeyword($name)){
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
@@ -149,7 +148,15 @@ EOT
         $fields = $this->askEntityFields($this->bundle);
         $this->fields = array();
         foreach ($fields as $fieldInfo) {
-            $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
+            if($fieldInfo['type'] == 'image') {
+                $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
+                    $fieldInfo['extra'], true, $fieldInfo['minHeight'], $fieldInfo['maxHeight'], $fieldInfo['minWidth'], $fieldInfo['maxWidth'], $fieldInfo['mimeTypes']);
+            }
+            elseif($fieldInfo['type'] == 'media') {
+                $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'],
+                    $fieldInfo['extra'], true, null, null, null, null, $fieldInfo['mimeTypes']);
+            }
+            else $this->fields[] = $this->getEntityFields($this->bundle, $this->pagepartName, $this->prefix, $fieldInfo['name'], $fieldInfo['type'], $fieldInfo['extra'], true);
         }
 
         /**
@@ -161,16 +168,10 @@ EOT
         /**
          * Ask that you want to create behat tests for the new pagepart, if possible
          */
-        if (count($this->sections) > 0) {
-            $behatFile = dirname($this->getContainer()->getParameter('kernel.root_dir').'/') . '/behat.yml';
-            $pagePartContext = $this->bundle->getPath() . '/Features/Context/PagePartContext.php';
-            $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
-            // Make sure behat is configured and the PagePartContext and BehatTestPage exits
-            if (file_exists($behatFile) && file_exists($pagePartContext) && file_exists($behatTestPage)) {
-                $this->behatTest = $this->assistant->askConfirmation('Do you want to generate behat tests for this pagepart? (y/n)', 'y');
-            } else {
-                $this->behatTest = false;
-            }
+        if (count($this->sections) > 0 && $this->canGenerateBehatTests($this->bundle)) {
+            $this->behatTest = $this->assistant->askConfirmation('Do you want to generate behat tests for this pagepart? (y/n)', 'y');
+        } else {
+            $this->behatTest = false;
         }
     }
 
@@ -186,5 +187,4 @@ EOT
 
         return new PagePartGenerator($filesystem, $registry, '/pagepart', $this->assistant, $this->getContainer());
     }
-
 }

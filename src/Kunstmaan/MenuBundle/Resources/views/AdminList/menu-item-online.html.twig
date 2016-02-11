@@ -1,0 +1,11 @@
+{% if item.online %}
+    <i class="fa fa-check-square-o"></i>
+    <span class="text--muted">
+        {{ ' (Online)' | trans }}
+    </span>
+{% else %}
+    <i class="fa fa-square-o"></i>
+    <span class="text--muted">
+        {{ ' (Offline)' | trans }}
+    </span>
+{% endif %}

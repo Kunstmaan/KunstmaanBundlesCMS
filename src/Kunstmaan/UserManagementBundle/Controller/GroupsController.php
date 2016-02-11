@@ -64,7 +64,7 @@ class GroupsController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $group = new Group();
-        $form = $this->createForm(new GroupType(), $group);
+        $form = $this->createForm(GroupType::class, $group);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -102,7 +102,7 @@ class GroupsController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
         /* @var Group $group */
         $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
-        $form = $this->createForm(new GroupType(), $group);
+        $form = $this->createForm(GroupType::class, $group);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

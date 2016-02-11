@@ -1,10 +1,10 @@
 <?php
 
-namespace {{ namespace }}\Form\{{ entity_class }};
+namespace {{ namespace }}\Form\Pages;
 
 use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The admin type for {{ entity_class }} pages
@@ -29,20 +29,21 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => '{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Page'
+	    'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}Page'
         ));
     }
+
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
-        return '{{ entity_class }}Page';
+	return '{{ entity_class|lower }}_page_type';
     }
 }

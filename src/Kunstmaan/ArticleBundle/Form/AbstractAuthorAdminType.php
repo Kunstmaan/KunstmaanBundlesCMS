@@ -14,7 +14,7 @@ class AbstractAuthorAdminType extends AbstractType
         $builder->add('link');
     }
 
-    function getName()
+    function getBlockPrefix()
     {
         return "abstactauthor_form";
     }

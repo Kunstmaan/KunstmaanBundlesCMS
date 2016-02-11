@@ -3,7 +3,10 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -20,26 +23,26 @@ class ChoicePagePartAdminType extends AbstractType
     {
         $builder
             ->add('label', null, array('required' => false))
-            ->add('required', 'checkbox', array('required' => false))
-            ->add('errormessage_required', 'text', array('required' => false))
-            ->add('expanded', 'checkbox', array('required' => false))
-            ->add('multiple', 'checkbox', array('required' => false))
-            ->add('choices', 'textarea', array('required' => false))
-            ->add('empty_value', 'text', array('required' => false));
+            ->add('required', CheckboxType::class, array('required' => false))
+            ->add('errormessage_required', TextType::class, array('required' => false))
+            ->add('expanded', CheckboxType::class, array('required' => false))
+            ->add('multiple', CheckboxType::class, array('required' => false))
+            ->add('choices', TextareaType::class, array('required' => false))
+            ->add('empty_value', TextType::class, array('required' => false));
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_formbundle_choicepageparttype';
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart'));
     }

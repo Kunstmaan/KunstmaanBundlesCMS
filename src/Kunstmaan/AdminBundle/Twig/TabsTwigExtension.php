@@ -12,24 +12,6 @@ use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
  */
 class TabsTwigExtension extends Twig_Extension
 {
-
-    /**
-     * @var Twig_Environment
-     */
-    protected $environment;
-
-    /**
-     * Initializes the runtime environment.
-     *
-     * This is where you can load some file that contains filter functions for instance.
-     *
-     * @param Twig_Environment $environment The current Twig_Environment instance
-     */
-    public function initRuntime(Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
     /**
      * Returns a list of functions to add to the existing list.
      *
@@ -38,20 +20,21 @@ class TabsTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'tabs_widget'  => new \Twig_Function_Method($this, 'renderWidget', array('is_safe' => array('html')))
+            new \Twig_SimpleFunction('tabs_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html')))
         );
     }
 
     /**
-     * @param TabPane $tabPane  The tab pane
-     * @param array   $options  The extra options
-     * @param string  $template The template
+     * @param \Twig_Environment $env
+     * @param TabPane           $tabPane  The tab pane
+     * @param array             $options  The extra options
+     * @param string            $template The template
      *
      * @return string
      */
-    public function renderWidget(TabPane $tabPane, $options = array(), $template = "KunstmaanAdminBundle:TabsTwigExtension:widget.html.twig")
+    public function renderWidget(Twig_Environment $env, TabPane $tabPane, $options = array(), $template = "KunstmaanAdminBundle:TabsTwigExtension:widget.html.twig")
     {
-        $template = $this->environment->loadTemplate($template);
+        $template = $env->loadTemplate($template);
 
         return $template->render(array_merge($options, array(
             'tabPane' => $tabPane

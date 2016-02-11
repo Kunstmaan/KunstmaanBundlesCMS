@@ -6,6 +6,12 @@ media:
 
   media:
     no: No files in this folder yet.
+    dnd:
+      tip: "Tip:"
+      tiptext: did you know you can just drop multiple files here?
+      alert:
+        title: Incoming!
+        text: Drop your files to instantly upload them to this folder.
     bulkupload:
       addto: Upload files to "%folder%"
     contenttab:
@@ -13,6 +19,8 @@ media:
     propertiestab:
       title: Properties
     title: Media
+    add:
+      action: Add media
     edit:
       action: Edit
     download:
@@ -30,6 +38,7 @@ media:
   folder:
     addsub:
       action: Add subfolder
+      action_short: Add
       modal:
         title: Add subfolder
         save: Add
@@ -37,6 +46,7 @@ media:
       no: No subfolders yet.
     delete:
       action: Delete this folder
+      action_short: Delete
       modal:
         title: Delete folder
         text: Are you sure you want to delete "%folder%"?
@@ -45,6 +55,7 @@ media:
       title: Content
     propertiestab:
       title: Properties
+    sortby: Sort by
 
   bulkupload:
     upload: Upload
@@ -80,3 +91,5 @@ media:
   widget:
     choose: Choose
     delete: Delete
+    media_chooser: Media-chooser
+    icon_chooser: Icon-chooser

@@ -67,6 +67,7 @@ class TranslationGroupManager
         $translation->setTranslationId($translationGroup->getId());
 
         $this->translationRepository->persist($translation);
+        $this->translationRepository->flush($translation);
 
         return $translation;
     }
@@ -77,7 +78,10 @@ class TranslationGroupManager
         $translation->setText($text);
         $translation->setFile($filename);
 
-        return $this->translationRepository->persist($translation);
+        $this->translationRepository->persist($translation);
+        $this->translationRepository->flush($translation);
+
+        return ;
     }
 
     /**

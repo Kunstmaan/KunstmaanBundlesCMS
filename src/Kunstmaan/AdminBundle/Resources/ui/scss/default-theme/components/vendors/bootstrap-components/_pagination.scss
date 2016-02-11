@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Bootstrap pagination fallback (until fanta has it right)
+   ========================================================================== */
+
+.pagination {
+
+    ul {
+        margin: 0;
+
+        @extend .pagination;
+    }
+}
+
+.pagination ul > li > span {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+div.pagination {
+    margin-bottom: 1rem;
+    display: block;
+    text-align: right;
+}
+
+.table-responsive + .pagination {
+    margin-top: 0;
+}

@@ -1,0 +1,82 @@
+/* ==========================================================================
+   Pageparts - Button pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.service-pp {
+    position: relative;
+
+    padding: 0;
+}
+
+
+/* Alignment
+   ========================================================================== */
+.service-pp--left {
+
+    .service-pp__image {
+
+        @media(min-width: $screen-sm-min) {
+            left: 0;
+        }
+    }
+
+    .service-pp__text {
+
+        @media(min-width: $screen-sm-min) {
+            float: right;
+        }
+    }
+}
+
+.service-pp--right {
+
+    .service-pp__image {
+
+        @media(min-width: $screen-sm-min) {
+            right: 0;
+        }
+    }
+
+    .service-pp__text {
+
+        @media(min-width: $screen-sm-min) {
+            float: left;
+        }
+    }
+}
+
+
+/* Head
+   ========================================================================== */
+.service-pp__head {
+    margin-top: 0;
+
+    color: $theme-color;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+
+    @media(min-width: $screen-md-min) {
+        font-size: 3rem;
+    }
+}
+
+
+/* Image
+   ========================================================================== */
+.service-pp__image {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2em;
+
+    @media(min-width: $screen-sm-min) {
+        max-width: none;
+        padding: 0 2em;
+    }
+
+    @media(min-width: $screen-md-min) {
+        padding: 0 4em;
+    }
+}

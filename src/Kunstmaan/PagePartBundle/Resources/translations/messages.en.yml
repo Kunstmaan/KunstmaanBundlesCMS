@@ -13,3 +13,15 @@ pagepart:
 
     text:
         content: 'Contents'
+
+    buttons:
+        move_up: Move up
+        move_down: Move down
+        edit: Edit
+        delete: Delete
+        resize: Minimize-Maximize
+
+region:
+    button:
+        min: Minimize
+        max: Maximize

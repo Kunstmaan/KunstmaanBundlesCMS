@@ -32,13 +32,11 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_tocpageparttype'.
-     *
      * @covers                Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_tocpageparttype', $this->object->getName());
+        $this->assertEquals(TocPagePartAdminType::class, $this->object->getName());
     }
 
     /**
@@ -50,11 +48,11 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::setDefaultOptions
+     * @covers Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $this->object->setDefaultOptions($this->resolver);
+        $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
         $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\TocPagePart');
     }

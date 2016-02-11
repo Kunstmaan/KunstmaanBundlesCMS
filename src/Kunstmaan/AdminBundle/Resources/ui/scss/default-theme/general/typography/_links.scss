@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+
+.link--gray {
+    color: $gray;
+
+    &:hover, &:focus {
+        color: $green;
+    }
+}
+
+.link--block {
+    display: block;
+}
+
+.link--text {
+    color: $text-color;
+
+    &:hover {
+        color: $link-hover-color;
+    }
+}
+
+.link--danger {
+
+    &:hover {
+        color: $brand-danger;
+    }
+}

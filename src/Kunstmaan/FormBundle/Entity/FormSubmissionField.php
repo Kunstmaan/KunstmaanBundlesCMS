@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
  *     "email" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField"
  * })
  */
-class FormSubmissionField
+abstract class FormSubmissionField
 {
     /**
      * This id of this FormSubmissionField
@@ -58,6 +58,11 @@ class FormSubmissionField
      * @ORM\JoinColumn(name="form_submission_id", referencedColumnName="id")
      */
     protected $formSubmission;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $sequence;
 
     /**
      * Get id
@@ -151,6 +156,30 @@ class FormSubmissionField
     public function setSubmission(FormSubmission $formSubmission)
     {
         $this->formSubmission = $formSubmission;
+
+        return $this;
+    }
+
+    /**
+     * Get sequence
+     *
+     * @return integer
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * Set sequence
+     *
+     * @param string $sequence
+     *
+     * @return FormSubmissionField
+     */
+    public function setSequence($sequence)
+    {
+        $this->sequence = $sequence;
 
         return $this;
     }

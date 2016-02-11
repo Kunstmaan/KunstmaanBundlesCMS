@@ -21,6 +21,11 @@ class Translator extends SymfonyTranslator
     private $resourceCacher;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
      * Add resources from the database
      * So the translator knows where to look (first) for specific translations
      * This function will also look if these resources are loaded from the stash or from the cache
@@ -30,6 +35,14 @@ class Translator extends SymfonyTranslator
         if ($this->addResourcesFromCacher() === false) {
             $this->addResourcesFromDatabaseAndCacheThem();
         }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function warmUp($cacheDir)
+    {
+        return;
     }
 
     /**
@@ -55,13 +68,16 @@ class Translator extends SymfonyTranslator
      */
     public function addResourcesFromDatabaseAndCacheThem($cacheResources = true)
     {
-        $resources = $this->translationRepository->getAllDomainsByLocale();
-        $this->addResources($resources);
+        try {
+            $resources = $this->translationRepository->getAllDomainsByLocale();
+            $this->addResources($resources);
 
-        if ($cacheResources === true) {
-            $this->resourceCacher->cacheResources($resources);
+            if ($cacheResources === true) {
+                $this->resourceCacher->cacheResources($resources);
+            }
+        } catch (\Exception $ex){
+            // don't load if the database doesn't work
         }
-
     }
 
     /**
@@ -93,7 +109,7 @@ class Translator extends SymfonyTranslator
 
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
-        if (!$this->container->isScopeActive('request')) {
+        if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
             return parent::trans($id, $parameters, $domain, $locale);
         }
 

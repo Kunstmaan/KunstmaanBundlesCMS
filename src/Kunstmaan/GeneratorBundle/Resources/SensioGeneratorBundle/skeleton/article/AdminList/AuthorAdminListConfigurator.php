@@ -1,8 +1,7 @@
 <?php
 
-namespace {{ namespace }}\AdminList\{{ entity_class }};
+namespace {{ namespace }}\AdminList;
 
-use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticleAuthorAdminListConfigurator;
 
 /**
@@ -27,6 +26,6 @@ class {{ entity_class }}AuthorAdminListConfigurator extends AbstractArticleAutho
      */
     public function getEntityName()
     {
-        return '{{ entity_class }}\{{ entity_class }}Author';
+	return '{{ entity_class }}Author';
     }
 }

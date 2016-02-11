@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cargo Bay Has Space - Vanilla</title>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type='text/css' />
+
+    <style>
+	.demo-container {
+	    width: 100%;
+	    padding: 2em;
+	}
+
+	.demo-container__main-header {
+	    margin-bottom: 2rem;
+	}
+
+	.demo-nav {
+	    width: 100%;
+	    margin: 2rem 0;
+	    overflow: hidden;
+	}
+
+	.demo-nav__item {
+	    display: block;
+	    float: left;
+	    padding: 1em;
+
+	    color: #333;
+	}
+
+	.demo-nav__item--hidden {
+	    display: none;
+	}
+
+	.demo-nav-external-spacehook {
+	    width: 300px;
+	    padding: 1em;
+
+	    background: #eee;
+	}
+
+	.has-space--space {
+	    background: #ADFFB7;
+	}
+
+	.has-space--no-space {
+	    background: #FFADAD;
+	}
+    </style>
+</head>
+<body>
+    <main role="main" class="demo-container">
+	<header class="demo-container__main-header">
+	    <h1>Cargo Bay Has Space - Vanilla</h1>
+	</header>
+	<div>
+	    <h4>
+		Demo 1 - Class as space-hook-target
+	    </h4>
+	    <nav role="navigation" data-space-hook-target=".js-has-space__space-hook--nav-1" class="js-has-space js-has-space__space-hook--nav-1 demo-nav">
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+	    </nav>
+	    <h4>
+		Demo 2 - Id as space-hook-target, has hidden items
+	    </h4>
+	    <nav role="navigation" id="has-space__space-hook--nav2" data-space-hook-target="#has-space__space-hook--nav2" class="js-has-space demo-nav">
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item js-has-space__item--hidden demo-nav__item demo-nav__item--hidden">Item</a>
+		<a href="#" class="js-has-space__item js-has-space__item--hidden demo-nav__item demo-nav__item--hidden">Item</a>
+		<a href="#" class="js-has-space__item js-has-space__item--hidden demo-nav__item demo-nav__item--hidden">Item</a>
+		<a href="#" class="js-has-space__item js-has-space__item--hidden demo-nav__item demo-nav__item--hidden">Item</a>
+		<a href="#" class="js-has-space__item js-has-space__item--hidden demo-nav__item demo-nav__item--hidden">Item</a>
+		<a href="#" class="js-has-space__item js-has-space__item--hidden demo-nav__item demo-nav__item--hidden">Item</a>
+		<a href="#" class="js-has-space__item js-has-space__item--hidden demo-nav__item demo-nav__item--hidden">Item</a>
+	    </nav>
+	    <h4>
+		Demo 3 - External class as space-hook-target
+	    </h4>
+	    <nav role="navigation" data-space-hook-target=".has-space__space-hook--nav3" class="js-has-space demo-nav">
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+		<a href="#" class="js-has-space__item demo-nav__item">Item</a>
+	    </nav>
+	    <p class="has-space__space-hook--nav3 demo-nav-external-spacehook">
+		External Spacehook for demo 3
+	    </p>
+	</div>
+    </main>
+
+    <script src="../js/vanilla.has-space.js"></script>
+    <script>
+	document.addEventListener("DOMContentLoaded", function(event) {
+	    cargobay.hasSpace.init();
+	});
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Repository\{{ entity_class }};
+namespace {{ namespace }}\Repository;
 
 use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
 
@@ -9,5 +9,4 @@ use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
  */
 class {{ entity_class }}OverviewPageRepository extends AbstractArticleOverviewPageRepository
 {
-
 }

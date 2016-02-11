@@ -10,19 +10,11 @@ class KunstmaanTranslatorExtensionTest extends \PHPUnit_Framework_TestCase
      */
     private $extension;
 
-    /**
-     * Root name of the configuration
-     *
-     * @var string
-     */
-    private $root;
-
     public function setUp()
     {
         parent::setUp();
 
         $this->extension = $this->getExtension();
-        $this->root      = "kuma_translator";
     }
 
     public function testEnabledByDefault()

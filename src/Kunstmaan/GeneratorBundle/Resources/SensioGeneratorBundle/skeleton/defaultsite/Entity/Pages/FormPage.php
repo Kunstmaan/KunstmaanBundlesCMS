@@ -3,7 +3,6 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use {{ namespace }}\Form\Pages\FormPageAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
@@ -17,7 +16,6 @@ use Symfony\Component\Form\AbstractType;
  */
 class FormPage extends AbstractFormPage implements HasPageTemplateInterface
 {
-
     /**
      * Returns the default backend form type for this form
      *

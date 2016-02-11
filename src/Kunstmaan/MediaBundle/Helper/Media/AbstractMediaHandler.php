@@ -11,6 +11,24 @@ use Symfony\Component\Form\AbstractType;
  */
 abstract class AbstractMediaHandler
 {
+    private $priority;
+
+    /**
+     * @param int $priority
+     */
+    function __construct($priority = 0)
+    {
+        $this->priority = $priority;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
     /**
      * @return string
      */

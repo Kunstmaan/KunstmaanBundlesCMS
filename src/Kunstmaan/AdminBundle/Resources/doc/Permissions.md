@@ -87,8 +87,8 @@ based permissions if needed.
 To check if the current user has access to a specific domain object, you use the following :
 
 ```php
-$securityContext = $this->get('security.context');
-if (false === $securityContext->isGranted(PermissionMap::PERMISSION_VIEW, $entity))
+$authChecker = $this->get('security.authorization_checker');
+if (false === $authChecker->isGranted(PermissionMap::PERMISSION_VIEW, $entity))
 {
     throw new AccessDeniedException();
 }

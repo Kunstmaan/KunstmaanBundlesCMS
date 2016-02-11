@@ -39,12 +39,12 @@ class GeneratePageCommand extends KunstmaanGenerateCommand
     /**
      * @var array
      */
-    private $sections;
+    private $sections = array();
 
     /**
      * @var array
      */
-    private $parentPages;
+    private $parentPages = array();
 
     /**
      * @see Command
@@ -129,13 +129,12 @@ EOT
             'The name of your Page: For example: <comment>SponsorPage</comment>, <comment>NewsOverviewPage</comment>',
             '',
         ));
-        $self = $this;
         $generator = $this->getGenerator();
-        $bundlePath = $self->bundle->getPath();
+        $bundlePath = $this->bundle->getPath();
 
         $name = $this->assistant->askAndValidate(
             'Page name',
-            function ($name) use ($self, $generator, $bundlePath) {
+            function ($name) use ($generator, $bundlePath) {
                 // Check reserved words
                 if ($generator->isReservedKeyword($name)){
                     throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
@@ -175,6 +174,10 @@ EOT
          * Ask which default page template we need to use
          */
         $templateSelect = $this->getTemplateList();
+        if (empty($templateSelect)) {
+            throw new \RuntimeException('You need to define at least one page template before running the page generator!');
+        }
+
         $this->assistant->writeLine('');
         $templateId = $this->assistant->askSelect('Which page template do you want to use', $templateSelect);
         $templateConfigs = $this->getAvailableTemplates($this->bundle);

@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Alert
+   ========================================================================== */
+
+.alert {
+    overflow: hidden;
+
+    .close{
+        line-height: 14px;
+    }
+}
+
+
+/* Actions
+   ========================================================================== */
+.alert__action {
+    display: block;
+    margin: 1rem 0 0 0;
+
+    @media (min-width: $screen-sm) {
+        display: inline-block;
+        float: right;
+        margin: -.5rem;
+    }
+}

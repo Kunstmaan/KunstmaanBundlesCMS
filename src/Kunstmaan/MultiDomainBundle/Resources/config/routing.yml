@@ -1,0 +1,4 @@
+kunstmaanmultidomainbundle_site_switch:
+    resource: '@KunstmaanMultiDomainBundle/Controller/SiteSwitchController.php'
+    type:     annotation
+    prefix:   /admin/multi-domain

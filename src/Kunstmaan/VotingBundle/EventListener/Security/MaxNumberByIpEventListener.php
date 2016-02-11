@@ -1,9 +1,9 @@
 <?php
 
 namespace Kunstmaan\VotingBundle\EventListener\Security;
-use Kunstmaan\VotingBundle\Entity\AbstractVote;
-use Symfony\Component\EventDispatcher\Event;
+
 use Kunstmaan\VotingBundle\Event\EventInterface;
+use Kunstmaan\VotingBundle\Services\RepositoryResolver;
 
 /**
 * Security listener for prevent ip to vote more than maxnumber for an event

@@ -1,8 +1,8 @@
-{% extends 'KunstmaanAdminBundle:Settings:index.html.twig' %}
+{% extends '@KunstmaanAdmin/Settings/index.html.twig' %}
 
 {% block content %}
     {% if data is iterable %}
-        <ul>
+        <ul class="list-group margin-top">
         {% for bundle in data %}
             {% if bundle.status == 'UP_TO_DATE' %}
                 {% set color = '#4F8A10' %}
@@ -14,7 +14,8 @@
                 {% set color = '#00529B' %}
                 {% set txt = 'settings.version.unknown'|trans %}
             {% endif %}
-            <li style="color: {{ color }}">
+
+            <li class="list-group-item" style="color: {{ color }}">
                 {{ bundle.name }} ({{ bundle.version }}{% if bundle.version != bundle.reference %} {{ bundle.reference|slice(0, 7) }}{% endif %}) {{ txt }}
             </li>
         {% endfor %}

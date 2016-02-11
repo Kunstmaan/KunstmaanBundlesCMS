@@ -1,117 +1,91 @@
-{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
-
-{% block extrajavascript %}
-    <script type="text/javascript">
-        var ckurl = '';
-        var ckid = '';
-
-        // Handle click of OK button
-        function handleOK(result) {
-            if (window.opener) {
-                {% if cke %}
-                    var funcNum = getUrlParam('CKEditorFuncNum');
-                    window.opener.CKEDITOR.tools.callFunction(funcNum, result['path']);
-                {% else %}
-                    window.opener.dialogWin.returnedValue = result;
-                    window.opener.dialogWin.returnFunc()
-                {% endif %}
-            } else {
-                //alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
-            }
-
-            window.close();
-            return false
-        }
-
-        // Handle click of Cancel button
-        function handleCancel() {
-            window.close();
-            return false
-        }
-
-        function doBodyLoad() {
-            if (window.opener) {
-                if (window.opener.blockEvents) {
-                    window.opener.blockEvents();
-                }
-            }
-        }
-
-        function doBodyUnload() {
-            if (window.opener) {
-                if (window.opener.unblockEvents) {
-                    window.opener.unblockEvents();
-                }
-            }
-        }
-
-        function getUrlParam(paramName) {
-            var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
-            var match = window.location.search.match(reParam) ;
-            return (match && match.length > 1) ? match[1] : '' ;
-        }
-    </script>
-{% endblock %}
-
-{% block extraparamsinbody %}
-    id="smallWindow"
-{% endblock %}
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
 {% block body %}
-    <header>
-        <div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a class="brand" href="#">{{ websitetitle | trans }}</a>
-                    <nav>
-                        <ul class="nav secondary-nav">
-                            {% if mediaChooserLink is defined and mediaChooserLink %}
-                                <li class="active first">
-                                    <a href="#">Pages</a>
-                                </li>
-                                <li class="last">
-                                    <a href="{{ mediaChooserLink }}">Media</a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                        <ul class="nav secondary-nav pull-right">
-                            {% set route = app.request.attributes.get('_route') %}
-                            {{ localeswitcher_widget(requiredlocales, route) }}
-                        </ul>
-                    </nav>
+    <header role="banner">
+
+        <!-- App Header -->
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+
+                <!-- Header -->
+                <div class="navbar-header">
+
+                    <!--Header - Toggle -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <!-- Navigation -->
+                <div class="collapse navbar-collapse" id="main-nav-bar">
+
+                    <!-- Navigation - Left -->
+                    <ul class="nav navbar-nav">
+                        {% if mediaChooserLink is defined and mediaChooserLink %}
+                            <li class="active">
+                                <a href="javascript:void(0)">
+                                    Pages
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ mediaChooserLink }}">
+                                    Media
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Navigation - Right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% set route = app.request.attributes.get('_route') %}
+                        {{ localeswitcher_widget(get_backend_locales(), route) }}
+                    </ul>
                 </div>
             </div>
-        </div>
+        </nav>
     </header>
 
-   <div class="container-fluid">
-       <!--=========Aside=========-->
-       <aside class="sidebar">
-           <h1 style="font-size:18px;">Link Chooser</h1>
-           <div class="search_wrp">
-               <form id="treeform">
-                   <input type="text" id="searchVal" placeholder="Search"/>
-                   <button id="search" class="btn search"><i class="icon-search"></i></button>
-               </form>
-           </div>
-           <div id="tree" class="tree">
-               <ul>
-                   {% for item in tree.rootItems %}
-                       {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
-                   {% endfor %}
-               </ul>
-           </div>
-       </aside>
 
-       <!--=========Content=========-->
-       <div class="content">
-           <div class="well">
-               <p id="selection">Selection: empty</p>
-               <div class="main_actions btn-group">
-                   <button onclick="handleOK({ path:ckurl, id:ckid });return false;" class="btn primary">Ok</button>
-                   <button onclick="handleCancel();" class="btn">Cancel</button>
-               </div>
-           </div>
-       </div>
-   </div>
+    <!-- Main Content -->
+    <main role="main" id="app__main" class="container-fluid app__main url-chooser">
+
+        <!-- Modal Sidebar -->
+        <aside id="app__sidebar" class="app__sidebar app__sidebar--static url-chooser__tree">
+            <!-- Tree Search -->
+            <div class="form-group app__sidebar__module app__sidebar__search">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+                </div>
+                <hr>
+            </div>
+
+            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
+                <ul>
+                    {% for item in tree.rootItems %}
+                        {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </aside>
+
+
+        <!-- Content -->
+        <div class="url-chooser__link-select">
+            <p id="url-chooser__selection-preview">
+                Selection: empty
+            </p>
+            <button type="button" id="save-url-chooser-modal" class="btn btn-primary btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
+                Ok
+            </button>
+            <button type="button" id="cancel-url-chooser-modal" class="btn btn-default btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
+                Cancel
+            </button>
+        </div>
+    </main>
 {% endblock %}

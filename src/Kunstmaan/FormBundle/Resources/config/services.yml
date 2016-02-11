@@ -9,15 +9,15 @@ services:
             -  { name: kunstmaan_admin.menu.adaptor }
 
     kunstmaan_form.form_mailer:
-        class: %kunstmaan_form.form_mailer.class%
-        arguments: [@mailer, @templating, @service_container]
+        class: '%kunstmaan_form.form_mailer.class%'
+        arguments: ['@mailer', '@templating', '@service_container']
 
     kunstmaan_form.form_handler:
         class: %kunstmaan_form.form_handler.class%
-        arguments: [@service_container]
+        arguments: ['@service_container']
 
     kunstmaan_form.configure_sub_actions_menu_listener:
         class: Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener
-        arguments: ["@doctrine.orm.entity_manager", "@router"]
+        arguments: ['@doctrine.orm.entity_manager', '@router']
         tags:
             - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureSubActionMenu', method: 'onSubActionMenuConfigure' }

@@ -47,10 +47,6 @@ class BehatTestPage extends AbstractPage  implements HasPageTemplateInterface
                 'name'  => 'FormPage',
                 'class' => '{{ namespace }}\Entity\Pages\FormPage'
             ),
-            array(
-                'name'  => 'SatelliteOverviewPage',
-                'class' => '{{ namespace }}\Entity\Pages\SatelliteOverviewPage'
-            ),
 {% endif %}
         );
     }

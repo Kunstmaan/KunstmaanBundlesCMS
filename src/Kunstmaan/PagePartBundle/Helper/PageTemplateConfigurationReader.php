@@ -27,9 +27,10 @@ class PageTemplateConfigurationReader
 
     /**
      * This will read the $name file and parse it to the PageTemplate
-     * @param string $name
      *
+     * @param string $name
      * @return PageTemplate
+     * @throws \Exception
      */
     public function parse($name)
     {
@@ -40,20 +41,40 @@ class PageTemplateConfigurationReader
         $name = substr($name, $pos + 1);
         $result = new PageTemplate();
         $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
-        $rawdata = Yaml::parse($path);
-        $result->setName($rawdata["name"]);
+        $rawData = Yaml::parse(file_get_contents($path));
+        $result->setName($rawData['name']);
         $rows = array();
-        foreach ($rawdata["rows"] as $rawRow) {
+        foreach ($rawData['rows'] as $rawRow) {
             $regions = array();
-            foreach ($rawRow["regions"] as $rawRegion) {
-                $regions[] = new Region($rawRegion["name"], $rawRegion["span"]);
+            foreach ($rawRow['regions'] as $rawRegion) {
+                $region = $this->buildRegion($rawRegion);
+                $regions[] = $region;
             }
             $rows[] = new Row($regions);
         }
         $result->setRows($rows);
-        $result->setTemplate($rawdata["template"]);
+        $result->setTemplate($rawData["template"]);
 
         return $result;
+    }
+
+    /**
+     * This builds a Region out of the rawRegion from the Yaml
+     *
+     * @param array $rawRegion
+     * @return Region
+     */
+    private function buildRegion($rawRegion)
+    {
+        $children = array();
+
+        if (isset($rawRegion['regions']) && count($rawRegion['regions'])) {
+            foreach ($rawRegion['regions'] as $child) {
+                $children[] = $this->buildRegion($child);
+            }
+        }
+
+        return new Region(array_key_exists('name', $rawRegion) ? $rawRegion['name'] : null, $rawRegion['span'], array_key_exists('template', $rawRegion) ? $rawRegion['template'] : null, $children);
     }
 
     /**

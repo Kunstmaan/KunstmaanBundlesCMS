@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
+use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
@@ -207,10 +208,12 @@ class PagePartAdmin
             foreach ($sequences as $sequence) {
                 if (array_key_exists($sequence, $this->newPageParts)) {
                     $this->pageParts[$sequence] = $this->newPageParts[$sequence];
-                } else {
+                } elseif (array_key_exists($sequence, $tempPageparts)) {
                     $this->pageParts[$sequence] = $tempPageparts[$sequence];
-                }
+                } else
+                    $this->pageParts[$sequence] = $this->getPagePart($sequence, array_search($sequence, $sequences)+1);
             }
+
             unset($tempPageparts);
         }
     }
@@ -232,19 +235,15 @@ class PagePartAdmin
         foreach ($this->pageParts as $pagePartRefId => $pagePart) {
             $data['pagepartadmin_' . $pagePartRefId] = $pagePart;
             $adminType                               = $pagePart->getDefaultAdminType();
-            if (!is_object($adminType) && is_string($adminType)) {
-                $adminType = $this->container->get($adminType);
-            }
-            $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminType);
+            $adminTypeFqn                            = ClassUtils::getClass($adminType);
+            $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminTypeFqn);
         }
 
         foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
             $data['pagepartadmin_' . $newPagePartRefId] = $newPagePart;
             $adminType                                  = $newPagePart->getDefaultAdminType();
-            if (!is_object($adminType) && is_string($adminType)) {
-                $adminType = $this->container->get($adminType);
-            }
-            $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminType);
+            $adminTypeFqn                            = ClassUtils::getClass($adminType);
+            $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminTypeFqn);
         }
 
         $formbuilder->setData($data);
@@ -356,6 +355,18 @@ class PagePartAdmin
         }
 
         return "no name";
+    }
+
+    /**
+     * @param bigint $id
+     * @param int    $sequenceNumber
+     *
+     * @return PagePart
+     */
+    public function getPagePart($id, $sequenceNumber)
+    {
+        $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+        return $ppRefRepo->getPagePart($id, $this->context, $sequenceNumber);
     }
 
     /**

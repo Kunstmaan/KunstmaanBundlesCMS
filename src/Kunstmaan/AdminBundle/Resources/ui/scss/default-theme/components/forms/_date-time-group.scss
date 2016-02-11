@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Date time group
+   ========================================================================== */
+
+   .date-time-group {
+       @extend %clearfix;
+
+       #form_main_date,
+       > div {
+           @extend %clearfix;
+       }
+       .form--double-widget__col {
+           width: calc(50% - 10px);
+           float: left;
+
+           &:last-child {
+               margin-left: 20px;
+           }
+       }
+   }
+
+   .form--double-widget__col {
+       position: relative;
+   }

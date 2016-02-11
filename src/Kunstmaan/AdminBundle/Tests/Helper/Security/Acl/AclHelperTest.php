@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -15,14 +16,11 @@ use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
-/**
- * AclHelperTest
- */
 class AclHelperTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -31,9 +29,9 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     protected $em;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    protected $sc;
+    protected $tokenStorage;
 
     /**
      * @var RoleHierarchyInterface
@@ -110,6 +108,14 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getQuoteStrategy')
             ->will($this->returnValue($strat));
 
+        $conf->expects($this->any())
+            ->method('getDefaultQueryHints')
+            ->willReturn(array());
+
+        $conf->expects($this->any())
+            ->method('isSecondLevelCacheEnabled')
+            ->willReturn(false);
+
         $this->em->expects($this->any())
             ->method('getConfiguration')
             ->will($this->returnValue($conf));
@@ -123,20 +129,20 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
             ->method('getClassMetadata')
             ->will($this->returnValue($meta));
 
-        $this->sc = $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContextInterface')
+        $this->tokenStorage = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')
             ->getMock();
 
         $this->token = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')
             ->getMock();
 
-        $this->sc->expects($this->any())
+        $this->tokenStorage->expects($this->any())
             ->method('getToken')
             ->will($this->returnValue($this->token));
 
         $this->rh = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
             ->getMock();
 
-        $this->object = new AclHelper($this->em, $this->sc, $this->rh);
+        $this->object = new AclHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
     /**
@@ -152,7 +158,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        new AclHelper($this->em, $this->sc, $this->rh);
+        new AclHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
     /**
@@ -346,10 +352,10 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getSecurityContext
+     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getTokenStorage
      */
-    public function testGetSecurityContext()
+    public function testGetTokenStorage()
     {
-        $this->assertSame($this->sc, $this->object->getSecurityContext());
+        $this->assertSame($this->tokenStorage, $this->object->getTokenStorage());
     }
 }

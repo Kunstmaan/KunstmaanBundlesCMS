@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ExportList implements ExportableInterface
 {
@@ -14,8 +15,14 @@ class ExportList implements ExportableInterface
     public function __construct(ExportListConfiguratorInterface $configurator)
     {
         $this->configurator = $configurator;
+        $this->configurator->buildFilters();
         $this->configurator->buildExportFields();
         $this->configurator->buildIterator();
+    }
+
+    public function bindRequest(Request $request)
+    {
+        $this->configurator->bindRequest($request);
     }
 
     public function getExportColumns()

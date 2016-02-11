@@ -22,4 +22,12 @@ class Events
      * @var string
      */
     const POST_DEEP_CLONE_AND_SAVE = 'kunstmaan_admin.postDeepCloneAndSave';
+
+    /**
+     * The adapt_simple_form event occurs after a simple form is created, here it's possible to add a tabPane to a form without
+     * the need for the form to be connected to a node
+     *
+     * @var string
+     */
+    const ADAPT_SIMPLE_FORM = 'kunstmaan_admin.adaptSimpleForm';
 }

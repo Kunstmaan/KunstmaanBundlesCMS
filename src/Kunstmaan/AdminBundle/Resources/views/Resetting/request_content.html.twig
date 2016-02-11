@@ -1,25 +1,32 @@
-<h1>{{ 'Reset password' |trans }}</h1>
+<p>
+    {{ 'Reset password' |trans }}
+</p>
 
 {% if invalid_username is defined %}
-    <div class="alert fade in alert-error">
-        <button class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-error">
         <strong>{{ 'form.error' | trans }}: </strong>
         {{ 'The username or email address does not exist.' | trans }}
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
     </div>
 {% endif %}
 
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST"
-      class="fos_user_resetting_request form-stacked">
-    <div class="control-group">
-        <label for="username">{{ 'Username or email address' |trans }}:</label>
-        <i class="icon-user"></i>
-        <input class="username" id="username" type="text" name="username" value=""
-               placeholder="{{ 'Username or email address' |trans }}" autofocus/>
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST">
+    <div class="form-group form-group--icon-in-control">
+        <label for="username" class="label--lighter">
+            {{ 'Username or email address' |trans }}:
+        </label>
+
+        <input class="form-control form-group--icon-in-control__form-control" id="username" type="text" name="username" value="" placeholder="{{ 'Username or email address' |trans }}" autofocus>
+        <i class="fa fa-user form-group--icon-in-control__icon"></i>
     </div>
-    <div class="btn_group">
-        <button class="btn" type="submit">{{ 'Reset password' |trans }}</button>
-        <button class="btn" type="reset"
-                onclick="window.location = '{{ path('fos_user_security_login' ) }}'">{{ 'form.cancel' | trans }}</button>
-    </div>
+
+    <button type="submit" class="btn btn-primary btn--raise-on-hover">
+        {{ 'Reset password' |trans }}
+    </button>
+    <a href="{{ path('fos_user_security_login' ) }}" class="btn btn-default btn--raise-on-hover">
+        {{ 'form.cancel' | trans }}
+    </a>
 </form>
 

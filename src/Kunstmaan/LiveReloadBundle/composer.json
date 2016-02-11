@@ -13,9 +13,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
-        "guzzle/guzzle": "3.8.*"
+        "php": ">=5.4.0",
+        "symfony/framework-bundle": "~2.3",
+        "guzzle/guzzle": "~3.9"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -23,7 +23,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

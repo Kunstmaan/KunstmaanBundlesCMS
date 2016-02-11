@@ -3,41 +3,29 @@
 namespace Kunstmaan\TranslatorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationAdminType extends AbstractType
 {
-    /**
-     * @var string
-     */
-    private $intention;
-
-    /**
-     * Constructor
-     *
-     * @param string $intention
-     */
-    public function __construct($intention = 'add')
-    {
-        $this->intention = $intention;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $intention = $options['csrf_token_id'];
         $options = array();
-        if ($this->intention == 'edit') {
-            $options = array('read_only' => true);
+        if ($intention == 'edit') {
+            $options = array('attr' => array('readonly' => true));
         }
 
-        $builder->add('domain', 'text', $options);
-        $builder->add('keyword', 'text', $options);
-        $builder->add('texts', 'collection', array(
-            'type' => new TextWithLocaleAdminType(),
+        $builder->add('domain', TextType::class, $options);
+        $builder->add('keyword', TextType::class, $options);
+        $builder->add('texts', CollectionType::class, array(
+            'entry_type' => TextWithLocaleAdminType::class,
             'label' => 'translator.translations',
             'by_reference' => false,
             'required' => false,
@@ -50,16 +38,15 @@ class TranslationAdminType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'translation';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\Translation',
-            'cascade_validation' => true,
         ));
     }
 }

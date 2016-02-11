@@ -13,7 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ArticleGenerator extends Generator
 {
-
     /**
      * @var Filesystem
      */
@@ -68,7 +67,7 @@ class ArticleGenerator extends Generator
         $this->generateForm($bundle, $entity, $parameters, $output);
         $this->generateAdminList($bundle, $entity, $parameters, $output);
         $this->generateController($bundle, $entity, $parameters, $output);
-        $this->generatePagepartConfigs($bundle, $entity, $parameters, $output);
+	$this->generatePageTemplateConfigs($bundle, $entity, $parameters, $output);
         $this->generateTemplates($bundle, $entity, $parameters, $output);
         $this->generateRouting($bundle, $entity, $parameters, $output);
         $this->generateMenu($bundle, $entity, $parameters, $output);
@@ -126,7 +125,7 @@ class ArticleGenerator extends Generator
     {
         $dirPath = sprintf("%s/Resources/config", $bundle->getPath());
         $skeletonDir = sprintf("%s/Resources/config", $this->skeletonDir);
-        if($this->multilanguage) {
+	if ($this->multilanguage) {
             $routing = $this->render($skeletonDir . '/routing_multilanguage.yml', $parameters);
         } else {
             $routing = $this->render($skeletonDir . '/routing_singlelanguage.yml', $parameters);
@@ -148,13 +147,15 @@ class ArticleGenerator extends Generator
         $skeletonDir = sprintf("%s/Resources/views", $this->skeletonDir);
         $fullSkeletonDir = sprintf("%s/Resources/views", $this->fullSkeletonDir);
 
-        $this->filesystem->copy($fullSkeletonDir . '/OverviewPage/view.html.twig', $dirPath . '/' . $entity . '/' . $entity . 'OverviewPage/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/' . $entity . '/' . $entity . 'OverviewPage/view.html.twig');
+	$this->filesystem->copy($fullSkeletonDir . '/OverviewPage/view.html.twig', $dirPath . '/Pages/' . $entity . 'OverviewPage/view.html.twig', true);
+	GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Pages/' . $entity . 'OverviewPage/view.html.twig');
+	$this->filesystem->copy($fullSkeletonDir . '/OverviewPage/pagetemplate.html.twig', $dirPath . '/Pages/' . $entity . 'OverviewPage/pagetemplate.html.twig', true);
 
-        $this->filesystem->copy($fullSkeletonDir . '/Page/view.html.twig', $dirPath . '/' . $entity . '/' . $entity . 'Page/view.html.twig', true);
-        GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/' . $entity . '/' . $entity . 'Page/view.html.twig');
+	$this->filesystem->copy($fullSkeletonDir . '/Page/view.html.twig', $dirPath . '/Pages/' . $entity . 'Page/view.html.twig', true);
+	GeneratorUtils::prepend("{% extends '" . $bundle->getName() .":Layout:layout.html.twig' %}\n", $dirPath . '/Pages/' . $entity . 'Page/view.html.twig');
+	$this->filesystem->copy($fullSkeletonDir . '/Page/pagetemplate.html.twig', $dirPath . '/Pages/' . $entity . 'Page/pagetemplate.html.twig', true);
 
-        $this->renderFile($skeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . '/' . $entity . '/' . $entity . 'PageAdminList/list.html.twig', $parameters );
+	$this->renderFile($skeletonDir . '/PageAdminList/list.html.twig', $dirPath . '/AdminList/' . '/' . $entity . 'PageAdminList/list.html.twig', $parameters);
 
         $output->writeln('Generating twig templates : <info>OK</info>');
     }
@@ -169,8 +170,8 @@ class ArticleGenerator extends Generator
      */
     public function generateController(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Controller/" . $entity, $bundle->getPath());
-        $skeletonDir = sprintf("%s/Controller", $this->skeletonDir);
+	$dirPath = sprintf('%s/Controller', $bundle->getPath());
+	$skeletonDir = sprintf('%s/Controller', $this->skeletonDir);
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageAdminListController', $parameters);
@@ -195,21 +196,13 @@ class ArticleGenerator extends Generator
      *
      * @throws \RuntimeException
      */
-    public function generatePagepartConfigs(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
+    public function generatePageTemplateConfigs(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/PagePartAdmin/" . $entity, $bundle->getPath());
-        $skeletonDir = sprintf("%s/PagePartAdmin", $this->skeletonDir);
+	$dirPath = sprintf('%s/Resources/config/pagetemplates', $bundle->getPath());
+	$skeletonDir = sprintf('%s/Resources/config/pagetemplates', $this->skeletonDir);
 
-        try {
-            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'OverviewPagePagePartAdminConfigurator', $parameters);
-        } catch (\Exception $error) {
-            throw new \RuntimeException($error->getMessage());
-        }
-        try {
-            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PagePagePartAdminConfigurator', $parameters);
-        } catch (\Exception $error) {
-            throw new \RuntimeException($error->getMessage());
-        }
+	$this->renderFile($skeletonDir . '/page.yml', $dirPath . '/'.strtolower($entity).'page.yml', $parameters);
+	$this->renderFile($skeletonDir . '/overviewpage.yml', $dirPath . '/'.strtolower($entity).'overviewpage.yml', $parameters);
 
         $output->writeln('Generating PagePart configurators : <info>OK</info>');
     }
@@ -224,7 +217,7 @@ class ArticleGenerator extends Generator
      */
     public function generateAdminList(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/AdminList/" . $entity, $bundle->getPath());
+	$dirPath = sprintf("%s/AdminList/", $bundle->getPath());
         $skeletonDir = sprintf("%s/AdminList", $this->skeletonDir);
 
         try {
@@ -252,7 +245,7 @@ class ArticleGenerator extends Generator
      */
     public function generateForm(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Form/" . $entity, $bundle->getPath());
+	$dirPath = sprintf("%s/Form/Pages/", $bundle->getPath());
         $skeletonDir = sprintf("%s/Form", $this->skeletonDir);
 
         try {
@@ -266,6 +259,8 @@ class ArticleGenerator extends Generator
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
+
+	$dirPath = sprintf("%s/Form/", $bundle->getPath());
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AuthorAdminType', $parameters);
@@ -286,14 +281,8 @@ class ArticleGenerator extends Generator
      */
     public function generateRepositories(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Repository/" . $entity, $bundle->getPath());
+	$dirPath = sprintf("%s/Repository/", $bundle->getPath());
         $skeletonDir = sprintf("%s/Repository", $this->skeletonDir);
-
-        try {
-            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'OverviewPageRepository', $parameters);
-        } catch (\Exception $error) {
-            throw new \RuntimeException($error->getMessage());
-        }
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'PageRepository', $parameters);
@@ -302,7 +291,7 @@ class ArticleGenerator extends Generator
         }
 
         try {
-            $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'AuthorRepository', $parameters);
+	    $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'OverviewPageRepository', $parameters);
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
@@ -320,7 +309,7 @@ class ArticleGenerator extends Generator
      */
     public function generateEntities(Bundle $bundle, $entity, array $parameters, OutputInterface $output)
     {
-        $dirPath = sprintf("%s/Entity/" . $entity, $bundle->getPath());
+	$dirPath = sprintf("%s/Entity/Pages", $bundle->getPath());
         $skeletonDir = sprintf("%s/Entity", $this->skeletonDir);
 
         try {
@@ -333,6 +322,8 @@ class ArticleGenerator extends Generator
         } catch (\Exception $error) {
             throw new \RuntimeException($error->getMessage());
         }
+
+	$dirPath = sprintf("%s/Entity", $bundle->getPath());
 
         try {
             $this->generateSkeletonBasedClass($skeletonDir, $entity, $dirPath, 'Author', $parameters);
@@ -383,5 +374,4 @@ class ArticleGenerator extends Generator
         }
         $this->renderFile($skeletonPath, $classPath, $parameters);
     }
-
 }

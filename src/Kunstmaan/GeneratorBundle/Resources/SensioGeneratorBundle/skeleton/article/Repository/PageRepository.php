@@ -1,9 +1,8 @@
 <?php
 
-namespace {{ namespace }}\Repository\{{ entity_class }};
+namespace {{ namespace }}\Repository;
 
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Kunstmaan\ArticleBundle\Repository\AbstractArticlePageRepository;
 
 /**
@@ -38,57 +37,29 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
      */
     public function getArticlesQuery($lang = null, $offset, $limit)
     {
-        $rsm = new ResultSetMappingBuilder($this->_em);
-        $rsm->addRootEntityFromClassMetadata('{{ namespace }}\Entity\{{ entity_class }}\{{ entity_class }}Page', 'qp');
+	$qb = $this->createQueryBuilder('a')
+	    ->innerJoin('KunstmaanNodeBundle:NodeVersion', 'v', 'WITH', 'a.id = v.refId')
+	    ->innerJoin('KunstmaanNodeBundle:NodeTranslation', 't', 'WITH', 't.publicNodeVersion = v.id')
+	    ->innerJoin('KunstmaanNodeBundle:Node', 'n', 'WITH', 't.node = n.id')
+	    ->where('t.online = 1')
+	    ->andWhere('n.deleted = 0')
+	    ->andWhere('v.refEntityName = :refname')
+	    ->orderBy('a.date', 'DESC')
+	    ->setParameter('refname', "{{ namespace | replace({'\\': '\\\\'}) }}\\Entity\\Pages\\{{ entity_class }}Page");
 
-        $query = "SELECT";
-        $query .= " article.*";
-        $query .= " FROM";
-        $query .= " {{ prefix }}{{ entity_class|lower }}_pages as article";
-        $query .= " INNER JOIN";
-        $query .= " kuma_node_versions nv ON nv.ref_id = article.id";
-        $query .= " INNER JOIN";
-        $query .= " kuma_node_translations nt ON nt.public_node_version_id = nv.id and nt.id = nv.node_translation_id";
-        $query .= " INNER JOIN";
-        $query .= " kuma_nodes n ON n.id = nt.node_id";
-        $query .= " WHERE";
-        $query .= " n.deleted = 0";
-        $query .= " AND";
-        $query .= " n.ref_entity_name = '{{ namespace | replace({'\\': '\\\\\\\\'}) }}\\\\Entity\\\\{{ entity_class }}\\\\{{ entity_class }}Page'";
-        $query .= " AND";
-        $query .= " nt.online = 1 ";
-        if ($lang) {
-            $query .= " AND";
-            $query .= " nt.lang = ? ";
+	if (!is_null($lang)) {
+	    $qb->andWhere('t.lang = :lang')
+		->setParameter('lang', $lang);
         }
-        $query .= " ORDER BY article.date DESC";
-        if($limit){
-            $query .= " LIMIT ?";
-            if($offset){
-                $query .= " OFFSET ?";
+
+	if ($limit) {
+	    $qb->setMaxResults(1);
+
+	    if ($offset) {
+		$qb->setFirstResult($offset);
             }
         }
 
-        $q = $this->_em->createNativeQuery($query, $rsm);
-
-        if ($lang) {
-            $q->setParameter(1, $lang);
-            if($limit){
-                $q->setParameter(2, $limit);
-                if($offset){
-                    $q->setParameter(3, $offset);
-                }
-            }
-
-        } else {
-            if($limit){
-                $q->setParameter(1, $limit);
-                if($offset){
-                    $q->setParameter(2, $offset);
-                }
-            }
-        }
-
-        return $q;
+	return $qb->getQuery();
     }
 }

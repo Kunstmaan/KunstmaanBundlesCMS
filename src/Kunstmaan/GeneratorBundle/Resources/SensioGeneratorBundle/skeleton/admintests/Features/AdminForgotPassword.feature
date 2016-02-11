@@ -35,5 +35,5 @@ Feature: AdminForgotPassword
   @javascript
   Scenario: Use the cancel button
     Given I am on the forgot password page
-    And I press "Cancel"
+    And I follow "Cancel"
     Then I should see "username"

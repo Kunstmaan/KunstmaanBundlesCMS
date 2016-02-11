@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cargo Bay Audioplayer - jQuery</title>
+
+    <meta name="description" content="Cargo Bay Audioplayer - jQuery">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type='text/css' />
+    <link rel="stylesheet" href="../styles/css/iconfont.css" type='text/css' />
+    <link rel="stylesheet" href="../styles/css/audioplayer.css" type='text/css' />
+
+    <style type="text/css">
+	p {
+	    font-size: 20px;
+	    margin: 8em 0;
+	}
+    </style>
+</head>
+<body>
+    <main role="main" class="container">
+	<header>
+	    <h1>
+		Cargo Bay Audioplayer - jQuery
+	    </h1>
+	</header>
+	<p>
+	    <!-- Add your own test-files -->
+	    <audio controls preload="metadata" class="js-audio-player">
+		<source src="test.mp3" type="audio/mp3"/>
+		<source src="test.ogg" type="audio/ogg"/>
+		<source src="test.wav" type="audio/wav"/>
+	    </audio>
+	</p>
+    </main>
+
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../js/jquery.audioplayer.js"></script>
+    <script>
+	$('.js-audio-player').audioPlayer();
+    </script>
+</body>
+</html>

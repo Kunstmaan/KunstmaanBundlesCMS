@@ -7,20 +7,15 @@ use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
-/**
- * NodeListener
- */
 class NodeListener
 {
-
     /**
-     * SecurityContextInterface
+     * AuthorizationCheckerInterface
      */
-    private $securityContext;
+    private $authorizationChecker;
 
     /**
      * @var PermissionAdmin
@@ -33,15 +28,15 @@ class NodeListener
     protected $permissionMap;
 
     /**
-     * @param SecurityContextInterface $securityContext The security context
-     * @param PermissionAdmin          $permissionAdmin The permission admin
-     * @param PermissionMapInterface   $permissionMap   The permission map
+     * @param AuthorizationCheckerInterface $authorizationChecker The security context
+     * @param PermissionAdmin               $permissionAdmin      The permission admin
+     * @param PermissionMapInterface        $permissionMap        The permission map
      */
-    public function __construct(SecurityContextInterface $securityContext, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, PermissionAdmin $permissionAdmin, PermissionMapInterface $permissionMap)
     {
+        $this->authorizationChecker = $authorizationChecker;
         $this->permissionAdmin = $permissionAdmin;
         $this->permissionMap = $permissionMap;
-        $this->securityContext = $securityContext;
     }
 
     /**
@@ -49,12 +44,11 @@ class NodeListener
      */
     public function adaptForm(AdaptFormEvent $event)
     {
-    	if($event->getPage() instanceof HasNodeInterface) {
-    		if ($this->securityContext->isGranted('ROLE_PERMISSIONMANAGER')) {
-    			$tabPane = $event->getTabPane();
-    			$tabPane->addTab(new Tab('Permissions', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
-    		}
-    	}
+        if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
+            if ($this->authorizationChecker->isGranted('ROLE_PERMISSIONMANAGER')) {
+                $tabPane = $event->getTabPane();
+                $tabPane->addTab(new Tab('Permissions', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
+            }
+        }
     }
-
 }

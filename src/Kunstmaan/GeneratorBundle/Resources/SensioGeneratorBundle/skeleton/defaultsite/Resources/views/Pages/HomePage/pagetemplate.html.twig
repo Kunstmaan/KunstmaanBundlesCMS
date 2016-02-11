@@ -1,20 +1,40 @@
-<div class="container">
-    <% if demosite %>
-    <div class="row">
-        <div class="col-md-12">
-            {% include '<%= bundle.name %>:Pages:HomePage/slider.html.twig' %}
-        </div>
+<% if demosite %>
+    <div class="container-fluid">
+        <header>
+            {{ render_pageparts(page, 'header') }}
+        </header>
+
+        <section class="text--center">
+            {{ render_pageparts(page, 'section1') }}
+        </section>
+
+        <section class="splash splash--gray-lighter">
+            <div class="container">
+                {{ render_pageparts(page, 'section2') }}
+            </div>
+        </section>
+
+        <section class="splash">
+            <div class="container">
+                {{ render_pageparts(page, 'section3') }}
+            </div>
+        </section>
+
+        <section class="splash splash--gray-lighter text--center splash--smaller-margin">
+            <div class="container">
+                {{ render_pageparts(page, 'section4') }}
+            </div>
+        </section>
+
+        <section class="container text--center">
+            {{ render_pageparts(page, 'section5') }}
+        </section>
     </div>
-    <% endif %>
-    <div class="row row--padded-large">
-        <div class="col-md-4 col--padded">
-            {{ render_pageparts(page, 'left_column') }}
-        </div>
-        <div class="col-md-4 col--padded">
-            {{ render_pageparts(page, 'middle_column') }}
-        </div>
-        <div class="col-md-4 col--padded">
-            {{ render_pageparts(page, 'right_column') }}
-        </div>
+
+<% else %>
+
+    <div class="container">
+        {{ render_pageparts(page, 'main') }}
     </div>
-</div>
+
+<% endif %>

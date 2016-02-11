@@ -2,26 +2,30 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
+use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel;
+use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanelActionInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 
-/**
- * MenuTwigExtension
- */
 class MenuTwigExtension extends \Twig_Extension
 {
     /**
-     * @var MenuBuilder $menuBuilder
+     * @var MenuBuilder
      */
     protected $menuBuilder;
 
     /**
-     * Constructor
-     *
-     * @param MenuBuilder $menuBuilder
+     * @var AdminPanel
      */
-    public function __construct(MenuBuilder $menuBuilder)
+    protected $adminPanel;
+
+    /**
+     * @param MenuBuilder $menuBuilder
+     * @param AdminPanel $adminPanel
+     */
+    public function __construct(MenuBuilder $menuBuilder, AdminPanel $adminPanel)
     {
         $this->menuBuilder = $menuBuilder;
+        $this->adminPanel  = $adminPanel;
     }
 
     /**
@@ -32,7 +36,8 @@ class MenuTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'admin_menu_get'  => new \Twig_Function_Method($this, 'getAdminMenu'),
+            new \Twig_SimpleFunction('get_admin_menu', array($this, 'getAdminMenu')),
+            new \Twig_SimpleFunction('get_admin_panel_actions', array($this, 'getAdminPanelActions')),
         );
     }
 
@@ -44,6 +49,16 @@ class MenuTwigExtension extends \Twig_Extension
     public function getAdminMenu()
     {
         return $this->menuBuilder;
+    }
+
+    /**
+     * Return the admin panel actions.
+     *
+     * @return AdminPanelActionInterface[]
+     */
+    public function getAdminPanelActions()
+    {
+        return $this->adminPanel->getAdminPanelActions();
     }
 
     /**

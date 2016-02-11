@@ -14,16 +14,16 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
-        "ruflin/elastica": "~1.0"
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
+        "ruflin/elastica": "~2.3"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\SearchBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

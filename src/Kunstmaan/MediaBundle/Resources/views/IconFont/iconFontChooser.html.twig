@@ -1,4 +1,4 @@
-{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
 {% block extracss %}
     <link rel="stylesheet" type="text/css" href="{{ loader.cssLink }}">
@@ -9,34 +9,11 @@
 {% endblock %}
 
 {% block body %}
-    <header>
-        <div class="navbar navbar-inverse navbar-fixed-top" data-dropdown="dropdown">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a class="brand" href="#">{{ websitetitle | trans }}</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <script type="text/javascript">
-        function handleOK(result) {
-            if (window.opener) {
-                window.opener.dialogWin.returnedValue = result;
-                window.opener.dialogWin.returnFunc()
-            } else {
-                //alert("You have closed the main window.\n\nNo action will be taken on the choices in this dialog box.")
-            }
-            window.close();
-            return false
-        }
-     </script>
-
     <div class="container-fluid">
         <!--=========Content=========-->
         <div class="content iconfont-list">
             {% for class in loader.cssClasses %}
-                <div onclick="handleOK({ iconClass: '{{ class }}' })" class="{{ class }}" style="font-size:30px;padding:15px;cursor:pointer;margin: 5px;border: 1px solid #ccc;display: inline-block;"></div>
+                <div class="js-icon-chooser__icon {{ class }}" data-icon-class="{{ class }}" style="font-size:30px;padding:15px;cursor:pointer;margin: 5px;border: 1px solid #ccc;display: inline-block;"></div>
             {% endfor %}
         </div>
     </div>

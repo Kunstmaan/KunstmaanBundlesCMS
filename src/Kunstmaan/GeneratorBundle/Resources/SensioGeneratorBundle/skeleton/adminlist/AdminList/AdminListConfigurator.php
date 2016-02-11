@@ -10,11 +10,12 @@ use {{ namespace }}\Form\{{ entity_class }}AdminType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 
 /**
  * The admin list configurator for {{ entity_class }}
  */
-class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
 {
     /**
      * @param EntityManager $em        The entity manager
@@ -67,4 +68,17 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
     {
         return '{{ entity_class }}';
     }
+
+{% if sortField %}
+    /**
+     * Get sortable field name
+     *
+     * @return string
+     */
+    public function getSortableField()
+    {
+        return "{{ sortField }}";
+    }
+{% endif %}
+
 }

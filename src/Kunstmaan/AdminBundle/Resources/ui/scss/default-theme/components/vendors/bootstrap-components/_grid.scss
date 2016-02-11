@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Bootstrap grid adjustments
+   ========================================================================== */
+
+/* Rows
+   ========================================================================== */
+.row--padded {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.row--padded-large {
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+}
+
+
+/* Col
+   ========================================================================== */
+.col--no-gutter {
+    padding: 0;
+}
+
+.col--padded {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.col--padded-large {
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+}
+
+
+/* Text
+   ========================================================================== */
+.text-xs-center {
+    @media (max-width: $screen-sm) {
+        text-align: center;
+    }
+}

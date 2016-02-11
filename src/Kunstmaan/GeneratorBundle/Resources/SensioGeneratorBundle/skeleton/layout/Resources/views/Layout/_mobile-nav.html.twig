@@ -1,0 +1,43 @@
+{# Mobile navigation #}
+
+{# Language nav #}
+{% set langs = get_locales() %}
+{% if langs|length > 0 %}
+    <nav role="navigation" class="language-nav">
+        <span class="language-nav__item language-nav__item--current">
+            {{ app.request.locale }}
+        </span>
+        {% for lang in langs %}
+            {% if lang != app.request.locale %}
+            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
+                {{ lang }}
+            </a>
+            {% endif %}
+        {% endfor %}
+    </nav>
+{% endif %}
+
+
+{# Main Navigation #}
+<nav class="site-nav">
+    {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+    {% for node in activeSubnode.children %}
+        <a href="{{ path('_slug', { 'url': node.slug }) }}" class="site-nav__item{% if(node.active) %} site-nav__item--active{% endif %}">
+            {{ node.title }}
+        </a>
+    {% endfor %}
+</nav>
+
+
+{# Contact Nav #}
+<nav class="contact-nav">
+    <a href="#" class="contact-nav__item">
+        <i class="icon icon--nav-mail contact-nav__icon"></i>
+    </a>
+    <a href="#" class="contact-nav__item">
+        <i class="icon icon--nav-phone contact-nav__icon"></i>
+    </a>
+    <a href="#" class="contact-nav__item">
+        <i class="icon icon--nav-location contact-nav__icon"></i>
+    </a>
+</nav>

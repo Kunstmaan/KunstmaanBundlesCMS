@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\NodeTranslationAdminType;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * NodeTranslation
@@ -56,6 +56,7 @@ class NodeTranslation extends AbstractEntity
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Regex("/^[a-zA-Z0-9\-_\/]+$/")
      */
     protected $slug;
 
@@ -76,7 +77,7 @@ class NodeTranslation extends AbstractEntity
 
     /**
      * @var ArrayCollection
-     *
+     * @Assert\Valid()
      * @ORM\OneToMany(targetEntity="NodeVersion", mappedBy="nodeTranslation")
      * @ORM\OrderBy({"created" = "ASC"})
      */
@@ -218,7 +219,7 @@ class NodeTranslation extends AbstractEntity
      */
     public function setSlug($slug)
     {
-        $this->slug = Slugifier::slugify($slug, '');
+        $this->slug = $slug;
 
         return $this;
     }
@@ -318,6 +319,10 @@ class NodeTranslation extends AbstractEntity
      */
     public function getNodeVersion($type)
     {
+        if($type == 'public') {
+            return $this->publicNodeVersion;
+        }
+
         $nodeVersions = $this->getNodeVersions();
 
         $max = count($nodeVersions);
@@ -344,6 +349,10 @@ class NodeTranslation extends AbstractEntity
     {
         $this->nodeVersions[] = $nodeVersion;
         $nodeVersion->setNodeTranslation($this);
+
+        if($nodeVersion->getType() == 'public') {
+            $this->publicNodeVersion = $nodeVersion;
+        }
 
         return $this;
     }

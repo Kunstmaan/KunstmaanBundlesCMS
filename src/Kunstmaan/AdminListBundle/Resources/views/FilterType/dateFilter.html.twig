@@ -1,22 +1,15 @@
-<select name="{{nameprefix}}comparator{{namesuffix}}">
-    <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
-    <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
-</select>
-<input type="text" class="form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} />
-{% if nameprefix != "" and namesuffix != "" %}
-	<script>
-    	$(document).ready(function() {
-            $('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker({'format' : 'dd/mm/yyyy'});
-        	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').datepicker('setStartDate', '{{ datePicker_startDate }}');
-        	$('.form_datepicker{{ nameprefix }}{{ namesuffix }}').inputmask("date");
-        });
-	</script>
-{% else %}
-	<script>
-    	$(document).ready(function() {
-            $('.form_datepicker').datepicker({'format' : 'dd/mm/yyyy'});
-        	$('.form_datepicker').datepicker('update');
-        	$('.form_datepicker').inputmask("date");
-        });
-	</script>
-{% endif %}
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+        <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
+        <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
+    </select>
+</div>
+
+<div class="form-group js-datepicker date">
+    <div class='input-group date' id='datetimepicker1'>
+        <input type="text" class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}" data-date-format="DD/MM/YYYY"{% if data.value is defined %} value="{{data.value}}"{% endif %}{% if datePicker_startDate is defined %} data-startDate="{{datePicker_startDate}}"{% endif %}>
+        <span class="input-group-addon">
+            <span class="fa fa-calendar-o"></span>
+        </span>
+    </div>
+</div>

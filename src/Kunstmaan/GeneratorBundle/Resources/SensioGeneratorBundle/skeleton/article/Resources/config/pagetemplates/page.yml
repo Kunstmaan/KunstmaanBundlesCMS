@@ -1,0 +1,5 @@
+name: "{{ entity_class }} page"
+rows:
+    - regions:
+        - { name: "main", span: 12 }
+template: "{{ bundle.name }}::Pages\\{{ entity_class }}Page\\pagetemplate.html.twig"

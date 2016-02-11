@@ -8,12 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-/**
- * CronUpdateNodeCommand
- */
 class CronUpdateNodeCommand extends ContainerAwareCommand
 {
-
     /**
      * {@inheritdoc}
      */
@@ -44,7 +40,7 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
                         // Set user security context
                         $user = $queuedNodeTranslationAction->getUser();
                         $runAsToken = new UsernamePasswordToken($user, null, 'foo', $user->getRoles());
-                        $this->getContainer()->get('security.context')->setToken($runAsToken);
+                        $this->getContainer()->get('security.token_storage')->setToken($runAsToken);
                     }
                     $nodeTranslation = $queuedNodeTranslationAction->getNodeTranslation();
                     switch ($action) {
@@ -66,5 +62,4 @@ class CronUpdateNodeCommand extends ContainerAwareCommand
             $output->writeln('No queued jobs');
         }
     }
-
 }

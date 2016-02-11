@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Config for Cargobay
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+
+/* Cookie-consent
+   ========================================================================== */
+//General
+$cookie-bar-position-top:                   auto;
+$cookie-bar-position-right:                 auto;
+$cookie-bar-position-bottom:                0;
+$cookie-bar-position-left:                  0;
+$cookie-bar-color:                          rgba(0, 55, 103, .9);
+$cookie-bar-text-align:                     center;
+$cookie-bar-width:                          100%;
+$cookie-bar-padding:                        1rem;
+$cookie-bar-font-color:                     $white;
+$cookie-bar-font-family:                    Helvetica, Arial, sans-serif;
+$cookie-bar-font-size:                      .9rem;
+$cookie-bar-line-height:                    1.2;
+
+//Policy link
+$cookie-bar-policy-link-color:              $white;
+$cookie-bar-policy-link-text-decoration:    underline;
+
+//Button
+$cookie-bar-button-margin:                  1rem 0 0 0;
+
+
+/* Sidebar Toggle
+   ========================================================================== */
+$sidebar--left__width: calc(100% - 3rem);
+$sidebar--left__max-width: 20rem;

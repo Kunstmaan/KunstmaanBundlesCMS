@@ -1,0 +1,22 @@
+{% set breadcrumbitems = adminmenu.breadcrumb %}
+{% if breadcrumbitems | length > 0 %}
+    <ul class="breadcrumb app__content__breadcrumb">
+    {% for breadcrumbitem in breadcrumbitems %}
+        {% if loop.last %}
+            <li class="active">
+                {{ breadcrumbitem.label | trans }}
+            </li>
+        {% else %}
+            <li>
+               {% if  breadcrumbitem.route %}
+                    <a href="{{ path(breadcrumbitem.route, breadcrumbitem.routeparams) }}">
+                        {{ breadcrumbitem.label | trans }}
+                    </a>
+               {% else %}
+                    <span>{{ breadcrumbitem.label | trans }}</span>
+               {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endif %}

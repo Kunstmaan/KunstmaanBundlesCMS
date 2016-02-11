@@ -3,15 +3,12 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField;
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EmailPagePart extends AbstractFormPagePart
 {
-
     /**
      * If set to true, you are obligated to fill in this page part
      *
@@ -116,7 +112,6 @@ class EmailPagePart extends AbstractFormPagePart
         return $this->errorMessageInvalid;
     }
 
-
     /**
      * Returns the frontend view
      *
@@ -132,12 +127,15 @@ class EmailPagePart extends AbstractFormPagePart
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
+     * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $efsf = new EmailFormSubmissionField();
         $efsf->setFieldName("field_" . $this->getUniqueId());
         $efsf->setLabel($this->getLabel());
+        $efsf->setSequence($sequence);
+
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $efsf;
 
@@ -156,7 +154,7 @@ class EmailPagePart extends AbstractFormPagePart
         $constraints[] = new Email($options);
 
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            new EmailFormSubmissionType(),
+            EmailFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,
@@ -164,7 +162,8 @@ class EmailPagePart extends AbstractFormPagePart
             )
         );
         $formBuilder->setData($data);
-        $fields[] = $efsf;
+
+        $fields->append($efsf);
     }
 
     /**
@@ -176,5 +175,4 @@ class EmailPagePart extends AbstractFormPagePart
     {
         return new EmailPagePartAdminType();
     }
-
 }

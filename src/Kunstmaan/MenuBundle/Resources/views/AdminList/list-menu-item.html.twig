@@ -1,0 +1,27 @@
+{% extends 'KunstmaanAdminListBundle:Default:list.html.twig' %}
+
+{% block admin_page_title %}
+    <div class="col-sm-6 col-md-8">
+        <h1 class="app__content__header__title">
+            Menu items for {{ adminlistconfigurator.menu.name }} and language {{ adminlistconfigurator.menu.locale }}
+        </h1>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb app__content__breadcrumb">
+        <li>
+            <a href="{{ path('KunstmaanAdminBundle_modules') }}">
+                Modules
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('kunstmaanmenubundle_admin_menu') }}">
+                Menu's
+            </a>
+        </li>
+        <li class="active">
+            Menu items
+        </li>
+    </ul>
+{% endblock %}

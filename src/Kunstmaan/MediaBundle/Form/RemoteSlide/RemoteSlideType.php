@@ -2,20 +2,17 @@
 
 namespace Kunstmaan\MediaBundle\Form\RemoteSlide;
 
-use Kunstmaan\MediaBundle\Repository\FolderRepository;
-use Symfony\Component\Form\AbstractType;
+use Kunstmaan\MediaBundle\Form\AbstractRemoteType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * RemoteSlideType
  */
-class RemoteSlideType extends AbstractType
+class RemoteSlideType extends AbstractRemoteType
 {
-
     /**
      * Builds the form.
      *
@@ -23,78 +20,24 @@ class RemoteSlideType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $builder
             ->add(
-                'name',
-                'text',
-                array(
-                    'constraints' => array(new NotBlank()),
-                    'required' => true
-                )
-            )
-            ->add(
-                'code',
-                'text',
-                array(
-                    'constraints' => array(new NotBlank()),
-                    'required' => true
-                )
-            )
-            ->add(
                 'type',
-                'choice',
+                ChoiceType::class,
                 array(
-                    'choices' => array('slideshare' => 'slideshare'),
+                    'choices'     => array('slideshare' => 'slideshare'),
                     'constraints' => array(new NotBlank()),
-                    'required' => true
-                )
-            )
-            ->add(
-                'copyright',
-                'text',
-                array(
-                    'required' => false
-                )
-            )
-            ->add(
-                'description',
-                'textarea',
-                array(
-                    'required' => false
+                    'required'    => true,
+                    'choices_as_values' => true
                 )
             );
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                $helper = $event->getData();
-                $form = $event->getForm();
-
-                // Make sure file field is when creating new (not persisted) objects
-                if (null !== $helper->getMedia()->getId()) {
-                    // Allow changing folder on edit
-                    $form->add(
-                        'folder',
-                        'entity',
-                        array(
-                            'class' => 'KunstmaanMediaBundle:Folder',
-                            'property' => 'optionLabel',
-                            'query_builder' => function (FolderRepository $er) {
-                                return $er->selectFolderQueryBuilder()
-                                    ->andWhere('f.parent IS NOT NULL');
-                            },
-                            'required' => true,
-                        )
-                    );
-                }
-            }
-        );
     }
 
     /**
@@ -102,7 +45,7 @@ class RemoteSlideType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_slidetype';
     }
@@ -110,9 +53,9 @@ class RemoteSlideType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

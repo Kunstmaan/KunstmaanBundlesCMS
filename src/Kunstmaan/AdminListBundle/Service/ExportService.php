@@ -2,11 +2,8 @@
 
 namespace Kunstmaan\AdminListBundle\Service;
 
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
-use Kunstmaan\AdminListBundle\AdminList\ExportList;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

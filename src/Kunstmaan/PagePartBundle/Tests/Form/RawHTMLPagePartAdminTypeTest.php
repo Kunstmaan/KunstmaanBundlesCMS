@@ -31,13 +31,11 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * Generated from @assert () == 'kunstmaan_pagepartbundle_rawhtmlpageparttype'.
-     *
      * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::getName
      */
     public function testGetName()
     {
-        $this->assertEquals('kunstmaan_pagepartbundle_rawhtmlpageparttype', $this->object->getName());
+        $this->assertEquals(RawHTMLPagePartAdminType::class, $this->object->getName());
     }
 
     /**
@@ -50,11 +48,11 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::setDefaultOptions
+     * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $this->object->setDefaultOptions($this->resolver);
+        $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
         $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart');
     }

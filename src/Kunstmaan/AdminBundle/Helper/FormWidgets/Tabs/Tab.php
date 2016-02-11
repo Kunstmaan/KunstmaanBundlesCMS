@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
@@ -13,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Tab implements TabInterface
 {
-
     /**
      * @var string
      */
@@ -30,6 +30,16 @@ class Tab implements TabInterface
     protected $identifier;
 
     /**
+     * @var FormHelper
+     */
+    private $formHelper;
+
+    /**
+     * @var string
+     */
+    protected $template;
+
+    /**
      * @param string     $title  The title
      * @param FormWidget $widget The widget
      */
@@ -37,6 +47,8 @@ class Tab implements TabInterface
     {
         $this->title = $title;
         $this->widget = $widget;
+
+        $this->template = 'KunstmaanAdminBundle:Tabs:tab.html.twig';
     }
 
     /**
@@ -102,11 +114,6 @@ class Tab implements TabInterface
     }
 
     /**
-     * @var FormHelper
-     */
-    private $formHelper;
-
-    /**
      * @return FormHelper
      */
     protected function getFormHelper()
@@ -119,11 +126,19 @@ class Tab implements TabInterface
     }
 
     /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
      * @return string
      */
     public function getTemplate()
     {
-        return 'KunstmaanAdminBundle:Tabs:tab.html.twig';
+        return $this->template;
     }
 
     /**

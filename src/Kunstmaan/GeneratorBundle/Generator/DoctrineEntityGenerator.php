@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
+use Composer\Autoload\ClassLoader;
 use Symfony\Component\Filesystem\Filesystem;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -82,6 +83,8 @@ class DoctrineEntityGenerator extends Generator
             $path = $bundle->getPath().str_repeat('/..', substr_count(get_class($bundle), '\\'));
             $this->getRepositoryGenerator()->writeEntityRepositoryClass($class->customRepositoryClassName, $path);
         }
+
+        $this->addGeneratedEntityClassLoader($entityClass, $entityPath);
     }
 
     private function getTableNameFromEntityName($entityName)
@@ -132,5 +135,14 @@ class DoctrineEntityGenerator extends Generator
     protected function getRepositoryGenerator()
     {
         return new EntityRepositoryGenerator();
+    }
+
+    private function addGeneratedEntityClassLoader($class, $path)
+    {
+        // Prevent class not found bug on newly generated entity class
+        $classLoader = new ClassLoader();
+        $classLoader->addClassMap(array($class => $path));
+        $classLoader->setClassMapAuthoritative(true);
+        $classLoader->register(true);
     }
 }

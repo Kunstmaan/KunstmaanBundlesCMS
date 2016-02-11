@@ -1,17 +1,15 @@
 {
-  "name": "{{ bundle.getName() }}",
-  "version": "1.0.0",
-  "dependencies": {
-    "sass-bootstrap": "~3.0",
-    "bourbon": "~3.1",
-    "jquery": "~1.11",
-    "cupcake": "~1.6",
+    "name": "{{ bundle.getName() }}",
+    "version": "1.0.0",
+    "dependencies": {
     "html5shiv": "~3.7",
-    "flexslider": "latest",
-    "jquery.equalheights": "~1.5.2",
+    "bootstrap-sass-official": "~3.3",
+    "jquery": "~2.1",
+    "velocity": "~1.2",
+    {% if demosite %}
     "fitvids": "~1.1",
-    "svgeezy": "~1.0",
-    "jquery-placeholder": "~2.0",
-    "fancybox": "~2.1"
-  }
+    "modernizr": "~2.8",
+    {% endif %}
+    "cargobay": "~0.8"
+    }
 }

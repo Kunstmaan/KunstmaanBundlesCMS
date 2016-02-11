@@ -34,7 +34,7 @@ class RawHTMLPagePartTest extends \PHPUnit_Framework_TestCase
      *
      * @covers                Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals("RawHTMLPagePart " . htmlentities($this->object->getContent()), $this->object->__toString());
     }

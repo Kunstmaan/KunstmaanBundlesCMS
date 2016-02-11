@@ -1,14 +1,18 @@
-<ul class="dashboard-tabs">
+<ul class="dashboard-tabs nav nav-tabs js-auto-collapse-tabs">
     {% set i = 1 %}
     {% for overview in overviews %}
         <li class="dashboard-tabs__item" id="tab{{ overview.id }}">
-            <div class="dashboard-tabs__controller" data-id="{{ overview.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overview.id}) }}">
-                <h6 class="dashboard-tabs__item__title">
-                    {{ overview.title | trans }}
-                </h6>
-            </div>
+            <a href="#" class="dashboard-tabs__controller" data-id="{{ overview.id }}" data-path="{{ path('KunstmaanDashboardBundle_analytics_overview_ajax', {'id':overview.id}) }}" data-toggle="tab">
+                {{ overview.title | trans }}
+            </a>
         </li>
         {% set i = i + 1 %}
     {% endfor %}
+    <li class="tab__more dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            More <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
+    </li>
 </ul>
 

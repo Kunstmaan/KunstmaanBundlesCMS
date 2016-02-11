@@ -2,7 +2,7 @@
     {% if nodemenu is defined %}
         {% for topNode in nodemenu.getTopNodes() %}
             {% for node in topNode.getChildren() %}
-                {% include 'KunstmaanSitemapBundle:SitemapPage:entry.html.twig' with {'entry' : node} %}
+                {% include '@KunstmaanSitemap/SitemapPage/entry.html.twig' with {'entry' : node} %}
             {% endfor %}
         {% endfor %}
     {% endif %}

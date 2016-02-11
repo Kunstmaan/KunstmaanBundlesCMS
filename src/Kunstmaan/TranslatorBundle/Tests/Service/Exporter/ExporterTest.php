@@ -1,13 +1,12 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 
 class ExporterTest extends BaseTestCase
 {
-
     private $exporter;
-    private $translationRepository;
 
     public function setUp()
     {
@@ -30,8 +29,6 @@ class ExporterTest extends BaseTestCase
      */
     public function testGetExporterByExtensionNonFound()
     {
-        $exporter = $this->exporter->getExporterByExtension('exotic');
-
+        $this->exporter->getExporterByExtension('exotic');
     }
-
 }

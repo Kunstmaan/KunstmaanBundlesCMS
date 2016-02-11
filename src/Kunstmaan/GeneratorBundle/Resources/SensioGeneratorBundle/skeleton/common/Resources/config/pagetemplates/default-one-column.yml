@@ -2,6 +2,5 @@ name: "One column page"
 rows:
     - regions:
         - { name: "main", span: 12 }
-    - regions:
         - { name: "footer", span: 12 }
 template: "~~~BUNDLE~~~::Pages\\Common\\one-column-pagetemplate.html.twig"

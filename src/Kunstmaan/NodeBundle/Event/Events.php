@@ -72,7 +72,7 @@ class Events
     const ADAPT_FORM = 'kunstmaan_node.adaptForm';
 
     /**
-     * The postPersist event occurs for a given node, before the node is persisted.
+     * The prePersist event occurs for a given node, before the node is persisted.
      *
      * @var string
      */
@@ -107,6 +107,13 @@ class Events
     const COPY_PAGE_TRANSLATION = 'kunstmaan_node.copyPageTranslation';
 
     /**
+     * The recopyPageTranslation event occurs for a given node, when a recopy from a language as being asked.
+     *
+     * @var string
+     */
+    const RECOPY_PAGE_TRANSLATION = 'kunstmaan_node.recopyPageTranslation';
+
+    /**
      * The emptyPageTranslation event occurs for a given node, after a new page translation is created.
      *
      * @var string
@@ -129,4 +136,24 @@ class Events
      */
     const CONFIGURE_ACTION_MENU = 'kunstmaan_node.configureActionMenu';
 
+    /**
+     * This event will be triggered when the sluglistener needs to do security checks
+     *
+     * @var string
+     */
+    const SLUG_SECURITY = 'kunstmaan_node.slug.security';
+
+    /**
+     * This event will be triggered before the slugaction is performed
+     *
+     * @var string
+     */
+    const PRE_SLUG_ACTION = 'kunstmaan_node.preSlugAction';
+
+    /**
+     * This event will be triggered after the slugaction is performed
+     *
+     * @var string
+     */
+    const POST_SLUG_ACTION = 'kunstmaan_node.postSlugAction';
 }

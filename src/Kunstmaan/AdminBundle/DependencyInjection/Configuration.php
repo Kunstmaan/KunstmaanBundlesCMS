@@ -24,7 +24,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->fixXmlConfig('admin_locale')
+            ->fixXmlConfig('menu_item')
             ->children()
+                ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
                 ->arrayNode('admin_locales')
                     ->defaultValue(array('en'))
@@ -33,12 +35,25 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('session_security')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('ip_check')->defaultTrue()->end()
-                        ->booleanNode('user_agent_check')->defaultTrue()->end()
+                        ->booleanNode('ip_check')->defaultFalse()->end()
+                        ->booleanNode('user_agent_check')->defaultFalse()->end()
                     ->end()
                 ->end()
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
                 ->booleanNode('enable_console_exception_listener')->defaultTrue()->end()
+                ->arrayNode('menu_items')
+                    ->defaultValue([])
+                    ->useAttributeAsKey('route', false)
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('route')->isRequired()->end()
+                            ->scalarNode('label')->isRequired()->end()
+                            ->scalarNode('role')->defaultNull()->end()
+                            ->arrayNode('params')->defaultValue([])->prototype('scalar')->end()->end()
+                            ->scalarNode('parent')->defaultValue('KunstmaanAdminBundle_modules')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -21,13 +22,17 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('twig.form.resources', array_merge(
             $container->getParameter('twig.form.resources'),
             array('KunstmaanNodeBundle:Form:formWidgets.html.twig')
+        ));
+
+        $container->setDefinition('kunstmaan_node.pages_configuration', new Definition(
+            'Kunstmaan\NodeBundle\Helper\PagesConfiguration', [$config['pages']]
         ));
 
         $loader->load('services.yml');
@@ -44,7 +49,7 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $container->prependExtensionConfig('cmf_routing', $cmfRoutingExtraConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration(new Configuration(), $configs);
+        $this->processConfiguration(new Configuration(), $configs);
 
     }
 }

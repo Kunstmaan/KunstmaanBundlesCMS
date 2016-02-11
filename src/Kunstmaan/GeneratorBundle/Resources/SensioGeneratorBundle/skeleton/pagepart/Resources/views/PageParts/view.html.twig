@@ -4,6 +4,8 @@
     <p>{{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ " }}" }}</p>
 {% elseif key == 'rich_text' %}
     {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|raw }}" }}
+{% elseif key == 'wysiwyg' %}
+    {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|raw }}" }}
 {% elseif key == 'link' %}
     <a href="{{ "{{ resource." ~ fieldArray['url']['fieldName'] ~ " }}" }}" {{ "{% if resource." ~ fieldArray['new_window']['fieldName'] ~ " %}target=\"_blank\"{% endif %}" }}>{{ "{{ resource." ~ fieldArray['text']['fieldName'] ~ " }}" }}</a>
 {% elseif key == 'image' %}

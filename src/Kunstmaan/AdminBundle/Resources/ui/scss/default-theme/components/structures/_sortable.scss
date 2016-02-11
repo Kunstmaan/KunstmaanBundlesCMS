@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Sortable
+   ========================================================================== */
+
+
+/* Container
+   ========================================================================== */
+.sortable-container {
+    transition: transform .3s ease;
+
+    min-height: 5rem; // Enable drag & drop on empty region
+}
+
+
+
+/* Item
+   ========================================================================== */
+// General
+.sortable-item {
+    padding-bottom: 1rem;
+}
+
+.sortable-item--error {
+    @extend .fa;
+    @extend .fa-ban;
+
+    position: relative;
+    display: block;
+
+    background: $red;
+    border: 1px solid $red;
+
+    &:before {
+        position: absolute;
+        top: 4rem;
+        left: 0;
+
+        width: 100%;
+
+        text-align: center;
+        font-size: 3rem;
+        color: $white;
+    }
+
+    .pp {
+        background: transparent;
+        border: 0;
+    }
+
+    .pp__header, .pp__actions {
+        opacity: 1;
+    }
+
+    .pp-container__add {
+        opacity: 0;
+    }
+}
+
+
+// Ghost
+.sortable-item--ghost {
+    background: $gray-ultralight;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .1);
+
+    .pp, .pp-container__add {
+        opacity: 0;
+    }
+
+    &.sortable-item--error {
+        background: $red;
+    }
+}

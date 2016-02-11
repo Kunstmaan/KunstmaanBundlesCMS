@@ -1,22 +1,32 @@
-{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+{% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
-{% block header %}
-    <div class="page-header">
-        <h1>{{ 'Dashboard' | trans }}</h1>
-    </div>
+{% block header %}{% endblock %}
+
+{% block extracss %}
+    {% stylesheets
+    "@KunstmaanDashboardBundle/Resources/ui/scss/_dashboard.scss"
+        output='KunstmaanDashboardBundleAssets/css/DashboardStyle.min.css'
+        filter="scss"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
 {% endblock %}
 
 {% block content %}
     {% for widget in widgets %}
-        {{ render_esi(url(widget.resolvedController, {'id' : id})) }}
+        {{ render_esi(path(widget.resolvedController, {'id' : id})) }}
     {% endfor %}
 {% endblock %}
 
-{% block extracss %}
-    {% stylesheets
-        filter="scss"
-        "@KunstmaanDashboardBundle/Resources/public/scss/_dashboard.scss"
+{% block extrajavascript %}
+    {% javascripts
+    '@KunstmaanDashboardBundle/Resources/ui/js/analytics/metrics.js'
+    '@KunstmaanDashboardBundle/Resources/ui/js/analytics/tabs.js'
+    '@KunstmaanDashboardBundle/Resources/ui/js/analytics/goals.js'
+    '@KunstmaanDashboardBundle/Resources/ui/js/libs/morris-0.5.0.js'
+    '@KunstmaanDashboardBundle/Resources/ui/js/libs/raphael-2.1.2.js'
+    output='KunstmaanDashboardBundleAssets/js/ga-widget.js'
     %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
-    {% endstylesheets %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

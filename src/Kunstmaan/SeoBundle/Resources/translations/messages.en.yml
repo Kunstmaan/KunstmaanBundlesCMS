@@ -1,0 +1,36 @@
+# Media
+seo:
+    robots:
+        tip: Tip:
+        warning: This is a default value and example, no custom robots.txt has been defined.
+        moreinfo: You can find more information about the Kunstmaan robots.txt at our
+
+    action:
+        save: Save
+        cancel: Cancel
+        preview: Preview
+
+    form:
+        og:
+            title: OG Title
+            description: OG Description
+            url: OG Url
+            type: OG Type
+            image: OG Image
+        twitter:
+            title: Title
+            description: Description
+            sitehandle: Site Handle
+            creatorhandle: Creator Handle
+            image: Image
+        robots:
+            noindex: No index
+            nofollow: No follow
+            noarchive: No archive
+            nosnippet: No snippet
+            notranslate: No translate
+            noimageindex: No image index
+
+    pagetabs:
+        opengraph: Open Graph
+        twittercards: Twitter Cards

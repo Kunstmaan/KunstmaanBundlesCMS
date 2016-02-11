@@ -3,23 +3,40 @@
 namespace Kunstmaan\NodeSearchBundle\Search;
 
 use Kunstmaan\AdminBundle\Entity\BaseUser;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class NodeSearcher
- *
  * Default node searcher implementation
  *
  * @package Kunstmaan\NodeSearchBundle\Search
  */
 class NodeSearcher extends AbstractElasticaSearcher
 {
-    /** @var SecurityContextInterface */
-    private $securityContext = null;
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage = null;
 
-    public function setSecurityContext(SecurityContextInterface $securityContext)
+    /**
+     * @var DomainConfigurationInterface
+     */
+    private $domainConfiguration;
+
+    /**
+     * @param TokenStorageInterface $tokenStorage
+     */
+    public function setTokenStorage(TokenStorageInterface $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
+    }
+
+    /**
+     * @param DomainConfigurationInterface $domainConfiguration
+     */
+    public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
+    {
+        $this->domainConfiguration = $domainConfiguration;
     }
 
     /**
@@ -31,6 +48,8 @@ class NodeSearcher extends AbstractElasticaSearcher
      */
     public function defineSearch($query, $lang, $type)
     {
+        $query = \Elastica\Util::escapeTerm($query);
+
         $elasticaQueryLang = new \Elastica\Query\Term();
         $elasticaQueryLang->setTerm('lang', $lang);
 
@@ -45,19 +64,26 @@ class NodeSearcher extends AbstractElasticaSearcher
             ->setBoost(2.0)
             ->setQuery($query);
 
-        $elasticaQueryBool = new \Elastica\Query\Bool();
+        $elasticaQueryBool = new \Elastica\Query\BoolQuery();
         $elasticaQueryBool
             ->addMust($elasticaQueryLang)
             ->addShould($elasticaQueryTitle)
             ->addShould($elasticaQueryString)
             ->setMinimumNumberShouldMatch(1);
 
-        $this->applySecurityContext($elasticaQueryBool);
+        $this->applySecurityFilter($elasticaQueryBool);
 
         if (!is_null($type)) {
             $elasticaQueryType = new \Elastica\Query\Term();
             $elasticaQueryType->setTerm('type', $type);
             $elasticaQueryBool->addMust($elasticaQueryType);
+        }
+
+        $rootNode = $this->domainConfiguration->getRootNode();
+        if (!is_null($rootNode)) {
+            $elasticaQueryRoot = new \Elastica\Query\Term();
+            $elasticaQueryRoot->setTerm('root_id', $rootNode->getId());
+            $elasticaQueryBool->addMust($elasticaQueryRoot);
         }
 
         $this->query->setQuery($elasticaQueryBool);
@@ -77,15 +103,30 @@ class NodeSearcher extends AbstractElasticaSearcher
     }
 
     /**
-     * Filter search results so only documents that are viewable by the current user will be returned...
+     * Filter search results so only documents that are viewable by the current
+     * user will be returned...
      *
-     * @param $elasticaQueryBool
+     * @param \Elastica\Query\BoolQuery $elasticaQueryBool
      */
-    protected function applySecurityContext($elasticaQueryBool)
+    protected function applySecurityFilter($elasticaQueryBool)
+    {
+        $roles = $this->getCurrentUserRoles();
+
+        $elasticaQueryRoles = new \Elastica\Query\Terms();
+        $elasticaQueryRoles
+            ->setTerms('view_roles', $roles)
+            ->setMinimumMatch(1);
+        $elasticaQueryBool->addMust($elasticaQueryRoles);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCurrentUserRoles()
     {
         $roles = array();
-        if (!is_null($this->securityContext)) {
-            $user = $this->securityContext->getToken()->getUser();
+        if (!is_null($this->tokenStorage)) {
+            $user = $this->tokenStorage->getToken()->getUser();
             if ($user instanceof BaseUser) {
                 $roles = $user->getRoles();
             }
@@ -96,10 +137,6 @@ class NodeSearcher extends AbstractElasticaSearcher
             $roles[] = 'IS_AUTHENTICATED_ANONYMOUSLY';
         }
 
-        $elasticaQueryRoles = new \Elastica\Query\Terms();
-        $elasticaQueryRoles
-            ->setTerms('view_roles', $roles)
-            ->setMinimumMatch(1);
-        $elasticaQueryBool->addMust($elasticaQueryRoles);
+        return $roles;
     }
 }

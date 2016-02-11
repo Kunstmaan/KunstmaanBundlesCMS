@@ -1,6 +1,14 @@
 services:
-    {{ bundle.name|lower }}.default_locale_listener:
-        class: {{ bundle.namespace }}\EventListener\DefaultLocaleListener
+    {{ bundle.name|lower }}.node_translation.twig.extension:
+        class: {{ bundle.namespace }}\Twig\NodeTranslationTwigExtension
+        arguments: ["@doctrine.orm.entity_manager"]
         tags:
-          - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-        arguments: [%defaultlocale%]
+            - { name: twig.extension }
+
+{% if demosite %}
+    {{ bundle.name|lower }}.bikes.twig.extension:
+        class: {{ bundle.namespace }}\Twig\BikesTwigExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }
+{% endif %}

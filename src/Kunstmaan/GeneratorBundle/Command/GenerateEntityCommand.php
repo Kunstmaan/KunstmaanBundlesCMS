@@ -4,16 +4,17 @@ namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Symfony\Component\Console\Input\ArrayInput;
 use Kunstmaan\GeneratorBundle\Generator\DoctrineEntityGenerator;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Doctrine\DBAL\Types\Type;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
  * GenerateEntityCommand
@@ -33,7 +34,6 @@ class GenerateEntityCommand extends GenerateDoctrineCommand
             ->addOption('fields', null, InputOption::VALUE_REQUIRED, 'The fields to create with the new entity')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->addOption('with-repository', null, InputOption::VALUE_NONE, 'Whether to generate the entity repository or not')
-            ->addOption('with-adminlist', null, InputOption::VALUE_NONE, 'Whether to generate the entity AdminList or not')
             ->setHelp(<<<EOT
 The <info>kuma:generate:entity</info> task generates a new Doctrine
 entity inside a bundle:
@@ -53,11 +53,6 @@ The command can also generate the corresponding entity repository class with the
 
 <info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-repository</info>
 
-The command can also generate the corresponding entity AdminList with the
-<comment>--with-adminlist</comment> option:
-
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-adminlist</info>
-
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
 <info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --prefix=demo_</info>
@@ -65,7 +60,7 @@ Use the <info>--prefix</info> option to add a prefix to the table names of the g
 To deactivate the interaction mode, simply use the `--no-interaction` option
 without forgetting to pass all needed options:
 
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --with-adminlist --no-interaction</info>
+<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --no-interaction</info>
 EOT
             );
     }
@@ -75,10 +70,11 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
+    $questionHelper = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
-            if (!$dialog->askConfirmation($output, $dialog->getQuestion('Do you confirm generation', 'yes', '?'), true)) {
+            $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you confirm generation', 'yes', '?'), true);
+            if (!$questionHelper->ask($input, $output, $confirmationQuestion)) {
                 $output->writeln('<error>Command aborted</error>');
 
                 return 1;
@@ -94,7 +90,7 @@ EOT
 
         $prefix = $input->getOption('prefix');
 
-        $dialog->writeSection($output, 'Entity generation');
+        $questionHelper->writeSection($output, 'Entity generation');
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundleName);
 
@@ -103,21 +99,10 @@ EOT
 
         $output->writeln('Generating the entity code: <info>OK</info>');
 
-        $withAdminlist = $input->getOption('with-adminlist');
-        if ($withAdminlist) {
-            $command = $this->getApplication()->find('kuma:generate:adminlist');
-            $arguments = array(
-                'command' => 'doctrine:fixtures:load',
-                '--entity' => $entityInput
-            );
-            $input = new ArrayInput($arguments);
-            $command->run($input, $output);
-        }
-
-        $dialog->writeGeneratorSummary($output, array());
+        $questionHelper->writeGeneratorSummary($output, array());
 
         $output->writeln(array(
-                'Make sure you update your database first before you test the pagepart:',
+                'Make sure you update your database first before you test the entity/adminlist:',
                 '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
                 '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
                 '')
@@ -129,8 +114,8 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Doctrine2 entity generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Doctrine2 entity generator');
 
         // namespace
         $output->writeln(array(
@@ -147,9 +132,18 @@ EOT
         $foundBundle = $bundle = $entity = null;
 
         while (true) {
-            $entity = $dialog->askAndValidate($output, $dialog->getQuestion('The Entity shortcut name', $input->getOption('entity')), array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'), false, $input->getOption('entity'), $bundleNames);
+            $question = new Question($questionHelper->getQuestion('The Entity shortcut name', $input->getOption('entity')));
+            $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateEntityName'));
+            $question->setAutocompleterValues($bundleNames);
+            $entity = $questionHelper->ask($input, $output, $question);
 
             list($bundle, $entity) = $this->parseShortcutNotation($entity);
+
+            // check entity name
+            if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $entity)) {
+                $output->writeln(sprintf('<bg=red> "%s" is not a valid entity name.</>', $entity));
+                continue;
+            }
 
             // check reserved words
             if ($this->getGenerator()->isReservedKeyword($entity)) {
@@ -171,21 +165,17 @@ EOT
         }
         $input->setOption('entity', $bundle.':'.$entity);
 
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
         $inputAssistant->askForPrefix(null, $foundBundle->getNamespace());
 
         // fields
-        $input->setOption('fields', $this->addFields($input, $output, $dialog));
+        $input->setOption('fields', $this->addFields($input, $output, $questionHelper));
 
         // repository?
         $output->writeln('');
-        $withRepository = $dialog->askConfirmation($output, $dialog->getQuestion('Do you want to generate an empty repository class', $input->getOption('with-repository') ? 'yes' : 'no', '?'), $input->getOption('with-repository'));
+        $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you want to generate an empty repository class', $input->getOption('with-repository') ? 'yes' : 'no', '?'), $input->getOption('with-repository'));
+        $withRepository = $questionHelper->ask($input, $output, $confirmationQuestion);
         $input->setOption('with-repository', $withRepository);
-
-        // repository?
-        $output->writeln('');
-        $withAdminList = $dialog->askConfirmation($output, $dialog->getQuestion('Do you want to generate an AdminList for your entity', $input->getOption('with-adminlist') ? 'yes' : 'no', '?'), $input->getOption('with-adminlist'));
-        $input->setOption('with-adminlist', $withAdminList);
 
         // summary
         $output->writeln(array(
@@ -226,15 +216,15 @@ EOT
     }
 
     /**
-     * @param InputInterface  $input  The input
-     * @param OutputInterface $output The output
-     * @param DialogHelper    $dialog The dialog helper
+     * @param InputInterface  $input          The input
+     * @param OutputInterface $output         The output
+     * @param QuestionHelper  $questionHelper The question helper
      *
      * @throws \InvalidArgumentException
      *
      * @return array
      */
-    private function addFields(InputInterface $input, OutputInterface $output, DialogHelper $dialog)
+    private function addFields(InputInterface $input, OutputInterface $output, QuestionHelper $questionHelper)
     {
         $fields = $this->parseFields($input->getOption('fields'));
         $output->writeln(array(
@@ -288,9 +278,9 @@ EOT
 
         while (true) {
             $output->writeln('');
-            $self = $this;
             $generator = $this->getGenerator();
-            $columnName = $dialog->askAndValidate($output, $dialog->getQuestion('New field name (enter empty name to stop adding fields)', null), function ($name) use ($fields, $self, $generator) {
+            $question = new Question($questionHelper->getQuestion('New field name (enter empty name to stop adding fields)', null));
+            $question->setValidator(function ($name) use ($fields, $generator) {
                 if (isset($fields[$name]) || 'id' == $name) {
                     throw new \InvalidArgumentException(sprintf('Field "%s" is already defined.', $name));
                 }
@@ -302,6 +292,7 @@ EOT
 
                 return $name;
             });
+            $columnName = $questionHelper->ask($input, $output, $question);
             if (!$columnName) {
                 break;
             }
@@ -321,12 +312,17 @@ EOT
 
             $columnName = DoctrineEntityGenerator::convertCamelCaseToSnakeCase($columnName);
 
-            $type = $dialog->askAndValidate($output, $dialog->getQuestion('Field type', $defaultType), $fieldValidator, false, $defaultType, $types);
+            $question = new Question($questionHelper->getQuestion('Field type', $defaultType), $defaultType);
+            $question->setAutocompleterValues($types);
+            $question->setValidator($fieldValidator);
+            $type = $questionHelper->ask($input, $output, $question);
 
             $data = array('columnName' => $columnName, 'fieldName' => lcfirst(Container::camelize($columnName)), 'type' => $type);
 
             if ($type == 'string') {
-                $data['length'] = $dialog->askAndValidate($output, $dialog->getQuestion('Field length', 255), $lengthValidator, false, 255);
+                $question = new Question($questionHelper->getQuestion('Field length', 255), 255);
+                $question->setValidator($lengthValidator);
+                $data['length'] = $questionHelper->ask($input, $output, $question);
             }
 
             $fields[$columnName] = $data;

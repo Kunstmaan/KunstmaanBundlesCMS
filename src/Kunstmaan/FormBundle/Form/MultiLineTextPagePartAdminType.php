@@ -3,7 +3,9 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -20,24 +22,24 @@ class MultiLineTextPagePartAdminType extends AbstractType
     {
         $builder
             ->add('label', null, array('required' => false))
-            ->add('required', 'checkbox', array('required' => false))
-            ->add('errormessage_required', 'text', array('required' => false))
-            ->add('regex', 'text', array('required' => false))
-            ->add('errormessage_regex', 'text', array('required' => false));
+            ->add('required', CheckboxType::class, array('required' => false))
+            ->add('errormessage_required', TextType::class, array('required' => false))
+            ->add('regex', TextType::class, array('required' => false))
+            ->add('errormessage_regex', TextType::class, array('required' => false));
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_formbundle_singlelinetextpageparttype';
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart'));
     }

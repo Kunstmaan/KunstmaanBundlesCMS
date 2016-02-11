@@ -1,9 +1,9 @@
 # Media
-media: 
+media:
   aviary:
     title: Aviary
     nothing: Rien à voir ici.
-  
+
   media:
     no: Pas encore de fichier dans ce dossier.
     bulkupload:
@@ -30,6 +30,7 @@ media:
   folder:
     addsub:
       action: Ajouter un sous-dossier
+      action_short: Ajouter
       modal:
         title: Ajouter un sous-dossier
         save: Ajouter
@@ -37,9 +38,10 @@ media:
       no: Pas encore de sous-dossiers.
     delete:
       action: Supprimer ce dossier
+      action_short: Supprimer
       modal:
         title: Supprimer le dossier
-        text: Etes-vous certain de vouloir supprimer "%folder%"? 
+        text: Etes-vous certain de vouloir supprimer "%folder%"?
     save: Sauver
     contenttab:
       title: Contenu
@@ -49,7 +51,7 @@ media:
   bulkupload:
     upload: Upload
     bulkupload: Bulk upload
-    
+
   slide:
     add: Ajouer un slide
     modal:
@@ -70,7 +72,9 @@ media:
     modal:
       title: Ajouter un fichier
       save: Ajouter
-    
+
   widget:
     choose: Choisir
     delete: Supprimer
+    media_chooser: sélecteur de médias
+    icon_chooser: sélecteur des icônes

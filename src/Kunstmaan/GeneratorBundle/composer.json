@@ -14,29 +14,28 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "sensio/generator-bundle": ">=2.3.0, <2.5.0",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
+        "doctrine/orm": "^2.2.3",
+        "sensio/generator-bundle": "~2.5|~3.0",
         "fzaninotto/faker": "~1.4.0",
-        "kunstmaan/utilities-bundle": "~3.0.0"
+        "kunstmaan/utilities-bundle": "~3.2"
     },
     "suggest": {
-        "kunstmaan/admin-bundle": "~3.0.0",
-        "kunstmaan/adminlist-bundle": "~3.0.0",
-        "kunstmaan/form-bundle": "~3.0.0",
-        "kunstmaan/media-bundle": "~3.0.0",
-        "kunstmaan/media-pagepart-bundle": "~3.0.0",
-        "kunstmaan/node-bundle": "~3.0.0",
-        "kunstmaan/pagepart-bundle": "~3.0.0"
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/form-bundle": "~3.2",
+        "kunstmaan/media-bundle": "~3.2",
+        "kunstmaan/media-pagepart-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2",
+        "kunstmaan/pagepart-bundle": "~3.2"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\GeneratorBundle": "" }
+        "psr-4": { "Kunstmaan\\GeneratorBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/GeneratorBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "3.5-dev"
         }
     }
 }

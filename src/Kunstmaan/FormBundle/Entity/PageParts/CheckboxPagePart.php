@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +19,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionFi
  */
 class CheckboxPagePart extends AbstractFormPagePart
 {
-
     /**
      * If set to true, you are obligated to fill in this page part
      *
@@ -98,12 +96,15 @@ class CheckboxPagePart extends AbstractFormPagePart
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
+     * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $bfsf = new BooleanFormSubmissionField();
-        $bfsf->setFieldName("field_" . $this->getUniqueId());
+        $bfsf->setFieldName('field_' . $this->getUniqueId());
         $bfsf->setLabel($this->getLabel());
+        $bfsf->setSequence($sequence);
+
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $bfsf;
         $constraints = array();
@@ -115,7 +116,7 @@ class CheckboxPagePart extends AbstractFormPagePart
             $constraints[] = new NotBlank($options);
         }
         $formBuilder->add('formwidget_' . $this->getUniqueId(),
-            new BooleanFormSubmissionType(),
+            BooleanFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,
@@ -124,7 +125,7 @@ class CheckboxPagePart extends AbstractFormPagePart
         );
         $formBuilder->setData($data);
 
-        $fields[] = $bfsf;
+        $fields->append($bfsf);
     }
 
     /**
@@ -136,5 +137,4 @@ class CheckboxPagePart extends AbstractFormPagePart
     {
         return new CheckboxPagePartAdminType();
     }
-
 }

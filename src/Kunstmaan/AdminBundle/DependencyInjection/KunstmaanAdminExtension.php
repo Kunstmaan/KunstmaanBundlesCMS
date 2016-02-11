@@ -6,6 +6,8 @@ use InvalidArgumentException;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -29,7 +31,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
     public function load(array $configs, ContainerBuilder $container)
     {
         $container->setParameter('security.acl.permission.map.class', 'Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap');
-        $container->setParameter('version_checker.url', 'http://bundles.kunstmaan.be/version-check');
+        $container->setParameter('version_checker.url', 'https://bundles.kunstmaan.be/version-check');
         $container->setParameter('version_checker.timeframe', 60*60*24);
         $container->setParameter('version_checker.enabled', true);
 
@@ -38,6 +40,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         if (array_key_exists('dashboard_route', $config)) {
             $container->setParameter('kunstmaan_admin.dashboard_route', $config['dashboard_route']);
+        }
+        if (array_key_exists('admin_password', $config)) {
+            $container->setParameter('kunstmaan_admin.admin_password', $config['admin_password']);
         }
         $container->setParameter('kunstmaan_admin.admin_locales', $config['admin_locales']);
         $container->setParameter('kunstmaan_admin.default_admin_locale', $config['default_admin_locale']);
@@ -50,6 +55,10 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {
             $loader->load('console_listener.yml');
+        }
+
+        if (0 !== sizeof($config['menu_items'])) {
+            $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
     }
 
@@ -71,7 +80,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $fosUserConfig['resetting']['email']['template']    = 'FOSUserBundle:Resetting:email.txt.twig';
         $fosUserConfig['resetting']['form']['type']                 = 'fos_user_resetting';
         $fosUserConfig['resetting']['form']['name']                 = 'fos_user_resetting_form';
-        $fosUserConfig['resetting']['form']['validation_groups']    = array('ResetPassword');
+        $fosUserConfig['resetting']['form']['validation_groups']    = ['ResetPassword'];
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
 
         $monologConfig['handlers']['main']['type']  = 'rotating_file';
@@ -97,5 +106,16 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
     public function getXsdValidationBasePath()
     {
         return __DIR__.'/../Resources/config/schema';
+    }
+
+    private function addSimpleMenuAdaptor(ContainerBuilder $container, array $menuItems)
+    {
+        $definition = new Definition('Kunstmaan\AdminBundle\Helper\Menu\SimpleMenuAdaptor', [
+            new Reference('security.authorization_checker'),
+            $menuItems
+        ]);
+        $definition->addTag('kunstmaan_admin.menu.adaptor');
+
+        $container->setDefinition('kunstmaan_admin.menu.adaptor.simple', $definition);
     }
 }

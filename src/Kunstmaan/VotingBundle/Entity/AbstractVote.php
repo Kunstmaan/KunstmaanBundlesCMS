@@ -15,7 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AbstractVote
 {
-
     /**
      * Default value of any vote is 1
      *
@@ -31,7 +30,7 @@ class AbstractVote
     protected $id;
 
     /**
-     * @var datetime
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -112,7 +111,7 @@ class AbstractVote
 
     public function setMeta($meta)
     {
-        $this->meta;
+        $this->meta = $meta;
     }
 
     public function getMeta()
@@ -143,7 +142,7 @@ class AbstractVote
     /**
      * @ORM\PrePersist
      */
-    public function _prePersist()
+    public function prePersist()
     {
         // Set timestamp to now when none is set
         if ($this->timestamp === null) {
@@ -154,5 +153,4 @@ class AbstractVote
             $this->value = $this::DEFAULT_VALUE;
         }
     }
-
 }

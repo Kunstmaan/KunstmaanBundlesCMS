@@ -1,21 +1,18 @@
 {% set tocContent = '' %}
-
 {% if page is defined %}
+    {% for pagepart in getpageparts(page, "main") %}
+        {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
+            {% if pagepart.getNiv() == 2 %}
+                {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|slugify~'">'~pagepart.getTitle~'</a></li>' %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 
-{% for pagepart in getpageparts(page, "main") %}
-    {% if pagepart.getDefaultView == "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig" %}
-      {% if pagepart.getNiv() == 2 %}
-          {% set tocContent = tocContent~'<li><a href="#'~pagepart.getTitle|slugify~'">'~pagepart.getTitle~'</a></li>' %}
-      {% endif %}
+    {% if tocContent %}
+        <div class="toc-pp">
+            <ul>
+                {{ tocContent|raw }}
+            </ul>
+        </div>
     {% endif %}
-{% endfor %}
-
-{% if tocContent %}
-    <div class="toc-pp">
-        <ul>
-        {{ tocContent|raw }}
-        </ul>
-    </div>
-{% endif %}
-
 {% endif %}

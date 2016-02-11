@@ -1,16 +1,33 @@
-<div id="delete-modal" class="modal hide fade">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">&times;</button>
-        <h3>{{ 'media.folder.delete.modal.title'| trans({'%folder%': folder.name }) | raw }}</h3>
-    </div>
-    <div class="modal-body">
-        <p>{{ 'media.folder.delete.modal.text'| trans({'%folder%': folder.name }) | raw }}</p>
-    </div>
-    <div class="modal-footer">
-        <div class="btn_group">
-            <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id }) }}"
-               class="btn btn-danger">{{ 'form.delete' |trans }}</a>
-            <button class="btn" data-dismiss="modal">{{ 'form.cancel' |trans }}</button>
+<div id="delete-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'media.folder.delete.modal.title'| trans({'%folder%': folder.name }) | raw }}
+                </h3>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <p>
+                    {{ 'media.folder.delete.modal.text'| trans({'%folder%': folder.name }) | raw }}
+                </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <a href="{{ path('KunstmaanMediaBundle_folder_delete', { 'folderId' : folder.id , 'type' : type }) }}" class="js-add-app-loading btn btn-danger btn--raise-on-hover">
+                    {{ 'form.delete' |trans }}
+                </a>
+                <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                    {{ 'form.cancel' |trans }}
+                </button>
+            </div>
         </div>
     </div>
 </div>

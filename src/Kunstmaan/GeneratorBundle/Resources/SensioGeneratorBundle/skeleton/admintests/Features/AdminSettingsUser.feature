@@ -65,7 +65,7 @@ Feature: AdminSettingsUser
   Scenario: Login and edit own user
     Given I log out
     And I log in as "test"
-    And I follow "Logged in as test"
+    And I follow "Test"
     Then I should see "Settings"
     When I fill in "user[email]" with "support-edited@kunstmaan.be"
     And I press "Edit User"
@@ -80,7 +80,8 @@ Feature: AdminSettingsUser
 
   @javascript @resetBrowserAfter
   Scenario: Try to log in as the previously disabled test user
-    Given I log in as "test"
+    Given I log out
+    And I log in as "test"
     Then I should not see the dashboard
 
   @javascript

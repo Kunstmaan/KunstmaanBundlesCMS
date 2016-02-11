@@ -1,62 +1,65 @@
 parameters:
     kunstmaan_node.version_timeout: 3600
     kunstmaan_node.slugrouter.class: 'Kunstmaan\NodeBundle\Router\SlugRouter'
+    kunstmaan_node.sluglistener.class: 'Kunstmaan\NodeBundle\EventListener\SlugListener'
 
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: ["@session", "@kunstmaan_admin.logger"]
+        arguments: ['@session', '@kunstmaan_admin.logger' , '@kunstmaan_utilities.slugifier', '@kunstmaan_admin.domain_configuration']
+        calls:
+            - [ 'setRequestStack', ['@request_stack'] ]
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
             - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
+            - { name: 'doctrine.event_listener', event: 'prePersist', method: 'prePersist' }
+            - { name: 'doctrine.event_listener', event: 'preUpdate', method: 'preUpdate' }
 
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
-        arguments: ["@doctrine.orm.entity_manager", "@kunstmaan_admin.acl.native.helper"]
+        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.acl.native.helper', '@kunstmaan_node.pages_configuration', '@kunstmaan_admin.domain_configuration']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_node.form.type.urlchooser:
         class: Kunstmaan\NodeBundle\Form\Type\URLChooserType
         tags:
-            - { name: 'form.type', alias: 'urlchooser' }
+            - { name: 'form.type' }
 
     kunstmaan_node.form.type.slug:
         class: Kunstmaan\NodeBundle\Form\Type\SlugType
+        arguments: ['@kunstmaan_utilities.slugifier']
         tags:
-            - { name: 'form.type', alias: 'slug' }
+            - { name: 'form.type' }
 
     kunstmaan_node.admin_node.publisher:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@event_dispatcher", "@kunstmaan_admin.clone.helper"]
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.authorization_checker', '@event_dispatcher', '@kunstmaan_admin.clone.helper']
 
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder
-        arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager", "@router", "@event_dispatcher", "@security.context"]
+        arguments: ['@knp_menu.factory', '@doctrine.orm.entity_manager', '@router', '@event_dispatcher', '@security.authorization_checker', '@kunstmaan_node.pages_configuration' ]
 
     kunstmaan_node.menu.sub_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_node.actions_menu_builder
-        factory_method: createSubActionsMenu
-        arguments: ["@request"]
+        factory: ['@kunstmaan_node.actions_menu_builder', createSubActionsMenu]
+        arguments: ['@request']
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'sub_actions' } # The alias is what is used to retrieve the menu
 
     kunstmaan_node.menu.actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_node.actions_menu_builder
-        factory_method: createActionsMenu
-        arguments: ["@request"]
+        factory: ['@kunstmaan_node.actions_menu_builder', createActionsMenu]
+        arguments: ['@request']
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'actions' } # The alias is what is used to retrieve the menu
 
     kunstmaan_node.menu.top_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: kunstmaan_node.actions_menu_builder
-        factory_method: createTopActionsMenu
-        arguments: ["@request"]
+        factory: ['@kunstmaan_node.actions_menu_builder', createTopActionsMenu]
+        arguments: ['@request']
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'top_actions' } # The alias is what is used to retrieve the menu
@@ -68,55 +71,77 @@ services:
 
     kunstmaan_node.edit_node.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeListener
-        arguments: ["@security.context", "@kunstmaan_admin.permissionadmin", "@security.acl.permission.map"]
+        arguments: ['@security.authorization_checker', '@kunstmaan_admin.permissionadmin', '@security.acl.permission.map']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.adaptForm, method: adaptForm }
 
     kunstmaan_node.log_page_events.subscriber:
         class: Kunstmaan\NodeBundle\EventListener\LogPageEventsSubscriber
-        arguments: ["@kunstmaan_admin.logger", "@security.context"]
+        arguments: ['@kunstmaan_admin.logger', '@security.token_storage']
         tags:
             - { name: kernel.event_subscriber }
 
     kunstmaan_node.slugrouter:
-        class: "%kunstmaan_node.slugrouter.class%"
-        arguments: ["@service_container"]
+        class: '%kunstmaan_node.slugrouter.class%'
+        arguments: ['@service_container']
         tags:
             - { name: router, priority: 0 }
 
-    kunstmaan_node.node.twig.extension:
-        class: Kunstmaan\NodeBundle\Twig\NodeTwigExtension
-        arguments: ["@doctrine.orm.entity_manager", "@router"]
+    kunstmaan_node.pages_configuration.twig_extension:
+        class: Kunstmaan\NodeBundle\Twig\PagesConfigurationTwigExtension
+        public: false
+        arguments: [ '@kunstmaan_node.pages_configuration' ]
         tags:
             - { name: twig.extension }
 
     kunstmaan_node.page_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\PageCreatorService
         calls:
-            - [ setEntityManager, [ "@doctrine.orm.entity_manager" ] ]
-            - [ setACLPermissionCreatorService, [ "@kunstmaan_node.acl_permission_creator_service" ] ]
-            - [ setUserEntityClass, [ "%fos_user.model.user.class%" ] ]
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
+            - [ setACLPermissionCreatorService, [ '@kunstmaan_node.acl_permission_creator_service' ] ]
+            - [ setUserEntityClass, [ '%fos_user.model.user.class%' ] ]
 
     kunstmaan_node.acl_permission_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService
         calls:
-            - [ setAclProvider, [ "@security.acl.provider" ] ]
-            - [ setObjectIdentityRetrievalStrategy, [ "@security.acl.object_identity_retrieval_strategy" ] ]
-
-    gedmo.listener.tree:
-        class: Gedmo\Tree\TreeListener
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
-        calls:
-            - [ setAnnotationReader, [ @annotation_reader ] ]
+            - [ setAclProvider, [ '@security.acl.provider' ] ]
+            - [ setObjectIdentityRetrievalStrategy, [ '@security.acl.object_identity_retrieval_strategy' ] ]
 
     kunstmaan_node.doctrine_mapping.listener:
         class: Kunstmaan\NodeBundle\EventListener\MappingListener
-        arguments: ["%fos_user.model.user.class%"]
+        arguments: ['%fos_user.model.user.class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
     kunstmaan_node.command.fixtimestamps:
         class: Kunstmaan\NodeBundle\Command\FixTimestampsCommand
         calls:
-            - [setContainer, ["@service_container"] ]
+            - [setContainer, ['@service_container'] ]
+
+    kunstmaan_node.slug.listener:
+        class: '%kunstmaan_node.sluglistener.class%'
+        arguments: ['@doctrine.orm.entity_manager','@controller_resolver', '@event_dispatcher']
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    kunstmaan_node.slug.security.listener:
+        class: Kunstmaan\NodeBundle\EventListener\SlugSecurityListener
+        arguments: ['@doctrine.orm.entity_manager', '@security.authorization_checker', '@kunstmaan_node.node_menu']
+        tags:
+            - { name: kernel.event_listener, event: kunstmaan_node.slug.security, method: onSlugSecurityEvent }
+
+    kunstmaan_node.render.context.listener:
+        class: Kunstmaan\NodeBundle\EventListener\RenderContextListener
+        arguments: ['@templating', '@doctrine.orm.entity_manager']
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelView }
+
+    kunstmaan_node.node_menu:
+        class: Kunstmaan\NodeBundle\Helper\NodeMenu
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@kunstmaan_admin.acl.helper', '@kunstmaan_admin.domain_configuration']
+
+    kunstmaan_node.node.twig.extension:
+        class: Kunstmaan\NodeBundle\Twig\NodeTwigExtension
+        arguments: ['@doctrine.orm.entity_manager', '@router', '@kunstmaan_node.node_menu', '@request_stack']
+        tags:
+            - { name: twig.extension }

@@ -34,7 +34,7 @@ class ToTopPagePartTest extends \PHPUnit_Framework_TestCase
      *
      * @covers                Kunstmaan\PagePartBundle\Entity\ToTopPagePart::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals('ToTopPagePart', $this->object->__toString());
     }

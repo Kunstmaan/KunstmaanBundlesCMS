@@ -1,118 +1,122 @@
-{% block header %}{% endblock %}
-
 {% block content %}
-    <form method="post" action="" id="dashboard-setup-form">
-        <h2>{{ 'dashboard.ga.setup.title' | trans }}</h2>
+    <form method="post" action="" class="form--dashboard-setup" id="dashboard-setup-form">
         {% for flashMessage in app.session.flashbag.get('notice') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
             </div>
         {% endfor %}
 
-        <div class="setup-group" id="account-group">
-            <h4>{{ 'dashboard.ga.setup.accounts' | trans }}</h4>
-            <div id="accounts">
-                <select>
-                    <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
-                    {% for account in accounts %}
-                        <option {% if account.accountId == accountId %}selected{% endif %} data-id="{{account.accountId}}">
-                            {{ account.accountName }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+        <section class="row">
+            <aside class="col-md-3 form--dashboard-setup__aside">
+                <div class="setup-group" id="account-group">
+                    <h4>{{ 'dashboard.ga.setup.accounts' | trans }}</h4>
 
-            <div id="properties" {% if properties is not defined %}class="not-shown"{% endif %}>
-                <select>
-                    <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
-                    {% if properties is defined %}
-                        {% for property in properties %}
-                            <option {% if property.propertyId == propertyId %}selected{% endif %} data-id="{{property.propertyId}}">
-                                {{ property.propertyName }}
-                            </option>
-                        {% endfor %}
-                    {% endif %}
-                </select>
-            </div>
+                    <div id="accounts" class="setup-group__select__wrapper">
+                        <select class="setup-group__select js-advanced-select form-control advanced-select">
+                            <option data-id="" selected>{{ 'dashboard.ga.setup.account.select' | trans }}</option>
+                            {% for account in accounts %}
+                                <option {% if account.accountId == accountId %}selected{% endif %} data-id="{{account.accountId}}">
+                                    {{ account.accountName }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-            <div id="profiles" {% if profiles is not defined %}class="not-shown"{% endif %}>
-                <select>
-                    <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
-                    {% if profiles is defined %}
-                        {% for profile in profiles %}
-                            <option {% if profile.profileId == profileId %}selected{% endif %} data-id="{{profile.profileId}}">
-                                {{ profile.profileName }}
-                            </option>
-                        {% endfor %}
-                    {% endif %}
-                </select>
-            </div>
+                    <div id="properties" class="setup-group__select__wrapper{% if properties is not defined %} not-shown{% endif %}">
+                        <select class="setup-group__select js-advanced-select form-control advanced-select">
+                            <option data-id="">{{ 'dashboard.ga.setup.property.select' | trans }}</option>
+                            {% if properties is defined %}
+                                {% for property in properties %}
+                                    <option {% if property.propertyId == propertyId %}selected{% endif %} data-id="{{property.propertyId}}">
+                                        {{ property.propertyName }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
 
-            <input type="checkbox" name="disableGoals" id="disableGoals" name="disableGoals" {% if disableGoals %}checked{% endif %} />
-            <label for="disableGoals">
-                {{'dashboard.ga.setup.goals.disable' | trans}}
-            </label>
-        </div>
+                    <div id="profiles" class="setup-group__select__wrapper{% if profiles is not defined %} not-shown{% endif %}">
+                        <select class="setup-group__select js-advanced-select form-control advanced-select">
+                            <option data-id="">{{ 'dashboard.ga.setup.profile.select' | trans }}</option>
+                            {% if profiles is defined %}
+                                {% for profile in profiles %}
+                                    <option {% if profile.profileId == profileId %}selected{% endif %} data-id="{{profile.profileId}}">
+                                        {{ profile.profileName }}
+                                    </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
 
-        <div class="setup-group" id="segment-group">
-            <h4>{{ 'dashboard.ga.setup.segments' | trans }}</h4>
-            <p>
-                {{ 'dashboard.ga.setup.segment.info' | trans }} <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/segments" target="_blank">{{ 'dashboard.ga.setup.segment.here' | trans }}</a>.
-            </p>
+                    <input type="checkbox" name="disableGoals" id="disableGoals" name="disableGoals" {% if disableGoals %}checked{% endif %} />
+                    <label for="disableGoals">
+                        {{'dashboard.ga.setup.goals.disable' | trans}}
+                    </label>
+                </div>
+            </aside>
 
-            <ul>
-                {% for segment in segments %}
-                    <li id="segment-list__{{ segment.id }}">
-                        <div class="display-view">
-                            <span class="display-segment-name">{{ segment.name }}</span> (<span class="display-segment-query"> {{segment.query}} </span>)
-                            <button class="segment-list-button__delete btn btn-mini" data-segment-id="{{ segment.id }}"><i class="icon-remove"></i> remove</button>
-                            <button class="segment-list-button__edit btn btn-mini" data-segment-id="{{ segment.id }}"><i class="icon-edit"></i> edit</button>
-                        </div>
-                        <div class="edit-view">
-                            <input type="text" id="segment-edit-name-{{segment.id}}" class="segment-name" value="{{segment.name}}"/>
-                            <input type="text" id="segment-edit-query-{{segment.id}}" class="segment-query" value="{{segment.query}}"/>
-                            <button class="segment-list-button__confirm btn btn-small" data-segment-id="{{ segment.id }}"><i class="icon-ok"></i> save</button>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+            <div class="col-md-9 form--dashboard-setup__content">
+                <div class="setup-group segment-group" id="segment-group">
+                    <h4>{{ 'dashboard.ga.setup.segments' | trans }}</h4>
+                    <p>
+                        {{ 'dashboard.ga.setup.segment.info' | trans }} <a href="https://developers.google.com/analytics/devguides/reporting/core/v3/segments" target="_blank">{{ 'dashboard.ga.setup.segment.here' | trans }}</a>.
+                    </p>
 
-            <div id="segments-new"></div>
-
-            <button type="button" class="btn btn-small" id="segment-button__add">
-                <i class="icon-plus"></i> add segment
-            </button>
-
-            <div>
-                {% if profileSegments.own | length > 0 %}
-                    <h4>{{ 'dashboard.ga.setup.segment.own' | trans }}</h4>
-                    <ul>
-                        {% for segment in profileSegments.own %}
-                            <li>
-                                {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                    <h4>{{ 'dashboard.ga.setup.segment.builtin' | trans }}</h4>
-                <ul>
-                    {% for segment in profileSegments.builtin %}
-                        <li>
-                            {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
+                    <ul class="add-segment__list">
+                    {% for segment in segments %}
+                        <li id="segment-list__{{ segment.id }}" class="clearfix add-segment__list-item">
+                            <div class="display-view">
+                                <span class="display-segment-name">{{ segment.name }}</span> (<span class="display-segment-query"> {{segment.query}} </span>)
+                                <div class="btn-group btn-group-xs pull-right" role="group">
+                                    <button class="segment-list-button__delete btn btn-danger" data-segment-id="{{ segment.id }}">remove</button>
+                                    <button class="segment-list-button__edit btn btn-default" data-segment-id="{{ segment.id }}">edit</button>
+                                </div>
+                            </div>
+                            <div class="edit-view clearfix well">
+                                <input type="text" id="segment-edit-name-{{segment.id}}" class="segment-name" value="{{segment.name}}"/>
+                                <input type="text" id="segment-edit-query-{{segment.id}}" class="segment-query" value="{{segment.query}}"/>
+                                <button class="segment-list-button__confirm btn btn-default pull-right" data-segment-id="{{ segment.id }}">save</button>
+                            </div>
                         </li>
                     {% endfor %}
-                </ul>
-            </div>
-        </div>
+                    </ul>
 
-        <div class="setup-group" id="control-group">
-            {% if multiconfig is defined %}
-                <a href="{{ path('GaCollectionsBundle_Index', {'configId':configId}) }}" class="btn" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
-            {% else %}
-                <a href="{{ path('kunstmaan_dashboard') }}" class="btn" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
-            {% endif %}
-            <button disabled id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
-        </div>
+                    <div id="segments-new"></div>
+                    <button type="button" class="btn btn-primary" id="segment-button__add">add segment</button>
+
+                    <div>
+                        {% if profileSegments.own | length > 0 %}
+                            <h4>{{ 'dashboard.ga.setup.segment.own' | trans }}</h4>
+                            <ul class="list-group">
+                            {% for segment in profileSegments.own %}
+                                <li class="list-group-item">
+                                    {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <h4>{{ 'dashboard.ga.setup.segment.builtin' | trans }}</h4>
+                        <ul class="list-group">
+                            {% for segment in profileSegments.builtin %}
+                                <li class="list-group-item">
+                                    {{segment.name}} (<span class="segment-query__selection">{{segment.query}}</span>)
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="setup-group" id="control-group">
+                    {% if multiconfig is defined %}
+                        <a href="{{ path('GaCollectionsBundle_Index', {'configId':configId}) }}" class="btn btn-primary" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
+                    {% else %}
+                        <a href="{{ path('kunstmaan_dashboard') }}" class="btn btn-default" type="submit">{{ 'dashboard.ga.setup.back' | trans }}</a>
+                    {% endif %}
+                    <button disabled id="submit_save" class="btn btn-primary" type="submit">{{ 'form.save' | trans }}</button>
+                </div>
+            </div>
+        </section>
     </form>
 
     <input type="hidden" id="path_accounts" data-url="{{ path('kunstmaan_dashboard_ajax_accounts') }}" />
@@ -128,22 +132,4 @@
     <input type="hidden" id="config_id" data-id="{{configId}}" />
 {% endblock %}
 
-{% block extrajavascript %}
-    {% javascripts
-        '@KunstmaanDashboardBundle/Resources/public/js/setup/setup.js'
-        output='generated-js/ga_widget_setup.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
-
-
-{% block extracss %}
-    {% stylesheets
-        filter="scss"
-        "@KunstmaanDashboardBundle/Resources/public/scss/_dashboard-setup.scss"
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
-    {% endstylesheets %}
-{% endblock %}
 

@@ -133,17 +133,20 @@ class MediaController extends Controller
      */
     public function bulkUploadSubmitAction($folderId)
     {
-        $em = $this->getDoctrine()->getManager();
         // Make sure file is not cached (as it happens for example on iOS devices)
-        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
 
         // Settings
-        $tempDir          = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
-        $targetDir        = rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . "plupload";
+        if (ini_get('upload_tmp_dir')) {
+            $tempDir = ini_get('upload_tmp_dir');
+        } else {
+            $tempDir = sys_get_temp_dir();
+        }
+        $targetDir        = rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . 'plupload';
         $cleanupTargetDir = true; // Remove old files
         $maxFileAge       = 5 * 60 * 60; // Temp file age in seconds
 
@@ -153,92 +156,112 @@ class MediaController extends Controller
         }
 
         // Get a file name
-        if (isset($_REQUEST["name"])) {
-            $fileName = $_REQUEST["name"];
-        } elseif (!empty($_FILES)) {
-            $fileName = $_FILES["file"]["name"];
+        if (array_key_exists('name', $_REQUEST)) {
+            $fileName = $_REQUEST['name'];
+        } elseif (0 !== count($_FILES)) {
+            $fileName = $_FILES['file']['name'];
         } else {
-            $fileName = uniqid("file_");
+            $fileName = uniqid('file_', false);
         }
         $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 
+        $chunk = 0;
+        $chunks = 0;
         // Chunking might be enabled
-        $chunk  = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
-        $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
+        if (array_key_exists('chunk', $_REQUEST)) {
+            $chunk = (int)$_REQUEST['chunk'];
+        }
+        if (array_key_exists('chunks', $_REQUEST)) {
+            $chunks = (int)$_REQUEST['chunks'];
+        }
 
         // Remove old temp files
         if ($cleanupTargetDir) {
             if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+
+                return $this->returnJsonError('100', 'Failed to open temp directory.');
             }
 
             while (($file = readdir($dir)) !== false) {
-                $tmpfilePath = $targetDir . DIRECTORY_SEPARATOR . $file;
+                $tmpFilePath = $targetDir . DIRECTORY_SEPARATOR . $file;
 
                 // If temp file is current file proceed to the next
-                if ($tmpfilePath == "{$filePath}.part") {
+                if ($tmpFilePath === "{$filePath}.part") {
+
                     continue;
                 }
 
                 // Remove temp file if it is older than the max age and is not the current file
-                if (preg_match('/\.part$/', $file) && (filemtime($tmpfilePath) < time() - $maxFileAge)) {
-                    @unlink($tmpfilePath);
+                if (preg_match('/\.part$/', $file) && (filemtime($tmpFilePath) < time() - $maxFileAge)) {
+                    $success = @unlink($tmpFilePath);
+                    if ($success !== true) {
+
+                        return $this->returnJsonError('106', 'Could not remove temp file: '.$filePath);
+                    }
                 }
             }
             closedir($dir);
         }
 
         // Open temp file
-        if (!$out = @fopen("{$filePath}.part", $chunks ? "ab" : "wb")) {
-	    $response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
-	    $response->headers->set('Content-Type', 'application/json');
-	    return $response;
+        if (!$out = @fopen("{$filePath}.part", $chunks ? 'ab' : 'wb')) {
+
+            return $this->returnJsonError('102', 'Failed to open output stream.');
         }
 
-        if (!empty($_FILES)) {
-            if ($_FILES["file"]["error"] || !is_uploaded_file($_FILES["file"]["tmp_name"])) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+        if (0 !== count($_FILES)) {
+            if ($_FILES['file']['error'] || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+
+                return $this->returnJsonError('103', 'Failed to move uploaded file.');
             }
 
             // Read binary input stream and append it to temp file
-            if (!$in = @fopen($_FILES["file"]["tmp_name"], "rb")) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+            if (!$input = @fopen($_FILES['file']['tmp_name'], 'rb')) {
+
+                return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         } else {
-            if (!$in = @fopen("php://input", "rb")) {
-		$response = new Response('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+            if (!$input = @fopen('php://input', 'rb')) {
+
+                return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         }
 
-        while ($buff = fread($in, 4096)) {
+        while ($buff = fread($input, 4096)) {
             fwrite($out, $buff);
         }
 
         @fclose($out);
-        @fclose($in);
+        @fclose($input);
 
         // Check if file has been uploaded
-        if (!$chunks || $chunk == $chunks - 1) {
+        if (!$chunks || $chunk === $chunks - 1) {
             // Strip the temp .part suffix off
             rename("{$filePath}.part", $filePath);
         }
 
+
+        $em = $this->getDoctrine()->getManager();
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
         $file   = new File($filePath);
 
-        /* @var Media $media */
-        $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
-        $media->setFolder($folder);
-        $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+        try {
+            /* @var Media $media */
+            $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
+            $media->setFolder($folder);
+            $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+        } catch (\Exception $e) {
+
+            return $this->returnJsonError('104', 'Failed performing save on media-manager');
+        }
+
+        $success = unlink($filePath);
+        if ($success !== true) {
+
+            return $this->returnJsonError('105', 'Could not remove temp file: '.$filePath);
+        }
+
 
         // Return Success JSON-RPC response
         return new JsonResponse(array(
@@ -246,6 +269,18 @@ class MediaController extends Controller
             'result'  => '',
             'id'      => 'id'
         ));
+    }
+
+    private function returnJsonError($code, $message){
+
+        return new JsonResponse([
+            'jsonrpc' => '2.0',
+            'error '  => [
+                'code' => $code,
+                'message' => $message,
+            ],
+            'id'      => 'id'
+        ]);
     }
 
     /**
@@ -265,8 +300,11 @@ class MediaController extends Controller
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
         $drop = null;
-        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] == 0) {
+
+        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] === 0) {
             $drop = $request->files->get('files');
+	} else if ($request->files->get('file')) {
+	    $drop = $request->files->get('file');
         } else {
             $drop = $request->get('text');
         }
@@ -278,7 +316,7 @@ class MediaController extends Controller
             return new Response(json_encode(array('status' => 'File was uploaded successfuly!')));
         }
 
-        $request->getSession()->getFlashBag()->add('notice', 'Could not recognize what you dropped!');
+	$request->getSession()->getFlashBag()->add('danger', 'Could not recognize what you dropped!');
 
         return new Response(json_encode(array('status' => 'Could not recognize anything!')));
     }
@@ -395,7 +433,6 @@ class MediaController extends Controller
         $mediaId = $request->request->get('mediaId');
         $folderId = $request->request->get('folderId');
 
-        $response = array();
         if (empty($mediaId) || empty($folderId)) {
             return new JsonResponse(array('error' => array('title' => 'Missing media id or folder id')), 400);
         }

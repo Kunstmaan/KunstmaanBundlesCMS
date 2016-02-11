@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class GoogleAnalyticsController extends Controller
 {
@@ -21,7 +23,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function widgetAction(Request $request)
     {
-        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), true);
+        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), UrlGeneratorInterface::ABSOLUTE_URL);
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
         // if token not set
@@ -82,11 +84,17 @@ class GoogleAnalyticsController extends Controller
      *
      * @param Request $request
      *
+     * @throws AccessDeniedException
+     *
      * @return array
      */
     public function setTokenAction(Request $request)
     {
-        $code = $request->query->get('code');
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        $code = urldecode($request->query->get('code'));
 
         if (isset($code)) {
             $clientHelper = $this->container->get('kunstmaan_dashboard.helper.google.client');
@@ -107,10 +115,16 @@ class GoogleAnalyticsController extends Controller
      *
      * @param Request $request
      *
+     * @throws AccessDeniedException
+     *
      * @return array
      */
     public function configAction(Request $request)
     {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $params = array();
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
@@ -151,9 +165,15 @@ class GoogleAnalyticsController extends Controller
 
     /**
      * @Route("/resetProfile", name="KunstmaanDashboardBundle_analytics_resetProfile")
+     *
+     * @throws AccessDeniedException
      */
     public function resetProfileAction()
     {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetProfileId();
         return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
@@ -161,9 +181,15 @@ class GoogleAnalyticsController extends Controller
 
     /**
      * @Route("/resetProperty", name="KunstmaanDashboardBundle_analytics_resetProperty")
+     *
+     * @throws AccessDeniedException
      */
     public function resetPropertyAction()
     {
+        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();
         return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));

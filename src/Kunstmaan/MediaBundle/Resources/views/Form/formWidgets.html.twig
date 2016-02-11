@@ -1,159 +1,123 @@
 {% block iconfont_widget %}
     {% spaceless %}
-        <div id="{{ id }}_widget" class="clearfix {{ attr.class|default('') }}" style="{{ attr.style|default('') }}">
-            <input type="hidden" name="{{ full_name }}" value="{{ value|default('') }}"/>
+        <!-- Icon Chooser -->
+        <div id="{{ id }}_widget" class="icon-chooser media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %} js-icon-chooser" data-css-link="{{ loader_object.cssLink }}" data-widget-id="{{id}}">
+            <input type="hidden" name="{{ full_name }}" value="{{ value|default('') }}" class="js-icon-chooser__input"/>
 
-            <div class="input_media hasnomedia">
-                <div class="preview"></div>
-                <button class="choose">{{ 'media.widget.choose' | trans }}</button>
+            <!-- Icon Chooser Preview -->
+            <div class="media-chooser__preview">
+                <figure class="thumbnail">
+                    <div class="icon-chooser__preview js-icon-chooser__preview {{ value|default('') }}"></div>
+                </figure>
+
+                <!-- Icon Chooser delete button -->
+                <button type="button" class="btn media-chooser__preview__del-btn js-icon-chooser__close">
+                    <i class="fa fa-trash-o"></i>
+                </button>
             </div>
 
-            <div class="input_media hasmedia">
-                <div class="iconpreview" style="float:left;">
-                    <div class="{{ value|default('') }}" style="font-size:60px;"></div>
-                </div>
-                <button class="del">{{ 'media.widget.delete' | trans }}</button>
-                <p class="title" style="clear:both">{{ value|default('') }}</p>
-            </div>
+            <!-- Icon Chooser choose button -->
+            <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn js-icon-chooser__choose" data-toggle="modal" data-target="#{{ id }}_iconChooserModal" data-link="{{ path('KunstmaanMediaBundle_icon_font_chooser', {'loader': loader, 'loader_data': loader_data }) }}">
+                <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
+                {{ 'media.widget.choose' | trans }}
+            </button>
         </div>
 
-        <script type="text/javascript">
-            var cssId = 'iconfont';
-            if (!document.getElementById(cssId)) {
-                var head  = document.getElementsByTagName('head')[0];
-                var link  = document.createElement('link');
-                link.id   = cssId;
-                link.rel  = 'stylesheet';
-                link.type = 'text/css';
-                link.href = '{{ loader_object.cssLink }}';
-                link.media = 'all';
-                head.appendChild(link);
-            }
+        <!-- Icon Chooser Modal -->
+        <div class="js-ajax-modal modal fade" id="{{ id }}_iconChooserModal" role="dialog" aria-labelledby="iconhooserModal" aria-hidden="true" data-loaded="false" data-widget-id="{{ id }}">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
 
-            var widget = jQuery('#{{ id }}_widget');
-            if (widget.find('input').val() == '') {
-                widget.find('.hasnomedia').show();
-                widget.find('.hasmedia').hide();
-            } else {
-                widget.find('.hasnomedia').hide();
-                widget.find('.hasmedia').show();
-            }
-            widget.find('.choose').on('click', function(ev) {
-                ev.preventDefault();
-                openDGDialog('{{ path('KunstmaanMediaBundle_icon_font_chooser', {'loader': loader, 'loader_data': loader_data }) }}', 800, 600, function(param){
-                    var widget = jQuery('#{{ id }}_widget');
-                    widget.find('input').val(dialogWin.returnedValue.iconClass);
-                    widget.find('.hasmedia').find('.title').html(dialogWin.returnedValue.iconClass);
-                    var element =  widget.find('.hasmedia').find('.iconpreview').find('div');
-                    element.removeClass();
-                    element.addClass(dialogWin.returnedValue.iconClass);
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <h3 class="modal-title">
+                            {{ 'media.widget.icon_chooser' | trans }}
+                        </h3>
+                    </div>
 
-                    widget.find('.hasnomedia').hide();
-                    widget.find('.hasmedia').show();
-                });
-            });
-            widget.find('.del').on('click', function(ev) {
-                ev.preventDefault();
-                var widget = jQuery('#{{ id }}_widget');
-                widget.find('input').val('');
-                widget.find('.hasnomedia').show();
-                widget.find('.hasmedia').hide();
-            });
-        </script>
+                    <!-- Body -->
+                    <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+                </div>
+            </div>
+        </div>
     {% endspaceless %}
 {% endblock iconfont_widget %}
 
+
 {% block media_widget %}
 {% spaceless %}
-	<div id="{{ id }}_widget" class="clearfix {{ attr.class|default('') }}" style="{{ attr.style|default('') }}">
-		<input type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}"/>
+    <div id="{{ id }}-widget" class="media-chooser {% if(value.ent is defined) %}media-chooser--choosen{% endif %}">
+        <!-- Hidden input -->
+        <input id="{{ id }}" type="hidden" name="{{ full_name }}" value="{% if(value.id is defined) %}{{ value.id }}{% endif %}">
 
-		<div class="input_media hasnomedia">
-			<div class="preview"></div>
-			<button data-toggle="modal" data-target="#Media_Chooser" class="choose">{{ 'media.widget.choose' | trans }}</button>
-		</div>
-
-		<div class="input_media hasmedia">
-			{% if(value.ent is defined) %}
-			    <div class="preview">
-    			    {% set media = value.ent %}
-    			    {% set handler = mediamanager.getHandler(media) %}
+        <!-- Preview -->
+        <div class="media-chooser__preview">
+            <figure class="thumbnail">
+                {% if(value.ent is defined) %}
+                    {% set media = value.ent %}
+                    {% set handler = mediamanager.getHandler(media) %}
                     {% set imageurl =  handler.getImageUrl(media, app.request.basePath) %}
                     {% if imageurl is not empty and media.location == 'local' %}
                         {% if imageurl|lower|split('.')|last == 'svg' or 'image/svg' in media.contentType %}
-                            {% set imageurl = imageurl %}
+                            {% set imageurlretina = imageurl %}
                         {% else %}
-                            {% set imageurl = imageurl | imagine_filter('media_list_thumbnail') %}
+                            {% set imageurlretina = asset(imageurl | imagine_filter('media_list_thumbnail_retina')) %}
+                            {% set imageurl = asset(imageurl | imagine_filter('media_list_thumbnail')) %}
                         {% endif %}
                     {% endif %}
                     {% if imageurl %}
-                        <img src="{{ imageurl }}" alt="{{ media.name }}" />
+                        <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina }} 2x" alt="{{ media.name }}" id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                        <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
+                            {{ media.name }}
+                        </figcaption>
                     {% else %}
-                        <div style="font-size: 135px;text-align:center">
-                            <i class="icon-file"></i>
-                        </div>
+                        <i class="fa fa-file-o media-thumbnail__icon"></i>
+                        <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title">
+                            {{ media.name }}
+                        </figcaption>
                     {% endif %}
+                {% else %}
+                    <img id="{{ id }}__preview__img" class="thumbnail-img media-chooser__preview__img">
+                    <figcaption id="{{ id }}__preview__title" class="media-chooser__preview__title"></figcaption>
+                {% endif %}
+            </figure>
+
+            <button type="button" id="{{ id }}__preview__del-btn" class="js-media-chooser-del-preview-btn btn media-chooser__preview__del-btn" data-linked-id="{{ id }}">
+                <i class="fa fa-trash-o"></i>
+            </button>
+        </div>
+
+
+        <!-- Select Button -->
+        <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn" data-toggle="modal" data-target="#{{ id }}-mediaChooserModal" data-link="{{ path(chooser, {'type': mediatype}) }}">
+            <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
+            {{ 'media.widget.choose' | trans }}
+        </button>
+    </div>
+
+
+    <!-- Media Chooser Modal -->
+    <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3 class="modal-title">
+                        {{ 'media.widget.media_chooser' | trans }}
+                    </h3>
                 </div>
-                <button class="del">{{ 'media.widget.delete' | trans }}</button>
-                <p class="title">{{ media.name }}</p>
-			{% else %}
-				<div class="preview">
-					<img src="" alt="" />
-				</div>
-				<button class="del">{{ 'media.widget.delete' | trans }}</button>
-				<p class="title"></p>
-			{% endif %}
-		</div>
 
-        {% if attr['info_media'] is defined %}
-            &nbsp; <strong title="{{ attr['info_media']|trans }}" id="{{ id }}_info_media" style="cursor:help;display:inline-block;margin:10px 0 0 2px;">?</strong>
-            <script>
-                jQuery(document).ready(function(){
-                    $("#{{ id }}_info_media").tooltip();
-                });
-            </script>
-        {% endif %}
-	</div>
-
-	<script type="text/javascript">
-		{
-			var widget = jQuery('#{{ id }}_widget');
-			if ( widget.find('input').val() == '') {
-				widget.find('.hasnomedia').show();
-				widget.find('.hasmedia').hide();
-			} else {
-				widget.find('.hasnomedia').hide();
-				widget.find('.hasmedia').show();
-			}
-			widget.find('.choose').on('click', function(ev) {
-				ev.preventDefault();
-				openDGDialog('{{ path(chooser, {'type': mediatype}) }}', 1050, 600, function(param){
-					var widget = jQuery('#{{ id }}_widget');
-					widget.find('input').val(dialogWin.returnedValue.id);
-					if(typeof(dialogWin.returnedValue.title)!="undefined"){
-						widget.find('.hasmedia').find('.title').html(dialogWin.returnedValue.title);
-						widget.find('.hasmedia').find('.title').show();
-					} else {
-						widget.find('.hasmedia').find('.title').hide();
-					}
-					if(typeof(dialogWin.returnedValue.imgpath)!="undefined"){
-						widget.find('.hasmedia').find('img').attr('src', dialogWin.returnedValue.imgpath);
-						widget.find('.hasmedia').find('img').show();
-					} else {
-						widget.find('.hasmedia').find('img').hide();
-					}
-					widget.find('.hasnomedia').hide();
-					widget.find('.hasmedia').show();
-				});
-			});
-			widget.find('.del').on('click', function(ev) {
-				ev.preventDefault();
-				var widget = jQuery('#{{ id }}_widget');
-				widget.find('input').val('');
-				widget.find('.hasnomedia').show();
-				widget.find('.hasmedia').hide();
-			});
-		}
-	</script>
+                <!-- Body -->
+                <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+            </div>
+        </div>
+    </div>
 {% endspaceless %}
 {% endblock %}
