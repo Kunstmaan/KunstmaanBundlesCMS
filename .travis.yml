@@ -1,0 +1,107 @@
+language: php
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - libxss1
+    - imagemagick
+    - ghostscript
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: SYMFONY_VERSION="2.8.*" BUNDLES_VERSION="dev-master" DB="sqlite"
+    - env: SYMFONY_VERSION="2.8.*" BUNDLES_VERSION="dev-master" DB="postgres"
+
+services:
+  - elasticsearch
+
+mysql:
+  database: kunstmaanbundles
+  username: travis
+  encoding: utf8
+
+env:
+  - SYMFONY_VERSION="2.8.*" BUNDLES_VERSION="dev-master" DB="mysql"
+  - SYMFONY_VERSION="2.8.*" BUNDLES_VERSION="dev-master" DB="sqlite"
+  - SYMFONY_VERSION="2.8.*" BUNDLES_VERSION="dev-master" DB="postgres"
+
+before_install:
+  - composer selfupdate
+
+install:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 4 ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "~ 5.[56]" ] ; then echo yes | pecl install apcu-4.0.10; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" = "7.*" ] ; then pecl config-set preferred_state beta; echo yes | pecl install apcu; echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "memory_limit = -1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;'
+  - sh -c 'printf "\n" | pecl install imagick-3.4.0RC6'
+  - gem install sass
+  - npm install bower
+  - npm install grunt
+  - npm install grunt-cli
+  - npm install uglify-js
+  - npm install uglifycss
+  - chmod -R 777 app/cache/ app/logs/
+
+
+before_script:
+  - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'DROP DATABASE IF EXISTS kunstmaanbundles;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'create database kunstmaanbundles;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS kunstmaanbundles;'; fi"
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+  - sh -c "if [ '$DB' = 'postgres' ]; then sed -i 's/dbuser/postgres/g' app/config/parameters.yml; fi"
+  - sh -c "if [ '$DB' = 'postgres' ]; then sed -i 's/pdo_mysql/pdo_pgsql/g' app/config/parameters.yml; fi"
+  - sh -c "if [ '$DB' = 'mysql' ]; then sed -i 's/dbuser/travis/g' app/config/parameters.yml; fi"
+  - sh -c "if [ '$DB' = 'sqlite' ]; then sed -i "s/pdo_mysql/pdo_sqlite/g" app/config/parameters.yml; fi"
+  - sh -c "if [ '$DB' = 'sqlite' ]; then sed -i 's/# path:[ ]*\"%database_path%\"/path\:\ \"%kernel.root_dir%\/data.db3\"/g' app/config/config_base.yml; fi"
+  - composer require symfony/symfony:${SYMFONY_VERSION} kunstmaan/bundles-cms:${BUNDLES_VERSION} --no-update
+  - composer install --no-scripts
+  - composer dump-autoload --optimize
+  - php vendor/sensio/distribution-bundle/Resources/bin/build_bootstrap.php
+  - app/console --force --no-interaction doctrine:schema:drop --env=dev
+  - app/console --no-interaction doctrine:schema:create --env=dev
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
+  - wget http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar
+  - java -jar selenium-server-standalone-2.45.0.jar > /dev/null 2>&1 &
+  - sleep 5
+
+script:
+  - app/console kuma:generate:bundle --namespace="MyProject\\WebsiteBundle" --no-interaction --dir=src
+  - app/console kuma:generate:default-site --namespace="MyProject\\WebsiteBundle" --prefix="myproject_" --demosite --no-interaction
+  - bundle install
+  - npm install
+  - bower install
+  - gulp build || grunt build
+  - app/console --force --no-interaction doctrine:schema:drop --env=dev
+  - app/console --no-interaction doctrine:schema:create --env=dev
+  - app/console --no-interaction doctrine:fixtures:load --env=dev
+  - app/console kuma:generate:admin-tests --namespace="MyProject\\WebsiteBundle"
+  - app/console --no-interaction assets:install --env=test
+  - app/console --no-interaction assetic:dump --env=test
+  - app/console --no-interaction cache:clear --env=test
+  - app/console --no-interaction cache:warmup --env=test
+  - chmod -R 777 app/cache/ app/logs/
+  - app/console server:start
+  - phpunit -c app
+  - php -d memory_limit=2048M bin/behat @MyProjectWebsiteBundle --verbose
+  - app/console server:stop
+
+notifications:
+  email:
+    - travis@kunstmaan.be

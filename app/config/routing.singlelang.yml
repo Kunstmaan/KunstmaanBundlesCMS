@@ -1,0 +1,63 @@
+# KunstmaanMediaBundle
+_imagine:
+    resource: .
+    type:     imagine
+
+KunstmaanMediaBundle:
+    resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanAdminBundle
+KunstmaanAdminBundle:
+    resource: "@KunstmaanAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanNodeBundle
+KunstmaanNodeBundle:
+    resource: "@KunstmaanNodeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanPagePartBundle
+KunstmaanPagePartBundle:
+    resource: "@KunstmaanPagePartBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanFormBundle
+KunstmaanFormBundle:
+    resource: "@KunstmaanFormBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanSitemapBundle
+KunstmaanSitemapBundle:
+    resource: "@KunstmaanSitemapBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanTranslatorBundle
+KunstmaanTranslatorBundle:
+    resource: "@KunstmaanTranslatorBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanRedirectBundle
+KunstmaanRedirectBundle:
+    resource: "@KunstmaanRedirectBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanUserManagementBundle
+KunstmaanUserManagementBundle:
+    resource: "@KunstmaanUserManagementBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanDashboardBundle
+KunstmaanDashboardBundle:
+    resource: "@KunstmaanDashboardBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanSeoBundle
+KunstmaanSeoBundle:
+    resource: "@KunstmaanSeoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# Robots.txt
+KunstmaanSeoBundle_robots:
+    resource: "@KunstmaanSeoBundle/Controller/RobotsController.php"
+    type:     annotation

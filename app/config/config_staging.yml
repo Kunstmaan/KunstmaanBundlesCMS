@@ -1,0 +1,68 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    validation:
+        cache: validator.mapping.cache.doctrine.apc
+
+doctrine:
+    orm:
+        metadata_cache_driver: apc
+        result_cache_driver: apc
+        query_cache_driver: apc
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+            channels:     "!event"
+            excluded_404s:
+                - ^/
+        sentry:
+            type:  raven
+            dsn:   %sentry.dsn%
+            level: critical
+        nested:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+        console:
+            type:  console
+
+fos_http_cache:
+    cache_control:
+        rules:
+            # match admin area
+            -
+                match:
+                    path: ^/[^/]+/admin
+                headers:
+                    cache_control:
+                        public: false
+                        max_age: 0
+                        s_maxage: 0
+                    last_modified: "-1 hour"
+
+            # match esi requests
+            -
+                match:
+                    path: ^/_fragment
+                headers:
+                    cache_control:
+                        public: false
+                        max_age: 0
+                        s_maxage: 0
+                    last_modified: "-1 hour"
+
+            # match everything to set defaults
+            -
+                match:
+                    path: ^/
+                headers:
+                    cache_control:
+                        public: true
+                        max_age: 360
+                        s_maxage: 360
+                    vary: [Cookie, Accept-Encoding, Accept-Language]
