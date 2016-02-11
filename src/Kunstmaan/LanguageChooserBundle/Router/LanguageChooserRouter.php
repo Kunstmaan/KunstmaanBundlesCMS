@@ -85,7 +85,7 @@ class LanguageChooserRouter implements RouterInterface
     {
         if (!isset($this->context)) {
             $this->context = new RequestContext();
-            $this->context->fromRequest($this->container->get('request'));
+            $this->context->fromRequest($this->container->get('request_stack')->getCurrentRequest());
         }
 
         return $this->context;

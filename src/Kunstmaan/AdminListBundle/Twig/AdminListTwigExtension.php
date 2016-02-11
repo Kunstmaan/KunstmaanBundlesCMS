@@ -88,7 +88,7 @@ class AdminListTwigExtension extends \Twig_Extension
     {
         /* @var Router $router  */
         $router = $this->container->get('router');
-        $request = $this->container->get('request');
+        $request = $this->container->get('request_stack')->getCurrentRequest();
 
         $routeName = $request->attributes->get('_route');
         $routeParams = $request->query->all();

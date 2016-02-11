@@ -1,0 +1,24 @@
+{% extends 'KunstmaanAdminBundle:Default:layout.html.twig' %}
+
+{% block content %}
+
+    <table class="table">
+
+    {% for key, value in fields %}
+        <tr>
+            <td>
+                {{ key }}
+            </td>
+            <td>
+                {% if value.timezone is defined %}
+                    {{ value|date() }}
+                {% elseif value.id is defined %}
+                    OBJECT
+                {% else %}
+                    {{ value }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

@@ -94,6 +94,7 @@ interface AdminListConfiguratorInterface
      */
     public function canEdit($item);
 
+    public function canView($item);
     /**
      * Configure if it's possible to delete the given $item
      *

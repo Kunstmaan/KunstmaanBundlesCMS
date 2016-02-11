@@ -78,9 +78,12 @@
                         </td>
                     {% endif %}
                 {% endfor %}
-
+                
                 <!-- Actions -->
                 <td class="table__actions">
+                    {% if adminlist.canView(item) %}
+                        <a href="{{ path(adminlist.getViewUrlFor(item)["path"], adminlist.getViewUrlFor(item)[("params")] ) }}"><i class="icon-eye"></i>View</a>
+                    {% endif %}
                     {% if adminlist.canEdit(item) %}
                         <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item" title="Edit">
                             <i class="fa fa-pencil-square-o"></i>
