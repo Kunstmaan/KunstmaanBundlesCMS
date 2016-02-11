@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Float label forms
+   ========================================================================== */
+
+@import "config";
+
+/* Form group
+   ========================================================================== */
+
+.form__group {
+    position: relative;
+    margin-top: 2rem;
+
+    -webkit-backface-visibility: hidden;
+}
+
+/* Label
+   ========================================================================== */
+
+.form__label {
+    z-index: -1;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    font-size: 1rem;
+    color: $black;
+    font-weight: bold;
+
+    opacity: 0;
+
+    transition: all .3s ease-in-out;
+}
+
+.form__label--active {
+    transform: translateY(-1.5rem);
+
+    color: $labelActive;
+
+    opacity: 1;
+}
+
+.form__label--focus {
+    color: $labelFocus;
+}

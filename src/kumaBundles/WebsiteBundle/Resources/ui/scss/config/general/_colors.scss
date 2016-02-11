@@ -1,0 +1,50 @@
+/* ==========================================================================
+   Colors
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Colors
+   ========================================================================== */
+$black:                 #373737;
+$white:                 #fff;
+
+$grey:                  #9d9d9d;
+$blue:                  #5cb8e6;
+
+$red:                   #ff4600;
+
+
+/* Specifics
+   ========================================================================== */
+$text-color:            $black;
+$hr-color:              $grey;
+$link-color:            $blue;
+$link-color--hover:     darken($link-color, 15%);
+
+$theme-color:           $grey;
+$theme-color--dark:     $grey;
+
+
+/*doc
+---
+title: Colors
+name: 01_colors
+category: General
+---
+
+<div class="container exampleOutput no-markup">
+    <div class="row">
+        <div class="col-md-6">
+            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #373737;'></i><code class='styleguide__code'>#373737 - $black</code></code></div>
+            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #fff;'></i><code class='styleguide__code'>#fff - $white</code></code></div><br>            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #9d9d9d;'></i><code class='styleguide__code'>#9d9d9d - $grey</code></code></div>
+        </div>
+        <div class="col-md-6">
+            <br>
+                        <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #5cb8e6;'></i><code class='styleguide__code'>#5cb8e6 - $blue</code></code></div>
+            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #ff4600;'></i><code class='styleguide__code'>#ff4600 - $red</code></code></div>
+        </div>
+    </div>
+</div>
+*/

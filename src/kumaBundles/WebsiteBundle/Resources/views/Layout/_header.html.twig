@@ -1,0 +1,64 @@
+
+{# Default header #}
+{% if nodemenu is defined %}
+    <header role="header" class="main-header">
+        <div class="container-fluid">
+
+            {# Logo #}
+            {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
+            <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
+                <img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="main-header__logo__img">
+            </a>
+
+
+            {# Main navigation #}
+            <nav role="navigation" class="main-header__nav main-nav">
+            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+            {% for node in activeSubnode.children %}
+                {% if not node.node.isHiddenFromNav() %}
+                    <a href="{{ path('_slug', { 'url': node.slug }) }}" class="main-nav__link {% if(node.active) %}main-nav__link--active{% endif %}">
+                        {{ node.title }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+            </nav>
+
+
+            {# Search #}
+            {% set searchPageNode = nodemenu.getNodeByInternalName('search') %}
+            {% if searchPageNode %}
+                <form method="get" action="{{ path('_slug', { 'url': searchPageNode.slug }) }}" class="searchbox-form js-searchbox-form pull-left">
+                    <div class="searchbox">
+                        <div class="searchbox__content js-searchbox-content">
+                            <input type="text" name="query" id="query" value="{% if q_query is defined and q_query != '' %}{{ q_query }}{% endif %}" placeholder="{{ 'search'|trans }}" class="searchbox__input">
+                            <button type="submit" id="search" class="searchbox__submit">
+                                <i class="icon icon--search searchbox__submit__icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            {% endif %}
+
+
+            {# Language nav #}
+            {% set langs = get_locales() %}
+            {% if langs|length > 1 %}
+                <div class="language-nav">
+                    <span class="language-nav__active-lang">
+                        {{ app.request.locale }}
+                    </span>
+                    <nav role="navigation">
+                        {% for lang in langs %}
+                        {% if lang != app.request.locale %}
+                            <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">
+                                {{ lang }}
+                            </a>
+                        {% endif %}
+                        {% endfor %}
+                    </nav>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+{% endif %}
+

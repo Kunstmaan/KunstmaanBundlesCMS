@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Pageparts - Download pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.download-pp {
+
+    margin: $default-margin 0;
+
+}
+
+/*doc
+---
+title: download-pp
+name: 03_download-pp
+category: Pageparts
+---
+
+```html_example
+<p class="download-pp">
+    <a href="http://sandbox.sycorax.kunstmaan.be/uploads/media/557841622d970/fixie1.png?v1" target="_blank" class="download">fixie1.png</a>
+    <span>| png 1.8mb</span>
+</p>
+```
+
+*/

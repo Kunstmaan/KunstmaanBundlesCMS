@@ -1,0 +1,44 @@
+parameters:
+    database_driver:            pdo_mysql
+    database_host:              127.0.0.1
+    database_port:              ~
+    database_name:              kunstmaanbundles
+    database_user:              travis
+    database_password:          ~
+
+    mailer_transport:           smtp
+    mailer_host:                127.0.0.1
+    mailer_user:                ~
+    mailer_password:            ~
+
+    locale:                     en
+    secret:                     ThisTokenIsNotSoSecretChangeIt
+
+    debug_toolbar:              true
+    debug_redirects:            false
+    use_assetic_controller:     true
+
+    requiredlocales:            nl|fr|de|en
+    defaultlocale:              en
+    multilanguage:              true
+
+    sentry.dsn:                 https://XXXXXXXX:XXXXXXXX@app.getsentry.com/XXXX
+
+    cdnpath:                    ~
+
+    websitetitle:               MyProject
+    session_prefix:             myproject
+
+    searchport:                 9200
+    searchindexname:            myproject
+    searchindexprefix:          myproject
+
+    analytics.googletagmanager: GTM-XXXXXX
+
+    aviary_api_key:             Register on https://creativesdk.adobe.com/myapps.html
+
+    google.api.client_id:       More info at http://bundles.kunstmaan.be/documentation/cookbook/google-analytics-dashboard
+    google.api.client_secret:   ~
+    google.api.dev_key:         ~
+
+    doctrine.server_version:    5.6

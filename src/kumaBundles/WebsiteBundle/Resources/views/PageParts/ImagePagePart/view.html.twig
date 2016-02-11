@@ -1,0 +1,32 @@
+{% if resource.media is not empty %}
+    <div class="image-pp">
+        {% set imgUrl = '' %}
+        {% if app.request %}
+            {% set baseUrl = app.request.schemeandhttphost ~ app.request.basePath %}
+
+            {% if resource.media.name|lower|split('.')|last == 'svg' or 'image/svg' in resource.media.contentType %}
+                {% set imgUrl = baseUrl ~ asset(resource.media.url) %}
+            {% elseif resource.media.name|lower|split('.')|last == 'gif' or 'image/gif' in resource.media.contentType %}
+                {% set imgUrl = baseUrl ~ asset(resource.media.url) %}
+            {% elseif resource.media.name|lower|split('.')|last == 'png' %}
+                {% set imgUrl = asset(resource.media.url|imagine_filter('optimpng')) %}
+            {% else %}
+                {% set imgUrl = asset(resource.media.url|imagine_filter('optimjpg')) %}
+            {% endif %}
+        {% endif %}
+
+        {% if resource.link is defined and resource.link != '' %}
+            <a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}>
+        {% endif %}
+
+        <img src="{{ imgUrl }}"{% if resource.altText %} alt="{{ resource.altText }}"{% endif %} />
+
+        {% if resource.link is defined and resource.link != '' %}
+        </a>
+        {% endif %}
+
+        {% if resource.caption %}
+            <p>{{ resource.caption }}</p>
+        {% endif %}
+    </div>
+{% endif %}

@@ -1,0 +1,7 @@
+services:
+    kumabundleswebsitebundle.node_translation.twig.extension:
+        class: kumaBundles\WebsiteBundle\Twig\NodeTranslationTwigExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }
+

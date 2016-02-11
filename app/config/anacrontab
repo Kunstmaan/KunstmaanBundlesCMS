@@ -1,0 +1,2 @@
+* * * * * /<path to>/app/console kuma:nodes:cron --env=prod  > /dev/null 2>&1
+0 * * * * /<path to>/app/console kuma:dashboard:collect --env=prod  > /dev/null 2>&1

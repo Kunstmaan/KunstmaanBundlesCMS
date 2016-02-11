@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Icon font
+
+   Based on icomoon style.css
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+@font-face {
+    font-family: $iconfont-name;
+    src:url('#{$iconfont-path}/#{$iconfont-name}.eot?8at4kw');
+    src:url('#{$iconfont-path}/#{$iconfont-name}.eot?#iefix8at4kw') format('embedded-opentype'),
+    url('#{$iconfont-path}/#{$iconfont-name}.woff?8at4kw') format('woff'),
+    url('#{$iconfont-path}/#{$iconfont-name}.ttf?8at4kw') format('truetype'),
+    url('#{$iconfont-path}/#{$iconfont-name}.svg?8at4kw##{$iconfont-name}') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon--"], [class*=" icon--"] {
+    font-family: $iconfont-name;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+
+/*doc
+---
+title: Iconfont
+name: 03_iconfont
+category: Typography
+---
+<div class="container exampleOutput no-markup">
+    <div class="row">
+        <div class="col-md-4">
+                        <i class="icon icon--"></i>
+                <code class='styleguide__code'>icon icon--</code>
+
+            </div>
+            </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+*/

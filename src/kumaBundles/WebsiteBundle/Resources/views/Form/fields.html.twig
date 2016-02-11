@@ -1,0 +1,186 @@
+{# Widget attributes #}
+{% block widget_container_attributes %}
+{% spaceless %}
+    {% if id is not empty %}id="{{ id }}" {% endif %}
+    {% for attrname, attrvalue in attr %}{{ attrname }}="{{ attrvalue }}" {% endfor %}
+{% endspaceless %}
+{% endblock widget_container_attributes %}
+
+
+{# Form row #}
+{% block form_row %}
+{% spaceless %}
+    <div class="form-group {% if errors|length > 0 %}form-group--has-error{% endif %}">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+
+{# Form label #}
+{% block form_label %}
+{% spaceless %}
+    {% if label is not same as(false) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form-control-label form-control-label--required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ label|trans({}, translation_domain) }}{% if required %} *{% endif %}
+        </label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+
+
+{# Form widget: Hidden #}
+{% block hidden_widget %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }} class="form-widget--hidden hidden">
+        {% set type = type|default('hidden') %}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endspaceless %}
+{% endblock hidden_widget %}
+
+
+{# Form widget: Input #}
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} class="form-control form-control--input">
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+
+{# Form widget: Textarea #}
+{% block textarea_widget %}
+{% spaceless %}
+    <textarea {{ block('widget_attributes') }} class="form-control form-control--textarea form-widget--textarea">{{ value }}</textarea>
+{% endspaceless %}
+{% endblock textarea_widget %}
+
+
+{# Form widget: Selectbox #}
+{% block choice_widget_collapsed %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }} class="form-widget--select">
+        <i class="icon icon--triangle-down select__icon"></i>
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control form-control--select">
+            {% if placeholder is not none %}
+                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain) }}</option>
+            {% endif %}
+            {% if preferred_choices|length > 0 %}
+                {% set options = preferred_choices %}
+                {{ block('choice_widget_options') }}
+                {% if choices|length > 0 and separator is not none %}
+                    <option disabled="disabled">{{ separator }}</option>
+                {% endif %}
+            {% endif %}
+            {% set options = choices %}
+            {{ block('choice_widget_options') }}
+        </select>
+        <span class="form-bar"></span>
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+
+{# Form widget: Choice expanded - Radiobutton / Checkbox #}
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }} class="form-widget--choices">
+        {% for child in form %}
+            {{ form_widget(child, { 'required': false }) }}
+        {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+
+{# Form widget: Radiobutton #}
+{% block radio_widget %}
+{% spaceless %}
+    <div class="radio">
+        {% if required and not compound %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="form-control-choice">
+        <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ label|trans({}, translation_domain)|raw }}{% if required and not compound %}<span class="form-group__required-symbol">*</span>{% endif %}
+        </label>
+    </div>
+{% endspaceless %}
+{% endblock radio_widget %}
+
+
+{# Form widget: Checkbox #}
+{% block checkbox_widget %}
+{% spaceless %}
+    <div class="checkbox">
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="form-control-choice">
+        <label for="{{ id }}"{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ label|trans({}, translation_domain)|raw }}{% if required %}<span class="form-group__required-symbol">*</span>{% endif %}
+        </label>
+    </div>
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+
+{# Form widget: File upload #}
+{% block file_widget %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }} class="form-widget--file-upload">
+        {{ block('form_widget') }}
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+
+{# Form errors #}
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+            <span class="help-block">{{ error.message }}</span>
+        {% endfor %}
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+
+{# Button row #}
+{% block button_row %}
+{% spaceless %}
+    <div class="form-group text--right">
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock button_row %}
+
+
+{# Submit button #}
+{% block submit_widget %}
+{% spaceless %}
+    <div class="form-group text--right">
+        {% set type = type|default('submit') %}
+        {{ block('button_widget') }}
+    </div>
+{% endspaceless %}
+{% endblock submit_widget %}

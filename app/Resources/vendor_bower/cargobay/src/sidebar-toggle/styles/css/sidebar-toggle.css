@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Sidebar Toggle
+   ========================================================================== */
+
+/* Sidebar
+   ========================================================================== */
+
+.sidebar-toggle-container--prevent-overflow {
+	overflow: hidden;
+}
+
+/* Sidebar
+   ========================================================================== */
+
+.sidebar-toggle__sidebar {
+	position: fixed;
+	overflow: auto;
+}
+
+.sidebar-toggle__sidebar--left {
+	-webkit-transform: translateX(-100%);
+	        transform: translateX(-100%);
+	top: 0;
+	left: 0;
+	width: 60%;
+	max-width: 30rem;
+	height: 100%;
+}
+
+.sidebar-toggle__sidebar--right {
+	-webkit-transform: translateX(100%);
+	        transform: translateX(100%);
+	top: 0;
+	right: 0;
+	width: 60%;
+	max-width: 30rem;
+	height: 100%;
+}
+
+.sidebar-toggle__sidebar--top {
+	-webkit-transform: translateY(-100%);
+	        transform: translateY(-100%);
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: auto;
+	max-height: 80%;
+}
+
+.sidebar-toggle__sidebar--bottom {
+	-webkit-transform: translateY(100%);
+	        transform: translateY(100%);
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: auto;
+	max-height: 80%;
+}
+

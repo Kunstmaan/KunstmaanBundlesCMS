@@ -1,0 +1,26 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+assetic:
+    use_controller: "%use_assetic_controller%"
+    node: node
+    filters:
+        uglifyjs2:
+            bin: node_modules/uglify-js/bin/uglifyjs
+            compress: true
+        uglifycss:
+            bin: node_modules/uglifycss/uglifycss
