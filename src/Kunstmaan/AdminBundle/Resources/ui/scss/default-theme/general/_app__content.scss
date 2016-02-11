@@ -69,15 +69,16 @@
 .app__content__header__title__small--offline {
     position: relative;
 
-    display: inline-block;
-    padding-left: 2.5rem;
+    display: block;
+    padding-left: 2rem;
+    margin-top: 0.6rem;
 
     &:before {
         content: ' ';
 
         position: absolute;
         top: 50%;
-        left: 1rem;
+        left: 0.2rem;
 
         display: inline-block;
         width: .8rem;
@@ -86,6 +87,18 @@
 
         border-radius: 100%;
         border: 1px solid;
+
+
+    }
+
+    @media (min-width: $screen-sm-min) {
+        display: inline-block;
+        padding-left: 2.5rem;
+        margin-top: 0;
+
+        &:before {
+            left: 1rem;
+        }
     }
 }
 
@@ -108,6 +121,8 @@
 
 // Actions
 .app__content__header__extra-actions {
+    margin-top: 1rem;
+
     text-align: right;
 }
 
