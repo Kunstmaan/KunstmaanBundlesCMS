@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cargo Bay Float Label Form - jQuery</title>
+
+    <meta name="description" content="Cargo Bay Animate Form Elements - jQuery">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type='text/css' />
+    <link rel="stylesheet" href="../styles/css/float-label-form.css" type='text/css' />
+</head>
+<body>
+    <main role="main" class="container">
+        <header>
+            <h1>
+                Cargo Bay Float Label Form - jQuery
+            </h1>
+        </header>
+        <form class="form">
+            <div class="form__group">
+                <label class="form__label">Your First Name</label>
+                <input type="text" class="form__input js-form__field" placeholder="First Name">
+            </div>
+            <div class="form__group">
+                <label class="form__label">Your Last Name</label>
+                <input type="text" class="form__input js-form__field" placeholder="Last Name">
+            </div>
+        </form>
+    </main>
+
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="../js/jquery.float-label-form.js"></script>
+    <script>
+        $(function() {
+            cargobay.floatLabelForm.init();
+        });
+    </script>
+</body>
+</html>

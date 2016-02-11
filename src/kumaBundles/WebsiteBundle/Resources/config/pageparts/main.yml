@@ -1,0 +1,16 @@
+name: Main
+context: main
+types:
+    - { name: Audio, class: kumaBundles\WebsiteBundle\Entity\PageParts\AudioPagePart }
+    - { name: Button, class: kumaBundles\WebsiteBundle\Entity\PageParts\ButtonPagePart }
+    - { name: Download, class: kumaBundles\WebsiteBundle\Entity\PageParts\DownloadPagePart }
+    - { name: Header, class: kumaBundles\WebsiteBundle\Entity\PageParts\HeaderPagePart }
+    - { name: Image, class: kumaBundles\WebsiteBundle\Entity\PageParts\ImagePagePart }
+    - { name: IntroText, class: kumaBundles\WebsiteBundle\Entity\PageParts\IntroTextPagePart }
+    - { name: Line, class: kumaBundles\WebsiteBundle\Entity\PageParts\LinePagePart }
+    - { name: Link, class: kumaBundles\WebsiteBundle\Entity\PageParts\LinkPagePart }
+    - { name: RawHtml, class: kumaBundles\WebsiteBundle\Entity\PageParts\RawHtmlPagePart }
+    - { name: Text, class: kumaBundles\WebsiteBundle\Entity\PageParts\TextPagePart }
+    - { name: Toc, class: kumaBundles\WebsiteBundle\Entity\PageParts\TocPagePart }
+    - { name: ToTop, class: kumaBundles\WebsiteBundle\Entity\PageParts\ToTopPagePart }
+    - { name: Video, class: kumaBundles\WebsiteBundle\Entity\PageParts\VideoPagePart }

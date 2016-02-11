@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Pageparts - Link pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.link-pp {
+    margin: $default-margin 0;
+
+}
+
+
+/*doc
+---
+title: link-pp
+name: 06_link-pp
+category: Pageparts
+---
+
+```html_example
+<p class="link-pp">
+    <a href="/">
+        Link text
+        <i class="icon icon--arrow-right icon--small"></i>
+    </a>
+</p>
+```
+
+*/

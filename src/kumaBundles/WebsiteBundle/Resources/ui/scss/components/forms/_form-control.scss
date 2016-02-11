@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Forms - Form control
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.form-control {
+    display: block;
+    width: 100%;
+    max-width: 26rem;
+    min-height: 2.5rem;
+    padding: 0 1em;
+
+    border: 0;
+
+
+    &:focus {
+        outline: none;
+    }
+
+}
+
+
+/* Input
+   ========================================================================== */
+.form-control--input {}
+
+
+/* Textarea
+   ========================================================================== */
+.form-control--textarea {
+    max-width: none;
+}
+
+
+/* Select
+   ========================================================================== */
+.form-control--select {
+}
+
+
+/*doc
+---
+title: Form Control
+name: 02_form-control
+category: Forms
+---
+
+<strong>Input</strong>
+
+```html_example
+<input type="text" id="fc1" name="fc1" class="form-control form-control--input">
+```
+
+<strong>Textarea</strong>
+
+```html_example
+<textarea id="fc2" name="fc2" class="form-control form-control--textarea"></textarea>
+```
+
+<strong>Select</strong>
+
+```html_example
+<select id="fc3" name="fc3" class="form-control form-control--select">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+</select>
+```
+
+
+*/

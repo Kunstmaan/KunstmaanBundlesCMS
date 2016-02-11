@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Full image background
+   ========================================================================== */
+
+@import "config";
+
+/* General
+   ========================================================================== */
+.full-img-bg {
+    background-size: cover;
+    background-repeat: $fullimagebackground-repeat;
+    background-position: $fullimagebackground-position;
+    background-attachment: fixed;
+}

@@ -1,7 +1,7 @@
-parameters:
-#    kuma_bundles_website.example.class: kumaBundles\WebsiteBundle\Example
-
 services:
-#    kuma_bundles_website.example:
-#        class: %kuma_bundles_website.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    kumabundleswebsitebundle.node_translation.twig.extension:
+        class: kumaBundles\WebsiteBundle\Twig\NodeTranslationTwigExtension
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }
+
