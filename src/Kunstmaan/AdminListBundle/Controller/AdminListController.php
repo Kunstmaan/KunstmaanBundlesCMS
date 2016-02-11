@@ -247,13 +247,10 @@ abstract class AdminListController extends Controller
     }
 
 
-    protected function doViewAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request = null)
+    protected function doViewAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
     {
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
-        if (is_null($request)) {
-            $request = $this->getRequest();
-        }
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
         if ($helper === null) {
             throw new NotFoundHttpException("Entity not found.");
