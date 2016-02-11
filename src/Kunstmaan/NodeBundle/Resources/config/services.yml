@@ -43,24 +43,18 @@ services:
     kunstmaan_node.menu.sub_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory: ['@kunstmaan_node.actions_menu_builder', createSubActionsMenu]
-        arguments: ['@request']
-        scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'sub_actions' } # The alias is what is used to retrieve the menu
 
     kunstmaan_node.menu.actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory: ['@kunstmaan_node.actions_menu_builder', createActionsMenu]
-        arguments: ['@request']
-        scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'actions' } # The alias is what is used to retrieve the menu
 
     kunstmaan_node.menu.top_actions:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory: ['@kunstmaan_node.actions_menu_builder', createTopActionsMenu]
-        arguments: ['@request']
-        scope: request # needed as we have the request as a dependency here
         tags:
             - { name: 'knp_menu.menu', alias: 'top_actions' } # The alias is what is used to retrieve the menu
 
