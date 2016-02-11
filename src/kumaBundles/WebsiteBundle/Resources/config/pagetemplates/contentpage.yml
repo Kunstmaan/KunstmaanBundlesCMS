@@ -1,0 +1,5 @@
+name: "Content page"
+rows:
+    - regions:
+        - { name: "main", span: 12 }
+template: "kumaBundlesWebsiteBundle::Pages\\ContentPage\\pagetemplate.html.twig"

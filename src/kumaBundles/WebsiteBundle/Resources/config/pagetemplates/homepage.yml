@@ -1,0 +1,5 @@
+name: "Home page"
+rows:
+    - regions:
+        - { name: "main", span: 12 }
+template: "kumaBundlesWebsiteBundle::Pages\\HomePage\\pagetemplate.html.twig"

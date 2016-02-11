@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cargo Bay Sidebar Toggle - jQuery</title>
+
+    <meta name="description" content="Cargo Bay Sidebar Toggle - jQuery">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../styles/css/sidebar-toggle.css">
+</head>
+<body id="sidebar-toggle-container" class="sidebar-toggle-container">
+    <aside id="sidebar-toggle__sidebar" class="sidebar-toggle__sidebar sidebar-toggle__sidebar--bottom" style="background: #ccc; padding: 2em;">
+        <button type="button" class="js-sidebar-toggle__toggle-btn sidebar-toggle__toggle-btn" data-content="#sidebar-toggle__content" data-sidebar="#sidebar-toggle__sidebar" data-container="#sidebar-toggle-container" data-position="bottom" data-prevent-overflow="true" data-duration="300">
+            X Close
+        </button>
+
+        <header>
+            <h1>
+                Jquery Sidebar Toggle - Bottom
+            </h1>
+        </header>
+
+        <section>
+            <header>
+                <h2>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </h2>
+            </header>
+            <p>
+                Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            </p>
+            <p>
+                Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            </p>
+            <p>
+                Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            </p>
+        </section>
+
+        <section>
+            <header>
+                <h2>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </h2>
+            </header>
+            <p>
+                Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            </p>
+            <p>
+                Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            </p>
+            <p>
+                Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            </p>
+        </section>
+    </aside>
+
+    <main role="main" id="sidebar-toggle__content" class="sidebar-toggle__content">
+        <article class="container" style="padding: 2em 0 4em;">
+            <header>
+                <h1>
+                    Sidebar Toggle
+                </h1>
+            </header>
+
+            <section>
+                <header>
+                    <h2>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </h2>
+                </header>
+                <p>
+                    Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                </p>
+                <p>
+                    Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                </p>
+                <p>
+                    Nulla vitae elit libero, a pharetra augue. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                </p>
+            </section>
+
+            <button type="button" class="js-sidebar-toggle__toggle-btn sidebar-toggle__toggle-btn" data-content="#sidebar-toggle__content" data-sidebar="#sidebar-toggle__sidebar" data-container="#sidebar-toggle-container" data-position="bottom" data-prevent-overflow="true" data-duration="300">
+                &#9776; Menu
+            </button>
+        </article>
+
+    </main>
+
+    <script src="http://cdn.jsdelivr.net/velocity/1.2.2/velocity.min.js"></script>
+    <script src="../../js/vanilla.sidebar-toggle.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            cargobay.sidebarToggle.init();
+        });
+    </script>
+</body>
+</html>

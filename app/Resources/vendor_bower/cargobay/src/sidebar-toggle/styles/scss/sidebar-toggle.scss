@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Sidebar Toggle
+   ========================================================================== */
+
+@import "config";
+
+/* Sidebar
+   ========================================================================== */
+.sidebar-toggle-container--prevent-overflow {
+    overflow: hidden;
+}
+
+/* Sidebar
+   ========================================================================== */
+.sidebar-toggle__sidebar {
+    position: fixed;
+
+    overflow: auto;
+}
+
+.sidebar-toggle__sidebar--left {
+    transform: translateX(-100%);
+
+    top: 0;
+    left: 0;
+
+    width: $sidebar--left__width;
+    max-width: $sidebar--left__max-width;
+    height: 100%;
+}
+
+.sidebar-toggle__sidebar--right {
+    transform: translateX(100%);
+
+    top: 0;
+    right: 0;
+
+    width: $sidebar--right__width;
+    max-width: $sidebar--right__max-width;
+    height: 100%;
+}
+
+.sidebar-toggle__sidebar--top {
+    transform: translateY(-100%);
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: $sidebar--top__height;
+    max-height: $sidebar--top__max-height;
+}
+
+.sidebar-toggle__sidebar--bottom {
+    transform: translateY(100%);
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: $sidebar--bottom__height;
+    max-height: $sidebar--bottom__max-height;
+}

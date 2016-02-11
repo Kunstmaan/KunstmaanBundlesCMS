@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Pageparts - Image pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.image-pp {
+    margin: $default-margin 0;
+}
+
+/*doc
+---
+title: image-pp
+name: 04_image-pp
+category: Pageparts
+---
+
+```html_example
+<div class="image-pp">
+    <img src="http://placehold.it/1450x820">
+    <p>Some caption message</p>
+</div>
+```
+
+*/

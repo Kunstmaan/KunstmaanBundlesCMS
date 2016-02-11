@@ -1,54 +1,22 @@
 {
-    "name": "kunstmaan/bundles-cms",
-    "type": "library",
-    "description": "The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony2 framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much more.",
-    "keywords": ["cms"],
-    "homepage": "http://bundles.kunstmaan.be",
+    "name": "kunstmaan/bundles-standard-edition",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Kunstmaan Team",
-            "email": "bundles@kunstmaan.be"
-        },
-        {
-            "name": "The Community",
-            "homepage": "https://github.com/Kunstmaan/KunstmaanBundlesCMS/graphs/contributors"
-        }
-    ],
+    "type": "project",
+    "description": "The \"Kunstmaan Bundles CMS Standard Edition\" distribution",
+    "autoload": {
+        "psr-4": { "": "src/" },
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+    },
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "doctrine/orm": "~2.5.0",
-        "doctrine/dbal": "~2.5.0",
-        "doctrine/doctrine-bundle": "~1.4",
-        "symfony/assetic-bundle": "~2.7.1",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~5.0",
-        "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
-
-        "friendsofsymfony/user-bundle": "2.0.*@dev",
-        "knplabs/knp-menu-bundle": "~2.0",
-        "guzzle/guzzle": "~3.9",
-        "white-october/pagerfanta-bundle": "~1.0",
-        "phpoffice/phpexcel": "~1.8",
-        "kunstmaan/google-api-custom": "~1.0",
-        "ddeboer/data-import-bundle": "~0.1",
-        "gedmo/doctrine-extensions": "~2.3",
-        "lunetics/locale-bundle": "~2.4",
-        "doctrine/doctrine-fixtures-bundle": "~2.2",
-        "stof/doctrine-extensions-bundle": "~1.1",
-        "liip/imagine-bundle": "v1.4.3",
-        "imagine/imagine": "v0.5.0",
-        "knplabs/knp-gaufrette-bundle": "~0.1",
+        "kunstmaan/bundles-cms": "dev-master",
         "symfony-cmf/routing-bundle": "~1.4.0-RC1",
         "symfony-cmf/routing": "~1.4.0-RC2",
-        "ruflin/elastica": "~2.3",
-        "fpn/doctrine-extensions-taggable": "~0.9",
-        "sensio/generator-bundle": "~2.5",
-        "twig/extensions": "~1.0",
-        "egulias/email-validator": "~1.2"
+        "raven/raven": "~0.13.0",
+        "friendsofsymfony/http-cache-bundle": "~1.3.6",
+        "ekino/newrelic-bundle": "~1.3.2",
+        "doctrine/doctrine-migrations-bundle": "~1.1.1",
+        "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "kriswallsmith/spork": "~0.3.0"
     },
     "require-dev": {
         "behat/behat": "~2.5.0",
@@ -59,40 +27,45 @@
         "behat/mink-selenium2-driver": "*",
         "behat/mink-goutte-driver": "*",
         "behat/mink-sahi-driver": "*",
-        "symfony/phpunit-bridge": "~2.7",
         "phpunit/phpunit": "~4.4",
         "fzaninotto/faker": "~1.5",
-        "nelmio/alice": "~1.6"
+        "nelmio/alice": "~1.6",
+        "fabpot/goutte": "~1.0"
     },
-    "replace": {
-        "kunstmaan/admin-bundle": "self.version",
-        "kunstmaan/adminlist-bundle": "self.version",
-        "kunstmaan/article-bundle": "self.version",
-        "kunstmaan/form-bundle": "self.version",
-        "kunstmaan/media-bundle": "self.version",
-        "kunstmaan/media-pagepart-bundle": "self.version",
-        "kunstmaan/node-bundle": "self.version",
-        "kunstmaan/node-search-bundle": "self.version",
-        "kunstmaan/pagepart-bundle": "self.version",
-        "kunstmaan/search-bundle": "self.version",
-        "kunstmaan/seo-bundle": "self.version",
-        "kunstmaan/sitemap-bundle": "self.version",
-        "kunstmaan/utilities-bundle": "self.version",
-        "kunstmaan/translator-bundle": "self.version",
-        "kunstmaan/redirect-bundle": "self.version",
-        "kunstmaan/user-management-bundle": "self.version",
-        "kunstmaan/dashboard-bundle": "self.version",
-        "kunstmaan/behat-bundle": "self.version",
-        "kunstmaan/generator-bundle": "self.version",
-        "kunstmaan/live-reload-bundle": "self.version",
-        "kunstmaan/voting-bundle": "self.version",
-        "kunstmaan/languagechooser-bundle": "self.version",
-        "kunstmaan/tagging-bundle": "self.version"
+    "scripts": {
+        "post-root-package-install": [
+            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        ],
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ]
     },
-    "autoload": {
-        "psr-4": {"Kunstmaan\\": "src/Kunstmaan/"}
+    "config": {
+        "bin-dir": "bin",
+        "platform": {
+            "php": "5.5.0"
+        }
     },
     "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
         "branch-alias": {
             "dev-master": "3.5-dev"
         }

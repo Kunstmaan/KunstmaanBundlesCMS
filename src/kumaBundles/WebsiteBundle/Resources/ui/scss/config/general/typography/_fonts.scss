@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Fonts
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+
+/* Webfonts
+   ========================================================================== */
+$primary-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$secondary-font: "Times New Roman", serif;
+
+
+/* Iconfonts
+   ========================================================================== */
+$iconfont-name: "icomoon-frontend";
+
+
+/* Defaults
+   ========================================================================== */
+$font-family--base:         $primary-font;
+$font-family--headings:     $primary-font;
+$font-family--buttons:      $primary-font;

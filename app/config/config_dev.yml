@@ -1,0 +1,45 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        strict_requirements: true
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: "%debug_toolbar%"
+    intercept_redirects: "%debug_redirects%"
+
+monolog:
+    handlers:
+        main:
+            type:   stream
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  debug
+            channels: [!event]
+        console:
+            type:   console
+            bubble: false
+            channels: [!event, !doctrine]
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type:   firephp
+        #    level:  info
+        #chromephp:
+        #    type:   chromephp
+        #    level:  info
+
+assetic:
+    use_controller: "%use_assetic_controller%"
+    node: /usr/local/bin/node
+    filters:
+        uglifyjs2:
+            bin: /usr/local/bin/uglifyjs
+            compress: true
+        uglifycss:
+            bin: /usr/local/bin/uglifycss
+
+#swiftmailer:
+#    delivery_address: me@example.com

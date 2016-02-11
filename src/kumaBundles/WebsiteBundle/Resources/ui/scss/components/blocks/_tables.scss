@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Blocks - Tables
+   ========================================================================== */
+
+/* Default
+   ========================================================================== */
+.table-overflow-container {
+    max-width: 100%;
+    overflow-x: scroll;
+}
+
+
+
+
+
+/*doc
+---
+title: Tables
+name: 06_tables
+category: Blocks
+---
+
+<strong>Default</strong>
+
+```html_example
+
+<table>
+    <thead>
+    <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+    </tr>
+    <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+    </tr>
+    <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+    </tr>
+    </tbody>
+</table>
+```
+
+<strong>Overflow container</strong>
+
+```html_example
+<div class="table-overflow-container">
+    <table>
+    <thead>
+        <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        </tr>
+        <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        </tr>
+        <tr>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        <td>Lorem ipsum dolor sit amet.</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+```
+*/

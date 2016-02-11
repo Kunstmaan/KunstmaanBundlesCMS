@@ -1,6 +1,12 @@
 {
     "node": true,
     "browser": true,
+    "esnext": true,
+    "bitwise": false,
+    "curly": false,
+    "eqeqeq": true,
+    "eqnull": true,
+=======
     "es5": true,
     "esnext": true,
     "bitwise": true,
@@ -11,6 +17,21 @@
     "latedef": true,
     "newcap": true,
     "noarg": true,
+<<<<<<< HEAD
+    "undef": true,
+    "strict": false,
+    "trailing": false,
+    "smarttabs": true,
+    "globals": {
+	"jQuery": true,
+	"$": true,
+	"cupcake": true,
+	"cargobay": true,
+	"Modernizr": true,
+	"dataLayer": true,
+	"classie": true,
+	"kumaBundlesWebsiteBundle": true
+=======
     "quotmark": "single",
     "regexp": true,
     "undef": true,

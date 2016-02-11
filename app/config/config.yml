@@ -1,0 +1,173 @@
+imports:
+    - { resource: config_base.yml }
+
+framework:
+    ide:                "phpstorm://open?file=%%f&line=%%l"
+    esi:                { enabled: true }
+    fragments:          { path: /_fragment }
+    translator:         { fallback: %locale% }
+    session:
+        name:               %session_prefix%
+        # set true if no scripting languages need to access the cookie
+        cookie_httponly:    false
+    templating:
+        assets_version:     v1
+
+twig:
+    globals:
+        websitetitle: %websitetitle%
+        defaultlocale: %defaultlocale%
+        requiredlocales: %requiredlocales%
+        gtm_code: %analytics.googletagmanager%
+        #titlecolor: "#000000"
+        #titlebgcolor: "#2997CE"
+
+assetic:
+    node: /usr/bin/node
+    filters:
+        cssrewrite: ~
+        scss: ~
+        uglifyjs2:
+            bin: /usr/bin/uglifyjs
+            compress: true
+        uglifycss:
+            bin: /usr/bin/uglifycss
+        yui_js:
+            jar: %kernel.root_dir%/Resources/tools/java/yuicompressor-2.4.8.jar
+        jpegoptim:
+            bin: jpegoptim
+            strip_all: true
+            max: 85
+            apply_to: "\.jpe?g$"
+        optipng:
+            bin: optipng
+            apply_to: "\.png$"
+            level: 3
+        jpegtran:
+            bin: jpegtran
+            apply_to: "\.jpe?g$"
+            optimisation: true
+            progressive: true
+
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+                    gedmo_translatable:
+                        type: annotation
+                        prefix: Gedmo\Translatable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                        alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_translator:
+                        type: annotation
+                        prefix: Gedmo\Translator\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+                        alias: GedmoTranslator # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_loggable:
+                        type: annotation
+                        prefix: Gedmo\Loggable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                        alias: GedmoLoggable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_tree:
+                        type: annotation
+                        prefix: Gedmo\Tree\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                        alias: GedmoTree # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+
+parameters:
+    assetic.cache.class: Assetic\Cache\ArrayCache
+
+stof_doctrine_extensions:
+    default_locale: %defaultlocale%
+    translation_fallback: true
+    orm:
+        default:
+            loggable: true
+            translatable: true
+            sluggable: true
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: uploads/cache
+    driver: imagick
+    data_loader: default
+    filter_sets:
+        optim:
+            quality: 85
+            format: jpg
+            filters:
+                strip: ~
+        optimjpg:
+            quality: 85
+            format: jpg
+            filters:
+                strip: ~
+        optimpng:
+            quality: 85
+            format: png
+            filters:
+                strip: ~
+
+services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+    kunstmaan_logging_introspection:
+        class: Monolog\Processor\IntrospectionProcessor
+        tags:
+            - { name: monolog.processor }
+
+    kunstmaan_logging_web:
+        class: Symfony\Bridge\Monolog\Processor\WebProcessor
+        tags:
+            - { name: monolog.processor }
+
+    kunstmaan_logging_formatter:
+        class: Monolog\Formatter\LineFormatter
+
+    kunstmaan_newrelic_naming_strategy:
+        class: Kunstmaan\UtilitiesBundle\Helper\UrlTransactionNamingStrategy
+
+    gedmo.listener.tree:
+        class: Gedmo\Tree\TreeListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+    
+    fos_user.doctrine_registry:
+        alias: doctrine
+
+white_october_pagerfanta:
+    default_view: twitter_bootstrap
+
+kunstmaan_translator:
+    enabled: true
+    managed_locales: ['nl', 'en', 'de', 'fr']
+
+kunstmaan_admin:
+    admin_password: -adminpwd-
+    dashboard_route: 'kunstmaan_dashboard'
+
+ekino_new_relic:
+    enabled:        true
+    logging:        false
+    log_exceptions: true
+    log_commands:   true
+    transaction_naming: service
+    transaction_naming_service: kunstmaan_newrelic_naming_strategy

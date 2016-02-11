@@ -5,7 +5,7 @@
 /* General
    ========================================================================== */
 .login {
-    min-height: 100vh;
+    @include viewport-unit(min-height, 100vh);
     overflow: hidden;
 }
 
@@ -14,8 +14,12 @@
 /* Title
    ========================================================================== */
 .login__title {
-    margin: 20vh auto 2rem;
+    margin: 8rem auto 2rem;
     text-align: center;
+
+    @media (min-width: $screen-sm-min) {
+        margin: 14rem auto 2rem;
+    }
 }
 
 

@@ -1,0 +1,42 @@
+{% spaceless %}<!DOCTYPE html>
+{% set htmlLocale = app.request.locale|default(defaultlocale)|slice(0,2) %}
+<!--[if lte IE 9]> <html class="no-js lt-ie9" lang="{{ htmlLocale }}"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="{{ htmlLocale }}"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {{ websitetitle | trans }}{% block title %}{% endblock %}
+    </title>
+
+    {# Favicons #}
+    {% include 'kumaBundlesWebsiteBundle:Layout:_favicons.html.twig' %}
+
+    {# Webfonts #}
+    {% include 'kumaBundlesWebsiteBundle:Layout:_webfonts.html.twig' %}
+
+    {# CSS #}
+    {% include 'kumaBundlesWebsiteBundle:Layout:_css.html.twig' %}
+
+    {# JS #}
+    {% include 'kumaBundlesWebsiteBundle:Layout:_js_header.html.twig' %}
+</head>
+
+<body class="{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
+
+    {# Google Tagmanager #}
+    {% include 'kumaBundlesWebsiteBundle:Layout:_googletagmanager.html.twig' %}
+
+    {# Outdated browser message #}
+    {% include 'kumaBundlesWebsiteBundle:Layout:_outdatedbrowser.html.twig' %}
+
+    {# Content #}
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>
+{% endspaceless %}

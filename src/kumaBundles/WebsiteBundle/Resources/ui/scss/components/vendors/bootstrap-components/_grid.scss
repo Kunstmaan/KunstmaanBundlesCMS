@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Bootstrap grid adjustments
+   ========================================================================== */
+
+
+/* Rows
+   ========================================================================== */
+// Padding
+.row--padded {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+// Flex
+.row--flex {
+
+    @media(min-width: $screen-sm-min) {
+        display: flex;
+    }
+}
+.row--align-end {
+
+    @media(min-width: $screen-sm-min) {
+        align-items: flex-end;
+    }
+}
+.row--reverse {
+
+    @media(min-width: $screen-sm-min) {
+        flex-direction: row-reverse;
+    }
+}
+
+
+/* Col
+   ========================================================================== */
+// Padding
+.col--padded {
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    @media(min-width: $screen-md-min) {
+        padding-top: 2em;
+        padding-bottom: 2em;
+    }
+}

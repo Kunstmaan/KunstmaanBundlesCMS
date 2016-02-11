@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Header - Language nav
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.site-nav {
+    margin: 2rem 0 0;
+
+    @media(min-width: $screen-md-min) {
+        margin: 0 2rem 0 0;
+    }
+}
+
+.site-nav--desktop {
+    float: left;
+    display: inline-block;
+}
+
+
+/* Item
+   ========================================================================== */
+// General
+.site-nav__item {
+    display: block;
+    padding: .3em 1em;
+
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 2.3;
+    color: $white;
+
+    @media(min-width: $screen-md-min) {
+        display: inline-block;
+        margin: 0 .5rem 0 0;
+        padding: .5em 1em;
+
+        font-size: .65rem;
+        line-height: 1;
+        font-weight: 400;
+        color: $text-color;
+        text-transform: uppercase;
+    }
+}
+
+// Active
+.site-nav__item--active {
+    background-color: $grey--darker;
+    color: $theme-color;
+
+    @media(min-width: $screen-md-min) {
+        background: transparent;
+        color: $theme-color;
+   }
+}
+
+// CTA
+.site-nav__item--cta {
+    color: $theme-color;
+}
+
+.site-nav__item--cta__icon {
+    display: inline-block;
+    margin-left: .3rem;
+
+    font-size: .5em;
+    vertical-align: middle;
+}
