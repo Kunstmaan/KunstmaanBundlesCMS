@@ -44,6 +44,7 @@
 	    "<=bowerComponentsPath>cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
 	    "<=bowerComponentsPath>cargobay/src/videolink/js/jquery.videolink.js",
 {% endif %}
+        "<=bowerComponentsPath>picturefill/dist/pictureFill.js",
 	    "<=resourcesPath>ui/js/**/*.js"
 	],
 	"other": [
