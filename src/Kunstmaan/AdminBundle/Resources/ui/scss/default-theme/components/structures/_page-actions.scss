@@ -35,6 +35,10 @@
 
     text-align: right;
 
+    .btn {
+        padding: .6rem 1rem;
+    }
+
     @media (min-width: $screen-xs-min) {
         float: right;
         margin: -1rem 0 1rem;
@@ -44,10 +48,13 @@
         }
     }
 
-    &.page-main-actions--inside-extra-actions-header {
-
-        @media (min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
+        &.page-main-actions--inside-extra-actions-header {
             margin: 0;
+        }
+
+        .btn {
+            padding: .6rem 2rem;
         }
     }
 }
@@ -90,7 +97,7 @@
 /* Sub actions
    ========================================================================== */
 .page-sub-actions {
-    margin: 1rem 0;
+    margin: -2rem 0 2.2rem;
 
     text-align: right;
 
