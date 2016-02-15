@@ -13,7 +13,7 @@
 <!-- Check for actions -->
 {% set itemActionsPossible = false %}
 {% for item in adminlist.items(extraparams) %}
-    {% if (adminlist.canEdit(item) or adminlist.canDelete(item) or adminlist.hasItemActions() ) %}
+    {% if (adminlist.canEdit(item) or adminlist.canView(item) or adminlist.canDelete(item) or adminlist.hasItemActions() ) %}
         {% set itemActionsPossible = true %}
     {% endif %}
 {% endfor %}
@@ -78,7 +78,7 @@
                         </td>
                     {% endif %}
                 {% endfor %}
-                
+
                 <!-- Actions -->
                 <td class="table__actions">
                     {% if adminlist.canView(item) %}
