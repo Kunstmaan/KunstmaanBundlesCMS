@@ -39,15 +39,15 @@ abstract class AdminListController extends Controller
      * Shows the list of entities
      *
      * @param AbstractAdminListConfigurator $configurator
-     * @param null|Request $request
      *
      * @return array
      */
-    protected function doIndexAction(AbstractAdminListConfigurator $configurator, Request $request)
+    protected function doIndexAction(AbstractAdminListConfigurator $configurator)
     {
         $em = $this->getEntityManager();
         /* @var AdminList $adminList */
         $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
+        $request = $this->get('request_stack')->getCurrentRequest();
         $adminList->bindRequest($request);
 
         $this->buildSortableFieldActions($configurator);

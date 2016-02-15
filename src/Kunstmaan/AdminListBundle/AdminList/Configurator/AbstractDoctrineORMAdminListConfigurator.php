@@ -42,7 +42,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * @var AclHelper
      */
-    private $aclHelper = null;
+    protected $aclHelper = null;
 
     /**
      * @param EntityManager $em        The entity manager
