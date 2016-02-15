@@ -10,6 +10,7 @@
     "fitvids": "~1.1",
     "modernizr": "~2.8",
     {% endif %}
-    "cargobay": "~0.8"
+    "cargobay": "~0.8",
+    "picturefill": "~3.0.1"
     }
 }
