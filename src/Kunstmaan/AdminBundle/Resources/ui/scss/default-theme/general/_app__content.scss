@@ -16,6 +16,10 @@
 
     min-height: calc(100vh - 95px);
 
+    .table-responsive {
+        margin-top: 2rem;
+    }
+
     @media (max-width: $screen-md) {
         @include transform-style(preserve-3d);
         @include transition-property (transform);
