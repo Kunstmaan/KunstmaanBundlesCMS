@@ -235,6 +235,9 @@ class PagePartAdmin
         foreach ($this->pageParts as $pagePartRefId => $pagePart) {
             $data['pagepartadmin_' . $pagePartRefId] = $pagePart;
             $adminType                               = $pagePart->getDefaultAdminType();
+            if (!is_object($adminType) && is_string($adminType)) {
+                $adminType = $this->container->get($adminType);
+            }
             $adminTypeFqn                            = ClassUtils::getClass($adminType);
             $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminTypeFqn);
         }
@@ -242,6 +245,9 @@ class PagePartAdmin
         foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
             $data['pagepartadmin_' . $newPagePartRefId] = $newPagePart;
             $adminType                                  = $newPagePart->getDefaultAdminType();
+            if (!is_object($adminType) && is_string($adminType)) {
+                $adminType = $this->container->get($adminType);
+            }
             $adminTypeFqn                            = ClassUtils::getClass($adminType);
             $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminTypeFqn);
         }
