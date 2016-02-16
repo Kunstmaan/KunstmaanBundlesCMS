@@ -42,5 +42,4 @@ services:
 
     kunstmaan_node_search.search.service:
         class: %kunstmaan_node_search.search_service.class%
-        arguments: ['@service_container', '@request']
-        scope: request
+        arguments: ['@service_container', '@request_stack']
