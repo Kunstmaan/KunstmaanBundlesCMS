@@ -34,6 +34,21 @@ class FileFormSubmissionField extends FormSubmissionField
     protected $fileName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", unique=true, length=255)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $uuid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $url;
+
+    /**
      * Non-persistent storage of upload file
      *
      * @Assert\File(maxSize="6000000")
@@ -66,7 +81,7 @@ class FileFormSubmissionField extends FormSubmissionField
      *
      * @param string $uploadDir
      */
-    public function upload($uploadDir)
+    public function upload($uploadDir, $webDir)
     {
         // the file property can be empty if the field is not required
         if (null === $this->file) {
@@ -76,11 +91,17 @@ class FileFormSubmissionField extends FormSubmissionField
         // sanitize filename for security
         $safeFileName = $this->getSafeFileName($this->file);
 
+        $uuid = uniqid();
+        $this->setUuid($uuid);
+
         // move takes the target directory and then the target filename to move to
-        $this->file->move($uploadDir, $safeFileName);
+        $this->file->move(sprintf('%s/%s', $uploadDir, $uuid), $safeFileName);
 
         // set the path property to the filename where you'ved saved the file
         $this->fileName = $safeFileName;
+
+        // set the url to the uuid directory inside the web dir
+        $this->setUrl(sprintf('%s%s/', $webDir, $uuid) . $safeFileName);
 
         // clean up the file property as you won't need it anymore
         $this->file = null;
@@ -97,7 +118,8 @@ class FileFormSubmissionField extends FormSubmissionField
     public function onValidPost(Form $form, FormBuilderInterface $formBuilder, Request $request, ContainerInterface $container)
     {
         $uploadDir = $container->getParameter('form_submission_rootdir');
-        $this->upload($uploadDir);
+        $webDir = $container->getParameter('form_submission_webdir');
+        $this->upload($uploadDir, $webDir);
     }
 
     /**
@@ -139,6 +161,54 @@ class FileFormSubmissionField extends FormSubmissionField
     public function getFileName()
     {
         return $this->fileName;
+    }
+
+    /**
+     * Set uuid
+     *
+     * @param string $uuid
+     *
+     * @return FileFormSubmissionField
+     */
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    /**
+     * Get uuid
+     *
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     *
+     * @return FileFormSubmissionField
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
