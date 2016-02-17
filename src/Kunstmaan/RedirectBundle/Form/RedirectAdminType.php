@@ -8,22 +8,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RedirectAdminType extends AbstractType
 {
-    /**
-     * @var DomainConfigurationInterface
-     */
-    private $domainConfiguration;
-
-    /**
-     * @param DomainConfigurationInterface $domainConfiguration
-     */
-    public function __construct(DomainConfigurationInterface $domainConfiguration)
-    {
-        $this->domainConfiguration = $domainConfiguration;
-    }
-
     /**
      * Builds the form.
      *
@@ -37,8 +25,8 @@ class RedirectAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($this->domainConfiguration->isMultiDomainHost()) {
-            $hosts = $this->domainConfiguration->getHosts();
+        if ($options['domainConfiguration']->isMultiDomainHost()) {
+            $hosts = $options['domainConfiguration']->getHosts();
             $domains = array_combine($hosts, $hosts);
             $domains = array_merge(array('redirect.all' => ''), $domains);
 
@@ -65,6 +53,18 @@ class RedirectAdminType extends AbstractType
         ));
         $builder->add('permanent', CheckboxType::class, array(
             'required' => false
+        ));
+    }
+
+    /**
+     * Configures the options for this type.
+     *
+     * @param OptionsResolver $resolver The resolver for the options.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'domainConfiguration' => null,
         ));
     }
 
