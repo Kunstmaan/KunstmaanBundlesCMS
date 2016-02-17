@@ -93,7 +93,7 @@ class VersionChecker
 
         $jsonData = json_encode(array(
             'host' => $this->container->get('request_stack')->getCurrentRequest()->getHttpHost(),
-            'installed' => filectime($this->container->get('kernel')->getRootDir().'/console'),
+            'installed' => filectime($this->container->get('kernel')->getRootDir().'/../bin/console'),
             'bundles' => $this->parseComposer(),
             'project' => $this->container->getParameter('websitetitle')
         ));
