@@ -132,8 +132,16 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
                     $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
 
                 $mediaChooser.addClass('media-chooser--choosen');
-                $previewImg.attr('src', itemThumbPath);
                 $previewTitle.html(itemTitle);
+
+                if ( itemThumbPath === "") {
+                    var $parent = $previewTitle.parent();
+                    $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
+                }
+                else
+                {
+                    $previewImg.attr('src', itemThumbPath);
+                }
 
             // Close modal
             parent.$('#' + parentModalId).modal('hide');
