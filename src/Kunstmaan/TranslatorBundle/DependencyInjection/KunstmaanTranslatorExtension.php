@@ -60,9 +60,6 @@ class KunstmaanTranslatorExtension extends Extension
         if($container->hasParameter('defaultlocale')) {
             $translator->addMethodCall('setFallbackLocales', array(array($container->getParameter('defaultlocale'))));
         }
-
-        $collector = $container->getDefinition('kunstmaan.data_collector.translator');
-        $collector->addArgument($translator);
     }
 
     /**
