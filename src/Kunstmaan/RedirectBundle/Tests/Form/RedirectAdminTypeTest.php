@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\RedirectBundle\Tests\Form;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;
 
 /**
@@ -20,6 +21,16 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
     protected $objectSingleDomain;
 
     /**
+     * @var DomainConfigurationInterface
+     */
+    protected $multiDomainConfiguration;
+
+    /**
+     * @var DomainConfigurationInterface
+     */
+    protected $singleDomainConfiguration;
+
+    /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
@@ -35,8 +46,11 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
         $singleDomainConfiguration->expects($this->any())->method('isMultiDomainHost')->will($this->returnValue(false));
         $singleDomainConfiguration->expects($this->any())->method('getHosts')->will($this->returnValue(array()));
 
-        $this->objectMultiDomain = new RedirectAdminType($multiDomainConfiguration);
-        $this->objectSingleDomain = new RedirectAdminType($singleDomainConfiguration);
+        $this->multiDomainConfiguration = $multiDomainConfiguration;
+        $this->singleDomainConfiguration = $singleDomainConfiguration;
+
+        $this->objectMultiDomain = new RedirectAdminType();
+        $this->objectSingleDomain = new RedirectAdminType();
     }
 
     /**
@@ -66,7 +80,7 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
             ->method('add')
             ->with('permanent');
 
-        $this->objectSingleDomain->buildForm($builder, array());
+        $this->objectSingleDomain->buildForm($builder, array('domainConfiguration' => $this->singleDomainConfiguration));
 
         $builder = $this->getMock('Symfony\Component\Form\Test\FormBuilderInterface');
         $builder
@@ -86,7 +100,7 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
             ->method('add')
             ->with('permanent');
 
-        $this->objectMultiDomain->buildForm($builder, array());
+        $this->objectMultiDomain->buildForm($builder, array('domainConfiguration' => $this->multiDomainConfiguration));
     }
 
     /**
