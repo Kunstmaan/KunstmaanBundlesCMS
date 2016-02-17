@@ -186,7 +186,7 @@
                 {{ parent() }}
             {% else %}
                 <p class="text--muted">
-                    {{ 'media.media.no' |trans }}
+                    {{ 'media.media.no' |trans }} 
                 </p>
             {% endif %}
         {% else %}
@@ -211,7 +211,7 @@
                                 <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ media.url }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
                                     <figure>
                                         {% if imageurl %}
-                                            <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina }} 2x" alt="{{ media.name }}" class="media-thumbnail__img">
+                                            <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">
                                         {% else %}
                                             <i class="fa fa-file-o media-thumbnail__icon"></i>
                                         {% endif %}
