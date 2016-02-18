@@ -96,7 +96,6 @@ EOT
         $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
 
-
         // Generate the default pageparts
         $command = $this->getApplication()->find('kuma:generate:default-pageparts');
         $arguments = array(

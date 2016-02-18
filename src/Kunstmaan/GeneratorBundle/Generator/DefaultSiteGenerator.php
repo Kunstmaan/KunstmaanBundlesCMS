@@ -373,7 +373,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         }
 
         // Error templates
-
         $relPath = '/Resources/views/Error/';
         $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
 
