@@ -49,7 +49,7 @@ class GeneratePagePartCommand extends KunstmaanGenerateCommand
             ->setHelp(<<<EOT
 The <info>kuma:generate:pagepart</info> command generates a new pagepart and the pagepart configuration.
 
-<info>php app/console kuma:generate:pagepart</info>
+<info>php bin/console kuma:generate:pagepart</info>
 EOT
             )
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table name of the generated entity')
@@ -76,8 +76,8 @@ EOT
         $this->assistant->writeSection('PagePart successfully created', 'bg=green;fg=black');
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you test the pagepart:',
-            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+            '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
+            '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
             ($this->behatTest ? 'A new behat test is created, to run it: <comment>bin/behat --tags \'@'.$this->pagepartName.'\' @'.$this->bundle->getName().'</comment>' : '')
         ));
     }

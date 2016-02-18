@@ -14,7 +14,7 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 
 /**
- * Symfony CLI command to create a group using app/console kuma:group:create <name_of_the_group>
+ * Symfony CLI command to create a group using bin/console kuma:group:create <name_of_the_group>
  */
 class CreateGroupCommand extends ContainerAwareCommand
 {
@@ -34,12 +34,12 @@ class CreateGroupCommand extends ContainerAwareCommand
             ->setHelp(<<<EOT
 The <info>kuma:group:create</info> command creates a group:
 
-  <info>php app/console kuma:group:create Administrators</info>
+  <info>php bin/console kuma:group:create Administrators</info>
 
 You can specify a list of roles to attach to this group by specifying the
 optional --roles parameter, providing a comma separated list of roles :
 
-  <info>php app/console kuma:group:create --role=admin,guest Administrators</info>
+  <info>php bin/console kuma:group:create --role=admin,guest Administrators</info>
 
 <comment>Note:</comment> The ROLE_ prefix will be added if you don't provide it AND you must make
 sure the roles already exist!

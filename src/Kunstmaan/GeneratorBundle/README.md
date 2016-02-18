@@ -16,19 +16,19 @@ This bundle is compatible with all Symfony 2.3.* releases. More information abou
 Generate a Bundle :
 
 ```
-app/console kuma:generate:bundle
+bin/console kuma:generate:bundle
 ```
 
 Generate an Entity based on the [KunstmaanAdminBundle](https://github.com/Kunstmaan/KunstmaanAdminBundle)'s AbstractEntity
 
 ```
-app/console kuma:generate:entity
+bin/console kuma:generate:entity
 ```
 
 Generate a [KunstmaanAdminList](https://github.com/Kunstmaan/KunstmaanAdminListBundle) for an Entity :
 
 ```
-app/console kuma:generate:adminlist --entity=Bundle:Entity
+bin/console kuma:generate:adminlist --entity=Bundle:Entity
 ```
 
 ### Website
@@ -36,7 +36,7 @@ app/console kuma:generate:adminlist --entity=Bundle:Entity
 Generate a default website using the Kunstmaan bundles :
 
 ```
-app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
+bin/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```
 
 #### Search page
@@ -44,7 +44,7 @@ app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefi
 Generate a search page based on the [KunstmaanNodeSearchBundle](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle) :
 
 ```
-app/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
+bin/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```
 
 #### Article : Overview and detail pages
@@ -52,7 +52,7 @@ app/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=
 Generate an overview page with article pages. The overview page contains a paginated list of its articles. The articles are managed by AdminLists.
 
 ```
-app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
+bin/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
 ```
 
 #### Page
@@ -60,7 +60,7 @@ app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Ent
 Generate a new custom page :
 
 ```
-app/console kuma:generate:page --prefix=tableprefix_
+bin/console kuma:generate:page --prefix=tableprefix_
 ```
 
 #### PagePart
@@ -68,7 +68,7 @@ app/console kuma:generate:page --prefix=tableprefix_
 Generate a new page part page based on the [KunstmaanPagePartBundle](https://github.com/Kunstmaan/KunstmaanPagePartBundle) :
 
 ```
-app/console kuma:generate:pagepart --prefix=tableprefix_
+bin/console kuma:generate:pagepart --prefix=tableprefix_
 ```
 
 ## More

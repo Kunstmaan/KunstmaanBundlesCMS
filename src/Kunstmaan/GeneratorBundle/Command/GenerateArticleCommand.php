@@ -34,15 +34,15 @@ class GenerateArticleCommand extends GenerateDoctrineCommand
             ->setHelp(<<<EOT
 The <info>kuma:generate:article</info> command generates classes for Articles using the KunstmaanArticleBundle
 
-<info>php app/console kuma:generate:article --namespace=Namespace/NamedBundle --entity=Article</info>
+<info>php bin/console kuma:generate:article --namespace=Namespace/NamedBundle --entity=Article</info>
 
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
-<info>php app/console kuma:generate:article --namespace=Namespace/NamedBundle --prefix=demo_</info>
+<info>php bin/console kuma:generate:article --namespace=Namespace/NamedBundle --prefix=demo_</info>
 
 Add the <info>--dummydata</info> option to create data fixtures to populate your database
 
-<info>php app/console kuma:generate:article --namespace=Namespace/NamedBundle --dummydata</info>
+<info>php bin/console kuma:generate:article --namespace=Namespace/NamedBundle --dummydata</info>
 EOT
             )
             ->setName('kuma:generate:article');
@@ -77,12 +77,12 @@ EOT
         $generator->generate($bundle, $entity, $prefix, $dummydata, $output);
 
         $output->writeln(array('Make sure you update your database first before using the created entities:',
-                '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>')
+                '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>')
         );
 
         if ($dummydata) {
-            $output->writeln('    New DataFixtures were created. You can load them via: <comment>app/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $bundle->getNamespace()).'/DataFixtures/ORM/ArticleGenerator/ --append</comment>');
+            $output->writeln('    New DataFixtures were created. You can load them via: <comment>bin/console doctrine:fixtures:load --fixtures=src/'.str_replace('\\', '/', $bundle->getNamespace()).'/DataFixtures/ORM/ArticleGenerator/ --append</comment>');
         }
 
         $output->writeln('');
