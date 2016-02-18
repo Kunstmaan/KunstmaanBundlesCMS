@@ -52,11 +52,21 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return RemoteVideoType
+     * @return string
      */
     public function getFormType()
     {
-        return new RemoteVideoType($this->configuration);
+        return RemoteVideoType::class;
+    }
+
+    /**
+     * Return the default form type options
+     *
+     * @return array
+     */
+    public function getFormTypeOptions()
+    {
+        return array('configuration' => $this->configuration);
     }
 
     /**

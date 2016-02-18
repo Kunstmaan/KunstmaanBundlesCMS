@@ -27,8 +27,6 @@ class {{ className }} extends {{ extend_class }}
         parent::buildForm($builder, $options);
 {% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}{% for field in fieldArray %}
         $builder->add('{{ field.fieldName }}', '{{ field.formType }}', array(
-{% if field.formType == 'media' %}            'pattern' => 'KunstmaanMediaBundle_chooser',
-{% endif %}
 {% if field.mediaType is defined and field.mediaType != 'none' %}            'mediatype' => '{{ field.mediaType }}',
 {% if field.mimeTypes != null or (field.mediaType == 'image' and (field.minHeight != null or field.maxHeight != null or field.minWidth != null or field.maxWidth or null)) %}
             'constraints' => array(new Assert\Media(array(

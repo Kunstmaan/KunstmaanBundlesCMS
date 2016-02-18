@@ -42,7 +42,7 @@ class MediaController extends Controller
         $handler      = $mediaManager->getHandler($media);
         $helper       = $handler->getFormHelper($media);
 
-        $form = $this->createForm($handler->getFormType(), $helper);
+        $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -359,7 +359,7 @@ class MediaController extends Controller
         $media        = new Media();
         $helper       = $handler->getFormHelper($media);
 
-        $form = $this->createForm($handler->getFormType(), $helper);
+        $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

@@ -244,9 +244,7 @@ class ContactInfoAdminType extends \Symfony\Component\Form\AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('name', TextType::class, array(
-            'max_length' => 35,
-        ));
+        $builder->add('name', TextType::class);
 
         $builder->add('email', TextType::class, array(
             'attr' => array('title' => 'Publicly visible on the website'),
