@@ -112,3 +112,11 @@ public function onAdaptSimpleFormEvent(AdaptSimpleFormEvent $event)
     $event->setTabPane($tabPane);
 }
 ```
+
+# UPGRADE FROM 3.5 to 3.5.1
+
+## FileFormSubmissionField changes
+
+When using the FormBundle with the FileUploadPagePart, files with the same name were overriding each other. Therefore we have added two new fields to the FileFormSubmissionField, UUID and URL. By doing this, every file that is being uploaded will be placed into a unique folder. 
+
+When updating from a previous version, be sure to update your database scheme.

@@ -8,27 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * RemoteVideoType
- */
 class RemoteVideoType extends AbstractRemoteType
 {
-
-    /**
-     * @var array
-     */
-    protected $configuration = array();
-
-    /**
-     * Constructor, gets the RemoteVideo configuration
-     *
-     * @param array $configuration
-     */
-    public function __construct($configuration = array())
-    {
-        $this->configuration = $configuration;
-    }
-
     /**
      * Builds the form.
      *
@@ -49,18 +30,18 @@ class RemoteVideoType extends AbstractRemoteType
                 'type',
                 ChoiceType::class,
                 array(
-                    'choices'     => $this->getRemoteVideoChoices(),
+                    'choices'     => $this->getRemoteVideoChoices($options['configuration']),
                     'constraints' => array(new NotBlank()),
                     'required'    => true
                 )
             );
     }
 
-    protected function getRemoteVideoChoices()
+    protected function getRemoteVideoChoices($configuration)
     {
         $choices = array();
-        if (count($this->configuration)) {
-            foreach ($this->configuration as $config => $enabled) {
+        if (count($configuration)) {
+            foreach ($configuration as $config => $enabled) {
                 if (!$enabled) {
                     continue;
                 }
@@ -91,6 +72,7 @@ class RemoteVideoType extends AbstractRemoteType
         $resolver->setDefaults(
             array(
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
+                'configuration' => array()
             )
         );
     }

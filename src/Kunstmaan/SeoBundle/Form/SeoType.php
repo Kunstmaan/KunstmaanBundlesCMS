@@ -10,9 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * SeoType
- */
 class SeoType extends AbstractType
 {
     const ROBOTS_NOINDEX = "noindex";
@@ -29,33 +26,39 @@ class SeoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class)
-        ->add('metaTitle', null, array(
+            ->add('metaTitle', null, array(
                 'label' => 'Title',
-                'max_length' => 55,
                 'attr' => array(
-                'info_text' => 'The title tag is often used on search engine results pages. It should be less than 55 characters.'
-            )
-        ))
-        ->add('metaDescription', null, array('label' => 'Meta description', 'max_length' => 155));
+                    'info_text' => 'The title tag is often used on search engine results pages. It should be less than 55 characters.',
+                    'maxlength' => 55
+                )
+            ))
+            ->add('metaDescription', null, array(
+                'label' => 'Meta description',
+                'attr' => array(
+                    'maxlength' => 155
+                )
+            ));
 
         $builder->add('metaRobots', ChoiceType::class, array(
-          'choices' => array(
-            'seo.form.robots.noindex'      => self::ROBOTS_NOINDEX,
-            'seo.form.robots.nofollow'     => self::ROBOTS_NOFOLLOW,
-            'seo.form.robots.noarchive'    => self::ROBOTS_NOARCHIVE,
-            'seo.form.robots.nosnippet'    => self::ROBOTS_NOSNIPPET,
-            'seo.form.robots.notranslate'  => self::ROBOTS_NOTRANSLATE,
-            'seo.form.robots.noimageindex' => self::ROBOTS_NOIMAGEINDEX,
-          ),
-          'max_length' => 255,
-          'required' => false,
-          'multiple' => true,
-          'expanded' => false,
-          'label' => 'Meta robots',
-          'attr' => array(
-            'class' => 'js-advanced-select form-control',
-            'data-placeholder' => 'Choose robot tags',
-          )));
+            'choices' => array(
+                'seo.form.robots.noindex'      => self::ROBOTS_NOINDEX,
+                'seo.form.robots.nofollow'     => self::ROBOTS_NOFOLLOW,
+                'seo.form.robots.noarchive'    => self::ROBOTS_NOARCHIVE,
+                'seo.form.robots.nosnippet'    => self::ROBOTS_NOSNIPPET,
+                'seo.form.robots.notranslate'  => self::ROBOTS_NOTRANSLATE,
+                'seo.form.robots.noimageindex' => self::ROBOTS_NOIMAGEINDEX,
+            ),
+            'required' => false,
+            'multiple' => true,
+            'expanded' => false,
+            'label' => 'Meta robots',
+            'attr' => array(
+                'class' => 'js-advanced-select form-control',
+                'data-placeholder' => 'Choose robot tags',
+                'maxlength' => 255
+            )
+        ));
 
         $builder->get('metaRobots')
             ->addModelTransformer(new CallbackTransformer(

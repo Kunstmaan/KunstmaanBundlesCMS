@@ -30,7 +30,6 @@ class {{ pagepart }}AdminType extends AbstractType
 	parent::buildForm($builder, $options);
 
 	$builder->add('media', MediaType::class, array(
-	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'label' => 'mediapagepart.image.choosefile',
 	    'mediatype' => 'image',
 	    'required' => true

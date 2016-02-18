@@ -23,12 +23,10 @@ class {{ pagepart }}AdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	$builder->add('video', MediaType::class, array(
-	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'video',
 	    'required' => true
 	));
 	$builder->add('thumbnail', MediaType::class, array(
-	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => false
 	));

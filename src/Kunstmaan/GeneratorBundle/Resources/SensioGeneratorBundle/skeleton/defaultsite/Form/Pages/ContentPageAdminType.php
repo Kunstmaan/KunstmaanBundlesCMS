@@ -31,7 +31,6 @@ class ContentPageAdminType extends PageAdminType
         parent::buildForm($builder, $options);
 {% if demosite %}
 	$builder->add('menuImage', MediaType::class, array(
-	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => false
 	));

@@ -6,9 +6,6 @@ namespace Kunstmaan\MediaBundle\Helper\Media;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 
-/**
- * AbstractMediaHandler
- */
 abstract class AbstractMediaHandler
 {
     private $priority;
@@ -30,6 +27,16 @@ abstract class AbstractMediaHandler
     }
 
     /**
+     * Return the default form type options
+     *
+     * @return array
+     */
+    public function getFormTypeOptions()
+    {
+        return array();
+    }
+
+    /**
      * @return string
      */
     abstract public function getName();
@@ -40,7 +47,7 @@ abstract class AbstractMediaHandler
     abstract public function getType();
 
     /**
-     * @return AbstractType
+     * @return string
      */
     abstract public function getFormType();
 

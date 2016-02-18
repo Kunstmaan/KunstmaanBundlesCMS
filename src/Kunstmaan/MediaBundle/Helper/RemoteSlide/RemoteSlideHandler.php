@@ -36,11 +36,11 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return RemoteSlideType
+     * @return string
      */
     public function getFormType()
     {
-        return new RemoteSlideType();
+        return RemoteSlideType::class;
     }
 
     /**

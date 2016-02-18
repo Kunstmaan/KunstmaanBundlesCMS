@@ -48,7 +48,6 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
 	    'required' => false,
 	));
 	$builder->add('image', MediaType::class, array(
-	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => false,
 	));
