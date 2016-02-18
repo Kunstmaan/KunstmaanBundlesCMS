@@ -69,9 +69,7 @@ class RemoteVideoType extends AbstractRemoteType
      * @param OptionsResolver $resolver The resolver for the options.
      */
     public function configureOptions(OptionsResolver $resolver)
-    {$resolver->setDefaults(array(
-        'domainConfiguration' => null,
-    ));
+    {
         $resolver->setDefaults(
             array(
                 'data_class' => 'Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper',
