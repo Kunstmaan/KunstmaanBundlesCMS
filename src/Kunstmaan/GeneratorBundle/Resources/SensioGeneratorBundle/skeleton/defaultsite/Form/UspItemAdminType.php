@@ -28,7 +28,6 @@ class UspItemAdminType extends AbstractType
 	parent::buildForm($builder, $options);
 
 	$builder->add('icon', MediaType::class, array(
-	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => true
 	));

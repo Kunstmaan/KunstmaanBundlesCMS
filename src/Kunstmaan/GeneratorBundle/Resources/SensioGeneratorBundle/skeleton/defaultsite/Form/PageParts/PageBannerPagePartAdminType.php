@@ -37,7 +37,6 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	    'required' => false,
 	));
 	$builder->add('backgroundImage', MediaType::class, array(
-	    'pattern' => 'KunstmaanMediaBundle_chooser',
 	    'mediatype' => 'image',
 	    'required' => false,
 	));

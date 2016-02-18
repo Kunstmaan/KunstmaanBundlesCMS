@@ -50,11 +50,11 @@ class RemoteAudioHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return RemoteAudioType
+     * @return string
      */
     public function getFormType()
     {
-        return new RemoteAudioType();
+        return RemoteAudioType::class;
     }
 
     /**

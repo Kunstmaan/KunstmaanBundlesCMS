@@ -166,6 +166,6 @@ class ChooserController extends Controller
         $media   = new Media();
         $helper  = $handler->getFormHelper($media);
 
-        return $this->createForm($handler->getFormType(), $helper)->createView();
+        return $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions())->createView();
     }
 }
