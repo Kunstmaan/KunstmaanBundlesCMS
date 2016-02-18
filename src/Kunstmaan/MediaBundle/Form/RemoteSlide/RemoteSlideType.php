@@ -34,8 +34,7 @@ class RemoteSlideType extends AbstractRemoteType
                 array(
                     'choices'     => array('slideshare' => 'slideshare'),
                     'constraints' => array(new NotBlank()),
-                    'required'    => true,
-                    'choices_as_values' => true
+                    'required'    => true
                 )
             );
     }

@@ -51,8 +51,7 @@ class SocialType extends AbstractType
                     "Book"     => "book",
                     "Video"    => "video.other",
                     "Music"    => "music.song"
-                ),
-                'choices_as_values' => true,
+                )
             ))
             ->add('ogImage', MediaType::class, array(
                 'label' => 'seo.form.og.image',

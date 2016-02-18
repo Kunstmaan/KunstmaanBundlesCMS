@@ -42,20 +42,17 @@ class {{ pagepart }}AdminType extends AbstractType
 	$builder->add('type', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$types, {{ pagepart }}::$types),
 	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
+	    'required' => true
 	));
 	$builder->add('size', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$sizes, {{ pagepart }}::$sizes),
 	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
+	    'required' => true
 	));
 	$builder->add('position', ChoiceType::class, array(
 	    'choices' => array_combine({{ pagepart }}::$positions, {{ pagepart }}::$positions),
 	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
+	    'required' => true
 	));
     }
 
