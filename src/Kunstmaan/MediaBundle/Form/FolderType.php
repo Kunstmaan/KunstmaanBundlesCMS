@@ -39,8 +39,7 @@ class FolderType extends AbstractType
                         'image' => 'image',
                         'slideshow' => 'slideshow',
                         'video' => 'video'
-                    ),
-                    'choices_as_values' => true
+                    )
                 )
             )
             ->add(

@@ -66,7 +66,6 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     'label'       => 'settings.user.adminlang',
                     'required'    => true,
                     'placeholder' => false,
-                    'choices_as_values' => true,
                 ));
 
         if ($this->canEditAllFields) {

@@ -36,8 +36,7 @@ class NodeMenuTabTranslationAdminType extends AbstractType
             'choices'     => array_combine(range(-50, 50), range(-50, 50)),
             'placeholder' => false,
             'required'    => false,
-            'attr'        => array('title' => 'Used to reorder the pages.'),
-            'choices_as_values' => true
+            'attr'        => array('title' => 'Used to reorder the pages.')
         ));
     }
 
