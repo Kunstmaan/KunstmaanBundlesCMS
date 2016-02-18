@@ -6,6 +6,7 @@ parameters:
     kunstmaan_admin.admin_locale.listener.class: 'Kunstmaan\AdminBundle\EventListener\AdminLocaleListener'
     kunstmaan_admin.acl.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper'
     kunstmaan_admin.acl.native.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper'
+    kunstmaan_admin.security.acl.permission.map.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap'
     kunstmaan_admin.clone.listener.class: 'Kunstmaan\AdminBundle\EventListener\CloneListener'
     kunstmaan_admin.session_security.class: 'Kunstmaan\AdminBundle\EventListener\SessionSecurityListener'
     kunstmaan_admin.password_resetting.listener.class: 'Kunstmaan\AdminBundle\EventListener\PasswordResettingListener'
@@ -79,6 +80,9 @@ services:
     kunstmaan_admin.acl.native.helper:
         class: '%kunstmaan_admin.acl.native.helper.class%'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
+
+    kunstmaan_admin.security.acl.permission.map:
+        class: '%kunstmaan_admin.security.acl.permission.map.class%'
 
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
