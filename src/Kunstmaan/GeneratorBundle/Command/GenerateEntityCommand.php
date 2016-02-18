@@ -38,7 +38,7 @@ class GenerateEntityCommand extends GenerateDoctrineCommand
 The <info>kuma:generate:entity</info> task generates a new Doctrine
 entity inside a bundle:
 
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post</info>
+<info>php bin/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post</info>
 
 The above command would initialize a new entity in the following entity
 namespace <info>Acme\BlogBundle\Entity\Blog\Post</info>.
@@ -46,21 +46,21 @@ namespace <info>Acme\BlogBundle\Entity\Blog\Post</info>.
 You can also optionally specify the fields you want to generate in the new
 entity:
 
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text"</info>
+<info>php bin/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text"</info>
 
 The command can also generate the corresponding entity repository class with the
 <comment>--with-repository</comment> option:
 
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-repository</info>
+<info>php bin/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --with-repository</info>
 
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --prefix=demo_</info>
+<info>php bin/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --prefix=demo_</info>
 
 To deactivate the interaction mode, simply use the `--no-interaction` option
 without forgetting to pass all needed options:
 
-<info>php app/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --no-interaction</info>
+<info>php bin/console kuma:generate:entity --entity=AcmeBlogBundle:Blog/Post --fields="title:string(255) body:text" --with-repository --no-interaction</info>
 EOT
             );
     }
@@ -103,8 +103,8 @@ EOT
 
         $output->writeln(array(
                 'Make sure you update your database first before you test the entity/adminlist:',
-                '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+                '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
                 '')
         );
     }

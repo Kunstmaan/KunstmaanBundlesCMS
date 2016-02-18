@@ -46,7 +46,7 @@ class GenerateAdminListCommand extends GenerateDoctrineCommand
                 <<<EOT
                 The <info>kuma:generate:adminlist</info> command generates an AdminList for a Doctrine ORM entity.
 
-<info>php app/console kuma:generate:adminlist Bundle:Entity</info>
+<info>php bin/console kuma:generate:adminlist Bundle:Entity</info>
 EOT
             )
             ->setName('kuma:generate:adminlist');

@@ -55,7 +55,7 @@ class GenerateFormPageCommand extends KunstmaanGenerateCommand
             ->setHelp(<<<EOT
 The <info>kuma:generate:formpage</info> command generates a new formpage and its configuration.
 
-<info>php app/console kuma:generate:formpage</info>
+<info>php bin/console kuma:generate:formpage</info>
 EOT
             )
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table name of the generated entity')
@@ -95,8 +95,8 @@ EOT
 
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you use the page:',
-            '    Directly update your database:          <comment>app/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate</comment>',
+            '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
+            '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
             ''
         ));
     }
