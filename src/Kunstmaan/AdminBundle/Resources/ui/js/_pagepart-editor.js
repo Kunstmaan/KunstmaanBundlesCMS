@@ -182,11 +182,12 @@ kunstmaanbundles.pagepartEditor = function (window) {
     movePagePartUp = function ($btn) {
         var $targetId = $btn.data('target-id');
 
-        var $currentPp = $('#' + $targetId + '-pp-container');
+        var $currentPp = $btn.parents('#' + $targetId + '-pp-container');
         var $previousPp = $currentPp.prevAll('.sortable-item:first');
+
         // ReInit the modules. This is needed for a known bug in CKEDITOR. When moving a element with a ckeditor in
         // The DOM, the ckeditor needs to be reinitialized.
-        reInit(currentPp);
+        reInit($currentPp);
         if ($previousPp.length) {
             $($previousPp).before($currentPp);
             // Enable "leave page" modal
@@ -200,7 +201,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         });
 
         // Update display order.
-        updateDisplayOrder(previousPp, currentPp);
+        updateDisplayOrder($previousPp, $currentPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
@@ -211,11 +212,11 @@ kunstmaanbundles.pagepartEditor = function (window) {
     movePagePartDown = function ($btn) {
         var $targetId = $btn.data('target-id');
 
-        var $currentPp = $('#' + $targetId + '-pp-container');
+        var $currentPp = $btn.parents('#' + $targetId + '-pp-container');
         var $nextPp = $currentPp.nextAll('.sortable-item:first');
         // ReInit the modules. This is needed for a known bug in CKEDITOR. When moving a element with a ckeditor in
         // The DOM, the ckeditor needs to be reinitialized.
-        reInit(currentPp);
+        reInit($currentPp);
         if ($nextPp.length) {
             $($nextPp).after($currentPp);
             kunstmaanbundles.checkIfEdited.edited();
@@ -228,7 +229,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         });
 
         // Update display order.
-        updateDisplayOrder(currentPp, nextPp);
+        updateDisplayOrder($currentPp, $nextPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
@@ -246,11 +247,11 @@ kunstmaanbundles.pagepartEditor = function (window) {
         $btn.toggleClass('pp__actions__action--resize-max');
 
         if ($resizeTarget.hasClass('action--maximize')) {
-             $btn.find('i').removeClass('fa-minus').addClass('fa-plus');
-             $resizeTarget.velocity({"height": "7rem"}, {duration: 400, easing: 'ease-in-out'});
+            $btn.find('i').removeClass('fa-minus').addClass('fa-plus');
+            $resizeTarget.velocity({"height": "7rem"}, {duration: 400, easing: 'ease-in-out'});
         } else {
-             $btn.find('i').removeClass('fa-plus').addClass('fa-minus');
-             $resizeTarget.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
+            $btn.find('i').removeClass('fa-plus').addClass('fa-minus');
+            $resizeTarget.velocity({"height": "100%"}, {duration: 400, easing: 'ease-in-out'});
         }
 
     };
