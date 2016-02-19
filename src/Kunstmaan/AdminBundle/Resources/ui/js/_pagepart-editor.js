@@ -186,7 +186,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         var $previousPp = $currentPp.prevAll('.sortable-item:first');
         // ReInit the modules. This is needed for a known bug in CKEDITOR. When moving a element with a ckeditor in
         // The DOM, the ckeditor needs to be reinitialized.
-        reInit(currentPp);
+        reInit($currentPp);
         if ($previousPp.length) {
             $($previousPp).before($currentPp);
             // Enable "leave page" modal
@@ -200,7 +200,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         });
 
         // Update display order.
-        updateDisplayOrder(previousPp, currentPp);
+        updateDisplayOrder($previousPp, $currentPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
@@ -215,7 +215,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         var $nextPp = $currentPp.nextAll('.sortable-item:first');
         // ReInit the modules. This is needed for a known bug in CKEDITOR. When moving a element with a ckeditor in
         // The DOM, the ckeditor needs to be reinitialized.
-        reInit(currentPp);
+        reInit($currentPp);
         if ($nextPp.length) {
             $($nextPp).after($currentPp);
             kunstmaanbundles.checkIfEdited.edited();
@@ -228,7 +228,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         });
 
         // Update display order.
-        updateDisplayOrder(currentPp, nextPp);
+        updateDisplayOrder($currentPp, $nextPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
