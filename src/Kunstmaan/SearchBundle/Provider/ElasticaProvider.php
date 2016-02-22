@@ -141,16 +141,24 @@ class ElasticaProvider implements SearchProviderInterface
 
     /**
      * @param string $host
-     * @param int    $port
+     * @param int $port
+     * @param string|null $username
+     * @param string|null $password
      */
-    public function addNode($host, $port)
+    public function addNode($host, $port, $username = null, $password = null)
     {
         foreach ($this->nodes as $node) {
             if ($node['host'] === $host && $node['port'] === $port) {
                 return;
             }
         }
-        $this->nodes[] = array('host' => $host, 'port' => $port);
+
+        $authHeader = null;
+        if (null !== $username && $password !== null) {
+            $authHeader = array('Authorization' => 'Basic ' . base64_encode($username . ':' . $password));
+        }
+
+        $this->nodes[] = array('host' => $host, 'port' => $port, 'headers' => $authHeader);
     }
 
     /**
