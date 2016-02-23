@@ -24,7 +24,7 @@ class SearchService
      * @var RenderContext
      *
      */
-    protected $renderContect;
+    protected $renderContext;
 
     /**
      * @var Container
@@ -52,7 +52,7 @@ class SearchService
         $this->container = $container;
         $this->requestStack = $requestStack;
         $this->defaultPerPage = $defaultPerPage;
-        $this->renderContect = new RenderContext();
+        $this->renderContext = new RenderContext();
     }
 
     /**
@@ -67,17 +67,35 @@ class SearchService
     /**
      * @return RenderContext
      */
-    public function getRenderContect()
+    public function getRenderContext()
     {
-        return $this->renderContect;
+        return $this->renderContext;
     }
 
     /**
-     * @param RenderContext $renderContect
+     * @param RenderContext $renderContext
      */
-    public function setRenderContect($renderContect)
+    public function setRenderContext($renderContext)
     {
-        $this->renderContect = $renderContect;
+        $this->renderContext = $renderContext;
+    }
+
+    /**
+     * @return RenderContext
+     * @deprecated Use getRenderContext
+     */
+    public function getRenderContect()
+    {
+        return $this->renderContext;
+    }
+
+    /**
+     * @param RenderContext $renderContext
+     * @deprecated Use setRenderContext
+     */
+    public function setRenderContect($renderContext)
+    {
+        $this->renderContext = $renderContext;
     }
 
     /**
@@ -124,7 +142,7 @@ class SearchService
 
         $pageNumber = $this->getRequestedPage($request);
         $searcher   = $this->container->get($entity->getSearcher());
-        $this->applySearchParams($searcher, $request, $this->renderContect);
+        $this->applySearchParams($searcher, $request, $this->renderContext);
 
         $adapter    = new SearcherRequestAdapter($searcher);
         $pagerfanta = new Pagerfanta($adapter);
