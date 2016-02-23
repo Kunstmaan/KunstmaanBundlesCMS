@@ -15,7 +15,7 @@ use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 /**
  * The admin list configurator for {{ entity_class }}
  */
-class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
+class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator {% if sortField %}implements SortableInterface {% endif %}
 {
     /**
      * @param EntityManager $em        The entity manager
