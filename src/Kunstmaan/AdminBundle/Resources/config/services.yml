@@ -84,6 +84,15 @@ services:
     kunstmaan_admin.security.acl.permission.map:
         class: '%kunstmaan_admin.security.acl.permission.map.class%'
 
+    kunstmaan_admin.security.acl.voter:
+        class: Kunstmaan\AdminBundle\Helper\Security\Acl\Voter\AclVoter
+        arguments: ['@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@security.acl.security_identity_retrieval_strategy', '@kunstmaan_admin.security.acl.permission.map']
+        tags:
+            - { name: security.voter, priority: 255 }
+            - { name: monolog.logger, channel: security }
+        # small performance boost
+        public: false
+
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@event_dispatcher', '@kunstmaan_utilities.shell', '@kernel']
