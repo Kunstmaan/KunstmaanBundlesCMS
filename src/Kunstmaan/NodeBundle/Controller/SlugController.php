@@ -10,6 +10,7 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,7 +108,10 @@ class SlugController extends Controller
             throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
-        $request->attributes->set('_template', $view);
+        $template = new Template(array());
+        $template->setTemplate($view);
+
+        $request->attributes->set('_template', $template);
 
         return $renderContext->getArrayCopy();
     }

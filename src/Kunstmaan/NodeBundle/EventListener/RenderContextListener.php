@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\Templating\EngineInterface;
@@ -85,7 +86,11 @@ class RenderContextListener
             //set the rendercontext with all params as response, plus the template in the request attribs
             //the SensioFrameworkExtraBundle kernel.view will handle everything else
             $event->setControllerResult((array) $parameters);
-            $request->attributes->set('_template', $entity->getDefaultView());
+
+            $template = new Template(array());
+            $template->setTemplate($entity->getDefaultView());
+
+            $request->attributes->set('_template', $template);
         }
     }
 }
