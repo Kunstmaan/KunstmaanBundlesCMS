@@ -162,7 +162,7 @@ EOT
         $prefix = $multilang ? '/{_locale}' : '';
 
         $code = sprintf("%s:\n", strtolower($bundle->getName()) . '_' . strtolower($entityClass) . '_admin_list');
-        $code .= sprintf("    resource: @%s/Controller/%sAdminListController.php\n", $bundle->getName(), $entityClass);
+        $code .= sprintf("    resource: '@%s/Controller/%sAdminListController.php'\n", $bundle->getName(), $entityClass, "'");
         $code .= "    type:     annotation\n";
         $code .= sprintf("    prefix:   %s/admin/%s/\n", $prefix, strtolower($entityClass));
         if ($multilang) {
