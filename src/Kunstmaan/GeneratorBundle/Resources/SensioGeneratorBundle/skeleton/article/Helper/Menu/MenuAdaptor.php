@@ -11,21 +11,28 @@ use Symfony\Component\HttpFoundation\Request;
 
 class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 {
-    private $overviewpageIds = array();
+    private $overviewpageIds = null;
+
+    private $em;
 
     /**
      * @param EntityManager $em The entity manager
      */
     public function __construct(EntityManager $em)
     {
-	$overviewPageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\Pages\\{{ entity_class }}OverviewPage');
-        foreach ($overviewPageNodes as $overviewPageNode) {
-            $this->overviewpageIds[] = $overviewPageNode->getId();
-        }
+	    $this->em = $em;
     }
 
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
+        if (is_null($this->overviewpageIds)) {
+            $overviewPageNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\Pages\\{{ entity_class }}OverviewPage');
+            $this->overviewpageIds = array();
+            foreach ($overviewPageNodes as $overviewPageNode) {
+                $this->overviewpageIds[] = $overviewPageNode->getId();
+            }
+        }
+
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             // Page
             $menuItem = new TopMenuItem($menu);
