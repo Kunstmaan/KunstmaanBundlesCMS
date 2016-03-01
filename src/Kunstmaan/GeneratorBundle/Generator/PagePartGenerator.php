@@ -313,8 +313,10 @@ class PagePartGenerator extends KunstmaanGenerator
                                     $formType = $this->container->get($formType);
                                 }
 
+                                $formFqn = get_class($formType);
+
                                 // Get all page properties
-                                $form     = $this->container->get('form.factory')->create($formType);
+                                $form     = $this->container->get('form.factory')->create($formFqn);
                                 $children = $form->createView()->children;
 
                                 $pageFields = array();
