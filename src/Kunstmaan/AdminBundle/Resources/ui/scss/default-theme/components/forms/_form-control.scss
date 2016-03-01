@@ -137,10 +137,18 @@ input[type=range]:focus {
     box-shadow: none;
 }
 
-.range + .input-group-addon {
-    margin-left: 0.4rem;
+.range,
+.checkbox,
+.radio,
+.urlchooser {
 
-    border-left: 1px solid $ddd;
+    & + .input-group-addon {
+        margin-left: .4rem;
+
+        border-left: 1px solid $ddd;
+        border-radius: .3rem;
+    }
+
 }
 
 .range--value {
