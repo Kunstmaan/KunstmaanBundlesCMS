@@ -20,6 +20,10 @@ kunstmaanbundles.mediaChooser = (function(window, undefined) {
                 $widget = $('#' + linkedID + '-widget'),
                 $input = $('#' + linkedID);
 
+            $('.media-chooser__preview__img').attr({'src': '', 'srcset': '', 'alt': ''});
+
+            $(".media-thumbnail__icon").remove();
+
             $widget.removeClass('media-chooser--choosen');
             $input.val('');
         });
