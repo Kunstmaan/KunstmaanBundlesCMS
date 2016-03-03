@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection;
 
+use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -77,7 +78,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $fosUserConfig['resetting']['email']['from_email']['address']        = 'admin@kunstmaan.be';
         $fosUserConfig['resetting']['email']['from_email']['sender_name']    = 'admin';
         $fosUserConfig['resetting']['email']['template']    = 'FOSUserBundle:Resetting:email.txt.twig';
-        $fosUserConfig['resetting']['form']['type']                 = 'fos_user_resetting';
+        $fosUserConfig['resetting']['form']['type']                 = ResettingFormType::class;
         $fosUserConfig['resetting']['form']['name']                 = 'fos_user_resetting_form';
         $fosUserConfig['resetting']['form']['validation_groups']    = ['ResetPassword'];
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
