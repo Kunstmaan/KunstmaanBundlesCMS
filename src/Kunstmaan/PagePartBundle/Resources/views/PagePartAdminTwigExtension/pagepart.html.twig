@@ -79,7 +79,7 @@
     <!-- New PP select -->
     <div class="pp-container__add">
         <select class="js-add-pp-select form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
-            <option value="">Add a pagepart</option>
+            <option value="">{{ 'Add a pagepart' | trans }}</option>
             {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
                 <option value="{{pagePartType.class}}">{{pagePartType.name|trans}}</option>
             {% endfor %}
