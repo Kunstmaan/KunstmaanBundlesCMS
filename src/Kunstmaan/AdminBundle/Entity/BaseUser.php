@@ -36,6 +36,11 @@ abstract class BaseUser extends AbstractUser
     protected $passwordChanged;
 
     /**
+     * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
+     */
+    protected $googleId;
+
+    /**
      * Construct a new user
      */
     public function __construct()
@@ -144,6 +149,22 @@ abstract class BaseUser extends AbstractUser
         $this->passwordChanged = $passwordChanged;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
     }
 
     /**
