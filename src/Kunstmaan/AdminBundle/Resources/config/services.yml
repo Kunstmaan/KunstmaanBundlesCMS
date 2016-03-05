@@ -179,3 +179,21 @@ services:
     kunstmaan_admin.domain_configuration:
         class: '%kunstmaan_admin.domain_configuration.class%'
         arguments: ['@service_container']
+
+    kunstmaan_admin.oauth_authenticator:
+        class: Kunstmaan\AdminBundle\Security\OAuthAuthenticator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@router'
+            - '%kunstmaan_admin.google_signin.client_id%'
+            - '%kunstmaan_admin.google_signin.client_secret%'
+            - '%kunstmaan_admin.google_signin.hosted_domain%'
+
+    kunstmaan_admin.google_signin.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\GoogleSignInTwigExtension
+        arguments:
+            - '%kunstmaan_admin.google_signin.enabled%'
+            - '%kunstmaan_admin.google_signin.client_id%'
+            - '%kunstmaan_admin.google_signin.hosted_domain%'
+        tags:
+            - { name: twig.extension }

@@ -40,6 +40,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.colorpicker.init();
         kunstmaanbundles.charactersLeft.init();
         kunstmaanbundles.rangeslider.init();
+        kunstmaanbundles.googleOAuth.init();
     };
 
 
