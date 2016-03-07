@@ -42,7 +42,7 @@
                             {% for key,add in adminaddlist %}
                                 <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
                                     {{ 'form.add' | trans }}
-                                    {{ key }}
+                                    {{ key | trans }}
                                 </a>
                             {% endfor %}
                         {% endif %}
