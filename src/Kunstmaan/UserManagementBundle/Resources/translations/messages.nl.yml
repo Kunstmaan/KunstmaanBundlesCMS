@@ -1,0 +1,24 @@
+# Settings
+settings:
+  groups: Groepen
+  group:
+      name: Nan
+      edit: Bewerk groep
+      add: Groep toevoegen
+      roles: Rollen
+  users: Gebruikers
+  user:
+      username: Gebruikersnaam
+      password: Wachtwoord
+      repeatedpassword: Herhaal wachtwoord
+      adminlang: Admin interface taal
+      email: E-mail
+      enabled: Ingeschakeld
+      roles: Groepen
+      add: Gebruiker toevoegen
+      edit: Gebruiker bewerken
+  roles: Rollen
+  role:
+      role: Rol
+      add: Rol toevoegen
+      edit: Rol bewerken

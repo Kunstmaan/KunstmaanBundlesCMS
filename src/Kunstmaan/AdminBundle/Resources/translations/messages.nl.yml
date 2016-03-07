@@ -1,0 +1,78 @@
+# Pages
+pages:
+  title: Pagina's
+  parts: PageParts
+  draft: Concept
+  pagenottranslated: Deze pagina is niet vertaald
+  copyfrom: Kopieer van taal
+  createemptypage: Als lege pagina aanmaken
+  movingconfirmation: U gaat "%title%" verplaatsen naar "%target%". Weet u dit zeker?
+
+ # Modules
+modules:
+  title: Modules
+
+# Settings
+settings:
+  title: Instellingen
+  maintanance: Onderhoud
+  scheduled: Geplande taken
+  version:
+      bundle: Bundel verses
+      composer_lock_not_found: Geen composer.lock bestand gevonden in de project root
+      error_parsing_composer: Fout bij het parsen van het composer.lock bestand, geen geldige json
+      error: Er ging iets fout bij het ophalen van de versie informatie. Probeer het later nog eens.
+      moreinfo: Voer composer update uit om de bundles te updaten. Het is mogelijk dat andere bundles moeten worden geupgrade in het geval van conflicten.
+      uptodate: is up-to-date
+      toupdate: kan worden geupdate naar
+      unknown: versie information onbekend
+
+# Tools
+tools:
+  title: Tools
+  clear_frontend_cache: Frontend cache legen
+  clear_backend_cache: Backend cache legen
+  clear_all_caches: Alle caches legen
+  shutdown: Uitschakelen
+
+# Forms
+form:
+  cancel: Annuleer
+  delete: Verwijder
+  deletesure: Weet u zeker dat u dit wilt verwijderen?
+  edit: Bewerk
+  add: Toevoegen
+  save: Opslaan
+  publish: Publiceer
+  unpublish: Publiceren ongedaan maken
+  saveasdraft: Als concept opslaan
+  name: Naam
+  type: Type
+  error: Fout
+  warning: Waarschuwing
+  headsup: Heads up
+  forgot:
+    password: Ik ben mijn wachtwoord vergeten.
+  permissions: Permissies
+  properties: Eigenschappen
+  createdat: Gemaakt op
+  updatedat: Bewerkt op
+  actions: Acties
+  addfilter: Filter toevoegen
+  choosetypefilter: Filter op
+  versions: Versies
+
+omnext:
+  home: Home
+  title: Welkom!
+  welcome: Welkom.
+  information: <strong>Informatie.</strong> Er zijn geen nieuwe notificaties.
+
+permissions:
+  you_made_changes: U heeft de permissies op deze pagina gewijzigd.
+  apply_recursively: Pas deze wijzigingen recursief op alle subpagina's toe.
+  review_changes: Controleer uw wijzigingen
+  changes: Permissie wijzigingen
+  permissions_added: 'De volgende permissies worden <strong>toegevoegd</strong>:'
+  permissions_removed: 'De volgende permissies worden <strong>verwijderd</strong>:'
+  role_name: Rol naam
