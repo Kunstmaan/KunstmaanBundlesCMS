@@ -5,6 +5,7 @@ parameters:
     kunstmaan_media.media_handler.image.class: 'Kunstmaan\MediaBundle\Helper\Image\ImageHandler'
     kunstmaan_media.media_handler.file.class: 'Kunstmaan\MediaBundle\Helper\File\FileHandler'
     aviary_api_key: null
+    kunstmaan_media.media_path: '/uploads/media/'
 
 services:
     kunstmaan_media.media_handlers.remote_slide:
@@ -29,7 +30,8 @@ services:
         class: '%kunstmaan_media.media_handler.image.class%'
         arguments: [1, '@kunstmaan_media.mimetype_guesser.factory', '%aviary_api_key%']
         calls:
-            - [ setMediaPath, [ '%kernel.root_dir%' ] ]
+            - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
+            - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%kunstmaan_media.blacklisted_extensions%' ] ]
             - [ setSlugifier, ['@kunstmaan_utilities.slugifier']]
         tags:
@@ -39,7 +41,8 @@ services:
         class: '%kunstmaan_media.media_handler.file.class%'
         arguments: [0, '@kunstmaan_media.mimetype_guesser.factory']
         calls:
-            - [ setMediaPath, [ '%kernel.root_dir%' ] ]
+            - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
+            - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]
             - [ setBlacklistedExtensions, [ '%kunstmaan_media.blacklisted_extensions%' ] ]
             - [ setSlugifier, ['@kunstmaan_utilities.slugifier']]
         tags:
