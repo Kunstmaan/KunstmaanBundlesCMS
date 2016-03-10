@@ -156,9 +156,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
     // Delete
     deletePagePart = function ($btn) {
         var $targetId = $btn.data('target-id'),
-            $container = $('#' + $targetId + '-pp-container'),
-            $parent = $container.parent()
-        ;
+            $container = $('#' + $targetId + '-pp-container');
 
         // Enable "leave page" modal
         kunstmaanbundles.checkIfEdited.edited();
