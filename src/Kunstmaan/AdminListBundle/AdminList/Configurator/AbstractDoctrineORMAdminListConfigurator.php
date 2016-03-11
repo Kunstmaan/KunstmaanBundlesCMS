@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Traversable;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
@@ -168,6 +169,9 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
                 $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
 
+            // Apply other changes
+            $this->finishQueryBuilder($queryBuilder);
+
             // Apply ACL restrictions (if applicable)
             if (!is_null($this->permissionDef) && !is_null($this->aclHelper)) {
                 $this->query = $this->aclHelper->apply($queryBuilder, $this->permissionDef);
@@ -177,6 +181,16 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         }
 
         return $this->query;
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
+    protected function finishQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        if ($this instanceof SortableInterface) {
+            $queryBuilder->addOrderBy($this->getSortableField());
+        }
     }
 
     /**

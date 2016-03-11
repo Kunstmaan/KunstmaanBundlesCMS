@@ -328,15 +328,21 @@ abstract class AdminListController extends Controller
         $setter = "set".ucfirst($sortableField);
         $getter = "get".ucfirst($sortableField);
 
-        $nextItem = $repo->createQueryBuilder('i')->where('i.'.$sortableField.' < :weight')->setParameter('weight', $item->$getter())->orderBy('i.'.$sortableField, 'DESC')->setMaxResults(1)->getQuery()->getOneOrNullResult();
+        $nextItem = $repo->createQueryBuilder('i')
+            ->where('i.'.$sortableField.' < :weight')
+            ->setParameter('weight', $item->$getter())
+            ->orderBy('i.'.$sortableField, 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
         if ($nextItem) {
             $nextItem->$setter($item->$getter());
             $em->persist($nextItem);
-        }
-        $item->$setter($item->$getter() - 1);
+            $item->$setter($item->$getter() - 1);
 
-        $em->persist($item);
-        $em->flush();
+            $em->persist($item);
+            $em->flush();
+        }
 
         $indexUrl = $configurator->getIndexUrl();
 
@@ -355,15 +361,21 @@ abstract class AdminListController extends Controller
         $setter = "set".ucfirst($sortableField);
         $getter = "get".ucfirst($sortableField);
 
-        $nextItem = $repo->createQueryBuilder('i')->where('i.'.$sortableField.' > :weight')->setParameter('weight', $item->$getter())->orderBy('i.'.$sortableField, 'ASC')->setMaxResults(1)->getQuery()->getOneOrNullResult();
+        $nextItem = $repo->createQueryBuilder('i')
+            ->where('i.'.$sortableField.' > :weight')
+            ->setParameter('weight', $item->$getter())
+            ->orderBy('i.'.$sortableField, 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
         if ($nextItem) {
             $nextItem->$setter($item->$getter());
             $em->persist($nextItem);
-        }
-        $item->$setter($item->$getter() + 1);
+            $item->$setter($item->$getter() + 1);
 
-        $em->persist($item);
-        $em->flush();
+            $em->persist($item);
+            $em->flush();
+        }
 
         $indexUrl = $configurator->getIndexUrl();
 
