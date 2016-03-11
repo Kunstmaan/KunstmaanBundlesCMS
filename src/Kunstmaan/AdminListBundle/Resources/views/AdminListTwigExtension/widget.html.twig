@@ -82,16 +82,16 @@
                 <!-- Actions -->
                 <td class="table__actions">
                     {% if adminlist.canView(item) %}
-                        <a href="{{ path(adminlist.getViewUrlFor(item)["path"], adminlist.getViewUrlFor(item)[("params")] ) }}"><i class="icon-eye"></i>View</a>
+                        <a href="{{ path(adminlist.getViewUrlFor(item)["path"], adminlist.getViewUrlFor(item)[("params")] ) }}"><i class="icon-eye"></i>{{ 'View' | trans }}</a>
                     {% endif %}
                     {% if adminlist.canEdit(item) %}
-                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item" title="Edit">
+                        <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item" title="{{ 'Edit' | trans }}">
                             <i class="fa fa-pencil-square-o"></i>
                         </a>
                     {% endif %}
 
                     {% if adminlist.canDelete(item) %}
-                        <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item" title="Delete">
+                        <a href="#" data-toggle="modal" data-target="#sure-modal-{{ item.id }}" class="link--text link--danger table__actions__item" title="{{ 'Delete' | trans }}">
                             <i class="fa fa-trash-o"></i>
                         </a>
                     {% endif %}
@@ -103,7 +103,7 @@
                             {% else %}
                                 {% set url = itemAction.getUrlFor(item) %}
                                 {% if url %}
-                                    <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item" title="{{ itemAction.getLabelFor(item) }}">
+                                    <a href="{{ path(url["path"], url[("params")]) }}" class="link--text table__actions__item" title="{{ itemAction.getLabelFor(item) | trans }}">
                                         {% if itemAction.getIconFor(item) is not null %}
                                             <i class="fa fa-{{ itemAction.getIconFor(item) }}"></i>
                                         {% endif %}
@@ -127,9 +127,9 @@
             <button type="button" class="js-bulk-action-button btn btn-default btn--raise-on-hover disabled" data-action="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}">
                 {% if action.getIcon() is not null %}
                     <i class="fa fa-{{ action.getIcon() }} }} btn__icon"></i>
-                    {{ action.getLabel() }}
+                    {{ action.getLabel()|trans }}
                 {% else %}
-                    {{ action.getLabel() }}
+                    {{ action.getLabel()|trans }}
                 {% endif %}
             </button>
         {% endif %}

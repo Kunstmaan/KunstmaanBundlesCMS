@@ -4,7 +4,7 @@
     <form action="{{ path("fos_user_security_check") }}" method="post">
         {% if error %}
             <div class="alert alert-danger">
-                Wrong password or email
+                {{ 'Wrong password or email' | trans }}
                 <button type="button" class="close" aria-label="Close" data-dismiss="alert">
                     <i class="fa fa-times"></i>
                 </button>
@@ -35,7 +35,7 @@
         </div>
 
         <button type="submit" id="_submit" name="_submit" class="btn btn-brand btn-block btn--raise-on-hover">
-            Log In
+            {{ 'Log In' | trans }}
         </button>
     </form>
 {% endblock fos_user_content %}
