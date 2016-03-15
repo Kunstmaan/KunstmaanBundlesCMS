@@ -270,6 +270,7 @@ kunstmaanbundles.richEditor = (function(window, undefined) {
             if($el.hasClass('js-rich-editor')) {
                 $el.removeClass('js-rich-editor--enabled');
 
+                CKEDITOR.instances[instance].updateElement();
                 CKEDITOR.instances[instance].destroy(true);
             };
         }
