@@ -189,7 +189,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     protected function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
         if ($this instanceof SortableInterface) {
-            $queryBuilder->addOrderBy($this->getSortableField());
+            $queryBuilder->addOrderBy('b.' . $this->getSortableField());
         }
     }
 
