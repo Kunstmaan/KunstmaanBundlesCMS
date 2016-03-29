@@ -154,7 +154,7 @@ It would be neat to display the picture (if there is one) in the admin list as w
     }
 ```
 
-As the picture field has a toString method that just returns the id of the relevant record in the media table this will display a number instead of the actual image, which is not what we want. So let's fix that. First we'll a template file to display the column. So create a new folder (we like a consistent naming scheme, so we'll add these custom column templates in `AdminList/entity-name/column-name.twig.html`) :
+As the picture field has a toString method that just returns the id of the relevant record in the media table this will display a number instead of the actual image, which is not what we want. So let's fix that. First we'll add a template file to display the column. So create a new folder (we like a consistent naming scheme, so we'll add these custom column templates in `AdminList/entity-name/column-name.twig.html`) :
 
 ```
 mkdir -p src/MyProject/WebsiteBundle/Resources/views/AdminList/Employee
