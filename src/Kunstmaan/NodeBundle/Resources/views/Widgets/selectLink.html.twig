@@ -1,5 +1,20 @@
 {% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
+{% import _self as macros %}
+{% macro selectLinkRecTreeView(tree, item) %}
+    {% import _self as macros %}
+    <li rel="page" class="{% if item.online == 0 %}jstree-node--offline{% endif %}"{% if item.online == 0 %} data-jstree='{"type":"offline"}'{% endif %}>
+        <a href="#" class="js-url-chooser-link-select" data-slug="{{ item.url }}"  data-id="{{ item.id }}">
+            {{ item.title }}
+        </a>
+        <ul>
+            {% for item in tree.children(item.id) %}
+                {{ macros.selectLinkRecTreeView(tree, item) }}
+            {% endfor %}
+        </ul>
+    </li>
+{% endmacro %}
+
 {% block body %}
     <header role="banner">
 
@@ -68,7 +83,7 @@
             <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
                 <ul>
                     {% for item in tree.rootItems %}
-                        {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
+                        {{ macros.selectLinkRecTreeView(tree, item) }}
                     {% endfor %}
                 </ul>
             </nav>

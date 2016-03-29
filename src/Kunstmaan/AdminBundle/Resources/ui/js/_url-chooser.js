@@ -23,14 +23,15 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
             var $this = $(this),
                 slug = $this.data('slug'),
-                id = $this.data('id');
-
-            // Update preview
-            $('#url-chooser__selection-preview').text('Selection: ' + slug);
+                id = $this.data('id'),
+                baseUrl = $this.closest('nav').data('base-url');
 
             // Store values
-            itemUrl = slug;
+            itemUrl = baseUrl + (slug ? "/" + slug : '');
             itemId = id;
+
+            // Update preview
+            $('#url-chooser__selection-preview').text('Selection: ' + itemUrl);
         });
 
         // Media Chooser select
