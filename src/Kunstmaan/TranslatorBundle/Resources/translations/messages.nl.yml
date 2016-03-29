@@ -17,5 +17,5 @@ settings:
         import_translations_forced: Importeer geforceerd
         not_live_warning: "De live vertalingen zijn niet up-to-date. Klik op 'Live herladen' om deze te updaten."
         choose_language: "Kies een taal"
-        succesful_added: "Nieuw vertaling is goed aangemaakt"
+        succesful_added: "Nieuwe vertaling is succesvol aangemaakt"
         succesful_edited: "Vertaling is succesvol aangepast"

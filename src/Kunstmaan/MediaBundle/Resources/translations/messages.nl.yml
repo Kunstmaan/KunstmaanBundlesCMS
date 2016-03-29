@@ -1,0 +1,95 @@
+# Media
+media:
+  aviary:
+    title: Aviary
+    nothing: Hier is niets te zien.
+
+  media:
+    no: Er staan nog geen bestanden in deze map.
+    dnd:
+      tip: "Tip:"
+      tiptext: wist u dat u meerdere bestanden hier naartoe kunt slepen?
+      alert:
+        title: Incoming!
+        text: Sleep uw bestanden hier naartoe om ze direct in deze map te uploaden.
+    bulkupload:
+      addto: Upload bstanden naar "%folder%"
+    contenttab:
+      title: Inhoud
+    propertiestab:
+      title: Eigenschappen
+    title: Media
+    add:
+      action: Media toevoegen
+    edit:
+      action: Bewerk
+    download:
+      action: Download
+    mediainfo:
+      name: Naam
+      contenttype: Inhoudstype
+      createdat: Toegevoegd
+      updatedat: Bewerkt
+      downloadlink: Download link
+    addto: Voeg media toe aan "%folder%"
+    deletesure: Weet u zeker dat u dit wilt verwijderen?
+    new: Voeg media toe aan "%folder%"
+
+  folder:
+    addsub:
+      action: Submap toevoegen
+      action_short: Toevoegen
+      modal:
+        title: Submap toevoegen
+        save: Toevoegen
+    sub:
+      no: Er zijn nog geen submappen.
+    delete:
+      action: Verwijder deze map
+      action_short: Verwijder
+      modal:
+        title: Verwijder map
+        text: Weet u zeker dat u "%folder%" wilt verwijderen?
+    save: Opslaan
+    contenttab:
+      title: Inhoud
+    propertiestab:
+      title: Eigenschappen
+    sortby: Sorteer op
+
+  bulkupload:
+    upload: Upload
+    bulkupload: Bulk upload
+    select_files: Selecteer bestanden
+    upload_more: Upload meer bestanden
+    back_to_folder: Terug naar map
+    upload_finished: Het uploaden is afgerond.
+    not_available: De bulk upload functie is niet beschikbaar voor u. Uw browser biedt geen ondersteuning voor Flash, Silverlight of HTML5.
+
+  slide:
+    add: Slide toevoegen
+    modal:
+      title: Slide toevoegen
+      save: Toevoegen
+  video:
+    add: Video toevoegen
+    modal:
+      title: Video toevoegen
+      save: Toevoegen
+  audio:
+    add: Audio toevoegen
+    modal:
+          title: Audio toevoegen
+          save: Toevoegen
+
+  file:
+    add: Bestand toevoegen
+    modal:
+      title: Bestand toevoegen
+      save: toevoegen
+
+  widget:
+    choose: Kies
+    delete: Verwijder
+    media_chooser: Media-keuze
+    icon_chooser: Icoon-keuze

@@ -1,0 +1,27 @@
+pagepart:
+    header:
+        type: 'Kop type'
+        title: 'Titel'
+
+    link:
+        choose: 'Kies link'
+        openinnewwindow: 'Open in nieuw venster'
+        text: 'Tekst'
+
+    html:
+        content: 'Inhoud'
+
+    text:
+        content: 'inhoud'
+
+    buttons:
+        move_up: Verplaats omhoog
+        move_down: Verplaats omlaag
+        edit: Bewerk
+        delete: Verwijder
+        resize: Minimaliseer / Maximaliseer
+
+region:
+    button:
+        min: Minimaliseer
+        max: Maximaliseer
