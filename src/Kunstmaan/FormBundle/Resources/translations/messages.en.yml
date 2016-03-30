@@ -3,7 +3,7 @@ formsubmissions:
   index:
     title: Form pages with submissions
   menu:
-    title: Submissions
+    title: Form submissions
   list:
     title: Form submissions for page
   edit:

@@ -18,7 +18,7 @@ settings:
   maintanance: Onderhoud
   scheduled: Geplande taken
   version:
-      bundle: Bundel verses
+      bundle: Bundle versies
       composer_lock_not_found: Geen composer.lock bestand gevonden in de project root
       error_parsing_composer: Fout bij het parsen van het composer.lock bestand, geen geldige json
       error: Er ging iets fout bij het ophalen van de versie informatie. Probeer het later nog eens.

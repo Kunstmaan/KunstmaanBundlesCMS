@@ -42,7 +42,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                 $menuItem
                     ->setRoute('KunstmaanUserManagementBundle_settings_users')
                     ->setUniqueId('Users')
-                    ->setLabel('Users')
+                    ->setLabel('settings.users')
                     ->setParent($parent);
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                     $menuItem->setActive(true);
@@ -54,7 +54,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                 $menuItem
                     ->setRoute('KunstmaanUserManagementBundle_settings_groups')
                     ->setUniqueId('Groups')
-                    ->setLabel('Groups')
+                    ->setLabel('settings.groups')
                     ->setParent($parent);
 
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
@@ -67,7 +67,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                 $menuItem
                     ->setRoute('KunstmaanUserManagementBundle_settings_roles')
                     ->setUniqueId('Roles')
-                    ->setLabel('Roles')
+                    ->setLabel('settings.roles')
                     ->setParent($parent);
                 if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                     $menuItem->setActive(true);
