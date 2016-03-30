@@ -26,9 +26,9 @@ class NodeRepository extends NestedTreeRepository
      * @param bool      $includeHiddenFromNav include the hiddenfromnav nodes
      *                                        or not
      *
-     * @return Node[]
+     * @return Node[]fff
      */
-    public function getTopNodes(
+    public function getTopNodes(f
         $lang,
         $permission,
         AclHelper $aclHelper,

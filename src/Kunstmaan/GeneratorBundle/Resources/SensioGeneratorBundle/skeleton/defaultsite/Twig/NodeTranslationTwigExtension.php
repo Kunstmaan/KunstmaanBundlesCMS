@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Twig;
+namespace \Twig;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;

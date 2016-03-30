@@ -405,7 +405,7 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     public function generateTwigExtensions($parameters)
     {
         $relPath = '/Twig/';
-        $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'NodeTranslationTwigExtension.php', $parameters, true);
+//        $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'NodeTranslationTwigExtension.php', $parameters, true);
         if ($this->demosite) {
             $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'BikesTwigExtension.php', $parameters, true);
         }
