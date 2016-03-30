@@ -459,6 +459,14 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 $name       = $this->assistant->askAndValidate(
                     $question,
                     function ($name) use ($generator, $container) {
+                        /**
+                         * Replace slash to backslash. Eg: CmsBundle:Blog/Comment --> CmsBundle:Blog\Comment
+                         *
+                         * @see \Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory::getMetadataFor()
+                         * @see \Doctrine\ORM\Mapping\ClassMetadataFactory::getFqcnFromAlias()
+                         */
+                        $name = strtr($name, '/', '\\');
+
                         $parts = explode(':', $name);
 
                         // Should contain colon

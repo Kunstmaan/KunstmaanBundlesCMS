@@ -82,3 +82,14 @@ services:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
         calls:
             - [setContainer, ['@service_container'] ]
+
+    kunstmaan_media.filesystem_adapter:
+        class: Gaufrette\Adapter\Local
+        arguments:
+            - '%kernel.root_dir%/../web%kunstmaan_media.media_path%'
+            - true
+
+    kunstmaan_media.filesystem:
+        class: Gaufrette\Filesystem
+        arguments:
+            - '@kunstmaan_media.filesystem_adapter'
