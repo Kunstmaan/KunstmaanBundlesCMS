@@ -16,6 +16,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class NodeTranslationRepository extends EntityRepository
 {
+
     /**
      * Get max children weight
      *
