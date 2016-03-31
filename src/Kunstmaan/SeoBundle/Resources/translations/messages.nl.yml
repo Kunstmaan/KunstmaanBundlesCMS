@@ -1,0 +1,36 @@
+# Media
+seo:
+    robots:
+        tip: Tip:
+        warning: Dit is een standaard waarde en voorbeeld. Er is geen eigen robots.txt ingesteld.
+        moreinfo: Meer informatie over de Kunstmaan robots.txt staat op onze
+
+    action:
+        save: Opslaan
+        cancel: Annuleren
+        preview: Preview
+
+    form:
+        og:
+            title: OG Title
+            description: OG Description
+            url: OG Url
+            type: OG Type
+            image: OG Image
+        twitter:
+            title: Titel
+            description: Omschrijving
+            sitehandle: Site Handle
+            creatorhandle: Creator Handle
+            image: Afbeelding
+        robots:
+            noindex: No index
+            nofollow: No follow
+            noarchive: No archive
+            nosnippet: No snippet
+            notranslate: No translate
+            noimageindex: No image index
+
+    pagetabs:
+        opengraph: Open Graph
+        twittercards: Twitter Cards
