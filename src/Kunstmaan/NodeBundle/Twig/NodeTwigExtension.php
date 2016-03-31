@@ -114,8 +114,9 @@ class NodeTwigExtension extends Twig_Extension
      */
     public function getNodeTranslationByNodeId($nodeId, $lang)
     {
-        $qb = getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang);
-        return $qb->getQuery()->getOneOrNullResult();
+        $repo = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+
+        return $repo->getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang);
     }
 
     /**

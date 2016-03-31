@@ -29,8 +29,7 @@ class NodeRepository extends NestedTreeRepository
      */
     public function getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang)
     {
-        $repo = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation');
-        $qb = $repo->createQueryBuilder('nt')
+        $qb = $this->createQueryBuilder('nt')
             ->select('nt')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
             ->where('n.deleted != 1')
@@ -42,7 +41,7 @@ class NodeRepository extends NestedTreeRepository
             ->setFirstResult(0)
             ->setMaxResults(1);
 
-        return $qb;
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
 
