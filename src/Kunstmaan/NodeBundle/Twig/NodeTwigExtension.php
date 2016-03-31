@@ -115,19 +115,8 @@ class NodeTwigExtension extends Twig_Extension
     public function getNodeTranslationByNodeId($nodeId, $lang)
     {
         $repo = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation');
-        $qb = $repo->createQueryBuilder('nt')
-            ->select('nt')
-            ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
-            ->where('n.deleted != 1')
-            ->andWhere('nt.online = 1')
-            ->andWhere('nt.lang = :lang')
-            ->setParameter('lang', $lang)
-            ->andWhere('n.id = :node_id')
-            ->setParameter('node_id', $nodeId)
-            ->setFirstResult(0)
-            ->setMaxResults(1);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $repo->getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang);
     }
 
     /**

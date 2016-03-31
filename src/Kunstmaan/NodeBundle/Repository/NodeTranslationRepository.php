@@ -17,6 +17,30 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class NodeTranslationRepository extends EntityRepository
 {
     /**
+     * Get the QueryBuilder based on node id and language.
+     *
+     * @param int $nodeId
+     * @param string $lang
+     * @return array_shift($result)
+     */
+    public function getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang)
+    {
+        $qb = $this->createQueryBuilder('nt')
+            ->select('nt')
+            ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
+            ->where('n.deleted != 1')
+            ->andWhere('nt.online = 1')
+            ->andWhere('nt.lang = :lang')
+            ->setParameter('lang', $lang)
+            ->andWhere('n.id = :node_id')
+            ->setParameter('node_id', $nodeId)
+            ->setFirstResult(0)
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * Get max children weight
      *
      * @param Node $parentNode
