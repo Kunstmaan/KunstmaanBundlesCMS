@@ -29,6 +29,7 @@
     {# CSS #}
     {% include '<%= shortBundleName %>/Layout/_css.html.twig' %}
 </head>
+{% endspaceless %}
 
 <body id="sidebar-toggle-container" class="sidebar-toggle-container{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
 <% if demosite %>
@@ -87,4 +88,3 @@
 <% endif %>
 </body>
 </html>
-{% endspaceless %}
