@@ -88,7 +88,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes')
                 ->setUniqueId('pages')
-                ->setLabel('Pages')
+                ->setLabel('pages.title')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);

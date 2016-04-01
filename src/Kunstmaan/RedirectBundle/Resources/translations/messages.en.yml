@@ -1,4 +1,5 @@
 redirect:
+    title: Redirects
     all: All domains
     origin_info: The URL that you want to redirect, eg. /contest
     target_info: The destination redirect URL, eg. /en/contests/summer-contest
