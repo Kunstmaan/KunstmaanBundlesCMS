@@ -1,0 +1,23 @@
+<!-- Load widget code -->
+<script src="http://feather.aviary.com/imaging/v1/editor.js"></script>
+
+<!-- Instantiate the widget -->
+<script>
+    var featherEditor = new Aviary.Feather({
+        apiKey: '{{ handler.aviaryApiKey }}',
+        tools: 'all',
+        onSave: function(imageID, newURL) {
+            var img = document.getElementById(imageID);
+            img.src = newURL;
+            window.location = '{{ url('KunstmaanMediaBundle_aviary', { 'folderId' : folder.id, 'mediaId' : media.id }) }}?url='+newURL;
+        }
+    });
+
+    function launchEditor(id, src) {
+        featherEditor.launch({
+            image: id,
+            url: src
+        });
+        return false;
+    }
+</script>
