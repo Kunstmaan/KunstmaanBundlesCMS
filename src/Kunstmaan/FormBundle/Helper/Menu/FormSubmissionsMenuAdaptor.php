@@ -29,7 +29,7 @@ class FormSubmissionsMenuAdaptor implements MenuAdaptorInterface
             $menuitem = new TopMenuItem($menu);
             $menuitem
                 ->setRoute('KunstmaanFormBundle_formsubmissions')
-                ->setLabel('Form submissions')
+                ->setLabel('formsubmissions.menu.title')
                 ->setUniqueId('Form submissions')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuitem->getRoute()) === 0) {

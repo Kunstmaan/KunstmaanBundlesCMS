@@ -3,7 +3,7 @@ formsubmissions:
   index:
     title: Formulierpagina's met inzendingen
   menu:
-    title: Inzendingen
+    title: Formulier inzendingen
   list:
     title: Formulier inzendingen voor pagina
   edit:

@@ -23,7 +23,7 @@ class RedirectMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('kunstmaanredirectbundle_admin_redirect')
-                ->setLabel('Redirects')
+                ->setLabel('redirect.title')
                 ->setUniqueId('Redirects')
                 ->setParent($parent);
 
