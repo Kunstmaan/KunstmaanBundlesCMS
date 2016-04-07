@@ -289,7 +289,6 @@ class FolderController extends Controller
     private function createEmptyForm(){
         $defaultData = array('checked' => false);
         $form = $this->createFormBuilder($defaultData)
-//            ->add('checked', CheckboxType::class, array('required' => false, 'label' => 'Also delete subfolders'))
             ->add('checked', CheckboxType::class, array('required' => false, 'label' => 'media.folder.empty.modal.checkbox'))
             ->getForm();
         return $form;

@@ -42,6 +42,11 @@ media:
       modal:
         title: Submap toevoegen
         save: Toevoegen
+      form:
+        name: Naam
+        rel: Rel
+        parent: Ouder
+        internal_name: Interne naam
     empty:
       action: Verwijder inhoud map
       action_short: Verwijder inhoud

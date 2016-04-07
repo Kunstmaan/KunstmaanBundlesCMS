@@ -42,6 +42,11 @@ media:
       modal:
         title: Add subfolder
         save: Add
+      form:
+        name: Name
+        rel: Rel
+        parent: Parent
+        internal_name: Internal name
     empty:
       action: Empty folder
       action_short: Empty
