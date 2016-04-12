@@ -3,12 +3,17 @@
 namespace Kunstmaan\PagePartBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
+use Kunstmaan\PagePartBundle\Repository\PageTemplateConfigurationRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
@@ -21,7 +26,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class PagePartCreatorService
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface|EntityManager
      */
     protected $em;
 
@@ -43,9 +48,9 @@ class PagePartCreatorService
     /**
      * Sets the EntityManager dependency.
      *
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function setEntityManager(EntityManager $em)
+    public function setEntityManager(EntityManagerInterface $em)
     {
         $this->em = $em;
         // Because these repositories are shared between the different functions it's
@@ -56,7 +61,7 @@ class PagePartCreatorService
     }
 
     /**
-     * @return EntityManager
+     * @return EntityManagerInterface
      */
     public function getEntityManager()
     {
@@ -82,12 +87,13 @@ class PagePartCreatorService
      *      It won't override pageparts but it will rather inject itself in that position and
      *      push the other pageparts down.
      */
-    public function addPagePartToPage($nodeOrInternalName, PagePartInterface $pagePart, $language, $context='main', $position=null)
+    public function addPagePartToPage($nodeOrInternalName, PagePartInterface $pagePart, $language, $context = 'main', $position = null)
     {
         // Find the correct page instance.
         $node = $this->getNode($nodeOrInternalName);
         /** @var $translation NodeTranslation */
         $translation = $node->getNodeTranslation($language, true);
+        /** @var HasPagePartsInterface $page */
         $page = $translation->getRef($this->em);
 
         // Find latest position.
@@ -167,24 +173,26 @@ class PagePartCreatorService
      */
     public function setPageTemplate($nodeOrInternalName, $language, $templateName)
     {
-	$node = $this->getNode($nodeOrInternalName);
-	/** @var $translation NodeTranslation */
-	$translation = $node->getNodeTranslation($language, true);
-	$page = $translation->getRef($this->em);
+        $node = $this->getNode($nodeOrInternalName);
+        /** @var $translation NodeTranslation */
+        $translation = $node->getNodeTranslation($language, true);
+        /** @var HasPageTemplateInterface|EntityInterface $page */
+        $page = $translation->getRef($this->em);
 
-	$repo = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
-	$pageTemplateConfiguration = $repo->findFor($page);
-	if ($pageTemplateConfiguration) {
-	    $pageTemplateConfiguration->setPageTemplate($templateName);
-	} else {
-	    $pageTemplateConfiguration = new PageTemplateConfiguration();
-	    $pageTemplateConfiguration->setPageId($page->getId());
-	    $pageTemplateConfiguration->setPageEntityName(ClassLookup::getClass($page));
-	    $pageTemplateConfiguration->setPageTemplate($templateName);
-	}
+        /** @var PageTemplateConfigurationRepository $repo */
+        $repo = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
+        $pageTemplateConfiguration = $repo->findFor($page);
+        if ($pageTemplateConfiguration) {
+            $pageTemplateConfiguration->setPageTemplate($templateName);
+        } else {
+            $pageTemplateConfiguration = new PageTemplateConfiguration();
+            $pageTemplateConfiguration->setPageId($page->getId());
+            $pageTemplateConfiguration->setPageEntityName(ClassLookup::getClass($page));
+            $pageTemplateConfiguration->setPageTemplate($templateName);
+        }
 
-	$this->em->persist($pageTemplateConfiguration);
-	$this->em->flush();
+        $this->em->persist($pageTemplateConfiguration);
+        $this->em->flush();
     }
 
     /**
