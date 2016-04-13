@@ -167,9 +167,14 @@ class FileHandler extends AbstractMediaHandler
         }
         if ($content instanceof UploadedFile) {
             $pathInfo = pathinfo($content->getClientOriginalName());
-            $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
-            $name = $media->getName();
-            if (empty($name)) {
+
+            if(isset($pathInfo['extension'])){
+                $originalFileName = sprintf('%s.%s', $this->slugifier->slugify($pathInfo['filename']), $pathInfo['extension']);
+            } else {
+                $originalFileName = $this->slugifier->slugify($pathInfo['filename']);
+            }
+            $media->setOriginalFilename($originalFileName);
+            if (empty($media->getName())) {
                 $media->setName($media->getOriginalFilename());
             }
         }
@@ -237,7 +242,10 @@ class FileHandler extends AbstractMediaHandler
 
         $parts    = pathinfo($filename);
         $filename = $this->slugifier->slugify($parts['filename']);
-        $filename .= '.'.strtolower($parts['extension']);
+        if(isset($parts['extension'])){
+            $filename .= '.'.strtolower($parts['extension']);
+        }
+
 
         return sprintf(
             '%s/%s',
