@@ -15,7 +15,7 @@
     <!-- Sortable container -->
     <div id="parts-{{ pagepartadmin.context }}" class="js-sortable-container sortable-container" data-scope="{% spaceless %}{% for type in pagepartadmin.possiblePagePartTypes %}{{ type.class|replace({'\\':""})~' ' }}{% endfor %}{% endspaceless %}">
         {% for id, pagepart in pagepartadmin.pagepartmap %}
-            {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/pagepart.html.twig' with { 'id': id, 'pagepartadmin': pagepartadmin, 'editmode': false} %}
+            {% include '@KunstmaanPagePartBundle/Resources/views/PagePartAdminTwigExtension/pagepart.html.twig' with { 'id': id, 'pagepartadmin': pagepartadmin, 'editmode': false} %}
         {% endfor %}
     </div>
 </div>

@@ -29,8 +29,12 @@ class FolderType extends AbstractType
     {
         $folder = $options['folder'];
         $builder
-            ->add('name', null, array('label' => 'media.folder.addsub.form.name')
-
+            ->add(
+                'name',
+                null,
+                array(
+                    'label' => 'media.folder.addsub.form.name'
+                )
             )
             ->add(
                 'rel',

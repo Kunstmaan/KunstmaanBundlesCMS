@@ -106,3 +106,10 @@ media:
     delete: Verwijder
     media_chooser: Media-keuze
     icon_chooser: Icoon-keuze
+
+  adminlist:
+    configurator:
+      name: Naam
+      type: Type
+      date: Datum
+      filesize: Bestandsgrootte
