@@ -42,6 +42,14 @@ media:
       modal:
         title: Add subfolder
         save: Add
+    empty:
+      action: Empty folder
+      action_short: Empty
+      modal:
+        title: Empty folder
+        text: Are you sure you want to delete the content of folder "%folder%"?
+        checkbox: Also delete subfolders
+        save: Empty
     sub:
       no: No subfolders yet.
     delete:

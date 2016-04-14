@@ -42,6 +42,14 @@ media:
       modal:
         title: Submap toevoegen
         save: Toevoegen
+    empty:
+      action: Verwijder inhoud map
+      action_short: Verwijder inhoud
+      modal:
+        title: Verwijder inhoud map
+        text: Weet u zeker dat u de inhoud van "%folder%" wilt verwijderen?
+        checkbox: Verwijder ook de subfolders
+        save: Verwijder inhoud
     sub:
       no: Er zijn nog geen submappen.
     delete:
