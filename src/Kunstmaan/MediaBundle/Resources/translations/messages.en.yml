@@ -42,6 +42,11 @@ media:
       modal:
         title: Add subfolder
         save: Add
+      form:
+          name: Name 
+          rel: Rel 
+          parent: Parent 
+          internal_name: Internal name
     sub:
       no: No subfolders yet.
     delete:
@@ -93,3 +98,10 @@ media:
     delete: Delete
     media_chooser: Media-chooser
     icon_chooser: Icon-chooser
+
+  adminlist:
+    configurator:
+      name: Name
+      type: Type
+      date: Date
+      filesize: Filesize

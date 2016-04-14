@@ -57,10 +57,10 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
-        $this->addField('contentType', 'Type', true);
-        $this->addField('updatedAt', 'Date', true);
-        $this->addField('filesize', 'Filesize', true);
+        $this->addField('name', 'media.adminlist.configurator.name', true);
+        $this->addField('contentType', 'media.adminlist.configurator.type', true);
+        $this->addField('updatedAt', 'media.adminlist.configurator.date', true);
+        $this->addField('filesize', 'media.adminlist.configurator.filesize', true);
     }
 
     /**
