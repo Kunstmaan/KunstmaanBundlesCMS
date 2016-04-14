@@ -71,7 +71,7 @@ class FolderController extends Controller
 
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    'Folder \'' . $folder->getName() . '\' has been updated!'
+                    $this->get('translator')->trans('media.folder.show.success.text', array('%folder%' => $folder->getName()))
                 );
 
                 return new RedirectResponse(
@@ -115,11 +115,11 @@ class FolderController extends Controller
         if (is_null($parentFolder)) {
             $this->get('session')->getFlashBag()->add(
                 'failure',
-                'You can\'t delete the \'' . $folderName . '\' folder!'
+                $this->get('translator')->trans('media.folder.delete.failure.text', array('%folder%' => $folder->getName()))
             );
         } else {
             $em->getRepository('KunstmaanMediaBundle:Folder')->delete($folder);
-            $this->get('session')->getFlashBag()->add('success', 'Folder \'' . $folderName . '\' has been deleted!');
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('media.folder.delete.success.text', array('%folder%' => $folder->getName())));
             $folderId = $parentFolder->getId();
         }
         if (strpos($_SERVER['HTTP_REFERER'],'chooser')) {
@@ -164,7 +164,7 @@ class FolderController extends Controller
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    'Folder \'' . $folder->getName() . '\' has been created!'
+                    $this->get('translator')->trans('media.folder.addsub.success.text', array('%folder%' => $folder->getName()))
                 );
                 if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
@@ -227,7 +227,7 @@ class FolderController extends Controller
 
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    'Folder \'' . $folder->getName() . '\' has been emptied!'
+                    $this->get('translator')->trans('media.folder.empty.success.text', array('%folder%' => $folder->getName()))
                 );
                 if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
@@ -286,7 +286,8 @@ class FolderController extends Controller
         );
     }
 
-    private function createEmptyForm(){
+    private function createEmptyForm()
+    {
         $defaultData = array('checked' => false);
         $form = $this->createFormBuilder($defaultData)
             ->add('checked', CheckboxType::class, array('required' => false, 'label' => 'media.folder.empty.modal.checkbox'))
