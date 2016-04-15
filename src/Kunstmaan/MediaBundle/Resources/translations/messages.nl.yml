@@ -31,9 +31,9 @@ media:
       createdat: Toegevoegd
       updatedat: Bewerkt
       downloadlink: Download link
-    addto: Voeg media toe aan "%folder%"
+    addto: Voeg media toe aan '%folder%'
     deletesure: Weet u zeker dat u dit wilt verwijderen?
-    new: Voeg media toe aan "%folder%"
+    new: Voeg media toe aan '%folder%'
 
   folder:
     addsub:
@@ -43,10 +43,22 @@ media:
         title: Submap toevoegen
         save: Toevoegen
       form:
-          name: Naam 
-          rel: Rel 
-          parent: Ouder 
-          internal_name: Interne naam
+        name: Naam
+        rel: Rel
+        parent: Ouder
+        internal_name: Interne naam
+      success:
+        text: Map '%folder%' is aangemaakt!
+    empty:
+      action: Verwijder inhoud map
+      action_short: Verwijder inhoud
+      modal:
+        title: Verwijder inhoud map
+        text: Weet u zeker dat u de inhoud van '%folder%' wilt verwijderen?
+        checkbox: Verwijder ook de subfolders
+        save: Verwijder inhoud
+      success:
+        text: Map '%folder%' is leeggemaakt!
     sub:
       no: Er zijn nog geen submappen.
     delete:
@@ -54,13 +66,20 @@ media:
       action_short: Verwijder
       modal:
         title: Verwijder map
-        text: Weet u zeker dat u "%folder%" wilt verwijderen?
+        text: Weet u zeker dat u '%folder%' wilt verwijderen?
+      failure:
+        text: U kan de map '%folder%' niet verwijderen!
+      success:
+        text: Map '%folder%' is verwijderd!
     save: Opslaan
     contenttab:
       title: Inhoud
     propertiestab:
       title: Eigenschappen
     sortby: Sorteer op
+    show:
+      success:
+        text: Map '%folder%' is geüpdatet!
 
   bulkupload:
     upload: Upload

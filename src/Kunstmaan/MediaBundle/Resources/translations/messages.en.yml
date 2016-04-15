@@ -43,10 +43,22 @@ media:
         title: Add subfolder
         save: Add
       form:
-          name: Name 
-          rel: Rel 
-          parent: Parent 
-          internal_name: Internal name
+        name: Name
+        rel: Rel
+        parent: Parent
+        internal_name: Internal name
+      success:
+        text: Folder '%folder%' has been created!
+    empty:
+      action: Empty folder
+      action_short: Empty
+      modal:
+        title: Empty folder
+        text: Are you sure you want to delete the content of folder "%folder%"?
+        checkbox: Also delete subfolders
+        save: Empty
+      success:
+        text: Folder '%folder%' has been emptied!
     sub:
       no: No subfolders yet.
     delete:
@@ -55,12 +67,19 @@ media:
       modal:
         title: Delete folder
         text: Are you sure you want to delete "%folder%"?
+      failure:
+        text: You can't delete the %folder% folder!
+      success:
+        text: Folder '%folder%' has been deleted!
     save: Save
     contenttab:
       title: Content
     propertiestab:
       title: Properties
     sortby: Sort by
+    show:
+      success:
+        text: Folder %folder% has been updated!
 
   bulkupload:
     upload: Upload
