@@ -10,7 +10,7 @@
 
     <li {% if activeTab == tabIdentifier %} class="active" {% endif %}>
         <a href="#{{ tabIdentifier }}" data-toggle="tab">
-            {{ tab.title }}
+            {{ tab.title|trans }}
             {% if formErrors|length > 0 %}
                 <span class="error-label">
                     {{formErrors|length}}

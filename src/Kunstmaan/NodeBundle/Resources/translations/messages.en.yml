@@ -49,3 +49,13 @@ kuma_node:
         online_public.raw:                  Online / Public version
         offline.raw:                        Offline
         "go_to_draft_version.%url%.raw":    (Go to <a href="%url%">draft version</a>)
+
+    tab:
+        properties:
+            title:  Properties
+        menu:
+            title:  Menu
+        permissions:
+            title:  Permissions
+        searcher:
+            title:  Searcher

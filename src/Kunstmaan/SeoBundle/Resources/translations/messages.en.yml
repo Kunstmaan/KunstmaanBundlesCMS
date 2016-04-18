@@ -53,3 +53,9 @@ seo:
     pagetabs:
         opengraph: Open Graph
         twittercards: Twitter Cards
+
+    tab:
+        seo:
+            title: SEO
+        social:
+            title: Social
