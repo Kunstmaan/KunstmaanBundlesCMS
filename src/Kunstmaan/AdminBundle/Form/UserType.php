@@ -80,8 +80,8 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                             'multiple' => true,
                             'expanded' => false,
                             'required' => false,
-                            'placeholder' => 'settings.user.roles_placeholder',
                             'attr' => array(
+                                'placeholder' => 'settings.user.roles_placeholder',
                                 'class' => 'js-advanced-select form-control advanced-select',
                             )
                         )
