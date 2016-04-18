@@ -242,12 +242,14 @@
                                         </span>
                                     </a>
 
-                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" #} class="btn media-thumbnail-del-btn">
+                                    <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn media-thumbnail-del-btn">
                                         <i class="fa fa-trash-o"></i>
-                                    </a>
+                                    </button>
                                     <span class="media-thumbnail-del-helper">
                                         Delete
                                     </span>
+                                    <!-- Modals -->
+                                    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
                                 </div>
 
                                 {# Clearfixes #}
