@@ -24,7 +24,9 @@ class SlidePagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', MediaType::class, array('label' => 'mediapagepart.slide.choose'));
+        $builder->add('media', MediaType::class, array(
+            'label' => 'mediapagepart.slide.choose',
+        ));
     }
 
     /**

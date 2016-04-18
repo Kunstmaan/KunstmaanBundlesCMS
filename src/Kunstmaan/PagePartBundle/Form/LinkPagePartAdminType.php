@@ -18,9 +18,19 @@ class LinkPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('url', URLChooserType::class, array('label' => 'pagepart.link.choose', 'required' => false))
-            ->add('openinnewwindow', CheckboxType::class, array('label' => 'pagepart.link.openinnewwindow', 'required' => false))
-            ->add('text', null, array('label' => 'pagepart.link.text', 'required' => false));
+        $builder
+            ->add('url', URLChooserType::class, array(
+                'label' => 'pagepart.link.choose',
+                'required' => false,
+            ))
+            ->add('openinnewwindow', CheckboxType::class, array(
+                'label' => 'pagepart.link.openinnewwindow',
+                'required' => false,
+            ))
+            ->add('text', null, array(
+                'label' => 'pagepart.link.text',
+                'required' => false,
+            ));
     }
 
     /**
