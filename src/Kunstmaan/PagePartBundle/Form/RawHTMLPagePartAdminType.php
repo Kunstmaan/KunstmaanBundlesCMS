@@ -18,7 +18,14 @@ class RawHTMLPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', TextareaType::class, array('label' => 'pagepart.html.content', 'required' => false, 'attr' => array("style" => "width: 600px", 'rows' => 32)));
+        $builder->add('content', TextareaType::class, array(
+            'label' => 'pagepart.html.content',
+            'required' => false,
+            'attr' => array(
+                'style' => 'width: 600px',
+                'rows' => 32,
+            ),
+        ));
     }
 
     /**

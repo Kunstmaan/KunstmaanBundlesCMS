@@ -17,3 +17,26 @@ modal:
 
 pages:
     copynotavailable: "Please translate the parent page first"
+
+kuma_node:
+    form:
+        controller_action:
+            title:
+                label:  Title
+        menu_tab:
+            hidden_from_menu:
+                label:  Hidden from menu
+            internal_name:
+                label:  Internal name
+        menu_tab_translation:
+            slug:
+                label:  Slug
+            weight:
+                label:  Weight
+                title:  Used to reorder the pages.
+        page:
+            title:
+                label:  Navigation title
+            page_title:
+                label:  Page title
+                info_text: Used as title inside the page.

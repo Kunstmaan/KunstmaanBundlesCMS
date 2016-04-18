@@ -1,24 +1,26 @@
 # Settings
 settings:
-  groups: Groups
-  group:
-      name: Name
-      edit: Edit group
-      add: Add group
-      roles: Roles
-  users: Users
-  user:
-      username: Username
-      password: Password
-      repeatedpassword: Repeat password
-      adminlang: Admin interface language
-      email: E-mail
-      enabled: Enabled
-      roles: Groups
-      add: Add User
-      edit: Edit User
-  roles: Roles
-  role:
-      role: Role
-      add: Add Role
-      edit: Edit Role
+    groups: Groups
+    group:
+        name: Name
+        edit: Edit group
+        add: Add group
+        roles: Roles
+        roles_placeholder: Choose the roles...
+    users: Users
+    user:
+        username: Username
+        password: Password
+        repeatedpassword: Repeat password
+        adminlang: Admin interface language
+        email: E-mail
+        enabled: Enabled
+        roles: Groups
+        roles_placeholder: Choose the permission groups...
+        add: Add User
+        edit: Edit User
+    roles: Roles
+    role:
+        role: Role
+        add: Add Role
+        edit: Edit Role
