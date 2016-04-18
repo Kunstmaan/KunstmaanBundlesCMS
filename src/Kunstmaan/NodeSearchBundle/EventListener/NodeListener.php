@@ -34,6 +34,6 @@ class NodeListener
         $searchWidget->addType('node_search', new NodeSearchAdminType());
 
         $tabPane = $event->getTabPane();
-        $tabPane->addTab(new Tab('Searcher', $searchWidget));
+        $tabPane->addTab(new Tab('kuma_node.tab.searcher.title', $searchWidget));
     }
 }

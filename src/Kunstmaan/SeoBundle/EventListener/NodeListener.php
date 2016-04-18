@@ -40,12 +40,12 @@ class NodeListener
 
             $seoWidget = new FormWidget();
             $seoWidget->addType('seo', new SeoType(), $seo);
-            $event->getTabPane()->addTab(new Tab('SEO', $seoWidget));
+            $event->getTabPane()->addTab(new Tab('seo.tab.seo.title', $seoWidget));
 
             $socialWidget = new FormWidget();
             $socialWidget->addType('social', new SocialType(), $seo);
             $socialWidget->setTemplate('KunstmaanSeoBundle:Admin\Social:social.html.twig');
-            $event->getTabPane()->addTab(new Tab('Social', $socialWidget));
+            $event->getTabPane()->addTab(new Tab('seo.tab.social.title', $socialWidget));
         }
     }
 }
