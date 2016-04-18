@@ -61,6 +61,12 @@ form:
     addfilter: Add filter
     choosetypefilter: Filter on
     versions: Versions
+    button:
+        dropdown:
+            more: More
+        filter:
+            clear: Clear
+            filter: Filter
 
 omnext:
     home: Home

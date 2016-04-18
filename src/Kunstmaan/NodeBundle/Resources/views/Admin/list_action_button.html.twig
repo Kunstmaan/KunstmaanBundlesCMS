@@ -1,8 +1,8 @@
 <button {% for key,value in action.getUrl()[("attributes")] %}{{ key }}="{{ value }}" {% endfor %}>
 {% if action.getIcon() is not null %}
     <i class="fa fa-{{ action.getIcon() }}"></i>
-    {{ action.getLabel() }}
+    {{ action.getLabel()|trans }}
 {% else %}
-    {{ action.getLabel() }}
+    {{ action.getLabel()|trans }}
 {% endif %}
 </button>

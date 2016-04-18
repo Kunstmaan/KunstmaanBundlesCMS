@@ -74,6 +74,8 @@ kuma_form:
         submit_button_page_part:
             label:
                 label: Label
+    button:
+        export_to:  Export to
 
 # Form Submissions
 formsubmissions:
