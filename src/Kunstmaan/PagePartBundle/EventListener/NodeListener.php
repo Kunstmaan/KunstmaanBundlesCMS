@@ -66,7 +66,7 @@ class NodeListener
         if ($page instanceof HasPageTemplateInterface) {
             $pageTemplateWidget = new PageTemplateWidget($page, $event->getRequest(), $this->em, $this->kernel, $this->formFactory, $this->pagePartAdminFactory);
             /* @var Tab $propertiesTab */
-            $propertiesTab = $tabPane->getTabByTitle('Properties');
+            $propertiesTab = $tabPane->getTabByTitle('kuma_node.tab.properties.title');
             if (!is_null($propertiesTab)) {
                 $propertiesWidget = $propertiesTab->getWidget();
                 $tabPane->removeTab($propertiesTab);

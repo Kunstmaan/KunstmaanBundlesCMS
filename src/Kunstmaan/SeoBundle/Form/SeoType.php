@@ -54,8 +54,8 @@ class SeoType extends AbstractType
             'multiple' => true,
             'expanded' => false,
             'label' => 'seo.form.seo.meta_robots.label',
-            'placeholder' => 'seo.form.seo.meta_robots.placeholder',
             'attr' => array(
+                'placeholder' => 'seo.form.seo.meta_robots.placeholder',
                 'class' => 'js-advanced-select form-control',
                 'maxlength' => 255
             )
