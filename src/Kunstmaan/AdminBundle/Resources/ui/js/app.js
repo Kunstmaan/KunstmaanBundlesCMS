@@ -15,6 +15,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
+        kunstmaanbundles.sidebarsearchfocus.init();
         kunstmaanbundles.filter.init();
         kunstmaanbundles.sortableTable.init();
         kunstmaanbundles.checkIfEdited.init();
