@@ -84,3 +84,7 @@ kuma_admin:
                 label: Title
             content:
                 label: Content (raw html)
+
+kuma_js:
+    auto_collapse:
+        more_button_label: More

@@ -26,7 +26,10 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
     createMoreDropdown = function() {
         // create dom elements
         $moreButtonContainer = $('<div class="btn-group btn-group--more">').appendTo($btnGroup);
-        $moreButton = $('<button class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">').text('More ').appendTo($moreButtonContainer);
+        var label = MORE_BUTTON_LABEL
+            ? MORE_BUTTON_LABEL
+            : 'More';
+        $moreButton = $('<button class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">').text(label + ' ').appendTo($moreButtonContainer);
         $caret = $('<span class="fa fa-caret-down">').appendTo($moreButton);
         $dropdownList = $('<ul class="dropdown-menu dropdown-menu-right dropdown-menu--more">').appendTo($moreButtonContainer);
 
