@@ -40,3 +40,12 @@ kuma_node:
             page_title:
                 label:  Page title
                 info_text: Used as title inside the page.
+    status:
+        "will_be_publish_at.%date%.raw":    This page will be published at %date%
+        "will_be_unpublish_at.%date%.raw":  This page will be unpublished at %date%
+        button:
+            schedulle_cancel: Cancel
+        "offline_draft.%public_url%.raw":   Offline / Draft version (Go to <a href="%public_url%">public version</a>)
+        online_public.raw:                  Online / Public version
+        offline.raw:                        Offline
+        "go_to_draft_version.%url%.raw":    (Go to <a href="%url%">draft version</a>)
