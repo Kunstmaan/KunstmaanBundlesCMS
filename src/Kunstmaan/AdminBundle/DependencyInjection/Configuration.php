@@ -54,6 +54,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('google_signin')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('enabled')->defaultFalse()->end()
+                        ->scalarNode('client_id')->isRequired()->end()
+                        ->scalarNode('client_secret')->isRequired()->end()
+                        ->scalarNode('hosted_domain')->isRequired()->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
