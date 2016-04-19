@@ -67,3 +67,6 @@ omnext:
   welcome: Bienvenue.
   information: <strong>Information.</strong> Il n'y a pas de nouvelles notifications.
 
+errors:
+    oauth:
+        invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.

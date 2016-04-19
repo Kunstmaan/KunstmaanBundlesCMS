@@ -13,13 +13,11 @@ class GoogleSignInTwigExtension extends Twig_Extension
 {
     private $enabled;
     private $clientId;
-    private $hostedDomain;
 
-    public function __construct($enabled, $clientId, $hostedDomain)
+    public function __construct($enabled, $clientId)
     {
         $this->enabled = $enabled;
         $this->clientId = $clientId;
-        $this->hostedDomain = $hostedDomain;
     }
 
     /**
@@ -32,7 +30,6 @@ class GoogleSignInTwigExtension extends Twig_Extension
         return array(
             new \Twig_SimpleFunction('google_signin_enabled', array($this, 'isGoogleSignInEnabled')),
             new \Twig_SimpleFunction('google_signin_client_id', array($this, 'getClientId')),
-            new \Twig_SimpleFunction('google_signin_hosted_domain', array($this, 'getHostedDomain'))
         );
     }
 
@@ -47,14 +44,6 @@ class GoogleSignInTwigExtension extends Twig_Extension
     public function getClientId()
     {
         return $this->clientId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHostedDomain()
-    {
-        return $this->hostedDomain;
     }
 
     /**

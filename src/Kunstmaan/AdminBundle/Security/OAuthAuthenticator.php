@@ -2,33 +2,56 @@
 
 namespace Kunstmaan\AdminBundle\Security;
 
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\User;
+use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Translation\DataCollectorTranslator;
 
 class OAuthAuthenticator extends AbstractGuardAuthenticator
 {
-    private $em;
+    /** @var RouterInterface */
     private $router;
-    private $clientId;
-    private $clientSecret;
-    private $hostedDomain;
+    
+    /** @var Session */
+    private $session;
+    
+    /** @var DataCollectorTranslator */
+    private $translator;
 
-    public function __construct(EntityManager $em, RouterInterface $router, $clientId, $clientSecret, $hostedDomain)
+    /** @var OAuthUserCreator */
+    private $oAuthUserCreator;
+    
+    /** @var string */
+    private $clientId;
+    
+    /** @var string */
+    private $clientSecret;
+
+    /**
+     * OAuthAuthenticator constructor.
+     * @param RouterInterface $router
+     * @param Session $session
+     * @param DataCollectorTranslator $translator
+     * @param OAuthUserCreator $oAuthUserCreator
+     * @param $clientId
+     * @param $clientSecret
+     */
+    public function __construct(RouterInterface $router, Session $session, DataCollectorTranslator $translator, OAuthUserCreator $oAuthUserCreator, $clientId, $clientSecret)
     {
-        $this->em = $em;
         $this->router = $router;
+        $this->session = $session;
+        $this->translator = $translator;
+        $this->oAuthUserCreator = $oAuthUserCreator;
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
-        $this->hostedDomain = $hostedDomain;
     }
 
     /**
@@ -114,32 +137,12 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
         if (!$ticket instanceof \Google_LoginTicket) {
             return null;
         }
-        
+
         $data = $ticket->getAttributes()['payload'];
         $email = $data['email'];
         $googleId = $data['sub'];
 
-        $user = $this->em->getRepository('KunstmaanAdminBundle:User')
-            ->findOneBy(array('googleId' => $googleId));
-
-        if (!$user instanceof User && preg_match('/'.$this->hostedDomain.'$/', $email)) {
-            $user = new User();
-            $user->setUsername($email);
-            $user->setEmail($email);
-            $user->setPlainPassword($googleId . $email . time());
-            $user->setEnabled(true);
-            $user->setLocked(false);
-            $user->setGoogleId($googleId);
-            $user->addRole('ROLE_SUPER_ADMIN');
-            $user->setAdminLocale('en');
-            $user->setPasswordChanged(true);
-
-            // Persist
-            $this->em->persist($user);
-            $this->em->flush();
-        }
-
-        return $user;
+        return $this->oAuthUserCreator->getOrCreateUser($email, $googleId);
     }
 
     /**
@@ -179,6 +182,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        $this->session->getFlashBag()->add('error', $this->translator->trans('errors.oauth.invalid'));
         return new RedirectResponse($this->router->generate('fos_user_security_login'));
     }
 

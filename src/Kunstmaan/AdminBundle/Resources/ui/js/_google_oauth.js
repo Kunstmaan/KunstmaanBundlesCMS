@@ -17,8 +17,7 @@ kunstmaanbundles.googleOAuth = (function($, window, undefined) {
             gapi.load('auth2', function() {
                 auth2 = gapi.auth2.init({
                     client_id: $input.data('clientid'),
-                    scope: 'profile email',
-                    hosted_domain: $input.data('hosteddomain')
+                    scope: 'profile email'
                 });
 
                 attachSignin(document.getElementById('app_oauth_signin'));

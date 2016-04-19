@@ -3,7 +3,7 @@
 {% block fos_user_content %}
     <form id="app__login__form" action="{{ path("fos_user_security_check") }}" method="post">
         {% if google_signin_enabled() %}
-        <input id="google_id_token" data-url="{{ path('KunstmaanAdminBundle_oauth_signin') }}" data-clientid="{{ google_signin_client_id() }}" data-hosteddomain="{{ google_signin_hosted_domain() }}" type="hidden" name="_google_id_token">
+        <input id="google_id_token" data-url="{{ path('KunstmaanAdminBundle_oauth_signin') }}" data-clientid="{{ google_signin_client_id() }}" type="hidden" name="_google_id_token">
         {% endif %}
         {% if error %}
             <div class="alert alert-danger">
