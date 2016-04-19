@@ -25,6 +25,10 @@ And enter the following data at the respective prompts :
 - Field name : `last_name`, type : `string`, length : `50`
 - Field name : `twitter_handle`, type : `string`, length : `20`
 
+To generate it's companion Admin List we can use another generator :
+
+    app/console kuma:generate:adminlist
+
 We don't need an empty repository class, but would like an admin list, generate the source skeleton and initialise the routing, so answer these prompts accordingly.
 
 So, now we have the skeleton ready, but as mentioned before we would like to add a picture of the employee. We'll add this field manually, so open up `src/MyProject/WebsiteBundle/Entity/Employee.php` and add the following :
@@ -71,12 +75,14 @@ Since we've added an extra field to our entity, we'll also have to update the en
 as well :
 
 ```php
+    use \Kunstmaan\MediaBundle\Form\Type\MediaType;
+    ...
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	...
 	$builder->add(
 	    'picture',
-	    'media',
+        MediaType::class,
 	    array(
 		'pattern'  => 'KunstmaanMediaBundle_chooser',
 		'required' => false,
