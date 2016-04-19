@@ -6,7 +6,7 @@
             <div class="app__content__header__extra-actions">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Export to
+                        {{ 'kuma_form.button.export_to' | trans }}
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
@@ -29,6 +29,6 @@
 
 {% block content %}
     <h2>{{ nodetranslation.title }}</h2>
-    
+
     {{ adminlist_widget(adminlist, 'KunstmaanFormBundle_formsubmissions_list', {"nodeTranslationId" : nodetranslation.id}) }}
 {% endblock %}

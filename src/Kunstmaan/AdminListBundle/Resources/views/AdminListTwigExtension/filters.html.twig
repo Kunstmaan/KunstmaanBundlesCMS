@@ -84,10 +84,10 @@
                 <!-- Form Actions -->
                 <div class="form-actions form-actions--padded">
                     <button type="button" id="clear-all-filters" class="btn btn-default btn--raise-on-hover form-actions__btn">
-                        Clear
+                        {{ 'form.button.filter.clear'|trans }}
                     </button>
                     <button type="submit" name="filter" value="filter" id="apply-all-filters" class="btn btn-primary btn--raise-on-hover form-actions__btn">
-                        Filter
+                        {{ 'form.button.filter.filter'|trans }}
                     </button>
                 </div>
             </form>
@@ -98,7 +98,7 @@
 
     <!-- Toggle Button -->
     <button type="button" class="js-toggle-btn btn btn-default btn--flat-top toggle-button app__filter__toggle{% if filter.currentfilters|length >0 %} toggle-btn--active{% endif %}" data-target="#app__filter">
-        Filter
+        {{ 'form.button.filter.filter'|trans }}
         <i class="fa fa-chevron-down btn__icon toggle-btn__icon--show"></i>
         <i class="fa fa-chevron-up btn__icon toggle-btn__icon--hide"></i>
     </button>

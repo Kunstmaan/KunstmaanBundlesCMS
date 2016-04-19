@@ -20,7 +20,9 @@ class ControllerActionAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class);
-        $builder->add('title');
+        $builder->add('title', null, array(
+            'label' => 'kuma_node.form.controller_action.title.label',
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

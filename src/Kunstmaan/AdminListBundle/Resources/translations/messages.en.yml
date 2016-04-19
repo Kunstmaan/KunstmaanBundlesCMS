@@ -1,0 +1,3 @@
+kuma_admin_list:
+    form:
+        export_to: Export to

@@ -27,7 +27,10 @@ class AudioPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', MediaType::class, array('mediatype' => 'audio', 'label' => 'mediapagepart.audio.choose'));
+        $builder->add('media', MediaType::class, array(
+            'mediatype' => 'audio',
+            'label' => 'mediapagepart.audio.choose',
+        ));
     }
 
     /**

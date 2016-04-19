@@ -28,6 +28,7 @@ class NewsletterSubscriptionType extends AbstractPopupAdminType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', EmailType::class, array(
+            'label' => 'kuma_lead_generation.form.newsletter_subscription.email.label',
             'constraints' => array(
                 new NotBlank(),
                 new Email(array('checkMX' => false)),

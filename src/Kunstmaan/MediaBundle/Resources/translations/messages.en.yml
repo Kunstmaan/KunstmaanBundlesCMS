@@ -1,126 +1,164 @@
 # Media
 media:
-  aviary:
-    title: Aviary
-    nothing: Nothing to see here.
+    aviary:
+        title: Aviary
+        nothing: Nothing to see here.
 
-  media:
-    no: No files in this folder yet.
-    dnd:
-      tip: "Tip:"
-      tiptext: did you know you can just drop multiple files here?
-      alert:
-        title: Incoming!
-        text: Drop your files to instantly upload them to this folder.
+    media:
+        no: No files in this folder yet.
+        dnd:
+            tip: "Tip:"
+            tiptext: did you know you can just drop multiple files here?
+            alert:
+                title: Incoming!
+                text: Drop your files to instantly upload them to this folder.
+        bulkupload:
+            addto: Upload files to "%folder%"
+        contenttab:
+            title: Content
+        propertiestab:
+            title: Properties
+        title: Media
+        add:
+            action: Add media
+        edit:
+            action: Edit
+        download:
+            action: Download
+        mediainfo:
+            name: Name
+            contenttype: Content-type
+            createdat: Added
+            updatedat: Updated
+            downloadlink: Download link
+        addto: Add media to "%folder%"
+        deletesure: Are you sure you want to delete this item?
+        new: Add media to "%folder%"
+
+    folder:
+        addsub:
+            action: Add subfolder
+            action_short: Add
+            modal:
+                title: Add subfolder
+                save: Add
+            form:
+                name: Name
+                rel: Rel
+                parent: Parent
+                internal_name: Internal name
+            success:
+                text: Folder '%folder%' has been created!
+        empty:
+            action: Empty folder
+            action_short: Empty
+            modal:
+                title: Empty folder
+                text: Are you sure you want to delete the content of folder "%folder%"?
+                checkbox: Also delete subfolders
+                save: Empty
+            success:
+                text: Folder '%folder%' has been emptied!
+        sub:
+            no: No subfolders yet.
+        delete:
+            action: Delete this folder
+            action_short: Delete
+            modal:
+                title: Delete folder
+                text: Are you sure you want to delete "%folder%"?
+            failure:
+                text: You can't delete the %folder% folder!
+            success:
+                text: Folder '%folder%' has been deleted!
+        save: Save
+        contenttab:
+            title: Content
+        propertiestab:
+            title: Properties
+        sortby: Sort by
+        show:
+            success:
+                text: Folder %folder% has been updated!
+
     bulkupload:
-      addto: Upload files to "%folder%"
-    contenttab:
-      title: Content
-    propertiestab:
-      title: Properties
-    title: Media
-    add:
-      action: Add media
-    edit:
-      action: Edit
-    download:
-      action: Download
-    mediainfo:
-      name: Name
-      contenttype: Content-type
-      createdat: Added
-      updatedat: Updated
-      downloadlink: Download link
-    addto: Add media to "%folder%"
-    deletesure: Are you sure you want to delete this item?
-    new: Add media to "%folder%"
+        upload: Upload
+        bulkupload: Bulk upload
+        select_files: Select files
+        upload_more: Upload more files
+        back_to_folder: Back to folder
+        upload_finished: The file upload has finished.
+        not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
 
-  folder:
-    addsub:
-      action: Add subfolder
-      action_short: Add
-      modal:
-        title: Add subfolder
-        save: Add
-      form:
-        name: Name
-        rel: Rel
-        parent: Parent
-        internal_name: Internal name
-      success:
-        text: Folder '%folder%' has been created!
-    empty:
-      action: Empty folder
-      action_short: Empty
-      modal:
-        title: Empty folder
-        text: Are you sure you want to delete the content of folder "%folder%"?
-        checkbox: Also delete subfolders
-        save: Empty
-      success:
-        text: Folder '%folder%' has been emptied!
-    sub:
-      no: No subfolders yet.
-    delete:
-      action: Delete this folder
-      action_short: Delete
-      modal:
-        title: Delete folder
-        text: Are you sure you want to delete "%folder%"?
-      failure:
-        text: You can't delete the %folder% folder!
-      success:
-        text: Folder '%folder%' has been deleted!
-    save: Save
-    contenttab:
-      title: Content
-    propertiestab:
-      title: Properties
-    sortby: Sort by
-    show:
-      success:
-        text: Folder %folder% has been updated!
+    slide:
+        add: Add Slide
+        modal:
+            title: Add Slide
+            save: Add
+    video:
+        add: Add Video
+        modal:
+            title: Add Video
+            save: Add
+    audio:
+        add: Add Audio
+        modal:
+            title: Add Audio
+            save: Add
 
-  bulkupload:
-    upload: Upload
-    bulkupload: Bulk upload
-    select_files: Select files
-    upload_more: Upload more files
-    back_to_folder: Back to folder
-    upload_finished: The file upload has finished.
-    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
+    file:
+        add: Add File
+        modal:
+            title: Add File
+            save: Add
 
-  slide:
-    add: Add Slide
-    modal:
-      title: Add Slide
-      save: Add
-  video:
-    add: Add Video
-    modal:
-      title: Add Video
-      save: Add
-  audio:
-    add: Add Audio
-    modal:
-          title: Add Audio
-          save: Add
+    widget:
+        choose: Choose
+        delete: Delete
+        media_chooser: Media-chooser
+        icon_chooser: Icon-chooser
 
-  file:
-    add: Add File
-    modal:
-      title: Add File
-      save: Add
+    adminlist:
+        configurator:
+            name: Name
+            type: Type
+            date: Date
+            filesize: Filesize
 
-  widget:
-    choose: Choose
-    delete: Delete
-    media_chooser: Media-chooser
-    icon_chooser: Icon-chooser
-
-  adminlist:
-    configurator:
-      name: Name
-      type: Type
-      date: Date
-      filesize: Filesize
+    form:
+        remote:
+            name:
+                label: Name
+            code:
+                label: Code
+            type:
+                label: Type
+            copyright:
+                label: Copyright
+            description:
+                label: Description
+        bulk_upload:
+            files:
+                label: Files
+        file:
+            name:
+                label: Name
+            file:
+                label: File
+            copyright:
+                label: Copyright
+            description:
+                label: Description
+            file:
+                label: File
+            originalFilename:
+                label: Original filename
+        remote_audio:
+            type:
+                label: Type
+        remote_slide:
+            type:
+                label: Type
+        remote_video:
+            type:
+                label: Type

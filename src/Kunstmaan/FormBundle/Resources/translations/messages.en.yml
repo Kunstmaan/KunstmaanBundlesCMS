@@ -1,13 +1,92 @@
+kuma_form:
+    form:
+        page_admin:
+            title:
+                label:  Title
+            thanks:
+                label:  Thanks
+            subject:
+                label:  Subject
+            from_email:
+                label:  From e-mail
+            to_email:
+                label:  To e-mail
+        checkbox_page_part:
+            label:
+                label:  Label
+            required:
+                label:  Required
+            errormessage_required:
+                label:  Error message required
+        choice_page_part:
+            label:
+                label: Label
+            required:
+                label: Required
+            errormessage_required:
+                label: Error message required
+            expanded:
+                label: Expanded
+            multiple:
+                label: Multiple
+            choices:
+                label: Choices
+            empty_value:
+                label: Empty value
+        email_page_part:
+            label:
+                label: Label
+            required:
+                label: Required
+            errorMessageRequired:
+                label: Error message required
+            errorMessageInvalid:
+                label: Error message invalid
+        file_upload_page_part:
+            label:
+                label: Label
+            required:
+                label: Required
+            errormessage_required:
+                label: Error message required
+        multi_line_text_page_part:
+            label:
+                label: Label
+            required:
+                label: Required
+            errormessage_required:
+                label: Error message required
+            regex:
+                label: regex
+            errormessage_regex:
+                label: Error message regex
+        single_line_text_page_part:
+            label:
+                label: Label
+            required:
+                label: Required
+            errormessage_required:
+                label: Error message required
+            regex:
+                label: regex
+            errormessage_regex:
+                label: Error message regex
+        submit_button_page_part:
+            label:
+                label: Label
+    button:
+        export_to:  Export to
+
 # Form Submissions
 formsubmissions:
-  index:
-    title: Form pages with submissions
-  menu:
-    title: Form submissions
-  list:
-    title: Form submissions for page
-  edit:
-    title: Form submission for page
+    index:
+        title: Form pages with submissions
+    menu:
+        title: Form submissions
+    list:
+        title: Form submissions for page
+    edit:
+        title: Form submission for page
 
 subaction:
     formsubmissions: "Submissions"
