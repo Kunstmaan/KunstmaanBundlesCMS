@@ -43,7 +43,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new TopMenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanAdminBundle_settings')
-                ->setLabel('Settings')
+                ->setLabel('settings.title')
                 ->setUniqueId('settings')
                 ->setParent($parent)
                 ->setRole('settings');
@@ -57,7 +57,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                     $menuItem = new MenuItem($menu);
                     $menuItem
                         ->setRoute('KunstmaanAdminBundle_settings_bundle_version')
-                        ->setLabel('Bundle versions')
+                        ->setLabel('settings.version.bundle')
                         ->setUniqueId('bundle_versions')
                         ->setParent($parent);
                     if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {

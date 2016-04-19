@@ -8,6 +8,8 @@ use Elastica\Type\Mapping;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
@@ -23,7 +25,6 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
@@ -561,15 +562,23 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         SearchViewTemplateInterface $page,
         EngineInterface $renderer
     ) {
-        $view    = $page->getSearchView();
+        $view = $page->getSearchView();
+        $renderContext = new RenderContext([
+            'locale'          => $nodeTranslation->getLang(),
+            'page'            => $page,
+            'indexMode'       => true,
+            'nodetranslation' => $nodeTranslation,
+        ]);
+
+        if ($page instanceof PageInterface) {
+            $request = $this->container->get('request_stack')->getCurrentRequest();
+            $page->service($this->container, $request, $renderContext);
+        }
+
         $content = $this->removeHtml(
             $renderer->render(
                 $view,
-                array(
-                    'locale'    => $nodeTranslation->getLang(),
-                    'page'      => $page,
-                    'indexMode' => true
-                )
+                $renderContext->getArrayCopy()
             )
         );
 

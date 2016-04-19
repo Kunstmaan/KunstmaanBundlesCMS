@@ -19,3 +19,9 @@ services:
         arguments: ['@kunstmaan_redirect.repositories.redirect', '@kunstmaan_admin.domain_configuration']
         tags:
             - { name: router, priority: 1 }
+
+    kunstmaan_redirect.form.type:
+        class: Kunstmaan\RedirectBundle\Form\RedirectAdminType
+        arguments: ['@kunstmaan_admin.domain_configuration']
+        tags:
+            - { name: form.type, alias: kunstmaan_redirect_form_type }

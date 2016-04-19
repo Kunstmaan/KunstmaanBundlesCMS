@@ -25,6 +25,10 @@ And enter the following data at the respective prompts :
 - Field name : `last_name`, type : `string`, length : `50`
 - Field name : `twitter_handle`, type : `string`, length : `20`
 
+To generate it's companion Admin List we can use another generator :
+
+    app/console kuma:generate:adminlist
+
 We don't need an empty repository class, but would like an admin list, generate the source skeleton and initialise the routing, so answer these prompts accordingly.
 
 So, now we have the skeleton ready, but as mentioned before we would like to add a picture of the employee. We'll add this field manually, so open up `src/MyProject/WebsiteBundle/Entity/Employee.php` and add the following :
@@ -71,12 +75,14 @@ Since we've added an extra field to our entity, we'll also have to update the en
 as well :
 
 ```php
+    use \Kunstmaan\MediaBundle\Form\Type\MediaType;
+    ...
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 	...
 	$builder->add(
 	    'picture',
-	    'media',
+        MediaType::class,
 	    array(
 		'pattern'  => 'KunstmaanMediaBundle_chooser',
 		'required' => false,
@@ -154,7 +160,7 @@ It would be neat to display the picture (if there is one) in the admin list as w
     }
 ```
 
-As the picture field has a toString method that just returns the id of the relevant record in the media table this will display a number instead of the actual image, which is not what we want. So let's fix that. First we'll a template file to display the column. So create a new folder (we like a consistent naming scheme, so we'll add these custom column templates in `AdminList/entity-name/column-name.twig.html`) :
+As the picture field has a toString method that just returns the id of the relevant record in the media table this will display a number instead of the actual image, which is not what we want. So let's fix that. First we'll add a template file to display the column. So create a new folder (we like a consistent naming scheme, so we'll add these custom column templates in `AdminList/entity-name/column-name.twig.html`) :
 
 ```
 mkdir -p src/MyProject/WebsiteBundle/Resources/views/AdminList/Employee

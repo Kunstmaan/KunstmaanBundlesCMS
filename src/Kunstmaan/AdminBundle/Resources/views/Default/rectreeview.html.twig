@@ -15,10 +15,10 @@
     class="{% if menuitem.active or treeLevel == 1 %}jstree-open{% endif %}{% if menuitem.offline %} jstree-node--offline{% endif %}"{% if menuitem.role %} rel="{{menuitem.role}}"{% endif %}>
     {% if menuitem.route %}
         <a href="{{ path(menuitem.route, menuitem.routeparams) }}" class="{% if currentMenuItem is not null and currentMenuItem.uniqueId == menuitem.uniqueId %}active{% endif %}">
-            {{ menuitem.label }}
+            {{ menuitem.label | trans }}
         </a>
     {% else %}
-        {{ menuitem.label }}
+        {{ menuitem.label | trans }}
     {% endif %}
 
     <ul>

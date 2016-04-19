@@ -98,7 +98,25 @@ class NodeTwigExtension extends Twig_Extension
                 'file_exists',
                 array($this, 'fileExists')
             ),
+            new \Twig_SimpleFunction(
+                'get_node_trans_by_node_id',
+                array($this, 'getNodeTranslationByNodeId')
+            ),
         );
+    }
+
+        /**
+     * Get the node translation object based on node id and language.
+     *
+     * @param int $nodeId
+     * @param string $lang
+     * @return NodeTranslation
+     */
+    public function getNodeTranslationByNodeId($nodeId, $lang)
+    {
+        $repo = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation');
+
+        return $repo->getNodeTranslationByNodeIdQueryBuilder($nodeId, $lang);
     }
 
     /**

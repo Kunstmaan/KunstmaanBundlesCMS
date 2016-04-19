@@ -311,7 +311,7 @@ SQL;
             )
             ->leftJoin(
                 'n',
-                '(SELECT lang, title, weight, node_id, url FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)',
+                'kuma_node_translations',
                 'v',
                 '(v.node_id = n.id AND v.lang <> :lang)'
             )
