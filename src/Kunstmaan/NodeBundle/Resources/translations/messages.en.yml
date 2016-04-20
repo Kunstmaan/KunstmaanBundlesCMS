@@ -59,3 +59,16 @@ kuma_node:
             title:  Permissions
         searcher:
             title:  Searcher
+
+    modal:
+        add_homepage:
+            h:  Add homepage
+            form:
+                title:
+                    label: Title
+                type:
+                    label: Type
+                add:
+                    label: Add
+                cancel:
+                    label: Cancel
