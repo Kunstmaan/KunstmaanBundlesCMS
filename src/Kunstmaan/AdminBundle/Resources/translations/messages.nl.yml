@@ -76,3 +76,7 @@ permissions:
   permissions_added: 'De volgende permissies worden <strong>toegevoegd</strong>:'
   permissions_removed: 'De volgende permissies worden <strong>verwijderd</strong>:'
   role_name: Rol naam
+
+errors:
+    oauth:
+        invalid: Het was niet mogelijk om in te loggen via Google OAuth, waarschijnlijk is je domein naam niet toegelaten.

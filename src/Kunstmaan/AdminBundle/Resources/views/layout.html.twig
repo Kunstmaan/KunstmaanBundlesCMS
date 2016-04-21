@@ -23,7 +23,7 @@
         {% endif %}
 
         {% for key, messages in app.session.flashbag.all() %}
-            <div class="alert alert-info {{ key }}">
+            <div class="alert alert-{{ key }} {{ key }}">
                 <button type="button" class="close" data-dismiss="alert">
                     <i class="fa fa-times"></i>
                 </button>
