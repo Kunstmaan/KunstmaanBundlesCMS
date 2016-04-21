@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
  * The FormSubmissionField will hold the submitted values from the form page parts. The FormSubmissionFields
  * will be attached to a FormSubmission.
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\FormBundle\Repository\FormSubmissionFieldRepository")
+ * @ORM\Entity
  * @ORM\Table(name="kuma_form_submission_fields")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
