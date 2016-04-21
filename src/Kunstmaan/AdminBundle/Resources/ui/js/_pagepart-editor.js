@@ -8,7 +8,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
         delete: []
     };
 
-    var init, addPagePart, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent, reInit, updateDisplayOrder;
+    var init, addPagePart, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent, reInit, reOrder;
 
     init = function () {
         var $body = $('body');
@@ -199,6 +199,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
         reInit($currentPp);
         if ($previousPp.length) {
             $($previousPp).before($currentPp);
+            // Update display order.
+            reOrder($currentPp.parent());
             // Enable "leave page" modal
             kunstmaanbundles.checkIfEdited.edited();
         }
@@ -208,9 +210,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
             offset: -200,
             easing: 'ease-in-out'
         });
-
-        // Update display order.
-        updateDisplayOrder($previousPp, $currentPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
@@ -228,6 +227,9 @@ kunstmaanbundles.pagepartEditor = function (window) {
         reInit($currentPp);
         if ($nextPp.length) {
             $($nextPp).after($currentPp);
+            // Update display order.
+            reOrder($currentPp.parent());
+            // Enable "leave page" modal
             kunstmaanbundles.checkIfEdited.edited();
         }
 
@@ -236,9 +238,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
             offset: -200,
             easing: 'ease-in-out'
         });
-
-        // Update display order.
-        updateDisplayOrder($currentPp, $nextPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
@@ -315,12 +314,12 @@ kunstmaanbundles.pagepartEditor = function (window) {
             }
         });
     };
-    updateDisplayOrder = function($firstEl, $secondEl) {
-        $secondSortEl = $($secondEl).find('#' + $($secondEl).data('sortkey'));
-        $firstSortEl = $($firstEl).find('#' + $($firstEl).data('sortkey'));
-
-        $secondSortEl.val(parseInt($secondSortEl.val()) -1);
-        $firstSortEl.val(parseInt($firstSortEl.val()) +1);
+    reOrder = function($container) {
+        var i = 0;
+        $container.children('.sortable-item:visible').each(function() {
+            var $sortEl = $(this).find('#' + $(this).data('sortkey'));
+            $sortEl.val(i++);
+        });
     };
     return {
         init: init,

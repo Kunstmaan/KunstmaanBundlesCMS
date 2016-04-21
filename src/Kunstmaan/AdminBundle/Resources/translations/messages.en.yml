@@ -83,6 +83,10 @@ permissions:
     permissions_removed: 'The following permissions will be <strong>removed</strong>:'
     role_name: Role name
 
+errors:
+    oauth:
+        invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.
+
 kuma_admin:
     dashboard:
         configuration:

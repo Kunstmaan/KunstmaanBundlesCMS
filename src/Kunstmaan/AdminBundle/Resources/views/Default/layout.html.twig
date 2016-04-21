@@ -22,6 +22,10 @@
 
     <!-- JS -->
     {% include "@KunstmaanAdmin/Default/_js_header.html.twig" %}
+
+    {% if google_signin_enabled() %}
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+    {% endif %}
 </head>
 
 <body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}" data-file-browse-url="{% if nodebundleisactive is defined and nodebundleisactive %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}" data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
