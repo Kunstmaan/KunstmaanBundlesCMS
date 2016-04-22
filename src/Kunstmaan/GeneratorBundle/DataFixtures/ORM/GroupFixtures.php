@@ -12,6 +12,10 @@ use Kunstmaan\AdminBundle\Entity\Group;
  */
 class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
+    const REFERENCE_ADMINS_GROUP = 'admins-group';
+    const REFERENCE_GUESTS_GROUP = 'guests-group';
+    const REFERENCE_SUPERADMINS_GROUP = 'superadmins-group';
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -20,25 +24,25 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $group1 = $this->createGroup($manager, 'Administrators', array(
-            $this->getReference('permissionmanager-role'),
-            $this->getReference('admin-role')
+            $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
+            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE)
         ));
 
         $group2 = $this->createGroup($manager, 'Guests', array(
-            $this->getReference('guest-role')
+            $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE)
         ));
 
         $group3 = $this->createGroup($manager, 'Super administrators', array(
-            $this->getReference('permissionmanager-role'),
-            $this->getReference('superadmin-role'),
-            $this->getReference('admin-role'),
+            $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
+            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
+            $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE),
         ));
 
         $manager->flush();
 
-        $this->addReference('admins-group',       $group1);
-        $this->addReference('guests-group',       $group2);
-        $this->addReference('superadmins-group',  $group3);
+        $this->addReference(self::REFERENCE_ADMINS_GROUP,       $group1);
+        $this->addReference(self::REFERENCE_GUESTS_GROUP,       $group2);
+        $this->addReference(self::REFERENCE_SUPERADMINS_GROUP,  $group3);
     }
 
     /**
