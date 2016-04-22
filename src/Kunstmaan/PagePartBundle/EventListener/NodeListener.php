@@ -66,13 +66,13 @@ class NodeListener
         if ($page instanceof HasPageTemplateInterface) {
             $pageTemplateWidget = new PageTemplateWidget($page, $event->getRequest(), $this->em, $this->kernel, $this->formFactory, $this->pagePartAdminFactory);
             /* @var Tab $propertiesTab */
-            $propertiesTab = $tabPane->getTabByTitle('Properties');
+            $propertiesTab = $tabPane->getTabByTitle('kuma_node.tab.properties.title');
             if (!is_null($propertiesTab)) {
                 $propertiesWidget = $propertiesTab->getWidget();
                 $tabPane->removeTab($propertiesTab);
-                $tabPane->addTab(new Tab("Content", new ListWidget(array($propertiesWidget, $pageTemplateWidget))), 0);
+                $tabPane->addTab(new Tab("kuma_pagepart.tab.content.title", new ListWidget(array($propertiesWidget, $pageTemplateWidget))), 0);
             } else {
-                $tabPane->addTab(new Tab("Content", $pageTemplateWidget), 0);
+                $tabPane->addTab(new Tab("kuma_pagepart.tab.content.title", $pageTemplateWidget), 0);
             }
         } else if ($page instanceof HasPagePartsInterface) {
             /* @var HasPagePartsInterface $page */
@@ -83,7 +83,7 @@ class NodeListener
                 $pagePartWidget = new PagePartWidget($page, $event->getRequest(), $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory);
                 if ($index == 0) {
                     /* @var Tab $propertiesTab */
-                    $propertiesTab = $tabPane->getTabByTitle('Properties');
+                    $propertiesTab = $tabPane->getTabByTitle('kuma_node.tab.properties.title');
 
                     if (!is_null($propertiesTab)) {
                         $propertiesWidget = $propertiesTab->getWidget();

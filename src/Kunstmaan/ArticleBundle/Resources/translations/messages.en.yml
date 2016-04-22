@@ -1,0 +1,12 @@
+article:
+    form:
+        date:
+            label: Date
+        summery:
+            label: Summery
+    author:
+        form:
+            name:
+                label: Name
+            link:
+                label: Link

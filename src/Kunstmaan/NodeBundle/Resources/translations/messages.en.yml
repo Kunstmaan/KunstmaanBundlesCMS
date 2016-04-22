@@ -17,3 +17,58 @@ modal:
 
 pages:
     copynotavailable: "Please translate the parent page first"
+
+kuma_node:
+    form:
+        controller_action:
+            title:
+                label:  Title
+        menu_tab:
+            hidden_from_menu:
+                label:  Hidden from menu
+            internal_name:
+                label:  Internal name
+        menu_tab_translation:
+            slug:
+                label:  Slug
+            weight:
+                label:  Weight
+                title:  Used to reorder the pages.
+        page:
+            title:
+                label:  Navigation title
+            page_title:
+                label:  Page title
+                info_text: Used as title inside the page.
+    status:
+        "will_be_publish_at.%date%.raw":    This page will be published at %date%
+        "will_be_unpublish_at.%date%.raw":  This page will be unpublished at %date%
+        button:
+            schedulle_cancel: Cancel
+        "offline_draft.%public_url%.raw":   Offline / Draft version (Go to <a href="%public_url%">public version</a>)
+        online_public.raw:                  Online / Public version
+        offline.raw:                        Offline
+        "go_to_draft_version.%url%.raw":    (Go to <a href="%url%">draft version</a>)
+
+    tab:
+        properties:
+            title:  Properties
+        menu:
+            title:  Menu
+        permissions:
+            title:  Permissions
+        searcher:
+            title:  Searcher
+
+    modal:
+        add_homepage:
+            h:  Add homepage
+            form:
+                title:
+                    label: Title
+                type:
+                    label: Type
+                add:
+                    label: Add
+                cancel:
+                    label: Cancel

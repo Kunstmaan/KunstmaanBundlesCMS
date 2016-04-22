@@ -1,0 +1,5 @@
+kuma_tagging:
+    form:
+        tag:
+            name:
+                label: Name

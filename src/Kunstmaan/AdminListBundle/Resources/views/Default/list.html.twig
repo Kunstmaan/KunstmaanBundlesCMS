@@ -51,7 +51,7 @@
                     {% if adminlist.canExport() %}
                         <div class="btn-group dropdown">
                             <a class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown" href="#">
-                                Export to
+                                {{ 'kuma_amdmin_list.form.export_to' | trans }}
                                 <i class="fa fa-caret-down btn__icon"></i>
                             </a>
 
@@ -78,9 +78,9 @@
                                 <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}" class="btn">
                                     {% if action.getIcon() is not null %}
                                         <i class="fa fa-{{ action.getIcon() }}"></i>
-                                        {{ action.getLabel() }}
+                                        {{ action.getLabel()|trans }}
                                     {% else %}
-                                        {{ action.getLabel() }}
+                                        {{ action.getLabel()|trans }}
                                     {% endif %}
                                 </a>
                             {% endif %}

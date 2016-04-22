@@ -20,9 +20,19 @@ class CheckboxPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array('required' => false))
-            ->add('required', CheckboxType::class, array('required' => false))
-            ->add('errormessage_required', TextType::class, array('required' => false));
+            ->add('label', null, array(
+                'label' => 'kuma_form.form.checkbox_page_part.label.label',
+                'required' => false,
+            ))
+            ->add('required', CheckboxType::class, array(
+                'label' => 'kuma_form.form.checkbox_page_part.required.label',
+                'required' => false,
+            ))
+            ->add('errormessage_required', TextType::class, array(
+                'label' => 'kuma_form.form.checkbox_page_part.errormessage_required.label',
+                'required' => false,
+            ))
+        ;
     }
 
     /**

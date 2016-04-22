@@ -1,82 +1,100 @@
 # Pages
 pages:
-  title: Pages
-  parts: PageParts
-  draft: Draft
-  pagenottranslated: This page is not translated
-  copyfrom: Copy from language
-  createemptypage: Create as an empty page
-  movingconfirmation: You are moving "%title%" to "%target%", are you sure?
+    title: Pages
+    parts: PageParts
+    draft: Draft
+    pagenottranslated: This page is not translated
+    copyfrom: Copy from language
+    createemptypage: Create as an empty page
+    movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 
 # Modules
 modules:
-  title: Modules
+    title: Modules
 
 # Settings
 settings:
-  title: Settings
-  maintanance: Maintenance
-  scheduled: Scheduled Jobs
-  version:
-      bundle: Bundle versions
-      composer_lock_not_found: No composer.lock file found in your project root
-      error_parsing_composer: Error parsing composer.lock file, no valid json
-      error: Something went wrong while fetching the version information. Please try again later.
-      moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
-      uptodate: is up-to-date
-      toupdate: can be updated to
-      unknown: version information unknown
+    title: Settings
+    maintanance: Maintenance
+    scheduled: Scheduled Jobs
+    version:
+        bundle: Bundle versions
+        composer_lock_not_found: No composer.lock file found in your project root
+        error_parsing_composer: Error parsing composer.lock file, no valid json
+        error: Something went wrong while fetching the version information. Please try again later.
+        moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+        uptodate: is up-to-date
+        toupdate: can be updated to
+        unknown: version information unknown
 
 # Tools
 tools:
-  title: Tools
-  clear_frontend_cache: Clear frontend cache
-  clear_backend_cache: Clear backend cache
-  clear_all_caches: Clear all caches
-  shutdown: Shutdown
+    title: Tools
+    clear_frontend_cache: Clear frontend cache
+    clear_backend_cache: Clear backend cache
+    clear_all_caches: Clear all caches
+    shutdown: Shutdown
 
 # Forms
 form:
-  cancel: Cancel
-  delete: Delete
-  deletesure: Are you sure you want to delete this?
-  edit: Edit
-  add: Add New
-  save: Save
-  publish: Publish
-  unpublish: Unpublish
-  saveasdraft: Save as draft
-  name: Name
-  type: Type
-  error: Error
-  warning: Warning
-  headsup: Heads up
-  forgot:
-    password: Forgot my password.
-  permissions: Permissions
-  properties: Properties
-  createdat: Created At
-  updatedat: Updated At
-  actions: Actions
-  addfilter: Add filter
-  choosetypefilter: Filter on
-  versions: Versions
+    cancel: Cancel
+    delete: Delete
+    deletesure: Are you sure you want to delete this?
+    edit: Edit
+    add: Add New
+    save: Save
+    publish: Publish
+    unpublish: Unpublish
+    saveasdraft: Save as draft
+    name: Name
+    type: Type
+    error: Error
+    warning: Warning
+    headsup: Heads up
+    forgot:
+        password: Forgot my password.
+    permissions: Permissions
+    properties: Properties
+    createdat: Created At
+    updatedat: Updated At
+    actions: Actions
+    addfilter: Add filter
+    choosetypefilter: Filter on
+    versions: Versions
+    button:
+        dropdown:
+            more: More
+        filter:
+            clear: Clear
+            filter: Filter
 
 omnext:
-  home: Home
-  title: Welcome!
-  welcome: Welcome.
-  information: <strong>Information.</strong> There are no new notifications.
+    home: Home
+    title: Welcome!
+    welcome: Welcome.
+    information: <strong>Information.</strong> There are no new notifications.
 
 permissions:
-  you_made_changes: You have made changes to the permissions on this page.
-  apply_recursively: Apply these changes recursively on all child pages
-  review_changes: Review your changes
-  changes: Permission changes
-  permissions_added: 'The following permissions will be <strong>added</strong>:'
-  permissions_removed: 'The following permissions will be <strong>removed</strong>:'
-  role_name: Role name
+    you_made_changes: You have made changes to the permissions on this page.
+    apply_recursively: Apply these changes recursively on all child pages
+    review_changes: Review your changes
+    changes: Permission changes
+    permissions_added: 'The following permissions will be <strong>added</strong>:'
+    permissions_removed: 'The following permissions will be <strong>removed</strong>:'
+    role_name: Role name
 
 errors:
     oauth:
         invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.
+
+kuma_admin:
+    dashboard:
+        configuration:
+            title:
+                label: Title
+            content:
+                label: Content (raw html)
+
+kuma_js:
+    auto_collapse:
+        more_button_label: More

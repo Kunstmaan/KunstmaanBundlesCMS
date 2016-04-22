@@ -22,13 +22,35 @@ class ChoicePagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array('required' => false))
-            ->add('required', CheckboxType::class, array('required' => false))
-            ->add('errormessage_required', TextType::class, array('required' => false))
-            ->add('expanded', CheckboxType::class, array('required' => false))
-            ->add('multiple', CheckboxType::class, array('required' => false))
-            ->add('choices', TextareaType::class, array('required' => false))
-            ->add('empty_value', TextType::class, array('required' => false));
+            ->add('label', null, array(
+                'label' => 'kuma_form.form.choice_page_part.label.label',
+                'required' => false,
+            ))
+            ->add('required', CheckboxType::class, array(
+                'label' => 'kuma_form.form.choice_page_part.required.label',
+                'required' => false,
+            ))
+            ->add('errormessage_required', TextType::class, array(
+                'label' => 'kuma_form.form.choice_page_part.errormessage_required.label',
+                'required' => false,
+            ))
+            ->add('expanded', CheckboxType::class, array(
+                'label' => 'kuma_form.form.choice_page_part.expanded.label',
+                'required' => false,
+            ))
+            ->add('multiple', CheckboxType::class, array(
+                'label' => 'kuma_form.form.choice_page_part.multiple.label',
+                'required' => false,
+            ))
+            ->add('choices', TextareaType::class, array(
+                'label' => 'kuma_form.form.choice_page_part.choices.label',
+                'required' => false,
+            ))
+            ->add('empty_value', TextType::class, array(
+                'label' => 'kuma_form.form.choice_page_part.empty_value.label',
+                'required' => false,
+            ))
+        ;
     }
 
     /**

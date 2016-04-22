@@ -18,7 +18,15 @@ class TextPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	$builder->add('content', TextareaType::class, array('label' => 'pagepart.text.content', 'required' => false, 'attr' => array('rows' => 32, 'cols' => 600, 'class' => 'js-rich-editor rich-editor')));
+        $builder->add('content', TextareaType::class, array(
+            'label' => 'pagepart.text.content',
+            'required' => false,
+            'attr' => array(
+                'rows' => 32,
+                'cols' => 600,
+                'class' => 'js-rich-editor rich-editor',
+            ),
+        ));
     }
 
     /**
