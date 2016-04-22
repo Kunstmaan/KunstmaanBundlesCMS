@@ -65,4 +65,14 @@ class MediaRepository extends EntityRepository
 
         return $picture;
     }
+
+    /**
+     * Finds all Media  that has their deleted flag set to 1
+     *
+     * @return object[]
+     */
+    public function findAllDeleted()
+    {
+        return $this->findBy(array('deleted' => true));
+    }
 }
