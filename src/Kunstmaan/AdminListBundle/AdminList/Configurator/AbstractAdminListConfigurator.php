@@ -668,14 +668,29 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     /**
      * @return string
      */
-    public function getEditTemplate()
-    {
-        return $this->editTemplate;
-    }
-
     public function getViewTemplate()
     {
         return $this->viewTemplate;
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return AdminListConfiguratorInterface
+     */
+    public function setViewTemplate($template)
+    {
+        $this->viewTemplate = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditTemplate()
+    {
+        return $this->editTemplate;
     }
 
     /**
