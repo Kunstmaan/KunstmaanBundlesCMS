@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -58,8 +59,8 @@ class NodeTranslationListener
         $this->slugifier           = $slugifier;
         $this->domainConfiguration = $domainConfiguration;
     }
-    
-    public function setRequestStack(RequestStack $requestStack) 
+
+    public function setRequestStack(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
     }
@@ -340,7 +341,7 @@ class NodeTranslationListener
         } elseif (count($flashes) > 0 && $this->isInRequestScope()) {
             // No translations found so we're certain we can show this message.
             $flash = current(array_slice($flashes, -1));
-            $this->session->getFlashBag()->add('warning', $flash);
+            $this->session->getFlashBag()->add(FlashTypes::WARNING, $flash);
         }
 
         return true;
@@ -374,9 +375,9 @@ class NodeTranslationListener
             return $string.$append.'1';
         }
     }
-    
+
     private function isInRequestScope()
     {
-        return $this->requestStack && $this->requestStack->getCurrentRequest();        
+        return $this->requestStack && $this->requestStack->getCurrentRequest();
     }
 }

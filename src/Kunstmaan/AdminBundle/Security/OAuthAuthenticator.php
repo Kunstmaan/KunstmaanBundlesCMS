@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Security;
 
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,19 +20,19 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
 {
     /** @var RouterInterface */
     private $router;
-    
+
     /** @var Session */
     private $session;
-    
+
     /** @var DataCollectorTranslator */
     private $translator;
 
     /** @var OAuthUserCreator */
     private $oAuthUserCreator;
-    
+
     /** @var string */
     private $clientId;
-    
+
     /** @var string */
     private $clientSecret;
 
@@ -182,7 +183,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $this->session->getFlashBag()->add('error', $this->translator->trans('errors.oauth.invalid'));
+        $this->session->getFlashBag()->add(FlashTypes::ERROR, $this->translator->trans('errors.oauth.invalid'));
         return new RedirectResponse($this->router->generate('fos_user_security_login'));
     }
 

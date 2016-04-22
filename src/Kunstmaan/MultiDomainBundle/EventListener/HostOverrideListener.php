@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\MultiDomainBundle\EventListener;
 
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -16,19 +18,27 @@ class HostOverrideListener
     protected $session;
 
     /**
+     * @var Translator
+     */
+    protected $translator;
+
+    /**
      * @var DomainConfigurationInterface
      */
     protected $domainConfiguration;
 
     /**
      * @param Session                      $session
+     * @param Translator                   $translator
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(
         Session $session,
+        Translator $translator,
         DomainConfigurationInterface $domainConfiguration
     ) {
         $this->session             = $session;
+        $this->translator          = $translator;
         $this->domainConfiguration = $domainConfiguration;
     }
 
@@ -58,8 +68,8 @@ class HostOverrideListener
         if ($request->getHost() !== $this->domainConfiguration->getHost()) {
             // Add flash message for admin pages
             $this->session->getFlashBag()->add(
-                'warning',
-                'multi_domain.host_override_active'
+                FlashTypes::WARNING,
+                $this->translator->trans('multi_domain.host_override_active')
             );
         }
     }
