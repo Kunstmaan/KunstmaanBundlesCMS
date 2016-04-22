@@ -4,8 +4,10 @@ namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -109,8 +111,8 @@ class UsersController extends BaseSettingsController
                 $userManager->updateUser($user, true);
 
                 $this->get('session')->getFlashBag()->add(
-                    'success',
-                    'User \''.$user->getUsername().'\' has been created!'
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.users.add.flash.success.%username%', ['%username%' => $user->getUsername()])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
@@ -178,8 +180,8 @@ class UsersController extends BaseSettingsController
                 $userManager->updateUser($user, true);
 
                 $this->get('session')->getFlashBag()->add(
-                    'success',
-                    'User \''.$user->getUsername().'\' has been edited!'
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', ['%username%' => $user->getUsername()])
                 );
 
                 return new RedirectResponse(
@@ -226,7 +228,10 @@ class UsersController extends BaseSettingsController
             $username = $user->getUsername();
             $em->remove($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'User \''.$username.'\' has been deleted!');
+            $this->get('session')->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', ['%username%' => $username])
+            );
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));

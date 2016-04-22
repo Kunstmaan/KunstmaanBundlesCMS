@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,17 +37,23 @@ class PasswordCheckListener
     private $session;
 
     /**
+     * @var Translator
+     */
+    private $translator;
+
+    /**
      * @param AuthorizationCheckerInterface  $authorizationChecker
      * @param TokenStorageInterface          $tokenStorage
      * @param Router                         $router
      * @param Session                        $session
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, Translator $translator)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
         $this->session = $session;
+        $this->translator = $translator;
     }
 
     /**
@@ -60,7 +68,10 @@ class PasswordCheckListener
                 $user = $this->tokenStorage->getToken()->getUser();
                 if ($user->isPasswordChanged() === false) {
                     $response = new RedirectResponse($this->router->generate('fos_user_change_password'));
-                    $this->session->getFlashBag()->add('error', 'Your password has not yet been changed');
+                    $this->session->getFlashBag()->add(
+                        FlashTypes::ERROR,
+                        $this->translator->trans('kuma_admin.password_check.flash.error')
+                    );
                     $event->setResponse($response);
                 }
             }

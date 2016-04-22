@@ -24,3 +24,25 @@ settings:
         role: Role
         add: Add Role
         edit: Edit Role
+
+kuma_user:
+    roles:
+        add:
+            flash:
+                'success.%role%': Role '%role%' has been created!
+        edit:
+            flash:
+                'success.%role%': Role '%role%' has been edited!
+        delete:
+            flash:
+                'success.%role%': Role '%role%' has been deleted!
+    users:
+        add:
+            flash:
+                'success.%username%': User '%username%' has been created!
+        edit:
+            flash:
+                'success.%username%': User '%username%' has been edited!
+        delete:
+            flash:
+                'success.%username%': User '%username%' has been deleted!

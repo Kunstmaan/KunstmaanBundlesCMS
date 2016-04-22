@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
@@ -68,7 +69,10 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $em->persist($dashboardConfiguration);
                 $em->flush($dashboardConfiguration);
-                $this->get('session')->getFlashBag()->add('success', 'The welcome page has been edited!');
+                $this->get('session')->getFlashBag()->add(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_admin.edit.flash.success')
+                );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanAdminBundle_homepage'));
             }

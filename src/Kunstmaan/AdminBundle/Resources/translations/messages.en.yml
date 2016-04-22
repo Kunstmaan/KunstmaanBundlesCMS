@@ -88,12 +88,32 @@ errors:
         invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.
 
 kuma_admin:
+    flash_type:
+        success: Success
+        warning: Warning
+        error:   Error
+        info:    Info
+        danger:  Danger
     dashboard:
         configuration:
             title:
                 label: Title
             content:
                 label: Content (raw html)
+    edit:
+        flash:
+            success: The welcome page has been edited!
+    password_check:
+        flash:
+            error: Your password has not yet been changed
+    ga_ajax_controller:
+        flash:
+            success: Succesfully saved!
+    media:
+        flash:
+            'deleted_success.%medianame%': Entry '%medianame%' has been deleted!
+            drop_success:       File was uploaded successfuly!
+            drop_unrecognized:  Could not recognize what you dropped!
 
 kuma_js:
     auto_collapse:

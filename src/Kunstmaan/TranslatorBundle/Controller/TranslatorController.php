@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
@@ -36,6 +37,7 @@ class TranslatorController extends AdminListController
      * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return array
      */
     public function indexAction(Request $request)
     {
@@ -50,12 +52,12 @@ class TranslatorController extends AdminListController
 
         if (!$cacheFresh && !$debugMode) {
             $noticeText = $this->get('translator')->trans('settings.translator.not_live_warning');
-            $this->get('session')->getFlashBag()->add('notice', $noticeText);
+            $this->get('session')->getFlashBag()->add(FlashTypes::INFO, $noticeText);
         }
 
         return array(
-          'adminlist' => $adminList,
-          'adminlistconfigurator' => $configurator
+            'adminlist' => $adminList,
+            'adminlistconfigurator' => $configurator
         );
     }
 
@@ -103,7 +105,7 @@ class TranslatorController extends AdminListController
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add(
-                  'success',
+                  FlashTypes::SUCCESS,
                   $this->get('translator')->trans('settings.translator.succesful_added')
                 );
 
@@ -173,7 +175,7 @@ class TranslatorController extends AdminListController
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add(
-                  'success',
+                  FlashTypes::SUCCESS,
                   $this->get('translator')->trans('settings.translator.succesful_edited')
                 );
 

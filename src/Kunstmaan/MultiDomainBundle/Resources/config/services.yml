@@ -16,7 +16,7 @@ services:
 
     kunstmaan_multi_domain.host_override_listener:
         class: Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener
-        arguments: ['@session', '@kunstmaan_admin.domain_configuration']
+        arguments: ['@session', '@translator', '@kunstmaan_admin.domain_configuration']
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
