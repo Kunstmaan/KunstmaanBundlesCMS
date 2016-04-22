@@ -36,11 +36,12 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
         $url = parent::getBrowserPath($path, $filter, $runtimeConfig, $resolver);
         $newPath = parse_url($url, PHP_URL_PATH);
         $newInfo = pathinfo($newPath);
-        if ($info['extension'] != $newInfo['extension']) {
-            $query = parse_url($url, PHP_URL_QUERY);
-            $url .= ($query ? '&' : '?') . 'originalExtension=' . $info['extension'];
+        if(isset($info['extension']) && isset($newInfo['extension'])){
+            if ($info['extension'] != $newInfo['extension']) {
+                $query = parse_url($url, PHP_URL_QUERY);
+                $url .= ($query ? '&' : '?') . 'originalExtension=' . $info['extension'];
+            }
         }
-
         return $url;
     }
 
