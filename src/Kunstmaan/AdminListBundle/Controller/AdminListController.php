@@ -136,7 +136,7 @@ abstract class AdminListController extends Controller
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
             if ($form->isValid()) {
@@ -214,7 +214,7 @@ abstract class AdminListController extends Controller
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
             if ($form->isValid()) {
