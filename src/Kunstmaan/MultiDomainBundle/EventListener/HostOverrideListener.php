@@ -4,11 +4,11 @@ namespace Kunstmaan\MultiDomainBundle\EventListener;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class HostOverrideListener
 {
@@ -18,7 +18,7 @@ class HostOverrideListener
     protected $session;
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     protected $translator;
 
@@ -29,12 +29,12 @@ class HostOverrideListener
 
     /**
      * @param Session                      $session
-     * @param Translator                   $translator
+     * @param TranslatorInterface          $translator
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(
         Session $session,
-        Translator $translator,
+        TranslatorInterface $translator,
         DomainConfigurationInterface $domainConfiguration
     ) {
         $this->session             = $session;

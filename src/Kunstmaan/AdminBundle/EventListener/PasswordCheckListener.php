@@ -3,13 +3,13 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * PasswordCheckListener to check if the user has to change his password
@@ -37,17 +37,18 @@ class PasswordCheckListener
     private $session;
 
     /**
-     * @var Translator
+     * @var TranslatorInterface
      */
     private $translator;
 
     /**
-     * @param AuthorizationCheckerInterface  $authorizationChecker
-     * @param TokenStorageInterface          $tokenStorage
-     * @param Router                         $router
-     * @param Session                        $session
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TokenStorageInterface $tokenStorage
+     * @param Router $router
+     * @param Session $session
+     * @param TranslatorInterface $translator
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, Translator $translator)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, TranslatorInterface $translator)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
