@@ -14,20 +14,19 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "doctrine/orm": "~2.2,>=2.2.3"
     },
     "suggest": {
         "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\UtilitiesBundle": "" }
+        "psr-4": { "Kunstmaan\\UtilitiesBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/UtilitiesBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "4.0-dev"
         }
     }
 }

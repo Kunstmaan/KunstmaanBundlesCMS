@@ -107,7 +107,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
         $queryBuilder->andWhere('b.lang = :lang');
         $queryBuilder->andWhere('n.deleted = 0');
         $queryBuilder->andWhere('n.refEntityName = :class');
-        $queryBuilder->addOrderBy("nv.updated", "DESC");
+        $queryBuilder->addOrderBy("b.updated", "DESC");
         $queryBuilder->setParameter('lang', $this->locale);
     }
 
@@ -154,6 +154,7 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     {
         $repository = $this->getOverviewPageRepository();
         $pages = $repository->findActiveOverviewPages();
+
         if (isset($pages) && count($pages) > 0) {
             return $pages[0];
         }
@@ -173,5 +174,4 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     {
         return 'KunstmaanArticleBundle:AbstractArticlePageAdminList:list.html.twig';
     }
-
 }

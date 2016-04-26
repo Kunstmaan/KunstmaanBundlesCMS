@@ -3,6 +3,7 @@
 namespace Kunstmaan\TaggingBundle\Entity;
 
 use DoctrineExtensions\Taggable\TagManager as BaseTagManager;
+use DoctrineExtensions\Taggable\Taggable as BaseTaggable;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
@@ -13,12 +14,40 @@ class TagManager extends BaseTagManager
 
     const TAGGING_HYDRATOR = 'taggingHydrator';
 
+    public function loadTagging(BaseTaggable $resource)
+    {
+        if ($resource instanceof LazyLoadingTaggableInterface) {
+            $resource->setTagLoader(function (Taggable $taggable) {
+                parent::loadTagging($taggable);
+            });
+
+            return ;
+        }
+
+        parent::loadTagging($resource);
+    }
+
+    public function saveTagging(BaseTaggable $resource)
+    {
+        $tags = clone $resource->getTags();
+        parent::saveTagging($resource);
+        if (sizeof($tags) !== sizeof($resource->getTags())) {
+            // parent::saveTagging uses getTags by reference and removes elements, so it ends up empty :-/
+            // this causes all tags to be deleted when an entity is persisted more than once in a request
+            // Restore:
+            $this->replaceTags($tags->toArray(), $resource);
+        }
+
+    }
+
+
     /**
      * Gets all tags for the given taggable resource
      *
-     * @param \DoctrineExtensions\Taggable\Taggable $resource Taggable resource
+     * @param BaseTaggable $resource Taggable resource
+     * @return array
      */
-    public function getTagging(\DoctrineExtensions\Taggable\Taggable $resource)
+    public function getTagging(BaseTaggable $resource)
     {
         $em = $this->em;
 

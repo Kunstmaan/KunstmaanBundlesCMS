@@ -3,32 +3,41 @@
 namespace Kunstmaan\PagePartBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\NodeBundle\Repository\NodeRepository,
-    Kunstmaan\NodeBundle\Repository\NodeTranslationRepository,
-    Kunstmaan\NodeBundle\Entity\NodeTranslation;
-
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface,
-    Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
+use Kunstmaan\NodeBundle\Repository\NodeRepository;
+use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * A class to facilitate the adding of PageParts to existing pages.
  *
  * NOTE: There is a similar implementation for adding pages. See the NodeBundle for more on this.
  *
- * Class PagePartCreatorService
  * @package Kunstmaan\PagePartBundle\Helper\Services
  */
 class PagePartCreatorService
 {
-
-    /** @var EntityManager */
+    /**
+     * @var EntityManager
+     */
     protected $em;
-    /** @var PagePartRefRepository */
+
+    /**
+     * @var PagePartRefRepository
+     */
     protected $pagePartRepo;
-    /** @var NodeTranslationRepository */
+
+    /**
+     * @var NodeTranslationRepository
+     */
     protected $translationRepo;
-    /** @var NodeRepository */
+
+    /**
+     * @var NodeRepository
+     */
     protected $nodeRepo;
 
     /**
@@ -53,8 +62,6 @@ class PagePartCreatorService
     {
         return $this->em;
     }
-
-
 
     /**
      * Add a single pagepart to an existing page for a specific language, in an optional position.
@@ -95,7 +102,6 @@ class PagePartCreatorService
         $this->pagePartRepo->addPagePart($page, $pagePart, $position, $context);
     }
 
-
     /**
      * A helper function to more easily append multiple pageparts in different manners.
      *
@@ -106,7 +112,7 @@ class PagePartCreatorService
      *
      *      array('main' => array(
      *          function() { return new DummyPagePart('A') }, function() { return new DummyPagePart('B') }
-     *       ), 'banners' => array($awesomeNanner));
+     *       ), 'banners' => array($awesomeBanner));
      *
      *      So it's an array containing the pageparts per region. Each pagepart is returned by a function.
      *      This is clean because we don't have to bother with variablenames which we have to remember to pass
@@ -154,6 +160,32 @@ class PagePartCreatorService
         }
     }
 
+    /**
+     * @param mixed(Node|string) $nodeOrInternalName
+     * @param string $language
+     * @param string $templateName
+     */
+    public function setPageTemplate($nodeOrInternalName, $language, $templateName)
+    {
+	$node = $this->getNode($nodeOrInternalName);
+	/** @var $translation NodeTranslation */
+	$translation = $node->getNodeTranslation($language, true);
+	$page = $translation->getRef($this->em);
+
+	$repo = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
+	$pageTemplateConfiguration = $repo->findFor($page);
+	if ($pageTemplateConfiguration) {
+	    $pageTemplateConfiguration->setPageTemplate($templateName);
+	} else {
+	    $pageTemplateConfiguration = new PageTemplateConfiguration();
+	    $pageTemplateConfiguration->setPageId($page->getId());
+	    $pageTemplateConfiguration->setPageEntityName(ClassLookup::getClass($page));
+	    $pageTemplateConfiguration->setPageTemplate($templateName);
+	}
+
+	$this->em->persist($pageTemplateConfiguration);
+	$this->em->flush();
+    }
 
     /**
      * A helper function to express what pagepart you want.
@@ -167,7 +199,7 @@ class PagePartCreatorService
      *
      * @return callable The function that will instantiate a pagepart.
      */
-    public function getCreatorArgumentsForPagePartAndProperties($pagePartClassName, array $setters=null)
+    public function getCreatorArgumentsForPagePartAndProperties($pagePartClassName, array $setters = null)
     {
         return function() use ($pagePartClassName, $setters) {
             $pp = new $pagePartClassName;
@@ -181,7 +213,6 @@ class PagePartCreatorService
             return $pp;
         };
     }
-
 
     /**
      * @param mixed(string|Node) $nodeOrInternalName

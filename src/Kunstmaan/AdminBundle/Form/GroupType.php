@@ -4,7 +4,9 @@ namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -20,7 +22,7 @@ class GroupType extends AbstractType
         $builder
             ->add(
                 'name',
-                'text',
+                TextType::class,
                 array(
                     'required' => true,
                     'label'    => 'settings.group.name'
@@ -28,7 +30,7 @@ class GroupType extends AbstractType
             )
             ->add(
                 'rolesCollection',
-                'entity',
+                EntityType::class,
                 array(
                     'label'         => 'settings.group.roles',
                     'class'         => 'KunstmaanAdminBundle:Role',
@@ -40,8 +42,8 @@ class GroupType extends AbstractType
                     'expanded'      => false,
                     'required'      => true,
                     'attr'          => array(
-                        'class'            => 'chzn-select',
-                        'data-placeholder' => 'Choose the roles...'
+                        'placeholder'   => 'settings.group.roles_placeholder',
+                        'class'         => 'js-advanced-select form-control advanced-select',
                     ),
                 )
             );
@@ -50,7 +52,7 @@ class GroupType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'group';
     }

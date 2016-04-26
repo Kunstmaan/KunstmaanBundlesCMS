@@ -173,6 +173,14 @@ class Media extends AbstractEntity
             }
         }
     }
+    
+    /**
+     * @return int
+     */
+    public function getFileSizeBytes() 
+    {
+    	return $this->filesize;
+    }
 
     /**
      * @param int $filesize

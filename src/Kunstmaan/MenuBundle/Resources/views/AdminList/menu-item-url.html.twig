@@ -1,0 +1,7 @@
+{% if item.type == 'page_link' %}
+    {% set displayUrl = path('_slug', {url: item.nodeTranslation.url}) %}
+{% else %}
+    {% set displayUrl = item.url %}
+{% endif %}
+
+<a href="{{ displayUrl }}" target="_blank">{{ displayUrl }}</a>

@@ -29,7 +29,15 @@ class DateFilterType extends AbstractORMFilterType
     public function apply(array $data, $uniqueId)
     {
         if (isset($data['value']) && isset($data['comparator'])) {
-            $date = DateTime::createFromFormat('d/m/Y', $data['value'])->format('Y-m-d');
+            $dateTime = DateTime::createFromFormat('d/m/Y', $data['value']);
+            
+            if (false === $dateTime) {
+                // Failed to create DateTime object.
+                return;
+            }
+
+            $date = $dateTime->format('Y-m-d');
+            
             switch ($data['comparator']) {
                 case 'before':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias() . $this->columnName, ':var_' . $uniqueId));

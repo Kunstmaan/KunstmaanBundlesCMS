@@ -60,7 +60,7 @@ class RolesController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $role = new Role('');
-        $form = $this->createForm(new RoleType(), $role);
+        $form = $this->createForm(RoleType::class, $role);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -99,7 +99,7 @@ class RolesController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
-        $form = $this->createForm(new RoleType(), $role);
+        $form = $this->createForm(RoleType::class, $role);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);

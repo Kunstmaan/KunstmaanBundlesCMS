@@ -125,6 +125,17 @@ class NodeVersion extends AbstractEntity
         return $this->type;
     }
 
+    public function isDraft()
+    {
+        return self::DRAFT_VERSION === $this->type;
+    }
+
+    public function isPublic()
+    {
+        return self::PUBLIC_VERSION === $this->type;
+    }
+
+
     /**
      * Set type
      *

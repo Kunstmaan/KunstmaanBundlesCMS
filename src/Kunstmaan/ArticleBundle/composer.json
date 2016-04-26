@@ -13,22 +13,21 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
+        "php": ">=5.5.0",
+        "symfony/symfony": "~2.8",
         "white-october/pagerfanta-bundle": "1.0.*",
-        "kunstmaan/admin-bundle": "~3.0.0",
-        "kunstmaan/adminlist-bundle": "~3.0.0",
-        "kunstmaan/node-bundle": "~3.0.0",
+        "kunstmaan/admin-bundle": "~3.2",
+        "kunstmaan/adminlist-bundle": "~3.2",
+        "kunstmaan/node-bundle": "~3.2",
         "friendsofsymfony/user-bundle": "2.0.*@dev"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\ArticleBundle": "" }
+        "psr-4": { "Kunstmaan\\ArticleBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/ArticleBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "4.0-dev"
         }
     }
 }

@@ -4,7 +4,7 @@ namespace {{ namespace }}\Form\Pages;
 
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The admin type for home pages
@@ -32,9 +32,9 @@ class HomePageAdminType extends PageAdminType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '{{ namespace }}\Entity\Pages\HomePage'
@@ -46,7 +46,7 @@ class HomePageAdminType extends PageAdminType
      *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'homepage';
     }

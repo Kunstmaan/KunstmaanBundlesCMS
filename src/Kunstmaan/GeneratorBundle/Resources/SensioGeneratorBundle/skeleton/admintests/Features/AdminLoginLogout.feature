@@ -10,7 +10,7 @@ Feature: AdminLoginLogout
     Then I should see "Wrong"
 
   @javascript
-  Scenario: log in with correct credentials
+  Scenario: log in with new credentials
     Given I log in as "admin"
     And I go to the dashboard page
     Then I should see the dashboard

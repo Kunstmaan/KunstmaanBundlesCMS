@@ -1,0 +1,52 @@
+/* ==========================================================================
+   App
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.app {
+    background: $blue-ultralight;
+}
+
+
+/* Loading
+   ========================================================================== */
+.app--loading {
+
+    .app__main {
+
+        &:before {
+            content: " ";
+
+            z-index: 9001;
+            position: fixed;
+            top: 50vh;
+            left: 50vw;
+
+            display: block;
+            width: 3rem;
+            height: 3rem;
+            margin: -1.5rem 0 0 -1.5rem;
+
+            background-color: #D1D5DF;
+            border-radius: 3px;
+
+            @include animation(rotateplane 1.2s infinite ease-in-out);
+        }
+
+        &:after {
+            content: " ";
+
+            z-index: 9001;
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            display: block;
+            width: 100vw;
+            height: 100vh;
+
+            background: rgba(255, 255, 255, .8);
+        }
+    }
+}

@@ -21,6 +21,11 @@ class Translator extends SymfonyTranslator
     private $resourceCacher;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
      * Add resources from the database
      * So the translator knows where to look (first) for specific translations
      * This function will also look if these resources are loaded from the stash or from the cache
@@ -30,6 +35,14 @@ class Translator extends SymfonyTranslator
         if ($this->addResourcesFromCacher() === false) {
             $this->addResourcesFromDatabaseAndCacheThem();
         }
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function warmUp($cacheDir)
+    {
+        return;
     }
 
     /**
@@ -55,13 +68,16 @@ class Translator extends SymfonyTranslator
      */
     public function addResourcesFromDatabaseAndCacheThem($cacheResources = true)
     {
-        $resources = $this->translationRepository->getAllDomainsByLocale();
-        $this->addResources($resources);
+        try {
+            $resources = $this->translationRepository->getAllDomainsByLocale();
+            $this->addResources($resources);
 
-        if ($cacheResources === true) {
-            $this->resourceCacher->cacheResources($resources);
+            if ($cacheResources === true) {
+                $this->resourceCacher->cacheResources($resources);
+            }
+        } catch (\Exception $ex){
+            // don't load if the database doesn't work
         }
-
     }
 
     /**
@@ -93,11 +109,11 @@ class Translator extends SymfonyTranslator
 
     public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
     {
-        if (!$this->container->isScopeActive('request')) {
+        if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
             return parent::trans($id, $parameters, $domain, $locale);
         }
 
-        $showTranslationsSource = $this->container->get('request')->get('transSource');
+        $showTranslationsSource = $this->request->get('transSource');
         if ($showTranslationsSource !== null) {
             $trans = sprintf('%s (%s)', $id, $domain);
         } else {
@@ -112,12 +128,12 @@ class Translator extends SymfonyTranslator
     public function profileTranslation($id, $parameters, $domain, $locale, $trans)
     {
 
-        if ($this->container->getParameter('kuma_translator.profiler') === false) {
+        if (!$this->request || $this->container->getParameter('kuma_translator.profiler') === false) {
             return;
         }
 
         if ($locale === null) {
-            $locale = $this->container->get('request')->get('_locale');
+            $locale = $this->request->get('_locale');
         }
 
         $translation = new Translation;
@@ -126,7 +142,7 @@ class Translator extends SymfonyTranslator
         $translation->setLocale($locale);
         $translation->setText($trans);
 
-        $translationCollection = $this->container->get('request')->request->get('usedTranslations');
+        $translationCollection = $this->request->request->get('usedTranslations');
 
         if (!$translationCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
             $translationCollection = new ArrayCollection;
@@ -134,7 +150,7 @@ class Translator extends SymfonyTranslator
 
         $translationCollection->set($domain . $id . $locale, $translation);
 
-        $this->container->get('request')->request->set('usedTranslations', $translationCollection);
+        $this->request->request->set('usedTranslations', $translationCollection);
 
     }
 

@@ -3,13 +3,17 @@
 namespace Kunstmaan\MediaBundle\Form\File;
 
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
 
 /**
  * FileType
@@ -32,30 +36,34 @@ class FileType extends AbstractType
     {
         $builder->add(
             'name',
-            'text',
+            TextType::class,
             array(
+                'label' => 'media.form.file.name.label',
                 'required' => false
             )
         );
         $builder->add(
             'file',
-            'file',
+            BaseFileType::class,
             array(
+                'label' => 'media.form.file.file.label',
                 'constraints' => array(new File()),
                 'required' => false
             )
         );
         $builder->add(
             'copyright',
-            'text',
+            TextType::class,
             array(
+                'label' => 'media.form.file.copyright.label',
                 'required' => false
             )
         );
         $builder->add(
             'description',
-            'textarea',
+            TextareaType::class,
             array(
+                'label' => 'media.form.file.description.label',
                 'required' => false
             )
         );
@@ -70,8 +78,9 @@ class FileType extends AbstractType
                 if (!$helper || null === $helper->getMedia()->getId()) {
                     $form->add(
                         'file',
-                        'file',
+                        BaseFileType::class,
                         array(
+                            'label' => 'media.form.file.file.label',
                             'constraints' => array(new NotBlank(), new File()),
                             'required' => true
                         )
@@ -80,8 +89,9 @@ class FileType extends AbstractType
                     // Display original filename only for persisted objects
                     $form->add(
                         'originalFilename',
-                        'text',
+                        TextType::class,
                         array(
+                            'label' => 'media.form.file.originalFilename.label',
                             'required' => false,
                             'attr' => array(
                                 'readonly' => 'readonly'
@@ -91,10 +101,10 @@ class FileType extends AbstractType
                     // Allow changing folder on edit
                     $form->add(
                         'folder',
-                        'entity',
+                        EntityType::class,
                         array(
                             'class' => 'KunstmaanMediaBundle:Folder',
-                            'property' => 'optionLabel',
+                            'choice_label' => 'optionLabel',
                             'query_builder' => function (FolderRepository $er) {
                                 return $er->selectFolderQueryBuilder()
                                     ->andWhere('f.parent IS NOT NULL');
@@ -112,7 +122,7 @@ class FileType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_filetype';
     }
@@ -120,9 +130,9 @@ class FileType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

@@ -133,6 +133,11 @@ class AdminList
         return $this->configurator->canAdd();
     }
 
+    public function canView($item)
+    {
+        return $this->configurator->canView($item);
+    }
+
     /**
      * @return array
      */
@@ -149,6 +154,11 @@ class AdminList
     public function getEditUrlFor($item)
     {
         return $this->configurator->getEditUrlFor($item);
+    }
+
+    public function getViewUrlFor($item)
+    {
+        return $this->configurator->getViewUrlFor($item);
     }
 
     /**

@@ -1,8 +1,0 @@
-<li rel="page" class="{% if item.online == 0 %}offline{% endif %}">
-    <a onclick="jQuery('#selection').text('Selection: {{ path('_slug', { 'url': item.url }) }}'); ckurl = '{{ path('_slug', { 'url': item.url }) }}'; ckid = '{{ item.id }}';" class="item" href="#">{{ item.title }}</a>
-    <ul>
-        {% for item in tree.children(item.id) %}
-            {% include 'KunstmaanNodeBundle:Widgets:selectLinkRecTreeView.html.twig' %}
-        {% endfor %}
-    </ul>
-</li>

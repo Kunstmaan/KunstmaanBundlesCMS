@@ -3,10 +3,12 @@
 namespace Kunstmaan\TranslatorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextWithLocaleAdminType extends AbstractType
 {
@@ -16,8 +18,11 @@ class TextWithLocaleAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('locale', 'hidden');
-        $builder->add('text', 'textarea', array(
+        $builder->add('locale', HiddenType::class, array(
+            'label' => 'kuma_translator.form.text_with_locale.locale.label',
+        ));
+        $builder->add('text', TextareaType::class, array(
+            'label' => 'kuma_translator.form.text_with_locale.text.label',
             'required' => false
         ));
 
@@ -30,7 +35,7 @@ class TextWithLocaleAdminType extends AbstractType
 
                 $options = $form->get('text')->getConfig()->getOptions();
                 $options['label'] = strtoupper($data->getLocale());
-                $form->add('text', 'textarea', $options);
+                $form->add('text', TextareaType::class, $options);
             }
         );
     }
@@ -40,12 +45,12 @@ class TextWithLocaleAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'text_with_locale';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '\Kunstmaan\TranslatorBundle\Model\TextWithLocale',

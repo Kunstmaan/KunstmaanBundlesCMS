@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -41,8 +42,9 @@ class BulkUploadType extends AbstractType
     {
         $builder->add(
             'files',
-            'file',
+            FileType::class,
             array(
+                'label' => 'media.form.bulk_upload.files.label',
                 'required' => false,
                 'attr' => array(
                     'accept' => $this->accept,
@@ -58,7 +60,7 @@ class BulkUploadType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_bulkupload';
     }

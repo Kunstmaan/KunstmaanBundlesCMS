@@ -123,7 +123,7 @@ class PageCreatorService
 
         $parent = isset($options['parent']) ? $options['parent'] : null;
 
-        $pageInternalName = isset($options['page_internal_name']) ? $options['page_internal_name'] : '';
+        $pageInternalName = isset($options['page_internal_name']) ? $options['page_internal_name'] : null;
 
         $setOnline = isset($options['set_online']) ? $options['set_online'] : false;
 

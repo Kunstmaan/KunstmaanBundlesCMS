@@ -5,6 +5,8 @@ namespace {{ namespace }}\Features\Context;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;
 use Behat\Mink\Exception\ElementNotFoundException;
+use {{ namespace }}\Entity\Pages\ContentPage;
+use {{ namespace }}\Entity\Pages\FormPage;
 
 /**
  * PageContext
@@ -26,7 +28,7 @@ class PageContext extends BehatContext
     }
 
     /**
-     * @param string $pageType The type of the page - contentpage, formpage
+     * @param string $pageType The type of the page - ContentPage, FormPage
      * @param string $pageName The name of the page
      *
      * @Given /^I add ([a-zA-Z0-9]*) "([^"]*)"$/
@@ -35,11 +37,20 @@ class PageContext extends BehatContext
      */
     public function iAddPage($pageType, $pageName)
     {
+        switch ($pageType) {
+            case 'ContentPage':
+                $pageType = ContentPage::class;
+                break;
+            case 'FormPage':
+                $pageType = FormPage::class;
+                break;
+        }
         $records = array(
             "addpage_title" => $this->getMainContext()->fixStepArgument($pageName),
             "addpage_type" => $this->getMainContext()->fixStepArgument($pageType)
         );
 
+        $this->getMainContext()->pressButton("More");
         $this->getMainContext()->pressButton("Add subpage");
         $this->getMainContext()->iWaitSeconds(1);
 
@@ -102,6 +113,7 @@ class PageContext extends BehatContext
         // Navigate to the page we want to publish
         $this->getMainContext()->clickLink($pageName);
         // Click the save button
+        $this->getMainContext()->pressButton("More");
         $this->getMainContext()->pressButton($action);
     }
 
@@ -172,7 +184,7 @@ class PageContext extends BehatContext
     {
         $states = array(
             'Publish' => 'pub',
-            'Unpublish' => 'unpub_publish_action'
+            'Unpublish' => 'unpub'
         );
 
         if (!is_null($pageName)) {
@@ -186,13 +198,8 @@ class PageContext extends BehatContext
 
         $page = $this->getMainContext()->getSession()->getPage();
 
-        $publishButton = $page->find('xpath', "descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' main_actions ')]/descendant-or-self::*/a");
-        if (!is_null($publishButton)) {
-            $publishButton->click();
-        } else {
-            $message = sprintf('No publish button was found');
-            throw new ExpectationException($message, $this->getSession());
-        }
+        $this->getMainContext()->pressButton("More");
+        $this->getMainContext()->clickLink($state);
 
         $modals = $page->findAll('xpath', "//div[contains(@id, $states[$state])]");
 
@@ -204,7 +211,7 @@ class PageContext extends BehatContext
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[text()='".$state."']");
+                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//a[contains(@class, 'btn btn-danger btn--raise-on-hover')]");
 
                 return;
             }
@@ -223,6 +230,7 @@ class PageContext extends BehatContext
         // Navigate to the page we want to delete
         $this->getMainContext()->clickLink($pageName);
 
+        $this->getMainContext()->pressButton("More");
         $this->getMainContext()->pressButton("Delete");
 
         $page = $this->getMainContext()->getSession()->getPage();

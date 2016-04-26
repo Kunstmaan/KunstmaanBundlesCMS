@@ -1,0 +1,39 @@
+/* ==========================================================================
+   Header - Contact nav
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.contact-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+}
+
+
+/* Item
+   ========================================================================== */
+.contact-nav__item {
+    float: left;
+    display: block;
+    width: calc(100% / 3);
+    padding: .9em 0;
+
+    text-align: center;
+    color: $grey;
+    font-size: 1.875rem;
+    line-height: 100%;
+
+    border: 1px solid $grey--dark;
+    border-width: 1px 0 0 1px;
+
+    &:first-child {
+        border-left-width: 0;
+    }
+
+    &:hover, &:focus {
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Structures - Pagination
+   ========================================================================== */
+
+.pagination {
+
+    ul {
+        padding: 0;
+
+        text-align: center;
+    }
+
+    li {
+        display: inline-block;
+
+        list-style: none;
+
+        color: $grey--dark;
+        font-size: .9rem;
+
+        a {
+            color: $grey--dark;
+            font-size: .9rem;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: $blue;
+            }
+        }
+
+        & + li {
+            margin-left: 2rem;
+        }
+    }
+
+    .active {
+        height: 2rem;
+        width: 2rem;
+
+        background: $blue;
+
+        border-radius: 100%;
+
+        span {
+            color: $white;
+            line-height: 2rem;
+        }
+    }
+}
+
+.pagination__direction-icon {
+    font-size: .6rem;
+}
+
+/*doc
+---
+title: Pagination
+name: 08_pagination
+category: Structures
+---
+
+```html_example
+<div class="pagination">
+    <ul>
+    <li class="prev disabled">
+        <span><span class="icon--arrow-left pagination__direction-icon"></span></span>
+    </li>
+    <li class="active">
+        <span>1</span>
+    </li>
+    <li>
+        <a href="/app_dev.php/nl/blog?page=2">2</a>
+    </li>
+    <li class="next">
+        <a href="/app_dev.php/nl/blog?page=2">
+        <span class="icon--arrow-right pagination__direction-icon"></span>
+        </a>
+    </li>
+    </ul>
+</div>
+```
+
+*/

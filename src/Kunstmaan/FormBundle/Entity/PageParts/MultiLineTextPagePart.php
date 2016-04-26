@@ -3,13 +3,10 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -22,7 +19,6 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class MultiLineTextPagePart extends AbstractFormPagePart
 {
-
     /**
      * If set to true, you are obligated to fill in this page part
      *
@@ -162,12 +158,15 @@ class MultiLineTextPagePart extends AbstractFormPagePart
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
+     * @param int                  $sequence    The sequence of the form field
      */
-    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields)
+    public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $mfsf = new TextFormSubmissionField();
-        $mfsf->setFieldName("field_" . $this->getUniqueId());
+        $mfsf->setFieldName('field_' . $this->getUniqueId());
         $mfsf->setLabel($this->getLabel());
+        $mfsf->setSequence($sequence);
+
         $data = $formBuilder->getData();
         $data['formwidget_' . $this->getUniqueId()] = $mfsf;
 
@@ -189,7 +188,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
 
         $formBuilder->add(
             'formwidget_' . $this->getUniqueId(),
-            new TextFormSubmissionType(),
+            TextFormSubmissionType::class,
             array(
                 'label'       => $this->getLabel(),
                 'constraints' => $constraints,
@@ -198,7 +197,7 @@ class MultiLineTextPagePart extends AbstractFormPagePart
         );
         $formBuilder->setData($data);
 
-        $fields[] = $mfsf;
+        $fields->append($mfsf);
     }
 
     /**
@@ -210,5 +209,4 @@ class MultiLineTextPagePart extends AbstractFormPagePart
     {
         return new MultiLineTextPagePartAdminType();
     }
-
 }

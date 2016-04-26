@@ -43,13 +43,13 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Admin Tests Generation');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Admin Tests Generation');
 
         GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
 
         $namespace = Validators::validateBundleNamespace($input->getOption('namespace'));
-        $bundle = strtr($namespace, array('\\' => ''));
+        $bundle = strtr($namespace, array('\\Bundle\\' => '', '\\' => ''));
 
         $bundle = $this
             ->getApplication()
@@ -65,10 +65,10 @@ EOT
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the Kunstmaan default site generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the Kunstmaan default site generator');
 
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
 
         $inputAssistant->askForNamespace(array(
             '',
@@ -81,6 +81,6 @@ EOT
 
     protected function createGenerator()
     {
-        return new AdminTestsGenerator($this->getContainer()->get('filesystem'), '/admintests');
+        return new AdminTestsGenerator($this->getContainer(), $this->getContainer()->get('filesystem'), '/admintests');
     }
 }

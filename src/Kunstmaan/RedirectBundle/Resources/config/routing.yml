@@ -1,4 +1,4 @@
 KunstmaanRedirectBundle_redirect_adminlist:
-    resource: @KunstmaanRedirectBundle/Controller/RedirectAdminListController.php
+    resource: '@KunstmaanRedirectBundle/Controller/RedirectAdminListController.php'
     type:     annotation
     prefix:   /admin/settings/redirect/

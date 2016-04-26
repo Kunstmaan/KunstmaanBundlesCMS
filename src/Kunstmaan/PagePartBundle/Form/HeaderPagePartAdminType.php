@@ -1,8 +1,10 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Form;
+
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -16,27 +18,39 @@ class HeaderPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('niv', 'choice', array('label' => 'pagepart.header.type', 'choices' => array('1' => 'Header 1', '2' => 'Header 2', '3' => 'Header 3', '4' => 'Header 4', '5' => 'Header 5', '6' => 'Header 6'), 'required' => true,));
-        $builder->add('title', null, array('label' => 'pagepart.header.title', 'required' => true));
+        $builder->add(
+          'niv',
+          ChoiceType::class,
+          array(
+            'label' => 'pagepart.header.type',
+            'choices' => array('Header 1' => '1', 'Header 2' => '2', 'Header 3' => '3', 'Header 4' => '4', 'Header 5' => '5', 'Header 6' => '6'),
+            'required' => true,
+            'choices_as_values' => true
+          )
+        );
+        $builder->add('title', null, array(
+            'label' => 'pagepart.header.title',
+            'required' => true,
+        ));
     }
 
     /**
-     * @assert () == 'kunstmaan_pagepartbundle_headerpageparttype'
-     *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_pagepartbundle_headerpageparttype';
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-                               'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
-                               ));
+        $resolver->setDefaults(
+          array(
+            'data_class' => 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart',
+          )
+        );
     }
 }

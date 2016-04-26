@@ -1,4 +1,4 @@
 KunstmaanSitemapBundle_sitemap:
-    resource: "@KunstmaanSitemapBundle/Controller/SitemapController.php"
+    resource: '@KunstmaanSitemapBundle/Controller/SitemapController.php'
     type:     annotation
     prefix:   /

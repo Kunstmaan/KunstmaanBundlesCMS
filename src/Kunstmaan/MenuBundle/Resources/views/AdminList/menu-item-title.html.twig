@@ -1,0 +1,5 @@
+{% set marginDefinition = 60 %}
+{% set marginLeft = ((item.lvl + 1) * marginDefinition) - marginDefinition %}
+<div style="margin-left: {{ marginLeft }}px;{% if not item.online%}color:#999;{% endif %}">
+    {% if item.lvl > 0 %}∟ {% endif %}{{ item.displayTitle }}
+</div>

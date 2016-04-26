@@ -36,11 +36,11 @@ class RemoteSlideHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return RemoteSlideType
+     * @return string
      */
     public function getFormType()
     {
-        return new RemoteSlideType();
+        return RemoteSlideType::class;
     }
 
     /**
@@ -89,7 +89,7 @@ class RemoteSlideHandler extends AbstractMediaHandler
                 try {
                     $json = json_decode(
                         file_get_contents(
-                            'http://www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/slideshow/embed_code/' . $code . '&format=json'
+                            'http://www.slideshare.net/api/oembed/2?url=http://www.slideshare.net/slideshow/embed_code/key/' . $code . '&format=json'
                         )
                     );
                     $slide->setThumbnailUrl($json->thumbnail);

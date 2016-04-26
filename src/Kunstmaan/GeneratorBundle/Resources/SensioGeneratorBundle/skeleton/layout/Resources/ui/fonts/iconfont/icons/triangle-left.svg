@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="5px" height="7px" viewBox="0 0 5 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>triangle-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+	<g id="icons" sketch:type="MSArtboardGroup" transform="translate(-108.000000, -77.000000)" fill="#373737">
+	    <g id="Triangles" sketch:type="MSLayerGroup" transform="translate(83.000000, 76.000000)">
+		<path d="M27.3628931,6.86363636 L23.8628931,2.13636364 L30.8628931,2.13636364 L27.3628931,6.86363636 L27.3628931,6.86363636 Z" id="Triangle-left" sketch:type="MSShapeGroup" transform="translate(27.362893, 4.500000) scale(1, -1) rotate(90.000000) translate(-27.362893, -4.500000) "></path>
+	    </g>
+	</g>
+    </g>
+</svg>

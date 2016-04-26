@@ -12,6 +12,8 @@ interface ExportListConfiguratorInterface
 
     public function getIterator();
 
+    public function buildFilters();
+
     public function buildExportFields();
 
     public function getStringValue($item, $columnName);

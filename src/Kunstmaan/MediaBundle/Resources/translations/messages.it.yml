@@ -30,6 +30,7 @@ media:
   folder:
     addsub:
       action: Aggiungi sottocartella
+      action_short: Aggiungi
       modal:
         title: Aggiungi sottocartella
         save: Aggiungi
@@ -37,6 +38,7 @@ media:
       no: Sottocartelle non presenti.
     delete:
       action: Cancella questa cartella
+      action_short: Cancella
       modal:
         title: Cancella cartella
         text: Sei sicuro di voler cancellare "%folder%"?

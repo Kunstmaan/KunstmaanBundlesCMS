@@ -5,27 +5,23 @@ namespace Kunstmaan\NodeBundle\EventListener;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
-
+use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * LogPageEventsSubscriber
- */
 class LogPageEventsSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var Logger
      */
     private $logger;
 
     /**
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    private $securityContext;
+    private $tokenStorage;
 
     /**
      * @var UserInterface
@@ -33,13 +29,13 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     private $user = null;
 
     /**
-     * @param Logger                   $logger          The logger
-     * @param SecurityContextInterface $securityContext The security context
+     * @param Logger                  $logger        The logger
+     * @param TokenStorageInterface   $tokenStorage  The security token storage
      */
-    public function __construct(Logger $logger, SecurityContextInterface $securityContext)
+    public function __construct(Logger $logger, TokenStorageInterface $tokenStorage)
     {
         $this->logger = $logger;
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -66,6 +62,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     {
         return array(
             Events::COPY_PAGE_TRANSLATION => 'onCopyPageTranslation',
+            Events::RECOPY_PAGE_TRANSLATION => 'onRecopyPageTranslation',
             Events::ADD_EMPTY_PAGE_TRANSLATION => 'onAddEmptyPageTranslation',
             Events::POST_PUBLISH => 'postPublish',
             Events::POST_UNPUBLISH => 'postUnPublish',
@@ -84,7 +81,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     private function getUser()
     {
         if (is_null($this->user)) {
-            $this->user = $this->securityContext->getToken()->getUser();
+            $this->user = $this->tokenStorage->getToken()->getUser();
         }
 
         return $this->user;
@@ -96,6 +93,14 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     public function onCopyPageTranslation(CopyPageTranslationNodeEvent $event)
     {
         $this->logger->addInfo(sprintf('%s just copied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
+    }
+
+    /**
+     * @param RecopyPageTranslationNodeEvent $event
+     */
+    public function onRecopyPageTranslation(RecopyPageTranslationNodeEvent $event)
+    {
+        $this->logger->addInfo(sprintf('%s just recopied the page translation from %s (%d) to %s (%d) for node with id %d', $this->getUser()->getUsername(), $event->getOriginalLanguage(), $event->getOriginalPage()->getId(), $event->getNodeTranslation()->getLang(), $event->getPage()->getId(), $event->getNode()->getId()));
     }
 
     /**
@@ -161,5 +166,4 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
     {
         $this->logger->addInfo(sprintf('%s just created a draft version %d for node %d in language %s', $this->getUser()->getUsername(), $event->getNodeVersion()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
-
 }

@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Helper\Google;
 use Google_Client;
 use Symfony\Cmf\Component\Routing\ChainRouter;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ClientHelper
 {
@@ -21,7 +22,7 @@ class ClientHelper
         $this->client = $client;
 
         try {
-            $uri = $router->generate($routeName, array(), true);
+            $uri = $router->generate($routeName, array(), UrlGeneratorInterface::ABSOLUTE_URL);
             $this->client->setRedirectUri($uri);
         } catch (\Exception $e) {
             $this->client->setRedirectUri('');

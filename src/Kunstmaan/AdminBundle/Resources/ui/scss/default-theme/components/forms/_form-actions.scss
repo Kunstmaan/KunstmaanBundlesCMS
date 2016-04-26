@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Form Actions
+   ========================================================================== */
+
+.form-actions {
+    overflow: hidden;
+
+    border-top: 1px solid $gray-lighter;
+    text-align: right;
+}
+
+.form-actions--padded {
+    padding: 1em;
+}

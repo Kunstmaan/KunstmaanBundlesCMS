@@ -2,7 +2,8 @@
 
 namespace Kunstmaan\MediaPagePartBundle\Form;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
@@ -24,7 +25,9 @@ class DownloadPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('media', 'media', array('pattern' => 'KunstmaanMediaBundle_chooser_filechooser', 'label' => 'mediapagepart.download.choosefile'));
+        $builder->add('media', MediaType::class, array(
+            'label' => 'mediapagepart.download.choosefile',
+        ));
     }
 
     /**
@@ -32,7 +35,7 @@ class DownloadPagePartAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'kunstmaan_mediabundle_downloadpageparttype';
     }
@@ -40,13 +43,12 @@ class DownloadPagePartAdminType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
                 'data_class' => 'Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart',
         ));
     }
-
 }

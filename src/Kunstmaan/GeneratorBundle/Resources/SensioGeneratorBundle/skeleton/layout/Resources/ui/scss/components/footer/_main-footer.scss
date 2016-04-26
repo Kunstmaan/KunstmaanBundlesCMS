@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Footer - Main footer
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.main-footer {
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+{% if demosite %}
+/* Footer navigation
+   ========================================================================== */
+.footer-nav {
+    margin: 2rem 0;
+
+    @media(max-width: $screen-xs-max) {
+        text-align: center;
+    }
+}
+
+.footer-nav__title {
+    margin: 0 0 1rem 0;
+
+    font-size: .75rem;
+    text-transform: uppercase;
+}
+
+.footer-nav__title__link {
+    color: $black;
+    font-weight: 600;
+
+    &:hover, &:focus, &:active {
+        color: $black;
+    }
+}
+
+.footer-nav__item {
+    display: block;
+    margin-bottom: .4rem;
+
+    font-size: .9rem;
+    line-height: 150%;
+    color: $grey;
+
+    &:hover, &:focus, &:active {
+        text-decoration: none;
+    }
+}
+
+.footer-nav__item--active {
+    color: $link-color--hover;
+}
+
+.footer-nav--demosite {
+    .footer-nav__title {
+        color: $black;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: .9rem;
+        line-height: 150%;
+        color: $grey;
+    }
+}
+
+{% endif %}

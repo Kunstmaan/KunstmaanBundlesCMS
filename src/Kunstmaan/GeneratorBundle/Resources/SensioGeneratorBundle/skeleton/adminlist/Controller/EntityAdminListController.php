@@ -70,6 +70,21 @@ class {{ entity_class }}AdminListController extends AdminListController
     }
 
     /**
+     * The edit action
+     *
+     * @param int $id
+     *
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function viewAction(Request $request, $id)
+    {
+        return parent::doViewAction($this->getAdminListConfigurator(), $id, $request);
+    }
+
+    /**
      * The delete action
      *
      * @param int $id
@@ -97,4 +112,37 @@ class {{ entity_class }}AdminListController extends AdminListController
     {
         return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
+
+{% if sortField %}
+    /**
+     * The move up action
+     *
+     * @param int $id
+     *
+     * @Route("/{id}/move-up", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_move_up")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function moveUpAction(Request $request, $id)
+    {
+    return parent::doMoveUpAction($this->getAdminListConfigurator(), $id, $request);
+    }
+
+    /**
+     * The move down action
+     *
+     * @param int $id
+     *
+     * @Route("/{id}/move-down", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_move_down")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function moveDownAction(Request $request, $id)
+    {
+    return parent::doMoveDownAction($this->getAdminListConfigurator(), $id, $request);
+    }
+{% endif %}
+
 }

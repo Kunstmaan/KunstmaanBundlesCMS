@@ -1,0 +1,21 @@
+subaction:
+    versions: "Versies"
+
+action:
+    saveasdraft: "Als concept opslaan"
+    recopyfromlanguage: "Kopieer de inhoud van een andere taal"
+    publish: "Publiceer"
+    unpublish: "Publiceren ongedaan maken"
+    preview: "Preview"
+    save: "Opslaan"
+    delete: "Verwijder"
+    addsubpage: "Subpagina toevoegen"
+    duplicate: "Dupliceer"
+
+modal:
+    sourcelanguage: "Bron taal"
+
+pages:
+    copynotavailable: "Vertaal eerst de bovenliggende pagina"
+
+"This list contains all the pages, chronologically ordered by updated date.": "Deze lijst bevat alle pagina's chronologisch gesorteed op laatste wijziging."

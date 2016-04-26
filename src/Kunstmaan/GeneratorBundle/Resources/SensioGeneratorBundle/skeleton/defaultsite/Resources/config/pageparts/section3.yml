@@ -1,0 +1,5 @@
+name: "Section 3"
+context: "section3"
+extends: "main"
+types:
+    - { name: "Service", class: "{{ namespace|replace({'\\': '\\\\'}) }}\\Entity\\PageParts\\ServicePagePart" }

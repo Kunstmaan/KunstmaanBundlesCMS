@@ -67,7 +67,7 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::__toString
      */
-    public function test__toString()
+    public function testToString()
     {
         $this->assertEquals('LinkPagePart', $this->object->__toString());
     }

@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -18,11 +19,37 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_node');
+        $root = $treeBuilder->root('kunstmaan_node');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        /** @var ArrayNodeDefinition $pages */
+        $root
+            ->children()
+                ->arrayNode('pages')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->isRequired()->end()
+                            ->scalarNode('search_type')->end()
+                            ->booleanNode('structure_node')->end()
+                            ->booleanNode('indexable')->end()
+                            ->scalarNode('icon')->defaultNull()->end()
+                            ->scalarNode('hidden_from_tree')->end()
+                            ->booleanNode('is_homepage')->defaultFalse()->end()
+                            ->arrayNode('allowed_children')
+                                ->prototype('array')
+                                    ->beforeNormalization()
+                                        ->ifString()->then(function ($v) { return ["class" => $v]; })
+                                    ->end()
+                                    ->children()
+                                        ->scalarNode('class')->isRequired()->end()
+                                        ->scalarNode('name')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+
         return $treeBuilder;
     }
 }

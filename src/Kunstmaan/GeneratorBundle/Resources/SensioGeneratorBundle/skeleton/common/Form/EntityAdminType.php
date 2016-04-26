@@ -2,8 +2,9 @@
 
 namespace {{ namespace }}\Form\{{ entity_prefix }};
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Kunstmaan\MediaBundle\Validator\Constraints as Assert;
 
 /**
  * {{ className }}
@@ -26,11 +27,32 @@ class {{ className }} extends {{ extend_class }}
         parent::buildForm($builder, $options);
 {% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}{% for field in fieldArray %}
         $builder->add('{{ field.fieldName }}', '{{ field.formType }}', array(
-{% if field.formType == 'media' %}            'pattern' => 'KunstmaanMediaBundle_chooser',
-{% endif %}
 {% if field.mediaType is defined and field.mediaType != 'none' %}            'mediatype' => '{{ field.mediaType }}',
+{% if field.mimeTypes != null or (field.mediaType == 'image' and (field.minHeight != null or field.maxHeight != null or field.minWidth != null or field.maxWidth or null)) %}
+            'constraints' => array(new Assert\Media(array(
+{% if field.mimeTypes != null %}
+                'mimeTypes' => array({% for type in field.mimeTypes %}'{{ type }}',{% endfor %}),
 {% endif %}
-{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'rich_editor'),
+{% endif %}
+{% if field.mediaType is defined and field.mediaType == 'image' %}
+{% if field.minHeight != null %}
+                'minHeight' => '{{ field.minHeight }}',
+{% endif %}
+{% if field.maxHeight != null %}
+                'maxHeight' => '{{ field.maxHeight }}',
+{% endif %}
+{% if field.minWidth != null %}
+                'minWidth' => '{{ field.minWidth }}',
+{% endif %}
+{% if field.maxWidth != null %}
+                'maxWidth' => '{{ field.maxWidth }}',
+{% endif %}
+{% endif %}
+{% if field.mimeTypes != null or (field.mediaType == 'image' and (field.minHeight != null or field.maxHeight != null or field.minWidth != null or field.maxWidth or null)) %}
+            ))),
+{% endif %}
+{% endif %}
+{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
 {% endif %}
 {% if key == 'multi_line' %}            'attr' => array('rows' => 10, 'cols' => 600),
 {% endif %}
@@ -57,7 +79,7 @@ class {{ className }} extends {{ extend_class }}
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return '{{ name }}';
     }
@@ -65,9 +87,9 @@ class {{ className }} extends {{ extend_class }}
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => '{{ entity }}'

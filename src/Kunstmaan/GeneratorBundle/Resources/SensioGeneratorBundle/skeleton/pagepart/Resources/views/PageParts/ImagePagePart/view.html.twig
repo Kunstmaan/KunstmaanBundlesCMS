@@ -1,0 +1,45 @@
+{% import _self as buildImage %}
+
+{% macro setFilters(image, altText, type) %}
+
+    {% set imgUrl = '' %}
+
+    {% if type in ['svg', 'gif'] %}
+        {% set imgUrl = absolute_url(asset(image)) %}
+        <img src="{{ imgUrl }}"{% if altText %} alt="{{ altText }}"{% endif %} />
+    {% else %}
+        {% set imgUrl_huge =    asset(image | imagine_filter('image_huge_' ~ type)) %}
+        {% set imgUrl_big =     asset(image | imagine_filter('image_big_' ~ type)) %}
+        {% set imgUrl_medium =  asset(image | imagine_filter('image_medium_' ~ type)) %}
+        {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type)) %}
+        {% set srcSet = imgUrl_huge ~ ' 2400w,' ~ imgUrl_big ~ ' 1200w,' ~ imgUrl_medium ~ ' 600w,' ~ imgUrl_small ~ ' 400w' %}
+
+        <img srcset="{{ srcSet }}"{% if altText %} sizes="100vw" alt="{{ altText }}"{% endif %}/>
+        <noscript>
+            <img src="{{ imgUrl_big }}"{% if altText %} alt="{{ altText }}"{% endif %} />
+        </noscript>
+    {% endif %}
+{% endmacro %}
+
+{% if resource.media is not empty %}
+    {% if app.request %}
+        <figure class="image-pp">
+            {% set imageType = resource.media.originalFilename|lower|split('.')|last %}
+
+            {% if resource.link is defined and resource.link != '' %}
+            <a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}>
+                {% endif %}
+
+                {{ buildImage.setFilters(resource.media.url, resource.altText, imageType) }}
+
+                {% if resource.link is defined and resource.link != '' %}
+            </a>
+            {% endif %}
+            {% if resource.caption %}
+                <figcaption>
+                    <p>{{ resource.caption }}</p>
+                </figcaption>
+            {% endif %}
+        </figure>
+    {% endif %}
+{% endif %}

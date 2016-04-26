@@ -1,5 +1,6 @@
 parameters:
     kunstmaan_admin.menubuilder.class: 'Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder'
+    kunstmaan_admin.admin_panel.class: 'Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel'
     kunstmaan_admin.apply_acl_changeset.listener.class: 'Kunstmaan\AdminBundle\EventListener\ApplyAclChangesetListener'
     kunstmaan_admin.login.listener.class: 'Kunstmaan\AdminBundle\EventListener\LoginListener'
     kunstmaan_admin.admin_locale.listener.class: 'Kunstmaan\AdminBundle\EventListener\AdminLocaleListener'
@@ -7,12 +8,18 @@ parameters:
     kunstmaan_admin.acl.native.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper'
     kunstmaan_admin.clone.listener.class: 'Kunstmaan\AdminBundle\EventListener\CloneListener'
     kunstmaan_admin.session_security.class: 'Kunstmaan\AdminBundle\EventListener\SessionSecurityListener'
+    kunstmaan_admin.password_resetting.listener.class: 'Kunstmaan\AdminBundle\EventListener\PasswordResettingListener'
+    kunstmaan_admin.password_check.listener.class: 'Kunstmaan\AdminBundle\EventListener\PasswordCheckListener'
     kunstmaan_admin.firewall.provider_key: 'main'
+    kunstmaan_admin.domain_configuration.class: 'Kunstmaan\AdminBundle\Helper\DomainConfiguration'
 
 services:
     kunstmaan_admin.menubuilder:
-        class: "%kunstmaan_admin.menubuilder.class%"
-        arguments: ["@translator", "@service_container"]
+        class: '%kunstmaan_admin.menubuilder.class%'
+        arguments: ['@service_container']
+
+    kunstmaan_admin.admin_panel:
+        class: '%kunstmaan_admin.admin_panel.class%'
 
     kunstmaan_admin.menu.adaptor.modules:
         class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
@@ -21,30 +28,31 @@ services:
 
     kunstmaan_admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
-        arguments: ["@service_container"]
+        arguments: ['@service_container']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_admin.login.listener:
-        class: "%kunstmaan_admin.login.listener.class%"
-        arguments: ["@kunstmaan_admin.logger", "@kunstmaan_admin.versionchecker"]
+        class: '%kunstmaan_admin.login.listener.class%'
+        arguments: ['@kunstmaan_admin.logger', '@kunstmaan_admin.versionchecker']
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
     kunstmaan_admin.admin_locale.listener:
-        class: "%kunstmaan_admin.admin_locale.listener.class%"
-        arguments: ["@security.context", "@translator", "%kunstmaan_admin.default_admin_locale%", "%kunstmaan_admin.firewall.provider_key%"]
+        class: '%kunstmaan_admin.admin_locale.listener.class%'
+        arguments: ['@security.token_storage', '@translator', '%kunstmaan_admin.default_admin_locale%', '%kunstmaan_admin.firewall.provider_key%']
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
 
     kunstmaan_admin.menu.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
-        arguments: ["@kunstmaan_admin.menubuilder"]
+        arguments: ['@kunstmaan_admin.menubuilder', '@kunstmaan_admin.admin_panel']
         tags:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.localeswitcher.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\LocaleSwitcherTwigExtension
+        arguments: ['@kunstmaan_admin.domain_configuration']
         tags:
             -  { name: 'twig.extension' }
 
@@ -55,7 +63,7 @@ services:
 
     kunstmaan_admin.formtools.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\FormToolsExtension
-        arguments: ["@kunstmaan_admin.form.helper"]
+        arguments: ['@kunstmaan_admin.form.helper']
         tags:
             - { name: 'twig.extension' }
 
@@ -65,42 +73,42 @@ services:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.acl.helper:
-        class: "%kunstmaan_admin.acl.helper.class%"
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.role_hierarchy"]
+        class: '%kunstmaan_admin.acl.helper.class%'
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
 
     kunstmaan_admin.acl.native.helper:
-        class: "%kunstmaan_admin.acl.native.helper.class%"
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.role_hierarchy"]
+        class: '%kunstmaan_admin.acl.native.helper.class%'
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
 
     kunstmaan_admin.permissionadmin:
         class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
-        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@security.acl.provider", "@security.acl.object_identity_retrieval_strategy", "@event_dispatcher", "@kunstmaan_utilities.shell", "@kernel"]
+        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@event_dispatcher', '@kunstmaan_utilities.shell', '@kernel']
 
     kunstmaan_admin.clone.helper:
         class: Kunstmaan\AdminBundle\Helper\CloneHelper
-        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
+        arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
 
     kunstmaan_admin.clone.listener:
-        class: "%kunstmaan_admin.clone.listener.class%"
+        class: '%kunstmaan_admin.clone.listener.class%'
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.onDeepCloneAndSave, method: onDeepCloneAndSave }
 
     kunstmaan_admin.logger.processor.user:
         class: Kunstmaan\AdminBundle\Helper\UserProcessor
-        arguments: [ "@service_container" ]
+        arguments: [ '@service_container' ]
         tags:
             - { name: monolog.processor, method: processRecord }
             - { name: kunstmaan_admin.logger.processor, method: processRecord }
 
     kunstmaan_admin.logger.handler:
         class: Monolog\Handler\RotatingFileHandler
-        arguments: ["%kernel.logs_dir%/kunstmaan_%kernel.environment%.log", 10]
+        arguments: ['%kernel.logs_dir%/kunstmaan_%kernel.environment%.log', 10]
 
     kunstmaan_admin.logger:
         class: Symfony\Bridge\Monolog\Logger
         arguments: [kunstmaan]
         calls:
-            - [pushHandler, ["@kunstmaan_admin.logger.handler"]]
+            - [pushHandler, ['@kunstmaan_admin.logger.handler']]
 
     kunstmaan_admin.form.helper:
         class: Kunstmaan\AdminBundle\Helper\FormHelper
@@ -112,35 +120,87 @@ services:
 
     kunstmaan_admin.permission_creator:
         class: Kunstmaan\AdminBundle\Helper\Creators\ACLPermissionCreator
-        arguments: ["@security.acl.provider", "@security.acl.object_identity_retrieval_strategy"]
+        arguments: ['@security.acl.provider', '@security.acl.object_identity_retrieval_strategy']
 
     kunstmaan_admin.versionchecker:
         class: Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker
-        arguments: ["@service_container", "@kunstmaan_admin.cache"]
+        arguments: ['@service_container', '@kunstmaan_admin.cache']
 
     kunstmaan_admin.cache:
         class: Doctrine\Common\Cache\FilesystemCache
-        arguments: ["%kernel.cache_dir%/fcache"]
+        arguments: ['%kernel.cache_dir%/fcache']
 
     kunstmaan_admin.form.type.color:
         class: Kunstmaan\AdminBundle\Form\ColorType
         tags:
-            - { name: form.type, alias: color }
+            - { name: form.type }
 
     kunstmaan_admin.doctrine_mapping.listener:
         class: Kunstmaan\AdminBundle\EventListener\MappingListener
-        arguments: ["%fos_user.model.user.class%"]
+        arguments: ['%fos_user.model.user.class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
     kunstmaan_admin.form.type.range:
         class: Kunstmaan\AdminBundle\Form\RangeType
         tags:
-            - { name: form.type, alias: range }
+            - { name: form.type }
 
     kunstmaan_admin.session_security:
-        class: "%kunstmaan_admin.session_security.class%"
-        arguments: ["%kunstmaan_admin.session_security.ip_check%", "%kunstmaan_admin.session_security.user_agent_check%", "@logger"]
+        class: '%kunstmaan_admin.session_security.class%'
+        arguments: ['%kunstmaan_admin.session_security.ip_check%', '%kunstmaan_admin.session_security.user_agent_check%', '@logger']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -1000 }
+
+    kunstmaan_form.type.wysiwyg:
+        class: Kunstmaan\AdminBundle\Form\WysiwygType
+        tags:
+            - { name: form.type }
+
+    kunstmaan_admin.password_resetting.listener:
+        class: '%kunstmaan_admin.password_resetting.listener.class%'
+        arguments: ['@fos_user.user_manager']
+        tags:
+            - { name: kernel.event_listener, event: fos_user.change_password.edit.completed, method: onPasswordResettingSuccess }
+
+    kunstmaan_admin.password_check.listener:
+        class: '%kunstmaan_admin.password_check.listener.class%'
+        arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
+
+    kunstmaan_admin.admin_panel.adaptor:
+        class: Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor
+        arguments: ['@security.token_storage']
+        tags:
+            -  { name: 'kunstmaan_admin.admin_panel.adaptor' }
+
+    kunstmaan_admin.domain_configuration:
+        class: '%kunstmaan_admin.domain_configuration.class%'
+        arguments: ['@service_container']
+
+    kunstmaan_admin.oauth_authenticator:
+        class: Kunstmaan\AdminBundle\Security\OAuthAuthenticator
+        arguments:
+            - '@router'
+            - '@session'
+            - '@translator'
+            - '@kunstmaan_admin.oauth_user_creator'
+            - '%kunstmaan_admin.google_signin.client_id%'
+            - '%kunstmaan_admin.google_signin.client_secret%'
+
+    kunstmaan_admin.oauth_user_creator:
+        class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%kunstmaan_admin.google_signin.hosted_domains%'
+            - '%fos_user.model.user.class%'
+
+    kunstmaan_admin.google_signin.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\GoogleSignInTwigExtension
+        arguments:
+            - '%kunstmaan_admin.google_signin.enabled%'
+            - '%kunstmaan_admin.google_signin.client_id%'
+        tags:
+            - { name: twig.extension }

@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4.0",
         "symfony/symfony": "~2.3",
         "behat/behat": "~2.5.0",
         "behat/mink": "*",
@@ -26,13 +26,12 @@
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
-        "psr-0": { "Kunstmaan\\BehatBundle": "" }
+        "psr-0": { "Kunstmaan\\BehatBundle\\": "" }
     },
-    "target-dir": "Kunstmaan/BehatBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "4.0-dev"
         }
     }
 }

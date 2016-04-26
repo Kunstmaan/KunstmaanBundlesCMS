@@ -1,0 +1,69 @@
+<script>
+    window.onload = function() {
+        var object = document.getElementById('form_social_ogType');
+        object.addEventListener('change', doCheckboxToggle);
+        doCheckboxToggle();
+    };
+
+    function doCheckboxToggle() {
+        var object = document.getElementById('form_social_ogType');
+        var value = object.options[object.selectedIndex].value;
+
+
+        var author = document.getElementById('form_social_ogArticleAuthor');
+        var publisher = document.getElementById('form_social_ogArticlePublisher');
+        var section = document.getElementById('form_social_ogArticleSection');
+        if (value == 'article') {
+            author.parentElement.style.display = 'block';
+            publisher.parentElement.style.display = 'block';
+            section.parentElement.style.display = 'block';
+        } else {
+            author.parentElement.style.display = 'none';
+            publisher.parentElement.style.display = 'none';
+            section.parentElement.style.display = 'none';
+        }
+    }
+</script>
+
+{% if resource.types is not empty %}
+    <fieldset class="panel panel-default form-properties">
+        <div class="panel-body">
+            {% for typeName in resource.types|keys %}
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active"><a href="#og" data-toggle="tab">{{ 'seo.pagetabs.opengraph'|trans }}</a></li>
+                    <li><a href="#twitter" data-toggle="tab">{{ 'seo.pagetabs.twittercards'|trans }}</a></li>
+                </ul>
+                <div class="tab-content social-elements">
+                    <div class="tab-pane active" id="og">
+                        {{ form_row(formView[typeName].id) }}
+                        {{ form_row(formView[typeName].ogTitle) }}
+                        {{ form_row(formView[typeName].ogDescription) }}
+                        {{ form_row(formView[typeName].ogUrl) }}
+                        {{ form_row(formView[typeName].ogType) }}
+                        {# These fields are contitional by ogType == article #}
+                        {{ form_row(formView[typeName].ogArticleAuthor) }}
+                        {{ form_row(formView[typeName].ogArticlePublisher) }}
+                        {{ form_row(formView[typeName].ogArticleSection) }}
+                        {# End conditional #}
+                        {{ form_row(formView[typeName].ogImage) }}
+                    </div>
+                    <div class="tab-pane" id="twitter">
+                        {{ form_row(formView[typeName].twitterTitle) }}
+                        {{ form_row(formView[typeName].twitterDescription) }}
+                        {{ form_row(formView[typeName].twitterSite) }}
+                        {{ form_row(formView[typeName].twitterCreator) }}
+                        {{ form_row(formView[typeName].twitterImage) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </fieldset>
+    <style>
+        .social-elements .tab-pane {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 15px;
+        }
+    </style>
+{% endif %}

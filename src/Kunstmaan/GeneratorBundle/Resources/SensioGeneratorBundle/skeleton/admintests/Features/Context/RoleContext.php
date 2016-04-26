@@ -41,7 +41,7 @@ class RoleContext extends BehatContext
      */
     public function iEditRole($roleName)
     {
-        $this->getMainContext()->clickAction($roleName, 'edit', 'roles');
+        $this->getMainContext()->clickAction($roleName, 'Edit', 'roles');
     }
 
     /**
@@ -51,7 +51,7 @@ class RoleContext extends BehatContext
      */
     public function iDeleteRole($roleName)
     {
-        $this->getMainContext()->clickAction($roleName, 'delete', 'roles');
+        $this->getMainContext()->clickAction($roleName, 'Delete', 'roles');
 
         $page = $this->getMainContext()->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@class, 'modal')]");

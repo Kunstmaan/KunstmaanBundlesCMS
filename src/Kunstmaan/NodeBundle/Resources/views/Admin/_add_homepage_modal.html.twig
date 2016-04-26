@@ -1,0 +1,51 @@
+<!-- Modal - Add homepage -->
+{% set homePageTypes = get_homepage_types() %}
+{% if homePageTypes is not empty %}
+    <div id="add-homepage-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3>{{ 'kuma_node.modal.add_homepage.h'|trans() }}</h3>
+                </div>
+
+                <form action="{{ path('KunstmaanNodeBundle_nodes_add_homepage') }}" method="post" novalidate="novalidate">
+
+                    <!-- body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="addpage_title">
+                                {{ 'kuma_node.modal.add_homepage.form.title.label'|trans() }}
+                            </label>
+                            <input name="title" type="text" id="addpage_title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="addpage_type">
+                                {{ 'kuma_node.modal.add_homepage.form.type.label'|trans() }}
+                            </label>
+                            <select name="type" id="addpage_type" class="form-control">
+                                {% for pageTypeClass,pageTypeName in homePageTypes %}
+                                    <option value="{{ pageTypeClass }}">{{ pageTypeName|trans }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'kuma_node.modal.add_homepage.form.add.label'|trans() }}
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.add_homepage.form.cancel.label'|trans() }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}

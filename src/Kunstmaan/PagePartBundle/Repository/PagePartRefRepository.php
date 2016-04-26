@@ -29,7 +29,7 @@ class PagePartRefRepository extends EntityRepository
     public function addPagePart(HasPagePartsInterface $page, PagePartInterface $pagepart, $sequencenumber, $context = "main", $pushOtherPageParts = true)
     {
         if ($pushOtherPageParts) {
-            $pagepartrefs = $this->getPagePartRefs($page);
+            $pagepartrefs = $this->getPagePartRefs($page, $context);
             foreach ($pagepartrefs as $pagepartref) {
                 if ($pagepartref->getSequencenumber() >= $sequencenumber) {
                     $pagepartref->setSequencenumber($pagepartref->getSequencenumber() + 1);
@@ -180,5 +180,24 @@ class PagePartRefRepository extends EntityRepository
                 ->setParameter('pageEntityname', $pageClassname)
                 ->setParameter('pageId', $page->getId())
                 ->setParameter('context', $context)->getSingleScalarResult() != 0;
+    }
+
+    /**
+     * @param bigint   $id             The id
+     * @param string   $context        The context
+     * @param int      $sequenceNumber The sequence number
+     *
+     * @return PagePart
+     */
+    public function getPagePart($id, $context = 'main', $sequenceNumber)
+    {
+        $ppRef = $this->find($id);
+        $ppRef->setContext($context);
+        $ppRef->setSequenceNumber($sequenceNumber);
+        $this->getEntityManager()->persist($ppRef);
+        $this->getEntityManager()->flush($ppRef);
+
+        return $this->getEntityManager()->getRepository($ppRef->getPagePartEntityName())->find($ppRef->getPagePartId());
+
     }
 }

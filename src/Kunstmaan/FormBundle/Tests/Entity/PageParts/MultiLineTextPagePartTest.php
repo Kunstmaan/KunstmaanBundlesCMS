@@ -91,7 +91,7 @@ class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(sizeof($fields) == 0);
         /* @var $formBuilder FormBuilderInterface */
-        $object->adaptForm($formBuilder, $fields);
+        $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(sizeof($fields) > 0);
     }
 

@@ -1,0 +1,62 @@
+/* ==========================================================================
+   Pageparts - Link pp
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.link-pp {
+    margin: $default-margin 0;
+
+{% if demosite %}
+    font-size: .85rem;
+
+    a {
+        display: inline-block;
+        color: $black;
+        font-weight: 600;
+    }
+{% endif %}
+}
+
+{% if demosite %}
+/* Link
+   ========================================================================== */
+.link-pp__link {
+    display: inline-block;
+    color: $black;
+    font-weight: 600;
+}
+
+
+/* Icon
+   ========================================================================== */
+.link-pp__icon {
+    @extend .icon--arrow-right;
+
+    font-size: .5rem;
+    display: inline-block;
+    margin-left: .5rem;
+
+    &:before {
+        @include iconfont-reset;
+    }
+}
+{% endif %}
+
+/*doc
+---
+title: link-pp
+name: 06_link-pp
+category: Pageparts
+---
+
+```html_example
+<p class="link-pp">
+    <a href="/">
+        Link text
+        <i class="icon icon--arrow-right icon--small"></i>
+    </a>
+</p>
+```
+
+*/

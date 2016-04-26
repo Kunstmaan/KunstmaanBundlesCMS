@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Traversable;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
@@ -42,7 +43,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     /**
      * @var AclHelper
      */
-    private $aclHelper = null;
+    protected $aclHelper = null;
 
     /**
      * @param EntityManager $em        The entity manager
@@ -99,8 +100,8 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
             $adapter          = new DoctrineORMAdapter($this->getQuery());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setNormalizeOutOfRangePages(true);
-            $this->pagerfanta->setCurrentPage($this->getPage());
             $this->pagerfanta->setMaxPerPage($this->getLimit());
+            $this->pagerfanta->setCurrentPage($this->getPage());
         }
 
         return $this->pagerfanta;
@@ -168,6 +169,9 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
                 $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
 
+            // Apply other changes
+            $this->finishQueryBuilder($queryBuilder);
+
             // Apply ACL restrictions (if applicable)
             if (!is_null($this->permissionDef) && !is_null($this->aclHelper)) {
                 $this->query = $this->aclHelper->apply($queryBuilder, $this->permissionDef);
@@ -177,6 +181,16 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         }
 
         return $this->query;
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
+    protected function finishQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        if ($this instanceof SortableInterface) {
+            $queryBuilder->addOrderBy('b.' . $this->getSortableField());
+        }
     }
 
     /**

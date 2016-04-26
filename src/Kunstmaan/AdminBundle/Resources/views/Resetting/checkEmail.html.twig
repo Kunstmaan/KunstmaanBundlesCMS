@@ -1,8 +1,10 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div class="alert fade in">
-        <a class="close" href="{{ path('fos_user_security_login') }}">×</a>
+    <div class="alert alert-success">
         {{ 'We have sent you an email with a link to reset your password.' | trans }}
+        <a class="btn alert__action" href="{{ path('fos_user_security_login') }}">
+            <i class="fa fa-times"></i>
+        </a>
     </div>
 {% endblock %}

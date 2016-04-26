@@ -3,12 +3,16 @@ subaction:
 
 action:
     saveasdraft: "Guarda como borrador"
+    recopyfromlanguage: "Copy content from other language"
     publish: "Publicar"
     unpublish: "Despublicar"
     preview: "Vista Previa"
     save: "Guardar"
     delete: "Borrar"
     addsubpage: "Agregar subpágina"
+
+modal:
+    sourcelanguage: "Source language"
 
 pages:
     copynotavailable: "Por favor, traduzca la página padre primero"

@@ -53,6 +53,11 @@ class MenuItem
     private $offline = false;
 
     /**
+     * @var boolean
+     */
+    private $folder = false;
+
+    /**
      * @var MenuItem[]
      */
     private $children = null;
@@ -392,6 +397,30 @@ class MenuItem
     public function setOffline($offline)
     {
         $this->offline = $offline;
+
+        return $this;
+    }
+
+    /**
+     * Get menu item folder state
+     *
+     * @return bool
+     */
+    public function getFolder()
+    {
+        return $this->folder;
+    }
+
+    /**
+     * Set menu item folder state
+     *
+     * @param bool $folder
+     *
+     * @return MenuItem
+     */
+    public function setFolder($folder)
+    {
+        $this->folder = $folder;
 
         return $this;
     }

@@ -1,22 +1,20 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 
 use Kunstmaan\TranslatorBundle\Model\Translation\Translation;
 use Kunstmaan\TranslatorBundle\Model\Translation\TranslationGroup;
+use Kunstmaan\TranslatorBundle\Service\TranslationGroupManager;
 
 class Importer
 {
     /**
-     * Array of all translation loaders
      * @var array
      */
     private $loaders = array();
 
-    private $translationRepository;
-
     /**
-     * TranslationGroupManager
-     * @var Kunstmaan\TranslatorBundle\Service\TranslationGroupManager
+     * @var TranslationGroupManager
      */
     private $translationGroupManager;
 
@@ -38,7 +36,6 @@ class Importer
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
             if ($this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force)) {
                 $importedTranslations++;
-                $this->translationRepository->flush();
             }
         }
 
@@ -47,6 +44,10 @@ class Importer
 
     private function importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force = false)
     {
+        if (strlen($keyword) > 255) {
+            return false;
+        }
+
         $translationGroup = $this->translationGroupManager->getTranslationGroupByKeywordAndDomain($keyword, $domain);
 
         if (!($translationGroup instanceof TranslationGroup)) {
@@ -60,7 +61,7 @@ class Importer
         }
 
         if (true === $force && null === $translation) {
-            $translation = $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
+            $this->translationGroupManager->updateTranslation($translationGroup, $locale, $text, $filename);
 
             return true;
         }
@@ -86,14 +87,8 @@ class Importer
         $this->loaders = $loaders;
     }
 
-    public function setTranslationRepository($translationRepository)
-    {
-        $this->translationRepository = $translationRepository;
-    }
-
-    public function setTranslationGroupManager($translationGroupManager)
+    public function setTranslationGroupManager(TranslationGroupManager $translationGroupManager)
     {
         $this->translationGroupManager = $translationGroupManager;
     }
-
 }

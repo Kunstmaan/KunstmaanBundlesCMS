@@ -2,12 +2,11 @@
 
 namespace Kunstmaan\NodeBundle\Form\Type;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
-
 use Symfony\Component\Form\FormView;
-
 use Symfony\Component\Form\AbstractType;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
 /**
  * Sype
@@ -16,17 +15,31 @@ class SlugType extends AbstractType
 {
 
     /**
-     * @return string
+     * @var SlugifierInterface
      */
-    public function getParent()
+	private $slugifier;
+
+    /**
+     *
+     * @param SlugifierInterface $slugifier The slugifier
+     */
+    public function __construct(SlugifierInterface $slugifier)
     {
-        return 'text';
+        $this->slugifier = $slugifier;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getParent()
+    {
+        return TextType::class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
     {
         return 'slug';
     }
@@ -37,7 +50,7 @@ class SlugType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
             $nodeTranslation = $form->getParent()->getData();
-            $view->vars['reset'] = Slugifier::slugify($nodeTranslation->getTitle(), '');
+            $view->vars['reset'] = $this->slugifier->slugify($nodeTranslation->getTitle(), '');
             $parentNode = $nodeTranslation->getNode()->getParent();
             if ($parentNode !== null) {
                 $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);

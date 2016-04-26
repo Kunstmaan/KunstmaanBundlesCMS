@@ -31,6 +31,16 @@ abstract class BaseUser extends AbstractUser
     protected $adminLocale;
 
     /**
+     * @ORM\Column(type="boolean", name="password_changed", nullable=true)
+     */
+    protected $passwordChanged;
+
+    /**
+     * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
+     */
+    protected $googleId;
+
+    /**
      * Construct a new user
      */
     public function __construct()
@@ -118,6 +128,46 @@ abstract class BaseUser extends AbstractUser
     }
 
     /**
+     * is passwordChanged
+     *
+     * @return boolean
+     */
+    public function isPasswordChanged()
+    {
+        return $this->passwordChanged;
+    }
+
+    /**
+     * Set passwordChanged
+     *
+     * @param boolean $passwordChanged
+     *
+     * @return User
+     */
+    public function setPasswordChanged($passwordChanged)
+    {
+        $this->passwordChanged = $passwordChanged;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * @param mixed $googleId
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+
+    /**
      * @param ClassMetadata $metadata
      */
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -136,6 +186,19 @@ abstract class BaseUser extends AbstractUser
         )));
     }
 
-    abstract protected function getFormTypeClass();
-    abstract protected function getAdminListConfiguratorClass();
+    /**
+     * Return class name of form type used to add & edit users
+     *
+     * @return string
+     */
+    abstract public function getFormTypeClass();
+
+    /**
+     * Return class name of admin list configurator used for users
+     *
+     * @return string
+     *
+     * @deprecated Use the kunstmaan_user_management.user_admin_list_configurator.class parameter instead!
+     */
+    abstract public function getAdminListConfiguratorClass();
 }

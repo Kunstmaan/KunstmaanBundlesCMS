@@ -1,0 +1,13 @@
+# Form Submissions
+formsubmissions:
+  index:
+    title: Formulierpagina's met inzendingen
+  menu:
+    title: Formulier inzendingen
+  list:
+    title: Formulier inzendingen voor pagina
+  edit:
+    title: Formulier inzendingen voor pagina
+
+subaction:
+    formsubmissions: "Inzendingen"

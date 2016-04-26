@@ -1,8 +1,8 @@
 <?php
 
-namespace {{ namespace }}\Controller\{{ entity_class }};
+namespace {{ namespace }}\Controller;
 
-use {{ namespace }}\AdminList\{{ entity_class }}\{{ entity_class }}PageAdminListConfigurator;
+use {{ namespace }}\AdminList\{{ entity_class }}PageAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticlePageAdminListController;
@@ -27,23 +27,23 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
     /**
      * The index action
      *
-     * @Route("/", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page")
+     * @Route("/", name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page")
      */
     public function indexAction(Request $request)
     {
-        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
+        return parent::doIndexAction($this->getAdminListConfigurator($request), $request);
     }
 
     /**
      * The add action
      *
-     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_add")
+     * @Route("/add", name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_add")
      * @Method({"GET", "POST"})
      * @return array
      */
     public function addAction(Request $request)
     {
-        return parent::doAddAction($this->getAdminListConfigurator(), $request);
+        return parent::doAddAction($this->getAdminListConfigurator($request), $request);
     }
 
     /**
@@ -51,14 +51,14 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_edit")
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_edit")
      * @Method({"GET", "POST"})
      *
      * @return array
      */
     public function editAction(Request $request, $id)
     {
-        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doEditAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
@@ -66,14 +66,14 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param int $id
      *
-     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_delete")
+     * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_delete")
      * @Method({"GET", "POST"})
      *
      * @return array
      */
     public function deleteAction(Request $request, $id)
     {
-        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doDeleteAction($this->getAdminListConfigurator($request), $id, $request);
     }
 
     /**
@@ -81,13 +81,13 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
      *
      * @param $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv"}, name="{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page_export")
      * @Method({"GET", "POST"})
      *
      * @return array
      */
     public function exportAction(Request $request, $_format)
     {
-        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+        return parent::doExportAction($this->getAdminListConfigurator($request), $_format, $request);
     }
 }

@@ -15,3 +15,18 @@ kunstmaan_admin.menu.adaptor.settings:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 ```
+
+## Simple Menu Adaptor
+
+If you only wish to add a simple menu item (for example under the "Modules" section), you can use the `SimpleMenuAdaptor` by adding a configuration:
+
+```
+kunstmaan_admin:
+    menu_items:
+      - route: AcmeBundle_mymodule_list  # your route name
+        label: FooBaring Module
+        parent: ~                        # attach it under specified menu item, default: KunstmaanAdminBundle_modules
+        params: { source: "menuitem" }   # optional, array with custom route parameters
+        role: ROLE_ADMIN                 # optional, only show for users with this role
+
+```

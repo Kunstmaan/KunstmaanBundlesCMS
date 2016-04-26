@@ -31,6 +31,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
 
     /**
      * @var array
+     * @deprecated use aggregations instead
      */
     private $facets;
 
@@ -40,13 +41,19 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     private $hits;
 
     /**
+     * @var array
+     */
+    private $aggregations;
+
+    /**
      * @param SearcherInterface $searcher
      */
     public function __construct(SearcherInterface $searcher)
     {
-        $this->searcher = $searcher;
-        $this->facets   = array();
-        $this->hits     = array();
+        $this->searcher     = $searcher;
+        $this->facets       = array();
+        $this->hits         = array();
+        $this->aggregations = array();
     }
 
     /**
@@ -64,6 +71,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
 
     /**
      * @return array
+     * @deprecated use getAggregations instead
      */
     public function getFacets()
     {
@@ -110,6 +118,7 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
         }
         $this->collectHits($result);
         $this->collectFacets($result);
+        $this->collectAggregations($result);
     }
 
     /**
@@ -147,6 +156,21 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     }
 
     /**
+     * @param ResultSet $result
+     * @return bool
+     */
+    protected function collectAggregations(ResultSet $result)
+    {
+        if (!$result->hasAggregations()) {
+            return false;
+        }
+
+        $this->aggregations = $result->getAggregations();
+
+        return true;
+    }
+
+    /**
      * @return ResultSet
      */
     private function getResponse()
@@ -156,5 +180,13 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
         }
 
         return $this->response;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAggregations()
+    {
+        return $this->aggregations;
     }
 }

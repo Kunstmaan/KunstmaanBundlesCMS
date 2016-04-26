@@ -1,0 +1,25 @@
+{% set bikes = get_bikes() %}
+{% if bikes|length > 0 %}
+    <div class="table-responsive bikeslist-pp">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'bike.type'|trans|capitalize }}</th>
+                    <th>{{ 'bike.brand'|trans|capitalize }}</th>
+                    <th>{{ 'bike.model'|trans|capitalize }}</th>
+                    <th>{{ 'bike.price'|trans|capitalize }} (EUR)</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for bike in bikes %}
+                <tr>
+                    <td>{{ ('bike.' ~ bike.type)|trans }}</a></td>
+                    <td>{{ bike.brand }}</td>
+                    <td>{{ bike.model }}</td>
+                    <td>{{ bike.price }}</td>
+                <tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

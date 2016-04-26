@@ -29,8 +29,9 @@ class RemoteVideoHandler extends AbstractMediaHandler
      * Constructor. Takes the configuration of the RemoveVideoHandler
      * @param array $configuration
      */
-    public function __construct($configuration = array())
+    public function __construct($priority, $configuration = array())
     {
+        parent::__construct($priority);
         $this->configuration = $configuration;
     }
 
@@ -51,11 +52,21 @@ class RemoteVideoHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return RemoteVideoType
+     * @return string
      */
     public function getFormType()
     {
-        return new RemoteVideoType($this->configuration);
+        return RemoteVideoType::class;
+    }
+
+    /**
+     * Return the default form type options
+     *
+     * @return array
+     */
+    public function getFormTypeOptions()
+    {
+        return array('configuration' => $this->configuration);
     }
 
     /**
@@ -101,11 +112,17 @@ class RemoteVideoHandler extends AbstractMediaHandler
         //update thumbnail
         switch ($video->getType()) {
             case 'youtube':
-                $video->setThumbnailUrl('http://img.youtube.com/vi/' . $code . '/0.jpg');
+                try {
+                    if (fopen('//img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'r') === false) {
+                        $video->setThumbnailUrl('//img.youtube.com/vi/'.$code.'/0.jpg');
+                    } else {
+                        $video->setThumbnailUrl('//img.youtube.com/vi/'.$code.'/maxresdefault.jpg');
+                    }
+                } catch (\Exception $e) {}
                 break;
             case 'vimeo':
                 try {
-                    $xml = simplexml_load_file('http://vimeo.com/api/v2/video/' . $code . '.xml');
+                    $xml = simplexml_load_file('//vimeo.com/api/v2/video/' . $code . '.xml');
                     $video->setThumbnailUrl((string)$xml->video->thumbnail_large);
                 } catch (\Exception $e) {
 
@@ -196,6 +213,16 @@ class RemoteVideoHandler extends AbstractMediaHandler
             }
             $parsedUrl = parse_url($data);
             switch ($parsedUrl['host']) {
+                case 'youtu.be':
+                    $code = substr($parsedUrl['path'], 1); // remove slash
+                    $result = new Media();
+                    $video = new RemoteVideoHelper($result);
+                    $video->setType('youtube');
+                    $video->setCode($code);
+                    $result = $video->getMedia();
+                    $result->setName('Youtube ' . $code);
+                    break;
+
                 case 'www.youtube.com':
                 case 'youtube.com':
                     parse_str($parsedUrl['query'], $queryFields);

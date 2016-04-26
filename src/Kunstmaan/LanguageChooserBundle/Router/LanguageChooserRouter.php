@@ -5,6 +5,7 @@ namespace Kunstmaan\LanguageChooserBundle\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -84,7 +85,7 @@ class LanguageChooserRouter implements RouterInterface
     {
         if (!isset($this->context)) {
             $this->context = new RequestContext();
-            $this->context->fromRequest($this->container->get('request'));
+            $this->context->fromRequest($this->container->get('request_stack')->getCurrentRequest());
         }
 
         return $this->context;
@@ -111,7 +112,7 @@ class LanguageChooserRouter implements RouterInterface
      *
      * @return null|string
      */
-    public function generate($name, $parameters = array(), $absolute = false)
+    public function generate($name, $parameters = array(), $absolute = UrlGeneratorInterface::ABSOLUTE_URL)
     {
         $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->context);
 

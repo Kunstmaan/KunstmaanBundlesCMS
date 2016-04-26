@@ -59,7 +59,7 @@ class SessionSecurityListener
 
         // Make sure the ip and user agent is stored in the session
         $request = $event->getRequest();
-        if ($request->hasSession()) {
+        if ($request->hasSession() && $request->getSession()->isStarted()) {
             $session = $request->getSession();
             if ($this->ipCheck && !$session->has('kuma_ip')) {
                 $session->set('kuma_ip', $this->getIp($request));
@@ -80,7 +80,7 @@ class SessionSecurityListener
         }
 
         $request = $event->getRequest();
-        if ($request->hasSession()) {
+        if ($request->hasSession() && $request->getSession()->isStarted()) {
             $session = $request->getSession();
 
             // Check that the ip matches

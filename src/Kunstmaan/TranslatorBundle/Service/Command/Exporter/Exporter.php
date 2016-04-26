@@ -14,12 +14,6 @@ class Exporter
      */
     private $exporters = array();
 
-    /**
-     * Stasher for saving data into a resource
-     * @var Kunstmaan\TranslatorBundle\Service\Stasher\StasherInterface
-     */
-    private $stasher;
-
     public function getExportedContent(ExportFile $exportFile)
     {
         return $this->getExporterByExtension($exportFile->getExtension())->export($exportFile->getArray());
@@ -40,5 +34,4 @@ class Exporter
     {
         $this->exporters = $exporters;
     }
-
 }

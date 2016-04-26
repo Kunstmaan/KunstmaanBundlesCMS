@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Pageparts - Totop pp
+   ========================================================================== */
+
+.totop-pp {
+    margin: 3rem 0;
+
+{% if demosite %}
+    padding-bottom: .5rem;
+
+    font-size: .85rem;
+    text-align: right;
+    border-bottom: 1px solid $hr-color;
+
+    a {
+        display: inline-block;
+
+        color: $text-color;
+    }
+{% endif %}
+}
+
+/*doc
+---
+title: totop-pp
+name: 09_totop-pp
+category: Pageparts
+---
+
+```html_example
+<p class="totop-pp">
+    <a href="#">Top</a>
+</p>
+```
+
+*/

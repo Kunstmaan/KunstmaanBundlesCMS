@@ -1,33 +1,16 @@
-<select name="{{nameprefix}}comparator{{namesuffix}}" id="{{nameprefix}}comparator{{namesuffix}}">
-    <option value="eq" {% if data.comparator is defined and data.comparator == "eq" %} selected="selected" {% endif %} >equals</option>
-    <option value="neq" {% if data.comparator is defined and data.comparator == "neq" %} selected="selected" {% endif %} >not equals</option>
-    <option value="lt" {% if data.comparator is defined and data.comparator == "lt" %} selected="selected" {% endif %} >lower than</option>
-    <option value="lte" {% if data.comparator is defined and data.comparator == "lte" %} selected="selected" {% endif %} >lower than or equal</option>
-    <option value="gt" {% if data.comparator is defined and data.comparator == "gt" %} selected="selected" {% endif %} >greater than</option>
-    <option value="gte" {% if data.comparator is defined and data.comparator == "gte" %} selected="selected" {% endif %} >greater than or equal</option>
-    <option value="isnull" {% if data.comparator is defined and data.comparator == "isnull" %} selected="selected" {% endif %} >empty</option>
-    <option value="isnotnull" {% if data.comparator is defined and data.comparator == "isnotnull" %} selected="selected" {% endif %} >not empty</option>
-</select>
-<input type="text" name="{{nameprefix}}value{{namesuffix}}" id="{{nameprefix}}value{{namesuffix}}"
-       {% if data.value is defined %}
-            value="{{data.value}}"
-        {% endif %}
-        />
+<div class="form-group">
+    <select name="{{nameprefix}}comparator{{namesuffix}}" id="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
+        <option value="eq" {% if data.comparator is defined and data.comparator == "eq" %} selected="selected" {% endif %} >equals</option>
+        <option value="neq" {% if data.comparator is defined and data.comparator == "neq" %} selected="selected" {% endif %} >not equals</option>
+        <option value="lt" {% if data.comparator is defined and data.comparator == "lt" %} selected="selected" {% endif %} >lower than</option>
+        <option value="lte" {% if data.comparator is defined and data.comparator == "lte" %} selected="selected" {% endif %} >lower than or equal</option>
+        <option value="gt" {% if data.comparator is defined and data.comparator == "gt" %} selected="selected" {% endif %} >greater than</option>
+        <option value="gte" {% if data.comparator is defined and data.comparator == "gte" %} selected="selected" {% endif %} >greater than or equal</option>
+        <option value="isnull" {% if data.comparator is defined and data.comparator == "isnull" %} selected="selected" {% endif %} >empty</option>
+        <option value="isnotnull" {% if data.comparator is defined and data.comparator == "isnotnull" %} selected="selected" {% endif %} >not empty</option>
+    </select>
+</div>
 
-<script>
-    var synctextfieldvisibility = function() {
-        var $comparator = $('#{{nameprefix}}comparator{{namesuffix}}'),
-            $value = $('#{{nameprefix}}value{{namesuffix}}')
-        ;
-
-        if($comparator.val() == 'isnull' || $comparator.val() == 'isnotnull'){
-            $value.hide();
-        } else {
-            $value.show();
-        }
-    };
-
-    $(document).ready(function() {
-        $('#{{nameprefix}}comparator{{namesuffix}}').change(synctextfieldvisibility);
-    });
-</script>
+<div class="form-group">
+    <input type="text" name="{{nameprefix}}value{{namesuffix}}" id="{{nameprefix}}value{{namesuffix}}" {% if data.value is defined %}value="{{data.value}}"{% endif %} class="form-control">
+</div>

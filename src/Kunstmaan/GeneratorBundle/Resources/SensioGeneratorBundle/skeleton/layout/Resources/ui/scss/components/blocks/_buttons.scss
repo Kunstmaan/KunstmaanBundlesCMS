@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Blocks - Buttons
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.btn {
+{% if demosite %}
+    @include box-shadow;
+{% endif %}
+    display: inline-block;
+    margin: 0;
+    padding: .7em 1.5em;
+
+    background: none;
+    border: 1px solid $text-color;
+    -webkit-appearance: none;
+
+{% if demosite %}
+    background-color: $white;
+    border: 1px solid $hr-color;
+{% endif %}
+    color: $text-color;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    line-height: 1;
+
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+
+    transition: background .3s ease-in-out;
+
+    &:hover, &:focus, &:active {
+        text-decoration: none;
+        color: $text-color;
+{% if demosite %}
+        background-color: darken($white, 5%);
+{% endif %}
+    }
+
+    &:active, &:focus {
+        outline: 0;
+    }
+
+    &[disabled], fieldset[disabled] & {
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: .65;
+    }
+}
+
+
+/* Types
+   ========================================================================== */
+// Primary
+.btn--primary {
+{% if demosite %}
+    background-color: $theme-color;
+    color: $white;
+    border-color: $theme-color;
+
+    &:hover, &:focus, &:active {
+        background-color: lighten($theme-color, 5%);
+        color: $white;
+    }
+{% endif %}
+}
+
+// Secondary
+.btn--secondary {
+{% if demosite %}
+    background-color: $theme-color--dark;
+    color: $white;
+    border-color: $theme-color--dark;
+
+    &:hover, &:focus, &:active {
+        background-color: lighten($theme-color--dark, 5%);
+        color: $white;
+    }
+{% endif %}
+}
+
+
+
+
+/*doc
+---
+title: Buttons
+name: 01_buttons
+category: Blocks
+---
+
+<strong>General</strong>
+
+```html_example
+<button type="button" class="btn">
+    Button
+</button>
+```
+
+<strong>Types</strong>
+
+```html_example
+<button type="button" class="btn btn--primary">
+    Primary
+</button>
+
+<button type="button" class="btn btn--secondary">
+    Secondary
+</button>
+```
+*/

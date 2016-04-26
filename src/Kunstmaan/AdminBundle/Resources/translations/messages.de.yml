@@ -21,8 +21,8 @@ settings:
       composer_lock_not_found: Keine composer.lock im Projekt Root gefunden.
       error_parsing_composer: Fehler beim Parsen der composer.lock Datei, kein gültiges JSON.
       error: Beim Abrufen der Versionen trat ein Fehler auf. Bitte später erneut versuchen.
-      moreinfo: Zum Aktualisieren composer update ausführen. Bei Konflikten müssen eventuell weitere Bundles aktualisiert. 
-      uptodate: ist aktuell 
+      moreinfo: Zum Aktualisieren composer update ausführen. Bei Konflikten müssen eventuell weitere Bundles aktualisiert.
+      uptodate: ist aktuell
       toupdate: kann aktualisiert werden auf
       unknown: unbekannte Version
 
@@ -38,11 +38,12 @@ tools:
 form:
   cancel: Abrechen
   delete: Löschen
+  deletesure: Sind Sie sicher, Sie wollen diese löschen?
   edit: Bearbeiten
   add: Neu
   save: Speichern
   publish: Publizieren
-  unpublish: Depublizieren 
+  unpublish: Depublizieren
   saveasdraft: Entwurf Speichern
   name: Name
   type: Typ
@@ -52,17 +53,20 @@ form:
   forgot:
     password: Passwort vergessen.
   permissions: Rechte
-  properties: Eigentschaften 
+  properties: Eigentschaften
   createdat: Erstellt
   updatedat: Aktualisiert
   actions: Aktionen
   addfilter: Filter hinzufügen
   choosetypefilter: Filter aktiv
   versions: Versionen
-  
+
 omnext:
   home: Home
   title: Willkommen!
   welcome: Willkommen.
   information: <strong>Information.</strong> Keine neuen Benachrichtigungen vorhanden.
 
+errors:
+    oauth:
+        invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.

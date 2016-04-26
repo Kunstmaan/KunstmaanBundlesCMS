@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\LanguageChooserBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,9 +12,10 @@ class LanguageChooserController extends Controller
     /**
      * Handles the language chooser
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return Response the request response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $enableAutodetect = $this->container->getParameter('kunstmaan_language_chooser.autodetectlanguage');
         $enableSplashpage = $this->container->getParameter('kunstmaan_language_chooser.showlanguagechooser');
@@ -22,8 +24,6 @@ class LanguageChooserController extends Controller
 
         if ($enableAutodetect) {
             $localeGuesserManager   = $this->get('lunetics_locale.guesser_manager');
-
-            $request                = $this->getRequest();
 
             $locale = $localeGuesserManager->runLocaleGuessing($request);
 

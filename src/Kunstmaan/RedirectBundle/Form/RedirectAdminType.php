@@ -2,15 +2,16 @@
 
 namespace Kunstmaan\RedirectBundle\Form;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * The type for Redirect
- */
 class RedirectAdminType extends AbstractType
 {
-
     /**
      * Builds the form.
      *
@@ -24,9 +25,51 @@ class RedirectAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('origin');
-        $builder->add('target');
-        $builder->add('permanent');
+        if ($options['domainConfiguration']->isMultiDomainHost()) {
+            $hosts = $options['domainConfiguration']->getHosts();
+            $domains = array_combine($hosts, $hosts);
+            $domains = array_merge(array('redirect.all' => ''), $domains);
+
+            $builder->add('domain', ChoiceType::class, array(
+                'label' => 'redirect.form.redirect.domain.label',
+                'choices' => $domains,
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
+                'choices_as_values' => true,
+            ));
+        }
+
+        $builder->add('origin', TextType::class, array(
+            'label' => 'redirect.form.redirect.origin.label',
+            'required' => true,
+            'attr' => array(
+                'info_text' => 'redirect.origin_info',
+            ),
+        ));
+        $builder->add('target', TextType::class, array(
+            'label' => 'redirect.form.redirect.target.label',
+            'required' => true,
+            'attr' => array(
+                'info_text' => 'redirect.target_info',
+            ),
+        ));
+        $builder->add('permanent', CheckboxType::class, array(
+            'label' => 'redirect.form.redirect.permanent.label',
+            'required' => false,
+        ));
+    }
+
+    /**
+     * Configures the options for this type.
+     *
+     * @param OptionsResolver $resolver The resolver for the options.
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'domainConfiguration' => null,
+        ));
     }
 
     /**
@@ -34,9 +77,8 @@ class RedirectAdminType extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'redirect_form';
     }
-
 }

@@ -1,4 +1,4 @@
 {% if frontendform is defined %}
-{{ form_widget(frontendform['formwidget_'~resource.uniqueId], { 'attr' : {'bound' : frontendformobject.bound } }) }}
-{{ form_errors(frontendform['formwidget_'~resource.uniqueId]) }}
+    {{ form_widget(frontendform['formwidget_'~resource.uniqueId], { 'attr' : {'bound' : frontendformobject.bound } }) }}
+    {{ form_errors(frontendform['formwidget_'~resource.uniqueId]) }}
 {% endif %}

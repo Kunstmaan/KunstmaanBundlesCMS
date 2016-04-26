@@ -1,0 +1,114 @@
+/* ==========================================================================
+   DND - Upload
+   ========================================================================== */
+
+/* Container
+   ========================================================================== */
+.dnd-container {
+    position: relative;
+    min-height: 400px;
+}
+
+
+/* General
+   ========================================================================== */
+.dnd-area {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: none;
+    width: 100vw;
+    height: 100vh;
+}
+
+.dnd-area--dragover {
+    z-index: 30;
+    display: block;
+
+    .dnd-area__drop-alert {
+        display: block;
+    }
+
+    .dnd-area__drop-alert__figure {
+        -webkit-animation-name: animDndPopOver;
+                animation-name: animDndPopOver;
+        -webkit-animation-duration: 1s;
+                animation-duration: 1s;
+        -webkit-animation-iteration-count: 5;
+                animation-iteration-count: 5;
+    }
+}
+
+@-webkit-keyframes animDndPopOver {
+    0% {
+        box-shadow: 0 0 0 0 $blue;
+    }
+
+    50% {
+        box-shadow: 0 0 0 20px $blue;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 $blue;
+    }
+}
+@keyframes animDndPopOver {
+    0% {
+        box-shadow: 0 0 0 0 $blue;
+    }
+
+    50% {
+        box-shadow: 0 0 0 20px $blue;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 $blue;
+    }
+}
+
+
+/* Alert
+   ========================================================================== */
+.dnd-area__drop-alert {
+    display: none;
+
+    pointer-events: none;
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, .6);
+}
+
+
+.dnd-area__drop-alert__figure {
+    z-index: 4;
+    position: absolute;
+    top: calc(50% - 15rem);
+    left: calc(50% - 15rem);
+
+    width: 30rem;
+    height: 30rem;
+    padding: 5em 2em 2em;
+    border-radius: 100%;
+
+    background: $blue;
+}
+
+.dnd-area__drop-alert__figure__img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto 3rem;
+}
+
+.dnd-area__drop-alert__figure__caption {
+    text-align: center;
+    color: $white;
+}
+
+.dnd-area__drop-alert__figure__caption__title {
+    color: $white;
+}

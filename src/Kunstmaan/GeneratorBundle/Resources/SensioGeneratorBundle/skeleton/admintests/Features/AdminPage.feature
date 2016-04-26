@@ -15,7 +15,7 @@ Feature: AdminPage
   @javascript @ensureCleanSession
   Scenario: Add a new page
     Given I am on the admin home page
-    And I add contentpage "ContentsubPage"
+    And I add ContentPage "ContentsubPage"
     Then I should see "ContentsubPage"
 
   @javascript
@@ -51,7 +51,7 @@ Feature: AdminPage
     Then I should not see "Not found"
 
   @javascript
-  Scenario: Publish the page
+  Scenario: Unpublish the page
     Given I unpublish page "ContentsubPage"
     Then I should see "has been unpublished"
 

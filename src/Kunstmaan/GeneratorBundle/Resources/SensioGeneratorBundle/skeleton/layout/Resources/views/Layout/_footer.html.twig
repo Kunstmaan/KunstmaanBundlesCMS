@@ -1,0 +1,125 @@
+<footer role="footer" class="footer">
+
+<% if demosite %>
+    {# Newsletter subscription #}
+    <section class="newsletter splash splash--primary text--center">
+        <div class="container-fluid">
+            <div class="newsletter__content">
+                <h2 class="newsletter__title">{{ 'footer.newsletter.title'|trans }}</h2>
+                <div class="newsletter__text">
+                    <p>{{ 'footer.newsletter.description'|trans }}</p>
+                </div>
+                <form action="" class="newsletter__form">
+                    <input type="text" class="form-control newsletter__form__input">
+                    <button type="submit" class="btn btn--secondary newsletter__form__btn">{{ 'footer.newsletter.button'|trans }}</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    {# Social footer #}
+    <section class="social-footer">
+        <div class="container-fluid">
+            <div class="social-footer__inner text--center">
+                <a href="https://twitter.com/kunstmaan" class="social-footer__link">
+                    <i class="social-link__icon icon--social-twitter"></i>
+                </a>
+                <a href="http://www.linkedin.com/company/kunstmaan" class="social-footer__link">
+                    <i class="social-footer__icon icon--social-linkedin"></i>
+                </a>
+                <a href="https://github.com/Kunstmaan" class="social-footer__link">
+                    <i class="social-footer__icon icon--social-github"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+<% endif %>
+
+    {# Main footer #}
+    {% if nodemenu is defined %}
+        <section class="main-footer container-fluid">
+            <div class="row">
+            {# Footer navigation #}
+            {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
+            {% for node in activeSubnode.children %}
+                {% if not node.node.isHiddenFromNav() and node.node.internalName != 'contact' %}
+                <div class="col-md-3 col-sm-3">
+                    <nav class="footer-nav">
+
+                        <h6 class="footer-nav__title">
+                            <a href="{{ path('_slug', { 'url': node.slug }) }}" class="footer-nav__title__link">{{ node.title }}</a>
+                        </h6>
+
+                        {% if node.children|length>0 %}
+                            {% if node.node.internalName == 'article_overview_page' %}
+                                {% for node2 in node.children %}
+                                    {% if loop.index < 4 %}
+                                    {% if node2.title|length > 40 %}
+                                        {% set ltitle = node2.title[:40] ~ '...' %}
+                                    {% else %}
+                                        {% set ltitle = node2.title %}
+                                    {% endif %}
+
+                                    <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__item{% if(node2.active) %} footer-nav__item--active{% endif %}">
+                                        {{ ltitle }}
+                                    </a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% for node2 in node.children | slice(0, 3) %}
+                                    {% if not node.node.isHiddenFromNav() %}
+                                    <a href="{{ path('_slug', { 'url': node2.slug }) }}" class="footer-nav__item{% if(node2.active) %} footer-nav__item--active{% endif %}">
+                                        {{ node2.title }}
+                                    </a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    </nav>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+            <% if demosite %>
+                <div class="col-md-3 col-sm-3">
+                    <nav class="footer-nav footer-nav--demosite">
+                        <h6 class="footer-nav__title">
+                            {{ 'footer.visit_us'|trans }}
+                        </h6>
+                        <p>The Crew<br/>Philipssite 5 - bus 10<br/>B-3001 Leuven</p>
+                    </nav>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <nav class="footer-nav footer-nav--demosite">
+                        <h6 class="footer-nav__title">
+                            {{ 'footer.contact_us'|trans }}
+                        </h6>
+                        <p><strong>T</strong> +32 (0)16 300 780<br/><strong>E</strong> <a href="mailto:bundles@kunstmaan.be" target="_blank">bundles@kunstmaan.be</a></p>
+                    </nav>
+                </div>
+            <% endif %>
+            </div>
+        </section>
+    {% endif %}
+
+
+    {# Sub-footer #}
+    <section class="sub-footer">
+        <div class="container-fluid">
+            <div class="sub-footer__inner">
+                <p class="sub-footer__info">
+                    &copy; {{ "now"|date("Y") }}
+                    {% if nodemenu is defined %}
+                    {% set sitemap = nodemenu.getNodeByInternalName('sitemap') %}
+                    {% if (sitemap != null and sitemap.online) %}- <a href="{{ path('_slug', { 'url': sitemap.slug }) }}" class="sub-footer__info__link">{{ sitemap.title }}</a>{% endif %}
+                    {% endif %}
+                </p>
+                <p class="sub-footer__credentials">
+                    Created by <a href="http://www.kunstmaan.be" class="sub-footer__credentials__link"><img src="/frontend/img/general/logo-kunstmaan.svg" alt="Kunstmaan" class="sub-footer__credentials__img"></a>
+                </p>
+            </div>
+        </div>
+    </section>
+</footer>

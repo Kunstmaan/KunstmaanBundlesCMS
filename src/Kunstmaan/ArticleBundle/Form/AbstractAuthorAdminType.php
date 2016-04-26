@@ -10,11 +10,15 @@ class AbstractAuthorAdminType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('link');
+        $builder->add('name', null, array(
+            'label' => 'article.author.form.name.label',
+        ));
+        $builder->add('link', null, array(
+            'label' => 'article.author.form.link.label',
+        ));
     }
 
-    function getName()
+    function getBlockPrefix()
     {
         return "abstactauthor_form";
     }

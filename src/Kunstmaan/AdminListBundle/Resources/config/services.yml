@@ -6,13 +6,13 @@ services:
         class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
 
     kunstmaan_adminlist.service.export:
-        class:  %kunstmaan_adminlist.service.export.class%
+        class:  '%kunstmaan_adminlist.service.export.class%'
         calls:
-            -  [ setRenderer, [ "@templating" ] ]
+            -  [ setRenderer, [ '@templating' ] ]
 
     kunstmaan_adminlist.twig.extension:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
         tags:
             -  { name: twig.extension }
         arguments:
-            -  @service_container
+            -  '@service_container'

@@ -1,0 +1,64 @@
+/* ==========================================================================
+   App Main
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.app__main {
+    position: relative;
+
+    width: 100%;
+    padding-top: $navbar-height;
+    overflow: hidden;
+}
+
+
+/* Altered State
+   ========================================================================== */
+.app__main--altered-state {
+
+    &.app__main--has-sidebar .app__content {
+        border-left-color: $gray-lighter;
+
+        @media (max-width: $screen-sm) {
+            -webkit-transform: translateX(-webkit-calc(100% - 4.5rem));
+               -moz-transform: translateX(-moz-calc(100% - 4.5rem));
+                    transform: translateX(calc(100% - 4.5rem));
+        }
+
+        @media (min-width: $screen-sm) and (max-width: $screen-md){
+            -webkit-transform: translateX(-webkit-calc(28rem));
+               -moz-transform: translateX(-moz-calc(28rem));
+                    transform: translateX(calc(28rem));
+        }
+
+        @media (min-width: $screen-md) {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+
+    .app__sidebar-toggle__hide-icon {
+        display: inline-block;
+    }
+
+    .app__sidebar-toggle__show-icon {
+        display: none;
+    }
+
+    @media (min-width: $screen-md) {
+        .app__sidebar-toggle__hide-icon {
+            display: none;
+        }
+
+        .app__sidebar-toggle__show-icon {
+            display: inline-block;
+        }
+    }
+}
+
+
+/* No sidebar
+   ========================================================================== */
+// .app__main--no-sidebar {
+// }

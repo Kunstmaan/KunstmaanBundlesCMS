@@ -27,8 +27,9 @@ class RemoteAudioHandler extends AbstractMediaHandler
      */
     const TYPE = 'audio';
 
-    public function __construct($soundcloudApiKey)
+    public function __construct($priority, $soundcloudApiKey)
     {
+        parent::__construct($priority);
         $this->soundcloudApiKey = $soundcloudApiKey;
     }
 
@@ -49,11 +50,11 @@ class RemoteAudioHandler extends AbstractMediaHandler
     }
 
     /**
-     * @return RemoteAudioType
+     * @return string
      */
     public function getFormType()
     {
-        return new RemoteAudioType();
+        return RemoteAudioType::class;
     }
 
     /**

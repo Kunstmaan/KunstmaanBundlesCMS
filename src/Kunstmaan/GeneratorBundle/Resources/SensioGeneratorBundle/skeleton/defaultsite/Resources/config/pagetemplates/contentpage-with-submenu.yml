@@ -1,0 +1,6 @@
+name: "Content page with submenu"
+rows:
+    - regions:
+        - { name: "main", span: 12 }
+        - { name: "submenu", span: 12, template: "{{ bundle.name }}:Layout:submenu.html.twig" }
+template: "{{ bundle.name }}::Pages\\ContentPage\\pagetemplate.html.twig"

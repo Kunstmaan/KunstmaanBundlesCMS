@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'cargobay-audioplayer';
+    src:url('../../fonts/iconfont/cargobay-audioplayer.eot?-amw1fv');
+    src:url('../../fonts/iconfont/cargobay-audioplayer.eot?#iefix-amw1fv') format('embedded-opentype'),
+	url('../../fonts/iconfont/cargobay-audioplayer.woff?-amw1fv') format('woff'),
+	url('../../fonts/iconfont/cargobay-audioplayer.ttf?-amw1fv') format('truetype'),
+	url('../../fonts/iconfont/cargobay-audioplayer.svg?-amw1fv#cargobay-audioplayer') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon--"], [class*=" icon--"] {
+    font-family: 'cargobay-audioplayer';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon--play:before {
+    content: "\e600";
+}
+.icon--pause:before {
+    content: "\e601";
+}
+.icon--volume-medium:before {
+    content: "\e602";
+}
+.icon--volume-mute:before {
+    content: "\e603";
+}

@@ -1,0 +1,74 @@
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.choice-block {
+    position: relative;
+
+    margin: 1rem 0;
+}
+
+
+
+/* Input
+   ========================================================================== */
+.choice-block__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 0;
+}
+
+
+
+/* Item
+   ========================================================================== */
+.choice-block__item {
+    display: block;
+    padding: 1em;
+
+    border: 1px solid $gray-lighter;
+    border-radius: $border-radius-base;
+
+    cursor: pointer;
+}
+
+.choice-block__item__head {
+    margin: 0 0 1rem 0;
+}
+
+.choice-block__item__col {
+    padding: .4em;
+    margin: .3rem 0 .3rem 0;
+
+    background: $gray-ultralight;
+    text-align: center;
+    border-radius: $border-radius-base;
+}
+
+.choice-block__input:checked {
+
+    & + .choice-block__item {
+        border: 1px solid $brand-primary;
+
+        @include transition(border .3s ease);
+
+        .choice-block__item__head {
+            color: $brand-primary;
+
+            @include transition(color .3s ease);
+        }
+
+        .choice-block__item__col {
+            background: $gray-lighter;
+
+            @include transition(background .3s ease);
+        }
+    }
+
+
+
+}

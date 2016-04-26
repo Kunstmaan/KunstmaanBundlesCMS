@@ -3,16 +3,16 @@
     {% set route_params = route_params|merge(app.request.query.all) %}
 
     <li class="dropdown language">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#language">
+        <a href="#language" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             {{ app.request.attributes.get('_locale') }}
-            <b class="caret"></b>
+            <span class="caret"></span>
         </a>
-        <ul class="dropdown-menu">
-            {% for locale in locales %}
-                <li {% if app.request.attributes.get('_locale') == locale %}class="active"{% endif %}>
-                    <a href="{{ path(route,  route_params | merge({'_locale': locale})) }}">{{ locale }}</a>
-                </li>
-            {% endfor %}
+        <ul class="dropdown-menu" role="menu">
+        {% for locale in locales %}
+            <li class="{% if app.request.attributes.get('_locale') == locale %} active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                <a href="{{ path(route, route_params | merge({'_locale': locale})) }}">{{ locale }}</a>
+            </li>
+        {% endfor %}
         </ul>
     </li>
 {% endif %}

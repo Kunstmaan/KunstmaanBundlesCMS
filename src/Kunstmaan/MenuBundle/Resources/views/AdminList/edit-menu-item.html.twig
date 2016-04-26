@@ -1,0 +1,58 @@
+{% extends 'KunstmaanAdminListBundle:Default:add_or_edit.html.twig' %}
+
+{% block content %}
+    {{ parent() }}
+
+    <script>
+        window.onload = function() {
+            var object = document.getElementById('menuitem_form_type');
+            object.addEventListener('change', doCheckboxToggle);
+            doCheckboxToggle();
+        };
+
+        function doCheckboxToggle() {
+            var object = document.getElementById('menuitem_form_type');
+            var value = object.options[object.selectedIndex].value;
+
+            var nt = document.getElementById('menuitem_form_nodeTranslation');
+            var url = document.getElementById('menuitem_form_url');
+            var title = document.getElementById('menuitem_form_title');
+            if (value == 'page_link') {
+                nt.parentElement.style.display = 'block';
+                url.parentElement.style.display = 'none';
+                title.parentElement.firstChild.innerHTML = 'Override menu title';
+            } else {
+                nt.parentElement.style.display = 'none';
+                url.parentElement.style.display = 'block';
+                nt.selectedIndex = 0;
+                title.parentElement.firstChild.innerHTML = 'Title *';
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block admin_page_title %}
+    <div class="col-sm-6 col-md-8">
+        <h1 class="app__content__header__title">
+            Menu items
+        </h1>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <ul class="breadcrumb app__content__breadcrumb">
+        <li>
+            <a href="{{ path('KunstmaanAdminBundle_modules') }}">
+                Modules
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('kunstmaanmenubundle_admin_menu') }}">
+                Menu's
+            </a>
+        </li>
+        <li class="active">
+            Menu items
+        </li>
+    </ul>
+{% endblock %}

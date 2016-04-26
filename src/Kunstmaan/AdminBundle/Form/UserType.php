@@ -3,8 +3,15 @@
 namespace Kunstmaan\AdminBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -18,11 +25,6 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     private $canEditAllFields = false;
 
     /**
-     * @var array
-     */
-    private $langs = array();
-
-    /**
      * Setter to check if we can display all form fields
      *
      * @param $canEditAllFields
@@ -34,47 +36,41 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     }
 
     /**
-     * @param array $langs
-     */
-    public function setLangs(array $langs)
-    {
-        $this->langs = $langs;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $languages = array();
-        foreach ($this->langs as $lang) {
+        foreach ($options['langs'] as $lang) {
             $languages[$lang] = $lang;
         }
 
-        $builder->add('username', 'text', array ('required' => true, 'label' => 'settings.user.username'))
-                ->add('plainPassword', 'repeated', array(
-                    'type' => 'password',
+        $this->canEditAllFields = $options['can_edit_all_fields'];
+
+        $builder->add('username', TextType::class, array ('required' => true, 'label' => 'settings.user.username'))
+                ->add('plainPassword', RepeatedType::class, array(
+                    'type' => PasswordType::class,
                     'required' => $options['password_required'],
-                    'invalid_message' => "errors.password.dontmatch",
+                    'invalid_message' => 'errors.password.dontmatch',
                     'first_options' => array(
                         'label' => 'settings.user.password'
                     ),
                     'second_options' => array(
                         'label' => 'settings.user.repeatedpassword'
                     )
-                    )
-                )
-                ->add('email', 'email', array ('required' => true, 'label' => 'settings.user.email'))
-                ->add('adminLocale', 'choice', array(
+                ))
+                ->add('email', EmailType::class, array ('required' => true, 'label' => 'settings.user.email'))
+                ->add('adminLocale', ChoiceType::class, array(
                     'choices'     => $languages,
                     'label'       => 'settings.user.adminlang',
                     'required'    => true,
-                    'empty_value' => false
+                    'placeholder' => false,
+                    'choices_as_values' => true,
                 ));
 
         if ($this->canEditAllFields) {
-            $builder->add('enabled', 'checkbox', array('required' => false, 'label' => 'settings.user.enabled'))
-                    ->add('groups', 'entity', array(
+            $builder->add('enabled', CheckboxType::class, array('required' => false, 'label' => 'settings.user.enabled'))
+                    ->add('groups', EntityType::class, array(
                             'label' => 'settings.user.roles',
                             'class' => 'KunstmaanAdminBundle:Group',
                             'query_builder' => function(EntityRepository $er) {
@@ -85,8 +81,8 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                             'expanded' => false,
                             'required' => false,
                             'attr' => array(
-                                'class' => 'chzn-select',
-                                'data-placeholder' => 'Choose the permission groups...'
+                                'placeholder' => 'settings.user.roles_placeholder',
+                                'class' => 'js-advanced-select form-control advanced-select',
                             )
                         )
                     );
@@ -96,7 +92,7 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'user';
     }
@@ -104,10 +100,16 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('password_required' => false));
-        $resolver->addAllowedValues(array('password_required' => array(true, false)));
+        $resolver->setDefaults(
+          array(
+            'password_required' => false,
+            'data_class' => 'Kunstmaan\AdminBundle\Entity\User',
+            'langs' => null,
+            'can_edit_all_fields' => null,
+          )
+        );
+        $resolver->addAllowedValues('password_required', array(true, false));
     }
-
 }

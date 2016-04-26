@@ -3,8 +3,9 @@
 namespace Kunstmaan\ArticleBundle\Form;
 
 use Kunstmaan\NodeBundle\Form\PageAdminType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The admin type for abstract article pages
@@ -27,24 +28,26 @@ class AbstractArticlePageAdminType extends PageAdminType
         parent::buildForm($builder, $options);
         $builder->add(
             'date',
-            'datetime',
+            DateTimeType::class,
             array(
+                'label' => 'article.form.date.label',
                 'required' => true,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
                 'date_format' => 'dd/MM/yyyy'
             )
         );
-        $builder->add('summary');
+        $builder->add('summary', null, array(
+            'label' => 'article.form.summery.label'
+        ));
     }
 
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolverInterface $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options.
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function configureOptions(OptionsResolver $resolver)    {
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractArticlePage'
         ));
@@ -53,7 +56,7 @@ class AbstractArticlePageAdminType extends PageAdminType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'AbstractArticlePage';
     }

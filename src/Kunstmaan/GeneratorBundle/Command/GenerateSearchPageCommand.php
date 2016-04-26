@@ -55,8 +55,8 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Search Page Generation');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Search Page Generation');
 
         GeneratorUtils::ensureOptionsProvided($input, array('namespace'));
 
@@ -90,10 +90,10 @@ EOT
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $dialog = $this->getDialogHelper();
-        $dialog->writeSection($output, 'Welcome to the SearchPage generator');
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, 'Welcome to the SearchPage generator');
 
-        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $dialog, $this->getApplication()->getKernel(), $this->getContainer());
+        $inputAssistant = GeneratorUtils::getInputAssistant($input, $output, $questionHelper, $this->getApplication()->getKernel(), $this->getContainer());
 
         $inputAssistant->askForNamespace(array(
             '',

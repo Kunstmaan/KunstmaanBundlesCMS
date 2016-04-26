@@ -3,32 +3,58 @@
 
 {% block extra_actions_header %}
     {% if adminlistconfigurator.overviewPage %}
-        <div class='main_actions btn-group'>
-            <a href='#' data-target='#add-subpage-modal' data-toggle='modal' class='btn'>{{ 'form.add'|trans }}</a>
+    <div class='col-sm-6 col-md-4'>
+        <!-- Main-actions -->
+        <div class='page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header'>
+        <div class='btn-group'>
+            <a href='#' data-target='#add-subpage-modal' data-toggle='modal' class='btn btn-primary btn--raise-on-hover'>
+            {{ 'form.add'|trans }}
+            </a>
+                </div>
         </div>
-        <div id='add-subpage-modal' class='modal hide fade'>
+    </div>
+
+    <div id='add-subpage-modal' class='modal fade'>
+        <div class='modal-dialog'>
+        <div class='modal-content'>
             <div class='modal-header'>
-                <button class='close' data-dismiss='modal'>&times;</button>
-                <h3>Add " ~ entity_class ~ "</h3>
+            <button class='close' data-dismiss='modal'>
+                <i class='fa fa-times'></i>
+            </button>
+            <h3>
+                Add " ~ entity_class ~ "
+            </h3>
+                    </div>
+
+            <form action='{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : '" ~ namespace|replace({'\\': '\\\\'}) ~ "\\\\Entity\\\\Pages\\\\" ~ entity_class ~ "Page'}) }}' method='post' novalidate='novalidate'>
+
+            <div class='modal-body'>
+                <div class='form-group'>
+                <label for='addpage_title'>
+                    Title
+                </label>
+                <input type='text' name='title' id='addpage_title' class='form-control'>
+                </div>
             </div>
-            <form action='{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : '" ~ namespace|replace({'\\': '\\\\'}) ~ "\\\\Entity\\\\" ~ entity_class ~ "\\\\" ~ entity_class ~ "Page'}) }}' method='post' novalidate='novalidate'>
-                <div class='modal-body'>
-                    <div class='input_prop'>
-                        <label for='addpage_title'>Title</label>
-                        <input name='title' id='addpage_title' type='text'>
-                    </div>
-                </div>
-                <div class='modal-footer'>
-                    <div class='btn_group'>
-                        <input type='submit' name='submit' value='Add' class='btn btn-primary' />
-                        <button class='btn' data-dismiss='modal'>Cancel</button>
-                    </div>
-                </div>
+
+            <div class='modal-footer'>
+                <button type='submit' name='submit' class='btn btn-primary btn--raise-on-hover'>
+                Add
+                </button>
+                <button class='btn btn-default btn--raise-on-hover' data-dismiss='modal'>
+                Cancel
+                </button>
+            </div>
             </form>
+                </div>
+        </div>
         </div>
     {% else %}
-        <div class='alert alert-block'>
+    <div class='alert alert-warning'>
             <strong>Warning: </strong> You need to create at least one overview page before you can create a " ~ entity_class ~ "
+        <button class='close' data-dismiss='alert'>
+        <i class='fa fa-times'></i>
+        </button>
         </div>
     {% endif %}
 {% endblock %}

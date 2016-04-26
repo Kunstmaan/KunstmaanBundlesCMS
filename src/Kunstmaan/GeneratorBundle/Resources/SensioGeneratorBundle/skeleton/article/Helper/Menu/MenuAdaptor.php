@@ -11,27 +11,34 @@ use Symfony\Component\HttpFoundation\Request;
 
 class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
 {
-    private $overviewpageIds = array();
+    private $overviewpageIds = null;
+
+    private $em;
 
     /**
      * @param EntityManager $em The entity manager
      */
     public function __construct(EntityManager $em)
     {
-        $overviewPageNodes = $em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\{{ entity_class }}\\{{ entity_class }}OverviewPage');
-        foreach ($overviewPageNodes as $overviewPageNode) {
-            $this->overviewpageIds[] = $overviewPageNode->getId();
-        }
+	    $this->em = $em;
     }
 
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
+        if (is_null($this->overviewpageIds)) {
+            $overviewPageNodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findByRefEntityName('{{ namespace|replace({"\\": "\\\\"}) }}\\Entity\\Pages\\{{ entity_class }}OverviewPage');
+            $this->overviewpageIds = array();
+            foreach ($overviewPageNodes as $overviewPageNode) {
+                $this->overviewpageIds[] = $overviewPageNode->getId();
+            }
+        }
+
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
             // Page
             $menuItem = new TopMenuItem($menu);
             $menuItem
-                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}page')
-                ->setLabel('{{ entity_class }}')
+		->setRoute('{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page')
+		->setLabel('{{ entity_class }} Pages')
                 ->setUniqueId('{{ entity_class }}')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
@@ -43,7 +50,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             // Author
             $menuItem = new TopMenuItem($menu);
             $menuItem
-                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_{{ entity_class|lower }}author')
+		->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author')
                 ->setLabel('{{ entity_class }} Authors')
                 ->setUniqueId('{{ entity_class }} Authors')
                 ->setParent($parent);

@@ -29,7 +29,7 @@ class PdfTransformer implements PreviewTransformerInterface
             if (!file_exists($previewFilename)) {
                 $this->imagick->readImage($absolutePath . '[0]');
                 $this->imagick->setImageFormat('jpg');
-                $this->imagick->flattenimages();
+                $this->imagick->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
                 $this->imagick->writeImage($previewFilename);
                 $this->imagick->clear();
             }

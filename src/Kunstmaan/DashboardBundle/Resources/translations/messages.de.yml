@@ -1,0 +1,55 @@
+form:
+    back: 'Zurück'
+
+dashboard:
+    ga:
+        tab:
+            today: Heute
+            yesterday: Gestern
+            last_7_days: Letzte 7 Tage
+            last_30_days: Letzte 30 Tage
+            last_12_months: Letzte 12 Monate
+            year_to_date: Jahr bis heute
+        chart:
+            users: Besucher
+            pct_new_sessions: % Neue Sitzungen
+            sessions: Sitzungen
+            pageviews: Seitenaufrufe
+            avg_pages_p_session: Seiten / Sitzung
+            avg_session_duration: Durchschn. Sitzungsdauer
+        setup:
+            goals:
+                disable: Disable goals
+            title: Google Analytics dashboard widget einrichten
+            content: "To learn how to setup the Google Analytics widget, please refer to"
+            docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
+            docs: the documentation
+            redirect: "This is your redirect URI:"
+            refresh: "Once everything is set up, refresh this page."
+            connect: Connect your Google Account
+            confirm: Connect now
+            profile:
+                title: Select a profile
+                select: Select a profile..
+                content: Select a profile for the selected website
+            property:
+              title: Select a website to track
+              select: Select a website..
+              content: Select a domain registered in your Google Analytics account.
+            account:
+                title: Select an account
+                select: Select an account..
+            link: Dashboard einrichten
+            back: Zum Dashboard
+            segment:
+                add: Add segment
+                info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
+                here: here
+                own: Own segments
+                builtin: Built-in segments
+            segments: Segment setup
+            accounts: Account setup
+        reset:
+            property: Change Google Analytics link
+        last_update: "Letzte Aktualisierung:"
+        unavailable: Keine Daten verfügbar, bitte Aktualisieren Button klicken.
