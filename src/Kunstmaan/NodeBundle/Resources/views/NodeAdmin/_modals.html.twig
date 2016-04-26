@@ -11,7 +11,7 @@
                     <i class="fa fa-times"></i>
                 </button>
                 <h3>
-                    Unpublish
+                    {{ 'kuma_node.modal.unpublish.title'|trans() }}
                 </h3>
             </div>
 
@@ -20,13 +20,13 @@
                 <!-- Body -->
                 <div class="modal-body">
                     <p>
-                        Are you sure you want to unpublish this page? If you do this, the page will be offline!
+                        {{ 'kuma_node.modal.unpublish.body'|trans() }}
                     </p>
 
                     <div class="form-group">
                         <label>
                             <input id="unpublish-later__check" type="checkbox">
-                            Unpublish later
+                            {{ 'kuma_node.modal.unpublish.later.label'|trans() }}
                         </label>
                     </div>
 
@@ -58,18 +58,18 @@
                 <div class="modal-footer">
                     <div id="unpublish-later-action" class="btn_group">
                         <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary btn--raise-on-hover">
-                            Unpublish later
+                            {{ 'kuma_node.modal.unpublish.later.button'|trans() }}
                         </button>
                         <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                            Cancel
+                            {{ 'kuma_node.modal.unpublish.later.cancel'|trans() }}
                         </button>
                     </div>
                     <div id="unpublish-action" class="btn_group">
                         <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
-                            Unpublish
+                            {{ 'kuma_node.modal.unpublish.now.button'|trans() }}
                         </a>
                         <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                            Cancel
+                            {{ 'kuma_node.modal.unpublish.now.cancel'|trans() }}
                         </button>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                     <i class="fa fa-times"></i>
                 </button>
                 <h3>
-                    Publish
+                    {{ 'kuma_node.modal.publish.title'|trans() }}
                 </h3>
             </div>
 
@@ -99,13 +99,13 @@
                 <!-- Body -->
                 <div class="modal-body">
                     <p>
-                        Are you sure you want to publish this page? If you do this, the page will be online!
+                        {{ 'kuma_node.modal.publish.body'|trans() }}
                     </p>
 
                     <div class="form-group">
                         <label>
                             <input id="publish-later__check" type="checkbox">
-                            Publish later
+                            {{ 'kuma_node.modal.publish.later.label'|trans() }}
                         </label>
                     </div>
 
@@ -136,15 +136,19 @@
                 <div class="modal-footer">
                     <div id="publish-later-action">
                         <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
-                            Publish later
+                            {{ 'kuma_node.modal.publish.later.button'|trans() }}
                         </button>
-                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.publish.later.cancel'|trans() }}
+                        </button>
                     </div>
                     <div id="publish-action">
                         <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
-                            Publish
+                            {{ 'kuma_node.modal.publish.now.button'|trans() }}
                         </a>
-                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.publish.now.cancel'|trans() }}
+                        </button>
                     </div>
                 </div>
             </form>
@@ -163,7 +167,7 @@
                 <button class="close" data-dismiss="modal">
                     <i class="fa fa-times"></i>
                 </button>
-                <h3>Versions</h3>
+                <h3>{{ 'kuma_node.modal.versions.title'|trans() }}</h3>
             </div>
 
             <!-- Body -->
@@ -171,10 +175,10 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Type</th>
-                        <th>Last modified</th>
-                        <th>User</th>
-                        <th>Actions</th>
+                        <th>{{ 'kuma_node.modal.versions.table.type'|trans() }}</th>
+                        <th>{{ 'kuma_node.modal.versions.table.last_modified'|trans() }}</th>
+                        <th>{{ 'kuma_node.modal.versions.table.user'|trans() }}</th>
+                        <th>{{ 'kuma_node.modal.versions.table.actions'|trans() }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -187,12 +191,12 @@
                             <td class="table__actions">
                                 <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item table__actions__item--block">
                                     <i class="fa fa-eye"></i>
-                                    Preview
+                                    {{ 'kuma_node.modal.versions.actions.preview'|trans() }}
                                 </a>
                                 {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
                                     <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item table__actions__item--block">
                                         <i class="fa fa-refresh"></i>
-                                        Revert
+                                        {{ 'kuma_node.modal.versions.actions.revert'|trans() }}
                                     </a>
                                 {% endif %}
                             </td>
@@ -218,7 +222,7 @@
                     <button class="close" data-dismiss="modal">
                         <i class="fa fa-times"></i>
                     </button>
-                    <h3>Add subpage</h3>
+                    <h3>{{ 'kuma_node.modal.add_subpage.title'|trans() }}</h3>
                 </div>
 
                 <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': node.id }) }}" method="post" novalidate="novalidate">
@@ -227,13 +231,13 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="addpage_title">
-                                Title
+                                {{ 'kuma_node.modal.add_subpage.label.title'|trans() }}
                             </label>
                             <input name="title" type="text" id="addpage_title" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="addpage_type">
-                                Type
+                                {{ 'kuma_node.modal.add_subpage.label.type'|trans() }}
                             </label>
                             <select name="type" id="addpage_type" class="form-control">
                                 {% for pageType in pagePossibleChildPages %}
@@ -245,8 +249,12 @@
 
                     <!-- Footer -->
                     <div class="modal-footer">
-                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">Add</button>
-                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'kuma_node.modal.add_subpage.button.add'|trans() }}
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.add_subpage.button.cancel'|trans() }}
+                        </button>
                     </div>
                 </form>
             </div>
@@ -265,19 +273,23 @@
                 <button class="close" data-dismiss="modal">
                     <i class="fa fa-times"></i>
                 </button>
-                <h3>Delete page '{{ page.title }}'</h3>
+                <h3>{{ 'kuma_node.modal.delete_page.title.%page%'|trans({'%page%': page.title}) }}</h3>
             </div>
 
             <!-- Body -->
             <div class="modal-body">
-                <p>This will remove the page completely! Are you really sure about this?</p>
+                <p>{{ 'kuma_node.modal.delete_page.body.%page%'|trans({'%page%': page.title}) }}</p>
             </div>
 
             <!-- Footer -->
             <div class="modal-footer">
                 <form action="{{ path('KunstmaanNodeBundle_nodes_delete', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Delete</button>
-                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
+                        {{ 'kuma_node.modal.delete_page.button.delete'|trans() }}
+                    </button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'kuma_node.modal.delete_page.button.cancel'|trans() }}
+                    </button>
                 </form>
             </div>
         </div>
@@ -295,7 +307,7 @@
                 <button class="close" data-dismiss="modal">
                     <i class="fa fa-times"></i>
                 </button>
-                <h3>Duplicate page '{{ page.title }}'</h3>
+                <h3>{{ 'kuma_node.modal.duplicate_page.title.%page%'|trans({'%page%': page.title}) }}</h3>
             </div>
 
             <form action="{{ path('KunstmaanNodeBundle_nodes_duplicate', { 'id': node.id }) }}" method="post" novalidate="novalidate">
@@ -304,7 +316,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="duplicatepage_title">
-                            New title
+                            {{ 'kuma_node.modal.duplicate_page.label.new_title'|trans() }}
                         </label>
                         <input name="title" type="text" id="title" class="form-control">
                     </div>
@@ -312,8 +324,12 @@
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Duplicate</button>
-                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
+                        {{ 'kuma_node.modal.duplicate_page.button.duplicate'|trans() }}
+                    </button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'kuma_node.modal.duplicate_page.button.cancel'|trans() }}
+                    </button>
                 </div>
             </form>
         </div>
@@ -362,8 +378,12 @@
 
                     <!-- Footer -->
                     <div class="modal-footer">
-                        <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Copy</button>
-                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
+                            {{ 'kuma_node.modal.recopyfromlanguage.button.copy'|trans() }}
+                        </button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.recopyfromlanguage.button.cancel'|trans() }}
+                        </button>
                     </div>
                 </form>
             </div>
