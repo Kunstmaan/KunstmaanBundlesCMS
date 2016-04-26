@@ -25,3 +25,8 @@ region:
     button:
         min: Minimize
         max: Maximize
+
+kuma_pagepart:
+    tab:
+        content:
+            title: Content

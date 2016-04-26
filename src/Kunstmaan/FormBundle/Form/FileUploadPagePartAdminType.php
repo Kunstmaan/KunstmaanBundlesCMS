@@ -21,9 +21,19 @@ class FileUploadPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array('required' => true))
-            ->add('required', CheckboxType::class, array('required' => false))
-            ->add('errormessage_required', TextType::class, array('required' => false));
+            ->add('label', null, array(
+                'required' => true,
+                'label' => 'kuma_form.form.file_upload_page_part.label.label',
+            ))
+            ->add('required', CheckboxType::class, array(
+                'required' => false,
+                'label' => 'kuma_form.form.file_upload_page_part.required.label',
+            ))
+            ->add('errormessage_required', TextType::class, array(
+                'required' => false,
+                'label' => 'kuma_form.form.file_upload_page_part.errormessage_required.label',
+            ))
+        ;
     }
 
     /**

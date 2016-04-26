@@ -14,7 +14,9 @@ class NodeSearchAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('boost');
+        $builder->add('boost', null, array(
+            'label' => 'node_search.form.search.boost.label',
+        ));
     }
 
     /**

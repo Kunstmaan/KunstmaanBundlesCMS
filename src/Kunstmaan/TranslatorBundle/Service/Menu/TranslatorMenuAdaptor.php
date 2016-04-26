@@ -27,7 +27,7 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanTranslatorBundle_settings_translations')
-                ->setLabel('Translations')
+                ->setLabel('translator.translator.title')
                 ->setUniqueId('Translations')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {

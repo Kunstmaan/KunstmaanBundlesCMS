@@ -127,7 +127,7 @@ class FileHandler extends AbstractMediaHandler
     {
         if ($object instanceof File ||
             ($object instanceof Media &&
-                (is_file($object->getContent()) || $object->getLocation() == 'local'))
+            (is_file($object->getContent()) || $object->getLocation() == 'local'))
         ) {
             return true;
         }
@@ -192,6 +192,29 @@ class FileHandler extends AbstractMediaHandler
      */
     public function removeMedia(Media $media)
     {
+        # Remove links to content in database
+        $media->setContentType(null);
+        $media->setUrl(null);
+
+        $adapter = $this->fileSystem->getAdapter();
+
+        # Remove the file from filesystem
+        $fileKey = $this->getFilePath($media);
+        if($adapter->exists($fileKey)) {
+            $adapter->delete($fileKey);
+        }
+
+        # Remove the files containing folder if there's nothing left
+        $folderPath = $this->getFileFolderPath($media);
+        if($adapter->exists($folderPath) && $adapter->isDirectory($folderPath)) {
+
+            $allMyKeys = $adapter->keys();
+            $everythingfromdir = preg_grep('/'.$folderPath, $allMyKeys);
+
+            if (count($everythingfromdir) === 1) {
+                $adapter->delete($folderPath);
+            }
+        }
     }
 
     /**
@@ -223,32 +246,6 @@ class FileHandler extends AbstractMediaHandler
     public function getOriginalFile(Media $media)
     {
         return $this->fileSystem->get($this->getFilePath($media), true);
-    }
-
-    /**
-     *
-     *
-     * @param Media $media
-     * @return string
-     */
-    private function getFilePath(Media $media)
-    {
-        $filename  = $media->getOriginalFilename();
-        $filename  = str_replace(array('/', '\\', '%'), '', $filename);
-
-        if (!empty($this->blacklistedExtensions)) {
-            $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
-        }
-
-        $parts    = pathinfo($filename);
-        $filename = $this->slugifier->slugify($parts['filename']);
-        $filename .= '.'.strtolower($parts['extension']);
-
-        return sprintf(
-            '%s/%s',
-            $media->getUuid(),
-            $filename
-        );
     }
 
     /**
@@ -299,4 +296,39 @@ class FileHandler extends AbstractMediaHandler
         );
     }
 
+    /**
+     *
+     *
+     * @param Media $media
+     * @return string
+     */
+    private function getFilePath(Media $media)
+    {
+        $filename  = $media->getOriginalFilename();
+        $filename  = str_replace(array('/', '\\', '%'), '', $filename);
+
+        if (!empty($this->blacklistedExtensions)) {
+            $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
+        }
+
+        $parts    = pathinfo($filename);
+        $filename = $this->slugifier->slugify($parts['filename']);
+        $filename .= '.'.strtolower($parts['extension']);
+
+        return sprintf(
+            '%s/%s',
+            $media->getUuid(),
+            $filename
+        );
+    }
+
+    /**
+     * @param Media $media
+     *
+     * @return string
+     */
+    private function getFileFolderPath(Media $media)
+    {
+        return substr($this->getFilePath($media), 0, strrpos($this->getFilePath($media), $media->getOriginalFilename()));
+    }
 }

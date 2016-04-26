@@ -17,11 +17,19 @@ seo:
             url: OG Url
             type: OG Type
             image: OG Image
+            article:
+                author:     OG Article Author
+                publisher:  OG Article Publisher
+                section:    OG Article Section
         twitter:
             title: Title
+            title_info_text: The title of your twitter card. Falls back to SEO Meta title
             description: Description
+            description_info_text: The description of your twitter card. Falls back to SEO Meta description
             sitehandle: Site Handle
+            sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
             creatorhandle: Creator Handle
+            creatorhandle_info_text: Twitter handle of your page publisher.
             image: Image
         robots:
             noindex: No index
@@ -30,7 +38,24 @@ seo:
             nosnippet: No snippet
             notranslate: No translate
             noimageindex: No image index
+        seo:
+            meta_title:
+                label:  Title
+                info_text: The title tag is often used on search engine results pages. It should be less than 55 characters.
+            meta_description:
+                label: Meta description
+            meta_robots:
+                label: Meta robots
+                placeholder: Choose robot tags
+            extra_metadata:
+                label: Extra metadata
 
     pagetabs:
         opengraph: Open Graph
         twittercards: Twitter Cards
+
+    tab:
+        seo:
+            title: SEO
+        social:
+            title: Social

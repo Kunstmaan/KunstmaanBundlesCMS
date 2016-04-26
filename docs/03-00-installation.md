@@ -23,12 +23,6 @@ It will then ask you some questions to configure Symfony and the CMS system. At 
 
 We will configure all other parameters later on.
 
-Lastly it will ask to remove the .git folder, answer **Y**.
-
-```
-Do you want to remove the existing VCS (.git, .svn..) history? [Y,n]?
-```
-
 First step now is to add all these files into version control. What version control system and what vcs hosting you use is up to you. This example assumes [Git](http://git-scm.com) and [GitHub](https://github.com).
 
 Create a new repository (in most cases a private one). Don't add any files from the GitHub interface to start with.

@@ -19,12 +19,15 @@ class PageAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class);
-	$builder->add('title', null, array('label' => 'Navigation title'));
-	$builder->add('pageTitle', null, array(
-	    'attr' => array(
-		'info_text' => 'Used as title inside the page.'
-	    )
-	));
+        $builder->add('title', null, array(
+            'label' => 'kuma_node.form.page.title.label',
+        ));
+        $builder->add('pageTitle', null, array(
+            'label' => 'kuma_node.form.page.page_title.label',
+            'attr' => array(
+                'info_text' => 'kuma_node.form.page.page_title.info_text',
+            ),
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

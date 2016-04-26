@@ -18,11 +18,25 @@ class AbstractFormPageAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
-	$builder->add('thanks', TextareaType::class, array('required' => false, 'attr' => array('class' => 'js-rich-editor rich-editor')));
-        $builder->add('subject');
-        $builder->add('from_email');
-        $builder->add('to_email');
+        $builder->add('title', null, array(
+            'label' => 'kuma_form.form.page_admin.title.label',
+        ));
+        $builder->add('thanks', TextareaType::class, array(
+            'label' => 'kuma_form.form.page_admin.thanks.label',
+            'required' => false,
+            'attr' => array(
+                'class' => 'js-rich-editor rich-editor'
+            ),
+        ));
+        $builder->add('subject', null, array(
+            'label' => 'kuma_form.form.page_admin.subject.label',
+        ));
+        $builder->add('from_email', null, array(
+            'label' => 'kuma_form.form.page_admin.from_email.label',
+        ));
+        $builder->add('to_email', null, array(
+            'label' => 'kuma_form.form.page_admin.to_email.label',
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -20,8 +20,8 @@ class ScriptInjectorListener implements EventSubscriberInterface
 
     public function __construct(Client $httpClient, $checkServerPresence = true)
     {
-	$this->httpClient          = $httpClient;
-	$this->checkServerPresence = $checkServerPresence;
+        $this->httpClient          = $httpClient;
+        $this->checkServerPresence = $checkServerPresence;
     }
 
     public function onKernelResponse(FilterResponseEvent $event)
@@ -71,7 +71,7 @@ class ScriptInjectorListener implements EventSubscriberInterface
         if (false !== $pos) {
             $script = "livereload.js";
 
-	    if ($this->checkServerPresence) {
+            if ($this->checkServerPresence) {
                 // GET is required, as livereload apparently does not support HEAD requests ...
                 $request = $this->httpClient->get($script);
                 try {

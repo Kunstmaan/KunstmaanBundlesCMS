@@ -10,5 +10,6 @@ The cookbook is a continuously growing collection of recipes that explain how to
 * [Using the LeadGenerationBundle](./05-06-using-the-leadgenerationbundle.md)
 * [Using the MenuBundle](./05-06-using-the-menubundle.md)
 * [Using the MultiDomainBundle](./05-08-using-the-multi-domain-bundle.md)
+* [Enabling google login](./05-13-enabling-google-auth-login.md)
 
 > Have some cool insight or thing you did with the CMS? Please share it with us and other developers by [sending a pull request](./07-00-contributing.md)!

@@ -38,6 +38,7 @@ class FileType extends AbstractType
             'name',
             TextType::class,
             array(
+                'label' => 'media.form.file.name.label',
                 'required' => false
             )
         );
@@ -45,6 +46,7 @@ class FileType extends AbstractType
             'file',
             BaseFileType::class,
             array(
+                'label' => 'media.form.file.file.label',
                 'constraints' => array(new File()),
                 'required' => false
             )
@@ -53,6 +55,7 @@ class FileType extends AbstractType
             'copyright',
             TextType::class,
             array(
+                'label' => 'media.form.file.copyright.label',
                 'required' => false
             )
         );
@@ -60,6 +63,7 @@ class FileType extends AbstractType
             'description',
             TextareaType::class,
             array(
+                'label' => 'media.form.file.description.label',
                 'required' => false
             )
         );
@@ -76,6 +80,7 @@ class FileType extends AbstractType
                         'file',
                         BaseFileType::class,
                         array(
+                            'label' => 'media.form.file.file.label',
                             'constraints' => array(new NotBlank(), new File()),
                             'required' => true
                         )
@@ -86,6 +91,7 @@ class FileType extends AbstractType
                         'originalFilename',
                         TextType::class,
                         array(
+                            'label' => 'media.form.file.originalFilename.label',
                             'required' => false,
                             'attr' => array(
                                 'readonly' => 'readonly'

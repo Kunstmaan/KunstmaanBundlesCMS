@@ -939,7 +939,7 @@ class NodeAdminController extends Controller
             $nodeAdminType = $this->container->get($nodeAdminType);
         }
         $propertiesWidget->addType('node', $nodeAdminType, $node);
-        $tabPane->addTab(new Tab('Properties', $propertiesWidget));
+        $tabPane->addTab(new Tab('kuma_node.tab.properties.title', $propertiesWidget));
 
         // Menu tab
         $menuWidget = new FormWidget();
@@ -949,7 +949,7 @@ class NodeAdminController extends Controller
             $nodeTranslation
         );
         $menuWidget->addType('menunode', new NodeMenuTabAdminType($isStructureNode), $node);
-        $tabPane->addTab(new Tab('Menu', $menuWidget));
+        $tabPane->addTab(new Tab('kuma_node.tab.menu.title', $menuWidget));
 
         $this->get('event_dispatcher')->dispatch(
             Events::ADAPT_FORM,

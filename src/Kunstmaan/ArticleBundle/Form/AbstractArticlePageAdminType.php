@@ -30,13 +30,16 @@ class AbstractArticlePageAdminType extends PageAdminType
             'date',
             DateTimeType::class,
             array(
+                'label' => 'article.form.date.label',
                 'required' => true,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
                 'date_format' => 'dd/MM/yyyy'
             )
         );
-        $builder->add('summary');
+        $builder->add('summary', null, array(
+            'label' => 'article.form.summery.label'
+        ));
     }
 
     /**

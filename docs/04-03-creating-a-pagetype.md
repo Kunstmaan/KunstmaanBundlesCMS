@@ -143,10 +143,10 @@ So add the following in `EmployeesPage.php` :
 
 ```php
     use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
-    
+
     public function getControllerAction()
     {
-        return 'MyProjectWebsiteBundle:Controller:service';
+        return 'MyProjectWebsiteBundle:EmployeesPage:service';
     }
 ```
 
@@ -161,7 +161,7 @@ And create a new Controller `EmployeesPageController.php` to handle the logic :
     {
         $em = $this->get('doctrine.orm.entity_manager');
         $employees = $em->getRepository('MyProjectWebsiteBundle:Employee')->findAll();
-        
+
         $context['employees'] = $employees;
         $request->attributes->set('_renderContext',$context);
     }

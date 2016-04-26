@@ -2,3 +2,9 @@ search:
     search: Search
     results: Results
     looking_for: You were looking for "%query%"
+
+node_search:
+    form:
+        search:
+            boost:
+                label: Boost

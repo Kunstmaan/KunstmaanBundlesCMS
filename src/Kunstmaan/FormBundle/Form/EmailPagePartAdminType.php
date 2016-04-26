@@ -20,10 +20,23 @@ class EmailPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array('required' => false))
-            ->add('required', CheckboxType::class, array('required' => false))
-            ->add('errorMessageRequired', TextType::class, array('required' => false))
-            ->add('errorMessageInvalid', TextType::class, array('required' => false));
+            ->add('label', null, array(
+                'required' => false,
+                'label' => 'kuma_form.form.email_page_part.label.label',
+            ))
+            ->add('required', CheckboxType::class, array(
+                'required' => false,
+                'label' => 'kuma_form.form.email_page_part.required.label',
+            ))
+            ->add('errorMessageRequired', TextType::class, array(
+                'required' => false,
+                'label' => 'kuma_form.form.email_page_part.errorMessageRequired.label',
+            ))
+            ->add('errorMessageInvalid', TextType::class, array(
+                'required' => false,
+                'label' => 'kuma_form.form.email_page_part.errorMessageInvalid.label',
+            ))
+        ;
     }
 
     /**

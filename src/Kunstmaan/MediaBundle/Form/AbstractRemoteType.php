@@ -36,39 +36,45 @@ abstract class AbstractRemoteType extends AbstractType
                 'name',
                 TextType::class,
                 array(
+                    'label' => 'media.form.remote.name.label',
                     'constraints' => array(new NotBlank()),
-                    'required' => true
+                    'required' => true,
                 )
             )
             ->add(
                 'code',
                 TextType::class,
                 array(
+                    'label' => 'media.form.remote.code.label',
                     'constraints' => array(new NotBlank()),
-                    'required' => true
+                    'required' => true,
                 )
             )
             ->add(
                 'type',
                 ChoiceType::class,
                 array(
+                    'label' => 'media.form.remote.type.label',
                     'choices' => array(),
                     'constraints' => array(new NotBlank()),
-                    'required' => true
+                    'required' => true,
+                    'choices_as_values' => true,
                 )
             )
             ->add(
                 'copyright',
                 TextType::class,
                 array(
-                    'required' => false
+                    'label' => 'media.form.remote.copyright.label',
+                    'required' => false,
                 )
             )
             ->add(
                 'description',
                 TextareaType::class,
                 array(
-                    'required' => false
+                    'label' => 'media.form.remote.description.label',
+                    'required' => false,
                 )
             );
 

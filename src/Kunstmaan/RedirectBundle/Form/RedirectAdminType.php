@@ -31,6 +31,7 @@ class RedirectAdminType extends AbstractType
             $domains = array_merge(array('redirect.all' => ''), $domains);
 
             $builder->add('domain', ChoiceType::class, array(
+                'label' => 'redirect.form.redirect.domain.label',
                 'choices' => $domains,
                 'required' => true,
                 'expanded' => false,
@@ -39,19 +40,22 @@ class RedirectAdminType extends AbstractType
         }
 
         $builder->add('origin', TextType::class, array(
+            'label' => 'redirect.form.redirect.origin.label',
             'required' => true,
             'attr' => array(
-                'info_text' => 'redirect.origin_info'
-            )
+                'info_text' => 'redirect.origin_info',
+            ),
         ));
         $builder->add('target', TextType::class, array(
+            'label' => 'redirect.form.redirect.target.label',
             'required' => true,
             'attr' => array(
-                'info_text' => 'redirect.target_info'
-            )
+                'info_text' => 'redirect.target_info',
+            ),
         ));
         $builder->add('permanent', CheckboxType::class, array(
-            'required' => false
+            'label' => 'redirect.form.redirect.permanent.label',
+            'required' => false,
         ));
     }
 

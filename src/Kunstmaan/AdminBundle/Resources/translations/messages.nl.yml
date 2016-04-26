@@ -18,7 +18,7 @@ settings:
   maintanance: Onderhoud
   scheduled: Geplande taken
   version:
-      bundle: Bundel verses
+      bundle: Bundle versies
       composer_lock_not_found: Geen composer.lock bestand gevonden in de project root
       error_parsing_composer: Fout bij het parsen van het composer.lock bestand, geen geldige json
       error: Er ging iets fout bij het ophalen van de versie informatie. Probeer het later nog eens.
@@ -76,3 +76,7 @@ permissions:
   permissions_added: 'De volgende permissies worden <strong>toegevoegd</strong>:'
   permissions_removed: 'De volgende permissies worden <strong>verwijderd</strong>:'
   role_name: Rol naam
+
+errors:
+    oauth:
+        invalid: Het was niet mogelijk om in te loggen via Google OAuth, waarschijnlijk is je domein naam niet toegelaten.

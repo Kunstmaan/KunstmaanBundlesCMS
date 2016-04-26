@@ -44,6 +44,7 @@ class BulkUploadType extends AbstractType
             'files',
             FileType::class,
             array(
+                'label' => 'media.form.bulk_upload.files.label',
                 'required' => false,
                 'attr' => array(
                     'accept' => $this->accept,

@@ -71,7 +71,7 @@
 
 
     <!-- Main-actions -->
-    <div class="page-main-actions js-auto-collapse-buttons">
+    <div class="page-main-actions {#js-auto-collapse-buttons#}">
         <div class="btn-group">
             {% block actions %}
                 <div class="btn-group" role="group">
@@ -100,6 +100,10 @@
                 <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
                     <span class="large-screen">{{ 'media.folder.delete.action' |trans }}</span>
                     <span class="small-screen">{{ 'media.folder.delete.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                </button>
+                <button class="btn btn-default btn--raise-on-hover" data-target="#empty-modal" data-toggle="modal" type="button">
+                    <span class="large-screen">{{ 'media.folder.empty.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.empty.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
             {% endblock %}
         </div>
@@ -131,7 +135,7 @@
         </li>
         <li class="tab__more dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                More <span class="caret"></span>
+                {{ 'form.button.dropdown.more' | trans }} <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
         </li>
@@ -238,12 +242,14 @@
                                         </span>
                                     </a>
 
-                                    <a href="{{ path('KunstmaanMediaBundle_media_delete', { 'mediaId': media.id }) }}" #} class="btn media-thumbnail-del-btn">
+                                    <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn media-thumbnail-del-btn">
                                         <i class="fa fa-trash-o"></i>
-                                    </a>
+                                    </button>
                                     <span class="media-thumbnail-del-helper">
                                         Delete
                                     </span>
+                                    <!-- Modals -->
+                                    {% include 'KunstmaanMediaBundle:Media:delete-modal.html.twig' %}
                                 </div>
 
                                 {# Clearfixes #}
@@ -301,6 +307,7 @@
     <!-- Modals -->
     {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
     {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/empty-modal.html.twig' %}
 
 {% endblock %}
 

@@ -50,6 +50,11 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.session_security.ip_check', $config['session_security']['ip_check']);
         $container->setParameter('kunstmaan_admin.session_security.user_agent_check', $config['session_security']['user_agent_check']);
 
+        $container->setParameter('kunstmaan_admin.google_signin.enabled', $config['google_signin']['enabled']);
+        $container->setParameter('kunstmaan_admin.google_signin.client_id', $config['google_signin']['client_id']);
+        $container->setParameter('kunstmaan_admin.google_signin.client_secret', $config['google_signin']['client_secret']);
+        $container->setParameter('kunstmaan_admin.google_signin.hosted_domains', $config['google_signin']['hosted_domains']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 

@@ -1,4 +1,5 @@
 redirect:
+    title: Verwijzingen
     all: Alle domeinen
     origin_info: Het adres wat moet worden doorverwezen, bijv. /contest
     target_info: Het adres waar naartoe wordt verwezen, bijv. /en/contests/summer-contest

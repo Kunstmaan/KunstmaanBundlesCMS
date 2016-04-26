@@ -102,11 +102,5 @@ class DoctrineMediaListener
      */
     public function preRemove(LifecycleEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
-        if (!$entity instanceof Media) {
-            return;
-        }
-
-        $this->mediaManager->removeMedia($entity);
     }
 }

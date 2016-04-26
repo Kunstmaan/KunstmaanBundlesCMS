@@ -21,7 +21,6 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant());
         $generator->generate($bundle, '', __DIR__ . '/../data', false);
 
-        $this->assertFileExists($path . '/Twig/NodeTranslationTwigExtension.php');
     }
 
     protected function getBundle($path)

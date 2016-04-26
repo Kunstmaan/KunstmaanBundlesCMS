@@ -10,11 +10,6 @@ services:
         calls:
             -  [ setRenderer, [ '@templating' ] ]
 
-    pagerfanta.view.adminlist:
-        class: Kunstmaan\AdminListBundle\Service\Pager\TwitterBootstrapAdminListView
-        tags:
-            - { name: pagerfanta.view, alias: twitter_bootstrap_admin_list }
-
     kunstmaan_adminlist.twig.extension:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
         tags:

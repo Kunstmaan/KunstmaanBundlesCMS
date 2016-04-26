@@ -21,10 +21,10 @@ class UrlWhiteListAdminType extends AbstractRuleAdminType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('urls', TextareaType::class, array(
-            'attr' => array('info_text' => 'Define a list of whitelist url (patterns).
-                                            Each url on a separate line.
-                                            You can also use regex expressions.
-                                            Examples: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$')
+            'label' => 'kuma_lead_generation.form.url_white_list.urls.label',
+            'attr' => array(
+                'info_text' => 'kuma_lead_generation.form.url_white_list.urls.info_text',
+            ),
         ));
     }
 

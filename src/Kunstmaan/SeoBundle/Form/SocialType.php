@@ -60,17 +60,17 @@ class SocialType extends AbstractType
         $builder
             ->add('ogArticleAuthor', TextType::class,
                 array(
-                    'label' => 'OG Article Author',
+                    'label' => 'seo.form.og.article.author',
                     'required' => false
                 ))
             ->add('ogArticlePublisher', TextType::class,
                 array(
-                    'label' => 'OG Article Publisher',
+                    'label' => 'seo.form.og.article.publisher',
                     'required' => false
                 ))
             ->add('ogArticleSection', TextType::class,
                 array(
-                    'label' => 'OG Article Section',
+                    'label' => 'seo.form.og.article.section',
                     'required' => false
                 ));
 
@@ -81,29 +81,29 @@ class SocialType extends AbstractType
             'label' => 'seo.form.twitter.title',
             'required'  => false,
             'attr'      => array(
-                'info_text'     => "The title of your twitter card. Falls back to SEO Meta title"
-            )
+                'info_text'     => 'seo.form.twitter.title_info_text',
+            ),
         ))
             ->add('twitterDescription', TextAreaType::class, array(
                 'label' => 'seo.form.twitter.description',
                 'required'  => false,
                 'attr'      => array(
-                    'info_text'     => "The description of your twitter card. Falls back to SEO Meta description"
-                )
+                    'info_text'     => 'seo.form.twitter.description_info_text',
+                ),
             ))
             ->add('twitterSite', TextType::class, array(
                 'label' => 'seo.form.twitter.sitehandle',
                 'required'  => false,
                 'attr'      => array(
-                    'info_text'     => "Twitter handle of your website organisation. This value is required for twitter cards to work."
-                )
+                    'info_text'     => 'seo.form.twitter.sitehandle_info_text',
+                ),
             ))
             ->add('twitterCreator', TextType::class, array(
                 'label' => 'seo.form.twitter.creatorhandle',
                 'required'  => false,
                 'attr'      => array(
-                    'info_text'     => "Twitter handle of your page publisher."
-                )
+                    'info_text'     => 'Twitter handle of your page publisher.',
+                ),
             ))
             ->add('twitterImage', MediaType::class, array(
                 'label' => 'seo.form.twitter.image',

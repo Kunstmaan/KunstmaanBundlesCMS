@@ -27,14 +27,14 @@ class SeoType extends AbstractType
     {
         $builder->add('id', HiddenType::class)
             ->add('metaTitle', null, array(
-                'label' => 'Title',
+                'label' => 'seo.form.seo.meta_title.label',
                 'attr' => array(
-                    'info_text' => 'The title tag is often used on search engine results pages. It should be less than 55 characters.',
+                    'info_text' => 'seo.form.seo.meta_title.info_text',
                     'maxlength' => 55
                 )
             ))
             ->add('metaDescription', null, array(
-                'label' => 'Meta description',
+                'label' => 'seo.form.seo.meta_description.label',
                 'attr' => array(
                     'maxlength' => 155
                 )
@@ -52,10 +52,10 @@ class SeoType extends AbstractType
             'required' => false,
             'multiple' => true,
             'expanded' => false,
-            'label' => 'Meta robots',
+            'label' => 'seo.form.seo.meta_robots.label',
             'attr' => array(
+                'placeholder' => 'seo.form.seo.meta_robots.placeholder',
                 'class' => 'js-advanced-select form-control',
-                'data-placeholder' => 'Choose robot tags',
                 'maxlength' => 255
             )
         ));
@@ -77,7 +77,10 @@ class SeoType extends AbstractType
                     return $string;
                 }
             ));
-        $builder->add('extraMetadata', TextareaType::class, array('label' => 'Extra metadata', 'required' => false));
+        $builder->add('extraMetadata', TextareaType::class, array(
+            'label' => 'seo.form.seo.extra_metadata.label',
+            'required' => false,
+        ));
     }
 
     /**

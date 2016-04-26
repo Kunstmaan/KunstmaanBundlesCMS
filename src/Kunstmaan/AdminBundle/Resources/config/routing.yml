@@ -47,3 +47,10 @@ fos_user_change_password:
     path: /admin/profile/change-password
     defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
     methods: [GET, POST]
+
+##########################
+## Google OAuth Sign In ##
+##########################
+KunstmaanAdminBundle_oauth_signin:
+    path: /admin/google_signin_check
+    defaults: { _controller: KunstmaanAdminBundle:OAuth:check }

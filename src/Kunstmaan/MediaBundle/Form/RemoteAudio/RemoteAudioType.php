@@ -34,6 +34,7 @@ class RemoteAudioType extends AbstractRemoteType
                 'type',
                 ChoiceType::class,
                 array(
+                    'label'       => 'media.form.remote_audio.type.label',
                     'choices'     => array('soundcloud' => 'soundcloud'),
                     'constraints' => array(new NotBlank()),
                     'required'    => true

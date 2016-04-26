@@ -29,7 +29,13 @@ class FolderType extends AbstractType
     {
         $folder = $options['folder'];
         $builder
-            ->add('name')
+            ->add(
+                'name',
+                null,
+                array(
+                    'label' => 'media.folder.addsub.form.name'
+                )
+            )
             ->add(
                 'rel',
                 ChoiceType::class,
@@ -39,7 +45,9 @@ class FolderType extends AbstractType
                         'image' => 'image',
                         'slideshow' => 'slideshow',
                         'video' => 'video'
-                    )
+                    ),
+                    'choices_as_values' => true,
+                    'label' => 'media.folder.addsub.form.rel'
                 )
             )
             ->add(
@@ -48,6 +56,7 @@ class FolderType extends AbstractType
                 array(
                     'class' => 'KunstmaanMediaBundle:Folder',
                     'choice_label' => 'optionLabel',
+                    'label' => 'media.folder.addsub.form.parent',
                     'required' => true,
                     'query_builder' => function (FolderRepository $er) use ($folder) {
                         return $er->selectFolderQueryBuilder($folder);
@@ -58,7 +67,7 @@ class FolderType extends AbstractType
                 'internalName',
                 TextType::class,
                 array(
-                    'label' => 'Internal name',
+                    'label' => 'media.folder.addsub.form.internal_name',
                     'required' => false
                 )
             );

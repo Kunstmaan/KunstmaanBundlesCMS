@@ -1,7 +1,8 @@
-{% include "@KunstmaanAdmin/Default/_ckeditor_configs.html.twig" %}
+{% include "@KunstmaanAdminBundle/Resources/views/Default/_ckeditor_configs.html.twig" %}
 
 <script>
     CKEDITOR_BASEPATH = '/bundles/kunstmaanadmin/default-theme/ckeditor/';
+    MORE_BUTTON_LABEL = '{{ 'kuma_js.auto_collapse.more_button_label' | trans | e('js') }}';
 </script>
 
 {% javascripts
@@ -19,6 +20,7 @@
     "@KunstmaanAdminBundle/Resources/ui/js/_app-loading.js"
     "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-tree.js"
     "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-toggle.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-search-focus.js"
     "@KunstmaanAdminBundle/Resources/ui/js/_app-main-actions.js"
     "@KunstmaanAdminBundle/Resources/ui/js/_app-filter.js"
     "@KunstmaanAdminBundle/Resources/ui/js/_app-sortable-table.js"
@@ -42,6 +44,7 @@
     "@KunstmaanAdminBundle/Resources/ui/js/_colorpicker.js"
     "@KunstmaanAdminBundle/Resources/ui/js/_characters-left.js"
     "@KunstmaanAdminBundle/Resources/ui/js/_input-range-slider.js"
+    "@KunstmaanAdminBundle/Resources/ui/js/_google_oauth.js"
     "@KunstmaanAdminBundle/Resources/ui/js/app.js"
     output="KunstmaanAdminBundleAssets/js/footer.min.js" filter="?uglifyjs2"
 %}
@@ -56,4 +59,4 @@
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
-{% include "@KunstmaanAdmin/Default/_js_footer_extra.html.twig" %}
+{% include "@KunstmaanAdminBundle/Resources/views/Default/_js_footer_extra.html.twig" %}

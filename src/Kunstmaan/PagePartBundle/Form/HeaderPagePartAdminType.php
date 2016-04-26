@@ -27,7 +27,10 @@ class HeaderPagePartAdminType extends AbstractType
             'required' => true
           )
         );
-        $builder->add('title', null, array('label' => 'pagepart.header.title', 'required' => true));
+        $builder->add('title', null, array(
+            'label' => 'pagepart.header.title',
+            'required' => true,
+        ));
     }
 
     /**
