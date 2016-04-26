@@ -1,6 +1,7 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Controller;
 
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
@@ -216,8 +217,8 @@ class GoogleAnalyticsAJAXController extends Controller
         $em->flush();
 
         $this->get('session')->getFlashBag()->add(
-            'success',
-            'Succesfully saved!'
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_admin.ga_ajax_controller.flash.success')
         );
 
         return new JsonResponse();

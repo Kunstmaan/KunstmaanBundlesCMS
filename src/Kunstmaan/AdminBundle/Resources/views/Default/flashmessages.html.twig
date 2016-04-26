@@ -4,7 +4,7 @@
             <button type="button" class="close" data-dismiss="alert">
                 <i class="fa fa-times"></i>
             </button>
-            <strong>{{ flashMessageType | capitalize }}:</strong> {{ flashMessage|trans }}
+            <strong>{{ ('kuma_admin.flash_type.' ~ flashMessageType) | trans }}:</strong> {{ flashMessage|trans }}
         </div>
     {% endfor %}
 {% endfor %}

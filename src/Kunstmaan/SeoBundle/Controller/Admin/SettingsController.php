@@ -3,6 +3,7 @@
 namespace Kunstmaan\SeoBundle\Controller\Admin;
 
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,7 +58,7 @@ class SettingsController extends BaseSettingsController
 
         if (!$isSaved) {
             $warning = $this->get('translator')->trans('seo.robots.warning');
-            $this->get('session')->getFlashBag()->add('warning', $warning);
+            $this->get('session')->getFlashBag()->add(FlashTypes::WARNING, $warning);
         }
 
         return array(

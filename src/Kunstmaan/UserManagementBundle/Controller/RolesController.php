@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Role;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
@@ -68,7 +69,10 @@ class RolesController extends BaseSettingsController
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'Role \''.$role->getRole().'\' has been created!');
+                $this->get('session')->getFlashBag()->add(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', ['%role%' => $role->getRole()])
+                );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
             }
@@ -107,7 +111,10 @@ class RolesController extends BaseSettingsController
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'Role \''.$role->getRole().'\' has been edited!');
+                $this->get('session')->getFlashBag()->add(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', ['%role%' => $role->getRole()])
+                );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
             }
@@ -139,11 +146,14 @@ class RolesController extends BaseSettingsController
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
         if (!is_null($role)) {
-            $rolename = $role->getRole();
+            $roleName = $role->getRole();
             $em->remove($role);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Role \''.$rolename.'\' has been deleted!');
+            $this->get('session')->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', ['%role%' => $roleName])
+            );
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));

@@ -49,6 +49,33 @@ kuma_node:
         online_public.raw:                  Online / Public version
         offline.raw:                        Offline
         "go_to_draft_version.%url%.raw":    (Go to <a href="%url%">draft version</a>)
+    admin:
+        publish:
+            flash:
+                success_published: The page has been published
+                success_scheduled: Publishing of the page has been scheduled
+        unpublish:
+            flash:
+                success_unpublished: The page has been unpublished
+                success_scheduled: Unpublishing of the page has been scheduled
+        unschedule:
+            flash:
+                success: The scheduling has been canceled
+        delete:
+            flash:
+                success: The page is deleted!
+        duplicate:
+            flash:
+                success: The page has been duplicated!
+        revert:
+            flash:
+                success: The page contents has been reverted
+        edit:
+            flash:
+                success: The page has been edited
+        new_page:
+            title:
+                default: New page
 
     tab:
         properties:
@@ -72,3 +99,58 @@ kuma_node:
                     label: Add
                 cancel:
                     label: Cancel
+        unpublish:
+            title:          Unpublish
+            body:           Are you sure you want to unpublish this page? If you do this, the page will be offline!
+            later:
+                label:      Unpublish later
+                button:     Unpublish later
+                cancel:     Cancel
+            now:
+                button:     Unpublish
+                cancel:     Cancel
+        publish:
+            title:          Publish
+            body:           Are you sure you want to publish this page? If you do this, the page will be online!
+            later:
+                label:      Publish later
+                button:     Publish later
+                cancel:     Cancel
+            now:
+                button:     Unpublish
+                cancel:     Cancel
+        versions:
+            title:          Versions
+            table:
+                type:       Type
+                last_modified:  Last modified
+                user:       User
+                actions:    Actions
+            actions:
+                preview:    Preview
+                revert:     Revert
+        add_subpage:
+            title:          Add subpage
+            label:
+                title:      Title
+                type:       Type
+            button:
+                add:        Add
+                cancel:     Cancel
+        delete_page:
+            'title.%page%': Delete page '%page%'
+            'body.%page%':  This will remove the page completely! Are you really sure about this?
+            button:
+                delete:     Delete
+                cancel:     Cancel
+        duplicate_page:
+            'title.%page%': Duplicate page '%page%'
+            label:
+                new_title:  New title
+            button:
+                duplicate:  Duplicate
+                cancel:     Cancel
+        recopyfromlanguage:
+            button:
+                copy:   Copy
+                cancel: Cancel

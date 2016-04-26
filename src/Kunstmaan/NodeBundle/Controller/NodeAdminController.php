@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeBundle\Controller;
 use DateTime;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
@@ -312,16 +313,16 @@ class NodeAdminController extends Controller
                 $date
             );
             $this->get('session')->getFlashBag()->add(
-                'success',
-                'Publishing of the page has been scheduled'
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_node.admin.publish.flash.success_scheduled')
             );
         } else {
             $this->get('kunstmaan_node.admin_node.publisher')->publish(
                 $nodeTranslation
             );
             $this->get('session')->getFlashBag()->add(
-                'success',
-                'The page has been published'
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_node.admin.publish.flash.success_published')
             );
         }
 
@@ -354,10 +355,16 @@ class NodeAdminController extends Controller
         if ($request->get('unpub_date')) {
             $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
             $this->get('kunstmaan_node.admin_node.publisher')->unPublishLater($nodeTranslation, $date);
-            $this->get('session')->getFlashBag()->add('success', 'Unpublishing of the page has been scheduled');
+            $this->get('session')->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_node.admin.unpublish.flash.success_scheduled')
+            );
         } else {
             $this->get('kunstmaan_node.admin_node.publisher')->unPublish($nodeTranslation);
-            $this->get('session')->getFlashBag()->add('success', 'The page has been unpublished');
+            $this->get('session')->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_node.admin.unpublish.flash.success_unpublished')
+            );
         }
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
@@ -387,7 +394,10 @@ class NodeAdminController extends Controller
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $this->get('kunstmaan_node.admin_node.publisher')->unSchedulePublish($nodeTranslation);
 
-        $this->get('session')->getFlashBag()->add('success', 'The scheduling has been canceled');
+        $this->get('session')->getFlashBag()->add(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_node.admin.unschedule.flash.success')
+        );
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $id)));
     }
@@ -442,7 +452,10 @@ class NodeAdminController extends Controller
             $response   = new RedirectResponse($url);
         }
 
-        $this->get('session')->getFlashBag()->add('success', 'The page is deleted!');
+        $this->get('session')->getFlashBag()->add(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_node.admin.delete.flash.success')
+        );
 
         return $response;
     }
@@ -510,7 +523,10 @@ class NodeAdminController extends Controller
 
         $this->updateAcl($originalNode, $nodeNewPage);
 
-        $this->get('session')->getFlashBag()->add('success', 'The page has been duplicated!');
+        $this->get('session')->getFlashBag()->add(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_node.admin.duplicate.flash.success')
+        );
 
         return $this->redirect(
             $this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $nodeNewPage->getId()))
@@ -587,7 +603,10 @@ class NodeAdminController extends Controller
             )
         );
 
-        $this->get('session')->getFlashBag()->add('success', 'The page contents has been reverted');
+        $this->get('session')->getFlashBag()->add(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_node.admin.revert.flash.success')
+        );
 
         return $this->redirect(
             $this->generateUrl(
@@ -993,8 +1012,8 @@ class NodeAdminController extends Controller
                 );
 
                 $this->get('session')->getFlashBag()->add(
-                    'success',
-                    'The page has been edited'
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_node.admin.edit.flash.success')
                 );
 
                 $params = array(
@@ -1196,7 +1215,7 @@ class NodeAdminController extends Controller
         if (is_string($title) && !empty($title)) {
             $newPage->setTitle($title);
         } else {
-            $newPage->setTitle('New page');
+            $newPage->setTitle($this->get('translator')->trans('kuma_node.admin.new_page.title.default'));
         }
         $this->em->persist($newPage);
         $this->em->flush();
