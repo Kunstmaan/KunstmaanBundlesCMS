@@ -84,3 +84,17 @@ The path is relevant to the root of your Symfony project. The context can be eit
 You'll have to set this to console when you are calling the code from an environment outside of your webserver.
 For example for a migration you would use the console context. Otherwise you can just omit the parameter
 so the default web context is used.
+
+## Commands:
+
+### Clean Deleted Media Command:
+
+Description:
+
+	Removes all files from the filesystem related to Media that has been flagged as deleted in the database.
+
+Invoked by: ```app/console kuma:media:clean-deleted-media```
+
+Options:
+
+	--force/-f : Does not prompt the user if he is certain he wants to remove all deleted Media from the filesystem.
