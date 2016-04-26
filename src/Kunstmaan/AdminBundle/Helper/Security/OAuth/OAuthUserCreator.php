@@ -44,12 +44,12 @@ class OAuthUserCreator
         $user = $this->em->getRepository($this->userClass)
             ->findOneBy(array('googleId' => $googleId));
 
-        if (!$user instanceof User && $this->isConfiguredDomain($email)) {
+        if (!$user instanceof $this->userClass && $this->isConfiguredDomain($email)) {
 
             $user = $this->em->getRepository($this->userClass)
                 ->findOneBy(array('username' => $email));
 
-            if(!$user instanceof User) {
+            if(!$user instanceof $this->userClass) {
                 $user = new $this->userClass;
                 $user->setUsername($email);
                 $user->setEmail($email);
