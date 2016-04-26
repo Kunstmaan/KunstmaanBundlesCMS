@@ -154,8 +154,11 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
         $domainConfiguration = $this->getMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
+        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator->method('trans')
+            ->willReturnArgument(0);
 
-        $listener = new HostOverrideListener($session, $domainConfiguration);
+        $listener = new HostOverrideListener($session, $translator, $domainConfiguration);
 
         return $listener;
     }
