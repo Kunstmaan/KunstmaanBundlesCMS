@@ -83,6 +83,11 @@ services:
         calls:
             - [setContainer, ['@service_container'] ]
 
+    kunstmaan_media.command.cleandeletedmedia:
+        class: Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand
+        calls:
+            - [setContainer, ['@service_container'] ]
+
     kunstmaan_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
         arguments:
