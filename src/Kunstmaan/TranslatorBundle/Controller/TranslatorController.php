@@ -3,13 +3,13 @@
 namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Translation\TranslatorInterface;
 
 
 class TranslatorController extends AdminListController
@@ -36,6 +37,7 @@ class TranslatorController extends AdminListController
      * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return array
      */
     public function indexAction(Request $request)
     {
@@ -50,12 +52,12 @@ class TranslatorController extends AdminListController
 
         if (!$cacheFresh && !$debugMode) {
             $noticeText = $this->get('translator')->trans('settings.translator.not_live_warning');
-            $this->get('session')->getFlashBag()->add('notice', $noticeText);
+            $this->get('session')->getFlashBag()->add(FlashTypes::INFO, $noticeText);
         }
 
         return array(
-          'adminlist' => $adminList,
-          'adminlistconfigurator' => $configurator
+            'adminlist' => $adminList,
+            'adminlistconfigurator' => $configurator
         );
     }
 
@@ -103,7 +105,7 @@ class TranslatorController extends AdminListController
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add(
-                  'success',
+                  FlashTypes::SUCCESS,
                   $this->get('translator')->trans('settings.translator.succesful_added')
                 );
 
@@ -173,7 +175,7 @@ class TranslatorController extends AdminListController
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add(
-                  'success',
+                  FlashTypes::SUCCESS,
                   $this->get('translator')->trans('settings.translator.succesful_edited')
                 );
 
@@ -274,7 +276,7 @@ class TranslatorController extends AdminListController
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
         /**
-         * @var Translator $translator
+         * @var TranslatorInterface $translator
          */
         $translator = $this->get('translator');
 

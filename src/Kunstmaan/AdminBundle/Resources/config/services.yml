@@ -179,7 +179,7 @@ services:
 
     kunstmaan_admin.password_check.listener:
         class: '%kunstmaan_admin.password_check.listener.class%'
-        arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session']
+        arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session', '@translator']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
 

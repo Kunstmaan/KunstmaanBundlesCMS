@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Controller;
 
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
@@ -91,7 +92,10 @@ class MediaController extends Controller
 
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
-        $this->get('session')->getFlashBag()->add('success', 'Entry \'' . $medianame . '\' has been deleted!');
+        $this->get('session')->getFlashBag()->add(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_admin.media.flash.deleted_success.%medianame%', ['%medianame%' => $medianame])
+        );
 
         // If the redirect url is passed via the url we use it
         $redirectUrl = $request->query->get('redirectUrl');
@@ -303,8 +307,8 @@ class MediaController extends Controller
 
         if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] === 0) {
             $drop = $request->files->get('files');
-	} else if ($request->files->get('file')) {
-	    $drop = $request->files->get('file');
+        } else if ($request->files->get('file')) {
+            $drop = $request->files->get('file');
         } else {
             $drop = $request->get('text');
         }
@@ -313,12 +317,15 @@ class MediaController extends Controller
             $media->setFolder($folder);
             $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-            return new Response(json_encode(array('status' => 'File was uploaded successfuly!')));
+            return new Response(json_encode(array('status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_success'))));
         }
 
-	$request->getSession()->getFlashBag()->add('danger', 'Could not recognize what you dropped!');
+        $request->getSession()->getFlashBag()->add(
+            FlashTypes::DANGER,
+            $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')
+        );
 
-        return new Response(json_encode(array('status' => 'Could not recognize anything!')));
+        return new Response(json_encode(array('status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized'))));
     }
 
     /**

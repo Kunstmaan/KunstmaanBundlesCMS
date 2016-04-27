@@ -20,19 +20,19 @@
     * PDO with the MySQL binding enabled
     * pecl_http needs to be enabled
     * php.ini recommended settings
-		* short_open_tag = Off
-		* magic_quotes_gpc = Off
-		* register_globals = Off
-		* session.auto_start = Off
-		* date.timezone should be configured
+        * short_open_tag = Off
+        * magic_quotes_gpc = Off
+        * register_globals = Off
+        * session.auto_start = Off
+        * date.timezone should be configured
 * MySQL 5.x (some work on sqlite has been done but is not supported)
 * Node.js and NPM with these packages installed globally:
-	* bower
+    * bower
     * gulp
     * uglify-js
     * uglifycss
 * Ruby, RubyGems and the bundler gem
 * A webserver like Apache or Nginx (preferably with a Varnish server in front)
 * Imagemagick
-* Elasticsearch
+* Elasticsearch (1.7.3)
 * Memcached (optionally)

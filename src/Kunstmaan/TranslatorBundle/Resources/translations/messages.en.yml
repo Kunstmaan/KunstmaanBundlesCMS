@@ -27,3 +27,18 @@ kuma_translator:
                 label:  Locale
             text:
                 label:  Text
+    command:
+        clear:
+            flash:
+                success:    All live translations are up to date.
+        import:
+            flash:
+                success:        Translations successfully imported, none existing translations were overwritten.
+                force_success:  Translations successfully imported, all existing translations were overwritten.
+    modal:
+        confirmation:
+            force_import:
+                title:  Are you sure you want to force an import?
+                body:   All existing translations will be overwritten.
+                confirm_button: Import
+                cancel_button:  Cancel
