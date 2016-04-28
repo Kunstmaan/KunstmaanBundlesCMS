@@ -316,7 +316,7 @@ SQL;
                 '(v.node_id = n.id AND v.lang <> :lang)'
             )
             ->where('n.deleted = 0')
-            ->addGroupBy('n.id, t.id, v.id')
+            ->addGroupBy('n.id')
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
 
