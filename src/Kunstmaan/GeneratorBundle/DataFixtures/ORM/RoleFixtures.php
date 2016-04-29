@@ -13,6 +13,11 @@ use Doctrine\Common\Persistence\ObjectManager;
  */
 class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
+    const REFERENCE_PERMISSIONMANAGER_ROLE = 'permissionmanager-role';
+    const REFERENCE_ADMIN_ROLE = 'admin-role';
+    const REFERENCE_SUPERADMIN_ROLE = 'superadmin-role';
+    const REFERENCE_GUEST_ROLE = 'guest-role';
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -27,10 +32,10 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->flush();
 
-        $this->addReference('permissionmanager-role', $role1);
-        $this->addReference('admin-role', $role2);
-        $this->addReference('superadmin-role', $role3);
-        $this->addReference('guest-role', $role4);
+        $this->addReference(self::REFERENCE_PERMISSIONMANAGER_ROLE, $role1);
+        $this->addReference(self::REFERENCE_ADMIN_ROLE, $role2);
+        $this->addReference(self::REFERENCE_SUPERADMIN_ROLE, $role3);
+        $this->addReference(self::REFERENCE_GUEST_ROLE, $role4);
     }
 
     /**
