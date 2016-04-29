@@ -4,7 +4,7 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    {% set formParams = {'method': 'POST', 'action': path('KunstmaanUserManagementBundle_settings_users_edit', { 'id' : user.id }), 'attr': {'novalidate': 'novalidate'}} %}q
+    {% set formParams = {'method': 'POST', 'action': path('KunstmaanUserManagementBundle_settings_users_edit', { 'id' : user.id }), 'attr': {'novalidate': 'novalidate'}} %}
     {% if tabPane is defined %}
         {{ form_start(tabPane.formView, formParams) }}
     {% else %}
