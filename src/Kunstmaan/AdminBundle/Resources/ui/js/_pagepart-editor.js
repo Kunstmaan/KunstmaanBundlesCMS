@@ -92,29 +92,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 var $temp = $('<div>');
                 $temp.append(data);
 
-                var uniqueModules = [];
-
                 // Check if some javascript needs to be reinitialised for this PP
-                $temp.find('*[data-reinit-js]').each(function () {
-                    // Get modules from data attribute
-                    var modules = $(this).data('reinit-js');
-
-                    if (modules) {
-                        for (var i = 0; i < modules.length; i++) {
-                            // Check if there really is a module with the given name and it if has a public reInit function
-                            if (typeof kunstmaanbundles[modules[i]] === 'object' && typeof kunstmaanbundles[modules[i]].reInit === 'function') {
-                                // prevent duplicate modules
-                                if ($.inArray(modules[i], uniqueModules) === -1) {
-                                    uniqueModules.push(modules[i]);
-                                }
-                            }
-                        }
-                    }
-                });
-
-                for (var i = 0; i < uniqueModules.length; i++) {
-                    kunstmaanbundles[uniqueModules[i]].reInit();
-                }
+                reInit($temp);
 
                 // Remove Loading
                 kunstmaanbundles.appLoading.removeLoading();
@@ -300,6 +279,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
         })
     };
     reInit = function($el) {
+        var uniqueModules = [];
+
         $el.find('*[data-reinit-js]').each(function() {
             // Get modules from data attribute
             var modules = $(this).data('reinit-js');
@@ -308,7 +289,11 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 for (var i = 0; i < modules.length; i++) {
                     // Check if there really is a module with the given name and it if has a public reInit function
                     if (typeof kunstmaanbundles[modules[i]] === 'object' && typeof kunstmaanbundles[modules[i]].reInit === 'function') {
-                        kunstmaanbundles[modules[i]].reInit();
+                        // prevent duplicate modules
+                        if ($.inArray(modules[i], uniqueModules) === -1) {
+                            uniqueModules.push(modules[i]);
+                            kunstmaanbundles[modules[i]].reInit();
+                        }
                     }
                 }
             }
