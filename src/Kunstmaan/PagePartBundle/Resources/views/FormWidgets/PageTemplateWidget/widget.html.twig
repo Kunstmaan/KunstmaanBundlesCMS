@@ -110,7 +110,11 @@
                 {% set widget = resource.getFormWidget(region.name) %}
                 {% if widget is not null %}
                     {% set pagepartadmin = widget.pagepartadmin %}
-                    {{ pagepartadmin_widget(pagepartadmin, formView) }}
+                    {% if widget.pagePartAdminConfigurator.widgetTemplate %}
+                        {{ pagepartadmin_widget(pagepartadmin, formView, [], widget.pagePartAdminConfigurator.widgetTemplate) }}
+                    {% else %}
+                        {{ pagepartadmin_widget(pagepartadmin, formView) }}
+                    {% endif %}
                 {% elseif region.template is defined and region.template %}
                     {% include region.template with {'page': resource.page} %}
                 {% else %}

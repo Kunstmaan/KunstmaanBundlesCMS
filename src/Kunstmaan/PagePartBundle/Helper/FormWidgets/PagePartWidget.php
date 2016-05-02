@@ -146,4 +146,12 @@ class PagePartWidget extends FormWidget
 
         return $params;
     }
+
+    /**
+     * @return AbstractPagePartAdminConfigurator
+     */
+    public function getPagePartAdminConfigurator()
+    {
+        return $this->pagePartAdminConfigurator;
+    }
 }
