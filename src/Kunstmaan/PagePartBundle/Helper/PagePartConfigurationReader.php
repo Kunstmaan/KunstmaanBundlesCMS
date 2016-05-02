@@ -75,6 +75,10 @@ class PagePartConfigurationReader
         $result->setPossiblePagePartTypes(array_values($types));
         $result->setContext($rawData['context']);
 
+        if (isset($rawData['widget_template'])) {
+            $result->setWidgetTemplate($rawData['widget_template']);
+        }
+
         return $result;
     }
 
