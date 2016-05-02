@@ -61,6 +61,12 @@ form:
   addfilter: Filter toevoegen
   choosetypefilter: Filter op
   versions: Versies
+  button:
+    dropdown:
+        more: Meer
+    filter:
+        clear: Wissen
+        filter: Filteren
 
 omnext:
   home: Home
