@@ -2,8 +2,10 @@
 
 namespace Kunstmaan\PagePartBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\FormFactoryInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationReaderInterface;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\ListWidget;
@@ -12,8 +14,6 @@ use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\PagePartBundle\Helper\FormWidgets\PageTemplateWidget;
 use Kunstmaan\PagePartBundle\Helper\FormWidgets\PagePartWidget;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
 
 /**
  * NodeListener
@@ -22,19 +22,9 @@ class NodeListener
 {
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
 
     /**
      * @var PagePartAdminFactory
@@ -42,17 +32,33 @@ class NodeListener
     private $pagePartAdminFactory;
 
     /**
-     * @param EntityManager        $em                   The entity manager
-     * @param KernelInterface      $kernel               The kernel
-     * @param FormFactoryInterface $formFactory          The form factory
-     * @param PagePartAdminFactory $pagePartAdminFactory The page part admin factory
+     * @var PageTemplateConfigurationReaderInterface
      */
-    public function __construct(EntityManager $em, KernelInterface $kernel, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
+    private $templateReader;
+
+    /**
+     * @var PagePartConfigurationReaderInterface
+     */
+    private $pagePartReader;
+
+    /**
+     * @var PageTemplateConfigurationService
+     */
+    private $pageTemplateConfiguratiorService;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        PagePartAdminFactory $pagePartAdminFactory,
+        PageTemplateConfigurationReaderInterface $templateReader,
+        PagePartConfigurationReaderInterface $pagePartReader,
+        PageTemplateConfigurationService $pageTemplateConfiguratiorService
+    )
     {
         $this->em = $em;
-        $this->formFactory = $formFactory;
-        $this->kernel = $kernel;
         $this->pagePartAdminFactory = $pagePartAdminFactory;
+        $this->templateReader = $templateReader;
+        $this->pagePartReader = $pagePartReader;
+        $this->pageTemplateConfiguratiorService = $pageTemplateConfiguratiorService;
     }
 
     /**
@@ -64,7 +70,8 @@ class NodeListener
         $tabPane = $event->getTabPane();
 
         if ($page instanceof HasPageTemplateInterface) {
-            $pageTemplateWidget = new PageTemplateWidget($page, $event->getRequest(), $this->em, $this->kernel, $this->formFactory, $this->pagePartAdminFactory);
+            $pageTemplateWidget = new PageTemplateWidget($page, $event->getRequest(), $this->em, $this->pagePartAdminFactory, $this->templateReader, $this->pagePartReader, $this->pageTemplateConfiguratiorService);
+
             /* @var Tab $propertiesTab */
             $propertiesTab = $tabPane->getTabByTitle('kuma_node.tab.properties.title');
             if (!is_null($propertiesTab)) {
@@ -76,11 +83,10 @@ class NodeListener
             }
         } else if ($page instanceof HasPagePartsInterface) {
             /* @var HasPagePartsInterface $page */
-            $pagePartConfigurationReader = new PagePartConfigurationReader($this->kernel);
-            $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
+            $pagePartAdminConfigurators = $this->pagePartReader->getPagePartAdminConfigurators($page);
 
             foreach ($pagePartAdminConfigurators as $index => $pagePartAdminConfiguration) {
-                $pagePartWidget = new PagePartWidget($page, $event->getRequest(), $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory);
+                $pagePartWidget = new PagePartWidget($page, $event->getRequest(), $this->em, $pagePartAdminConfiguration, $this->pagePartAdminFactory);
                 if ($index == 0) {
                     /* @var Tab $propertiesTab */
                     $propertiesTab = $tabPane->getTabByTitle('kuma_node.tab.properties.title');
