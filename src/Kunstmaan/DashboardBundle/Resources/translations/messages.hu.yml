@@ -1,0 +1,56 @@
+
+form:
+    back: Vissza
+
+dashboard:
+    ga:
+        tab:
+            today: Ma
+            yesterday: Tegnap
+            last_7_days: Legutóbbi 7 nap
+            last_30_days: Legutóbbi 30 nap
+            last_12_months: Legutóbbi 12 hónap
+            year_to_date: Idei év
+        chart:
+            users: Felhasználók
+            pct_new_sessions: Új munkamenet
+            sessions: Munkamenetek
+            pageviews: Oldalmegtekintések
+            avg_pages_p_session: Oldalak / Munkamenetek
+            avg_session_duration: Átlagos munkamenet időtartam
+        setup:
+            goals:
+                disable: Célok leállítása
+            title: Állítsd be a Google Analytics  widgetet
+            content: Bővebben a Google Analytics widget beállításairól ezen a linket találhat információkat:
+            docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
+            docs: a dokumentáció
+            redirect: "Ez az átirányított URI:"
+            refresh: Amennyiben mindent beállított, frissítse az oldalt
+            connect: Kapcsolódás a Google fiókhoz
+            confirm: Kapcsolódás
+            profile:
+                title: Válassz egy profilt
+                select: Válassz egy profilt..
+                content: Válassz egy profilt a kiválasztott weboldalhoz
+            property:
+              title: Válassz egy weboldalt a követéshez
+              select: Válasszon egy weboldalt
+              content: Válaszd ki azt a domaint, ami a Google Analyticshez van rendelve.
+            account:
+                title: Válassz egy felhasználót
+                select: Válasszon egy fiókot..
+            link: Beállítások
+            back: Vissza a vezérlőpultra
+            segment:
+                add: Szegmens hozzáadása
+                info: 'Szegmens létrehozásához használható az ID-k (és lehet őket kombinálni), vagy írja meg a saját lekérdezését. A Google előre definiált szegmens ID-kat biztosít, vagy a Google Segment Builder segítségével sajátot is készíthetsz.'
+                here: itt
+                own: Saját szegmensek
+                builtin: Beépített szegmensek
+            segments: Szegmensek
+            accounts: Fiókok
+        reset:
+            property: Google Analytics link megváltoztatása
+        last_update: "Utolsó frissítés;"
+        unavailable: Nem érhetőek el információk, kattintson a frissítés gombra.

@@ -1,0 +1,32 @@
+pagepart:
+    header:
+        type: Fejléc típusa
+        title: Cím
+
+    link:
+        choose: Link oldalelem
+        openinnewwindow: Új ablakban nyissa meg
+        text: Link szövege
+
+    html:
+        content: Html tartalom
+
+    text:
+        content: Tartalom
+
+    buttons:
+        move_up: Felfelé mozgatás
+        move_down: Lefelé mozgatás
+        edit: Szerkesztés
+        delete: Törlés
+        resize: Gomb újraméretezése
+
+region:
+    button:
+        min: Minimalizálás
+        max: Maximalizálás
+
+kuma_pagepart:
+    tab:
+        content:
+            title: Tartalom

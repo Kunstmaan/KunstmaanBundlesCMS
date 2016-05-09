@@ -1,0 +1,12 @@
+article:
+    form:
+        date:
+            label: Dátum
+        summery:
+            label: Összegzés
+    author:
+        form:
+            name:
+                label: Név
+            link:
+                label: Link

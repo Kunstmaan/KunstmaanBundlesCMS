@@ -1,0 +1,164 @@
+# Media
+media:
+    aviary:
+        title: Aviary
+        nothing: Nincs megjeleníthető elem
+
+    media:
+        no: Még nincs fájl ebben a könyvtárban.
+        dnd:
+            tip: "Tip:"
+            tiptext: Tudtad, hogy a fájlokat egyből ebbe a mappába is feltöltheted?
+            alert:
+                title: Érkezik!
+                text: Húzd ide a fájlokat az azonnali feltöltéshez ebbe a könyvtárba.
+        bulkupload:
+            addto: Fájlok feltöltése a "%folder%" mappába
+        contenttab:
+            title: Tartalom
+        propertiestab:
+            title: Részletek
+        title: Média
+        add:
+            action: Hozzáadása
+        edit:
+            action: Szerkesztés
+        download:
+            action: Letöltés
+        mediainfo:
+            name: Név
+            contenttype: Információ
+            createdat: Létrehozva
+            updatedat: Frissítve
+            downloadlink: Letölthető innen:
+        addto: ehhez
+        deletesure: Biztos, hogy törölni szeretné?
+        new: Új hozzáadása
+
+    folder:
+        addsub:
+            action: Almappa létrehozása
+            action_short: Almappa hozzáadása
+            modal:
+                title: Almappa hozzáadása
+                save: Mentés
+            form:
+                name: media.folder.addsub.form.name
+                rel: media.folder.addsub.form.rel
+                parent: media.folder.addsub.form.parent
+                internal_name: media.folder.addsub.form.internal_name
+            success:
+                text: media.folder.addsub.success.text
+        empty:
+            action: media.folder.empty.action
+            action_short: media.folder.empty.action_short
+            modal:
+                title: media.folder.empty.modal.title
+                text: media.folder.empty.modal.text
+                checkbox: media.folder.empty.modal.checkbox
+                save: media.folder.empty.modal.save
+            success:
+                text: media.folder.empty.success.text
+        sub:
+            no: Még nincsenek almappák
+        delete:
+            action: Törlés
+            action_short: Törlés
+            modal:
+                title: Könyvtár törlése
+                text: Szöveg
+            failure:
+                text: media.folder.delete.failure.text
+            success:
+                text: media.folder.delete.success.text
+        save: Mentés
+        contenttab:
+            title: Tartalom
+        propertiestab:
+            title: Részletek
+        sortby: Sorrendezés
+        show:
+            success:
+                text: media.folder.show.success.text
+
+    bulkupload:
+        upload: Feltöltés
+        bulkupload: Tömeges feltöltés
+        select_files: Fájlok kiválasztása
+        upload_more: További fájlok feltöltése
+        back_to_folder: Vissza a mappába
+        upload_finished: Feltöltés sikeres volt
+        not_available: Tömeges feltöltés nem lehetséges
+
+    slide:
+        add: Bemutató hozzáadása
+        modal:
+            title: Bemutató hozzáadása
+            save: Hozzáadás
+    video:
+        add: Videó hozzáadása
+        modal:
+            title: Videó hozzáadása
+            save: Hozzáadás
+    audio:
+        add: Audió hozzáadása
+        modal:
+            title: Audió hozzáadása
+            save: Hozzáadás
+
+    file:
+        add: Fájl feltöltése
+        modal:
+            title: Fájl hozzáadása
+            save: Hozzáadás
+
+    widget:
+        choose: Válassz
+        delete: Törlés
+        media_chooser: Média választó
+        icon_chooser: Ikon választó
+
+    adminlist:
+        configurator:
+            name: media.adminlist.configurator.name
+            type: media.adminlist.configurator.type
+            date: media.adminlist.configurator.date
+            filesize: media.adminlist.configurator.filesize
+
+    form:
+        remote:
+            name:
+                label: Név
+            code:
+                label: Kód
+            type:
+                label: Típus
+            copyright:
+                label: Szerzői jog
+            description:
+                label: Leírás
+        bulk_upload:
+            files:
+                label: Fájlok
+        file:
+            name:
+                label: Név
+            file:
+                label: Fájl
+            copyright:
+                label: Szerzői jog
+            description:
+                label: Leírás
+            file:
+                label: Fájl
+            originalFilename:
+                label: Eredeti fájlnév
+        remote_audio:
+            type:
+                label: Típus
+        remote_slide:
+            type:
+                label: Típus
+        remote_video:
+            type:
+                label: Típus
