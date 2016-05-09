@@ -269,6 +269,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
         $translations = array();
 	foreach ($this->requiredLocales as $locale) {
 	    $translations[] = array('language' => $locale, 'callback' => function($page, $translation, $seo) use ($locale) {
+			// @todo (Chris) Fordítani normálisan
 		$translation->setTitle($locale == 'nl' ? 'Diensten' : 'Services');
 		$translation->setSlug($locale == 'nl' ? 'diensten' : 'services');
 		$translation->setWeight(20);
@@ -802,6 +803,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
     {
 	$trans = array();
 {% if demosite %}
+		// @todo (Chris) Fordítani normálisan
 	$trans['bike.type']['en'] = 'Type';
 	$trans['bike.type']['nl'] = 'Type';
 	$trans['bike.brand']['en'] = 'Brand';
@@ -865,6 +867,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 	$trans['demositemessage']['nl'] = 'Dit is de demonstratie website van het <a href="http://bundles.kunstmaan.be">KunstmaanBundlesCMS</a>.<strong>Alle inhoud op deze website is pure fictie!</strong> Deze site is gemaakt om je een idee te geven wat je kan bouwen met dit open-source content management system. Je kan je eigen instantie van deze site opzetten door <a href="https://github.com/roderik/KunstmaanBundlesCMS/blob/master/docs/03-installation.md#generating-your-website-skeleton">het draaien van de Default Site Generator met de --demosite optie</a>.Je kan ook <a href="/en/admin">de administratie module</a> uitproberen door in te loggen met <i>admin</i> als username en <i>admin</i> als wachtwoord.';
 {% endif %}
 
+		// @todo (Chris) Fordítani normálisan
 	$trans['warning.outdated.title']['en'] = 'You are using an outdated browser.';
 	$trans['warning.outdated.title']['nl'] = 'Uw browser is verouderd.';
 	$trans['warning.outdated.title']['fr'] = 'Vous utilisez un navigateur internet dépassé.';
