@@ -3,7 +3,8 @@
 namespace Kunstmaan\PagePartBundle\Controller;
 
 use Doctrine\Common\Util\ClassUtils;
-use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -26,16 +27,21 @@ class PagePartAdminController extends Controller
      */
     public function newPagePartAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->get('doctrine.orm.entity_manager');
 
         $pageId        = $request->get('pageid');
         $pageClassName = $request->get('pageclassname');
         $context       = $request->get('context');
         $pagePartClass = $request->get('type');
 
-        $page = $em->getRepository($pageClassName)->findOneById($pageId);
+        /** @var HasPagePartsInterface $page */
+        $page = $em->getRepository($pageClassName)->find($pageId);
 
-        $pagePartConfigurationReader = new PagePartConfigurationReader($this->container->get('kernel'));
+        if (false === $page instanceof HasPagePartsInterface) {
+            throw new \RuntimeException(sprintf('Given page (%s:%d) has no pageparts', $pageClassName, $pageId));
+        }
+
+        $pagePartConfigurationReader = $this->container->get('kunstmaan_page_part.page_part_configuration_reader');
         $pagePartAdminConfigurators  = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
 
         $pagePartAdminConfigurator = null;
@@ -50,7 +56,15 @@ class PagePartAdminController extends Controller
         }
 
         $pagePartAdmin = new PagePartAdmin($pagePartAdminConfigurator, $em, $page, $context, $this->container);
+        /** @var PagePartInterface $pagePart */
         $pagePart      = new $pagePartClass();
+
+        if (false === $pagePart instanceof PagePartInterface) {
+            throw new \RuntimeException(sprintf(
+                'Given pagepart expected to implement PagePartInterface, %s given',
+                $pagePartClass
+            ));
+        }
 
         $formFactory = $this->container->get('form.factory');
         $formBuilder = $formFactory->createBuilder(FormType::class);
@@ -61,23 +75,23 @@ class PagePartAdminController extends Controller
         $data['pagepartadmin_' . $id] = $pagePart;
         $adminType                    = $pagePart->getDefaultAdminType();
 
-        if (!is_object($adminType) && is_string($adminType)) {
+        if (is_string($adminType)) {
             $adminType = $this->container->get($adminType);
         }
 
-        $adminTypeFqn                 = ClassUtils::getClass($adminType);
+        $adminTypeFqn = ClassUtils::getClass($adminType);
 
         $formBuilder->add('pagepartadmin_' . $id, $adminTypeFqn);
         $formBuilder->setData($data);
         $form     = $formBuilder->getForm();
         $formview = $form->createView();
 
-        return array(
+        return [
             'id'            => $id,
             'form'          => $formview,
             'pagepart'      => $pagePart,
             'pagepartadmin' => $pagePartAdmin,
             'editmode'      => true
-        );
+        ];
     }
 }

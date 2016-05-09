@@ -31,8 +31,9 @@ class Region
      * @param string $name
      * @param number $span
      * @param string $template
+     * @param array  $children
      */
-    public function __construct($name, $span, $template = null, $children = array())
+    public function __construct($name, $span, $template = null, $children = [])
     {
         $this->setName($name);
         $this->setSpan($span);
@@ -57,7 +58,7 @@ class Region
     {
         $this->name = $name;
 
-    return $this;
+        return $this;
     }
 
     /**
@@ -77,7 +78,7 @@ class Region
     {
         $this->span = $span;
 
-    return $this;
+        return $this;
     }
 
     /**
@@ -85,7 +86,7 @@ class Region
      */
     public function getTemplate()
     {
-    return $this->template;
+        return $this->template;
     }
 
     /**
@@ -95,9 +96,9 @@ class Region
      */
     public function setTemplate($template)
     {
-    $this->template = $template;
+        $this->template = $template;
 
-    return $this;
+        return $this;
     }
 
     /**

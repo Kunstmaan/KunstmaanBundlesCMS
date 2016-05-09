@@ -4,21 +4,22 @@ namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
+use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationReaderInterface;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateInterface;
+use Kunstmaan\PagePartBundle\PageTemplate\Region;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\PagePartBundle\Helper\PageTemplateConfigurationReader;
-use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
 
 /**
  * PageTemplateWidget
@@ -27,54 +28,39 @@ class PageTemplateWidget extends FormWidget
 {
 
     /**
-     * @var AbstractPagePartAdminConfigurator
+     * @var EntityManagerInterface
      */
-    protected $pagePartAdminConfigurator;
-
-    /**
-     * @var EntityManager
-     */
-    protected $em;
+    private $em;
 
     /**
      * @var PagePartAdminFactory
      */
-    protected $pagePartAdminFactory;
-
-    /**
-     * @var PagePartAdmin
-     */
-    protected $pagePartAdmin;
+    private $pagePartAdminFactory;
 
     /**
      * @var PageInterface
      */
-    protected $page;
-
-    /**
-     * @var FormFactoryInterface
-     */
-    protected $formFactory;
+    private $page;
 
     /**
      * @var Request
      */
-    protected $request;
+    private $request;
 
     /**
-     * @var array
+     * @var PagePartWidget[]
      */
-    protected $widgets = array();
+    private $widgets = array();
 
     /**
-     * @var PageTemplate[]
+     * @var PageTemplateInterface[]
      */
-    protected $pageTemplates = array();
+    private $pageTemplates = array();
 
     /**
-     * @var AbstractPagePartAdminConfigurator[]
+     * @var PagePartAdminConfiguratorInterface[]
      */
-    protected $pagePartAdminConfigurations = array();
+    private $pagePartAdminConfigurations = array();
 
     /**
      * @var PageTemplateConfiguration
@@ -82,29 +68,34 @@ class PageTemplateWidget extends FormWidget
     protected $pageTemplateConfiguration;
 
     /**
-     * @param HasPageTemplateInterface $page                 The page
-     * @param Request                  $request              The request
-     * @param EntityManager            $em                   The entity manager
-     * @param KernelInterface          $kernel               The kernel
-     * @param FormFactoryInterface     $formFactory          The form factory
-     * @param PagePartAdminFactory     $pagePartAdminFactory The page part admin factory
+     * @param HasPageTemplateInterface $page
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param PagePartAdminFactory $pagePartAdminFactory
+     * @param PageTemplateConfigurationReaderInterface $templateReader
+     * @param PagePartConfigurationReaderInterface $pagePartReader
+     * @param PageTemplateConfigurationService $pageTemplateConfiguratiorService
      */
-    public function __construct(HasPageTemplateInterface $page, Request $request, EntityManager $em, KernelInterface $kernel, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
+    public function __construct(
+        HasPageTemplateInterface $page,
+        Request $request,
+        EntityManagerInterface $em,
+        PagePartAdminFactory $pagePartAdminFactory,
+        PageTemplateConfigurationReaderInterface $templateReader,
+        PagePartConfigurationReaderInterface $pagePartReader,
+        PageTemplateConfigurationService $pageTemplateConfiguratiorService
+    )
     {
         parent::__construct();
 
         $this->page = $page;
         $this->em = $em;
         $this->request = $request;
-        $this->formFactory = $formFactory;
         $this->pagePartAdminFactory = $pagePartAdminFactory;
-        $pageTemplateConfigurationReader = new PageTemplateConfigurationReader($kernel);
-        $this->pageTemplates = $pageTemplateConfigurationReader->getPageTemplates($page);
-        $pagePartConfigurationReader = new PagePartConfigurationReader($kernel);
-        $this->pagePartAdminConfigurations = $pagePartConfigurationReader->getPagePartAdminConfigurators($this->page);
-        $repo = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
-        $repo->setContainer($kernel->getContainer());
-        $this->pageTemplateConfiguration = $repo->findOrCreateFor($page);
+
+        $this->pageTemplates = $templateReader->getPageTemplates($page);
+        $this->pagePartAdminConfigurations = $pagePartReader->getPagePartAdminConfigurators($page);
+        $this->pageTemplateConfiguration = $pageTemplateConfiguratiorService->findOrCreateFor($page);
 
         foreach ($this->getPageTemplate()->getRows() as $row) {
             foreach ($row->getRegions() as $region) {
@@ -138,14 +129,15 @@ class PageTemplateWidget extends FormWidget
                 $pagePartAdminConfiguration = $ppac;
             }
         }
+
         if ($pagePartAdminConfiguration !== null) {
-            $pagePartWidget = new PagePartWidget($this->page, $this->request, $this->em, $pagePartAdminConfiguration, $this->formFactory, $this->pagePartAdminFactory);
+            $pagePartWidget = new PagePartWidget($this->page, $this->request, $this->em, $pagePartAdminConfiguration, $this->pagePartAdminFactory);
             $this->widgets[$region->getName()] = $pagePartWidget;
         }
     }
 
     /**
-     * @return PageTemplate
+     * @return PageTemplateInterface
      */
     public function getPageTemplate()
     {
@@ -153,7 +145,7 @@ class PageTemplateWidget extends FormWidget
     }
 
     /**
-     * @return PageTemplate
+     * @return PageTemplateInterface[]
      */
     public function getPageTemplates()
     {
@@ -161,7 +153,7 @@ class PageTemplateWidget extends FormWidget
     }
 
     /**
-     * @return PageInterface
+     * @return PageInterface|HasPageTemplateInterface
      */
     public function getPage()
     {
@@ -246,8 +238,7 @@ class PageTemplateWidget extends FormWidget
      */
     public function getExtraParams(Request $request)
     {
-        $params = array();
-        return $params;
+        return [];
     }
 
 }

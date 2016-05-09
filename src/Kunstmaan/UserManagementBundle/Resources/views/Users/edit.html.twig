@@ -4,7 +4,12 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanUserManagementBundle_settings_users_edit', { 'id' : user.id }), 'attr': {'novalidate': 'novalidate'}}) }}
+    {% set formParams = {'method': 'POST', 'action': path('KunstmaanUserManagementBundle_settings_users_edit', { 'id' : user.id }), 'attr': {'novalidate': 'novalidate'}} %}
+    {% if tabPane is defined %}
+        {{ form_start(tabPane.formView, formParams) }}
+    {% else %}
+        {{ form_start(form, formParams) }}
+    {% endif %}
 
         <!-- Header -->
         <header class="app__content__header">
@@ -52,5 +57,10 @@
                 {{ form_rest(form) }}
             {% endif %}
         </fieldset>
-    {{ form_end(form) }}
+
+    {% if tabPane is defined %}
+        {{ form_end(tabPane.formView) }}
+    {% else %}
+        {{ form_end(form) }}
+    {% endif %}
 {% endblock %}

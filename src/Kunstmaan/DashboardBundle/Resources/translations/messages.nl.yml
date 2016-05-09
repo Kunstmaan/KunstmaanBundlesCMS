@@ -1,0 +1,55 @@
+form:
+    back: 'Terug'
+
+dashboard:
+    ga:
+        tab:
+            today: Vandaag
+            yesterday: Gisteren
+            last_7_days: Laatste 7 dagen
+            last_30_days: Laatste 30 dagen
+            last_12_months: Laaste 12 maanden
+            year_to_date: Jaar naar datum
+        chart:
+            users: Gebruikers
+            pct_new_sessions: % Nieuwe sessies
+            sessions: Sessies
+            pageviews: Pagina weergaven
+            avg_pages_p_session: Pagina's / Sessies
+            avg_session_duration: Gemiddelde duur sessie
+        setup:
+            goals:
+                disable: Doelen uitschakelen
+            title: Stel je Google Analytics dashboard widget in
+            content: "Om te leren hoe de Google Analytics widget werkt, verwijzen we u door naar"
+            docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
+            docs: de documentatie
+            redirect: "Dit is uw redirect URI:"
+            refresh: "Zodra alles ingesteld is kan u deze pagina verversen"
+            connect: Verbind uw Google Account
+            confirm: Verbind nu
+            profile:
+                title: Selecteer een profiel
+                select: Selecteer een profiel..
+                content: Selecteer een profiel voor de geselecteerde website
+            property:
+              title: Selecteer een website waarvan u de data wilt capteren
+              select: Selecteer een website
+              content: Selecteer een domein dat geregistreerd is in uw Google Analytics account.
+            account:
+                title: Selecteer een account
+                select: Selecteer een account..
+            link: Configureerd dashboard
+            back: Ga naar het dashboard
+            segment:
+                add: Voeg segment toe
+                info: "Om segmenten aan te maken kan u segment IDs gebruiken (en deze ook combinereren), of kan u eigen queries schrijven. Google biedt voorgedefinieerde segment ID's  (zie hieronder), en u kan er zelf ook toevoegen d.m.v. de Google Segment Builder tool in Google Analytics. Voor documentatie over hoe je je eigen segment queries te maken, klikt u"
+                here: hier
+                own: Eigen segmenten
+                builtin: Ingebouwde segmenten
+            segments: Configureer segment
+            accounts: Configureer account
+        reset:
+            property: Wijzig Google Analytics link
+        last_update: "Laatste wijziging:"
+        unavailable: Geen gegevens beschikbaar, gelieve op de update knop te drukken.

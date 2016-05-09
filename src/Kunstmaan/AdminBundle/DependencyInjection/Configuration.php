@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -56,10 +57,24 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('google_signin')
                     ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->beforeNormalization()
+                        ->always()
+                        ->then(function ($v) {
+                            if ($v === true || (isset($v['enabled']) && $v['enabled'])) {
+                                if (empty($v['client_id']) || empty($v['client_secret'])) {
+                                    throw new InvalidConfigurationException('The "client_id" and "client_secret" settings are required under the "google_signin" group.');
+                                }
+                            } else {
+                                unset($v['client_id'], $v['client_secret'], $v['hosted_domains']);
+                            }
+
+                            return $v;
+                        })
+                    ->end()
                     ->children()
-                        ->booleanNode('enabled')->defaultFalse()->end()
-                        ->scalarNode('client_id')->isRequired()->end()
-                        ->scalarNode('client_secret')->isRequired()->end()
+                        ->scalarNode('client_id')->defaultNull()->end()
+                        ->scalarNode('client_secret')->defaultNull()->end()
                         ->arrayNode('hosted_domains')
                             ->prototype('array')
                                 ->children()

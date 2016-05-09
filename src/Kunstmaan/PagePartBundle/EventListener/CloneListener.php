@@ -3,11 +3,12 @@
 namespace Kunstmaan\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Kunstmaan\PagePartBundle\Helper\PagePartConfigurationReader;
+use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 
 /**
  * This event will make sure pageparts are being copied when deepClone is done on an entity implementing hasPagePartsInterface
@@ -16,23 +17,29 @@ class CloneListener
 {
 
     /**
-     * @var EntityManager
+     * @var EntityManager|EntityManagerInterface
      */
     private $em;
 
     /**
-     * @var KernelInterface
+     * @var PagePartConfigurationReaderInterface
      */
-    private $kernel;
+    private $pagePartReader;
 
     /**
-     * @param EntityManager   $em     The entity manager
-     * @param KernelInterface $kernel The kernel
+     * @var PageTemplateConfigurationService
      */
-    public function __construct(EntityManager $em, KernelInterface $kernel)
+    private $pageTemplateConfiguratiorService;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        PagePartConfigurationReaderInterface $pagePartReader,
+        PageTemplateConfigurationService $pageTemplateConfiguratiorService
+    )
     {
         $this->em = $em;
-        $this->kernel = $kernel;
+        $this->pagePartReader = $pagePartReader;
+        $this->pageTemplateConfiguratiorService = $pageTemplateConfiguratiorService;
     }
 
     /**
@@ -45,17 +52,15 @@ class CloneListener
         if ($originalEntity instanceof HasPagePartsInterface) {
             $clonedEntity = $event->getClonedEntity();
 
-            $pagePartConfigurationReader = new PagePartConfigurationReader($this->kernel);
-            $contexts = $pagePartConfigurationReader->getPagePartContexts($originalEntity);
+            $contexts = $this->pagePartReader->getPagePartContexts($originalEntity);
             foreach ($contexts as $context) {
                 $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef')->copyPageParts($this->em, $originalEntity, $clonedEntity, $context);
             }
         }
+
         if ($originalEntity instanceof HasPageTemplateInterface) {
             $clonedEntity = $event->getClonedEntity();
-            $PageTemplateConfigurationRepo = $this->em->getRepository('KunstmaanPagePartBundle:PageTemplateConfiguration');
-            $PageTemplateConfigurationRepo->setContainer($this->kernel->getContainer());
-            $newPageTemplateConfiguration = clone $PageTemplateConfigurationRepo->findOrCreateFor($originalEntity);
+            $newPageTemplateConfiguration = clone $this->pageTemplateConfiguratiorService->findOrCreateFor($originalEntity);
             $newPageTemplateConfiguration->setId(null);
             $newPageTemplateConfiguration->setPageId($clonedEntity->getId());
             $this->em->persist($newPageTemplateConfiguration);

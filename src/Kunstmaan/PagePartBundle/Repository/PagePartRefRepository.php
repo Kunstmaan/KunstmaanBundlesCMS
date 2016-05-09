@@ -24,7 +24,7 @@ class PagePartRefRepository extends EntityRepository
      * @param string                $context            The context
      * @param bool                  $pushOtherPageParts Push other pageparts (sequence + 1)
      *
-     * @return \Kunstmaan\PagePartBundle\Entity\PagePartRef
+     * @return PagePartRef
      */
     public function addPagePart(HasPagePartsInterface $page, PagePartInterface $pagepart, $sequencenumber, $context = "main", $pushOtherPageParts = true)
     {
@@ -38,7 +38,7 @@ class PagePartRefRepository extends EntityRepository
             }
         }
 
-        $pagepartref = new \Kunstmaan\PagePartBundle\Entity\PagePartRef();
+        $pagepartref = new PagePartRef();
         $pagepartref->setContext($context);
         $pageClassname = ClassLookup::getClass($page);
         $pagepartref->setPageEntityname($pageClassname);
@@ -183,11 +183,11 @@ class PagePartRefRepository extends EntityRepository
     }
 
     /**
-     * @param bigint   $id             The id
-     * @param string   $context        The context
-     * @param int      $sequenceNumber The sequence number
+     * @param int    $id             The id
+     * @param string $context        The context
+     * @param int    $sequenceNumber The sequence number
      *
-     * @return PagePart
+     * @return PagePartInterface
      */
     public function getPagePart($id, $context = 'main', $sequenceNumber)
     {
