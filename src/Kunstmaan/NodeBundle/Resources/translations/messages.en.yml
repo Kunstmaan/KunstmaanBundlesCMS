@@ -117,7 +117,7 @@ kuma_node:
                 button:     Publish later
                 cancel:     Cancel
             now:
-                button:     Unpublish
+                button:     Publish
                 cancel:     Cancel
         versions:
             title:          Versions
