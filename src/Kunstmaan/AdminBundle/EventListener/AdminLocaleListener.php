@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -79,7 +80,7 @@ class AdminLocaleListener implements EventSubscriberInterface
      */
     private function isAdminToken($providerKey, TokenInterface $token = null)
     {
-        return ($token instanceof UsernamePasswordToken || $token instanceof RememberMeToken) && $token->getProviderKey() === $providerKey;
+        return ($token instanceof UsernamePasswordToken || $token instanceof RememberMeToken || $token instanceof PostAuthenticationGuardToken) && $token->getProviderKey() === $providerKey;
     }
 
     /**
