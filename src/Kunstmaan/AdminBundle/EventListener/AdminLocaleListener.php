@@ -79,7 +79,7 @@ class AdminLocaleListener implements EventSubscriberInterface
      */
     private function isAdminToken($providerKey, TokenInterface $token = null)
     {
-        return ($token instanceof UsernamePasswordToken || $token instanceof RememberMeToken) && $token->getProviderKey() === $providerKey;
+        return $token->getProviderKey() === $providerKey;
     }
 
     /**
