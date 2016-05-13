@@ -1,0 +1,48 @@
+# Settings
+settings:
+    groups: Csoportok
+    group:
+        name: Csoport neve
+        edit: Csoport szerkesztése
+        add: Csoport hozzáadása
+        roles: Csoport szerepkörök
+        roles_placeholder: Válassz egy jogosultságot...
+    users: Felhasználók
+    user:
+        username: Felhasználónév
+        password: Jelszó
+        repeatedpassword: Megismételt jelszó
+        adminlang: Felhasználó nyelve az admin felületen
+        email: E-mail cím
+        enabled: Engedélyezett
+        roles: Felhasználó szerepkörei
+        roles_placeholder: Válassz ki a jogosultság csoportokat...
+        add: Felhasználó hozzáadása
+        edit: Felhasználó szerkesztése
+    roles: Szerepkörök
+    role:
+        role: Szerepkör engedélyek
+        add: Szerepkör hozzáadása
+        edit: Szerepkör szerkezstése
+
+kuma_user:
+    roles:
+        add:
+            flash:
+                'success.%role%': A(z) '%role%' jogosultság létrehozva!
+        edit:
+            flash:
+                'success.%role%': A(z) '%role%' jogosultság módosítva!
+        delete:
+            flash:
+                'success.%role%': A(z) '%role%' jogosultság törölve!
+    users:
+        add:
+            flash:
+                'success.%username%': A(z) '%username%' felhasználó létrehozva!
+        edit:
+            flash:
+                'success.%username%': A(z) '%username%' felhasználó módosítva!
+        delete:
+            flash:
+                'success.%username%': A(z) '%username%' felhasználó törölve!

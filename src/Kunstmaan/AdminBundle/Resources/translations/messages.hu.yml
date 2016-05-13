@@ -1,0 +1,120 @@
+# Pages
+pages:
+    title: Oldalak
+    parts: Oldalelem
+    draft: Piszkozat
+    pagenottranslated: Az oldal nincs lefordítva
+    copyfrom: Másolás innen
+    createemptypage: Üres oldal létrehozása
+    movingconfirmation: Biztos, hogy áthelyezi az oldalt?
+
+# Modules
+modules:
+    title: Modulok
+
+# Settings
+settings:
+    title: Beállítások
+    maintanance: Karbantartás
+    scheduled: Időzített feladatok
+    version:
+        bundle: Bundle verziók
+        composer_lock_not_found: Nincsen composer.lock file a project könyvtárában
+        error_parsing_composer: Hiba a composer.lock fájl feldolgozása közben, nincs valid json
+        error: Hiba történt a verzió információk letöltése közben. Kérjük próbálja meg később.
+        moreinfo: A bundle frissítése érdekében futtason egy composer frissítést. Lehetséges, hogy szükséges frissíteni további bundleket.
+        uptodate: naprakész
+        toupdate: frissíthető erre
+        unknown: Nincsenek verzió információk
+
+# Tools
+tools:
+    title: Eszközök
+    clear_frontend_cache: Frontend cache törlése
+    clear_backend_cache: Backend cache törlése
+    clear_all_caches: Az összes cache törlése
+    shutdown: Leállítás
+
+# Forms
+form:
+    cancel: Mégse
+    delete: Törlés
+    deletesure: Biztos benne?
+    edit: Szerkesztés
+    add: Hozzáad
+    save: Mentés
+    publish: Publikál
+    unpublish: Publikálás visszavonása
+    saveasdraft: Mentés piszkozatként
+    name: Név
+    type: Típus
+    error: Hiba
+    warning: Figyelmeztetés
+    headsup: Figyelmeztetés
+    forgot:
+        password: Elfelejtett jelszó
+    permissions: Jogosultságok
+    properties: Tulajdonságok
+    createdat: Létrehozva
+    updatedat: Frissítve
+    actions: Műveletek
+    addfilter: Szűrés beállítása
+    choosetypefilter: Válasszon szűrési lehetőséget
+    versions: Verziók
+    button:
+        dropdown:
+            more: Továbbiak
+        filter:
+            clear: Töröl
+            filter: Szűrés
+
+omnext:
+    home: Nyitóoldal
+    title: Üdvözöljük!
+    welcome: Üdvözöljük!
+    information: <strong>Információ.</strong> Nincs új üzenet.
+
+permissions:
+    you_made_changes: Módosítottad az engedélyeket.
+    apply_recursively: Minden módosítás legyen érvényes az aloldalakra?
+    review_changes: Változtatások megtekintése
+    changes: Engedélyek módosítása
+    permissions_added: Engedély hozzáadása
+    permissions_removed: Engedély eltávolítása
+    role_name: Szerepkör neve
+
+errors:
+    oauth:
+        invalid: Nem tudsz belépni Google OAuth-tal, talán a domain neved nincs engedélyezve.
+
+kuma_admin:
+    flash_type:
+        success: Sikeres művelet
+        warning: Figyelmeztetés
+        error:   Hiba
+        info:    Információ
+        danger:  Veszély
+    dashboard:
+        configuration:
+            title:
+                label: Cím
+            content:
+                label: Tartalom (html forrás)
+    edit:
+        flash:
+            success: Az üdvözlő oldal módosításai sikeresen elmentve.
+    password_check:
+        flash:
+            error: A jelszavad még nem lett megváltoztatva
+    ga_ajax_controller:
+        flash:
+            success: Sikeresen mentve
+    media:
+        flash:
+            'deleted_success.%medianame%': A '%medianame%' sikeresen törölve!
+            drop_success: A fájlfeltöltés sikeresen befejezve.
+            drop_unrecognized: Nem sikerült értelmezni a fájlhúzás műveletet.
+
+kuma_js:
+    auto_collapse:
+        more_button_label: Továbbiak
