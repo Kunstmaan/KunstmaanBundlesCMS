@@ -51,7 +51,7 @@
     {% else %}
         {% set title = adminlist.configurator.getEntityName() %}
     {% endif %}
-
+    
     {% if adminlistconfigurator.overviewPage %}
         {% if adminlist.canAdd() %}
             <div class="col-sm-6 col-md-4">
@@ -74,7 +74,7 @@
                                     {% endfor %}
                                 </ul>
                             {% else %}
-                                <button type="button" data-target="#add-subpage-modal" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
+                                <button type="button" data-target="#add-subpage-modal-{{ adminlistconfigurator.overviewPage.id }}" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
                                     {{ 'form.add' | trans }}
                                 </button>
                             {% endif %}
