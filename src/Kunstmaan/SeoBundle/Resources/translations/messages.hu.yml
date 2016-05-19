@@ -1,0 +1,61 @@
+# Media
+seo:
+    robots:
+        tip: Tip:
+        warning: Ez csak egy alapértelmezett érték és példa, nincsen robots.txt feltöltve
+        moreinfo: További információk
+
+    action:
+        save: Mentés
+        cancel: Mégse
+        preview: Előnézet
+
+    form:
+        og:
+            title: Cím
+            description: Leírás
+            url: url
+            type: Típus
+            image: Kép
+            article:
+                author: OG cikk szerző
+                publisher: OG cikk közlő
+                section: OG cikk szekció
+        twitter:
+            title: Cím
+            title_info_text: A Twitter kártyád címe. Háttérbe szorítja a SEO Meta címet
+            description: Leírás
+            description_info_text: A twitter kártyád leírása. Háttérbe szorítja a SEO Meta leírást
+            sitehandle: Oldal kezelője
+            sitehandle_info_text: A weblap tulajdonos Twitter kezelője. Ez az érték szükséges ahhoz, hogy működjenek a twitter kártyák.
+            creatorhandle: Oldal létrehozója
+            creatorhandle_info_text: Twitter handle of your page publisher.
+            image: Kép
+        robots:
+            noindex: No index
+            nofollow: No follow
+            noarchive: No archive
+            nosnippet: No snippet
+            notranslate: No translate
+            noimageindex: No image index
+        seo:
+            meta_title:
+                label: Cím
+                info_text: A cím mezőt gyakran használják a kereső motorok a találati listában. Kevesebb, mint 55 karakteresnek kell lennie.
+            meta_description:
+                label: Meta leírás
+            meta_robots:
+                label: Meta robotok
+                placeholder: Válassz robot tageket
+            extra_metadata:
+                label: Extra meta adat
+
+    pagetabs:
+        opengraph: Open Graph
+        twittercards: Twitter
+
+    tab:
+        seo:
+            title: SEO
+        social:
+            title: Közösség

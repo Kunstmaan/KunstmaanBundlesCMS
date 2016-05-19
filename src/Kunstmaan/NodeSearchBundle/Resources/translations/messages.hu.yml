@@ -1,0 +1,10 @@
+search:
+    search: Keresés
+    results: Találatok
+    looking_for: A következőre kerestél: "%query%"
+
+node_search:
+    form:
+        search:
+            boost:
+                label: Gyorsítás

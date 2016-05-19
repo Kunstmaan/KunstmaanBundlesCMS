@@ -6,6 +6,7 @@ use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\Translation\Translator;
 
 class ExportService
 {
@@ -13,6 +14,11 @@ class ExportService
      * @var EngineInterface
      */
     private $renderer;
+
+    /**
+     * @var Translator
+     */
+    private $translator;
 
     const EXT_CSV   = 'csv';
     const EXT_EXCEL = 'xlsx';
@@ -107,7 +113,7 @@ class ExportService
 
         $row = array();
         foreach ($adminList->getExportColumns() as $column) {
-            $row[] = $column->getHeader();
+            $row[] = $this->translator->trans($column->getHeader());
         }
         $objWorksheet->fromArray($row, null, 'A' . $number++);
 
@@ -179,5 +185,13 @@ class ExportService
     public function setRenderer($renderer)
     {
         $this->renderer = $renderer;
+    }
+
+    /**
+     * @param Translator $translator
+     */
+    public function setTranslator($translator)
+    {
+        $this->translator = $translator;
     }
 }
