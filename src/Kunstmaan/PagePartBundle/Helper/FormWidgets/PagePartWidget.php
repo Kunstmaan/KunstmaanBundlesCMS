@@ -3,26 +3,21 @@
 namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 class PagePartWidget extends FormWidget
 {
     /**
-     * @var AbstractPagePartAdminConfigurator
-     */
-    protected $pagePartAdminConfigurator;
-
-    /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -42,33 +37,31 @@ class PagePartWidget extends FormWidget
     protected $page;
 
     /**
-     * @var FormFactoryInterface
-     */
-    protected $formFactory;
-
-    /**
      * @var Request
      */
     protected $request;
 
     /**
-     * @param HasPagePartsInterface             $page                      The page
-     * @param Request                           $request                   The request
-     * @param EntityManager                     $em                        The entity manager
-     * @param AbstractPagePartAdminConfigurator $pagePartAdminConfigurator The page part admin configurator
-     * @param FormFactoryInterface              $formFactory               The form factory
-     * @param PagePartAdminFactory              $pagePartAdminFactory      The page part admin factory
+     * @var PagePartAdminConfiguratorInterface
      */
-    public function __construct(HasPagePartsInterface $page, Request $request, EntityManager $em, AbstractPagePartAdminConfigurator $pagePartAdminConfigurator, FormFactoryInterface $formFactory, PagePartAdminFactory $pagePartAdminFactory)
+    protected $pagePartAdminConfigurator;
+
+    /**
+     * @param HasPagePartsInterface              $page                      The page
+     * @param Request                            $request                   The request
+     * @param EntityManagerInterface             $em                        The entity manager
+     * @param PagePartAdminConfiguratorInterface $pagePartAdminConfigurator The page part admin configurator
+     * @param PagePartAdminFactory               $pagePartAdminFactory      The page part admin factory
+     */
+    public function __construct(HasPagePartsInterface $page, Request $request, EntityManagerInterface $em, PagePartAdminConfiguratorInterface $pagePartAdminConfigurator, PagePartAdminFactory $pagePartAdminFactory)
     {
         parent::__construct();
 
         $this->page = $page;
         $this->em = $em;
-        $this->formFactory = $formFactory;
-        $this->pagePartAdminConfigurator = $pagePartAdminConfigurator;
         $this->pagePartAdminFactory = $pagePartAdminFactory;
         $this->request = $request;
+        $this->pagePartAdminConfigurator = $pagePartAdminConfigurator;
 
         $this->pagePartAdmin = $pagePartAdminFactory->createList($pagePartAdminConfigurator, $em, $page, null);
         $this->setTemplate('KunstmaanPagePartBundle:FormWidgets\PagePartWidget:widget.html.twig');
@@ -82,7 +75,7 @@ class PagePartWidget extends FormWidget
         parent::buildForm($builder);
 
         $this->pagePartAdmin->preBindRequest($this->request);
-        $this->pagePartAdmin->adaptForm($builder, $this->formFactory);
+        $this->pagePartAdmin->adaptForm($builder);
     }
 
     /**
@@ -148,7 +141,7 @@ class PagePartWidget extends FormWidget
     }
 
     /**
-     * @return AbstractPagePartAdminConfigurator
+     * @return PagePartAdminConfiguratorInterface
      */
     public function getPagePartAdminConfigurator()
     {

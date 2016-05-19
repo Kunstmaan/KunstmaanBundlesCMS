@@ -1,0 +1,9 @@
+name: Main content
+context: main
+types:
+  - name: FooBar
+    class: 'Foo\BarPagePart'
+  - name: Foo
+    class: FooPagePart
+  - name: Bar
+    class: BarPagePart

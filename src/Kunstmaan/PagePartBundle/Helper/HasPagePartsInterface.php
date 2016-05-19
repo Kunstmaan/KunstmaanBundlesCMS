@@ -2,7 +2,7 @@
 
 namespace  Kunstmaan\PagePartBundle\Helper;
 
-use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 
 /**
  * An interface for something that contains pageparts
@@ -10,8 +10,10 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 interface HasPagePartsInterface
 {
 
+    public function getId();
+
     /**
-     * @return AbstractPagePartAdminConfigurator[]
+     * @return PagePartAdminConfiguratorInterface[]
      */
     public function getPagePartAdminConfigurations();
 

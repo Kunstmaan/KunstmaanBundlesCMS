@@ -5,6 +5,13 @@ namespace Kunstmaan\PagePartBundle\Tests\EventListener;
 use Kunstmaan\PagePartBundle\EventListener\CloneListener;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfigurator;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
+use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
+use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 
 /**
  * CloneListenerTest
@@ -12,29 +19,34 @@ use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 class CloneListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManager|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $em;
+    private $em;
 
     /**
-     * @var Symfony\Component\HttpKernel\KernelInterface
+     * @var PagePartAdminConfiguratorInterface
      */
-    protected $kernel;
+    private $configurator;
 
     /**
-     * @var Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator
+     * @var \Doctrine\ORM\EntityRepository|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $configurator;
-
-    /**
-     * @var Doctrine\ORM\EntityRepository
-     */
-    protected $repo;
+    private $repo;
 
     /**
      * @var CloneListener
      */
-    protected $object;
+    private $object;
+
+    /**
+     * @var PagePartConfigurationReaderInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $reader;
+
+    /**
+     * @var PageTemplateConfigurationService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $templateService;
 
     /**
      * Sets up the fixture.
@@ -47,29 +59,32 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
-            ->setMethods(array('findOrCreateFor', 'copyPageParts', 'setContainer'))
+        $this->repo = $this->getMockBuilder(PagePartRefRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->em->expects($this->any())
             ->method('getRepository')
-            ->with(
-                $this->logicalOr(
-                    'KunstmaanPagePartBundle:PagePartRef',
-                    'KunstmaanPagePartBundle:PageTemplateConfiguration'
-                )
-            )
+            ->with($this->equalTo('KunstmaanPagePartBundle:PagePartRef'))
             ->will($this->returnValue($this->repo));
 
-        $this->kernel = $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
+        $this->configurator = new PagePartAdminConfigurator();
+        $this->configurator->setContext('main');
 
-        $this->configurator = $this->getMock('Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator');
-        $this->configurator->expects($this->any())
-            ->method('getContext')
-            ->will($this->returnValue('main'));
+        $this->reader = $this->getMock(PagePartConfigurationReaderInterface::class);
+        $this->reader
+            ->expects($this->any())
+            ->method('getPagePartAdminConfigurators')
+            ->will($this->returnValue([$this->configurator]));
 
-        $this->object = new CloneListener($this->em, $this->kernel);
+        $this->reader
+            ->expects($this->any())
+            ->method('getPagePartContexts')
+            ->will($this->returnValue([$this->configurator->getContext()]));
+
+        $this->templateService = $this->getMockBuilder(PageTemplateConfigurationService::class)->disableOriginalConstructor()->getMock();
+
+        $this->object = new CloneListener($this->em, $this->reader, $this->templateService);
     }
 
     /**
@@ -84,13 +99,7 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testClonePagePart()
     {
-        $entity = $this->getMockBuilder('Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface')
-            ->setMethods(array('getId', 'getPagePartAdminConfigurations'))
-            ->getMock();
-
-        $entity->expects($this->any())
-            ->method('getPagePartAdminConfigurations')
-            ->will($this->returnValue(array($this->configurator)));
+        $entity = $this->getMock(HasPagePartsInterface::class);
 
         $clone = clone $entity;
 
@@ -107,14 +116,9 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testClonePageTemplate()
     {
-        $entity = $this->getMockBuilder('Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface')
-            ->setMethods(array('getId', 'getPageTemplates', 'getPagePartAdminConfigurations'))
-            ->getMock();
+        $entity = $this->getMock(HasPageTemplateInterface::class);
 
-        $entity->expects($this->any())
-            ->method('getPagePartAdminConfigurations')
-            ->will($this->returnValue(array($this->configurator)));
-
+        /** @var HasPageTemplateInterface|\PHPUnit_Framework_MockObject_MockObject $clone */
         $clone = clone $entity;
 
         $entity->expects($this->any())
@@ -133,7 +137,7 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
         $configuration->setId(1);
         $configuration->setPageId(1);
 
-        $this->repo->expects($this->once())
+        $this->templateService->expects($this->once())
             ->method('findOrCreateFor')
             ->with($this->identicalTo($entity))
             ->will($this->returnValue($configuration));

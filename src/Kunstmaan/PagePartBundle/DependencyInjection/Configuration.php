@@ -1,6 +1,8 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -17,11 +19,40 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_page_part');
+        $root = $treeBuilder->root('kunstmaan_page_part');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        /** @var ArrayNodeDefinition $pageparts */
+        $pageparts = $root->children()->arrayNode('pageparts')->prototype('array');
+        $pageparts->children()->scalarNode('name')->isRequired();
+        $pageparts->children()->scalarNode('context')->isRequired();
+        $pageparts->children()->scalarNode('extends');
+        $pageparts->children()->scalarNode('widget_template');
+
+        /** @var ArrayNodeDefinition $types */
+        $types = $pageparts->children()->arrayNode('types')->defaultValue([])->prototype('array');
+        $types->children()->scalarNode('name')->isRequired();
+        $types->children()->scalarNode('class')->isRequired();
+        $types->children()->scalarNode('pagelimit');
+
+        // *************************************************************************************************************
+
+        /** @var ArrayNodeDefinition $pagetemplates */
+        $pagetemplates = $root->children()->arrayNode('pagetemplates')->defaultValue([])->prototype('array');
+
+        $pagetemplates->children()->scalarNode('template')->isRequired();
+        $pagetemplates->children()->scalarNode('name')->isRequired();
+
+        /** @var ArrayNodeDefinition $rows */
+        $rows = $pagetemplates->children()->arrayNode('rows')->prototype('array');
+
+        /** @var ArrayNodeDefinition $regions */
+        $regions = $rows->children()->arrayNode('regions')->prototype('array');
+
+        // no subregions this way, sorry. feel free to implement it: https://gist.github.com/Lumbendil/3249173
+        $regions->children()->scalarNode('name');
+        $regions->children()->scalarNode('span')->defaultValue(12);
+        $regions->children()->scalarNode('template');
+
         return $treeBuilder;
     }
 }

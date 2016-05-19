@@ -1,50 +1,93 @@
 parameters:
-#    kunstmaan_k_page_part.example.class: Kunstmaan\PagePartBundle\Example
+    kunstmaan_pagepart.page_part_configuration_reader.class: 'Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReader'
+    kunstmaan_pagepart.page_part_configuration_parser.class: 'Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser'
+
+    kunstmaan_pagepart.page_template_configuration_reader.class: 'Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationReader'
+    kunstmaan_pagepart.page_template_configuration_parser.class: 'Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationParser'
+
+    kunstmaan_page_part.page_template.page_template_configuration_service.class: 'Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService'
 
 services:
-#    kunstmaan_k_page_part.example:
-#        class: %kunstmaan_k_page_part.example.class%
-#        arguments: [@service_id, 'plain_value', %parameter%]
     kunstmaan_pagepart.pageparts:
-        class: Kunstmaan\PagePartBundle\PagePartAdmin\Builder
+        class: 'Kunstmaan\PagePartBundle\PagePartAdmin\Builder'
+
+    kunstmaan_page_part.page_part_configuration_reader:
+        class: '%kunstmaan_pagepart.page_part_configuration_reader.class%'
+        arguments: [ '@kunstmaan_page_part.page_part_configuration_parser' ]
+
+    kunstmaan_page_part.page_part_configuration_parser:
+        class: '%kunstmaan_pagepart.page_part_configuration_parser.class%'
+        public: false
+        arguments: [ '@kernel', '%kunstmaan_page_part.page_parts_presets%' ]
+
+    kunstmaan_page_part.page_template_configuration_reader:
+        class: '%kunstmaan_pagepart.page_template_configuration_reader.class%'
+        arguments: [ '@kunstmaan_page_part.page_template_configuration_parser' ]
+
+    kunstmaan_page_part.page_template_configuration_parser:
+        class: '%kunstmaan_pagepart.page_template_configuration_parser.class%'
+        public: false
+        arguments: [ '@kernel', '%kunstmaan_page_part.page_templates_presets%' ]
+
+
+    kunstmaan_page_part.page_template.page_template_configuration_service:
+        class: '%kunstmaan_page_part.page_template.page_template_configuration_service.class%'
+        arguments:
+          - '@kunstmaan_page_part.repository.page_template_configuration'
+          - '@kunstmaan_page_part.page_template_configuration_reader'
+
+    kunstmaan_page_part.repository.page_template_configuration:
+        class: 'Kunstmaan\PagePartBundle\Repository\PageTemplateConfigurationRepository'
+        public: false
+        factory: [ '@doctrine.orm.entity_manager', 'getRepository' ]
+        arguments:
+          - 'KunstmaanPagePartBundle:PageTemplateConfiguration'
 
     kunstmaan_pagepartadmin.factory:
-        class: Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory
+        class: 'Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory'
         arguments: ['@service_container']
 
     kunstmaan_pagepartadmin.twig.extension:
-        class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension
+        class: 'Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension'
         tags:
             -  { name: twig.extension }
 
     kunstmaan_pageparts.twig.extension:
-        class: Kunstmaan\PagePartBundle\Twig\Extension\PagePartTwigExtension
+        class: 'Kunstmaan\PagePartBundle\Twig\Extension\PagePartTwigExtension'
         arguments:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: twig.extension }
             
     kunstmaan_pagetemplate.twig.extension:
-        class: Kunstmaan\PagePartBundle\Twig\Extension\PageTemplateTwigExtension
+        class: 'Kunstmaan\PagePartBundle\Twig\Extension\PageTemplateTwigExtension'
         arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@kernel'
+            - '@kunstmaan_page_part.page_template.page_template_configuration_service'
         tags:
             - { name: twig.extension }
 
     kunstmaan_pageparts.pagepart_creator_service:
-            class: Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService
-            calls:
-                - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
+        class: 'Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService'
+        calls:
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
 
     kunstmaan_pageparts.edit_node.listener:
-        class: Kunstmaan\PagePartBundle\EventListener\NodeListener
-        arguments: ['@doctrine.orm.entity_manager', '@kernel', '@form.factory', '@kunstmaan_pagepartadmin.factory']
+        class: 'Kunstmaan\PagePartBundle\EventListener\NodeListener'
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@kunstmaan_pagepartadmin.factory'
+          - '@kunstmaan_page_part.page_template_configuration_reader'
+          - '@kunstmaan_page_part.page_part_configuration_reader'
+          - '@kunstmaan_page_part.page_template.page_template_configuration_service'
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.adaptForm, method: adaptForm }
 
     kunstmaan_pageparts.clone.listener:
-        class: Kunstmaan\PagePartBundle\EventListener\CloneListener
-        arguments: ['@doctrine.orm.entity_manager', '@kernel']
+        class: 'Kunstmaan\PagePartBundle\EventListener\CloneListener'
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@kunstmaan_page_part.page_part_configuration_reader'
+          - '@kunstmaan_page_part.page_template.page_template_configuration_service'
+
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.postDeepCloneAndSave, method: postDeepCloneAndSave }

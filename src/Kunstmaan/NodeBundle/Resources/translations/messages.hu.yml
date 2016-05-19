@@ -1,0 +1,156 @@
+subaction:
+    versions: Verziók
+
+action:
+    saveasdraft: Mentés piszkozatként
+    recopyfromlanguage: Másik nyelvről másolás
+    publish: Publikálás
+    unpublish: Publikálás visszavonása
+    preview: Előnézet
+    save: Mentés
+    delete: Törlés
+    addsubpage: Aloldal hozzáadása
+    duplicate: Másolás
+
+modal:
+    sourcelanguage: modal.sourcelanguage
+
+pages:
+    copynotavailable: Másolás nem lehetséges
+
+kuma_node:
+    form:
+        controller_action:
+            title:
+                label:  Cím
+        menu_tab:
+            hidden_from_menu:
+                label:  Elrejtés a menüből
+            internal_name:
+                label:  Belső név
+        menu_tab_translation:
+            slug:
+                label:  Elérési útaz URL-ben
+            weight:
+                label:  Súlyozás
+                title:  Az oldalak újrarendezéséhez használd
+        page:
+            title:
+                label:  Navigációs cím
+            page_title:
+                label:  Oldal cím
+                info_text: Belső hivatkozásoknál használd.
+    status:
+        "will_be_publish_at.%date%.raw": Ez az oldal publikálva lesz: %date%
+        "will_be_unpublish_at.%date%.raw": Az oldal rejtett lesz (publikálás visszavonása): %date%
+        button:
+            schedulle_cancel: Mégse
+        "offline_draft.%public_url%.raw": Nem elérhető / Piszkozat verzió (Ugrás a <a href="%public_url%">publikus verzióhoz</a>)
+        online_public.raw: Elérhető / Nyilvános verzió
+        offline.raw: Nem elérhető
+        "go_to_draft_version.%url%.raw": Ugrás a <a href="%url%">piszkozat verzióhoz</a>
+    admin:
+        publish:
+            flash:
+                success_published: Az oldal nyilvános
+                success_scheduled: Az oldal időzítve lesz nyilvános
+        unpublish:
+            flash:
+                success_unpublished: Az oldal el lett rejtve
+                success_scheduled: Az oldal elrejtése időzítve
+        unschedule:
+            flash:
+                success: Az időzítés vissza lett vonva
+        delete:
+            flash:
+                success: Az oldal sikeresen törölve!
+        duplicate:
+            flash:
+                success: Az oldal duplikálva!
+        revert:
+            flash:
+                success: A tartalom vissza lett állítva
+        edit:
+            flash:
+                success: Az oldal módosítva.
+        new_page:
+            title:
+                default: Új oldal
+
+    tab:
+        properties:
+            title:  Tulajdonságok
+        menu:
+            title:  Menü
+        permissions:
+            title:  Jogosultságok
+        searcher:
+            title:  Kereső
+
+    modal:
+        add_homepage:
+            h: Nyitólap hozzáadása
+            form:
+                title:
+                    label: Cím
+                type:
+                    label: Típus
+                add:
+                    label: Hozzáadás
+                cancel:
+                    label: Mégse
+        unpublish:
+            title: Elrejtés
+            body: Biztos benne, hogy el szeretné rejteni az oldalt - publikálás visszavonása? Ha elrejti, nem lesz az oldal elérhető!
+            later:
+                label: Elrejtés később
+                button: Elrejtés később
+                cancel: Mégse
+            now:
+                button: Elrejtés
+                cancel: Mégse
+        publish:
+            title: Publikálás
+            body: Biztos benne, hogy nyilvánossá szeretné tenni ezt az oldalt? Ha nyilvánossá teszi, elérhető lesz!
+            later:
+                label: Publikálás később
+                button: Publikálás később
+                cancel: Mégse
+            now:
+                button: Oldal elrejtése
+                cancel: Mégse
+        versions:
+            title: Verziók
+            table:
+                type: Típus
+                last_modified: Utolsó módosítás
+                user: Felhasználó
+                actions: Műveletek
+            actions:
+                preview: Előnézet
+                revert: Visszaállít
+        add_subpage:
+            title: Aloldal hozzáadása
+            label:
+                title: Cím
+                type: Típus
+            button:
+                add: Hozzáad
+                cancel: Mégse
+        delete_page:
+            'title.%page%': '%page%' oldal törlése
+            'body.%page%': A törlés végleges és teljes! Biztosan törölni szeretné az oldalt?
+            button:
+                delete: Törlés
+                cancel: Mégse
+        duplicate_page:
+            'title.%page%': A(z) '%page%' oldal duplikálása
+            label:
+                new_title: Új cím
+            button:
+                duplicate: Duplikálás
+                cancel: Mégse
+        recopyfromlanguage:
+            button:
+                copy: Másol
+                cancel: Mégse

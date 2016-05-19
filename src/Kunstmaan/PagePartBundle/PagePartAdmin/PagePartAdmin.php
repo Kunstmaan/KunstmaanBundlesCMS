@@ -4,8 +4,9 @@ namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
@@ -20,12 +21,12 @@ use Symfony\Component\HttpFoundation\Request;
 class PagePartAdmin
 {
     /**
-     * @var AbstractPagePartAdminConfigurator
+     * @var PagePartAdminConfiguratorInterface
      */
     protected $configurator;
 
     /**
-     * @var EntityManager
+     * @var EntityManager|EntityManagerInterface
      */
     protected $em;
 
@@ -45,38 +46,38 @@ class PagePartAdmin
     protected $container;
 
     /**
-     * @var array
+     * @var PagePartInterface[]
      */
     protected $pageParts = array();
 
     /**
-     * @var array
+     * @var PagePartRef[]
      */
     protected $pagePartRefs = array();
 
     /**
-     * @var array
+     * @var PagePartInterface[]
      */
     protected $newPageParts = array();
 
     /**
-     * @param AbstractPagePartAdminConfigurator $configurator The configurator
-     * @param EntityManager                     $em           The entity manager
-     * @param HasPagePartsInterface             $page         The page
-     * @param null|string                       $context      The context
-     * @param null|ContainerInterface           $container    The container
+     * @param PagePartAdminConfiguratorInterface $configurator The configurator
+     * @param EntityManagerInterface             $em           The entity manager
+     * @param HasPagePartsInterface              $page         The page
+     * @param null|string                        $context      The context
+     * @param null|ContainerInterface            $container    The container
      *
      * @throws \InvalidArgumentException
      */
     public function __construct(
-        AbstractPagePartAdminConfigurator $configurator,
-        EntityManager $em,
+        PagePartAdminConfiguratorInterface $configurator,
+        EntityManagerInterface $em,
         HasPagePartsInterface $page,
         $context = null,
         ContainerInterface $container = null
     ) {
-        if (!($page instanceof AbstractEntity)) {
-            throw new \InvalidArgumentException("Page must be an instance of AbstractEntity.");
+        if (!($page instanceof EntityInterface)) {
+            throw new \InvalidArgumentException("Page must be an instance of EntityInterface.");
         }
 
         $this->configurator = $configurator;
@@ -115,6 +116,7 @@ class PagePartAdmin
         }
 
         // Fetch all the pageparts (only one query per pagepart type)
+        /** @var EntityInterface[] $pageParts */
         $pageParts = array();
         foreach ($types as $classname => $ids) {
             $result    = $this->em->getRepository($classname)->findBy(array('id' => $ids));
@@ -124,8 +126,8 @@ class PagePartAdmin
         // Link the pagepartref to the pagepart
         foreach ($this->pagePartRefs as $pagePartRef) {
             foreach ($pageParts as $key => $pagePart) {
-                if (ClassLookup::getClass($pagePart) == $pagePartRef->getPagePartEntityname() && $pagePart->getId(
-                    ) == $pagePartRef->getPagePartId()
+                if (ClassLookup::getClass($pagePart) == $pagePartRef->getPagePartEntityname()
+                    && $pagePart->getId() == $pagePartRef->getPagePartId()
                 ) {
                     $this->pageParts[$pagePartRef->getId()] = $pagePart;
                     unset($pageParts[$key]);
@@ -136,7 +138,7 @@ class PagePartAdmin
     }
 
     /**
-     * @return AbstractEntity
+     * @return EntityInterface
      */
     public function getPage()
     {
@@ -174,6 +176,7 @@ class PagePartAdmin
             if (array_key_exists($pagePartRef->getId(), $subPagePartsToDelete)) {
                 $pagePart = $this->pageParts[$pagePartRef->getId()];
                 foreach ($subPagePartsToDelete[$pagePartRef->getId()] as $deleteInfo) {
+                    /** @var EntityInterface[] $objects */
                     $objects = call_user_func(array($pagePart, 'get' . ucfirst($deleteInfo['name'])));
 
                     foreach ($objects as $object) {
@@ -185,6 +188,7 @@ class PagePartAdmin
                 }
             }
         }
+
         if ($doFlush) {
             $this->em->flush();
         }
@@ -347,11 +351,11 @@ class PagePartAdmin
     }
 
     /**
-     * @param AbstractPagePart $pagepart
+     * @param PagePartInterface $pagepart
      *
      * @return string
      */
-    public function getType(AbstractPagePart $pagepart)
+    public function getType(PagePartInterface $pagepart)
     {
         $possiblePagePartTypes = $this->configurator->getPossiblePagePartTypes();
         foreach ($possiblePagePartTypes as &$pageparttype) {
@@ -364,14 +368,16 @@ class PagePartAdmin
     }
 
     /**
-     * @param bigint $id
-     * @param int    $sequenceNumber
+     * @param int $id
+     * @param int $sequenceNumber
      *
-     * @return PagePart
+     * @return PagePartInterface
      */
     public function getPagePart($id, $sequenceNumber)
     {
+        /** @var PagePartRefRepository $ppRefRepo */
         $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
+
         return $ppRefRepo->getPagePart($id, $this->context, $sequenceNumber);
     }
 

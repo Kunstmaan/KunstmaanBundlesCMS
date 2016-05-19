@@ -1,0 +1,44 @@
+translator:
+    translator:
+        title: Fordítás
+        inline_edit_title: translator.translator.inline_edit_title
+        emptytext: Üres
+        invalid_translation: A fordítás nem megfelelő
+        fatal_error_occurred: Sajnos hiba történt, próbálja meg újra
+    translations: Fordítások
+    translation_not_unique: Nem egyedi
+
+settings:
+    translator:
+        add: Fordítás hozzáadása
+        edit: Szerkesztése
+        refresh_live: Azonnali frissítés
+        import_translations: Import
+        import_translations_forced: Kényszerített import
+        not_live_warning: A fordítás nem azonnali idejű!
+        choose_language: Válassz egy nyelvet
+        succesful_added: Sikeresen hozzá lett adva.
+        succesful_edited: Sikeres szerkesztés
+
+kuma_translator:
+    form:
+        text_with_locale:
+            locale:
+                label: Nyelv
+            text:
+                label: Szöveg
+    command:
+        clear:
+            flash:
+                success: Minden élő fordítás friss.
+        import:
+            flash:
+                success: A fordítások sikeresen importálva, a létező fordítások nem változtak.
+                force_success: A fordítások sikeresen importálva, minden létező fordítás felül lett írva.
+    modal:
+        confirmation:
+            force_import:
+                title: Biztos benne, hogy erőltetve szeretne importálni?
+                body: Minden létező fordítás felül lesz írva.
+                confirm_button: Importálás
+                cancel_button: Mégse

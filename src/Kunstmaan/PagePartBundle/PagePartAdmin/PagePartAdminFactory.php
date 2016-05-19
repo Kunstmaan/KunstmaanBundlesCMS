@@ -2,9 +2,8 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -28,14 +27,14 @@ class PagePartAdminFactory
     }
 
     /**
-     * @param AbstractPagePartAdminConfigurator $configurator The configurator
-     * @param EntityManager                     $em           The entity manager
-     * @param HasPagePartsInterface             $page         The page
-     * @param string|null                       $context      The context
+     * @param PagePartAdminConfiguratorInterface $configurator The configurator
+     * @param EntityManagerInterface             $em           The entity manager
+     * @param HasPagePartsInterface              $page         The page
+     * @param string|null                        $context      The context
      *
      * @return PagePartAdmin
      */
-    public function createList(AbstractPagePartAdminConfigurator $configurator, EntityManager $em, HasPagePartsInterface $page, $context = null)
+    public function createList(PagePartAdminConfiguratorInterface $configurator, EntityManagerInterface $em, HasPagePartsInterface $page, $context = null)
     {
         return new PagePartAdmin($configurator, $em, $page, $context, $this->container);
     }

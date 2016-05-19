@@ -1,0 +1,20 @@
+
+mediapagepart:
+    download:
+        choosefile: Fájl kiválasztása
+
+    image:
+        choosefile: Fájl kiválasztása
+        alttext: Kép hiánya esetén megjelenítendő szöveg
+        link: Ide linkkeljen a kép
+        openinnewwindow: Új ablakban nyíljon meg
+
+
+    slide:
+        choose: Slide oldalelem
+
+    video:
+        choose: Videó oldalelem
+
+    audio:
+        choose: Hanganyag oldalelem
