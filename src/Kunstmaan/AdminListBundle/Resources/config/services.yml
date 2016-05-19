@@ -9,6 +9,7 @@ services:
         class:  '%kunstmaan_adminlist.service.export.class%'
         calls:
             -  [ setRenderer, [ '@templating' ] ]
+            -  [ setTranslator, [ '@translator' ] ]
 
     kunstmaan_adminlist.twig.extension:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
