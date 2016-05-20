@@ -1,9 +1,14 @@
 article:
+    warning:
+        create_overview_page: You need to create at least one overview page before you can create a %type% page
     form:
         date:
             label: Date
         summery:
             label: Summery
+    modal:
+        add:
+            label: Add %type% item to %page%
     author:
         form:
             name:
