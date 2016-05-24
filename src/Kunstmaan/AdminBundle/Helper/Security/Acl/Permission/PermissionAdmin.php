@@ -176,7 +176,15 @@ class PermissionAdmin
      */
     public function getAllRoles()
     {
-        return $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+        $roles = $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+
+        $user = $this->tokenStorage->getToken()->getUser();
+        if ($user && !$user->isSuperAdmin() && ($superAdminRole = array_keys($roles, 'ROLE_SUPER_ADMIN'))) {
+            $superAdminRole = current($superAdminRole);
+            unset($roles[$superAdminRole]);
+        }
+
+        return $roles;
     }
 
     /**
