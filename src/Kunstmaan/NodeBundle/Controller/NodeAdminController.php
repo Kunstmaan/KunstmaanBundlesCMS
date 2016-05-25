@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
@@ -151,12 +152,15 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function copyFromOtherLanguageAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
@@ -203,12 +207,15 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function recopyFromOtherLanguageAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
@@ -254,12 +261,15 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function createEmptyPageAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
@@ -294,12 +304,15 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function publishAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request         = $this->get('request_stack')->getCurrentRequest();
@@ -342,12 +355,15 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function unPublishAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request         = $this->get('request_stack')->getCurrentRequest();
@@ -383,6 +399,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function unSchedulePublishAction(Request $request, $id)
     {
@@ -390,6 +407,8 @@ class NodeAdminController extends Controller
 
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $this->get('kunstmaan_node.admin_node.publisher')->unSchedulePublish($nodeTranslation);
@@ -416,12 +435,15 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function deleteAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_DELETE);
 
@@ -474,6 +496,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function duplicateAction(Request $request, $id)
     {
@@ -481,6 +504,8 @@ class NodeAdminController extends Controller
         /* @var Node $parentNode */
         $originalNode = $this->em->getRepository('KunstmaanNodeBundle:Node')
             ->find($id);
+
+        $this->validateNode($originalNode, $id);
 
         // Check with Acl
         $this->checkPermission($originalNode, PermissionMap::PERMISSION_EDIT);
@@ -549,12 +574,15 @@ class NodeAdminController extends Controller
      * @return RedirectResponse
      * @throws AccessDeniedException
      * @throws InvalidArgumentException
+     * @throws ResourceNotFoundException
      */
     public function revertAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
@@ -634,12 +662,15 @@ class NodeAdminController extends Controller
      * @return RedirectResponse
      * @throws AccessDeniedException
      * @throws InvalidArgumentException
+     * @throws ResourceNotFoundException
      */
     public function addAction(Request $request, $id)
     {
         $this->init($request);
         /* @var Node $parentNode */
         $parentNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($parentNode, $id);
 
         // Check with Acl
         $this->checkPermission($parentNode, PermissionMap::PERMISSION_EDIT);
@@ -825,12 +856,15 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse|array
      * @throws AccessDeniedException
+     * @throws ResourceNotFoundException
      */
     public function editAction(Request $request, $id, $subaction)
     {
         $this->init($request);
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        $this->validateNode($node, $id);
 
         $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
 
@@ -1240,5 +1274,18 @@ class NodeAdminController extends Controller
         }
 
         return $type;
+    }
+
+    /**
+     * @param $node
+     * @param $id
+     *
+     * @throws ResourceNotFoundException
+     */
+    private function validateNode($node, $id)
+    {
+        if (!$node) {
+            throw new ResourceNotFoundException("Node with id " . $id . " not found");
+        }
     }
 }
