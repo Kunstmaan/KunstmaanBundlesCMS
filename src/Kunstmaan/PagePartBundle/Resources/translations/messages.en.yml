@@ -30,3 +30,24 @@ kuma_pagepart:
     tab:
         content:
             title: Content
+    modal:
+        delete:
+            'title.%type%':  "Delete pagepart '%type%'"
+            'text.%type%':  This will not remove the pagepart completely, save the page to remove this pagepart permanently.
+            button:
+                delete: Delete
+                cancel: Cancel
+    select:
+        add:  Add a pagepart
+
+    template:
+        modal:
+            change:
+                current:    Current
+                title:      Change template
+                button:
+                    open:   Change template
+                    change: Change
+                    cancel: Cancel
+                message:
+                    'no_admin_found.%name%':    NO ADMIN FOUND for %name%

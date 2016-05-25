@@ -71,3 +71,29 @@ kuma_lead_generation:
                     Each url on a separate line.
                     You can also use regex expressions.
                     Examples: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+
+    popup:
+        add:
+            modal:
+                title:      Add popup
+                button:
+                    open:   Add popup
+                    add:    Add
+                    cancel: Cancel
+        type:
+            label: Type
+
+    rules:
+        'page_title.%name%': Rules for %name%
+        add:
+            modal:
+                title:  Add Rule
+                button:
+                    open:   Add Rule
+                    add:    Add
+                    cancel: Cancel
+
+    breadcrumbs:
+        modules:    Modules
+        popups:     Popups
+        rules:      Rules

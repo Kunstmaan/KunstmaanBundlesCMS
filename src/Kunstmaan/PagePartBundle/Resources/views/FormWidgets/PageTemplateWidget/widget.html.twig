@@ -20,7 +20,7 @@
         <!-- Change Template - Button -->
         <button type="button" class="btn btn-default btn--raise-on-hover btn--icon-left" data-keyboard="true" data-toggle="modal" data-target="#change-template-modal{{ id }}">
             <i class="fa fa-th btn__icon"></i>
-            Change template
+            {{ 'kuma_pagepart.template.modal.change.button.open'|trans() }}
         </button>
 
 
@@ -34,7 +34,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                         <h4 class="modal-title">
-                            Change template
+                            {{ 'kuma_pagepart.template.modal.change.title'|trans() }}
                         </h4>
                     </div>
 
@@ -47,7 +47,7 @@
                                     <h5 class="choice-block__item__head">
                                         {{ pagetemplate.name|trans }}
                                         {% if resource.pagetemplate.name == pagetemplate.name %}
-                                            <small>(Current)</small>
+                                            <small>({{ 'kuma_pagepart.template.modal.change.current'|trans() }})</small>
                                         {% endif %}
                                     </h5>
                                     {% for row in pagetemplate.rows %}
@@ -68,10 +68,10 @@
 
                     <div class="modal-footer">
                         <button type="button" class="js-change-page-template btn btn-primary btn--raise-on-hover" data-modal="change-template-modal{{ id }}">
-                            Change
+                            {{ 'kuma_pagepart.template.modal.change.button.change'|trans() }}
                         </button>
                         <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                            Cancel
+                            {{ 'kuma_pagepart.template.modal.change.button.cancel'|trans() }}
                         </button>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
                 {% elseif region.template is defined and region.template %}
                     {% include region.template with {'page': resource.page} %}
                 {% else %}
-                    NO ADMIN FOUND for {{ region.name }}
+                    {{ 'kuma_pagepart.template.modal.change.message.no_admin_found.%name%'|trans({'%name%': region.name}) }}
                 {% endif %}
             </div>
         </div>
