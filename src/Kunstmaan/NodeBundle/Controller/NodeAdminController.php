@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
@@ -152,7 +152,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function copyFromOtherLanguageAction(Request $request, $id)
     {
@@ -207,7 +207,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function recopyFromOtherLanguageAction(Request $request, $id)
     {
@@ -261,7 +261,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function createEmptyPageAction(Request $request, $id)
     {
@@ -304,7 +304,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function publishAction(Request $request, $id)
     {
@@ -355,7 +355,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function unPublishAction(Request $request, $id)
     {
@@ -399,7 +399,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function unSchedulePublishAction(Request $request, $id)
     {
@@ -435,7 +435,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function deleteAction(Request $request, $id)
     {
@@ -496,7 +496,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function duplicateAction(Request $request, $id)
     {
@@ -574,7 +574,7 @@ class NodeAdminController extends Controller
      * @return RedirectResponse
      * @throws AccessDeniedException
      * @throws InvalidArgumentException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function revertAction(Request $request, $id)
     {
@@ -662,7 +662,7 @@ class NodeAdminController extends Controller
      * @return RedirectResponse
      * @throws AccessDeniedException
      * @throws InvalidArgumentException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function addAction(Request $request, $id)
     {
@@ -856,7 +856,7 @@ class NodeAdminController extends Controller
      *
      * @return RedirectResponse|array
      * @throws AccessDeniedException
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     public function editAction(Request $request, $id, $subaction)
     {
@@ -1280,12 +1280,12 @@ class NodeAdminController extends Controller
      * @param $node
      * @param $id
      *
-     * @throws ResourceNotFoundException
+     * @throws NotFoundHttpException
      */
     private function validateNode($node, $id)
     {
         if (!$node) {
-            throw new ResourceNotFoundException("Node with id " . $id . " not found");
+            throw new NotFoundHttpException("Node with id " . $id . " not found");
         }
     }
 }
