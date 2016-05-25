@@ -1,7 +1,7 @@
 # Media
 seo:
     robots:
-        tip: Tip:
+        tip: "Tip:"
         warning: Ez csak egy alapértelmezett érték és példa, nincsen robots.txt feltöltve
         moreinfo: További információk
 
