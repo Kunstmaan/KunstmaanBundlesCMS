@@ -8,7 +8,7 @@
                     <div class="btn-group">
                         {% block actions %}
                             <button type="button" data-target="#add-popup-modal" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
-                                Add Popup
+                                {{ 'kuma_lead_generation.popup.add.modal.button.open'|trans() }}
                             </button>
                         {% endblock %}
                     </div>
@@ -26,7 +26,7 @@
                                 <i class="fa fa-times"></i>
                             </button>
                             <h3>
-                                Add Popup
+                                {{ 'kuma_lead_generation.popup.add.modal.title'|trans() }}
                             </h3>
                         </div>
 
@@ -35,7 +35,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="popup_type">
-                                        Type
+                                        {{ 'kuma_lead_generation.popup.type.label'|trans() }}
                                     </label>
 
                                     <select class="form-control"  name="type">
@@ -50,10 +50,10 @@
                             <!-- Footer -->
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary btn--raise-on-hover">
-                                    Add
+                                    {{ 'kuma_lead_generation.popup.add.modal.button.add'|trans() }}
                                 </button>
                                 <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                                    Cancel
+                                    {{ 'kuma_lead_generation.popup.add.modal.button.cancel'|trans() }}
                                 </button>
                             </div>
                         </form>

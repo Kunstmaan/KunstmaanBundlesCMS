@@ -79,7 +79,7 @@
     <!-- New PP select -->
     <div class="pp-container__add">
         <select class="js-add-pp-select form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
-            <option value="">{{ 'Add a pagepart' | trans }}</option>
+            <option value="">{{ 'kuma_pagepart.select.add' | trans }}</option>
             {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
                 <option value="{{pagePartType.class}}">{{pagePartType.name|trans}}</option>
             {% endfor %}
@@ -100,24 +100,24 @@
                         <i class="fa fa-times"></i>
                     </button>
                     <h3>
-                        Delete pagepart '{{pagepartadmin.getType(pagepart)}}'
+                        {{ 'kuma_pagepart.modal.delete.title.%type%'|trans({'%type%': pagepartadmin.getType(pagepart)}) }}
                     </h3>
                 </div>
 
                 <!-- Body -->
                 <div class="modal-body">
                     <p>
-                        This will not remove the pagepart completely, save the page to remove this pagepart permanently.
+                        {{ 'kuma_pagepart.modal.delete.text.%type%'|trans({'%type%': pagepartadmin.getType(pagepart)}) }}
                     </p>
                 </div>
 
                 <!-- Footer -->
                 <div class="modal-footer">
                     <button type="button" class="js-delete-pp-btn btn btn-danger btn--raise-on-hover" data-target-id="{{id}}">
-                        Delete
+                        {{ 'kuma_pagepart.modal.delete.button.delete'|trans }}
                     </button>
                     <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                        Cancel
+                        {{ 'kuma_pagepart.modal.delete.button.cancel'|trans }}
                     </button>
                 </div>
             </div>

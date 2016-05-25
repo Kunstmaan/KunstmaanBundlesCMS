@@ -22,7 +22,7 @@ dashboard:
             goals:
                 disable: Célok leállítása
             title: Állítsd be a Google Analytics  widgetet
-            content: Bővebben a Google Analytics widget beállításairól ezen a linket találhat információkat:
+            content: "Bővebben a Google Analytics widget beállításairól ezen a linket találhat információkat:"
             docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
             docs: a dokumentáció
             redirect: "Ez az átirányított URI:"
