@@ -41,9 +41,7 @@
                     <p class="search-results__text">
                         {% set nrResults = pagerfanta.getNbResults() %}
                         <strong>{{ '{0} search.no_results|{1} one.result|]1,Inf[ many.results.%count%.%search_for%'
-                            |transchoice(nrResults, {'%count%': nrResults, '%search_for%': q_query})
-                            |meaning('Eg: `{0} Nincs találat a(z) `%search_for%` keresésre|{1} %count% találat|]1, Inf[ %count% találat')
-                            }}</strong>
+                            |transchoice(nrResults, {'%count%': nrResults, '%search_for%': q_query}) }}</strong>
                     </p>
                 {% endif %}
             </form>
