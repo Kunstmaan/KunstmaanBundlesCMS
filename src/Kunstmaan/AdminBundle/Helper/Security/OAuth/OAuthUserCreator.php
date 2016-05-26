@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
-class OAuthUserCreator
+class OAuthUserCreator implements OAuthUserCreatorInterface
 {
     /** @var EntityManager */
     private $em;
@@ -15,41 +15,35 @@ class OAuthUserCreator
     /** @var string */
     private $userClass;
 
+    /** @var OAuthUserFinderInterface */
+    private $userFinder;
+
     /**
      * OAuthUserCreator constructor.
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param $hostedDomains
      * @param $userClass
+     * @param OAuthUserFinderInterface $userFinder
      */
-    public function __construct(EntityManager $em, $hostedDomains, $userClass)
+    public function __construct(EntityManagerInterface $em, $hostedDomains, $userClass, OAuthUserFinderInterface $userFinder)
     {
         $this->em = $em;
         $this->hostedDomains = $hostedDomains;
         $this->userClass = $userClass;
+        $this->userFinder = $userFinder;
     }
 
     /**
-     * Returns an implementation of AbstractUser defined by the $userClass parameter.
-     * Checks if there already exists an account for the given googleId or email. If yes updates
-     * the access levels accordingly and returns that user. If no creates a new user with the
-     * configured access levels.
-     *
-     * @param string email
-     * @param string googleId
-     *
-     * @return AbstractUser Implementation
+     * {@inheritDoc}
      */
     public function getOrCreateUser($email, $googleId)
     {
-        $user = $this->em->getRepository($this->userClass)
-            ->findOneBy(array('googleId' => $googleId));
+        if ($this->isConfiguredDomain($email)) {
 
-        if (!$user instanceof $this->userClass && $this->isConfiguredDomain($email)) {
-
-            $user = $this->em->getRepository($this->userClass)
-                ->findOneBy(array('username' => $email));
+            $user = $this->userFinder->findUserByGoogleSignInData($email, $googleId);
 
             if(!$user instanceof $this->userClass) {
+                //User not present in database, create new one
                 $user = new $this->userClass;
                 $user->setUsername($email);
                 $user->setEmail($email);
@@ -70,7 +64,7 @@ class OAuthUserCreator
             $this->em->flush();
         }
 
-        return $user;
+        return isset($user) ? $user : null;
     }
 
     /**
