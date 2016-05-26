@@ -1,8 +1,8 @@
 redirect:
     title: Átirányítások
     all: Minden domain
-    origin_info: Az URL amit át akarsz irányítani, pl: /contest
-    target_info: Az URL, ahova átirányítasz, pl: /en/contest/summer-contest
+    origin_info: "Az URL amit át akarsz irányítani, pl: /contest"
+    target_info: "Az URL, ahova átirányítasz, pl: /en/contest/summer-contest"
 
     form:
         redirect:

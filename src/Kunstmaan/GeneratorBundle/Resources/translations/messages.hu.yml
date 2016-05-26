@@ -1,0 +1,9 @@
+'{0} search.no_results|{1} one.result|]1,Inf[ many.results.%count%.%search_for%': '{0} Nincs találat a(z) `%search_for%` keresésre|{1} %count% találat|]1, Inf[ %count% találat'
+
+search:
+    filter: Szűrő
+    no_results: Nincs találat
+
+pagerfanta:
+    prev:   Előző
+    next:   Következő

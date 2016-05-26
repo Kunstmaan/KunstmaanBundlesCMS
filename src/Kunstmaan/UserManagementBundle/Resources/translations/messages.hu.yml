@@ -29,20 +29,20 @@ kuma_user:
     roles:
         add:
             flash:
-                'success.%role%': A(z) '%role%' jogosultság létrehozva!
+                'success.%role%': "A(z) '%role%' jogosultság létrehozva!"
         edit:
             flash:
-                'success.%role%': A(z) '%role%' jogosultság módosítva!
+                'success.%role%': "A(z) '%role%' jogosultság módosítva!"
         delete:
             flash:
-                'success.%role%': A(z) '%role%' jogosultság törölve!
+                'success.%role%': "A(z) '%role%' jogosultság törölve!"
     users:
         add:
             flash:
-                'success.%username%': A(z) '%username%' felhasználó létrehozva!
+                'success.%username%': "A(z) '%username%' felhasználó létrehozva!"
         edit:
             flash:
-                'success.%username%': A(z) '%username%' felhasználó módosítva!
+                'success.%username%': "A(z) '%username%' felhasználó módosítva!"
         delete:
             flash:
-                'success.%username%': A(z) '%username%' felhasználó törölve!
+                'success.%username%': "A(z) '%username%' felhasználó törölve!"
