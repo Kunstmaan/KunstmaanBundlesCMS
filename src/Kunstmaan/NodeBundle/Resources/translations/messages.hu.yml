@@ -117,7 +117,7 @@ kuma_node:
                 button: Publikálás később
                 cancel: Mégse
             now:
-                button: Oldal elrejtése
+                button: Publikálás
                 cancel: Mégse
         versions:
             title: Verziók
