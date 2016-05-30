@@ -41,8 +41,7 @@
                         {% else %}
                             {% for key,add in adminaddlist %}
                                 <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
-                                    {{ 'form.add' | trans }}
-                                    {{ key | trans }}
+                                    {{ 'form.add.%subject%' | trans({ '%subject%': key|trans }) }}
                                 </a>
                             {% endfor %}
                         {% endif %}

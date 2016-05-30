@@ -42,6 +42,7 @@ form:
     deletesure: Are you sure you want to delete this?
     edit: Edit
     add: Add New
+    'add.%subject%': 'Add New %subject%'
     save: Save
     publish: Publish
     unpublish: Unpublish

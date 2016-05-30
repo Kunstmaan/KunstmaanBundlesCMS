@@ -41,6 +41,7 @@ form:
   deletesure: Sei sicuro di voler eliminare questo ?
   edit: Modifica
   add: Aggiungi nuovo
+  'add.%subject%': 'Aggiungi nuovo %subject%'
   save: Salva
   publish: Pubblica
   unpublish: Sospendi

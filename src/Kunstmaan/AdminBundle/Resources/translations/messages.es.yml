@@ -41,6 +41,7 @@ form:
   deletesure: ¿Seguro que quieres borrar esto?
   edit: Editar
   add: Agregar
+  'add.%subject%': 'Agregar %subject%'
   save: Guardar
   publish: Publicar
   unpublish: Despublicar
