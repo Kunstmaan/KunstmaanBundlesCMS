@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Security;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator;
+use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,11 +42,11 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * @param RouterInterface $router
      * @param Session $session
      * @param TranslatorInterface $translator
-     * @param OAuthUserCreator $oAuthUserCreator
+     * @param OAuthUserCreatorInterface $oAuthUserCreator
      * @param $clientId
      * @param $clientSecret
      */
-    public function __construct(RouterInterface $router, Session $session, TranslatorInterface $translator, OAuthUserCreator $oAuthUserCreator, $clientId, $clientSecret)
+    public function __construct(RouterInterface $router, Session $session, TranslatorInterface $translator, OAuthUserCreatorInterface $oAuthUserCreator, $clientId, $clientSecret)
     {
         $this->router = $router;
         $this->session = $session;
