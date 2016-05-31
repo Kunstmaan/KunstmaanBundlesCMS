@@ -21,12 +21,16 @@
 
                     {% if adminlistconfigurator.hasItemActions() %}
                         {% for itemAction in adminlistconfigurator.getItemActions() %}
-                            <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
-                                {% if itemAction.getIconFor(entity) is not null %}
-                                    <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
-                                {% endif %}
-                                {{ itemAction.getLabelFor(entity) }}
-                            </a>
+                            {% if itemAction.template is not null %}
+                                {% include itemAction.template with {'itemAction': itemAction} %}
+                            {% else %}
+                                <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
+                                    {% if itemAction.getIconFor(entity) is not null %}
+                                        <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>
+                                    {% endif %}
+                                    {{ itemAction.getLabelFor(entity) }}
+                                </a>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
                 {% endblock %}
