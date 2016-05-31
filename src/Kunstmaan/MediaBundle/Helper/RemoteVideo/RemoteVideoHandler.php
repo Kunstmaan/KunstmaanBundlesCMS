@@ -113,7 +113,7 @@ class RemoteVideoHandler extends AbstractMediaHandler
         switch ($video->getType()) {
             case 'youtube':
                 try {
-                    if (fopen('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'r') === false) {
+                    if (@fopen('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg', 'r') === false) {
                         $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/0.jpg');
                     } else {
                         $video->setThumbnailUrl('https://img.youtube.com/vi/'.$code.'/maxresdefault.jpg');
