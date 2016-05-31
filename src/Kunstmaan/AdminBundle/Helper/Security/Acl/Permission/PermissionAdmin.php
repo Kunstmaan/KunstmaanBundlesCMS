@@ -176,6 +176,16 @@ class PermissionAdmin
      */
     public function getAllRoles()
     {
+        return $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
+    }
+
+    /**
+     * Get all manageable roles for pages
+     *
+     * @return Role[]
+     */
+    public function getManageableRolesForPages()
+    {
         $roles = $this->em->getRepository('KunstmaanAdminBundle:Role')->findAll();
 
         if (($token = $this->tokenStorage->getToken()) && ($user = $token->getUser())) {
