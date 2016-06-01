@@ -96,7 +96,9 @@ class AdminLocaleListener implements EventSubscriberInterface
             return false;
         }
 
-        if (strpos($url, '/admin/preview') !== false) {
+        preg_match('/^\/admin(\/.*)?\/preview/', $url, $matches);
+
+        if (count($matches) > 0) {
             return false;
         }
 
