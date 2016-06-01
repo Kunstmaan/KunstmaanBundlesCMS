@@ -89,16 +89,17 @@ class AdminLocaleListener implements EventSubscriberInterface
      */
     private function isAdminRoute($url)
     {
-        preg_match('/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/', $url, $matches);
+        //If the url contains an admin part and a preview part then it is not an admin route
+        preg_match('/^(\/app_[a-zA-Z]+\.php)?\/([a-zA-Z_-]{2,5}\/)?admin(\/.*)?\/preview/', $url, $matches);
 
-        // Check if path is part of admin area
-        if (count($matches) === 0) {
+        if (count($matches) > 0) {
             return false;
         }
 
-        preg_match('/^\/admin(\/.*)?\/preview/', $url, $matches);
+        preg_match('/^\/(app_[a-zA-Z]+\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/', $url, $matches);
 
-        if (count($matches) > 0) {
+        // Check if path is part of admin area
+        if (count($matches) === 0) {
             return false;
         }
 
