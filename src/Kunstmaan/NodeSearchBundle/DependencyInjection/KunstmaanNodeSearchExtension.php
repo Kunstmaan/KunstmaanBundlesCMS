@@ -72,11 +72,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'type'           => 'string',
                     'include_in_all' => true
                 ],
-                'lang'               => [
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed'
-                ],
                 'slug'               => [
                     'type'           => 'string',
                     'include_in_all' => false,
@@ -90,11 +85,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                 'page_class'         => [
                     'type'           => 'string',
                     'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ],
-                'contentanalyzer'    => [
-                    'type'           => 'string',
-                    'include_in_all' => true,
                     'index'          => 'not_analyzed'
                 ],
                 'content'            => [
