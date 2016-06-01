@@ -209,6 +209,13 @@ services:
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.google_signin.hosted_domains%'
             - '%fos_user.model.user.class%'
+            - '@kunstmaan_admin.oauth_user_finder'
+
+    kunstmaan_admin.oauth_user_finder:
+        class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinder
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%fos_user.model.user.class%'
 
     kunstmaan_admin.google_signin.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\GoogleSignInTwigExtension

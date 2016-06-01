@@ -13,7 +13,7 @@ media:
                 title: Érkezik!
                 text: Húzd ide a fájlokat az azonnali feltöltéshez ebbe a könyvtárba.
         bulkupload:
-            addto: Fájlok feltöltése a "%folder%" mappába
+            addto: 'Fájlok feltöltése a "%folder%" mappába'
         contenttab:
             title: Tartalom
         propertiestab:
@@ -30,7 +30,7 @@ media:
             contenttype: Információ
             createdat: Létrehozva
             updatedat: Frissítve
-            downloadlink: Letölthető innen:
+            downloadlink: "Letölthető innen:"
         addto: ehhez
         deletesure: Biztos, hogy törölni szeretné?
         new: Új hozzáadása
@@ -43,43 +43,43 @@ media:
                 title: Almappa hozzáadása
                 save: Mentés
             form:
-                name: media.folder.addsub.form.name
-                rel: media.folder.addsub.form.rel
-                parent: media.folder.addsub.form.parent
-                internal_name: media.folder.addsub.form.internal_name
+                name: Név
+                rel: Rel
+                parent: Szülő
+                internal_name: Belső név
             success:
-                text: media.folder.addsub.success.text
+                text: A(z) `%folder%` mappa sikeresen létrehozva
         empty:
-            action: media.folder.empty.action
-            action_short: media.folder.empty.action_short
+            action: Mappa ürítése
+            action_short: Ürítés
             modal:
-                title: media.folder.empty.modal.title
-                text: media.folder.empty.modal.text
-                checkbox: media.folder.empty.modal.checkbox
-                save: media.folder.empty.modal.save
+                title: Mappa ürítése
+                text: Bitzos benne, hogy törölni akarja a(z) `%folder%` mappa tartalmát?
+                checkbox: Alkönyvtárak törlése is
+                save: Ürítés
             success:
-                text: media.folder.empty.success.text
+                text: A `%folder%` mappa üres!
         sub:
             no: Még nincsenek almappák
         delete:
             action: Törlés
             action_short: Törlés
             modal:
-                title: Könyvtár törlése
-                text: Szöveg
+                title: Mappa törlése
+                text: Biztosan törölni akarja a `%folder%` mappát?
             failure:
-                text: media.folder.delete.failure.text
+                text: Nem törölhető a `%folder%` mappa!
             success:
-                text: media.folder.delete.success.text
+                text: A(z) `%folder%` mappa sikeresen törölve!
         save: Mentés
         contenttab:
             title: Tartalom
         propertiestab:
             title: Részletek
-        sortby: Sorrendezés
+        sortby: Rendezés
         show:
             success:
-                text: media.folder.show.success.text
+                text: A(z) `%folder%` mappa módosítva!
 
     bulkupload:
         upload: Feltöltés
@@ -88,7 +88,7 @@ media:
         upload_more: További fájlok feltöltése
         back_to_folder: Vissza a mappába
         upload_finished: Feltöltés sikeres volt
-        not_available: Tömeges feltöltés nem lehetséges
+        not_available: Tömeges feltöltés nem lehetséges. A böngészőjében nem elérhető Flash, Silverlight vagy HTML5 támogatás.
 
     slide:
         add: Bemutató hozzáadása
@@ -120,10 +120,10 @@ media:
 
     adminlist:
         configurator:
-            name: media.adminlist.configurator.name
-            type: media.adminlist.configurator.type
-            date: media.adminlist.configurator.date
-            filesize: media.adminlist.configurator.filesize
+            name: Név
+            type: Típus
+            date: Dátum
+            filesize: Fájlméret
 
     form:
         remote:

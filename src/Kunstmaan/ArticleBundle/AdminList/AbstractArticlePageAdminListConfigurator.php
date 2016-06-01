@@ -163,6 +163,15 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     }
 
     /**
+     * Returns all overview pages
+     * @return mixed
+     */
+    public function getOverviewPages()
+    {
+        return $this->getOverviewPageRepository()->findActiveOverviewPages();
+    }
+
+    /**
      * @return \Doctrine\ORM\EntityRepository
      */
     abstract public function getOverviewPageRepository();
@@ -173,5 +182,14 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     public function getListTemplate()
     {
         return 'KunstmaanArticleBundle:AbstractArticlePageAdminList:list.html.twig';
+    }
+
+    /**
+     * Returns the full entity class name
+     * @return string
+     */
+    public function getEntityClassName()
+    {
+        return $this->em->getRepository($this->getRepositoryName())->getClassName();
     }
 }

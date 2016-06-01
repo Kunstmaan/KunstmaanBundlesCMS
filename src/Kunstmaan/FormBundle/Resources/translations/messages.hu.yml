@@ -17,14 +17,14 @@ kuma_form:
             required:
                 label:  Kötelező
             errormessage_required:
-                label:  "Kötelező" hibaüzenet
+                label:  "'Kötelező' hibaüzenet"
         choice_page_part:
             label:
                 label: Felirat
             required:
                 label: Kötelező
             errormessage_required:
-                label: "Kötelező" hibaüzenet
+                label: "'Kötelező' hibaüzenet"
             expanded:
                 label: Nem legördülő
             multiple:
@@ -39,38 +39,38 @@ kuma_form:
             required:
                 label: Kötelező
             errorMessageRequired:
-                label: "Kötelező" hibaüzenet
+                label: "'Kötelező' hibaüzenet"
             errorMessageInvalid:
-                label: "Érvénytelen" hibaüzenet
+                label: "'Érvénytelen' hibaüzenet"
         file_upload_page_part:
             label:
                 label: Felirat
             required:
                 label: Kötelező
             errormessage_required:
-                label: "Kötelező" hibaüzenet
+                label: "'Kötelező' hibaüzenet"
         multi_line_text_page_part:
             label:
                 label: Felirat
             required:
                 label: Kötelező
             errormessage_required:
-                label: "Kötelező" hibaüzenet
+                label: "'Kötelező' hibaüzenet"
             regex:
                 label: Regex
             errormessage_regex:
-                label: "Regex" hibaüzenet
+                label: "'Regex' hibaüzenet"
         single_line_text_page_part:
             label:
                 label: Felirat
             required:
                 label: Kötelező
             errormessage_required:
-                label: "Kötelező" hibaüzenet
+                label: "'Kötelező' hibaüzenet"
             regex:
                 label: Regex
             errormessage_regex:
-                label: "Regex" hibaüzenet
+                label: "'Regex' hibaüzenet"
         submit_button_page_part:
             label:
                 label: Felirat

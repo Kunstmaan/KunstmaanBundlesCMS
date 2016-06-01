@@ -30,3 +30,24 @@ kuma_pagepart:
     tab:
         content:
             title: Tartalom
+    modal:
+        delete:
+            'title.%type%':  "'%type%' oldalelem törlése"
+            'text.%type%': Ez nem távolítja el teljesen az oldalelemet, mentsd az oldalt, hogy a módosítás végleges legyen.
+            button:
+                delete: Törlés
+                cancel: Mégse
+    select:
+        add:  Oldalelem hozzáadása
+
+    template:
+        modal:
+            change:
+                current:    Jelenlegi
+                title:      Sablon módosítása
+                button:
+                    open:   Sablon módosítása
+                    change: Módosítás
+                    cancel: Mégse
+                message:
+                    'no_admin_found.%name%':    'NINCS ADMINJA a következőnek: %name%'
