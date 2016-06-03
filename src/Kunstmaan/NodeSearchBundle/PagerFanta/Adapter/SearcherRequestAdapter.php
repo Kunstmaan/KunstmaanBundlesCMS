@@ -31,12 +31,6 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
 
     /**
      * @var array
-     * @deprecated use aggregations instead
-     */
-    private $facets;
-
-    /**
-     * @var array
      */
     private $hits;
 
@@ -51,7 +45,6 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     public function __construct(SearcherInterface $searcher)
     {
         $this->searcher     = $searcher;
-        $this->facets       = array();
         $this->hits         = array();
         $this->aggregations = array();
     }
@@ -67,15 +60,6 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
         $suggests = $this->suggests->getSuggests();
 
         return $suggests['content-suggester'][0]['options'];
-    }
-
-    /**
-     * @return array
-     * @deprecated use getAggregations instead
-     */
-    public function getFacets()
-    {
-        return $this->facets;
     }
 
     /**
@@ -112,12 +96,10 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
     protected function processResponse(ResultSet $result = null)
     {
         $this->hits = array();
-        $this->facets = array();
         if (is_null($result)) {
             return null;
         }
         $this->collectHits($result);
-        $this->collectFacets($result);
         $this->collectAggregations($result);
     }
 
@@ -136,23 +118,6 @@ class SearcherRequestAdapter implements SearcherRequestAdapterInterface
             }
             $this->hits[] = $content;
         }
-    }
-
-    /**
-     * @param ResultSet $result
-     *
-     * @return bool
-     */
-    protected function collectFacets(ResultSet $result)
-    {
-        if (!$result->hasFacets()) {
-            return false;
-        }
-
-        // Collect all facets
-        $this->facets = $result->getFacets();
-
-        return true;
     }
 
     /**
