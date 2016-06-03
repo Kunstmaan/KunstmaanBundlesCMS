@@ -70,7 +70,7 @@
 {# Make sure twitter site is set because otherwise twitter cards are not possible #}
 {% if seo.twitterSite %}
 <!-- Twitter Cards -->
-        <meta name="twitter:card" content="{% if seo.twitterImage.contentType == "remote/video" %}player{% else %}summary{% if seo.twitterImage %}_large_image{% endif %}{% endif %}" />
+        <meta name="twitter:card" content="{% if seo.twitterImage and seo.twitterImage.contentType == "remote/video" %}player{% else %}summary{% if seo.twitterImage %}_large_image{% endif %}{% endif %}" />
     {% if seo.twitterSite %}
         <meta name="twitter:site" content="{{ seo.twitterSite }}" />
     {% endif %}
