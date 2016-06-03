@@ -30,6 +30,8 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
             $loader->load('update_listener.yml');
         }
 
+        $container->setParameter('kunstmaan_node_search.use_match_query_for_title', $config['use_match_query_for_title']);
+
         $container->getDefinition('kunstmaan_node_search.search_configuration.node')
             ->addMethodCall('setDefaultProperties', [$config['mapping']]);
     }

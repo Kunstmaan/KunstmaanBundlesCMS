@@ -24,11 +24,24 @@ class NodeSearcher extends AbstractElasticaSearcher
     private $domainConfiguration;
 
     /**
+     * @var bool
+     */
+    private $useMatchQueryForTitle = false;
+
+    /**
      * @param TokenStorageInterface $tokenStorage
      */
     public function setTokenStorage(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
+    }
+
+    /**
+     * @param bool $useMatchQueryForTitle
+     */
+    public function setUseMatchQueryForTitle($useMatchQueryForTitle)
+    {
+        $this->useMatchQueryForTitle = $useMatchQueryForTitle;
     }
 
     /**
@@ -58,11 +71,18 @@ class NodeSearcher extends AbstractElasticaSearcher
             ->setFieldQuery('content', $query)
             ->setFieldMinimumShouldMatch('content', '80%');
 
-        $elasticaQueryTitle = new \Elastica\Query\QueryString();
-        $elasticaQueryTitle
-            ->setDefaultField('title')
-            ->setBoost(2.0)
-            ->setQuery($query);
+        if ($this->useMatchQueryForTitle) {
+            $elasticaQueryTitle = new \Elastica\Query\Match();
+            $elasticaQueryTitle
+              ->setFieldQuery('title', $query)
+              ->setFieldMinimumShouldMatch('title', '80%');
+        } else {
+            $elasticaQueryTitle = new \Elastica\Query\QueryString();
+            $elasticaQueryTitle
+              ->setDefaultField('title')
+              ->setBoost(2.0)
+              ->setQuery($query);
+        }
 
         $elasticaQueryBool = new \Elastica\Query\BoolQuery();
         $elasticaQueryBool

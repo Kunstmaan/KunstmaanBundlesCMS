@@ -20,6 +20,7 @@ services:
             - [ setIndexType, ['%kunstmaan_node_search.indextype%']]
             - [ setTokenStorage, ['@security.token_storage']]
             - [ setDomainConfiguration, ['@kunstmaan_admin.domain_configuration']]
+            - [ setUseMatchQueryForTitle, ['%kunstmaan_node_search.use_match_query_for_title%']]
 
     kunstmaan_node_search.service.indexable_pageparts:
         class: Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService
