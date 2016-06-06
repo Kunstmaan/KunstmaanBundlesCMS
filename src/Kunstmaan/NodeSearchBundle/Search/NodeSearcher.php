@@ -147,8 +147,7 @@ class NodeSearcher extends AbstractElasticaSearcher
 
         $elasticaQueryRoles = new \Elastica\Query\Terms();
         $elasticaQueryRoles
-            ->setTerms('view_roles', $roles)
-            ->setMinimumMatch(1);
+            ->setTerms('view_roles', $roles);
         $elasticaQueryBool->addMust($elasticaQueryRoles);
     }
 

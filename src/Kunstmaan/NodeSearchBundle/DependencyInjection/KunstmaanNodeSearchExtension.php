@@ -106,7 +106,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'type'           => 'string',
                     'include_in_all' => true,
                     'index'          => 'not_analyzed',
-                    'index_name'     => 'view_role'
                 ],
             ]
         ]);
