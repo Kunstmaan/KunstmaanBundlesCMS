@@ -322,12 +322,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     {
         $mapping = new Mapping();
         $mapping->setType($index->getType($this->indexType));
-        $mapping->setParam('search_analyzer', 'suggestion_analyzer');
-        $mapping->setParam('index_analyzer', 'index_analyzer');
-        $mapping->setParam(
-            '_boost',
-            array('name' => '_boost', 'null_value' => 1.0)
-        );
 
         $mapping->setProperties($this->properties);
 
@@ -404,7 +398,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         // Add document to index
         $uid = 'nodetranslation_' . $nodeTranslation->getId();
 
-        $this->addBoost($node, $page, $doc);
         $this->addCustomData($page, $doc);
 
         $this->documents[] = $this->searchProvider->createDocument(
@@ -597,28 +590,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         );
 
         return $content;
-    }
-
-    /**
-     * Add boost to the index document
-     *
-     * @param Node             $node
-     * @param HasNodeInterface $page
-     * @param array            $doc
-     */
-    protected function addBoost($node, HasNodeInterface $page, &$doc)
-    {
-        // Check page type boost
-        $doc['_boost'] = 1.0;
-        if ($page instanceof SearchBoostInterface) {
-            $doc['_boost'] += $page->getSearchBoost();
-        }
-
-        // Check if page is boosted
-        $nodeSearch = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findOneByNode($node);
-        if ($nodeSearch !== null) {
-            $doc['_boost'] += $nodeSearch->getBoost();
-        }
     }
 
     /**

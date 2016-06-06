@@ -70,6 +70,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                 ],
                 'title'              => [
                     'type'           => 'string',
+                    'boost'          => 2,
                     'include_in_all' => true
                 ],
                 'slug'               => [
@@ -107,10 +108,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'index'          => 'not_analyzed',
                     'index_name'     => 'view_role'
                 ],
-                '_boost'             => [
-                    'type'           => 'float',
-                    'include_in_all' => false
-                ]
             ]
         ]);
     }

@@ -41,7 +41,7 @@ class AnalysisFactory implements AnalysisFactoryInterface
      */
     public function addIndexAnalyzer($language)
     {
-        $this->analyzers['index_analyzer'] = array(
+        $this->analyzers['default'] = array(
             'type'      => $language,
             'tokenizer' => 'standard',
             'filter'    => array(
@@ -64,7 +64,7 @@ class AnalysisFactory implements AnalysisFactoryInterface
      */
     public function addSuggestionAnalyzer($language)
     {
-        $this->analyzers['suggestion_analyzer'] = array(
+        $this->analyzers['default_search'] = array(
             'type'      => $language,
             'tokenizer' => 'standard',
             'filter'    => array(

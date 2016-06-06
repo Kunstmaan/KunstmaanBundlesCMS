@@ -522,4 +522,18 @@ SQL;
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * Finds all different page classes currently registered as nodes
+     *
+     * @return string[]
+     */
+    public function findAllDistinctPageClasses()
+    {
+        $qb = $this->createQueryBuilder('n')
+            ->select('n.refEntityName')
+            ->distinct(true);
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }
