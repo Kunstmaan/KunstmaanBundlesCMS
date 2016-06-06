@@ -82,7 +82,9 @@
                 <!-- Actions -->
                 <td class="table__actions">
                     {% if adminlist.canView(item) %}
-                        <a href="{{ path(adminlist.getViewUrlFor(item)["path"], adminlist.getViewUrlFor(item)[("params")] ) }}"><i class="icon-eye"></i>{{ 'View' | trans }}</a>
+                        <a href="{{ path(adminlist.getViewUrlFor(item)["path"], adminlist.getViewUrlFor(item)[("params")] ) }}" class="link--text table__actions__item" title="{{ 'View' | trans }}">
+                            <i class="fa fa-eye"></i>
+                        </a>
                     {% endif %}
                     {% if adminlist.canEdit(item) %}
                         <a href="{{ path(adminlist.getEditUrlFor(item)["path"], adminlist.getEditUrlFor(item)[("params")] ) }}" class="link--text table__actions__item" title="{{ 'Edit' | trans }}">
