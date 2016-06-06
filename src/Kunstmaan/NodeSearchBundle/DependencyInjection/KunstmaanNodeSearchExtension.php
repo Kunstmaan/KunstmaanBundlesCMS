@@ -32,7 +32,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
 
         if (array_key_exists('use_match_query_for_title', $config)) {
             $container->getDefinition('kunstmaan_node_search.search.node')
-                ->addMethodCall('setUseMatchQueryForTitle', $config['use_match_query_for_title']);
+                ->addMethodCall('setUseMatchQueryForTitle', [$config['use_match_query_for_title']]);
         }
 
         $container->getDefinition('kunstmaan_node_search.search_configuration.node')
