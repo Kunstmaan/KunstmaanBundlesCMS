@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
-use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Zizoo\UserBundle\Entity\User;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -355,7 +355,7 @@ class NodeTranslationRepository extends EntityRepository
      * @param HasNodeInterface $hasNode The hasNode
      * @param string           $lang    The locale
      * @param Node             $node    The node
-     * @param BaseUser         $owner   The user
+     * @param User             $owner   The user
      *
      * @throws \InvalidArgumentException
      *
@@ -365,7 +365,7 @@ class NodeTranslationRepository extends EntityRepository
         HasNodeInterface $hasNode,
         $lang,
         Node $node,
-        BaseUser $owner
+        User $owner
     ) {
         $em        = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);
@@ -409,7 +409,7 @@ class NodeTranslationRepository extends EntityRepository
      * @param HasNodeInterface $hasNode The hasNode
      * @param string           $lang    The locale
      * @param Node             $node    The node
-     * @param BaseUser         $owner   The user
+     * @param User             $owner   The user
      *
      * @throws \InvalidArgumentException
      *
@@ -419,7 +419,7 @@ class NodeTranslationRepository extends EntityRepository
         HasNodeInterface $hasNode,
         $lang,
         Node $node,
-        BaseUser $owner
+        User $owner
     ) {
         $em        = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);

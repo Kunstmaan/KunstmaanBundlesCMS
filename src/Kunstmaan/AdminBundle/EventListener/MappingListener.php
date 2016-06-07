@@ -54,7 +54,7 @@ class MappingListener
             $mapping = array(
                 'fieldName' => 'groups',
                 'joinTable' => array(
-                    'name' => $tableName . '_groups',
+                    'name' => $tableName . '_group',
                     'joinColumns' => array(array(
                         'name' => 'user_id',
                         'unique' => false,
@@ -68,7 +68,7 @@ class MappingListener
                         'referencedColumnName' => 'id'
                     ))
                 ),
-                'targetEntity' => 'Kunstmaan\AdminBundle\Entity\Group',
+                'targetEntity' => 'Zizoo\UserBundle\Entity\Group',
                 'sourceEntity' => $this->className
             );
             $classMetadata->mapManyToMany($mapping);
