@@ -59,8 +59,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new StringFilterType('name'), 'Name');
-        $this->addFilter('link', new StringFilterType('link'), 'Link');
+        $this->addFilter('name', new StringFilterType('name'), 'article.author.list.filter.name');
+        $this->addFilter('link', new StringFilterType('link'), 'article.author.list.filter.link');
     }
 
     /**
@@ -68,8 +68,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
-        $this->addField('link', 'Link', true);
+        $this->addField('name', 'article.author.list.header.name', true);
+        $this->addField('link', 'article.author.list.header.link', true);
     }
 
 }

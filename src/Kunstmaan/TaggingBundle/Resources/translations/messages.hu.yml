@@ -3,3 +3,11 @@ kuma_tagging:
         tag:
             name:
                 label: Név
+
+    adminlist:
+        header:
+            name:       Név
+            created_at: Létrehozva
+            updated_at: Módosítva
+        filter:
+            name:       Név

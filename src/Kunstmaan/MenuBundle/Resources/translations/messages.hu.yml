@@ -1,0 +1,15 @@
+kuma_menu:
+    menu:
+        adminlist:
+            field:
+                name:   Név
+            filter:
+                name:   Név
+    menu_item:
+        adminlist:
+            field:
+                title:      Cím
+                online:     Online
+                type:       Típus
+                url:        Url
+                new_window: Új ablakban

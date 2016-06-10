@@ -82,6 +82,16 @@ kuma_lead_generation:
                     cancel: Mégse
         type:
             label: Type
+        list:
+            header:
+                id:         Id
+                name:       Név
+                type:       Típus
+                html_id:    Html ID
+                rule_count: '# szabály'
+            filter:
+                name:       Név
+                html_id:    Html ID
 
     rules:
         'page_title.%name%': 'Jogosultsági beállítások: %name%'
@@ -92,6 +102,13 @@ kuma_lead_generation:
                     open:   Jogosultság hozzáadása
                     add:    Hozzáadás
                     cancel: Mégse
+        list:
+            header:
+                id:         Id
+                type:       Típus
+                properties: Tulajdonságok
+            filter:
+                id:         Id
 
     breadcrumbs:
         modules:    Modulok

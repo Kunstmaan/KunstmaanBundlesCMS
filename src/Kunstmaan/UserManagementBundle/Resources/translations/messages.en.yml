@@ -37,6 +37,17 @@ kuma_user:
             flash:
                 'success.%role%': Role '%role%' has been deleted!
     users:
+        adminlist:
+            header:
+                username:   Username
+                email:      E-mail
+                enabled:    Enabled
+                last_login: Last login
+                groups:     Groups
+            filter:
+                username:   Username
+                email:      E-mail
+                enabled:    Enabled
         add:
             flash:
                 'success.%username%': User '%username%' has been created!
@@ -46,3 +57,16 @@ kuma_user:
         delete:
             flash:
                 'success.%username%': User '%username%' has been deleted!
+    group:
+        adminlist:
+            header:
+                name:   Name
+                roles:  Roles
+            filter:
+                name:   Name
+    role:
+        adminlist:
+            header:
+                role:   Role
+            filter:
+                role:   Role

@@ -10,8 +10,27 @@ article:
         add:
             label: Add %type% item to %page%
     author:
+        list:
+            header:
+                name:   Name
+                link:   Link
+            filter:
+                name:   Name
+                link:   Link
         form:
             name:
                 label: Name
             link:
                 label: Link
+    page:
+        list:
+            header:
+                title:      Title
+                created_at: Created at
+                updated_at: Updated at
+                online:     Online
+            filter:
+                title:      Title
+                created_at: Created at
+                updated_at: Updated at
+                online:     Online

@@ -14,3 +14,15 @@ redirect:
                 label: redirect.form.redirect.target.label
             permanent:
                 label: Állandó
+
+    adminlist:
+        header:
+            domain:     Domain
+            origin:     Eredeti
+            target:     Cél
+            permanent:  Állandó?
+        filter:
+            domain:     Domain
+            origin:     Eredeti
+            target:     Cél
+            permanent:  Állandó

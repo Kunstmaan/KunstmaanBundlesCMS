@@ -1,12 +1,36 @@
 article:
+    warning:
+        create_overview_page: Létre kell hoznod egy áttekintő oldalt, hogy csinálhass %type% oldalt!
     form:
         date:
             label: Dátum
         summery:
             label: Összegzés
+    modal:
+        add:
+            label: %type% hozzáadása a(z) %page% oldalhoz
     author:
+        list:
+            header:
+                name:   Név
+                link:   Link
+            filter:
+                name:   Név
+                link:   Link
         form:
             name:
                 label: Név
             link:
                 label: Link
+    page:
+        list:
+            header:
+                title:      Cím
+                created_at: Létrehozva
+                updated_at: Frissítve
+                online:     Online
+            filter:
+                title:      Cím
+                created_at: Létrehozva
+                updated_at: Frissítve
+                online:     Online
