@@ -45,7 +45,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_menu.menu.adminlist.filter.name');
     }
 
     /**

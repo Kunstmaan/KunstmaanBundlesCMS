@@ -120,10 +120,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFilters()
     {
         $this
-            ->addFilter('title', new StringFilterType('title'), 'Title')
-            ->addFilter('created', new DateFilterType('created'), 'Created At')
-            ->addFilter('updated', new DateFilterType('updated'), 'Updated At')
-            ->addFilter('online', new BooleanFilterType('online'), 'Online');
+            ->addFilter('title', new StringFilterType('title'), 'kuma_node.admin.list.filter.title')
+            ->addFilter('created', new DateFilterType('created'), 'kuma_node.admin.list.filter.created_at')
+            ->addFilter('updated', new DateFilterType('updated'), 'kuma_node.admin.list.filter.updated_at')
+            ->addFilter('online', new BooleanFilterType('online'), 'kuma_node.admin.list.filter.online');
     }
 
     /**

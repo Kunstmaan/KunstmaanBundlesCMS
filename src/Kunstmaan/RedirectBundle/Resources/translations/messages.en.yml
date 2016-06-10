@@ -21,3 +21,8 @@ redirect:
             origin:     Origin
             target:     Target
             permanent:  Permanent?
+        filter:
+            domain:     Domain
+            origin:     Origin
+            target:     Target
+            permanent:  Permanent

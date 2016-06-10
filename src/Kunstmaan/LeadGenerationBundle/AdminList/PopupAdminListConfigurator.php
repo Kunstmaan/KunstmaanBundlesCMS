@@ -39,8 +39,8 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
-        $this->addFilter('htmlId', new ORM\StringFilterType('htmlId'), 'htmlId');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_lead_generation.popup.list.filter.name');
+        $this->addFilter('htmlId', new ORM\StringFilterType('htmlId'), 'kuma_lead_generation.popup.list.filter.html_id');
     }
 
     /**

@@ -37,7 +37,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_tagging.adminlist.filter.name');
     }
 
     /**

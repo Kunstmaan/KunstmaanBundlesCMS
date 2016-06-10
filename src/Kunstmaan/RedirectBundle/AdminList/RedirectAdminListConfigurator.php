@@ -52,11 +52,11 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
             $hosts = $this->domainConfiguration->getHosts();
             $domains = array_combine($hosts, $hosts);
             $domains = array_merge(array('' => 'redirect.all'), $domains);
-            $this->addFilter('domain', new ORM\EnumerationFilterType('domain'), 'Domain', $domains);
+            $this->addFilter('domain', new ORM\EnumerationFilterType('domain'), 'redirect.adminlist.filter.domain', $domains);
         }
-        $this->addFilter('origin', new ORM\StringFilterType('origin'), 'Origin');
-        $this->addFilter('target', new ORM\StringFilterType('target'), 'Target');
-        $this->addFilter('permanent', new ORM\BooleanFilterType('permanent'), 'Permanent');
+        $this->addFilter('origin', new ORM\StringFilterType('origin'), 'redirect.adminlist.filter.origin');
+        $this->addFilter('target', new ORM\StringFilterType('target'), 'redirect.adminlist.filter.target');
+        $this->addFilter('permanent', new ORM\BooleanFilterType('permanent'), 'redirect.adminlist.filter.permanent');
     }
 
     /**

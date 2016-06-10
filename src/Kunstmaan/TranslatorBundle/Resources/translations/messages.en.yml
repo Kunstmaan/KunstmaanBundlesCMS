@@ -47,3 +47,8 @@ kuma_translator:
         header:
             domain:     Domain
             keyword:    Keyword
+        filter:
+            domain:     Domain
+            keyword:    Keyword
+            text:       Text
+            locale:     Locale

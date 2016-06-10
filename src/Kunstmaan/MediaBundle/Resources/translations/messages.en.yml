@@ -124,6 +124,11 @@ media:
             type: Type
             date: Date
             filesize: Filesize
+            filter:
+                name:       Name
+                type:       Type
+                updated_at: Date
+                filesize:   Filesize (in bytes)
 
     form:
         remote:

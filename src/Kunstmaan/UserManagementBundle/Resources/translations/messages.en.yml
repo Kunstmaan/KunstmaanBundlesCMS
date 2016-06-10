@@ -44,6 +44,10 @@ kuma_user:
                 enabled:    Enabled
                 last_login: Last login
                 groups:     Groups
+            filter:
+                username:   Username
+                email:      E-mail
+                enabled:    Enabled
         add:
             flash:
                 'success.%username%': User '%username%' has been created!
@@ -58,7 +62,11 @@ kuma_user:
             header:
                 name:   Name
                 roles:  Roles
+            filter:
+                name:   Name
     role:
         adminlist:
             header:
+                role:   Role
+            filter:
                 role:   Role

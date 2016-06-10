@@ -14,6 +14,9 @@ article:
             header:
                 name:   Name
                 link:   Link
+            filter:
+                name:   Name
+                link:   Link
         form:
             name:
                 label: Name
@@ -22,6 +25,11 @@ article:
     page:
         list:
             header:
+                title:      Title
+                created_at: Created at
+                updated_at: Updated at
+                online:     Online
+            filter:
                 title:      Title
                 created_at: Created at
                 updated_at: Updated at

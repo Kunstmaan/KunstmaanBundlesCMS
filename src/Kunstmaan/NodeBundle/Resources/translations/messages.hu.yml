@@ -82,6 +82,11 @@ kuma_node:
                 created_at: Létrehozva
                 updated_at: Frissítve
                 online:     Online
+            filter:
+                title:      Cím
+                created_at: Létrehozva
+                updated_at: Frissítve
+                online:     Online
 
     tab:
         properties:

@@ -59,8 +59,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new StringFilterType('name'), 'Name');
-        $this->addFilter('link', new StringFilterType('link'), 'Link');
+        $this->addFilter('name', new StringFilterType('name'), 'article.author.list.filter.name');
+        $this->addFilter('link', new StringFilterType('link'), 'article.author.list.filter.link');
     }
 
     /**

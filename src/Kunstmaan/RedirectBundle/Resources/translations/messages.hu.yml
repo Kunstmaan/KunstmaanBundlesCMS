@@ -21,3 +21,8 @@ redirect:
             origin:     Eredeti
             target:     Cél
             permanent:  Állandó?
+        filter:
+            domain:     Domain
+            origin:     Eredeti
+            target:     Cél
+            permanent:  Állandó

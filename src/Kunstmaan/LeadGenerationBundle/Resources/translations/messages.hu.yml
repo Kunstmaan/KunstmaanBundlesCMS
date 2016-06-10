@@ -89,6 +89,9 @@ kuma_lead_generation:
                 type:       Típus
                 html_id:    Html ID
                 rule_count: '# szabály'
+            filter:
+                name:       Név
+                html_id:    Html ID
 
     rules:
         'page_title.%name%': 'Jogosultsági beállítások: %name%'
@@ -104,6 +107,8 @@ kuma_lead_generation:
                 id:         Id
                 type:       Típus
                 properties: Tulajdonságok
+            filter:
+                id:         Id
 
     breadcrumbs:
         modules:    Modulok

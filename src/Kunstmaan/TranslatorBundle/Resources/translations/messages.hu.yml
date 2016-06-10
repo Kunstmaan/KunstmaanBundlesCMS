@@ -47,3 +47,8 @@ kuma_translator:
         header:
             domain:     Névtér
             keyword:    Kulcsszó
+        filter:
+            domain:     Névtér
+            keyword:    Kulcsszó
+            text:       Szöveg
+            locale:     Nyelv

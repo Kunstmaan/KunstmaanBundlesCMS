@@ -15,7 +15,7 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('role', new StringFilterType('role'), 'Role');
+        $this->addFilter('role', new StringFilterType('role'), 'kuma_user.role.adminlist.filter.role');
     }
 
     /**

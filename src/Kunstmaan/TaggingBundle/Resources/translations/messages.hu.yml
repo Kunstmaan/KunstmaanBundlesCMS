@@ -9,3 +9,5 @@ kuma_tagging:
             name:       Név
             created_at: Létrehozva
             updated_at: Módosítva
+        filter:
+            name:       Név

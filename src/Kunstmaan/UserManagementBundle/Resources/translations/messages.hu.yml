@@ -44,6 +44,10 @@ kuma_user:
                 enabled:    Elfogadva
                 last_login: Utolsó belépés
                 groups:     Csoportok
+            filter:
+                username:   Felhasználónév
+                email:      E-mail
+                enabled:    Elfogadva
         add:
             flash:
                 'success.%username%': "A(z) '%username%' felhasználó létrehozva!"
@@ -58,7 +62,11 @@ kuma_user:
             header:
                 name:   Név
                 roles:  Jogok
+            filter:
+                name:   Név
     role:
         adminlist:
             header:
+                role:   Jog
+            filter:
                 role:   Jog

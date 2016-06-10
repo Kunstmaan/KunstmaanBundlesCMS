@@ -106,7 +106,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFilters()
     {
-        $this->addFilter('id', new ORM\StringFilterType('id'), 'Id');
+        $this->addFilter('id', new ORM\StringFilterType('id'), 'kuma_lead_generation.rules.list.filter.id');
     }
 
     public function getValue($item, $columnName)

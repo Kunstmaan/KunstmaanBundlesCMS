@@ -89,6 +89,9 @@ kuma_lead_generation:
                 type:       Type
                 html_id:    Html ID
                 rule_count: '# of Rules'
+            filter:
+                name:       Name
+                html_id:    Html ID
 
     rules:
         'page_title.%name%': Rules for %name%
@@ -104,6 +107,8 @@ kuma_lead_generation:
                 id:         Id
                 type:       Type
                 properties: Properties
+            filter:
+                id:         Id
 
     breadcrumbs:
         modules:    Modules

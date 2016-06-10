@@ -15,7 +15,7 @@ class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new StringFilterType('name'), 'Name');
+        $this->addFilter('name', new StringFilterType('name'), 'kuma_user.group.adminlist.filter.name');
     }
 
     /**

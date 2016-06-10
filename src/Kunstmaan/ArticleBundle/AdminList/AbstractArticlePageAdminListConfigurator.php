@@ -66,10 +66,10 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      */
     public function buildFilters()
     {
-        $this->addFilter('title', new StringFilterType('title'), 'Title')
-            ->addFilter('online', new BooleanFilterType('online'), 'Online')
-            ->addFilter('created', new DateFilterType('created', 'nv'), 'Created At')
-            ->addFilter('updated', new DateFilterType('updated', 'nv'), 'Updated At');
+        $this->addFilter('title', new StringFilterType('title'), 'article.page.list.filter.title')
+            ->addFilter('online', new BooleanFilterType('online'), 'article.page.list.filter.online')
+            ->addFilter('created', new DateFilterType('created', 'nv'), 'article.page.list.filter.created_at')
+            ->addFilter('updated', new DateFilterType('updated', 'nv'), 'article.page.list.filter.updated_at');
     }
 
     /**
