@@ -36,11 +36,11 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function buildFields()
     {
         if ($this->domainConfiguration->isMultiDomainHost()) {
-            $this->addField('domain', 'Domain', true);
+            $this->addField('domain', 'redirect.adminlist.header.domain', true);
         }
-        $this->addField('origin', 'Origin', true);
-        $this->addField('target', 'Target', true);
-        $this->addField('permanent', 'Permanent?', true);
+        $this->addField('origin', 'redirect.adminlist.header.origin', true);
+        $this->addField('target', 'redirect.adminlist.header.target', true);
+        $this->addField('permanent', 'redirect.adminlist.header.permanent', true);
     }
 
     /**

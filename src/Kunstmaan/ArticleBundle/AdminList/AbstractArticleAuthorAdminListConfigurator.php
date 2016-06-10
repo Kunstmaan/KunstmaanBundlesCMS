@@ -68,8 +68,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
-        $this->addField('link', 'Link', true);
+        $this->addField('name', 'article.author.list.header.name', true);
+        $this->addField('link', 'article.author.list.header.link', true);
     }
 
 }

@@ -3,3 +3,9 @@ kuma_tagging:
         tag:
             name:
                 label: Name
+
+    adminlist:
+        header:
+            name:       Name
+            created_at: Created at
+            updated_at: Updated at

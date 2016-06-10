@@ -53,8 +53,8 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      */
     public function buildFields()
     {
-        $this->addField('domain', 'Domain', true);
-        $this->addField('keyword', 'Keyword', true);
+        $this->addField('domain', 'kuma_translator.adminlist.header.domain', true);
+        $this->addField('keyword', 'kuma_translator.adminlist.header.keyword', true);
     }
 
     /**

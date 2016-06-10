@@ -76,6 +76,17 @@ kuma_form:
                 label: Label
     button:
         export_to:  Export to
+    list:
+        header:
+            title:      Title
+            language:   Language
+            path:       Form path
+    submission:
+        list:
+            header:
+                created:    Date
+                language:   Language
+                ip_address: IP address
 
 # Form Submissions
 formsubmissions:

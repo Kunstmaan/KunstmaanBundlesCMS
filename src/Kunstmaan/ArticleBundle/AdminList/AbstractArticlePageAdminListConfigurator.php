@@ -77,10 +77,10 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
      */
     public function buildFields()
     {
-        $this->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
-            ->addField('created', 'Created At', true)
-            ->addField('updated', 'Updated At', true)
-            ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
+        $this->addField('title', 'article.page.list.header.title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
+            ->addField('created', 'article.page.list.header.created_at', true)
+            ->addField('updated', 'article.page.list.header.updated_at', true)
+            ->addField('online', 'article.page.list.header.online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
     /**

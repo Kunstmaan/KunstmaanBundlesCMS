@@ -76,6 +76,12 @@ kuma_node:
         new_page:
             title:
                 default: New page
+        list:
+            header:
+                title:      Title
+                created_at: Created At
+                updated_at: Updated At
+                online:     Online
 
     tab:
         properties:
