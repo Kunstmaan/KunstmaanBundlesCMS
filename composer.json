@@ -40,7 +40,7 @@
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "stof/doctrine-extensions-bundle": "~1.1",
         "liip/imagine-bundle": "v1.4.3",
-        "imagine/imagine": "v0.5.0",
+        "imagine/imagine": "v0.6.0",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "~1.4.0-RC1",
         "symfony-cmf/routing": "~1.4.0-RC2",
