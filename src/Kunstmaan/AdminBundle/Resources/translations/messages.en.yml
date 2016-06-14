@@ -104,6 +104,7 @@ kuma_admin:
     edit:
         flash:
             success: The welcome page has been edited!
+            search_provider_offline: Search indexing unavailable!
     password_check:
         flash:
             error: Your password has not yet been changed

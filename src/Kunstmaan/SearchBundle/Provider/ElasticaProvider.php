@@ -5,6 +5,7 @@ namespace Kunstmaan\SearchBundle\Provider;
 use Elastica\Client;
 use Elastica\Document;
 use Elastica\Index;
+use Kunstmaan\SearchBundle\Exception\SearchProviderException;
 
 class ElasticaProvider implements SearchProviderInterface
 {
@@ -93,11 +94,17 @@ class ElasticaProvider implements SearchProviderInterface
      * @param string $indexType
      *
      * @return \Elastica\Bulk\ResponseSet
+     * @throws SearchProviderException
      */
     public function addDocuments($docs, $indexName = '', $indexType = '')
     {
-        // Ignore indexName & indexType for Elastica, they have already been set in the document...
-        return $this->getClient()->addDocuments($docs);
+        try {
+            // Ignore indexName & indexType for Elastica, they have already been set in the document...
+            return $this->getClient()->addDocuments($docs);
+        } catch (\Exception $e)
+        {
+            throw new SearchProviderException('Search provider unavailable');
+        }
     }
 
     /**
