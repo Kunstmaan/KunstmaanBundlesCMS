@@ -132,7 +132,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     public function createIndex()
     {
         //build new index
+        /** @var Index $index */
         $index = $this->searchProvider->createIndex($this->indexName);
+
+        if ($index->exists()) {
+            return;
+        }
 
         //create analysis
         $analysis = $this->container->get(
@@ -291,6 +296,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function deleteIndex()
     {
+        /** @var Index $index */
+        $index = $this->searchProvider->getIndex($this->indexName);
+        if (!$index->exists()) {
+            return;
+        }
+
         $this->searchProvider->deleteIndex($this->indexName);
     }
 
