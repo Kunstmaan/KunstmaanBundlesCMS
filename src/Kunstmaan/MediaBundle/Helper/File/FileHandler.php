@@ -2,13 +2,14 @@
 
 namespace Kunstmaan\MediaBundle\Helper\File;
 
-use Gaufrette\Adapter\Local;
 use Gaufrette\Filesystem;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Form\File\FileType;
+use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
@@ -39,6 +40,11 @@ class FileHandler extends AbstractMediaHandler
     public $mimeTypeGuesser = null;
 
     /**
+     * @var ExtensionGuesserInterface
+     */
+    public $extensionGuesser = null;
+
+    /**
      * Files with a blacklisted extension will be converted to txt
      *
      * @var array
@@ -54,11 +60,13 @@ class FileHandler extends AbstractMediaHandler
      * Constructor
      * @param int $priority
      * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
+     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
+    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface)
     {
         parent::__construct($priority);
         $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
+        $this->extensionGuesser = $extensionGuesserFactoryInterface->get();
     }
 
     /**
@@ -170,19 +178,25 @@ class FileHandler extends AbstractMediaHandler
             $file = new File($content);
             $media->setContent($file);
         }
+
+        $contentType = $this->mimeTypeGuesser->guess($content->getPathname());
         if ($content instanceof UploadedFile) {
             $pathInfo = pathinfo($content->getClientOriginalName());
+
+            if (!array_key_exists('extension', $pathInfo)) {
+                $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
+            }
+
             $media->setOriginalFilename($this->slugifier->slugify($pathInfo['filename']).'.'.$pathInfo['extension']);
             $name = $media->getName();
+
             if (empty($name)) {
                 $media->setName($media->getOriginalFilename());
             }
         }
 
-        $media->setFileSize(filesize($media->getContent()));
-
-        $contentType = $this->mimeTypeGuesser->guess($media->getContent()->getPathname());
         $media->setContentType($contentType);
+        $media->setFileSize(filesize($media->getContent()));
         $media->setUrl($this->mediaPath . $this->getFilePath($media));
         $media->setLocation('local');
     }

@@ -9,6 +9,8 @@ parameters:
     kunstmaan_media.icon_font.default_loader.class: 'Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
     kunstmaan_media.media_creator_service.class: 'Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService'
     kunstmaan_media.mimetype_guesser.factory.class: 'Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory'
+    kunstmaan_media.extension_guesser.factory.class: 'Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactory'
+    kunstmaan_media.validator.has_guessable_extension.class: 'Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator'
 
 services:
     kunstmaan_media.media_manager:
@@ -73,6 +75,9 @@ services:
     kunstmaan_media.mimetype_guesser.factory:
         class: '%kunstmaan_media.mimetype_guesser.factory.class%'
 
+    kunstmaan_media.extension_guesser.factory:
+        class: '%kunstmaan_media.extension_guesser.factory.class%'
+
     kunstmaan_media.command.migratename:
         class: Kunstmaan\MediaBundle\Command\MigrateNameCommand
         calls:
@@ -98,3 +103,11 @@ services:
         class: Gaufrette\Filesystem
         arguments:
             - '@kunstmaan_media.filesystem_adapter'
+
+    kunstmaan_media.validator.has_guessable_extension:
+        class: '%kunstmaan_media.validator.has_guessable_extension.class%'
+        tags:
+            - { name: validator.constraint_validator, alias: has_guessable_extension }
+        calls:
+            - [setMimeTypeGuesser, ['@kunstmaan_media.mimetype_guesser.factory']]
+            - [setExtensionGuesser, ['@kunstmaan_media.extension_guesser.factory']]
