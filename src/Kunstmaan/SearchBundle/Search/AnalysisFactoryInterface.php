@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\SearchBundle\Search;
 
-interface AnalysisFactoryInterface 
+interface AnalysisFactoryInterface
 {
     /**
      * @return array
@@ -10,57 +10,45 @@ interface AnalysisFactoryInterface
     public function build();
 
     /**
-     * @param string $lang
+     * @param string $language
      *
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
-    public function addIndexAnalyzer($lang);
+    public function addIndexAnalyzer($language);
 
     /**
-     * @param string $lang
+     * @param string $language
      *
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
-    public function addSuggestionAnalyzer($lang);
+    public function addSuggestionAnalyzer($language);
 
     /**
-     * @return AnalysisFactory
-     */
-    public function addNGramFilter();
-
-    /**
-     * @param string $lang
-     * @param array  $words
+     * @param string $language
      *
-     * @return AnalysisFactory
+     * @return AnalysisFactoryInterface
      */
-    public function addStopWordsFilter($lang, array $words = null);
+    public function addStopWordsFilter($language);
 
     /**
-     * @return AnalysisFactory
+     * @param string $language
+     *
+     * @return AnalysisFactoryInterface
+     */
+    public function addStemmerFilter($language);
+
+    /**
+     * @return AnalysisFactoryInterface
      */
     public function addStripSpecialCharsFilter();
 
     /**
-     * @param string $lang
-     * @param array  $stopwords
+     * @return AnalysisFactoryInterface
      */
-    public function setStopwords($lang, $stopwords);
+    public function addNGramFilter();
 
     /**
-     * @param string $lang
-     *
-     * @return array
+     * @param string $language
      */
-    public function getStopwords($lang = 'en');
-
-    /**
-     * @param string $lang
-     */
-    public function setupLanguage($lang = 'en');
-
-    /**
-     * @param array|string $languages
-     */
-    public function setupLanguages($languages);
+    public function setupLanguage($lang = 'english');
 }

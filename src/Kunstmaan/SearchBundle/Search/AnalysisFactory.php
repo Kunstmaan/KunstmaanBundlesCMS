@@ -13,16 +13,11 @@ class AnalysisFactory implements AnalysisFactoryInterface
     /** @var array */
     private $filters;
 
-    /** @var array */
-    private $stopwords;
-
-
     public function __construct()
     {
         $this->analyzers  = array();
         $this->tokenizers = array();
         $this->filters    = array();
-        $this->stopwords  = array();
     }
 
     /**
@@ -40,87 +35,78 @@ class AnalysisFactory implements AnalysisFactoryInterface
     }
 
     /**
-     * @param string $lang
+     * @param string $language
      *
      * @return AnalysisFactoryInterface
      */
-    public function addIndexAnalyzer($lang)
+    public function addIndexAnalyzer($language)
     {
-        $this->analyzers['index_analyzer_' . $lang] = array(
-            'type'      => 'custom',
-            'tokenizer' => 'whitespace',
+        $this->analyzers['default'] = array(
+            'type'      => $language,
+            'tokenizer' => 'standard',
             'filter'    => array(
                 'trim',
                 'lowercase',
-                'stopwords_' . $lang,
                 'asciifolding',
                 'strip_special_chars',
-                'ngram'
+                $language . '_stop',
+                $language . '_stemmer'
             )
         );
 
-        // add dependencies
-        $this
-            ->addStopWordsFilter($lang)
-            ->addStripSpecialCharsFilter()
-            ->addNGramFilter();
-
         return $this;
     }
 
     /**
-     * @param string $lang
+     * @param string $language
      *
      * @return AnalysisFactoryInterface
      */
-    public function addSuggestionAnalyzer($lang)
+    public function addSuggestionAnalyzer($language)
     {
-        $this->analyzers['suggestion_analyzer_' . $lang] = array(
-            'type'      => 'custom',
-            'tokenizer' => 'whitespace',
-            'filter'    => array('trim', 'lowercase', 'asciifolding', 'strip_special_chars')
-        );
-
-        //add dependencies
-        $this
-            ->addStripSpecialCharsFilter()
-            ->addNGramFilter();
-
-        return $this;
-    }
-
-    /**
-     * @return AnalysisFactoryInterface
-     */
-    public function addNGramFilter()
-    {
-        $this->filters['ngram'] = array(
-            'type'     => 'nGram',
-            'min_gram' => 4,
-            'max_gram' => 30
+        $this->analyzers['default_search'] = array(
+            'type'      => $language,
+            'tokenizer' => 'standard',
+            'filter'    => array(
+                'trim',
+                'lowercase',
+                'asciifolding',
+                'strip_special_chars',
+                $language . '_stop',
+                $language . '_stemmer'
+            )
         );
 
         return $this;
     }
 
     /**
-     * @param string $lang
-     * @param array  $words
+     * @param string $language
      *
      * @return AnalysisFactoryInterface
      */
-    public function addStopWordsFilter($lang, array $words = null)
+    public function addStopWordsFilter($language)
     {
-        if ($words === null && isset($this->stopwords[$lang])) {
-            $words = $this->stopwords[$lang];
-        } elseif ($words === null) {
-            $words = array();
-        }
-
-        $this->filters['stopwords_' . $lang] = array(
+        $this->filters[$language . '_stop'] = array(
             'type'        => 'stop',
-            'stopwords'   => $words,
-            'ignore_case' => true
+            'stopwords'   => '_' . $language . '_'
+        );
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $language
+     *
+     * @return AnalysisFactoryInterface
+
+     */
+    public function addStemmerFilter($language)
+    {
+        $this->filters[$language . '_stemmer'] = array(
+            'type'        => 'stemmer',
+            'language'    => $language
         );
 
         return $this;
@@ -141,59 +127,27 @@ class AnalysisFactory implements AnalysisFactoryInterface
     }
 
     /**
-     * @param string $lang
-     * @param array  $stopwords
+     * @return AnalysisFactoryInterface
+     */
+    public function addNGramFilter()
+    {
+        // Ngrams are not used in our default implementation
+    }
+
+
+    /**
+     * @param string $language
      *
      * @return AnalysisFactoryInterface
      */
-    public function setStopwords($lang, $stopwords)
-    {
-        $this->stopwords[$lang] = $stopwords;
-
-        return $this;
-    }
-
-    /**
-     * @param string $lang
-     *
-     * @return array
-     */
-    public function getStopwords($lang = 'en')
-    {
-        if (isset($this->stopwords[$lang])) {
-            return $this->stopwords[$lang];
-        }
-
-        return array();
-    }
-
-    /**
-     * @param string $lang
-     *
-     * @return AnalysisFactoryInterface
-     */
-    public function setupLanguage($lang = 'en')
+    public function setupLanguage($language = 'english')
     {
         $this
-            ->addIndexAnalyzer($lang)
-            ->addSuggestionAnalyzer($lang);
-
-        return $this;
-    }
-
-    /**
-     * @param array|string $languages
-     *
-     * @return AnalysisFactoryInterface
-     */
-    public function setupLanguages($languages)
-    {
-        if (is_string($languages)) {
-            $languages = explode('|', $languages);
-        }
-        foreach ($languages as $lang) {
-            $this->setupLanguage($lang);
-        }
+            ->addIndexAnalyzer($language)
+            ->addSuggestionAnalyzer($language)
+            ->addStripSpecialCharsFilter()
+            ->addStopWordsFilter($language)
+            ->addStemmerFilter($language);
 
         return $this;
     }

@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.5.0",
         "symfony/symfony": "~2.8",
-        "ruflin/elastica": "~2.3"
+        "ruflin/elastica": "~3.2"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\SearchBundle\\": "" }
