@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode    = $treeBuilder->root('kunstmaan_node_search');
 
         $rootNode->children()->booleanNode('enable_update_listener')->defaultTrue();
+        $rootNode->children()->booleanNode('use_match_query_for_title')->defaultFalse();
 
         /** @var ArrayNodeDefinition $properties */
         $properties = $rootNode->children()->arrayNode('mapping')->useAttributeAsKey('name')->prototype('array');
