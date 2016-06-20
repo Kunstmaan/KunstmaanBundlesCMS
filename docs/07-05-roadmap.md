@@ -9,7 +9,7 @@
 ## v3.5.2
 
 * Add Google oauth integration for admin users as extra login option #1119
-* Better trnaslations (always use keys + support more languages)
+* Better translations (always use keys + support more languages)
 
 ## v3.6.0
 
