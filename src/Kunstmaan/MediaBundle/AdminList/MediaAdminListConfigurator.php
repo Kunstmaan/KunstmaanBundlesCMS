@@ -68,10 +68,10 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
-        $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'Type');
-        $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'Date');
-        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'Filesize (in bytes)');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'media.adminlist.configurator.filter.name');
+        $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'media.adminlist.configurator.filter.type');
+        $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'media.adminlist.configurator.filter.updated_at');
+        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'media.adminlist.configurator.filter.filesize');
     }
 
     /**

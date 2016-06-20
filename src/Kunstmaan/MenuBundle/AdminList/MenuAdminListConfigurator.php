@@ -37,7 +37,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
+        $this->addField('name', 'kuma_menu.menu.adminlist.field.name', true);
     }
 
     /**
@@ -45,7 +45,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_menu.menu.adminlist.filter.name');
     }
 
     /**

@@ -96,9 +96,9 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFields()
     {
-        $this->addField('id', 'Id', true);
-        $this->addField('classname', 'Type', false);
-        $this->addField('jsProperties', 'Properties', false);
+        $this->addField('id', 'kuma_lead_generation.rules.list.header.id', true);
+        $this->addField('classname', 'kuma_lead_generation.rules.list.header.type', false);
+        $this->addField('jsProperties', 'kuma_lead_generation.rules.list.header.properties', false);
     }
 
     /**
@@ -106,7 +106,7 @@ class RulesAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFilters()
     {
-        $this->addFilter('id', new ORM\StringFilterType('id'), 'Id');
+        $this->addFilter('id', new ORM\StringFilterType('id'), 'kuma_lead_generation.rules.list.filter.id');
     }
 
     public function getValue($item, $columnName)

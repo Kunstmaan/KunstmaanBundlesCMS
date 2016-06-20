@@ -1,0 +1,15 @@
+kuma_menu:
+    menu:
+        adminlist:
+            field:
+                name:   Name
+            filter:
+                name:   Name
+    menu_item:
+        adminlist:
+            field:
+                title:      Title
+                online:     Online
+                type:       Type
+                url:        Url
+                new_window: New window

@@ -47,9 +47,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function buildFields()
     {
-        $this->addField("created", "Date", true)
-             ->addField("lang", "Language", true)
-             ->addField("ipAddress", "ipAddress", true);
+        $this->addField("created", "kuma_form.submission.list.header.created", true)
+             ->addField("lang", "kuma_form.submission.list.header.language", true)
+             ->addField("ipAddress", "kuma_form.submission.list.header.ip_address", true);
     }
 
     /**

@@ -27,11 +27,11 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFields()
     {
-        $this->addField('id', 'Id', true);
-        $this->addField('name', 'Name', true);
-        $this->addField('classname', 'Type', false);
-        $this->addField('htmlId', 'Html id', true);
-        $this->addField('ruleCount', '# of Rules', false);
+        $this->addField('id', 'kuma_lead_generation.popup.list.header.id', true);
+        $this->addField('name', 'kuma_lead_generation.popup.list.header.name', true);
+        $this->addField('classname', 'kuma_lead_generation.popup.list.header.type', false);
+        $this->addField('htmlId', 'kuma_lead_generation.popup.list.header.html_id', true);
+        $this->addField('ruleCount', 'kuma_lead_generation.popup.list.header.rule_count', false);
     }
 
     /**
@@ -39,8 +39,8 @@ class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
-        $this->addFilter('htmlId', new ORM\StringFilterType('htmlId'), 'htmlId');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_lead_generation.popup.list.filter.name');
+        $this->addFilter('htmlId', new ORM\StringFilterType('htmlId'), 'kuma_lead_generation.popup.list.filter.html_id');
     }
 
     /**

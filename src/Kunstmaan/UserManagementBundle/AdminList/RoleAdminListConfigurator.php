@@ -15,7 +15,7 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('role', new StringFilterType('role'), 'Role');
+        $this->addFilter('role', new StringFilterType('role'), 'kuma_user.role.adminlist.filter.role');
     }
 
     /**
@@ -23,7 +23,7 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('role', 'Role', true);
+        $this->addField('role', 'kuma_user.role.adminlist.header.role', true);
     }
 
     /**

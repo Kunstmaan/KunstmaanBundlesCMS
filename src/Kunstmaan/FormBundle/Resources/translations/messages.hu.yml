@@ -76,6 +76,17 @@ kuma_form:
                 label: Felirat
     button:
         export_to: Exportálás
+    list:
+        header:
+            title:      Cím
+            language:   Nyelv
+            path:       Űrlap útvonala
+    submission:
+        list:
+            header:
+                created:    Dátum
+                language:   Nyelv
+                ip_address: IP cím
 
 # Form Submissions
 formsubmissions:

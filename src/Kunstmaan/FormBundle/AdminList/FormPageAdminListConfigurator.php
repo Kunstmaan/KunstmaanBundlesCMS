@@ -49,9 +49,9 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function buildFields()
     {
-        $this->addField('title', 'Title', true)
-            ->addField('lang', 'Language', true)
-            ->addField('url', 'Form path', true);
+        $this->addField('title', 'kuma_form.list.header.title', true)
+            ->addField('lang', 'kuma_form.list.header.language', true)
+            ->addField('url', 'kuma_form.list.header.path', true);
     }
 
     /**
