@@ -3,6 +3,8 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Event\UserEvent;
+use FOS\UserBundle\Model\UserInterface;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
@@ -10,8 +12,10 @@ use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -149,7 +153,15 @@ class UsersController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
+        /** @var UserInterface $user */
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        if ($user === null) {
+            throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
+        }
+
+        $userEvent = new UserEvent($user, $request);
+        $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
+
         $options = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user));
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
@@ -208,6 +220,7 @@ class UsersController extends BaseSettingsController
     /**
      * Delete a user
      *
+     * @param Request $request
      * @param int $id
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete")
@@ -216,15 +229,18 @@ class UsersController extends BaseSettingsController
      * @throws AccessDeniedException
      * @return array
      */
-    public function deleteAction($id)
+    public function deleteAction(Request $request, $id)
     {
         $this->checkPermission();
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        /* @var User $user */
+        /* @var UserInterface $user */
         $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
         if (!is_null($user)) {
+            $userEvent = new UserEvent($user, $request);
+            $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
+
             $username = $user->getUsername();
             $em->remove($user);
             $em->flush();
