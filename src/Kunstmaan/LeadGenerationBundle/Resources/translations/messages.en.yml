@@ -82,6 +82,16 @@ kuma_lead_generation:
                     cancel: Cancel
         type:
             label: Type
+        list:
+            header:
+                id:         Id
+                name:       Name
+                type:       Type
+                html_id:    Html ID
+                rule_count: '# of Rules'
+            filter:
+                name:       Name
+                html_id:    Html ID
 
     rules:
         'page_title.%name%': Rules for %name%
@@ -92,6 +102,13 @@ kuma_lead_generation:
                     open:   Add Rule
                     add:    Add
                     cancel: Cancel
+        list:
+            header:
+                id:         Id
+                type:       Type
+                properties: Properties
+            filter:
+                id:         Id
 
     breadcrumbs:
         modules:    Modules

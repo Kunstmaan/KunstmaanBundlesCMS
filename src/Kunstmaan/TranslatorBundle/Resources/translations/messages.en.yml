@@ -42,3 +42,13 @@ kuma_translator:
                 body:   All existing translations will be overwritten.
                 confirm_button: Import
                 cancel_button:  Cancel
+
+    adminlist:
+        header:
+            domain:     Domain
+            keyword:    Keyword
+        filter:
+            domain:     Domain
+            keyword:    Keyword
+            text:       Text
+            locale:     Locale

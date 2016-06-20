@@ -48,6 +48,8 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->scalarNode('publish_later_stepping')->defaultValue('15')->end()
+                ->scalarNode('unpublish_later_stepping')->defaultValue('15')->end()
             ->end();
 
         return $treeBuilder;

@@ -32,6 +32,13 @@ services:
         tags:
             - { name: 'form.type' }
 
+    kunstmaan_node.form.type.nodechoice:
+        class: Kunstmaan\NodeBundle\Form\NodeChoiceType
+        arguments:
+            - "@request_stack"
+        tags:
+            - { name: form.type }
+
     kunstmaan_node.admin_node.publisher:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.authorization_checker', '@event_dispatcher', '@kunstmaan_admin.clone.helper']

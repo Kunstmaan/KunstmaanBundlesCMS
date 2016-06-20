@@ -36,11 +36,11 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function buildFields()
     {
         if ($this->domainConfiguration->isMultiDomainHost()) {
-            $this->addField('domain', 'Domain', true);
+            $this->addField('domain', 'redirect.adminlist.header.domain', true);
         }
-        $this->addField('origin', 'Origin', true);
-        $this->addField('target', 'Target', true);
-        $this->addField('permanent', 'Permanent?', true);
+        $this->addField('origin', 'redirect.adminlist.header.origin', true);
+        $this->addField('target', 'redirect.adminlist.header.target', true);
+        $this->addField('permanent', 'redirect.adminlist.header.permanent', true);
     }
 
     /**
@@ -52,11 +52,11 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
             $hosts = $this->domainConfiguration->getHosts();
             $domains = array_combine($hosts, $hosts);
             $domains = array_merge(array('' => 'redirect.all'), $domains);
-            $this->addFilter('domain', new ORM\EnumerationFilterType('domain'), 'Domain', $domains);
+            $this->addFilter('domain', new ORM\EnumerationFilterType('domain'), 'redirect.adminlist.filter.domain', $domains);
         }
-        $this->addFilter('origin', new ORM\StringFilterType('origin'), 'Origin');
-        $this->addFilter('target', new ORM\StringFilterType('target'), 'Target');
-        $this->addFilter('permanent', new ORM\BooleanFilterType('permanent'), 'Permanent');
+        $this->addFilter('origin', new ORM\StringFilterType('origin'), 'redirect.adminlist.filter.origin');
+        $this->addFilter('target', new ORM\StringFilterType('target'), 'redirect.adminlist.filter.target');
+        $this->addFilter('permanent', new ORM\BooleanFilterType('permanent'), 'redirect.adminlist.filter.permanent');
     }
 
     /**

@@ -124,6 +124,11 @@ media:
             type: Típus
             date: Dátum
             filesize: Fájlméret
+            filter:
+                name:       Név
+                type:       Típus
+                updated_at: Dátum
+                filesize:   Fájlméret (byte-ban)
 
     form:
         remote:

@@ -42,3 +42,13 @@ kuma_translator:
                 body: Minden létező fordítás felül lesz írva.
                 confirm_button: Importálás
                 cancel_button: Mégse
+
+    adminlist:
+        header:
+            domain:     Névtér
+            keyword:    Kulcsszó
+        filter:
+            domain:     Névtér
+            keyword:    Kulcsszó
+            text:       Szöveg
+            locale:     Nyelv

@@ -353,7 +353,7 @@ class MediaController extends Controller
      *
      * @return array
      */
-    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = array())
+    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = array(), $isInModal=false)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -369,7 +369,11 @@ class MediaController extends Controller
         $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
 
         if ($request->isMethod('POST')) {
+            $params = array('folderId' => $folder->getId());
+            $params = array_merge($params, $extraParams);
+            
             $form->handleRequest($request);
+            
             if ($form->isValid()) {
                 $media = $helper->getMedia();
                 $media->setFolder($folder);
@@ -379,14 +383,18 @@ class MediaController extends Controller
                     'success',
                     'Media \'' . $media->getName() . '\' has been created!'
                 );
-
-                $params = array('folderId' => $folder->getId());
-                $params = array_merge($params, $extraParams);
-
+                return new RedirectResponse($this->generateUrl($redirectUrl, $params));
+            }
+            
+            if ($isInModal) {
+                $this->get('session')->getFlashBag()->add(
+                    'error',
+                    'Media not created! ' . $form->getErrors(true, true)
+                );
                 return new RedirectResponse($this->generateUrl($redirectUrl, $params));
             }
         }
-
+        
         return array(
             'type'   => $type,
             'form'   => $form->createView(),
@@ -423,7 +431,8 @@ class MediaController extends Controller
             $folderId,
             $type,
             'KunstmaanMediaBundle_chooser_show_folder',
-            $extraParams
+            $extraParams,
+            true
         );
     }
 

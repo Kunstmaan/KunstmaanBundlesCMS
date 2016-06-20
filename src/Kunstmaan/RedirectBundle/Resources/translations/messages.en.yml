@@ -14,3 +14,15 @@ redirect:
                 label: Target
             permanent:
                 label: Permanent
+
+    adminlist:
+        header:
+            domain:     Domain
+            origin:     Origin
+            target:     Target
+            permanent:  Permanent?
+        filter:
+            domain:     Domain
+            origin:     Origin
+            target:     Target
+            permanent:  Permanent

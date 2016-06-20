@@ -40,10 +40,10 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      */
     public function buildFilters()
     {
-        $this->addFilter('domain', new StringFilterType('domain'), 'domain');
-        $this->addFilter('keyword', new StringFilterType('keyword'), 'keyword');
-        $this->addFilter('text', new StringFilterType('text'), 'text');
-        $this->addFilter('locale', new EnumerationFilterType('locale'), 'locale', array_combine(
+        $this->addFilter('domain', new StringFilterType('domain'), 'kuma_translator.adminlist.filter.domain');
+        $this->addFilter('keyword', new StringFilterType('keyword'), 'kuma_translator.adminlist.filter.keyword');
+        $this->addFilter('text', new StringFilterType('text'), 'kuma_translator.adminlist.filter.text');
+        $this->addFilter('locale', new EnumerationFilterType('locale'), 'kuma_translator.adminlist.filter.locale', array_combine(
             $this->locales, $this->locales
         ));
     }
@@ -53,8 +53,8 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
      */
     public function buildFields()
     {
-        $this->addField('domain', 'Domain', true);
-        $this->addField('keyword', 'Keyword', true);
+        $this->addField('domain', 'kuma_translator.adminlist.header.domain', true);
+        $this->addField('keyword', 'kuma_translator.adminlist.header.keyword', true);
     }
 
     /**
@@ -177,7 +177,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             }
 
             // Field filter hack...
-            $this->addFilter('locale', new EnumerationFilterType('locale'), 'locale', array_combine(
+            $this->addFilter('locale', new EnumerationFilterType('locale'), 'kuma_translator.adminlist.filter.locale', array_combine(
                 $this->locales, $this->locales
             ));
 

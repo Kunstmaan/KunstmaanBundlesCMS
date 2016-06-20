@@ -37,6 +37,17 @@ kuma_user:
             flash:
                 'success.%role%': "A(z) '%role%' jogosultság törölve!"
     users:
+        adminlist:
+            header:
+                username:   Felhasználónév
+                email:      E-mail
+                enabled:    Elfogadva
+                last_login: Utolsó belépés
+                groups:     Csoportok
+            filter:
+                username:   Felhasználónév
+                email:      E-mail
+                enabled:    Elfogadva
         add:
             flash:
                 'success.%username%': "A(z) '%username%' felhasználó létrehozva!"
@@ -46,3 +57,16 @@ kuma_user:
         delete:
             flash:
                 'success.%username%': "A(z) '%username%' felhasználó törölve!"
+    group:
+        adminlist:
+            header:
+                name:   Név
+                roles:  Jogok
+            filter:
+                name:   Név
+    role:
+        adminlist:
+            header:
+                role:   Jog
+            filter:
+                role:   Jog
