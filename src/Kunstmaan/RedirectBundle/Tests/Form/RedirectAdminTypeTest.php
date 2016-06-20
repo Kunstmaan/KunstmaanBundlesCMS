@@ -102,12 +102,4 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->objectMultiDomain->buildForm($builder, array('domainConfiguration' => $this->multiDomainConfiguration));
     }
-
-    /**
-     * @covers Kunstmaan\RedirectBundle\Form\RedirectAdminType::getName
-     */
-    public function testGetName()
-    {
-        $this->assertEquals(RedirectAdminType::class, $this->objectMultiDomain->getName());
-    }
 }

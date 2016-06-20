@@ -31,14 +31,6 @@ class LinePagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\LinePagePartAdminType::getName
-     */
-    public function testGetName()
-    {
-        $this->assertEquals(LinePagePartAdminType::class, $this->object->getName());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Form\LinePagePartAdminType::buildForm
      */
     public function testBuildForm()
