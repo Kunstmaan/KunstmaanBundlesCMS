@@ -20,6 +20,7 @@ services:
             - [ setIndexType, ['%kunstmaan_node_search.indextype%']]
             - [ setTokenStorage, ['@security.token_storage']]
             - [ setDomainConfiguration, ['@kunstmaan_admin.domain_configuration']]
+            - [ setEntityManager, ['@doctrine.orm.entity_manager']]
 
     kunstmaan_node_search.service.indexable_pageparts:
         class: Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService

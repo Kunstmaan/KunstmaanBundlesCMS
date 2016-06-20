@@ -45,7 +45,7 @@
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "dev-symfony3",
         "symfony-cmf/routing": "~1.4.0-RC2",
-        "ruflin/elastica": "~2.3",
+        "ruflin/elastica": "~3.2",
         "fpn/doctrine-extensions-taggable": "~0.9",
         "sensio/generator-bundle": "~3.0",
         "twig/extensions": "~1.0",

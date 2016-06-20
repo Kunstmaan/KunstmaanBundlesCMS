@@ -177,11 +177,7 @@ class SearchService
             ->setContentType($queryType)
             ->setLanguage($lang);
 
-        // Facets
-        $facetTerms = new \Elastica\Facet\Terms('type');
-        $facetTerms->setField('type');
-        $query      = $searcher->getQuery();
-        $query->addFacet($facetTerms);
+        $query = $searcher->getQuery();
 
         // Aggregations
         $termsAggregation = new Terms('type');

@@ -70,12 +70,8 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                 ],
                 'title'              => [
                     'type'           => 'string',
+                    'boost'          => 2,
                     'include_in_all' => true
-                ],
-                'lang'               => [
-                    'type'           => 'string',
-                    'include_in_all' => true,
-                    'index'          => 'not_analyzed'
                 ],
                 'slug'               => [
                     'type'           => 'string',
@@ -90,11 +86,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                 'page_class'         => [
                     'type'           => 'string',
                     'include_in_all' => false,
-                    'index'          => 'not_analyzed'
-                ],
-                'contentanalyzer'    => [
-                    'type'           => 'string',
-                    'include_in_all' => true,
                     'index'          => 'not_analyzed'
                 ],
                 'content'            => [
@@ -115,12 +106,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'type'           => 'string',
                     'include_in_all' => true,
                     'index'          => 'not_analyzed',
-                    'index_name'     => 'view_role'
                 ],
-                '_boost'             => [
-                    'type'           => 'float',
-                    'include_in_all' => false
-                ]
             ]
         ]);
     }

@@ -43,8 +43,7 @@ class Configuration implements ConfigurationInterface
         $properties->children()->scalarNode('null_value');
         $properties->children()->scalarNode('analyzer');
         $properties->children()->scalarNode('index_analyzer');
-        $properties->children()->scalarNode('index_name');
-
+        $properties->children()->scalarNode('copy_to');
 
         return $treeBuilder;
     }

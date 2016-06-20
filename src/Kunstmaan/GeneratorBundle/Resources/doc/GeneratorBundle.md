@@ -67,7 +67,7 @@ bin/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefi
 
 Generate a search page for your website which will search the pages in the index created by the [KunstmaanNodeSearchBundle](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle). Only published nodes will be indexed.
 
-The search page holds by default 10 results per page and each result shows the page title, a highlighted best fragment and will link to the page. If your page is Taggable ([fpn/doctrine-extensions-taggable](https://github.com/FabienPennequin/DoctrineExtensions-Taggable)), the tags will be available as facets to filter on.
+The search page holds by default 10 results per page and each result shows the page title, a highlighted best fragment and will link to the page. If your page is Taggable ([fpn/doctrine-extensions-taggable](https://github.com/FabienPennequin/DoctrineExtensions-Taggable)), the tags will be available as aggregations to filter on.
 
 ### Command
 
