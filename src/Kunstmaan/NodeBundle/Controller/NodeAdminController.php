@@ -126,7 +126,7 @@ class NodeAdminController extends Controller
         $nodeAdminListConfigurator->addSimpleItemAction('Preview', $itemRoute, 'eye');
 
         $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
-        $nodeAdminListConfigurator->setShowAddHomepage($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN'));
+        $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN'));
 
         /** @var AdminList $adminlist */
         $adminlist = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);

@@ -35,6 +35,8 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
             'Kunstmaan\NodeBundle\Helper\PagesConfiguration', [$config['pages']]
         ));
 
+        $container->setParameter('kunstmaan_node.show_add_homepage', $config['show_add_homepage']);
+
         $loader->load('services.yml');
     }
 
