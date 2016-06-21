@@ -27,11 +27,11 @@ You will only need to make changes when your code extends some functionality of 
 
 ## Upgrade LiipImagineBundle from v0.20.2 to v1.4.3
 
-It is not possible anymore to change the format of cached images with all versions that were released after v0.20.2 (see 
-https://github.com/liip/LiipImagineBundle/issues/584). There is an issue on the LiipImagineBundle roadmap to fix this, 
-but it will not be ready before the 2.0 release (see https://github.com/liip/LiipImagineBundle/issues/686). In the 
+It is not possible anymore to change the format of cached images with all versions that were released after v0.20.2 (see
+https://github.com/liip/LiipImagineBundle/issues/584). There is an issue on the LiipImagineBundle roadmap to fix this,
+but it will not be ready before the 2.0 release (see https://github.com/liip/LiipImagineBundle/issues/686). In the
 meanwhile we extended some services to implement a quick workaround so we can a least update the bundle to a recent
-version. 
+version.
 
 You should change the `liip_imagine` configuration and the routing when updating:
 
@@ -117,6 +117,27 @@ public function onAdaptSimpleFormEvent(AdaptSimpleFormEvent $event)
 
 ## FileFormSubmissionField changes
 
-When using the FormBundle with the FileUploadPagePart, files with the same name were overriding each other. Therefore we have added two new fields to the FileFormSubmissionField, UUID and URL. By doing this, every file that is being uploaded will be placed into a unique folder. 
+When using the FormBundle with the FileUploadPagePart, files with the same name were overriding each other. Therefore we have added two new fields to the FileFormSubmissionField, UUID and URL. By doing this, every file that is being uploaded will be placed into a unique folder.
 
 When updating from a previous version, be sure to update your database scheme.
+
+# UPGRADE FROM 3.5.1 to 3.5.2
+
+## [MediaBundle] FileHandler and ImageHandler have changed.
+
+The service definitions for both `FileHandler` and `ImageHandler` have changed.
+If you have changed their classes using the `%kunstmaan_media.media_handler.[image|file].class%` parameter, make sure they implement the new method.
+
+The `MEDIA_PATH` constant on `FileHandler` has been removed in favor of a property that can be set using the `setMediaPath` method.
+
+
+## [PagePartBundle] `PagePartConfigurationReader` and `PageTemplateConfigurationReader` removed
+
+If you relied on those classes use new interfaces and services instead:
+
+ * `kunstmaan_page_part.page_part_configuration_reader` implementing `PagePartConfigurationReaderInterface`
+ * `kunstmaan_page_part.page_template_configuration_reader` implementing `PageTemplateConfigurationReaderInterface`
+
+Classes using those services has changed as well and now take them as a constructor dependency instead of creating an instance in place.
+
+The `PageTemplateConfigurationRepostiory::findOrCreateFor` has been moved to `PageTemplateConfigurationService::findOrCreateFor`. It can be found via the `kunstmaan_page_part.page_template.page_template_configuration_service` service.

@@ -40,16 +40,17 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
 
     public function prepend(ContainerBuilder $container)
     {
-        // set twig global params
-        $twigConfig['globals']['nodebundleisactive'] = true;
-        $container->prependExtensionConfig('twig', $twigConfig);
-
         $cmfRoutingExtraConfig['chain']['routers_by_id']['router.default'] = 100;
         $cmfRoutingExtraConfig['chain']['replace_symfony_router'] = true;
         $container->prependExtensionConfig('cmf_routing', $cmfRoutingExtraConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
-        $this->processConfiguration(new Configuration(), $configs);
+        $config = $this->processConfiguration(new Configuration(), $configs);
 
+        // set twig global params
+        $twigConfig['globals']['nodebundleisactive'] = true;
+        $twigConfig['globals']['publish_later_stepping'] = $config['publish_later_stepping'];
+        $twigConfig['globals']['unpublish_later_stepping'] = $config['unpublish_later_stepping'];
+        $container->prependExtensionConfig('twig', $twigConfig);
     }
 }

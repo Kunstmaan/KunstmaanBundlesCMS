@@ -13,12 +13,6 @@ interface SearcherRequestAdapterInterface extends AdapterInterface
 
     /**
      * @return array
-     * @deprecated use getAggregations instead
-     */
-    public function getFacets();
-
-    /**
-     * @return array
      */
     public function getAggregations();
 }
