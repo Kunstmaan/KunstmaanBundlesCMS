@@ -45,6 +45,8 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $em->rollback();
             $output->writeln('An error occured while updating soft-deleted media : <error>' . $e->getMessage() . '</error>');
+            $updates = 0;
+            $fileRenameQueue = array();
         }
 
         foreach ($fileRenameQueue as $row) {
