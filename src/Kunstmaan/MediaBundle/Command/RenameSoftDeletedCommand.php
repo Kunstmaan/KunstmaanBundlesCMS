@@ -9,14 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MigrateSoftDeletedCommand extends ContainerAwareCommand
+class RenameSoftDeletedCommand extends ContainerAwareCommand
 {
     /** @var EntityManager $em */
     protected $em;
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Migrating soft-deleted media...');
+        $output->writeln('Renaming soft-deleted media...');
         /**
          * @var EntityManager
          */
@@ -44,7 +44,7 @@ class MigrateSoftDeletedCommand extends ContainerAwareCommand
             $em->commit();
         } catch (\Exception $e) {
             $em->rollback();
-            $output->writeln('An error occured while migrating soft-deleted media : <error>' . $e->getMessage() . '</error>');
+            $output->writeln('An error occured while updating soft-deleted media : <error>' . $e->getMessage() . '</error>');
         }
 
         foreach ($fileRenameQueue as $row) {
@@ -64,10 +64,10 @@ class MigrateSoftDeletedCommand extends ContainerAwareCommand
         parent::configure();
 
         $this
-            ->setName('kuma:media:migrate-soft-deleted')
-            ->setDescription('Migrate soft-deleted media to rename public media.')
+            ->setName('kuma:media:rename-soft-deleted')
+            ->setDescription('Rename physical files for soft-deleted media.')
             ->setHelp(
-                "The <info>kuma:media:migrate-name</info> command can be used to migrate soft-deleted media which is still publically available under the original filename."
+                "The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename."
             );
     }
 }
