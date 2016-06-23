@@ -111,8 +111,8 @@ class DoctrineMediaListener
         $handler = $this->mediaManager->getHandler($entity);
         if (isset($this->fileUrlMap[$url]) && $handler instanceof FileHandler) {
             $handler->fileSystem->rename(
-                preg_replace('~^' . preg_quote(FileHandler::MEDIA_PATH, '~') . '~', '/', $this->fileUrlMap[$url]),
-                preg_replace('~^' . preg_quote(FileHandler::MEDIA_PATH, '~') . '~', '/', $url)
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $this->fileUrlMap[$url]),
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $url)
             );
             unset($this->fileUrlMap[$url]);
         }
