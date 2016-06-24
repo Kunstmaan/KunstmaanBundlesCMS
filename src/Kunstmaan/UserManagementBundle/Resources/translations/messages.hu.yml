@@ -23,7 +23,7 @@ settings:
     role:
         role: Szerepkör engedélyek
         add: Szerepkör hozzáadása
-        edit: Szerepkör szerkezstése
+        edit: Szerepkör szerkesztése
 
 kuma_user:
     roles:
