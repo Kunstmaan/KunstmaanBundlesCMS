@@ -11,5 +11,6 @@
         "app/Resources/vendor_bower/cargobay/src/sidebar-toggle/styles/scss/sidebar-toggle",
         "app/Resources/vendor_bower/cargobay/src/videolink/styles/scss/videolink";
 {% else %}
-@import "app/Resources/vendor_bower/cargobay/src/cookie-consent/styles/scss/cookie-consent";
+@import "app/Resources/vendor_bower/cargobay/src/cookie-consent/styles/scss/cookie-consent",
+        "app/Resources/vendor_bower/cargobay/src/videolink/styles/scss/videolink";
 {% endif %}
