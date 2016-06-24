@@ -41,9 +41,9 @@
 	    "<=bowerComponentsPath>cargobay/src/toggle/js/jquery.toggle.js",
 	    "<=bowerComponentsPath>cargobay/src/sidebar-toggle/js/jquery.sidebar-toggle.js",
 	    "<=bowerComponentsPath>cargobay/src/cookie-consent/js/jquery.cookie-consent.js",
+{% endif %}
 	    "<=bowerComponentsPath>cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
 	    "<=bowerComponentsPath>cargobay/src/videolink/js/jquery.videolink.js",
-{% endif %}
         "<=bowerComponentsPath>picturefill/dist/pictureFill.js",
 	    "<=resourcesPath>ui/js/**/*.js"
 	],
