@@ -175,7 +175,7 @@
                 data-max-items="{{ attr['nested_form_max']|default('false') }}"
                 {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}
                 {% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"
-                    {%- if attr['nested_add_button_label'] is not empty %} data-add-button-label="{{ attr['nested_add_button_label'] }}"{% endif -%}
+                    {%- if attr['nested_add_button_label'] is not empty %} data-add-button-label="{{ attr['nested_add_button_label']|trans }}"{% endif -%}
                 {% endif %}
                 data-initialized="false" data-initializing="false" data-reinit-js='["nestedForm"]'>
 
