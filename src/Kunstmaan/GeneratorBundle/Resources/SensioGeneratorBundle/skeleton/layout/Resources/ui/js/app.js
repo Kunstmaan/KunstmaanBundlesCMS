@@ -6,8 +6,8 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
 
     init = function() {
         cargobay.videolink.init();        
-{% if demosite %}
         cargobay.scrollToTop.init();
+{% if demosite %}
         cargobay.toggle.init();
         cargobay.sidebarToggle.init();
         cargobay.cookieConsent.init();
