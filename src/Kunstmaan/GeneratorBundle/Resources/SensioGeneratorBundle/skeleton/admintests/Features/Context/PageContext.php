@@ -12,6 +12,10 @@ use {{ namespace }}\Entity\Pages\FormPage;
  * PageContext
  *
  * Provides the context for the AdminPage.feature
+ *
+ * @SuppressWarnings(PMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PMD.TooManyMethods)
+ * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 class PageContext extends BehatContext
 {

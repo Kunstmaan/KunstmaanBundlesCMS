@@ -52,6 +52,8 @@ class {{ pagepart }} extends AbstractPagePart
 
     /**
      * @return boolean
+     *
+     * @SuppressWarnings(PMD.BooleanGetMethodName)
      */
     public function getOpenInNewWindow()
     {

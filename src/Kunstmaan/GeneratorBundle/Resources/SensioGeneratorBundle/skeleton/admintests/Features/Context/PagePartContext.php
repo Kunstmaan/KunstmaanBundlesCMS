@@ -10,6 +10,10 @@ use Behat\Mink\Exception\ElementNotFoundException;
  * PagePartContext
  *
  * Provides the context for the AdminPagePart.feature
+ *
+ * @SuppressWarnings(PMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PMD.TooManyMethods)
+ * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 class PagePartContext extends BehatContext
 {
@@ -135,6 +139,8 @@ class PagePartContext extends BehatContext
      * @param Boolean $multiple
      *
      * @throws ElementNotFoundException
+     *
+     * @SuppressWarnings(PMD.BooleanArgumentFlag)
      */
     public function selectOption($element, $option, $multiple = false)
     {

@@ -41,6 +41,8 @@ class ImagePagePart extends AbstractPagePart
      * Get opennewwindow
      *
      * @return bool
+     *
+     * @SuppressWarnings(PMD.BooleanGetMethodName)
      */
     public function getOpenInNewWindow()
     {
