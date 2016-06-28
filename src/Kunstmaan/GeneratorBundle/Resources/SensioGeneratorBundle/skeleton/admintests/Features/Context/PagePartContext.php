@@ -39,7 +39,7 @@ class PagePartContext extends BehatContext
      */
     public function iFillPagePartCkeEditor($name, $value)
     {
-        $this->getMainContext()->getSession()->switchToIFrame('cke_iframe_'.lcfirst($name));
+        $this->getMainContext()->getSession()->switchToIFrame('cke_iframe_' . lcfirst($name));
         $this->getMainContext()->getSession()->executeScript("document.body.innerHTML='$value'");
         $this->getMainContext()->getSession()->switchToIFrame();
     }
@@ -58,7 +58,7 @@ class PagePartContext extends BehatContext
         $field = $page->find('xpath', "//label[contains(normalize-space(string(.)), '$name')]");
         $element = $field->getParent()->find('xpath', "//input");
         $name = $element->getAttribute('name');
-        $javascript = "document.getElementsByName('".$name."')[0].value='".$value."';";
+        $javascript = "document.getElementsByName('" . $name . "')[0].value='" . $value . "';";
         $this->getMainContext()->getSession()->executeScript($javascript);
     }
 
@@ -121,7 +121,7 @@ class PagePartContext extends BehatContext
         if ($element->getValue() == '') {
             $id = $element->getAttribute('id');
             if (!empty($id)) {
-                $javascript = "document.getElementById('".$id."').value='".$timeValue."';";
+                $javascript = "document.getElementById('" . $id . "').value='" . $timeValue . "';";
                 $this->getMainContext()->getSession()->executeScript($javascript);
             }
         }
