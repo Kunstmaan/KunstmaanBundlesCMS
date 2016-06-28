@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}behat_test_pages")
  */
-class BehatTestPage extends AbstractPage  implements HasPageTemplateInterface
+class BehatTestPage extends AbstractPage implements HasPageTemplateInterface
 {
 
     /**
