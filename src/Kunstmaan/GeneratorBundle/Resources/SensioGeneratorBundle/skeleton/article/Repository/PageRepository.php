@@ -37,29 +37,29 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
      */
     public function getArticlesQuery($lang = null, $offset, $limit)
     {
-	$qb = $this->createQueryBuilder('a')
-	    ->innerJoin('KunstmaanNodeBundle:NodeVersion', 'v', 'WITH', 'a.id = v.refId')
-	    ->innerJoin('KunstmaanNodeBundle:NodeTranslation', 't', 'WITH', 't.publicNodeVersion = v.id')
-	    ->innerJoin('KunstmaanNodeBundle:Node', 'n', 'WITH', 't.node = n.id')
-	    ->where('t.online = 1')
-	    ->andWhere('n.deleted = 0')
-	    ->andWhere('v.refEntityName = :refname')
-	    ->orderBy('a.date', 'DESC')
-	    ->setParameter('refname', "{{ namespace | replace({'\\': '\\\\'}) }}\\Entity\\Pages\\{{ entity_class }}Page");
+        $qb = $this->createQueryBuilder('a')
+            ->innerJoin('KunstmaanNodeBundle:NodeVersion', 'v', 'WITH', 'a.id = v.refId')
+            ->innerJoin('KunstmaanNodeBundle:NodeTranslation', 't', 'WITH', 't.publicNodeVersion = v.id')
+            ->innerJoin('KunstmaanNodeBundle:Node', 'n', 'WITH', 't.node = n.id')
+            ->where('t.online = 1')
+            ->andWhere('n.deleted = 0')
+            ->andWhere('v.refEntityName = :refname')
+            ->orderBy('a.date', 'DESC')
+            ->setParameter('refname', "{{ namespace | replace({'\\': '\\\\'}) }}\\Entity\\Pages\\{{ entity_class }}Page");
 
-	if (!is_null($lang)) {
-	    $qb->andWhere('t.lang = :lang')
-		->setParameter('lang', $lang);
+        if (!is_null($lang)) {
+            $qb->andWhere('t.lang = :lang')
+                ->setParameter('lang', $lang);
         }
 
-	if ($limit) {
-	    $qb->setMaxResults(1);
+        if ($limit) {
+            $qb->setMaxResults(1);
 
-	    if ($offset) {
-		$qb->setFirstResult($offset);
+            if ($offset) {
+                $qb->setFirstResult($offset);
             }
         }
 
-	return $qb->getQuery();
+        return $qb->getQuery();
     }
 }

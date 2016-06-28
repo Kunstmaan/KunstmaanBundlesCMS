@@ -24,21 +24,21 @@ class BikeAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	$builder->add('type', ChoiceType::class, array(
-	    'choices' => array_combine(Bike::$types, Bike::$types),
-	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
-	));
-	$builder->add('brand', TextType::class, array(
-	    'required' => true
-	));
-	$builder->add('model', TextType::class, array(
-	    'required' => true
-	));
-	$builder->add('price', MoneyType::class, array(
-	    'required' => true
-	));
+        $builder->add('type', ChoiceType::class, array(
+            'choices' => array_combine(Bike::$types, Bike::$types),
+            'placeholder' => false,
+            'required' => true,
+                'choices_as_values' => true
+        ));
+        $builder->add('brand', TextType::class, array(
+            'required' => true
+        ));
+        $builder->add('model', TextType::class, array(
+            'required' => true
+        ));
+        $builder->add('price', MoneyType::class, array(
+            'required' => true
+        ));
     }
 
     /**
@@ -48,6 +48,6 @@ class BikeAdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return 'bike';
+        return 'bike';
     }
 }

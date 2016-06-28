@@ -19,7 +19,7 @@ class BikesTwigExtension extends \Twig_Extension
      */
     public function __construct(EntityManager $em)
     {
-	$this->em = $em;
+        $this->em = $em;
     }
 
     /**
@@ -29,10 +29,10 @@ class BikesTwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-	return array(
+        return array(
         new \Twig_SimpleFunction('get_bikes', array($this, 'getBikes')),
         new \Twig_SimpleFunction('get_submenu_items', array($this, 'getSubmenuItems')),
-	);
+        );
     }
 
     /**
@@ -40,7 +40,7 @@ class BikesTwigExtension extends \Twig_Extension
      */
     public function getBikes()
     {
-	return $this->em->getRepository('{{ bundle.getName() }}:Bike')->findAll();
+        return $this->em->getRepository('{{ bundle.getName() }}:Bike')->findAll();
     }
 
     /**
@@ -50,18 +50,18 @@ class BikesTwigExtension extends \Twig_Extension
      */
     public function getSubmenuItems(AbstractPage $page, $locale)
     {
-	$items = array();
+        $items = array();
 
-	$nv = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor($page);
-	if ($nv) {
-	    $nodeTranslations = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineChildren($nv->getNodeTranslation()->getNode(), $locale);
-	    foreach ($nodeTranslations as $nt) {
-		$childPage = $nt->getPublicNodeVersion()->getRef($this->em);
-		$items[] = array('nt' => $nt, 'page' => $childPage);
-	    }
-	}
+        $nv = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->getNodeVersionFor($page);
+        if ($nv) {
+            $nodeTranslations = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineChildren($nv->getNodeTranslation()->getNode(), $locale);
+            foreach ($nodeTranslations as $nt) {
+                $childPage = $nt->getPublicNodeVersion()->getRef($this->em);
+                $items[] = array('nt' => $nt, 'page' => $childPage);
+            }
+        }
 
-	return $items;
+        return $items;
     }
 
     /**
@@ -69,6 +69,6 @@ class BikesTwigExtension extends \Twig_Extension
      */
     public function getName()
     {
-	return 'bikes_twig_extension';
+        return 'bikes_twig_extension';
     }
 }

@@ -34,7 +34,7 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-	    'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}Page'
+            'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}Page'
         ));
     }
 
@@ -44,6 +44,6 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
      */
     public function getBlockPrefix()
     {
-	return '{{ entity_class|lower }}_page_type';
+        return '{{ entity_class|lower }}_page_type';
     }
 }

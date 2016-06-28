@@ -37,9 +37,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setUrl($url)
     {
-	$this->url = $url;
+        $this->url = $url;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -47,7 +47,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getUrl()
     {
-	return $this->url;
+        return $this->url;
     }
 
     /**
@@ -57,7 +57,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getOpenInNewWindow()
     {
-	return $this->openInNewWindow;
+        return $this->openInNewWindow;
     }
 
     /**
@@ -67,9 +67,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setOpenInNewWindow($openInNewWindow)
     {
-	$this->openInNewWindow = $openInNewWindow;
+        $this->openInNewWindow = $openInNewWindow;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -79,9 +79,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setText($text)
     {
-	$this->text = $text;
+        $this->text = $text;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -89,7 +89,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getText()
     {
-	return $this->text;
+        return $this->text;
     }
 
     /**
@@ -99,7 +99,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
     }
 
     /**
@@ -109,6 +109,6 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return new {{ adminType }}();
     }
 }

@@ -21,9 +21,9 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * @var array Supported bike types
      */
     public static $types = array(
-	self::TYPE_CITY_BIKE,
-	self::TYPE_MOUNTAIN_BIKE,
-	self::TYPE_RACING_BIKE
+        self::TYPE_CITY_BIKE,
+        self::TYPE_MOUNTAIN_BIKE,
+        self::TYPE_RACING_BIKE
     );
 
     /**
@@ -70,7 +70,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getType()
     {
-	return $this->type;
+        return $this->type;
     }
 
     /**
@@ -80,9 +80,9 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function setType($type)
     {
-	$this->type = $type;
+        $this->type = $type;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -90,7 +90,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getModel()
     {
-	return $this->model;
+        return $this->model;
     }
 
     /**
@@ -100,9 +100,9 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function setModel($model)
     {
-	$this->model = $model;
+        $this->model = $model;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -110,7 +110,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getBrand()
     {
-	return $this->brand;
+        return $this->brand;
     }
 
     /**
@@ -120,9 +120,9 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function setBrand($brand)
     {
-	$this->brand = $brand;
+        $this->brand = $brand;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -130,7 +130,7 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function getPrice()
     {
-	return $this->price;
+        return $this->price;
     }
 
     /**
@@ -140,9 +140,9 @@ class Bike extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     public function setPrice($price)
     {
-	$this->price = $price;
+        $this->price = $price;
 
-	return $this;
+        return $this;
     }
 
     /**
