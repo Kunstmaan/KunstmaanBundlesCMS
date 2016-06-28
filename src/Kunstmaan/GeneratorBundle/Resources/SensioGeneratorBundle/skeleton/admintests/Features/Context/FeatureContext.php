@@ -150,11 +150,11 @@ class FeatureContext extends AbstractContext
      */
     public function iLogOut()
     {
-	return array(
-	    new Step\Given('I am on "/'.$this->lang.'/admin/dashboard"'),
-	    new Step\Given('I wait 2 seconds'),
-	    new Step\When('I follow "logout"')
-	);
+        return array(
+            new Step\Given('I am on "/'.$this->lang.'/admin/dashboard"'),
+            new Step\Given('I wait 2 seconds'),
+            new Step\When('I follow "logout"')
+        );
     }
 
     /**

@@ -28,35 +28,35 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
 
-	$builder->add('linkUrl', URLChooserType::class, array(
-	    'required' => true
-	));
-	$builder->add('linkText', TextType::class, array(
-	    'required' => true
-	));
-	$builder->add('linkNewWindow', CheckboxType::class, array(
-	    'required' => false,
-	));
-	$builder->add('type', ChoiceType::class, array(
-	    'choices' => array_combine({{ pagepart }}::$types, {{ pagepart }}::$types),
-	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
-	));
-	$builder->add('size', ChoiceType::class, array(
-	    'choices' => array_combine({{ pagepart }}::$sizes, {{ pagepart }}::$sizes),
-	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
-	));
-	$builder->add('position', ChoiceType::class, array(
-	    'choices' => array_combine({{ pagepart }}::$positions, {{ pagepart }}::$positions),
-	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
-	));
+        $builder->add('linkUrl', URLChooserType::class, array(
+            'required' => true
+        ));
+        $builder->add('linkText', TextType::class, array(
+            'required' => true
+        ));
+        $builder->add('linkNewWindow', CheckboxType::class, array(
+            'required' => false,
+        ));
+        $builder->add('type', ChoiceType::class, array(
+            'choices' => array_combine({{ pagepart }}::$types, {{ pagepart }}::$types),
+            'placeholder' => false,
+            'required' => true,
+                'choices_as_values' => true
+        ));
+        $builder->add('size', ChoiceType::class, array(
+            'choices' => array_combine({{ pagepart }}::$sizes, {{ pagepart }}::$sizes),
+            'placeholder' => false,
+            'required' => true,
+                'choices_as_values' => true
+        ));
+        $builder->add('position', ChoiceType::class, array(
+            'choices' => array_combine({{ pagepart }}::$positions, {{ pagepart }}::$positions),
+            'placeholder' => false,
+            'required' => true,
+                'choices_as_values' => true
+        ));
     }
 
     /**
@@ -66,7 +66,7 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return '{{ pagepart|lower }}type';
+        return '{{ pagepart|lower }}type';
     }
 
     /**
@@ -76,8 +76,8 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
+        ));
     }
 }
