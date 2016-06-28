@@ -149,13 +149,13 @@ class PagePartContext extends BehatContext
         ));
 
         if (null === $opt) {
-            throw new ElementNotFoundException(
-                $element->getSession(), 'select option', 'value|text', $option
-            );
+            throw new ElementNotFoundException($element->getSession(), 'select option', 'value|text', $option);
         }
 
         $element->getSession()->getDriver()->selectOption(
-            $element->getXpath(), str_replace("\\", "\\\\", $opt->getValue()), $multiple
+            $element->getXpath(),
+            str_replace("\\", "\\\\", $opt->getValue()),
+            $multiple
         );
     }
 }

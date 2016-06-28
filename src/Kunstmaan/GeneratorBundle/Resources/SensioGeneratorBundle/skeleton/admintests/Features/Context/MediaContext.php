@@ -165,9 +165,7 @@ class MediaContext extends BehatContext
                 foreach ($records as $field => $value) {
                     $modalField = $modal->findField($field);
                     if (null === $modalField) {
-                        throw new ElementNotFoundException(
-                            $this->getSession(), 'form field', 'id|name|label|value', $field
-                        );
+                        throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $field);
                     }
                     $modalField->setValue($value);
                 }

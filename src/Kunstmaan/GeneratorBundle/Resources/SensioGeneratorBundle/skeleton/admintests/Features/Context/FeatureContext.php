@@ -322,9 +322,7 @@ class FeatureContext extends AbstractContext
                 $filterField = $this->getSession()->getPage()->find('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)));
             }
             if ($filterField === null) {
-                throw new ElementNotFoundException(
-                    $this->getSession(), 'form field', 'id|name|label|value', $field
-                );
+                throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $field);
             }
             //Check to see if we need to select an option or fill in a value.
             if ('select' !== $filterField->getTagName()) {
