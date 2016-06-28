@@ -122,10 +122,10 @@ class FeatureContext extends AbstractContext
     public function iTryToLogInWith($username, $password)
     {
         return array(
-            new Step\Given("I am on \"".$this->lang."/admin/login\""),
+            new Step\Given("I am on \"" . $this->lang . "/admin/login\""),
             new Step\Given("I wait 1 seconds"),
             new Step\Given("I press \"×\" if present"),
-            new Step\Given("I fill in \"username\" with \"". $username . "\""),
+            new Step\Given("I fill in \"username\" with \"" . $username . "\""),
             new Step\Given("I fill in \"password\" with \"" . $password . "\""),
             new Step\When("I press \"_submit\"")
         );
@@ -141,7 +141,7 @@ class FeatureContext extends AbstractContext
     public function iChangeThePasswordTo($newPassword)
     {
         return array(
-            new Step\Given("I fill in \"fos_user_change_password_form_current_password\" with \"". $this->adminPassword . "\""),
+            new Step\Given("I fill in \"fos_user_change_password_form_current_password\" with \"" . $this->adminPassword . "\""),
             new Step\Given("I fill in \"fos_user_change_password_form_plainPassword_first\" with \"" . $newPassword . "\""),
             new Step\Given("I fill in \"fos_user_change_password_form_plainPassword_second\" with \"" . $newPassword . "\""),
             new Step\When("I press \"Change password\"")
@@ -155,7 +155,7 @@ class FeatureContext extends AbstractContext
     public function iLogOut()
     {
         return array(
-            new Step\Given('I am on "/'.$this->lang.'/admin/dashboard"'),
+            new Step\Given('I am on "/' . $this->lang . '/admin/dashboard"'),
             new Step\Given('I wait 2 seconds'),
             new Step\When('I follow "logout"')
         );
@@ -211,9 +211,9 @@ class FeatureContext extends AbstractContext
     public function goToPage($pageName)
     {
         if (!empty($this->lang) && strncmp($pageName, "/", strlen("/"))) {
-            $pageName = "/".$pageName;
+            $pageName = "/" . $pageName;
         }
-        $this->getSession()->visit($this->locatePath($this->lang.$pageName));
+        $this->getSession()->visit($this->locatePath($this->lang . $pageName));
     }
 
     /**
@@ -235,28 +235,28 @@ class FeatureContext extends AbstractContext
     public function getPageUrlForPageName($pageName)
     {
         $pages = array(
-            "forgot password" => $this->lang."/admin/resetting/request",
-            "users" => $this->lang."/admin/settings/users",
-            "create new user" => $this->lang."/admin/settings/users/add",
-            "groups" => $this->lang."/admin/settings/groups",
-            "create new group" => $this->lang."/admin/settings/groups/add",
-            "roles" => $this->lang."/admin/settings/roles",
-            "create new role" => $this->lang."/admin/settings/roles/add",
-            "dashboard" => $this->lang."/admin",
-            "login" => $this->lang."/admin/login",
-            "media" => $this->lang."/admin/media/folder/1",
-            "add new image" => $this->lang."/admin/media/create/2/file",
-            "image" => $this->lang."/admin/media/folder/2",
-            "add new video" => $this->lang."/admin/media/create/3/video",
-            "video" => $this->lang."/admin/media/folder/3",
-            "add new slide" => $this->lang."/admin/media/create/4/slide",
-            "slide" => $this->lang."/admin/media/folder/4",
-            "add new file" => $this->lang."/admin/media/create/5/file",
-            "file" => $this->lang."/admin/media/folder/5",
-            "bulkupload" => $this->lang."/admin/media/bulkupload/1",
-            "admin home" => $this->lang."/admin/nodes/1",
-            "home" => $this->lang."/admin/nodes/1",
-            "pages" => $this->lang."/admin/nodes"
+            "forgot password" => $this->lang . "/admin/resetting/request",
+            "users" => $this->lang . "/admin/settings/users",
+            "create new user" => $this->lang . "/admin/settings/users/add",
+            "groups" => $this->lang . "/admin/settings/groups",
+            "create new group" => $this->lang . "/admin/settings/groups/add",
+            "roles" => $this->lang . "/admin/settings/roles",
+            "create new role" => $this->lang . "/admin/settings/roles/add",
+            "dashboard" => $this->lang . "/admin",
+            "login" => $this->lang . "/admin/login",
+            "media" => $this->lang . "/admin/media/folder/1",
+            "add new image" => $this->lang . "/admin/media/create/2/file",
+            "image" => $this->lang . "/admin/media/folder/2",
+            "add new video" => $this->lang . "/admin/media/create/3/video",
+            "video" => $this->lang . "/admin/media/folder/3",
+            "add new slide" => $this->lang . "/admin/media/create/4/slide",
+            "slide" => $this->lang . "/admin/media/folder/4",
+            "add new file" => $this->lang . "/admin/media/create/5/file",
+            "file" => $this->lang . "/admin/media/folder/5",
+            "bulkupload" => $this->lang . "/admin/media/bulkupload/1",
+            "admin home" => $this->lang . "/admin/nodes/1",
+            "home" => $this->lang . "/admin/nodes/1",
+            "pages" => $this->lang . "/admin/nodes"
         );
 
         return $pages[$pageName];
@@ -326,9 +326,7 @@ class FeatureContext extends AbstractContext
                 $filterField = $this->getSession()->getPage()->find('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)));
             }
             if ($filterField === null) {
-                throw new ElementNotFoundException(
-                    $this->getSession(), 'form field', 'id|name|label|value', $field
-                );
+                throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $field);
             }
             //Check to see if we need to select an option or fill in a value.
             if ('select' !== $filterField->getTagName()) {
@@ -369,8 +367,8 @@ class FeatureContext extends AbstractContext
 
             return array(
                 "filter_columnname[]" => $this->fixStepArgument($filterType),
-                "filter_comparator_".$nrOfFilterOptions => $this->fixStepArgument($filterComparator),
-                "filter_value_".$nrOfFilterOptions => $this->fixStepArgument($filterValue),
+                "filter_comparator_" . $nrOfFilterOptions => $this->fixStepArgument($filterComparator),
+                "filter_value_" . $nrOfFilterOptions => $this->fixStepArgument($filterValue),
             );
         } else {
             return array(
@@ -389,8 +387,8 @@ class FeatureContext extends AbstractContext
     public function iShouldSeeOr($text1, $text2)
     {
         $actual = $this->getSession()->getPage()->getText();
-        $regex1  = '/'.preg_quote($text1, '/').'/ui';
-        $regex2  = '/'.preg_quote($text2, '/').'/ui';
+        $regex1  = '/' . preg_quote($text1, '/') . '/ui';
+        $regex2  = '/' . preg_quote($text2, '/') . '/ui';
 
         if (!(preg_match($regex1, $actual) || preg_match($regex2, $actual))) {
             $message = sprintf('The text "%s" was not found anywhere in the text of the current page.', $text2);
@@ -440,7 +438,7 @@ class FeatureContext extends AbstractContext
      */
     protected function checkLink($href, $value = null, $newWindow = false) {
         $page = $this->getSession()->getPage();
-        $element = $page->find('xpath', "//a[contains(@href, '" . $href . "')".($newWindow ? 'and contains(@target, "_blank")' : '')."]");
+        $element = $page->find('xpath', "//a[contains(@href, '" . $href . "')" . ($newWindow ? 'and contains(@target, "_blank")' : '') . "]");
         if ($element) {
             if (!is_null($value)) {
                 if ($value == $element->getText()) {
@@ -463,7 +461,7 @@ class FeatureContext extends AbstractContext
     public function iShouldSeeImage($path, $altText = "")
     {
         $page = $this->getSession()->getPage();
-        $element = $page->find('xpath', "//img[contains(@src, '" . $path . "')".($altText ? 'and contains(@alt, "' . $altText . '")' : '')."]");
+        $element = $page->find('xpath', "//img[contains(@src, '" . $path . "')" . ($altText ? 'and contains(@alt, "' . $altText . '")' : '') . "]");
         if ($element) {
             return true;
         }

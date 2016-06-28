@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}content_pages")
  */
-class ContentPage extends AbstractPage  implements HasPageTemplateInterface, SearchTypeInterface
+class ContentPage extends AbstractPage implements HasPageTemplateInterface, SearchTypeInterface
 {
 {% if demosite %}
     /**
