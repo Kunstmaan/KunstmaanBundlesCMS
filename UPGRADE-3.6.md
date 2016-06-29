@@ -51,3 +51,9 @@ If you have overwritten, implemented, extended any of these interfaces and class
 * Document field 'contentanalyzer' has been removed from the default mapping configuration.
 * Parameter 'index_name' is not available anymore. Has been with the option 'copy_to'
 
+# UPGRADE FROM 3.6 to 3.6.1
+
+## [MediaBundle] Media has a new column.
+
+The Media entity has a new column named removed_from_file_system. This is used in the CleanDeleteMediaCommand to indicate in the database that a file, that was flagged as deleted, has been removed from the filesystem.
+So you have to generate a migration and execute it.
