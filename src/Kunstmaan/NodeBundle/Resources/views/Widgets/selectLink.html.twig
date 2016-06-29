@@ -80,7 +80,8 @@
                 <hr>
             </div>
 
-            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}" data-base-url={{ "/" ~ app.request.locale }}>
+            {% set base_url = multilanguage is not defined or multilanguage ? '/' ~ app.request.locale : '' %}
+            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}" data-base-url={{ base_url }}>
                 <ul>
                     {% for item in tree.rootItems %}
                         {{ macros.selectLinkRecTreeView(tree, item) }}
