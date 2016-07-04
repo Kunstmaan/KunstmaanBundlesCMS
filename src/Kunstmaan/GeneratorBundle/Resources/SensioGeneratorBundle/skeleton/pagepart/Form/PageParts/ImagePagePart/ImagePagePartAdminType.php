@@ -27,28 +27,28 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
 
-	$builder->add('media', MediaType::class, array(
-	    'label' => 'mediapagepart.image.choosefile',
-	    'mediatype' => 'image',
-	    'required' => true
-	));
-	$builder->add('caption', TextType::class, array(
-	    'required' => false
-	));
-	$builder->add('altText', TextType::class, array(
-	    'required' => false,
-	    'label' => 'mediapagepart.image.alttext'
-	));
-	$builder->add('link', URLChooserType::class, array(
-	    'required' => false,
-	    'label' => 'mediapagepart.image.link'
-	));
-	$builder->add('openInNewWindow', CheckboxType::class, array(
-	    'required' => false,
-	    'label' => 'mediapagepart.image.openinnewwindow'
-	));
+        $builder->add('media', MediaType::class, array(
+            'label' => 'mediapagepart.image.choosefile',
+            'mediatype' => 'image',
+            'required' => true
+        ));
+        $builder->add('caption', TextType::class, array(
+            'required' => false
+        ));
+        $builder->add('altText', TextType::class, array(
+            'required' => false,
+            'label' => 'mediapagepart.image.alttext'
+        ));
+        $builder->add('link', URLChooserType::class, array(
+            'required' => false,
+            'label' => 'mediapagepart.image.link'
+        ));
+        $builder->add('openInNewWindow', CheckboxType::class, array(
+            'required' => false,
+            'label' => 'mediapagepart.image.openinnewwindow'
+        ));
     }
 
     /**
@@ -58,7 +58,7 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return '{{ pagepart|lower }}type';
+        return '{{ pagepart|lower }}type';
     }
 
     /**
@@ -68,8 +68,8 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}',
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}',
+        ));
     }
 }
