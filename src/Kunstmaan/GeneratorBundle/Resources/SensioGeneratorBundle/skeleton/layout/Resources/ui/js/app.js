@@ -5,11 +5,11 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     var init;
 
     init = function() {
-{% if demosite %}
+        cargobay.videolink.init();        
         cargobay.scrollToTop.init();
+{% if demosite %}
         cargobay.toggle.init();
         cargobay.sidebarToggle.init();
-        cargobay.videolink.init();
         cargobay.cookieConsent.init();
         {{ bundle.getName() }}.search.init();
         {{ bundle.getName() }}.demoMsg.init();
