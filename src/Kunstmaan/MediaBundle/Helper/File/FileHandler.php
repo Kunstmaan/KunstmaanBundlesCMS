@@ -192,10 +192,6 @@ class FileHandler extends AbstractMediaHandler
      */
     public function removeMedia(Media $media)
     {
-        # Remove links to content in database
-        $media->setContentType(null);
-        $media->setUrl(null);
-
         $adapter = $this->fileSystem->getAdapter();
 
         # Remove the file from filesystem
@@ -206,7 +202,7 @@ class FileHandler extends AbstractMediaHandler
 
         # Remove the files containing folder if there's nothing left
         $folderPath = $this->getFileFolderPath($media);
-        if($adapter->exists($folderPath) && $adapter->isDirectory($folderPath)) {
+        if($adapter->exists($folderPath) && $adapter->isDirectory($folderPath) && !empty($folderPath)) {
 
             $allMyKeys = $adapter->keys();
             $everythingfromdir = preg_grep('/'.$folderPath, $allMyKeys);
@@ -215,6 +211,8 @@ class FileHandler extends AbstractMediaHandler
                 $adapter->delete($folderPath);
             }
         }
+
+        $media->setRemovedFromFileSystem(true);
     }
 
     /**
@@ -313,7 +311,9 @@ class FileHandler extends AbstractMediaHandler
 
         $parts    = pathinfo($filename);
         $filename = $this->slugifier->slugify($parts['filename']);
-        $filename .= '.'.strtolower($parts['extension']);
+        if (array_key_exists('extension', $parts)) {
+            $filename .= '.'.strtolower($parts['extension']);
+        }
 
         return sprintf(
             '%s/%s',
