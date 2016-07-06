@@ -12,12 +12,12 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
     /**
      * @var PagePartAdminConfiguratorInterface[]
      */
-    private $configurators = [];
+    protected $configurators = [];
 
     /**
      * @var PagePartConfigurationParserInterface
      */
-    private $parser;
+    protected $parser;
 
     public function __construct(PagePartConfigurationParserInterface $parser)
     {
