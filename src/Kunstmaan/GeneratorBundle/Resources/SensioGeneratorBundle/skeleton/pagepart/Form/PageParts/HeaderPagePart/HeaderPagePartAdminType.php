@@ -26,20 +26,21 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
 
-	$names = {{ pagepart }}::$supportedHeaders;
-	array_walk($names, function(&$item) { $item = 'Header ' . $item; });
+        $names = {{ pagepart }}::$supportedHeaders;
+        array_walk($names, function(&$item) { $item = 'Header ' . $item; });
 
-	$builder->add('niv', ChoiceType::class, array(
-	    'label' => 'pagepart.header.type',
-	    'choices' => array_combine($names, {{ pagepart }}::$supportedHeaders),
-	    'required' => true
-	));
-	$builder->add('title', TextType::class, array(
-	    'label' => 'pagepart.header.title',
-	    'required' => true
-	));
+        $builder->add('niv', ChoiceType::class, array(
+            'label' => 'pagepart.header.type',
+            'choices' => array_combine($names, {{ pagepart }}::$supportedHeaders),
+            'required' => true,
+                'choices_as_values' => true
+        ));
+        $builder->add('title', TextType::class, array(
+            'label' => 'pagepart.header.title',
+            'required' => true
+        ));
     }
 
     /**
@@ -49,7 +50,7 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return '{{ pagepart|lower }}type';
+        return '{{ pagepart|lower }}type';
     }
 
     /**
@@ -59,8 +60,8 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
+        ));
     }
 }

@@ -28,7 +28,7 @@ services:
 
     kunstmaan_media.media_handlers.image:
         class: '%kunstmaan_media.media_handler.image.class%'
-        arguments: [1, '@kunstmaan_media.mimetype_guesser.factory', '%aviary_api_key%']
+        arguments: [1, '@kunstmaan_media.mimetype_guesser.factory', '@kunstmaan_media.extension_guesser.factory', '%aviary_api_key%']
         calls:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
             - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]
@@ -39,7 +39,7 @@ services:
 
     kunstmaan_media.media_handlers.file:
         class: '%kunstmaan_media.media_handler.file.class%'
-        arguments: [0, '@kunstmaan_media.mimetype_guesser.factory']
+        arguments: [0, '@kunstmaan_media.mimetype_guesser.factory', '@kunstmaan_media.extension_guesser.factory']
         calls:
             - [ setFileSystem, [ '@kunstmaan_media.filesystem' ] ]
             - [ setMediaPath, [ '%kunstmaan_media.media_path%' ] ]

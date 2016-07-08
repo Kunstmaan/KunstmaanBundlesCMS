@@ -30,10 +30,11 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->pdfTransformer = $this->getMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
-        $factory = $this->getMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
+        $mockMimeTypeGuesserfactory = $this->getMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
+        $mockExtensionGuesserfactory = $this->getMock('Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface');
         $this->filesDir = realpath(__DIR__ . '/../../Files');
 
-        $this->object = new PdfHandler(1, $factory);
+        $this->object = new PdfHandler(1, $mockMimeTypeGuesserfactory, $mockExtensionGuesserfactory);
         $this->object->setPdfTransformer($this->pdfTransformer);
     }
 

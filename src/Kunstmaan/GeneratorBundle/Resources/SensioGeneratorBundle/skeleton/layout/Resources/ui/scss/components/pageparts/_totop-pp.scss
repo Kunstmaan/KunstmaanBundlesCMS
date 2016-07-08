@@ -5,7 +5,7 @@
 .totop-pp {
     margin: 3rem 0;
 
-{% if demosite %}
+
     padding-bottom: .5rem;
 
     font-size: .85rem;
@@ -17,7 +17,6 @@
 
         color: $text-color;
     }
-{% endif %}
 }
 
 /*doc

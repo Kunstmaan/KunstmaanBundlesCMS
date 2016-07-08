@@ -10,7 +10,7 @@ class PageTemplateConfigurationReader implements PageTemplateConfigurationReader
     /**
      * @var PageTemplateConfigurationParserInterface
      */
-    private $parser;
+    protected $parser;
 
     /**
      * @param PageTemplateConfigurationParserInterface $parser

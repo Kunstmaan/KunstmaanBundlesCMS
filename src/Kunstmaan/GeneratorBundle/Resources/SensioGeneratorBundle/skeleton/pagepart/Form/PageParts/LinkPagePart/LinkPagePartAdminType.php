@@ -27,17 +27,17 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
 
-	$builder->add('url', URLChooserType::class, array(
-	    'required' => true
-	));
-	$builder->add('text', TextType::class, array(
-	    'required' => true
-	));
-	$builder->add('openInNewWindow', CheckboxType::class, array(
-	    'required' => false,
-	));
+        $builder->add('url', URLChooserType::class, array(
+            'required' => true
+        ));
+        $builder->add('text', TextType::class, array(
+            'required' => true
+        ));
+        $builder->add('openInNewWindow', CheckboxType::class, array(
+            'required' => false,
+        ));
     }
 
     /**
@@ -47,7 +47,7 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return '{{ pagepart|lower }}type';
+        return '{{ pagepart|lower }}type';
     }
 
     /**
@@ -57,8 +57,8 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
+        ));
     }
 }

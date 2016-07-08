@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Image;
 
+use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Kunstmaan\MediaBundle\Helper\File\FileHandler;
@@ -16,11 +17,14 @@ class ImageHandler extends FileHandler
     protected $aviaryApiKey;
 
     /**
+     * @param int $priority
+     * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
+     * @param ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface
      * @param string $aviaryApiKey The aviary key
      */
-    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, $aviaryApiKey)
+    public function __construct($priority, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory, ExtensionGuesserFactoryInterface $extensionGuesserFactoryInterface, $aviaryApiKey)
     {
-        parent::__construct($priority, $mimeTypeGuesserFactory);
+        parent::__construct($priority, $mimeTypeGuesserFactory, $extensionGuesserFactoryInterface);
         $this->aviaryApiKey = $aviaryApiKey;
     }
 
