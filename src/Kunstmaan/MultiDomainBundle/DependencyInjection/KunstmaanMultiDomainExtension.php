@@ -21,7 +21,7 @@ class KunstmaanMultiDomainExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config        = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         $hostConfigurations = $this->getHostConfigurations($config['hosts']);
 
@@ -32,7 +32,7 @@ class KunstmaanMultiDomainExtension extends Extension
 
         $loader = new Loader\YamlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../Resources/config')
+            new FileLocator(__DIR__ . '/../Resources/config')
         );
         $loader->load('services.yml');
 
@@ -67,6 +67,8 @@ class KunstmaanMultiDomainExtension extends Extension
         $hostConfigurations = array();
         foreach ($hosts as $name => $settings) {
             $host = $settings['host'];
+            // Set the key of the host as id.
+            $hostConfigurations[$host]['id'] = $name;
 
             foreach ($settings as $setting => $data) {
                 if ($setting === 'locales') {

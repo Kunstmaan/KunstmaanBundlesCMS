@@ -7,7 +7,7 @@
     <ul class="dropdown-menu" role="menu">
         {% for host in get_multi_domain_hosts() %}
             <li class="{% if currentHost == host %} active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
-                <a href="{{ path(action.getUrl()[("path")], { 'host': host }) }}">{{ host }}</a>
+                <a href="{{ path(action.getUrl()[("path")], { 'host': host, 'route': app.request.attributes.get('_route'), 'route_params': app.request.attributes.get('_route_params') }) }}">{{ host }}</a>
             </li>
         {% endfor %}
     </ul>

@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Form;
+
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,13 +15,13 @@ class LinkPagePartAdminType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array                                        $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('url', URLChooserType::class, array(
-                'label' => 'pagepart.link.choose',
+                'label' => false,
                 'required' => false,
             ))
             ->add('openinnewwindow', CheckboxType::class, array(

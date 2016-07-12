@@ -32,7 +32,7 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	$builder->add('title', TextType::class, array(
 	    'required' => true
 	));
-	$builder->add('description', TextAreaType::class, array(
+	$builder->add('description', TextareaType::class, array(
 	    'attr' => array('rows' => 4, 'cols' => 600),
 	    'required' => false,
 	));
@@ -40,7 +40,7 @@ class PageBannerPagePartAdminType extends \Symfony\Component\Form\AbstractType
 	    'mediatype' => 'image',
 	    'required' => false,
 	));
-	$builder->add('buttonUrl', UrlChooserType::class, array(
+	$builder->add('buttonUrl', URLChooserType::class, array(
 	    'required' => false,
 	));
 	$builder->add('buttonText', TextType::class, array(
