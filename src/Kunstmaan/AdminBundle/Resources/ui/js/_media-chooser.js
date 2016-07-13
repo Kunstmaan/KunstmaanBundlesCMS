@@ -20,7 +20,7 @@ kunstmaanbundles.mediaChooser = (function(window, undefined) {
                 $widget = $('#' + linkedID + '-widget'),
                 $input = $('#' + linkedID);
 
-            $('.media-chooser__preview__img').attr({'src': '', 'srcset': '', 'alt': ''});
+            $this.parent('.media-chooser__preview').find('.media-chooser__preview__img').attr({'src': '', 'srcset': '', 'alt': ''});
 
             $(".media-thumbnail__icon").remove();
 
