@@ -149,6 +149,7 @@ class Media extends AbstractEntity
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->deleted = false;
+        $this->removedFromFileSystem = false;
     }
 
     /**
