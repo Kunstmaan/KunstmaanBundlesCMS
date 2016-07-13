@@ -1,10 +1,11 @@
 <!-- Load widget code -->
-<script src="http://feather.aviary.com/imaging/v1/editor.js"></script>
+<script src="https://dme0ih8comzn4.cloudfront.net/js/feather.js"></script>
 
 <!-- Instantiate the widget -->
 <script>
     var featherEditor = new Aviary.Feather({
         apiKey: '{{ handler.aviaryApiKey }}',
+        apiVersion: 3,
         tools: 'all',
         onSave: function(imageID, newURL) {
             var img = document.getElementById(imageID);
