@@ -69,14 +69,6 @@ class NodeSearcher extends AbstractElasticaSearcher
      }
 
     /**
-     * @param bool $useMatchQueryForTitle
-     */
-    public function setUseMatchQueryForTitle($useMatchQueryForTitle)
-    {
-        $this->useMatchQueryForTitle = $useMatchQueryForTitle;
-    }
-
-    /**
      * @param mixed  $query
      * @param string $type
      *
