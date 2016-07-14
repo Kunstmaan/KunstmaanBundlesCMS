@@ -40,6 +40,7 @@ class SocialType extends AbstractType
             ->add('ogUrl', URLChooserType::class, array(
                 'label' => 'seo.form.og.url',
                 'required'  => false,
+                'internal_link_only' => true
             ))
             ->add('ogType', ChoiceType::class, array(
                 'label'     => 'seo.form.og.type',
@@ -84,7 +85,7 @@ class SocialType extends AbstractType
                 'info_text'     => 'seo.form.twitter.title_info_text',
             ),
         ))
-            ->add('twitterDescription', TextAreaType::class, array(
+            ->add('twitterDescription', TextareaType::class, array(
                 'label' => 'seo.form.twitter.description',
                 'required'  => false,
                 'attr'      => array(

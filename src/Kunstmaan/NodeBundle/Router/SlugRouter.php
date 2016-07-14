@@ -48,8 +48,8 @@ class SlugRouter implements RouterInterface
      */
     public function __construct($container)
     {
-        $this->container           = $container;
-        $this->slugPattern         = "[a-zA-Z0-9\-_\/]*";
+        $this->container = $container;
+        $this->slugPattern = "[a-zA-Z0-9\-_\/]*";
         $this->domainConfiguration = $container->get('kunstmaan_admin.domain_configuration');
     }
 
@@ -70,7 +70,7 @@ class SlugRouter implements RouterInterface
             $this->getRouteCollection(),
             $this->getContext()
         );
-        $result     = $urlMatcher->match($pathinfo);
+        $result = $urlMatcher->match($pathinfo);
 
         if (!empty($result)) {
             $nodeTranslation = $this->getNodeTranslation($result);
@@ -120,8 +120,8 @@ class SlugRouter implements RouterInterface
     /**
      * Generate an url for a supplied route.
      *
-     * @param string   $name          The path
-     * @param array    $parameters    The route parameters
+     * @param string $name The path
+     * @param array $parameters The route parameters
      * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
      * @return null|string
@@ -192,26 +192,26 @@ class SlugRouter implements RouterInterface
      */
     protected function getPreviewRouteParameters()
     {
-        $previewPath         = '/admin/preview/{url}';
-        $previewDefaults     = array(
+        $previewPath = '/admin/preview/{url}';
+        $previewDefaults = array(
             '_controller' => 'KunstmaanNodeBundle:Slug:slug',
-            'preview'     => true,
-            'url'         => '',
-            '_locale'     => $this->getDefaultLocale()
+            'preview' => true,
+            'url' => '',
+            '_locale' => $this->getDefaultLocale()
         );
         $previewRequirements = array(
             'url' => $this->getSlugPattern()
         );
 
         if ($this->isMultiLanguage()) {
-            $previewPath = '/{_locale}'.$previewPath;
+            $previewPath = '/{_locale}' . $previewPath;
             unset($previewDefaults['_locale']);
             $previewRequirements['_locale'] = $this->getEscapedLocales($this->getBackendLocales());
         }
 
         return array(
-            'path'         => $previewPath,
-            'defaults'     => $previewDefaults,
+            'path' => $previewPath,
+            'defaults' => $previewDefaults,
             'requirements' => $previewRequirements
         );
     }
@@ -223,26 +223,26 @@ class SlugRouter implements RouterInterface
      */
     protected function getSlugRouteParameters()
     {
-        $slugPath         = '/{url}';
-        $slugDefaults     = array(
+        $slugPath = '/{url}';
+        $slugDefaults = array(
             '_controller' => 'KunstmaanNodeBundle:Slug:slug',
-            'preview'     => false,
-            'url'         => '',
-            '_locale'     => $this->getDefaultLocale()
+            'preview' => false,
+            'url' => '',
+            '_locale' => $this->getDefaultLocale()
         );
         $slugRequirements = array(
             'url' => $this->getSlugPattern()
         );
 
         if ($this->isMultiLanguage()) {
-            $slugPath = '/{_locale}'.$slugPath;
+            $slugPath = '/{_locale}' . $slugPath;
             unset($slugDefaults['_locale']);
             $slugRequirements['_locale'] = $this->getEscapedLocales($this->getFrontendLocales());
         }
 
         return array(
-            'path'         => $slugPath,
-            'defaults'     => $slugDefaults,
+            'path' => $slugPath,
+            'defaults' => $slugDefaults,
             'requirements' => $slugRequirements
         );
     }
@@ -250,9 +250,9 @@ class SlugRouter implements RouterInterface
     /**
      * @return boolean
      */
-    protected function isMultiLanguage()
+    protected function isMultiLanguage($host = null)
     {
-        return $this->domainConfiguration->isMultiLanguage();
+        return $this->domainConfiguration->isMultiLanguage($host);
     }
 
     /**
@@ -297,7 +297,7 @@ class SlugRouter implements RouterInterface
 
     /**
      * @param string $name
-     * @param array  $parameters
+     * @param array $parameters
      */
     protected function addRoute($name, array $parameters = array())
     {

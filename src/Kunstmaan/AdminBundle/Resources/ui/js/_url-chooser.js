@@ -1,41 +1,49 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.urlChooser = (function(window, undefined) {
+kunstmaanbundles.urlChooser = (function (window, undefined) {
 
-    var init, urlChooser,
-        saveUrlChooserModal, saveMediaChooserModal, getUrlParam;
+    var init, urlChooser, saveUrlChooserModal, saveMediaChooserModal, getUrlParam, adaptUrlChooser;
 
-    var itemUrl, itemId, itemTitle, itemThumbPath,
-        $body = $('body');
+    var itemUrl, itemId, itemTitle, itemThumbPath, replacedUrl, $body = $('body');
 
 
-    init = function() {
+    init = function () {
         urlChooser();
+        adaptUrlChooser();
     };
 
-
     // URL-Chooser
-    urlChooser = function() {
+    urlChooser = function () {
 
         // Link Chooser select
-        $body.on('click', '.js-url-chooser-link-select', function(e) {
+        $body.on('click', '.js-url-chooser-link-select', function (e) {
             e.preventDefault();
 
             var $this = $(this),
                 slug = $this.data('slug'),
                 id = $this.data('id'),
-                baseUrl = $this.closest('nav').data('base-url');
+                replaceUrl = $this.closest('nav').data('replace-url');
 
             // Store values
-            itemUrl = baseUrl + (slug ? "/" + slug : '');
+            itemUrl = (slug ? slug : '');
             itemId = id;
 
-            // Update preview
-            $('#url-chooser__selection-preview').text('Selection: ' + itemUrl);
+            // Replace URL
+            $.ajax({
+                url: replaceUrl,
+                type: 'GET',
+                data: {'text': itemUrl},
+                success: function (response) {
+                    replacedUrl = response.text;
+
+                    // Update preview
+                    $('#url-chooser__selection-preview').text('Selection: ' + replacedUrl);
+                }
+            });
         });
 
         // Media Chooser select
-        $body.on('click', '.js-url-chooser-media-select', function(e) {
+        $body.on('click', '.js-url-chooser-media-select', function (e) {
             e.preventDefault();
 
             var $this = $(this),
@@ -43,22 +51,33 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
                 thumbPath = $this.data('thumb-path'),
                 id = $this.data('id'),
                 title = $this.data('title'),
-                cke = $this.data('cke');
+                cke = $this.data('cke'),
+                replaceUrl = $this.closest('.thumbnail-wrapper').data('replace-url');
 
             // Store values
             itemUrl = path;
-            itemId = id,
+            itemId = id;
             itemTitle = title;
             itemThumbPath = thumbPath;
 
             // Save
-            if(!cke) {
+            if (!cke) {
                 var isMediaChooser = $(window.frameElement).closest('.js-ajax-modal').data('media-chooser');
 
-                if(isMediaChooser) {
+                if (isMediaChooser) {
                     saveMediaChooserModal(false);
                 } else {
-                    saveUrlChooserModal(false);
+                    // Replace URL
+                    $.ajax({
+                        url: replaceUrl,
+                        type: 'GET',
+                        data: {'text': itemUrl},
+                        success: function (response) {
+                            replacedUrl = response.text;
+                        }
+                    }).done(function () {
+                        saveUrlChooserModal(false);
+                    });
                 }
 
             } else {
@@ -68,10 +87,10 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
 
         // Cancel
-        $('#cancel-url-chooser-modal').on('click', function() {
+        $('#cancel-url-chooser-modal').on('click', function () {
             var cke = $(this).data('cke');
 
-            if(!cke) {
+            if (!cke) {
                 var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
                     parentModalId = $parentModal.attr('id');
 
@@ -84,7 +103,7 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
 
         // OK
-        $('#save-url-chooser-modal').on('click', function() {
+        $(document).on('click', '#save-url-chooser-modal', function () {
             var cke = $(this).data('cke');
 
             saveUrlChooserModal(cke);
@@ -93,14 +112,17 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
 
     // Save for URL-chooser
-    saveUrlChooserModal = function(cke) {
-        if(!cke) {
+    saveUrlChooserModal = function (cke) {
+        if (!cke) {
             var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
                 linkedInputId = $parentModal.data('linked-input-id'),
                 parentModalId = $parentModal.attr('id');
 
             // Set val
             parent.$('#' + linkedInputId).val(itemUrl).change();
+
+            // Set proper URL
+            parent.$('#' + linkedInputId).parents().find('.js-urlchooser-value').val(replacedUrl);
 
             // Close modal
             parent.$('#' + parentModalId).modal('hide');
@@ -118,31 +140,30 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
 
     // Save for Media-chooser
-    saveMediaChooserModal = function(cke) {
-        if(!cke) {
+    saveMediaChooserModal = function (cke) {
+        if (!cke) {
             var $parentModal = $(window.frameElement).closest('.js-ajax-modal'),
                 linkedInputId = $parentModal.data('linked-input-id'),
                 parentModalId = $parentModal.attr('id');
 
-                // Set val
-                parent.$('#' + linkedInputId).val(itemId).change();
+            // Set val
+            parent.$('#' + linkedInputId).val(itemId).change();
 
-                // Update preview
-                var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
-                    $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
-                    $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
+            // Update preview
+            var $mediaChooser = parent.$('#' + linkedInputId + '-widget'),
+                $previewImg = parent.$('#' + linkedInputId + '__preview__img'),
+                $previewTitle = parent.$('#' + linkedInputId + '__preview__title');
 
-                $mediaChooser.addClass('media-chooser--choosen');
-                $previewTitle.html(itemTitle);
+            $mediaChooser.addClass('media-chooser--choosen');
+            $previewTitle.html(itemTitle);
 
-                if ( itemThumbPath === "") {
-                    var $parent = $previewTitle.parent();
-                    $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
-                }
-                else
-                {
-                    $previewImg.attr('src', itemThumbPath);
-                }
+            if (itemThumbPath === "") {
+                var $parent = $previewTitle.parent();
+                $parent.prepend('<i class="fa fa-file-o media-thumbnail__icon"></i>');
+            }
+            else {
+                $previewImg.attr('src', itemThumbPath);
+            }
 
             // Close modal
             parent.$('#' + parentModalId).modal('hide');
@@ -160,16 +181,58 @@ kunstmaanbundles.urlChooser = (function(window, undefined) {
 
 
     // Get Url Parameters
-    getUrlParam = function(paramName) {
+    getUrlParam = function (paramName) {
         var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i'),
             match = window.location.search.match(reParam);
 
         return (match && match.length > 1) ? match[1] : '';
     };
 
+    // Adapt the url chooser according to the selected link type.
+    adaptUrlChooser = function () {
+        $body.on('click', '.js-change-link-type', function (e) {
+                e.preventDefault();
+                var $form = $(this).closest('form'),
+                    $urlChooser = $(this).parents('.urlchooser-wrapper'),
+                    $urlChooserName = $urlChooser.data('chooser-name');
+
+                var values = {};
+
+                $.each($form.serializeArray(), function (i, field) {
+                    // Only submit required values.
+                    if (field.name.indexOf('link_type') != -1 || field.name.indexOf('link_url') != -1) {
+                        if (field.name.indexOf($urlChooserName) != -1 && field.name.indexOf('link_url') == -1) {
+                            values[field.name] = field.value;
+                        }
+                    }
+                    else {
+                        // Main sequence can not be submitted.
+                        if (field.name.indexOf('main_sequence') == -1) {
+                            values[field.name] = field.value;
+                        }
+                    }
+                });
+
+                // Add the selected li value.
+                values[$(this).data('name')] = $(this).data('value');
+
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: values,
+                    success: function (html) {
+                        $urlChooser.replaceWith(
+                            $(html).find('#' + $urlChooser.attr('id'))
+                        );
+                    }
+                });
+            }
+        );
+    };
 
     return {
         init: init
     };
 
-})(window);
+})
+(window);

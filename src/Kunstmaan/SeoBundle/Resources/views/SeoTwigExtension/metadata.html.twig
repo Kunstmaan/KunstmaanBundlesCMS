@@ -36,8 +36,8 @@
     <meta property="og:locale" content="{{ app.request.locale }}">
 {% endif %}
     <meta property="og:site_name" content="{{ websitetitle }}">
-{% if seo.getOgUrl() and get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) %}
-    <meta property="og:url" content="{{ get_absolute_url(seo.ogUrl, app.request.schemeandhttphost) }}">
+{% if seo.getOgUrl() %}
+    <meta property="og:url" content="{{ seo.ogUrl | replace_url }}">
 {% else %}
 {% if currentNode %}
     <meta property="og:url" content="{{ url('_slug', { 'url': currentNode.slug, '_locale': app.request.locale }) }}"/>

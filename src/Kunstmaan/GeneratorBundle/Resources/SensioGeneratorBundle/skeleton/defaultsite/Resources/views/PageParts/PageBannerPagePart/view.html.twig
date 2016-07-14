@@ -16,7 +16,7 @@
             {% endif %}
 
             {% if resource.buttonUrl and resource.buttonText %}
-                <a href="{{ resource.buttonUrl }}" {% if resource.buttonNewWindow %}target="_blank"{% endif %} class="btn header-visual__btn">
+                <a href="{{ resource.buttonUrl|replace_url }}" {% if resource.buttonNewWindow %}target="_blank"{% endif %} class="btn header-visual__btn">
                     {{ resource.buttonText }}
                 </a>
             {% endif %}

@@ -26,25 +26,25 @@ interface DomainConfigurationInterface
     public function getDefaultLocale();
 
     /**
-     * Return if the current host is multi language.
+     * Return if the current host or the host provided is multi language.
      *
      * @return bool
      */
-    public function isMultiLanguage();
+    public function isMultiLanguage($host = null);
 
     /**
-     * Return the frontend locales for the current host.
+     * Return the frontend locales for the current host or the host provided.
      *
      * @return array
      */
-    public function getFrontendLocales();
+    public function getFrontendLocales($host = null);
 
     /**
-     * Return the backend locales for the current host.
+     * Return the backend locales for the current host or the host provided.
      *
      * @return array
      */
-    public function getBackendLocales();
+    public function getBackendLocales($host = null);
 
     /**
      * Return the root node for the current host (should always be null when the
@@ -52,7 +52,7 @@ interface DomainConfigurationInterface
      *
      * @return Kunstmaan\NodeBundle\Entity\Node|null
      */
-    public function getRootNode();
+    public function getRootNode($host = null);
 
     /**
      * Return true if we found multi domain configuration for the current host.
@@ -76,4 +76,33 @@ interface DomainConfigurationInterface
      * @return mixed
      */
     public function getLocalesExtraData();
+
+    /**
+     * Return the full host
+     *
+     * @return mixed
+     */
+    public function getFullHost($host = null);
+
+    /**
+     * Return the full host of a given id.
+     *
+     * @return mixed
+     */
+    public function getFullHostById($id);
+
+    /**
+     * Return the host switched to from url chooser
+     *
+     * @return mixed
+     */
+    public function getHostSwitched();
+
+    /**
+     * Return the host name with the protocol
+     *
+     * @return mixed
+     */
+    public function getHostBaseUrl($host = null);
+
 }

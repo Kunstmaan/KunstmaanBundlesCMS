@@ -1,7 +1,6 @@
 parameters:
     kunstmaan_admin.menubuilder.class: 'Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder'
     kunstmaan_admin.admin_panel.class: 'Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel'
-    kunstmaan_admin.apply_acl_changeset.listener.class: 'Kunstmaan\AdminBundle\EventListener\ApplyAclChangesetListener'
     kunstmaan_admin.login.listener.class: 'Kunstmaan\AdminBundle\EventListener\LoginListener'
     kunstmaan_admin.admin_locale.listener.class: 'Kunstmaan\AdminBundle\EventListener\AdminLocaleListener'
     kunstmaan_admin.acl.helper.class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper'
@@ -56,6 +55,12 @@ services:
         arguments: ['@kunstmaan_admin.domain_configuration']
         tags:
             -  { name: 'twig.extension' }
+
+    kunstmaan_admin.multidomain.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\MultiDomainAdminTwigExtension
+        arguments: ['@kunstmaan_admin.domain_configuration']
+        tags:
+              -  { name: 'twig.extension' }
 
     kunstmaan_admin.locale.twig.extension:
         class: Kunstmaan\AdminBundle\Twig\DateByLocaleExtension
