@@ -445,10 +445,18 @@ class NodeAdminController extends Controller
         $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, $event);
         if (null === $response = $event->getResponse()) {
             $nodeParent = $node->getParent();
-            $url        = $this->get('router')->generate(
-                'KunstmaanNodeBundle_nodes_edit',
-                array('id' => $nodeParent->getId())
-            );
+            // Check if we have a parent. Otherwise redirect to pages overview.
+            if ($nodeParent) {
+                $url = $this->get('router')->generate(
+                    'KunstmaanNodeBundle_nodes_edit',
+                    array('id' => $nodeParent->getId())
+                );
+            }
+            else {
+                $url = $this->get('router')->generate(
+                    'KunstmaanNodeBundle_nodes'
+                );
+            }
             $response   = new RedirectResponse($url);
         }
 

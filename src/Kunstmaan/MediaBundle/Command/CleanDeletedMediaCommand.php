@@ -52,11 +52,11 @@ class CleanDeletedMediaCommand extends ContainerAwareCommand
             }
             $em->flush();
             $em->commit();
+            $output->writeln('<info>All Media flagged as deleted, have now been removed from the file system.<info>');
         } catch (\Exception $e) {
             $em->rollback();
-            $output->writeln('An error occured while trying to delete Media from the file system:\n <error>'. $e->getMessage() . '</error>');
+            $output->writeln('An error occured while trying to delete Media from the file system:');
+            $output->writeln('<error>'. $e->getMessage() . '</error>');
         }
-
-        $output->writeln('<info>All Media flagged as deleted, have now been removed from the file system.<info>');
     }
 }

@@ -114,14 +114,19 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->builder->setActiveNodeVersion($nodeVersion);
 
-
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.saveasdraft'));
         $this->assertNull($menu->getChild('action.recopyfromlanguage'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.save'));
-        $this->assertNull($menu->getChild('action.delete'));;
+
+        if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
+            $this->assertNotNull($menu->getChild('action.delete'));;
+        }
+        else {
+            $this->assertNull($menu->getChild('action.delete'));;
+        }
 
         $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
@@ -148,7 +153,12 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
-        $this->assertNull($menu->getChild('action.delete'));
+        if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
+            $this->assertNotNull($menu->getChild('action.delete'));;
+        }
+        else {
+            $this->assertNull($menu->getChild('action.delete'));;
+        }
 
         $nodeTranslation->setOnline(true);
         $menu = $this->builder->createActionsMenu();
@@ -158,7 +168,12 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.preview'));
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.unpublish'));
-        $this->assertNull($menu->getChild('action.delete'));
+        if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
+            $this->assertNotNull($menu->getChild('action.delete'));;
+        }
+        else {
+            $this->assertNull($menu->getChild('action.delete'));;
+        }
 
         $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }

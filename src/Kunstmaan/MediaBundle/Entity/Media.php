@@ -135,6 +135,13 @@ class Media extends AbstractEntity
     protected $deleted;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", name="removed_from_file_system")
+     */
+    protected $removedFromFileSystem;
+
+    /**
      * constructor
      */
     public function __construct()
@@ -142,6 +149,7 @@ class Media extends AbstractEntity
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->deleted = false;
+        $this->removedFromFileSystem = false;
     }
 
     /**
@@ -550,6 +558,22 @@ class Media extends AbstractEntity
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRemovedFromFileSystem()
+    {
+        return $this->removedFromFileSystem;
+    }
+
+    /**
+     * @param boolean $removedFromFileSystem
+     */
+    public function setRemovedFromFileSystem($removedFromFileSystem)
+    {
+        $this->removedFromFileSystem = $removedFromFileSystem;
     }
 
     /**
