@@ -4,6 +4,7 @@ namespace Kunstmaan\LeadGenerationBundle\Entity\Popup;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @UniqueEntity(fields={"name"})
  */
-abstract class AbstractPopup
+abstract class AbstractPopup implements EntityInterface
 {
     /**
      * @ORM\Id
@@ -48,6 +49,19 @@ abstract class AbstractPopup
     {
         $this->rules = new ArrayCollection();
     }
+
+    /**
+     * @param int $id
+     *
+     * @return AbstractPopup
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
 
     /**
      * @return int
