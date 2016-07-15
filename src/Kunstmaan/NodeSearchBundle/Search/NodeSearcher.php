@@ -87,7 +87,7 @@ class NodeSearcher extends AbstractElasticaSearcher
             $elasticaQueryTitle = new \Elastica\Query\Match();
             $elasticaQueryTitle
               ->setFieldQuery('title', $query)
-              ->setFieldBoost(2.0)
+              ->setFieldBoost('title', 2.0)
               ->setFieldMinimumShouldMatch('title', '80%');
         } else {
             $elasticaQueryTitle = new \Elastica\Query\QueryString();
