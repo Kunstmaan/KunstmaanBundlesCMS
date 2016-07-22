@@ -57,16 +57,16 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
     public function getPagePartAdminConfigurations()
     {
 {% if demosite %}
-	    return array(
-		'{{ bundle.getName() }}:header',
-		'{{ bundle.getName() }}:section1',
-		'{{ bundle.getName() }}:section2',
-		'{{ bundle.getName() }}:section3',
-		'{{ bundle.getName() }}:section4',
-		'{{ bundle.getName() }}:section5'
-	    );
+            return array(
+                '{{ bundle.getName() }}:header',
+                '{{ bundle.getName() }}:section1',
+                '{{ bundle.getName() }}:section2',
+                '{{ bundle.getName() }}:section3',
+                '{{ bundle.getName() }}:section4',
+                '{{ bundle.getName() }}:section5'
+            );
 {% else %}
-	    return array('{{ bundle.getName() }}:main');
+            return array('{{ bundle.getName() }}:main');
 {% endif %}
     }
 
@@ -75,7 +75,7 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
      */
     public function getPageTemplates()
     {
-    	return array('{{ bundle.getName() }}:homepage');
+            return array('{{ bundle.getName() }}:homepage');
     }
 
     /**
@@ -91,6 +91,6 @@ class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchT
      */
     public function getSearchType()
     {
-	    return 'Home';
+            return 'Home';
     }
 }

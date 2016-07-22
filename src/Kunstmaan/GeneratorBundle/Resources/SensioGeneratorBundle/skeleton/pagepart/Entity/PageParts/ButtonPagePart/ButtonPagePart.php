@@ -81,39 +81,39 @@ class {{ pagepart }} extends AbstractPagePart
      * @var array Supported types
      */
     public static $types = array(
-	self::TYPE_PRIMARY,
-	self::TYPE_SECONDARY,
-	self::TYPE_TERTIARY,
-	self::TYPE_QUATERNARY,
-	self::TYPE_LINK
+        self::TYPE_PRIMARY,
+        self::TYPE_SECONDARY,
+        self::TYPE_TERTIARY,
+        self::TYPE_QUATERNARY,
+        self::TYPE_LINK
     );
 
     /**
      * @var array Supported sizes
      */
     public static $sizes = array(
-	self::SIZE_EXTRA_LARGE,
-	self::SIZE_LARGE,
-	self::SIZE_DEFAULT,
-	self::SIZE_SMALL,
-	self::SIZE_EXTRA_SMALL
+        self::SIZE_EXTRA_LARGE,
+        self::SIZE_LARGE,
+        self::SIZE_DEFAULT,
+        self::SIZE_SMALL,
+        self::SIZE_EXTRA_SMALL
     );
 
     /**
      * @var array Supported positions
      */
     public static $positions = array(
-	self::POSITION_LEFT,
-	self::POSITION_CENTER,
-	self::POSITION_RIGHT,
-	self::POSITION_BLOCK
+        self::POSITION_LEFT,
+        self::POSITION_CENTER,
+        self::POSITION_RIGHT,
+        self::POSITION_BLOCK
     );
 
     public function __construct()
     {
-	$this->type = self::TYPE_PRIMARY;
-	$this->size = self::SIZE_DEFAULT;
-	$this->position = self::POSITION_LEFT;
+        $this->type = self::TYPE_PRIMARY;
+        $this->size = self::SIZE_DEFAULT;
+        $this->position = self::POSITION_LEFT;
     }
 
     /**
@@ -123,9 +123,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setLinkNewWindow($linkNewWindow)
     {
-	$this->linkNewWindow = $linkNewWindow;
+        $this->linkNewWindow = $linkNewWindow;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -133,7 +133,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function isLinkNewWindow()
     {
-	return $this->linkNewWindow;
+        return $this->linkNewWindow;
     }
 
     /**
@@ -143,9 +143,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setLinkText($linkText)
     {
-	$this->linkText = $linkText;
+        $this->linkText = $linkText;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -153,7 +153,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getLinkText()
     {
-	return $this->linkText;
+        return $this->linkText;
     }
 
     /**
@@ -163,9 +163,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setLinkUrl($linkUrl)
     {
-	$this->linkUrl = $linkUrl;
+        $this->linkUrl = $linkUrl;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -173,7 +173,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getLinkUrl()
     {
-	return $this->linkUrl;
+        return $this->linkUrl;
     }
 
     /**
@@ -185,13 +185,13 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setType($type)
     {
-	if (!in_array($type, self::$types)) {
-	    throw new \InvalidArgumentException("Type $type not supported");
-	}
+        if (!in_array($type, self::$types)) {
+            throw new \InvalidArgumentException("Type $type not supported");
+        }
 
-	$this->type = $type;
+        $this->type = $type;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -201,7 +201,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getType()
     {
-	return $this->type;
+        return $this->type;
     }
 
     /**
@@ -213,12 +213,12 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setSize($size)
     {
-	if (!in_array($size, self::$sizes)) {
-	    throw new \InvalidArgumentException("Size $size not supported");
-	}
-	$this->size = $size;
+        if (!in_array($size, self::$sizes)) {
+            throw new \InvalidArgumentException("Size $size not supported");
+        }
+        $this->size = $size;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -228,7 +228,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getSize()
     {
-	return $this->size;
+        return $this->size;
     }
 
     /**
@@ -240,12 +240,12 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setPosition($position)
     {
-	if (!in_array($position, self::$positions)) {
-	    throw new \InvalidArgumentException("Position $position not supported");
-	}
-	$this->position = $position;
+        if (!in_array($position, self::$positions)) {
+            throw new \InvalidArgumentException("Position $position not supported");
+        }
+        $this->position = $position;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -255,7 +255,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getPosition()
     {
-	return $this->position;
+        return $this->position;
     }
 
     /**
@@ -265,7 +265,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
     }
 
     /**
@@ -275,6 +275,6 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return new {{ adminType }}();
     }
 }

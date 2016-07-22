@@ -44,6 +44,14 @@ class NodeSearcher extends AbstractElasticaSearcher
     }
 
     /**
+     * @param bool $useMatchQueryForTitle
+     */
+    public function setUseMatchQueryForTitle($useMatchQueryForTitle)
+    {
+        $this->useMatchQueryForTitle = $useMatchQueryForTitle;
+    }
+
+    /**
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function setDomainConfiguration(DomainConfigurationInterface $domainConfiguration)
@@ -87,11 +95,13 @@ class NodeSearcher extends AbstractElasticaSearcher
             $elasticaQueryTitle = new \Elastica\Query\Match();
             $elasticaQueryTitle
               ->setFieldQuery('title', $query)
+              ->setFieldBoost(2.0)
               ->setFieldMinimumShouldMatch('title', '80%');
         } else {
             $elasticaQueryTitle = new \Elastica\Query\QueryString();
             $elasticaQueryTitle
               ->setDefaultField('title')
+              ->setBoost(2.0)
               ->setQuery($query);
         }
 

@@ -29,34 +29,34 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
 
-	$builder->add('title', TextType::class, array(
-	    'required' => true,
-	));
-	$builder->add('description', TextareaType::class, array(
-	    'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
-	    'required' => false,
-	));
-	$builder->add('linkUrl', URLChooserType::class, array(
-	    'required' => false,
-	));
-	$builder->add('linkText', TextType::class, array(
-	    'required' => false,
-	));
-	$builder->add('linkNewWindow', CheckboxType::class, array(
-	    'required' => false,
-	));
-	$builder->add('image', MediaType::class, array(
-	    'mediatype' => 'image',
-	    'required' => false,
-	));
-	$builder->add('imagePosition', ChoiceType::class, array(
-	    'choices' => array_combine(ServicePagePart::$imagePositions, ServicePagePart::$imagePositions),
-	    'placeholder' => false,
-	    'required' => true,
-		'choices_as_values' => true
-	));
+        $builder->add('title', TextType::class, array(
+            'required' => true,
+        ));
+        $builder->add('description', TextareaType::class, array(
+            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
+            'required' => false,
+        ));
+        $builder->add('linkUrl', URLChooserType::class, array(
+            'required' => false,
+        ));
+        $builder->add('linkText', TextType::class, array(
+            'required' => false,
+        ));
+        $builder->add('linkNewWindow', CheckboxType::class, array(
+            'required' => false,
+        ));
+        $builder->add('image', MediaType::class, array(
+            'mediatype' => 'image',
+            'required' => false,
+        ));
+        $builder->add('imagePosition', ChoiceType::class, array(
+            'choices' => array_combine(ServicePagePart::$imagePositions, ServicePagePart::$imagePositions),
+            'placeholder' => false,
+            'required' => true,
+                'choices_as_values' => true
+        ));
     }
 
     /**
@@ -66,7 +66,7 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
      */
     public function getBlockPrefix()
     {
-	return 'servicepageparttype';
+        return 'servicepageparttype';
     }
 
     /**
@@ -76,8 +76,8 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\ServicePagePart'
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\ServicePagePart'
+        ));
     }
 }

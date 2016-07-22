@@ -19,7 +19,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
     }
 
     /**
@@ -29,6 +29,6 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return new {{ adminType }}();
     }
 }

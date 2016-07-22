@@ -27,14 +27,14 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
 
     public function setAuthor($author)
     {
-	$this->author = $author;
+        $this->author = $author;
 
-	return $this;
+        return $this;
     }
 
     public function getAuthor()
     {
-	return $this->author;
+        return $this->author;
     }
 
     /**
@@ -52,7 +52,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getSearchType()
     {
-	return '{{ entity_class }}';
+        return '{{ entity_class }}';
     }
 
     /**
@@ -60,7 +60,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPagePartAdminConfigurations()
     {
-	return array('{{ bundle.getName() }}:main');
+        return array('{{ bundle.getName() }}:main');
     }
 
     /**
@@ -68,12 +68,12 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPageTemplates()
     {
-	return array('{{ bundle.getName() }}:{{ entity_class|lower }}page');
+        return array('{{ bundle.getName() }}:{{ entity_class|lower }}page');
     }
 
     public function getDefaultView()
     {
-	return '{{ bundle.getName() }}:Pages/{{ entity_class }}Page:view.html.twig';
+        return '{{ bundle.getName() }}:Pages/{{ entity_class }}Page:view.html.twig';
     }
 
     /**

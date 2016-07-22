@@ -14,6 +14,10 @@ use Behat\Mink\Selector\CssSelector;
  * FeatureContext
  *
  * Provides the global context that includes the subcontexts
+ *
+ * @SuppressWarnings(PMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PMD.TooManyMethods)
+ * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 class FeatureContext extends AbstractContext
 {

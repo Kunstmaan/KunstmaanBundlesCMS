@@ -31,20 +31,20 @@ class FormPageAdminType extends PageAdminType
     {
         parent::buildForm($builder, $options);
 
-	$builder->add('subject', TextType::class, array(
-	    'required' => false,
-	));
-	$builder->add('fromEmail', EmailType::class, array(
-	    'required' => false,
-	));
-	$builder->add('toEmail', EmailType::class, array(
-	    'required' => false,
-	));
+        $builder->add('subject', TextType::class, array(
+            'required' => false,
+        ));
+        $builder->add('fromEmail', EmailType::class, array(
+            'required' => false,
+        ));
+        $builder->add('toEmail', EmailType::class, array(
+            'required' => false,
+        ));
         $builder->add('thanks', TextareaType::class, array(
-	    'required' => false,
-	    'attr' => array(
-		'class' => 'js-rich-editor rich-editor'
-	    )
+            'required' => false,
+            'attr' => array(
+                'class' => 'js-rich-editor rich-editor'
+            )
         ));
     }
 
