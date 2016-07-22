@@ -91,6 +91,7 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 	$this->createSearchPage();
 {% endif %}
         $this->createDashboard();
+        $this->setAdminPassword('admin');
     }
 
     /**
@@ -988,5 +989,19 @@ class DefaultSiteFixtures extends AbstractFixture implements OrderedFixtureInter
 	protected function trans($id, $locale)
 	{
 		return $this->container->get('translator')->trans($id, [], static::TRANSLATION_DOMAIN, $locale);
-	}
+    }
+
+    /**
+     * Sets the admin user's password to 'admin'
+     *
+     */
+    protected function setAdminPassword($password)
+    {
+        $adminUser = $this->getReference('adminuser');
+
+        $adminUser->setPlainPassword('admin');
+        $adminUser->setPasswordChanged(true);
+        $this->manager->persist($adminUser);
+        $this->manager->flush();
+    }
 }
