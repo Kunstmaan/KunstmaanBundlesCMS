@@ -355,7 +355,7 @@ class ActionsMenuBuilder
             );
         }
 
-        if (null !== $node->getParent()
+        if ((null !== $node->getParent() || $node->getChildren()->isEmpty())
             && $this->authorizationChecker->isGranted(
                 PermissionMap::PERMISSION_DELETE,
                 $node
