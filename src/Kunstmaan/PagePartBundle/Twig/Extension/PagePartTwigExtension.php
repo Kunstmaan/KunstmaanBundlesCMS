@@ -50,7 +50,8 @@ class PagePartTwigExtension extends \Twig_Extension
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $contextName);
         $newTwigContext = array_merge($parameters, array(
-            'pageparts' => $pageparts
+            'pageparts' => $pageparts,
+            'page' => $page
         ));
         $newTwigContext = array_merge($newTwigContext, $twigContext);
 
