@@ -5,13 +5,16 @@
 {%- endfor -%}
 {% set counter = 0 %}
 {% for item in iterator %}
-{% set item = item[counter] %}
-{% set counter = counter + 1 %}
+{% if item[0] is defined %}
+{% set item = item[0] %}
+{% else %}
+{% set item = item %}
+{% endif %}
 {% for column in adminlist.exportColumns -%}
 {%- set columnName = column.name -%}
 {%- set template = column.template -%}
 {% if template is not null and template != 1 and template != "" %}
-{{- quote|raw -}}{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName)} %}{{- quote|raw -}}
+{{- quote|raw -}}{% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getStringValue(item, columnName)} %}{{- quote|raw -}}
 {% else %}
 {{- quote|raw -}}{{- adminlist.getStringValue(item, columnName) -}}{{- quote|raw -}}
 {% endif %}
