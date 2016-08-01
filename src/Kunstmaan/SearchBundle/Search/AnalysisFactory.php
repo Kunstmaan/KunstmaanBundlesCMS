@@ -46,6 +46,7 @@ class AnalysisFactory implements AnalysisFactoryInterface
             'tokenizer' => 'standard',
             'filter'    => array(
                 'trim',
+                'ngram',
                 'lowercase',
                 'asciifolding',
                 'strip_special_chars',
@@ -69,6 +70,7 @@ class AnalysisFactory implements AnalysisFactoryInterface
             'tokenizer' => 'standard',
             'filter'    => array(
                 'trim',
+                'ngram',
                 'lowercase',
                 'asciifolding',
                 'strip_special_chars',
@@ -131,9 +133,13 @@ class AnalysisFactory implements AnalysisFactoryInterface
      */
     public function addNGramFilter()
     {
-        // Ngrams are not used in our default implementation
+        $this->filters['ngram'] = array(
+            'type'     => 'nGram',
+            'min_gram' => 4,
+            'max_gram' => 30
+        );
+        return $this;
     }
-
 
     /**
      * @param string $language
@@ -146,6 +152,7 @@ class AnalysisFactory implements AnalysisFactoryInterface
             ->addIndexAnalyzer($language)
             ->addSuggestionAnalyzer($language)
             ->addStripSpecialCharsFilter()
+            ->addNGramFilter()
             ->addStopWordsFilter($language)
             ->addStemmerFilter($language);
 
