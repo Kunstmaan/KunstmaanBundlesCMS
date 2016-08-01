@@ -207,11 +207,12 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
                     }
                     else {
                         // Main sequence can not be submitted.
-                        if (field.name.indexOf('main_sequence') == -1) {
+                        if (field.name.indexOf('sequence') == -1) {
                             values[field.name] = field.value;
                         }
                     }
                 });
+
 
                 // Add the selected li value.
                 values[$(this).data('name')] = $(this).data('value');
