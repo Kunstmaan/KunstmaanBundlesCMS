@@ -116,7 +116,7 @@ class DomainConfiguration extends BaseDomainConfiguration
      */
     public function getBackendLocales($host = null)
     {
-        if (!$host) {
+        if (!$host && $this->getHost()) {
             $host = $this->hosts[$this->getHost()];
         }
 
@@ -268,7 +268,11 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $host = $this->getRealHost($host);
 
-        return $this->hosts[$host];
+        if ($host) {
+            return $this->hosts[$host];
+        }
+
+        return null;
     }
 
 
