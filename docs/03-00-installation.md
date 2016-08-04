@@ -48,7 +48,7 @@ At this point refreshing the page for your repository on GitHub will show you yo
 First, you should generate a bundle for your website specific code.
 
 ```
-app/console kuma:generate:bundle
+bin/console kuma:generate:bundle
 ```
 
 Each bundle is hosted under a namespace (like Acme/WebsiteBundle). The namespace should begin with a "vendor" name like your company name, your project name, or your client name, followed by one or more optional category sub-namespaces, and it should end with the bundle name itself (which must have Bundle as a suffix).
@@ -59,17 +59,17 @@ For all other questions, the defaults should suffice.
 
 > Sometimes there are some issues with bash/zsh escaping in terminal input, so use / instead of \ for the namespace delimiter to avoid any problems.
 
-![app/console kuma:generate:bundle](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/bundlegen.png)
+![bin/console kuma:generate:bundle](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/bundlegen.png)
 
 ## Generating your website skeleton
 
 Now that we have a bundle to store our code in, we are going to generate the skeleton for our website. You do this by running the following command. It will ask you for a MySQL database prefix, just leave it unless you have a specific reason to do so.
 
 ```
-app/console kuma:generate:default-site
+bin/console kuma:generate:default-site
 ```
 
-![app/console kuma:generate:default-site](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/defaultsitegen.png)
+![bin/console kuma:generate:default-site](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/defaultsitegen.png)
 
 This generates:
 
@@ -87,24 +87,24 @@ This generates:
 When this is done, create the database schema and load all the generated fixtures to fill it.
 
 ```
-app/console doctrine:database:create
-app/console doctrine:schema:create
-app/console doctrine:fixtures:load
+bin/console doctrine:database:create
+bin/console doctrine:schema:create
+bin/console doctrine:fixtures:load
 ```
 
-![app/console doctrine:schema:create](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/schemacreate.png)
+![bin/console doctrine:schema:create](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/schemacreate.png)
 
 ## Generate Unit and Behat tests (optional)
 
 If you want, you can generate a set of Unit and Behat test features that test that your site is working correctly. It will test logging in to the administration interface, it will create a page and tries to enter every pagepart. Most generators will generate extra features when you add features later on in development.
 
 ```
-app/console kuma:generate:admin-tests
+bin/console kuma:generate:admin-tests
 ```
 
 Just accept the default bundle namespace at the prompt.
 
-![app/console kuma:generate:admin-tests](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/behattests.png)
+![bin/console kuma:generate:admin-tests](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/behattests.png)
 
 
 ## Get all the front-end assets
@@ -131,8 +131,8 @@ bundle install
 npm install
 bower install
 gulp build
-app/console assets:install --symlink
-app/console assetic:dump
+bin/console assets:install --symlink
+bin/console assetic:dump
 ```
 
 At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/en/admin) should greet you with the following screens.

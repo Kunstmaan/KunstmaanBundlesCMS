@@ -40,16 +40,11 @@ class UsersController extends BaseSettingsController
     {
         $this->checkPermission();
         $em = $this->getDoctrine()->getManager();
-        $userObject = $this->getUserClassInstance();
         $configuratorClassName = '';
         if ($this->container->hasParameter('kunstmaan_user_management.user_admin_list_configurator.class')) {
             $configuratorClassName = $this->container->getParameter(
                 'kunstmaan_user_management.user_admin_list_configurator.class'
             );
-        }
-        // Fallback for backwards compatibility - will be removed in the future!
-        if (empty($configuratorClassName)) {
-            $configuratorClassName = $userObject->getAdminListConfiguratorClass();
         }
 
         $configurator = new $configuratorClassName($em);

@@ -93,7 +93,7 @@ Description:
 
 	Removes all files from the filesystem related to Media that has been flagged as deleted in the database.
 
-Invoked by: ```app/console kuma:media:clean-deleted-media```
+Invoked by: ```bin/console kuma:media:clean-deleted-media```
 
 Options:
 
