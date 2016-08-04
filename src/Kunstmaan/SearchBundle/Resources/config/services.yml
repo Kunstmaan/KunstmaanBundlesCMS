@@ -5,8 +5,14 @@ parameters:
     kunstmaan_search.search_configuration_chain.class: Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain
     kunstmaan_search.search_provider_chain.class: Kunstmaan\SearchBundle\Provider\SearchProviderChain
     kunstmaan_search.search.class: Kunstmaan\SearchBundle\Search\Search
-    kunstmaan_search.search.factory.analysis.class: Kunstmaan\SearchBundle\Search\AnalysisFactory
     kunstmaan_search.search_provider.elastica.class: Kunstmaan\SearchBundle\Provider\ElasticaProvider
+    kunstmaan_search.search.factory.analysis.class: Kunstmaan\SearchBundle\Search\LanguageAnalysisFactory
+    # Default analysis factory provides language aware analyzers. if you need nGram analyzers you
+    # can use the provided nGramAnalysisFactory by overriding the following parameter.
+    #kunstmaan_search.search.factory.analysis.class: Kunstmaan\SearchBundle\Search\NGramAnalysisFactory
+    # Ofcourse you can also provide your own implementation as long as it implements the
+    # AnalysisFactoryInterface. More information can be found in the
+    # documentation of this SearchBundle
 
 services:
     kunstmaan_search.search:

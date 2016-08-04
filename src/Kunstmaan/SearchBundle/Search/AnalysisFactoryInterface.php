@@ -45,7 +45,7 @@ interface AnalysisFactoryInterface
     /**
      * @return AnalysisFactoryInterface
      */
-    public function addNGramFilter();
+    public function addNGramTokenizer();
 
     /**
      * @param string $language
