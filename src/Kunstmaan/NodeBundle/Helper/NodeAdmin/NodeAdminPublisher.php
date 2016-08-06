@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class NodeAdminPublisher
 {
@@ -223,7 +224,7 @@ class NodeAdminPublisher
      * @param HasNodeInterface $page            The page
      * @param NodeTranslation  $nodeTranslation The node translation
      * @param NodeVersion      $nodeVersion     The node version
-     * @param BaseUser         $user            The user
+     * @param UserInterface    $user            The user
      *
      * @return mixed
      */
@@ -231,7 +232,7 @@ class NodeAdminPublisher
         HasNodeInterface $page,
         NodeTranslation $nodeTranslation,
         NodeVersion $nodeVersion,
-        BaseUser $user
+        UserInterface $user
     ) {
         $newPublicPage  = $this->cloneHelper->deepCloneAndSave($page);
         $newNodeVersion = $this->em->getRepository('KunstmaanNodeBundle:NodeVersion')->createNodeVersionFor(

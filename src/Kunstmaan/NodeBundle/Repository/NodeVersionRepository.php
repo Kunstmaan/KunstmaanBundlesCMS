@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeBundle\Repository;
 
 use DateTime;
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Zizoo\UserBundle\Entity\User;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
@@ -33,7 +33,7 @@ class NodeVersionRepository extends EntityRepository
     /**
      * @param HasNodeInterface $hasNode         The object
      * @param NodeTranslation  $nodeTranslation The node translation
-     * @param BaseUser         $owner           The user
+     * @param User             $owner           The user
      * @param NodeVersion      $origin          The nodeVersion this nodeVersion originated from
      * @param string           $type            (public|draft)
      * @param DateTime         $created         The date this node version is created
@@ -43,7 +43,7 @@ class NodeVersionRepository extends EntityRepository
     public function createNodeVersionFor(
         HasNodeInterface $hasNode,
         NodeTranslation $nodeTranslation,
-        BaseUser $owner,
+        User $owner,
         NodeVersion $origin = null,
         $type = 'public',
         $created = null

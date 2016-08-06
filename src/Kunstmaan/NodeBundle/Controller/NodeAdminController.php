@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
-use Kunstmaan\AdminBundle\Entity\BaseUser;
+
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
@@ -23,6 +23,7 @@ use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -67,7 +68,7 @@ class NodeAdminController extends Controller
     protected $authorizationChecker;
 
     /**
-     * @var BaseUser $user
+     * @var UserInterface $user
      */
     protected $user;
 
@@ -1131,13 +1132,13 @@ class NodeAdminController extends Controller
 
     /**
      * @param EntityManager   $em       The Entity Manager
-     * @param BaseUser        $user     The user who deletes the children
+     * @param UserInterface   $user     The user who deletes the children
      * @param string          $locale   The locale that was used
      * @param ArrayCollection $children The children array
      */
     private function deleteNodeChildren(
         EntityManager $em,
-        BaseUser $user,
+        UserInterface $user,
         $locale,
         ArrayCollection $children
     ) {

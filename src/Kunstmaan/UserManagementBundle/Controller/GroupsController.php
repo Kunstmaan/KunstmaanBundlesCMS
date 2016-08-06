@@ -5,11 +5,14 @@ namespace Kunstmaan\UserManagementBundle\Controller;
 use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
-use Kunstmaan\AdminBundle\Entity\Group;
-use Kunstmaan\AdminBundle\Form\GroupType;
+//use Kunstmaan\AdminBundle\Entity\Group;
+use Zizoo\UserBundle\Entity\Group as Group;
+//use Kunstmaan\AdminBundle\Form\GroupType;
+use Zizoo\TestBundle\Form\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
-use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
+//use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
+use Zizoo\TestBundle\AdminList\GroupAdminListConfigurator as GroupAdminListConfigurator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -101,7 +104,7 @@ class GroupsController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var Group $group */
-        $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
+        $group = $em->getRepository('ZizooUserBundle:Group')->find($id);
         $form = $this->createForm(GroupType::class, $group);
 
         if ($request->isMethod('POST')) {
@@ -139,7 +142,7 @@ class GroupsController extends BaseSettingsController
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
+        $group = $em->getRepository('ZizooUserBundle:Group')->find($id);
         if (!is_null($group)) {
             $groupname = $group->getName();
             $em->remove($group);

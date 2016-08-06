@@ -3,7 +3,7 @@
 namespace Kunstmaan\NodeBundle\Repository;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Zizoo\UserBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
@@ -189,7 +189,7 @@ class NodeRepository extends NestedTreeRepository
     /**
      * @param HasNodeInterface $hasNode      The object to link to
      * @param string           $lang         The locale
-     * @param BaseUser         $owner        The user
+     * @param User             $owner        The user
      * @param string           $internalName The internal name (may be null)
      *
      * @throws \InvalidArgumentException
@@ -199,7 +199,7 @@ class NodeRepository extends NestedTreeRepository
     public function createNodeFor(
         HasNodeInterface $hasNode,
         $lang,
-        BaseUser $owner,
+        User $owner,
         $internalName = null
     ) {
         $em   = $this->getEntityManager();
