@@ -12,6 +12,7 @@ services:
             - '@kunstmaan_node.acl_permission_creator_service'
             - '@kunstmaan_fixtures.populator.populator'
             - '@kunstmaan_utilities.slugifier'
+            - '@kunstmaan_node.pages_configuration'
         tags:
             - { name: kunstmaan_fixtures.builder, alias: PageBuilder }
 
