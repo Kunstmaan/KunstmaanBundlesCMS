@@ -5,6 +5,7 @@ namespace Kunstmaan\RedirectBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Table(name="kuma_redirects")
@@ -81,7 +82,7 @@ class Redirect extends AbstractEntity
     /**
      * Get origin
      *
-     * @return string 
+     * @return string
      */
     public function getOrigin()
     {
@@ -104,7 +105,7 @@ class Redirect extends AbstractEntity
     /**
      * Get target
      *
-     * @return string 
+     * @return string
      */
     public function getTarget()
     {
@@ -132,5 +133,19 @@ class Redirect extends AbstractEntity
     public function isPermanent()
     {
         return $this->permanent;
+    }
+
+    /**
+     * @Assert\Callback
+     *
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->getOrigin() === $this->getTarget()) {
+            $context->buildViolation('errors.redirect.origin_same_as_target')
+                ->atPath('target')
+                ->addViolation();
+        }
     }
 }
