@@ -90,15 +90,15 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\Service\ExportService::createExcelSheet
-     * @todo   Implement testCreateExcelSheet().
+     * @covers Kunstmaan\AdminListBundle\Service\ExportService::streamExcelSheet
      */
-    public function testCreateExcelSheet()
+    public function testStreamExcelSheet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $adminList = $this->getMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
+
+        $response = $this->object->streamExcelSheet($adminList);
+
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
 
     /**
@@ -107,16 +107,6 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
     public function testCreateResponse()
     {
         $response = $this->object->createResponse('content', ExportService::EXT_CSV);
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\Service\ExportService::createResponseForExcel
-     */
-    public function testCreateResponseForExcel()
-    {
-        $writer = $this->getMock('\PHPExcel_Writer_IWriter');
-        $response = $this->object->createResponseForExcel($writer);
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
     }
 }
