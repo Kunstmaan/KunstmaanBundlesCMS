@@ -49,17 +49,17 @@ class Method implements PropertyParserInterface
                  * 2: Search if method needs arguments en find them through typehint and additional params
                  * 3: Magic methods without arguments
                  */
-                if (method_exists($provider, $method) && !empty($arguments)) {
+                if (method_exists($provider, $method)) {
                     $refl = new \ReflectionMethod($provider, $method);
-                    $value = $this->processValue($pattern, $refl->invokeArgs($provider, $arguments), $value, $matches[0]);
-                    break;
-                } elseif (method_exists($provider, $method)) {
-                    $refl = new \ReflectionMethod($provider, $method);
-                    $parameters = $refl->getParameters();
-                    $arguments = $this->findArguments($parameters, $additional);
 
-                    if (count($parameters) !== count($arguments)) {
-                        throw new \Exception('Can not match all arguments for provider ' . get_class($provider));
+                    if (count($arguments) < $refl->getNumberOfRequiredParameters()) {
+                        $parameters = $refl->getParameters();
+                        $parametersNeeded = array_slice($parameters, count($arguments));
+                        $arguments = array_merge($arguments, $this->findArguments($parametersNeeded, $additional));
+
+                        if (count($parameters) !== count($arguments)) {
+                            throw new \Exception('Can not match all arguments for provider ' . get_class($provider));
+                        }
                     }
 
                     $value = $this->processValue($pattern, $refl->invokeArgs($provider, $arguments), $value, $matches[0]);
