@@ -108,18 +108,15 @@ class ConfigController
         }
 
         // If the formType is a service, get it from the container.
+        $formFqcn = is_object($formType) ? get_class($formType) : $formType;
         if (!is_object($formType) && is_string($formType)) {
-            if (class_exists($formType)) {
-                $formType = new $formType;
-            } else {
-                $formType = $this->container->get($formType);
+            if ($this->container->has($formType)) {
+                $formFqcn = get_class($this->container->get($formType));
             }
         }
 
-        $formFqn = get_class($formType);
-
         $form = $this->formFactory->create(
-            $formFqn,
+            $formFqcn,
             $config
         );
 
