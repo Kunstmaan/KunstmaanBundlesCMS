@@ -121,7 +121,11 @@ abstract class AdminListController extends Controller
 
         $formType = $configurator->getAdminType($helper);
         if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
+            if (class_exists($formType)) {
+                $formType = new $formType;
+            } else {
+                $formType = $this->container->get($formType);
+            }
         }
         $formFqn = get_class($formType);
 
@@ -199,7 +203,11 @@ abstract class AdminListController extends Controller
 
         $formType = $configurator->getAdminType($helper);
         if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
+            if (class_exists($formType)) {
+                $formType = new $formType;
+            } else {
+                $formType = $this->container->get($formType);
+            }
         }
         $formFqn = get_class($formType);
 

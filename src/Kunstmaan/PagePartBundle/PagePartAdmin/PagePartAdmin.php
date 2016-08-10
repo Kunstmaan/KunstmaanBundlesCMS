@@ -240,7 +240,11 @@ class PagePartAdmin
             $data['pagepartadmin_' . $pagePartRefId] = $pagePart;
             $adminType                               = $pagePart->getDefaultAdminType();
             if (!is_object($adminType) && is_string($adminType)) {
-                $adminType = $this->container->get($adminType);
+                if (class_exists($adminType)) {
+                    $adminType = new $adminType;
+                } else {
+                    $adminType = $this->container->get($adminType);
+                }
             }
             $adminTypeFqn                            = ClassUtils::getClass($adminType);
             $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminTypeFqn);
@@ -250,7 +254,11 @@ class PagePartAdmin
             $data['pagepartadmin_' . $newPagePartRefId] = $newPagePart;
             $adminType                                  = $newPagePart->getDefaultAdminType();
             if (!is_object($adminType) && is_string($adminType)) {
-                $adminType = $this->container->get($adminType);
+                if (class_exists($adminType)) {
+                    $adminType = new $adminType;
+                } else {
+                    $adminType = $this->container->get($adminType);
+                }
             }
             $adminTypeFqn                            = ClassUtils::getClass($adminType);
             $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminTypeFqn);
