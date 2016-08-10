@@ -238,30 +238,26 @@ class PagePartAdmin
 
         foreach ($this->pageParts as $pagePartRefId => $pagePart) {
             $data['pagepartadmin_' . $pagePartRefId] = $pagePart;
-            $adminType                               = $pagePart->getDefaultAdminType();
+            $adminType = $pagePart->getDefaultAdminType();
+            $adminTypeFqcn = is_object($adminType) ? ClassUtils::getClass($adminType) : $adminType;
             if (!is_object($adminType) && is_string($adminType)) {
-                if (class_exists($adminType)) {
-                    $adminType = new $adminType;
-                } else {
-                    $adminType = $this->container->get($adminType);
+                if ($this->container->has($adminType)) {
+                    $adminTypeFqcn = ClassUtils::getClass($this->container->get($adminType));
                 }
             }
-            $adminTypeFqn                            = ClassUtils::getClass($adminType);
-            $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminTypeFqn);
+            $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminTypeFqcn);
         }
 
         foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
             $data['pagepartadmin_' . $newPagePartRefId] = $newPagePart;
-            $adminType                                  = $newPagePart->getDefaultAdminType();
+            $adminType = $newPagePart->getDefaultAdminType();
+            $adminTypeFqcn = is_object($adminType) ? ClassUtils::getClass($adminType) : $adminType;
             if (!is_object($adminType) && is_string($adminType)) {
-                if (class_exists($adminType)) {
-                    $adminType = new $adminType;
-                } else {
-                    $adminType = $this->container->get($adminType);
+                if ($this->container->has($adminType)) {
+                    $adminTypeFqcn = ClassUtils::getClass($this->container->get($adminType));
                 }
             }
-            $adminTypeFqn                            = ClassUtils::getClass($adminType);
-            $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminTypeFqn);
+            $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminTypeFqcn);
         }
 
         $formbuilder->setData($data);

@@ -955,25 +955,23 @@ class NodeAdminController extends Controller
 
         // Building the form
         $propertiesWidget = new FormWidget();
-        $pageAdminType    = $page->getDefaultAdminType();
+        $pageAdminType = $page->getDefaultAdminType();
+        $pageAdminTypeFqcn = is_object($pageAdminType) ? get_class($pageAdminType) : $pageAdminType;
         if (!is_object($pageAdminType) && is_string($pageAdminType)) {
-            if (class_exists($pageAdminType)) {
-                $pageAdminType = new $pageAdminType;
-            } else {
-                $pageAdminType = $this->container->get($pageAdminType);
+            if ($this->container->has($pageAdminType)) {
+                $pageAdminTypeFqcn = get_class($this->container->get($pageAdminType));
             }
         }
-        $propertiesWidget->addType('main', $pageAdminType, $page);
+        $propertiesWidget->addType('main', $pageAdminTypeFqcn, $page);
 
         $nodeAdminType = $node->getDefaultAdminType();
+        $nodeAdminTypeFqcn = is_object($nodeAdminType) ? get_class($nodeAdminType) : $nodeAdminType;
         if (!is_object($nodeAdminType) && is_string($nodeAdminType)) {
-            if (class_exists($nodeAdminType)) {
-                $nodeAdminType = new $nodeAdminType;
-            } else {
-                $nodeAdminType = $this->container->get($nodeAdminType);
+            if ($this->container->has($nodeAdminType)) {
+                $nodeAdminTypeFqcn = get_class($this->container->get($nodeAdminType));
             }
         }
-        $propertiesWidget->addType('node', $nodeAdminType, $node);
+        $propertiesWidget->addType('node', $nodeAdminTypeFqcn, $node);
         $tabPane->addTab(new Tab('kuma_node.tab.properties.title', $propertiesWidget));
 
         // Menu tab

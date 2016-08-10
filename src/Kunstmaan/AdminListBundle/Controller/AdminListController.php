@@ -120,20 +120,18 @@ abstract class AdminListController extends Controller
         $helper = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
+        $formFqcn = is_object($formType) ? get_class($formType) : $formType;
         if (!is_object($formType) && is_string($formType)) {
-            if (class_exists($formType)) {
-                $formType = new $formType;
-            } else {
-                $formType = $this->container->get($formType);
+            if ($this->container->has($formType)) {
+                $formFqcn = get_class($this->container->get($formType));
             }
         }
-        $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
+        $event = new AdaptSimpleFormEvent($request, $formFqcn, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formFqcn, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
@@ -202,20 +200,18 @@ abstract class AdminListController extends Controller
         }
 
         $formType = $configurator->getAdminType($helper);
+        $formFqcn = is_object($formType) ? get_class($formType) : $formType;
         if (!is_object($formType) && is_string($formType)) {
-            if (class_exists($formType)) {
-                $formType = new $formType;
-            } else {
-                $formType = $this->container->get($formType);
+            if ($this->container->has($formType)) {
+                $formFqcn = get_class($this->container->get($formType));
             }
         }
-        $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
+        $event = new AdaptSimpleFormEvent($request, $formFqcn, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formFqcn, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
