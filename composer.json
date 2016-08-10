@@ -34,7 +34,6 @@
         "knplabs/knp-menu-bundle": "~2.0",
         "guzzlehttp/guzzle": "~6.1",
         "white-october/pagerfanta-bundle": "~1.0",
-        "phpoffice/phpexcel": "~1.8",
         "kunstmaan/google-api-custom": "~1.0",
         "ddeboer/data-import-bundle": "~0.1",
         "gedmo/doctrine-extensions": "~2.3",
@@ -49,7 +48,9 @@
         "fpn/doctrine-extensions-taggable": "~0.9",
         "sensio/generator-bundle": "~3.0",
         "twig/extensions": "~1.0",
-        "egulias/email-validator": "~1.2"
+        "egulias/email-validator": "~1.2",
+        "box/spout": "^2.5",
+        "ruflin/elastica": "^3.2"
     },
     "require-dev": {
         "behat/behat": "3.1.0rc1",

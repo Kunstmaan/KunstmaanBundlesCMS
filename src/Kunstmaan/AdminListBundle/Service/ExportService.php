@@ -2,11 +2,14 @@
 
 namespace Kunstmaan\AdminListBundle\Service;
 
+use Box\Spout\Writer\WriterInterface;
 use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Translation\Translator;
+use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Type;
 
 class ExportService
 {
@@ -55,17 +58,15 @@ class ExportService
     {
         switch ($_format) {
             case self::EXT_EXCEL:
-                $writer   = $this->createExcelSheet($adminList);
-                $response = $this->createResponseForExcel($writer);
+                $response = $this->streamExcelSheet($adminList);
                 break;
             default:
                 $content  = $this->createFromTemplate($adminList, $_format, $template);
                 $response = $this->createResponse($content, $_format);
+                $filename = sprintf('entries.%s', $_format);
+                $response->headers->set('Content-Disposition', sprintf('attachment; filename=%s', $filename));
                 break;
         }
-
-        $filename = sprintf('entries.%s', $_format);
-        $response->headers->set('Content-Disposition', sprintf('attachment; filename=%s', $filename));
 
         return $response;
     }
@@ -98,52 +99,53 @@ class ExportService
     /**
      * @param ExportableInterface $adminList
      *
-     * @return \PHPExcel_Writer_Excel2007
+     * @return Response
      *
      * @throws \Exception
-     * @throws \PHPExcel_Exception
      */
-    public function createExcelSheet(ExportableInterface $adminList)
+    public function streamExcelSheet(ExportableInterface $adminList)
     {
-        $objPHPExcel = new \PHPExcel();
-
-        $objWorksheet = $objPHPExcel->getActiveSheet();
-
-        $number = 1;
-
-        $row = array();
-        foreach ($adminList->getExportColumns() as $column) {
-            $row[] = $this->translator->trans($column->getHeader());
-        }
-        $objWorksheet->fromArray($row, null, 'A' . $number++);
-
-        $iterator = $adminList->getIterator();
-        foreach ($iterator as $item) {
-            if (array_key_exists(0, $item)) {
-                $itemObject = $item[0];
-            } else {
-                $itemObject = $item;
-            }
+        $response = new StreamedResponse();
+        $response->setCallback(function () use ($adminList) {
+            $writer = WriterFactory::create(Type::XLSX);
+            $writer->openToBrowser("export.xlsx");
 
             $row = array();
             foreach ($adminList->getExportColumns() as $column) {
-                $data = $adminList->getStringValue($itemObject, $column->getName());
-                if (is_object($data)) {
-                    if (!$this->renderer->exists($column->getTemplate())) {
-                        throw new \Exception('No export template defined for ' . get_class($data));
-                    }
+                $row[] = $this->translator->trans($column->getHeader());
+            }
+            $writer->addRow($row);
 
-                    $data = $this->renderer->render($column->getTemplate(), array('object' => $data));
+            $iterator = $adminList->getIterator();
+            $rows = array();
+            foreach ($iterator as $item) {
+                if (array_key_exists(0, $item)) {
+                    $itemObject = $item[0];
+                } else {
+                    $itemObject = $item;
                 }
 
-                $row[] = $data;
+                $row = array();
+                foreach ($adminList->getExportColumns() as $column) {
+                    $data = $adminList->getStringValue($itemObject, $column->getName());
+                    if (is_object($data)) {
+                        if (!$this->renderer->exists($column->getTemplate())) {
+                            throw new \Exception('No export template defined for ' . get_class($data));
+                        }
+
+                        $data = $this->renderer->render($column->getTemplate(), array('object' => $data));
+                    }
+
+                    $row[] = $data;
+                }
+                $rows[] = $row;
             }
-            $objWorksheet->fromArray($row, null, 'A' . $number++);
-        }
 
-        $objWriter = new \PHPExcel_Writer_Excel2007($objPHPExcel);
+            $writer->addRows($rows);
+            $writer->close();
+        });
 
-        return $objWriter;
+        return $response;
     }
 
     /**
@@ -157,24 +159,6 @@ class ExportService
         $response = new Response();
         $response->headers->set('Content-Type', sprintf('text/%s', $_format));
         $response->setContent($content);
-
-        return $response;
-    }
-
-    /**
-     * @param \PHPExcel_Writer_IWriter $writer
-     *
-     * @return StreamedResponse
-     */
-    public function createResponseForExcel(\PHPExcel_Writer_IWriter $writer)
-    {
-        $response = new StreamedResponse(
-            function () use ($writer) {
-                $writer->save('php://output');
-            }
-        );
-
-        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
         return $response;
     }
