@@ -32,9 +32,20 @@ class Parser
             $entities[$key] = $ref->getEntity();
         }
 
-        $fixture->setProperties($this->parseArray($fixture->getProperties(), $providers, $entities, [$fixture]));
-        $fixture->setParameters($this->parseArray($fixture->getParameters(), $providers, $fixtures, [$fixture]));
-        $fixture->setTranslations($this->parseArray($fixture->getTranslations(), $providers, $fixtures, [$fixture]));
+        $fixture->setProperties($this->parseArray($fixture->getProperties(), $providers, $entities, [
+            $fixture,
+            'fixtures' => $fixtures,
+        ]));
+
+        $fixture->setParameters($this->parseArray($fixture->getParameters(), $providers, $fixtures, [
+            $fixture,
+            'fixtures' => $fixtures,
+        ]));
+
+        $fixture->setTranslations($this->parseArray($fixture->getTranslations(), $providers, $fixtures, [
+            $fixture,
+            'fixtures' => $fixtures,
+        ]));
     }
 
     public function parseEntity($entity, $providers, $fixtures = [], $additional = [])
