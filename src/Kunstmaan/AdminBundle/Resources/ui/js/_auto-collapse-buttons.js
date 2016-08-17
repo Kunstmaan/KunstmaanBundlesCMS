@@ -37,7 +37,7 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
         $buttonsRedundant.each( function() {
             var $li = $('<li>');
 
-            $(this).removeClass().addClass('btn-dropdown-menu').appendTo($li);
+            $(this).removeClass().addClass('btn-dropdown-menu js-save-btn').appendTo($li);
             $li.appendTo($dropdownList);
         });
     };
