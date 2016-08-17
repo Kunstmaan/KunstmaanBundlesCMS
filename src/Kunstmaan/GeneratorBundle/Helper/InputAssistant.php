@@ -41,7 +41,7 @@ class InputAssistant
     {
         $this->input = $input;
         $this->output = $output;
-	$this->questionHelper = $questionHelper;
+	    $this->questionHelper = $questionHelper;
         $this->kernel = $kernel;
         $this->container = $container;
     }

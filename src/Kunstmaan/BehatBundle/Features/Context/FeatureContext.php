@@ -2,21 +2,21 @@
 
 namespace Kunstmaan\BehatBundle\Features\Context;
 
+use Behat\Behat\Context\Context;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
-use Kunstmaan\BehatBundle\Features\Context\SubContext\RadioButtonSubContext;
+use Behat\Testwork\Hook\Scope\AfterTestScope;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
 
-class FeatureContext extends MinkContext
+class FeatureContext extends MinkContext implements Context
 {
 
     protected $browserName;
 
     public function __construct(array $parameters)
     {
-        $this->useContext('RadioButtonSubContext', new RadioButtonSubContext($parameters));
         $this->browserName = $this->getMinkParameter('browser_name');
     }
 
@@ -95,9 +95,9 @@ class FeatureContext extends MinkContext
      *
      * @AfterStep
      */
-    public function takeScreenshotAfterFailedStep($event)
+    public function takeScreenshotAfterFailedStep(AfterTestScope $event)
     {
-        if (4 === $event->getResult()) {
+        if (4 === $event->getTestResult()) {
             $driver = $this->getSession()->getDriver();
             if (!($driver instanceof Selenium2Driver)) {
                 throw new UnsupportedDriverActionException('Taking screenshots is not supported by %s, use Selenium2Driver instead.', $driver);

@@ -15,7 +15,7 @@ Suppose we want to manage the employees of our virtual company. For every employ
 
 The first thing to do is create an entity to store this information. To do that, we'll use our entity generator :
 
-    app/console kuma:generate:entity
+    bin/console kuma:generate:entity
 
 And enter the following data at the respective prompts :
 
@@ -27,7 +27,7 @@ And enter the following data at the respective prompts :
 
 To generate it's companion Admin List we can use another generator :
 
-    app/console kuma:generate:adminlist
+    bin/console kuma:generate:adminlist
 
 We don't need an empty repository class, but would like an admin list, generate the source skeleton and initialise the routing, so answer these prompts accordingly.
 
@@ -94,7 +94,7 @@ as well :
 
 Now everything should be good to go, so we'll create a new migration for the required database changes, and apply it immediately :
 
-    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
+    bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate
 
 If all went well, you should see a bare bones admin list when you go to `/app_dev.php/en/admin/employee/`.
 
@@ -213,7 +213,7 @@ If you want to use the admin list for entities you already created, you will hav
 
 And then you can simply run the admin list generator to generate the basic admin list skeleton:
 
-    app/console kuma:generate:adminlist
+    bin/console kuma:generate:adminlist
 
 
 ## Adding the admin list to the Modules menu

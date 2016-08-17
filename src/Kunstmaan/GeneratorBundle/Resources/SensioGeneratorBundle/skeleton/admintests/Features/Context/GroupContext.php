@@ -2,16 +2,26 @@
 
 namespace {{ namespace }}\Features\Context;
 
-use Behat\Behat\Context\BehatContext;
-use Behat\Behat\Context\Step;
+use Behat\Behat\Context\Context;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 /**
  * GroupContext
  *
  * Provides the context for the AdminSettingsGroup.feature
  */
-class GroupContext extends BehatContext
+class GroupContext implements Context
 {
+    /** @var FeatureContext $mainContext */
+    private $mainContext;
+
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+        $environment = $scope->getEnvironment();
+
+        $this->mainContext = $environment->getContext(FeatureContext::class);
+    }
 
     /**
      * @param string $groupName
@@ -22,17 +32,15 @@ class GroupContext extends BehatContext
      */
     public function iFillInCorrectGroupInformationForGroup($groupName)
     {
-        $steps = $this->iFillInGroupInformationForGroupWithoutRoles($groupName);
+        $this->iFillInGroupInformationForGroupWithoutRoles($groupName);
 
         $roles = array(
             "ROLE_ADMIN",
             "ROLE_PERMISSIONMANAGER"
         );
         foreach ($roles as $role) {
-            $steps[] = new Step\When("I additionally select \"$role\" from \"group[rolesCollection][]\"");
+            $this->mainContext->additionallySelectOption('group[rolesCollection][]', $role);
         }
-
-        return $steps;
     }
 
     /**
@@ -44,16 +52,13 @@ class GroupContext extends BehatContext
      */
     public function iFillInGroupInformationForGroupWithoutRoles($groupName)
     {
-        $steps = array();
-
         $records = array(
-            "group[name]" => $this->getMainContext()->fixStepArgument($groupName)
+            "group[name]" => $this->mainContext->fixStepArgument($groupName)
         );
-        foreach ($records as $field => $value) {
-            $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
-        }
 
-        return $steps;
+        foreach ($records as $field => $value) {
+            $this->mainContext->fillField($field, $value);
+        }
     }
 
     /**
@@ -63,7 +68,7 @@ class GroupContext extends BehatContext
      */
     public function iEditGroup($groupName)
     {
-        $this->getMainContext()->clickAction($groupName, 'Edit', 'groups');
+        $this->mainContext->clickAction($groupName, 'Edit', 'groups');
     }
 
     /**
@@ -73,20 +78,20 @@ class GroupContext extends BehatContext
      */
     public function iDeleteGroup($groupName)
     {
-        $this->getMainContext()->clickAction($groupName, 'Delete', 'groups');
+        $this->mainContext->clickAction($groupName, 'Delete', 'groups');
 
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@class, 'modal')]");
 
         //Wait 1 second for the modal to be visible
         //Else we can get a error when running the tests.
-        $this->getMainContext()->iWaitSeconds(1);
+        $this->mainContext->iWaitSeconds(1);
 
         // Find the visible modal.
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
+                $this->mainContext->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }

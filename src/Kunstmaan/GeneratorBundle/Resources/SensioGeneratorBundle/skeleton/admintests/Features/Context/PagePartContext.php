@@ -2,8 +2,9 @@
 
 namespace {{ namespace }}\Features\Context;
 
-use Behat\Behat\Context\BehatContext;
-use Behat\Behat\Context\Step;
+use Behat\Behat\Context\Context;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
@@ -11,8 +12,19 @@ use Behat\Mink\Exception\ElementNotFoundException;
  *
  * Provides the context for the AdminPagePart.feature
  */
-class PagePartContext extends BehatContext
+class PagePartContext implements Context
 {
+    /** @var FeatureContext $mainContext */
+    private $mainContext;
+
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+        $environment = $scope->getEnvironment();
+
+        $this->mainContext = $environment->getContext(FeatureContext::class);
+    }
+
     /**
      * @param string $context The context
      * @param string $pagePartName The name of the pagepart
@@ -23,10 +35,10 @@ class PagePartContext extends BehatContext
      */
     public function iAddPagePart($pagePartName, $context)
     {
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $element = $page->find('xpath', "//div[contains(@data-context, '" . $context . "')]//select");
         $this->selectOption($element, $pagePartName);
-        $this->getMainContext()->iWaitSeconds(2);
+        $this->mainContext->iWaitSeconds(2);
     }
 
     /**
@@ -39,9 +51,9 @@ class PagePartContext extends BehatContext
      */
     public function iFillPagePartCkeEditor($name, $value)
     {
-        $this->getMainContext()->getSession()->switchToIFrame('cke_iframe_' . lcfirst($name));
-        $this->getMainContext()->getSession()->executeScript("document.body.innerHTML='$value'");
-        $this->getMainContext()->getSession()->switchToIFrame();
+        $this->mainContext->getSession()->switchToIFrame('cke_iframe_' . lcfirst($name));
+        $this->mainContext->getSession()->executeScript("document.body.innerHTML='$value'");
+        $this->mainContext->getSession()->switchToIFrame();
     }
 
     /**
@@ -54,12 +66,12 @@ class PagePartContext extends BehatContext
      */
     public function iFillPagePartImage($name, $value)
     {
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $field = $page->find('xpath', "//label[contains(normalize-space(string(.)), '$name')]");
         $element = $field->getParent()->find('xpath', "//input");
         $name = $element->getAttribute('name');
         $javascript = "document.getElementsByName('" . $name . "')[0].value='" . $value . "';";
-        $this->getMainContext()->getSession()->executeScript($javascript);
+        $this->mainContext->getSession()->executeScript($javascript);
     }
 
     /**
@@ -71,7 +83,7 @@ class PagePartContext extends BehatContext
      */
     public function iClickEditPagePart($name)
     {
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $field = $page->find('xpath', "//h6[contains(normalize-space(string(.)), '$name')]");
         $button = $field->getParent()->find('xpath', "//button[contains(@class, 'edit')]");
         $button->click();
@@ -86,18 +98,18 @@ class PagePartContext extends BehatContext
      */
     public function iClickDeletePagePart($name)
     {
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $field = $page->find('xpath', "//h6[contains(normalize-space(string(.)), '$name')]");
         $button = $field->getParent()->find('xpath', "//button[contains(@class, 'del')]");
         $button->click();
 
-        $this->getMainContext()->iWaitSeconds(2);
+        $this->mainContext->iWaitSeconds(2);
 
         $field = $page->find('xpath', "//h3[contains(normalize-space(string(.)), \"Delete pagepart '$name'\")]");
         $button = $field->getParent()->getParent()->find('xpath', "//button[contains(normalize-space(string(.)), 'Delete')]");
         $button->click();
 
-        $this->getMainContext()->iWaitSeconds(1);
+        $this->mainContext->iWaitSeconds(1);
     }
 
     /**
@@ -111,7 +123,7 @@ class PagePartContext extends BehatContext
      */
     public function iFillPagePartDateTime($name, $dateValue, $timeValue)
     {
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $field = $page->find('xpath', "//label[contains(normalize-space(string(.)), '$name')]");
         $element = $field->getParent()->find('xpath', "//input[contains(@class, 'form_datepicker')]");
         $element->setValue($dateValue);
@@ -122,7 +134,7 @@ class PagePartContext extends BehatContext
             $id = $element->getAttribute('id');
             if (!empty($id)) {
                 $javascript = "document.getElementById('" . $id . "').value='" . $timeValue . "';";
-                $this->getMainContext()->getSession()->executeScript($javascript);
+                $this->mainContext->getSession()->executeScript($javascript);
             }
         }
     }
@@ -131,7 +143,7 @@ class PagePartContext extends BehatContext
      * Selects current node specified option if it's a select field.
      *
      * @param NodeElement $element
-     * @param string  $option
+     * @param string $option
      * @param Boolean $multiple
      *
      * @throws ElementNotFoundException

@@ -116,12 +116,10 @@ class DomainConfiguration extends BaseDomainConfiguration
      */
     public function getBackendLocales($host = null)
     {
-        if (!$host && $this->getHost()) {
-            $host = $this->hosts[$this->getHost()];
-        }
+        $host = $this->getRealHost($host);
 
-        if (isset($host['locales'])) {
-            return array_values($host['locales']);
+        if (isset($this->hosts[$host]['locales'])) {
+            return array_values($this->hosts[$host]['locales']);
         }
 
         return parent::getBackendLocales();

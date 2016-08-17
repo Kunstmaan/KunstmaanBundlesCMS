@@ -35,7 +35,6 @@ class AdminListTwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('adminlist_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
-            new \Twig_SimpleFunction('my_router_params', array($this, 'routerParams')),
             new \Twig_SimpleFunction('supported_export_extensions', array($this, 'getSupportedExtensions')),
         );
     }
@@ -74,32 +73,6 @@ class AdminListTwigExtension extends \Twig_Extension
             'extraparams'   => $urlparams,
             'adminlist'     => $view
         ));
-    }
-
-    /**
-     * Emulating the symfony 2.1.x $request->attributes->get('_route_params') feature.
-     * Code based on PagerfantaBundle's twig extension.
-     *
-     * @deprecated: you should use _route_params from the request attributes param bag now
-     *
-     * @return array
-     */
-    public function routerParams()
-    {
-        /* @var Router $router  */
-        $router = $this->container->get('router');
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-
-        $routeName = $request->attributes->get('_route');
-        $routeParams = $request->query->all();
-        $routeCollection = $router->getRouteCollection();
-        /* @var CompiledRoute $compiledRouteConnection */
-        $compiledRouteConnection = $routeCollection->get($routeName)->compile();
-        foreach ($compiledRouteConnection->getVariables() as $variable) {
-            $routeParams[$variable] = $request->attributes->get($variable);
-        }
-
-        return $routeParams;
     }
 
     public function getSupportedExtensions()

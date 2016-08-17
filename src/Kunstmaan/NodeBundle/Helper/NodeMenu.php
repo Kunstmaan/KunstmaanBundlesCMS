@@ -628,16 +628,6 @@ class NodeMenu
 
     /**
      * @return string
-     *
-     * @deprecated Only here to provide backwards compatibility ...
-     */
-    public function getLang()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * @return string
      */
     public function getLocale()
     {

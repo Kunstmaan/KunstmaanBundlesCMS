@@ -16,13 +16,13 @@ Every service should have a separate page part, since you want to display them c
 
 To make things easier, we created a page part generator that will generate the basic skeleton, and does all of the basic wiring, so go ahead and execute the following :
 
-    app/console kuma:generate:pagepart
+    bin/console kuma:generate:pagepart
 
 First this will ask for a table name prefix, just leave it as it's suggested by the generator.
 
 Then it will ask for a name, this is the class name for your page part. It's best to use something sensible, preferably ending in PagePart, so let's call it the `MyServicesPagePart`.
 
-![app/console kuma:generate:pagepart](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppgenerator.png)
+![bin/console kuma:generate:pagepart](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppgenerator.png)
 
 Now the generator will ask for a list of fields to add to the page part, so just enter the following at the respective prompts:
 
@@ -34,19 +34,19 @@ And finally press return at the field name prompt without entering a field name 
 
 Now you will be prompted to select the section(s) you want to add this page part to, for now just enter `3` (Main).
 
-![app/console kuma:generate:pagepart](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppgenfields.png)
+![bin/console kuma:generate:pagepart](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppgenfields.png)
 
 If all goes well, the necessary code should have been created, and you'll get a hint on how to update your database to reflect the changes that were made.  You can either forcibly update your database (which might make it harder to deploy, since you will have to manually alter the database when deploying) or you can create a migration for the change (which is advisable).
 
 We prefer the latter, so go ahead and execute :
 
-    app/console doctrine:migrations:diff
-    app/console doctrine:migrations:migrate
+    bin/console doctrine:migrations:diff
+    bin/console doctrine:migrations:migrate
 
 This will create a migration and update your database. Now head on over to the back-end (`/app_dev.php/en/admin`) and have a look at the Content PageParts page (`/app_dev.php/en/admin/nodes/2`). If all went well, you should see 'Service'
 at the bottom of the 'Add a pagepart' combobox and you should be able to add, edit and delete Service page parts as well.
 
-![app/console doctrine:migrations](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppmigration.png)
+![bin/console doctrine:migrations](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/ppmigration.png)
 
 ## Modifying the generated page part template
 
@@ -116,7 +116,7 @@ liip_imagine:
 
 Now, clear the cache.
 
-    app/console cache:clear
+    bin/console cache:clear
 
 And have a look at the front-end (`/app_dev.php/en/content-pageparts`), the Service page part should now be rendered as just defined.
 
@@ -177,7 +177,7 @@ Now create a new `view.html.twig` file that contains the code you wish to use to
 
 Clear the cache :
 
-    app/console cache:clear
+    bin/console cache:clear
 
 And reload the Content PageParts page (`/app_dev.php/en/content-pageparts`). The table of contents on top of the page should now be rendered as an ordered list instead of the default unordered one.
 
