@@ -17,6 +17,7 @@ services:
 
     kunstmaan_media.media_handlers.pdf:
         class: '%kunstmaan_media.media_handler.pdf.class%'
+        parent: kunstmaan_media.media_handlers.file
         arguments: [1, '@kunstmaan_media.mimetype_guesser.factory', '@kunstmaan_media.extension_guesser.factory']
         calls:
             - [ setMediaPath, [ '%kernel.root_dir%' ] ]
