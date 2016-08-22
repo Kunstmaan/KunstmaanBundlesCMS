@@ -5,6 +5,7 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 use Doctrine\ORM\Tools\EntityGenerator;
+use Doctrine\ORM\Tools\EntityRepositoryGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;
@@ -88,6 +89,7 @@ class KunstmaanGenerator extends Generator
      * @param string          $namePrefix
      * @param string          $dbPrefix
      * @param string|null     $extendClass
+     * @param bool            $withRepository
      *
      * @return array
      * @throws \RuntimeException
@@ -98,24 +100,32 @@ class KunstmaanGenerator extends Generator
         $fields,
         $namePrefix,
         $dbPrefix,
-        $extendClass = null
+        $extendClass = null,
+        $withRepository = false
     ) {
         // configure the bundle (needed if the bundle does not contain any Entities yet)
         $config = $this->registry->getManager(null)->getConfiguration();
         $config->setEntityNamespaces(
             array_merge(
-                array($bundle->getName() => $bundle->getNamespace() . '\\Entity\\' . $namePrefix),
+                array($bundle->getName() => $bundle->getNamespace() . '\\Entity' . ($namePrefix ? '\\' . $namePrefix : '')),
                 $config->getEntityNamespaces()
             )
         );
 
-        $entityClass = $this->registry->getAliasNamespace($bundle->getName()) . '\\' . $namePrefix . '\\' . $name;
-        $entityPath  = $bundle->getPath() . '/Entity/' . $namePrefix . '/' . str_replace('\\', '/', $name) . '.php';
+        $entityClass = $this->registry->getAliasNamespace($bundle->getName()) . ($namePrefix ? '\\' . $namePrefix : '') . '\\' . $name;
+        $entityPath  = $bundle->getPath() . '/Entity/' . ($namePrefix ? $namePrefix . '/' : '') . str_replace('\\', '/', $name) . '.php';
         if (file_exists($entityPath)) {
             throw new \RuntimeException(sprintf('Entity "%s" already exists.', $entityClass));
         }
 
         $class = new ClassMetadataInfo($entityClass, new UnderscoreNamingStrategy());
+        if ($withRepository) {
+            $entityClass = preg_replace('/\\\\Entity\\\\/', '\\Repository\\', $entityClass, 1);
+            $class->customRepositoryClassName = $entityClass.'Repository';
+            $path = $bundle->getPath().str_repeat('/..', substr_count(get_class($bundle), '\\'));
+            $this->getRepositoryGenerator()->writeEntityRepositoryClass($class->customRepositoryClassName, $path);
+        }
+
         foreach ($fields as $fieldSet) {
             foreach ($fieldSet as $fieldArray) {
                 foreach ($fieldArray as $field) {
@@ -428,5 +438,13 @@ class KunstmaanGenerator extends Generator
         }
 
         return file_put_contents($target, $this->renderTwig($template, $parameters, $sourceDir));
+    }
+
+    /**
+     * @return \Doctrine\ORM\Tools\EntityRepositoryGenerator
+     */
+    protected function getRepositoryGenerator()
+    {
+        return new EntityRepositoryGenerator();
     }
 }
