@@ -7,9 +7,3 @@
     requirements:
          _locale: "%requiredlocales%"
 
-{{ bundle.getName()|lower }}_{{ entity_class|lower }}author_admin_list:
-    resource: '@{{ bundle.getName() }}/Controller/{{ entity_class }}AuthorAdminListController.php'
-    type:     annotation
-    prefix:   /{_locale}/%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}author/
-    requirements:
-         _locale: "%requiredlocales%"

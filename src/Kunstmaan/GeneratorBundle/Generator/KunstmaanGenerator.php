@@ -321,28 +321,32 @@ class KunstmaanGenerator extends Generator
     /**
      * Render all files in the source directory and copy them to the target directory.
      *
-     * @param string $sourceDir  The source directory where we need to look in
-     * @param string $targetDir  The target directory where we need to copy the files too
-     * @param string $filename   The name of the file that needs to be rendered
-     * @param array  $parameters The parameters that will be passed to the templates
-     * @param bool   $override   Whether to override an existing file or not
+     * @param string $sourceDir The source directory where we need to look in
+     * @param string $targetDir The target directory where we need to copy the files too
+     * @param string $filename The name of the file that needs to be rendered
+     * @param array $parameters The parameters that will be passed to the templates
+     * @param bool $override Whether to override an existing file or not
+     * @param string|null $targetFilename The name of the target file (if null, then use $filename)
      */
-    public function renderSingleFile($sourceDir, $targetDir, $filename, array $parameters, $override = false)
+    public function renderSingleFile($sourceDir, $targetDir, $filename, array $parameters, $override = false, $targetFilename = null)
     {
         // Make sure the source -and target dir contain a trailing slash
         $sourceDir = rtrim($sourceDir, '/') . '/';
         $targetDir = rtrim($targetDir, '/') . '/';
+        if (is_null($targetFilename)) {
+            $targetFilename = $filename;
+        }
 
         $this->setSkeletonDirs(array($sourceDir));
 
         if (is_file($sourceDir . $filename)) {
             // Check that we are allowed the overwrite the file if it already exists
-            if (!is_file($targetDir . $filename) || $override === true) {
+            if (!is_file($targetDir . $targetFilename) || $override === true) {
                 $fileParts = explode('.', $filename);
                 if (end($fileParts) === 'twig') {
-                    $this->renderTwigFile($filename, $targetDir . $filename, $parameters, $sourceDir);
+                    $this->renderTwigFile($filename, $targetDir . $targetFilename, $parameters, $sourceDir);
                 } else {
-                    $this->renderFile($filename, $targetDir . $filename, $parameters);
+                    $this->renderFile($filename, $targetDir . $targetFilename, $parameters);
                 }
             }
         }

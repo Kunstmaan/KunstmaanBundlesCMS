@@ -1,0 +1,39 @@
+{% if type != 'Author' %}
+    /**
+     * @param \{{ namespace }}\Entity\{{ entity_class }}{{ type }} ${{ type|lower }}
+     * @return $this
+     */
+    public function set{{ pluralType|capitalize }}(${{ type|lower }})
+    {
+        $this->{{ pluralType }} = ${{ type|lower }};
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function get{{ pluralType|capitalize }}()
+    {
+        return $this->{{ pluralType }};
+    }
+{% else %}
+    /**
+     * @param \{{ namespace }}\Entity\{{ entity_class }}{{ type }} ${{ type|lower }}
+     * @return $this
+     */
+     public function set{{ type|capitalize }}(${{ type|lower }})
+     {
+         $this->{{ type|lower }} = ${{ type|lower }};
+
+         return $this;
+     }
+
+     /**
+      * @return \{{ namespace }}\Entity\{{ entity_class }}{{ type }} ${{ type|lower }}
+      */
+      public function get{{ type|capitalize }}()
+      {
+          return $this->{{ type|lower }};
+      }
+{% endif %}

@@ -2,13 +2,13 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Symfony\Component\Form\AbstractType;
-use {{ namespace }}\Entity\{{ entity_class }}Author;
 use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
+use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}PageRepository")
@@ -17,25 +17,14 @@ use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
  */
 class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTemplateInterface, SearchTypeInterface
 {
-    /**
-     * @var {{ entity_class }}Author
-     *
-     * @ORM\ManyToOne(targetEntity="{{ namespace }}\Entity\{{ entity_class }}Author")
-     * @ORM\JoinColumn(name="{{ entity_class|lower }}_author_id", referencedColumnName="id")
-     */
-    protected $author;
+    //%PagePartial.php.twig%
 
-    public function setAuthor($author)
+    public function __construct()
     {
-	$this->author = $author;
-
-	return $this;
+        //%constructor%
     }
 
-    public function getAuthor()
-    {
-	return $this->author;
-    }
+    //%PagePartialFunctions.php.twig%
 
     /**
      * Returns the default backend form type for this page
@@ -52,7 +41,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getSearchType()
     {
-	return '{{ entity_class }}';
+	    return '{{ entity_class }}';
     }
 
     /**
@@ -60,7 +49,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPagePartAdminConfigurations()
     {
-	return array('{{ bundle.getName() }}:main');
+	    return array('{{ bundle.getName() }}:{{ entity_class|lower }}main');
     }
 
     /**
@@ -68,12 +57,12 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPageTemplates()
     {
-	return array('{{ bundle.getName() }}:{{ entity_class|lower }}page');
+	    return array('{{ bundle.getName() }}:{{ entity_class|lower }}page');
     }
 
     public function getDefaultView()
     {
-	return '{{ bundle.getName() }}:Pages/{{ entity_class }}Page:view.html.twig';
+	    return '{{ bundle.getName() }}:Pages/{{ entity_class }}Page:view.html.twig';
     }
 
     /**
