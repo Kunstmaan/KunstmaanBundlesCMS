@@ -1,12 +1,12 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
+kunstmaanbundles.autoCollapseButtons = (function ($, window, undefined) {
 
     var init, createMoreDropdown,
         buttonsVisible,
         $autoCollapseButtons, $btnGroup, $allButtons, $buttonsRedundant, $moreButtonContainer, $moreButton, $caret, $dropdownList;
 
-    init = function() {
+    init = function () {
         buttonsVisible = 2;
 
         $autoCollapseButtons = $('.js-auto-collapse-buttons');
@@ -23,7 +23,7 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
         }
     };
 
-    createMoreDropdown = function() {
+    createMoreDropdown = function () {
         // create dom elements
         $moreButtonContainer = $('<div class="btn-group btn-group--more">').appendTo($btnGroup);
         var label = MORE_BUTTON_LABEL
@@ -34,10 +34,10 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
         $dropdownList = $('<ul class="dropdown-menu dropdown-menu-right dropdown-menu--more">').appendTo($moreButtonContainer);
 
         // move buttons to dropdown list & remove styling
-        $buttonsRedundant.each( function() {
+        $buttonsRedundant.each(function () {
             var $li = $('<li>');
 
-            $(this).removeClass().addClass('btn-dropdown-menu').appendTo($li);
+            $(this).removeClass().addClass('btn-dropdown-menu js-save-btn').appendTo($li);
             $li.appendTo($dropdownList);
         });
     };
