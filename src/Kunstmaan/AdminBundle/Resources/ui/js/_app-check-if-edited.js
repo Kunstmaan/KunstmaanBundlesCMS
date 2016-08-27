@@ -1,18 +1,17 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.checkIfEdited = (function($, window, undefined) {
+kunstmaanbundles.checkIfEdited = (function ($, window, undefined) {
 
     var init, edited, _doUnload;
 
     var NeedCheck = $('body').hasClass('js-check-if-edited'),
         isEdited = false,
-        oldEdited = false;
 
 
-    init = function() {
+    init = function () {
 
-        if(NeedCheck) {
-            $('.js-save-btn').on('click', function() {
+        if (NeedCheck) {
+            $(document).on('click', '.js-save-btn', function () {
                 window.onbeforeunload = null;
             });
 
@@ -21,13 +20,13 @@ kunstmaanbundles.checkIfEdited = (function($, window, undefined) {
     };
 
 
-    edited = function() {
+    edited = function () {
         isEdited = true;
     };
 
 
-    _doUnload = function() {
-        if(isEdited) {
+    _doUnload = function () {
+        if (isEdited) {
             return 'You haven\'t saved this page, are you sure you want to close it?';
         }
     };
