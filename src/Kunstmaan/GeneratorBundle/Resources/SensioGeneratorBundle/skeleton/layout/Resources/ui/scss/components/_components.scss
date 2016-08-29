@@ -19,6 +19,9 @@
 
 /* Structures
    ========================================================================== */
+
+@import "structures/cookie-consent";
+
 {% if demosite %}
 @import "structures/splash",
         "structures/submenu",
@@ -28,10 +31,7 @@
         "structures/header-visual",
         "structures/newsletter",
         "structures/pagination",
-        "structures/cookie-consent",
         "structures/demosite-msg";
-{% else %}
-// @import "structures/..";
 {% endif %}
 
 
