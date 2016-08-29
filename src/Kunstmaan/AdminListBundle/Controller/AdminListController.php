@@ -224,9 +224,12 @@ abstract class AdminListController extends Controller
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_EDIT, new AdminListEvent($helper));
                 $indexUrl = $configurator->getIndexUrl();
 
-                return new RedirectResponse(
-                    $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
-                );
+                // Don't redirect to listing when coming from ajax request, needed for url chooser.
+                if (!$request->isXmlHttpRequest()) {
+                    return new RedirectResponse(
+                        $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+                    );
+                }
             }
         }
 
