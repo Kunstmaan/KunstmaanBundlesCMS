@@ -19,14 +19,13 @@ class ExportTranslationsCommand extends ContainerAwareCommand
         ->addOption('domains',    'd',    InputOption::VALUE_REQUIRED, 'Specify which domains to export, default all domains in the stash')
         ->addOption('format',     'f',    InputOption::VALUE_REQUIRED, 'Specify which format files should be, default is yaml')
         ->addOption('locales',    'l',    InputOption::VALUE_REQUIRED, 'Specifiy which locales to export, default all in the stash');
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $domains =      $input->getOption('domains');
-        $format =       $input->getOption('format');
-        $locales =      $input->getOption('locales');
+        $domains = $input->getOption('domains');
+        $format = $input->getOption('format');
+        $locales = $input->getOption('locales');
 
         if (is_null($format)) {
             throw new InvalidArgumentException('A format should be defined, e.g --format yml');
@@ -39,6 +38,5 @@ class ExportTranslationsCommand extends ContainerAwareCommand
             ->setLocales($locales === null ? false : $locales);
 
         $this->getContainer()->get('kunstmaan_translator.service.exporter.command_handler')->executeExportCommand($exportCommand);
-
     }
 }

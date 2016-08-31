@@ -1,11 +1,11 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests;
 
 include __DIR__.'/app/AppKernel.php';
 
 abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
 {
-
     public $container;
     public $kernel;
     public $connection;
@@ -34,5 +34,4 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
     {
         $this->kernel->shutdown();
     }
-
 }

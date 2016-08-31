@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,7 +10,7 @@ use Kunstmaan\TranslatorBundle\Service\Command\DiffCommand;
 use Doctrine\Bundle\MigrationsBundle\Command\DoctrineCommand;
 
 /**
- * Command for generate migration classes by checking the translation flag value
+ * Command for generate migration classes by checking the translation flag value.
  */
 class MigrationsDiffCommand extends DiffCommand
 {

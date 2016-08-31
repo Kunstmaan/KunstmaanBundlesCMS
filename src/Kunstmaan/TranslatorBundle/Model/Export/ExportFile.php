@@ -1,11 +1,12 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Model\Export;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
- * A representation of a translation export into a file
+ * A representation of a translation export into a file.
  */
 class ExportFile
 {
@@ -16,22 +17,24 @@ class ExportFile
     private $locale;
 
     /**
-     * ArrayCollection with keyword as key, text as value
+     * ArrayCollection with keyword as key, text as value.
+     *
      * @var ArrayCollection
      */
     private $translations;
 
     /**
-     * Translations converted into an array
+     * Translations converted into an array.
+     *
      * @var array
      */
     private $array = array();
 
-    private $content ='';
+    private $content = '';
 
     public function __construct()
     {
-        $this->translations = new ArrayCollection;
+        $this->translations = new ArrayCollection();
     }
 
     public function fillArray()

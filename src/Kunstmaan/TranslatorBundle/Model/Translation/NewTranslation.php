@@ -1,25 +1,29 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Model\Translation;
 
 /**
- * Defines a new translation - bridge between controller and service layer
+ * Defines a new translation - bridge between controller and service layer.
  */
 class NewTranslation
 {
     /**
-     * An array with all translations, key = locale, value = translation
+     * An array with all translations, key = locale, value = translation.
+     *
      * @var array
      */
     protected $locales = array();
 
     /**
-     * Keyword of the new translations
+     * Keyword of the new translations.
+     *
      * @var string
      */
     protected $keyword;
 
     /**
-     * Domain name of the new translations
+     * Domain name of the new translations.
+     *
      * @var string
      */
     protected $domain;
@@ -53,5 +57,4 @@ class NewTranslation
     {
         $this->domain = $domain;
     }
-
 }

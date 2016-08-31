@@ -1,10 +1,11 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Service\Command\Exporter;
 
 use Symfony\Component\Yaml\Dumper;
 
 /**
- * Export into yaml format
+ * Export into yaml format.
  */
 class YamlFileExporter implements FileExporterInterface
 {
@@ -26,5 +27,4 @@ class YamlFileExporter implements FileExporterInterface
     {
         return 'yml' === $format;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -7,7 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command to reset/request translation flags from the stash
+ * Command to reset/request translation flags from the stash.
  */
 class TranslationFlagCommand extends ContainerAwareCommand
 {
@@ -28,11 +29,10 @@ class TranslationFlagCommand extends ContainerAwareCommand
             $this->resetAllTranslationFlags();
             $output->writeln('<info>All translation and translation domain flags are reset.</info>');
         }
-
     }
 
     /**
-     * Rest all flags of all translations and all domains
+     * Rest all flags of all translations and all domains.
      */
     public function resetAllTranslationFlags()
     {

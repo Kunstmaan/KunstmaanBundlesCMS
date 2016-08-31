@@ -7,7 +7,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 /**
  * Translation Loader
- * Loads translations from the defined stasher
+ * Loads translations from the defined stasher.
  */
 class Loader implements LoaderInterface
 {

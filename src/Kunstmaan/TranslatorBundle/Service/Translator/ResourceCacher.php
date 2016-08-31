@@ -6,29 +6,32 @@ use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Finder\Finder;
 
 /**
- * ResourceCacher is used to cache all the resource into a file
+ * ResourceCacher is used to cache all the resource into a file.
  */
 class ResourceCacher
 {
     /**
-     * @var boolean
+     * @var bool
      */
     private $debug;
 
     /**
-     * Where to store cache files
+     * Where to store cache files.
+     *
      * @var string
      */
     private $cacheDir;
 
     /**
-     * Logger
+     * Logger.
+     *
      * @var \Symfony\Component\HttpKernel\Log\LoggerInterface
      */
     private $logger;
 
     /**
-     * Retrieve resources from cache file (if any)
+     * Retrieve resources from cache file (if any).
+     *
      * @return resources false if empty
      */
     public function getCachedResources()
@@ -47,9 +50,9 @@ class ResourceCacher
     }
 
     /**
-     * Cache an array of resources into the given cache
-     * @param  array $resources
-     * @return void
+     * Cache an array of resources into the given cache.
+     *
+     * @param array $resources
      */
     public function cacheResources(array $resources)
     {
@@ -60,7 +63,8 @@ class ResourceCacher
     }
 
     /**
-     * Get cache file location
+     * Get cache file location.
+     *
      * @return string
      */
     public function getCacheFileLocation()
@@ -69,8 +73,7 @@ class ResourceCacher
     }
 
     /**
-     * Remove all cached files (translations/resources)
-     * @return void
+     * Remove all cached files (translations/resources).
      */
     public function flushCache()
     {

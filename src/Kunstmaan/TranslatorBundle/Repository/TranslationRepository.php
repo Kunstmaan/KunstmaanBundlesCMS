@@ -1,16 +1,18 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Repository;
 
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Model\TextWithLocale;
 
 /**
- * Translator Repository class
+ * Translator Repository class.
  */
 class TranslationRepository extends AbstractTranslatorRepository
 {
     /**
-     * Get an array of all domains group by locales
+     * Get an array of all domains group by locales.
+     *
      * @return array array[0] = ["name" => "messages", "locale" => "nl"]
      */
     public function getAllDomainsByLocale()
@@ -61,10 +63,9 @@ EOQ;
     {
         return $this->createQueryBuilder('t')
           ->update('KunstmaanTranslatorBundle:Translation', 't')
-          ->set('t.flag', "NULL")
+          ->set('t.flag', 'NULL')
           ->getQuery()
           ->execute();
-
     }
 
     public function getTranslationsByLocalesAndDomains($locales, $domains)
@@ -125,7 +126,7 @@ EOQ;
             // Fetch new translation ID
             $translationId = $this->getUniqueTranslationId();
             /**
-             * @var TextWithLocale $textWithLocale
+             * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
                 $text = $textWithLocale->getText();
@@ -153,7 +154,7 @@ EOQ;
         $this->getEntityManager()->beginTransaction();
         try {
             /**
-             * @var TextWithLocale $textWithLocale
+             * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
                 if ($textWithLocale->getId()) {
@@ -184,9 +185,10 @@ EOQ;
     }
 
     /**
-     * Removes all translations with the given translation id
+     * Removes all translations with the given translation id.
      *
      * @param string $translationId
+     *
      * @return mixed
      */
     public function removeTranslations($translationId)

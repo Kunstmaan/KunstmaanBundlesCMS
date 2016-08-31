@@ -10,14 +10,14 @@ use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\Finder\Finder;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class KunstmaanTranslatorExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -57,7 +57,7 @@ class KunstmaanTranslatorExtension extends Extension
 
         $translator->addMethodCall('setFallbackLocales', array(array('en')));
 
-        if($container->hasParameter('defaultlocale')) {
+        if ($container->hasParameter('defaultlocale')) {
             $translator->addMethodCall('setFallbackLocales', array(array($container->getParameter('defaultlocale'))));
         }
     }
@@ -65,7 +65,7 @@ class KunstmaanTranslatorExtension extends Extension
     /**
      * Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension
      * $this->registerTranslatorConfiguration($config['translator'], $container);
-     * Used to load all other translation files
+     * Used to load all other translation files.
      */
     public function registerTranslatorConfiguration($config, $container)
     {
@@ -105,9 +105,9 @@ class KunstmaanTranslatorExtension extends Extension
             $finder = Finder::create();
             $finder->files();
 
-                $finder->filter(function (\SplFileInfo $file) {
-                    return 2 === substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
-                });
+            $finder->filter(function (\SplFileInfo $file) {
+                return 2 === substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
+            });
 
             $finder->in($dirs);
 

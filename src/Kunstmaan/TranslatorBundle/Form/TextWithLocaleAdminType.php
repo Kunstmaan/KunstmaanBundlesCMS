@@ -14,7 +14,7 @@ class TextWithLocaleAdminType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,7 +23,7 @@ class TextWithLocaleAdminType extends AbstractType
         ));
         $builder->add('text', TextareaType::class, array(
             'label' => 'kuma_translator.form.text_with_locale.text.label',
-            'required' => false
+            'required' => false,
         ));
 
         $builder->addEventListener(
