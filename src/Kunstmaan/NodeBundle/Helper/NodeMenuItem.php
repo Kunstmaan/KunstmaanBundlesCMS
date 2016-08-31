@@ -8,7 +8,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 /**
- * NodeMenuItem
+ * NodeMenuItem.
  */
 class NodeMenuItem
 {
@@ -48,7 +48,7 @@ class NodeMenuItem
      * @param NodeMenuItem|null|false $parent          The parent nodemenuitem
      * @param NodeMenu                $menu            The menu
      */
-    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent = false, NodeMenu $menu)
+    public function __construct(Node $node, NodeTranslation $nodeTranslation, $parent, NodeMenu $menu)
     {
         $this->node = $node;
         $this->nodeTranslation = $nodeTranslation;
@@ -92,7 +92,7 @@ class NodeMenuItem
             return $nodeTranslation->getTitle();
         }
 
-        return "Untranslated";
+        return 'Untranslated';
     }
 
     /**
@@ -109,7 +109,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return string|NULL
+     * @return string|null
      */
     public function getSlugPart()
     {
@@ -143,7 +143,7 @@ class NodeMenuItem
     }
 
     /**
-     * @return NodeMenuItem|NULL
+     * @return NodeMenuItem|null
      */
     public function getParent()
     {
@@ -166,14 +166,14 @@ class NodeMenuItem
     /**
      * @param string $class
      *
-     * @return NodeMenuItem|NULL
+     * @return NodeMenuItem|null
      */
     public function getParentOfClass($class)
     {
         // Check for namespace alias
         if (strpos($class, ':') !== false) {
             list($namespaceAlias, $simpleClassName) = explode(':', $class);
-            $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
+            $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias).'\\'.$simpleClassName;
         }
         if ($this->getParent() === null) {
             return null;
@@ -237,7 +237,7 @@ class NodeMenuItem
         // Check for namespace alias
         if (strpos($class, ':') !== false) {
             list($namespaceAlias, $simpleClassName) = explode(':', $class);
-            $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
+            $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias).'\\'.$simpleClassName;
         }
         $result = array();
         $children = $this->getChildren();
@@ -251,7 +251,8 @@ class NodeMenuItem
     }
 
     /**
-     * Get the first child of class, this is not using the getChildrenOfClass method for performance reasons
+     * Get the first child of class, this is not using the getChildrenOfClass method for performance reasons.
+     *
      * @param string $class
      *
      * @return NodeMenuItem
@@ -261,7 +262,7 @@ class NodeMenuItem
         // Check for namespace alias
         if (strpos($class, ':') !== false) {
             list($namespaceAlias, $simpleClassName) = explode(':', $class);
-            $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias) . '\\' . $simpleClassName;
+            $class = $this->em->getConfiguration()->getEntityNamespace($namespaceAlias).'\\'.$simpleClassName;
         }
         foreach ($this->getChildren() as $child) {
             if ($child->getPage() instanceof $class) {

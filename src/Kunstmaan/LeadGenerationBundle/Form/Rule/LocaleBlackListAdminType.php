@@ -25,17 +25,17 @@ class LocaleBlackListAdminType extends AbstractRuleAdminType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('locale', ChoiceType::class, array(
-            'label'     => 'kuma_lead_generation.form.locale_black_list.locale.label',
-            'attr'      => array(
+            'label' => 'kuma_lead_generation.form.locale_black_list.locale.label',
+            'attr' => array(
                 'info_text' => 'kuma_lead_generation.form.locale_black_list.locale.info_text',
             ),
-            'choices'   => $this->locales,
-            'choices_as_values' => true
+            'choices' => $this->locales,
+            'choices_as_values' => true,
         ));
     }
 

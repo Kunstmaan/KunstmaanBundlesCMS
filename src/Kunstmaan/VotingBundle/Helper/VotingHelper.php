@@ -5,11 +5,10 @@ namespace Kunstmaan\VotingBundle\Helper;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Helper class for Voting
+ * Helper class for Voting.
  */
 class VotingHelper
 {
-
     /**
      * @var EntityManager
      */
@@ -19,5 +18,4 @@ class VotingHelper
     {
         $this->em = $em;
     }
-
 }

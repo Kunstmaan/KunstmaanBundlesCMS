@@ -109,7 +109,7 @@ class OnExitIntentRule extends AbstractRule
         return array(
             'sensitivity' => $this->getSensitivity(),
             'timer' => $this->getTimer(),
-            'delay' => $this->getDelay()
+            'delay' => $this->getDelay(),
         );
     }
 

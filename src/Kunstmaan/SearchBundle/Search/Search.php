@@ -7,7 +7,7 @@ use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
 
 /**
  * Search class which will delegate to the active SearchProvider
- * The active SearchProvider can be overridden by overriding the "kunstmaan_search.search" parameter
+ * The active SearchProvider can be overridden by overriding the "kunstmaan_search.search" parameter.
  */
 class Search implements SearchProviderInterface
 {
@@ -34,12 +34,12 @@ class Search implements SearchProviderInterface
     public function __construct(SearchProviderChainInterface $searchProviderChain, $indexNamePrefix, $activeProvider)
     {
         $this->searchProviderChain = $searchProviderChain;
-        $this->indexNamePrefix     = $indexNamePrefix;
-        $this->activeProvider      = $activeProvider;
+        $this->indexNamePrefix = $indexNamePrefix;
+        $this->activeProvider = $activeProvider;
     }
 
     /**
-     * Get the current active SearchProvider
+     * Get the current active SearchProvider.
      *
      * @return SearchProviderInterface
      */
@@ -49,23 +49,23 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createIndex($indexName)
     {
-        return $this->getActiveProvider()->createIndex($this->indexNamePrefix . $indexName);
+        return $this->getActiveProvider()->createIndex($this->indexNamePrefix.$indexName);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getIndex($indexName)
     {
-        return $this->getActiveProvider()->getIndex($this->indexNamePrefix . $indexName);
+        return $this->getActiveProvider()->getIndex($this->indexNamePrefix.$indexName);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getClient()
     {
@@ -73,25 +73,25 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createDocument($uid, $document, $indexName = '', $indexType = '')
     {
         return $this->getActiveProvider()->createDocument(
             $uid,
             $document,
-            $this->indexNamePrefix . $indexName,
+            $this->indexNamePrefix.$indexName,
             $indexType
         );
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addDocument($uid, $document, $indexType, $indexName)
     {
         return $this->getActiveProvider()->addDocument(
-            $this->indexNamePrefix . $indexName,
+            $this->indexNamePrefix.$indexName,
             $indexType,
             $document,
             $uid
@@ -99,7 +99,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addDocuments($documents, $indexName = '', $indexType = '')
     {
@@ -107,31 +107,31 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deleteDocument($indexName, $indexType, $uid)
     {
-        return $this->getActiveProvider()->deleteDocument($this->indexNamePrefix . $indexName, $indexType, $uid);
+        return $this->getActiveProvider()->deleteDocument($this->indexNamePrefix.$indexName, $indexType, $uid);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deleteDocuments($indexName, $indexType, array $ids)
     {
-        return $this->getActiveProvider()->deleteDocuments($this->indexNamePrefix . $indexName, $indexType, $ids);
+        return $this->getActiveProvider()->deleteDocuments($this->indexNamePrefix.$indexName, $indexType, $ids);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function deleteIndex($indexName)
     {
-        return $this->getActiveProvider()->deleteIndex($this->indexNamePrefix . $indexName);
+        return $this->getActiveProvider()->deleteIndex($this->indexNamePrefix.$indexName);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -139,7 +139,7 @@ class Search implements SearchProviderInterface
     }
 
     /**
-     * Get the prefix for the index' name
+     * Get the prefix for the index' name.
      *
      * @return string
      */

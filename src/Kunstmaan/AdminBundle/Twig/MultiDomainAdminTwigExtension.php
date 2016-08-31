@@ -16,7 +16,6 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
         $this->domainConfiguration = $domainConfiguration;
     }
 
-
     /**
      * Get Twig functions defined in this extension.
      *
@@ -36,16 +35,16 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
      * Render multidomain switcher widget.
      *
      * @param \Twig_Environment $env
-     * @param array $locales The locales
-     * @param string $route The route
-     * @param array $parameters The route parameters
+     * @param array             $locales    The locales
+     * @param string            $route      The route
+     * @param array             $parameters The route parameters
      *
      * @return string
      */
     public function renderWidget(\Twig_Environment $env, $route, array $parameters = array())
     {
         $template = $env->loadTemplate(
-            "@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget.html.twig"
+            '@KunstmaanAdmin/MultiDomainAdminTwigExtension/widget.html.twig'
         );
 
         return $template->render(
@@ -53,14 +52,14 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
                 $parameters,
                 array(
                     'hosts' => $this->getAdminDomainHosts(),
-                    'route' => $route
+                    'route' => $route,
                 )
             )
         );
     }
 
     /**
-     * Check if site is multiDomain
+     * Check if site is multiDomain.
      *
      * @return bool
      */

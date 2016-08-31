@@ -3,38 +3,36 @@
 namespace Kunstmaan\FormBundle\Helper;
 
 use Symfony\Component\Routing\RouterInterface;
-
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 
 /**
- * FormPageInterface
+ * FormPageInterface.
  */
 interface FormPageInterface
 {
-
     /**
-     * Get the email address of the sender of the administrative email
+     * Get the email address of the sender of the administrative email.
      *
      * @return string
      */
     public function getFromEmail();
 
     /**
-     * Get the email address of the recipient from the administrative email
+     * Get the email address of the recipient from the administrative email.
      *
      * @return string
      */
     public function getToEmail();
 
     /**
-     * Get the subject of the administrative email
+     * Get the subject of the administrative email.
      *
      * @return string
      */
     public function getSubject();
 
     /**
-     * Generate the url of the thank you page
+     * Generate the url of the thank you page.
      *
      * @param RouterInterface $router  The router
      * @param RenderContext   $context The render context
@@ -44,21 +42,21 @@ interface FormPageInterface
     public function generateThankYouUrl(RouterInterface $router, RenderContext $context);
 
     /**
-     * Get the page part context used for the form
+     * Get the page part context used for the form.
      *
      * @return string
      */
     public function getFormElementsContext();
 
     /**
-     * Returns the page part configurations which specify which page parts can be added to this form
+     * Returns the page part configurations which specify which page parts can be added to this form.
      *
      * @return array
      */
     public function getPagePartAdminConfigurations();
 
     /**
-     * Returns the default view of this form
+     * Returns the default view of this form.
      *
      * @return string
      */

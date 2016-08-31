@@ -3,33 +3,33 @@
 namespace Kunstmaan\SearchBundle\Provider;
 
 /**
- * Interface for a SearchProvider
+ * Interface for a SearchProvider.
  */
 interface SearchProviderInterface
 {
     /**
-     * Returns a unique name for the SearchProvider
+     * Returns a unique name for the SearchProvider.
      *
      * @return string
      */
     public function getName();
 
     /**
-     * Return the client object
+     * Return the client object.
      *
      * @return mixed
      */
     public function getClient();
 
     /**
-     * Create an index
+     * Create an index.
      *
      * @param string $indexName Name of the index
      */
     public function createIndex($indexName);
 
     /**
-     * Return the index object
+     * Return the index object.
      *
      * @param $indexName
      *
@@ -38,7 +38,7 @@ interface SearchProviderInterface
     public function getIndex($indexName);
 
     /**
-     * Create a document
+     * Create a document.
      *
      * @param string $uid
      * @param mixed  $document
@@ -50,7 +50,7 @@ interface SearchProviderInterface
     public function createDocument($document, $uid, $indexName = '', $indexType = '');
 
     /**
-     * Add a document to the index
+     * Add a document to the index.
      *
      * @param string $indexName Name of the index
      * @param string $indexType Type of the index to add the document to
@@ -61,7 +61,7 @@ interface SearchProviderInterface
     public function addDocument($indexName, $indexType, $document, $uid);
 
     /**
-     * Add a collection of documents at once
+     * Add a collection of documents at once.
      *
      * @param mixed  $documents
      * @param string $indexName Name of the index
@@ -72,7 +72,7 @@ interface SearchProviderInterface
     public function addDocuments($documents, $indexName = '', $indexType = '');
 
     /**
-     * delete a document from the index
+     * delete a document from the index.
      *
      * @param string $indexName Name of the index
      * @param string $indexType Type of the index the document is located
@@ -88,7 +88,7 @@ interface SearchProviderInterface
     public function deleteDocuments($indexName, $indexType, array $ids);
 
     /**
-     * Delete an index
+     * Delete an index.
      *
      * @param string $indexName Name of the index to delete
      */

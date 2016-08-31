@@ -7,22 +7,21 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Event triggered through a callback from the LinkedIn Javascript API when a Share has been executed
+ * Event triggered through a callback from the LinkedIn Javascript API when a Share has been executed.
  */
 class LinkedInShareEvent extends Event implements EventInterface
 {
-
     private $request;
 
     /**
-     * The reference for the Share
+     * The reference for the Share.
      *
      * @var string
      */
     private $reference;
 
     /**
-     * The value of this Share
+     * The value of this Share.
      *
      * @var int
      */
@@ -55,5 +54,4 @@ class LinkedInShareEvent extends Event implements EventInterface
     {
         return $this->value;
     }
-
 }

@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\FormBundle\Entity\AbstractFormPage;
-
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -14,7 +12,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class ConfigureActionsMenuListener
 {
-
     /**
      * @var EntityManager
      */
@@ -26,8 +23,8 @@ class ConfigureActionsMenuListener
     private $router;
 
     /**
-     * @param EntityManager $em     The entity manager
-     * @param RouterInterface       $router The router
+     * @param EntityManager   $em     The entity manager
+     * @param RouterInterface $router The router
      */
     public function __construct(EntityManager $em, RouterInterface $router)
     {
@@ -36,7 +33,7 @@ class ConfigureActionsMenuListener
     }
 
     /**
-     * Configure the form submissions link on top of the form in the sub action menu
+     * Configure the form submissions link on top of the form in the sub action menu.
      *
      * @param ConfigureActionMenuEvent $event
      */
@@ -53,5 +50,4 @@ class ConfigureActionsMenuListener
             }
         }
     }
-
 }

@@ -14,7 +14,7 @@ use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 
 /**
- * CloneListenerTest
+ * CloneListenerTest.
  */
 class CloneListenerTest extends \PHPUnit_Framework_TestCase
 {

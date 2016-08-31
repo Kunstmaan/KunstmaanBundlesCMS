@@ -29,7 +29,7 @@ abstract class AbstractRule
     protected $popup;
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -46,6 +46,7 @@ abstract class AbstractRule
 
     /**
      * @param AbstractPopup $popup
+     *
      * @return AbstractRule
      */
     public function setPopup(AbstractPopup $popup)
@@ -104,7 +105,7 @@ abstract class AbstractRule
     abstract public function getJsFilePath();
 
     /**
-     * Get the rule admin type
+     * Get the rule admin type.
      *
      * @return AbstractRuleAdminType
      */

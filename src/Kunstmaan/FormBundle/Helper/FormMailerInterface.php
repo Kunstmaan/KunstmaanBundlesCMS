@@ -9,7 +9,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmission;
  */
 interface FormMailerInterface
 {
-
     /**
      * @param FormSubmission $submission The submission
      * @param string         $from       The from address
@@ -17,5 +16,4 @@ interface FormMailerInterface
      * @param string         $subject    The subject
      */
     public function sendContactMail(FormSubmission $submission, $from, $to, $subject);
-
 }

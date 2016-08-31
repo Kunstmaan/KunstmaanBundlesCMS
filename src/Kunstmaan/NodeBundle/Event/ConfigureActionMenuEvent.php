@@ -4,17 +4,14 @@ namespace Kunstmaan\NodeBundle\Event;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-
 use Symfony\Component\EventDispatcher\Event;
-
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 
 /**
- * ConfigureActionMenuEvent
+ * ConfigureActionMenuEvent.
  */
 class ConfigureActionMenuEvent extends Event
 {
-
     /**
      * @var FactoryInterface
      */
@@ -38,7 +35,7 @@ class ConfigureActionMenuEvent extends Event
     public function __construct(FactoryInterface $factory, ItemInterface $menu, NodeVersion $activeNodeVersion)
     {
         $this->factory = $factory;
-        $this->menu    = $menu;
+        $this->menu = $menu;
         $this->activeNodeVersion = $activeNodeVersion;
     }
 
@@ -59,7 +56,7 @@ class ConfigureActionMenuEvent extends Event
     }
 
     /**
-     * Get activeNodeVersion
+     * Get activeNodeVersion.
      *
      * @return NodeVersion
      */
@@ -67,5 +64,4 @@ class ConfigureActionMenuEvent extends Event
     {
         return $this->activeNodeVersion;
     }
-
 }

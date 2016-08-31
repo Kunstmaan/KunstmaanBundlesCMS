@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * RoleType defines the form used for {@link Role}
+ * RoleType defines the form used for {@link Role}.
  */
 class RoleType extends AbstractType
 {
@@ -16,7 +16,7 @@ class RoleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('role', TextType::class, array (
+        $builder->add('role', TextType::class, array(
             'required' => true,
             'label' => 'settings.role.role',
         ));

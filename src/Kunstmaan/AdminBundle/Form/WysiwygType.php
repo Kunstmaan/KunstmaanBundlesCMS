@@ -5,10 +5,8 @@ namespace Kunstmaan\AdminBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-
 /**
- * Class WysiwygType
- * @package Kunstmaan\AdminBundle\Form
+ * Class WysiwygType.
  */
 class WysiwygType extends AbstractType
 {

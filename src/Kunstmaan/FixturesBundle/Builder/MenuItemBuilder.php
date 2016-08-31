@@ -26,9 +26,9 @@ class MenuItemBuilder implements BuilderInterface
 
             if (isset($properties['menu']) &&
                 $properties['menu']->getLocale() &&
-                isset($additionalEntities['translationNode_' . $properties['menu']->getLocale()])) {
+                isset($additionalEntities['translationNode_'.$properties['menu']->getLocale()])) {
                 $fixture->getEntity()->setType(BaseMenuItem::TYPE_PAGE_LINK);
-                $fixture->getEntity()->setNodeTranslation($additionalEntities['translationNode_' . $properties['menu']->getLocale()]);
+                $fixture->getEntity()->setNodeTranslation($additionalEntities['translationNode_'.$properties['menu']->getLocale()]);
             }
         }
 

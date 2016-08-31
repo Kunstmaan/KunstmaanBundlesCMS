@@ -6,12 +6,12 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
- * Fixes bug with date vs Date headers
+ * Fixes bug with date vs Date headers.
  */
 class FixDateListener
 {
     /**
-     * Make sure response has a timestamp
+     * Make sure response has a timestamp.
      *
      * @param FilterResponseEvent|GetResponseEvent $event
      */

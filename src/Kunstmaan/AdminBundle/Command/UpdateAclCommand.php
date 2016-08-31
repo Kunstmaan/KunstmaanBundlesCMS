@@ -27,8 +27,8 @@ class UpdateAclCommand extends ContainerAwareCommand
 
         $this->setName('kuma:acl:update')
             ->setDescription('Permissions update of ACL entries for all nodes for given role')
-            ->setHelp("The <info>kuma:update:acl</info> will update ACL entries for the nodes of the current project" .
-                "with given role and permissions");
+            ->setHelp('The <info>kuma:update:acl</info> will update ACL entries for the nodes of the current project'.
+                'with given role and permissions');
     }
 
     /**
@@ -80,7 +80,6 @@ class UpdateAclCommand extends ContainerAwareCommand
             }
             $aclProvider->updateAcl($acl);
         }
-        $output->writeln(count($nodes) . ' nodes processed.');
+        $output->writeln(count($nodes).' nodes processed.');
     }
-
 }

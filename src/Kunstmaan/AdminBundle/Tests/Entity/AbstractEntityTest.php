@@ -47,6 +47,6 @@ class AbstractEntityTest extends \PHPUnit_Framework_TestCase
     public function test__toString()
     {
         $this->object->setId(8);
-        $this->assertEquals("8", $this->object->__toString());
+        $this->assertEquals('8', $this->object->__toString());
     }
 }

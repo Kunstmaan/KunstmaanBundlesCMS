@@ -5,13 +5,15 @@ namespace Kunstmaan\TranslatorBundle\Service\Command;
 abstract class AbstractCommandHandler
 {
     /**
-     * Managed locales from config file
+     * Managed locales from config file.
+     *
      * @var array
      */
     protected $managedLocales;
 
     /**
-     * Kernel
+     * Kernel.
+     *
      * @var AppKernel
      */
     protected $kernel;
@@ -27,9 +29,12 @@ abstract class AbstractCommandHandler
     }
 
     /**
-     * Parses a string of locales into an array
-     * @param  string     $locales ex. nl,fr, de, SE, eN
+     * Parses a string of locales into an array.
+     *
+     * @param string $locales ex. nl,fr, de, SE, eN
+     *
      * @return array
+     *
      * @throws \Exception If the string with locales can't be parsed
      */
     public function parseRequestedLocales($locales)
@@ -53,7 +58,9 @@ abstract class AbstractCommandHandler
         }
 
         if (count($values) >= 1) {
-            return array_map(function($value) { return strtolower(trim($value)); }, $values);
+            return array_map(function ($value) {
+                return strtolower(trim($value));
+            }, $values);
         }
 
         throw new \Exception('Invalid values specified');

@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
 
 /**
- * Generates classes based on the AbstractArticle classes from KunstmaanArticleBundle
+ * Generates classes based on the AbstractArticle classes from KunstmaanArticleBundle.
  */
 class GenerateArticleCommand extends GenerateDoctrineCommand
 {
@@ -27,11 +27,11 @@ class GenerateArticleCommand extends GenerateDoctrineCommand
                     new InputOption('namespace', '', InputOption::VALUE_REQUIRED, 'The namespace to generate the Article classes in'),
                     new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The article class name ("News", "Press", ..."'),
                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
-                    new InputOption('dummydata', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database')
+                    new InputOption('dummydata', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database'),
                 )
             )
             ->setDescription('Generates Article classes based on KunstmaanArticleBundle')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:article</info> command generates classes for Articles using the KunstmaanArticleBundle
 
 <info>php bin/console kuma:generate:article --namespace=Namespace/NamedBundle --entity=Article</info>
@@ -73,12 +73,12 @@ EOT
             ->getKernel()
             ->getBundle($bundle);
 
-        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $entity, $prefix, $dummydata, $output);
 
         $output->writeln(array('Make sure you update your database first before using the created entities:',
                 '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>')
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', )
         );
 
         if ($dummydata) {
@@ -120,7 +120,7 @@ EOT
                 if (empty($entity)) {
                     throw new \RuntimeException('You have to provide a entity name!');
                 } elseif (!preg_match('/^[a-zA-Z][a-zA-Z_0-9]+$/', $entity)) {
-                    throw new \InvalidArgumentException(sprintf("%s".' contains invalid characters', $entity));
+                    throw new \InvalidArgumentException(sprintf('%s'.' contains invalid characters', $entity));
                 } else {
                     return $entity;
                 }

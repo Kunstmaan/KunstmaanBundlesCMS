@@ -19,7 +19,7 @@ use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var PermissionAdmin $object
+     * @var PermissionAdmin
      */
     protected $object;
 
@@ -177,7 +177,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return entity manager mock
+     * Return entity manager mock.
      *
      * @return EntityManager
      */
@@ -189,7 +189,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return alc provider mock
+     * Return alc provider mock.
      *
      * @return AclProviderInterface
      */
@@ -199,7 +199,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return security token storage
+     * Return security token storage.
      *
      * @return TokenStorageInterface
      */
@@ -209,7 +209,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return oid retrieval strategy mock
+     * Return oid retrieval strategy mock.
      *
      * @return ObjectIdentityRetrievalStrategyInterface
      */
@@ -219,7 +219,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return event dispatcher mock
+     * Return event dispatcher mock.
      *
      * @return EventDispatcherInterface
      */
@@ -245,7 +245,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return permission admin mock
+     * Return permission admin mock.
      *
      * @return PermissionAdmin
      */
@@ -297,7 +297,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return entity mock
+     * Return entity mock.
      *
      * @return AbstractEntity
      */
@@ -307,7 +307,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Return permission admin mock
+     * Return permission admin mock.
      *
      * @return PermissionAdmin
      */

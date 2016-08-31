@@ -13,7 +13,7 @@ class PopupManager
     private $popups = null;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em;
 
@@ -58,6 +58,7 @@ class PopupManager
 
     /**
      * @param AbstractPopup $popup
+     *
      * @return array
      */
     public function getAvailableRules(AbstractPopup $popup)
@@ -72,7 +73,7 @@ class PopupManager
                 'Kunstmaan\LeadGenerationBundle\Entity\Rule\RecurringEveryXTimeRule',
                 'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule',
                 'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlWhitelistRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule'
+                'Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule',
             );
         }
     }

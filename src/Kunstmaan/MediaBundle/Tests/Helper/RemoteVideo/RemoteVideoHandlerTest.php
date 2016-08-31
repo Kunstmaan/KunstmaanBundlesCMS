@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteVideo;
-
 
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 

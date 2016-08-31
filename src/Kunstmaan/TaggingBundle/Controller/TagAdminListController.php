@@ -42,6 +42,7 @@ class TagAdminListController extends AdminListController
      * @Route("/add", name="kunstmaantaggingbundle_admin_tag_add")
      * @Method({"GET", "POST"})
      * @Template("KunstmaanAdminListBundle:Default:add.html.twig")
+     *
      * @return array
      */
     public function addAction(Request $request)
@@ -84,7 +85,7 @@ class TagAdminListController extends AdminListController
         $qb = $em->getRepository('KunstmaanTaggingBundle:Tag')->createQueryBuilder('n')
             ->where('n.name LIKE :search')
             ->orderBy('n.name', 'ASC')
-            ->setParameter('search', '%' . $search . '%');
+            ->setParameter('search', '%'.$search.'%');
         $tags = $qb->getQuery()->getResult();
 
         return array('tags' => $tags);

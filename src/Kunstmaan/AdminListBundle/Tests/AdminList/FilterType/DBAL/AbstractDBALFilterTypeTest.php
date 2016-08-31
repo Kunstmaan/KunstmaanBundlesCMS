@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\DBAL;
 
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
-
 use Doctrine\DBAL\Query\QueryBuilder;
 
 /**

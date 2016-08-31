@@ -6,12 +6,12 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
- * User admin list configurator used to manage {@link User} in the admin
+ * User admin list configurator used to manage {@link User} in the admin.
  */
 class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
     /**
-     * Build filters for admin list
+     * Build filters for admin list.
      */
     public function buildFilters()
     {
@@ -21,7 +21,7 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -33,18 +33,19 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     }
 
     /**
-     * Override path convention (because settings is a virtual admin subtree)
+     * Override path convention (because settings is a virtual admin subtree).
      *
      * @param string $suffix
+     *
      * @return string
      */
     public function getPathByConvention($suffix = null)
     {
-        return 'KunstmaanUserManagementBundle_settings_users' . (empty($suffix) ? '' : '_' . $suffix);
+        return 'KunstmaanUserManagementBundle_settings_users'.(empty($suffix) ? '' : '_'.$suffix);
     }
 
     /**
-     * Get entity name
+     * Get entity name.
      *
      * @return string
      */

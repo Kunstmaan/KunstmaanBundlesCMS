@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,6 +19,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     *
      * @covers Kunstmaan\MediaBundle\Entity\Folder::__construct
      */
     protected function setUp()

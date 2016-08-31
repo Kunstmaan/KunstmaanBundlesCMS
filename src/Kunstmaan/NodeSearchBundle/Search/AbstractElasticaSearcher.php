@@ -78,7 +78,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
     {
         $suggestPhrase = new Suggest\Phrase('content-suggester', 'content');
         $suggestPhrase->setText($this->data);
-        $suggestPhrase->setHighlight("<strong>", "</strong>");
+        $suggestPhrase->setHighlight('<strong>', '</strong>');
         $suggestPhrase->setAnalyzer('suggestion_analyzer');
         $suggestPhrase->setConfidence(2);
         $suggestPhrase->setSize(1);
@@ -94,7 +94,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getSearchResult()
     {
-        $index = $this->search->getIndex($this->getIndexName() . '_' . $this->language);
+        $index = $this->search->getIndex($this->getIndexName().'_'.$this->language);
 
         $search = new Search($this->search->getClient());
         $search->addIndex($index);
@@ -177,7 +177,6 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
 
     /**
      * @return mixed
-     *
      * @return SearcherInterface
      */
     public function getData()

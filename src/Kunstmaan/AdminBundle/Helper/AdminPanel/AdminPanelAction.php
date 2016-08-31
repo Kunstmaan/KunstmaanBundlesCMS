@@ -36,9 +36,9 @@ class AdminPanelAction implements AdminPanelActionInterface
         $icon = null,
         $template = null
     ) {
-        $this->url      = $url;
-        $this->icon     = $icon;
-        $this->label    = $label;
+        $this->url = $url;
+        $this->icon = $icon;
+        $this->label = $label;
         if (!empty($template)) {
             $this->template = $template;
         }

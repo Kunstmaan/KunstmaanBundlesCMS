@@ -20,7 +20,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
      * @param string              $cachePrefix
      * @param FilterConfiguration $filterConfig
      */
-    public function __construct(Filesystem $filesystem, RequestContext $requestContext, $webRootDir, $cachePrefix = 'media/cache', FilterConfiguration $filterConfig)
+    public function __construct(Filesystem $filesystem, RequestContext $requestContext, $webRootDir, $cachePrefix, FilterConfiguration $filterConfig)
     {
         parent::__construct($filesystem, $requestContext, $webRootDir, $cachePrefix);
 
@@ -52,6 +52,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
     /**
      * @param string $path
      * @param string $format
+     *
      * @return string
      */
     private function changeFileExtension($path, $format)
@@ -61,7 +62,7 @@ class WebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPath
         }
 
         $info = pathinfo($path);
-        $path = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
+        $path = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'.'.$format;
 
         return $path;
     }

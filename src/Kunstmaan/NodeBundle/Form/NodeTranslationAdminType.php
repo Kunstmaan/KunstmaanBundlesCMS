@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * NodeTranslationAdminType
+ * NodeTranslationAdminType.
  */
 class NodeTranslationAdminType extends AbstractType
 {

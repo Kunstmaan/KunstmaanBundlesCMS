@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\ORM;
 
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
-
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -42,5 +41,4 @@ class AbstractORMFilterTypeTest extends \PHPUnit_Framework_TestCase
 
         $object->setQueryBuilder($queryBuilder);
     }
-
 }

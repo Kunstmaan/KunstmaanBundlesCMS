@@ -10,13 +10,12 @@ use Doctrine\ORM\Query;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 /**
- * An abstract admin list configurator that can be used with the orm query builder
+ * An abstract admin list configurator that can be used with the orm query builder.
  */
 abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminListConfigurator
 {
@@ -51,12 +50,12 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
-        $this->em        = $em;
+        $this->em = $em;
         $this->aclHelper = $aclHelper;
     }
 
     /**
-     * Return the url to edit the given $item
+     * Return the url to edit the given $item.
      *
      * @param object $item
      *
@@ -68,13 +67,13 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_EDIT),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_EDIT),
+            'params' => $params,
         );
     }
 
     /**
-     * Get the delete url for the given $item
+     * Get the delete url for the given $item.
      *
      * @param object $item
      *
@@ -86,8 +85,8 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_DELETE),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
+            'params' => $params,
         );
     }
 
@@ -97,7 +96,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter          = new DoctrineORMAdapter($this->getQuery());
+            $adapter = new DoctrineORMAdapter($this->getQuery());
             $this->pagerfanta = new Pagerfanta($adapter);
             $this->pagerfanta->setNormalizeOutOfRangePages(true);
             $this->pagerfanta->setMaxPerPage($this->getLimit());
@@ -132,7 +131,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * Return an iterator for all items that matches the current filtering
+     * Return an iterator for all items that matches the current filtering.
      *
      * @return \Iterator
      */
@@ -164,7 +163,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
             if (!empty($this->orderBy)) {
                 $orderBy = $this->orderBy;
                 if (!strpos($orderBy, '.')) {
-                    $orderBy = 'b.' . $orderBy;
+                    $orderBy = 'b.'.$orderBy;
                 }
                 $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
@@ -189,7 +188,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     protected function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
         if ($this instanceof SortableInterface) {
-            $queryBuilder->addOrderBy('b.' . $this->getSortableField());
+            $queryBuilder->addOrderBy('b.'.$this->getSortableField());
         }
     }
 

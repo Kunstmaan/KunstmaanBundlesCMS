@@ -7,7 +7,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
 /**
- * ORMFilterTypeTestCase
+ * ORMFilterTypeTestCase.
  */
 abstract class ORMFilterTypeTestCase extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ abstract class ORMFilterTypeTestCase extends \PHPUnit_Framework_TestCase
         $config->setMetadataDriverImpl(new AnnotationDriver(new AnnotationReader()));
 
         $params = array('driver' => 'pdo_sqlite', 'memory' => true);
-        $em =  \Doctrine\ORM\EntityManager::create($params, $config);
+        $em = \Doctrine\ORM\EntityManager::create($params, $config);
 
         return new QueryBuilder($em);
     }

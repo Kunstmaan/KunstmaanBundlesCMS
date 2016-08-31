@@ -21,6 +21,7 @@ class SiteSwitchController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return Response
+     *
      * @throws AccessDeniedException
      * @throws NotFoundHttpException
      */
@@ -35,12 +36,12 @@ class SiteSwitchController extends Controller
 
         $currentHost = $domainConfiguration->getHost();
 
-        /**
+        /*
          * If current host type is different then the host going to, redirect to it's homepage.
          * If coming from url chooser, don't redirect to homepage if other host.
          */
         if ((($hosts[$host]['type'] !== $hosts[$currentHost]['type']) || (!$request->query->has('route'))) && (!$request->get('from_url_chooser'))) {
-            $route = "KunstmaanAdminBundle_homepage";
+            $route = 'KunstmaanAdminBundle_homepage';
             $defaultLocale = $this->get('kunstmaan_admin.domain_configuration')->getDefaultLocale();
         } else {
             $route = $request->query->get('route');
@@ -56,7 +57,6 @@ class SiteSwitchController extends Controller
         } else {
             $session->set(DomainConfiguration::OVERRIDE_HOST, $host);
         }
-
 
         $response = new RedirectResponse(
             $this->get('router')->generate($route, $routeParams)

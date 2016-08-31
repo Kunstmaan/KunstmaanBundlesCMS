@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * EventListener which will be triggered when a Node has been updated in order to update its related documents
- * in the index
+ * in the index.
  */
 class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterface
 {

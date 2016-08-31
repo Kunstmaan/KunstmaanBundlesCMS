@@ -5,7 +5,7 @@ namespace Kunstmaan\UtilitiesBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanUtilitiesBundle
+ * KunstmaanUtilitiesBundle.
  */
 class KunstmaanUtilitiesBundle extends Bundle
 {

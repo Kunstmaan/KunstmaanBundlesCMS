@@ -39,6 +39,5 @@ class ParserCompilerPass implements CompilerPassInterface
                 );
             }
         }
-
     }
 }

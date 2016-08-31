@@ -5,10 +5,8 @@ namespace Kunstmaan\AdminBundle\Tests\Mocks;
 use Doctrine\DBAL\Driver\Statement;
 
 /**
- * StatementMock
+ * StatementMock.
  */
 abstract class StatementMock implements \Iterator, Statement
 {
-
 }
-

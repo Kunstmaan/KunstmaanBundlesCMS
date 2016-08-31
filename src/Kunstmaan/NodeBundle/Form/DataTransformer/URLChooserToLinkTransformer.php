@@ -34,5 +34,4 @@ class URLChooserToLinkTransformer implements DataTransformerInterface
 
         return $value['link_url'];
     }
-
 }

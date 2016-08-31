@@ -3,22 +3,19 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 
 /**
- * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
+ * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities.
  */
 class ApplyAclCommand extends ContainerAwareCommand
 {
-
     /**
      * @var EntityManager
      */
@@ -38,11 +35,11 @@ class ApplyAclCommand extends ContainerAwareCommand
 
         $this->setName('kuma:acl:apply')
              ->setDescription('Apply ACL changeset.')
-             ->setHelp("The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.");
+             ->setHelp('The <info>kuma:acl:apply</info> can be used to apply an ACL changeset recursively, changesets are fetched from the database.');
     }
 
     /**
-     * Apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
+     * Apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities.
      *
      * @param InputInterface  $input  The input
      * @param OutputInterface $output The output
@@ -85,7 +82,7 @@ class ApplyAclCommand extends ContainerAwareCommand
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     private function isRunning()
     {
@@ -104,5 +101,4 @@ class ApplyAclCommand extends ContainerAwareCommand
 
         return false;
     }
-
 }

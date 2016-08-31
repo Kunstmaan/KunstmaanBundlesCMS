@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Twig;
 use IntlDateFormatter as DateFormatter;
 
 /**
- * DateByLocaleExtension
+ * DateByLocaleExtension.
  */
 class DateByLocaleExtension extends \Twig_Extension
 {
@@ -42,7 +42,7 @@ class DateByLocaleExtension extends \Twig_Extension
      *
      * @return string
      */
-    public static function localeDateFilter($date, $locale = "nl", $dateType = 'medium', $timeType = 'none', $pattern = null)
+    public static function localeDateFilter($date, $locale = 'nl', $dateType = 'medium', $timeType = 'none', $pattern = null)
     {
         $values = array(
             'none' => DateFormatter::NONE,

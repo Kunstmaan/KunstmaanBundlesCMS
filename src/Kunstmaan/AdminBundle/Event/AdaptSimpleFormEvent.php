@@ -7,12 +7,10 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class AdaptSimpleFormEvent
- * @package Kunstmaan\AdminBundle\Event
+ * Class AdaptSimpleFormEvent.
  */
 class AdaptSimpleFormEvent extends Event
 {
-
     /**
      * @var Request
      */
@@ -40,7 +38,7 @@ class AdaptSimpleFormEvent extends Event
 
     /**
      * @param Request $request
-     * @param string $formType
+     * @param string  $formType
      * @param $data
      */
     public function __construct(Request $request, $formType, $data, $options = array())

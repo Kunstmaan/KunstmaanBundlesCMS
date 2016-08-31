@@ -7,21 +7,20 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 
 /**
- * The StringFormSubmissionField can be used to store string values to a FormSubmission
+ * The StringFormSubmissionField can be used to store string values to a FormSubmission.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_string_form_submission_fields")
  */
 class StringFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="sfsf_value", type="string")
      */
     protected $value;
 
     /**
-     * Returns the default form type for this FormSubmissionField
+     * Returns the default form type for this FormSubmissionField.
      *
      * @return StringFormSubmissionType
      */
@@ -31,7 +30,7 @@ class StringFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Return a string representation of this FormSubmissionField
+     * Return a string representation of this FormSubmissionField.
      *
      * @return string
      */
@@ -39,11 +38,11 @@ class StringFormSubmissionField extends FormSubmissionField
     {
         $value = $this->getValue();
 
-        return !empty($value) ? $value : "";
+        return !empty($value) ? $value : '';
     }
 
     /**
-     * Returns the current value of this field
+     * Returns the current value of this field.
      *
      * @return string
      */
@@ -53,7 +52,7 @@ class StringFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Sets the current value of this field
+     * Sets the current value of this field.
      *
      * @param string $value
      *

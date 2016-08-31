@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * User entity
+ * User entity.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\UserRepository")
  * @ORM\Table(name="kuma_users")

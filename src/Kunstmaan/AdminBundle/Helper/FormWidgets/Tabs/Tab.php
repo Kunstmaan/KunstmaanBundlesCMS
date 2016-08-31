@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The default tab implementation
+ * The default tab implementation.
  */
 class Tab implements TabInterface
 {

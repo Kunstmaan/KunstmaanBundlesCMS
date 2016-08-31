@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * MediaHandlerCompilerPass
+ * MediaHandlerCompilerPass.
  */
 class MediaHandlerCompilerPass implements CompilerPassInterface
 {

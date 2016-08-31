@@ -12,7 +12,7 @@ use Doctrine\ORM\Tools\EntityGenerator;
 use Doctrine\ORM\Tools\EntityRepositoryGenerator;
 
 /**
- * DoctrineEntityGenerator
+ * DoctrineEntityGenerator.
  */
 class DoctrineEntityGenerator extends Generator
 {
@@ -34,7 +34,7 @@ class DoctrineEntityGenerator extends Generator
      * @param string          $entity         The entity name
      * @param string          $format         The format
      * @param array           $fields         The fields
-     * @param boolean         $withRepository With repository
+     * @param bool            $withRepository With repository
      * @param string          $prefix         A prefix
      *
      * @throws \RuntimeException
@@ -64,7 +64,7 @@ class DoctrineEntityGenerator extends Generator
             $class->mapField($field);
         }
 
-        $class->setPrimaryTable(array('name' => $prefix . $this->getTableNameFromEntityName($entity)));
+        $class->setPrimaryTable(array('name' => $prefix.$this->getTableNameFromEntityName($entity)));
 
         $entityGenerator = $this->getEntityGenerator();
 
@@ -91,6 +91,7 @@ class DoctrineEntityGenerator extends Generator
     {
         // Only look at the last part. We split on '\'
         $entityName = str_replace('\\', '', $entityName);
+
         return $this->convertCamelCaseToSnakeCase($entityName);
     }
 
@@ -99,13 +100,14 @@ class DoctrineEntityGenerator extends Generator
         $text = preg_replace_callback('/[A-Z]/', create_function('$match', 'return "_" . strtolower($match[0]);'), $text);
         // remove first underscore.
         $text = preg_replace('/^_/', '', $text);
+
         return strtolower($text);
     }
 
     /**
      * @param string $keyword
      *
-     * @return boolean
+     * @return bool
      */
     public function isReservedKeyword($keyword)
     {

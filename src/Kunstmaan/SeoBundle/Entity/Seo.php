@@ -11,7 +11,7 @@ use Kunstmaan\SeoBundle\Form\SeoType;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
- * Seo metadata for entities
+ * Seo metadata for entities.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\SeoBundle\Repository\SeoRepository")
  * @ORM\Table(name="kuma_seo", indexes={@ORM\Index(name="idx_seo_lookup", columns={"ref_id", "ref_entity_name"})})
@@ -24,7 +24,6 @@ class Seo extends AbstractEntity
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
      * @Assert\Length(max=55)
-     *
      */
     protected $metaTitle;
 
@@ -33,7 +32,6 @@ class Seo extends AbstractEntity
      *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
      * @Assert\Length(max=155)
-     *
      */
     protected $metaDescription;
 
@@ -122,28 +120,28 @@ class Seo extends AbstractEntity
     protected $ogArticleSection;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_title", type="string", length=255, nullable=true)
      */
     protected $twitterTitle;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_description", type="text", nullable=true)
      */
     protected $twitterDescription;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_site", type="string", length=255, nullable=true)
      */
     protected $twitterSite;
 
     /**
-     * @var string $twitterTitle
+     * @var string
      *
      * @ORM\Column(name="twitter_creator", type="string", length=255, nullable=true)
      */
@@ -486,7 +484,7 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * Get refId
+     * Get refId.
      *
      * @return int
      */
@@ -496,7 +494,7 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * Set refId
+     * Set refId.
      *
      * @param int $refId
      *
@@ -510,7 +508,7 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * Set reference entity name
+     * Set reference entity name.
      *
      * @param string $refEntityName
      *
@@ -524,7 +522,7 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * Get reference entity name
+     * Get reference entity name.
      *
      * @return string
      */

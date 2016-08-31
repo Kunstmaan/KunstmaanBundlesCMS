@@ -38,7 +38,7 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
         $newInfo = pathinfo($newPath);
         if ($info['extension'] != $newInfo['extension']) {
             $query = parse_url($url, PHP_URL_QUERY);
-            $url .= ($query ? '&' : '?') . 'originalExtension=' . $info['extension'];
+            $url .= ($query ? '&' : '?').'originalExtension='.$info['extension'];
         }
 
         return $url;
@@ -47,6 +47,7 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
     /**
      * @param string $path
      * @param string $format
+     *
      * @return string
      */
     private function changeFileExtension($path, $format)
@@ -56,8 +57,8 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
         }
 
         $info = pathinfo($path);
-        $path = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $format;
+        $path = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'.'.$format;
 
         return $path;
-   }
+    }
 }

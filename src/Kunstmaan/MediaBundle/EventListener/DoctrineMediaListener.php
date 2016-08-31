@@ -9,12 +9,12 @@ use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
- * DoctrineMediaListener
+ * DoctrineMediaListener.
  */
 class DoctrineMediaListener
 {
     /**
-     * @var MediaManager $mediaManager
+     * @var MediaManager
      */
     private $mediaManager;
 
@@ -78,7 +78,7 @@ class DoctrineMediaListener
 
     /**
      * @param object $entity The entity
-     * @param bool $new Is new
+     * @param bool   $new    Is new
      */
     private function saveMedia($entity, $new = false)
     {

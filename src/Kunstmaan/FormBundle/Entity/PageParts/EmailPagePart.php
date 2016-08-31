@@ -12,7 +12,7 @@ use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * The email page part can be used to create forms with email input fields
+ * The email page part can be used to create forms with email input fields.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_email_page_parts")
@@ -20,28 +20,28 @@ use Doctrine\ORM\Mapping as ORM;
 class EmailPagePart extends AbstractFormPagePart
 {
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      */
     protected $errorMessageRequired;
 
     /**
-     * Error message shows when the value is invalid
+     * Error message shows when the value is invalid.
      *
      * @ORM\Column(type="string", name="error_message_invalid", nullable=true)
      */
     protected $errorMessageInvalid;
 
     /**
-     * Sets the required value of this page part
+     * Sets the required value of this page part.
      *
      * @param bool $required
      *
@@ -55,7 +55,7 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Check if the page part is required
+     * Check if the page part is required.
      *
      * @return bool
      */
@@ -65,7 +65,7 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the message shown when the page part is required and no value was entered
+     * Sets the message shown when the page part is required and no value was entered.
      *
      * @param string $errorMessageRequired
      *
@@ -79,7 +79,7 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the error message that will be shown when the page part is required and no value was entered
+     * Get the error message that will be shown when the page part is required and no value was entered.
      *
      * @return string
      */
@@ -89,7 +89,7 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the message shown when the value is invalid
+     * Sets the message shown when the value is invalid.
      *
      * @param string $errorMessageInvalid
      *
@@ -103,7 +103,7 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the error message that will be shown when the value is invalid
+     * Get the error message that will be shown when the value is invalid.
      *
      * @return string
      */
@@ -113,17 +113,17 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the frontend view
+     * Returns the frontend view.
      *
      * @return string
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:EmailPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:EmailPagePart:view.html.twig';
     }
 
     /**
-     * Modify the form with the fields of the current page part
+     * Modify the form with the fields of the current page part.
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
@@ -132,12 +132,12 @@ class EmailPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $efsf = new EmailFormSubmissionField();
-        $efsf->setFieldName("field_" . $this->getUniqueId());
+        $efsf->setFieldName('field_'.$this->getUniqueId());
         $efsf->setLabel($this->getLabel());
         $efsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $efsf;
+        $data['formwidget_'.$this->getUniqueId()] = $efsf;
 
         $constraints = array();
         if ($this->getRequired()) {
@@ -153,12 +153,12 @@ class EmailPagePart extends AbstractFormPagePart
         }
         $constraints[] = new Email($options);
 
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
+        $formBuilder->add('formwidget_'.$this->getUniqueId(),
             EmailFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);
@@ -167,7 +167,7 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the default backend form type for this page part
+     * Returns the default backend form type for this page part.
      *
      * @return EmailPagePartAdminType
      */

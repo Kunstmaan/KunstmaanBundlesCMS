@@ -5,7 +5,7 @@ namespace Kunstmaan\PagePartBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanPagePartBundle
+ * KunstmaanPagePartBundle.
  */
 class KunstmaanPagePartBundle extends Bundle
 {

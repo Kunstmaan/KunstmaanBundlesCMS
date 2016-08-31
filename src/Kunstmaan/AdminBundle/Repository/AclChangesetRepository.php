@@ -3,17 +3,15 @@
 namespace Kunstmaan\AdminBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 
 /**
- * ACL changeset repository
+ * ACL changeset repository.
  */
 class AclChangesetRepository extends EntityRepository
 {
-
     /**
-     * Find a changeset with status RUNNING
+     * Find a changeset with status RUNNING.
      *
      * @return null|AclChangeset
      */
@@ -30,7 +28,7 @@ class AclChangesetRepository extends EntityRepository
     }
 
     /**
-     * Fetch the oldest acl changeset for state NEW
+     * Fetch the oldest acl changeset for state NEW.
      *
      * @return null|AclChangeset
      */
@@ -47,7 +45,7 @@ class AclChangesetRepository extends EntityRepository
     }
 
     /**
-     * Check if there are pending changesets
+     * Check if there are pending changesets.
      *
      * @return bool
      */
@@ -60,5 +58,4 @@ class AclChangesetRepository extends EntityRepository
 
         return $qb->getQuery()->getSingleScalarResult() != 0;
     }
-
 }

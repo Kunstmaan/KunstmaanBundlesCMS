@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Entity;
 
 use InvalidArgumentException;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
@@ -13,7 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Group
+ * Group.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_groups")
@@ -43,7 +42,7 @@ class Group implements RoleInterface, GroupInterface
     protected $roles;
 
     /**
-     * Construct a new group
+     * Construct a new group.
      *
      * @param string $name Name of the group
      */
@@ -54,7 +53,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -64,7 +63,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Get string representation of object
+     * Get string representation of object.
      *
      * @return string
      */
@@ -74,7 +73,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Returns an array of strings (needed because Symfony ACL doesn't support using RoleInterface yet)
+     * Returns an array of strings (needed because Symfony ACL doesn't support using RoleInterface yet).
      *
      * @return array
      */
@@ -140,12 +139,13 @@ class Group implements RoleInterface, GroupInterface
      * @param Role $role
      *
      * @return GroupInterface
+     *
      * @throws InvalidArgumentException
      */
     public function addRole($role)
     {
         if (!$role instanceof Role) {
-            throw new InvalidArgumentException("addRole takes a Role object as the parameter");
+            throw new InvalidArgumentException('addRole takes a Role object as the parameter');
         }
 
         if (!$this->hasRole($role->getRole())) {
@@ -175,7 +175,7 @@ class Group implements RoleInterface, GroupInterface
     /**
      * Pass an ARRAY of Role objects and will clear the collection and re-set it with new Roles.
      *
-     * @param Role[] $roles array of Role objects.
+     * @param Role[] $roles array of Role objects
      *
      * @return GroupInterface
      */
@@ -204,7 +204,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Return the name of the group
+     * Return the name of the group.
      *
      * @return string
      */
@@ -214,7 +214,7 @@ class Group implements RoleInterface, GroupInterface
     }
 
     /**
-     * Set the name of the group
+     * Set the name of the group.
      *
      * @param string $name New name of the group
      *

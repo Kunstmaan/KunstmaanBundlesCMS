@@ -13,7 +13,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     /** @var PdfTransformer */
     protected $object;
 
-    /** @var Filesystem  */
+    /** @var Filesystem */
     protected $filesystem;
 
     /** @var string */
@@ -30,7 +30,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('Imagick')) {
             $this->markTestSkipped('Imagick is not available.');
         }
-        $this->filesDir = realpath(__DIR__ . '/../../Files');
+        $this->filesDir = realpath(__DIR__.'/../../Files');
         $this->tempDir = str_replace('/', DIRECTORY_SEPARATOR, sys_get_temp_dir().'/kunstmaan_media_test');
 
         $this->filesystem = new Filesystem();
@@ -53,10 +53,10 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testApplyWritesJpg()
     {
-        $pdfFilename = $this->tempDir . '/sample.pdf';
+        $pdfFilename = $this->tempDir.'/sample.pdf';
         $jpgFilename = $pdfFilename.'.jpg';
 
-        $pdf = $this->filesDir . '/sample.pdf';
+        $pdf = $this->filesDir.'/sample.pdf';
         $this->filesystem->copy($pdf, $pdfFilename);
         $this->assertTrue(file_exists($pdfFilename));
 
@@ -73,10 +73,10 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testApplyDoesNotOverwriteExisting()
     {
-        $pdfFilename = $this->tempDir . '/sample.pdf';
-        $jpgFilename = $pdfFilename . '.jpg';
+        $pdfFilename = $this->tempDir.'/sample.pdf';
+        $jpgFilename = $pdfFilename.'.jpg';
 
-        $pdf = $this->filesDir . '/sample.pdf';
+        $pdf = $this->filesDir.'/sample.pdf';
         $this->filesystem->copy($pdf, $pdfFilename);
         $this->assertTrue(file_exists($pdfFilename));
 
@@ -94,8 +94,8 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPreviewFilename()
     {
-        $pdfFilename = $this->tempDir . '/sample.pdf';
-        $jpgFilename = $pdfFilename . '.jpg';
+        $pdfFilename = $this->tempDir.'/sample.pdf';
+        $jpgFilename = $pdfFilename.'.jpg';
 
         $this->assertEquals($jpgFilename, $this->object->getPreviewFilename($pdfFilename));
     }

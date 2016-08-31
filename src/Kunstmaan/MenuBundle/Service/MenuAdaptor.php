@@ -25,9 +25,9 @@ class MenuAdaptor implements MenuAdaptorInterface
 
     /**
      * @param MenuBuilder $menu
-     * @param array $children
-     * @param MenuItem $parent
-     * @param Request $request
+     * @param array       $children
+     * @param MenuItem    $parent
+     * @param Request     $request
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
@@ -37,7 +37,7 @@ class MenuAdaptor implements MenuAdaptorInterface
                 $menuItem
                     ->setRoute('kunstmaanmenubundle_admin_menu')
                     ->setUniqueId('menus')
-                    ->setLabel("Menus")
+                    ->setLabel('Menus')
                     ->setParent($parent);
                 if (in_array($request->attributes->get('_route'), array(
                     'kunstmaanmenubundle_admin_menu',

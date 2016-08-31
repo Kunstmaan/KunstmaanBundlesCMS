@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class UrlReplaceController
+ * Class UrlReplaceController.
  *
  * @Route(service="kunstmaan_node.url_replace.controller")
  */
@@ -28,10 +28,9 @@ class UrlReplaceController
     }
 
     /**
-     * Render a url with the twig url replace filter
+     * Render a url with the twig url replace filter.
      *
      * @Route("/replace", name="KunstmaanNodeBundle_urlchooser_replace", condition="request.isXmlHttpRequest()")
-     *
      */
     public function replaceURLAction(Request $request)
     {

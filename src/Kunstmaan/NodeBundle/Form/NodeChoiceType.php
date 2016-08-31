@@ -17,7 +17,7 @@ class NodeChoiceType extends AbstractType
     /**
      * @param RequestStack $requestStack
      */
-    function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
     }
@@ -61,7 +61,6 @@ class NodeChoiceType extends AbstractType
 
         $resolver->setNormalizer('query_builder', $queryBuilderNormalizer);
         $resolver->setAllowedTypes('query_builder', array('null', 'callable', 'Doctrine\ORM\QueryBuilder'));
-
     }
 
     public function getParent()

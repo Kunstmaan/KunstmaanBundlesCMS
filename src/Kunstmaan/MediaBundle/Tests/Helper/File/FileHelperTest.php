@@ -1,9 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class FileHelperTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Media
      */
@@ -26,6 +25,7 @@ class FileHelperTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     *
      * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::__construct
      */
     protected function setUp()

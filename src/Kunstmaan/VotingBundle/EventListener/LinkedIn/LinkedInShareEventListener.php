@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Container;
 
 class LinkedInShareEventListener
 {
-
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -45,5 +44,4 @@ class LinkedInShareEventListener
         $this->em->persist($vote);
         $this->em->flush();
     }
-
 }

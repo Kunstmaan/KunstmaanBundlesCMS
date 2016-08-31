@@ -24,20 +24,20 @@ $secret = 'SECRET_ACCESS_KEY';
 
 // prepare policy
 $policy = base64_encode(json_encode(array(
-	// ISO 8601 - date('c'); generates uncompatible date, so better do it manually
-	'expiration' => date('Y-m-d\TH:i:s.000\Z', strtotime('+1 day')),
-	'conditions' => array(
-		array('bucket' => $bucket),
-		array('acl' => 'public-read'),
-		array('starts-with', '$key', ''),
-		// for demo purposes we are accepting only images
-		array('starts-with', '$Content-Type', 'image/'),
-		// Plupload internally adds name field, so we need to mention it here
-		array('starts-with', '$name', ''),
-		// One more field to take into account: Filename - gets silently sent by FileReference.upload() in Flash
-		// http://docs.amazonwebservices.com/AmazonS3/latest/dev/HTTPPOSTFlash.html
-		array('starts-with', '$Filename', ''),
-	)
+    // ISO 8601 - date('c'); generates uncompatible date, so better do it manually
+    'expiration' => date('Y-m-d\TH:i:s.000\Z', strtotime('+1 day')),
+    'conditions' => array(
+        array('bucket' => $bucket),
+        array('acl' => 'public-read'),
+        array('starts-with', '$key', ''),
+        // for demo purposes we are accepting only images
+        array('starts-with', '$Content-Type', 'image/'),
+        // Plupload internally adds name field, so we need to mention it here
+        array('starts-with', '$name', ''),
+        // One more field to take into account: Filename - gets silently sent by FileReference.upload() in Flash
+        // http://docs.amazonwebservices.com/AmazonS3/latest/dev/HTTPPOSTFlash.html
+        array('starts-with', '$Filename', ''),
+    ),
 )));
 
 // sign policy

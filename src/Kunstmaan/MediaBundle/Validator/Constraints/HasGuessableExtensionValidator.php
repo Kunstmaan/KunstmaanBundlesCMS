@@ -11,24 +11,23 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Class hasGuessableExtensionValidator
+ * Class hasGuessableExtensionValidator.
  */
 class HasGuessableExtensionValidator extends ConstraintValidator
 {
-
     /**
-     * @var ExtensionGuesserInterface $extensionGuesser
+     * @var ExtensionGuesserInterface
      */
     private $extensionGuesser;
 
     /**
-     * @var MimeTypeGuesserInterface $mimeTypeGuesser
+     * @var MimeTypeGuesserInterface
      */
     private $mimeTypeGuesser;
 
     /**
      * @param $value
-     * @param Constraint  $constraint
+     * @param Constraint $constraint
      *
      * @throws ConstraintDefinitionException
      * @throws UnexpectedTypeException
@@ -36,7 +35,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof HasGuessableExtension) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\HasGuessableExtension');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\HasGuessableExtension');
         }
 
         if (!$value instanceof UploadedFile) {
@@ -49,7 +48,7 @@ class HasGuessableExtensionValidator extends ConstraintValidator
             $pathInfo['extension'] = $this->extensionGuesser->guess($contentType);
         }
 
-        if ($pathInfo['extension'] === NULL) {
+        if ($pathInfo['extension'] === null) {
             $this->context->buildViolation($constraint->notGuessableErrorMessage)
                 ->setCode(HasGuessableExtension::NOT_GUESSABLE_ERROR)
                 ->addViolation();
@@ -69,6 +68,6 @@ class HasGuessableExtensionValidator extends ConstraintValidator
      */
     public function setMimeTypeGuesser(MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
-        $this->mimeTypeGuesser= $mimeTypeGuesserFactory->get();
+        $this->mimeTypeGuesser = $mimeTypeGuesserFactory->get();
     }
 }

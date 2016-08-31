@@ -5,9 +5,8 @@ namespace Kunstmaan\VotingBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanVotingBundle
+ * KunstmaanVotingBundle.
  */
 class KunstmaanVotingBundle extends Bundle
 {
-
 }

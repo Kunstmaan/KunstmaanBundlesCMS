@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 
 /**
- * The checkbox page part can be used to create forms with checkbox input fields
+ * The checkbox page part can be used to create forms with checkbox input fields.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_checkbox_page_parts")
@@ -20,21 +20,21 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionFi
 class CheckboxPagePart extends AbstractFormPagePart
 {
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      */
     protected $errorMessageRequired;
 
     /**
-     * Sets the required valud of this page part
+     * Sets the required valud of this page part.
      *
      * @param bool $required
      *
@@ -48,7 +48,7 @@ class CheckboxPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Check if the page part is required
+     * Check if the page part is required.
      *
      * @return bool
      */
@@ -58,7 +58,7 @@ class CheckboxPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the message shown when the page part is required and no value was entered
+     * Sets the message shown when the page part is required and no value was entered.
      *
      * @param string $errorMessageRequired
      *
@@ -72,7 +72,7 @@ class CheckboxPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the error message that will be shown when the page part is required and no value was entered
+     * Get the error message that will be shown when the page part is required and no value was entered.
      *
      * @return string
      */
@@ -82,17 +82,17 @@ class CheckboxPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the frontend view
+     * Returns the frontend view.
      *
      * @return string
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:CheckboxPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:CheckboxPagePart:view.html.twig';
     }
 
     /**
-     * Modify the form with the fields of the current page part
+     * Modify the form with the fields of the current page part.
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
@@ -101,12 +101,12 @@ class CheckboxPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $bfsf = new BooleanFormSubmissionField();
-        $bfsf->setFieldName('field_' . $this->getUniqueId());
+        $bfsf->setFieldName('field_'.$this->getUniqueId());
         $bfsf->setLabel($this->getLabel());
         $bfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $bfsf;
+        $data['formwidget_'.$this->getUniqueId()] = $bfsf;
         $constraints = array();
         if ($this->getRequired()) {
             $options = array();
@@ -115,12 +115,12 @@ class CheckboxPagePart extends AbstractFormPagePart
             }
             $constraints[] = new NotBlank($options);
         }
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
+        $formBuilder->add('formwidget_'.$this->getUniqueId(),
             BooleanFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);
@@ -129,7 +129,7 @@ class CheckboxPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the default backend form type for this page part
+     * Returns the default backend form type for this page part.
      *
      * @return SingleLineTextPagePartAdminType
      */

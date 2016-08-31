@@ -33,7 +33,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -41,7 +41,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Build filters for admin list
+     * Build filters for admin list.
      */
     public function buildFilters()
     {
@@ -49,7 +49,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Get bundle name
+     * Get bundle name.
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Get entity name
+     * Get entity name.
      *
      * @return string
      */
@@ -87,7 +87,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Configure if it's possible to delete the given $item
+     * Configure if it's possible to delete the given $item.
      *
      * @param object|array $item
      *

@@ -3,19 +3,16 @@
 namespace Kunstmaan\NodeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * AbstractControllerAction
+ * AbstractControllerAction.
  */
 abstract class AbstractControllerAction extends AbstractEntity implements HasNodeInterface
 {
-
     /**
      * @var string
      *
@@ -37,7 +34,7 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     protected $parent;
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -51,7 +48,7 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -87,5 +84,4 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     {
         return new ControllerActionAdminType();
     }
-
 }

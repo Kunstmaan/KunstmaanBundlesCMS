@@ -8,11 +8,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * The type for the StringFormSubmissionField
+ * The type for the StringFormSubmissionField.
  */
 class StringFormSubmissionType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
@@ -20,7 +19,9 @@ class StringFormSubmissionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
-        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
+        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function ($v) {
+            return isset($v);
+        });
         $builder->add('value', TextType::class, $fieldOptions);
     }
 

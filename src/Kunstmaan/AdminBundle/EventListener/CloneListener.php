@@ -7,11 +7,10 @@ use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * This listener will make sure the id isn't copied for AbstractEntities
+ * This listener will make sure the id isn't copied for AbstractEntities.
  */
 class CloneListener
 {
-
     /**
      * @param DeepCloneAndSaveEvent $event
      */
@@ -26,5 +25,4 @@ class CloneListener
             $clonedEntity->deepClone();
         }
     }
-
 }

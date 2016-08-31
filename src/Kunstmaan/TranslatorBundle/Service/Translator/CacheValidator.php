@@ -5,12 +5,13 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Validates and checks translations cache
+ * Validates and checks translations cache.
  */
 class CacheValidator
 {
     /**
-     * Where to store cache files
+     * Where to store cache files.
+     *
      * @var string
      */
     private $cacheDir;
@@ -18,8 +19,9 @@ class CacheValidator
     private $translationRepository;
 
     /**
-     * Checks the caching files of they are even with the stasher content
-     * @return boolean
+     * Checks the caching files of they are even with the stasher content.
+     *
+     * @return bool
      */
     public function isCacheFresh()
     {
@@ -34,7 +36,8 @@ class CacheValidator
     }
 
     /**
-     * Get the last updated or inserted from all database translations
+     * Get the last updated or inserted from all database translations.
+     *
      * @return DateTime last createdAt or updateAt date from the translations stash
      */
     public function getLastTranslationChangeDate()
@@ -43,7 +46,8 @@ class CacheValidator
     }
 
     /**
-     * Retrieve a Datetime of the oldest cache file made
+     * Retrieve a Datetime of the oldest cache file made.
+     *
      * @return DateTime mtime of oldest cache file
      */
     public function getOldestCachefileDate()

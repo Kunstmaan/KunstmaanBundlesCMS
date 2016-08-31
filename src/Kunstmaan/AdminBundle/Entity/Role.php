@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Role Entity
+ * Role Entity.
  *
  * @ORM\Entity
  * @ORM\Table( name="kuma_roles" )
@@ -16,7 +16,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Role implements RoleInterface
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="id")
@@ -31,7 +30,7 @@ class Role implements RoleInterface
     protected $role;
 
     /**
-     * Populate the role field
+     * Populate the role field.
      *
      * @param string $role
      */
@@ -61,7 +60,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */

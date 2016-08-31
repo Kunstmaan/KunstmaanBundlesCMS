@@ -7,7 +7,7 @@ use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * MediaManager
+ * MediaManager.
  */
 class MediaManager
 {
@@ -46,7 +46,7 @@ class MediaManager
     }
 
     /**
-     * Returns handler with the highest priority to handle the Media item which can handle the item. If no handler is found, it returns FileHandler
+     * Returns handler with the highest priority to handle the Media item which can handle the item. If no handler is found, it returns FileHandler.
      *
      * @param Media|File $media
      *
@@ -65,7 +65,7 @@ class MediaManager
     }
 
     /**
-     * Returns handler with the highest priority to handle the Media item based on the Type. If no handler is found, it returns FileHandler
+     * Returns handler with the highest priority to handle the Media item based on the Type. If no handler is found, it returns FileHandler.
      *
      * @param string $type
      *

@@ -11,7 +11,7 @@ use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 
 /**
- * The file upload page part can be used to create forms with the possibility to upload files
+ * The file upload page part can be used to create forms with the possibility to upload files.
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -20,21 +20,21 @@ use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 class FileUploadPagePart extends AbstractFormPagePart
 {
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      */
     protected $errorMessageRequired;
 
     /**
-     * Modify the form with the fields of the current page part
+     * Modify the form with the fields of the current page part.
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
@@ -43,12 +43,12 @@ class FileUploadPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $ffsf = new FileFormSubmissionField();
-        $ffsf->setFieldName('field_' . $this->getUniqueId());
+        $ffsf->setFieldName('field_'.$this->getUniqueId());
         $ffsf->setLabel($this->getLabel());
         $ffsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $ffsf;
+        $data['formwidget_'.$this->getUniqueId()] = $ffsf;
 
         $constraints = array();
         if ($this->getRequired()) {
@@ -60,12 +60,12 @@ class FileUploadPagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_' . $this->getUniqueId(),
+            'formwidget_'.$this->getUniqueId(),
             FileFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);
@@ -74,7 +74,7 @@ class FileUploadPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the required valud of this page part
+     * Sets the required valud of this page part.
      *
      * @param bool $required
      *
@@ -88,7 +88,7 @@ class FileUploadPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Check if the page part is required
+     * Check if the page part is required.
      *
      * @return bool
      */
@@ -98,7 +98,7 @@ class FileUploadPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the message shown when the page part is required and no value was entered
+     * Sets the message shown when the page part is required and no value was entered.
      *
      * @param string $errorMessageRequired
      *
@@ -112,7 +112,7 @@ class FileUploadPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the error message that will be shown when the page part is required and no value was entered
+     * Get the error message that will be shown when the page part is required and no value was entered.
      *
      * @return string
      */
@@ -122,17 +122,17 @@ class FileUploadPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the view used in the frontend
+     * Returns the view used in the frontend.
      *
      * @return mixed
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:FileUploadPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:FileUploadPagePart:view.html.twig';
     }
 
     /**
-     * Returns the default backend form type for this page part
+     * Returns the default backend form type for this page part.
      *
      * @return FileUploadPagePartAdminType
      */

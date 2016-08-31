@@ -44,10 +44,10 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateMultiLanguage()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $container = $this->getContainer($request, true);
-        $object    = new SlugRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $object = new SlugRouter($container);
+        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/en/some-uri', $url);
 
         $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en'), UrlGeneratorInterface::ABSOLUTE_PATH);
@@ -61,10 +61,10 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerateSingleLanguage()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $container = $this->getContainer($request);
-        $object    = new SlugRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $object = new SlugRouter($container);
+        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://domain.tld/some-uri', $url);
 
         $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'nl'), UrlGeneratorInterface::ABSOLUTE_PATH);
@@ -79,7 +79,7 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
     {
         $context = $this->getMock('Symfony\Component\Routing\RequestContext');
         $container = $this->getContainer(null);
-        $object    = new SlugRouter($container);
+        $object = new SlugRouter($container);
         $object->setContext($context);
         $this->assertEquals($context, $object->getContext());
     }
@@ -94,11 +94,11 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatchWithNodeTranslation()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $nodeTranslation = new NodeTranslation();
         $container = $this->getContainer($request, true, $nodeTranslation);
-        $object    = new SlugRouter($container);
-        $result    = $object->match('/en/some-uri');
+        $object = new SlugRouter($container);
+        $result = $object->match('/en/some-uri');
         $this->assertEquals('some-uri', $result['url']);
         $this->assertEquals('en', $result['_locale']);
         $this->assertEquals($nodeTranslation, $result['_nodeTranslation']);
@@ -110,15 +110,15 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatchWithoutNodeTranslation()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $container = $this->getContainer($request);
-        $object    = new SlugRouter($container);
+        $object = new SlugRouter($container);
         $object->match('/en/some-uri');
     }
 
     private function getContainer($request, $multiLanguage = false, $nodeTranslation = null)
     {
-        $container    = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration($multiLanguage)),
@@ -163,7 +163,6 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
 
         $domainConfiguration->method('getRootNode')
             ->willReturn(null);
-
 
         return $domainConfiguration;
     }

@@ -7,7 +7,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Node
+ * Node.
  *
  * @ORM\Entity()
  * @ORM\Table(name="kuma_nodes_search")

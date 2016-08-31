@@ -5,13 +5,12 @@ namespace Kunstmaan\UserManagementBundle\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
- * Role admin list configurator used to manage {@link Role} in the admin
+ * Role admin list configurator used to manage {@link Role} in the admin.
  */
 class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
 {
-
     /**
-     * Build filters for admin list
+     * Build filters for admin list.
      */
     public function buildFilters()
     {
@@ -19,7 +18,7 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -27,7 +26,7 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     }
 
     /**
-     * Get repository name
+     * Get repository name.
      *
      * @return string
      */
@@ -35,5 +34,4 @@ class RoleAdminListConfigurator extends AbstractSettingsAdminListConfigurator
     {
         return 'Role';
     }
-
 }

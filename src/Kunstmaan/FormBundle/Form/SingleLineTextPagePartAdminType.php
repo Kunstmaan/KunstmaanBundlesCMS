@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * This class represents the type for the SubleLineTextPagePart
+ * This class represents the type for the SubleLineTextPagePart.
  */
 class SingleLineTextPagePartAdminType extends AbstractType
 {

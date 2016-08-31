@@ -10,7 +10,7 @@ use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The AdminList controller for the AbstractArticleAuthor
+ * The AdminList controller for the AbstractArticleAuthor.
  */
 abstract class AbstractArticleAuthorAdminListController extends AdminListController
 {
@@ -20,22 +20,22 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     protected $configurator;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     protected $em;
 
     /**
-     * @var string $locale
+     * @var string
      */
     protected $locale;
 
     /**
-     * @var User $user
+     * @var User
      */
     protected $user;
 
     /**
-     * @var AclHelper $aclHelper
+     * @var AclHelper
      */
     protected $aclHelper;
 
@@ -55,7 +55,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     /**
      * @return AbstractArticlePageAdminListConfigurator
      */
-    abstract  public function createAdminListConfigurator();
+    abstract public function createAdminListConfigurator();
 
     protected function initAdminListConfigurator(Request $request)
     {
@@ -66,7 +66,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     }
 
     /**
-     * The index action
+     * The index action.
      */
     public function indexAction(Request $request)
     {
@@ -74,7 +74,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     }
 
     /**
-     * The add action
+     * The add action.
      */
     public function addAction(Request $request)
     {
@@ -82,7 +82,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     }
 
     /**
-     * The edit action
+     * The edit action.
      */
     public function editAction(Request $request, $id)
     {
@@ -90,7 +90,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     }
 
     /**
-     * The delete action
+     * The delete action.
      */
     public function deleteAction(Request $request, $id)
     {
@@ -98,7 +98,7 @@ abstract class AbstractArticleAuthorAdminListController extends AdminListControl
     }
 
     /**
-     * Export action
+     * Export action.
      */
     public function exportAction(Request $request, $_format)
     {

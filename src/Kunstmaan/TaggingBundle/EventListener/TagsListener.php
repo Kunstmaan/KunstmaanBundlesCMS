@@ -4,13 +4,11 @@ namespace Kunstmaan\TaggingBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use DoctrineExtensions\Taggable\Taggable;
-
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TagsListener
 {
-
     /**
      * @var ContainerInterface
      */
@@ -36,7 +34,8 @@ class TagsListener
     }
 
     /**
-     * Runs the postPersist doctrine event and updates the current flag if needed
+     * Runs the postPersist doctrine event and updates the current flag if needed.
+     *
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
     public function postPersist(LifecycleEventArgs $args)
@@ -49,7 +48,8 @@ class TagsListener
     }
 
     /**
-     * Runs the postUpdate doctrine event and updates the current flag if needed
+     * Runs the postUpdate doctrine event and updates the current flag if needed.
+     *
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
     public function postUpdate(LifecycleEventArgs $args)
@@ -65,5 +65,4 @@ class TagsListener
             $this->getTagManager()->saveTagging($page);
         }
     }
-
 }

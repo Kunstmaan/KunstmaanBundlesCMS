@@ -6,7 +6,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface;
 
 /**
- * Custom handler for PDF files (display thumbnails if imagemagick is enabled and has PDF support)
+ * Custom handler for PDF files (display thumbnails if imagemagick is enabled and has PDF support).
  */
 class PdfHandler extends FileHandler
 {
@@ -27,7 +27,7 @@ class PdfHandler extends FileHandler
     {
         parent::setMediaPath($kernelRootDir);
 
-        $this->setWebPath(realpath(str_replace('/', DIRECTORY_SEPARATOR, $kernelRootDir . '/../web/')) . DIRECTORY_SEPARATOR);
+        $this->setWebPath(realpath(str_replace('/', DIRECTORY_SEPARATOR, $kernelRootDir.'/../web/')).DIRECTORY_SEPARATOR);
     }
 
     /**
@@ -51,7 +51,7 @@ class PdfHandler extends FileHandler
      */
     public function getType()
     {
-        return PdfHandler::TYPE;
+        return self::TYPE;
     }
 
     /**
@@ -79,22 +79,22 @@ class PdfHandler extends FileHandler
 
         try {
             // Generate preview for PDF
-            $this->pdfTransformer->apply($this->webPath . $media->getUrl());
+            $this->pdfTransformer->apply($this->webPath.$media->getUrl());
         } catch (\ImagickException $e) {
             // Fail silently ()
         }
     }
 
     /**
-     * @param Media $media The media entity
+     * @param Media  $media    The media entity
      * @param string $basepath The base path
      *
      * @return string
      */
     public function getImageUrl(Media $media, $basepath)
     {
-        $filename = $this->pdfTransformer->getPreviewFilename($basepath . $media->getUrl());
-        if (!file_exists($this->webPath . $filename)) {
+        $filename = $this->pdfTransformer->getPreviewFilename($basepath.$media->getUrl());
+        if (!file_exists($this->webPath.$filename)) {
             return null;
         }
 

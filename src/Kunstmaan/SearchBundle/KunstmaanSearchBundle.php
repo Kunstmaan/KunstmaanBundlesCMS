@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanSearchBundle
+ * KunstmaanSearchBundle.
  */
 class KunstmaanSearchBundle extends Bundle
 {

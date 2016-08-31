@@ -91,7 +91,7 @@ class DomainConfiguration extends BaseDomainConfiguration
         if (isset($this->hosts[$host])) {
             $hostInfo = $this->hosts[$host];
 
-            return ('multi_lang' === $hostInfo['type']);
+            return 'multi_lang' === $hostInfo['type'];
         }
 
         return parent::isMultiLanguage();
@@ -136,7 +136,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * Fetch the root node for the current host
+     * Fetch the root node for the current host.
      */
     public function getRootNode($host = null)
     {
@@ -157,7 +157,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * Return (optional) extra config settings for the current host
+     * Return (optional) extra config settings for the current host.
      */
     public function getExtraData()
     {
@@ -171,7 +171,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * Return (optional) extra config settings for the locales for the current host
+     * Return (optional) extra config settings for the locales for the current host.
      */
     public function getLocalesExtraData()
     {
@@ -272,7 +272,6 @@ class DomainConfiguration extends BaseDomainConfiguration
 
         return null;
     }
-
 
     /**
      * @return array()

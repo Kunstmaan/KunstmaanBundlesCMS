@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The default tab implementation
+ * The default tab implementation.
  */
 class FormWidget implements FormWidgetInterface
 {
@@ -78,7 +78,6 @@ class FormWidget implements FormWidgetInterface
      */
     public function bindRequest(Request $request)
     {
-
     }
 
     /**
@@ -157,10 +156,10 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @param string       $name
-     * @param string       $type
-     * @param null         $data
-     * @param array        $options
+     * @param string $name
+     * @param string $type
+     * @param null   $data
+     * @param array  $options
      *
      * @return FormWidget
      */

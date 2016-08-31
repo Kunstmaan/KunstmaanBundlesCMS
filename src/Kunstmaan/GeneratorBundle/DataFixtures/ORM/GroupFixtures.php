@@ -8,7 +8,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
 
 /**
- * Fixture for creating the basic groups
+ * Fixture for creating the basic groups.
  */
 class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -17,7 +17,7 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     const REFERENCE_SUPERADMINS_GROUP = 'superadmins-group';
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load data fixtures with the passed EntityManager.
      *
      * @param ObjectManager $manager
      */
@@ -25,11 +25,11 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         $group1 = $this->createGroup($manager, 'Administrators', array(
             $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
-            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE)
+            $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
         ));
 
         $group2 = $this->createGroup($manager, 'Guests', array(
-            $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE)
+            $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE),
         ));
 
         $group3 = $this->createGroup($manager, 'Super administrators', array(
@@ -46,7 +46,7 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Create a group
+     * Create a group.
      *
      * @param ObjectManager $manager The object manager
      * @param string        $name    The name of the group
@@ -66,7 +66,7 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Get the order of this fixture
+     * Get the order of this fixture.
      *
      * @return int
      */
@@ -74,5 +74,4 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         return 2;
     }
-
 }

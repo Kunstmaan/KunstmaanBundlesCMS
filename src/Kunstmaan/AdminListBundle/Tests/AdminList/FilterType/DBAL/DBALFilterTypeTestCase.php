@@ -7,7 +7,7 @@ use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Doctrine\DBAL\Connection;
 
 /**
- * DBALFilterTypeTestCase
+ * DBALFilterTypeTestCase.
  */
 abstract class DBALFilterTypeTestCase extends \PHPUnit_Framework_TestCase
 {

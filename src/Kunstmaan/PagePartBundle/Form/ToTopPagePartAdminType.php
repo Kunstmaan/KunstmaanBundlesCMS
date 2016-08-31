@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * ToTopPagePartAdminType
+ * ToTopPagePartAdminType.
  */
 class ToTopPagePartAdminType extends AbstractType
 {

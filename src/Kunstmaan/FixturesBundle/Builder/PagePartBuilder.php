@@ -20,9 +20,9 @@ class PagePartBuilder implements BuilderInterface
 
     public function __construct(EntityManager $em, Populator $populator)
     {
-        $this->em           = $em;
+        $this->em = $em;
         $this->pagePartRepo = $em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        $this->populator    = $populator;
+        $this->populator = $populator;
     }
 
     public function canBuild(Fixture $fixture)
@@ -46,28 +46,28 @@ class PagePartBuilder implements BuilderInterface
 
     public function postFlushBuild(Fixture $fixture)
     {
-        $params       = $fixture->getParameters();
+        $params = $fixture->getParameters();
         $translations = $fixture->getTranslations();
-        $original     = $fixture->getEntity();
+        $original = $fixture->getEntity();
 
         if (!isset($params['page']) || empty($translations)) {
             throw new \Exception(
-                'No page reference and/or translations detected for pagepart fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')'
+                'No page reference and/or translations detected for pagepart fixture '.$fixture->getName().' ('.$fixture->getClass().')'
             );
         }
 
         $pageFixture = $params['page'];
         if (!$pageFixture instanceof Fixture) {
             throw new \Exception(
-                'Could not find a reference "' . $params['page'] . '"" for fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')'
+                'Could not find a reference "'.$params['page'].'"" for fixture '.$fixture->getName().' ('.$fixture->getClass().')'
             );
         }
 
         $additionalEntities = $pageFixture->getAdditionalEntities();
-        $pp                 = $original;
-        $first              = null;
+        $pp = $original;
+        $first = null;
         foreach ($translations as $language => $data) {
-            $key = $pageFixture->getName() . '_' . $language;
+            $key = $pageFixture->getName().'_'.$language;
             if (!isset($additionalEntities[$key])) {
                 continue;
             }
@@ -83,10 +83,10 @@ class PagePartBuilder implements BuilderInterface
 
             // Find latest position.
             $position = array_key_exists('position', $params) ? $params['position'] : null;
-            $context  = isset($params['context']) ? $params['context'] : 'main';
+            $context = isset($params['context']) ? $params['context'] : 'main';
             if (is_null($position)) {
                 $pageParts = $this->pagePartRepo->getPagePartRefs($page, $context);
-                $position  = count($pageParts) + 1;
+                $position = count($pageParts) + 1;
             }
 
             $this->pagePartRepo->addPagePart($page, $pp, $position, $context);

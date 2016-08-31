@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -8,7 +9,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this

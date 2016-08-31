@@ -3,15 +3,13 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use DateTime;
-
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * The form submission
+ * The form submission.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_form_submissions")
@@ -20,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 class FormSubmission implements EntityInterface
 {
     /**
-     * This id of the form submission
+     * This id of the form submission.
      *
      * @ORM\Id
      * @ORM\Column(type="bigint")
@@ -29,14 +27,14 @@ class FormSubmission implements EntityInterface
     protected $id;
 
     /**
-     * The ip address which created this form submission
+     * The ip address which created this form submission.
      *
      * @ORM\Column(type="string", name="ip_address")
      */
     protected $ipAddress;
 
     /**
-     * Link to the node of the form which created this form submission
+     * Link to the node of the form which created this form submission.
      *
      * @ORM\ManyToOne(targetEntity="Kunstmaan\NodeBundle\Entity\Node")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id")
@@ -44,21 +42,21 @@ class FormSubmission implements EntityInterface
     protected $node;
 
     /**
-     * The language of the form submission
+     * The language of the form submission.
      *
      * @ORM\Column(type="string")
      */
     protected $lang;
 
     /**
-     * The date when the form submission was created
+     * The date when the form submission was created.
      *
      * @ORM\Column(type="datetime")
      */
     protected $created;
 
     /**
-     * The extra fields with their value, which where configured on the form which created this submission
+     * The extra fields with their value, which where configured on the form which created this submission.
      *
      * @ORM\OneToMany(targetEntity="FormSubmissionField", mappedBy="formSubmission")
      * @ORM\OrderBy({"sequence" = "ASC"})
@@ -66,7 +64,7 @@ class FormSubmission implements EntityInterface
     protected $fields;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -75,9 +73,9 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -85,7 +83,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param string $id
      *
@@ -99,7 +97,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Get the ip address which submitted this form submission
+     * Get the ip address which submitted this form submission.
      *
      * @return string
      */
@@ -109,7 +107,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Set the ip address
+     * Set the ip address.
      *
      * @param string $ipAddress
      *
@@ -123,7 +121,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Get the node of the form which created this form submission
+     * Get the node of the form which created this form submission.
      *
      * @return Node
      */
@@ -133,7 +131,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Set the node of the form which created this form submission
+     * Set the node of the form which created this form submission.
      *
      * @param Node $node
      *
@@ -147,7 +145,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Sets the language of this form submission
+     * Sets the language of this form submission.
      *
      * @param string $lang
      *
@@ -161,7 +159,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Get the language of this form submission
+     * Get the language of this form submission.
      *
      * @return string
      */
@@ -171,7 +169,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Set the date when the form submission was created
+     * Set the date when the form submission was created.
      *
      * @param datetime $created
      *
@@ -185,7 +183,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Get the date when this form submission was created
+     * Get the date when this form submission was created.
      *
      * @return datetime
      */
@@ -195,7 +193,7 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * Returns the list of fields with their values
+     * Returns the list of fields with their values.
      *
      * @return FormSubmissionField[];
      */
@@ -205,13 +203,12 @@ class FormSubmission implements EntityInterface
     }
 
     /**
-     * A string representation of this form submission
+     * A string representation of this form submission.
      *
      * @return string;
      */
     public function __toString()
     {
-        return "FormSubmission";
+        return 'FormSubmission';
     }
-
 }

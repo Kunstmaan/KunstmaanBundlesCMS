@@ -3,11 +3,10 @@
 namespace Kunstmaan\MediaBundle\Form\Type;
 
 /**
- * CurrentValueContainer
+ * CurrentValueContainer.
  */
 class CurrentValueContainer
 {
-
     /**
      * @var object
      */

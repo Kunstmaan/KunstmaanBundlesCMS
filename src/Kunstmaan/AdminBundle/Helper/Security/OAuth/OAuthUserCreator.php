@@ -20,6 +20,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
 
     /**
      * OAuthUserCreator constructor.
+     *
      * @param EntityManagerInterface $em
      * @param $hostedDomains
      * @param $userClass
@@ -34,20 +35,19 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getOrCreateUser($email, $googleId)
     {
         if ($this->isConfiguredDomain($email)) {
-
             $user = $this->userFinder->findUserByGoogleSignInData($email, $googleId);
 
-            if(!$user instanceof $this->userClass) {
+            if (!$user instanceof $this->userClass) {
                 //User not present in database, create new one
-                $user = new $this->userClass;
+                $user = new $this->userClass();
                 $user->setUsername($email);
                 $user->setEmail($email);
-                $user->setPlainPassword($googleId . $email . time());
+                $user->setPlainPassword($googleId.$email.time());
                 $user->setEnabled(true);
                 $user->setLocked(false);
                 $user->setAdminLocale('en');
@@ -69,7 +69,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
 
     /**
      * This method returns the access level coupled with the domain of the given email
-     * If the given domain name has not been configured this function will return null
+     * If the given domain name has not been configured this function will return null.
      *
      * @param string email
      *
@@ -78,7 +78,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     private function getAccessLevels($email)
     {
         foreach ($this->hostedDomains as $hostedDomain) {
-            if(preg_match('/'.$hostedDomain['domain_name'].'$/', $email)) {
+            if (preg_match('/'.$hostedDomain['domain_name'].'$/', $email)) {
                 return $hostedDomain['access_levels'];
             }
         }
@@ -87,7 +87,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     }
 
     /**
-     * This method returns wether a domain for the given email has been configured
+     * This method returns wether a domain for the given email has been configured.
      *
      * @param string email
      *
@@ -96,7 +96,7 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
     private function isConfiguredDomain($email)
     {
         foreach ($this->hostedDomains as $hostedDomain) {
-            if(preg_match('/'.$hostedDomain['domain_name'].'$/', $email)) {
+            if (preg_match('/'.$hostedDomain['domain_name'].'$/', $email)) {
                 return true;
             }
         }

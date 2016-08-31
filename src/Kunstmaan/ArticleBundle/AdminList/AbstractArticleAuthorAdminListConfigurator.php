@@ -8,7 +8,7 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 
 /**
- * The AdminList configurator for the AbstractArticleAuthor
+ * The AdminList configurator for the AbstractArticleAuthor.
  */
 class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -41,7 +41,7 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function getBundleName()
     {
-        return "KunstmaanArticleBundle";
+        return 'KunstmaanArticleBundle';
     }
 
     /**
@@ -51,11 +51,11 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function getEntityName()
     {
-        return "AbstractArticleAuthor";
+        return 'AbstractArticleAuthor';
     }
 
     /**
-     * Configure filters
+     * Configure filters.
      */
     public function buildFilters()
     {
@@ -64,12 +64,11 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
         $this->addField('name', 'article.author.list.header.name', true);
         $this->addField('link', 'article.author.list.header.link', true);
     }
-
 }

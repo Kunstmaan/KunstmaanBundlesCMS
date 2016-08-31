@@ -6,26 +6,26 @@ use Kunstmaan\VotingBundle\Event\EventInterface;
 use Kunstmaan\VotingBundle\Services\RepositoryResolver;
 
 /**
-* Security listener for prevent ip to vote more than maxnumber for an event
-*/
+ * Security listener for prevent ip to vote more than maxnumber for an event.
+ */
 class MaxNumberByIpEventListener
 {
-
     /**
-    * RepositoryResolver
-    */
+     * RepositoryResolver.
+     */
     protected $repositoryResolver;
 
     /**
-    * Number
-    */
+     * Number.
+     */
     protected $maxNumber;
 
     /**
-    * Constructor
-    * @param RepositoryResolver $repositoryResolver entity manager
-    * @param integer            $maxNumber          max number
-    */
+     * Constructor.
+     *
+     * @param RepositoryResolver $repositoryResolver entity manager
+     * @param int                $maxNumber          max number
+     */
     public function __construct($repositoryResolver, $maxNumber)
     {
         $this->repositoryResolver = $repositoryResolver;
@@ -33,12 +33,12 @@ class MaxNumberByIpEventListener
     }
 
     /**
-    * On vote
-    * @param EventInterface $event event
-    */
+     * On vote.
+     *
+     * @param EventInterface $event event
+     */
     public function onVote(EventInterface $event)
     {
-
         $repository = $this->repositoryResolver->getRepositoryForEvent($event);
 
         if (!$repository) {
@@ -48,8 +48,7 @@ class MaxNumberByIpEventListener
         $vote = $repository->countByReferenceAndByIp($event->getReference(),  $event->getRequest()->getClientIp());
 
         if ($vote >= $this->maxNumber) {
-             $event->stopPropagation();
+            $event->stopPropagation();
         }
     }
-
 }

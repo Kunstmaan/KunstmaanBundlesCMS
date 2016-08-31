@@ -29,8 +29,8 @@ class SlugListener
     protected $eventDispatcher;
 
     /**
-     * @param EntityManager $entityManager
-     * @param ControllerResolver $resolver
+     * @param EntityManager            $entityManager
+     * @param ControllerResolver       $resolver
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(EntityManager $entityManager, ControllerResolver $resolver, EventDispatcherInterface $eventDispatcher)
@@ -42,6 +42,7 @@ class SlugListener
 
     /**
      * @param FilterControllerEvent $event
+     *
      * @throws \Exception
      */
     public function onKernelController(FilterControllerEvent $event)
@@ -54,7 +55,7 @@ class SlugListener
         }
 
         $nodeTranslation = $request->attributes->get('_nodeTranslation');
-        if (! ($nodeTranslation instanceof NodeTranslation)) {
+        if (!($nodeTranslation instanceof NodeTranslation)) {
             throw new \Exception('Invalid _nodeTranslation value found in request attributes');
         }
         $entity = $nodeTranslation->getRef($this->em);

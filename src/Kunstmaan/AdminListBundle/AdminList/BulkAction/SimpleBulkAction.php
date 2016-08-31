@@ -29,10 +29,10 @@ class SimpleBulkAction implements BulkActionInterface
     private $template;
 
     /**
-     * @param array    $url      The url path and parameters
-     * @param string   $label    The label
-     * @param string   $icon     The icon
-     * @param string   $template The template
+     * @param array  $url      The url path and parameters
+     * @param string $label    The label
+     * @param string $icon     The icon
+     * @param string $template The template
      */
     public function __construct(array $url, $label, $icon = null, $template = null)
     {

@@ -7,7 +7,6 @@ namespace Kunstmaan\AdminListBundle\AdminList\ItemAction;
  */
 interface ItemActionInterface
 {
-
     /**
      * @param mixed $item
      *
@@ -33,5 +32,4 @@ interface ItemActionInterface
      * @return string
      */
     public function getTemplate();
-
 }

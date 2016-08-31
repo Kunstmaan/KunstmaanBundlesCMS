@@ -8,7 +8,6 @@ namespace Kunstmaan\AdminListBundle\AdminList\ItemAction;
  */
 class SimpleItemAction implements ItemActionInterface
 {
-
     /**
      * @var callable
      */
@@ -31,7 +30,7 @@ class SimpleItemAction implements ItemActionInterface
 
     /**
      * @param callable $routerGenerator The generator used to generate the url of an item, when generating the item will
-     *                                  be provided.
+     *                                  be provided
      * @param string   $icon            The icon
      * @param string   $label           The label
      * @param string   $template        The template
@@ -53,7 +52,7 @@ class SimpleItemAction implements ItemActionInterface
     {
         $routeGenerator = $this->routerGenerator;
         if (is_callable($routeGenerator)) {
-           return $routeGenerator($item);
+            return $routeGenerator($item);
         }
 
         return null;
@@ -86,5 +85,4 @@ class SimpleItemAction implements ItemActionInterface
     {
         return $this->template;
     }
-
 }

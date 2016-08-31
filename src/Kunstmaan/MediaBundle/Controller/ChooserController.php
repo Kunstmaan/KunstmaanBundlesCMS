@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ChooserController extends Controller
 {
-
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_chooser")
      *
@@ -30,13 +29,13 @@ class ChooserController extends Controller
      */
     public function chooserIndexAction(Request $request)
     {
-        $em       = $this->getDoctrine()->getManager();
-        $session  = $request->getSession();
+        $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
         $folderId = false;
 
-        $type            = $request->get('type', 'all');
+        $type = $request->get('type', 'all');
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser     = $request->get('linkChooser');
+        $linkChooser = $request->get('linkChooser');
 
         // Go to the last visited folder
         if ($session->get('last-media-folder')) {
@@ -52,14 +51,14 @@ class ChooserController extends Controller
             // Redirect to the first top folder
             /* @var Folder $firstFolder */
             $firstFolder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFirstTopFolder();
-            $folderId    = $firstFolder->getId();
+            $folderId = $firstFolder->getId();
         }
 
         $params = array(
-            'folderId'        => $folderId,
-            'type'            => $type,
+            'folderId' => $folderId,
+            'type' => $type,
             'CKEditorFuncNum' => $cKEditorFuncNum,
-            'linkChooser'     => $linkChooser
+            'linkChooser' => $linkChooser,
         );
 
         return $this->redirect($this->generateUrl('KunstmaanMediaBundle_chooser_show_folder', $params));
@@ -76,12 +75,12 @@ class ChooserController extends Controller
      */
     public function chooserShowFolderAction(Request $request, $folderId)
     {
-        $em      = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
 
-        $type            = $request->get('type');
+        $type = $request->get('type');
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser     = $request->get('linkChooser');
+        $linkChooser = $request->get('linkChooser');
 
         // Remember the last visited folder in the session
         $session->set('last-media-folder', $folderId);
@@ -110,19 +109,19 @@ class ChooserController extends Controller
         $mediaManager = $this->get('kunstmaan_media.media_manager');
 
         $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 
         $sub = new Folder();
         $sub->setParent($folder);
-        $subForm  = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
+        $subForm = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
 
         $linkChooserLink = null;
         if (!empty($linkChooser)) {
             $params = array();
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
-                $routeName                 = 'KunstmaanNodeBundle_ckselecturl';
+                $routeName = 'KunstmaanNodeBundle_ckselecturl';
             } else {
                 $routeName = 'KunstmaanNodeBundle_selecturl';
             }
@@ -131,22 +130,22 @@ class ChooserController extends Controller
 
         $viewVariabels = array(
             'cKEditorFuncNum' => $cKEditorFuncNum,
-            'linkChooser'     => $linkChooser,
+            'linkChooser' => $linkChooser,
             'linkChooserLink' => $linkChooserLink,
-            'mediamanager'    => $mediaManager,
-            'foldermanager'   => $this->get('kunstmaan_media.folder_manager'),
-            'handler'         => $handler,
-            'type'            => $type,
-            'folder'          => $folder,
-            'adminlist'       => $adminList,
-            'subform'         => $subForm->createView()
+            'mediamanager' => $mediaManager,
+            'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
+            'handler' => $handler,
+            'type' => $type,
+            'folder' => $folder,
+            'adminlist' => $adminList,
+            'subform' => $subForm->createView(),
         );
 
         /* generate all forms */
         $forms = array();
 
-        foreach($mediaManager->getFolderAddActions()  as $addAction ) {
-            $forms[$addAction['type']] = $this->createTypeFormView($mediaHandler,$addAction['type']);
+        foreach ($mediaManager->getFolderAddActions()  as $addAction) {
+            $forms[$addAction['type']] = $this->createTypeFormView($mediaHandler, $addAction['type']);
         }
 
         $viewVariabels['forms'] = $forms;
@@ -156,15 +155,15 @@ class ChooserController extends Controller
 
     /**
      * @param MediaManager $mediaManager
-     * @param String       $type
+     * @param string       $type
      *
      * @return \Symfony\Component\Form\FormView
      */
     private function createTypeFormView(MediaManager $mediaManager, $type)
     {
         $handler = $mediaManager->getHandlerForType($type);
-        $media   = new Media();
-        $helper  = $handler->getFormHelper($media);
+        $media = new Media();
+        $helper = $handler->getFormHelper($media);
 
         return $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions())->createView();
     }

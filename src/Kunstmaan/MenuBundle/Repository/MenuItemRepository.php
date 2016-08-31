@@ -7,10 +7,10 @@ use Kunstmaan\MenuBundle\Entity\BaseMenuItem;
 
 class MenuItemRepository extends NestedTreeRepository implements MenuItemRepositoryInterface
 {
-
     /**
      * @param string $menuName
      * @param string $locale
+     *
      * @return array
      */
     public function getMenuItemsForLanguage($menuName, $locale)
@@ -30,7 +30,7 @@ class MenuItemRepository extends NestedTreeRepository implements MenuItemReposit
             ->setParameter('url_type', BaseMenuItem::TYPE_URL_LINK);
 
         $query = $query->getQuery();
-        
+
         return $query->getArrayResult();
     }
 }

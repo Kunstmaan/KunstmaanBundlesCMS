@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class OAuthUserFinder implements OAuthUserFinderInterface
 {
-
     /** @var EntityManager */
     private $em;
 
@@ -15,6 +14,7 @@ class OAuthUserFinder implements OAuthUserFinderInterface
 
     /**
      * OAuthUserCreator constructor.
+     *
      * @param EntityManagerInterface $em
      * @param $userClass
      */
@@ -24,9 +24,8 @@ class OAuthUserFinder implements OAuthUserFinderInterface
         $this->userClass = $userClass;
     }
 
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findUserByGoogleSignInData($email, $googleId)
     {
@@ -39,7 +38,7 @@ class OAuthUserFinder implements OAuthUserFinderInterface
             $user = $this->em->getRepository($this->userClass)
                 ->findOneBy(array('email' => $email));
 
-            if(!$user instanceof $this->userClass) {
+            if (!$user instanceof $this->userClass) {
                 //Last chance try looking for email address in username field
                 $user = $this->em->getRepository($this->userClass)
                     ->findOneBy(array('username' => $email));

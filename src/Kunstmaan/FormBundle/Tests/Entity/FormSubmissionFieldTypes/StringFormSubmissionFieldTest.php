@@ -6,7 +6,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionFie
 use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 
 /**
- * Tests for StringFormSubmissionField
+ * Tests for StringFormSubmissionField.
  */
 class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new StringFormSubmissionField;
+        $this->object = new StringFormSubmissionField();
     }
 
     /**

@@ -8,7 +8,6 @@ use Kunstmaan\TranslatorBundle\DependencyInjection\Compiler\KunstmaanTranslatorC
 
 class KunstmaanTranslatorBundle extends Bundle
 {
-
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

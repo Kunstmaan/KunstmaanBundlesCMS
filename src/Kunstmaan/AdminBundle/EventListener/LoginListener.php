@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
- * Login listener to log login actions
+ * Login listener to log login actions.
  */
 class LoginListener
 {
@@ -24,14 +24,14 @@ class LoginListener
     private $versionChecker;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Logger         $logger         The logger
      * @param VersionChecker $versionChecker The version checker
      */
     public function __construct(Logger $logger, VersionChecker $versionChecker)
     {
-        $this->logger         = $logger;
+        $this->logger = $logger;
         $this->versionChecker = $versionChecker;
     }
 
@@ -46,7 +46,7 @@ class LoginListener
         $user = $event->getAuthenticationToken()->getUser();
 
         if ($user instanceof UserInterface) {
-            $this->logger->addInfo($user . ' successfully logged in to the cms');
+            $this->logger->addInfo($user.' successfully logged in to the cms');
             $this->versionChecker->periodicallyCheck();
         }
     }

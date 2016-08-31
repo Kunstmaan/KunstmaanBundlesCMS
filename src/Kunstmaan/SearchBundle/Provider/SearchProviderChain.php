@@ -3,7 +3,7 @@
 namespace Kunstmaan\SearchBundle\Provider;
 
 /**
- * The chain of SearchProviders
+ * The chain of SearchProviders.
  */
 class SearchProviderChain implements SearchProviderChainInterface
 {
@@ -16,7 +16,7 @@ class SearchProviderChain implements SearchProviderChainInterface
     }
 
     /**
-     * Add a SearchProvider to the chain
+     * Add a SearchProvider to the chain.
      *
      * @param SearchProviderInterface $provider
      * @param string                  $alias
@@ -27,7 +27,7 @@ class SearchProviderChain implements SearchProviderChainInterface
     }
 
     /**
-     * Get a SearchProvider based on its alias
+     * Get a SearchProvider based on its alias.
      *
      * @param string $alias
      *
@@ -43,7 +43,7 @@ class SearchProviderChain implements SearchProviderChainInterface
     }
 
     /**
-     * Get all SearchProviders
+     * Get all SearchProviders.
      *
      * @return SearchProviderInterface[]
      */

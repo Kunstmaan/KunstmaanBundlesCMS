@@ -6,11 +6,10 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterf
 use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
 
 /**
- * AdminListFactory
+ * AdminListFactory.
  */
 class AdminListFactory
 {
-
     /**
      * @param AdminListConfiguratorInterface $configurator The configurator
      *
@@ -23,6 +22,7 @@ class AdminListFactory
 
     /**
      * @param $configurator
+     *
      * @return ExportList
      */
     public function createExportList(ExportListConfiguratorInterface $configurator)

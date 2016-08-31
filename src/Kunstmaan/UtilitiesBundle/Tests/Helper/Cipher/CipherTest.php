@@ -5,13 +5,12 @@ namespace Kunstmaan\UtilitiesBundle\Tests\Helper\Cipher;
 use Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher;
 
 /**
- * CipherTest
+ * CipherTest.
  */
 class CipherTest extends \PHPUnit_Framework_TestCase
 {
-
-    const SECRET = "secret";
-    const CONTENT = "This is a random sentence which will be encrypted and then decrypted!";
+    const SECRET = 'secret';
+    const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
 
     /**
      * @var Cipher
@@ -48,5 +47,4 @@ class CipherTest extends \PHPUnit_Framework_TestCase
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
         $this->assertEquals($decryptedValue, self::CONTENT);
     }
-
 }

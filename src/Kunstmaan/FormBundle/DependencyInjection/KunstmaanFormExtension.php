@@ -9,18 +9,17 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class KunstmaanFormExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
 
@@ -30,12 +29,12 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
 
     public function prepend(ContainerBuilder $container)
     {
-        if(!$container->hasParameter('form_submission_rootdir')) {
+        if (!$container->hasParameter('form_submission_rootdir')) {
             $container->setParameter('form_submission_rootdir',
                 sprintf('%s/../web/uploads/formsubmissions', $container->getParameter('kernel.root_dir')));
         }
 
-        if(!$container->hasParameter('form_submission_webdir')) {
+        if (!$container->hasParameter('form_submission_webdir')) {
             $container->setParameter('form_submission_webdir', '/uploads/formsubmissions/');
         }
 

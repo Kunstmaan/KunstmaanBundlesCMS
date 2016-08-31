@@ -1,45 +1,45 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Model\Translation;
+
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 /**
- * Groups all translations for all languages specified by a key
+ * Groups all translations for all languages specified by a key.
  **/
 class TranslationGroup
 {
     /**
-     * Translation ID
+     * Translation ID.
      */
     private $id;
 
     /**
-     * All translations for a specific key (Kunstmaan\TranslatorBundle\Model\Translation\Translation)
+     * All translations for a specific key (Kunstmaan\TranslatorBundle\Model\Translation\Translation).
      *
      * @var Doctrine\Common\Collections\ArrayCollection
      **/
     private $translations;
 
     /**
-     * Translation identifier
+     * Translation identifier.
      *
      * @var string
      **/
     private $keyword;
 
     /**
-     * The domain name of this group
-     *
+     * The domain name of this group.
      **/
     private $domain;
 
     public function __construct()
     {
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection;
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function hasTranslation($locale)
     {
-
         if (count($this->translations) <= 0) {
             return false;
         }

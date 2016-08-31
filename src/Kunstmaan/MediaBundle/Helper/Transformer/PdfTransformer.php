@@ -27,7 +27,7 @@ class PdfTransformer implements PreviewTransformerInterface
             // If it doesn't exist yet, extract the first page of the PDF
             $previewFilename = $this->getPreviewFilename($absolutePath);
             if (!file_exists($previewFilename)) {
-                $this->imagick->readImage($absolutePath . '[0]');
+                $this->imagick->readImage($absolutePath.'[0]');
                 $this->imagick->setImageFormat('jpg');
                 $this->imagick->mergeImageLayers(\Imagick::LAYERMETHOD_FLATTEN);
                 $this->imagick->writeImage($previewFilename);
@@ -47,7 +47,6 @@ class PdfTransformer implements PreviewTransformerInterface
      */
     public function getPreviewFilename($absolutePath)
     {
-        return $absolutePath . '.jpg';
+        return $absolutePath.'.jpg';
     }
 }
-

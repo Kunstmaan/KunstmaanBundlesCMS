@@ -3,11 +3,10 @@
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
 /**
- * Builder
+ * Builder.
  */
 class Builder
 {
-
     /**
      * @return array
      */
@@ -19,7 +18,7 @@ class Builder
                            array('name' => 'Raw HTML', 'class' => 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart'),
                            array('name' => 'Line', 'class' => 'Kunstmaan\PagePartBundle\Entity\LinePagePart'),
                            array('name' => 'TOC', 'class' => 'Kunstmaan\PagePartBundle\Entity\TocPagePart'),
-                           array('name' => 'Link To Top', 'class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart'),);
+                           array('name' => 'Link To Top', 'class' => 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart'), );
 
         return $pageParts;
     }

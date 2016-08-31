@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * An abstract Form Page Admin Type
+ * An abstract Form Page Admin Type.
  */
 class AbstractFormPageAdminType extends AbstractType
 {
@@ -25,7 +25,7 @@ class AbstractFormPageAdminType extends AbstractType
             'label' => 'kuma_form.form.page_admin.thanks.label',
             'required' => false,
             'attr' => array(
-                'class' => 'js-rich-editor rich-editor'
+                'class' => 'js-rich-editor rich-editor',
             ),
         ));
         $builder->add('subject', null, array(

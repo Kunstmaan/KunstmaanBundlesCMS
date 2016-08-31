@@ -7,7 +7,6 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
  */
 interface CipherInterface
 {
-
     /**
      * Encrypt the given value to an unreadable string.
      *
@@ -25,5 +24,4 @@ interface CipherInterface
      * @return string
      */
     public function decrypt($value);
-
 }

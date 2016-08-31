@@ -5,9 +5,8 @@ namespace Kunstmaan\NodeSearchBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanNodeSearchBundle
+ * KunstmaanNodeSearchBundle.
  */
 class KunstmaanNodeSearchBundle extends Bundle
 {
-
 }

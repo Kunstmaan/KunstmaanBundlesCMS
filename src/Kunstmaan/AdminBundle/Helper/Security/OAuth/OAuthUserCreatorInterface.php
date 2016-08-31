@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
 /**
- * Interface OAuthUserCreatorInterface
+ * Interface OAuthUserCreatorInterface.
  */
 interface OAuthUserCreatorInterface
 {
@@ -19,6 +19,6 @@ interface OAuthUserCreatorInterface
      * @param string googleId
      *
      * @return mixed AbstractUser Implementation
-    */
+     */
     public function getOrCreateUser($email, $googleId);
 }

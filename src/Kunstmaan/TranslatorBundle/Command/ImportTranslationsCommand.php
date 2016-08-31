@@ -25,11 +25,11 @@ class ImportTranslationsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $force          = $input->getOption('force');
-        $locales        = $input->getOption('locales');
-        $globals        = $input->getOption('globals');
-        $defaultBundle  = $input->getOption('defaultbundle') ;
-        $bundles        = $input->hasOption('bundles') ? array_map('trim', explode(',', $input->getOption('bundles'))) : array();
+        $force = $input->getOption('force');
+        $locales = $input->getOption('locales');
+        $globals = $input->getOption('globals');
+        $defaultBundle = $input->getOption('defaultbundle');
+        $bundles = $input->hasOption('bundles') ? array_map('trim', explode(',', $input->getOption('bundles'))) : array();
 
         $importCommand = new ImportCommand();
         $importCommand
@@ -40,8 +40,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
             ->setBundles($bundles);
 
         $imported = $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
-        
-        $output->writeln(sprintf("Translation imported: %d", $imported));
 
+        $output->writeln(sprintf('Translation imported: %d', $imported));
     }
 }

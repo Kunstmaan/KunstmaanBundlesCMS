@@ -3,7 +3,6 @@
 namespace Kunstmaan\FormBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
@@ -29,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class FormSubmissionField
 {
     /**
-     * This id of this FormSubmissionField
+     * This id of this FormSubmissionField.
      *
      * @ORM\Id
      * @ORM\Column(type="bigint")
@@ -38,21 +37,21 @@ abstract class FormSubmissionField
     protected $id;
 
     /**
-     * The name of this FormSubmissionField
+     * The name of this FormSubmissionField.
      *
      * @ORM\Column(type="string")
      */
     protected $fieldName;
 
     /**
-     * The label used for this FormSubmissionField
+     * The label used for this FormSubmissionField.
      *
      * @ORM\Column(type="string")
      */
     protected $label;
 
     /**
-     * The FormSubmission this field is part of
+     * The FormSubmission this field is part of.
      *
      * @ORM\ManyToOne(targetEntity="FormSubmission", inversedBy="fields")
      * @ORM\JoinColumn(name="form_submission_id", referencedColumnName="id")
@@ -65,9 +64,9 @@ abstract class FormSubmissionField
     protected $sequence;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -75,7 +74,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param string $id
      *
@@ -89,7 +88,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Get the field name
+     * Get the field name.
      *
      * @return string
      */
@@ -99,7 +98,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Set the field name
+     * Set the field name.
      *
      * @param string $fieldName
      *
@@ -113,7 +112,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Get the label
+     * Get the label.
      *
      * @return string
      */
@@ -123,7 +122,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Set the label
+     * Set the label.
      *
      * @param string $label
      *
@@ -137,7 +136,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Get the FormSubmission this field is part of
+     * Get the FormSubmission this field is part of.
      *
      * @return FormSubmission
      */
@@ -147,7 +146,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Set the FormSubmission this field is part of
+     * Set the FormSubmission this field is part of.
      *
      * @param FormSubmission $formSubmission
      *
@@ -161,9 +160,9 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Get sequence
+     * Get sequence.
      *
-     * @return integer
+     * @return int
      */
     public function getSequence()
     {
@@ -171,7 +170,7 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Set sequence
+     * Set sequence.
      *
      * @param string $sequence
      *
@@ -185,13 +184,13 @@ abstract class FormSubmissionField
     }
 
     /**
-     * Text representation of this field
+     * Text representation of this field.
      *
      * @return string
      */
     public function __toString()
     {
-        return "FormSubmission Field";
+        return 'FormSubmission Field';
     }
 
     /**

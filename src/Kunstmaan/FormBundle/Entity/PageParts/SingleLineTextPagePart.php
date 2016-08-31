@@ -12,7 +12,7 @@ use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * The single-line text page part can be used to create forms with text input fields
+ * The single-line text page part can be used to create forms with text input fields.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_single_line_text_page_parts")
@@ -20,35 +20,35 @@ use Doctrine\ORM\Mapping as ORM;
 class SingleLineTextPagePart extends AbstractFormPagePart
 {
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      */
     protected $errorMessageRequired;
 
     /**
-     * If set the entered value will be matched with this regular expression
+     * If set the entered value will be matched with this regular expression.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $regex;
 
     /**
-     * If a regular expression is set and it doesn't match with the given value, this error message will be shown
+     * If a regular expression is set and it doesn't match with the given value, this error message will be shown.
      *
      * @ORM\Column(type="string", name="error_message_regex", nullable=true)
      */
     protected $errorMessageRegex;
 
     /**
-     * Sets the required valud of this page part
+     * Sets the required valud of this page part.
      *
      * @param bool $required
      *
@@ -62,7 +62,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Check if the page part is required
+     * Check if the page part is required.
      *
      * @return bool
      */
@@ -72,7 +72,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the message shown when the page part is required and no value was entered
+     * Sets the message shown when the page part is required and no value was entered.
      *
      * @param string $errorMessageRequired
      *
@@ -86,7 +86,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the error message that will be shown when the page part is required and no value was entered
+     * Get the error message that will be shown when the page part is required and no value was entered.
      *
      * @return string
      */
@@ -96,7 +96,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Set the regular expression to match the entered value against
+     * Set the regular expression to match the entered value against.
      *
      * @param string $regex
      *
@@ -110,7 +110,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the current regular expression
+     * Get the current regular expression.
      *
      * @return string
      */
@@ -120,7 +120,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Set the error message which will be shown when the entered value doesn't match the regular expression
+     * Set the error message which will be shown when the entered value doesn't match the regular expression.
      *
      * @param string $errorMessageRegex
      *
@@ -134,7 +134,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the current error message which will be shown when the entered value doesn't match the regular expression
+     * Get the current error message which will be shown when the entered value doesn't match the regular expression.
      *
      * @return string
      */
@@ -144,17 +144,17 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the frontend view
+     * Returns the frontend view.
      *
      * @return string
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:SingleLineTextPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:SingleLineTextPagePart:view.html.twig';
     }
 
     /**
-     * Modify the form with the fields of the current page part
+     * Modify the form with the fields of the current page part.
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
@@ -163,12 +163,12 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     public function adaptForm(FormBuilderInterface $formBuilder, ArrayObject $fields, $sequence)
     {
         $sfsf = new StringFormSubmissionField();
-        $sfsf->setFieldName('field_' . $this->getUniqueId());
+        $sfsf->setFieldName('field_'.$this->getUniqueId());
         $sfsf->setLabel($this->getLabel());
         $sfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $sfsf;
+        $data['formwidget_'.$this->getUniqueId()] = $sfsf;
 
         $constraints = array();
         if ($this->getRequired()) {
@@ -186,12 +186,12 @@ class SingleLineTextPagePart extends AbstractFormPagePart
             $constraints[] = new Regex($options);
         }
 
-        $formBuilder->add('formwidget_' . $this->getUniqueId(),
+        $formBuilder->add('formwidget_'.$this->getUniqueId(),
             StringFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);
@@ -200,7 +200,7 @@ class SingleLineTextPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the default backend form type for this page part
+     * Returns the default backend form type for this page part.
      *
      * @return SingleLineTextPagePartAdminType
      */

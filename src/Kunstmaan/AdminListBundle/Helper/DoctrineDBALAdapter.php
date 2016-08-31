@@ -24,9 +24,9 @@ class DoctrineDBALAdapter implements AdapterInterface
     /**
      * Constructor.
      *
-     * @param QueryBuilder $queryBuilder A DBAL query builder.
-     * @param string $countField Primary key for the table in query. Used in count expression. Must include table alias
-     * @param boolean $useDistinct When set to true it'll count the countfield with a distinct in front of it.
+     * @param QueryBuilder $queryBuilder A DBAL query builder
+     * @param string       $countField   Primary key for the table in query. Used in count expression. Must include table alias
+     * @param bool         $useDistinct  When set to true it'll count the countfield with a distinct in front of it
      *
      * @api
      */
@@ -49,7 +49,7 @@ class DoctrineDBALAdapter implements AdapterInterface
     /**
      * Returns the query builder.
      *
-     * @return QueryBuilder The query builder.
+     * @return QueryBuilder The query builder
      *
      * @api
      */
@@ -68,7 +68,7 @@ class DoctrineDBALAdapter implements AdapterInterface
         if ($this->useDistinct) {
             $distinctString = 'DISTINCT ';
         }
-        $statement = $query->select('COUNT('. $distinctString . $this->countField.') AS total_results')
+        $statement = $query->select('COUNT('.$distinctString.$this->countField.') AS total_results')
             ->orderBy($this->countField)
             ->setMaxResults(1)
             ->execute();

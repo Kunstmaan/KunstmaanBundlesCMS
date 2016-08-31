@@ -7,17 +7,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * Main settings controller
+ * Main settings controller.
  */
 class SettingsController extends BaseSettingsController
 {
     /**
-     * Index page for the settings
+     * Index page for the settings.
      *
      * @Route("/", name="KunstmaanAdminBundle_settings")
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function indexAction()
@@ -28,12 +29,13 @@ class SettingsController extends BaseSettingsController
     }
 
     /**
-     * Show bundles version update information
+     * Show bundles version update information.
      *
      * @Route("/bundle-version", name="KunstmaanAdminBundle_settings_bundle_version")
      * @Template("KunstmaanAdminBundle:Settings:bundleVersion.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function bundleVersionAction()
@@ -56,7 +58,7 @@ class SettingsController extends BaseSettingsController
         }
 
         return array(
-            'data' => $data
+            'data' => $data,
         );
     }
 }

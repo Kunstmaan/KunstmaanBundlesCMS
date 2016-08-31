@@ -3,7 +3,6 @@
 namespace Kunstmaan\TaggingBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
@@ -11,7 +10,6 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-
     /**
      * @param EntityManager $em        The entity manager
      * @param AclHelper     $aclHelper The acl helper
@@ -23,7 +21,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -33,7 +31,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Build filters for admin list
+     * Build filters for admin list.
      */
     public function buildFilters()
     {
@@ -41,7 +39,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Get bundle name
+     * Get bundle name.
      *
      * @return string
      */
@@ -51,7 +49,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     }
 
     /**
-     * Get entity name
+     * Get entity name.
      *
      * @return string
      */
@@ -59,5 +57,4 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     {
         return 'Tag';
     }
-
 }

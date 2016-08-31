@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * This compiler pass makes it possible to adapt the menu
+ * This compiler pass makes it possible to adapt the menu.
  */
 class MenuCompilerPass implements CompilerPassInterface
 {

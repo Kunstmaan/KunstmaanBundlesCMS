@@ -40,7 +40,7 @@ class HostOverrideCleanupHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $request = Request::create('/');
         $response = new Response();
-        $token    = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
 
         $this->object->logout($request, $response, $token);
 
@@ -60,7 +60,7 @@ class HostOverrideCleanupHandlerTest extends \PHPUnit_Framework_TestCase
         $request->cookies->set($session->getName(), null);
 
         $response = new Response();
-        $token    = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
 
         $this->object->logout($request, $response, $token);
 

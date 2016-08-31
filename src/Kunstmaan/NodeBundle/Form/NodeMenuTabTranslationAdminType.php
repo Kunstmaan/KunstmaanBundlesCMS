@@ -37,11 +37,11 @@ class NodeMenuTabTranslationAdminType extends AbstractType
         }
         $builder->add('weight', ChoiceType::class, array(
             'label' => 'kuma_node.form.menu_tab_translation.weight.label',
-            'choices'     => array_combine(range(-50, 50), range(-50, 50)),
+            'choices' => array_combine(range(-50, 50), range(-50, 50)),
             'placeholder' => false,
-            'required'    => false,
-            'attr'        => array('title' => 'kuma_node.form.menu_tab_translation.weight.title'),
-            'choices_as_values' => true
+            'required' => false,
+            'attr' => array('title' => 'kuma_node.form.menu_tab_translation.weight.title'),
+            'choices_as_values' => true,
         ));
     }
 

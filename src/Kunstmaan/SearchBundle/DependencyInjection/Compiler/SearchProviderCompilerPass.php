@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * CompilerPass class for SearchProviders
+ * CompilerPass class for SearchProviders.
  *
  * Will find all services tagged "kunstmaan_search.searchprovider" and will add them to the chain with their alias.
  */

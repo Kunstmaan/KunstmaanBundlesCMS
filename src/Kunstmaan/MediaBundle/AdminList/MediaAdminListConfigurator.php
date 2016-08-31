@@ -18,7 +18,7 @@ use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The admin list configurator for the Media entity
+ * The admin list configurator for the Media entity.
  */
 class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -33,18 +33,17 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     private $request;
 
     /**
-     * @param EntityManager $em The entity manager
-     * @param MediaManager $mediaManager The media manager
-     * @param Folder $folder The current folder
-     * @param Request $request The request object
+     * @param EntityManager $em           The entity manager
+     * @param MediaManager  $mediaManager The media manager
+     * @param Folder        $folder       The current folder
+     * @param Request       $request      The request object
      */
     public function __construct(
         EntityManager $em,
         MediaManager $mediaManager,
         Folder $folder,
         Request $request
-    )
-    {
+    ) {
         parent::__construct($em);
 
         $this->setAdminType(new MediaType($mediaManager, $em));
@@ -53,7 +52,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -64,7 +63,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     }
 
     /**
-     * Build filters for admin list
+     * Build filters for admin list.
      */
     public function buildFilters()
     {
@@ -75,7 +74,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     }
 
     /**
-     * Return the url to list all the items
+     * Return the url to list all the items.
      *
      * @return array
      */
@@ -83,7 +82,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     {
         return array(
             'path' => $this->request->get('_route'),
-            'params' => array('folderId' => $this->folder->getId())
+            'params' => array('folderId' => $this->folder->getId()),
         );
     }
 
@@ -98,7 +97,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     }
 
     /**
-     * Configure if it's possible to delete the given $item
+     * Configure if it's possible to delete the given $item.
      *
      * @param object|array $item
      *
@@ -118,7 +117,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     }
 
     /**
-     * Add item actions buttons
+     * Add item actions buttons.
      */
     public function buildItemActions()
     {
@@ -131,7 +130,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     }
 
     /**
-     * Get bundle name
+     * Get bundle name.
      *
      * @return string
      */
@@ -141,7 +140,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     }
 
     /**
-     * Get entity name
+     * Get entity name.
      *
      * @return string
      */

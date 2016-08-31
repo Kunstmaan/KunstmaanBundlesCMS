@@ -3,12 +3,12 @@
 namespace Kunstmaan\UtilitiesBundle\Helper;
 
 /**
- * Sulgifier is a helper to slugify a certain string
+ * Sulgifier is a helper to slugify a certain string.
  */
 class Slugifier implements SlugifierInterface
 {
     /**
-     * Slugify a string
+     * Slugify a string.
      *
      * @param string $text    Text to slugify
      * @param string $default Default return value (override when slugify would return an empty string)
@@ -23,7 +23,7 @@ class Slugifier implements SlugifierInterface
 
         // transliterate
         if (class_exists('Transliterator')) {
-            $text = mb_convert_encoding((string)$text, 'UTF-8', mb_list_encodings());
+            $text = mb_convert_encoding((string) $text, 'UTF-8', mb_list_encodings());
 
             $transliterator = \Transliterator::create('Any-Latin; Latin-ASCII');
             $text = $transliterator->transliterate($text);

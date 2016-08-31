@@ -3,36 +3,32 @@
 namespace Kunstmaan\SeoBundle\Twig;
 
 use Twig_Extension;
-use Twig_Environment;
-
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-
 use Kunstmaan\SeoBundle\Entity\Seo;
 
 /**
- * Twig extensions for Seo
+ * Twig extensions for Seo.
  */
 class SeoTwigExtension extends Twig_Extension
 {
-
     /**
      * @var EntityManager
      */
     protected $em;
 
     /**
-     * Website title defined in your parameters
+     * Website title defined in your parameters.
+     *
      * @var string
      */
     private $websiteTitle;
 
     /**
      * Saves querying the db multiple times, if you happen to use any of the defined
-     * functions more than once in your templates
+     * functions more than once in your templates.
+     *
      * @var array
      */
     private $seoCache = [];
@@ -68,6 +64,7 @@ class SeoTwigExtension extends Twig_Extension
      *
      * @param string $url
      * @param string $host
+     *
      * @return string
      */
     public function getAbsoluteUrl($url, $host = null)
@@ -108,9 +105,9 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * The first value that is not null or empty will be returned.
      *
-     * @param AbstractPage $entity The entity for which you want the page title.
+     * @param AbstractPage $entity The entity for which you want the page title
      *
-     * @return string The page title. Will look in the SEO meta first, then the NodeTranslation, then the page.
+     * @return string The page title. Will look in the SEO meta first, then the NodeTranslation, then the page
      */
     public function getTitleFor(AbstractPage $entity)
     {
@@ -125,7 +122,7 @@ class SeoTwigExtension extends Twig_Extension
 
     /**
      * @param AbstractPage $entity
-     * @param null|string $default If given we'll return this text if no SEO title was found.
+     * @param null|string  $default If given we'll return this text if no SEO title was found
      *
      * @return string
      */
@@ -148,9 +145,9 @@ class SeoTwigExtension extends Twig_Extension
 
     /**
      * @param \Twig_Environment $environment
-     * @param AbstractEntity $entity The entity
-     * @param mixed $currentNode The current node
-     * @param string $template The template
+     * @param AbstractEntity    $entity      The entity
+     * @param mixed             $currentNode The current node
+     * @param string            $template    The template
      *
      * @return string
      */
@@ -175,7 +172,6 @@ class SeoTwigExtension extends Twig_Extension
     {
         return 'kuma_seo_twig_extension';
     }
-
 
     /**
      * @param array $values
@@ -212,10 +208,8 @@ class SeoTwigExtension extends Twig_Extension
             }
         }
 
-
         return null;
     }
-
 
     /**
      * Gets the Website title defined in your parameters.
@@ -249,6 +243,7 @@ class SeoTwigExtension extends Twig_Extension
     public function getImageDimensions($src)
     {
         list($width, $height) = getimagesize($src);
+
         return array('width' => $width, 'height' => $height);
     }
 }

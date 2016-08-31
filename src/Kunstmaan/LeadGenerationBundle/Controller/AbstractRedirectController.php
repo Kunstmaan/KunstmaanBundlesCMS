@@ -16,7 +16,7 @@ abstract class AbstractRedirectController extends Controller
         $thePopup = $this->getDoctrine()->getRepository('KunstmaanLeadGenerationBundle:Popup\AbstractPopup')->find($popup);
 
         return $this->render($this->getIndexTemplate(), array(
-            'popup' => $thePopup
+            'popup' => $thePopup,
         ));
     }
 

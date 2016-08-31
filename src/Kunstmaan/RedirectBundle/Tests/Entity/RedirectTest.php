@@ -20,7 +20,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Redirect;
+        $this->object = new Redirect();
     }
 
     /**
@@ -70,5 +70,4 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
         $this->object->setPermanent(true);
         $this->assertTrue($this->object->isPermanent());
     }
-
 }

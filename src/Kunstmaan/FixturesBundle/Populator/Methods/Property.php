@@ -5,7 +5,7 @@ namespace Kunstmaan\FixturesBundle\Populator\Methods;
 class Property implements MethodInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function canSet($object, $property, $value)
     {
@@ -13,7 +13,7 @@ class Property implements MethodInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function set($object, $property, $value)
     {

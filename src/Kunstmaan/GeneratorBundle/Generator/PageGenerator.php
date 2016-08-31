@@ -5,7 +5,7 @@ namespace Kunstmaan\GeneratorBundle\Generator;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
- * Generates all classes/files for a new page
+ * Generates all classes/files for a new page.
  */
 class PageGenerator extends KunstmaanGenerator
 {
@@ -66,12 +66,12 @@ class PageGenerator extends KunstmaanGenerator
         array $sections,
         array $parentPages
     ) {
-        $this->bundle      = $bundle;
-        $this->entity      = $entity;
-        $this->prefix      = $prefix;
-        $this->fields      = $fields;
-        $this->template    = $template;
-        $this->sections    = $sections;
+        $this->bundle = $bundle;
+        $this->entity = $entity;
+        $this->prefix = $prefix;
+        $this->fields = $fields;
+        $this->template = $template;
+        $this->sections = $sections;
         $this->parentPages = $parentPages;
 
         $this->generatePageEntity();
@@ -97,32 +97,32 @@ class PageGenerator extends KunstmaanGenerator
         );
 
         // Add implements HasPageTemplateInterface
-        $search     = 'extends \Kunstmaan\NodeBundle\Entity\AbstractPage';
+        $search = 'extends \Kunstmaan\NodeBundle\Entity\AbstractPage';
         $entityCode = str_replace(
             $search,
-            $search . ' implements \Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface',
+            $search.' implements \Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface',
             $entityCode
         );
 
         // Add some extra functions in the generated entity :s
-        $params    = array(
-            'bundle'    => $this->bundle->getName(),
-            'page'      => $this->entity,
-            'template'  => substr($this->template, 0, strlen($this->template) - 4),
-            'sections'  => array_map(
+        $params = array(
+            'bundle' => $this->bundle->getName(),
+            'page' => $this->entity,
+            'template' => substr($this->template, 0, strlen($this->template) - 4),
+            'sections' => array_map(
                 function ($val) {
                     return substr($val, 0, strlen($val) - 4);
                 },
                 $this->sections
             ),
-            'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\Pages\\' . $this->entity . 'AdminType',
-            'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()) . '\\Pages\\' . $this->entity
+            'adminType' => '\\'.$this->bundle->getNamespace().'\\Form\\Pages\\'.$this->entity.'AdminType',
+            'namespace' => $this->registry->getAliasNamespace($this->bundle->getName()).'\\Pages\\'.$this->entity,
         );
         $extraCode = $this->render('/Entity/Pages/ExtraFunctions.php', $params);
 
-        $pos        = strrpos($entityCode, '}');
-        $trimmed    = substr($entityCode, 0, $pos);
-        $entityCode = $trimmed . $extraCode . "\n}";
+        $pos = strrpos($entityCode, '}');
+        $trimmed = substr($entityCode, 0, $pos);
+        $entityCode = $trimmed.$extraCode."\n}";
 
         // Write class to filesystem
         $this->filesystem->mkdir(dirname($entityPath));
@@ -159,19 +159,19 @@ class PageGenerator extends KunstmaanGenerator
     }
 
     /**
-     * Update the getPossibleChildTypes function of the parent Page classes
+     * Update the getPossibleChildTypes function of the parent Page classes.
      */
     private function updateParentPages()
     {
         $phpCode = "            array(\n";
-        $phpCode .= "                'name' => '" . $this->entity . "',\n";
-        $phpCode .= "                'class'=> '" .
-            $this->bundle->getNamespace() .
-            "\\Entity\\Pages\\" . $this->entity . "'\n";
-        $phpCode .= "            ),";
+        $phpCode .= "                'name' => '".$this->entity."',\n";
+        $phpCode .= "                'class'=> '".
+            $this->bundle->getNamespace().
+            '\\Entity\\Pages\\'.$this->entity."'\n";
+        $phpCode .= '            ),';
 
         // When there is a BehatTestPage, we should also allow the new page as sub page
-        $behatTestPage = $this->bundle->getPath() . '/Entity/Pages/BehatTestPage.php';
+        $behatTestPage = $this->bundle->getPath().'/Entity/Pages/BehatTestPage.php';
         if (file_exists($behatTestPage)) {
             $this->parentPages[] = $behatTestPage;
         }

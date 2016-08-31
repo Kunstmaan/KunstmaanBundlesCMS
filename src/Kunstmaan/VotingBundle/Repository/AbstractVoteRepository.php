@@ -1,14 +1,14 @@
 <?php
+
 namespace Kunstmaan\VotingBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
- * AbstractVote Repository class
+ * AbstractVote Repository class.
  */
 class AbstractVoteRepository extends EntityRepository
 {
-
     /**
      * @param string $reference The reference to filter the votes by
      *
@@ -44,7 +44,7 @@ class AbstractVoteRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
-     /**
+    /**
      * @param string $reference The reference to filter the votes by
      * @param string $ip        The ip to filter the votes by
      *

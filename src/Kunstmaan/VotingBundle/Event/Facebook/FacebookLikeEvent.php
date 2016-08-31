@@ -7,22 +7,21 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Event triggered through a callback from the Facebook API when a Like has been executed
+ * Event triggered through a callback from the Facebook API when a Like has been executed.
  */
 class FacebookLikeEvent extends Event implements EventInterface
 {
-
     private $request;
 
     /**
-     * The response returned by the Facebook API callback when a Like has been registered
+     * The response returned by the Facebook API callback when a Like has been registered.
      *
      * @var string
      */
     private $response;
 
     /**
-     * The value of this like
+     * The value of this like.
      *
      * @var int
      */
@@ -49,8 +48,8 @@ class FacebookLikeEvent extends Event implements EventInterface
     }
 
     /**
-    * @return string
-    */
+     * @return string
+     */
     public function getReference()
     {
         return $this->response;
@@ -63,5 +62,4 @@ class FacebookLikeEvent extends Event implements EventInterface
     {
         return $this->value;
     }
-
 }

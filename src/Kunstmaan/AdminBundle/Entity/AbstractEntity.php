@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * The Abstract ORM entity
+ * The Abstract ORM entity.
  */
 abstract class AbstractEntity implements EntityInterface
 {
@@ -17,7 +17,7 @@ abstract class AbstractEntity implements EntityInterface
     protected $id;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -27,7 +27,7 @@ abstract class AbstractEntity implements EntityInterface
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id The unique identifier
      *
@@ -41,13 +41,12 @@ abstract class AbstractEntity implements EntityInterface
     }
 
     /**
-     * Return string representation of entity
+     * Return string representation of entity.
      *
      * @return string
      */
     public function __toString()
     {
-        return "" . $this->getId();
+        return ''.$this->getId();
     }
-
 }

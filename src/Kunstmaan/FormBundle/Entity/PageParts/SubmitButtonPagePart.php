@@ -7,23 +7,22 @@ use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * This page part adds a submit button to the forms
+ * This page part adds a submit button to the forms.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_submit_button_page_parts")
  */
 class SubmitButtonPagePart extends AbstractPagePart
 {
-
     /**
-     * The label on the submit button
+     * The label on the submit button.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $label;
 
     /**
-     * Set the label
+     * Set the label.
      *
      * @param int $label
      *
@@ -37,7 +36,7 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
-     * Get the label
+     * Get the label.
      *
      * @return string
      */
@@ -47,37 +46,37 @@ class SubmitButtonPagePart extends AbstractPagePart
     }
 
     /**
-     * Return a string representation of this page part
+     * Return a string representation of this page part.
      *
      * @return string
      */
     public function __toString()
     {
-        return "SubmitButtonPagePart";
+        return 'SubmitButtonPagePart';
     }
 
     /**
-     * Return the frontend view
+     * Return the frontend view.
      *
      * @return string
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig';
     }
 
     /**
-     * Return the backend view
+     * Return the backend view.
      *
      * @return string
      */
     public function getAdminView()
     {
-        return "KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig";
+        return 'KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig';
     }
 
     /**
-     * Returns the default form type for this FormSubmissionField
+     * Returns the default form type for this FormSubmissionField.
      *
      * @return SubmitButtonPagePartAdminType
      */
@@ -85,5 +84,4 @@ class SubmitButtonPagePart extends AbstractPagePart
     {
         return new SubmitButtonPagePartAdminType();
     }
-
 }

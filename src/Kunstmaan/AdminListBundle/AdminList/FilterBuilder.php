@@ -3,15 +3,13 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Symfony\Component\HttpFoundation\Request;
-
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 
 /**
- * AdminListFilter
+ * AdminListFilter.
  */
 class FilterBuilder
 {
-
     /**
      * @var array
      */
@@ -40,7 +38,7 @@ class FilterBuilder
         $this->filterDefinitions[$columnName] = array(
             'type' => $type,
             'options' => $options,
-            'filtername' => $filterName
+            'filtername' => $filterName,
         );
 
         return $this;
@@ -97,10 +95,10 @@ class FilterBuilder
      */
     public function bindRequest(Request $request)
     {
-        $filterBuilderName = 'filter_' . $request->get('_route');
+        $filterBuilderName = 'filter_'.$request->get('_route');
 
         $this->currentParameters = $request->query->all();
-        if(count($this->currentParameters) === 0) {
+        if (count($this->currentParameters) === 0) {
             if (!$request->query->has('filter')) {
                 if ($request->getSession()->has($filterBuilderName)) {
                     $savedQuery = $request->getSession()->get($filterBuilderName);
@@ -121,7 +119,7 @@ class FilterBuilder
                 $filter = new Filter($filterColumnName, $this->get($filterColumnName), $uniqueId);
                 $this->currentFilters[] = $filter;
                 $filter->bindRequest($request);
-                $index++;
+                ++$index;
             }
         }
     }

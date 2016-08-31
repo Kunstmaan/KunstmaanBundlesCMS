@@ -31,10 +31,10 @@ class PopupTwigExtension extends \Twig_Extension
     private $debug;
 
     /**
-     * @param PopupManager $popupManager
+     * @param PopupManager       $popupManager
      * @param ContainerInterface $container
-     * @param array $popupTypes
-     * @param bool $debug
+     * @param array              $popupTypes
+     * @param bool               $debug
      */
     public function __construct(PopupManager $popupManager, ContainerInterface $container, array $popupTypes, $debug)
     {
@@ -93,6 +93,7 @@ class PopupTwigExtension extends \Twig_Extension
 
     /**
      * @param AbstractRule $rule
+     *
      * @return array
      */
     public function getRuleProperties(AbstractRule $rule)
@@ -116,7 +117,7 @@ class PopupTwigExtension extends \Twig_Extension
     public function getAvailablePopupTypes()
     {
         $popups = array();
-        foreach($this->popupTypes as $popupType) {
+        foreach ($this->popupTypes as $popupType) {
             $object = new $popupType();
             $popups[$object->getClassname()] = $object->getFullClassname();
         }
@@ -128,6 +129,7 @@ class PopupTwigExtension extends \Twig_Extension
      * Get the available popup types for a specific popup.
      *
      * @param AbstractPopup $popup
+     *
      * @return array
      */
     public function getAvailableRuleTypes(AbstractPopup $popup)
@@ -135,7 +137,7 @@ class PopupTwigExtension extends \Twig_Extension
         $rulesTypes = $this->popupManager->getAvailableRules($popup);
 
         $rules = array();
-        foreach($rulesTypes as $ruleType) {
+        foreach ($rulesTypes as $ruleType) {
             $object = new $ruleType();
             $rules[$object->getClassname()] = $object->getFullClassname();
         }

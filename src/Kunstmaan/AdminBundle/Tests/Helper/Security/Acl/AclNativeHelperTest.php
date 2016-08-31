@@ -133,8 +133,8 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'table' => 'myTable',
-                    'alias' => 'n'
-                )
+                    'alias' => 'n',
+                ),
             )
         );
 
@@ -184,8 +184,8 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'table' => 'myTable',
-                    'alias' => 'n'
-                )
+                    'alias' => 'n',
+                ),
             )
         );
 

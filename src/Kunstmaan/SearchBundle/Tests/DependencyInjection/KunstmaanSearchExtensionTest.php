@@ -30,7 +30,7 @@ class KunstmaanSearchExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the Configuration to test
+     * Returns the Configuration to test.
      *
      * @return Configuration
      */

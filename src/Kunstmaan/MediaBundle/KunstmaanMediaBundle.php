@@ -3,17 +3,14 @@
 namespace Kunstmaan\MediaBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-
 use Kunstmaan\MediaBundle\DependencyInjection\Compiler\MediaHandlerCompilerPass;
-
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanMediaBundle
+ * KunstmaanMediaBundle.
  */
 class KunstmaanMediaBundle extends Bundle
 {
-
     /**
      * @param ContainerBuilder $container A ContainerBuilder instance
      */

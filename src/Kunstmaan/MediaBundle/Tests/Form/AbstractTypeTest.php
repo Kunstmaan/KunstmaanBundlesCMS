@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Form;
 
 use Symfony\Component\Form\Forms;
@@ -10,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilder;
 
 /**
- * AbstractTypeTestCase
+ * AbstractTypeTestCase.
  */
 abstract class AbstractTypeTest extends WebTestCase
 {

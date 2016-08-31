@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
@@ -21,7 +22,7 @@ class AdminListFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new AdminListFactory;
+        $this->object = new AdminListFactory();
     }
 
     /**

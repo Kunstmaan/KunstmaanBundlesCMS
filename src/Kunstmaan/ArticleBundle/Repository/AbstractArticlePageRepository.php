@@ -5,12 +5,12 @@ namespace Kunstmaan\ArticleBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Repository class for the AbstractArticlePage
+ * Repository class for the AbstractArticlePage.
  */
 abstract class AbstractArticlePageRepository extends EntityRepository
 {
     /**
-     * Returns an array of all article pages
+     * Returns an array of all article pages.
      *
      * @param string $lang
      * @param int    $offset
@@ -18,5 +18,5 @@ abstract class AbstractArticlePageRepository extends EntityRepository
      *
      * @return array
      */
-    public abstract function getArticles($lang = null, $offset = 0, $limit = 10);
+    abstract public function getArticles($lang = null, $offset = 0, $limit = 10);
 }

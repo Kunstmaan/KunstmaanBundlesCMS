@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\SearchBundle\Provider;
 
-interface SearchProviderChainInterface 
+interface SearchProviderChainInterface
 {
     /**
-     * Add a SearchProvider to the chain
+     * Add a SearchProvider to the chain.
      *
      * @param SearchProviderInterface $provider
      * @param string                  $alias
@@ -13,7 +13,7 @@ interface SearchProviderChainInterface
     public function addProvider(SearchProviderInterface $provider, $alias);
 
     /**
-     * Get a SearchProvider based on its alias
+     * Get a SearchProvider based on its alias.
      *
      * @param string $alias
      *
@@ -22,7 +22,7 @@ interface SearchProviderChainInterface
     public function getProvider($alias);
 
     /**
-     * Get all SearchProviders
+     * Get all SearchProviders.
      *
      * @return SearchProviderInterface[]
      */

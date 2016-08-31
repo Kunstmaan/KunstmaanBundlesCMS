@@ -7,8 +7,7 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 /**
- * Custom UrlMatcher which holds a copy of all the routes, this is needed for the DynamicRouting
- *
+ * Custom UrlMatcher which holds a copy of all the routes, this is needed for the DynamicRouting.
  */
 class DynamicUrlMatcher extends UrlMatcher
 {
@@ -28,7 +27,7 @@ class DynamicUrlMatcher extends UrlMatcher
     }
 
     /**
-     * Check if url exists
+     * Check if url exists.
      *
      * @param string $pathInfo
      *
@@ -42,5 +41,4 @@ class DynamicUrlMatcher extends UrlMatcher
 
         return false;
     }
-
 }

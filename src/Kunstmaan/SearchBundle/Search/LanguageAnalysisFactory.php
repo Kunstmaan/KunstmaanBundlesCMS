@@ -14,14 +14,14 @@ class LanguageAnalysisFactory extends AbstractAnalysisFactory
         $this->analyzers['default'] = array(
             'type' => $language,
             'tokenizer' => 'standard',
-            'filter'    => array(
+            'filter' => array(
                 'trim',
                 'lowercase',
                 'asciifolding',
                 'strip_special_chars',
-                $language . '_stop',
-                $language . '_stemmer'
-            )
+                $language.'_stop',
+                $language.'_stemmer',
+            ),
         );
 
         return $this;
@@ -37,14 +37,14 @@ class LanguageAnalysisFactory extends AbstractAnalysisFactory
         $this->analyzers['default_search'] = array(
             'type' => $language,
             'tokenizer' => 'standard',
-            'filter'    => array(
+            'filter' => array(
                 'trim',
                 'lowercase',
                 'asciifolding',
                 'strip_special_chars',
-                $language . '_stop',
-                $language . '_stemmer'
-            )
+                $language.'_stop',
+                $language.'_stemmer',
+            ),
         );
 
         return $this;

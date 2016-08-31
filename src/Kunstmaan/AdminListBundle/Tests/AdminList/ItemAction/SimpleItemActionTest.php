@@ -1,8 +1,8 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\ItemAction;
 
 use stdClass;
-
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 
 /**
@@ -32,13 +32,11 @@ class SimpleItemActionTest extends \PHPUnit_Framework_TestCase
      * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getIconFor
      * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getLabelFor
      * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getTemplate
-     *
-     * @return null
      */
     public function test__construct()
     {
-        /** @noinspection PhpUnusedParameterInspection */
-        $object = new SimpleItemAction(function($item) {
+        /* @noinspection PhpUnusedParameterInspection */
+        $object = new SimpleItemAction(function ($item) {
             return 'http://www.domain.com/action';
         }, 'icon.png', 'Label', 'template.html.twig');
 

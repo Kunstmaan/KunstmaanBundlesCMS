@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
-
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart;
 
 /**
@@ -23,7 +22,7 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new DownloadPagePart;
+        $this->object = new DownloadPagePart();
     }
 
     /**
@@ -52,7 +51,7 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig', $defaultView);
     }
 
     /**

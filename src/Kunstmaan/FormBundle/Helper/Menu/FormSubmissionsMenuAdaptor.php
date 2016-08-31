@@ -6,17 +6,15 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The Form Submissions Menu Adaptor
+ * The Form Submissions Menu Adaptor.
  */
 class FormSubmissionsMenuAdaptor implements MenuAdaptorInterface
 {
-
     /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * In this method you can add children for a specific parent, but also remove and change the already created children.
      *
      * @param MenuBuilder $menu      The MenuBuilder
      * @param MenuItem[]  &$children The current children

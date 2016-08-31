@@ -9,7 +9,7 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Kunstmaan\SitemapBundle\Helper\HiddenFromSitemapInterface;
 
 /**
- * ContentPage
+ * ContentPage.
  *
  * @ORM\Entity()
  * @ORM\Table(name="kuma_sitemap_pages")
@@ -25,15 +25,15 @@ class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface, Ha
     }
 
     /**
-     * return string
+     * return string.
      */
     public function getDefaultView()
     {
-        return "KunstmaanSitemapBundle:SitemapPage:view.html.twig";
+        return 'KunstmaanSitemapBundle:SitemapPage:view.html.twig';
     }
 
     /**
-     * Returns true when the page is to be hidden from the generated sitemap
+     * Returns true when the page is to be hidden from the generated sitemap.
      *
      * @return bool
      */
@@ -43,7 +43,7 @@ class SitemapPage extends AbstractPage implements HiddenFromSitemapInterface, Ha
     }
 
     /**
-     * Returns true when the page's children should be hidden from the generated sitemap
+     * Returns true when the page's children should be hidden from the generated sitemap.
      *
      * @return bool
      */

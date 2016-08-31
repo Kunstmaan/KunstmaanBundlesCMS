@@ -22,7 +22,6 @@ class TranslationCacheCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         if ($input->getOption('flush')) {
             return $this->flushTranslationCache($input, $output);
         } elseif ($input->getOption('status')) {
@@ -34,7 +33,7 @@ class TranslationCacheCommand extends ContainerAwareCommand
 
     public function flushTranslationCache(InputInterface $input, OutputInterface $output)
     {
-        if ( $this->getContainer()->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache() ) {
+        if ($this->getContainer()->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache()) {
             $output->writeln('<info>Translation cache succesfully flushed</info>');
         }
     }

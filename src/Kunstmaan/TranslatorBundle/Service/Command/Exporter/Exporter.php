@@ -1,15 +1,17 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Service\Command\Exporter;
 
 use Kunstmaan\TranslatorBundle\Model\Export\ExportFile;
 
 /**
- * Responsible for exporting translations into files
+ * Responsible for exporting translations into files.
  */
 class Exporter
 {
     /**
-     * Array of all translation exporter
+     * Array of all translation exporter.
+     *
      * @var array
      */
     private $exporters = array();

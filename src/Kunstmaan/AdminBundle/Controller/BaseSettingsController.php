@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class BaseSettingsController extends Controller
 {
     /**
-     * Check permission
+     * Check permission.
      *
      * @throws AccessDeniedException
      */

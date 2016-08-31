@@ -8,11 +8,10 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 /**
- * CopyPageTranslationNodeEvent
+ * CopyPageTranslationNodeEvent.
  */
 class CopyPageTranslationNodeEvent extends NodeEvent
 {
-
     /**
      * @var NodeTranslation
      */
@@ -131,5 +130,4 @@ class CopyPageTranslationNodeEvent extends NodeEvent
     {
         return $this->originalNodeVersion;
     }
-
 }

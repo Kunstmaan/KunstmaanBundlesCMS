@@ -3,7 +3,6 @@
 namespace Kunstmaan\NodeBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -12,11 +11,10 @@ use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The event to pass metadata if the adaptForm event is triggered
+ * The event to pass metadata if the adaptForm event is triggered.
  */
 class AdaptFormEvent extends Event
 {
-
     /**
      * @var TabPane
      */
@@ -109,5 +107,4 @@ class AdaptFormEvent extends Event
     {
         return $this->request;
     }
-
 }

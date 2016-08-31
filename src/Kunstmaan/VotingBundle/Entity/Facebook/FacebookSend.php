@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\VotingBundle\Entity\AbstractVote;
 
 /**
- * A Facebook Send Event
+ * A Facebook Send Event.
  *
  * The reference will hold the URL that has been send
  *
@@ -15,5 +15,4 @@ use Kunstmaan\VotingBundle\Entity\AbstractVote;
  */
 class FacebookSend extends AbstractVote
 {
-
 }

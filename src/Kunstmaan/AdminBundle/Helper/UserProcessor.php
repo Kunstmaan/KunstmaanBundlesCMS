@@ -7,12 +7,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Adds the user information to the context of the record which will be logged
+ * Adds the user information to the context of the record which will be logged.
  */
 class UserProcessor
 {
     /**
-     * Use container else we have a continous loop in our dependency
+     * Use container else we have a continous loop in our dependency.
      *
      * @var ContainerInterface
      */

@@ -14,7 +14,7 @@ class SitesAdminPanelAdaptor implements AdminPanelAdaptorInterface
     public function getAdminPanelActions()
     {
         return array(
-            $this->getSiteSwitcherAction()
+            $this->getSiteSwitcherAction(),
         );
     }
 

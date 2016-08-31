@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Symfony\Component\Console\Event\ConsoleExceptionEvent;

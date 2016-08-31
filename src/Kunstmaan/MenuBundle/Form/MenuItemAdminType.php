@@ -27,15 +27,15 @@ class MenuItemAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $entityId = $options['entityId'];
-        $menu     = $options['menu'];
+        $menu = $options['menu'];
         $menuItemclass = $options['menuItemClass'];
 
         $builder->add(
             'parent',
             EntityType::class,
             array(
-                'class'         => $menuItemclass,
-                'choice_label'  => 'displayTitle',
+                'class' => $menuItemclass,
+                'choice_label' => 'displayTitle',
                 'query_builder' => function (EntityRepository $er) use (
                     $entityId,
                     $menu
@@ -51,37 +51,37 @@ class MenuItemAdminType extends AbstractType
 
                     return $qb;
                 },
-                'attr'          => array(
-                    'class'            => 'js-advanced-select',
-                    'data-placeholder' => 'Select the parent menu item...'
+                'attr' => array(
+                    'class' => 'js-advanced-select',
+                    'data-placeholder' => 'Select the parent menu item...',
                 ),
-                'multiple'      => false,
-                'expanded'      => false,
-                'required'      => false,
-                'label'         => 'Parent menu item'
+                'multiple' => false,
+                'expanded' => false,
+                'required' => false,
+                'label' => 'Parent menu item',
             )
         );
         $builder->add(
             'type',
             ChoiceType::class,
             array(
-                'choices'     => array_combine(
+                'choices' => array_combine(
                     MenuItem::$types,
                     MenuItem::$types
                 ),
                 'placeholder' => false,
-                'required'    => true
+                'required' => true,
             )
         );
-        $locale   = $options['locale'];
+        $locale = $options['locale'];
         $rootNode = $options['rootNode'];
 
         $builder->add(
             'nodeTranslation',
             EntityType::class,
             array(
-                'class'         => 'KunstmaanNodeBundle:NodeTranslation',
-                'choice_label'  => 'title',
+                'class' => 'KunstmaanNodeBundle:NodeTranslation',
+                'choice_label' => 'title',
                 'query_builder' => function (EntityRepository $er) use (
                     $locale,
                     $rootNode
@@ -103,28 +103,28 @@ class MenuItemAdminType extends AbstractType
 
                     return $qb;
                 },
-                'attr'          => array(
-                    'class'            => 'js-advanced-select',
-                    'data-placeholder' => 'Select the page to link to...'
+                'attr' => array(
+                    'class' => 'js-advanced-select',
+                    'data-placeholder' => 'Select the page to link to...',
                 ),
-                'multiple'      => false,
-                'expanded'      => false,
-                'required'      => true,
-                'label'         => 'Link page'
+                'multiple' => false,
+                'expanded' => false,
+                'required' => true,
+                'label' => 'Link page',
             )
         );
         $builder->add(
             'title',
             TextType::class,
             array(
-                'required' => false
+                'required' => false,
             )
         );
         $builder->add(
             'url',
             TextType::class,
             array(
-                'required' => true
+                'required' => true,
             )
         );
         $builder->add('newWindow');
@@ -133,7 +133,7 @@ class MenuItemAdminType extends AbstractType
     /**
      * Configures the options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {

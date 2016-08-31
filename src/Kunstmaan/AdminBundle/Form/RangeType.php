@@ -2,7 +2,7 @@
 /**
  * Created by Kunstmaan.
  * Date: 20/06/14
- * Time: 15:25
+ * Time: 15:25.
  */
 
 namespace Kunstmaan\AdminBundle\Form;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * HTML5 range type field
+ * HTML5 range type field.
  */
 class RangeType extends AbstractType
 {
@@ -25,7 +25,7 @@ class RangeType extends AbstractType
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return string
      */
@@ -35,7 +35,7 @@ class RangeType extends AbstractType
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */

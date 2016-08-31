@@ -3,14 +3,12 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Tests for ChoicePagePart
+ * Tests for ChoicePagePart.
  */
 class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +23,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ChoicePagePart;
+        $this->object = new ChoicePagePart();
     }
 
     /**
@@ -92,7 +90,6 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($object->getExpanded());
     }
 
-
     /**
      * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setMultiple
      * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getMultiple
@@ -128,5 +125,4 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $object->setEmptyValue($value);
         $this->assertEquals($value, $object->getEmptyValue());
     }
-
 }

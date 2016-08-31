@@ -3,15 +3,12 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormBuilder;
 
 /**
- * Tests for FileUploadPagePart
+ * Tests for FileUploadPagePart.
  */
 class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +23,7 @@ class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FileUploadPagePart;
+        $this->object = new FileUploadPagePart();
     }
 
     /**

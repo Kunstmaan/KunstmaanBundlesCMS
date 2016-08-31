@@ -5,11 +5,10 @@ namespace Kunstmaan\VotingBundle\Helper\UpDown;
 use Kunstmaan\VotingBundle\Helper\VotingHelper;
 
 /**
- * Helper class for Down votes
+ * Helper class for Down votes.
  */
 class DownVoteHelper extends VotingHelper
 {
-
     /**
      * @param string $reference Reference to filter the Down votes by
      *

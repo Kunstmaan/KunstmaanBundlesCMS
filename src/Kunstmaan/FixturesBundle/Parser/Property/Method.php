@@ -7,7 +7,7 @@ class Method implements PropertyParserInterface
     const REGEX = '/<[a-zA-Z0-9]+\([^\)]*\)>/';
 
     /**
-     * Check if this parser is applicable
+     * Check if this parser is applicable.
      *
      * @return bool
      */
@@ -21,13 +21,15 @@ class Method implements PropertyParserInterface
     }
 
     /**
-     * Parse provided value into new data
+     * Parse provided value into new data.
      *
      * @param $value
      * @param $providers
      * @param array $references
      * @param array $additional
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function parse($value, $providers, $references = [], $additional = [])
@@ -43,7 +45,7 @@ class Method implements PropertyParserInterface
             }, $arguments);
 
             foreach ($providers as $provider) {
-                /**
+                /*
                  * Call method from provider with/without arguments
                  * 1: Arguments are passed through from fixture
                  * 2: Search if method needs arguments en find them through typehint and additional params
@@ -59,7 +61,7 @@ class Method implements PropertyParserInterface
                     $arguments = $this->findArguments($parameters, $additional);
 
                     if (count($parameters) !== count($arguments)) {
-                        throw new \Exception('Can not match all arguments for provider ' . get_class($provider));
+                        throw new \Exception('Can not match all arguments for provider '.get_class($provider));
                     }
 
                     $value = $this->processValue($pattern, $refl->invokeArgs($provider, $arguments), $value, $matches[0]);
@@ -85,12 +87,12 @@ class Method implements PropertyParserInterface
         }
 
         return str_replace($pattern, $result, $value);
-
     }
 
     /**
      * @param $parameters
      * @param $additional
+     *
      * @return array
      */
     private function findArguments($parameters, $additional)
@@ -119,6 +121,7 @@ class Method implements PropertyParserInterface
     /**
      * @param \ReflectionParameter $parameter
      * @param $parameters
+     *
      * @return null|object
      */
     private function typeHintChecker(\ReflectionParameter $parameter, $parameters)
@@ -142,6 +145,7 @@ class Method implements PropertyParserInterface
     /**
      * @param \ReflectionParameter $parameter
      * @param $parameters
+     *
      * @return null|mixed
      */
     private function getArgumentByName(\ReflectionParameter $parameter, $parameters)

@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Twig;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 
 /**
- * LocaleSwitcherTwigExtension
+ * LocaleSwitcherTwigExtension.
  */
 class LocaleSwitcherTwigExtension extends \Twig_Extension
 {
@@ -40,16 +40,16 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
      * Render locale switcher widget.
      *
      * @param \Twig_Environment $env
-     * @param array $locales The locales
-     * @param string $route The route
-     * @param array $parameters The route parameters
+     * @param array             $locales    The locales
+     * @param string            $route      The route
+     * @param array             $parameters The route parameters
      *
      * @return string
      */
     public function renderWidget(\Twig_Environment $env, $locales, $route, array $parameters = array())
     {
         $template = $env->loadTemplate(
-            "KunstmaanAdminBundle:LocaleSwitcherTwigExtension:widget.html.twig"
+            'KunstmaanAdminBundle:LocaleSwitcherTwigExtension:widget.html.twig'
         );
 
         return $template->render(
@@ -57,7 +57,7 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
                 $parameters,
                 array(
                     'locales' => $locales,
-                    'route' => $route
+                    'route' => $route,
                 )
             )
         );

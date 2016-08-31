@@ -1,27 +1,26 @@
 <?php
 
 namespace Kunstmaan\NodeBundle\Tests;
+
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
-
 /**
- * SlugifierTest
+ * SlugifierTest.
  */
 class SlugifierTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var SlugifierInterface
      */
     private $slugifier;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setUp()
     {
-       $this->slugifier = new Slugifier();
+        $this->slugifier = new Slugifier();
     }
     /**
      * @param string $text    The text to slugify
@@ -40,7 +39,7 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Provides data to the {@link testSlugify} function
+     * Provides data to the {@link testSlugify} function.
      *
      * @return array
      */
@@ -59,7 +58,7 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function tearDown()
     {

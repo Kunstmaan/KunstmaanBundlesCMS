@@ -5,11 +5,10 @@ namespace Kunstmaan\VotingBundle\Helper\LinkedIn;
 use Kunstmaan\VotingBundle\Helper\VotingHelper;
 
 /**
- * Helper class for LinkedIn Shares
+ * Helper class for LinkedIn Shares.
  */
 class LinkedInShareHelper extends VotingHelper
 {
-
     /**
      * @param string $reference Reference to filter the LinkedIn Share by
      *

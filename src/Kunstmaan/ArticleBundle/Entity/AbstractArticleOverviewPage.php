@@ -9,7 +9,7 @@ use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 
 /**
- * The article overview page which shows its articles
+ * The article overview page which shows its articles.
  */
 abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPagePartsInterface, SlugActionInterface
 {
@@ -18,7 +18,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      */
     public function getPossibleChildTypes()
     {
-        return array ();
+        return array();
     }
 
     /**
@@ -30,7 +30,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
     }
 
     /**
-     * Return the Article repository
+     * Return the Article repository.
      *
      * @param $em
      *
@@ -43,7 +43,7 @@ abstract class AbstractArticleOverviewPage extends AbstractPage implements HasPa
      */
     public function getDefaultView()
     {
-        return "KunstmaanArticleBundle:AbstractArticleOverviewPage:view.html.twig";
+        return 'KunstmaanArticleBundle:AbstractArticleOverviewPage:view.html.twig';
     }
 
     public function getControllerAction()

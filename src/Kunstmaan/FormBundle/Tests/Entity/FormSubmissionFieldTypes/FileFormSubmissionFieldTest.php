@@ -6,7 +6,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Tests for FileFormSubmissionField
+ * Tests for FileFormSubmissionField.
  */
 class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FileFormSubmissionField;
+        $this->object = new FileFormSubmissionField();
     }
 
     /**
@@ -47,7 +47,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsNull()
     {
-        $file = new UploadedFile(__DIR__ . '/../../Resources/assets/example.jpg', 'example.jpg');
+        $file = new UploadedFile(__DIR__.'/../../Resources/assets/example.jpg', 'example.jpg');
 
         $object = $this->object;
         $this->assertTrue($object->isNull());
@@ -60,7 +60,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSafeFileName()
     {
-        $file = new UploadedFile(__DIR__ . '/../../Resources/assets/example.jpg', 'the file name $@&.jpg');
+        $file = new UploadedFile(__DIR__.'/../../Resources/assets/example.jpg', 'the file name $@&.jpg');
 
         $object = $this->object;
         $object->file = $file;
