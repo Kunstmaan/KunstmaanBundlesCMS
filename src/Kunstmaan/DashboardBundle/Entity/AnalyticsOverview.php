@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * AnalyticsOverview
+ * AnalyticsOverview.
  *
  * @ORM\Table(name="kuma_analytics_overview")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository")
@@ -39,42 +39,42 @@ class AnalyticsOverview extends AbstractEntity
     private $title;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="timespan", type="integer")
      */
     private $timespan;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="start_days_ago", type="integer")
      */
     private $startOffset = 0;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="use_year", type="boolean")
      */
     private $useYear = false;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="sessions", type="integer")
      */
     private $sessions = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="users", type="integer")
      */
     private $users = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="returning_users", type="integer")
      */
@@ -88,7 +88,7 @@ class AnalyticsOverview extends AbstractEntity
     private $newUsers = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pageviews", type="integer")
      */
@@ -102,7 +102,7 @@ class AnalyticsOverview extends AbstractEntity
     private $pagesPerSession = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="chart_data_max_value", type="integer")
      */
@@ -123,7 +123,7 @@ class AnalyticsOverview extends AbstractEntity
     private $chartData = '';
 
     /**
-     * Get percentage of returning users
+     * Get percentage of returning users.
      *
      * @return int
      */
@@ -133,7 +133,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get percentage of new users
+     * Get percentage of new users.
      *
      * @return int
      */
@@ -143,9 +143,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get config
+     * Get config.
      *
-     * @return integer
+     * @return int
      */
     public function getConfig()
     {
@@ -153,9 +153,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set config
+     * Set config.
      *
-     * @param integer $config
+     * @param int $config
      *
      * @return AnalyticsTopReferrals
      */
@@ -167,9 +167,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get segment
+     * Get segment.
      *
-     * @return integer
+     * @return int
      */
     public function getSegment()
     {
@@ -177,9 +177,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set segment
+     * Set segment.
      *
-     * @param integer $segment
+     * @param int $segment
      *
      * @return AnalyticsTopReferrals
      */
@@ -190,11 +190,11 @@ class AnalyticsOverview extends AbstractEntity
         return $this;
     }
 
-
     /**
-     * Set goals
+     * Set goals.
      *
      * @param array $goals
+     *
      * @return $this
      */
     public function setGoals($goals)
@@ -205,7 +205,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get goals
+     * Get goals.
      *
      * @return AnalyticsGoal[]
      */
@@ -221,16 +221,19 @@ class AnalyticsOverview extends AbstractEntity
     {
         $goals = array();
         foreach ($this->getGoals() as $goal) {
-            if ($goal->getVisits()) $goals[] = $goal;
+            if ($goal->getVisits()) {
+                $goals[] = $goal;
+            }
         }
+
         return $goals;
     }
 
-
     /**
-     * Set chartData
+     * Set chartData.
      *
      * @param array $chartData
+     *
      * @return $this
      */
     public function setChartData($chartData)
@@ -241,7 +244,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get chartData
+     * Get chartData.
      *
      * @return array
      */
@@ -251,9 +254,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set newUsers
+     * Set newUsers.
      *
      * @param float $newUsers
+     *
      * @return AnalyticsOverview
      */
     public function setNewUsers($newUsers)
@@ -264,7 +268,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get newUsers
+     * Get newUsers.
      *
      * @return float
      */
@@ -273,11 +277,11 @@ class AnalyticsOverview extends AbstractEntity
         return $this->newUsers;
     }
 
-
     /**
-     * Set returningUsers
+     * Set returningUsers.
      *
      * @param string $returningUsers
+     *
      * @return AnalyticsOverview
      */
     public function setReturningUsers($returningUsers)
@@ -288,7 +292,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get returningUsers
+     * Get returningUsers.
      *
      * @return string
      */
@@ -297,11 +301,11 @@ class AnalyticsOverview extends AbstractEntity
         return $this->returningUsers;
     }
 
-
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return AnalyticsOverview
      */
     public function setTitle($title)
@@ -312,7 +316,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -322,9 +326,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set startOffset
+     * Set startOffset.
      *
-     * @param integer $startOffset
+     * @param int $startOffset
+     *
      * @return AnalyticsOverview
      */
     public function setStartOffset($startOffset)
@@ -335,9 +340,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get startOffset
+     * Get startOffset.
      *
-     * @return integer
+     * @return int
      */
     public function getStartOffset()
     {
@@ -345,9 +350,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set timespan
+     * Set timespan.
      *
-     * @param integer $timespan
+     * @param int $timespan
+     *
      * @return AnalyticsOverview
      */
     public function setTimespan($timespan)
@@ -358,9 +364,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get timespan
+     * Get timespan.
      *
-     * @return integer
+     * @return int
      */
     public function getTimespan()
     {
@@ -368,9 +374,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set sessions
+     * Set sessions.
      *
-     * @param integer $sessions
+     * @param int $sessions
+     *
      * @return AnalyticsOverview
      */
     public function setSessions($sessions)
@@ -381,9 +388,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get sessions
+     * Get sessions.
      *
-     * @return integer
+     * @return int
      */
     public function getSessions()
     {
@@ -391,9 +398,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get Users
+     * Get Users.
      *
-     * @return integer
+     * @return int
      */
     public function getUsers()
     {
@@ -401,9 +408,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set users
+     * Set users.
      *
-     * @param integer $users
+     * @param int $users
+     *
      * @return AnalyticsOverview
      */
     public function setUsers($users)
@@ -414,9 +422,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set pageviews
+     * Set pageviews.
      *
-     * @param integer $pageviews
+     * @param int $pageviews
+     *
      * @return AnalyticsOverview
      */
     public function setPageviews($pageviews)
@@ -427,9 +436,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get pageviews
+     * Get pageviews.
      *
-     * @return integer
+     * @return int
      */
     public function getPageviews()
     {
@@ -437,9 +446,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set pagesPerSession
+     * Set pagesPerSession.
      *
      * @param float $pagesPerSession
+     *
      * @return AnalyticsOverview
      */
     public function setPagesPerSession($pagesPerSession)
@@ -450,7 +460,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get pagesPerSession
+     * Get pagesPerSession.
      *
      * @return float
      */
@@ -460,9 +470,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set avgSessionDuration
+     * Set avgSessionDuration.
      *
-     * @param integer $avgSessionDuration
+     * @param int $avgSessionDuration
+     *
      * @return AnalyticsOverview
      */
     public function setAvgSessionDuration($avgSessionDuration)
@@ -473,7 +484,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get avgSessionDuration
+     * Get avgSessionDuration.
      *
      * @return string
      */
@@ -483,9 +494,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set useYear
+     * Set useYear.
      *
-     * @param integer $useYear
+     * @param int $useYear
+     *
      * @return AnalyticsOverview
      */
     public function setUseYear($useYear)
@@ -496,9 +508,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get useYear
+     * Get useYear.
      *
-     * @return integer
+     * @return int
      */
     public function getUseYear()
     {
@@ -506,9 +518,10 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set chartDataMaxValue
+     * Set chartDataMaxValue.
      *
-     * @param integer $chartDataMaxValue
+     * @param int $chartDataMaxValue
+     *
      * @return AnalyticsOverview
      */
     public function setChartDataMaxValue($chartDataMaxValue)
@@ -519,9 +532,9 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get chartDataMaxValue
+     * Get chartDataMaxValue.
      *
-     * @return integer
+     * @return int
      */
     public function getChartDataMaxValue()
     {

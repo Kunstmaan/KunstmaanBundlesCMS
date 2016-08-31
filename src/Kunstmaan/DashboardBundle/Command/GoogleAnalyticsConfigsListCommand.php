@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -32,22 +33,21 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
         $configs = $this->getconfigs();
 
         if (count($configs)) {
-            $result = "\t".'<fg=green>' . count($configs) . '</fg=green> configs found:';
+            $result = "\t".'<fg=green>'.count($configs).'</fg=green> configs found:';
             $output->writeln($result);
-            foreach($configs as $config) {
-                $result = "\t".'(id: <fg=cyan>' .$config->getId() . '</fg=cyan>)';
-                $result .= "\t" . $config->getName();
+            foreach ($configs as $config) {
+                $result = "\t".'(id: <fg=cyan>'.$config->getId().'</fg=cyan>)';
+                $result .= "\t".$config->getName();
 
                 $output->writeln($result);
             }
         } else {
             $output->writeln('No configs found');
         }
-
     }
 
     /**
-     * get all segments
+     * get all segments.
      *
      * @return array
      */
@@ -55,6 +55,7 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
     {
         // get all segments
         $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+
         return $configRepository->findAll();
     }
 }

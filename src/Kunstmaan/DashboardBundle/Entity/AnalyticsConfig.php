@@ -11,7 +11,6 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  */
 class AnalyticsConfig extends AbstractEntity
 {
-
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist", "remove"})
      */
@@ -65,16 +64,17 @@ class AnalyticsConfig extends AbstractEntity
     private $lastUpdate = null;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="disable_goals", type="boolean")
      */
     private $disableGoals = false;
 
     /**
-     * Set overviews
+     * Set overviews.
      *
      * @param array $overviews
+     *
      * @return AnalyticsDailyOverviews
      */
     public function setOverviews($overviews)
@@ -85,7 +85,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get overviews
+     * Get overviews.
      *
      * @return array
      */
@@ -95,9 +95,10 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set segments
+     * Set segments.
      *
      * @param array $segments
+     *
      * @return AnalyticsDailysegments
      */
     public function setSegments($segments)
@@ -108,7 +109,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get segments
+     * Get segments.
      *
      * @return array
      */
@@ -118,7 +119,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -128,7 +129,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -142,7 +143,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get token
+     * Get token.
      *
      * @return string
      */
@@ -152,7 +153,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set token
+     * Set token.
      *
      * @param string $token
      *
@@ -166,7 +167,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get propertyId
+     * Get propertyId.
      *
      * @return string
      */
@@ -176,7 +177,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set propertyId
+     * Set propertyId.
      *
      * @param string $propertyId
      *
@@ -190,7 +191,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get accountId
+     * Get accountId.
      *
      * @return string
      */
@@ -200,7 +201,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set accountId
+     * Set accountId.
      *
      * @param string $accountId
      *
@@ -214,7 +215,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get profileId
+     * Get profileId.
      *
      * @return string
      */
@@ -224,7 +225,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set profileId
+     * Set profileId.
      *
      * @param string $profileId
      *
@@ -238,7 +239,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get lastUpdate
+     * Get lastUpdate.
      *
      * @return \DateTime
      */
@@ -248,7 +249,7 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set lastUpdate
+     * Set lastUpdate.
      *
      * @param \DateTime $lastUpdate
      *
@@ -262,9 +263,9 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Get disableGoals
+     * Get disableGoals.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDisableGoals()
     {
@@ -272,9 +273,9 @@ class AnalyticsConfig extends AbstractEntity
     }
 
     /**
-     * Set disableGoals
+     * Set disableGoals.
      *
-     * @param boolean $disableGoals
+     * @param bool $disableGoals
      *
      * @return $this
      */

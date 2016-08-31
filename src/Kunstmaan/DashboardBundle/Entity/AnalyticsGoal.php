@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * AnalyticsGoal
+ * AnalyticsGoal.
  *
  * @ORM\Table(name="kuma_analytics_goal")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsGoalRepository")
@@ -20,7 +20,7 @@ class AnalyticsGoal extends AbstractEntity
     private $overview;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="position", type="integer")
      */
@@ -34,7 +34,7 @@ class AnalyticsGoal extends AbstractEntity
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="visits", type="integer")
      */
@@ -48,9 +48,9 @@ class AnalyticsGoal extends AbstractEntity
     private $chartData = '';
 
     /**
-     * Get overview
+     * Get overview.
      *
-     * @return integer
+     * @return int
      */
     public function getOverview()
     {
@@ -58,9 +58,9 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Set overview
+     * Set overview.
      *
-     * @param integer $overview
+     * @param int $overview
      *
      * @return $this
      */
@@ -72,9 +72,10 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Set position
+     * Set position.
      *
-     * @param integer $position
+     * @param int $position
+     *
      * @return AnalyticsGoal
      */
     public function setPosition($position)
@@ -85,9 +86,9 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Get position
+     * Get position.
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {
@@ -95,9 +96,10 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return AnalyticsGoal
      */
     public function setName($name)
@@ -108,7 +110,7 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -118,9 +120,10 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Set visits
+     * Set visits.
      *
-     * @param integer $visits
+     * @param int $visits
+     *
      * @return AnalyticsGoal
      */
     public function setVisits($visits)
@@ -131,9 +134,9 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Get visits
+     * Get visits.
      *
-     * @return integer
+     * @return int
      */
     public function getVisits()
     {
@@ -141,9 +144,10 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Set chartData
+     * Set chartData.
      *
      * @param string $chartData
+     *
      * @return AnalyticsGoal
      */
     public function setChartData($chartData)
@@ -154,7 +158,7 @@ class AnalyticsGoal extends AbstractEntity
     }
 
     /**
-     * Get chartData
+     * Get chartData.
      *
      * @return string
      */

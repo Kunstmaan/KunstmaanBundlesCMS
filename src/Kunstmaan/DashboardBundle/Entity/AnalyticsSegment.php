@@ -5,7 +5,7 @@ namespace Kunstmaan\DashboardBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AnalyticsSegment
+ * AnalyticsSegment.
  *
  * @ORM\Table(name="kuma_analytics_segment")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsSegmentRepository")
@@ -37,11 +37,11 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     private $overviews;
 
-
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return AnalyticsSegment
      */
     public function setName($name)
@@ -52,7 +52,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -62,9 +62,10 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set query
+     * Set query.
      *
      * @param string $query
+     *
      * @return AnalyticsSegment
      */
     public function setQuery($query)
@@ -75,7 +76,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Get query
+     * Get query.
      *
      * @return string
      */
@@ -85,9 +86,9 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Get config
+     * Get config.
      *
-     * @return integer
+     * @return int
      */
     public function getConfig()
     {
@@ -95,9 +96,9 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set config
+     * Set config.
      *
-     * @param integer $config
+     * @param int $config
      *
      * @return AnalyticsTopReferrals
      */
@@ -109,9 +110,10 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set overviews
+     * Set overviews.
      *
      * @param array $overviews
+     *
      * @return $this
      */
     public function setoverviews($overviews)
@@ -122,7 +124,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Get overviews
+     * Get overviews.
      *
      * @return AnalyticsGoal[]
      */
@@ -130,5 +132,4 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     {
         return $this->overviews;
     }
-
 }

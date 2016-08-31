@@ -1,12 +1,11 @@
 <?php
 
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
-use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
+
 use Doctrine\ORM\EntityManager;
 
 class ConfigHelper
 {
-
     /** @var ServiceHelper */
     private $serviceHelper;
 
@@ -26,23 +25,24 @@ class ConfigHelper
     private $em;
 
     /**
-     * constructor
+     * constructor.
      *
      * @param ServiceHelper $serviceHelper
      * @param EntityManager $em
      */
-    public function __construct(ServiceHelper $serviceHelper, EntityManager $em) {
+    public function __construct(ServiceHelper $serviceHelper, EntityManager $em)
+    {
         $this->serviceHelper = $serviceHelper;
         $this->em = $em;
         $this->init();
     }
 
     /**
-     * Tries to initialise the Client object
+     * Tries to initialise the Client object.
      *
      * @param int $configId
      */
-    public function init($configId=false)
+    public function init($configId = false)
     {
         // if token is already saved in the database
         if ($this->getToken($configId) && '' !== $this->getToken($configId)) {
@@ -63,11 +63,11 @@ class ConfigHelper
     /* =============================== TOKEN =============================== */
 
         /**
-         * Get the token from the database
+         * Get the token from the database.
          *
          * @return string $token
          */
-        private function getToken($configId=false)
+        private function getToken($configId = false)
         {
             if (!$this->token || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
@@ -83,18 +83,18 @@ class ConfigHelper
         }
 
         /**
-         * Save the token to the database
+         * Save the token to the database.
          */
-        public function saveToken($token, $configId=false)
+        public function saveToken($token, $configId = false)
         {
             $this->token = $token;
             $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveToken($token, $configId);
         }
 
         /**
-         * Check if token is set
+         * Check if token is set.
          *
-         * @return boolean $result
+         * @return bool $result
          */
         public function tokenIsSet()
         {
@@ -104,7 +104,7 @@ class ConfigHelper
     /* =============================== ACCOUNT =============================== */
 
         /**
-         * Get a list of all available accounts
+         * Get a list of all available accounts.
          *
          * @return array $data A list of all properties
          */
@@ -116,19 +116,20 @@ class ConfigHelper
             foreach ($accounts as $account) {
                 $data[$account->getName()] = array(
                     'accountId' => $account->getId(),
-                    'accountName' => $account->getName()
+                    'accountName' => $account->getName(),
                 );
             }
             ksort($data);
+
             return $data;
         }
 
         /**
-         * Get the accountId from the database
+         * Get the accountId from the database.
          *
          * @return string $accountId
          */
-        public function getAccountId($configId=false)
+        public function getAccountId($configId = false)
         {
             if (!$this->accountId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
@@ -144,18 +145,18 @@ class ConfigHelper
         }
 
         /**
-         * Save the accountId to the database
+         * Save the accountId to the database.
          */
-        public function saveAccountId($accountId, $configId=false)
+        public function saveAccountId($accountId, $configId = false)
         {
             $this->accountId = $accountId;
             $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveAccountId($accountId, $configId);
         }
 
         /**
-         * Check if token is set
+         * Check if token is set.
          *
-         * @return boolean $result
+         * @return bool $result
          */
         public function accountIsSet()
         {
@@ -165,11 +166,11 @@ class ConfigHelper
     /* =============================== PROPERTY =============================== */
 
         /**
-         * Get a list of all available properties
+         * Get a list of all available properties.
          *
          * @return array $data A list of all properties
          */
-        public function getProperties($accountId=false)
+        public function getProperties($accountId = false)
         {
             if (!$this->getAccountId() && !$accountId) {
                 return false;
@@ -187,20 +188,21 @@ class ConfigHelper
                 if (sizeof($profiles) > 0) {
                     $data[$property->getName()] = array(
                         'propertyId' => $property->getId(),
-                        'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',
+                        'propertyName' => $property->getName().' ('.$property->getWebsiteUrl().')',
                     );
                 }
             }
             ksort($data);
+
             return $data;
         }
 
         /**
-         * Get the propertyId from the database
+         * Get the propertyId from the database.
          *
          * @return string $propertyId
          */
-        public function getPropertyId($configId=false)
+        public function getPropertyId($configId = false)
         {
             if (!$this->propertyId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
@@ -216,18 +218,18 @@ class ConfigHelper
         }
 
         /**
-         * Save the propertyId to the database
+         * Save the propertyId to the database.
          */
-        public function savePropertyId($propertyId, $configId=false)
+        public function savePropertyId($propertyId, $configId = false)
         {
             $this->propertyId = $propertyId;
             $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->savePropertyId($propertyId, $configId);
         }
 
         /**
-         * Check if propertyId is set
+         * Check if propertyId is set.
          *
-         * @return boolean $result
+         * @return bool $result
          */
         public function propertyIsSet()
         {
@@ -237,11 +239,11 @@ class ConfigHelper
     /* =============================== PROFILE =============================== */
 
         /**
-         * Get a list of all available profiles
+         * Get a list of all available profiles.
          *
          * @return array $data A list of all properties
          */
-        public function getProfiles($accountId=false, $propertyId=false)
+        public function getProfiles($accountId = false, $propertyId = false)
         {
             if (!$this->getAccountId() && !$accountId || !$this->getPropertyId() && !$propertyId) {
                 return false;
@@ -266,20 +268,21 @@ class ConfigHelper
                     $data[$profile->name] = array(
                             'profileId' => $profile->id,
                             'profileName' => $profile->name,
-                            'created' => $profile->created
+                            'created' => $profile->created,
                         );
                 }
             }
             ksort($data);
+
             return $data;
         }
 
         /**
-         * Get the propertyId from the database
+         * Get the propertyId from the database.
          *
          * @return string $propertyId
          */
-        public function getProfileId($configId=false)
+        public function getProfileId($configId = false)
         {
             if (!$this->profileId || $configId) {
                 /** @var AnalyticsConfigRepository $analyticsConfigRepository */
@@ -295,18 +298,18 @@ class ConfigHelper
         }
 
         /**
-         * Save the profileId to the database
+         * Save the profileId to the database.
          */
-        public function saveProfileId($profileId, $configId=false)
+        public function saveProfileId($profileId, $configId = false)
         {
             $this->profileId = $profileId;
             $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveProfileId($profileId, $configId);
         }
 
         /**
-         * Check if token is set
+         * Check if token is set.
          *
-         * @return boolean $result
+         * @return bool $result
          */
         public function profileIsSet()
         {
@@ -314,11 +317,12 @@ class ConfigHelper
         }
 
         /**
-         * Get the active profile
+         * Get the active profile.
          *
          * @return the profile
          */
-        public function getActiveProfile() {
+        public function getActiveProfile()
+        {
             $profiles = $this->getProfiles();
             $profileId = $this->getProfileId();
 
@@ -335,7 +339,7 @@ class ConfigHelper
 
     /* =============================== PROFILE SEGMENTS =============================== */
         /**
-         * get all segments for the saved profile
+         * get all segments for the saved profile.
          *
          * @return array
          */
@@ -354,12 +358,12 @@ class ConfigHelper
                 if ($segment->type == 'BUILT_IN') {
                     $builtin[] = array(
                         'name' => $segment->name,
-                        'query' => $segment->segmentId
+                        'query' => $segment->segmentId,
                     );
                 } else {
                     $own[] = array(
                         'name' => $segment->name,
-                        'query' => $segment->segmentId
+                        'query' => $segment->segmentId,
                     );
                 }
             }
@@ -370,9 +374,9 @@ class ConfigHelper
     /* =============================== CONFIG =============================== */
 
         /**
-         * Save the config to the database
+         * Save the config to the database.
          */
-        public function saveConfigName($configName, $configId=false)
+        public function saveConfigName($configName, $configId = false)
         {
             $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->saveConfigName($configName, $configId);
         }
@@ -380,7 +384,7 @@ class ConfigHelper
     /* =============================== AUTH URL =============================== */
 
         /**
-         * get the authUrl
+         * get the authUrl.
          *
          * @return string $authUrl
          */
@@ -392,6 +396,4 @@ class ConfigHelper
                 ->getClient()
                 ->createAuthUrl();
         }
-
-
 }

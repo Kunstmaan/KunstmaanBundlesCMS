@@ -1,19 +1,19 @@
 <?php
-namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
+namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
 class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
 {
     /**
-     * get data and save it for the overview
+     * get data and save it for the overview.
      *
      * @param AnalyticsOverview $overview The overview
      */
     public function getData(&$overview)
     {
-        $this->output->writeln("\t" . 'Fetching metrics..');
+        $this->output->writeln("\t".'Fetching metrics..');
 
         // execute the query
         $metrics = 'ga:sessions, ga:users, ga:pageviews, ga:pageviewsPerSession, ga:avgSessionDuration';
@@ -37,7 +37,6 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
 
         // avg visit duration metric
         $avgVisitDuration = is_numeric($rows[0][4]) ? $rows[0][4] : 0;
-        $overview->setAvgSessionDuration(gmdate("H:i:s", $avgVisitDuration));
+        $overview->setAvgSessionDuration(gmdate('H:i:s', $avgVisitDuration));
     }
-
 }
