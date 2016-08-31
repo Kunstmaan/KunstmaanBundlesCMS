@@ -13,7 +13,7 @@ class ImagineController extends \Liip\ImagineBundle\Controller\ImagineController
     {
         if ($request->query->has('originalExtension')) {
             $info = pathinfo($path);
-            $path = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $request->query->getAlpha('originalExtension');
+            $path = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'.'.$request->query->getAlpha('originalExtension');
         }
 
         return parent::filterAction($request, $path, $filter);
@@ -26,7 +26,7 @@ class ImagineController extends \Liip\ImagineBundle\Controller\ImagineController
     {
         if ($request->query->has('originalExtension')) {
             $info = pathinfo($path);
-            $path = $info['dirname'] . DIRECTORY_SEPARATOR . $info['filename'] . '.' . $request->query->getAlpha('originalExtension');
+            $path = $info['dirname'].DIRECTORY_SEPARATOR.$info['filename'].'.'.$request->query->getAlpha('originalExtension');
         }
 
         return parent::filterRuntimeAction($request, $hash, $path, $filter);

@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class MediaValidator extends ConstraintValidator
 {
-
     /**
      * @param MediaObject $value
      * @param Constraint  $constraint
@@ -20,7 +19,7 @@ class MediaValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Media) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Media');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Media');
         }
 
         if (!$value instanceof MediaObject) {
@@ -30,10 +29,9 @@ class MediaValidator extends ConstraintValidator
         $mimeType = $value->getContentType();
 
         if ($constraint->mimeTypes) {
-            $mimeTypes = (array)$constraint->mimeTypes;
+            $mimeTypes = (array) $constraint->mimeTypes;
 
             if (false === $this->validateMimeType($value, $mimeTypes)) {
-
                 $this->context->buildViolation($constraint->mimeTypesMessage)
                     ->setParameter('{{ type }}', $this->formatValue($mimeType))
                     ->setParameter('{{ types }}', $this->formatValues($mimeTypes))
@@ -49,7 +47,6 @@ class MediaValidator extends ConstraintValidator
         }
 
         $this->validateDimensions($value, $constraint);
-
     }
 
     private function validateMimeType(MediaObject $value, $allowedMimeTypes)
@@ -78,8 +75,8 @@ class MediaValidator extends ConstraintValidator
         $width = $value->getMetadataValue('original_width');
 
         if ($constraint->minHeight) {
-            if (!ctype_digit((string)$constraint->minHeight)) {
-                throw new ConstraintDefinitionException (
+            if (!ctype_digit((string) $constraint->minHeight)) {
+                throw new ConstraintDefinitionException(
                     sprintf(
                         '"%s" is not a valid minimum height',
                         $constraint->minHeight
@@ -99,8 +96,8 @@ class MediaValidator extends ConstraintValidator
         }
 
         if ($constraint->maxHeight) {
-            if (!ctype_digit((string)$constraint->maxHeight)) {
-                throw new ConstraintDefinitionException (
+            if (!ctype_digit((string) $constraint->maxHeight)) {
+                throw new ConstraintDefinitionException(
                     sprintf(
                         '"%s" is not a valid maximum height',
                         $constraint->maxHeight
@@ -120,8 +117,8 @@ class MediaValidator extends ConstraintValidator
         }
 
         if ($constraint->minWidth) {
-            if (!ctype_digit(( string )$constraint->minWidth)) {
-                throw new ConstraintDefinitionException (
+            if (!ctype_digit((string) $constraint->minWidth)) {
+                throw new ConstraintDefinitionException(
                     sprintf(
                         '"%s" is not a valid minimum width',
                         $constraint->minWidth
@@ -141,8 +138,8 @@ class MediaValidator extends ConstraintValidator
         }
 
         if ($constraint->maxWidth) {
-            if (!ctype_digit(( string )$constraint->maxWidth)) {
-                throw new ConstraintDefinitionException (
+            if (!ctype_digit((string) $constraint->maxWidth)) {
+                throw new ConstraintDefinitionException(
                     sprintf(
                         '"%s" is not a valid maximum width',
                         $constraint->maxWidth

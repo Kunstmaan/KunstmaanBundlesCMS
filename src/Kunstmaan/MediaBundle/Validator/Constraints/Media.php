@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraint;
  * @Annotation
  */
 class Media extends Constraint
-
 {
     const NOT_FOUND_ERROR = 1;
     const NOT_READABLE_ERROR = 2;

@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * IconFontType
+ * IconFontType.
  */
 class IconFontType extends AbstractType
 {
@@ -47,14 +47,14 @@ class IconFontType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
-                'loader'      => null,
-                'loader_data' => null
+                'loader' => null,
+                'loader_data' => null,
             )
         );
     }
@@ -89,8 +89,8 @@ class IconFontType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['loader']        = $form->getConfig()->getAttribute('loader');
+        $view->vars['loader'] = $form->getConfig()->getAttribute('loader');
         $view->vars['loader_object'] = $form->getConfig()->getAttribute('loader_object');
-        $view->vars['loader_data']   = serialize($form->getConfig()->getAttribute('loader_data'));
+        $view->vars['loader_data'] = serialize($form->getConfig()->getAttribute('loader_data'));
     }
 }

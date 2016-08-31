@@ -5,7 +5,7 @@ namespace Kunstmaan\MediaBundle\Helper\IconFont;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * AbstractIconFontLoader
+ * AbstractIconFontLoader.
  */
 abstract class AbstractIconFontLoader implements IconFontLoaderInterface
 {

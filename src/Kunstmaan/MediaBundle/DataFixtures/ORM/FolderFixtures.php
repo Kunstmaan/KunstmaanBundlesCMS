@@ -9,13 +9,12 @@ use Kunstmaan\MediaBundle\Entity\Folder;
 
 /**
  * Fixtures that make a general media-folder for a project
- * and for every type of media a folder in that media-folder
+ * and for every type of media a folder in that media-folder.
  */
 class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
-
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load data fixtures with the passed EntityManager.
      *
      * @param ObjectManager $manager
      */
@@ -127,7 +126,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Get the order of this fixture
+     * Get the order of this fixture.
      *
      * @return int
      */

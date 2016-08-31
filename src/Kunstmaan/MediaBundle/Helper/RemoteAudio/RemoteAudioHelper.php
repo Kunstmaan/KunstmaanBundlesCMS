@@ -8,7 +8,7 @@ use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Audio
- * Class that defines audio in the system
+ * Class that defines audio in the system.
  */
 class RemoteAudioHelper extends AbstractRemoteHelper implements RemoteInterface
 {

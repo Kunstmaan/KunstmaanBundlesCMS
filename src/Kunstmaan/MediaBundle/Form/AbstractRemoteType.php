@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * AbstractRemoteType
+ * AbstractRemoteType.
  */
 abstract class AbstractRemoteType extends AbstractType
 {
@@ -25,7 +25,7 @@ abstract class AbstractRemoteType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */

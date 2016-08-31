@@ -14,8 +14,8 @@ class MediaEditItemAction implements ItemActionInterface
     public function getUrlFor($item)
     {
         return array(
-          'path'   => 'KunstmaanMediaBundle_media_show',
-          'params' => array('mediaId' => $item->getId())
+          'path' => 'KunstmaanMediaBundle_media_show',
+          'params' => array('mediaId' => $item->getId()),
         );
     }
 

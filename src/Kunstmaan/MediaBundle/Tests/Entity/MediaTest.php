@@ -1,8 +1,8 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
@@ -18,6 +18,7 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     *
      * @covers Kunstmaan\MediaBundle\Entity\Media::__construct
      */
     protected function setUp()

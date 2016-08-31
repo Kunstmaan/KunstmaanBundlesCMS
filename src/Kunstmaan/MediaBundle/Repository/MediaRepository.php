@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
- * MediaRepository
+ * MediaRepository.
  */
 class MediaRepository extends EntityRepository
 {
@@ -36,6 +36,7 @@ class MediaRepository extends EntityRepository
      * @param int $mediaId
      *
      * @return object
+     *
      * @throws EntityNotFoundException
      */
     public function getMedia($mediaId)
@@ -49,9 +50,10 @@ class MediaRepository extends EntityRepository
     }
 
     /**
-     * @param integer $pictureId
+     * @param int $pictureId
      *
      * @return object
+     *
      * @throws EntityNotFoundException
      */
     public function getPicture($pictureId)
@@ -68,7 +70,7 @@ class MediaRepository extends EntityRepository
 
     /**
      * Finds all Media  that has their deleted flag set to 1
-     * and have their remove_from_file_system flag set to 0
+     * and have their remove_from_file_system flag set to 0.
      *
      * @return object[]
      */

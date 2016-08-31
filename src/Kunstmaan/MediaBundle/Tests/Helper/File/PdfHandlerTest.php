@@ -32,7 +32,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
         $this->pdfTransformer = $this->getMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
         $mockMimeTypeGuesserfactory = $this->getMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
         $mockExtensionGuesserfactory = $this->getMock('Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface');
-        $this->filesDir = realpath(__DIR__ . '/../../Files');
+        $this->filesDir = realpath(__DIR__.'/../../Files');
 
         $this->object = new PdfHandler(1, $mockMimeTypeGuesserfactory, $mockExtensionGuesserfactory);
         $this->object->setPdfTransformer($this->pdfTransformer);
@@ -60,7 +60,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     public function testCanHandlePdfFiles()
     {
         $media = new Media();
-        $media->setContent(new File($this->filesDir . '/sample.pdf'));
+        $media->setContent(new File($this->filesDir.'/sample.pdf'));
         $media->setContentType('application/pdf');
 
         $this->assertTrue($this->object->canHandle($media));
@@ -102,7 +102,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
         $media->setUrl('/path/to/media.pdf');
         $this->assertNull($this->object->getImageUrl($media, '/basepath'));
 
-        $previewFilename = sys_get_temp_dir() . '/media.pdf.jpg';
+        $previewFilename = sys_get_temp_dir().'/media.pdf.jpg';
         $fileSystem = new Filesystem();
         $fileSystem->touch($previewFilename);
         $media->setUrl('/media.pdf');
