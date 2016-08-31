@@ -68,7 +68,7 @@ class PageBuilder implements BuilderInterface
         $fixtureParams = $fixture->getParameters();
         $translations = $fixture->getTranslations();
         if (empty($translations)) {
-            throw new \Exception('No translations detected for page fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')');
+            throw new \Exception('No translations detected for page fixture '.$fixture->getName().' ('.$fixture->getClass().')');
         }
 
         $internalName = array_key_exists('page_internal_name', $fixtureParams) ?
@@ -92,9 +92,9 @@ class PageBuilder implements BuilderInterface
                 $translationNode->setOnline(isset($fixtureParams['set_online']) ? $fixtureParams['set_online'] : true);
             }
 
-            $fixture->addAdditional($fixture->getName() . '_' . $language, $page);
-            $fixture->addAdditional('translationNode_' . $language, $translationNode);
-            $fixture->addAdditional('nodeVersion_' . $language, $translationNode->getPublicNodeVersion());
+            $fixture->addAdditional($fixture->getName().'_'.$language, $page);
+            $fixture->addAdditional('translationNode_'.$language, $translationNode);
+            $fixture->addAdditional('nodeVersion_'.$language, $translationNode->getPublicNodeVersion());
             $fixture->addAdditional('rootNode', $rootNode);
 
             $this->populator->populate($translationNode, $data);
@@ -119,9 +119,9 @@ class PageBuilder implements BuilderInterface
 
         foreach ($fixture->getTranslations() as $language => $data) {
             /** @var HasNodeInterface $page */
-            $page = $entities[$fixture->getName() . '_' . $language];
+            $page = $entities[$fixture->getName().'_'.$language];
             /** @var NodeTranslation $translationNode */
-            $translationNode = $entities['translationNode_' . $language];
+            $translationNode = $entities['translationNode_'.$language];
 
             $pagecreator = array_key_exists('creator', $fixtureParams) ? $fixtureParams['creator'] : 'pagecreator';
             $creator = $this->userRepo->findOneBy(array('username' => $pagecreator));
@@ -241,13 +241,14 @@ class PageBuilder implements BuilderInterface
             // Replace the integer with the new digit.
             return preg_replace($finalDigitGrabberRegex, $digit, $string);
         } else {
-            return $string . $append . '1';
+            return $string.$append.'1';
         }
     }
 
     /**
      * @param string $parentPageClass
      * @param string $childPageClass
+     *
      * @return bool
      */
     private function canHaveChild($parentPageClass, $childPageClass)

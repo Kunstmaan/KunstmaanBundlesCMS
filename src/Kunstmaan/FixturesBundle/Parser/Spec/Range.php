@@ -6,10 +6,10 @@ use Kunstmaan\FixturesBundle\Loader\Fixture;
 
 class Range implements SpecParserInterface
 {
-    CONST REGEX = '/{(\d)+\.\.(\d)+}$/';
+    const REGEX = '/{(\d)+\.\.(\d)+}$/';
 
     /**
-     * Check if this parser is applicable
+     * Check if this parser is applicable.
      *
      * @return bool
      */
@@ -19,12 +19,14 @@ class Range implements SpecParserInterface
     }
 
     /**
-     * Parse provided value into new data
+     * Parse provided value into new data.
      *
      * @param $spec
      * @param $fixture
      * @param $fixtures
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function parse(Fixture $fixture, array $fixtures, $spec)
@@ -46,14 +48,14 @@ class Range implements SpecParserInterface
         $end = $keys[0][1];
 
         if ($start > $end) {
-            throw new \Exception('Range start can not be biggen than range end for fixture ' . $spec);
+            throw new \Exception('Range start can not be biggen than range end for fixture '.$spec);
         }
 
-        for ($i = $start; $i <= $end; $i++) {
+        for ($i = $start; $i <= $end; ++$i) {
             $newFixture = clone $fixture;
-            $newFixture->setName($name . $i);
+            $newFixture->setName($name.$i);
             $newFixture->setSpec($i);
-            $fixtures[$name . $i] = $newFixture;
+            $fixtures[$name.$i] = $newFixture;
         }
 
         return $fixtures;

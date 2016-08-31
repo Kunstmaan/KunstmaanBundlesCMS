@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FixturesBundle\Builder;
 
-
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 
 interface BuilderInterface
