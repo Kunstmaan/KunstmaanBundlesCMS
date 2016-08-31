@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command to populate all indexes. Use the 'full' argument when you want to delete and add all indexes again
+ * Command to populate all indexes. Use the 'full' argument when you want to delete and add all indexes again.
  *
  * It will load the SearchConfigurationChain and call the populateIndex() method on each SearchConfiguration
  */
@@ -28,7 +28,7 @@ class PopulateIndexCommand extends ContainerAwareCommand
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
-     * @return null|int  null or 0 if everything went fine, or an error code
+     * @return null|int null or 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -41,12 +41,12 @@ class PopulateIndexCommand extends ContainerAwareCommand
 
         $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.search_configuration_chain');
         /**
-         * @var string                       $alias
+         * @var string
          * @var SearchConfigurationInterface $searchConfiguration
          */
         foreach ($searchConfigurationChain->getConfigurations() as $alias => $searchConfiguration) {
             $searchConfiguration->populateIndex();
-            $output->writeln('Index populated : ' . $alias);
+            $output->writeln('Index populated : '.$alias);
         }
     }
 }

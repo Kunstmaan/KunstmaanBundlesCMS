@@ -3,23 +3,22 @@
 namespace Kunstmaan\SearchBundle\Configuration;
 
 /**
- * Interface for a SearchConfiguration
+ * Interface for a SearchConfiguration.
  */
 interface SearchConfigurationInterface
 {
     /**
-     * Create indexes
+     * Create indexes.
      */
     public function createIndex();
 
     /**
-     * Populate the indexes
+     * Populate the indexes.
      */
     public function populateIndex();
 
     /**
-     * Delete indexes
+     * Delete indexes.
      */
     public function deleteIndex();
-
 }
