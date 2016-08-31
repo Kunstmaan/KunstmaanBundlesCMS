@@ -36,14 +36,14 @@ class Redirect extends AbstractEntity
     private $target;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="permanent", type="boolean")
      */
     private $permanent;
 
     /**
-     * Get domain
+     * Get domain.
      *
      * @return string
      */
@@ -53,9 +53,10 @@ class Redirect extends AbstractEntity
     }
 
     /**
-     * Set domain
+     * Set domain.
      *
      * @param string $domain
+     *
      * @return Redirect
      */
     public function setDomain($domain)
@@ -66,9 +67,10 @@ class Redirect extends AbstractEntity
     }
 
     /**
-     * Set origin
+     * Set origin.
      *
      * @param string $origin
+     *
      * @return Redirect
      */
     public function setOrigin($origin)
@@ -79,9 +81,9 @@ class Redirect extends AbstractEntity
     }
 
     /**
-     * Get origin
+     * Get origin.
      *
-     * @return string 
+     * @return string
      */
     public function getOrigin()
     {
@@ -89,9 +91,10 @@ class Redirect extends AbstractEntity
     }
 
     /**
-     * Set target
+     * Set target.
      *
      * @param string $target
+     *
      * @return Redirect
      */
     public function setTarget($target)
@@ -102,9 +105,9 @@ class Redirect extends AbstractEntity
     }
 
     /**
-     * Get target
+     * Get target.
      *
-     * @return string 
+     * @return string
      */
     public function getTarget()
     {
@@ -112,9 +115,10 @@ class Redirect extends AbstractEntity
     }
 
     /**
-     * Set permanent
+     * Set permanent.
      *
-     * @param boolean $permanent
+     * @param bool $permanent
+     *
      * @return Redirect
      */
     public function setPermanent($permanent)
@@ -125,9 +129,9 @@ class Redirect extends AbstractEntity
     }
 
     /**
-     * Get permanent
+     * Get permanent.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPermanent()
     {

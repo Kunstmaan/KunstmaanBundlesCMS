@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\RedirectBundle\Form;
 
-use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,7 +34,7 @@ class RedirectAdminType extends AbstractType
                 'choices' => $domains,
                 'required' => true,
                 'expanded' => false,
-                'multiple' => false
+                'multiple' => false,
             ));
         }
 
@@ -62,7 +61,7 @@ class RedirectAdminType extends AbstractType
     /**
      * Configures the options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {

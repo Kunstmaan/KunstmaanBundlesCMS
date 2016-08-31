@@ -17,8 +17,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     private $domainConfiguration;
 
     /**
-     * @param EntityManager $em The entity manager
-     * @param AclHelper $aclHelper The acl helper
+     * @param EntityManager                $em                  The entity manager
+     * @param AclHelper                    $aclHelper           The acl helper
      * @param DomainConfigurationInterface $domainConfiguration
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null, DomainConfigurationInterface $domainConfiguration)
@@ -31,7 +31,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -44,7 +44,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Build filters for admin list
+     * Build filters for admin list.
      */
     public function buildFilters()
     {
@@ -75,7 +75,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Get bundle name
+     * Get bundle name.
      *
      * @return string
      */
@@ -85,7 +85,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Get entity name
+     * Get entity name.
      *
      * @return string
      */

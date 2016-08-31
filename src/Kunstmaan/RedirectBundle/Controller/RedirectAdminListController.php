@@ -29,7 +29,7 @@ class RedirectAdminListController extends AdminListController
     }
 
     /**
-     * The index action
+     * The index action.
      *
      * @Route("/", name="kunstmaanredirectbundle_admin_redirect")
      */
@@ -39,10 +39,11 @@ class RedirectAdminListController extends AdminListController
     }
 
     /**
-     * The add action
+     * The add action.
      *
      * @Route("/add", name="kunstmaanredirectbundle_admin_redirect_add")
      * @Method({"GET", "POST"})
+     *
      * @return array
      */
     public function addAction(Request $request)
@@ -51,7 +52,7 @@ class RedirectAdminListController extends AdminListController
     }
 
     /**
-     * The edit action
+     * The edit action.
      *
      * @param int $id
      *
@@ -66,7 +67,7 @@ class RedirectAdminListController extends AdminListController
     }
 
     /**
-     * The delete action
+     * The delete action.
      *
      * @param int $id
      *
@@ -81,12 +82,13 @@ class RedirectAdminListController extends AdminListController
     }
 
     /**
-     * The export action
+     * The export action.
      *
      * @param string $_format
      *
      * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx"}, name="kunstmaanredirectbundle_admin_redirect_export")
      * @Method({"GET", "POST"})
+     *
      * @return array
      */
     public function exportAction(Request $request, $_format)
