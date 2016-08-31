@@ -1,9 +1,9 @@
 <?php
+
 namespace Kunstmaan\VotingBundle\Event;
 
-
-interface EventInterface {
-
+interface EventInterface
+{
     public function getRequest();
 
     public function getReference();

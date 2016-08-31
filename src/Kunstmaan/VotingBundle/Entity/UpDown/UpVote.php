@@ -6,12 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\VotingBundle\Entity\AbstractVote;
 
 /**
- * A standard up vote
+ * A standard up vote.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\VotingBundle\Repository\UpDown\UpVoteRepository")
  * @ORM\Table(name="kuma_voting_upvote")
  */
 class UpVote extends AbstractVote
 {
-
 }

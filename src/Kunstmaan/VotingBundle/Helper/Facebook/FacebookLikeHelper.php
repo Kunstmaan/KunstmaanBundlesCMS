@@ -1,14 +1,14 @@
 <?php
 
 namespace Kunstmaan\VotingBundle\Helper\Facebook;
+
 use Kunstmaan\VotingBundle\Helper\VotingHelper;
 
 /**
- * Helper class for Facebook Likes
+ * Helper class for Facebook Likes.
  */
 class FacebookLikeHelper extends VotingHelper
 {
-
     /**
      * @param string $reference Reference to filter the Facebook Like by
      *

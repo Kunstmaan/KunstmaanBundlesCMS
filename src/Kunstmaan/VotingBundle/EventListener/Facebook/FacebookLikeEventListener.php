@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Container;
 
 class FacebookLikeEventListener
 {
-
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -44,5 +43,4 @@ class FacebookLikeEventListener
         $this->em->persist($vote);
         $this->em->flush();
     }
-
 }

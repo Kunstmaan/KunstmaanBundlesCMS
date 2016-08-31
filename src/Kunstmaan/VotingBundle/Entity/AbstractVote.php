@@ -16,9 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
 class AbstractVote
 {
     /**
-     * Default value of any vote is 1
+     * Default value of any vote is 1.
      *
-     * @var integer
+     * @var int
      */
     const DEFAULT_VALUE = 1;
 
@@ -38,7 +38,7 @@ class AbstractVote
 
     /**
      * Use this to add your own identifier to which this vote is linked
-     * Could be an integer (ID), string (URL, category, path, ...), or any other value for that matter
+     * Could be an integer (ID), string (URL, category, path, ...), or any other value for that matter.
      *
      * @var string
      *
@@ -47,9 +47,9 @@ class AbstractVote
     protected $reference;
 
     /**
-     * Use this field to add the ID of a meta entity containing meta information of this vote
+     * Use this field to add the ID of a meta entity containing meta information of this vote.
      *
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -63,14 +63,14 @@ class AbstractVote
     protected $ip;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     protected $value;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -80,7 +80,7 @@ class AbstractVote
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id The unique identifier
      */

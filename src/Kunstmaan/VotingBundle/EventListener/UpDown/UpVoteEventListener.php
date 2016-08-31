@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Container;
 
 class UpVoteEventListener
 {
-
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -44,5 +43,4 @@ class UpVoteEventListener
         $this->em->persist($vote);
         $this->em->flush();
     }
-
 }

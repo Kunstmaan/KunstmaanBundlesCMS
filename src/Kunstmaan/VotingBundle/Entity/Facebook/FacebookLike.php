@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\VotingBundle\Entity\AbstractVote;
 
 /**
- * A Facebook Like Event
+ * A Facebook Like Event.
  *
  * The reference will hold the URL that has been liked
  *
@@ -15,5 +15,4 @@ use Kunstmaan\VotingBundle\Entity\AbstractVote;
  */
 class FacebookLike extends AbstractVote
 {
-
 }

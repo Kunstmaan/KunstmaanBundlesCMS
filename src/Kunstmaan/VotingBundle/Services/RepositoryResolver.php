@@ -3,7 +3,6 @@
 namespace Kunstmaan\VotingBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
@@ -11,30 +10,32 @@ use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 
 /**
- * Helper class get repository for an event
+ * Helper class get repository for an event.
  */
 class RepositoryResolver
 {
     /**
-     * Entity manager
+     * Entity manager.
      */
     protected $em;
-    
+
     /**
-    * Constructor
-    * @param Object $em entity manager
-    */
+     * Constructor.
+     *
+     * @param object $em entity manager
+     */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
     /**
-    * Return repository for event
-    * @param Event $event event
-    *
-    * @return Repository
-    */
+     * Return repository for event.
+     *
+     * @param Event $event event
+     *
+     * @return Repository
+     */
     public function getRepositoryForEvent($event)
     {
         $repository = null;
@@ -63,14 +64,14 @@ class RepositoryResolver
     }
 
     /**
-    * Return a repository By name
-    * @param string $name name
-    *
-    * @return Repository
-    */
+     * Return a repository By name.
+     *
+     * @param string $name name
+     *
+     * @return Repository
+     */
     protected function getRepository($name)
     {
         return $this->em->getRepository($name);
     }
-
 }

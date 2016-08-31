@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Container;
 
 class FacebookSendEventListener
 {
-
     /**
      * @var \Doctrine\ORM\EntityManager
      */
@@ -44,5 +43,4 @@ class FacebookSendEventListener
         $this->em->persist($vote);
         $this->em->flush();
     }
-
 }

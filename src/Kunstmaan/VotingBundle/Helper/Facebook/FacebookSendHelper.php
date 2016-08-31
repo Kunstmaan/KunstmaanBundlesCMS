@@ -1,14 +1,14 @@
 <?php
 
 namespace Kunstmaan\VotingBundle\Helper\Facebook;
+
 use Kunstmaan\VotingBundle\Helper\VotingHelper;
 
 /**
- * Helper class for Facebook Sends
+ * Helper class for Facebook Sends.
  */
 class FacebookSendHelper extends VotingHelper
 {
-
     /**
      * @param string $reference Reference to filter the Facebook Send by
      *

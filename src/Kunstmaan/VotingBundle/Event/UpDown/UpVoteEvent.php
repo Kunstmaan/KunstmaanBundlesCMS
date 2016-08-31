@@ -7,11 +7,10 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Event when an Up vote has been triggered
+ * Event when an Up vote has been triggered.
  */
 class UpVoteEvent extends Event implements EventInterface
 {
-
     private $request;
 
     private $reference;
@@ -45,5 +44,4 @@ class UpVoteEvent extends Event implements EventInterface
     {
         return $this->value;
     }
-
 }
