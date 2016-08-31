@@ -31,5 +31,4 @@ class IndexNodeEvent extends Event
     {
         return $this->page;
     }
-
 }

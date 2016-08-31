@@ -26,7 +26,7 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
      */
     public function __construct(EntityManager $em, IndexablePagePartsService $indexablePagePartsService)
     {
-        $this->em                        = $em;
+        $this->em = $em;
         $this->indexablePagePartsService = $indexablePagePartsService;
     }
 
@@ -52,10 +52,10 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     public function getParentPage(HasNodeInterface $page, $locale)
     {
         /** @var Node $node */
-        $node            = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
-        $parentNode      = $node->getParent();
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
+        $parentNode = $node->getParent();
         $nodeTranslation = $parentNode->getNodeTranslation($locale);
-        $parentPage      = $nodeTranslation->getRef($this->em);
+        $parentPage = $nodeTranslation->getRef($this->em);
 
         return $parentPage;
     }
@@ -76,12 +76,12 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
         $contextName = 'main',
         array $parameters = array()
     ) {
-        $template       = $env->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
-        $pageparts      = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
+        $template = $env->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
+        $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
         $newTwigContext = array_merge(
             $parameters,
             array(
-                'pageparts' => $pageparts
+                'pageparts' => $pageparts,
             )
         );
         $newTwigContext = array_merge($newTwigContext, $twigContext);
