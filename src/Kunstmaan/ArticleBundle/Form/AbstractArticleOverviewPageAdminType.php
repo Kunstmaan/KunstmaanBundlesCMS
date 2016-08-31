@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * The admin type for abstract article overview pages
+ * The admin type for abstract article overview pages.
  */
 class AbstractArticleOverviewPageAdminType extends PageAdminType
 {
@@ -30,12 +30,12 @@ class AbstractArticleOverviewPageAdminType extends PageAdminType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver The resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractOverviewArticlePage'
+            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractOverviewArticlePage',
         ));
     }
 

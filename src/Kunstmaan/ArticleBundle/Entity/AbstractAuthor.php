@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 
-class AbstractAuthor extends AbstractEntity {
-
+class AbstractAuthor extends AbstractEntity
+{
     /**
      * @var string
      *
@@ -51,5 +51,4 @@ class AbstractAuthor extends AbstractEntity {
     {
         return new AbstractAuthorAdminType();
     }
-
 }
