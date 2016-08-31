@@ -3,7 +3,6 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
@@ -17,26 +16,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Settings controller handling everything related to creating, editing, deleting and listing roles in an admin list
+ * Settings controller handling everything related to creating, editing, deleting and listing roles in an admin list.
  */
 class RolesController extends BaseSettingsController
 {
     /**
-     * List roles
+     * List roles.
      *
      * @Route   ("/", name="KunstmaanUserManagementBundle_settings_roles")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function listAction(Request $request)
     {
         $this->checkPermission();
 
-        $em        = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator($em));
+        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -45,13 +45,14 @@ class RolesController extends BaseSettingsController
     }
 
     /**
-     * Add a role
+     * Add a role.
      *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_roles_add")
      * @Method({"GET", "POST"})
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return array|RedirectResponse
      */
     public function addAction(Request $request)
@@ -84,7 +85,7 @@ class RolesController extends BaseSettingsController
     }
 
     /**
-     * Edit a role
+     * Edit a role.
      *
      * @param int $id
      *
@@ -93,6 +94,7 @@ class RolesController extends BaseSettingsController
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return array|RedirectResponse
      */
     public function editAction(Request $request, $id)
@@ -122,12 +124,12 @@ class RolesController extends BaseSettingsController
 
         return array(
             'form' => $form->createView(),
-            'role' => $role
+            'role' => $role,
         );
     }
 
     /**
-     * Delete a role
+     * Delete a role.
      *
      * @param int $id
      *
@@ -135,6 +137,7 @@ class RolesController extends BaseSettingsController
      * @Method({"GET", "POST"})
      *
      * @throws AccessDeniedException
+     *
      * @return RedirectResponse
      */
     public function deleteAction($id)
@@ -158,5 +161,4 @@ class RolesController extends BaseSettingsController
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
     }
-
 }

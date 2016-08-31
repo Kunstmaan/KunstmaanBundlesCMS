@@ -22,12 +22,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
+ * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list.
  */
 class UsersController extends BaseSettingsController
 {
     /**
-     * List users
+     * List users.
      *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_users")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
@@ -50,7 +50,7 @@ class UsersController extends BaseSettingsController
         $configurator = new $configuratorClassName($em);
 
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator);
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
         return array(
@@ -71,7 +71,7 @@ class UsersController extends BaseSettingsController
     }
 
     /**
-     * Add a user
+     * Add a user.
      *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_users_add")
      * @Method({"GET", "POST"})
@@ -124,7 +124,7 @@ class UsersController extends BaseSettingsController
     }
 
     /**
-     * Edit a user
+     * Edit a user.
      *
      * @param int $id
      *
@@ -133,6 +133,7 @@ class UsersController extends BaseSettingsController
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function editAction(Request $request, $id)
@@ -173,7 +174,6 @@ class UsersController extends BaseSettingsController
         $form = $this->createForm($formFqn, $user, $options);
 
         if ($request->isMethod('POST')) {
-
             if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
@@ -213,15 +213,16 @@ class UsersController extends BaseSettingsController
     }
 
     /**
-     * Delete a user
+     * Delete a user.
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete")
      * @Method({"GET", "POST"})
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function deleteAction(Request $request, $id)

@@ -24,7 +24,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * In this method you can add children for a specific parent, but also remove and change the already created children.
      *
      * @param MenuBuilder $menu      The MenuBuilder
      * @param MenuItem[]  &$children The current children
@@ -35,8 +35,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
     {
         if (is_null($parent)) {
             return;
-        }
-        else if ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
                 $menuItem = new MenuItem($menu);
                 $menuItem

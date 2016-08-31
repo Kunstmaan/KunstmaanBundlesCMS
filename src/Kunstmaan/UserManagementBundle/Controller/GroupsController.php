@@ -3,33 +3,31 @@
 namespace Kunstmaan\UserManagementBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Settings controller handling everything related to creating, editing, deleting and listing groups in an admin list
+ * Settings controller handling everything related to creating, editing, deleting and listing groups in an admin list.
  */
 class GroupsController extends BaseSettingsController
 {
     /**
-     * List groups
+     * List groups.
      *
      * @Route("/", name="KunstmaanUserManagementBundle_settings_groups")
      * @Template("KunstmaanAdminListBundle:Default:list.html.twig")
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function listAction(Request $request)
@@ -39,7 +37,7 @@ class GroupsController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator($em));
+        $adminlist = $this->get('kunstmaan_adminlist.factory')->createList(new GroupAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -48,13 +46,14 @@ class GroupsController extends BaseSettingsController
     }
 
     /**
-     * Add a group
+     * Add a group.
      *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_groups_add")
      * @Method({"GET", "POST"})
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function addAction(Request $request)
@@ -83,7 +82,7 @@ class GroupsController extends BaseSettingsController
     }
 
     /**
-     * Edit a group
+     * Edit a group.
      *
      * @param int $id
      *
@@ -92,6 +91,7 @@ class GroupsController extends BaseSettingsController
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function editAction(Request $request, $id)
@@ -116,13 +116,13 @@ class GroupsController extends BaseSettingsController
         }
 
         return array(
-            'form'  => $form->createView(),
-            'group' => $group
+            'form' => $form->createView(),
+            'group' => $group,
         );
     }
 
     /**
-     * Delete a group
+     * Delete a group.
      *
      * @param int $id
      *
@@ -131,6 +131,7 @@ class GroupsController extends BaseSettingsController
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return RedirectResponse
      */
     public function deleteAction($id)
@@ -149,5 +150,4 @@ class GroupsController extends BaseSettingsController
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_groups'));
     }
-
 }
