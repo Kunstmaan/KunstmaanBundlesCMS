@@ -3,7 +3,7 @@
 namespace Kunstmaan\PagePartBundle\PageTemplate;
 
 /**
- * Definition of a region in a page template
+ * Definition of a region in a page template.
  */
 class Region
 {

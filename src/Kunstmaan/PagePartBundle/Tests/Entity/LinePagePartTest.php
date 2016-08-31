@@ -5,7 +5,7 @@ namespace Kunstmaan\PagePartBundle\Tests\Entity;
 use Kunstmaan\PagePartBundle\Entity\LinePagePart;
 
 /**
- * LinePagePartTest
+ * LinePagePartTest.
  */
 class LinePagePartTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,5 +54,4 @@ class LinePagePartTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Kunstmaan\PagePartBundle\Form\LinePagePartAdminType', $this->object->getDefaultAdminType());
     }
-
 }

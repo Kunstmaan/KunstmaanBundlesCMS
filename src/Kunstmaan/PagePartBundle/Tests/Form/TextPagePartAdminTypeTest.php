@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Form;
+
 use Kunstmaan\PagePartBundle\Tests\Form\PagePartAdminTypeTestCase;
 
 /**
@@ -19,7 +21,7 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->object = new TextPagePartAdminType;
+        $this->object = new TextPagePartAdminType();
     }
 
     /**
@@ -46,6 +48,6 @@ class TextPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\TextPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\TextPagePart');
     }
 }

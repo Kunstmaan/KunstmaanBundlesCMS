@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Entity;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -7,14 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
 
 /**
- * Class that defines a header page part object to add to a page
+ * Class that defines a header page part object to add to a page.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_header_page_parts")
  */
 class HeaderPagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -35,7 +35,7 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * Set niv
+     * Set niv.
      *
      * @param int $niv
      *
@@ -49,7 +49,7 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * Get niv
+     * Get niv.
      *
      * @return int
      */
@@ -83,7 +83,7 @@ class HeaderPagePart extends AbstractPagePart
      */
     public function __toString()
     {
-        return "HeaderPagePart " . $this->getTitle();
+        return 'HeaderPagePart '.$this->getTitle();
     }
 
     /**
@@ -91,7 +91,7 @@ class HeaderPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanPagePartBundle:HeaderPagePart:view.html.twig";
+        return 'KunstmaanPagePartBundle:HeaderPagePart:view.html.twig';
     }
 
     /**

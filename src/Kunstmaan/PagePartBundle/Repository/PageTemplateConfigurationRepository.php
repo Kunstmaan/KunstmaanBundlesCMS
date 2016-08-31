@@ -8,11 +8,10 @@ use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 
 /**
- * PageTemplateConfigurationRepository
+ * PageTemplateConfigurationRepository.
  */
 class PageTemplateConfigurationRepository extends EntityRepository
 {
-
     /**
      * @param HasPageTemplateInterface $page
      *
@@ -22,5 +21,4 @@ class PageTemplateConfigurationRepository extends EntityRepository
     {
         return $this->findOneBy(array('pageId' => $page->getId(), 'pageEntityName' => ClassLookup::getClass($page)));
     }
-
 }

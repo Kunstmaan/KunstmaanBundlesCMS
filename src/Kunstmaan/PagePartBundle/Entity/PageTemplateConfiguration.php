@@ -8,7 +8,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 
 /**
- * Configuration for page templates
+ * Configuration for page templates.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\PagePartBundle\Repository\PageTemplateConfigurationRepository")
  * @ORM\Table(name="kuma_page_template_configuration", indexes={@ORM\Index(name="idx_page_template_config_search", columns={"page_id", "page_entity_name"})})
@@ -31,9 +31,9 @@ class PageTemplateConfiguration extends AbstractEntity
     protected $pageTemplate;
 
     /**
-     * Get pageId
+     * Get pageId.
      *
-     * @return integer
+     * @return int
      */
     public function getPageId()
     {
@@ -41,7 +41,7 @@ class PageTemplateConfiguration extends AbstractEntity
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return PageTemplateConfiguration
      */
@@ -53,7 +53,7 @@ class PageTemplateConfiguration extends AbstractEntity
     }
 
     /**
-     * Get pageEntityname
+     * Get pageEntityname.
      *
      * @return string
      */
@@ -63,7 +63,7 @@ class PageTemplateConfiguration extends AbstractEntity
     }
 
     /**
-     * Set pageEntityname
+     * Set pageEntityname.
      *
      * @param string $pageEntityName
      *
@@ -77,7 +77,7 @@ class PageTemplateConfiguration extends AbstractEntity
     }
 
     /**
-     * get pageTemplate
+     * get pageTemplate.
      *
      * @return string
      */
@@ -87,7 +87,7 @@ class PageTemplateConfiguration extends AbstractEntity
     }
 
     /**
-     * Set pagetemplate
+     * Set pagetemplate.
      *
      * @param string $pageTemplate
      *

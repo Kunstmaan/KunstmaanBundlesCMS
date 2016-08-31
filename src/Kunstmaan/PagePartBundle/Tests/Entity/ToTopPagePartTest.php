@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
+
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 
 /**

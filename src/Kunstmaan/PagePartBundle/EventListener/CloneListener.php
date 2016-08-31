@@ -11,11 +11,10 @@ use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationRe
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 
 /**
- * This event will make sure pageparts are being copied when deepClone is done on an entity implementing hasPagePartsInterface
+ * This event will make sure pageparts are being copied when deepClone is done on an entity implementing hasPagePartsInterface.
  */
 class CloneListener
 {
-
     /**
      * @var EntityManager|EntityManagerInterface
      */
@@ -35,8 +34,7 @@ class CloneListener
         EntityManagerInterface $em,
         PagePartConfigurationReaderInterface $pagePartReader,
         PageTemplateConfigurationService $pageTemplateConfiguratiorService
-    )
-    {
+    ) {
         $this->em = $em;
         $this->pagePartReader = $pagePartReader;
         $this->pageTemplateConfiguratiorService = $pageTemplateConfiguratiorService;

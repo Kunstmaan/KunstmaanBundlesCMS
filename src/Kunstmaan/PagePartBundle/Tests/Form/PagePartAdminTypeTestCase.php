@@ -8,11 +8,10 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 
 /**
- * PagePartAdminTypeTestCase
+ * PagePartAdminTypeTestCase.
  */
 class PagePartAdminTypeTestCase extends WebTestCase
 {

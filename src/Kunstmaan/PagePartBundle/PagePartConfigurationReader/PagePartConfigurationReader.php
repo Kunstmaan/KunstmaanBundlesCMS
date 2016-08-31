@@ -7,8 +7,6 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 
 class PagePartConfigurationReader implements PagePartConfigurationReaderInterface
 {
-
-
     /**
      * @var PagePartAdminConfiguratorInterface[]
      */
@@ -28,6 +26,7 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
      * @param HasPagePartsInterface $page
      *
      * @throws \Exception
+     *
      * @return PagePartAdminConfiguratorInterface[]
      */
     public function getPagePartAdminConfigurators(HasPagePartsInterface $page)
@@ -42,7 +41,7 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
                 $this->configurators[$value] = $this->parser->parse($value, $this->configurators);
                 $pagePartAdminConfigurators[] = $this->configurators[$value];
             } else {
-                throw new \Exception("don't know how to handle the pagePartAdminConfiguration " . get_class($value));
+                throw new \Exception("don't know how to handle the pagePartAdminConfiguration ".get_class($value));
             }
         }
 
@@ -53,6 +52,7 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
      * @param HasPagePartsInterface $page
      *
      * @throws \Exception
+     *
      * @return string[]
      */
     public function getPagePartContexts(HasPagePartsInterface $page)
@@ -69,5 +69,4 @@ class PagePartConfigurationReader implements PagePartConfigurationReaderInterfac
 
         return $result;
     }
-
 }

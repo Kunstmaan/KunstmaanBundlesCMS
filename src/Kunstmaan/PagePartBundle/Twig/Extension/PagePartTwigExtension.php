@@ -8,11 +8,10 @@ use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 /**
- * PagePartTwigExtension
+ * PagePartTwigExtension.
  */
 class PagePartTwigExtension extends \Twig_Extension
 {
-
     protected $em;
 
     /**
@@ -29,7 +28,7 @@ class PagePartTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true,'is_safe' => array('html'))),
+            new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
             new \Twig_SimpleFunction('getpageparts', array('needs_environment' => true, $this, 'getPageParts')),
         );
     }
@@ -43,15 +42,15 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderPageParts(\Twig_Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = "main", array $parameters = array())
+    public function renderPageParts(\Twig_Environment $env, array $twigContext, HasPagePartsInterface $page, $contextName = 'main', array $parameters = array())
     {
-        $template = $env->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
+        $template = $env->loadTemplate('KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig');
         /* @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $contextName);
         $newTwigContext = array_merge($parameters, array(
             'pageparts' => $pageparts,
-            'page' => $page
+            'page' => $page,
         ));
         $newTwigContext = array_merge($newTwigContext, $twigContext);
 
@@ -64,9 +63,9 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(HasPagePartsInterface $page, $context = "main")
+    public function getPageParts(HasPagePartsInterface $page, $context = 'main')
     {
-        /**@var $entityRepository PagePartRefRepository */
+        /** @var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
         $pageparts = $entityRepository->getPageParts($page, $context);
 
@@ -80,5 +79,4 @@ class PagePartTwigExtension extends \Twig_Extension
     {
         return 'pageparts_twig_extension';
     }
-
 }

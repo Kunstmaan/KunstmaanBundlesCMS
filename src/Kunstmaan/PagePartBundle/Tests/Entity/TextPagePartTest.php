@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
+
 use Kunstmaan\PagePartBundle\Entity\TextPagePart;
 
 /**
@@ -35,8 +37,8 @@ class TextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetGetContent()
     {
-        $this->object->setContent("tèst content with s3ç!àL");
-        $this->assertEquals($this->object->getContent(), "tèst content with s3ç!àL");
+        $this->object->setContent('tèst content with s3ç!àL');
+        $this->assertEquals($this->object->getContent(), 'tèst content with s3ç!àL');
     }
 
     /**
@@ -46,7 +48,7 @@ class TextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testToString()
     {
-        $this->assertEquals("TextPagePart " . $this->object->getContent(), $this->object->__toString());
+        $this->assertEquals('TextPagePart '.$this->object->getContent(), $this->object->__toString());
     }
 
     /**

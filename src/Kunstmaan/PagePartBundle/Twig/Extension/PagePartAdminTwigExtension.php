@@ -5,7 +5,7 @@ namespace Kunstmaan\PagePartBundle\Twig\Extension;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 
 /**
- * PagePartAdminTwigExtension
+ * PagePartAdminTwigExtension.
  */
 class PagePartAdminTwigExtension extends \Twig_Extension
 {
@@ -20,7 +20,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Renders the HTML for a given pagepart
+     * Renders the HTML for a given pagepart.
      *
      * Example usage in Twig:
      *
@@ -33,25 +33,25 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
      * @param \Twig_Environment $env
-     * @param PagePartAdmin $ppAdmin The pagepart admin to render
-     * @param Form $form The form
-     * @param array $parameters Additional variables passed to the template
-     * @param string $templateName
+     * @param PagePartAdmin     $ppAdmin      The pagepart admin to render
+     * @param Form              $form         The form
+     * @param array             $parameters   Additional variables passed to the template
+     * @param string            $templateName
+     *
      * @return string The html markup
      */
     public function renderWidget(
         \Twig_Environment $env,
-        PagePartAdmin $ppAdmin ,
+        PagePartAdmin $ppAdmin,
         $form = null,
         array $parameters = array(),
         $templateName = 'KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig'
-    )
-    {
+    ) {
         $template = $env->loadTemplate($templateName);
 
         return $template->render(array_merge($parameters, array(
             'pagepartadmin' => $ppAdmin,
-            'form' => $form
+            'form' => $form,
         )));
     }
 

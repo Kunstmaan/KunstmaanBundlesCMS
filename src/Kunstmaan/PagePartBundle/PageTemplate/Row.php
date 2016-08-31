@@ -1,12 +1,12 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\PageTemplate;
 
 /**
- * Definition of a row in a page template
+ * Definition of a row in a page template.
  */
 class Row
 {
-
     /**
      * @var Region[]
      */

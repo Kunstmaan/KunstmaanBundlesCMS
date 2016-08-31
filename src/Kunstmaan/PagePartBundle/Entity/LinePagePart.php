@@ -1,11 +1,12 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
 
 /**
- * LinePagePart
+ * LinePagePart.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_line_page_parts")
@@ -17,7 +18,7 @@ class LinePagePart extends AbstractPagePart
      */
     public function __toString()
     {
-        return "LinePagePart";
+        return 'LinePagePart';
     }
 
     /**
@@ -25,7 +26,7 @@ class LinePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanPagePartBundle:LinePagePart:view.html.twig";
+        return 'KunstmaanPagePartBundle:LinePagePart:view.html.twig';
     }
 
     /**

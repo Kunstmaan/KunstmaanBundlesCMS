@@ -5,14 +5,12 @@ namespace  Kunstmaan\PagePartBundle\Helper;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateInterface;
 
 /**
- * HasPageTemplateInterface
+ * HasPageTemplateInterface.
  */
 interface HasPageTemplateInterface extends HasPagePartsInterface
 {
-
     /**
      * @return PageTemplateInterface[]
      */
     public function getPageTemplates();
-
 }
