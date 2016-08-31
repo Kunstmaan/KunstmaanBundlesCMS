@@ -15,16 +15,13 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Templating\EngineInterface;
 
-
 /**
- * Class ConfigController
- * @package Kunstmaan\ConfigBundle\Controller
+ * Class ConfigController.
  *
  * @Route(service="kunstmaan_config.controller.config")
  */
 class ConfigController
 {
-
     /**
      * @var ChainRouter
      */
@@ -41,33 +38,33 @@ class ConfigController
     private $authorizationChecker;
 
     /**
-     * @var EntityManagerInterface $em
+     * @var EntityManagerInterface
      */
     private $em;
 
     /**
-     * @var array $configuration
+     * @var array
      */
     private $configuration;
 
     /**
-     * @var ContainerInterface $container
+     * @var ContainerInterface
      */
     private $container;
 
     /**
-     * @var FormFactoryInterface $formFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
     /**
-     * @param ChainRouter $router
-     * @param EngineInterface $templating
+     * @param ChainRouter                   $router
+     * @param EngineInterface               $templating
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param EntityManagerInterface $em
-     * @param array $configuration
-     * @param ContainerInterface $container
-     * @param FormFactoryInterface $formFactory
+     * @param EntityManagerInterface        $em
+     * @param array                         $configuration
+     * @param ContainerInterface            $container
+     * @param FormFactoryInterface          $formFactory
      */
     public function __construct(ChainRouter $router, EngineInterface $templating, AuthorizationCheckerInterface $authorizationChecker, EntityManagerInterface $em, $configuration, ContainerInterface $container, FormFactoryInterface $formFactory)
     {
@@ -84,12 +81,13 @@ class ConfigController
      * Generates the site config administration form and fills it with a default value if needed.
      *
      * @param Request $request
+     *
      * @return array|RedirectResponse
      */
     public function indexAction(Request $request, $internal_name)
     {
         /**
-         * @var $entity Config
+         * @var Config
          */
         $entity = $this->getConfigEntityByInternalName($internal_name);
         $entityClass = get_class($entity);
@@ -122,7 +120,6 @@ class ConfigController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-
                 $this->em->persist($config);
                 $this->em->flush();
 
@@ -140,15 +137,16 @@ class ConfigController
 
     /**
      * Get site config entity by a given internal name
-     * If entity not found, throw new NotFoundHttpException()
+     * If entity not found, throw new NotFoundHttpException().
      *
      * @param string $internal_name
+     *
      * @return mixed
      */
     private function getConfigEntityByInternalName($internal_name)
     {
         foreach ($this->configuration['entities'] as $class) {
-            $entity = new $class;
+            $entity = new $class();
 
             if ($entity->getInternalName() == $internal_name) {
                 return $entity;
@@ -159,7 +157,7 @@ class ConfigController
     }
 
     /**
-     * Check permission
+     * Check permission.
      *
      * @throws AccessDeniedException
      */

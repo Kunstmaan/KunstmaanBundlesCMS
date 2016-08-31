@@ -2,11 +2,10 @@
 
 namespace Kunstmaan\ConfigBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * The Abstract class for the config entities
+ * The Abstract class for the config entities.
  */
 abstract class AbstractConfig extends AbstractEntity implements ConfigurationInterface
 {
@@ -14,5 +13,4 @@ abstract class AbstractConfig extends AbstractEntity implements ConfigurationInt
     {
         return array('ROLE_SUPER_ADMIN');
     }
-
 }
