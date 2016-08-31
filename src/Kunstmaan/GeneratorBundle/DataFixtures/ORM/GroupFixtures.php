@@ -35,7 +35,7 @@ class GroupFixtures extends AbstractFixture implements OrderedFixtureInterface
         $group3 = $this->createGroup($manager, 'Super administrators', array(
             $this->getReference(RoleFixtures::REFERENCE_PERMISSIONMANAGER_ROLE),
             $this->getReference(RoleFixtures::REFERENCE_ADMIN_ROLE),
-            $this->getReference(RoleFixtures::REFERENCE_GUEST_ROLE),
+            $this->getReference(RoleFixtures::REFERENCE_SUPERADMIN_ROLE),
         ));
 
         $manager->flush();
