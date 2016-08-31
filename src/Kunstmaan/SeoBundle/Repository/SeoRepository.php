@@ -3,19 +3,17 @@
 namespace Kunstmaan\SeoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
- * Repository for Seo
+ * Repository for Seo.
  */
 class SeoRepository extends EntityRepository
 {
-
     /**
-     * Find the seo information for the given entity
+     * Find the seo information for the given entity.
      *
      * @param AbstractEntity $entity
      *
@@ -42,5 +40,4 @@ class SeoRepository extends EntityRepository
 
         return $seo;
     }
-
 }

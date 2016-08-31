@@ -12,7 +12,7 @@ use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 /**
- * This will add a seo tab on each page
+ * This will add a seo tab on each page.
  */
 class NodeListener
 {

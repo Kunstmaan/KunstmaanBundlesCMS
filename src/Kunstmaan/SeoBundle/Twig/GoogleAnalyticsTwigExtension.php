@@ -2,15 +2,14 @@
 
 namespace Kunstmaan\SeoBundle\Twig;
 
-use Kunstmaan\SeoBundle\Helper\Order,
-    Kunstmaan\SeoBundle\Helper\OrderConverter,
-    Kunstmaan\SeoBundle\Helper\OrderPreparer;
-
-use Twig_Extension,
-    Twig_Environment;
+use Kunstmaan\SeoBundle\Helper\Order;
+use Kunstmaan\SeoBundle\Helper\OrderConverter;
+use Kunstmaan\SeoBundle\Helper\OrderPreparer;
+use Twig_Extension;
+use Twig_Environment;
 
 /**
- * Twig extensions for Google Analytics
+ * Twig extensions for Google Analytics.
  */
 class GoogleAnalyticsTwigExtension extends Twig_Extension
 {
@@ -45,9 +44,8 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         );
     }
 
-
     /**
-     * @param string $id The Google Analytics Account ID.
+     * @param string $id The Google Analytics Account ID
      */
     public function setAccountID($id)
     {
@@ -78,10 +76,9 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
      * @param $environment \Twig_Environment
      * @param $options     array|null        Example: {account_id: 'UA-XXXXX-Y'}
      *
-     * @return string The HTML rendered.
+     * @return string The HTML rendered
      *
-     * @throws \Twig_Error_Runtime When the Google Analytics ID is nowhere to be found.
-     *
+     * @throws \Twig_Error_Runtime When the Google Analytics ID is nowhere to be found
      */
     public function renderInitialize(\Twig_Environment $environment, $options = null)
     {
@@ -107,17 +104,16 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         return $template->render($options);
     }
 
-
     /**
      * @param Twig_Environment $environment
      * @param Order            $order
      *
-     * @return string The HTML rendered.
+     * @return string The HTML rendered
      */
     public function renderECommerceTracking(\Twig_Environment $environment, Order $order)
     {
-        $order    = $this->orderPreparer->prepare($order);
-        $options  = $this->orderConverter->convert($order);
+        $order = $this->orderPreparer->prepare($order);
+        $options = $this->orderConverter->convert($order);
         $template = $environment->loadTemplate(
             'KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:ecommerce_tracking.html.twig'
         );
@@ -133,13 +129,12 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         return 'kuma_google_analytics_twig_extension';
     }
 
-
     /**
      * Prefer the given option if already set. Otherwise set the value given.
      *
-     * @param array  &$arr   This is modified in place.
-     * @param string $option The key in the $arr array.
-     * @param mixed  $value  The new value if the option wasn't set already.
+     * @param array  &$arr   This is modified in place
+     * @param string $option The key in the $arr array
+     * @param mixed  $value  The new value if the option wasn't set already
      */
     private function setOptionIfNotSet(&$arr, $option, $value)
     {
@@ -151,13 +146,13 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
     /**
      * Check if an option is set.
      *
-     * @param array  $arr    The array to check.
-     * @param string $option The key in the $arr array.
+     * @param array  $arr    The array to check
+     * @param string $option The key in the $arr array
      *
      * @return bool
      */
     private function isOptionSet($arr, $option)
     {
-        return (!isset($arr[$option]) || !empty($arr[$option]));
+        return !isset($arr[$option]) || !empty($arr[$option]);
     }
 }

@@ -5,9 +5,8 @@ namespace Kunstmaan\SeoBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanSeoBundle
+ * KunstmaanSeoBundle.
  */
 class KunstmaanSeoBundle extends Bundle
 {
-
 }

@@ -3,15 +3,12 @@
 namespace Kunstmaan\SeoBundle\Helper;
 
 /**
- * Class OrderItem
- *
- * @package Kunstmaan\SeoBundle\Helper
+ * Class OrderItem.
  */
 class OrderItem
 {
-
     /**
-     * @var string REQUIRED! The unique productcode.
+     * @var string REQUIRED! The unique productcode
      */
     protected $sku;
 
@@ -36,7 +33,7 @@ class OrderItem
     }
 
     /**
-     * @var string The name of the product.
+     * @var string The name of the product
      */
     protected $name = '';
 
@@ -61,7 +58,7 @@ class OrderItem
     }
 
     /**
-     * @var string Category or variation.
+     * @var string Category or variation
      */
     protected $categoryOrVariation = '';
 
@@ -86,7 +83,7 @@ class OrderItem
     }
 
     /**
-     * @var number REQUIRED! The price of a single unity.
+     * @var number REQUIRED! The price of a single unity
      */
     protected $unitPrice;
 
@@ -99,7 +96,7 @@ class OrderItem
      */
     public function setUnitPrice($unitPrice)
     {
-        $this->unitPrice = (Double) $unitPrice;
+        $this->unitPrice = (float) $unitPrice;
 
         return $this;
     }
@@ -113,7 +110,7 @@ class OrderItem
     }
 
     /**
-     * @var number REQUIRED! The quantity in which the item was ordered.
+     * @var number REQUIRED! The quantity in which the item was ordered
      */
     protected $quantity = 1;
 
@@ -126,7 +123,7 @@ class OrderItem
      */
     public function setQuantity($quantity)
     {
-        $this->quantity = (Double) $quantity;
+        $this->quantity = (float) $quantity;
 
         return $this;
     }
@@ -140,16 +137,17 @@ class OrderItem
     }
 
     /**
-     * The total value of the OrderItem (excluding taxes)
+     * The total value of the OrderItem (excluding taxes).
+     *
      * @return number
      */
     public function getValue()
     {
-        return ($this->unitPrice * $this->quantity);
+        return $this->unitPrice * $this->quantity;
     }
 
     /**
-     * @var number The amount of taxes. Not a percentage value but the actual value. In total. Not for a single item.
+     * @var number The amount of taxes. Not a percentage value but the actual value. In total. Not for a single item
      */
     protected $taxes;
 
@@ -160,7 +158,7 @@ class OrderItem
      */
     public function setTaxes($taxes)
     {
-        $this->taxes = (Double) $taxes;
+        $this->taxes = (float) $taxes;
 
         return $this;
     }
