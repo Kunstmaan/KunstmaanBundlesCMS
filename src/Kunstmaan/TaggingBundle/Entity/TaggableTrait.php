@@ -21,7 +21,7 @@ trait TaggableTrait
     private $lazyTagLoader;
 
     /**
-     * Returns the unique taggable resource type
+     * Returns the unique taggable resource type.
      *
      * @return string
      */
@@ -31,7 +31,7 @@ trait TaggableTrait
     }
 
     /**
-     * Returns the unique taggable resource identifier
+     * Returns the unique taggable resource identifier.
      *
      * @return string
      */
@@ -41,7 +41,7 @@ trait TaggableTrait
     }
 
     /**
-     * Returns the collection of tags for this Taggable entity
+     * Returns the collection of tags for this Taggable entity.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

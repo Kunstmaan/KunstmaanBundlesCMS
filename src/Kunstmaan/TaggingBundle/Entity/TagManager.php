@@ -6,12 +6,10 @@ use DoctrineExtensions\Taggable\TagManager as BaseTagManager;
 use DoctrineExtensions\Taggable\Taggable as BaseTaggable;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 class TagManager extends BaseTagManager
 {
-
     const TAGGING_HYDRATOR = 'taggingHydrator';
 
     public function loadTagging(BaseTaggable $resource)
@@ -21,7 +19,7 @@ class TagManager extends BaseTagManager
                 parent::loadTagging($taggable);
             });
 
-            return ;
+            return;
         }
 
         parent::loadTagging($resource);
@@ -37,14 +35,13 @@ class TagManager extends BaseTagManager
             // Restore:
             $this->replaceTags($tags->toArray(), $resource);
         }
-
     }
 
-
     /**
-     * Gets all tags for the given taggable resource
+     * Gets all tags for the given taggable resource.
      *
      * @param BaseTaggable $resource Taggable resource
+     *
      * @return array
      */
     public function getTagging(BaseTaggable $resource)
@@ -72,9 +69,8 @@ class TagManager extends BaseTagManager
 
     public function findById($id)
     {
-
         if (!isset($id) || is_null($id)) {
-            return NULL;
+            return null;
         }
         $builder = $this->em->createQueryBuilder();
 
@@ -97,11 +93,11 @@ class TagManager extends BaseTagManager
         return $tagsRepo->findAll();
     }
 
-    public function findRelatedItems(Taggable $item, $class, $locale, $nbOfItems=1)
+    public function findRelatedItems(Taggable $item, $class, $locale, $nbOfItems = 1)
     {
         $instance = new $class();
         if (!($instance instanceof Taggable)) {
-            return NULL;
+            return null;
         }
 
         $em = $this->em;
@@ -159,5 +155,4 @@ EOD;
 
         return $items;
     }
-
 }

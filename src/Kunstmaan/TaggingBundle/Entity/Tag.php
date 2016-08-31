@@ -6,7 +6,6 @@ use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 /**
@@ -16,7 +15,6 @@ use Kunstmaan\TaggingBundle\Form\TagAdminType;
  */
 class Tag extends BaseTag
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="bigint")
@@ -47,7 +45,7 @@ class Tag extends BaseTag
     protected $tagging;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -57,7 +55,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id The unique identifier
      */
@@ -67,7 +65,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -77,7 +75,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -87,7 +85,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * set createdAt
+     * set createdAt.
      *
      * @param $createdAt
      */
@@ -97,7 +95,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return datetime
      */
@@ -107,7 +105,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * Set UpdatedAt
+     * Set UpdatedAt.
      *
      * @param $updatedAt
      */
@@ -117,7 +115,7 @@ class Tag extends BaseTag
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return datetime
      */
@@ -135,5 +133,4 @@ class Tag extends BaseTag
     {
         return $this->getName();
     }
-
 }
