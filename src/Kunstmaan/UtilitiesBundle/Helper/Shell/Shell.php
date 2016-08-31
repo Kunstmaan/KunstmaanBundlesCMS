@@ -7,7 +7,6 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
  */
 class Shell implements ShellInterface
 {
-
     /**
      * @param string $command  The command
      * @param int    $priority The priority
@@ -28,13 +27,13 @@ class Shell implements ShellInterface
     /**
      * @param int $pid
      *
-     * @return boolean
+     * @return bool
      */
     public function isRunning($pid)
     {
         exec("ps $pid", $processState);
 
-        return (count($processState) >= 2);
+        return count($processState) >= 2;
     }
 
     /**
@@ -42,7 +41,7 @@ class Shell implements ShellInterface
      *
      * @param int $pid
      *
-     * @return boolean true when the process was successfully killed, false when the process wasn't running.
+     * @return bool true when the process was successfully killed, false when the process wasn't running
      */
     public function kill($pid)
     {
@@ -54,5 +53,4 @@ class Shell implements ShellInterface
 
         return false;
     }
-
 }

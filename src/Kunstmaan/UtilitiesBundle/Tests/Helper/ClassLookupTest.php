@@ -42,5 +42,4 @@ class ClassLookupTest extends \PHPUnit_Framework_TestCase
         $class = ClassLookup::getClassName(new DummyClass());
         $this->assertEquals('DummyClass', $class);
     }
-
 }

@@ -5,16 +5,16 @@ namespace Kunstmaan\UtilitiesBundle\Helper;
 use Doctrine\ORM\Proxy\Proxy;
 
 /**
- * Helper for looking up the classname, not the ORM proxy
+ * Helper for looking up the classname, not the ORM proxy.
  */
 class ClassLookup
 {
     /**
-     * Get full class name of object (ie. class name including full namespace)
+     * Get full class name of object (ie. class name including full namespace).
      *
      * @param mixed $object
      *
-     * @return string the name of the class and if the given $object isn't a vaid Object false will be returned.
+     * @return string the name of the class and if the given $object isn't a vaid Object false will be returned
      */
     public static function getClass($object)
     {
@@ -22,7 +22,7 @@ class ClassLookup
     }
 
     /**
-     * Get class name of object (ie. class name without namespace)
+     * Get class name of object (ie. class name without namespace).
      *
      * @param string|object $reference
      *
@@ -30,7 +30,7 @@ class ClassLookup
      */
     public static function getClassName($reference)
     {
-        $reference = is_string($reference) ? $reference : ClassLookup::getClass($reference);
+        $reference = is_string($reference) ? $reference : self::getClass($reference);
         $className = explode('\\', $reference);
 
         return array_pop($className);

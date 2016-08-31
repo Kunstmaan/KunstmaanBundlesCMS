@@ -7,7 +7,6 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
  */
 class UrlSafeCipher extends Cipher
 {
-
     /**
      * Encrypt the given value so that it's unreadable and that it can be used in an url.
      *
@@ -36,7 +35,7 @@ class UrlSafeCipher extends Cipher
      * Decodes a hexadecimal encoded binary string.
      * PHP version >= 5.4 has a function for this by default.
      *
-     * @param String $hexString
+     * @param string $hexString
      *
      * @return string
      */
@@ -46,7 +45,7 @@ class UrlSafeCipher extends Cipher
         $result = '';
         while ($pos < strlen($hexString)) {
             if (strpos(" \t\n\r", $hexString{$pos}) !== false) {
-                $pos++;
+                ++$pos;
             } else {
                 $code = hexdec(substr($hexString, $pos, 2));
                 $pos = $pos + 2;
@@ -56,5 +55,4 @@ class UrlSafeCipher extends Cipher
 
         return $result;
     }
-
 }
