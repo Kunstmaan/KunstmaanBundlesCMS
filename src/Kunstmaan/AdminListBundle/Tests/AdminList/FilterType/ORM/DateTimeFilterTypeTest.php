@@ -30,10 +30,10 @@ class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
     {
         $request = new Request(array(
             'filter_comparator_datetime' => 'before',
-            'filter_value_datetime'      => array('date' => '14/04/2014', 'time' => '09:00')
+            'filter_value_datetime' => array('date' => '14/04/2014', 'time' => '09:00'),
         ));
 
-        $data     = array();
+        $data = array();
         $uniqueId = 'datetime';
         $this->object->bindRequest($request, $data, $uniqueId);
 

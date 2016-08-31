@@ -3,11 +3,10 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
 use DateTime;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * DateFilterType
+ * DateFilterType.
  */
 class DateFilterType extends AbstractORMFilterType
 {
@@ -18,8 +17,8 @@ class DateFilterType extends AbstractORMFilterType
      */
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
-        $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
-        $data['value']      = $request->query->get('filter_value_' . $uniqueId);
+        $data['comparator'] = $request->query->get('filter_comparator_'.$uniqueId);
+        $data['value'] = $request->query->get('filter_value_'.$uniqueId);
     }
 
     /**
@@ -30,23 +29,23 @@ class DateFilterType extends AbstractORMFilterType
     {
         if (isset($data['value']) && isset($data['comparator'])) {
             $dateTime = DateTime::createFromFormat('d/m/Y', $data['value']);
-            
+
             if (false === $dateTime) {
                 // Failed to create DateTime object.
                 return;
             }
 
             $date = $dateTime->format('Y-m-d');
-            
+
             switch ($data['comparator']) {
                 case 'before':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias().$this->columnName, ':var_'.$uniqueId));
                     break;
                 case 'after':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->getAlias().$this->columnName, ':var_'.$uniqueId));
                     break;
             }
-            $this->queryBuilder->setParameter('var_' . $uniqueId, $date);
+            $this->queryBuilder->setParameter('var_'.$uniqueId, $date);
         }
     }
 

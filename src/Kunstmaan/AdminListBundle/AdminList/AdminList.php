@@ -3,17 +3,14 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Pagerfanta\Pagerfanta;
 
 /**
- * AdminList
+ * AdminList.
  */
 class AdminList
 {
-
     /**
      * @var Request
      */
@@ -93,7 +90,7 @@ class AdminList
     }
 
     /**
-     * Return an iterator for all items that matches the current filtering
+     * Return an iterator for all items that matches the current filtering.
      *
      * @return \Iterator
      */
@@ -112,6 +109,7 @@ class AdminList
         if (is_null($columnName)) {
             return count($this->configurator->getSortFields()) > 0;
         }
+
         return in_array($columnName, $this->configurator->getSortFields());
     }
 

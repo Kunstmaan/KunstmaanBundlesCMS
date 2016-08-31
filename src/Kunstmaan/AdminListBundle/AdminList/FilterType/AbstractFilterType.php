@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType;
 
 /**
- * AbstractFilterType
+ * AbstractFilterType.
  *
  * Abstract base class for all admin list filters
  */
@@ -26,7 +26,7 @@ abstract class AbstractFilterType implements FilterTypeInterface
     public function __construct($columnName, $alias = 'b')
     {
         $this->columnName = $columnName;
-        $this->alias      = $alias;
+        $this->alias = $alias;
     }
 
     /**
@@ -44,6 +44,6 @@ abstract class AbstractFilterType implements FilterTypeInterface
             return $this->alias;
         }
 
-        return $this->alias . '.';
+        return $this->alias.'.';
     }
 }

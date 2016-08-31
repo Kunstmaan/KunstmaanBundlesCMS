@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Abstract admin list configurator, this implements the most common functionality from the
- * AdminListConfiguratorInterface and ExportListConfiguratorInterface
+ * AdminListConfiguratorInterface and ExportListConfiguratorInterface.
  */
 abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInterface, ExportListConfiguratorInterface
 {
@@ -131,32 +131,32 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Configure the fields you can filter on
+     * Configure the fields you can filter on.
      */
     public function buildFilters()
     {
     }
 
     /**
-     * Configure the actions for each line
+     * Configure the actions for each line.
      */
     public function buildItemActions()
     {
     }
 
     /**
-     * Configure the actions that can be executed on the whole list
+     * Configure the actions that can be executed on the whole list.
      */
     public function buildListActions()
     {
     }
 
     /**
-     * Configure the export fields
+     * Configure the export fields.
      */
     public function buildExportFields()
     {
-        /**
+        /*
          * This is only here to prevent a BC break!!!
          *
          * Just override this function if you want to set your own fields...
@@ -167,14 +167,14 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Build iterator (if needed)
+     * Build iterator (if needed).
      */
     public function buildIterator()
     {
     }
 
     /**
-     * Reset all built members
+     * Reset all built members.
      */
     public function resetBuilds()
     {
@@ -186,7 +186,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Configure the types of items you can add
+     * Configure the types of items you can add.
      *
      * @param array $params
      *
@@ -196,7 +196,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = array_merge($params, $this->getExtraParameters());
 
-        $friendlyName = explode("\\", $this->getEntityName());
+        $friendlyName = explode('\\', $this->getEntityName());
         $friendlyName = array_pop($friendlyName);
         $re = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
         $a = preg_split($re, $friendlyName);
@@ -211,7 +211,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Get the url to export the listed items
+     * Get the url to export the listed items.
      *
      * @return array
      */
@@ -227,7 +227,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
     public function getViewUrlFor($item)
     {
-        if (is_object($item)){
+        if (is_object($item)) {
             $id = $item->getid();
         } else {
             $id = $item['id'];
@@ -236,13 +236,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_VIEW),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_VIEW),
+            'params' => $params,
         );
     }
 
     /**
-     * Return the url to list all the items
+     * Return the url to list all the items.
      *
      * @return array
      */
@@ -304,7 +304,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Return the default form admin type options
+     * Return the default form admin type options.
      *
      * @return array
      */
@@ -324,7 +324,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Configure if it's possible to delete the given $item
+     * Configure if it's possible to delete the given $item.
      *
      * @param object|array $item
      *
@@ -336,7 +336,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Configure if it's possible to add new items
+     * Configure if it's possible to add new items.
      *
      * @return bool
      */
@@ -351,7 +351,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * Configure if it's possible to add new items
+     * Configure if it's possible to add new items.
      *
      * @return bool
      */
@@ -361,9 +361,9 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $name The field name
-     * @param string $header The header title
-     * @param string $sort Sortable column or not
+     * @param string $name     The field name
+     * @param string $header   The header title
+     * @param string $sort     Sortable column or not
      * @param string $template The template
      *
      * @return AbstractAdminListConfigurator
@@ -376,8 +376,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $name The field name
-     * @param string $header The header title
+     * @param string $name     The field name
+     * @param string $header   The header title
      * @param string $template The template
      *
      * @return AbstractAdminListConfigurator
@@ -390,10 +390,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $columnName The column name
-     * @param FilterTypeInterface $type The filter type
-     * @param string $filterName The name of the filter
-     * @param array $options Options
+     * @param string              $columnName The column name
+     * @param FilterTypeInterface $type       The filter type
+     * @param string              $filterName The name of the filter
+     * @param array               $options    Options
      *
      * @return AbstractAdminListConfigurator
      */
@@ -452,11 +452,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $label The label, only used when the template equals null
+     * @param string   $label          The label, only used when the template equals null
      * @param callable $routeGenerator The generator used to generate the url of an item, when generating the item will
      *                                 be provided
-     * @param string $icon The icon, only used when the template equals null
-     * @param string $template The template, when not specified the label is shown
+     * @param string   $icon           The icon, only used when the template equals null
+     * @param string   $template       The template, when not specified the label is shown
      *
      * @return AbstractAdminListConfigurator
      */
@@ -570,8 +570,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param array|object $item The item
-     * @param string $columnName The column name
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
      *
      * @return mixed
      */
@@ -610,8 +610,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param array|object $item The item
-     * @param string $columnName The column name
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
      *
      * @return string
      */
@@ -625,13 +625,13 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $result->format('Y-m-d H:i:s');
         } else {
             if ($result instanceof PersistentCollection) {
-                $results = "";
+                $results = '';
                 /* @var Object $entry */
                 foreach ($result as $entry) {
                     $results[] = $entry->getName();
                 }
                 if (empty($results)) {
-                    return "";
+                    return '';
                 }
 
                 return implode(', ', $results);
@@ -726,7 +726,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * You can override this method to do some custom things you need to do when adding an entity
+     * You can override this method to do some custom things you need to do when adding an entity.
      *
      * @param object $entity
      *
@@ -803,7 +803,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
                 'orderDirection' => $this->orderDirection,
             )
         );
-
 
         $this->getFilterBuilder()->bindRequest($request);
     }

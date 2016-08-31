@@ -13,32 +13,32 @@ use Symfony\Component\Form\AbstractType;
 use Pagerfanta\Pagerfanta;
 
 /**
- * Implement this interface to create your own admin list
+ * Implement this interface to create your own admin list.
  */
 interface AdminListConfiguratorInterface
 {
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields();
 
     /**
-     * Configure the fields you can filter on
+     * Configure the fields you can filter on.
      */
     public function buildFilters();
 
     /**
-     * Configure the actions for each item
+     * Configure the actions for each item.
      */
     public function buildItemActions();
 
     /**
-     * Configure the actions that can be executed on the whole list
+     * Configure the actions that can be executed on the whole list.
      */
     public function buildListActions();
 
     /**
-     * Return the url to edit the given $item
+     * Return the url to edit the given $item.
      *
      * @param object|array $item
      *
@@ -47,7 +47,7 @@ interface AdminListConfiguratorInterface
     public function getEditUrlFor($item);
 
     /**
-     * Configure the types of items you can add
+     * Configure the types of items you can add.
      *
      * @param array $params
      *
@@ -56,7 +56,7 @@ interface AdminListConfiguratorInterface
     public function getAddUrlFor(array $params = array());
 
     /**
-     * Get the delete url for the given $item
+     * Get the delete url for the given $item.
      *
      * @param object|array $item
      *
@@ -65,14 +65,14 @@ interface AdminListConfiguratorInterface
     public function getDeleteUrlFor($item);
 
     /**
-     * Return the url to list all the items
+     * Return the url to list all the items.
      *
      * @return array
      */
     public function getIndexUrl();
 
     /**
-     * Get the url to export the listed items
+     * Get the url to export the listed items.
      *
      * @return string
      */
@@ -96,7 +96,7 @@ interface AdminListConfiguratorInterface
 
     public function canView($item);
     /**
-     * Configure if it's possible to delete the given $item
+     * Configure if it's possible to delete the given $item.
      *
      * @param object|array $item
      *
@@ -105,14 +105,14 @@ interface AdminListConfiguratorInterface
     public function canDelete($item);
 
     /**
-     * Configure if it's possible to add new items
+     * Configure if it's possible to add new items.
      *
      * @return bool
      */
     public function canAdd();
 
     /**
-     * Configure if it's possible to add new items
+     * Configure if it's possible to add new items.
      *
      * @return bool
      */
@@ -200,7 +200,7 @@ interface AdminListConfiguratorInterface
     public function getDeleteTemplate();
 
     /**
-     * You can override this method to do some custom things you need to do when adding an entity
+     * You can override this method to do some custom things you need to do when adding an entity.
      *
      * @param object $entity
      *
@@ -223,14 +223,14 @@ interface AdminListConfiguratorInterface
     public function getItems();
 
     /**
-     * Bind request
+     * Bind request.
      *
      * @param Request $request
      */
     public function bindRequest(Request $request);
 
     /**
-     * Get current pagerfanta
+     * Get current pagerfanta.
      *
      * @return Pagerfanta
      */

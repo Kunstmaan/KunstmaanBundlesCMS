@@ -3,11 +3,10 @@
 namespace Kunstmaan\AdminListBundle\AdminList;
 
 /**
- * Field
+ * Field.
  */
 class Field
 {
-
     /**
      * @var string
      */
@@ -36,9 +35,9 @@ class Field
      */
     public function __construct($name, $header, $sort = false, $template = null)
     {
-        $this->name     = $name;
-        $this->header   = $header;
-        $this->sort     = $sort;
+        $this->name = $name;
+        $this->header = $header;
+        $this->sort = $sort;
         $this->template = $template;
     }
 

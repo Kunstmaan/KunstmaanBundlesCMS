@@ -3,11 +3,10 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL;
 
 use DateTime;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * DateFilterType
+ * DateFilterType.
  */
 class DateFilterType extends AbstractDBALFilterType
 {
@@ -18,8 +17,8 @@ class DateFilterType extends AbstractDBALFilterType
      */
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
-        $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
-        $data['value']      = $request->query->get('filter_value_' . $uniqueId);
+        $data['comparator'] = $request->query->get('filter_comparator_'.$uniqueId);
+        $data['value'] = $request->query->get('filter_value_'.$uniqueId);
     }
 
     /**
@@ -38,13 +37,13 @@ class DateFilterType extends AbstractDBALFilterType
             $date = $dateTime->format('Y-m-d');
             switch ($data['comparator']) {
                 case 'before':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias().$this->columnName, ':var_'.$uniqueId));
                     break;
                 case 'after':
-                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
+                    $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->getAlias().$this->columnName, ':var_'.$uniqueId));
                     break;
             }
-            $this->queryBuilder->setParameter('var_' . $uniqueId, $date);
+            $this->queryBuilder->setParameter('var_'.$uniqueId, $date);
         }
     }
 

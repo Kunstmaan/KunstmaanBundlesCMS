@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\Service;
 
-use Box\Spout\Writer\WriterInterface;
 use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +22,7 @@ class ExportService
      */
     private $translator;
 
-    const EXT_CSV   = 'csv';
+    const EXT_CSV = 'csv';
     const EXT_EXCEL = 'xlsx';
 
     /**
@@ -31,13 +30,13 @@ class ExportService
      */
     public static function getSupportedExtensions()
     {
-        $rfl  = new \ReflectionClass(new self());
+        $rfl = new \ReflectionClass(new self());
         $data = $rfl->getConstants();
 
         $extensions = array();
         foreach ($data as $name => $ext) {
             if (strpos($name, 'EXT_') !== false) {
-                $key              = ucfirst(strtolower(str_replace('EXT_', '', $name)));
+                $key = ucfirst(strtolower(str_replace('EXT_', '', $name)));
                 $extensions[$key] = $ext;
             }
         }
@@ -61,7 +60,7 @@ class ExportService
                 $response = $this->streamExcelSheet($adminList);
                 break;
             default:
-                $content  = $this->createFromTemplate($adminList, $_format, $template);
+                $content = $this->createFromTemplate($adminList, $_format, $template);
                 $response = $this->createResponse($content, $_format);
                 $filename = sprintf('entries.%s', $_format);
                 $response->headers->set('Content-Disposition', sprintf('attachment; filename=%s', $filename));
@@ -81,7 +80,7 @@ class ExportService
     public function createFromTemplate(ExportableInterface $adminList, $_format, $template = null)
     {
         if ($template === null) {
-            $template = sprintf("KunstmaanAdminListBundle:Default:export.%s.twig", $_format);
+            $template = sprintf('KunstmaanAdminListBundle:Default:export.%s.twig', $_format);
         }
 
         $iterator = $adminList->getIterator();
@@ -89,9 +88,9 @@ class ExportService
         return $this->renderer->render(
             $template,
             array(
-                'iterator'    => $iterator,
-                'adminlist'   => $adminList,
-                'queryparams' => array()
+                'iterator' => $iterator,
+                'adminlist' => $adminList,
+                'queryparams' => array(),
             )
         );
     }
@@ -108,7 +107,7 @@ class ExportService
         $response = new StreamedResponse();
         $response->setCallback(function () use ($adminList) {
             $writer = WriterFactory::create(Type::XLSX);
-            $writer->openToBrowser("export.xlsx");
+            $writer->openToBrowser('export.xlsx');
 
             $row = array();
             foreach ($adminList->getExportColumns() as $column) {
@@ -130,7 +129,7 @@ class ExportService
                     $data = $adminList->getStringValue($itemObject, $column->getName());
                     if (is_object($data)) {
                         if (!$this->renderer->exists($column->getTemplate())) {
-                            throw new \Exception('No export template defined for ' . get_class($data));
+                            throw new \Exception('No export template defined for '.get_class($data));
                         }
 
                         $data = $this->renderer->render($column->getTemplate(), array('object' => $data));

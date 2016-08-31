@@ -11,7 +11,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
 use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
 
 /**
- * An abstract admin list configurator that can be used with dbal query builder
+ * An abstract admin list configurator that can be used with dbal query builder.
  */
 abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminListConfigurator
 {
@@ -49,7 +49,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * Return the url to edit the given $item
+     * Return the url to edit the given $item.
      *
      * @param array $item
      *
@@ -61,13 +61,13 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_EDIT),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_EDIT),
+            'params' => $params,
         );
     }
 
     /**
-     * Get the delete url for the given $item
+     * Get the delete url for the given $item.
      *
      * @param object $item
      *
@@ -79,8 +79,8 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_DELETE),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
+            'params' => $params,
         );
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getPagerfanta()
     {
         if (is_null($this->pagerfanta)) {
-            $adapter          = new DoctrineDBALAdapter(
+            $adapter = new DoctrineDBALAdapter(
                 $this->getQueryBuilder(),
                 $this->getCountField(),
                 $this->getUseDistinctCount()
@@ -108,7 +108,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
      */
     public function adaptQueryBuilder(
         QueryBuilder $queryBuilder,
-        /** @noinspection PhpUnusedParameterInspection */
+        /* @noinspection PhpUnusedParameterInspection */
         array $params = array()
     ) {
         $queryBuilder->where('1=1');
@@ -131,13 +131,13 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * Return an iterator for all items that matches the current filtering
+     * Return an iterator for all items that matches the current filtering.
      *
      * @return \Iterator
      */
     public function getIterator()
     {
-        /** @var Statement $statement*/
+        /** @var Statement $statement */
         $statement = $this->getQueryBuilder()->execute();
 
         return $statement;
@@ -172,7 +172,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * Set count field (must include table alias!)
+     * Set count field (must include table alias!).
      *
      * @param string $countField
      *
@@ -186,7 +186,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * Get current count field (including table alias)
+     * Get current count field (including table alias).
      *
      * @return string
      */
@@ -210,7 +210,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     }
 
     /**
-     * Get current doDistinctCount
+     * Get current doDistinctCount.
      *
      * @return bool
      */

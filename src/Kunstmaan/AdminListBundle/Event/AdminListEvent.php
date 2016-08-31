@@ -13,6 +13,7 @@ class AdminListEvent extends Event
 
     /**
      * AdminListEvent constructor.
+     *
      * @param object $entity
      */
     public function __construct($entity)

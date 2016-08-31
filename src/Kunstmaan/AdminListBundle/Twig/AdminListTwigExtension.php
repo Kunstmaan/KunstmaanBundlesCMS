@@ -4,12 +4,10 @@ namespace Kunstmaan\AdminListBundle\Twig;
 
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\Router;
-use Symfony\Component\Routing\CompiledRoute;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
 /**
- * AdminListTwigExtension
+ * AdminListTwigExtension.
  */
 class AdminListTwigExtension extends \Twig_Extension
 {
@@ -40,7 +38,7 @@ class AdminListTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Renders the HTML for a given view
+     * Renders the HTML for a given view.
      *
      * Example usage in Twig:
      *
@@ -62,16 +60,16 @@ class AdminListTwigExtension extends \Twig_Extension
      */
     public function renderWidget(\Twig_Environment $env, AdminList $view, $basepath, array $urlparams = array(), array $addparams = array())
     {
-        $template = $env->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
+        $template = $env->loadTemplate('KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig');
 
-        $filterBuilder  = $view->getFilterBuilder();
+        $filterBuilder = $view->getFilterBuilder();
 
         return $template->render(array(
-            'filter'        => $filterBuilder,
-            'basepath'      => $basepath,
-            'addparams'     => $addparams,
-            'extraparams'   => $urlparams,
-            'adminlist'     => $view
+            'filter' => $filterBuilder,
+            'basepath' => $basepath,
+            'addparams' => $addparams,
+            'extraparams' => $urlparams,
+            'adminlist' => $view,
         ));
     }
 
@@ -89,5 +87,4 @@ class AdminListTwigExtension extends \Twig_Extension
     {
         return 'adminlist_twig_extension';
     }
-
 }
