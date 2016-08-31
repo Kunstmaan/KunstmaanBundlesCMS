@@ -420,6 +420,11 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      * @return bool
      */
     private function isMultiLangEnvironment() {
+        // use the multilanguage parameter, if it exists
+        if ($this->container->hasParameter('multilanguage')) {
+            return $this->container->getParameter('multilanguage');
+        }
+
         // This is a pretty silly implementation.
         // It just checks if it can find _locale in the routing.yml
         $routingFile = file_get_contents($this->rootDir.'/app/config/routing.yml');

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class NodeMenuTabTranslationAdminType extends AbstractType
 {
@@ -33,6 +34,9 @@ class NodeMenuTabTranslationAdminType extends AbstractType
             $builder->add('slug', SlugType::class, array(
                 'label' => 'kuma_node.form.menu_tab_translation.slug.label',
                 'required' => false,
+                'constraints' => array(
+                    new Regex("/^[a-zA-Z0-9\-_\/]+$/")
+                )
             ));
         }
         $builder->add('weight', ChoiceType::class, array(

@@ -122,6 +122,7 @@ npm install -g bower
 npm install -g gulp
 npm install -g uglify-js
 npm install -g uglifycss
+gem install bundler
 ```
 
 Then execute the following commands:

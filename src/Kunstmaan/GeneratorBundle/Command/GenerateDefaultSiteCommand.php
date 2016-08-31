@@ -147,6 +147,6 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant);
+        return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant, $this->getContainer());
     }
 }
