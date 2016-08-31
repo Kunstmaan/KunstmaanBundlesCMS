@@ -13,12 +13,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Extension;
 
 /**
- * Extension to fetch node / translation by page in Twig templates
+ * Extension to fetch node / translation by page in Twig templates.
  */
 class NodeTwigExtension extends Twig_Extension
 {
     /**
-     * @var EntityManagerInterface $em
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -49,9 +49,9 @@ class NodeTwigExtension extends Twig_Extension
         NodeMenu $nodeMenu,
         RequestStack $requestStack
     ) {
-        $this->em           = $em;
-        $this->generator    = $generator;
-        $this->nodeMenu     = $nodeMenu;
+        $this->em = $em;
+        $this->generator = $generator;
+        $this->nodeMenu = $nodeMenu;
         $this->requestStack = $requestStack;
     }
 
@@ -105,11 +105,12 @@ class NodeTwigExtension extends Twig_Extension
         );
     }
 
-        /**
+    /**
      * Get the node translation object based on node id and language.
      *
-     * @param int $nodeId
+     * @param int    $nodeId
      * @param string $lang
+     *
      * @return NodeTranslation
      */
     public function getNodeTranslationByNodeId($nodeId, $lang)
@@ -167,10 +168,10 @@ class NodeTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param string  $internalName Internal name of the node
-     * @param string  $locale       Locale
-     * @param array   $parameters   (optional) extra parameters
-     * @param boolean $relative     (optional) return relative path?
+     * @param string $internalName Internal name of the node
+     * @param string $locale       Locale
+     * @param array  $parameters   (optional) extra parameters
+     * @param bool   $relative     (optional) return relative path?
      *
      * @return string
      */
@@ -186,10 +187,10 @@ class NodeTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param string  $internalName   Internal name of the node
-     * @param string  $locale         Locale
-     * @param array   $parameters     (optional) extra parameters
-     * @param boolean $schemeRelative (optional) return relative scheme?
+     * @param string $internalName   Internal name of the node
+     * @param string $locale         Locale
+     * @param array  $parameters     (optional) extra parameters
+     * @param bool   $schemeRelative (optional) return relative scheme?
      *
      * @return string
      */
@@ -213,7 +214,7 @@ class NodeTwigExtension extends Twig_Extension
      */
     public function getNodeMenu($locale, Node $node = null, $includeHiddenFromNav = false)
     {
-        $request   = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMasterRequest();
         $isPreview = $request->attributes->has('preview') && $request->attributes->get('preview') === true;
         $this->nodeMenu->setLocale($locale);
         $this->nodeMenu->setCurrentNode($node);
@@ -242,7 +243,7 @@ class NodeTwigExtension extends Twig_Extension
      */
     private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
     {
-        $url         = '';
+        $url = '';
         $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
             ->getNodeTranslationByLanguageAndInternalName($locale, $internalName);
 
@@ -252,8 +253,8 @@ class NodeTwigExtension extends Twig_Extension
 
         return array_merge(
             array(
-                'url'     => $url,
-                '_locale' => $locale
+                'url' => $url,
+                '_locale' => $locale,
             ),
             $parameters
         );

@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * PageAdminType
+ * PageAdminType.
  */
 class PageAdminType extends AbstractType
 {

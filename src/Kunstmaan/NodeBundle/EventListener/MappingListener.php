@@ -5,7 +5,7 @@ namespace Kunstmaan\NodeBundle\EventListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 
 /**
- * Class MappingListener
+ * Class MappingListener.
  */
 class MappingListener
 {
@@ -15,7 +15,7 @@ class MappingListener
     private $className;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $className
      */
@@ -26,6 +26,7 @@ class MappingListener
 
     /**
      * Called when class meta data is fetched.
+     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
@@ -42,7 +43,7 @@ class MappingListener
                     'name' => 'user_id',
                     'referencedColumnName' => 'id',
                     'unique' => false,
-                    'nullable' => true
+                    'nullable' => true,
                 )),
             );
             $classMetadata->mapManyToOne($mapping);

@@ -9,7 +9,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
- * NodeVersion
+ * NodeVersion.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeVersionRepository")
  * @ORM\Table(name="kuma_node_versions", indexes={@ORM\Index(name="idx_node_version_lookup", columns={"ref_id", "ref_entity_name"})})
@@ -18,9 +18,8 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class NodeVersion extends AbstractEntity
 {
-
-    const DRAFT_VERSION     = 'draft';
-    const PUBLIC_VERSION    = 'public';
+    const DRAFT_VERSION = 'draft';
+    const PUBLIC_VERSION = 'public';
 
     /**
      * @var NodeTranslation
@@ -73,7 +72,7 @@ class NodeVersion extends AbstractEntity
     protected $refEntityName;
 
     /**
-     * The nodeVersion this nodeVersion originated from
+     * The nodeVersion this nodeVersion originated from.
      *
      * @var NodeVersion
      *
@@ -83,7 +82,7 @@ class NodeVersion extends AbstractEntity
     protected $origin;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -92,7 +91,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Set nodeTranslation
+     * Set nodeTranslation.
      *
      * @param NodeTranslation $nodeTranslation
      *
@@ -106,7 +105,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get NodeTranslation
+     * Get NodeTranslation.
      *
      * @return NodeTranslation
      */
@@ -116,7 +115,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -135,9 +134,8 @@ class NodeVersion extends AbstractEntity
         return self::PUBLIC_VERSION === $this->type;
     }
 
-
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
      *
@@ -151,7 +149,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Set owner
+     * Set owner.
      *
      * @param string $owner
      *
@@ -165,7 +163,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get owner
+     * Get owner.
      *
      * @return string
      */
@@ -175,7 +173,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param DateTime $created
      *
@@ -189,7 +187,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return DateTime
      */
@@ -199,7 +197,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param DateTime $updated
      *
@@ -213,7 +211,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return DateTime
      */
@@ -223,7 +221,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get refId
+     * Get refId.
      *
      * @return int
      */
@@ -233,7 +231,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Set refId
+     * Set refId.
      *
      * @param int $refId
      *
@@ -247,7 +245,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Set reference entity name
+     * Set reference entity name.
      *
      * @param string $refEntityName
      *
@@ -261,7 +259,7 @@ class NodeVersion extends AbstractEntity
     }
 
     /**
-     * Get reference entity name
+     * Get reference entity name.
      *
      * @return string
      */
@@ -270,9 +268,6 @@ class NodeVersion extends AbstractEntity
         return $this->refEntityName;
     }
 
-    /**
-     * @return null
-     */
     public function getDefaultAdminType()
     {
         return null;
@@ -320,5 +315,4 @@ class NodeVersion extends AbstractEntity
     {
         return $this->origin;
     }
-
 }

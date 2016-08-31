@@ -5,11 +5,10 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-
 use Symfony\Component\Form\AbstractType;
 
 /**
- * TestEntity
+ * TestEntity.
  */
 class TestEntity extends AbstractEntity implements HasNodeInterface
 {
@@ -29,7 +28,7 @@ class TestEntity extends AbstractEntity implements HasNodeInterface
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -82,7 +81,7 @@ class TestEntity extends AbstractEntity implements HasNodeInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isStructureNode()
     {

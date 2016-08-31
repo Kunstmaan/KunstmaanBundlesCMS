@@ -3,11 +3,10 @@
 namespace Kunstmaan\NodeBundle\Event;
 
 /**
- * Events
+ * Events.
  */
 class Events
 {
-
     /**
      * The addNode event occurs for a given node, after it's being created.
      *
@@ -137,21 +136,21 @@ class Events
     const CONFIGURE_ACTION_MENU = 'kunstmaan_node.configureActionMenu';
 
     /**
-     * This event will be triggered when the sluglistener needs to do security checks
+     * This event will be triggered when the sluglistener needs to do security checks.
      *
      * @var string
      */
     const SLUG_SECURITY = 'kunstmaan_node.slug.security';
 
     /**
-     * This event will be triggered before the slugaction is performed
+     * This event will be triggered before the slugaction is performed.
      *
      * @var string
      */
     const PRE_SLUG_ACTION = 'kunstmaan_node.preSlugAction';
 
     /**
-     * This event will be triggered after the slugaction is performed
+     * This event will be triggered after the slugaction is performed.
      *
      * @var string
      */

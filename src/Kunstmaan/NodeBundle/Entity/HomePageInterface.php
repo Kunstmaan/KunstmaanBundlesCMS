@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-interface HomePageInterface 
+interface HomePageInterface
 {
-
 }

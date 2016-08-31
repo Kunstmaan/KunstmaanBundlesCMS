@@ -12,7 +12,7 @@ use Gedmo\Tree\Node as GedmoNode;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Node
+ * Node.
  *
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeRepository")
  * @ORM\Table(
@@ -29,7 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Node extends AbstractEntity implements GedmoNode
 {
-
     /**
      * @var Node
      *
@@ -106,14 +105,14 @@ class Node extends AbstractEntity implements GedmoNode
     protected $internalName;
 
     /**
-     * constructor
+     * constructor.
      */
     public function __construct()
     {
-        $this->children         = new ArrayCollection();
+        $this->children = new ArrayCollection();
         $this->nodeTranslations = new ArrayCollection();
-        $this->deleted          = false;
-        $this->hiddenFromNav    = false;
+        $this->deleted = false;
+        $this->hiddenFromNav = false;
     }
 
     /**
@@ -173,7 +172,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Add children
+     * Add children.
      *
      * @param Node $child
      *
@@ -237,7 +236,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Add nodeTranslation
+     * Add nodeTranslation.
      *
      * @param NodeTranslation $nodeTranslation
      *
@@ -252,7 +251,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param Node $parent
      *
@@ -266,7 +265,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return Node
      */
@@ -280,11 +279,11 @@ class Node extends AbstractEntity implements GedmoNode
      */
     public function getParents()
     {
-        $parent  = $this->getParent();
+        $parent = $this->getParent();
         $parents = array();
         while ($parent !== null) {
             $parents[] = $parent;
-            $parent    = $parent->getParent();
+            $parent = $parent->getParent();
         }
 
         return array_reverse($parents);
@@ -311,7 +310,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Set referenced entity
+     * Set referenced entity.
      *
      * @param HasNodeInterface $entity
      *
@@ -325,7 +324,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Set class name of referenced entity
+     * Set class name of referenced entity.
      *
      * @param string $refEntityName
      *
@@ -339,7 +338,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get class name of referenced entity
+     * Get class name of referenced entity.
      *
      * @return string
      */
@@ -349,7 +348,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Set internal name
+     * Set internal name.
      *
      * @param string $internalName
      *
@@ -363,7 +362,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get internal name
+     * Get internal name.
      *
      * @return string
      */
@@ -381,7 +380,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get tree left
+     * Get tree left.
      *
      * @return int
      */
@@ -391,7 +390,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get tree right
+     * Get tree right.
      *
      * @return int
      */
@@ -401,7 +400,7 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * Get tree level
+     * Get tree level.
      *
      * @return int
      */
@@ -415,6 +414,6 @@ class Node extends AbstractEntity implements GedmoNode
      */
     public function __toString()
     {
-        return "node " . $this->getId() . ", refEntityName: " . $this->getRefEntityName();
+        return 'node '.$this->getId().', refEntityName: '.$this->getRefEntityName();
     }
 }

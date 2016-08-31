@@ -31,12 +31,12 @@ class NodeMenuTabAdminType extends AbstractType
     {
         if (!$this->isStructureNode) {
             $builder->add('hiddenFromNav', CheckboxType::class, array(
-                'label' => 'kuma_node.form.menu_tab.hidden_from_menu.label', 
+                'label' => 'kuma_node.form.menu_tab.hidden_from_menu.label',
                 'required' => false,
             ));
         }
         $builder->add('internalName', TextType::class, array(
-            'label' => 'kuma_node.form.menu_tab.internal_name.label', 
+            'label' => 'kuma_node.form.menu_tab.internal_name.label',
             'required' => false,
         ));
     }

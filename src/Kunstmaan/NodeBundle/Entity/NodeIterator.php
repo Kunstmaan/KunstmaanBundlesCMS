@@ -15,12 +15,12 @@ class NodeIterator implements \RecursiveIterator
 
     public function hasChildren()
     {
-        return (!$this->_data->current()->getChildren()->isEmpty());
+        return !$this->_data->current()->getChildren()->isEmpty();
     }
 
     public function getChildren()
     {
-        return new NodeIterator($this->_data->current()->getChildren());
+        return new self($this->_data->current()->getChildren());
     }
 
     public function current()

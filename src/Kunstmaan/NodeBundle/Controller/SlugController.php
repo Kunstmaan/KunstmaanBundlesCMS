@@ -18,13 +18,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * This controller is for showing frontend pages based on slugs
+ * This controller is for showing frontend pages based on slugs.
  */
 class SlugController extends Controller
 {
-
     /**
-     * Handle the page requests
+     * Handle the page requests.
      *
      * @param Request $request The request
      * @param string  $url     The url
@@ -38,7 +37,7 @@ class SlugController extends Controller
     public function slugAction(Request $request, $url = null, $preview = false)
     {
         /* @var EntityManager $em */
-        $em     = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
 
         /* @var NodeTranslation $nodeTranslation */
@@ -46,7 +45,7 @@ class SlugController extends Controller
 
         // If no node translation -> 404
         if (!$nodeTranslation) {
-            throw $this->createNotFoundException('No page found for slug ' . $url);
+            throw $this->createNotFoundException('No page found for slug '.$url);
         }
 
         $entity = $this->getPageEntity(
@@ -55,7 +54,7 @@ class SlugController extends Controller
             $em,
             $nodeTranslation
         );
-        $node   = $nodeTranslation->getNode();
+        $node = $nodeTranslation->getNode();
 
         $securityEvent = new SlugSecurityEvent();
         $securityEvent
@@ -76,27 +75,27 @@ class SlugController extends Controller
         $renderContext = new RenderContext(
             array(
                 'nodetranslation' => $nodeTranslation,
-                'slug'            => $url,
-                'page'            => $entity,
-                'resource'        => $entity,
-                'nodemenu'        => $nodeMenu,
+                'slug' => $url,
+                'page' => $entity,
+                'resource' => $entity,
+                'nodemenu' => $nodeMenu,
             )
         );
         if (method_exists($entity, 'getDefaultView')) {
-            /** @noinspection PhpUndefinedMethodInspection */
+            /* @noinspection PhpUndefinedMethodInspection */
             $renderContext->setView($entity->getDefaultView());
         }
         $preEvent = new SlugEvent(null, $renderContext);
         $eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
         $renderContext = $preEvent->getRenderContext();
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $response = $entity->service($this->container, $request, $renderContext);
 
         $postEvent = new SlugEvent($response, $renderContext);
         $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
 
-        $response      = $postEvent->getResponse();
+        $response = $postEvent->getResponse();
         $renderContext = $postEvent->getRenderContext();
 
         if ($response instanceof Response) {
@@ -105,7 +104,7 @@ class SlugController extends Controller
 
         $view = $renderContext->getView();
         if (empty($view)) {
-            throw $this->createNotFoundException('No page found for slug ' . $url);
+            throw $this->createNotFoundException('No page found for slug '.$url);
         }
 
         $template = new Template(array());
@@ -118,7 +117,7 @@ class SlugController extends Controller
 
     /**
      * @param Request                $request
-     * @param boolean                $preview
+     * @param bool                   $preview
      * @param EntityManagerInterface $em
      * @param NodeTranslation        $nodeTranslation
      *

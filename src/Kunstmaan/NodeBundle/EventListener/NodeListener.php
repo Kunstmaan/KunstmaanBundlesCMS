@@ -13,7 +13,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 class NodeListener
 {
     /**
-     * AuthorizationCheckerInterface
+     * AuthorizationCheckerInterface.
      */
     private $authorizationChecker;
 

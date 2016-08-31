@@ -85,7 +85,6 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($updated, $this->object->getUpdated());
     }
 
-
     /**
      * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setRef
      * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getRefId
@@ -108,5 +107,4 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->object->getDefaultAdminType());
     }
-
 }

@@ -20,11 +20,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Listens to doctrine postFlush event and updates
- * the urls if the entities are nodetranslations
+ * the urls if the entities are nodetranslations.
  */
 class NodeTranslationListener
 {
-
     private $session;
     private $logger;
     private $nodeTranslations;
@@ -53,10 +52,10 @@ class NodeTranslationListener
         SlugifierInterface $slugifier,
         DomainConfigurationInterface $domainConfiguration
     ) {
-        $this->nodeTranslations    = array();
-        $this->session             = $session;
-        $this->logger              = $logger;
-        $this->slugifier           = $slugifier;
+        $this->nodeTranslations = array();
+        $this->session = $session;
+        $this->logger = $logger;
+        $this->slugifier = $slugifier;
         $this->domainConfiguration = $domainConfiguration;
     }
 
@@ -97,14 +96,14 @@ class NodeTranslationListener
     ) {
         $publicNode = $nodeTranslation->getRef($em);
 
-        /** Do nothing for StructureNode objects, skip */
+        /* Do nothing for StructureNode objects, skip */
         if ($publicNode instanceof HasNodeInterface && $publicNode->isStructureNode(
             )
         ) {
             return;
         }
 
-        /**
+        /*
          * If no slug is set and no structure node, apply title as slug
          */
         if ($nodeTranslation->getSlug() === null && $nodeTranslation->getNode()
@@ -125,10 +124,9 @@ class NodeTranslationListener
         }
     }
 
-
     /**
      * onFlush doctrine event - collect all nodetranslations in scheduled
-     * entity updates here
+     * entity updates here.
      *
      * @param OnFlushEventArgs $args
      *
@@ -148,7 +146,7 @@ class NodeTranslationListener
     }
 
     /**
-     * PostUpdate doctrine event - updates the nodetranslation urls if needed
+     * PostUpdate doctrine event - updates the nodetranslation urls if needed.
      *
      * @param PostFlushEventArgs $args
      */
@@ -164,7 +162,7 @@ class NodeTranslationListener
                 /** @var $publicNodeVersion NodeVersion */
                 $publicNode = $publicNodeVersion->getRef($em);
 
-                /** Do nothing for StructureNode objects, skip */
+                /* Do nothing for StructureNode objects, skip */
                 if ($publicNode instanceof HasNodeInterface && $publicNode->isStructureNode(
                     )
                 ) {
@@ -184,7 +182,7 @@ class NodeTranslationListener
     }
 
     /**
-     * Checks if a nodetranslation has children and update their url
+     * Checks if a nodetranslation has children and update their url.
      *
      * @param NodeTranslation $node The node
      * @param EntityManager   $em   The entity manager
@@ -216,13 +214,13 @@ class NodeTranslationListener
     }
 
     /**
-     * Update the url for a nodetranslation
+     * Update the url for a nodetranslation.
      *
      * @param NodeTranslation $nodeTranslation The node translation
      * @param EntityManager   $em              The entity manager
      *
      * @return NodeTranslation|bool Returns the node when all is well because
-     *                              it has to be saved.
+     *                              it has to be saved
      */
     private function updateUrl(NodeTranslation $nodeTranslation, $em)
     {
@@ -240,9 +238,9 @@ class NodeTranslationListener
     }
 
     /**
-     * @param NodeTranslation $translation  The node translation
-     * @param EntityManager   $em           The entity manager
-     * @param array           $flashes      Flashes
+     * @param NodeTranslation $translation The node translation
+     * @param EntityManager   $em          The entity manager
+     * @param array           $flashes     Flashes
      *
      * A function that checks the URL and sees if it's unique.
      * It's allowed to be the same when the node is a StructureNode.
@@ -261,16 +259,14 @@ class NodeTranslationListener
      *
      * [1] For all languages for now. The issue is that we need a way to know
      * if a node's URL is prepended with the language or not. For now both
-     * scenarios are possible so we check for all languages.
-     *
+     * scenarios are possible so we check for all languages
      * @param NodeTranslation &$translation Reference to the NodeTranslation.
-     *                                      This is modified in place.
+     *                                      This is modified in place
      * @param EntityManager   $em           The entity manager
      * @param array           $flashes      The flash messages array
      *
      * @return bool
-     *
-     * @return boolean
+     * @return bool
      */
     private function ensureUniqueUrl(
         NodeTranslation &$translation,
@@ -278,8 +274,8 @@ class NodeTranslationListener
         $flashes = array()
     ) {
         // Can't use GetRef here yet since the NodeVersions aren't loaded yet for some reason.
-        $nodeVersion     = $translation->getPublicNodeVersion();
-        $page            = $em->getRepository($nodeVersion->getRefEntityName())
+        $nodeVersion = $translation->getPublicNodeVersion();
+        $page = $em->getRepository($nodeVersion->getRefEntityName())
             ->find($nodeVersion->getRefId());
         $isStructureNode = $page->isStructureNode();
 
@@ -352,16 +348,16 @@ class NodeTranslationListener
      * If the string does not end in a number we'll add the append and then add
      * the first number.
      *
-     * @param string $string The string we want to increment.
+     * @param string $string The string we want to increment
      * @param string $append The part we want to append before we start adding
-     *                       a number.
+     *                       a number
      *
-     * @return string Incremented string.
+     * @return string Incremented string
      */
     private static function incrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
-        $matches                = array();
+        $matches = array();
 
         preg_match($finalDigitGrabberRegex, $string, $matches);
 

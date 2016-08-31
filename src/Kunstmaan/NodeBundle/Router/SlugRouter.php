@@ -19,7 +19,7 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * The SlugRouter takes care of routing the paths for slugs. It should have the
  * lowest priority as it's a catch-all router that routes (almost) all requests
- * to the SlugController
+ * to the SlugController.
  */
 class SlugRouter implements RouterInterface
 {
@@ -42,7 +42,7 @@ class SlugRouter implements RouterInterface
     protected $domainConfiguration;
 
     /**
-     * The constructor for this service
+     * The constructor for this service.
      *
      * @param ContainerInterface $container
      */
@@ -56,7 +56,7 @@ class SlugRouter implements RouterInterface
     /**
      * Match given urls via the context to the routes we defined.
      * This functionality re-uses the default Symfony way of routing and its
-     * components
+     * components.
      *
      * @param string $pathinfo
      *
@@ -76,7 +76,7 @@ class SlugRouter implements RouterInterface
             $nodeTranslation = $this->getNodeTranslation($result);
             if (is_null($nodeTranslation)) {
                 throw new ResourceNotFoundException(
-                    'No page found for slug ' . $pathinfo
+                    'No page found for slug '.$pathinfo
                 );
             }
             $result['_nodeTranslation'] = $nodeTranslation;
@@ -120,8 +120,8 @@ class SlugRouter implements RouterInterface
     /**
      * Generate an url for a supplied route.
      *
-     * @param string $name The path
-     * @param array $parameters The route parameters
+     * @param string   $name          The path
+     * @param array    $parameters    The route parameters
      * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
      * @return null|string
@@ -137,7 +137,7 @@ class SlugRouter implements RouterInterface
     }
 
     /**
-     * Getter for routeCollection
+     * Getter for routeCollection.
      *
      * @return \Symfony\Component\Routing\RouteCollection
      */
@@ -168,7 +168,7 @@ class SlugRouter implements RouterInterface
     }
 
     /**
-     * Add the preview route to the route collection
+     * Add the preview route to the route collection.
      */
     protected function addPreviewRoute()
     {
@@ -177,7 +177,7 @@ class SlugRouter implements RouterInterface
     }
 
     /**
-     * Add the slug route to the route collection
+     * Add the slug route to the route collection.
      */
     protected function addSlugRoute()
     {
@@ -186,7 +186,7 @@ class SlugRouter implements RouterInterface
     }
 
     /**
-     * Return preview route parameters
+     * Return preview route parameters.
      *
      * @return array
      */
@@ -197,14 +197,14 @@ class SlugRouter implements RouterInterface
             '_controller' => 'KunstmaanNodeBundle:Slug:slug',
             'preview' => true,
             'url' => '',
-            '_locale' => $this->getDefaultLocale()
+            '_locale' => $this->getDefaultLocale(),
         );
         $previewRequirements = array(
-            'url' => $this->getSlugPattern()
+            'url' => $this->getSlugPattern(),
         );
 
         if ($this->isMultiLanguage()) {
-            $previewPath = '/{_locale}' . $previewPath;
+            $previewPath = '/{_locale}'.$previewPath;
             unset($previewDefaults['_locale']);
             $previewRequirements['_locale'] = $this->getEscapedLocales($this->getBackendLocales());
         }
@@ -212,12 +212,12 @@ class SlugRouter implements RouterInterface
         return array(
             'path' => $previewPath,
             'defaults' => $previewDefaults,
-            'requirements' => $previewRequirements
+            'requirements' => $previewRequirements,
         );
     }
 
     /**
-     * Return slug route parameters
+     * Return slug route parameters.
      *
      * @return array
      */
@@ -228,14 +228,14 @@ class SlugRouter implements RouterInterface
             '_controller' => 'KunstmaanNodeBundle:Slug:slug',
             'preview' => false,
             'url' => '',
-            '_locale' => $this->getDefaultLocale()
+            '_locale' => $this->getDefaultLocale(),
         );
         $slugRequirements = array(
-            'url' => $this->getSlugPattern()
+            'url' => $this->getSlugPattern(),
         );
 
         if ($this->isMultiLanguage()) {
-            $slugPath = '/{_locale}' . $slugPath;
+            $slugPath = '/{_locale}'.$slugPath;
             unset($slugDefaults['_locale']);
             $slugRequirements['_locale'] = $this->getEscapedLocales($this->getFrontendLocales());
         }
@@ -243,12 +243,12 @@ class SlugRouter implements RouterInterface
         return array(
             'path' => $slugPath,
             'defaults' => $slugDefaults,
-            'requirements' => $slugRequirements
+            'requirements' => $slugRequirements,
         );
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     protected function isMultiLanguage($host = null)
     {
@@ -297,7 +297,7 @@ class SlugRouter implements RouterInterface
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param array  $parameters
      */
     protected function addRoute($name, array $parameters = array())
     {
@@ -357,6 +357,6 @@ class SlugRouter implements RouterInterface
             $escapedLocales[] = str_replace('-', '\-', $locale);
         }
 
-        return join('|', $escapedLocales);
+        return implode('|', $escapedLocales);
     }
 }

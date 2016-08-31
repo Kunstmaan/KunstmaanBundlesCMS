@@ -3,13 +3,12 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 /**
- * A context for rendering pages through service methods
+ * A context for rendering pages through service methods.
  */
 class RenderContext extends \ArrayObject
 {
-
     /**
-     * @var string $view
+     * @var string
      */
     private $view;
 

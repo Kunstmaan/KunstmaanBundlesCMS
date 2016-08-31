@@ -7,7 +7,7 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 
 /**
- * QueuedNodeTranslationAction
+ * QueuedNodeTranslationAction.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_node_queued_node_translation_actions")
@@ -15,7 +15,7 @@ use Kunstmaan\AdminBundle\Entity\BaseUser;
  */
 class QueuedNodeTranslationAction extends AbstractEntity
 {
-    const ACTION_PUBLISH   = 'publish';
+    const ACTION_PUBLISH = 'publish';
     const ACTION_UNPUBLISH = 'unpublish';
 
     /**
@@ -48,9 +48,10 @@ class QueuedNodeTranslationAction extends AbstractEntity
     protected $date;
 
     /**
-     * Set nodeTranslation
+     * Set nodeTranslation.
      *
      * @param NodeTranslation $nodeTranslation
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setNodeTranslation(NodeTranslation $nodeTranslation)
@@ -61,7 +62,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Get NodeTranslation
+     * Get NodeTranslation.
      *
      * @return NodeTranslation
      */
@@ -71,7 +72,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Get action
+     * Get action.
      *
      * @return string
      */
@@ -81,9 +82,10 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Set action
+     * Set action.
      *
      * @param string $action
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setAction($action)
@@ -94,9 +96,10 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Set user
+     * Set user.
      *
      * @param BaseUser $user
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setUser(BaseUser $user)
@@ -107,7 +110,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return string
      */
@@ -117,9 +120,10 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return QueuedNodeTranslationAction
      */
     public function setDate(\DateTime $date)
@@ -130,7 +134,7 @@ class QueuedNodeTranslationAction extends AbstractEntity
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return DateTime
      */
@@ -138,5 +142,4 @@ class QueuedNodeTranslationAction extends AbstractEntity
     {
         return $this->date;
     }
-
 }

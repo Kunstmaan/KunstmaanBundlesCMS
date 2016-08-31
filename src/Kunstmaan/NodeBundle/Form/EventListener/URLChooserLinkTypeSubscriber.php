@@ -4,7 +4,6 @@ namespace Kunstmaan\NodeBundle\Form\EventListener;
 
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Kunstmaan\NodeBundle\Validation\URLValidator;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -49,9 +48,8 @@ class URLChooserLinkTypeSubscriber implements EventSubscriberInterface
             $form->add('link_url', TextType::class, array(
                 'label' => 'URL',
                 'required' => true,
-                'attr' => $attributes
+                'attr' => $attributes,
             ));
         }
     }
-
 }

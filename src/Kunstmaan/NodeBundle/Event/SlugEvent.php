@@ -2,18 +2,15 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class SlugEvent
- * @package Kunstmaan\NodeBundle\Event
+ * Class SlugEvent.
  */
 class SlugEvent extends Event
 {
-
     /**
      * @var Response
      */
@@ -25,10 +22,10 @@ class SlugEvent extends Event
     protected $renderContext;
 
     /**
-     * @param Response $response
+     * @param Response      $response
      * @param RenderContext $renderContext
      */
-    function __construct(Response $response = null, RenderContext $renderContext)
+    public function __construct(Response $response = null, RenderContext $renderContext)
     {
         $this->response = $response;
         $this->renderContext = $renderContext;

@@ -18,7 +18,6 @@ class PagesConfigurationTwigExtension extends \Twig_Extension
         $this->pagesConfiguration = $pagesConfiguration;
     }
 
-
     /**
      * Returns a list of functions to add to the existing list.
      *
@@ -30,7 +29,7 @@ class PagesConfigurationTwigExtension extends \Twig_Extension
             'get_possible_child_types' => new \Twig_SimpleFunction(
                 'get_possible_child_types', [$this, 'getPossibleChildTypes']
             ),
-            'get_homepage_types'       => new \Twig_SimpleFunction(
+            'get_homepage_types' => new \Twig_SimpleFunction(
                 'get_homepage_types', [$this, 'getHomepageTypes']
             ),
         ];

@@ -9,18 +9,16 @@ use Symfony\Component\Form\AbstractType;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
 /**
- * Sype
+ * Sype.
  */
 class SlugType extends AbstractType
 {
-
     /**
      * @var SlugifierInterface
      */
-	private $slugifier;
+    private $slugifier;
 
     /**
-     *
      * @param SlugifierInterface $slugifier The slugifier
      */
     public function __construct(SlugifierInterface $slugifier)
@@ -49,16 +47,16 @@ class SlugType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-            $nodeTranslation = $form->getParent()->getData();
-            $view->vars['reset'] = $this->slugifier->slugify($nodeTranslation->getTitle(), '');
-            $parentNode = $nodeTranslation->getNode()->getParent();
-            if ($parentNode !== null) {
-                $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);
-                $slug = $nodeTranslation->getSlugPart();
-                if (!empty($slug)) {
-                    $slug .= '/';
-                }
-                $view->vars['prefix'] = $slug;
+        $nodeTranslation = $form->getParent()->getData();
+        $view->vars['reset'] = $this->slugifier->slugify($nodeTranslation->getTitle(), '');
+        $parentNode = $nodeTranslation->getNode()->getParent();
+        if ($parentNode !== null) {
+            $nodeTranslation = $parentNode->getNodeTranslation($nodeTranslation->getLang(), true);
+            $slug = $nodeTranslation->getSlugPart();
+            if (!empty($slug)) {
+                $slug .= '/';
             }
+            $view->vars['prefix'] = $slug;
+        }
     }
 }

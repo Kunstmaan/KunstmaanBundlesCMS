@@ -13,7 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * The Abstract ORM Page
+ * The Abstract ORM Page.
  */
 abstract class AbstractPage extends AbstractEntity implements PageInterface
 {
@@ -38,7 +38,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     protected $parent;
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
@@ -52,7 +52,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -62,7 +62,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Set pagetitle
+     * Set pagetitle.
      *
      * @param string $pageTitle
      *
@@ -76,7 +76,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Get pagetitle
+     * Get pagetitle.
      *
      * @return string
      */
@@ -118,7 +118,7 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Returns the default backend form type for this page
+     * Returns the default backend form type for this page.
      *
      * @return AbstractType
      */
@@ -137,7 +137,6 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
     }
-
 
     /**
      * By default this will return false. Pages will always be pages until some class says otherwise.
