@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
-
 use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
 
 /**
@@ -23,7 +22,7 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ImagePagePart;
+        $this->object = new ImagePagePart();
     }
 
     /**
@@ -76,7 +75,7 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig', $defaultView);
     }
 
     /**

@@ -1,21 +1,20 @@
 <?php
 
 namespace Kunstmaan\MediaPagePartBundle\Entity;
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
- * ImagePagePart
+ * ImagePagePart.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_image_page_parts")
  */
 class ImagePagePart extends AbstractPagePart
 {
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -38,7 +37,7 @@ class ImagePagePart extends AbstractPagePart
     protected $media;
 
     /**
-     * Get opennewwindow
+     * Get opennewwindow.
      *
      * @return bool
      */
@@ -48,7 +47,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * Set openwinnewwindow
+     * Set openwinnewwindow.
      *
      * @param bool $openInNewWindow
      *
@@ -62,7 +61,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * Set link
+     * Set link.
      *
      * @param string $link
      *
@@ -76,7 +75,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * Get link
+     * Get link.
      *
      * @return string
      */
@@ -86,7 +85,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * Set alt text
+     * Set alt text.
      *
      * @param string $altText
      *
@@ -100,7 +99,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * Get media
+     * Get media.
      *
      * @return Media
      */
@@ -110,7 +109,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * Set media
+     * Set media.
      *
      * @param Media $media
      *
@@ -124,7 +123,7 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * Get alt text
+     * Get alt text.
      *
      * @return string
      */
@@ -142,7 +141,7 @@ class ImagePagePart extends AbstractPagePart
             return $this->getMedia()->getUrl();
         }
 
-        return "";
+        return '';
     }
 
     /**
@@ -150,7 +149,7 @@ class ImagePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig";
+        return 'KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig';
     }
 
     /**
