@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * PasswordCheckListener to check if the user has to change his password
+ * PasswordCheckListener to check if the user has to change his password.
  */
 class PasswordCheckListener
 {
@@ -43,10 +43,10 @@ class PasswordCheckListener
 
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TokenStorageInterface $tokenStorage
-     * @param Router $router
-     * @param Session $session
-     * @param TranslatorInterface $translator
+     * @param TokenStorageInterface         $tokenStorage
+     * @param Router                        $router
+     * @param Session                       $session
+     * @param TranslatorInterface           $translator
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, TranslatorInterface $translator)
     {

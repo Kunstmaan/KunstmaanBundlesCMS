@@ -14,7 +14,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
 /**
- * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>
+ * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>.
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
@@ -33,7 +33,7 @@ class CreateUserCommand extends ContainerAwareCommand
                 new InputOption('super-admin', null, InputOption::VALUE_NONE, 'Set the user as super admin'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ))
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:user:create</info> command creates a user:
 
   <info>php bin/console kuma:user:create matthieu --group=Users</info>
@@ -61,7 +61,7 @@ EOT
     /**
      * Executes the current command.
      *
-     * @param InputInterface $input The input
+     * @param InputInterface  $input  The input
      * @param OutputInterface $output The output
      *
      * @return int
@@ -106,13 +106,12 @@ EOT
         $groupOutput = '';
 
         foreach ($groupNames as $groupName) {
-
-            if ((int)$groupName !== 0) {
+            if ((int) $groupName !== 0) {
                 $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
-                $groupOutput .= $groups[$groupName]->getName() . ', ';
+                $groupOutput .= $groups[$groupName]->getName().', ';
             } else {
                 $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
-                $groupOutput .= $groupName . ', ';
+                $groupOutput .= $groupName.', ';
             }
 
             if ($group instanceof Group) {
@@ -137,17 +136,15 @@ EOT
     /**
      * Interacts with the user.
      *
-     * @param InputInterface $input The input
+     * @param InputInterface  $input  The input
      * @param OutputInterface $output The output
      *
      * @throws \InvalidArgumentException
-     *
-     * @return void
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         if (!$input->getArgument('username')) {
-            $question = New Question('Please choose a username:');
+            $question = new Question('Please choose a username:');
             $question->setValidator(function ($username) {
                 if (null === $username) {
                     throw new \InvalidArgumentException('Username can not be empty');
@@ -164,7 +161,7 @@ EOT
         }
 
         if (!$input->getArgument('email')) {
-            $question = New Question('Please choose an email:');
+            $question = new Question('Please choose an email:');
             $question->setValidator(function ($email) {
                 if (null === $email) {
                     throw new \InvalidArgumentException('Email can not be empty');
@@ -181,8 +178,7 @@ EOT
         }
 
         if (!$input->getArgument('password')) {
-
-            $question = New Question('Please choose a password:');
+            $question = new Question('Please choose a password:');
             $question->setHidden(true);
             $question->setHiddenFallback(false);
             $question->setValidator(function ($password) {
@@ -225,6 +221,7 @@ EOT
                         'Group(s) must be of type integer and can not be empty'
                     );
                 }
+
                 return $groups;
             });
 

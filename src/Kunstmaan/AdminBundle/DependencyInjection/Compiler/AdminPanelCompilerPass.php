@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * This compiler pass makes it possible to add items to the admin panel
+ * This compiler pass makes it possible to add items to the admin panel.
  */
 class AdminPanelCompilerPass implements CompilerPassInterface
 {

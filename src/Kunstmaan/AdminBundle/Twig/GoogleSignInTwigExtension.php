@@ -2,12 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
-use Twig_Environment;
 use Twig_Extension;
 
 /**
- * Class GoogleSignInTwigExtension
- * @package Kunstmaan\AdminBundle\Twig
+ * Class GoogleSignInTwigExtension.
  */
 class GoogleSignInTwigExtension extends Twig_Extension
 {
@@ -53,5 +51,4 @@ class GoogleSignInTwigExtension extends Twig_Extension
     {
         return 'google_signin_twig_extension';
     }
-
 }

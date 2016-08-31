@@ -7,11 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
- * DashboardConfigurationType
+ * DashboardConfigurationType.
  */
 class DashboardConfigurationType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -26,7 +25,7 @@ class DashboardConfigurationType extends AbstractType
             'attr' => array(
                 'style' => 'width: 1000px',
                 'rows' => 20,
-            )
+            ),
         ));
     }
 
@@ -37,5 +36,4 @@ class DashboardConfigurationType extends AbstractType
     {
         return 'dashboardconfiguration';
     }
-
 }

@@ -6,17 +6,16 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
- * AclWalker
+ * AclWalker.
  */
 class AclWalker extends SqlWalker
 {
-
     /**
      * Walks down a FromClause AST node, thereby generating the appropriate SQL.
      *
      * @param string $fromClause
      *
-     * @return string The SQL.
+     * @return string The SQL
      */
     public function walkFromClause($fromClause)
     {
@@ -28,7 +27,6 @@ class AclWalker extends SqlWalker
 JOIN ({$extraQuery}) ta_ ON {$tableAlias}.id = ta_.id
 tempAclView;
 
-        return $sql . ' ' . $tempAclView;
+        return $sql.' '.$tempAclView;
     }
-
 }

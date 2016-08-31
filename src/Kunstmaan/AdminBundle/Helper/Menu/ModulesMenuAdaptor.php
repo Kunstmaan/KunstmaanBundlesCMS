@@ -2,19 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * MenuAdaptor to add the Modules MenuItem to the top menu
+ * MenuAdaptor to add the Modules MenuItem to the top menu.
  */
 class ModulesMenuAdaptor implements MenuAdaptorInterface
 {
     /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * In this method you can add children for a specific parent, but also remove and change the already created children.
      *
      * @param MenuBuilder $menu      The MenuBuilder
      * @param MenuItem[]  &$children The current children
@@ -36,5 +32,4 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
             $children[] = $menuItem;
         }
     }
-
 }

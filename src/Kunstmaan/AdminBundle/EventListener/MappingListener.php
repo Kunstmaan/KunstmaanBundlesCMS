@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 
 /**
- * Class MappingListener
+ * Class MappingListener.
  */
 class MappingListener
 {
@@ -15,7 +15,7 @@ class MappingListener
     private $className;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $className
      */
@@ -26,6 +26,7 @@ class MappingListener
 
     /**
      * Called when class meta data is fetched.
+     *
      * @param LoadClassMetadataEventArgs $eventArgs
      */
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
@@ -42,7 +43,7 @@ class MappingListener
                     'name' => 'user_id',
                     'referencedColumnName' => 'id',
                     'unique' => false,
-                    'nullable' => true
+                    'nullable' => true,
                 )),
             );
             $classMetadata->mapManyToOne($mapping);
@@ -54,22 +55,22 @@ class MappingListener
             $mapping = array(
                 'fieldName' => 'groups',
                 'joinTable' => array(
-                    'name' => $tableName . '_groups',
+                    'name' => $tableName.'_groups',
                     'joinColumns' => array(array(
                         'name' => 'user_id',
                         'unique' => false,
                         'nullable' => true,
-                        'referencedColumnName' => 'id'
+                        'referencedColumnName' => 'id',
                     )),
                     'inverseJoinColumns' => array(array(
                         'name' => 'group_id',
                         'unique' => false,
                         'nullable' => true,
-                        'referencedColumnName' => 'id'
-                    ))
+                        'referencedColumnName' => 'id',
+                    )),
                 ),
                 'targetEntity' => 'Kunstmaan\AdminBundle\Entity\Group',
-                'sourceEntity' => $this->className
+                'sourceEntity' => $this->className,
             );
             $classMetadata->mapManyToMany($mapping);
         }

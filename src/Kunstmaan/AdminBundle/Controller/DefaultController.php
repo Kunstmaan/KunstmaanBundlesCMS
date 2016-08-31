@@ -12,12 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * The default controller is used to render the main screen the users see when they log in to the admin
+ * The default controller is used to render the main screen the users see when they log in to the admin.
  */
 class DefaultController extends Controller
 {
     /**
-     * The index action will render the main screen the users see when they log in in to the admin
+     * The index action will render the main screen the users see when they log in in to the admin.
      *
      * @Route("/", name="KunstmaanAdminBundle_homepage")
      * @Template()
@@ -26,8 +26,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->container->hasParameter("kunstmaan_admin.dashboard_route")) {
-            return $this->redirect($this->generateUrl($this->container->getParameter("kunstmaan_admin.dashboard_route")));
+        if ($this->container->hasParameter('kunstmaan_admin.dashboard_route')) {
+            return $this->redirect($this->generateUrl($this->container->getParameter('kunstmaan_admin.dashboard_route')));
         }
 
         /* @var DashboardConfiguration $dashboardConfiguration */
@@ -40,7 +40,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * The admin of the index page
+     * The admin of the index page.
      *
      * @Route("/adminindex", name="KunstmaanAdminBundle_homepage_admin")
      * @Template()
@@ -52,7 +52,7 @@ class DefaultController extends Controller
     public function editIndexAction(Request $request)
     {
         /* @var $em EntityManager */
-        $em      = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         /* @var DashboardConfiguration $dashboardConfiguration */
         $dashboardConfiguration = $em
@@ -79,8 +79,8 @@ class DefaultController extends Controller
         }
 
         return array(
-            'form'                   => $form->createView(),
-            'dashboardConfiguration' => $dashboardConfiguration
+            'form' => $form->createView(),
+            'dashboardConfiguration' => $dashboardConfiguration,
         );
     }
 }

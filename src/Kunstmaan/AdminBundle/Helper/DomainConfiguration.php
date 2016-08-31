@@ -6,11 +6,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class DomainConfiguration
+ * Class DomainConfiguration.
  *
  * Default (single domain) configuration handling
- *
- * @package Kunstmaan\AdminBundle\Helper
  */
 class DomainConfiguration implements DomainConfigurationInterface
 {
@@ -100,9 +98,6 @@ class DomainConfiguration implements DomainConfigurationInterface
         return false;
     }
 
-    /**
-     * @return null
-     */
     public function getRootNode($host = null)
     {
         return null;
@@ -135,36 +130,23 @@ class DomainConfiguration implements DomainConfigurationInterface
         return $requestStack->getMasterRequest();
     }
 
-    /**
-     * @return null
-     */
     public function getFullHost($host = null)
     {
         return null;
     }
 
-    /**
-     * @return null
-     */
     public function getFullHostById($id)
     {
         return null;
     }
 
-    /**
-     * @return null
-     */
     public function getHostSwitched()
     {
         return null;
     }
 
-    /**
-     * @return null
-     */
     public function getHostBaseUrl($host = null)
     {
         return null;
     }
-
 }

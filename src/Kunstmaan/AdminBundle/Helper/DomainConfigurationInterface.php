@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Helper;
 interface DomainConfigurationInterface
 {
     /**
-     * Return the current host (or the current host override if using the MultiDomainBundle)
+     * Return the current host (or the current host override if using the MultiDomainBundle).
      *
      * @return string
      */
@@ -78,7 +78,7 @@ interface DomainConfigurationInterface
     public function getLocalesExtraData();
 
     /**
-     * Return the full host
+     * Return the full host.
      *
      * @return mixed
      */
@@ -92,17 +92,16 @@ interface DomainConfigurationInterface
     public function getFullHostById($id);
 
     /**
-     * Return the host switched to from url chooser
+     * Return the host switched to from url chooser.
      *
      * @return mixed
      */
     public function getHostSwitched();
 
     /**
-     * Return the host name with the protocol
+     * Return the host name with the protocol.
      *
      * @return mixed
      */
     public function getHostBaseUrl($host = null);
-
 }

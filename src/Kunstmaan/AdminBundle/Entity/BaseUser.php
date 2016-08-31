@@ -21,7 +21,7 @@ abstract class BaseUser extends AbstractUser
     protected $id;
 
     /**
-     * The doctrine metadata is set dynamically in Kunstmaan\AdminBundle\EventListener\MappingListener
+     * The doctrine metadata is set dynamically in Kunstmaan\AdminBundle\EventListener\MappingListener.
      */
     protected $groups;
 
@@ -41,7 +41,7 @@ abstract class BaseUser extends AbstractUser
     protected $googleId;
 
     /**
-     * Construct a new user
+     * Construct a new user.
      */
     public function __construct()
     {
@@ -50,7 +50,7 @@ abstract class BaseUser extends AbstractUser
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -60,7 +60,7 @@ abstract class BaseUser extends AbstractUser
     }
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id
      *
@@ -104,7 +104,7 @@ abstract class BaseUser extends AbstractUser
     }
 
     /**
-     * Get adminLocale
+     * Get adminLocale.
      *
      * @return string
      */
@@ -114,7 +114,7 @@ abstract class BaseUser extends AbstractUser
     }
 
     /**
-     * Set adminLocale
+     * Set adminLocale.
      *
      * @param string $adminLocale
      *
@@ -128,9 +128,9 @@ abstract class BaseUser extends AbstractUser
     }
 
     /**
-     * is passwordChanged
+     * is passwordChanged.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPasswordChanged()
     {
@@ -138,9 +138,9 @@ abstract class BaseUser extends AbstractUser
     }
 
     /**
-     * Set passwordChanged
+     * Set passwordChanged.
      *
-     * @param boolean $passwordChanged
+     * @param bool $passwordChanged
      *
      * @return User
      */
@@ -173,21 +173,21 @@ abstract class BaseUser extends AbstractUser
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('username', new NotBlank());
-        $metadata->addPropertyConstraint('plainPassword', new NotBlank(array("groups" => array("Registration"))));
+        $metadata->addPropertyConstraint('plainPassword', new NotBlank(array('groups' => array('Registration'))));
         $metadata->addPropertyConstraint('email', new NotBlank());
         $metadata->addPropertyConstraint('email', new Email());
         $metadata->addConstraint(new UniqueEntity(array(
-            'fields'  => 'username',
+            'fields' => 'username',
             'message' => 'errors.user.loginexists',
         )));
         $metadata->addConstraint(new UniqueEntity(array(
-            'fields'  => 'email',
+            'fields' => 'email',
             'message' => 'errors.user.emailexists',
         )));
     }
 
     /**
-     * Return class name of form type used to add & edit users
+     * Return class name of form type used to add & edit users.
      *
      * @return string
      */

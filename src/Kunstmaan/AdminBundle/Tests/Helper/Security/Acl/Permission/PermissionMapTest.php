@@ -6,7 +6,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 
 /**
- * PermissionMapTest
+ * PermissionMapTest.
  */
 class PermissionMapTest extends \PHPUnit_Framework_TestCase
 {

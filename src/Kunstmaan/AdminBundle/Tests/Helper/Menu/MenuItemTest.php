@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
@@ -132,7 +133,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $child2 = new MenuItem($this->object->getMenu());
         $child2->setAppearInNavigation(true);
         $children = array($child1, $child2);
-
 
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()

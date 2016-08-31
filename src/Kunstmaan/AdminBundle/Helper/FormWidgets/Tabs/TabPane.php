@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * A tab pane is a container which holds tabs
+ * A tab pane is a container which holds tabs.
  */
 class TabPane
 {
@@ -257,7 +257,7 @@ class TabPane
     }
 
     /**
-     * Reset the indexes of the tabs
+     * Reset the indexes of the tabs.
      */
     private function reindexTabs()
     {

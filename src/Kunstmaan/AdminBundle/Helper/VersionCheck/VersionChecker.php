@@ -8,7 +8,7 @@ use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Version checker
+ * Version checker.
  */
 class VersionChecker
 {
@@ -38,10 +38,10 @@ class VersionChecker
     private $enabled;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param ContainerInterface $container
-     * @param Cache $cache
+     * @param Cache              $cache
      */
     public function __construct(ContainerInterface $container, Cache $cache)
     {
@@ -65,8 +65,6 @@ class VersionChecker
 
     /**
      * Check if we recently did a version check, if not do one now.
-     *
-     * @return void
      */
     public function periodicallyCheck()
     {
@@ -83,7 +81,7 @@ class VersionChecker
     /**
      * Get the version details via webservice.
      *
-     * @return mixed A list of bundles if available.
+     * @return mixed A list of bundles if available
      */
     public function check()
     {
@@ -95,15 +93,15 @@ class VersionChecker
             'host' => $this->container->get('request_stack')->getCurrentRequest()->getHttpHost(),
             'installed' => filectime($this->container->get('kernel')->getRootDir().'/../bin/console'),
             'bundles' => $this->parseComposer(),
-            'project' => $this->container->getParameter('websitetitle')
+            'project' => $this->container->getParameter('websitetitle'),
         ));
 
         try {
             $client = new Client($this->webserviceUrl, array(
                 'curl.options' => array(
-                    CURLOPT_TIMEOUT        => 3,
-                    CURLOPT_CONNECTTIMEOUT => 1
-                )
+                    CURLOPT_TIMEOUT => 3,
+                    CURLOPT_CONNECTTIMEOUT => 1,
+                ),
             ));
             $request = $client->post('', null, $jsonData);
             $call = $request->send();
@@ -135,6 +133,7 @@ class VersionChecker
      * Returns a list of composer packages.
      *
      * @return array
+     *
      * @throws Exception\ParseException
      */
     protected function getPackages()
@@ -168,6 +167,7 @@ class VersionChecker
      * Parse the composer.lock file to get the currently used versions of the kunstmaan bundles.
      *
      * @return array
+     *
      * @throws Exception\ParseException
      */
     protected function parseComposer()
@@ -178,7 +178,7 @@ class VersionChecker
                 $bundles[] = array(
                     'name' => $package['name'],
                     'version' => $package['version'],
-                    'reference' => $package['source']['reference']
+                    'reference' => $package['source']['reference'],
                 );
             }
         }

@@ -5,12 +5,12 @@ namespace Kunstmaan\AdminBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * UserRepository
+ * UserRepository.
  */
 class UserRepository extends EntityRepository
 {
     /**
-     * Get user(s) that have the specified role(s)
+     * Get user(s) that have the specified role(s).
      *
      * @param string|array $role The role(s) for which you want to retrieve the users
      *
@@ -37,5 +37,4 @@ class UserRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
 }

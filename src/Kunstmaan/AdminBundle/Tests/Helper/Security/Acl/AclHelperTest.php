@@ -315,7 +315,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
 
         $rows = array(
             array('id' => 1),
-            array('id' => 9)
+            array('id' => 9),
         );
 
         $hydrator->expects($this->once())

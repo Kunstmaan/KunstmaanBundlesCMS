@@ -6,7 +6,7 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Model\UserManager;
 
 /**
- * Set password_changed property to 1 after changing the password
+ * Set password_changed property to 1 after changing the password.
  */
 class PasswordResettingListener
 {
@@ -18,7 +18,7 @@ class PasswordResettingListener
     /**
      * @param UserManager $userManager
      */
-    function __construct(UserManager $userManager)
+    public function __construct(UserManager $userManager)
     {
         $this->userManager = $userManager;
     }

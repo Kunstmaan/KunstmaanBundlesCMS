@@ -7,11 +7,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**
- * This compiler pass makes it possible to add processors for the Kunstmaan logger
+ * This compiler pass makes it possible to add processors for the Kunstmaan logger.
  */
 class AddLogProcessorsCompilerPass implements CompilerPassInterface
 {
-
     /**
      * @param ContainerBuilder $container
      */
@@ -35,5 +34,4 @@ class AddLogProcessorsCompilerPass implements CompilerPassInterface
             }
         }
     }
-
 }

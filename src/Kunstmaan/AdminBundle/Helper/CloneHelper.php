@@ -8,11 +8,10 @@ use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 
 /**
- * This helper will help you to clone Entities
+ * This helper will help you to clone Entities.
  */
 class CloneHelper
 {
-
     /**
      * @var EntityManager
      */
@@ -50,5 +49,4 @@ class CloneHelper
 
         return $clonedEntity;
     }
-
 }

@@ -10,11 +10,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanAdminBundle
+ * KunstmaanAdminBundle.
  */
 class KunstmaanAdminBundle extends Bundle
 {
-
     /**
      * @param ContainerBuilder $container A ContainerBuilder instance
      */

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\AdminPanel;
 
-class AdminPanel 
+class AdminPanel
 {
     /**
      * @var AdminPanelAdaptorInterface[]
@@ -20,7 +20,7 @@ class AdminPanel
     private $actions = null;
 
     /**
-     * Add admin panel adaptor
+     * Add admin panel adaptor.
      *
      * @param AdminPanelAdaptorInterface $adaptor
      */
@@ -31,7 +31,7 @@ class AdminPanel
     }
 
     /**
-     * Return current admin panel actions
+     * Return current admin panel actions.
      */
     public function getAdminPanelActions()
     {

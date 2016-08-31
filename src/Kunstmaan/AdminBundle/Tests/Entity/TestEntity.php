@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Tests\Entity;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
- * TestEntity
+ * TestEntity.
  */
 class TestEntity extends AbstractEntity
 {
@@ -16,5 +16,4 @@ class TestEntity extends AbstractEntity
     {
         $this->setId($id);
     }
-
 }

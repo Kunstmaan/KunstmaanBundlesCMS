@@ -5,14 +5,12 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * AdminLocaleListener to override default locale if user-specific locale is set in database
+ * AdminLocaleListener to override default locale if user-specific locale is set in database.
  */
 class AdminLocaleListener implements EventSubscriberInterface
 {
@@ -40,18 +38,18 @@ class AdminLocaleListener implements EventSubscriberInterface
      * @param TokenStorageInterface $tokenStorage
      * @param TranslatorInterface   $translator
      * @param string                $defaultAdminLocale
-     * @param string                $providerKey          Firewall name to check against
+     * @param string                $providerKey        Firewall name to check against
      */
     public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, $defaultAdminLocale, $providerKey = 'main')
     {
-        $this->translator         = $translator;
-        $this->tokenStorage       = $tokenStorage;
+        $this->translator = $translator;
+        $this->tokenStorage = $tokenStorage;
         $this->defaultAdminLocale = $defaultAdminLocale;
-        $this->providerKey        = $providerKey;
+        $this->providerKey = $providerKey;
     }
 
     /**
-     * onKernelRequest
+     * onKernelRequest.
      *
      * @param GetResponseEvent $event
      */
@@ -107,9 +105,9 @@ class AdminLocaleListener implements EventSubscriberInterface
     }
 
     /**
-     * getSubscribedEvents
+     * getSubscribedEvents.
      */
-    static public function getSubscribedEvents()
+    public static function getSubscribedEvents()
     {
         return array(
             // Must be registered before the default Locale listener

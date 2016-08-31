@@ -2,17 +2,17 @@
 
 namespace Kunstmaan\AdminBundle\Entity;
 
-interface EntityInterface 
+interface EntityInterface
 {
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
     public function getId();
 
     /**
-     * Set id
+     * Set id.
      *
      * @param int $id The unique identifier
      *

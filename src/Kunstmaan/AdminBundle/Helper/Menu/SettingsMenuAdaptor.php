@@ -2,15 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
-use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * SettingsMenuAdaptor to add the Settings MenuItem to the top menu and build the Settings tree
+ * SettingsMenuAdaptor to add the Settings MenuItem to the top menu and build the Settings tree.
  */
 class SettingsMenuAdaptor implements MenuAdaptorInterface
 {
@@ -20,7 +16,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     private $container;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param ContainerInterface $container
      */
@@ -30,7 +26,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
     }
 
     /**
-     * In this method you can add children for a specific parent, but also remove and change the already created children
+     * In this method you can add children for a specific parent, but also remove and change the already created children.
      *
      * @param MenuBuilder $menu      The MenuBuilder
      * @param MenuItem[]  &$children The current children
@@ -68,5 +64,4 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             }
         }
     }
-
 }
