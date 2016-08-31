@@ -53,7 +53,7 @@ class LocaleBlacklistRule extends AbstractRule
     public function getJsProperties()
     {
         return array(
-            'locale' => $this->getLocale()
+            'locale' => $this->getLocale(),
         );
     }
 

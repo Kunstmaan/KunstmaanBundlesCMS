@@ -29,7 +29,7 @@ class RulesAdminListController extends AdminListController
     }
 
     /**
-     * The detail action
+     * The detail action.
      *
      * @Route("/{popup}/rules", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_detail")
      */
@@ -39,7 +39,7 @@ class RulesAdminListController extends AdminListController
     }
 
     /**
-     * The add action
+     * The add action.
      *
      * @Route("/{popup}/add", requirements={"popup" = "\d+"}, name="kunstmaanleadgenerationbundle_admin_rule_abstractrule_add")
      * @Method({"GET", "POST"})
@@ -54,7 +54,7 @@ class RulesAdminListController extends AdminListController
     }
 
     /**
-     * The edit action
+     * The edit action.
      *
      * @param int $id
      *
@@ -69,7 +69,7 @@ class RulesAdminListController extends AdminListController
     }
 
     /**
-     * The delete action
+     * The delete action.
      *
      * @param int $id
      *
