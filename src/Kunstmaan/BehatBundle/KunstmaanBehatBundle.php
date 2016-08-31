@@ -5,9 +5,8 @@ namespace Kunstmaan\BehatBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanBehatBundle
+ * KunstmaanBehatBundle.
  */
 class KunstmaanBehatBundle extends Bundle
 {
-
 }
