@@ -32,7 +32,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -44,7 +44,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Get bundle name
+     * Get bundle name.
      *
      * @return string
      */
@@ -54,7 +54,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Get entity name
+     * Get entity name.
      *
      * @return string
      */
@@ -82,7 +82,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function getValue($item, $columnName)
     {
         if ($columnName == 'title') {
-           return $item->getDisplayTitle();
+            return $item->getDisplayTitle();
         } elseif ($columnName == 'online') {
             return $item;
         } elseif ($columnName == 'type') {
@@ -109,7 +109,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * You can override this method to do some custom things you need to do when adding an entity
+     * You can override this method to do some custom things you need to do when adding an entity.
      *
      * @param object $entity
      *

@@ -21,8 +21,9 @@ class MenuItemAdminListController extends AdminListController
 
     /**
      * @param Request $request
-     * @param int $menuid
-     * @param int $entityId
+     * @param int     $menuid
+     * @param int     $entityId
+     *
      * @return AbstractAdminListConfigurator
      */
     public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
@@ -46,7 +47,7 @@ class MenuItemAdminListController extends AdminListController
     }
 
     /**
-     * The index action
+     * The index action.
      *
      * @Route("/{menuid}/items", name="kunstmaanmenubundle_admin_menuitem")
      */
@@ -80,10 +81,11 @@ class MenuItemAdminListController extends AdminListController
     }
 
     /**
-     * The add action
+     * The add action.
      *
      * @Route("/{menuid}/items/add", name="kunstmaanmenubundle_admin_menuitem_add")
      * @Method({"GET", "POST"})
+     *
      * @return array
      */
     public function addAction(Request $request, $menuid)
@@ -92,7 +94,7 @@ class MenuItemAdminListController extends AdminListController
     }
 
     /**
-     * The edit action
+     * The edit action.
      *
      * @param int $id
      *
@@ -107,7 +109,7 @@ class MenuItemAdminListController extends AdminListController
     }
 
     /**
-     * The delete action
+     * The delete action.
      *
      * @param int $id
      *
@@ -126,6 +128,7 @@ class MenuItemAdminListController extends AdminListController
      *
      * @Route("{menuid}/items/{item}/move-up", name="kunstmaanmenubundle_admin_menuitem_move_up")
      * @Method({"GET"})
+     *
      * @return RedirectResponse
      */
     public function moveUpAction(Request $request, $menuid, $item)
@@ -148,6 +151,7 @@ class MenuItemAdminListController extends AdminListController
      *
      * @Route("{menuid}/items/{item}/move-down", name="kunstmaanmenubundle_admin_menuitem_move_down")
      * @Method({"GET"})
+     *
      * @return RedirectResponse
      */
     public function moveDownAction(Request $request, $menuid, $item)

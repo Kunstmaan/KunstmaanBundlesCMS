@@ -31,7 +31,7 @@ class MenuItem extends BaseMenuItem
     protected $parent;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
