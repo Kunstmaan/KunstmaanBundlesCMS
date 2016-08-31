@@ -37,8 +37,8 @@ class HostOverrideListener
         TranslatorInterface $translator,
         DomainConfigurationInterface $domainConfiguration
     ) {
-        $this->session             = $session;
-        $this->translator          = $translator;
+        $this->session = $session;
+        $this->translator = $translator;
         $this->domainConfiguration = $domainConfiguration;
     }
 
