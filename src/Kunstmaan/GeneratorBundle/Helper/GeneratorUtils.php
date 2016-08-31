@@ -10,15 +10,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * GeneratorUtils
+ * GeneratorUtils.
  */
 class GeneratorUtils
 {
-
     /**
      * Cleans the prefix. Prevents a double underscore from happening.
      *
      * @param $prefixString
+     *
      * @return string
      */
     public static function cleanPrefix($prefixString)
@@ -28,7 +28,7 @@ class GeneratorUtils
             return null;
         }
 
-        $result = preg_replace('/_*$/i', '', strtolower($prefixString)) . '_';
+        $result = preg_replace('/_*$/i', '', strtolower($prefixString)).'_';
 
         if ($result == '_') {
             return null;
@@ -64,7 +64,7 @@ class GeneratorUtils
     }
 
     /**
-     * Prepend the string in the file
+     * Prepend the string in the file.
      *
      * @param string $string   Text to be added in front of the file
      * @param string $filename File to prepend in
@@ -82,7 +82,7 @@ class GeneratorUtils
     }
 
     /**
-     * Append the string in the file
+     * Append the string in the file.
      *
      * @param string $string   Text to be added in front of the file
      * @param string $filename File to prepend in
@@ -100,7 +100,7 @@ class GeneratorUtils
     }
 
     /**
-     * Find and replace the string in the file
+     * Find and replace the string in the file.
      *
      * @param string $toReplace   Text to be replaced
      * @param string $replaceText Text as replacement
@@ -113,9 +113,7 @@ class GeneratorUtils
             $content = str_replace($toReplace, $replaceText, $content);
             file_put_contents($filename, $content);
         }
-
     }
-
 
     public static function getFullSkeletonPath($pathInSkeleton)
     {
@@ -123,7 +121,7 @@ class GeneratorUtils
 
         // pathInSkeleton needs to be prepended by a /
         if (substr($pathInSkeleton, 0, 1) !== '/') {
-            $pathInSkeleton = '/' . $pathInSkeleton;
+            $pathInSkeleton = '/'.$pathInSkeleton;
         }
 
         // Can't have a / at the end.
@@ -131,7 +129,7 @@ class GeneratorUtils
             $pathInSkeleton = rtrim($pathInSkeleton, '/');
         }
 
-        return __DIR__ . '/../Resources/SensioGeneratorBundle/skeleton' . $pathInSkeleton;
+        return __DIR__.'/../Resources/SensioGeneratorBundle/skeleton'.$pathInSkeleton;
     }
 
     public static function ensureOptionsProvided(InputInterface $input, array $options)
@@ -147,6 +145,7 @@ class GeneratorUtils
      * Replaces '\' with '/'.
      *
      * @param $namespace
+     *
      * @return string
      */
     public static function fixNamespace($namespace)
@@ -171,6 +170,6 @@ class GeneratorUtils
      */
     public static function getInputAssistant(InputInterface &$input, OutputInterface $output, QuestionHelper $questionHelper, Kernel $kernel, ContainerInterface $container)
     {
-	return new InputAssistant($input, $output, $questionHelper, $kernel, $container);
+        return new InputAssistant($input, $output, $questionHelper, $kernel, $container);
     }
 }

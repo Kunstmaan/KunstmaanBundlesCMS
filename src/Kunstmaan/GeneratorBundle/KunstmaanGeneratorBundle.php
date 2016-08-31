@@ -5,9 +5,8 @@ namespace Kunstmaan\GeneratorBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanGeneratorBundle
+ * KunstmaanGeneratorBundle.
  */
 class KunstmaanGeneratorBundle extends Bundle
 {
-
 }

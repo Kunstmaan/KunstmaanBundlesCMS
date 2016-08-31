@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\GeneratorBundle\Tests\Helper;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
@@ -19,7 +20,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new GeneratorUtils;
+        $this->object = new GeneratorUtils();
     }
 
     /**

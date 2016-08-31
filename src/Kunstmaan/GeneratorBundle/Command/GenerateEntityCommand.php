@@ -17,11 +17,10 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
- * GenerateEntityCommand
+ * GenerateEntityCommand.
  */
 class GenerateEntityCommand extends GenerateDoctrineCommand
 {
-
     /**
      * {@inheritdoc}
      */
@@ -70,7 +69,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    $questionHelper = $this->getQuestionHelper();
+        $questionHelper = $this->getQuestionHelper();
 
         if ($input->isInteractive()) {
             $confirmationQuestion = new ConfirmationQuestion($questionHelper->getQuestion('Do you confirm generation', 'yes', '?'), true);
@@ -94,7 +93,7 @@ EOT
 
         $bundle = $this->getContainer()->get('kernel')->getBundle($bundleName);
 
-        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle("KunstmaanGeneratorBundle"));
+        $generator = $this->getGenerator($this->getApplication()->getKernel()->getBundle('KunstmaanGeneratorBundle'));
         $generator->generate($bundle, $entity, $format, array_values($fields), $input->getOption('with-repository'), $prefix);
 
         $output->writeln('Generating the entity code: <info>OK</info>');
@@ -105,7 +104,7 @@ EOT
                 'Make sure you update your database first before you test the entity/adminlist:',
                 '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
                 '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
-                '')
+                '', )
         );
     }
 
@@ -124,7 +123,7 @@ EOT
             '',
             'First, you need to give the entity name you want to generate.',
             'You must use the shortcut notation like <comment>AcmeBlogBundle:Post</comment>.',
-            ''
+            '',
         ));
 
         $bundleNames = array_keys($this->getContainer()->get('kernel')->getBundles());
@@ -140,7 +139,7 @@ EOT
             list($bundle, $entity) = $this->parseShortcutNotation($entity);
 
             // check entity name
-            if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $entity)) {
+            if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $entity)) {
                 $output->writeln(sprintf('<bg=red> "%s" is not a valid entity name.</>', $entity));
                 continue;
             }
@@ -182,7 +181,7 @@ EOT
             '',
             $this->getHelper('formatter')->formatBlock('Summary before generation', 'bg=blue;fg=white', true),
             '',
-            sprintf("You are going to generate a \"<info>%s:%s</info>\" Doctrine2 entity", $bundle, $entity),
+            sprintf('You are going to generate a "<info>%s:%s</info>" Doctrine2 entity', $bundle, $entity),
             '',
         ));
     }
@@ -266,7 +265,7 @@ EOT
             }
 
             $result = filter_var($length, FILTER_VALIDATE_INT, array(
-                'options' => array('min_range' => 1)
+                'options' => array('min_range' => 1),
             ));
 
             if (false === $result) {

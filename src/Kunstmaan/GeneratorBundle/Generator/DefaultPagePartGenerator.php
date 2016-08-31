@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Generates all classes/files for a new pagepart
+ * Generates all classes/files for a new pagepart.
  */
 class DefaultPagePartGenerator extends KunstmaanGenerator
 {
@@ -43,9 +43,9 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
      */
     public function generate(BundleInterface $bundle, $entity, $prefix, array $sections, $behatTest)
     {
-        $this->bundle   = $bundle;
-        $this->entity   = $entity;
-        $this->prefix   = $prefix;
+        $this->bundle = $bundle;
+        $this->entity = $entity;
+        $this->prefix = $prefix;
         $this->sections = $sections;
 
         $this->generatePagePartEntity();
@@ -65,25 +65,25 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generatePagePartEntity()
     {
         $params = array(
-            'bundle'         => $this->bundle->getName(),
-            'namespace'      => $this->bundle->getNamespace(),
-            'pagepart'       => $this->entity,
-            'pagepartname'   => str_replace('PagePart', '', $this->entity),
-            'adminType'      => '\\' . $this->bundle->getNamespace(
-                ) . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
+            'bundle' => $this->bundle->getName(),
+            'namespace' => $this->bundle->getNamespace(),
+            'pagepart' => $this->entity,
+            'pagepartname' => str_replace('PagePart', '', $this->entity),
+            'adminType' => '\\'.$this->bundle->getNamespace(
+                ).'\\Form\\PageParts\\'.$this->entity.'AdminType',
             'underscoreName' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)),
-            'prefix'         => $this->prefix
+            'prefix' => $this->prefix,
         );
 
         $this->renderSingleFile(
-            $this->skeletonDir . '/Entity/PageParts/' . $this->entity . '/',
-            $this->bundle->getPath() . '/Entity/PageParts/',
-            $this->entity . '.php',
+            $this->skeletonDir.'/Entity/PageParts/'.$this->entity.'/',
+            $this->bundle->getPath().'/Entity/PageParts/',
+            $this->entity.'.php',
             $params,
             true
         );
 
-        $this->assistant->writeLine('Generating ' . $this->entity . ' Entity:       <info>OK</info>');
+        $this->assistant->writeLine('Generating '.$this->entity.' Entity:       <info>OK</info>');
     }
 
     /**
@@ -92,22 +92,22 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generateFormType()
     {
         $params = array(
-            'bundle'       => $this->bundle->getName(),
-            'namespace'    => $this->bundle->getNamespace(),
-            'pagepart'     => $this->entity,
+            'bundle' => $this->bundle->getName(),
+            'namespace' => $this->bundle->getNamespace(),
+            'pagepart' => $this->entity,
             'pagepartname' => str_replace('PagePart', '', $this->entity),
-            'adminType'    => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType'
+            'adminType' => '\\'.$this->bundle->getNamespace().'\\Form\\PageParts\\'.$this->entity.'AdminType',
         );
 
         $this->renderSingleFile(
-            $this->skeletonDir . '/Form/PageParts/' . $this->entity . '/',
-            $this->bundle->getPath() . '/Form/PageParts/',
-            $this->entity . 'AdminType.php',
+            $this->skeletonDir.'/Form/PageParts/'.$this->entity.'/',
+            $this->bundle->getPath().'/Form/PageParts/',
+            $this->entity.'AdminType.php',
             $params,
             true
         );
 
-        $this->assistant->writeLine('Generating ' . $this->entity . ' FormType:     <info>OK</info>');
+        $this->assistant->writeLine('Generating '.$this->entity.' FormType:     <info>OK</info>');
     }
 
     /**
@@ -118,33 +118,33 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
         $params = array(
             'pagepart' => strtolower(
                     preg_replace('/([a-z])([A-Z])/', '$1-$2', str_ireplace('PagePart', '', $this->entity))
-                ) . '-pp',
+                ).'-pp',
         );
 
         $this->renderSingleFile(
-            $this->skeletonDir . '/Resources/views/PageParts/' . $this->entity . '/',
-            $this->bundle->getPath() . '/Resources/views/PageParts/' . $this->entity . '/',
+            $this->skeletonDir.'/Resources/views/PageParts/'.$this->entity.'/',
+            $this->bundle->getPath().'/Resources/views/PageParts/'.$this->entity.'/',
             'view.html.twig',
             $params,
             true
         );
 
-        $this->assistant->writeLine('Generating ' . $this->entity . ' template:     <info>OK</info>');
+        $this->assistant->writeLine('Generating '.$this->entity.' template:     <info>OK</info>');
     }
 
     /**
-     * Update the page section config files
+     * Update the page section config files.
      */
     private function generateSectionConfig()
     {
         if (count($this->sections) > 0) {
-            $dir = $this->bundle->getPath() . '/Resources/config/pageparts/';
+            $dir = $this->bundle->getPath().'/Resources/config/pageparts/';
             foreach ($this->sections as $section) {
-                $data = Yaml::parse(file_get_contents($dir . $section));
+                $data = Yaml::parse(file_get_contents($dir.$section));
                 if (!array_key_exists('types', $data)) {
                     $data['types'] = array();
                 }
-                $class = $this->bundle->getNamespace() . '\\Entity\\PageParts\\' . $this->entity;
+                $class = $this->bundle->getNamespace().'\\Entity\\PageParts\\'.$this->entity;
                 $found = false;
                 foreach ($data['types'] as $type) {
                     if ($type['class'] == $class) {
@@ -154,16 +154,16 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
 
                 if (!$found) {
                     $data['types'][] = array(
-                        'name'  => str_replace('PagePart', '', $this->entity),
-                        'class' => $class
+                        'name' => str_replace('PagePart', '', $this->entity),
+                        'class' => $class,
                     );
                 }
 
                 $ymlData = Yaml::dump($data);
-                file_put_contents($dir . $section, $ymlData);
+                file_put_contents($dir.$section, $ymlData);
             }
 
-            $this->assistant->writeLine('Updating ' . $this->entity . ' section config: <info>OK</info>');
+            $this->assistant->writeLine('Updating '.$this->entity.' section config: <info>OK</info>');
         }
     }
 

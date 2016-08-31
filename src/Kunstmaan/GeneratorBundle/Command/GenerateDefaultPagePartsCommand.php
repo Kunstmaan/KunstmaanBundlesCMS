@@ -6,7 +6,7 @@ use Kunstmaan\GeneratorBundle\Generator\DefaultPagePartGenerator;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * Generates the default pageparts
+ * Generates the default pageparts.
  */
 class GenerateDefaultPagePartsCommand extends KunstmaanGenerateCommand
 {
@@ -36,7 +36,7 @@ class GenerateDefaultPagePartsCommand extends KunstmaanGenerateCommand
     protected function configure()
     {
         $this->setDescription('Generates default pageparts')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:default-pageparts</info> command generates the default pageparts and adds the pageparts configuration.
 
 <info>php bin/console kuma:generate:default-pageparts</info>
@@ -88,7 +88,7 @@ EOT
         $this->assistant->writeLine(array(
                 'Make sure you update your database first before you test the pagepart:',
                 '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>')
+                '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>', )
         );
     }
 
@@ -103,18 +103,18 @@ EOT
 
         $this->assistant->writeLine(array("This command helps you to generate a new pagepart.\n"));
 
-        /**
+        /*
          * Ask for which bundle we need to create the pagepart
          */
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('pagepart', $bundleNamespace);
 
-        /**
+        /*
          * Ask the database table prefix
          */
         $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
 
-        /**
+        /*
          * Ask for which page sections we should enable this pagepart
          */
         $contexts = $this->assistant->getOptionOrDefault('contexts', null);
@@ -134,7 +134,7 @@ EOT
             $this->sections = $this->askForSections($question, $this->bundle, true);
         }
 
-        /**
+        /*
          * Check that we can create behat tests for the default pagepart
          */
         $this->behatTest = (count($this->sections) > 0 && $this->canGenerateBehatTests($this->bundle));

@@ -3,13 +3,12 @@
 namespace Kunstmaan\GeneratorBundle\DataFixtures\ORM;
 
 use Kunstmaan\AdminBundle\Entity\Role;
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Fixture for creation the basic roles
+ * Fixture for creation the basic roles.
  */
 class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -19,7 +18,7 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     const REFERENCE_GUEST_ROLE = 'guest-role';
 
     /**
-     * Load data fixtures with the passed EntityManager
+     * Load data fixtures with the passed EntityManager.
      *
      * @param ObjectManager $manager
      */
@@ -39,7 +38,7 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Create a role
+     * Create a role.
      *
      * @param ObjectManager $manager The object manager
      * @param string        $name    The name of the role
@@ -55,7 +54,7 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * Get the order of this fixture
+     * Get the order of this fixture.
      *
      * @return int
      */
@@ -63,5 +62,4 @@ class RoleFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         return 1;
     }
-
 }
