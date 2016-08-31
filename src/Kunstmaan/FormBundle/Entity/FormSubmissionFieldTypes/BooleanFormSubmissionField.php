@@ -8,21 +8,20 @@ use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 
 /**
- * The BooleanFormSubmissionField can be used to store one or more selected choices to a FormSubmission
+ * The BooleanFormSubmissionField can be used to store one or more selected choices to a FormSubmission.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_boolean_form_submission_fields")
  */
 class BooleanFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="bfsf_value", type="boolean", nullable=true)
      */
     protected $value;
 
     /**
-     * Returns the default form type for this FormSubmissionField
+     * Returns the default form type for this FormSubmissionField.
      *
      * @return ChoiceFormSubmissionType
      */
@@ -32,7 +31,7 @@ class BooleanFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Returns a string representation of this FormSubmissionField
+     * Returns a string representation of this FormSubmissionField.
      *
      * @return string
      */
@@ -40,16 +39,16 @@ class BooleanFormSubmissionField extends FormSubmissionField
     {
         $value = $this->getValue();
         if (empty($value)) {
-            return "false";
+            return 'false';
         } else {
-            return "true";
+            return 'true';
         }
     }
 
     /**
-     * Get the value of this field
+     * Get the value of this field.
      *
-     * @return boolean
+     * @return bool
      */
     public function getValue()
     {
@@ -57,9 +56,9 @@ class BooleanFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Set the value of this field
+     * Set the value of this field.
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return BooleanFormSubmissionField
      */

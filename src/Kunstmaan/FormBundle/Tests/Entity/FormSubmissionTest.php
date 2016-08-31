@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Tests\Entity;
+
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use DateTime;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -20,7 +22,7 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FormSubmission;
+        $this->object = new FormSubmission();
     }
 
     /**
@@ -43,7 +45,6 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($id, $object->getId());
     }
 
-
     /**
      * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setIpAddress
      * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getIpAddress
@@ -51,7 +52,7 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     public function testSetGetIpAddress()
     {
         $object = $this->object;
-        $ip = "127.0.0.1";
+        $ip = '127.0.0.1';
         $object->setIpAddress($ip);
         $this->assertEquals($ip, $object->getIpAddress());
     }
@@ -90,7 +91,7 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     public function testSetGetCreated()
     {
         $object = $this->object;
-        $now = new DateTime;
+        $now = new DateTime();
         $object->setCreated($now);
         $this->assertEquals($now, $object->getCreated());
     }

@@ -8,14 +8,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * The type for the BooleanFormSubmissionField
+ * The type for the BooleanFormSubmissionField.
  */
 class BooleanFormSubmissionType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -7,21 +7,20 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
 
 /**
- * The EmailFormSubmissionField can be used to store email values to a FormSubmission
+ * The EmailFormSubmissionField can be used to store email values to a FormSubmission.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_email_form_submission_fields")
  */
 class EmailFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="efsf_value", type="string")
      */
     protected $value;
 
     /**
-     * Returns the default form type for this FormSubmissionField
+     * Returns the default form type for this FormSubmissionField.
      *
      * @return EmailFormSubmissionType
      */
@@ -31,7 +30,7 @@ class EmailFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Return a string representation of this FormSubmissionField
+     * Return a string representation of this FormSubmissionField.
      *
      * @return string
      */
@@ -39,11 +38,11 @@ class EmailFormSubmissionField extends FormSubmissionField
     {
         $value = $this->getValue();
 
-        return !empty($value) ? $value : "";
+        return !empty($value) ? $value : '';
     }
 
     /**
-     * Returns the current value of this field
+     * Returns the current value of this field.
      *
      * @return string
      */
@@ -53,7 +52,7 @@ class EmailFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Sets the current value of this field
+     * Sets the current value of this field.
      *
      * @param string $value
      *

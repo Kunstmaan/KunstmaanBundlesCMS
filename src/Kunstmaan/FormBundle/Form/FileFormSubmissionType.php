@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * This class represents the type for the file FileFormSubmissionField
+ * This class represents the type for the file FileFormSubmissionField.
  */
 class FileFormSubmissionType extends AbstractType
 {
@@ -19,7 +19,9 @@ class FileFormSubmissionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $keys = array_fill_keys(array('label', 'required', 'constraints'), null);
-        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
+        $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function ($v) {
+            return isset($v);
+        });
 
         $builder->add('file', FileType::class, $fieldOptions);
     }

@@ -3,17 +3,12 @@
 namespace Kunstmaan\FormBundle\Tests\Stubs;
 
 /**
- * TestRepository
+ * TestRepository.
  */
 class TestRepository
 {
-
-    /**
-     * @return NULL
-     */
     public function find()
     {
         return null;
     }
-
 }

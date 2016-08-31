@@ -6,7 +6,7 @@ use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
 
 /**
- * Tests for SubmitButtonPagePart
+ * Tests for SubmitButtonPagePart.
  */
 class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new SubmitButtonPagePart;
+        $this->object = new SubmitButtonPagePart();
     }
 
     /**
@@ -39,7 +39,7 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
     public function testSetGetLabel()
     {
         $object = $this->object;
-        $label = "Test label";
+        $label = 'Test label';
         $object->setLabel($label);
         $this->assertEquals($label, $object->getLabel());
     }

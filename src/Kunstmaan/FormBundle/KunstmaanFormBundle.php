@@ -5,7 +5,7 @@ namespace Kunstmaan\FormBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * KunstmaanFormBundle
+ * KunstmaanFormBundle.
  */
 class KunstmaanFormBundle extends Bundle
 {

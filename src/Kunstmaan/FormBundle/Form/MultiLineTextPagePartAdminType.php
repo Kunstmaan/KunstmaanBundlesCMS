@@ -9,11 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * This class represents the type for the MultiLineTextPagePart
+ * This class represents the type for the MultiLineTextPagePart.
  */
 class MultiLineTextPagePartAdminType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options

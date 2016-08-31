@@ -12,7 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Adminlist configuration to list all the form pages
+ * Adminlist configuration to list all the form pages.
  */
 class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -35,7 +35,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Configure filters
+     * Configure filters.
      */
     public function buildFilters()
     {
@@ -45,7 +45,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Configure the visible columns
+     * Configure the visible columns.
      */
     public function buildFields()
     {
@@ -61,11 +61,11 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     {
         $create_route = function (EntityInterface $item) {
             return array(
-                'path'   => 'KunstmaanFormBundle_formsubmissions_list',
-                'params' => array('nodeTranslationId' => $item->getId())
+                'path' => 'KunstmaanFormBundle_formsubmissions_list',
+                'params' => array('nodeTranslationId' => $item->getId()),
             );
         };
-        $ia           = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction(
+        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction(
             $create_route,
             'eye',
             'View'
@@ -74,7 +74,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Return the url to edit the given $item
+     * Return the url to edit the given $item.
      *
      * @param mixed $item
      *
@@ -83,13 +83,13 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function getEditUrlFor($item)
     {
         return array(
-            'path'   => 'KunstmaanFormBundle_formsubmissions_list',
-            'params' => array('nodeTranslationId' => $item->getId())
+            'path' => 'KunstmaanFormBundle_formsubmissions_list',
+            'params' => array('nodeTranslationId' => $item->getId()),
         );
     }
 
     /**
-     * Return the url to list all the items
+     * Return the url to list all the items.
      *
      * @return array
      */
@@ -99,7 +99,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Configure if it's possible to add new items
+     * Configure if it's possible to add new items.
      *
      * @return bool
      */
@@ -114,7 +114,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Configure the types of items you can add
+     * Configure the types of items you can add.
      *
      * @param array $params
      *
@@ -122,11 +122,11 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getAddUrlFor(array $params = array())
     {
-        return "";
+        return '';
     }
 
     /**
-     * Configure if it's possible to delete the given $item
+     * Configure if it's possible to delete the given $item.
      *
      * @param mixed $item
      *
@@ -138,7 +138,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     }
 
     /**
-     * Get the delete url for the given $item
+     * Get the delete url for the given $item.
      *
      * @param mixed $item
      *

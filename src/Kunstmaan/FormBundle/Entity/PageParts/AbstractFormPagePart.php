@@ -5,34 +5,32 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Abstract version of a form page part
+ * Abstract version of a form page part.
  */
 abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdaptorInterface
 {
-
     /**
-     * The label
+     * The label.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $label;
 
     /**
-     * Returns a unique id for the current page part
+     * Returns a unique id for the current page part.
      *
      * @return string
      */
     public function getUniqueId()
     {
-        return  str_replace('\\', '', ClassLookup::getClass($this)) . $this->id; //TODO
+        return  str_replace('\\', '', ClassLookup::getClass($this)).$this->id; //TODO
     }
 
     /**
-     * Set the label used for this page part
+     * Set the label used for this page part.
      *
      * @param int $label
      *
@@ -46,7 +44,7 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * Get the label used for this page part
+     * Get the label used for this page part.
      *
      * @return string
      */
@@ -56,13 +54,12 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     }
 
     /**
-     * Returns the view used in the backend
+     * Returns the view used in the backend.
      *
      * @return string
      */
     public function getAdminView()
     {
-        return "KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig";
+        return 'KunstmaanFormBundle:AbstractFormPagePart:admin-view.html.twig';
     }
-
 }

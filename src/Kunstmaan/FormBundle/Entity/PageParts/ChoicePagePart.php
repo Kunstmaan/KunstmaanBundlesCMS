@@ -53,31 +53,31 @@ class ChoicePagePart extends AbstractFormPagePart
     protected $emptyValue;
 
     /**
-     * If set to true, you are obligated to fill in this page part
+     * If set to true, you are obligated to fill in this page part.
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $required = false;
 
     /**
-     * Error message shows when the page part is required and nothing is filled in
+     * Error message shows when the page part is required and nothing is filled in.
      *
      * @ORM\Column(type="string", name="error_message_required", nullable=true)
      */
     protected $errorMessageRequired;
 
     /**
-     * Returns the view used in the frontend
+     * Returns the view used in the frontend.
      *
      * @return string
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:ChoicePagePart:view.html.twig";
+        return 'KunstmaanFormBundle:ChoicePagePart:view.html.twig';
     }
 
     /**
-     * Modify the form with the fields of the current page part
+     * Modify the form with the fields of the current page part.
      *
      * @param FormBuilderInterface $formBuilder The form builder
      * @param ArrayObject          $fields      The fields
@@ -89,14 +89,14 @@ class ChoicePagePart extends AbstractFormPagePart
         $choices = array_map('trim', $choices);
 
         $cfsf = new ChoiceFormSubmissionField();
-        $cfsf->setFieldName("field_" . $this->getUniqueId());
+        $cfsf->setFieldName('field_'.$this->getUniqueId());
         $cfsf->setLabel($this->getLabel());
         $cfsf->setChoices($choices);
         $cfsf->setRequired($this->required);
         $cfsf->setSequence($sequence);
 
         $data = $formBuilder->getData();
-        $data['formwidget_' . $this->getUniqueId()] = $cfsf;
+        $data['formwidget_'.$this->getUniqueId()] = $cfsf;
         $constraints = array();
         if ($this->getRequired()) {
             $options = array();
@@ -107,14 +107,14 @@ class ChoicePagePart extends AbstractFormPagePart
         }
 
         $formBuilder->add(
-            'formwidget_' . $this->getUniqueId(),
+            'formwidget_'.$this->getUniqueId(),
             ChoiceFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
-                'required'    => $this->getRequired(),
-                'expanded'    => $this->getExpanded(),
-                'multiple'    => $this->getMultiple(),
-                'choices'     => $choices,
+                'label' => $this->getLabel(),
+                'required' => $this->getRequired(),
+                'expanded' => $this->getExpanded(),
+                'multiple' => $this->getMultiple(),
+                'choices' => $choices,
                 'placeholder' => $this->getEmptyValue(),
                 'constraints' => $constraints,
             )
@@ -125,7 +125,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the default backend form type for this FormSubmissionField
+     * Returns the default backend form type for this FormSubmissionField.
      *
      * @return ChoicePagePartAdminType
      */
@@ -135,7 +135,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Set the expanded value, default this is false
+     * Set the expanded value, default this is false.
      *
      * @param bool $expanded
      *
@@ -149,7 +149,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the expanded value
+     * Get the expanded value.
      *
      * @return bool
      */
@@ -159,7 +159,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Set the multple value, default this is false
+     * Set the multple value, default this is false.
      *
      * @param bool $multiple
      *
@@ -173,9 +173,9 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the current multiple value
+     * Get the current multiple value.
      *
-     * @return boolean
+     * @return bool
      */
     public function getMultiple()
     {
@@ -183,7 +183,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Set the choices for this pagepart
+     * Set the choices for this pagepart.
      *
      * @param string $choices Seperated by '\n'
      *
@@ -197,7 +197,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the current choices
+     * Get the current choices.
      *
      * @return string Seperated by '\n'
      */
@@ -207,7 +207,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Set emptyValue
+     * Set emptyValue.
      *
      * @param string $emptyValue
      *
@@ -221,7 +221,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get emptyValue
+     * Get emptyValue.
      *
      * @return string
      */
@@ -231,7 +231,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the required valud of this page part
+     * Sets the required valud of this page part.
      *
      * @param bool $required
      *
@@ -245,7 +245,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Check if the page part is required
+     * Check if the page part is required.
      *
      * @return bool
      */
@@ -255,7 +255,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Sets the message shown when the page part is required and no value was entered
+     * Sets the message shown when the page part is required and no value was entered.
      *
      * @param string $errorMessageRequired
      *
@@ -269,7 +269,7 @@ class ChoicePagePart extends AbstractFormPagePart
     }
 
     /**
-     * Get the error message that will be shown when the page part is required and no value was entered
+     * Get the error message that will be shown when the page part is required and no value was entered.
      *
      * @return string
      */

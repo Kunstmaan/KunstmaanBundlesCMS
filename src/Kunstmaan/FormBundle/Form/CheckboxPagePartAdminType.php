@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * This class represents the type for the CheckboxPagePart
+ * This class represents the type for the CheckboxPagePart.
  */
 class CheckboxPagePartAdminType extends AbstractType
 {

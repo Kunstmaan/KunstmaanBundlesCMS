@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * This class represents the type for the EmailPagePart
+ * This class represents the type for the EmailPagePart.
  */
 class EmailPagePartAdminType extends AbstractType
 {

@@ -10,11 +10,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * This class represents the type for the ChoicePagePart
+ * This class represents the type for the ChoicePagePart.
  */
 class ChoicePagePartAdminType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options

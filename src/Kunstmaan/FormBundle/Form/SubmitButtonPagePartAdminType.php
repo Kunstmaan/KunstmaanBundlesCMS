@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * This class represents the type for the SubmitButtonPagePart
+ * This class represents the type for the SubmitButtonPagePart.
  */
 class SubmitButtonPagePartAdminType extends AbstractType
 {
@@ -20,7 +20,7 @@ class SubmitButtonPagePartAdminType extends AbstractType
         $builder
             ->add('label', null, array(
                 'required' => false,
-                'label' => 'kuma_form.form.submit_button_page_part.label.label'
+                'label' => 'kuma_form.form.submit_button_page_part.label.label',
             ));
     }
 

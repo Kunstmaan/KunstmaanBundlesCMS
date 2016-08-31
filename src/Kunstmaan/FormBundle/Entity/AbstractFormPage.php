@@ -5,14 +5,11 @@ namespace Kunstmaan\FormBundle\Entity;
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
-
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
-
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\AbstractType;
@@ -26,7 +23,7 @@ use Symfony\Component\Form\AbstractType;
 abstract class AbstractFormPage extends AbstractPage implements FormPageInterface, HasPagePartsInterface, SlugActionInterface
 {
     /**
-     * The thank you text to be shown when the form was successfully submitted
+     * The thank you text to be shown when the form was successfully submitted.
      *
      * @Assert\NotBlank()
      * @ORM\Column(type="text", nullable=true)
@@ -34,14 +31,14 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     protected $thanks;
 
     /**
-     * The subject of the administrative email
+     * The subject of the administrative email.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $subject;
 
     /**
-     * The sender of the administrative email
+     * The sender of the administrative email.
      *
      * @ORM\Column(type="string", name="from_email", nullable=true)
      * @Assert\Email()
@@ -49,14 +46,14 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     protected $fromEmail;
 
     /**
-     * The recipient of the administrative email
+     * The recipient of the administrative email.
      *
      * @ORM\Column(type="string", name="to_email", nullable=true)
      */
     protected $toEmail;
 
     /**
-     * Sets the thanks text, shown when the form was successfully submitted
+     * Sets the thanks text, shown when the form was successfully submitted.
      *
      * @param string $thanks
      *
@@ -70,7 +67,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Get the thanks text, shown when the form was successfully submitted
+     * Get the thanks text, shown when the form was successfully submitted.
      *
      * @return string
      */
@@ -80,7 +77,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Get the subject of the administrative email
+     * Get the subject of the administrative email.
      *
      * @return string
      */
@@ -90,7 +87,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Set the subject of the administrative email
+     * Set the subject of the administrative email.
      *
      * @param string $subject
      *
@@ -104,7 +101,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Get the email address of the recipient from the administrative email
+     * Get the email address of the recipient from the administrative email.
      *
      * @return string
      */
@@ -114,7 +111,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Set the email address of the recipient from the administrative email
+     * Set the email address of the recipient from the administrative email.
      *
      * @param string $toEmail
      *
@@ -128,7 +125,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Get the email address of the sender of the administrative email
+     * Get the email address of the sender of the administrative email.
      *
      * @return string
      */
@@ -138,7 +135,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Sets the email address of the sender of the administrative email
+     * Sets the email address of the sender of the administrative email.
      *
      * @param string $fromEmail
      *
@@ -152,7 +149,7 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Generate the url of the thank you page
+     * Generate the url of the thank you page.
      *
      * @param RouterInterface $router  The router
      * @param RenderContext   $context The render context
@@ -167,12 +164,12 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
         return $router->generate('_slug', array(
             'url' => $context['slug'],
             '_locale' => $nodeTranslation->getLang(),
-            'thanks' => true
+            'thanks' => true,
         ));
     }
 
     /**
-     * Returns the default backend form type for this form
+     * Returns the default backend form type for this form.
      *
      * @return AbstractType
      */
@@ -182,13 +179,13 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Get the page part context used for the form
+     * Get the page part context used for the form.
      *
      * @return string
      */
     public function getFormElementsContext()
     {
-        return "main";
+        return 'main';
     }
 
     /**
@@ -198,5 +195,4 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     {
         return 'KunstmaanFormBundle:AbstractFormPage:service';
     }
-
 }

@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * The form handler handles everything from creating the form to handling the submitted form
+ * The form handler handles everything from creating the form to handling the submitted form.
  */
 class FormHandler implements FormHandlerInterface
 {
@@ -93,8 +93,8 @@ class FormHandler implements FormHandlerInterface
                 return new RedirectResponse($page->generateThankYouUrl($router, $context));
             }
         }
-        $context["frontendform"] = $form->createView();
-        $context["frontendformobject"] = $form;
+        $context['frontendform'] = $form->createView();
+        $context['frontendformobject'] = $form;
 
         return null;
     }

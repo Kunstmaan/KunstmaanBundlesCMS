@@ -6,7 +6,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionFiel
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
 
 /**
- * Tests for EmailFormSubmissionField
+ * Tests for EmailFormSubmissionField.
  */
 class EmailFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class EmailFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new EmailFormSubmissionField;
+        $this->object = new EmailFormSubmissionField();
     }
 
     /**

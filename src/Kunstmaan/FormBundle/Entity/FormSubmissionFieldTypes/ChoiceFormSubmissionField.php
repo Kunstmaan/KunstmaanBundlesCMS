@@ -3,19 +3,17 @@
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 
 /**
- * The ChoiceFormSubmissionField can be used to store one or more selected choices to a FormSubmission
+ * The ChoiceFormSubmissionField can be used to store one or more selected choices to a FormSubmission.
  *
  * @ORM\Entity
  * @ORM\Table(name="kuma_choice_form_submission_fields")
  */
 class ChoiceFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="cfsf_value", type="array", nullable=true)
      */
@@ -54,7 +52,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     protected $required = false;
 
     /**
-     * Returns the default form type for this FormSubmissionField
+     * Returns the default form type for this FormSubmissionField.
      *
      * @return ChoiceFormSubmissionType
      */
@@ -64,7 +62,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Returns a string representation of this FormSubmissionField
+     * Returns a string representation of this FormSubmissionField.
      *
      * @return string
      */
@@ -79,7 +77,8 @@ class ChoiceFormSubmissionField extends FormSubmissionField
                 foreach ($values as $value) {
                     $result[] = array_key_exists($value, $choices) ? trim($choices[$value]) : $value;
                 }
-                return implode(", ", $result);
+
+                return implode(', ', $result);
             } else {
                 if (isset($choices[$values])) {
                     return trim($choices[$values]);
@@ -87,11 +86,11 @@ class ChoiceFormSubmissionField extends FormSubmissionField
             }
         }
 
-        return "";
+        return '';
     }
 
     /**
-     * Checks if the value of this field is null
+     * Checks if the value of this field is null.
      *
      * @return bool
      */
@@ -101,14 +100,14 @@ class ChoiceFormSubmissionField extends FormSubmissionField
         if (is_array($values)) {
             return empty($values) || sizeof($values) <= 0;
         } elseif (is_string($values)) {
-            return (!isset($values) || trim($values) === '');
+            return !isset($values) || trim($values) === '';
         } else {
             return is_null($values);
         }
     }
 
     /**
-     * Get the value of this field
+     * Get the value of this field.
      *
      * @return array
      */
@@ -118,7 +117,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Set the value of this field
+     * Set the value of this field.
      *
      * @param array $values
      *
@@ -132,7 +131,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Set the expanded value
+     * Set the expanded value.
      *
      * @param bool $expanded
      *
@@ -146,7 +145,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Returns the current expanded value, by default this will be false
+     * Returns the current expanded value, by default this will be false.
      *
      * @return bool
      */
@@ -156,7 +155,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Set the multiple value
+     * Set the multiple value.
      *
      * @param bool $multiple
      *
@@ -170,7 +169,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Returns the current multiple value, by default this will be false
+     * Returns the current multiple value, by default this will be false.
      *
      * @return bool
      */
@@ -180,7 +179,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Set the possible choices for this field
+     * Set the possible choices for this field.
      *
      * @param array $choices
      *
@@ -194,7 +193,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Get the possible choices for this field
+     * Get the possible choices for this field.
      *
      * @return array
      */
@@ -204,9 +203,9 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Set the field as required or not
+     * Set the field as required or not.
      *
-     * @param boolean $required
+     * @param bool $required
      *
      * @return ChoiceFormSubmissionField
      */
@@ -218,13 +217,12 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     }
 
     /**
-     * Get the field required status, by default this will be false
+     * Get the field required status, by default this will be false.
      *
-     * @return boolean
+     * @return bool
      */
     public function getRequired()
     {
         return $this->required;
     }
-
 }

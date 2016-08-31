@@ -6,7 +6,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionFie
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 
 /**
- * Tests for ChoiceFormSubmissionField
+ * Tests for ChoiceFormSubmissionField.
  */
 class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ChoiceFormSubmissionField;
+        $this->object = new ChoiceFormSubmissionField();
     }
 
     /**
@@ -110,5 +110,4 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $object->setChoices($choices);
         $this->assertEquals($choices, $object->getChoices());
     }
-
 }
