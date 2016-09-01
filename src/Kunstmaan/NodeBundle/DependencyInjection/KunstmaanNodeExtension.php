@@ -36,6 +36,8 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         ));
 
         $container->setParameter('kunstmaan_node.show_add_homepage', $config['show_add_homepage']);
+        $container->setParameter('kunstmaan_node.lock_threshold', $config['lock']['threshold']);
+        $container->setParameter('kunstmaan_node.lock_enabled', $config['lock']['enabled']);
 
         $loader->load('services.yml');
     }

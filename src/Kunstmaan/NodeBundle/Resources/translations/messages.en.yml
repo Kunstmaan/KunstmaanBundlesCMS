@@ -73,6 +73,8 @@ kuma_node:
         edit:
             flash:
                 success: The page has been edited
+                locked: The page is currently being edited by %user%
+                locked_success: A draft version has been created because the page is already being edited by another user
         new_page:
             title:
                 default: New page
