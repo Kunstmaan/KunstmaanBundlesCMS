@@ -150,7 +150,7 @@ kuma_node:
                 cancel:     Cancel
         delete_page:
             'title.%page%': Delete page '%page%'
-            'body.%page%':  This will remove the page completely! Are you really sure about this?
+            'body.%page%':  This will remove the page completely in all languages! Are you really sure about this?
             button:
                 delete:     Delete
                 cancel:     Cancel
