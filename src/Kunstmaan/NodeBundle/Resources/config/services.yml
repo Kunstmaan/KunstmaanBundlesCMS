@@ -46,6 +46,10 @@ services:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.authorization_checker', '@event_dispatcher', '@kunstmaan_admin.clone.helper']
 
+    kunstmaan_node.admin_node.node_version_lock_helper:
+        class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder
         arguments: ['@knp_menu.factory', '@doctrine.orm.entity_manager', '@router', '@event_dispatcher', '@security.authorization_checker', '@kunstmaan_node.pages_configuration' ]
