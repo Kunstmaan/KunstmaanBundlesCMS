@@ -51,6 +51,15 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('publish_later_stepping')->defaultValue('15')->end()
                 ->scalarNode('unpublish_later_stepping')->defaultValue('15')->end()
                 ->booleanNode('show_add_homepage')->defaultTrue()->end()
+                ->arrayNode('lock')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('check_interval')->defaultValue(15)->end()
+                        ->scalarNode('threshold')->defaultValue(35)->end()
+                        ->booleanNode('enabled')->defaultFalse()->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

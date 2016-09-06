@@ -293,6 +293,14 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
+     * @return NodeVersion
+     */
+    public function getDraftNodeVersion()
+    {
+        return $this->getNodeVersion('draft');
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getNodeVersions()

@@ -28,7 +28,6 @@ Selecting the node in the tree with node translation id 50, will generate a toke
 
 Selecting the node in the tree with node translation id 50, on domain "my_domain_en" will generate a token like "[my_domain_en:NT50]".
 
-
 ##MAJOR CHANGE##
 
 For the new URL chooser to work, we have added a new twig filter "replace_url". This filter needs to be used to generate the correct url automatically.
@@ -40,3 +39,7 @@ On all the exiting pageParts with an URLChooser field, you need to change the tw
 When adding a rich text field or a wysiwyg field, you will need to pipe the output of this field also to the replace_url filter. Hereby, all URL's chosen in the wysiwyg will also be replaced correctly.
  
 The DomainConfigurationInterface has also been changed. If you have implemented this interface, please be sure to check the required methods.
+
+##Node version locking
+
+See https://github.com/Kunstmaan/KunstmaanBundlesCMS/tree/master/src/Kunstmaan/NodeBundle/Resources/doc/Locking.md
