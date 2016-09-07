@@ -9,7 +9,7 @@ use Kunstmaan\AdminBundle\Entity\User;
  * NodeVersionLock
  *
  * @ORM\Table(name="kuma_node_version_lock", indexes={
- *     @ORM\Index(name="nt_owner_public_idx", columns={"owner", "node_translation_id", "public_Version"}),
+ *     @ORM\Index(name="nt_owner_public_idx", columns={"owner", "node_translation_id", "public_version"}),
  * })
  * @ORM\Entity(repositoryClass="Kunstmaan\NodeBundle\Repository\NodeVersionLockRepository")
  */
