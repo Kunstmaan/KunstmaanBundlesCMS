@@ -185,6 +185,6 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
             ->andWhere(
                 'n.id IN (SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)'
             )
-            ->addOrderBy('n.sequenceNumber', 'DESC');
+            ->addOrderBy('n.id', 'DESC');
     }
 }
