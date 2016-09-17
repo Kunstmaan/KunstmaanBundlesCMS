@@ -74,14 +74,9 @@ class PagePartAdminController extends Controller
         $data                         = $formBuilder->getData();
         $data['pagepartadmin_' . $id] = $pagePart;
         $adminType                    = $pagePart->getDefaultAdminType();
+        $adminTypeFqcn = $this->container->get('kunstmaan_utilities.fqcn')->getFqcn($adminType);
 
-        if (is_string($adminType)) {
-            $adminType = $this->container->get($adminType);
-        }
-
-        $adminTypeFqn = ClassUtils::getClass($adminType);
-
-        $formBuilder->add('pagepartadmin_' . $id, $adminTypeFqn);
+        $formBuilder->add('pagepartadmin_' . $id, $adminTypeFqcn);
         $formBuilder->setData($data);
         $form     = $formBuilder->getForm();
         $formview = $form->createView();
