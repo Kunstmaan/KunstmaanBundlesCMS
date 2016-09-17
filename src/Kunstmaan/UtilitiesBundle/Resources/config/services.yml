@@ -21,4 +21,6 @@ services:
         tags:
             - { name: twig.extension }
 
-
+    kunstmaan_utilities.fqcn:
+        class: Kunstmaan\UtilitiesBundle\Helper\FqcnLookup
+        arguments: ['@service_container']

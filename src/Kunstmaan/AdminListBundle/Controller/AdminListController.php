@@ -120,12 +120,7 @@ abstract class AdminListController extends Controller
         $helper = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
-        $formFqcn = is_object($formType) ? get_class($formType) : $formType;
-        if (!is_object($formType) && is_string($formType)) {
-            if ($this->container->has($formType)) {
-                $formFqcn = get_class($this->container->get($formType));
-            }
-        }
+        $formFqcn = $this->container->get('kunstmaan_utilities.fqcn')->getFqcn($formType);
 
         $event = new AdaptSimpleFormEvent($request, $formFqcn, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
@@ -200,12 +195,7 @@ abstract class AdminListController extends Controller
         }
 
         $formType = $configurator->getAdminType($helper);
-        $formFqcn = is_object($formType) ? get_class($formType) : $formType;
-        if (!is_object($formType) && is_string($formType)) {
-            if ($this->container->has($formType)) {
-                $formFqcn = get_class($this->container->get($formType));
-            }
-        }
+        $formFqcn = $this->container->get('kunstmaan_utilities.fqcn')->getFqcn($formType);
 
         $event = new AdaptSimpleFormEvent($request, $formFqcn, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);

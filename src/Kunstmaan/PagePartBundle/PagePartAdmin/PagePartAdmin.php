@@ -239,24 +239,14 @@ class PagePartAdmin
         foreach ($this->pageParts as $pagePartRefId => $pagePart) {
             $data['pagepartadmin_' . $pagePartRefId] = $pagePart;
             $adminType = $pagePart->getDefaultAdminType();
-            $adminTypeFqcn = is_object($adminType) ? ClassUtils::getClass($adminType) : $adminType;
-            if (!is_object($adminType) && is_string($adminType)) {
-                if ($this->container->has($adminType)) {
-                    $adminTypeFqcn = ClassUtils::getClass($this->container->get($adminType));
-                }
-            }
+            $adminTypeFqcn = $this->container->get('kunstmaan_utilities.fqcn')->getFqcn($adminType);
             $formbuilder->add('pagepartadmin_' . $pagePartRefId, $adminTypeFqcn);
         }
 
         foreach ($this->newPageParts as $newPagePartRefId => $newPagePart) {
             $data['pagepartadmin_' . $newPagePartRefId] = $newPagePart;
             $adminType = $newPagePart->getDefaultAdminType();
-            $adminTypeFqcn = is_object($adminType) ? ClassUtils::getClass($adminType) : $adminType;
-            if (!is_object($adminType) && is_string($adminType)) {
-                if ($this->container->has($adminType)) {
-                    $adminTypeFqcn = ClassUtils::getClass($this->container->get($adminType));
-                }
-            }
+            $adminTypeFqcn = $this->container->get('kunstmaan_utilities.fqcn')->getFqcn($adminType);
             $formbuilder->add('pagepartadmin_' . $newPagePartRefId, $adminTypeFqcn);
         }
 
