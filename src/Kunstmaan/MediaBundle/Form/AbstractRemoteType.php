@@ -58,7 +58,6 @@ abstract class AbstractRemoteType extends AbstractType
                     'choices' => array(),
                     'constraints' => array(new NotBlank()),
                     'required' => true,
-                    'choices_as_values' => true,
                 )
             )
             ->add(
