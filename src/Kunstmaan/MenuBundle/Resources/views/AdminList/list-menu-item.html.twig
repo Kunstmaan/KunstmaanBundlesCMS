@@ -3,7 +3,10 @@
 {% block admin_page_title %}
     <div class="col-sm-6 col-md-8">
         <h1 class="app__content__header__title">
-            Menu items for {{ adminlistconfigurator.menu.name }} and language {{ adminlistconfigurator.menu.locale }}
+            {{ 'kuma_menu.menu_item.adminlist.title'|trans({
+                '%name%': adminlistconfigurator.menu.name,
+                '%locale%': adminlistconfigurator.menu.locale
+            }) }}
         </h1>
     </div>
 {% endblock %}
@@ -12,16 +15,16 @@
     <ul class="breadcrumb app__content__breadcrumb">
         <li>
             <a href="{{ path('KunstmaanAdminBundle_modules') }}">
-                Modules
+                {{ 'kuma_menu.menu_item.adminlist.breadcrumb.modules'|trans }}
             </a>
         </li>
         <li>
             <a href="{{ path('kunstmaanmenubundle_admin_menu') }}">
-                Menu's
+                {{ 'kuma_menu.menu_item.adminlist.breadcrumb.menu'|trans }}
             </a>
         </li>
         <li class="active">
-            Menu items
+            {{ 'kuma_menu.menu_item.adminlist.breadcrumb.menu_items'|trans }}
         </li>
     </ul>
 {% endblock %}

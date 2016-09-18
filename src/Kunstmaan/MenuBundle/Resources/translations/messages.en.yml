@@ -7,9 +7,25 @@ kuma_menu:
                 name:   Name
     menu_item:
         adminlist:
+            breadcrumb:
+                modules: Modules
+                menu: Menu's
+                menu_items: Menu items
+            title: Menu items for %name% and language %locale%
+            online: (Online)
+            offline: (Offline)
             field:
                 title:      Title
                 online:     Online
                 type:       Type
                 url:        Url
                 new_window: New window
+    form:
+        parent: Parent menu item
+        parent_placeholder: Select the parent menu item...
+        type: Type
+        node_translation: Link page
+        node_translation_placeholder: Select the page to link to...
+        title: Title
+        url: Url
+        new_window: New window
