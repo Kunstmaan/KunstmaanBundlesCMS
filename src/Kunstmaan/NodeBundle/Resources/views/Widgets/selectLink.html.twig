@@ -6,15 +6,11 @@
 
     {# Add some tokens which are being replaced by the URLHelper #}
     {% if is_multidomain_site() %}
-        {% set switched_host = get_switched_host() %}
-        {% set switched_host_id = switched_host.id %}
-
         {% if switched_host_is_current() %}
             {% set slug = "[%s]" | format("NT" ~ item.nt_id) %}
         {% else %}
-            {% set slug = "[%s:%s]" | format(switched_host_id, "NT" ~ item.nt_id) %}
+            {% set slug = "[%s:%s]" | format(switched_host.id, "NT" ~ item.nt_id) %}
         {% endif %}
-
     {% else %}
         {% set slug = "[%s]" | format("NT" ~ item.nt_id) %}
     {% endif %}
