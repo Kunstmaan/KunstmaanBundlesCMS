@@ -212,6 +212,9 @@
                         </div>
                     </div>
                     {% if adminlist.count > 0 %}
+                        {% if adminlist.pagerfanta.haveToPaginate() %}
+                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+                        {% endif %}
                         <div class="row">
                             {% for media in adminlist.items %}
                                 {% set handler = mediamanager.getHandler(media) %}
@@ -264,6 +267,9 @@
                                 {% endif %}
                             {% endfor %}
                         </div>
+                        {% if adminlist.pagerfanta.haveToPaginate() %}
+                            {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
+                        {% endif %}
                         <p id="dnd-area-link" class="text--muted">
                             <strong>{{ 'media.media.dnd.tip' |trans }}</strong> {{ 'media.media.dnd.tiptext' |trans }}
                         </p>
