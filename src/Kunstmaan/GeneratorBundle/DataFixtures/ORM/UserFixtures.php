@@ -94,7 +94,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $enabled = false,
         $changed = false
     ) {
-        $user = new User();
+        $user = $this->container->get('fos_user.user_manager')->createUser();
         $user->setUsername($username);
         $user->setPlainPassword($password);
         $user->setRoles($roles);
