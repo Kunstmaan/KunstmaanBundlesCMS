@@ -1,7 +1,7 @@
 # KunstmaanLeadGenerationBundle
 
-This bundle makes it easy to create lead generation popups for your website, and lets you configure them so that they 
-only appear when you want. To achieve this, you can use the build in rules or create your own custom rules/logic. 
+This bundle makes it easy to create lead generation popups for your website, and lets you configure them so that they
+only appear when you want. To achieve this, you can use the build in rules or create your own custom rules/logic.
 
 1. USAGE
 --------
@@ -14,8 +14,8 @@ Include at the bottom of your layout twig file:
     {{ lead_generation_render_js_includes() }}
     {{ lead_generation_render_popups_html() }}
     {{ lead_generation_render_initialize_js() }}
-    
-If desired, you can replace the `lead_generation_render_js_includes()` with your own logic, or include the javascript 
+
+If desired, you can replace the `lead_generation_render_js_includes()` with your own logic, or include the javascript
 files in your own mimified javascript file.
 
 *NOTE*: jQuery is required
@@ -48,7 +48,7 @@ class NewsletterPopup extends AbstractPopup
     {
         return 'CompanyYourBundle:NewsletterPopup:index';
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -72,12 +72,7 @@ use Kunstmaan\LeadGenerationBundle\Form\Popup\AbstractPopupAdminType;
 
 class NewsletterPopupAdminType extends AbstractPopupAdminType
 {
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'newsletter_popup_type';
     }
@@ -114,7 +109,7 @@ class NewsletterPopupController extends AbstractNewsletterController
     {
         return 'CompanyYourBundle:Popup/Newsletter:thanks.html.twig';
     }
-    
+
     /**
      * @param Request $request
      * @param array $data
@@ -124,7 +119,7 @@ class NewsletterPopupController extends AbstractNewsletterController
     {
         // Your subscription logic here
     }
-    
+
     // Extend some more functions if needed
 }
 
@@ -228,7 +223,7 @@ class AfterXSecondsRule extends AbstractRule
     {
         return '/bundles/companyyourbundle/js/rule/AfterXSecondsRule.js';
     }
-    
+
     /**
      * @return AfterXSecondsAdminType
      */
@@ -371,7 +366,7 @@ use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
 class AfterXSecondsRule extends AbstractRule
 {
     // Otherfunctions here
-   
+
    public function getService()
    {
        return 'companyyourbundle.your_service';
@@ -401,7 +396,7 @@ class NewsletterPopup extends AbstractPopup
     {
         return 'CompanyYourBundle:NewsletterPopup:index';
     }
-    
+
     /**
      * Get a list of available rules for this popup.
      * When null is returned, all rules are available.

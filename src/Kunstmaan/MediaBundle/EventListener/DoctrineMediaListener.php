@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
@@ -17,6 +18,11 @@ class DoctrineMediaListener
      * @var MediaManager $mediaManager
      */
     private $mediaManager;
+
+    /**
+     * @var array
+     */
+    private $fileUrlMap = array();
 
     /**
      * @param MediaManager $mediaManager
@@ -65,6 +71,20 @@ class DoctrineMediaListener
                 $em->getClassMetadata(ClassLookup::getClass($entity)),
                 $eventArgs->getEntity()
             );
+
+            // local media is soft-deleted or soft-delete is reverted
+            $changeSet = $eventArgs->getEntityChangeSet();
+            if (isset($changeSet['deleted']) && $entity->getLocation() === 'local') {
+                $deleted = (!$changeSet['deleted'][0] && $changeSet['deleted'][1]);
+                $reverted = ($changeSet['deleted'][0] && !$changeSet['deleted'][1]);
+                if ($deleted || $reverted) {
+                    $oldFileUrl = $entity->getUrl();
+                    $newFileName = ($reverted ? $entity->getOriginalFilename() : uniqid());
+                    $newFileUrl = dirname($oldFileUrl) . '/' . $newFileName . '.' . pathinfo($oldFileUrl, PATHINFO_EXTENSION);
+                    $entity->setUrl($newFileUrl);
+                    $this->fileUrlMap[$newFileUrl] = $oldFileUrl;
+                }
+            }
         }
     }
 
@@ -87,6 +107,15 @@ class DoctrineMediaListener
         }
 
         $this->mediaManager->saveMedia($entity, $new);
+        $url = $entity->getUrl();
+        $handler = $this->mediaManager->getHandler($entity);
+        if (isset($this->fileUrlMap[$url]) && $handler instanceof FileHandler) {
+            $handler->fileSystem->rename(
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $this->fileUrlMap[$url]),
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $url)
+            );
+            unset($this->fileUrlMap[$url]);
+        }
     }
 
     /**

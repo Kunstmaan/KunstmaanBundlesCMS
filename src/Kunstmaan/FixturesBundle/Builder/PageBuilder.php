@@ -10,10 +10,11 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
+use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 
 class PageBuilder implements BuilderInterface
 {
@@ -25,11 +26,17 @@ class PageBuilder implements BuilderInterface
     private $populator;
     private $slugifier;
 
+    /**
+     * @var PagesConfiguration
+     */
+    private $pagesConfiguration;
+
     public function __construct(
         EntityManager $em,
         ACLPermissionCreatorService $aclPermissionCreatorService,
         Populator $populator,
-        Slugifier $slugifier
+        Slugifier $slugifier,
+        PagesConfiguration $pagesConfiguration
     ) {
         $this->manager = $em;
         $this->nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
@@ -38,6 +45,7 @@ class PageBuilder implements BuilderInterface
         $this->aclPermissionCreatorService = $aclPermissionCreatorService;
         $this->populator = $populator;
         $this->slugifier = $slugifier;
+        $this->pagesConfiguration = $pagesConfiguration;
     }
 
     public function canBuild(Fixture $fixture)
@@ -170,8 +178,15 @@ class PageBuilder implements BuilderInterface
             isset($fixtureParams['hidden_from_nav']) ? $fixtureParams['hidden_from_nav'] : false
         );
         $parent = $this->getParentNode($fixtureParams, $language);
+
         if ($parent instanceof Node) {
             $rootNode->setParent($parent);
+
+            if (!$this->canHaveChild($parent->getRefEntityName(), get_class($page))) {
+                throw new \Exception(
+                    sprintf('A %s can\'t have a %s as child. Forgot to add in allowed_children or getPossibleChildTypes?', $parent->getRefEntityName(), get_class($page))
+                );
+            }
         }
 
         return $rootNode;
@@ -228,5 +243,23 @@ class PageBuilder implements BuilderInterface
         } else {
             return $string . $append . '1';
         }
+    }
+
+    /**
+     * @param string $parentPageClass
+     * @param string $childPageClass
+     * @return bool
+     */
+    private function canHaveChild($parentPageClass, $childPageClass)
+    {
+        $childTypes = $this->pagesConfiguration->getPossibleChildTypes($parentPageClass);
+
+        foreach ($childTypes as $childType) {
+            if ($childType['class'] == $childPageClass) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

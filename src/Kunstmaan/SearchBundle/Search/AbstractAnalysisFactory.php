@@ -2,16 +2,16 @@
 
 namespace Kunstmaan\SearchBundle\Search;
 
-class AnalysisFactory implements AnalysisFactoryInterface
+abstract class AbstractAnalysisFactory implements AnalysisFactoryInterface
 {
     /** @var array */
-    private $analyzers;
+    protected $analyzers;
 
     /** @var array */
-    private $tokenizers;
+    protected $tokenizers;
 
     /** @var array */
-    private $filters;
+    protected $filters;
 
     public function __construct()
     {
@@ -39,46 +39,15 @@ class AnalysisFactory implements AnalysisFactoryInterface
      *
      * @return AnalysisFactoryInterface
      */
-    public function addIndexAnalyzer($language)
-    {
-        $this->analyzers['default'] = array(
-            'type'      => $language,
-            'tokenizer' => 'standard',
-            'filter'    => array(
-                'trim',
-                'lowercase',
-                'asciifolding',
-                'strip_special_chars',
-                $language . '_stop',
-                $language . '_stemmer'
-            )
-        );
-
-        return $this;
-    }
+    public abstract function addIndexAnalyzer($language);
 
     /**
      * @param string $language
      *
      * @return AnalysisFactoryInterface
      */
-    public function addSuggestionAnalyzer($language)
-    {
-        $this->analyzers['default_search'] = array(
-            'type'      => $language,
-            'tokenizer' => 'standard',
-            'filter'    => array(
-                'trim',
-                'lowercase',
-                'asciifolding',
-                'strip_special_chars',
-                $language . '_stop',
-                $language . '_stemmer'
-            )
-        );
+    public abstract function addSuggestionAnalyzer($language);
 
-        return $this;
-    }
 
     /**
      * @param string $language
@@ -129,11 +98,16 @@ class AnalysisFactory implements AnalysisFactoryInterface
     /**
      * @return AnalysisFactoryInterface
      */
-    public function addNGramFilter()
+    public function addNGramTokenizer()
     {
-        // Ngrams are not used in our default implementation
+        $this->tokenizers['kuma_ngram'] = array(
+            'type'     => 'nGram',
+            'min_gram' => 4,
+            'max_gram' => 30,
+            'token_chars' => [ "letter", "digit" ]
+        );
+        return $this;
     }
-
 
     /**
      * @param string $language
@@ -146,6 +120,7 @@ class AnalysisFactory implements AnalysisFactoryInterface
             ->addIndexAnalyzer($language)
             ->addSuggestionAnalyzer($language)
             ->addStripSpecialCharsFilter()
+            ->addNGramTokenizer()
             ->addStopWordsFilter($language)
             ->addStemmerFilter($language);
 

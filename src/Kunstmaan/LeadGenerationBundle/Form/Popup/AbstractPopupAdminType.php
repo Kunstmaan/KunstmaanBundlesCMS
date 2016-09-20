@@ -29,11 +29,4 @@ abstract class AbstractPopupAdminType extends AbstractType
         ));
         $builder->add('htmlId', TextType::class);
     }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    abstract function getBlockPrefix();
 }
