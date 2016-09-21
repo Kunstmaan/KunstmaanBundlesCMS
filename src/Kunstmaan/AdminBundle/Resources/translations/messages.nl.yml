@@ -87,3 +87,35 @@ permissions:
 errors:
     oauth:
         invalid: Het was niet mogelijk om in te loggen via Google OAuth, waarschijnlijk is je domein naam niet toegelaten.
+
+kuma_admin:
+    flash_type:
+        success: Succes
+        warning: Waarschuwing
+        error:   Fout
+        info:    Info
+        danger:  Gevaar
+    dashboard:
+        configuration:
+            title:
+                label: Titel
+            content:
+                label: Inhoud (raw html)
+    edit:
+        flash:
+            success: De welkomstpagina is gewijzigd!
+    password_check:
+        flash:
+            error: U heeft uw wachtwoord nog niet gewijzigd
+    ga_ajax_controller:
+        flash:
+            success: Succesvol bewaard!
+    media:
+        flash:
+            'deleted_success.%medianame%': Item '%medianame%' is verwijderd!
+            drop_success:       Het bestand is succesvol geupload!
+            drop_unrecognized:  Bestand wordt niet herkend!
+
+kuma_js:
+    auto_collapse:
+        more_button_label: Meer

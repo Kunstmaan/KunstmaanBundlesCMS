@@ -124,3 +124,42 @@ media:
       type: Type
       date: Datum
       filesize: Bestandsgrootte
+
+  form:
+    remote:
+        name:
+            label: Naam
+        code:
+            label: Code
+        type:
+            label: Type
+        copyright:
+            label: Copyright
+        description:
+            label: Omschrijving
+    bulk_upload:
+        files:
+            label: Bestanden
+    file:
+        name:
+            label: Naam
+        file:
+            label: Bestand
+        copyright:
+            label: Copyright
+        description:
+            label: Omschrijving
+        file:
+            label: Bestand
+        originalFilename:
+            label: Originele bestandsnaam
+    remote_audio:
+        type:
+            label: Type
+    remote_slide:
+        type:
+            label: Type
+    remote_video:
+        type:
+            label: Type
+

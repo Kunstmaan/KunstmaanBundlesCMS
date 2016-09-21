@@ -3,3 +3,26 @@ redirect:
     all: Alle domeinen
     origin_info: Het adres wat moet worden doorverwezen, bijv. /contest
     target_info: Het adres waar naartoe wordt verwezen, bijv. /en/contests/summer-contest
+
+    form:
+        redirect:
+            domain:
+                label: Domein
+            origin:
+                label: Origin
+            target:
+                label: Target
+            permanent:
+                label: Permanent
+
+    adminlist:
+        header:
+            domain:     Domein
+            origin:     Origin
+            target:     Target
+            permanent:  Permanent?
+        filter:
+            domain:     Domein
+            origin:     Origin
+            target:     Target
+            permanent:  Permanent
