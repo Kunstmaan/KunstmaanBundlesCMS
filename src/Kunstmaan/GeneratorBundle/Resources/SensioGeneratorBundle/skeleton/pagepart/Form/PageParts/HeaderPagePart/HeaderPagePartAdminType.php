@@ -35,7 +35,6 @@ class {{ pagepart }}AdminType extends AbstractType
             'label' => 'pagepart.header.type',
             'choices' => array_combine($names, {{ pagepart }}::$supportedHeaders),
             'required' => true,
-                'choices_as_values' => true
         ));
         $builder->add('title', TextType::class, array(
             'label' => 'pagepart.header.title',
