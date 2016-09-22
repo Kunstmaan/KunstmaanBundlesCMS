@@ -5,6 +5,7 @@ namespace Kunstmaan\MenuBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -52,13 +53,13 @@ class MenuItemAdminType extends AbstractType
                     return $qb;
                 },
                 'attr'          => array(
-                    'class'            => 'js-advanced-select',
-                    'data-placeholder' => 'Select the parent menu item...'
+                    'class'       => 'js-advanced-select',
+                    'placeholder' => 'kuma_menu.form.parent_placeholder'
                 ),
                 'multiple'      => false,
                 'expanded'      => false,
                 'required'      => false,
-                'label'         => 'Parent menu item'
+                'label'         => 'kuma_menu.form.parent'
             )
         );
         $builder->add(
@@ -71,7 +72,8 @@ class MenuItemAdminType extends AbstractType
                 ),
                 'placeholder' => false,
                 'required'    => true,
-                'choices_as_values' => true
+                'choices_as_values' => true,
+                'label' => 'kuma_menu.form.type'
             )
         );
         $locale   = $options['locale'];
@@ -105,30 +107,38 @@ class MenuItemAdminType extends AbstractType
                     return $qb;
                 },
                 'attr'          => array(
-                    'class'            => 'js-advanced-select',
-                    'data-placeholder' => 'Select the page to link to...'
+                    'class'       => 'js-advanced-select',
+                    'placeholder' => 'kuma_menu.form.node_translation_placeholder'
                 ),
                 'multiple'      => false,
                 'expanded'      => false,
                 'required'      => true,
-                'label'         => 'Link page'
+                'label'         => 'kuma_menu.form.node_translation'
             )
         );
         $builder->add(
             'title',
             TextType::class,
             array(
-                'required' => false
+                'required' => false,
+                'label' => 'kuma_menu.form.title'
             )
         );
         $builder->add(
             'url',
             TextType::class,
             array(
-                'required' => true
+                'required' => true,
+                'label' => 'kuma_menu.form.url'
             )
         );
-        $builder->add('newWindow');
+        $builder->add(
+            'newWindow',
+            CheckboxType::class,
+            array(
+                'label' => 'kuma_menu.form.new_window'
+            )
+        );
     }
 
     /**
