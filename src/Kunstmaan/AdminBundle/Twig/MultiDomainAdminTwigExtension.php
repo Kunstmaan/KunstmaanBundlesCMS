@@ -11,11 +11,13 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
      */
     private $domainConfiguration;
 
+    /**
+     * @param DomainConfigurationInterface $domainConfiguration
+     */
     public function __construct(DomainConfigurationInterface $domainConfiguration)
     {
         $this->domainConfiguration = $domainConfiguration;
     }
-
 
     /**
      * Get Twig functions defined in this extension.
@@ -36,7 +38,6 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
      * Render multidomain switcher widget.
      *
      * @param \Twig_Environment $env
-     * @param array $locales The locales
      * @param string $route The route
      * @param array $parameters The route parameters
      *
@@ -74,7 +75,7 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
      */
     public function getSwitchedHost()
     {
-        return $this->domainConfiguration->getHostSwitched();
+        return $this->domainConfiguration->getHostSwitched()['host'];
     }
 
     /**
@@ -82,9 +83,12 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
      */
     public function switchedHostIsCurrent()
     {
-        return $this->domainConfiguration->getHost() == $this->getSwitchedHost()['host'];
+        return $this->domainConfiguration->getHost() == $this->getSwitchedHost();
     }
 
+    /**
+     * @return array
+     */
     public function getAdminDomainHosts()
     {
         return $this->domainConfiguration->getHosts();
