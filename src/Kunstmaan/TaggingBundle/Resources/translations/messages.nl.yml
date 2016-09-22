@@ -1,0 +1,13 @@
+kuma_tagging:
+    form:
+        tag:
+            name:
+                label: Naam
+
+    adminlist:
+        header:
+            name:       Naam
+            created_at: Aangemaakt op
+            updated_at: Gewijzigd op
+        filter:
+            name:       Naam

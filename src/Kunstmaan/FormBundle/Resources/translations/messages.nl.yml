@@ -1,3 +1,93 @@
+kuma_form:
+    form:
+        page_admin:
+            title:
+                label:  Titel
+            thanks:
+                label:  Dank u
+            subject:
+                label:  Onderwerp
+            from_email:
+                label:  Van e-mail
+            to_email:
+                label:  Aan e-mail
+        checkbox_page_part:
+            label:
+                label:  Label
+            required:
+                label:  Verplicht
+            errormessage_required:
+                label:  Foutmelding verplicht
+        choice_page_part:
+            label:
+                label: Label
+            required:
+                label: Verplicht
+            errormessage_required:
+                label: Foutmelding verplicht
+            expanded:
+                label: Uitgeklapt
+            multiple:
+                label: Meerdere
+            choices:
+                label: Keuzes
+            empty_value:
+                label: Lege waarde
+        email_page_part:
+            label:
+                label: Label
+            required:
+                label: Verplicht
+            errorMessageRequired:
+                label: Foutmelding verplicht
+            errorMessageInvalid:
+                label: Error message invalid
+        file_upload_page_part:
+            label:
+                label: Label
+            required:
+                label: Verplicht
+            errormessage_required:
+                label: Foutmelding verplicht
+        multi_line_text_page_part:
+            label:
+                label: Label
+            required:
+                label: Verplicht
+            errormessage_required:
+                label: Foutmelding verplicht
+            regex:
+                label: regex
+            errormessage_regex:
+                label: Foutmelding regex
+        single_line_text_page_part:
+            label:
+                label: Label
+            required:
+                label: Verplicht
+            errormessage_required:
+                label: Foutmelding verplicht
+            regex:
+                label: regex
+            errormessage_regex:
+                label: Foutmelding regex
+        submit_button_page_part:
+            label:
+                label: Label
+    button:
+        export_to:  Exporteer naar
+    list:
+        header:
+            title:      Titel
+            language:   Taal
+            path:       Form path
+    submission:
+        list:
+            header:
+                created:    Datum
+                language:   Taal
+                ip_address: IP address
+
 # Form Submissions
 formsubmissions:
   index:

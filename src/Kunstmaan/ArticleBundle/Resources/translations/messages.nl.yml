@@ -1,0 +1,36 @@
+article:
+    warning:
+        create_overview_page: U moet minstens één overview pagina maken alvorens u een %type% pagina kan aanmaken
+    form:
+        date:
+            label: Datum
+        summery:
+            label: Samenvatting
+    modal:
+        add:
+            label: Voeg %type% item toe aan %page%
+    author:
+        list:
+            header:
+                name:   Naam
+                link:   Link
+            filter:
+                name:   Naam
+                link:   Link
+        form:
+            name:
+                label: Naam
+            link:
+                label: Link
+    page:
+        list:
+            header:
+                title:      Titel
+                created_at: Gemaakt op
+                updated_at: Bewerkt op
+                online:     Online
+            filter:
+                title:      Titel
+                created_at: Gemaakt op
+                updated_at: Bewerkt op
+                online:     Online
