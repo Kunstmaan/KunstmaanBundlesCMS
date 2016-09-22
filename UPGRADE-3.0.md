@@ -108,13 +108,6 @@ class VersionYOUR_TIMESTAMP extends AbstractMigration implements ContainerAwareI
 
     public function postUp(Schema $schema)
     {
-        //fix nodetranslation timestamps
-        $input  = new ArgvInput(array());
-        $output = new ConsoleOutput();
-
-        $command = $this->container->get('kunstmaan_node.command.fixtimestamps');
-        $command->run($input, $output);
-
         //migrate names
         $input  = new ArgvInput(array());
         $output = new ConsoleOutput();
