@@ -19,3 +19,151 @@ pages:
     copynotavailable: "Vertaal eerst de bovenliggende pagina"
 
 "This list contains all the pages, chronologically ordered by updated date.": "Deze lijst bevat alle pagina's chronologisch gesorteed op laatste wijziging."
+
+kuma_node:
+    form:
+        controller_action:
+            title:
+                label:  Titel
+        menu_tab:
+            hidden_from_menu:
+                label:  Verborgen in menu
+            internal_name:
+                label:  Interne naam
+        menu_tab_translation:
+            slug:
+                label:  Slug
+            weight:
+                label:  Gewicht
+                title:  Wordt gebruikt om de pagina te sorteren.
+        page:
+            title:
+                label:  Navigatie titel
+            page_title:
+                label:  Pagina titel
+                info_text: Wordt gebruikt als titel op de pagina.
+    status:
+        "will_be_publish_at.%date%.raw":    Deze pagina wordt gepubliceerd op %date%
+        "will_be_unpublish_at.%date%.raw":  Deze pagina wordt offline gezet op %date%
+        button:
+            schedulle_cancel: Cancel
+        "offline_draft.%public_url%.raw":   Offline / Draft versie (Ga naar <a href="%public_url%">publieke versie</a>)
+        online_public.raw:                  Online / Publieke versie
+        offline.raw:                        Offline
+        "go_to_draft_version.%url%.raw":    (Ga naar <a href="%url%">draft versie</a>)
+    admin:
+        publish:
+            flash:
+                success_published: De pagina staat online
+                success_scheduled: De publicatie van de pagina staat ingepland
+        unpublish:
+            flash:
+                success_unpublished: De pagina staat offline
+                success_scheduled: Het offline zetten van de pagina staat ingepland
+        unschedule:
+            flash:
+                success: De geplande taak is geannuleerd
+        delete:
+            flash:
+                success: De pagina is verwijderd!
+        duplicate:
+            flash:
+                success: De pagina is gedupliceerd!
+        revert:
+            flash:
+                success: The page contents has been reverted
+        edit:
+            flash:
+                success: De pagina is bewerkt
+        new_page:
+            title:
+                default: Nieuwe pagina
+        list:
+            header:
+                title:      Titel
+                created_at: Gemaakt op
+                updated_at: Bewerkt op
+                online:     Online
+            filter:
+                title:      Titel
+                created_at: Gemaakt op
+                updated_at: Bewerkt op
+                online:     Online
+
+    tab:
+        properties:
+            title:  Properties
+        menu:
+            title:  Menu
+        permissions:
+            title:  Permissies
+        searcher:
+            title:  Zoeker
+
+    modal:
+        add_homepage:
+            h:  Voeg homepagina toe
+            form:
+                title:
+                    label: Titel
+                type:
+                    label: Type
+                add:
+                    label: Toevoegen
+                cancel:
+                    label: Annuleer
+        unpublish:
+            title:          Publiceren ongedaan maken
+            body:           Weet u zeker dat u deze pagina offline wil halen?
+            later:
+                label:      Unpublish later
+                button:     Unpublish later
+                cancel:     Annuleer
+            now:
+                button:     Unpublish
+                cancel:     Annuleer
+        publish:
+            title:          Publiceer
+            body:           Weet u zeker dat u deze pagina online wil zetten? 
+            later:
+                label:      Publiceer later
+                button:     Publiceer later
+                cancel:     Annuleer
+            now:
+                button:     Publish
+                cancel:     Annuleer
+        versions:
+            title:          Versies
+            table:
+                type:       Type
+                last_modified:  Laatst gewijzigd
+                user:       User
+                actions:    Acties
+            actions:
+                preview:    Preview
+                revert:     Terug draaien
+        add_subpage:
+            title:          Subpage toevoegen
+            label:
+                title:      Titel
+                type:       Type
+            button:
+                add:        Voeg toe
+                cancel:     Annuleer
+        delete_page:
+            'title.%page%': Verwijder pagina '%page%'
+            'body.%page%':  Deze pagina zal volledig verwijderd worden! Weet u dit zeker?
+            button:
+                delete:     Verwijder
+                cancel:     Annuleer
+        duplicate_page:
+            'title.%page%': Dupliceer pagina '%page%'
+            label:
+                new_title:  Nieuwe titel
+            button:
+                duplicate:  Dupliceer
+                cancel:     Annuleer
+        recopyfromlanguage:
+            button:
+                copy:   Kopieer
+                cancel: Annuleer

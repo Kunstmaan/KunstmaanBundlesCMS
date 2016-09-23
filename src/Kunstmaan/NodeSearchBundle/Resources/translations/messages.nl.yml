@@ -2,3 +2,9 @@ search:
     search: Zoek
     results: Resultaten
     looking_for: U zocht naar "%query%"
+
+node_search:
+    form:
+        search:
+            boost:
+                label: Boost
