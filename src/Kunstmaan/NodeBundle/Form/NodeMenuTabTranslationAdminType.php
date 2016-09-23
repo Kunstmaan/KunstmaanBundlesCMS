@@ -12,25 +12,12 @@ use Symfony\Component\Validator\Constraints\Regex;
 class NodeMenuTabTranslationAdminType extends AbstractType
 {
     /**
-     * @var bool
-     */
-    private $isStructureNode;
-
-    /**
-     * @param bool $isStructureNode
-     */
-    public function __construct($isStructureNode = false)
-    {
-        $this->isStructureNode = $isStructureNode;
-    }
-
-    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (!$this->isStructureNode) {
+        if ($options['slugable']) {
             $builder->add('slug', SlugType::class, array(
                 'label' => 'kuma_node.form.menu_tab_translation.slug.label',
                 'required' => false,
@@ -45,7 +32,7 @@ class NodeMenuTabTranslationAdminType extends AbstractType
             'placeholder' => false,
             'required'    => false,
             'attr'        => array('title' => 'kuma_node.form.menu_tab_translation.weight.title'),
-            'choice_translation_domain' => false
+            'choice_translation_domain' => false,
         ));
     }
 
@@ -61,6 +48,7 @@ class NodeMenuTabTranslationAdminType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Kunstmaan\NodeBundle\Entity\NodeTranslation',
+            'slugable' => true,
         ));
     }
 }
