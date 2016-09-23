@@ -935,10 +935,11 @@ class NodeAdminController extends Controller
         $menuWidget = new FormWidget();
         $menuWidget->addType(
             'menunodetranslation',
-            new NodeMenuTabTranslationAdminType($isStructureNode),
-            $nodeTranslation
+            NodeMenuTabTranslationAdminType::class,
+            $nodeTranslation,
+            ['slugable' => !$isStructureNode]
         );
-        $menuWidget->addType('menunode', new NodeMenuTabAdminType($isStructureNode), $node);
+        $menuWidget->addType('menunode', NodeMenuTabAdminType::class, $node, ['available_in_nav' => !$isStructureNode]);
         $tabPane->addTab(new Tab('kuma_node.tab.menu.title', $menuWidget));
 
         $this->get('event_dispatcher')->dispatch(
