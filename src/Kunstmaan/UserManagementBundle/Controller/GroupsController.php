@@ -34,7 +34,7 @@ class GroupsController extends BaseSettingsController
      */
     public function listAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -59,7 +59,7 @@ class GroupsController extends BaseSettingsController
      */
     public function addAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -96,7 +96,7 @@ class GroupsController extends BaseSettingsController
      */
     public function editAction(Request $request, $id)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -135,7 +135,7 @@ class GroupsController extends BaseSettingsController
      */
     public function deleteAction($id)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();

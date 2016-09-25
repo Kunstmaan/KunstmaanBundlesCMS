@@ -90,9 +90,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function setTokenAction(Request $request)
     {
-        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $code = urldecode($request->query->get('code'));
 
@@ -121,9 +119,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function configAction(Request $request)
     {
-        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $params = array();
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
@@ -170,9 +166,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function resetProfileAction()
     {
-        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetProfileId();
@@ -186,9 +180,7 @@ class GoogleAnalyticsController extends Controller
      */
     public function resetPropertyAction()
     {
-        if (false === $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->resetPropertyId();

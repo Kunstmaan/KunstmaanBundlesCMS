@@ -38,7 +38,8 @@ class UsersController extends BaseSettingsController
      */
     public function listAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $userObject = $this->getUserClassInstance();
         $configuratorClassName = '';
@@ -88,7 +89,8 @@ class UsersController extends BaseSettingsController
      */
     public function addAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         $user = $this->getUserClassInstance();
 
         $options = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => get_class($user));
@@ -148,7 +150,7 @@ class UsersController extends BaseSettingsController
         } else {
             $requiredRole = 'ROLE_SUPER_ADMIN';
         }
-        $this->checkPermission($requiredRole);
+        $this->denyAccessUnlessGranted($requiredRole);
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -231,7 +233,7 @@ class UsersController extends BaseSettingsController
      */
     public function deleteAction(Request $request, $id)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();

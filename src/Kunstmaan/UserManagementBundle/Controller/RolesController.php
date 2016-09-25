@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing roles in an admin list
@@ -32,7 +33,7 @@ class RolesController extends BaseSettingsController
      */
     public function listAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $em        = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
@@ -56,7 +57,7 @@ class RolesController extends BaseSettingsController
      */
     public function addAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -97,7 +98,7 @@ class RolesController extends BaseSettingsController
      */
     public function editAction(Request $request, $id)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -139,7 +140,7 @@ class RolesController extends BaseSettingsController
      */
     public function deleteAction($id)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
