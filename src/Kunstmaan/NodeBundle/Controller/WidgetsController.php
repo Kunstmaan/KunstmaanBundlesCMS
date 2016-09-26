@@ -27,6 +27,7 @@ class WidgetsController extends Controller
     {
         $params        = $this->getTemplateParameters($request);
         $params['cke'] = true;
+        $params['multilanguage'] = $this->getParameter('multilanguage');
 
         return $params;
     }
