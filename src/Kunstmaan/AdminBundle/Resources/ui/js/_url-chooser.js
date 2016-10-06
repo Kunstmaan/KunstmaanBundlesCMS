@@ -122,7 +122,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             parent.$('#' + linkedInputId).val(itemUrl).change();
 
             // Set proper URL
-            parent.$('#' + linkedInputId).parents().find('.js-urlchooser-value').val(replacedUrl);
+            parent.$('#' + linkedInputId).parent().find('.js-urlchooser-value').val(replacedUrl);
 
             // Close modal
             parent.$('#' + parentModalId).modal('hide');
