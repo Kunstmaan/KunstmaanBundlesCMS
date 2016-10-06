@@ -12,7 +12,9 @@ use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
  */
 class PagePartTwigExtension extends \Twig_Extension
 {
-
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
     /**
@@ -47,8 +49,7 @@ class PagePartTwigExtension extends \Twig_Extension
     {
         $template = $env->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */
-        $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        $pageparts = $entityRepository->getPageParts($page, $contextName);
+        $pageparts = $this->getPageParts($page, $contextName);
         $newTwigContext = array_merge($parameters, array(
             'pageparts' => $pageparts,
             'page' => $page
