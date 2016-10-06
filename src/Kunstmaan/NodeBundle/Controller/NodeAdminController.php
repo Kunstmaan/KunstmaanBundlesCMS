@@ -126,7 +126,7 @@ class NodeAdminController extends Controller
         $nodeAdminListConfigurator->addSimpleItemAction('Preview', $itemRoute, 'eye');
 
         $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
-        $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN'));
+        $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN'));
 
         /** @var AdminList $adminlist */
         $adminlist = $this->get('kunstmaan_adminlist.factory')->createList($nodeAdminListConfigurator);
@@ -158,7 +158,7 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
         $originalLanguage             = $request->get('originallanguage');
         $otherLanguageNodeTranslation = $node->getNodeTranslation($originalLanguage, true);
@@ -210,7 +210,7 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
         $otherLanguageNodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($request->get('source'));
         $otherLanguageNodeNodeVersion = $otherLanguageNodeTranslation->getPublicNodeVersion();
@@ -261,7 +261,7 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
         $entityName = $node->getRefEntityName();
         /* @var HasNodeInterface $myLanguagePage */
@@ -423,7 +423,7 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_DELETE);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_DELETE, $node);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $nodeVersion     = $nodeTranslation->getPublicNodeVersion();
@@ -491,7 +491,7 @@ class NodeAdminController extends Controller
             ->find($id);
 
         // Check with Acl
-        $this->checkPermission($originalNode, PermissionMap::PERMISSION_EDIT);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $originalNode);
 
         $request = $this->get('request_stack')->getCurrentRequest();
 
@@ -564,7 +564,7 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
         $version = $request->get('version');
 
@@ -650,7 +650,7 @@ class NodeAdminController extends Controller
         $parentNode = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         // Check with Acl
-        $this->checkPermission($parentNode, PermissionMap::PERMISSION_EDIT);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $parentNode);
 
         $parentNodeTranslation = $parentNode->getNodeTranslation($this->locale, true);
         $parentNodeVersion     = $parentNodeTranslation->getPublicNodeVersion();
@@ -711,9 +711,7 @@ class NodeAdminController extends Controller
         $this->init($request);
 
         // Check with Acl
-        if (false === $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $type = $this->validatePageType($request);
 
@@ -768,7 +766,7 @@ class NodeAdminController extends Controller
         foreach ($nodeIds as $id) {
             /* @var Node $node */
             $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
-            $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+            $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
             $nodes[] = $node;
         }
 
@@ -778,7 +776,7 @@ class NodeAdminController extends Controller
             $newParentId = isset($changeParents[$node->getId()]) ? $changeParents[$node->getId()] : null;
             if ($newParentId) {
                 $parent = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($newParentId);
-                $this->checkPermission($parent, PermissionMap::PERMISSION_EDIT);
+                $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $parent);
                 $node->setParent($parent);
                 $this->em->persist($node);
                 $this->em->flush($node);
@@ -840,7 +838,7 @@ class NodeAdminController extends Controller
         /* @var Node $node */
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
-        $this->checkPermission($node, PermissionMap::PERMISSION_EDIT);
+        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $node);
 
         $tabPane = new TabPane(
             'todo',
@@ -1114,19 +1112,6 @@ class NodeAdminController extends Controller
         );
 
         return $nodeVersion;
-    }
-
-    /**
-     * @param Node   $node       The node
-     * @param string $permission The permission to check for
-     *
-     * @throws AccessDeniedException
-     */
-    private function checkPermission(Node $node, $permission)
-    {
-        if (false === $this->authorizationChecker->isGranted($permission, $node)) {
-            throw new AccessDeniedException();
-        }
     }
 
     /**
