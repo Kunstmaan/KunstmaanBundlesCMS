@@ -32,24 +32,30 @@ class URLChooserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (!$options['internal_link_only']) {
-            $choices = [
-                'pagepart.link.internal' => URLChooserType::INTERNAL,
-                'pagepart.link.external' => URLChooserType::EXTERNAL,
-                'pagepart.link.email' => URLChooserType::EMAIL,
-            ];
+        $choices = [
+            'pagepart.link.internal' => URLChooserType::INTERNAL,
+            'pagepart.link.external' => URLChooserType::EXTERNAL,
+            'pagepart.link.email' => URLChooserType::EMAIL,
+        ];
 
-            $builder->add('link_type', ChoiceType::class, array(
-                'required' => true,
-                'mapped' => false,
-                'attr' => array(
-                    'class' => 'js-change-link-type',
-                ),
-                'choices' => $choices,
-            ));
-
-            $builder->get('link_type')->addEventSubscriber(new URLChooserLinkTypeSubscriber());
+        if ($types = $options['link_types']) {
+            foreach ($choices as $key => $choice) {
+                if (!in_array($choice, $types)) {
+                    unset($choices[$key]);
+                }
+            }
         }
+
+        $builder->add('link_type', ChoiceType::class, array(
+            'required' => true,
+            'mapped' => false,
+            'attr' => array(
+                'class' => 'js-change-link-type',
+            ),
+            'choices' => $choices,
+        ));
+
+        $builder->get('link_type')->addEventSubscriber(new URLChooserLinkTypeSubscriber());
 
         $builder->addEventSubscriber(new URLChooserFormSubscriber());
         $builder->addViewTransformer(new URLChooserToLinkTransformer());
@@ -64,7 +70,7 @@ class URLChooserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => null,
-            'internal_link_only' => false
+            'link_types' => []
         ));
     }
 

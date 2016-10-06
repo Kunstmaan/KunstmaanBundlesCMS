@@ -47,7 +47,14 @@ class URLChooserFormSubscriber implements EventSubscriberInterface
             }
         }
         else {
-            $attributes['choose_url'] = true;
+            $choices = $form->get('link_type')->getConfig()->getOption('choices');
+            $firstOption = array_shift($choices);
+
+            if ($firstOption == URLChooserType::INTERNAL) {
+                $attributes['choose_url'] = true;
+            }
+
+            $form->get('link_type')->setData($firstOption);
         }
 
         $form->add('link_url', TextType::class, array(

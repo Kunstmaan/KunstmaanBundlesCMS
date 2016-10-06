@@ -40,7 +40,10 @@ class SocialType extends AbstractType
             ->add('ogUrl', URLChooserType::class, array(
                 'label' => 'seo.form.og.url',
                 'required'  => false,
-                'internal_link_only' => true
+                'link_types' => [
+                    URLChooserType::INTERNAL,
+                    URLChooserType::EXTERNAL,
+                ]
             ))
             ->add('ogType', ChoiceType::class, array(
                 'label'     => 'seo.form.og.type',

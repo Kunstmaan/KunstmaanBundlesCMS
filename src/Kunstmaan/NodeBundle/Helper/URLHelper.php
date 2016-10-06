@@ -106,9 +106,10 @@ class URLHelper
                             if ($hostId) {
                                 $urlParams['otherSite'] = $hostId;
                             }
+
                             $url = $this->router->generate('_slug', $urlParams);
 
-                            $text = str_replace($fullTag, $hostBaseUrl . $url, $text);
+                            $text = str_replace($fullTag, $hostId ? $hostBaseUrl : '' . $url, $text);
                         }
                     }
 
