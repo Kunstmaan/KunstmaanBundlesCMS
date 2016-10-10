@@ -41,7 +41,7 @@ abstract class AdminListController extends Controller
      * @param AbstractAdminListConfigurator $configurator
      * @param null|Request $request
      *
-     * @return array
+     * @return Response
      */
     protected function doIndexAction(AbstractAdminListConfigurator $configurator, Request $request)
     {
@@ -69,7 +69,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
     {
@@ -95,7 +95,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
     {
