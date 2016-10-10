@@ -27,7 +27,7 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface, Slu
         return array();
     }
 
-    /*
+    /**
      * return string
      */
     public function getDefaultView()
