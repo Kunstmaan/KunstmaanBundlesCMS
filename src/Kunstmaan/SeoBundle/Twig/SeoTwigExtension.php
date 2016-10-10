@@ -244,11 +244,16 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * @param $src
      *
-     * @return Seo
+     * @return array|null
      */
     public function getImageDimensions($src)
     {
-        list($width, $height) = getimagesize($src);
+        try {
+            list($width, $height) = getimagesize($src);
+        } catch (\Exception $e) {
+            return null;
+        }
+
         return array('width' => $width, 'height' => $height);
     }
 }

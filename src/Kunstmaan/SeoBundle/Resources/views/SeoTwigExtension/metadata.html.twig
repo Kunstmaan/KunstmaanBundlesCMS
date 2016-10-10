@@ -61,8 +61,10 @@
         {% set dimensions = get_image_dimensions(imageUrl) %}
         <meta property="og:image" content="{{ asset(imageUrl) }}">
         <meta property="og:image:type" content="{{ seo.ogImage.contentType }}">
-        <meta property="og:image:height" content="{{ dimensions.height }}">
-        <meta property="og:image:width" content="{{ dimensions.width }}">
+        {% if dimensions %}
+            <meta property="og:image:height" content="{{ dimensions.height }}">
+            <meta property="og:image:width" content="{{ dimensions.width }}">
+        {% endif %}
         <link rel="image_src" href="{{ asset(imageUrl) }}"/>
     {% endif %}
 {% endif %}
