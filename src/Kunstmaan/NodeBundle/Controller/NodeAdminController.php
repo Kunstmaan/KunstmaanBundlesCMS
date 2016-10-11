@@ -994,22 +994,25 @@ class NodeAdminController extends Controller
                     );
                 }
 
-                $params = array(
-                    'id' => $node->getId(),
-                    'subaction' => $subaction,
-                    'currenttab' => $tabPane->getActiveTab()
-                );
-                $params = array_merge(
-                    $params,
-                    $tabPane->getExtraParams($request)
-                );
+                // Don't redirect to listing when coming from ajax request, needed for url chooser.
+                if (!$request->isXmlHttpRequest()) {
+                    $params = array(
+                        'id' => $node->getId(),
+                        'subaction' => $subaction,
+                        'currenttab' => $tabPane->getActiveTab()
+                    );
+                    $params = array_merge(
+                        $params,
+                        $tabPane->getExtraParams($request)
+                    );
 
-                return $this->redirect(
-                    $this->generateUrl(
-                        'KunstmaanNodeBundle_nodes_edit',
-                        $params
-                    )
-                );
+                    return $this->redirect(
+                        $this->generateUrl(
+                            'KunstmaanNodeBundle_nodes_edit',
+                            $params
+                        )
+                    );
+                }
             }
         }
 
