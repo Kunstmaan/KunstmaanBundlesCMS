@@ -74,7 +74,7 @@ class PageTemplateWidget extends FormWidget
      * @param PagePartAdminFactory $pagePartAdminFactory
      * @param PageTemplateConfigurationReaderInterface $templateReader
      * @param PagePartConfigurationReaderInterface $pagePartReader
-     * @param PageTemplateConfigurationService $pageTemplateConfiguratiorService
+     * @param PageTemplateConfigurationService $pageTemplateConfigurationService
      */
     public function __construct(
         HasPageTemplateInterface $page,
@@ -83,7 +83,7 @@ class PageTemplateWidget extends FormWidget
         PagePartAdminFactory $pagePartAdminFactory,
         PageTemplateConfigurationReaderInterface $templateReader,
         PagePartConfigurationReaderInterface $pagePartReader,
-        PageTemplateConfigurationService $pageTemplateConfiguratiorService
+        PageTemplateConfigurationService $pageTemplateConfigurationService
     )
     {
         parent::__construct();
@@ -95,7 +95,7 @@ class PageTemplateWidget extends FormWidget
 
         $this->pageTemplates = $templateReader->getPageTemplates($page);
         $this->pagePartAdminConfigurations = $pagePartReader->getPagePartAdminConfigurators($page);
-        $this->pageTemplateConfiguration = $pageTemplateConfiguratiorService->findOrCreateFor($page);
+        $this->pageTemplateConfiguration = $pageTemplateConfigurationService->findOrCreateFor($page);
 
         foreach ($this->getPageTemplate()->getRows() as $row) {
             foreach ($row->getRegions() as $region) {

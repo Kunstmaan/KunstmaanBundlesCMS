@@ -17,10 +17,10 @@ class LanguageAnalysisFactory extends AbstractAnalysisFactory
             'filter'    => array(
                 'trim',
                 'lowercase',
-                'asciifolding',
-                'strip_special_chars',
                 $language . '_stop',
-                $language . '_stemmer'
+                $language . '_stemmer',
+                'asciifolding',
+                'strip_special_chars'
             )
         );
 
@@ -40,10 +40,10 @@ class LanguageAnalysisFactory extends AbstractAnalysisFactory
             'filter'    => array(
                 'trim',
                 'lowercase',
-                'asciifolding',
-                'strip_special_chars',
                 $language . '_stop',
-                $language . '_stemmer'
+                $language . '_stemmer',
+                'asciifolding',
+                'strip_special_chars'
             )
         );
 

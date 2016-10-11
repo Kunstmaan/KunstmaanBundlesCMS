@@ -25,7 +25,7 @@ class SettingsController extends BaseSettingsController
      */
     public function robotsSettingsAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository("KunstmaanSeoBundle:Robots");
