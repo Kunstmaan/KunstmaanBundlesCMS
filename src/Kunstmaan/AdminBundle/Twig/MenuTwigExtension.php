@@ -61,13 +61,4 @@ class MenuTwigExtension extends \Twig_Extension
         return $this->adminPanel->getAdminPanelActions();
     }
 
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'adminmenu_twig_extension';
-    }
 }

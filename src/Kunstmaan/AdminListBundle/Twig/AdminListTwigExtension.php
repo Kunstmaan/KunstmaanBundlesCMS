@@ -80,14 +80,5 @@ class AdminListTwigExtension extends \Twig_Extension
         return ExportService::getSupportedExtensions();
     }
 
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'adminlist_twig_extension';
-    }
 
 }

@@ -113,11 +113,4 @@ class MenuTwigExtension extends \Twig_Extension
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kunstmaan_menu_twig_extension';
-    }
 }

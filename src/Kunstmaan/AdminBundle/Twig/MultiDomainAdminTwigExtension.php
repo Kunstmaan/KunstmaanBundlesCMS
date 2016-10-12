@@ -94,13 +94,4 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
         return $this->domainConfiguration->getHosts();
     }
 
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'MultiDomainAdminTwigExtension';
-    }
 }

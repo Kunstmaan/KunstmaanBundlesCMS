@@ -258,12 +258,4 @@ class NodeTwigExtension extends Twig_Extension
             $parameters
         );
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'node_twig_extension';
-    }
 }

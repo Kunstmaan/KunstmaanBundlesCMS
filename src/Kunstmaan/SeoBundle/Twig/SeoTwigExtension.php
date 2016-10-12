@@ -168,14 +168,6 @@ class SeoTwigExtension extends Twig_Extension
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kuma_seo_twig_extension';
-    }
-
 
     /**
      * @param array $values

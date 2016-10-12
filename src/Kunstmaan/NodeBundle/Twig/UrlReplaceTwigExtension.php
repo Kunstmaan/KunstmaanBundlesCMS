@@ -35,11 +35,4 @@ class UrlReplaceTwigExtension extends \Twig_Extension
         return $this->urlHelper->replaceUrl($text);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kunstmaan_url_replace_extension';
-    }
 }
