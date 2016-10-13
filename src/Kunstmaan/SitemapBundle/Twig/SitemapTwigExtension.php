@@ -56,5 +56,15 @@ class SitemapTwigExtension extends \Twig_Extension
         return false;
     }
 
+    /**
+     * Returns the name of the extension.
+     *
+     * @return string The extension name
+     */
+    public function getName()
+    {
+        return "kunstmaan_sitemap_extension";
+    }
+
 }
 

@@ -74,5 +74,12 @@ class PagePartTwigExtension extends \Twig_Extension
         return $pageparts;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'pageparts_twig_extension';
+    }
 
 }

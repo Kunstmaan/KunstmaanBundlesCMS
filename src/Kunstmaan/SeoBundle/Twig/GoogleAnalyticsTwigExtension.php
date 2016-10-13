@@ -125,6 +125,13 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
         return $template->render($options);
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'kuma_google_analytics_twig_extension';
+    }
 
 
     /**

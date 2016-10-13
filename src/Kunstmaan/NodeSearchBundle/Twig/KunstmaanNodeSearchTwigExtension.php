@@ -89,4 +89,13 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
         return $template->render($newTwigContext);
     }
 
+    /**
+     * Returns the name of the extension.
+     *
+     * @return string The extension name
+     */
+    public function getName()
+    {
+        return 'kunstmaan_node_search_twig_extension';
+    }
 }

@@ -54,4 +54,13 @@ class PagesConfigurationTwigExtension extends \Twig_Extension
         return $this->pagesConfiguration->getHomepageTypes();
     }
 
+    /**
+     * Returns the name of the extension.
+     *
+     * @return string The extension name
+     */
+    public function getName()
+    {
+        return 'pages_configuration_twig_extension';
+    }
 }
