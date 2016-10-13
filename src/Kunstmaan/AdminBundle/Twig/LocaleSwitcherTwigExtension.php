@@ -79,13 +79,4 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
         return $this->domainConfiguration->getBackendLocales($switchedHost);
     }
 
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'localeswitcher_twig_extension';
-    }
 }

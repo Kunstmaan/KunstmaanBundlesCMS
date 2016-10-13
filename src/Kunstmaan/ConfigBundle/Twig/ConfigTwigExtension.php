@@ -77,11 +77,4 @@ class ConfigTwigExtension extends Twig_Extension
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kunstmaan_config_twig_extension';
-    }
 }
