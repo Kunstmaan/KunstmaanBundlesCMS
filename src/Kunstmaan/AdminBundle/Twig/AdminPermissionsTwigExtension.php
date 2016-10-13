@@ -46,4 +46,14 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
             'recursiveSupport'  => true
         ), $parameters));
     }
+
+    /**
+     * Get the Twig extension name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'permissionsadmin_twig_extension';
+    }
 }

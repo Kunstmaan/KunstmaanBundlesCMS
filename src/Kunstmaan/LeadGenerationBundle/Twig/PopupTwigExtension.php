@@ -143,4 +143,11 @@ class PopupTwigExtension extends \Twig_Extension
         return $rules;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'kunstmaan_lead_generation_popup_twig_extension';
+    }
 }
