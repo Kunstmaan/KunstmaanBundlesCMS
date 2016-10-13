@@ -139,7 +139,8 @@ abstract class AdminListController extends Controller
                 $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_ADD, new AdminListEvent($helper));
 
                 // Check if Sortable interface is implemented
@@ -217,19 +218,17 @@ abstract class AdminListController extends Controller
                 $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_EDIT, new AdminListEvent($helper));
                 $em->persist($helper);
                 $em->flush();
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_EDIT, new AdminListEvent($helper));
                 $indexUrl = $configurator->getIndexUrl();
 
-                // Don't redirect to listing when coming from ajax request, needed for url chooser.
-                if (!$request->isXmlHttpRequest()) {
-                    return new RedirectResponse(
-                        $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
-                    );
-                }
+                return new RedirectResponse(
+                    $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
+                );
             }
         }
 

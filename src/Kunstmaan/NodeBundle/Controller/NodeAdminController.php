@@ -958,7 +958,8 @@ class NodeAdminController extends Controller
         if ($request->getMethod() == 'POST') {
             $tabPane->bindRequest($request);
 
-            if ($tabPane->isValid()) {
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($tabPane->isValid() && !$request->isXmlHttpRequest()) {
                 $this->get('event_dispatcher')->dispatch(
                     Events::PRE_PERSIST,
                     new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
@@ -994,25 +995,22 @@ class NodeAdminController extends Controller
                     );
                 }
 
-                // Don't redirect to listing when coming from ajax request, needed for url chooser.
-                if (!$request->isXmlHttpRequest()) {
-                    $params = array(
-                        'id' => $node->getId(),
-                        'subaction' => $subaction,
-                        'currenttab' => $tabPane->getActiveTab()
-                    );
-                    $params = array_merge(
-                        $params,
-                        $tabPane->getExtraParams($request)
-                    );
+                $params = array(
+                    'id' => $node->getId(),
+                    'subaction' => $subaction,
+                    'currenttab' => $tabPane->getActiveTab()
+                );
+                $params = array_merge(
+                    $params,
+                    $tabPane->getExtraParams($request)
+                );
 
-                    return $this->redirect(
-                        $this->generateUrl(
-                            'KunstmaanNodeBundle_nodes_edit',
-                            $params
-                        )
-                    );
-                }
+                return $this->redirect(
+                    $this->generateUrl(
+                        'KunstmaanNodeBundle_nodes_edit',
+                        $params
+                    )
+                );
             }
         }
 
