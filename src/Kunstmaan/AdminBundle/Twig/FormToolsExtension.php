@@ -39,6 +39,15 @@ class FormToolsExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * Get the Twig extension name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'FormToolsExtension';
+    }
 
     /**
      * Return if there are error messages.

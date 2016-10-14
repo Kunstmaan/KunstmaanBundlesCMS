@@ -55,4 +55,11 @@ class PagePartAdminTwigExtension extends \Twig_Extension
         )));
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'pagepartadmin_twig_extension';
+    }
 }
