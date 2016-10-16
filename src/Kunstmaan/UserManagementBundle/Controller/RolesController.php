@@ -70,9 +70,11 @@ class RolesController extends BaseSettingsController
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', ['%role%' => $role->getRole()])
+                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
+                        '%role%' => $role->getRole()
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
@@ -112,9 +114,11 @@ class RolesController extends BaseSettingsController
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', ['%role%' => $role->getRole()])
+                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
+                        '%role%' => $role->getRole()
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
@@ -147,13 +151,14 @@ class RolesController extends BaseSettingsController
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
         if (!is_null($role)) {
-            $roleName = $role->getRole();
             $em->remove($role);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', ['%role%' => $roleName])
+                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
+                    '%role%' => $role->getRole()
+                ])
             );
         }
 

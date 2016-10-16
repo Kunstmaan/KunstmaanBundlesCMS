@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
@@ -69,7 +70,8 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $em->persist($dashboardConfiguration);
                 $em->flush($dashboardConfiguration);
-                $this->get('session')->getFlashBag()->add(
+
+                $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('kuma_admin.edit.flash.success')
                 );

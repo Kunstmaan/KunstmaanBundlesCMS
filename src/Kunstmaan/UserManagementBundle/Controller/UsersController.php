@@ -116,9 +116,11 @@ class UsersController extends BaseSettingsController
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.users.add.flash.success.%username%', ['%username%' => $user->getUsername()])
+                    $this->get('translator')->trans('kuma_user.users.add.flash.success.%username%', [
+                        '%username%' => $user->getUsername()
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
@@ -193,9 +195,11 @@ class UsersController extends BaseSettingsController
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', ['%username%' => $user->getUsername()])
+                    $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
+                        '%username%' => $user->getUsername()
+                    ])
                 );
 
                 return new RedirectResponse(
@@ -243,12 +247,14 @@ class UsersController extends BaseSettingsController
             $userEvent = new UserEvent($user, $request);
             $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
 
-            $username = $user->getUsername();
             $em->remove($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add(
+
+            $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', ['%username%' => $username])
+                $this->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
+                    '%username%' => $user->getUsername()
+                ])
             );
         }
 

@@ -57,8 +57,10 @@ class SettingsController extends BaseSettingsController
         }
 
         if (!$isSaved) {
-            $warning = $this->get('translator')->trans('seo.robots.warning');
-            $this->get('session')->getFlashBag()->add(FlashTypes::WARNING, $warning);
+            $this->addFlash(
+                FlashTypes::WARNING,
+                $this->get('translator')->trans('seo.robots.warning')
+            );
         }
 
         return array(

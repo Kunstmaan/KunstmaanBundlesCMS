@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Group;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
@@ -71,7 +72,13 @@ class GroupsController extends BaseSettingsController
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Group \''.$group->getName().'\' has been created!');
+
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.group.add.flash.success', array(
+                        '%groupname%' => $group->getName()
+                    ))
+                );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_groups'));
             }
@@ -109,7 +116,13 @@ class GroupsController extends BaseSettingsController
             if ($form->isValid()) {
                 $em->persist($group);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Group \''.$group->getName().'\' has been edited!');
+
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.group.edit.flash.success', array(
+                        '%groupname%' => $group->getName()
+                    ))
+                );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_groups'));
             }
@@ -141,10 +154,15 @@ class GroupsController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
         $group = $em->getRepository('KunstmaanAdminBundle:Group')->find($id);
         if (!is_null($group)) {
-            $groupname = $group->getName();
             $em->remove($group);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Group \''.$groupname.'\' has been deleted!');
+
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_user.group.delete.flash.success', array(
+                    '%groupname%' => $group->getName()
+                ))
+            );
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_groups'));
