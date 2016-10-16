@@ -99,7 +99,7 @@ class UsersController extends BaseSettingsController
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+            $options['can_edit_all_fields'] = $this->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $form = $this->createForm(
@@ -170,7 +170,7 @@ class UsersController extends BaseSettingsController
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+            $options['can_edit_all_fields'] = $this->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
