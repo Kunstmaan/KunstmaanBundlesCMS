@@ -27,7 +27,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         if ($this->container->hasParameter("kunstmaan_admin.dashboard_route")) {
-            return $this->redirect($this->generateUrl($this->container->getParameter("kunstmaan_admin.dashboard_route")));
+            return $this->redirect($this->generateUrl($this->getParameter("kunstmaan_admin.dashboard_route")));
         }
 
         /* @var DashboardConfiguration $dashboardConfiguration */
