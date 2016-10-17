@@ -9,7 +9,9 @@ use Symfony\Component\Form\AbstractType;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
 /**
- * Sype
+ * Class SlugType.
+ *
+ * @package Kunstmaan\NodeBundle\Form\Type
  */
 class SlugType extends AbstractType
 {

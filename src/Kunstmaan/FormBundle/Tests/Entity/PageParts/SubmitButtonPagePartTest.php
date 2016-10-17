@@ -79,8 +79,6 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $adminType = $this->object->getDefaultAdminType();
-        $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof SubmitButtonPagePartAdminType);
+        $this->assertEquals(SubmitButtonPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

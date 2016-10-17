@@ -30,10 +30,10 @@ class ToTopPagePart extends AbstractPagePart
     }
 
     /**
-     * @return ToTopPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new ToTopPagePartAdminType();
+        return ToTopPagePartAdminType::class;
     }
 }

@@ -55,10 +55,10 @@ class RawHTMLPagePart extends AbstractPagePart
     }
 
     /**
-     * @return RawHTMLPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new RawHTMLPagePartAdminType();
+        return RawHTMLPagePartAdminType::class;
     }
 }

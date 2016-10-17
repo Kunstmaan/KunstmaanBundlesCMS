@@ -308,15 +308,8 @@ class PagePartGenerator extends KunstmaanGenerator
 
                             // Page template found
                             if (array_key_exists($ptConfigFilename, $sectionInfo[$ppConfigFilename]['pagetempates'])) {
-                                $formType = $entity->getDefaultAdminType();
-                                if (!is_object($formType)) {
-                                    $formType = $this->container->get($formType);
-                                }
-
-                                $formFqn = get_class($formType);
-
                                 // Get all page properties
-                                $form     = $this->container->get('form.factory')->create($formFqn);
+                                $form     = $this->container->get('form.factory')->create($entity->getDefaultAdminType());
                                 $children = $form->createView()->children;
 
                                 $pageFields = array();

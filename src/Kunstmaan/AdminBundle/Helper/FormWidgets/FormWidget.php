@@ -4,7 +4,6 @@ namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\FormHelper;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -137,9 +136,7 @@ class FormWidget implements FormWidgetInterface
     }
 
     /**
-     * @param string $identifier
-     *
-     * @return TabInterface
+     * {@inheritdoc}
      */
     public function setIdentifier($identifier)
     {
@@ -166,10 +163,6 @@ class FormWidget implements FormWidgetInterface
      */
     public function addType($name, $type, $data = null, $options = array())
     {
-        // Get fully qualified class name of form if not provided as string
-        if ($type instanceof AbstractType) {
-            $type = get_class($type);
-        }
         $this->types[$name] = $type;
         $this->data[$name] = $data;
         $this->options[$name] = $options;

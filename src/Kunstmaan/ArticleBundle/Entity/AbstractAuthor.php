@@ -49,7 +49,7 @@ class AbstractAuthor extends AbstractEntity {
 
     public function getAdminType()
     {
-        return new AbstractAuthorAdminType();
+        return AbstractAuthorAdminType::class;
     }
 
 }

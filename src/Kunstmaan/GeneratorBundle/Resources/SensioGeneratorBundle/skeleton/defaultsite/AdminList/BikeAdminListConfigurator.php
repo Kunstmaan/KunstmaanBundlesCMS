@@ -18,10 +18,9 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
-	parent::__construct($em, $aclHelper);
+        parent::__construct($em, $aclHelper);
 
-	$this->setAdminType(new BikeAdminType());
-
+        $this->setAdminType(BikeAdminType::class);
     }
 
     /**

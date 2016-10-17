@@ -918,17 +918,8 @@ class NodeAdminController extends Controller
 
         // Building the form
         $propertiesWidget = new FormWidget();
-        $pageAdminType = $page->getDefaultAdminType();
-        if (!is_object($pageAdminType) && is_string($pageAdminType)) {
-            $pageAdminType = $this->container->get($pageAdminType);
-        }
-        $propertiesWidget->addType('main', $pageAdminType, $page);
-
-        $nodeAdminType = $node->getDefaultAdminType();
-        if (!is_object($nodeAdminType) && is_string($nodeAdminType)) {
-            $nodeAdminType = $this->container->get($nodeAdminType);
-        }
-        $propertiesWidget->addType('node', $nodeAdminType, $node);
+        $propertiesWidget->addType('main', $page->getDefaultAdminType(), $page);
+        $propertiesWidget->addType('node', $node->getDefaultAdminType(), $node);
         $tabPane->addTab(new Tab('kuma_node.tab.properties.title', $propertiesWidget));
 
         // Menu tab

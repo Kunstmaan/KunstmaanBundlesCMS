@@ -67,10 +67,10 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
-     * @return VideoPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new VideoPagePartAdminType();
+        return VideoPagePartAdminType::class;
     }
 }

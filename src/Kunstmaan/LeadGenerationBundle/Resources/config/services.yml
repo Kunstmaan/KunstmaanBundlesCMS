@@ -26,10 +26,14 @@ services:
     kunstmaan_lead_generation.rule.form.localewhitelistrule:
         class: Kunstmaan\LeadGenerationBundle\Form\Rule\LocaleWhiteListAdminType
         arguments: ['@kunstmaan_admin.domain_configuration']
+        tags:
+            - { name: form.type }
 
     kunstmaan_lead_generation.rule.form.localeblacklistrule:
         class: Kunstmaan\LeadGenerationBundle\Form\Rule\LocaleBlackListAdminType
         arguments: ['@kunstmaan_admin.domain_configuration']
+        tags:
+            - { name: form.type }
 
     kunstmaan_lead_generation.rule.service.localeruleservice:
         class: Kunstmaan\LeadGenerationBundle\Service\Rule\LocaleRuleService

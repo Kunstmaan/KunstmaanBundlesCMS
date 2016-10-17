@@ -4,7 +4,6 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
 use Symfony\Component\Form\FormBuilderInterface;
-use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
@@ -131,10 +130,10 @@ class CheckboxPagePart extends AbstractFormPagePart
     /**
      * Returns the default backend form type for this page part
      *
-     * @return SingleLineTextPagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new CheckboxPagePartAdminType();
+        return CheckboxPagePartAdminType::class;
     }
 }
