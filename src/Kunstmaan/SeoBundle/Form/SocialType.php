@@ -40,6 +40,10 @@ class SocialType extends AbstractType
             ->add('ogUrl', URLChooserType::class, array(
                 'label' => 'seo.form.og.url',
                 'required'  => false,
+                'link_types' => [
+                    URLChooserType::INTERNAL,
+                    URLChooserType::EXTERNAL,
+                ]
             ))
             ->add('ogType', ChoiceType::class, array(
                 'label'     => 'seo.form.og.type',
@@ -51,8 +55,7 @@ class SocialType extends AbstractType
                     "Book"     => "book",
                     "Video"    => "video.other",
                     "Music"    => "music.song"
-                ),
-                'choices_as_values' => true,
+                )
             ))
             ->add('ogImage', MediaType::class, array(
                 'label' => 'seo.form.og.image',
@@ -85,7 +88,7 @@ class SocialType extends AbstractType
                 'info_text'     => 'seo.form.twitter.title_info_text',
             ),
         ))
-            ->add('twitterDescription', TextAreaType::class, array(
+            ->add('twitterDescription', TextareaType::class, array(
                 'label' => 'seo.form.twitter.description',
                 'required'  => false,
                 'attr'      => array(

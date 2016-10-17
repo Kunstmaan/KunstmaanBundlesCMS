@@ -146,7 +146,7 @@ class PagePartGenerator extends KunstmaanGenerator
         if (count($this->sections) > 0) {
             $dir = $this->bundle->getPath() . '/Resources/config/pageparts/';
             foreach ($this->sections as $section) {
-                $data = Yaml::parse($dir . $section);
+                $data = Yaml::parse(file_get_contents($dir . $section));
                 if (!array_key_exists('types', $data)) {
                     $data['types'] = array();
                 }
@@ -174,7 +174,7 @@ class PagePartGenerator extends KunstmaanGenerator
         $sectionInfo = array();
         $dir         = $configDir . '/pageparts/';
         foreach ($this->sections as $section) {
-            $data                                    = Yaml::parse($dir . $section);
+            $data                                    = Yaml::parse(file_get_contents($dir . $section));
             $sectionInfo[basename($section, '.yml')] = array('context' => $data['context'], 'pagetempates' => array());
         }
 
@@ -201,7 +201,7 @@ class PagePartGenerator extends KunstmaanGenerator
             $parts    = explode("/", $templatePath);
             $fileName = basename($parts[count($parts) - 1], '.yml');
 
-            $data         = Yaml::parse($templatePath);
+            $data         = Yaml::parse(file_get_contents($templatePath));
             $templateName = $data['name'];
             if (array_key_exists('rows', $data) && is_array($data['rows'])) {
                 foreach ($data['rows'] as $row) {
@@ -308,13 +308,8 @@ class PagePartGenerator extends KunstmaanGenerator
 
                             // Page template found
                             if (array_key_exists($ptConfigFilename, $sectionInfo[$ppConfigFilename]['pagetempates'])) {
-                                $formType = $entity->getDefaultAdminType();
-                                if (!is_object($formType)) {
-                                    $formType = $this->container->get($formType);
-                                }
-
                                 // Get all page properties
-                                $form     = $this->container->get('form.factory')->create($formType);
+                                $form     = $this->container->get('form.factory')->create($entity->getDefaultAdminType());
                                 $children = $form->createView()->children;
 
                                 $pageFields = array();

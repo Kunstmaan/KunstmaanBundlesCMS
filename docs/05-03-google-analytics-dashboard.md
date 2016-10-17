@@ -72,8 +72,8 @@ Update composer
 
 Update the database, use either a migration or force a schema update
 
-    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
-    app/console doctrine:schema:update --force
+    bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate
+    bin/console doctrine:schema:update --force
 
 ## App setup
 
@@ -100,6 +100,6 @@ On the next page, you’ll be asked to select the website you want to track and 
 
 You can also load the data from the console with the command
 
-    app/console kuma:dashboard:collect
+    bin/console kuma:dashboard:collect
 
 You can always update the data yourself this way, but it’s easier to configure a cronjob to do this every 30 minutes, or another interval.

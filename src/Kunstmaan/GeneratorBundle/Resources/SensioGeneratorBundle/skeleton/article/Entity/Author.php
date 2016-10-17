@@ -18,10 +18,10 @@ class {{ entity_class }}Author extends AbstractAuthor
     /**
      * Returns the default backend form type for this page
      *
-     * @return AbstractType
+     * @return string
      */
     public function getAdminType()
     {
-        return new {{ entity_class }}AuthorAdminType();
+        return {{ entity_class }}AuthorAdminType::class;
     }
 }

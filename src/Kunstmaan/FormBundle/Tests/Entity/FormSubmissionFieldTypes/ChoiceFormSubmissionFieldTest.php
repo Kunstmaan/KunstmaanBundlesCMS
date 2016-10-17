@@ -37,9 +37,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $adminType = $this->object->getDefaultAdminType();
-        $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof ChoiceFormSubmissionType);
+        $this->assertEquals(ChoiceFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
     /**

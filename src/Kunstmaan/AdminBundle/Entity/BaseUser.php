@@ -192,13 +192,4 @@ abstract class BaseUser extends AbstractUser
      * @return string
      */
     abstract public function getFormTypeClass();
-
-    /**
-     * Return class name of admin list configurator used for users
-     *
-     * @return string
-     *
-     * @deprecated Use the kunstmaan_user_management.user_admin_list_configurator.class parameter instead!
-     */
-    abstract public function getAdminListConfiguratorClass();
 }

@@ -40,19 +40,9 @@ class Node extends AbstractEntity implements GedmoNode
     protected $parent;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="integer", nullable=false, name="sequence_number")
-     *
-     * @deprecated nodes are sorted by the nodetranslation's weight field
-     */
-    protected $sequenceNumber;
-
-    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Node", mappedBy="parent")
-     * @ORM\OrderBy({"sequenceNumber" = "ASC"})
      */
     protected $children;
 
@@ -301,26 +291,6 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @param int $sequenceNumber
-     *
-     * @return Node
-     */
-    public function setSequenceNumber($sequenceNumber)
-    {
-        $this->sequenceNumber = $sequenceNumber;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSequenceNumber()
-    {
-        return $this->sequenceNumber;
-    }
-
-    /**
      * @return bool
      */
     public function isDeleted()
@@ -403,27 +373,11 @@ class Node extends AbstractEntity implements GedmoNode
     }
 
     /**
-     * @return NodeAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new NodeAdminType();
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function preInsert()
-    {
-        if (!$this->sequenceNumber) {
-            $parent = $this->getParent();
-            if ($parent) {
-                $count                = count($parent->getChildren());
-                $this->sequenceNumber = $count + 1;
-            } else {
-                $this->sequenceNumber = 1;
-            }
-        }
+        return NodeAdminType::class;
     }
 
     /**

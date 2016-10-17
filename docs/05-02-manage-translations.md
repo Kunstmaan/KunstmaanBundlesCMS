@@ -29,31 +29,31 @@ This method is much more flexible and has more options.
 - A __normal__ import (same import as in the backend)
 
 ```
-app/console kuma:translator:import --forced
+bin/console kuma:translator:import --forced
 ```
 
 - A __forced__ import
 
 ```
-app/console kuma:translator:import
+bin/console kuma:translator:import
 ```
 Note: both normal and forced import will only import translations from the current bundle.
 
 - Import translations from specific bundle
 
 ```
-app/console kuma:translator:import --bundle=superCoolNewApplicationBundle
+bin/console kuma:translator:import --bundle=superCoolNewApplicationBundle
 ```
 
 - Import translations only for specified locales
 
 ```
-app/console kuma:translator:import --locales=nl,fr,de
+bin/console kuma:translator:import --locales=nl,fr,de
 ```
 - Import translations from the global Resources (```app/Resoureces/translations```)
 
 ```
-app/console kuma:translator:import --globals
+bin/console kuma:translator:import --globals
 ```
 
 2) Translation caching and clearing
@@ -75,13 +75,13 @@ $kernel = new AppKernel('prod', false);
 So when you've ```debug mode``` off and changes are done in the backend, you'll see a notice. This notice will tell you that not all translations are up to date (in the cache). You can either click ```Refresh live``` or refresh the cache from the cli:
 
 ```
-app/console kuma:translator:cache --flush
+bin/console kuma:translator:cache --flush
 ```
 
 You can also request the current cache status:
 
 ```
-app/console kuma:translator:cache --status
+bin/console kuma:translator:cache --status
 ```
 
 3) Configuration

@@ -24,11 +24,11 @@ class GenerateLayoutCommand extends KunstmaanGenerateCommand
             ->setHelp(<<<EOT
 The <info>kuma:generate:layout</info> command generates a basic website layout.
 
-<info>php app/console kuma:generate:layout</info>
+<info>php bin/console kuma:generate:layout</info>
 
 Use the <info>--namespace</info> option to indicate for which bundle you want to create the layout
 
-<info>php app/console kuma:generate:layout --namespace=Namespace/NamedBundle</info>
+<info>php bin/console kuma:generate:layout --namespace=Namespace/NamedBundle</info>
 EOT
             )
             ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace of the bundle where we need to create the layout in')

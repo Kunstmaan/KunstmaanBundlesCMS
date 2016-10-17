@@ -128,7 +128,7 @@ class Tag extends BaseTag
 
     public function getDefaultAdminType()
     {
-        return new TagAdminType();
+        return TagAdminType::class;
     }
 
     public function __toString()

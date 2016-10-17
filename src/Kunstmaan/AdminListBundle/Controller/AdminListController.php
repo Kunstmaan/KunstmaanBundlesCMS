@@ -41,7 +41,7 @@ abstract class AdminListController extends Controller
      * @param AbstractAdminListConfigurator $configurator
      * @param null|Request $request
      *
-     * @return array
+     * @return Response
      */
     protected function doIndexAction(AbstractAdminListConfigurator $configurator, Request $request)
     {
@@ -69,7 +69,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
     {
@@ -95,7 +95,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
     {
@@ -120,26 +120,23 @@ abstract class AdminListController extends Controller
         $helper = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-        $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
+        $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_ADD, new AdminListEvent($helper));
 
                 // Check if Sortable interface is implemented
@@ -198,26 +195,23 @@ abstract class AdminListController extends Controller
         }
 
         $formType = $configurator->getAdminType($helper);
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-        $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
+        $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_EDIT, new AdminListEvent($helper));
                 $em->persist($helper);
                 $em->flush();

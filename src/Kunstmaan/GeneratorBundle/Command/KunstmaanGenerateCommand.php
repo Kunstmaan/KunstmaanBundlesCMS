@@ -377,7 +377,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         $info = null;
         try {
-            $data = Yaml::parse($dir . $file);
+            $data = Yaml::parse(file_get_contents($dir . $file));
             $info = array(
                 'name'    => $data['name'],
                 'context' => $data['context'],
@@ -852,7 +852,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
     {
         $info = null;
         try {
-            $data = Yaml::parse($dir . $file);
+            $data = Yaml::parse(file_get_contents($dir . $file));
             // Parse contexts
             $contexts = array();
             foreach ($data['rows'] as $row) {

@@ -557,10 +557,10 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * @return SeoType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new SeoType();
+        return SeoType::class;
     }
 }

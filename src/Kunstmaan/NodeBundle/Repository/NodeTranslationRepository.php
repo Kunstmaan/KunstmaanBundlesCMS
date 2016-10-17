@@ -151,27 +151,6 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * @deprecated Use getOnlineNodeTranslationsQueryBuilder instead
-     *
-     * This returns the node translations that are currently published
-     *
-     * @return array
-     */
-    public function getOnlineNodes()
-    {
-        return $this->createQueryBuilder('b')
-            ->select('b', 'v')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->leftJoin(
-                'b.publicNodeVersion',
-                'v',
-                'WITH',
-                'b.publicNodeVersion = v.id'
-            )
-            ->where('n.deleted != 1 AND b.online = 1');
-    }
-
-    /**
      * Get the node translation for a node
      *
      * @param HasNodeInterface $hasNode
@@ -239,7 +218,6 @@ class NodeTranslationRepository extends EntityRepository
                 't.publicNodeVersion = v.id'
             )
             ->where('n.deleted != 1')
-            ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -292,7 +270,6 @@ class NodeTranslationRepository extends EntityRepository
                 'b.publicNodeVersion = v.id'
             )
             ->addOrderBy('b.online', 'DESC')
-            ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -540,7 +517,6 @@ class NodeTranslationRepository extends EntityRepository
             )
             ->where('n.deleted != 1')
             ->andWhere('nt.online = 1')
-            ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
 

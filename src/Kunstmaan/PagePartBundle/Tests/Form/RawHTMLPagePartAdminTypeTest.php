@@ -31,14 +31,6 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::getName
-     */
-    public function testGetName()
-    {
-        $this->assertEquals(RawHTMLPagePartAdminType::class, $this->object->getName());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::buildForm
      */
     public function testBuildForm()

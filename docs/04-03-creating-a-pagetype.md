@@ -11,7 +11,7 @@ That's what this chapter is all about. Custom page types can define pages contai
 The first thing to do is to create a skeleton for the page, and again, we've got a generator that does that :
 
 ```
-app/console kuma:generate:page
+bin/console kuma:generate:page
 ```
 
 It will ask for a table prefix name and a page name, which is the PHP class name of the page to generate. Since I want to display my Employees on this page, I'll call it `EmployeesPage`.
@@ -28,8 +28,8 @@ in the page tree.
 The basic code skeleton should now be generated, so go ahead and create (and apply) a migration for the database changes :
 
 ```
-app/console doctrine:migrations:diff
-app/console doctrine:migrations:migrate
+bin/console doctrine:migrations:diff
+bin/console doctrine:migrations:migrate
 ```
 
 If you head over to the admin area, to the Pages menu and click on the homepage in the tree on the left, you should be able to add the EmployeesPage as a subpage. So just go ahead and do that, using `Employees` as title.

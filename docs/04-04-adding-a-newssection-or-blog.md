@@ -9,7 +9,7 @@ we decided to create a bundle to make implementing these a lot easier.
 
 First up is the article generator :
 
-    app/console kuma:generate:article
+    bin/console kuma:generate:article
 
 This will first ask for the bundle namespace (you can accept the default - `MyProject/WebsiteBundle`), then it will ask for
 a name (enter `News`), and finally it will ask for the table name prefix, so enter `myproject_websitebundle_` as before.
@@ -17,7 +17,7 @@ a name (enter `News`), and finally it will ask for the table name prefix, so ent
 The basic code skeleton should now be generated, so go ahead and create (and apply) a migration for the database
 changes :
 
-    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
+    bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate
 
 As you can see, 3 new tables will be generated. One contains details for the authors, one will contain news overview
 pages and the last one will contain the actual news page.
@@ -62,7 +62,7 @@ afterwards!).
 
 Adding support for news articles to your site is as simple as this :
 
-    app/console kuma:generate:article
+    bin/console kuma:generate:article
 
 
 3) Under the hood

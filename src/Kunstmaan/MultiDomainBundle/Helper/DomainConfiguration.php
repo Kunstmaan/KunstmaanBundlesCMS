@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DomainConfiguration extends BaseDomainConfiguration
 {
     const OVERRIDE_HOST = '_override_host';
+    const SWITCH_HOST = '_switch_host';
 
     /**
      * @var Node
@@ -83,9 +84,10 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @return bool
      */
-    public function isMultiLanguage()
+    public function isMultiLanguage($host = null)
     {
-        $host = $this->getHost();
+        $host = $this->getRealHost($host);
+
         if (isset($this->hosts[$host])) {
             $hostInfo = $this->hosts[$host];
 
@@ -98,9 +100,10 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @return array
      */
-    public function getFrontendLocales()
+    public function getFrontendLocales($host = null)
     {
-        $host = $this->getHost();
+        $host = $this->getRealHost($host);
+
         if (isset($this->hosts[$host]['locales'])) {
             return array_keys($this->hosts[$host]['locales']);
         }
@@ -111,9 +114,10 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @return array
      */
-    public function getBackendLocales()
+    public function getBackendLocales($host = null)
     {
-        $host = $this->getHost();
+        $host = $this->getRealHost($host);
+
         if (isset($this->hosts[$host]['locales'])) {
             return array_values($this->hosts[$host]['locales']);
         }
@@ -134,17 +138,18 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * Fetch the root node for the current host
      */
-    public function getRootNode()
+    public function getRootNode($host = null)
     {
         if (!$this->isMultiDomainHost()) {
             return parent::getRootNode();
         }
 
         if (is_null($this->rootNode)) {
-            $host           = $this->getHost();
-            $internalName   = $this->hosts[$host]['root'];
-            $em             = $this->container->get('doctrine.orm.entity_manager');
-            $nodeRepo       = $em->getRepository('KunstmaanNodeBundle:Node');
+            $host = $this->getRealHost($host);
+
+            $internalName = $this->hosts[$host]['root'];
+            $em = $this->container->get('doctrine.orm.entity_manager');
+            $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
             $this->rootNode = $nodeRepo->getNodeByInternalName($internalName);
         }
 
@@ -157,6 +162,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     public function getExtraData()
     {
         $host = $this->getHost();
+
         if (!isset($this->hosts[$host]['extra'])) {
             return parent::getExtraData();
         }
@@ -170,6 +176,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     public function getLocalesExtraData()
     {
         $host = $this->getHost();
+
         if (!isset($this->hosts[$host]['locales_extra'])) {
             return parent::getLocalesExtraData();
         }
@@ -185,9 +192,22 @@ class DomainConfiguration extends BaseDomainConfiguration
         $request = $this->getMasterRequest();
 
         return !is_null($request) &&
-            $this->isAdminRoute($request->getRequestUri()) &&
-            $request->hasPreviousSession() &&
-            $request->getSession()->has(self::OVERRIDE_HOST);
+        $this->isAdminRoute($request->getRequestUri()) &&
+        $request->hasPreviousSession() &&
+        $request->getSession()->has(self::OVERRIDE_HOST);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasHostSwitched()
+    {
+        $request = $this->getMasterRequest();
+
+        return !is_null($request) &&
+        $this->isAdminRoute($request->getRequestUri()) &&
+        $request->hasPreviousSession() &&
+        $request->getSession()->has(self::SWITCH_HOST);
     }
 
     /**
@@ -200,6 +220,22 @@ class DomainConfiguration extends BaseDomainConfiguration
         }
 
         return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHostSwitched()
+    {
+        $request = $this->getMasterRequest();
+
+        $host = $this->getHost();
+
+        if ($this->hasHostSwitched()) {
+            $host = $request->getSession()->get(self::SWITCH_HOST);
+        }
+
+        return $this->hosts[$host];
     }
 
     /**
@@ -221,5 +257,55 @@ class DomainConfiguration extends BaseDomainConfiguration
         }
 
         return true;
+    }
+
+    /**
+     * @return array()
+     */
+    public function getFullHost($host = null)
+    {
+        $host = $this->getRealHost($host);
+
+        if ($host) {
+            return $this->hosts[$host];
+        }
+
+        return null;
+    }
+
+
+    /**
+     * @return array()
+     */
+    public function getFullHostById($id)
+    {
+        foreach ($this->hosts as $host => $parameters) {
+            if (!isset($parameters['id']) || $parameters['id'] !== $id) {
+                continue;
+            }
+
+            return $parameters;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHostBaseUrl($host = null)
+    {
+        $config = $this->getFullHost($host);
+
+        return sprintf('%s://%s', $config['protocol'], $config['host']);
+    }
+
+    private function getRealHost($host = null)
+    {
+        if (!$host) {
+            $host = $this->getHost();
+        }
+
+        return $host;
     }
 }

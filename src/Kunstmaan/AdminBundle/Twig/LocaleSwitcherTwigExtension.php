@@ -40,9 +40,9 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
      * Render locale switcher widget.
      *
      * @param \Twig_Environment $env
-     * @param array             $locales    The locales
-     * @param string            $route      The route
-     * @param array             $parameters The route parameters
+     * @param array $locales The locales
+     * @param string $route The route
+     * @param array $parameters The route parameters
      *
      * @return string
      */
@@ -57,7 +57,7 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
                 $parameters,
                 array(
                     'locales' => $locales,
-                    'route'   => $route
+                    'route' => $route
                 )
             )
         );
@@ -74,9 +74,9 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     /**
      * @return array
      */
-    public function getBackendLocales()
+    public function getBackendLocales($switchedHost = null)
     {
-        return $this->domainConfiguration->getBackendLocales();
+        return $this->domainConfiguration->getBackendLocales($switchedHost);
     }
 
     /**

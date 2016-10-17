@@ -102,11 +102,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
     }
 
     /**
-     * Get admin type of entity
-     *
-     * @param mixed $item
-     *
-     * @return AbstractType|null
+     * {@inheritdoc}
      */
     public function getAdminType($item)
     {

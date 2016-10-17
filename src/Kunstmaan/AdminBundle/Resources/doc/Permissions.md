@@ -13,7 +13,7 @@ security:
 After the connection is configured, we have to import the database structure, you do that by running
 
 ```
-app/console init:acl
+bin/console init:acl
 ```
 
 Without this you will not be able to use ACL permission support.

@@ -49,7 +49,6 @@ class SeoType extends AbstractType
                 'seo.form.robots.notranslate'  => self::ROBOTS_NOTRANSLATE,
                 'seo.form.robots.noimageindex' => self::ROBOTS_NOIMAGEINDEX,
             ),
-            'choices_as_values' => true,
             'required' => false,
             'multiple' => true,
             'expanded' => false,

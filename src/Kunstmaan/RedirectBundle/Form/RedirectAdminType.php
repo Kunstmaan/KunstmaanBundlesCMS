@@ -35,8 +35,7 @@ class RedirectAdminType extends AbstractType
                 'choices' => $domains,
                 'required' => true,
                 'expanded' => false,
-                'multiple' => false,
-                'choices_as_values' => true,
+                'multiple' => false
             ));
         }
 

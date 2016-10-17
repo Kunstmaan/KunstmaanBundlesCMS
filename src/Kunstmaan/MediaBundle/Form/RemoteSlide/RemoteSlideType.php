@@ -35,8 +35,7 @@ class RemoteSlideType extends AbstractRemoteType
                     'label'       => 'media.form.remote_slide.type.label',
                     'choices'     => array('slideshare' => 'slideshare'),
                     'constraints' => array(new NotBlank()),
-                    'required'    => true,
-                    'choices_as_values' => true
+                    'required'    => true
                 )
             );
     }

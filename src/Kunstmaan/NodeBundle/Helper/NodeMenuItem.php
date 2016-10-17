@@ -85,14 +85,6 @@ class NodeMenuItem
     /**
      * @return string
      */
-    public function getLang()
-    {
-        return $this->menu->getLang();
-    }
-
-    /**
-     * @return string
-     */
     public function getTitle()
     {
         $nodeTranslation = $this->getNodeTranslation();

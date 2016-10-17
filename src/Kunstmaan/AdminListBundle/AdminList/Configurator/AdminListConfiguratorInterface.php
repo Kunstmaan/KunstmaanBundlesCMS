@@ -83,7 +83,7 @@ interface AdminListConfiguratorInterface
      *
      * @throws InvalidArgumentException
      *
-     * @return AbstractType
+     * @return string FQCN of form type
      */
     public function getAdminType($entity);
 

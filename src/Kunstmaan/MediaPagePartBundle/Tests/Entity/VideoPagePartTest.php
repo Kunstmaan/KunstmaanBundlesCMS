@@ -52,7 +52,6 @@ class VideoPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $defaultAdminType = $this->object->getDefaultAdminType();
-        $this->assertTrue($defaultAdminType instanceof VideoPagePartAdminType);
+        $this->assertEquals(VideoPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }
