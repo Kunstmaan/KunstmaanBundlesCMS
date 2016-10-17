@@ -109,7 +109,7 @@ class URLHelper
 
                             $url = $this->router->generate('_slug', $urlParams);
 
-                            $text = str_replace($fullTag, $hostId ? $hostBaseUrl : '' . $url, $text);
+                            $text = str_replace($fullTag, $hostId ? $hostBaseUrl . $url : $url, $text);
                         }
                     }
 
