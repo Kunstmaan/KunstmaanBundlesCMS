@@ -1,18 +1,17 @@
 {% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
+{% set switchedHost = get_switched_host() %}
+
 {% import _self as macros %}
-{% macro selectLinkRecTreeView(tree, item) %}
+{% macro selectLinkRecTreeView(tree, item, switchedHost) %}
     {% import _self as macros %}
 
     {# Add some tokens which are being replaced by the URLHelper #}
     {% if is_multidomain_site() %}
-        {% set switched_host = get_switched_host() %}
-        {% set switched_host_id = switched_host.id %}
-
         {% if switched_host_is_current() %}
             {% set slug = "[%s]" | format("NT" ~ item.nt_id) %}
         {% else %}
-            {% set slug = "[%s:%s]" | format(switched_host_id, "NT" ~ item.nt_id) %}
+            {% set slug = "[%s:%s]" | format(switchedHost.id, "NT" ~ item.nt_id) %}
         {% endif %}
 
     {% else %}
@@ -25,7 +24,7 @@
         </a>
         <ul>
             {% for item in tree.children(item.id) %}
-                {{ macros.selectLinkRecTreeView(tree, item) }}
+                {{ macros.selectLinkRecTreeView(tree, item, switchedHost) }}
             {% endfor %}
         </ul>
     </li>
@@ -71,7 +70,7 @@
                     <!-- Navigation - Right -->
                     <ul class="nav navbar-nav navbar-right">
                         {% set route = app.request.attributes.get('_route') %}
-                        {{ localeswitcher_widget(get_backend_locales(is_multidomain_site() ? get_switched_host()), route) }}
+                        {{ localeswitcher_widget(get_backend_locales(is_multidomain_site() ? switchedHost.host), route) }}
 
                         {% if is_multidomain_site() %}
                             {{ multidomain_widget(route) }}
@@ -102,7 +101,7 @@
             <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-replace-url="{{path("KunstmaanNodeBundle_urlchooser_replace") }}" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
                 <ul>
                     {% for item in tree.rootItems %}
-                        {{ macros.selectLinkRecTreeView(tree, item) }}
+                        {{ macros.selectLinkRecTreeView(tree, item, switchedHost) }}
                     {% endfor %}
                 </ul>
             </nav>
