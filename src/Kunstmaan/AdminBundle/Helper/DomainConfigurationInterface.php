@@ -28,8 +28,6 @@ interface DomainConfigurationInterface
     /**
      * Return if the current host or the host provided is multi language.
      *
-     * @param string|null $host
-     *
      * @return bool
      */
     public function isMultiLanguage($host = null);
@@ -37,16 +35,12 @@ interface DomainConfigurationInterface
     /**
      * Return the frontend locales for the current host or the host provided.
      *
-     * @param string|null $host
-     *
      * @return array
      */
     public function getFrontendLocales($host = null);
 
     /**
      * Return the backend locales for the current host or the host provided.
-     *
-     * @param string|null $host
      *
      * @return array
      */
@@ -56,9 +50,7 @@ interface DomainConfigurationInterface
      * Return the root node for the current host (should always be null when the
      * root node does not exist OR you don't use the MultiDomainBundle).
      *
-     * @param string|null $host
-     *
-     * @return \Kunstmaan\NodeBundle\Entity\Node|null
+     * @return Kunstmaan\NodeBundle\Entity\Node|null
      */
     public function getRootNode($host = null);
 
@@ -86,16 +78,7 @@ interface DomainConfigurationInterface
     public function getLocalesExtraData();
 
     /**
-     * Return the full host config
-     *
-     * @return array
-     */
-    public function getFullHostConfig();
-
-    /**
      * Return the full host
-     *
-     * @param string|null $host
      *
      * @return mixed
      */
@@ -103,8 +86,6 @@ interface DomainConfigurationInterface
 
     /**
      * Return the full host of a given id.
-     *
-     * @param int $id
      *
      * @return mixed
      */
@@ -120,9 +101,8 @@ interface DomainConfigurationInterface
     /**
      * Return the host name with the protocol
      *
-     * @param string|null $host
-     *
      * @return mixed
      */
     public function getHostBaseUrl($host = null);
+
 }
