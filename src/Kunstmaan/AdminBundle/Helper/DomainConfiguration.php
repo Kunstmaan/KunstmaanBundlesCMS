@@ -26,9 +26,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     /** @var string */
     protected $defaultLocale;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -72,8 +69,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
-     *
      * @return bool
      */
     public function isMultiLanguage($host = null)
@@ -82,8 +77,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
-     *
      * @return array
      */
     public function getFrontendLocales($host = null)
@@ -92,8 +85,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
-     *
      * @return array
      */
     public function getBackendLocales($host = null)
@@ -110,8 +101,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
-     *
      * @return null
      */
     public function getRootNode($host = null)
@@ -147,16 +136,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @return array
-     */
-    public function getFullHostConfig()
-    {
-        return array();
-    }
-
-    /**
-     * @param string|null $host
-     *
      * @return null
      */
     public function getFullHost($host = null)
@@ -165,8 +144,6 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param int $id
-     *
      * @return null
      */
     public function getFullHostById($id)
@@ -183,12 +160,11 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
-     * @param string|null $host
-     *
      * @return null
      */
     public function getHostBaseUrl($host = null)
     {
         return null;
     }
+
 }

@@ -57,6 +57,7 @@ class SiteSwitchController extends Controller
             $session->set(DomainConfiguration::OVERRIDE_HOST, $host);
         }
 
+
         $response = new RedirectResponse(
             $this->get('router')->generate($route, $routeParams)
         );
