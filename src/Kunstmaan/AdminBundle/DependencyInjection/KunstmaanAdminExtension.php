@@ -50,6 +50,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.session_security.ip_check', $config['session_security']['ip_check']);
         $container->setParameter('kunstmaan_admin.session_security.user_agent_check', $config['session_security']['user_agent_check']);
 
+        $container->setParameter('kunstmaan_admin.admin_prefix', $this->normalizeUrlSlice($config['admin_prefix']));
+
         $container->setParameter('kunstmaan_admin.google_signin.enabled', $config['google_signin']['enabled']);
         $container->setParameter('kunstmaan_admin.google_signin.client_id', $config['google_signin']['client_id']);
         $container->setParameter('kunstmaan_admin.google_signin.client_secret', $config['google_signin']['client_secret']);
@@ -128,5 +130,24 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $definition->addTag('kunstmaan_admin.menu.adaptor');
 
         $container->setDefinition('kunstmaan_admin.menu.adaptor.simple', $definition);
+    }
+
+    /**
+     * @param string $urlSlice
+     *
+     * @return string
+     */
+    protected function normalizeUrlSlice($urlSlice)
+    {
+        /* Get rid of exotic characters that would break the url */
+        $urlSlice = filter_var($urlSlice, FILTER_SANITIZE_URL);
+
+        /* Remove leading and trailing slashes */
+        $urlSlice = trim($urlSlice, '/');
+
+        /* Make sure our $urlSlice is literally used in our regex */
+        $urlSlice = preg_quote($urlSlice);
+
+        return $urlSlice;
     }
 }

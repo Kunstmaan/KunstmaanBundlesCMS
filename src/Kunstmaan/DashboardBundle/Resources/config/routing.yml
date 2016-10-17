@@ -1,14 +1,14 @@
 kunstmaan_dashboard:
     resource: '@KunstmaanDashboardBundle/Controller/DashboardController.php'
     type:     annotation
-    prefix:   /admin/dashboard
+    prefix:   /%kunstmaan_admin.admin_prefix%/dashboard
 
 kunstmaan_dashboard_googleanalytics:
     resource: '@KunstmaanDashboardBundle/Controller/GoogleAnalyticsController.php'
     type:     annotation
-    prefix:   /admin/dashboard/widget/googleanalytics
+    prefix:   /%kunstmaan_admin.admin_prefix%/dashboard/widget/googleanalytics
 
 kunstmaan_dashboard_googleanalytics_AJAX:
     resource: '@KunstmaanDashboardBundle/Controller/GoogleAnalyticsAJAXController.php'
     type:     annotation
-    prefix:   /admin/dashboard/ajax/
+    prefix:   /%kunstmaan_admin.admin_prefix%/dashboard/ajax/
