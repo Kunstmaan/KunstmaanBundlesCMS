@@ -512,7 +512,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function enterRequestScope($lang)
     {
         $requestStack = $this->container->get('request_stack');
-        if (!$requestStack->getCurrentRequest()) {
+        // If there already is a request, get the locale from it.
+        if ($requestStack->getCurrentRequest()) {
+            $locale = $requestStack->getCurrentRequest()->getLocale();
+        }
+        // If we don't have a request or the current request locale is different from the node langauge
+        if (!$requestStack->getCurrentRequest() || ($locale && $locale !== $lang)) {
             $request = new Request();
             $request->setLocale($lang);
 
