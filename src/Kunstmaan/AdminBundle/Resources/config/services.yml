@@ -22,12 +22,12 @@ services:
         class: '%kunstmaan_admin.admin_panel.class%'
 
     kunstmaan_admin.menu.adaptor.modules:
-        class: Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor
+        class: 'Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor'
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
     kunstmaan_admin.menu.adaptor.settings:
-        class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
+        class: 'Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor'
         arguments: ['@service_container']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
@@ -45,36 +45,36 @@ services:
             - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
 
     kunstmaan_admin.menu.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\MenuTwigExtension
+        class: 'Kunstmaan\AdminBundle\Twig\MenuTwigExtension'
         arguments: ['@kunstmaan_admin.menubuilder', '@kunstmaan_admin.admin_panel']
         tags:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.localeswitcher.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\LocaleSwitcherTwigExtension
+        class: 'Kunstmaan\AdminBundle\Twig\LocaleSwitcherTwigExtension'
         arguments: ['@kunstmaan_admin.domain_configuration']
         tags:
             -  { name: 'twig.extension' }
 
     kunstmaan_admin.multidomain.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\MultiDomainAdminTwigExtension
+        class: 'Kunstmaan\AdminBundle\Twig\MultiDomainAdminTwigExtension'
         arguments: ['@kunstmaan_admin.domain_configuration']
         tags:
               -  { name: 'twig.extension' }
 
     kunstmaan_admin.locale.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\DateByLocaleExtension
+        class: 'Kunstmaan\AdminBundle\Twig\DateByLocaleExtension'
         tags:
             - { name: 'twig.extension' }
 
     kunstmaan_admin.formtools.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\FormToolsExtension
+        class: 'Kunstmaan\AdminBundle\Twig\FormToolsExtension'
         arguments: ['@kunstmaan_admin.form.helper']
         tags:
             - { name: 'twig.extension' }
 
     kunstmaan_admin.permissions.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\AdminPermissionsTwigExtension
+        class: 'Kunstmaan\AdminBundle\Twig\AdminPermissionsTwigExtension'
         tags:
             -  { name: 'twig.extension' }
 
@@ -90,7 +90,7 @@ services:
         class: '%kunstmaan_admin.security.acl.permission.map.class%'
 
     kunstmaan_admin.security.acl.voter:
-        class: Kunstmaan\AdminBundle\Helper\Security\Acl\Voter\AclVoter
+        class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\Voter\AclVoter'
         arguments: ['@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@security.acl.security_identity_retrieval_strategy', '@kunstmaan_admin.security.acl.permission.map']
         tags:
             - { name: security.voter, priority: 255 }
@@ -99,11 +99,11 @@ services:
         public: false
 
     kunstmaan_admin.permissionadmin:
-        class: Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin
+        class: 'Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.acl.provider', '@security.acl.object_identity_retrieval_strategy', '@event_dispatcher', '@kunstmaan_utilities.shell', '@kernel']
 
     kunstmaan_admin.clone.helper:
-        class: Kunstmaan\AdminBundle\Helper\CloneHelper
+        class: 'Kunstmaan\AdminBundle\Helper\CloneHelper'
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
 
     kunstmaan_admin.clone.listener:
@@ -112,55 +112,55 @@ services:
             - { name: kernel.event_listener, event: kunstmaan_admin.onDeepCloneAndSave, method: onDeepCloneAndSave }
 
     kunstmaan_admin.logger.processor.user:
-        class: Kunstmaan\AdminBundle\Helper\UserProcessor
+        class: 'Kunstmaan\AdminBundle\Helper\UserProcessor'
         arguments: [ '@service_container' ]
         tags:
             - { name: monolog.processor, method: processRecord }
             - { name: kunstmaan_admin.logger.processor, method: processRecord }
 
     kunstmaan_admin.logger.handler:
-        class: Monolog\Handler\RotatingFileHandler
+        class: 'Monolog\Handler\RotatingFileHandler'
         arguments: ['%kernel.logs_dir%/kunstmaan_%kernel.environment%.log', 10]
 
     kunstmaan_admin.logger:
-        class: Symfony\Bridge\Monolog\Logger
+        class: 'Symfony\Bridge\Monolog\Logger'
         arguments: [kunstmaan]
         calls:
             - [pushHandler, ['@kunstmaan_admin.logger.handler']]
 
     kunstmaan_admin.form.helper:
-        class: Kunstmaan\AdminBundle\Helper\FormHelper
+        class: 'Kunstmaan\AdminBundle\Helper\FormHelper'
 
     kunstmaan_admin.tabs.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\TabsTwigExtension
+        class: 'Kunstmaan\AdminBundle\Twig\TabsTwigExtension'
         tags:
             - { name: twig.extension }
 
     kunstmaan_admin.permission_creator:
-        class: Kunstmaan\AdminBundle\Helper\Creators\ACLPermissionCreator
+        class: 'Kunstmaan\AdminBundle\Helper\Creators\ACLPermissionCreator'
         arguments: ['@security.acl.provider', '@security.acl.object_identity_retrieval_strategy']
 
     kunstmaan_admin.versionchecker:
-        class: Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker
+        class: 'Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker'
         arguments: ['@service_container', '@kunstmaan_admin.cache']
 
     kunstmaan_admin.cache:
-        class: Doctrine\Common\Cache\FilesystemCache
+        class: 'Doctrine\Common\Cache\FilesystemCache'
         arguments: ['%kernel.cache_dir%/fcache']
 
     kunstmaan_admin.form.type.color:
-        class: Kunstmaan\AdminBundle\Form\ColorType
+        class: 'Kunstmaan\AdminBundle\Form\ColorType'
         tags:
             - { name: form.type }
 
     kunstmaan_admin.doctrine_mapping.listener:
-        class: Kunstmaan\AdminBundle\EventListener\MappingListener
+        class: 'Kunstmaan\AdminBundle\EventListener\MappingListener'
         arguments: ['%fos_user.model.user.class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
 
     kunstmaan_admin.form.type.range:
-        class: Kunstmaan\AdminBundle\Form\RangeType
+        class: 'Kunstmaan\AdminBundle\Form\RangeType'
         tags:
             - { name: form.type }
 
@@ -172,7 +172,7 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -1000 }
 
     kunstmaan_form.type.wysiwyg:
-        class: Kunstmaan\AdminBundle\Form\WysiwygType
+        class: 'Kunstmaan\AdminBundle\Form\WysiwygType'
         tags:
             - { name: form.type }
 
@@ -189,7 +189,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
 
     kunstmaan_admin.admin_panel.adaptor:
-        class: Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor
+        class: 'Kunstmaan\AdminBundle\Helper\AdminPanel\DefaultAdminPanelAdaptor'
         arguments: ['@security.token_storage']
         tags:
             -  { name: 'kunstmaan_admin.admin_panel.adaptor' }
@@ -199,7 +199,7 @@ services:
         arguments: ['@service_container']
 
     kunstmaan_admin.oauth_authenticator:
-        class: Kunstmaan\AdminBundle\Security\OAuthAuthenticator
+        class: 'Kunstmaan\AdminBundle\Security\OAuthAuthenticator'
         arguments:
             - '@router'
             - '@session'
@@ -209,7 +209,7 @@ services:
             - '%kunstmaan_admin.google_signin.client_secret%'
 
     kunstmaan_admin.oauth_user_creator:
-        class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator
+        class: 'Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator'
         arguments:
             - '@doctrine.orm.entity_manager'
             - '%kunstmaan_admin.google_signin.hosted_domains%'
@@ -217,13 +217,13 @@ services:
             - '@kunstmaan_admin.oauth_user_finder'
 
     kunstmaan_admin.oauth_user_finder:
-        class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinder
+        class: 'Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinder'
         arguments:
             - '@doctrine.orm.entity_manager'
             - '%fos_user.model.user.class%'
 
     kunstmaan_admin.google_signin.twig.extension:
-        class: Kunstmaan\AdminBundle\Twig\GoogleSignInTwigExtension
+        class: 'Kunstmaan\AdminBundle\Twig\GoogleSignInTwigExtension'
         arguments:
             - '%kunstmaan_admin.google_signin.enabled%'
             - '%kunstmaan_admin.google_signin.client_id%'

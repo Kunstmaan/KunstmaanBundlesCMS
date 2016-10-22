@@ -1,16 +1,16 @@
 parameters:
-    kunstmaan_dashboard.widget.googleanalytics.command: Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand
-    kunstmaan_dashboard.widget.googleanalytics.controller: Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController
+    kunstmaan_dashboard.widget.googleanalytics.command: 'Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand'
+    kunstmaan_dashboard.widget.googleanalytics.controller: 'Kunstmaan\DashboardBundle\Controller\GoogleAnalyticsController'
     kunstmaan_dashboard.googleclient.class: 'Google_Client'
     kunstmaan_dashboard.googleclienthelper.class: 'Kunstmaan\DashboardBundle\Helper\GoogleClientHelper'
     google.api.app_name: 'Kuma Analytics Dashboard'
 
 services:
     kunstmaan_dashboard.manager.widgets:
-        class: Kunstmaan\DashboardBundle\Manager\WidgetManager
+        class: 'Kunstmaan\DashboardBundle\Manager\WidgetManager'
 
     kunstmaan_dashboard.widget.googleanalytics:
-        class: Kunstmaan\DashboardBundle\Widget\DashboardWidget
+        class: 'Kunstmaan\DashboardBundle\Widget\DashboardWidget'
         arguments: ['%kunstmaan_dashboard.widget.googleanalytics.command%', '%kunstmaan_dashboard.widget.googleanalytics.controller%', '@service_container']
         tags:
             - { name: kunstmaan_dashboard.widget, priority: 1 }

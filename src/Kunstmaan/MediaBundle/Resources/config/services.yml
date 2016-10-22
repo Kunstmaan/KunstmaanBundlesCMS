@@ -58,7 +58,7 @@ services:
         arguments: ['@service_container']
 
     kunstmaan_media.repository.folder:
-        class:            Kunstmaan\MediaBundle\Repository\FolderRepository
+        class:            'Kunstmaan\MediaBundle\Repository\FolderRepository'
         factory:          ['@doctrine.orm.entity_manager', getRepository]
         arguments:        ['KunstmaanMediaBundle:Folder']
 
@@ -79,23 +79,23 @@ services:
         class: '%kunstmaan_media.extension_guesser.factory.class%'
 
     kunstmaan_media.command.rebuildfoldertree:
-        class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
+        class: 'Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand'
         calls:
             - [setContainer, ['@service_container'] ]
 
     kunstmaan_media.command.cleandeletedmedia:
-        class: Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand
+        class: 'Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand'
         calls:
             - [setContainer, ['@service_container'] ]
 
     kunstmaan_media.filesystem_adapter:
-        class: Gaufrette\Adapter\Local
+        class: 'Gaufrette\Adapter\Local'
         arguments:
             - '%kernel.root_dir%/../web%kunstmaan_media.media_path%'
             - true
 
     kunstmaan_media.filesystem:
-        class: Gaufrette\Filesystem
+        class: 'Gaufrette\Filesystem'
         arguments:
             - '@kunstmaan_media.filesystem_adapter'
 

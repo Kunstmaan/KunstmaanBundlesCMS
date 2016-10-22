@@ -1,5 +1,5 @@
 parameters:
-    kunstmaan_node_search.node_index_update.listener.class: Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener
+    kunstmaan_node_search.node_index_update.listener.class: 'Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener'
 
 services:
     kunstmaan_node_search.node_index_update.listener:
