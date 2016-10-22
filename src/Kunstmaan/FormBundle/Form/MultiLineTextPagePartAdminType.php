@@ -21,7 +21,7 @@ class MultiLineTextPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array(
+            ->add('label', TextType::class, array(
                 'required' => false,
                 'label' => 'kuma_form.form.multi_line_text_page_part.label.label',
             ))

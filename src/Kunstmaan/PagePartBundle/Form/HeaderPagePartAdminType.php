@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
@@ -28,7 +29,7 @@ class HeaderPagePartAdminType extends AbstractType
             'choices_as_values' => true
           )
         );
-        $builder->add('title', null, array(
+        $builder->add('title', TextType::class, array(
             'label' => 'pagepart.header.title',
             'required' => true,
         ));

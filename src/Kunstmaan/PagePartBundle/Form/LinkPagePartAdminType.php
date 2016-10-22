@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Form;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
@@ -27,7 +28,7 @@ class LinkPagePartAdminType extends AbstractType
                 'label' => 'pagepart.link.openinnewwindow',
                 'required' => false,
             ))
-            ->add('text', null, array(
+            ->add('text', TextType::class, array(
                 'label' => 'pagepart.link.text',
                 'required' => false,
             ));

@@ -20,7 +20,7 @@ class EmailPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array(
+            ->add('label', TextType::class, array(
                 'required' => false,
                 'label' => 'kuma_form.form.email_page_part.label.label',
             ))
