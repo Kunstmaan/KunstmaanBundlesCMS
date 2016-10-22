@@ -82,6 +82,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return bool
      */
     public function isMultiLanguage($host = null)
@@ -98,6 +100,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return array
      */
     public function getFrontendLocales($host = null)
@@ -112,6 +116,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return array
      */
     public function getBackendLocales($host = null)
@@ -137,6 +143,10 @@ class DomainConfiguration extends BaseDomainConfiguration
 
     /**
      * Fetch the root node for the current host
+     *
+     * @param string|null $host
+     *
+     * @return Node|null
      */
     public function getRootNode($host = null)
     {
@@ -260,7 +270,17 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @return array()
+     * @return array
+     */
+    public function getFullHostConfig()
+    {
+        return $this->hosts;
+    }
+
+    /**
+     * @param string|null $host
+     *
+     * @return array
      */
     public function getFullHost($host = null)
     {
@@ -275,7 +295,9 @@ class DomainConfiguration extends BaseDomainConfiguration
 
 
     /**
-     * @return array()
+     * @param int $id
+     *
+     * @return array
      */
     public function getFullHostById($id)
     {
@@ -291,6 +313,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return string
      */
     public function getHostBaseUrl($host = null)
@@ -300,6 +324,11 @@ class DomainConfiguration extends BaseDomainConfiguration
         return sprintf('%s://%s', $config['protocol'], $config['host']);
     }
 
+    /**
+     * @param string|null $host
+     *
+     * @return null|string
+     */
     private function getRealHost($host = null)
     {
         if (!$host) {
