@@ -1,15 +1,30 @@
 {% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
+{% set switchedHost = get_switched_host() %}
+
 {% import _self as macros %}
-{% macro selectLinkRecTreeView(tree, item) %}
+{% macro selectLinkRecTreeView(tree, item, switchedHost) %}
     {% import _self as macros %}
+
+    {# Add some tokens which are being replaced by the URLHelper #}
+    {% if is_multidomain_site() %}
+        {% if switched_host_is_current() %}
+            {% set slug = "[%s]" | format("NT" ~ item.nt_id) %}
+        {% else %}
+            {% set slug = "[%s:%s]" | format(switchedHost.id, "NT" ~ item.nt_id) %}
+        {% endif %}
+
+    {% else %}
+        {% set slug = "[%s]" | format("NT" ~ item.nt_id) %}
+    {% endif %}
+
     <li rel="page" class="{% if item.online == 0 %}jstree-node--offline{% endif %}"{% if item.online == 0 %} data-jstree='{"type":"offline"}'{% endif %}>
-        <a href="#" class="js-url-chooser-link-select" data-slug="{{ item.url }}"  data-id="{{ item.id }}">
+        <a href="#" class="js-url-chooser-link-select" data-slug="{{ slug }}" data-id="{{ item.id }}">
             {{ item.title }}
         </a>
         <ul>
             {% for item in tree.children(item.id) %}
-                {{ macros.selectLinkRecTreeView(tree, item) }}
+                {{ macros.selectLinkRecTreeView(tree, item, switchedHost) }}
             {% endfor %}
         </ul>
     </li>
@@ -17,7 +32,6 @@
 
 {% block body %}
     <header role="banner">
-
         <!-- App Header -->
         <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -56,7 +70,11 @@
                     <!-- Navigation - Right -->
                     <ul class="nav navbar-nav navbar-right">
                         {% set route = app.request.attributes.get('_route') %}
-                        {{ localeswitcher_widget(get_backend_locales(), route) }}
+                        {{ localeswitcher_widget(get_backend_locales(is_multidomain_site() ? switchedHost.host), route) }}
+
+                        {% if is_multidomain_site() %}
+                            {{ multidomain_widget(route) }}
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -80,11 +98,10 @@
                 <hr>
             </div>
 
-            {% if multilanguage %}{% set baseURL = "/" ~ app.request.locale %}{% else %}{% set baseURL = "" %}{% endif %}
-            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}" data-base-url={{ baseURL }}>
+            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-replace-url="{{path("KunstmaanNodeBundle_urlchooser_replace") }}" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}">
                 <ul>
                     {% for item in tree.rootItems %}
-                        {{ macros.selectLinkRecTreeView(tree, item) }}
+                        {{ macros.selectLinkRecTreeView(tree, item, switchedHost) }}
                     {% endfor %}
                 </ul>
             </nav>
@@ -103,5 +120,7 @@
                 Cancel
             </button>
         </div>
+
     </main>
+
 {% endblock %}

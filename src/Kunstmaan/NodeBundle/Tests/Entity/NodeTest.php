@@ -169,16 +169,6 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setSequenceNumber
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getSequenceNumber
-     */
-    public function testSetGetSequenceNumber()
-    {
-        $this->object->setSequenceNumber(1);
-        $this->assertEquals(1, $this->object->getSequenceNumber());
-    }
-
-    /**
      * @covers Kunstmaan\NodeBundle\Entity\Node::isDeleted
      * @covers Kunstmaan\NodeBundle\Entity\Node::setDeleted
      */

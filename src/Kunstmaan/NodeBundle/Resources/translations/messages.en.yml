@@ -73,6 +73,8 @@ kuma_node:
         edit:
             flash:
                 success: The page has been edited
+                locked: The page is currently being edited by %users%
+                locked_success: An automatic backup has been created because the page is being edited by another user
         new_page:
             title:
                 default: New page

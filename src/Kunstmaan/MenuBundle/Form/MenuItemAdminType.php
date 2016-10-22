@@ -72,7 +72,6 @@ class MenuItemAdminType extends AbstractType
                 ),
                 'placeholder' => false,
                 'required'    => true,
-                'choices_as_values' => true,
                 'label' => 'kuma_menu.form.type'
             )
         );

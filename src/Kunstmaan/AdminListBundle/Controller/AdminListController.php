@@ -41,7 +41,7 @@ abstract class AdminListController extends Controller
      * @param AbstractAdminListConfigurator $configurator
      * @param null|Request $request
      *
-     * @return array
+     * @return Response
      */
     protected function doIndexAction(AbstractAdminListConfigurator $configurator, Request $request)
     {
@@ -69,7 +69,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
     {
@@ -95,7 +95,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
     {
@@ -136,10 +136,11 @@ abstract class AdminListController extends Controller
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_ADD, new AdminListEvent($helper));
 
                 // Check if Sortable interface is implemented
@@ -214,10 +215,11 @@ abstract class AdminListController extends Controller
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
                 $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_EDIT, new AdminListEvent($helper));
                 $em->persist($helper);
                 $em->flush();

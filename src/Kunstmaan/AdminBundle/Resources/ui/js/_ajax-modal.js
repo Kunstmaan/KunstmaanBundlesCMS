@@ -1,19 +1,20 @@
 var kunstmaanbundles = kunstmaanbundles || {};
 
-kunstmaanbundles.ajaxModal = (function($, window, undefined) {
+kunstmaanbundles.ajaxModal = (function ($, window, undefined) {
 
     var init,
         initModals, resetAjaxModals;
 
-    init = function() {
-        $('.js-ajax-modal').on('show.bs.modal', initModals);
+    init = function () {
+        $(document).on('show.bs.modal', '.js-ajax-modal', initModals);
     };
 
 
-    initModals = function(e) {
+    initModals = function (e) {
         var $modal = $(this);
 
-        if(!$modal.data('loaded')) {
+
+        if (!$modal.data('loaded')) {
             var $btn = $(e.relatedTarget),
                 link = $btn.data('link');
 
@@ -23,7 +24,7 @@ kunstmaanbundles.ajaxModal = (function($, window, undefined) {
     }
 
 
-    resetAjaxModals = function() {
+    resetAjaxModals = function () {
         $('.js-ajax-modal').off('show.bs.modal', initModals);
         $('.js-ajax-modal').on('show.bs.modal', initModals);
     };

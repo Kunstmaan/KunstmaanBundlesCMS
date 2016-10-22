@@ -5,7 +5,7 @@
             {% set imgUrl = app.request.schemeandhttphost ~ app.request.basePath ~ asset(resource.media.url) %}
         {% endif %}
         {% if resource.link is defined and resource.link != "" %}
-            <a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ imgUrl }}" alt="{{ resource.alttext }}" /></a>
+            <a href="{{ resource.link | replace_url}}" {% if resource.openinnewwindow %}target="_blank"{% endif %}><img src="{{ imgUrl }}" alt="{{ resource.alttext }}" /></a>
         {% else %}
             <img src="{{ imgUrl }}" alt="{{ resource.alttext }}" />
         {% endif %}

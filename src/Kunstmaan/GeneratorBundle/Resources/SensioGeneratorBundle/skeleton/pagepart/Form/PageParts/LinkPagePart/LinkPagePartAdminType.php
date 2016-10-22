@@ -30,7 +30,8 @@ class {{ pagepart }}AdminType extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder->add('url', URLChooserType::class, array(
-            'required' => true
+            'required' => true,
+            'label' => false
         ));
         $builder->add('text', TextType::class, array(
             'required' => true

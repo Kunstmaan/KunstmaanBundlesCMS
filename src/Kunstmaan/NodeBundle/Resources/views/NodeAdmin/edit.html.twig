@@ -2,7 +2,7 @@
 {% set form = tabPane.getFormView() %}
 
 
-{% block extrabodyclasses %}{{ parent() }} js-check-if-edited{% endblock %}
+{% block extrabodyclasses %}{{ parent() }} js-check-if-edited{% if nodeVersionLockCheck %} js-node-version-lock{% endif %}{% endblock %}
 
 
 {% block messages %}
@@ -80,6 +80,17 @@
 
 
 {% block content %}
+    {% if nodeVersionLockCheck %}
+        <div class="hidden" id="js-node-version-lock-data" data-check-interval="{{ nodeVersionLockInterval }}" data-url="{{ path('KunstmaanNodeBundle_nodes_versionlock_check', {'id': node.id, 'public': draft ? 0 : 1}) }}">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+                <span class="message"></span>
+            </div>
+        </div>
+    {% endif %}
+
     {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanNodeBundle_nodes_edit', { 'id': node.id, 'subaction': subaction }), 'attr': {'novalidate': 'novalidate', 'id': 'pageadminform', 'class': 'form'}}) }}
 
         {{ knp_menu_render('sub_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_actions.html.twig'}) }}
@@ -90,7 +101,6 @@
     {{ form_end(form) }}
 
     {% include '@KunstmaanNode/NodeAdmin/_modals.html.twig' %}
-
 {% endblock %}
 
 {% block extracss %}

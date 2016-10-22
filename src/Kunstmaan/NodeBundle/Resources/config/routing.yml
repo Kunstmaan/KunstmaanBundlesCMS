@@ -7,3 +7,8 @@ KunstmaanNodeBundle_nodes:
     resource: '@KunstmaanNodeBundle/Controller/NodeAdminController.php'
     type:     annotation
     prefix:   /admin/nodes
+
+kunstmaan_node.url_replace.controller:
+    resource: '@KunstmaanNodeBundle/Controller/UrlReplaceController.php'
+    type:     annotation
+    prefix:   /admin/url-replace

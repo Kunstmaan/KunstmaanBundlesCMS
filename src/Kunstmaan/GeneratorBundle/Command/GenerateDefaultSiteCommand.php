@@ -36,11 +36,11 @@ class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
             ->setHelp(<<<EOT
 The <info>kuma:generate:site</info> command generates an website using the Kunstmaan bundles
 
-<info>php app/console kuma:generate:default-site --namespace=Namespace/NamedBundle</info>
+<info>php bin/console kuma:generate:default-site --namespace=Namespace/NamedBundle</info>
 
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
-<info>php app/console kuma:generate:default-site --namespace=Namespace/NamedBundle --prefix=demo_</info>
+<info>php bin/console kuma:generate:default-site --namespace=Namespace/NamedBundle --prefix=demo_</info>
 EOT
             )
             ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
@@ -95,7 +95,6 @@ EOT
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
-
 
         // Generate the default pageparts
         $command = $this->getApplication()->find('kuma:generate:default-pageparts');

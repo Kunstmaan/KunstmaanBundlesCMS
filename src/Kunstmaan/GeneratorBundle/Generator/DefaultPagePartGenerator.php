@@ -140,7 +140,7 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
         if (count($this->sections) > 0) {
             $dir = $this->bundle->getPath() . '/Resources/config/pageparts/';
             foreach ($this->sections as $section) {
-                $data = Yaml::parse($dir . $section);
+                $data = Yaml::parse(file_get_contents($dir . $section));
                 if (!array_key_exists('types', $data)) {
                     $data['types'] = array();
                 }
