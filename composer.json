@@ -61,7 +61,7 @@
         "behat/mink-sahi-driver": "*",
         "symfony/phpunit-bridge": "~2.7",
         "phpunit/phpunit": "~4.4",
-        "fzaninotto/faker": "~1.5",
+        "fzaninotto/faker": "~1.6",
         "nelmio/alice": "~1.6"
     },
     "replace": {
