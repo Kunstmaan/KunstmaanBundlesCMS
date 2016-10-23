@@ -3,6 +3,7 @@
 namespace Kunstmaan\FormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,7 +33,7 @@ class AbstractFormPageAdminType extends AbstractType
         $builder->add('subject', TextType::class, array(
             'label' => 'kuma_form.form.page_admin.subject.label',
         ));
-        $builder->add('from_email', TextType::class, array(
+        $builder->add('from_email', EmailType::class, array(
             'label' => 'kuma_form.form.page_admin.from_email.label',
         ));
         $builder->add('to_email', TextType::class, array(
