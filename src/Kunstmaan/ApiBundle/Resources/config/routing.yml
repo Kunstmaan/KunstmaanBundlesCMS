@@ -1,0 +1,7 @@
+kunstmaan_api_nodes:
+    type: rest
+    resource: kunstmaan_api.controller.nodes
+
+kunstmaan_api_pages:
+    type: rest
+    resource: kunstmaan_api.controller.pages
