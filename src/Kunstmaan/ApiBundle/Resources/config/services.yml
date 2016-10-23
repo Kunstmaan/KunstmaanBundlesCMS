@@ -1,0 +1,32 @@
+services:
+    kunstmaan_api.controller.nodes:
+        class: Kunstmaan\ApiBundle\Controller\NodesController
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        calls:
+            - [setViewHandler, ['@fos_rest.view_handler.default']]
+
+    kunstmaan_api.controller.pages:
+        class: Kunstmaan\ApiBundle\Controller\PagesController
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+            - "@kunstmaan_api.service.data_transformer"
+        calls:
+            - [setViewHandler, ['@fos_rest.view_handler.default']]
+
+    kunstmaan_api.service.data_transformer:
+        class: Kunstmaan\ApiBundle\Service\DataTransformerService
+
+    kunstmaan_api.service.transformers.page:
+        class: Kunstmaan\ApiBundle\Service\Transformers\PageTransformer
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: kunstmaan_api.transformer, priority: -250 }
+
+    kunstmaan_api.service.transformers.page_part:
+        class: Kunstmaan\ApiBundle\Service\Transformers\PagePartTransformer
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: kunstmaan_api.transformer }
