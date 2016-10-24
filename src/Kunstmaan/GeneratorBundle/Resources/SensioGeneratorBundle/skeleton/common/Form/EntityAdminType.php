@@ -2,21 +2,21 @@
 
 namespace {{ namespace }}\Form\{{ entity_prefix }};
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 use Kunstmaan\MediaBundle\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * {{ className }}
  */
 class {{ className }} extends {{ extend_class }}
 {
-
     /**
      * Builds the form.
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      *
@@ -26,12 +26,15 @@ class {{ className }} extends {{ extend_class }}
     {
         parent::buildForm($builder, $options);
 {% for fieldSet in fields %}{% for key, fieldArray in fieldSet %}{% for field in fieldArray %}
-        $builder->add('{{ field.fieldName }}', '{{ field.formType }}', array(
+        $builder->add('{{ field.fieldName }}', '{{ field.formType }}', [
 {% if field.mediaType is defined and field.mediaType != 'none' %}            'mediatype' => '{{ field.mediaType }}',
 {% if field.mimeTypes != null or (field.mediaType == 'image' and (field.minHeight != null or field.maxHeight != null or field.minWidth != null or field.maxWidth or null)) %}
-            'constraints' => array(new Assert\Media(array(
+            'constraints' => [new Assert\Media([
 {% if field.mimeTypes != null %}
-                'mimeTypes' => array({% for type in field.mimeTypes %}'{{ type }}',{% endfor %}),
+                'mimeTypes' => [
+                {% for type in field.mimeTypes %}
+    '{{ type }}',
+                {% endfor %}],
 {% endif %}
 {% endif %}
 {% if field.mediaType is defined and field.mediaType == 'image' %}
@@ -49,12 +52,12 @@ class {{ className }} extends {{ extend_class }}
 {% endif %}
 {% endif %}
 {% if field.mimeTypes != null or (field.mediaType == 'image' and (field.minHeight != null or field.maxHeight != null or field.minWidth != null or field.maxWidth or null)) %}
-            ))),
+            ])],
 {% endif %}
 {% endif %}
-{% if key == 'rich_text' %}            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
+{% if key == 'rich_text' %}            'attr' => ['rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140],
 {% endif %}
-{% if key == 'multi_line' %}            'attr' => array('rows' => 10, 'cols' => 600),
+{% if key == 'multi_line' %}            'attr' => ['rows' => 10, 'cols' => 600],
 {% endif %}
 {% if key == 'single_ref' %}            'class' => '{{ field.targetEntity }}',
             'expanded' => false,
@@ -70,7 +73,7 @@ class {{ className }} extends {{ extend_class }}
 {% endif %}
 {% if field.nullable is defined and field.nullable %}            'required' => false,
 {% endif %}
-        ));
+        ]);
 {% endfor %}{% endfor %}{% endfor %}
     }
 
@@ -91,8 +94,8 @@ class {{ className }} extends {{ extend_class }}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => '{{ entity }}'
-        ));
+        $resolver->setDefaults([
+            'data_class' => '{{ entity }}',
+        ]);
     }
 }
