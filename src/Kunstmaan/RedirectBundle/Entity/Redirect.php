@@ -9,7 +9,12 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="kuma_redirects")
+ * @ORM\Table(
+ *     name="kuma_redirects",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="kuma_redirects_idx_domain_origin", columns={"domain", "origin"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
  * @UniqueEntity(fields={"domain", "origin"})
  */
