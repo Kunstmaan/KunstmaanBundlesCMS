@@ -2,19 +2,18 @@
 
 namespace Kunstmaan\ConfigBundle\Controller;
 
-use Certimed\WebsiteBundle\Entity\Config;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Cmf\Component\Routing\ChainRouter;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Templating\EngineInterface;
-
 
 /**
  * Class ConfigController
@@ -24,9 +23,8 @@ use Symfony\Component\Templating\EngineInterface;
  */
 class ConfigController
 {
-
     /**
-     * @var ChainRouter
+     * @var RouterInterface
      */
     private $router;
 
@@ -61,7 +59,7 @@ class ConfigController
     private $formFactory;
 
     /**
-     * @param ChainRouter $router
+     * @param RouterInterface $router
      * @param EngineInterface $templating
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param EntityManagerInterface $em
@@ -69,8 +67,15 @@ class ConfigController
      * @param ContainerInterface $container
      * @param FormFactoryInterface $formFactory
      */
-    public function __construct(ChainRouter $router, EngineInterface $templating, AuthorizationCheckerInterface $authorizationChecker, EntityManagerInterface $em, $configuration, ContainerInterface $container, FormFactoryInterface $formFactory)
-    {
+    public function __construct(
+        RouterInterface $router,
+        EngineInterface $templating,
+        AuthorizationCheckerInterface $authorizationChecker,
+        EntityManagerInterface $em,
+        array $configuration,
+        ContainerInterface $container,
+        FormFactoryInterface $formFactory
+    ) {
         $this->router = $router;
         $this->templating = $templating;
         $this->authorizationChecker = $authorizationChecker;
@@ -84,14 +89,16 @@ class ConfigController
      * Generates the site config administration form and fills it with a default value if needed.
      *
      * @param Request $request
+     * @param string $internalName
+     *
      * @return array|RedirectResponse
      */
-    public function indexAction(Request $request, $internal_name)
+    public function indexAction(Request $request, $internalName)
     {
         /**
-         * @var $entity Config
+         * @var $entity AbstractConfig
          */
-        $entity = $this->getConfigEntityByInternalName($internal_name);
+        $entity = $this->getConfigEntityByInternalName($internalName);
         $entityClass = get_class($entity);
         $formType = $entity->getDefaultAdminType();
 
@@ -121,12 +128,12 @@ class ConfigController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
 
+            if ($form->isValid()) {
                 $this->em->persist($config);
                 $this->em->flush();
 
-                return new RedirectResponse($this->router->generate('kunstmaanconfigbundle_default', array('internal_name' => $internal_name)));
+                return new RedirectResponse($this->router->generate('kunstmaanconfigbundle_default', array('internal_name' => $internalName)));
             }
         }
 
@@ -142,15 +149,18 @@ class ConfigController
      * Get site config entity by a given internal name
      * If entity not found, throw new NotFoundHttpException()
      *
-     * @param string $internal_name
-     * @return mixed
+     * @param string $internalName
+     *
+     * @return AbstractConfig
+     * @throws NotFoundHttpException
      */
-    private function getConfigEntityByInternalName($internal_name)
+    private function getConfigEntityByInternalName($internalName)
     {
         foreach ($this->configuration['entities'] as $class) {
+            /** @var AbstractConfig $entity */
             $entity = new $class;
 
-            if ($entity->getInternalName() == $internal_name) {
+            if ($entity->getInternalName() == $internalName) {
                 return $entity;
             }
         }
@@ -160,6 +170,8 @@ class ConfigController
 
     /**
      * Check permission
+     *
+     * @param string $roleToCheck
      *
      * @throws AccessDeniedException
      */
