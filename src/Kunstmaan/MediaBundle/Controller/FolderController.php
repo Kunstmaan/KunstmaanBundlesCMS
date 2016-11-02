@@ -70,9 +70,11 @@ class FolderController extends Controller
             if ($editForm->isValid()) {
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.show.success.text', array('%folder%' => $folder->getName()))
+                    $this->get('translator')->trans('media.folder.show.success.text', array(
+                        '%folder%' => $folder->getName()
+                    ))
                 );
 
                 return new RedirectResponse(
@@ -114,13 +116,20 @@ class FolderController extends Controller
         $parentFolder = $folder->getParent();
 
         if (is_null($parentFolder)) {
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 FlashTypes::ERROR,
-                $this->get('translator')->trans('media.folder.delete.failure.text', array('%folder%' => $folder->getName()))
+                $this->get('translator')->trans('media.folder.delete.failure.text', array(
+                    '%folder%' => $folderName
+                ))
             );
         } else {
             $em->getRepository('KunstmaanMediaBundle:Folder')->delete($folder);
-            $this->get('session')->getFlashBag()->add(FlashTypes::SUCCESS, $this->get('translator')->trans('media.folder.delete.success.text', array('%folder%' => $folder->getName())));
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('media.folder.delete.success.text', array(
+                    '%folder%' => $folderName
+                ))
+            );
             $folderId = $parentFolder->getId();
         }
         if (strpos($_SERVER['HTTP_REFERER'],'chooser')) {
@@ -163,9 +172,11 @@ class FolderController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.addsub.success.text', array('%folder%' => $folder->getName()))
+                    $this->get('translator')->trans('media.folder.addsub.success.text', array(
+                        '%folder%' => $folder->getName()
+                    ))
                 );
                 if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
@@ -226,9 +237,11 @@ class FolderController extends Controller
 
                 $em->getRepository('KunstmaanMediaBundle:Folder')->emptyFolder($folder, $alsoDeleteFolders);
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.empty.success.text', array('%folder%' => $folder->getName()))
+                    $this->get('translator')->trans('media.folder.empty.success.text', array(
+                        '%folder%' => $folder->getName()
+                    ))
                 );
                 if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';

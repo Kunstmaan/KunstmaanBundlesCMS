@@ -167,3 +167,7 @@ media:
         remote_video:
             type:
                 label: Type
+
+    flash:
+        created: Media %medianame% has been created!
+        not_created: Media not created! %mediaerrors%

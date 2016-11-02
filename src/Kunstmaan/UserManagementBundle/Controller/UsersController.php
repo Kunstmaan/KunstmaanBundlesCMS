@@ -43,7 +43,7 @@ class UsersController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
         $configuratorClassName = '';
         if ($this->container->hasParameter('kunstmaan_user_management.user_admin_list_configurator.class')) {
-            $configuratorClassName = $this->container->getParameter(
+            $configuratorClassName = $this->getParameter(
                 'kunstmaan_user_management.user_admin_list_configurator.class'
             );
         }
@@ -66,7 +66,7 @@ class UsersController extends BaseSettingsController
      */
     private function getUserClassInstance()
     {
-        $userClassName = $this->container->getParameter('fos_user.model.user.class');
+        $userClassName = $this->getParameter('fos_user.model.user.class');
 
         return new $userClassName();
     }
@@ -88,13 +88,13 @@ class UsersController extends BaseSettingsController
 
         $user = $this->getUserClassInstance();
 
-        $options = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => get_class($user));
+        $options = array('password_required' => true, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => get_class($user));
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+            $options['can_edit_all_fields'] = $this->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $form = $this->createForm(
@@ -111,9 +111,11 @@ class UsersController extends BaseSettingsController
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.users.add.flash.success.%username%', ['%username%' => $user->getUsername()])
+                    $this->get('translator')->trans('kuma_user.users.add.flash.success.%username%', [
+                        '%username%' => $user->getUsername()
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
@@ -151,7 +153,7 @@ class UsersController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
 
         /** @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->getParameter('fos_user.model.user.class'))->find($id);
         if ($user === null) {
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
@@ -159,13 +161,13 @@ class UsersController extends BaseSettingsController
         $userEvent = new UserEvent($user, $request);
         $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
 
-        $options = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user));
+        $options = array('password_required' => false, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user));
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+            $options['can_edit_all_fields'] = $this->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
@@ -188,9 +190,11 @@ class UsersController extends BaseSettingsController
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', ['%username%' => $user->getUsername()])
+                    $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
+                        '%username%' => $user->getUsername()
+                    ])
                 );
 
                 return new RedirectResponse(
@@ -233,17 +237,19 @@ class UsersController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->getParameter('fos_user.model.user.class'))->find($id);
         if (!is_null($user)) {
             $userEvent = new UserEvent($user, $request);
             $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
 
-            $username = $user->getUsername();
             $em->remove($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add(
+
+            $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', ['%username%' => $username])
+                $this->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
+                    '%username%' => $user->getUsername()
+                ])
             );
         }
 
