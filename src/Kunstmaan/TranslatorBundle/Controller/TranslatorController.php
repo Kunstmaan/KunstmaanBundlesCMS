@@ -48,7 +48,7 @@ class TranslatorController extends AdminListController
         $adminList->bindRequest($request);
 
         $cacheFresh = $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-        $debugMode = $this->container->getParameter('kuma_translator.debug') === true;
+        $debugMode = $this->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
             $noticeText = $this->get('translator')->trans('settings.translator.not_live_warning');
@@ -82,7 +82,7 @@ class TranslatorController extends AdminListController
         $translator = $this->get('translator');
 
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $translation->addText($locale, '');
         }
@@ -150,7 +150,7 @@ class TranslatorController extends AdminListController
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
         $translation->setDomain($translations[0]->getDomain());
         $translation->setKeyword($translations[0]->getKeyword());
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $found = false;
             foreach ($translations as $t) {
@@ -250,7 +250,7 @@ class TranslatorController extends AdminListController
      */
     public function getAdminListConfigurator()
     {
-        $locales = explode('|', $this->container->getParameter('requiredlocales'));
+        $locales = explode('|', $this->getParameter('requiredlocales'));
 
         if (!isset($this->adminListConfigurator)) {
             $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getManager()

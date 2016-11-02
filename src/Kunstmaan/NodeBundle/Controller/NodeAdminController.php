@@ -914,7 +914,7 @@ class NodeAdminController extends Controller
                 //Check the version timeout and make a new nodeversion if the timeout is passed
                 $thresholdDate = date(
                     "Y-m-d H:i:s",
-                    time() - $this->container->getParameter(
+                    time() - $this->getParameter(
                         "kunstmaan_node.version_timeout"
                     )
                 );
