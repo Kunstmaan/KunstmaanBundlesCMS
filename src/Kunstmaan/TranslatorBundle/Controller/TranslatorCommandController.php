@@ -17,7 +17,10 @@ class TranslatorCommandController extends Controller
     {
 
         $this->get('kunstmaan_translator.service.translator.resource_cacher')->flushCache();
-        $this->get('session')->getFlashBag()->add(FlashTypes::SUCCESS, $this->get('translator')->trans('kuma_translator.command.clear.flash.success'));
+        $this->addFlash(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_translator.command.clear.flash.success')
+        );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
     }
@@ -36,7 +39,10 @@ class TranslatorCommandController extends Controller
 
         $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
 
-        $this->get('session')->getFlashBag()->add(FlashTypes::SUCCESS, $this->get('translator')->trans('kuma_translator.command.import.flash.success'));
+        $this->addFlash(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_translator.command.import.flash.success')
+        );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
     }
@@ -55,7 +61,10 @@ class TranslatorCommandController extends Controller
 
         $this->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
 
-        $this->get('session')->getFlashBag()->add(FlashTypes::SUCCESS, $this->get('translator')->trans('kuma_translator.command.import.flash.force_success'));
+        $this->addFlash(
+            FlashTypes::SUCCESS,
+            $this->get('translator')->trans('kuma_translator.command.import.flash.force_success')
+        );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
     }

@@ -51,8 +51,10 @@ class TranslatorController extends AdminListController
         $debugMode = $this->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
-            $noticeText = $this->get('translator')->trans('settings.translator.not_live_warning');
-            $this->get('session')->getFlashBag()->add(FlashTypes::INFO, $noticeText);
+            $this->addFlash(
+                FlashTypes::INFO,
+                $this->get('translator')->trans('settings.translator.not_live_warning')
+            );
         }
 
         return array(
@@ -104,9 +106,9 @@ class TranslatorController extends AdminListController
                 $em->getRepository('KunstmaanTranslatorBundle:Translation')->createTranslations($data);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
-                  FlashTypes::SUCCESS,
-                  $this->get('translator')->trans('settings.translator.succesful_added')
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('settings.translator.succesful_added')
                 );
 
                 $indexUrl = $configurator->getIndexUrl();
@@ -174,9 +176,9 @@ class TranslatorController extends AdminListController
                 $em->getRepository('KunstmaanTranslatorBundle:Translation')->updateTranslations($translation, $id);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
-                  FlashTypes::SUCCESS,
-                  $this->get('translator')->trans('settings.translator.succesful_edited')
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('settings.translator.succesful_edited')
                 );
 
                 $indexUrl = $configurator->getIndexUrl();
