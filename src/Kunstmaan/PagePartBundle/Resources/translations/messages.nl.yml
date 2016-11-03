@@ -7,6 +7,9 @@ pagepart:
         choose: 'Kies link'
         openinnewwindow: 'Open in nieuw venster'
         text: 'Tekst'
+        internal: Intern
+        external: Extern
+        email: Email
 
     html:
         content: 'Inhoud'
