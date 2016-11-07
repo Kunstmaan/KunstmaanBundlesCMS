@@ -101,7 +101,7 @@ class VersionChecker
 
         try {
             $client = new Client(array('connect_timeout' => 3, 'timeout' => 1));
-            $response = $client->post($this->webserviceUrl, null, $jsonData);
+            $response = $client->post($this->webserviceUrl, ['body' => $jsonData]);
             $data = json_decode($response->getBody()->getContents());
 
             if (null === $data) {
