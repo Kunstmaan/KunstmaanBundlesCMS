@@ -40,6 +40,10 @@ When adding a rich text field or a wysiwyg field, you will need to pipe the outp
  
 The DomainConfigurationInterface has also been changed. If you have implemented this interface, please be sure to check the required methods.
 
+##EventListener
+
+The AdminListEvent has been changed, properties Form, Request and function Response have been added.
+
 ##Node version locking
 
 See https://github.com/Kunstmaan/KunstmaanBundlesCMS/tree/master/src/Kunstmaan/NodeBundle/Resources/doc/Locking.md
