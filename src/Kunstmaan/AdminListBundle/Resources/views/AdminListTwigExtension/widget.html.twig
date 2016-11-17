@@ -68,13 +68,18 @@
                 {% for column in adminlist.columns%}
                     {% set columnName = column.name %}
                     {% set template = column.template %}
+                    {% set itemHelper = item %}
                     {% if template is not null %}
                         <td>
                             {% include template with {'row': item, 'columnName': columnName, 'object': adminlist.getValue(item, columnName), 'adminlist': adminlist} %}
                         </td>
                     {% else %}
                         <td>
-                            {{adminlist.getStringValue(item, columnName)}}
+                            {% if column.hasAlias() %}
+                                {% set itemHelper = column.getAliasObj(item) %}
+                                {% set columnName = column.getColumnName(columnName) %}
+                            {% endif %}
+                            {{adminlist.getStringValue(itemHelper, columnName)}}
                         </td>
                     {% endif %}
                 {% endfor %}
