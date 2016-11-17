@@ -40,6 +40,28 @@ When adding a rich text field or a wysiwyg field, you will need to pipe the outp
  
 The DomainConfigurationInterface has also been changed. If you have implemented this interface, please be sure to check the required methods.
 
+## Column sort and export for one to many field
+
+When you need to sort on a column filled by a one to many relation:
+
+```
+    /**
+     * AdminListConfigurator
+     */
+     
+    public function buildFields()
+    {
+        $this->addField('c.name', 'Category', true, null, new FieldAlias('c', 'category'));
+    }
+    
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder)
+    {
+        $queryBuilder
+            ->addSelect('c')
+            ->join('b.category', 'c');
+    }
+```
+
 ##Node version locking
 
 See https://github.com/Kunstmaan/KunstmaanBundlesCMS/tree/master/src/Kunstmaan/NodeBundle/Resources/doc/Locking.md
