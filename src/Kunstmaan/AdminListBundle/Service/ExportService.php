@@ -127,8 +127,14 @@ class ExportService
 
                 $row = array();
                 foreach ($adminList->getExportColumns() as $column) {
-                    $data = $adminList->getStringValue($itemObject, $column->getName());
-                    if (is_object($data)) {
+                    $columnName = $column->getName();
+                    $itemHelper = $itemObject;
+                    if ($column->hasAlias()) {
+                        $itemHelper = $column->getAliasObj($itemObject);
+                        $columnName = $column->getColumnName($columnName);
+                    }
+                    $data = $adminList->getStringValue($itemHelper, $columnName);
+                    if (null !== $column->getTemplate()) {
                         if (!$this->renderer->exists($column->getTemplate())) {
                             throw new \Exception('No export template defined for ' . get_class($data));
                         }
