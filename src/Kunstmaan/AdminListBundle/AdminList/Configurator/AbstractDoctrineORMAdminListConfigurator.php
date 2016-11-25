@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Traversable;
 use Doctrine\ORM\EntityManager;
@@ -10,7 +11,6 @@ use Doctrine\ORM\Query;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -51,7 +51,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
-        $this->em        = $em;
+        $this->em = $em;
         $this->aclHelper = $aclHelper;
     }
 
@@ -68,7 +68,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_EDIT),
+            'path' => $this->getPathByConvention($this::SUFFIX_EDIT),
             'params' => $params
         );
     }
@@ -86,7 +86,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_DELETE),
+            'path' => $this->getPathByConvention($this::SUFFIX_DELETE),
             'params' => $params
         );
     }
@@ -164,7 +164,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
             if (!empty($this->orderBy)) {
                 $orderBy = $this->orderBy;
                 if (!strpos($orderBy, '.')) {
-                    $orderBy = 'b.' . $orderBy;
+                    $orderBy = 'b.'.$orderBy;
                 }
                 $queryBuilder->orderBy($orderBy, ($this->orderDirection == 'DESC' ? 'DESC' : 'ASC'));
             }
@@ -178,9 +178,32 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
             } else {
                 $this->query = $queryBuilder->getQuery();
             }
+
+            $this->checkQueryCache();
         }
 
         return $this->query;
+    }
+
+    /**
+     * Check if Gedmo annotations are used.
+     * If this is the case, remove the query cache.
+     * This is needed for the Softdeleteable annotation for example.
+     */
+    protected function checkQueryCache()
+    {
+        $reader = new AnnotationReader();
+        $classMetaData = $this->getEntityManager()->getClassMetadata($this->getRepositoryName());
+        $className = $classMetaData->getName();
+        $annotations = $reader->getClassAnnotations(new \ReflectionClass(new $className));
+
+        foreach ($annotations as $annotation) {
+            $class = get_class($annotation);
+
+            if (stripos($class, 'Gedmo') !== FALSE) {
+                $this->query->useQueryCache(false);
+            }
+        }
     }
 
     /**
@@ -189,7 +212,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     protected function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
         if ($this instanceof SortableInterface) {
-            $queryBuilder->addOrderBy('b.' . $this->getSortableField());
+            $queryBuilder->addOrderBy('b.'.$this->getSortableField());
         }
     }
 
