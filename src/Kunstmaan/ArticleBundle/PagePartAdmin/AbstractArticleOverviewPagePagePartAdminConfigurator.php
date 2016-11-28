@@ -90,4 +90,12 @@ class AbstractArticleOverviewPagePagePartAdminConfigurator extends AbstractPageP
     {
         return "main";
     }
+
+    /**
+     * @return string
+     */
+    public function getWidgetTemplate()
+    {
+        return "";
+    }
 }
