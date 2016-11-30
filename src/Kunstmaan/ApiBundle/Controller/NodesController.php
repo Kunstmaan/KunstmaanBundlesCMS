@@ -13,6 +13,8 @@ namespace Kunstmaan\ApiBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\ControllerTrait;
+use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,10 +52,23 @@ class NodesController
      *      500="Something went wrong"
      *  }
      * )
+     *
+     * @Annotations\QueryParam(name="internalName", nullable=true, description="The internal name of the node")
+     * @Annotations\QueryParam(name="hiddenFromNav", nullable=true, default=false, description="If 1, only nodes hidden from nav will be returned")
+     * @Annotations\QueryParam(name="refEntityName", nullable=true, description="Which pages you want to have returned")
      */
-    public function getNodesAction()
+    public function getNodesAction(ParamFetcherInterface $paramFetcher)
     {
-        $data = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAll();
+        $params = [];
+
+        foreach ($paramFetcher->all() as $key => $param) {
+            if (null !== $param) {
+                $params[$key] = $param;
+            }
+        }
+
+        $data = $this->em->getRepository('KunstmaanNodeBundle:Node')->findBy($params);
+
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
