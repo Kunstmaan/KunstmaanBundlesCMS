@@ -101,6 +101,46 @@ class NodesController
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
+
+    /**
+     * Retrieve a single node's translations
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Retrieve a single node's translations",
+     *  resourceDescription="Retrieve a single node's translations",
+     *  output="Kunstmaan\NodeBundle\Entity\Node",
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="The node ID"
+     *      }
+     *  },
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      403="Returned when the user is not authorized to fetch nodes",
+     *      500="Something went wrong"
+     *  }
+     * )
+     *
+     * @Annotations\QueryParam(name="lang", nullable=true, description="Set language if you want only to retrieve the node translation in this language")
+     */
+    public function getNodeTranslationsAction($id, ParamFetcherInterface $paramFetcher)
+    {
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        if ($lang = $paramFetcher->get('lang')) {
+            $data = $node->getNodeTranslation($lang);
+        }
+        else {
+            $data = $node->getNodeTranslations();
+        }
+
+        return $this->handleView($this->view($data, Response::HTTP_OK));
+    }
+
     /**
      * Retrieve a single node's children
      *
