@@ -101,4 +101,65 @@ class NodesController
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
+    /**
+     * Retrieve a single node's children
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get a node's children",
+     *  resourceDescription="Get a node's children",
+     *  output="Kunstmaan\NodeBundle\Entity\Node",
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="The node ID"
+     *      }
+     *  },
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      403="Returned when the user is not authorized to fetch nodes",
+     *      500="Something went wrong"
+     *  }
+     * )
+     */
+    public function getNodeChildrenAction($id)
+    {
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $data = $node->getChildren();
+
+        return $this->handleView($this->view($data, Response::HTTP_OK));
+    }
+
+    /**
+     * Retrieve a single node's parent
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get a node's parent",
+     *  resourceDescription="Get a node's parent",
+     *  output="Kunstmaan\NodeBundle\Entity\Node",
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="The node ID"
+     *      }
+     *  },
+     *  statusCodes={
+     *      200="Returned when successful",
+     *      403="Returned when the user is not authorized to fetch nodes",
+     *      500="Something went wrong"
+     *  }
+     * )
+     */
+    public function getNodeParentAction($id)
+    {
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+        $data = $node->getParent();
+
+        return $this->handleView($this->view($data, Response::HTTP_OK));
+    }
 }
