@@ -2,16 +2,16 @@
 
 namespace Kunstmaan\NodeBundle\Helper\FormWidgets;
 
-use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\FormView;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 
 

@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
-use Doctrine\DBAL\Statement;
-use Traversable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Pagerfanta\Pagerfanta;
+use Doctrine\DBAL\Statement;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
 use Kunstmaan\AdminListBundle\Helper\DoctrineDBALAdapter;
+use Pagerfanta\Pagerfanta;
+use Traversable;
 
 /**
  * An abstract admin list configurator that can be used with dbal query builder

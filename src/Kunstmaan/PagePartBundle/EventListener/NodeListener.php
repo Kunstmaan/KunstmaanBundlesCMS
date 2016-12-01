@@ -3,17 +3,17 @@
 namespace Kunstmaan\PagePartBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\ListWidget;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
+use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\PagePartBundle\Helper\FormWidgets\PagePartWidget;
+use Kunstmaan\PagePartBundle\Helper\FormWidgets\PageTemplateWidget;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationReaderInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\ListWidget;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
-use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use Kunstmaan\PagePartBundle\Helper\FormWidgets\PageTemplateWidget;
-use Kunstmaan\PagePartBundle\Helper\FormWidgets\PagePartWidget;
 
 /**
  * NodeListener

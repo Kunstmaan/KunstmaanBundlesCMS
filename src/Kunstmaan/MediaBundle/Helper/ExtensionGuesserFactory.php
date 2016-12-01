@@ -3,8 +3,8 @@
 namespace Kunstmaan\MediaBundle\Helper;
 
 use Kunstmaan\MediaBundle\Helper\File\SVGExtensionGuesser;
-use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
+use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesserInterface;
 
 class ExtensionGuesserFactory implements ExtensionGuesserFactoryInterface
 {

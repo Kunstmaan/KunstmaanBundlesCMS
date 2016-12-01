@@ -2,11 +2,11 @@
 
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
+
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
  * DownloadPagePart

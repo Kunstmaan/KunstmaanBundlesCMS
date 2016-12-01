@@ -2,7 +2,7 @@ framework:
     secret:          secret
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
-        strict_requirements: %kernel.debug%
+        strict_requirements: "%kernel.debug%"
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true, enabled: true }
@@ -21,7 +21,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %kernel.logs_dir%/%kernel.environment%.log
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
 doctrine:
     dbal:
@@ -29,7 +29,7 @@ doctrine:
         connections:
             default:
                 driver:   pdo_sqlite
-                path:     %kernel.cache_dir%/test.db
+                path:     "%kernel.cache_dir%/test.db"
     orm:
         default_entity_manager:   default
         entity_managers:

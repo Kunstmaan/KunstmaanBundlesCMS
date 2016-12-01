@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\NodeBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
+
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

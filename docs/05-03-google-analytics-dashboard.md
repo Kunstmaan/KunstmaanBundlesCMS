@@ -59,7 +59,7 @@ Add bundle routing in `app/config/routing.yml`
 	resource: "@KunstmaanDashboardBundle/Resources/config/routing.yml"
 	prefix:   /{_locale}/
 	requirements:
-	    _locale: %requiredlocales%
+	    _locale: "%requiredlocales%"
 
 Change dashboard route in `app/config/config.yml`
 

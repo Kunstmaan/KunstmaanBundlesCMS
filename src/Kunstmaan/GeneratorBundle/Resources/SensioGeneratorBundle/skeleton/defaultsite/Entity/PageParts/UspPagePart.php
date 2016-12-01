@@ -2,11 +2,11 @@
 
 namespace {{ namespace }}\Entity\PageParts;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
-use {{ namespace }}\Entity\UspItem;
 use Symfony\Component\Validator\Constraints as Assert;
+use {{ namespace }}\Entity\UspItem;
 
 /**
  * @ORM\Table(name="{{ prefix }}usp_page_parts")

@@ -2,17 +2,17 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Sensio\Bundle\GeneratorBundle\Command\Validators;
-use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\Console\Question\Question;
 use Kunstmaan\GeneratorBundle\Generator\AdminListGenerator;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
+use Sensio\Bundle\GeneratorBundle\Command\GenerateDoctrineCommand;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
+use Sensio\Bundle\GeneratorBundle\Command\Validators;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Generates a KunstmaanAdminList
@@ -167,7 +167,7 @@ EOT
         $code .= sprintf("    prefix:   %s/admin/%s/\n", $prefix, strtolower($entityClass));
         if ($multilang) {
             $code .= "    requirements:\n";
-            $code .= "         _locale: %requiredlocales%\n";
+            $code .= "         _locale: \"%requiredlocales%\"\n";
         }
 
         if ($auto) {
@@ -207,7 +207,7 @@ EOT
      * type:     annotation
      * prefix:   /{_locale}/admin/testentity/
      * requirements:
-     * _locale: %requiredlocales%
+     * _locale: "%requiredlocales%"
      */
 
     protected function createGenerator()

@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL;
 
-use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
-
 use Doctrine\DBAL\Query\QueryBuilder;
+
+use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
 
 /**
  * the abstract filter used for DBAL query builder

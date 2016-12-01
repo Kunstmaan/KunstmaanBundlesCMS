@@ -5,13 +5,13 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 
 /**

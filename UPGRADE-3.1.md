@@ -59,7 +59,7 @@ KunstmaanSeoBundle:
     resource: "@KunstmaanSeoBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/
     requirements:
-	_locale: %requiredlocales%
+	_locale: "%requiredlocales%"
 
 Robots_txt:
     resource: "@KunstmaanSeoBundle/Controller/RobotsController.php"

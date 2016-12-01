@@ -2,12 +2,12 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use {{ namespace }}\Form\Pages\ContentPageAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
+use {{ namespace }}\Form\Pages\ContentPageAdminType;
 
 /**
  * ContentPage

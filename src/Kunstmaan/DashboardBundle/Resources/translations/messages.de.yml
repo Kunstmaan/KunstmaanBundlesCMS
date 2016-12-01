@@ -12,7 +12,7 @@ dashboard:
             year_to_date: Jahr bis heute
         chart:
             users: Besucher
-            pct_new_sessions: % Neue Sitzungen
+            pct_new_sessions: "% Neue Sitzungen"
             sessions: Sitzungen
             pageviews: Seitenaufrufe
             avg_pages_p_session: Seiten / Sitzung

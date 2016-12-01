@@ -3,10 +3,10 @@
 namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TranslatorCommandController extends Controller
 {

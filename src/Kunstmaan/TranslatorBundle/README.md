@@ -38,7 +38,7 @@ KunstmaanTranslatorBundle:
     resource: "@KunstmaanTranslatorBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/
     requirements:
-        _locale: %requiredlocales%
+        _locale: "%requiredlocales%"
 ```
 
 Configuration

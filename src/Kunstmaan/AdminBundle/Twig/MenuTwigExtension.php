@@ -20,12 +20,12 @@ class MenuTwigExtension extends \Twig_Extension
 
     /**
      * @param MenuBuilder $menuBuilder
-     * @param AdminPanel $adminPanel
+     * @param AdminPanel  $adminPanel
      */
     public function __construct(MenuBuilder $menuBuilder, AdminPanel $adminPanel)
     {
         $this->menuBuilder = $menuBuilder;
-        $this->adminPanel  = $adminPanel;
+        $this->adminPanel = $adminPanel;
     }
 
     /**
@@ -59,15 +59,5 @@ class MenuTwigExtension extends \Twig_Extension
     public function getAdminPanelActions()
     {
         return $this->adminPanel->getAdminPanelActions();
-    }
-
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'adminmenu_twig_extension';
     }
 }

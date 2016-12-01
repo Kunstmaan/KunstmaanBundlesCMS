@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\ConfigBundle\Helper\Menu;
 
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ConfigMenuAdaptor implements MenuAdaptorInterface

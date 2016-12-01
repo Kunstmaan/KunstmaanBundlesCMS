@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * AclHelper is a helper class to help setting the permissions when querying using native queries

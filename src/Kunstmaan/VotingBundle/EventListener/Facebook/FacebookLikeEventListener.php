@@ -3,8 +3,8 @@
 namespace Kunstmaan\VotingBundle\EventListener\Facebook;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;
+use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Symfony\Component\DependencyInjection\Container;
 
 class FacebookLikeEventListener

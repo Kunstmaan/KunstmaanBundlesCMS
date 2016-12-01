@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Symfony\Component\Form\AbstractType;
 use {{ namespace }}\Entity\{{ entity_class }}Author;
 use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * @ORM\Entity(repositoryClass="{{ namespace }}\Repository\{{ entity_class }}PageRepository")

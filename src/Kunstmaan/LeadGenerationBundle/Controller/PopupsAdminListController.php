@@ -3,13 +3,13 @@
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\LeadGenerationBundle\AdminList\PopupAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PopupsAdminListController extends AdminListController
 {

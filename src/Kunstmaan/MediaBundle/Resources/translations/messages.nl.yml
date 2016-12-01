@@ -149,8 +149,6 @@ media:
             label: Copyright
         description:
             label: Omschrijving
-        file:
-            label: Bestand
         originalFilename:
             label: Originele bestandsnaam
     remote_audio:

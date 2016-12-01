@@ -2,9 +2,9 @@
 
 namespace {{ namespace }}\Form\{{ entity_prefix }};
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 use Kunstmaan\MediaBundle\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * {{ className }}

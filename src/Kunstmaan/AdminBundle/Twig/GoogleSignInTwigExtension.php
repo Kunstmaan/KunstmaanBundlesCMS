@@ -46,12 +46,4 @@ class GoogleSignInTwigExtension extends Twig_Extension
         return $this->clientId;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'google_signin_twig_extension';
-    }
-
 }

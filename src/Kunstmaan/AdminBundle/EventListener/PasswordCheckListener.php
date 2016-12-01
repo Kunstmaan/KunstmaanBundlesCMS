@@ -3,11 +3,11 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Symfony\Component\Routing\RouterInterface as Router;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Routing\RouterInterface as Router;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 

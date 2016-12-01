@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Image;
 
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
+use Kunstmaan\MediaBundle\Helper\File\FileHandler;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\HttpFoundation\File\File;
-use Kunstmaan\MediaBundle\Helper\File\FileHandler;
-use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * FileHandler

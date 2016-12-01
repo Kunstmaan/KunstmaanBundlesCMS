@@ -2,19 +2,19 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\ArticleGenerator;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Faker\Provider\Lorem;
 use Faker\Provider\DateTime;
+use Faker\Provider\Lorem;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use {{ namespace }}\Entity\{{ entity_class }}Author;
 use {{ namespace }}\Entity\Pages\{{ entity_class }}OverviewPage;
 use {{ namespace }}\Entity\Pages\{{ entity_class }}Page;
+use {{ namespace }}\Entity\{{ entity_class }}Author;
 
 /**
  * {{ entity_class }}ArticleFixtures

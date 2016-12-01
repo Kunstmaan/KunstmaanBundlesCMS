@@ -267,7 +267,7 @@ parameters:
 
 services:
     kunstmaan_node_search.search_configuration.node:
-	class: %kunstmaan_node_search.search_configuration.node.class%
+	class: "%kunstmaan_node_search.search_configuration.node.class%"
 	arguments: ["@service_container", "@kunstmaan_search.search", "%kunstmaan_node_search.indexname%", "%kunstmaan_node_search.indextype%"]
 	calls:
 	    - [ setAclProvider, ["@security.acl.provider"]]
