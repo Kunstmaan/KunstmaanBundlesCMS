@@ -8,34 +8,36 @@ Before CMS version 3.1 we used a the `service()` method in a specific entiry to 
 - Add the `getControllerAction` method
 
 ```PHP
-class MyClassName implements SlugActionInterface
+class HomePage implements SlugActionInterface
 {
 	...
 	
-	getControllerAction()
+	public function getControllerAction()
 	{
-		return MyBundle:MyController:MyMethod;
+		return AppBundle:HomePageController:FooMethod;
+		
+		// or return a service.
+		
+		return appbundle.controller.home:fooAction;
 	}
 }
 ```
 
-MyBundle should be replaced with your bundle name, MyController with the name of your controller and MyMethod with the name of the method without the 'Action' suffix.
-
 ### Create or modify the controller
 
 ```php
-namespace MyVendor\MyBundle\Controller;
+namespace App\Bundle\Controller;
 
-class MyController extends Controller
+class HomePageController extends Controller
 {
 	...
 
-    public function MyMethodAction(Request $request)
+    /**
+     * Return a new Response or just an array with the data for your pagetemplate.
+     */
+    public function fooAction(Request $request)
     {
-		...
-		$context['variable'] = $variable;
-
-		$request->attributes->set('_renderContext',$context);
+        ...
     }
 }
 ```
