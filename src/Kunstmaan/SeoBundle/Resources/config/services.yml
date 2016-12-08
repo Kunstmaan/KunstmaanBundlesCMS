@@ -1,6 +1,6 @@
 services:
     kunstmaan_seo.twig.extension:
-        class: Kunstmaan\SeoBundle\Twig\SeoTwigExtension
+        class: 'Kunstmaan\SeoBundle\Twig\SeoTwigExtension'
         arguments: ['@doctrine.orm.entity_manager']
         calls:
             - [setWebsiteTitle, ['%websitetitle%']]
@@ -8,13 +8,13 @@ services:
             - { name: twig.extension }
 
     kunstmaan_seo.google_analytics.order_preparer:
-        class: Kunstmaan\SeoBundle\Helper\OrderPreparer
+        class: 'Kunstmaan\SeoBundle\Helper\OrderPreparer'
 
     kunstmaan_seo.google_analytics.order_converter:
-        class: Kunstmaan\SeoBundle\Helper\OrderConverter
+        class: 'Kunstmaan\SeoBundle\Helper\OrderConverter'
 
     kunstmaan_seo.google_analytics.twig.extension:
-        class: Kunstmaan\SeoBundle\Twig\GoogleAnalyticsTwigExtension
+        class: 'Kunstmaan\SeoBundle\Twig\GoogleAnalyticsTwigExtension'
         tags:
             - { name: twig.extension }
         calls:
@@ -23,19 +23,19 @@ services:
             - [ setOrderConverter, [ '@kunstmaan_seo.google_analytics.order_converter' ] ]
 
     kunstmaan_seo.node.listener:
-        class: Kunstmaan\SeoBundle\EventListener\NodeListener
+        class: 'Kunstmaan\SeoBundle\EventListener\NodeListener'
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.adaptForm, method: adaptForm }
 
     kunstmaan_seo.clone.listener:
-        class: Kunstmaan\SeoBundle\EventListener\CloneListener
+        class: 'Kunstmaan\SeoBundle\EventListener\CloneListener'
         arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.clone.helper']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.postDeepCloneAndSave, method: postDeepCloneAndSave }
 
     kunstmaanseobundle.seo_management_menu_adaptor:
-        class: Kunstmaan\SeoBundle\Helper\Menu\SeoManagementMenuAdaptor
+        class: 'Kunstmaan\SeoBundle\Helper\Menu\SeoManagementMenuAdaptor'
         arguments: ['@security.authorization_checker']
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }

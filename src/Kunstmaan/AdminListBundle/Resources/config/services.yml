@@ -1,9 +1,9 @@
 parameters:
-    kunstmaan_adminlist.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
+    kunstmaan_adminlist.service.export.class: 'Kunstmaan\AdminListBundle\Service\ExportService'
 
 services:
     kunstmaan_adminlist.factory:
-        class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
+        class: 'Kunstmaan\AdminListBundle\AdminList\AdminListFactory'
 
     kunstmaan_adminlist.service.export:
         class:  '%kunstmaan_adminlist.service.export.class%'
@@ -12,7 +12,7 @@ services:
             -  [ setTranslator, [ '@translator' ] ]
 
     kunstmaan_adminlist.twig.extension:
-        class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
+        class: 'Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension'
         tags:
             -  { name: twig.extension }
         arguments:

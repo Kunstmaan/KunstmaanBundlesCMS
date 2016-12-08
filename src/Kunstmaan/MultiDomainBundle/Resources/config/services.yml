@@ -1,24 +1,24 @@
 parameters:
-    kunstmaan_multi_domain.router.class: Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter
-    kunstmaan_multi_domain.domain_configuration.class: Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration
+    kunstmaan_multi_domain.router.class: 'Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter'
+    kunstmaan_multi_domain.domain_configuration.class: 'Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration'
 
 services:
     kunstmaan_multi_domain.admin_panel.sites:
-        class: Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor
+        class: 'Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor'
         tags:
             -  { name: 'kunstmaan_admin.admin_panel.adaptor', priority: 100 }
 
     kunstmaan_multi_domain.twig.extension:
-        class: Kunstmaan\MultiDomainBundle\Twig\MultiDomainTwigExtension
+        class: 'Kunstmaan\MultiDomainBundle\Twig\MultiDomainTwigExtension'
         arguments: ['@kunstmaan_admin.domain_configuration']
         tags:
               -  { name: 'twig.extension' }
 
     kunstmaan_multi_domain.host_override_listener:
-        class: Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener
+        class: 'Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener'
         arguments: ['@session', '@translator', '@kunstmaan_admin.domain_configuration']
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     kunstmaan_multi_domain.host_override_cleanup:
-        class: Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler
+        class: 'Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler'

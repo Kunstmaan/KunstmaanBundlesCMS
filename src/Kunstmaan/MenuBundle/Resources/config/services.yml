@@ -1,9 +1,9 @@
 parameters:
-    kunstmaan_menu.menu.adaptor.class: Kunstmaan\MenuBundle\Service\MenuAdaptor
-    kunstmaan_menu.menu.service.class: Kunstmaan\MenuBundle\Service\MenuService
-    kunstmaan_menu.menu.twig.extension.class: Kunstmaan\MenuBundle\Twig\MenuTwigExtension
-    kunstmaan_menu.menu.repository.class: Kunstmaan\MenuBundle\Repository\MenuItemRepository
-    kunstmaan_menu.menu.render_service.class: Kunstmaan\MenuBundle\Service\RenderService
+    kunstmaan_menu.menu.adaptor.class: 'Kunstmaan\MenuBundle\Service\MenuAdaptor'
+    kunstmaan_menu.menu.service.class: 'Kunstmaan\MenuBundle\Service\MenuService'
+    kunstmaan_menu.menu.twig.extension.class: 'Kunstmaan\MenuBundle\Twig\MenuTwigExtension'
+    kunstmaan_menu.menu.repository.class: 'Kunstmaan\MenuBundle\Repository\MenuItemRepository'
+    kunstmaan_menu.menu.render_service.class: 'Kunstmaan\MenuBundle\Service\RenderService'
 
 services:
     kunstmaan_menu.menu.adaptor:

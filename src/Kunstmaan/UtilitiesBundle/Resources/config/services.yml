@@ -16,7 +16,7 @@ services:
         class: '%kunstmaan_utilities.slugifier.class%'
 
     kunstmaan_utilities.twig.extension:
-        class: Kunstmaan\UtilitiesBundle\Twig\UtilitiesTwigExtension
+        class: 'Kunstmaan\UtilitiesBundle\Twig\UtilitiesTwigExtension'
         arguments: ['@kunstmaan_utilities.slugifier']
         tags:
             - { name: twig.extension }
