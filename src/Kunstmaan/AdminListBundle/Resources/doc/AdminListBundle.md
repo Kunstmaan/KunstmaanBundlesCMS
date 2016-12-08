@@ -224,7 +224,7 @@ To make your Entities sortable, there's the move up and down action method. (aut
         {
             return parent::doMoveUpAction($this->getAdminListConfigurator(), $id, $request);
         }
-    
+
         /**
          * The move down action
          *
@@ -321,3 +321,37 @@ YourBundle_documents:
 The AdminList has by default several filters : String, Boolean, Date and Number
 
 TODO : Add additional documentation
+
+## Locking your entities so that only 1 person may edit it at the same time.
+
+First you have to check your applications configuration.
+
+Add the following lines to your app/config/config.yml:
+
+```YAML
+kunstmaan_admin_list:
+    lock:
+        enabled: true
+        threshold: 35           #This is the default value and defines how long it takes for the lock to expire after saving.
+        check_interval: 15      #This is the default value and defines how often the lock should be refreshed.
+```
+
+Also make sure the routing for the AdminListBundle is included in your
+app/config/routing.yml. This was not necessary on older projects because the
+controller that checks the locking of entities did not exist yet. Add the
+following snippet to your routing.yml.
+
+```YAML
+KunstmaanAdminListBundle:
+    resource: "@KunstmaanAdminListBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+```
+
+Now that the configuration is finished you only have to do a single thing for
+each entity you want to lock. Implement the Interface LockableEntityInterface
+on each entity you want the AdminListController to lock for you. If the
+AdminListController encounters an entity that implements this interface and
+locking is enabled in the configuration it will make sure no other persons can access that entity at
+the same time.

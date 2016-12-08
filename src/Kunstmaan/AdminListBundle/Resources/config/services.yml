@@ -17,3 +17,10 @@ services:
             -  { name: twig.extension }
         arguments:
             -  '@service_container'
+
+    kunstmaan_entity.admin_entity.entity_version_lock_service:
+        class: Kunstmaan\AdminListBundle\Service\EntityVersionLockService
+        arguments:
+            -  '@doctrine.orm.entity_manager'
+            -  '%kunstmaan_entity.lock_threshold%'
+            -  '%kunstmaan_entity.lock_enabled%'
