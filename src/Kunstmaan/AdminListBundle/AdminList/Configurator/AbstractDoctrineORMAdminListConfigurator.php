@@ -2,18 +2,18 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
-use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
-use Traversable;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
-use Pagerfanta\Pagerfanta;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
+use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
+use Traversable;
 
 /**
  * An abstract admin list configurator that can be used with the orm query builder

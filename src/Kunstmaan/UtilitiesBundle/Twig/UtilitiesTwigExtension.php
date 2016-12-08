@@ -42,13 +42,4 @@ class UtilitiesTwigExtension extends Twig_Extension
     {
         return $this->slugifier->slugify($text, '');
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kunstmaan_utilities_twig_extension';
-    }
-
 }

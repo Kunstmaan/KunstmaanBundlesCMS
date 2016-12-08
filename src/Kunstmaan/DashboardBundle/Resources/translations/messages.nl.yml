@@ -12,7 +12,7 @@ dashboard:
             year_to_date: Jaar naar datum
         chart:
             users: Gebruikers
-            pct_new_sessions: % Nieuwe sessies
+            pct_new_sessions: "% Nieuwe sessies"
             sessions: Sessies
             pageviews: Pagina weergaven
             avg_pages_p_session: Pagina's / Sessies

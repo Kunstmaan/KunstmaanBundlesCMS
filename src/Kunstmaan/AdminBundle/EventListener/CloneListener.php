@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\DeepCloneInterface;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
  * This listener will make sure the id isn't copied for AbstractEntities

@@ -22,10 +22,10 @@
         "doctrine/dbal": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
-        "symfony/assetic-bundle": "~2.7.1",
+        "symfony/assetic-bundle": "~2.7",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "^2.8",
-        "symfony/security-acl": "^2.8",
+        "symfony/security-acl": "~2.8|~3.0",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
@@ -49,7 +49,6 @@
         "twig/extensions": "~1.0",
         "egulias/email-validator": "~1.2",
         "box/spout": "^2.5",
-        "twig/twig": "1.25",
         "ruflin/elastica": "^3.2"
     },
     "require-dev": {

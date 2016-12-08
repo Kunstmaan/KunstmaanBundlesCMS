@@ -3,10 +3,10 @@
 namespace Kunstmaan\AdminBundle\Helper\VersionCheck;
 
 use Doctrine\Common\Cache\Cache;
+use Exception;
 use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Exception;
 
 /**
  * Version checker

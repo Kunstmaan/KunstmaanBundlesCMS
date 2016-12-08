@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Routing;
 
+use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 
 /**
  * Custom UrlMatcher which holds a copy of all the routes, this is needed for the DynamicRouting

@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Faker\Provider\Lorem;
-use Faker\Provider\DateTime;
 use Faker\Provider\Base;
+use Faker\Provider\DateTime;
+use Faker\Provider\Lorem;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Generates all classes/files for a new pagepart

@@ -69,14 +69,4 @@ class MultiDomainTwigExtension extends \Twig_Extension implements \Twig_Extensio
     {
         return $this->domainConfiguration->getFullHost();
     }
-
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'MultiDomainTwigExtension';
-    }
 }

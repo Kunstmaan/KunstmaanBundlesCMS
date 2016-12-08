@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\DashboardBundle\Helper\Google;
 
+use Exception;
 use Google_Client as Client;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Exception;
 
 class ClientHelper
 {

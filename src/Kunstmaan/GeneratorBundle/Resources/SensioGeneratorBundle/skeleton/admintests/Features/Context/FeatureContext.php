@@ -2,12 +2,12 @@
 
 namespace {{ namespace }}\Features\Context;
 
-use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 use Behat\Mink\Element\Element;
 use Behat\Mink\Exception\ElementNotFoundException;
-use Behat\Mink\Exception\ResponseTextException;
 use Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Exception\ResponseTextException;
 use Behat\Mink\Selector\CssSelector;
+use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
 
 /**
  * FeatureContext

@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
-use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
+use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 
 /**
  * Tests for SubmitButtonPagePart

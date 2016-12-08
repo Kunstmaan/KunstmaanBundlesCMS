@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
-use Twig_Environment;
-
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 
 use Symfony\Component\Form\FormView;
+
+use Twig_Environment;
 
 /**
  * AdminPermissionsTwigExtension
@@ -36,24 +36,14 @@ class AdminPermissionsTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function renderWidget(Twig_Environment $env, PermissionAdmin $permissionAdmin, FormView $form , array $parameters = array())
+    public function renderWidget(Twig_Environment $env, PermissionAdmin $permissionAdmin, FormView $form, array $parameters = array())
     {
         $template = $env->loadTemplate("KunstmaanAdminBundle:PermissionsAdminTwigExtension:widget.html.twig");
 
         return $template->render(array_merge(array(
-            'form'              => $form,
-            'permissionadmin'   => $permissionAdmin,
-            'recursiveSupport'  => true
+            'form' => $form,
+            'permissionadmin' => $permissionAdmin,
+            'recursiveSupport' => true
         ), $parameters));
-    }
-
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'permissionsadmin_twig_extension';
     }
 }

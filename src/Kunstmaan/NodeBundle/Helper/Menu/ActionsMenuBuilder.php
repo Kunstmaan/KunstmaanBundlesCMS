@@ -3,16 +3,16 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Knp\Menu\ItemInterface;
-use Knp\Menu\FactoryInterface;
 
 class ActionsMenuBuilder
 {

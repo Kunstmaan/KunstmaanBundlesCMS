@@ -13,7 +13,7 @@ services:
             - [ setSearch, ['@kunstmaan_search.search']]
 
     kunstmaan_node_search.search.node:
-        class: %kunstmaan_node_search.search.node.class%
+        class: "%kunstmaan_node_search.search.node.class%"
         parent: kunstmaan_node_search.search.abstract_elastica_searcher
         calls:
             - [ setIndexName, ['%kunstmaan_node_search.indexname%']]
@@ -33,7 +33,7 @@ services:
             - { name: twig.extension }
 
     kunstmaan_node_search.search_configuration.node:
-        class: %kunstmaan_node_search.search_configuration.node.class%
+        class: "%kunstmaan_node_search.search_configuration.node.class%"
         arguments: ['@service_container', '@kunstmaan_search.search', '%kunstmaan_node_search.indexname%', '%kunstmaan_node_search.indextype%']
         calls:
             - [ setAclProvider, ['@security.acl.provider']]
@@ -42,5 +42,5 @@ services:
             - { name: kunstmaan_search.search_configuration, alias: Node }
 
     kunstmaan_node_search.search.service:
-        class: %kunstmaan_node_search.search_service.class%
+        class: "%kunstmaan_node_search.search_service.class%"
         arguments: ['@service_container', '@request_stack']

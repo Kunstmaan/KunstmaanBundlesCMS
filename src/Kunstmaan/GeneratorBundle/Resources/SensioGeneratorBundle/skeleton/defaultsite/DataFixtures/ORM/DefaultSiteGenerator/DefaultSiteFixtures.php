@@ -2,11 +2,9 @@
 
 namespace {{ namespace }}\DataFixtures\ORM\DefaultSiteGenerator;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
@@ -14,12 +12,14 @@ use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
 use Kunstmaan\NodeBundle\Helper\Services\PageCreatorService;
 use Kunstmaan\PagePartBundle\Helper\Services\PagePartCreatorService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use {{ namespace }}\Entity\Bike;
 use {{ namespace }}\Entity\Pages\ContentPage;
-use {{ namespace }}\Entity\Pages\HomePage;
 {% if demosite %}
 use {{ namespace }}\Entity\Pages\FormPage;
+use {{ namespace }}\Entity\Pages\HomePage;
 use {{ namespace }}\Entity\Pages\SearchPage;
-use {{ namespace }}\Entity\Bike;
 {% endif %}
 
 /**

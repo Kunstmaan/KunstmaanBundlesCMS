@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\FormBundle\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
 
 use Symfony\Component\HttpFoundation\Request;

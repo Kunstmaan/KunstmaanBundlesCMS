@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
-use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormView;
 
 /**
  * Helper class for forms

@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\NodeSearchBundle\PagerFanta\Adapter;
 
-use Kunstmaan\NodeSearchBundle\Search\SearcherInterface;
 use Elastica\ResultSet;
+use Kunstmaan\NodeSearchBundle\Search\SearcherInterface;
 
 /**
  * Class SearcherRequestAdapter

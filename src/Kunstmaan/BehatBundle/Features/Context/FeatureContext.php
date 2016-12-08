@@ -3,12 +3,12 @@
 namespace Kunstmaan\BehatBundle\Features\Context;
 
 use Behat\Behat\Context\Context;
-use Behat\Mink\Exception\UnsupportedDriverActionException;
-use Behat\Testwork\Hook\Scope\AfterTestScope;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ExpectationException;
+use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\Testwork\Hook\Scope\AfterTestScope;
 
 class FeatureContext extends MinkContext implements Context
 {

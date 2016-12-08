@@ -33,15 +33,15 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
      * @param \Twig_Environment $env
-     * @param PagePartAdmin $ppAdmin The pagepart admin to render
-     * @param Form $form The form
-     * @param array $parameters Additional variables passed to the template
-     * @param string $templateName
+     * @param PagePartAdmin     $ppAdmin    The pagepart admin to render
+     * @param Form              $form       The form
+     * @param array             $parameters Additional variables passed to the template
+     * @param string            $templateName
      * @return string The html markup
      */
     public function renderWidget(
         \Twig_Environment $env,
-        PagePartAdmin $ppAdmin ,
+        PagePartAdmin $ppAdmin,
         $form = null,
         array $parameters = array(),
         $templateName = 'KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig'
@@ -53,13 +53,5 @@ class PagePartAdminTwigExtension extends \Twig_Extension
             'pagepartadmin' => $ppAdmin,
             'form' => $form
         )));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'pagepartadmin_twig_extension';
     }
 }

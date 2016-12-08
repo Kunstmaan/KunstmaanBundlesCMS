@@ -37,7 +37,7 @@ class AppKernel extends Kernel
 KunstmaanMultiDomainBundle:
     resource: "@KunstmaanMultiDomainBundle/Resources/config/routing.yml"
     requirements:
-        _locale: %requiredlocales%
+        _locale: "%requiredlocales%"
 ```
 
 ### Add the multi domain configuration in your config.yml :

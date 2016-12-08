@@ -4,8 +4,8 @@ namespace Kunstmaan\NodeBundle\Event;
 
 
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SlugEvent

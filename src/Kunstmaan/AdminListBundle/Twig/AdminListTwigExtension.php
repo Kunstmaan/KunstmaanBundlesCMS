@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\AdminListBundle\Twig;
 
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\CompiledRoute;
-use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Symfony\Component\Routing\Router;
 
 /**
  * AdminListTwigExtension
@@ -64,14 +64,14 @@ class AdminListTwigExtension extends \Twig_Extension
     {
         $template = $env->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
 
-        $filterBuilder  = $view->getFilterBuilder();
+        $filterBuilder = $view->getFilterBuilder();
 
         return $template->render(array(
-            'filter'        => $filterBuilder,
-            'basepath'      => $basepath,
-            'addparams'     => $addparams,
-            'extraparams'   => $urlparams,
-            'adminlist'     => $view
+            'filter' => $filterBuilder,
+            'basepath' => $basepath,
+            'addparams' => $addparams,
+            'extraparams' => $urlparams,
+            'adminlist' => $view
         ));
     }
 
@@ -79,15 +79,4 @@ class AdminListTwigExtension extends \Twig_Extension
     {
         return ExportService::getSupportedExtensions();
     }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'adminlist_twig_extension';
-    }
-
 }

@@ -11,7 +11,7 @@ dashboard:
             year_to_date: Da inizio anno
         chart:
             users: Utenti
-            pct_new_sessions: % Nuove Sessioni
+            pct_new_sessions: "% Nuove Sessioni"
             sessions: Sessioni
             pageviews: Visualizzazioni Pagina
             avg_pages_p_session: Pagine / Sessione
