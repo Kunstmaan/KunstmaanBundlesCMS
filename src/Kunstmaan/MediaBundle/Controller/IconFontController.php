@@ -23,7 +23,7 @@ class IconFontController extends Controller
     public function iconFontChooserAction(Request $request)
     {
         $loader = $request->query->get('loader');
-        $loaderData = unserialize($request->query->get('loader_data'));
+        $loaderData = json_decode($request->query->get('loader_data'), true);
 
         $iconFontManager = $this->get('kunstmaan_media.icon_font_manager');
         if (empty($loader)) {
