@@ -180,7 +180,7 @@ EOT
                 $fieldInfo['minWidth'],
                 $fieldInfo['maxWidth'],
                 $fieldInfo['mimeTypes']
-            ;
+            );
         }
 
         /**
