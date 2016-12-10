@@ -46,7 +46,7 @@ class UpdateAclCommand extends ContainerAwareCommand
 
         // Select Permission(s)
         $permissionMap = $this->getContainer()->get('security.acl.permission.map');
-        $question = new ChoiceQuestion('Select permissions(s) (seperate by ",")',
+        $question = new ChoiceQuestion('Select permissions(s) (separate by ",")',
             $permissionMap->getPossiblePermissions());
         $question->setMultiselect(true);
         $mask = array_reduce($helper->ask($input, $output, $question), function ($a, $b) use ($permissionMap) {
