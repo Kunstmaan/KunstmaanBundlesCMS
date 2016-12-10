@@ -111,13 +111,11 @@ class NodeAdminController extends Controller
             $this->locale,
             PermissionMap::PERMISSION_VIEW,
             $this->authorizationChecker
-
         );
 
         $locale = $this->locale;
         $acl = $this->authorizationChecker;
         $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
-
             if ($acl->isGranted(PermissionMap::PERMISSION_VIEW, $item->getNode())) {
                 return array(
                     'path' => '_slug_preview',
@@ -125,8 +123,7 @@ class NodeAdminController extends Controller
                 );
             }
         };
-        $nodeAdminListConfigurator->addSimpleItemAction('Preview', $itemRoute, 'eye');
-
+        $nodeAdminListConfigurator->addSimpleItemAction('action.preview', $itemRoute, 'eye');
         $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
         $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN'));
 

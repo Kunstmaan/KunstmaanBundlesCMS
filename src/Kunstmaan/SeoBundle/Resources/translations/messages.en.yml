@@ -1,7 +1,8 @@
 # Media
 seo:
     robots:
-        tip: Tip:
+        title: Robots
+        tip: 'Tip:'
         warning: This is a default value and example, no custom robots.txt has been defined.
         moreinfo: You can find more information about the Kunstmaan robots.txt at our
 

@@ -63,7 +63,7 @@ class MenuItemAdminListController extends AdminListController
                 ),
             );
         };
-        $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-up', 'Move up'));
+        $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-up', 'kuma_admin_list.action.move_up'));
 
         $itemRoute = function (EntityInterface $item) use ($menuid) {
             return array(
@@ -74,7 +74,7 @@ class MenuItemAdminListController extends AdminListController
                 ),
             );
         };
-        $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-down', 'Move down'));
+        $configurator->addItemAction(new SimpleItemAction($itemRoute, 'arrow-down', 'kuma_admin_list.action.move_down'));
 
         return parent::doIndexAction($configurator, $request);
     }

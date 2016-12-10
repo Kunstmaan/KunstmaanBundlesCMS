@@ -40,8 +40,8 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function buildFilters()
     {
         $builder = $this->getFilterBuilder();
-        $builder->add('title', new StringFilterType('title'), 'Title')
-            ->add('online', new BooleanFilterType('online'), 'Online');
+        $builder->add('title', new StringFilterType('title'), 'kuma_form.list.filter.title')
+            ->add('online', new BooleanFilterType('online'), 'kuma_form.list.filter.online');
     }
 
     /**

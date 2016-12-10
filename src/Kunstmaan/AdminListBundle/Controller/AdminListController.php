@@ -468,7 +468,7 @@ abstract class AdminListController extends Controller
                 );
             };
 
-            $action = new SimpleItemAction($route, 'arrow-up', 'Move up');
+            $action = new SimpleItemAction($route, 'arrow-up', 'kuma_admin_list.action.move_up');
             $configurator->addItemAction($action);
 
             $route = function (EntityInterface $item) use ($configurator) {
@@ -478,7 +478,7 @@ abstract class AdminListController extends Controller
                 );
             };
 
-            $action = new SimpleItemAction($route, 'arrow-down', 'Move down');
+            $action = new SimpleItemAction($route, 'arrow-down', 'kuma_admin_list.action.move_down');
             $configurator->addItemAction($action);
         }
     }

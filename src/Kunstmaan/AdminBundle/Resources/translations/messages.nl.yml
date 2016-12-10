@@ -35,6 +35,10 @@ tools:
   clear_all_caches: Alle caches legen
   shutdown: Uitschakelen
 
+# Search
+search:
+    title: Zoeken
+
 # Forms
 form:
   cancel: Annuleer

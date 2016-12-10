@@ -37,7 +37,7 @@ class MenuAdminListController extends AdminListController
                 );
             };
             $this->configurator->addItemAction(
-                new SimpleItemAction($create_route, 'th-list', 'Manage')
+                new SimpleItemAction($create_route, 'th-list', 'kuma_menu.menu.adminlist.action.manage')
             );
             $this->configurator->setLocale($request->getLocale());
         }

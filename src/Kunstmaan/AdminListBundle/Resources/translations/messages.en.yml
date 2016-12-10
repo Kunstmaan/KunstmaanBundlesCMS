@@ -1,3 +1,9 @@
 kuma_admin_list:
     form:
         export_to: Export to
+    action:
+        view: View
+        edit: Edit
+        delete: Delete
+        move_up: Move up
+        move_down: Move down
