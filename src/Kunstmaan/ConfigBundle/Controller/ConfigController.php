@@ -129,7 +129,7 @@ class ConfigController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $this->em->persist($config);
                 $this->em->flush();
 

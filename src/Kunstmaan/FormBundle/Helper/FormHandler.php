@@ -62,7 +62,7 @@ class FormHandler implements FormHandlerInterface
         $form = $formBuilder->getForm();
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $formSubmission = new FormSubmission();
                 $formSubmission->setIpAddress($request->getClientIp());
                 $formSubmission->setNode($em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page));
