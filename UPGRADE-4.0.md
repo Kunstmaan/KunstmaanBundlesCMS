@@ -47,3 +47,9 @@ The AdminListEvent has been changed, properties Form, Request and function Respo
 ##Node version locking
 
 See https://github.com/Kunstmaan/KunstmaanBundlesCMS/tree/master/src/Kunstmaan/NodeBundle/Resources/doc/Locking.md
+
+## VotingBundle
+
+VotingBundle is refactored. If using custom voters implement the new abstract classes
+* VoteListener is renamed to AbstractVoteListener
+* VotingHelper is renamed to AbstractVotingHelper
