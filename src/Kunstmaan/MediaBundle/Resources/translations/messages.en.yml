@@ -154,8 +154,6 @@ media:
                 label: Copyright
             description:
                 label: Description
-            file:
-                label: File
             originalFilename:
                 label: Original filename
         remote_audio:

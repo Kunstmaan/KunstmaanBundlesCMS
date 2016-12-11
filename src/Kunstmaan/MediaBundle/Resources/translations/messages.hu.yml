@@ -154,8 +154,6 @@ media:
                 label: Szerzői jog
             description:
                 label: Leírás
-            file:
-                label: Fájl
             originalFilename:
                 label: Eredeti fájlnév
         remote_audio:
