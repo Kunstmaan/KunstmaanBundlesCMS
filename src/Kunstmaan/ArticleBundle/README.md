@@ -9,7 +9,7 @@ This bundle adds articles to your Kunstmaan Bundles project.
 
 Installation requirements
 -------------------------
-You should be able to get Symfony 2.3 or greater up and running before you can install the KunstmaanArticleBundle.
+You should be able to get Symfony 3 or greater up and running before you can install the KunstmaanArticleBundle.
 
 Installation instructions
 -------------------------

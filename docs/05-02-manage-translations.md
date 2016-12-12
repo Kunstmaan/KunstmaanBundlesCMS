@@ -15,7 +15,7 @@ Features
 * Clear translation cache from backend or the cli
 * Check translation cache from the cli
 * Create doctrine migration of all changed/added translations
-* Preview all managed translations from each request in the Symfony2 profiler
+* Preview all managed translations from each request in the Symfony profiler
 
 1) Import translations
 ---------------------------------------
@@ -58,7 +58,7 @@ bin/console kuma:translator:import --globals
 
 2) Translation caching and clearing
 ---
-Translations are stored in database, but we're using the native translator caching from Symfony2 when running your application with ```debug = false```.
+Translations are stored in database, but we're using the native translator caching from Symfony when running your application with ```debug = false```.
 
 This means that the following kernel configuration will __always__ look for translations in the database:
 

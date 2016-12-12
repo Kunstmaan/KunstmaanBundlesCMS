@@ -19,7 +19,7 @@ For php coding guidelines we use this:
 
 ## Folder structure
 
-This is based on the best practices described in the [Symfony2 Cookbook](http://symfony.com/doc/current/cookbook/bundles/best_practices.html).
+This is based on the best practices described in the [Symfony Cookbook](http://symfony.com/doc/current/cookbook/bundles/best_practices.html).
 
 * **Command/**: Should contain all the commands
 * **Controller/**: Should contain all the controllers
@@ -55,7 +55,7 @@ This is based on the best practices described in the [Symfony2 Cookbook](http://
 * We'll use keys to identify translatable strings which are prefixed per section, everything will be lowercase *(ex. actions.save)*
 * use 4 spaces instead of tabs
 * the constructor is always the first method
-* use phpcs with the symfony2 coding standard: https://github.com/opensky/Symfony2-coding-standard
+* use phpcs with the Symfony coding standard: https://github.com/opensky/Symfony2-coding-standard
 * use php mess detector already configured when running phpunit
 * use php duplicate code check
 * Form Types will be suffixes with Type when they are used in the frontend and AdminType when they are used for the backend
