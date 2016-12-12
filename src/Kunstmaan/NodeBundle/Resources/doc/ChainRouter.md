@@ -4,7 +4,7 @@ The KunstmaanNodeBundle implements the [Symfony CMF](http://cmf.symfony.com/) [R
 
 ## Chainrouter?
 
-The default Symfony 2 router does not support multiple routers. To allow more flexibility, the Symfony CMF Chainrouter was chosen to support multiple routers. An example of the flexibility gained is the KunstmaanNodeBundle:SlugController routing was changed to no longer allow routing inside entity objects. This was previously needed to achieve some goals but can be replaced by adding a custom router.
+The default Symfony 3 router does not support multiple routers. To allow more flexibility, the Symfony CMF Chainrouter was chosen to support multiple routers. An example of the flexibility gained is the KunstmaanNodeBundle:SlugController routing was changed to no longer allow routing inside entity objects. This was previously needed to achieve some goals but can be replaced by adding a custom router.
 
 ## Implementation
 
@@ -14,7 +14,7 @@ The default Symfony 2 router does not support multiple routers. To allow more fl
 
 ## Adding a router
 
-To add a router simple create a service and tag it with 'router' and a priority. The default Symfony 2.1 router has priority 100. For more information about the Chainrouter see the official Symfony CMF [RoutingExtra documentation](http://symfony-cmf.readthedocs.org/en/latest/bundles/routing-extra.html).
+To add a router simple create a service and tag it with 'router' and a priority. The default Symfony 3.1 router has priority 100. For more information about the Chainrouter see the official Symfony CMF [RoutingExtra documentation](http://symfony-cmf.readthedocs.org/en/latest/bundles/routing-extra.html).
 
 ## SlugController and SlugRouter
 
