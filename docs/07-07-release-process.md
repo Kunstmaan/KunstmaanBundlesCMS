@@ -14,13 +14,13 @@ we will do the final release. During this freeze, only bugfixed will be merged i
 ## Minor releases
 
 A minor release will be done when necessary. This will depend on:
-* the number of bugfixes
 * the number of backwards compatible new features
 * the release of a new minor Symfony version
 
 ## Patch releases
 
 A patch release will be done when needed. Some reasons:
+* new bugfixes
 * security issue was fixed (in CMS or Symfony)
 * a third party library compatibility issue was fixed
 * ...

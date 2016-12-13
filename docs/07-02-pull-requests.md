@@ -82,13 +82,13 @@ following steps.
 ### Select the correct branch for your pull request
 
 ```
-| Kind of PR    | Branch
-| ------------- | ---
-| New feature   | master branch
-| BC break      | master branch
-| Deprecations  | master branch
-| Bug fix       | latest minor version branch
-| Security fix  | first minor version branch (of the latest major version) where the security fix was introduced
+| Kind of PR                 | Branch
+| -------------------------- | ---
+| New feature (no BC breaks) | master branch
+| BC break                   | next major version branch
+| Deprecations               | master branch
+| Bug fix                    | latest minor version branch
+| Security fix               | first minor version branch (of the latest major version) where the security fix was introduced
 ```
 
 ### Rebase your pull request
