@@ -79,6 +79,18 @@ an existing one for instance), it must also include the following:
 Whenever you feel that your patch is ready for submission, follow the
 following steps.
 
+### Select the correct branch for your pull request
+
+```
+| Kind of PR    | Branch
+| ------------- | ---
+| New feature   | master branch
+| BC break      | master branch
+| Deprecations  | master branch
+| Bug fix       | latest minor version branch
+| Security fix  | first minor version branch (of the latest major version) where the security fix was introduced
+```
+
 ### Rebase your pull request
 
 Before submitting your pull request, update your branch (needed if it takes you a
