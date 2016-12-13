@@ -49,23 +49,6 @@ class PageCreatorService
     }
 
     /**
-     * Sets the Container. This is still here for backwards compatibility.
-     *
-     * The ContainerAwareInterface has been removed so the container won't be injected automatically.
-     * This function is just there for code that calls it manually.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance.
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->setEntityManager($container->get('doctrine.orm.entity_manager'));
-        $this->setACLPermissionCreatorService($container->get('kunstmaan_node.acl_permission_creator_service'));
-        $this->setUserEntityClass($container->getParameter('fos_user.model.user.class'));
-    }
-
-    /**
      * @param HasNodeInterface $pageTypeInstance The page.
      * @param array            $translations     Containing arrays. Sample:
      * [
