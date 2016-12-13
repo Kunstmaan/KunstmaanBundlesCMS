@@ -1,24 +1,26 @@
 # Release process
 
-Regarding our release process, we are implementing a flexible approach with limits. We will also follow the Symfony releases.
-This means that we will do a minor/major release when Symfony does.
+We are implementing a flexible release process approach with some limitations. We will not follow the same fixed release points as the Symfony project, nor the version numbers, but we try to make the Kunstmaan Bundles CMS compatible with the latest Symfony releases as soon as possible. This means that when a new minor Symfony version gets released, that this version can be used in the next minor release of the Kunstmaan Bundles CMS. A new major Symfony version can be used in the next major release of the CMS.
 
 ## Major releases
 
-A major release will be done every 3 to 9 months. This will depend on the submitted BC breaks
-on the master branch. When we reach 10 BC breaks, the 9 month limit or Symfony does a major release, than a new release 
-will be made. 
+A major release will be done every 3 to 9 months. This will depend on:
+* the number of backwards incompatible submitted pull requests / new features
+* the release of a new major Symfony version
 
-For our major release we want to implement a feature freeze and will do an RC release first. After a month 
-we will do a final release.
-
+For our major releases we want to implement a feature freeze period. We will do this by releasing a release candidate (RC) first. After a month
+we will do the final release. During this freeze, only bugfixed will be merged in the release branch.
 
 ## Minor releases
 
-A major release will be done every month, if necessary. This depends on the new features that are introduced and when
-Symfony does a minor release.
-
+A minor release will be done when necessary. This will depend on:
+* the number of bugfixes
+* the number of backwards compatible new features
+* the release of a new minor Symfony version
 
 ## Patch releases
 
-A patch release will be done every 2 weeks, if necessary. This depends on the bugfixes that are submitted.
+A patch release will be done when needed. Some reasons:
+* security issue was fixed (in CMS or Symfony)
+* a third party library compatibility issue was fixed
+* ...
