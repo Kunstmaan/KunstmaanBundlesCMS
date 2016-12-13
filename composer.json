@@ -30,7 +30,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
-        "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "friendsofsymfony/user-bundle": "2.0.0-beta1",
         "knplabs/knp-menu-bundle": "~2.0",
         "guzzlehttp/guzzle": "~6.1",
         "white-october/pagerfanta-bundle": "~1.0",
@@ -94,7 +94,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "3.6-dev"
         }
     }
 }
