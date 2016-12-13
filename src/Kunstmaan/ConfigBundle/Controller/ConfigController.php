@@ -114,15 +114,9 @@ class ConfigController
             $config = new $entityClass();
         }
 
-        // If the formType is a service, get it from the container.
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-
-        $formFqn = get_class($formType);
-
+        $formFqcn = $this->container->get('kunstmaan_utilities.fqcn')->getFqcn($formType);
         $form = $this->formFactory->create(
-            $formFqn,
+            $formFqcn,
             $config
         );
 
