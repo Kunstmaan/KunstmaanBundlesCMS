@@ -433,15 +433,15 @@ gulp.task('clear-symfony-cache', plugins.shell.task([
 
 // Migrate
 gulp.task('migrate', plugins.shell.task([
-    'app/console doctrine:migrations:migrate --no-interaction'
+    'bin/console doctrine:migrations:migrate --no-interaction'
 ]));
 
 
 // Clear Cache
 gulp.task('cc', plugins.shell.task([
-    'php app/console cache:clear',
-    'php app/console assetic:dump',
-    'php app/console assets:install web --symlink'
+    'php bin/console cache:clear',
+    'php bin/console assetic:dump',
+    'php bin/console assets:install web --symlink'
 ]));
 
 

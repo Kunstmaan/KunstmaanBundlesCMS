@@ -12,12 +12,12 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
@@ -41,7 +41,7 @@ abstract class AdminListController extends Controller
      * @param AbstractAdminListConfigurator $configurator
      * @param null|Request $request
      *
-     * @return array
+     * @return Response
      */
     protected function doIndexAction(AbstractAdminListConfigurator $configurator, Request $request)
     {
@@ -69,7 +69,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
     {
@@ -95,7 +95,7 @@ abstract class AdminListController extends Controller
      *
      * @throws AccessDeniedHttpException
      *
-     * @return array
+     * @return Response
      */
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
     {
@@ -136,11 +136,21 @@ abstract class AdminListController extends Controller
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
-                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_ADD, new AdminListEvent($helper));
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
+                $adminListEvent = new AdminListEvent($helper, $request, $form);
+                $this->container->get('event_dispatcher')->dispatch(
+                    AdminListEvents::PRE_ADD,
+                    $adminListEvent
+                );
+
+                // Check if Response is given
+                if ($adminListEvent->getResponse() instanceof Response) {
+                    return $adminListEvent->getResponse();
+                }
 
                 // Check if Sortable interface is implemented
                 if ($configurator instanceof SortableInterface) {
@@ -152,7 +162,16 @@ abstract class AdminListController extends Controller
 
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_ADD, new AdminListEvent($helper));
+                $this->container->get('event_dispatcher')->dispatch(
+                    AdminListEvents::POST_ADD,
+                    $adminListEvent
+                );
+
+                // Check if Response is given
+                if ($adminListEvent->getResponse() instanceof Response) {
+                    return $adminListEvent->getResponse();
+                }
+
                 $indexUrl = $configurator->getIndexUrl();
 
                 return new RedirectResponse(
@@ -214,19 +233,45 @@ abstract class AdminListController extends Controller
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
             } else {
-                $form->submit($request);
+                $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
-                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_EDIT, new AdminListEvent($helper));
+            // Don't redirect to listing when coming from ajax request, needed for url chooser.
+            if ($form->isValid() && !$request->isXmlHttpRequest()) {
+                $adminListEvent = new AdminListEvent($helper, $request, $form);
+                $this->container->get('event_dispatcher')->dispatch(
+                    AdminListEvents::PRE_EDIT,
+                    $adminListEvent
+                );
+
+                // Check if Response is given
+                if ($adminListEvent->getResponse() instanceof Response) {
+                    return $adminListEvent->getResponse();
+                }
+
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_EDIT, new AdminListEvent($helper));
+                $this->container->get('event_dispatcher')->dispatch(
+                    AdminListEvents::POST_EDIT,
+                    $adminListEvent
+                );
+
+                // Check if Response is given
+                if ($adminListEvent->getResponse() instanceof Response) {
+                    return $adminListEvent->getResponse();
+                }
+
                 $indexUrl = $configurator->getIndexUrl();
 
-                return new RedirectResponse(
-                    $this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array())
-                );
+                // Don't redirect to listing when coming from ajax request, needed for url chooser.
+                if (!$request->isXmlHttpRequest()) {
+                    return new RedirectResponse(
+                        $this->generateUrl(
+                            $indexUrl['path'],
+                            isset($indexUrl['params']) ? $indexUrl['params'] : array()
+                        )
+                    );
+                }
             }
         }
 
@@ -245,7 +290,6 @@ abstract class AdminListController extends Controller
             )
         );
     }
-
 
     protected function doViewAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
     {
@@ -302,10 +346,28 @@ abstract class AdminListController extends Controller
 
         $indexUrl = $configurator->getIndexUrl();
         if ($request->isMethod('POST')) {
-            $this->container->get('event_dispatcher')->dispatch(AdminListEvents::PRE_DELETE, new AdminListEvent($helper));
+            $adminListEvent = new AdminListEvent($helper, $request);
+            $this->container->get('event_dispatcher')->dispatch(
+                AdminListEvents::PRE_DELETE,
+                $adminListEvent
+            );
+
+            // Check if Response is given
+            if ($adminListEvent->getResponse() instanceof Response) {
+                return $adminListEvent->getResponse();
+            }
+
             $em->remove($helper);
             $em->flush();
-            $this->container->get('event_dispatcher')->dispatch(AdminListEvents::POST_DELETE, new AdminListEvent($helper));
+            $this->container->get('event_dispatcher')->dispatch(
+                AdminListEvents::POST_DELETE,
+                $adminListEvent
+            );
+
+            // Check if Response is given
+            if ($adminListEvent->getResponse() instanceof Response) {
+                return $adminListEvent->getResponse();
+            }
         }
 
         return new RedirectResponse(
@@ -399,9 +461,9 @@ abstract class AdminListController extends Controller
     {
         // Check if Sortable interface is implemented
         if ($configurator instanceof SortableInterface) {
-            $route = function (EntityInterface $item) use ($configurator){
+            $route = function (EntityInterface $item) use ($configurator) {
                 return array(
-                    'path' => $configurator->getPathByConvention() . '_move_up',
+                    'path' => $configurator->getPathByConvention().'_move_up',
                     'params' => array('id' => $item->getId()),
                 );
             };
@@ -409,9 +471,9 @@ abstract class AdminListController extends Controller
             $action = new SimpleItemAction($route, 'arrow-up', 'Move up');
             $configurator->addItemAction($action);
 
-            $route = function (EntityInterface $item) use ($configurator){
+            $route = function (EntityInterface $item) use ($configurator) {
                 return array(
-                    'path' => $configurator->getPathByConvention() . '_move_down',
+                    'path' => $configurator->getPathByConvention().'_move_down',
                     'params' => array('id' => $item->getId()),
                 );
             };

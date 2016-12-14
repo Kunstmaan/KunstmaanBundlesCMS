@@ -3,8 +3,8 @@
 namespace Kunstmaan\VotingBundle\EventListener\Facebook;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookSend;
+use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
 use Symfony\Component\DependencyInjection\Container;
 
 class FacebookSendEventListener

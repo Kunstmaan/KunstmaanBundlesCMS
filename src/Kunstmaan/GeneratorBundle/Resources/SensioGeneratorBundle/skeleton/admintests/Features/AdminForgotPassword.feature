@@ -16,21 +16,21 @@ Feature: AdminForgotPassword
     Given I am on the forgot password page
     Then I should see "Username"
     When I press "Reset password"
-    Then I should see "Error"
+    Then I should see "Reset"
 
   @javascript
   Scenario: Provide wrong credentials
     Given I am on the forgot password page
     And I fill in "username" with "wrong_username"
     And I press "Reset password"
-    Then I should see "Error"
+    Then I should see "An email has been sent"
 
   @javascript
   Scenario: Provide correct credentials
     Given I am on the forgot password page
     And I fill in "username" with "admin"
     And I press "Reset password"
-    Then I should see "We have sent you" or "already been requested"
+    Then I should see "An email has been sent"
 
   @javascript
   Scenario: Use the cancel button

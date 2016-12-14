@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\AdminListBundle\Service;
 
+use Box\Spout\Common\Type;
+use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Writer\WriterInterface;
 use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Translation\Translator;
-use Box\Spout\Writer\WriterFactory;
-use Box\Spout\Common\Type;
 
 class ExportService
 {
@@ -127,8 +127,14 @@ class ExportService
 
                 $row = array();
                 foreach ($adminList->getExportColumns() as $column) {
-                    $data = $adminList->getStringValue($itemObject, $column->getName());
-                    if (is_object($data)) {
+                    $columnName = $column->getName();
+                    $itemHelper = $itemObject;
+                    if ($column->hasAlias()) {
+                        $itemHelper = $column->getAliasObj($itemObject);
+                        $columnName = $column->getColumnName($columnName);
+                    }
+                    $data = $adminList->getStringValue($itemHelper, $columnName);
+                    if (null !== $column->getTemplate()) {
                         if (!$this->renderer->exists($column->getTemplate())) {
                             throw new \Exception('No export template defined for ' . get_class($data));
                         }

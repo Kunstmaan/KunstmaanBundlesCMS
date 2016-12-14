@@ -19,3 +19,36 @@ settings:
         choose_language: "Kies een taal"
         succesful_added: "Nieuwe vertaling is succesvol aangemaakt"
         succesful_edited: "Vertaling is succesvol aangepast"
+
+kuma_translator:
+    form:
+        text_with_locale:
+            locale:
+                label:  Lokaal
+            text:
+                label:  Tekst
+    command:
+        clear:
+            flash:
+                success:    Alle live vertalingen zijn up-to-date.
+        import:
+            flash:
+                success:        Vertalingen succesvol geïmporteerd, niet bestaande vertalingen werden overschreven.
+                force_success:  Vertalingen succesvol geïmporteerd, alle bestaande vertalingen werden overschreven.
+    modal:
+        confirmation:
+            force_import:
+                title:  Bent u zeker dat u de import wilt forceren?
+                body:   Alle bestaande vertalingen zullen overschreven worden.
+                confirm_button: Import
+                cancel_button:  Annuleer
+
+    adminlist:
+        header:
+            domain:     Domein
+            keyword:    Keyword
+        filter:
+            domain:     Domein
+            keyword:    Keyword
+            text:       Tekst
+            locale:     Lokaal

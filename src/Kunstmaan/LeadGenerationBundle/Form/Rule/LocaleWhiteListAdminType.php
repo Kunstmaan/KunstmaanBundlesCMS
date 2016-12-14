@@ -35,7 +35,6 @@ class LocaleWhiteListAdminType extends AbstractRuleAdminType
                 'info_text' => 'kuma_lead_generation.form.locale_white_list.locale.info_text',
             ),
             'choices'   => $this->locales,
-            'choices_as_values' => true
         ));
     }
 

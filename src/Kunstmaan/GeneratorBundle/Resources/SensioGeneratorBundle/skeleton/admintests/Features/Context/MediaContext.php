@@ -2,8 +2,8 @@
 
 namespace {{ namespace }}\Features\Context;
 
-use Behat\Behat\Context\BehatContext;
-use Behat\Behat\Context\Step;
+use Behat\Behat\Context\Context;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Mink\Exception\ElementNotFoundException;
 
 /**
@@ -11,8 +11,18 @@ use Behat\Mink\Exception\ElementNotFoundException;
  *
  * Provides the context for the AdminMedia.feature
  */
-class MediaContext extends BehatContext
+class MediaContext implements Context
 {
+    /** @var FeatureContext $mainContext */
+    private $mainContext;
+
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+        $environment = $scope->getEnvironment();
+
+        $this->mainContext = $environment->getContext(FeatureContext::class);
+    }
 
     /**
      * @param string $fileType the type of the file - image, pdf
@@ -28,18 +38,14 @@ class MediaContext extends BehatContext
             "pdf" => "pdf.pdf"
         );
 
-        $steps = array();
-
         $records = array(
-            "kunstmaan_mediabundle_filetype[name]" => $this->getMainContext()->fixStepArgument($fileType)
+            "kunstmaan_mediabundle_filetype[name]" => $this->mainContext->fixStepArgument($fileType)
         );
         foreach ($records as $field => $value) {
-            $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
+            $this->mainContext->fillField($field, $value);
         }
 
-        $steps[] = new Step\When("I attach the file \"$fileTypes[$fileType]\" to \"kunstmaan_mediabundle_filetype[file]\"");
-
-        return $steps;
+        $this->mainContext->attachFileToField('kunstmaan_mediabundle_filetype[file]', $fileTypes[$fileType]);
     }
 
     /**
@@ -47,7 +53,7 @@ class MediaContext extends BehatContext
      */
     public function iDeleteImage()
     {
-        $this->getMainContext()->iAmOnASpecificPage("image");
+        $this->mainContext->iAmOnASpecificPage("image");
         $this->performDelete();
     }
 
@@ -56,7 +62,7 @@ class MediaContext extends BehatContext
      */
     public function iDeleteFile()
     {
-        $this->getMainContext()->iAmOnASpecificPage("file");
+        $this->mainContext->iAmOnASpecificPage("file");
         $this->performDelete();
     }
 
@@ -74,19 +80,15 @@ class MediaContext extends BehatContext
             "slideshare" => "13842545"
         );
 
-        $steps = array();
-
         $records = array(
-            "kunstmaan_mediabundle_slidetype[name]" => $this->getMainContext()->fixStepArgument($slideName),
+            "kunstmaan_mediabundle_slidetype[name]" => $this->mainContext->fixStepArgument($slideName),
             "kunstmaan_mediabundle_slidetype[code]" => $slideCodes[$slideType]
         );
         foreach ($records as $field => $value) {
-            $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
+            $this->mainContext->fillField($field, $value);
         }
 
-        $steps[] = new Step\When("I select \"$slideType\" from \"kunstmaan_mediabundle_slidetype[type]\"");
-
-        return $steps;
+        $this->mainContext->selectOption('kunstmaan_mediabundle_slidetype[type]', $slideType);
     }
 
     /**
@@ -94,7 +96,7 @@ class MediaContext extends BehatContext
      */
     public function iDeleteSlide()
     {
-        $this->getMainContext()->iAmOnASpecificPage("slide");
+        $this->mainContext->iAmOnASpecificPage("slide");
         $this->performDelete();
     }
 
@@ -114,19 +116,15 @@ class MediaContext extends BehatContext
             "dailymotion" => "xr8509_raw-video-spacex-dragon-leaves-space-station_tech"
         );
 
-        $steps = array();
-
         $records = array(
-            "kunstmaan_mediabundle_videotype[name]" => $this->getMainContext()->fixStepArgument($videoName),
+            "kunstmaan_mediabundle_videotype[name]" => $this->mainContext->fixStepArgument($videoName),
             "kunstmaan_mediabundle_videotype[code]" => $videoCodes[$videoType]
         );
         foreach ($records as $field => $value) {
-            $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
+            $this->mainContext->fillField($field, $value);
         }
 
-        $steps[] = new Step\When("I select \"$videoType\" from \"kunstmaan_mediabundle_videotype[type]\"");
-
-        return $steps;
+        $this->mainContext->selectOption('kunstmaan_mediabundle_videotype[type]', $videoType);
     }
 
     /**
@@ -134,7 +132,7 @@ class MediaContext extends BehatContext
      */
     public function iDeleteVideo()
     {
-        $this->getMainContext()->iAmOnASpecificPage("video");
+        $this->mainContext->iAmOnASpecificPage("video");
         $this->performDelete();
     }
 
@@ -148,16 +146,16 @@ class MediaContext extends BehatContext
     public function iCreateSubFolder($folderName)
     {
         $records = array(
-            "kunstmaan_mediabundle_FolderType[name]" => $this->getMainContext()->fixStepArgument($folderName),
+            "kunstmaan_mediabundle_FolderType[name]" => $this->mainContext->fixStepArgument($folderName),
             "kunstmaan_mediabundle_FolderType[rel]" => "media",
             "kunstmaan_mediabundle_FolderType[parent]" => "1"
         );
 
-        $this->getMainContext()->pressButton("Add subfolder");
+        $this->mainContext->pressButton("Add subfolder");
         //Wait 1 second so the modal is completely visible
-        $this->getMainContext()->iWaitSeconds(1);
+        $this->mainContext->iWaitSeconds(1);
 
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@id, 'addsub-modal')]");
 
         foreach ($modals as $modal) {
@@ -165,11 +163,11 @@ class MediaContext extends BehatContext
                 foreach ($records as $field => $value) {
                     $modalField = $modal->findField($field);
                     if (null === $modalField) {
-                        throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $field);
+                        throw new ElementNotFoundException($this->mainContext->getSession(), 'form field', 'id|name|label|value', $field);
                     }
                     $modalField->setValue($value);
                 }
-                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
+                $this->mainContext->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }
@@ -202,23 +200,23 @@ class MediaContext extends BehatContext
     {
         if ($folderName != "") {
             //Navigate to the folder we want to delete
-            $this->getMainContext()->clickLink($folderName);
+            $this->mainContext->clickLink($folderName);
         }
 
-        $this->getMainContext()->pressButton("Delete this folder");
+        $this->mainContext->pressButton("Delete this folder");
 
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@id, 'delete-modal')]");
 
         //Wait 1 second for the modal to be visible
         //Else we can get a error when running the tests.
-        $this->getMainContext()->iWaitSeconds(1);
+        $this->mainContext->iWaitSeconds(1);
 
         // Find the visible modal.
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $this->getMainContext()->findAndClickButton($page, 'xpath', "//a[contains(@href, 'del')]");
+                $this->mainContext->findAndClickButton($page, 'xpath', "//a[contains(@href, 'del')]");
 
                 return;
             }
@@ -227,7 +225,23 @@ class MediaContext extends BehatContext
 
     private function performDelete()
     {
-        $page = $this->getMainContext()->getSession()->getPage();
-        $this->getMainContext()->findAndClickButton($page, 'xpath', "//a[contains(@class, 'del')]");
+        $page = $this->mainContext->getSession()->getPage();
+        $this->mainContext->findAndClickButton($page, 'xpath', "//button[contains(@class, 'del')]");
+
+        $modals = $page->findAll('xpath', "//div[contains(@id, 'sure-modal')]");
+
+        //Wait 1 second for the modal to be visible
+        //Else we can get a error when running the tests.
+        $this->mainContext->iWaitSeconds(1);
+
+        // Find the visible modal.
+        // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
+        foreach ($modals as $modal) {
+            if ($modal->hasClass('in')) {
+                $this->mainContext->findAndClickButton($page, 'xpath', "//a[contains(@href, 'del')]");
+
+                return;
+            }
+        }
     }
 }

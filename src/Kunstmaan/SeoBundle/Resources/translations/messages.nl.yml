@@ -12,25 +12,46 @@ seo:
 
     form:
         og:
-            title: OG Title
-            description: OG Description
+            title: OG Titel
+            description: OG Omschrijving
             url: OG Url
             type: OG Type
-            image: OG Image
+            image: OG Foto
         twitter:
-            title: Titel
+            title: Title
+            title_info_text: De titel van uw twitter card. Falls back to SEO Meta title
             description: Omschrijving
+            description_info_text: De omschrijving van uw twitter card. Falls back to SEO Meta description
             sitehandle: Site Handle
+            sitehandle_info_text: Twitter handle van de website of uw organisatie. Deze waarde is verplicht om twitter cards te laten werken.
             creatorhandle: Creator Handle
-            image: Afbeelding
+            creatorhandle_info_text: Twitter handle van de publisher van uw pagina.
+            image: Foto
         robots:
-            noindex: No index
-            nofollow: No follow
-            noarchive: No archive
-            nosnippet: No snippet
-            notranslate: No translate
-            noimageindex: No image index
+            noindex: Geen index
+            nofollow: Geen follow
+            noarchive: Geen archive
+            nosnippet: Geen snippet
+            notranslate: Geen vertaling
+            noimageindex: Geen image index
+        seo:
+            meta_title:
+                label:  Titel
+                info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s. De mag max. 55 karakters bevatten.
+            meta_description:
+                label: Meta omschrijving
+            meta_robots:
+                label: Meta robots
+                placeholder: Kies robot tags
+            extra_metadata:
+                label: Extra metadata
 
     pagetabs:
         opengraph: Open Graph
         twittercards: Twitter Cards
+
+    tab:
+        seo:
+            title: SEO
+        social:
+            title: Social

@@ -5,21 +5,21 @@ namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 use Doctrine\ORM\EntityManager;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Kunstmaan\NodeBundle\Entity\PageInterface;
+use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationReaderInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\Region;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
-use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
-use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 
 /**
  * PageTemplateWidget
@@ -74,7 +74,7 @@ class PageTemplateWidget extends FormWidget
      * @param PagePartAdminFactory $pagePartAdminFactory
      * @param PageTemplateConfigurationReaderInterface $templateReader
      * @param PagePartConfigurationReaderInterface $pagePartReader
-     * @param PageTemplateConfigurationService $pageTemplateConfiguratiorService
+     * @param PageTemplateConfigurationService $pageTemplateConfigurationService
      */
     public function __construct(
         HasPageTemplateInterface $page,
@@ -83,7 +83,7 @@ class PageTemplateWidget extends FormWidget
         PagePartAdminFactory $pagePartAdminFactory,
         PageTemplateConfigurationReaderInterface $templateReader,
         PagePartConfigurationReaderInterface $pagePartReader,
-        PageTemplateConfigurationService $pageTemplateConfiguratiorService
+        PageTemplateConfigurationService $pageTemplateConfigurationService
     )
     {
         parent::__construct();
@@ -95,7 +95,7 @@ class PageTemplateWidget extends FormWidget
 
         $this->pageTemplates = $templateReader->getPageTemplates($page);
         $this->pagePartAdminConfigurations = $pagePartReader->getPagePartAdminConfigurators($page);
-        $this->pageTemplateConfiguration = $pageTemplateConfiguratiorService->findOrCreateFor($page);
+        $this->pageTemplateConfiguration = $pageTemplateConfigurationService->findOrCreateFor($page);
 
         foreach ($this->getPageTemplate()->getRows() as $row) {
             foreach ($row->getRegions() as $region) {

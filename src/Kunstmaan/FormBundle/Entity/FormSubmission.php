@@ -4,11 +4,11 @@ namespace Kunstmaan\FormBundle\Entity;
 
 use DateTime;
 
-use Kunstmaan\AdminBundle\Entity\EntityInterface;
-use Kunstmaan\NodeBundle\Entity\Node;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
 
 /**
  * The form submission

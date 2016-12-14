@@ -2,14 +2,14 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
-use {{ namespace }}\Entity\PageParts\{{ pagepart }};
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use {{ namespace }}\Entity\PageParts\{{ pagepart }};
 
 /**
  * {{ pagepart }}AdminType
@@ -43,19 +43,16 @@ class {{ pagepart }}AdminType extends AbstractType
             'choices' => array_combine({{ pagepart }}::$types, {{ pagepart }}::$types),
             'placeholder' => false,
             'required' => true,
-                'choices_as_values' => true
         ));
         $builder->add('size', ChoiceType::class, array(
             'choices' => array_combine({{ pagepart }}::$sizes, {{ pagepart }}::$sizes),
             'placeholder' => false,
             'required' => true,
-                'choices_as_values' => true
         ));
         $builder->add('position', ChoiceType::class, array(
             'choices' => array_combine({{ pagepart }}::$positions, {{ pagepart }}::$positions),
             'placeholder' => false,
             'required' => true,
-                'choices_as_values' => true
         ));
     }
 

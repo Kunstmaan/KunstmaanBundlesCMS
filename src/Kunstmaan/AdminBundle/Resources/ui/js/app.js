@@ -42,6 +42,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.charactersLeft.init();
         kunstmaanbundles.rangeslider.init();
         kunstmaanbundles.googleOAuth.init();
+        kunstmaanbundles.appNodeVersionLock.init();
     };
 
 

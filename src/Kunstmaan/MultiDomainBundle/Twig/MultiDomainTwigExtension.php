@@ -4,16 +4,13 @@ namespace Kunstmaan\MultiDomainBundle\Twig;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 
-class MultiDomainTwigExtension extends \Twig_Extension
+class MultiDomainTwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     /**
      * @var DomainConfigurationInterface
      */
     private $domainConfiguration;
 
-    /**
-     * @param DomainConfigurationInterface $domainConfiguration
-     */
     public function __construct(DomainConfigurationInterface $domainConfiguration)
     {
         $this->domainConfiguration = $domainConfiguration;
@@ -30,6 +27,7 @@ class MultiDomainTwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('get_multi_domain_hosts', array($this, 'getMultiDomainHosts')),
             new \Twig_SimpleFunction('get_current_host', array($this, 'getCurrentHost')),
             new \Twig_SimpleFunction('get_extra_data', array($this, 'getExtraData')),
+            new \Twig_SimpleFunction('get_current_full_host', array($this, 'getCurrentFullHost')),
         );
     }
 
@@ -57,7 +55,7 @@ class MultiDomainTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getCurrentHost()
     {
@@ -65,12 +63,10 @@ class MultiDomainTwigExtension extends \Twig_Extension
     }
 
     /**
-     * Get the Twig extension name.
-     *
-     * @return string
+     * @return array
      */
-    public function getName()
+    public function getCurrentFullHost()
     {
-        return 'MultiDomainTwigExtension';
+        return $this->domainConfiguration->getFullHost();
     }
 }

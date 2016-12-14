@@ -2,13 +2,14 @@
 
 namespace Kunstmaan\AdminBundle\Controller;
 
-use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,7 +28,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         if ($this->container->hasParameter("kunstmaan_admin.dashboard_route")) {
-            return $this->redirect($this->generateUrl($this->container->getParameter("kunstmaan_admin.dashboard_route")));
+            return $this->redirect($this->generateUrl($this->getParameter("kunstmaan_admin.dashboard_route")));
         }
 
         /* @var DashboardConfiguration $dashboardConfiguration */
@@ -69,7 +70,8 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $em->persist($dashboardConfiguration);
                 $em->flush($dashboardConfiguration);
-                $this->get('session')->getFlashBag()->add(
+
+                $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('kuma_admin.edit.flash.success')
                 );

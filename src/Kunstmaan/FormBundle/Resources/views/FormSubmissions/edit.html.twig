@@ -3,7 +3,7 @@
 {% block header %}
     {% if adminmenu.current %}
         <div class="page-header">
-            <h1>{{ adminmenu.current.internalname | trans }} {% block page_header_addition %}{% endblock %}</h1>
+            <h1>{{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}</h1>
             <small><strong>date</strong>: {{ formsubmission.created|date }} / <strong>language</strong>: {{ formsubmission.lang }} / <strong>ip</strong>: {{ formsubmission.ipAddress }}</small>
             {% block extra_actions_header %}{% endblock %}
         </div>

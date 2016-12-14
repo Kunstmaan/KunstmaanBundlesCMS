@@ -3,9 +3,10 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\Menu\SimpleTreeView;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,6 +28,7 @@ class WidgetsController extends Controller
     {
         $params        = $this->getTemplateParameters($request);
         $params['cke'] = true;
+        $params['multilanguage'] = $this->getParameter('multilanguage');
 
         return $params;
     }
@@ -60,6 +62,7 @@ class WidgetsController extends Controller
     {
         /* @var EntityManager $em */
         $em     = $this->getDoctrine()->getManager();
+        $host = $request->getSession()->get(DomainConfiguration::SWITCH_HOST);
         $locale = $request->getLocale();
 
         $result = $em->getRepository('KunstmaanNodeBundle:Node')
@@ -68,7 +71,7 @@ class WidgetsController extends Controller
                 PermissionMap::PERMISSION_VIEW,
                 $this->get('kunstmaan_admin.acl.native.helper'),
                 true,
-                $this->get('kunstmaan_admin.domain_configuration')->getRootNode()
+                $this->get('kunstmaan_admin.domain_configuration')->getRootNode($host)
             );
 
         $simpleTreeView = new SimpleTreeView();
@@ -80,7 +83,7 @@ class WidgetsController extends Controller
         }
 
         // When the media bundle is available, we show a link in the header to the media chooser
-        $allBundles = $this->container->getParameter('kernel.bundles');
+        $allBundles = $this->getParameter('kernel.bundles');
         $mediaChooserLink = null;
 
         if (array_key_exists('KunstmaanMediaBundle', $allBundles)) {

@@ -64,6 +64,15 @@ kuma_user:
                 roles:  Roles
             filter:
                 name:   Name
+        add:
+            flash:
+                success: Group %groupname% has been created!
+        edit:
+            flash:
+                success: Group %groupname% has been edited!
+        delete:
+            flash:
+                success: Group %groupname% has been deleted!
     role:
         adminlist:
             header:

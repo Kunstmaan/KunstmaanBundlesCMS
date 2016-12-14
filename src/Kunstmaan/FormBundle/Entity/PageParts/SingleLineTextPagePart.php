@@ -3,13 +3,13 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
+use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
+use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
-use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * The single-line text page part can be used to create forms with text input fields

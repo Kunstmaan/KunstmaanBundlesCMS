@@ -3,12 +3,12 @@
 namespace {{ namespace }}\AdminList;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use {{ namespace }}\Entity\Bike;
 use {{ namespace }}\Form\BikeAdminType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 
 class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
 {

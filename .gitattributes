@@ -6,7 +6,6 @@ src/Kunstmaan/DashboardBundle/Resources/ui/vendor_bower/* linguist-vendored
 src/Kunstmaan/FixturesBundle/Resources/ui/vendor_bower/* linguist-vendored
 src/Kunstmaan/FormBundle/Resources/ui/vendor_bower/* linguist-vendored
 src/Kunstmaan/GeneratorBundle/Resources/ui/vendor_bower/* linguist-vendored
-src/Kunstmaan/LanguageChooserBundle/Resources/ui/vendor_bower/* linguist-vendored
 src/Kunstmaan/LeadGenerationBundle/Resources/ui/vendor_bower/* linguist-vendored
 src/Kunstmaan/LiveReloadBundle/Resources/ui/vendor_bower/* linguist-vendored
 src/Kunstmaan/MediaBundle/Resources/ui/vendor_bower/* linguist-vendored

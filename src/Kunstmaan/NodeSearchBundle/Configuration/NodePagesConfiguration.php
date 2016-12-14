@@ -7,6 +7,9 @@ use Elastica\Index;
 use Elastica\Type\Mapping;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
@@ -14,9 +17,6 @@ use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
@@ -521,7 +521,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected function enterRequestScope($lang)
     {
         $requestStack = $this->container->get('request_stack');
-        if (!$requestStack->getCurrentRequest()) {
+        // If there already is a request, get the locale from it.
+        if ($requestStack->getCurrentRequest()) {
+            $locale = $requestStack->getCurrentRequest()->getLocale();
+        }
+        // If we don't have a request or the current request locale is different from the node langauge
+        if (!$requestStack->getCurrentRequest() || ($locale && $locale !== $lang)) {
             $request = new Request();
             $request->setLocale($lang);
 

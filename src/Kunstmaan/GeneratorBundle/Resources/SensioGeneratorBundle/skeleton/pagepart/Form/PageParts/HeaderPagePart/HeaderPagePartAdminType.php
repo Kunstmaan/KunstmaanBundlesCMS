@@ -2,12 +2,12 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
-use {{ namespace }}\Entity\PageParts\{{ pagepart }};
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use {{ namespace }}\Entity\PageParts\{{ pagepart }};
 
 /**
  * {{ pagepart }}AdminType
@@ -35,7 +35,6 @@ class {{ pagepart }}AdminType extends AbstractType
             'label' => 'pagepart.header.type',
             'choices' => array_combine($names, {{ pagepart }}::$supportedHeaders),
             'required' => true,
-                'choices_as_values' => true
         ));
         $builder->add('title', TextType::class, array(
             'label' => 'pagepart.header.title',

@@ -61,12 +61,4 @@ class PageTemplateTwigExtension extends \Twig_Extension
         return $this->templateConfiguration->findOrCreateFor($page)->getPageTemplate();
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'pagetemplate_twig_extension';
-    }
-
 }

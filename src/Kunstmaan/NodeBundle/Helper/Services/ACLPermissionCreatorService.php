@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission,
-    Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder,
+    Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity,
     Symfony\Component\Security\Acl\Exception\AclNotFoundException,

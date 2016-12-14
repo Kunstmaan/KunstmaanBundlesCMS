@@ -2,10 +2,11 @@
 settings:
   groups: Groepen
   group:
-      name: Nan
+      name: Naam
       edit: Bewerk groep
       add: Groep toevoegen
       roles: Rollen
+      roles_placeholder: Kies rollen…
   users: Gebruikers
   user:
       username: Gebruikersnaam
@@ -22,3 +23,49 @@ settings:
       role: Rol
       add: Rol toevoegen
       edit: Rol bewerken
+
+kuma_user:
+    roles:
+        add:
+            flash:
+                'success.%role%': Rol '%role%' werd aangemaakt!
+        edit:
+            flash:
+                'success.%role%': Rol '%role%' werd gewijzigd!
+        delete:
+            flash:
+                'success.%role%': Rol '%role%' werd verwijderd!
+    users:
+        adminlist:
+            header:
+                username:   Gebruikersnaam
+                email:      E-mail
+                enabled:    Ingeschakeld
+                last_login: Laatste login
+                groups:     Groepen
+            filter:
+                username:   Gebruikersnaam
+                email:      E-mail
+                enabled:    Ingeschakeld
+        add:
+            flash:
+                'success.%username%': Gebruiker '%username%' werd aangemaakt!
+        edit:
+            flash:
+                'success.%username%': Gebruiker '%username%' werd aangemaakt!
+        delete:
+            flash:
+                'success.%username%': Gebruiker '%username%' werd aangemaakt!
+    group:
+        adminlist:
+            header:
+                name:   Naam
+                roles:  Rollen
+            filter:
+                name:   Naam
+    role:
+        adminlist:
+            header:
+                role:   Rol
+            filter:
+                role:   Rol

@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\RedirectBundle\Controller;
 
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
+use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class RedirectAdminListController extends AdminListController

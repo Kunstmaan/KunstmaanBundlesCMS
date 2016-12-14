@@ -3,14 +3,14 @@
 namespace {{ namespace }}\Entity\Pages;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
-use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
-use {{ namespace }}\Form\Pages\{{ entity_class }}OverviewPageAdminType;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use {{ namespace }}\Form\Pages\{{ entity_class }}OverviewPageAdminType;
 
 /**
  * The article overview page which shows its articles

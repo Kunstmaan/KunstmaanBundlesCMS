@@ -15,7 +15,7 @@ The 'entity' parameter is required in order to generated the class names. Most u
 The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
 
 ```
-app/console kuma:generate:article --namespace=Namespace\\NamedBundle --entity=Entity --prefix=tableprefix_
+bin/console kuma:generate:article --namespace=Namespace\\NamedBundle --entity=Entity --prefix=tableprefix_
 ```
 
 ### Generated files
@@ -23,7 +23,7 @@ app/console kuma:generate:article --namespace=Namespace\\NamedBundle --entity=En
 Assuming we generated articles using the following parameters :
 
 ```
-app/console kuma:generate:article --namespace=Kunstmaan\\NewsBundle --entity=news --prefix=news_
+bin/console kuma:generate:article --namespace=Kunstmaan\\NewsBundle --entity=news --prefix=news_
 ```
 
 The following files will be generated :

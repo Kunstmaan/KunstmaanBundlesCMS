@@ -2,7 +2,7 @@
 
 ## Read and learn from the documentation
 
-The Kunstmaan Bundles CMS is built on top of the Symfony 2 Full Stack framework and wants to be as close to the philosophy and way of working of Symfony itself. This means that knowledge of Symfony is a prerequisite for a succesful deployment, the official guides from Symfony should be a good starting place.
+The Kunstmaan Bundles CMS is built on top of the Symfony Full Stack framework and wants to be as close to the philosophy and way of working of Symfony itself. This means that knowledge of Symfony is a prerequisite for a succesful deployment, the official guides from Symfony should be a good starting place.
 
 * [The Book](http://symfony.com/doc/current/book/index.html)
 * [The Cookbook](http://symfony.com/doc/current/cookbook/index.html)

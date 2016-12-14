@@ -57,7 +57,7 @@ Which should return something like this :
 
 So, you've got ElasticSearch up and running, now you're ready to create the search page skeleton code, so just run :
 
-    app/console kuma:generate:search
+    bin/console kuma:generate:search
 
 This will first ask for the bundle namespace (you can accept the default - MyProject/WebsiteBundle), and finally it will
 ask for the table name prefix, so enter myproject_websitebundle_ as before.
@@ -65,7 +65,7 @@ ask for the table name prefix, so enter myproject_websitebundle_ as before.
 The basic code skeleton should now be generated, so go ahead and create (and apply) a migration for the database
 changes :
 
-    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
+    bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate
 
 This should make sure the necessary table (which will store the search pages) is created.
 
@@ -97,8 +97,8 @@ If you now go to `/app_dev.php/en/search` in your browser you should see the sea
 indexing anything, so let's set up the index first, go ahead and run :
 
 ```
-app/console kuma:search:setup
-app/console kuma:search:populate full
+bin/console kuma:search:setup
+bin/console kuma:search:populate full
 ```
 
 This should create the search index (if it does not exist yet) and populate it as well.
@@ -267,7 +267,7 @@ parameters:
 
 services:
     kunstmaan_node_search.search_configuration.node:
-	class: %kunstmaan_node_search.search_configuration.node.class%
+	class: "%kunstmaan_node_search.search_configuration.node.class%"
 	arguments: ["@service_container", "@kunstmaan_search.search", "%kunstmaan_node_search.indexname%", "%kunstmaan_node_search.indextype%"]
 	calls:
 	    - [ setAclProvider, ["@security.acl.provider"]]

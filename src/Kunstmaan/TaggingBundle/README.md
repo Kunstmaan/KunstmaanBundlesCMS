@@ -10,7 +10,7 @@ This bundle adds tagging to your Kunstmaan Bundles project.
 
 Installation requirements
 -------------------------
-You should be able to get Symfony 2.3 up and running before you can install the KunstmaanTaggingBundle.
+You should be able to get Symfony 3 up and running before you can install the KunstmaanTaggingBundle.
 
 Installation instructions
 -------------------------

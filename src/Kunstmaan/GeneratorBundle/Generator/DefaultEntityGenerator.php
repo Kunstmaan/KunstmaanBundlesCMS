@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Doctrine\ORM\Tools\EntityGenerator;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
  * DefaultEntityGenerator

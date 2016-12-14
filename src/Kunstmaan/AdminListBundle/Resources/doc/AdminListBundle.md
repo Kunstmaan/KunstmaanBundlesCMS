@@ -313,7 +313,7 @@ YourBundle_documents:
     type: annotation
     prefix: /{_locale}/admin/documents
     requirements:
-        _locale: %requiredlocales%
+        _locale: "%requiredlocales%"
 ```
 
 ## AdminList Filters

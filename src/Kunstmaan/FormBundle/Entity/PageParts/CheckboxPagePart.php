@@ -3,13 +3,13 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-use Symfony\Component\Form\FormBuilderInterface;
-use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
-use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
+use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
+use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
+use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * The checkbox page part can be used to create forms with checkbox input fields

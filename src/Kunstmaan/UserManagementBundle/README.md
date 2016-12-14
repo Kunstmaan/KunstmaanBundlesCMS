@@ -12,6 +12,6 @@ View screenshots and more information [http://bundles.kunstmaan.be](http://bundl
 
 ## Installation
 
-This bundle is compatible with all Symfony 2.3.* releases. More information about installing can be found in this line
+This bundle is compatible with all Symfony 3.* releases. More information about installing can be found in this line
 by line walkthrough of installing Symfony and all our bundles, please refer to the
 [Getting Started guide](http://bundles.kunstmaan.be/getting-started) and enjoy the full blown experience.

@@ -81,24 +81,6 @@ class SearchService
     }
 
     /**
-     * @return RenderContext
-     * @deprecated Use getRenderContext
-     */
-    public function getRenderContect()
-    {
-        return $this->renderContext;
-    }
-
-    /**
-     * @param RenderContext $renderContext
-     * @deprecated Use setRenderContext
-     */
-    public function setRenderContect($renderContext)
-    {
-        $this->renderContext = $renderContext;
-    }
-
-    /**
      * @return int
      */
     public function getDefaultPerPage()

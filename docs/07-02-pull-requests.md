@@ -4,7 +4,7 @@ Pull request are the best way to provide a bug fix or to propose enhancements to
 
 ## Step 1: Setup your environment
 
-Before working on the KunstmaanBundlesCMS, setup a Symfony 2 friendly environment like described in the [system requirements documentation](./03.01. System requirements.md) or [work with the PuPHPet Vagrant box](./03.02. Development environment.md).
+Before working on the KunstmaanBundlesCMS, setup a Symfony friendly environment like described in the [system requirements documentation](./03.01. System requirements.md) or [work with the PuPHPet Vagrant box](./03.02. Development environment.md).
 
 Make sure your git setup is complete. If you are new to git, we highly recommended you read the excellent and free [ProGit book](http://git-scm.com/book).
 
@@ -78,6 +78,18 @@ an existing one for instance), it must also include the following:
 
 Whenever you feel that your patch is ready for submission, follow the
 following steps.
+
+### Select the correct branch for your pull request
+
+```
+| Kind of PR                 | Branch
+| -------------------------- | ---
+| New feature (no BC breaks) | master branch
+| BC break                   | next major version branch
+| Deprecations               | master branch
+| Bug fix                    | latest minor version branch
+| Security fix               | first minor version branch (of the latest major version) where the security fix was introduced
+```
 
 ### Rebase your pull request
 

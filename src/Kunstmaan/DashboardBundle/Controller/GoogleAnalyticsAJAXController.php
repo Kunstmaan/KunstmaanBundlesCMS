@@ -6,12 +6,12 @@ use Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsGoal;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsOverviewRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class GoogleAnalyticsAJAXController extends Controller
 {
@@ -216,7 +216,7 @@ class GoogleAnalyticsAJAXController extends Controller
         $em->persist($config);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             FlashTypes::SUCCESS,
             $this->get('translator')->trans('kuma_admin.ga_ajax_controller.flash.success')
         );

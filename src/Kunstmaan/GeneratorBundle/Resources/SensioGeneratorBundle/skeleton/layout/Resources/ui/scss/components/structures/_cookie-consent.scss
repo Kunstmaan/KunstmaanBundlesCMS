@@ -1,21 +1,57 @@
 /* ==========================================================================
-   Structures - Cookieconsent
+   Cookie consent
    ========================================================================== */
 
 .cookie-bar {
-    z-index: 100;
     position: fixed;
     bottom: 0;
+    top: auto;
     left: 0;
+    right: auto;
+    z-index: 500;
 
-
+    display: none;
     width: 100%;
-    padding: 1rem;
+    padding: 1.5rem;
 
-    background: rgba($black, .9);
-    {% if demosite %}
-    background: rgba($blue--dark, .9);
-    {% endif %}
+    border: .1rem solid rgba(86,86,86,0.95);
+
+    background: rgba(86,86,86,0.95);
+
+    text-align: left;
+    color: $white;
+    line-height: 1.7;
+    font: {
+        family: Helvetica, Arial, sans-serif;
+        size: 1rem;
+    }
+
+    animation-name: cookieSlide;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.8s;
+
+    .cookie-bar__policy {
+        color: $white;
+        text-decoration: underline;
+    }
+
+    .cookie-bar__btn {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        margin: 1rem 0 0;
+        padding: 1rem 1.5rem;
+
+        border-radius: 0;
+        border: none;
+
+        font-size: 1rem;
+        color: rgba(86,86,86,0.95);
+
+        background: $white;
+    }
 
     p {
         padding: 0;
@@ -24,19 +60,23 @@
 
         color: $white;
         text-align: left;
-        font-size: .7rem;
+
+        font-size: 1rem;
+
+        a {
+            color: $white;
+        }
     }
 
-    .cookie-bar__btn {
-        position: absolute;
-        top: 50%;
-        right: 1rem;
+    @media(min-width: $screen-sm-min) {
+        bottom: 1rem;
+        left: 1rem;
 
-        margin: 0;
+        max-width: 35rem;
 
-        transform: translateY(-50%);
-
-        font-size: .7rem;
+        p {
+            max-width: 22.9rem;
+        }
     }
 
     @media(min-width: $screen-md-min) {
@@ -51,6 +91,21 @@
     }
 }
 
+
+.cookie-bar--visible {
+    display: block;
+}
+
+@keyframes cookieSlide {
+    0% {
+        transform: translateY(6rem);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
+}
 
 /*doc
 ---

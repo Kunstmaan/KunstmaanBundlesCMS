@@ -3,16 +3,18 @@
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 
 /**
  * PagePartTwigExtension
  */
 class PagePartTwigExtension extends \Twig_Extension
 {
-
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
     /**
@@ -29,7 +31,7 @@ class PagePartTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true,'is_safe' => array('html'))),
+            new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
             new \Twig_SimpleFunction('getpageparts', array('needs_environment' => true, $this, 'getPageParts')),
         );
     }
@@ -47,8 +49,7 @@ class PagePartTwigExtension extends \Twig_Extension
     {
         $template = $env->loadTemplate("KunstmaanPagePartBundle:PagePartTwigExtension:widget.html.twig");
         /* @var $entityRepository PagePartRefRepository */
-        $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        $pageparts = $entityRepository->getPageParts($page, $contextName);
+        $pageparts = $this->getPageParts($page, $contextName);
         $newTwigContext = array_merge($parameters, array(
             'pageparts' => $pageparts,
             'page' => $page
@@ -72,13 +73,4 @@ class PagePartTwigExtension extends \Twig_Extension
 
         return $pageparts;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'pageparts_twig_extension';
-    }
-
 }

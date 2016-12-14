@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\SeoBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SeoType extends AbstractType
@@ -49,7 +49,6 @@ class SeoType extends AbstractType
                 'seo.form.robots.notranslate'  => self::ROBOTS_NOTRANSLATE,
                 'seo.form.robots.noimageindex' => self::ROBOTS_NOIMAGEINDEX,
             ),
-            'choices_as_values' => true,
             'required' => false,
             'multiple' => true,
             'expanded' => false,

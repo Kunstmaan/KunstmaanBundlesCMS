@@ -4,8 +4,8 @@ namespace {{ namespace }}\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use {{ namespace }}\Entity\PageParts\UspPagePart;
 use Symfony\Component\Validator\Constraints as Assert;
+use {{ namespace }}\Entity\PageParts\UspPagePart;
 
 /**
  * @ORM\Table(name="{{ prefix }}usp_item")

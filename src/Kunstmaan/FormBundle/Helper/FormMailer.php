@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\FormBundle\Helper;
 
+use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_Mime_Message;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Kunstmaan\FormBundle\Entity\FormSubmission;
 
 /**
  * The form mailer

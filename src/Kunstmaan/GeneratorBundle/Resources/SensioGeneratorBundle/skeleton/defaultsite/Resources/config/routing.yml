@@ -9,5 +9,5 @@
     type:     annotation
     prefix:   /{_locale}/admin/bike/
     requirements:
-         _locale: %requiredlocales%
+         _locale: "%requiredlocales%"
 {% endif %}

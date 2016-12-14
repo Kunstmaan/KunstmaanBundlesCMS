@@ -27,7 +27,7 @@
             {% set imageType = resource.media.originalFilename|lower|split('.')|last %}
 
             {% if resource.link is defined and resource.link != '' %}
-            <a href="{{ resource.link }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}>
+            <a href="{{ resource.link | replace_url }}" {% if resource.openinnewwindow %}target="_blank"{% endif %}>
                 {% endif %}
 
                 {{ buildImage.setFilters(resource.media.url, resource.altText, imageType) }}

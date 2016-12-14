@@ -5,10 +5,10 @@ namespace Kunstmaan\NodeBundle\EventListener;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Kunstmaan\NodeBundle\Helper\NodeMenu;
 
 class SlugSecurityListener
 {
