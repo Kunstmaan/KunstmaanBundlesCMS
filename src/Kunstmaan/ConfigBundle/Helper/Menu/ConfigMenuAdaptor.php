@@ -56,7 +56,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
                     $menuItem = new MenuItem($menu);
                     $menuItem
                       ->setRoute('kunstmaanconfigbundle_default')
-                      ->setRouteParams(array('internal_name' => $entity->getInternalName()))
+                      ->setRouteParams(array('internalName' => $entity->getInternalName()))
                       ->setLabel($entity->getLabel())
                       ->setUniqueId($entity->getInternalName())
                       ->setParent($parent);
