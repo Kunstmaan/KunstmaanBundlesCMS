@@ -640,8 +640,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function removeHtml($text)
     {
-        // Strip all javascript including the script tags
-        $result = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $text);
+        // Strip all javascript and styling including the script / style tags
+        $result = preg_replace('/<(script|style)\b[^>]*>(.*?)<\/(script|style)>/is', "", $text);
         
         // Remove HTML markup
         $result = strip_tags($result);
