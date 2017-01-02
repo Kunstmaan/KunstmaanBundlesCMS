@@ -51,6 +51,7 @@ class PagePartAdminTwigExtension extends \Twig_Extension
 
         return $template->render(array_merge($parameters, array(
             'pagepartadmin' => $ppAdmin,
+            'page' => $ppAdmin->getPage(),
             'form' => $form
         )));
     }
