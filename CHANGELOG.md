@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.0.1 / 2017-01-09
+
+* [FormBundle] Fixed form export when using multiple fields with same label [#1430](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1430) ([@marksel](https://github.com/marksel)) 
+* [TaggingBundle]: make tag names translatable [#1429](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1429) ([@sandergo90](https://github.com/sandergo90)) 
+* [PagePartBundle]: add post persist event [#1426](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1426) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle]: set default values [#1422](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1422) ([@sandergo90](https://github.com/sandergo90)) 
+* [All] Allow symfony/monolog-bundle v3 [#1421](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1421) ([@aistis-](https://github.com/aistis-)) 
+* [ConfigBundle] Fixed variable name, in routing and view, for ConfigController::indexAction. [#1419](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1419) ([@adrianwaler](https://github.com/adrianwaler)) 
+* [GeneratorBundle] fixed datafixtures for default site [#1415](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1415) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminBundle]: remove locked and expired [#1414](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1414) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 4.0.0 / 2016-12-13
 
 * [AllBundles]: change symfony 2 to symfony 3 [#1408](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1408) ([@sandergo90](https://github.com/sandergo90))
