@@ -105,7 +105,6 @@ abstract class AdminListController extends Controller
 
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
-        $repo = $em->getRepository($configurator->getRepositoryName());
         $entityName = null;
         if (isset($type)) {
             $entityName = $type;
@@ -152,13 +151,8 @@ abstract class AdminListController extends Controller
                     return $adminListEvent->getResponse();
                 }
 
-                // Check if Sortable interface is implemented
-                if ($configurator instanceof SortableInterface) {
-                    $sort = $configurator->getSortableField();
-                    $weight = $this->getMaxSortableField($repo, $sort);
-                    $setter = "set".ucfirst($sort);
-                    $helper->$setter($weight + 1);
-                }
+                // Set sort weight
+                $helper = $this->setSortWeightOnNewItem($configurator, $helper);
 
                 $em->persist($helper);
                 $em->flush();
@@ -456,6 +450,25 @@ abstract class AdminListController extends Controller
         return (int)$maxWeight;
     }
 
+    /**
+     * Sets the sort weight on a new item. Can be overridden if a non-default sorting implementation is being used.
+     *
+     * @param AbstractAdminListConfigurator $configurator The adminlist configurator
+     * @param $item
+     *
+     * @return mixed
+     */
+    protected function setSortWeightOnNewItem(AbstractAdminListConfigurator $configurator, $item) {
+        if ($configurator instanceof SortableInterface) {
+            $repo = $this->getEntityManager()->getRepository($configurator->getRepositoryName());
+            $sort = $configurator->getSortableField();
+            $weight = $this->getMaxSortableField($repo, $sort);
+            $setter = "set".ucfirst($sort);
+            $item->$setter($weight + 1);
+        }
+
+        return $item;
+    }
 
     protected function buildSortableFieldActions(AbstractAdminListConfigurator $configurator)
     {
