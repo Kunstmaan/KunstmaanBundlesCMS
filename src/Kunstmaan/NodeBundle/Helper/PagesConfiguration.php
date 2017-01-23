@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\Helper;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use /** @noinspection PhpDeprecationInspection */
     Kunstmaan\NodeBundle\Entity\HideFromNodeTreeInterface;
@@ -11,13 +13,45 @@ use /** @noinspection PhpDeprecationInspection */
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
+
 class PagesConfiguration
 {
     private $configuration;
 
+    /**
+     * @var Registry
+     */
+    private $doctrine;
+
     public function __construct($configuration)
     {
         $this->configuration = $configuration;
+
+    }
+
+    public function setDoctrine(Registry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
+    /**
+     * Collects all entities that implement HomePageInterface and loads them into configuration
+     */
+    public function initConfiguration()
+    {
+        $metas = $this->doctrine->getManager()->getMetadataFactory()->getAllMetadata();
+        foreach ($metas as $meta) {
+            /** @var ClassMetadata $meta */
+            if ($meta->getReflectionClass()->implementsInterface(HomePageInterface::class)) {
+                $refName = $meta->getName();
+                if (!isset($this->configuration[$refName])) {
+                    $this->configuration[$refName] = [
+                        // name is created from classname
+                        'name' => substr($refName, strrpos($refName, '\\') + 1),
+                    ];
+                }
+            }
+        }
     }
 
     public function getName($refName)
