@@ -18,22 +18,22 @@ class NodeSearcher extends AbstractElasticaSearcher
     /**
      * @var TokenStorageInterface
      */
-    private $tokenStorage = null;
+    protected $tokenStorage = null;
 
     /**
      * @var DomainConfigurationInterface
      */
-    private $domainConfiguration;
+    protected $domainConfiguration;
 
     /**
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var bool
      */
-    private $useMatchQueryForTitle = false;
+    protected $useMatchQueryForTitle = false;
 
     /**
      * @param TokenStorageInterface $tokenStorage
