@@ -1,4 +1,5 @@
 {% for box in pageparts %}
     {% set resource = box %}
+    {% set pagepart_index = loop.index0 %}
     {% include box.getView(page) %}
 {% endfor %}
