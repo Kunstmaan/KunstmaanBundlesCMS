@@ -7,10 +7,12 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurat
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Kunstmaan\MenuBundle\Entity\BaseMenu;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MenuItemAdminListController extends AdminListController
 {
@@ -47,13 +49,27 @@ class MenuItemAdminListController extends AdminListController
 
     /**
      * The index action
+     * @param Request $request
+     * @param int $menuid
+     * @return Response
      *
      * @Route("/{menuid}/items", name="kunstmaanmenubundle_admin_menuitem")
      */
     public function indexAction(Request $request, $menuid)
     {
-        $configurator = $this->getAdminListConfigurator($request, $menuid);
+        $menuRepo = $this->getDoctrine()->getManager()->getRepository(
+            $this->getParameter('kunstmaan_menu.entity.menu.class')
+        );
 
+        /** @var BaseMenu $menu */
+        $menu = $menuRepo->find($menuid);
+        if ($menu->getLocale() != $request->getLocale()) {
+            /** @var BaseMenu $translatedMenu */
+            $translatedMenu = $menuRepo->findOneBy(['locale' => $request->getLocale(), 'name' => $menu->getName()]);
+            $menuid = $translatedMenu->getId();
+        }
+
+        $configurator = $this->getAdminListConfigurator($request, $menuid);
         $itemRoute = function (EntityInterface $item) use ($menuid) {
             return array(
                 'path' => 'kunstmaanmenubundle_admin_menuitem_move_up',

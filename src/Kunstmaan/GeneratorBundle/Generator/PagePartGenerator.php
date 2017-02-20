@@ -280,7 +280,7 @@ class PagePartGenerator extends KunstmaanGenerator
             $className = basename($parts[count($parts) - 1], '.php');
 
             $contents = file_get_contents($pageFile);
-            if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false) {
+            if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false && strpos($contents, 'trait ') === false) {
                 $classNamespace = '\\' . $this->bundle->getNamespace() . '\Entity\Pages\\' . $className;
                 $entity         = new $classNamespace;
 

@@ -3,6 +3,7 @@
 {{- quote|raw -}}{{- column.header | trans -}}{{- quote|raw -}}
 {%- if not loop.last -%},{%- endif -%}
 {%- endfor -%}
+{{ "" }}
 {% set counter = 0 %}
 {% for item in iterator %}
 {% if item[0] is defined %}
@@ -20,4 +21,5 @@
 {% endif %}
 {%- if not loop.last -%},{%- endif -%}
 {%- endfor -%}
+{{ "" }}
 {% endfor %}
