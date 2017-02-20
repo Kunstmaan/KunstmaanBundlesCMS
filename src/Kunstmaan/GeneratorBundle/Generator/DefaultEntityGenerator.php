@@ -3,6 +3,7 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Doctrine\ORM\Tools\EntityGenerator;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -32,17 +33,17 @@ class DefaultEntityGenerator extends KunstmaanGenerator
 
     /**
      * @param BundleInterface $bundle The bundle
-     * @param string $entity The entity name
-     * @param string $prefix The database prefix
-     * @param array $fields The fields
-     * @param bool $withRepository
+     * @param string          $entity The entity name
+     * @param string          $prefix The database prefix
+     * @param array           $fields The fields
+     * @param bool            $withRepository
      */
     public function generate(BundleInterface $bundle, $entity, $prefix, array $fields, $withRepository = false)
     {
-        $this->bundle   = $bundle;
-        $this->entity   = $entity;
-        $this->prefix   = $prefix;
-        $this->fields   = $fields;
+        $this->bundle = $bundle;
+        $this->entity = $entity;
+        $this->prefix = $prefix;
+        $this->fields = $fields;
 
         list($entityCode, $entityPath) = $this->generateEntity(
             $this->bundle,
@@ -50,12 +51,12 @@ class DefaultEntityGenerator extends KunstmaanGenerator
             $this->fields,
             '',
             $this->prefix,
-            null,
+            AbstractEntity::class,
             $withRepository
         );
 
-        $pos        = strrpos($entityCode, "}");
-        $trimmed    = substr($entityCode, 0, $pos);
+        $pos = strrpos($entityCode, "}");
+        $trimmed = substr($entityCode, 0, $pos);
         $entityCode = $trimmed . "\n}";
 
         // Write class to filesystem
@@ -63,14 +64,5 @@ class DefaultEntityGenerator extends KunstmaanGenerator
         file_put_contents($entityPath, $entityCode);
 
         $this->assistant->writeLine('Generating entity : <info>OK</info>');
-    }
-
-    /**
-     * @param string $classToExtend
-     * @return EntityGenerator
-     */
-    protected function getEntityGenerator($classToExtend = 'Kunstmaan\AdminBundle\Entity\AbstractEntity')
-    {
-        return parent::getEntityGenerator($classToExtend);
     }
 }

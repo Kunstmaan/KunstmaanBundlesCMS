@@ -9,7 +9,7 @@ parameters:
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: ['@session', '@kunstmaan_admin.logger' , '@kunstmaan_utilities.slugifier', '@kunstmaan_admin.domain_configuration']
+        arguments: ['@session', '@kunstmaan_admin.logger' , '@kunstmaan_utilities.slugifier', '@kunstmaan_admin.domain_configuration', '@kunstmaan_node.pages_configuration']
         calls:
             - [ 'setRequestStack', ['@request_stack'] ]
         tags:
