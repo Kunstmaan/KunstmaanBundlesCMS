@@ -6,14 +6,17 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
+use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -180,7 +183,11 @@ abstract class AdminListController extends Controller
             }
         }
 
-        $params = array('form' => $form->createView(), 'adminlistconfigurator' => $configurator);
+        $params = [
+            'form' => $form->createView(),
+            'adminlistconfigurator' => $configurator,
+            'entityVersionLockCheck' => false
+        ];
 
         if ($tabPane) {
             $params = array_merge($params, array('tabPane' => $tabPane));
@@ -208,12 +215,38 @@ abstract class AdminListController extends Controller
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
         $helper = $em->getRepository($configurator->getRepositoryName())->findOneById($entityId);
+
         if ($helper === null) {
             throw new NotFoundHttpException("Entity not found.");
         }
 
         if (!$configurator->canEdit($helper)) {
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+        }
+
+        if ($helper instanceof LockableEntityInterface) {
+            // This entity is locked
+            if ($this->isLockableEntityLocked($helper)) {
+                $indexUrl = $configurator->getIndexUrl();
+                // Don't redirect to listing when coming from ajax request, needed for url chooser.
+                if (!$request->isXmlHttpRequest()) {
+                    /** @var EntityVersionLockService $entityVersionLockService*/
+                    $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+
+                    $user = $entityVersionLockService->getUsersWithEntityVersionLock($helper, $this->getUser());
+                    $message = $this->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
+                    $this->addFlash(
+                        FlashTypes::WARNING,
+                        $message
+                    );
+                    return new RedirectResponse(
+                        $this->generateUrl(
+                            $indexUrl['path'],
+                            isset($indexUrl['params']) ? $indexUrl['params'] : array()
+                        )
+                    );
+                }
+            }
         }
 
         $formType = $configurator->getAdminType($helper);
@@ -229,6 +262,7 @@ abstract class AdminListController extends Controller
         $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
+
             if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
@@ -277,7 +311,12 @@ abstract class AdminListController extends Controller
 
         $configurator->buildItemActions();
 
-        $params = array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator);
+        $params = [
+            'form' => $form->createView(),
+            'entity' => $helper, 'adminlistconfigurator' => $configurator,
+            'entityVersionLockInterval' => $this->container->getParameter('kunstmaan_entity.lock_check_interval'),
+            'entityVersionLockCheck' => $this->container->getParameter('kunstmaan_entity.lock_enabled') && $helper instanceof LockableEntityInterface,
+        ];
 
         if ($tabPane) {
             $params = array_merge($params, array('tabPane' => $tabPane));
@@ -456,6 +495,16 @@ abstract class AdminListController extends Controller
         return (int)$maxWeight;
     }
 
+    /**
+     * @param LockableEntityInterface $entity
+     * @return bool
+     */
+    protected function isLockableEntityLocked(LockableEntityInterface $entity)
+    {
+        /** @var EntityVersionLockService $entityVersionLockService*/
+        $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+        return $entityVersionLockService->isEntityBelowThreshold($entity) || $entityVersionLockService->isEntityLocked($this->getUser(), $entity);
+    }
 
     protected function buildSortableFieldActions(AbstractAdminListConfigurator $configurator)
     {

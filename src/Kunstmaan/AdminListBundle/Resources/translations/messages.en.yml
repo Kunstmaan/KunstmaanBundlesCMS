@@ -1,3 +1,7 @@
 kuma_admin_list:
     form:
         export_to: Export to
+    edit:
+        flash:
+            success: The entity has been edited
+            locked: The entity is currently being edited by %user%
