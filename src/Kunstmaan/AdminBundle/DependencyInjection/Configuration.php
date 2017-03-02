@@ -88,6 +88,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('password_restrictions')
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('min_digits')->defaultNull()->end()
+                        ->integerNode('min_uppercase')->defaultNull()->end()
+                        ->integerNode('min_special_characters')->defaultNull()->end()
+                        ->integerNode('min_length')->defaultNull()->end()
+                        ->integerNode('max_length')->defaultNull()->end()
+                    ->end()
             ->end();
 
         return $treeBuilder;

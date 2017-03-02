@@ -55,6 +55,12 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.google_signin.client_secret', $config['google_signin']['client_secret']);
         $container->setParameter('kunstmaan_admin.google_signin.hosted_domains', $config['google_signin']['hosted_domains']);
 
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_digits' , $config['password_restrictions']['min_digits']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_uppercase' , $config['password_restrictions']['min_uppercase']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_special_characters' , $config['password_restrictions']['min_special_characters']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_length' , $config['password_restrictions']['min_length']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.max_length' , $config['password_restrictions']['max_length']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 

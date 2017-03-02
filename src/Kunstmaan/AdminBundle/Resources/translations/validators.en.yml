@@ -1,6 +1,11 @@
 errors:
   password:
     dontmatch: The passwords you entered don't match
+    mindigits: 'The password should contain at least {{ min_digits }} digits.'
+    minuppercase: 'The password should contain at least {{ min_uppercase }} uppercase characters.'
+    minspecialcharacters: 'The password should contain at least {{ min_special_characters }} special characters.'
+    minlength: 'The password should be at least {{ min_length }} characters long.'
+    maxlength: 'The password should be maximum {{ max_length }} characters long.'
 
   user:
     loginexists: This username is already in use
