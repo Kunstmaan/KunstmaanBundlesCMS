@@ -13,8 +13,10 @@ settings:
         add: Add translation
         edit: Edit translation
         refresh_live: Refresh live
-        import_translations: Import
         import_translations_forced: Import forced
+        import_translations: Import
+        actions: Actions
+        export_translations: Export to CSV
         not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
         choose_language: "Choose a language"
         succesful_added: "Translation succesfully created"
