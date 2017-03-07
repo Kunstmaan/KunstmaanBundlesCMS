@@ -103,6 +103,16 @@
     {% include '@KunstmaanNode/NodeAdmin/_modals.html.twig' %}
 {% endblock %}
 
+{% block breadcrumb %}
+
+    {% if getOverviewRoute(page) is not null %}
+        <a href="{{ path(getOverviewRoute(page)) }}" class="btn btn-default" style="margin:20px 0 20px 0;"><i class="fa fa-arrow-left"></i>
+            Back to overview
+        </a>
+    {%  endif %}
+
+{% endblock %}
+
 {% block extracss %}
     {% set cssPath = 'frontend/css/admin-style.min.css' %}
     {% if file_exists(cssPath) %}
