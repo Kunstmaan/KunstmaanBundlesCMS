@@ -124,7 +124,9 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         $queryBuilder
             ->select('b.*')
             ->from('(' . $qbHelper->getSQL() . ')', 'b')
-            ->setParameter('pageClass', $this->getPageClass());
+            ->orderBy('FIELD(b.lang, :lang)', 'DESC')
+            ->setParameter('pageClass', $this->getPageClass())
+            ->setParameter('lang', $this->locale);
 
 
     }
