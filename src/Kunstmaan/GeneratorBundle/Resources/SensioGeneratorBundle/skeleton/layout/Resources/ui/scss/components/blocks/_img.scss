@@ -28,20 +28,16 @@ name: 04_img
 category: Blocks
 ---
 
-<strong>Regular</strong>
-
 ```html_example
-    <img src="http://placehold.it/350x250">
-```
+<h3>Regular</h3>
+<img src="http://placehold.it/350x250">
 
-<strong>With caption</strong>
-
-```html_example
-    <figure>
+<h3>With caption</h3>
+<figure>
     <img src="http://placehold.it/350x250">
     <figcaption>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore perspiciatis voluptatem sed saepe debitis, impedit nesciunt quisquam ipsum molestiae quia ab.
     </figcaption>
-    </figure>
+</figure>
 ```
 */

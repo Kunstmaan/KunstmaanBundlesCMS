@@ -55,7 +55,7 @@
 
     @media(min-width: $screen-sm-min) {
         width: auto;
-        max-width: 750px;
+        max-width: 75rem;
     }
 }
 
@@ -67,7 +67,7 @@
     display: block;
     padding: .65em 1em;
 
-    font-size: .8rem;
+    font-size: 1.4rem;
     color: $black;
     background-color: $white;
     border: 1px solid $hr-color;
@@ -80,7 +80,7 @@
         display: inline-block;
 
         &.form-control {
-            max-width: 18.8rem;
+            max-width: 34rem;
         }
     }
 }
@@ -88,12 +88,14 @@
 .newsletter__form__btn {
     display: block;
     width: 100%;
-    margin-top: .5rem;
+    margin-top: 1rem;
+
+    font-size: 1.8rem;
 
     @media(min-width: $screen-sm-min) {
         display: inline-block;
         width: auto;
-        margin-left: .5rem;
+        margin-left: 1rem;
         margin-top: 0;
     }
 }

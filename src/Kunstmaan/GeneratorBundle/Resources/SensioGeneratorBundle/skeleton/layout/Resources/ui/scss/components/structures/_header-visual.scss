@@ -5,12 +5,12 @@
 .header-visual {
     position: relative;
 
-    margin-bottom: 4rem;
+    margin-bottom: 7rem;
 
     @media(min-width: $screen-md-min) {
         overflow: hidden;
         height: 70vh;
-        max-height: 40rem;
+        max-height: 72rem;
     }
 }
 
@@ -18,7 +18,7 @@
     width: 100%;
 
     @media(min-width: $screen-md-min) {
-        transform: translateY(-50%);
+        transform: translate3d(0, -50%, 0);
 
         z-index: 0;
         position: absolute;
@@ -30,11 +30,11 @@
 }
 
 .header-visual__content {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
     text-align: center;
 
     @media(min-width: $screen-md-min) {
-        transform: translateY(-50%);
+        transform: translate3d(0, -50%, 0);
 
         z-index: 1;
         position: absolute;
@@ -59,7 +59,7 @@
     @media(min-width: $screen-md-min) {
         margin-top: 0;
 
-        font-size: 5.625rem;
+        font-size: 10rem;
         font-weight: 100;
         color: $white;
     }
@@ -69,7 +69,7 @@
 
     @media(min-width: $screen-md-min) {
         max-width: 50%;
-        margin-bottom: 2.5rem;
+        margin-bottom: 4.5rem;
 
         color: $white;
     }
@@ -78,10 +78,10 @@
 .header-visual__btn {
     padding: .9em 1.5em;
 
-    color: $blue--dark;
+    color: $brand-primary--dark;
     text-transform: uppercase;
     font-weight: 300;
-    font-size: 1.1rem;
+    font-size: 2rem;
 
     @media(min-width: $screen-md-min) {
         border: 0;

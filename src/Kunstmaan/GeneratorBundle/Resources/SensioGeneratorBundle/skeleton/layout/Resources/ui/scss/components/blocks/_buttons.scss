@@ -57,12 +57,12 @@
 // Primary
 .btn--primary {
 {% if demosite %}
-    background-color: $theme-color;
+    background-color: $brand-primary;
     color: $white;
-    border-color: $theme-color;
+    border-color: $brand-primary;
 
     &:hover, &:focus, &:active {
-        background-color: lighten($theme-color, 5%);
+        background-color: lighten($brand-primary, 5%);
         color: $white;
     }
 {% endif %}
@@ -71,12 +71,12 @@
 // Secondary
 .btn--secondary {
 {% if demosite %}
-    background-color: $theme-color--dark;
+    background-color: $brand-primary--dark;
     color: $white;
-    border-color: $theme-color--dark;
+    border-color: $brand-primary--dark;
 
     &:hover, &:focus, &:active {
-        background-color: lighten($theme-color--dark, 5%);
+        background-color: lighten($brand-primary--dark, 5%);
         color: $white;
     }
 {% endif %}
@@ -92,17 +92,14 @@ name: 01_buttons
 category: Blocks
 ---
 
-<strong>General</strong>
-
 ```html_example
+
+<h3>General</h3>
 <button type="button" class="btn">
     Button
 </button>
-```
 
-<strong>Types</strong>
-
-```html_example
+<h3>Types</h3>
 <button type="button" class="btn btn--primary">
     Primary
 </button>

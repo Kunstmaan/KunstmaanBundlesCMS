@@ -12,7 +12,7 @@
         {% set imgUrl_big =     asset(image | imagine_filter('image_big_' ~ type)) %}
         {% set imgUrl_medium =  asset(image | imagine_filter('image_medium_' ~ type)) %}
         {% set imgUrl_small =   asset(image | imagine_filter('image_small_' ~ type)) %}
-        {% set srcSet = imgUrl_huge ~ ' 2400w,' ~ imgUrl_big ~ ' 1200w,' ~ imgUrl_medium ~ ' 600w,' ~ imgUrl_small ~ ' 400w' %}
+        {% set srcSet =  imgUrl_small ~ ' 400w, ' ~ imgUrl_medium ~ ' 600w, ' ~ imgUrl_big ~ ' 1200w, ' ~ imgUrl_huge ~ ' 2400w' %}
 
         <img srcset="{{ srcSet }}"{% if altText %} sizes="100vw" alt="{{ altText }}"{% endif %}/>
         <noscript>

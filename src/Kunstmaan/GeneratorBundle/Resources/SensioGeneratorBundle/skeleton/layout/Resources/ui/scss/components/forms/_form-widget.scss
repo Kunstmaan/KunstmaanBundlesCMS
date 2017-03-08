@@ -15,14 +15,14 @@
 {% if demosite %}
     position: relative;
 
-    max-width: 26rem;
-    min-height: 2.5rem;
+    max-width: 45rem;
+    min-height: 4rem;
     padding: 0;
 
     border: 1px solid $hr-color;
 
     &:focus {
-        border-color: $blue;
+        border-color: $brand-primary;
         outline: none;
     }
 
@@ -32,14 +32,14 @@
 .select__icon {
     position: absolute;
     top: 0;
-    right: .2rem;
+    right: .35rem;
     z-index: -1;
 
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 4rem;
+    width: 4rem;
 
-    font-size: .4rem;
-    line-height: 2.5rem;
+    font-size: .7rem;
+    line-height: 4rem;
     text-align: center;
     color: $grey;
 }
@@ -49,7 +49,7 @@
    ========================================================================== */
 .form-widget--choices {
 {% if demosite %}
-    padding-top: .5rem;
+    padding-top: .9rem;
 
 {% endif %}
 }
@@ -89,7 +89,7 @@
 {% if demosite %}
 .form-widget--textarea {
     width: 100%;
-    max-width: 26rem;
+    max-width: 45rem;
 }
 {% endif %}
 

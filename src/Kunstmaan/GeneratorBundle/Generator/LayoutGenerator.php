@@ -43,7 +43,9 @@ class LayoutGenerator extends KunstmaanGenerator
 
         $this->shortBundleName = '@'.str_replace('Bundle', '', $bundle->getName());
 
-        $this->generateBowerFiles();
+        if ($this->demosite) {
+            $this->generateBowerFiles();
+        }
         $this->generateGulpFiles();
         $this->generateGemsFile();
         $this->generateAssets();
@@ -76,7 +78,7 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     private function generateGulpFiles()
     {
-        $this->renderFiles($this->skeletonDir . '/gulp/', $this->rootDir, array('bundle' => $this->bundle), true);
+        $this->renderFiles($this->skeletonDir . '/gulp/', $this->rootDir, array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
         $this->renderSingleFile(
             $this->skeletonDir . '/gulp/',
             $this->rootDir,
@@ -135,25 +137,31 @@ class LayoutGenerator extends KunstmaanGenerator
         if (!$this->demosite) {
 
             // Files
-            $this->removeDirectory($targetDir . $relPath . '/files/content/');
-            $this->removeDirectory($targetDir . $relPath . '/files/dummy/');
+            $this->removeDirectory($targetDir . $relPath . '/files/');
 
 
             // Images
-            $this->removeDirectory($targetDir . $relPath . '/fonts/iconfont/');
+            $this->removeDirectory($targetDir . $relPath . '/fonts/');
 
 
             // JS
             $this->removeFile($targetDir . $relPath . '/js/search.js');
+            $this->removeFile($targetDir . $relPath . '/js/demoMsg.js');
 
 
             // Images
             $this->removeDirectory($targetDir . $relPath . '/img/demosite/');
+            $this->removeDirectory($targetDir . $relPath . '/img/buttons/');
+            $this->removeDirectory($targetDir . $relPath . '/img/dummy/');
+            $this->removeDirectory($targetDir . $relPath . '/img/backgrounds/');
 
 
             // SCSS
             // SCSS - Blocks
             $this->removeFile($targetDir . $relPath . '/scss/components/blocks/_img-icon.scss');
+
+            // SCSS - Forms
+            $this->removeFile($targetDir . $relPath . '/scss/components/forms/_form-widget.scss');
 
             // SCSS - Structures
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_splash.scss');
@@ -164,19 +172,24 @@ class LayoutGenerator extends KunstmaanGenerator
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_header-visual.scss');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_newsletter.scss');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_pagination.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/_demosite-msg.scss');
 
             // SCSS - Header
-            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_main-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_site-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_language-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_contact-nav.scss');
-            $this->removeFile($targetDir . $relPath . '/scss/components/footer/_search-form.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/header/_main-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/header/_site-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/header/_language-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/header/_contact-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/header/_search-form.scss');
 
             // SCSS - Footer
             $this->removeFile($targetDir . $relPath . '/scss/components/footer/_social-footer.scss');
 
             // SCSS - Pageparts
             $this->removeFile($targetDir . $relPath . '/scss/components/pageparts/_service-pp.scss');
+
+            // SCSS - Config
+            $this->removeFile($targetDir . $relPath . '/scss/config/vendors/_cargobay-imports.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/config/vendors/_cargobay-vars.scss');
 
             // SCSS - Mixins
             $this->removeDirectory($targetDir . $relPath . '/scss/helpers/mixins/');
@@ -202,7 +215,8 @@ class LayoutGenerator extends KunstmaanGenerator
 
         if (!$this->demosite) {
             // Layout
-            $this->removeFile($targetDir . $relPath . '/Layout/mobile_nav.html.twig');
+            $this->removeFile($targetDir . $relPath . '/Layout/_mobile-nav.html.twig');
+            $this->removeFile($targetDir . $relPath . '/Layout/_demositemessage.html.twig');
         }
 
         $this->assistant->writeLine('Generating template files : <info>OK</info>');

@@ -8,7 +8,7 @@
     margin: $default-margin 0;
 
 {% if demosite %}
-    font-size: .85rem;
+    font-size: 1.5rem;
 
     a {
         display: inline-block;
@@ -33,9 +33,9 @@
 .link-pp__icon {
     @extend .icon--arrow-right;
 
-    font-size: .5rem;
+    font-size: .9rem;
     display: inline-block;
-    margin-left: .5rem;
+    margin-left: .9rem;
 
     &:before {
         @include iconfont-reset;
