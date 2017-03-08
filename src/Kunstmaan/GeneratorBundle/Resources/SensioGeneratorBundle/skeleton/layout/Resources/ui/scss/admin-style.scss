@@ -14,8 +14,8 @@
 
 /* Vendors - only vars!
    ========================================================================== */
-@import "config/vendors/bootstrap-vars",
-        "config/vendors/cargobay-vars";
+@import "config/vendors/bootstrap-vars"{% if demosite %},
+        "config/vendors/cargobay-vars"{% endif %};
 
 /* General
    ========================================================================== */
@@ -37,34 +37,34 @@
 
     /* Blocks
        ========================================================================== */
-    @import "blocks/img",
-            "blocks/hr",
-            "blocks/lists",
-            "blocks/links",
-            "blocks/buttons",
-            "blocks/tables";
+    @import "components/blocks/img",
+            "components/blocks/hr",
+            "components/blocks/lists",
+            "components/blocks/links",
+            "components/blocks/buttons",
+            "components/blocks/tables";
 
     /* Structures
        ========================================================================== */
 {% if demosite %}
-    @import "structures/header-visual",
-            "structures/submenu";
+    @import "components/structures/header-visual",
+            "components/structures/submenu";
 {% else %}
     // @import "structures/..";
 {% endif %}
 
     /* Pageparts
        ========================================================================== */
-    @import "pageparts/button-pp",
-            "pageparts/download-pp",
-            "pageparts/header-pp",
-            "pageparts/image-pp",
-            "pageparts/introtext-pp",
-            "pageparts/link-pp",
+    @import "components/pageparts/button-pp",
+            "components/pageparts/download-pp",
+            "components/pageparts/header-pp",
+            "components/pageparts/image-pp",
+            "components/pageparts/introtext-pp",
+            "components/pageparts/link-pp",
 {% if demosite %}
-            "pageparts/service-pp",
+            "components/pageparts/service-pp",
 {% endif %}
-            "pageparts/text-pp",
-            "pageparts/totop-pp",
-            "pageparts/video-pp";
+            "components/pageparts/text-pp",
+            "components/pageparts/totop-pp",
+            "components/pageparts/video-pp";
 }

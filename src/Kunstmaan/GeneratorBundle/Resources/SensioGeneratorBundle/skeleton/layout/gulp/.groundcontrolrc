@@ -1,25 +1,25 @@
 {
     "vars": {
-	"distPath": "web/frontend/",
-	"resourcesPath": "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/"
+        "distPath": "web/frontend/",
+        "resourcesPath": "src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/"
     },
 
     "project": {
-	"name": "{{ bundle.getName() }}",
-	"mainBundlePath": "{{ bundle.namespace|replace({'\\':'/'}) }}",
-	"mainBundleName": "{{ bundle.getName() }}",
-	"mainJsInclude": {
-	    "folder": "Layout/",
-	    "fileName": "_js_footer.html.twig"
-	}
+        "name": "{{ bundle.getName() }}",
+        "mainBundlePath": "{{ bundle.namespace|replace({'\\':'/'}) }}",
+        "mainBundleName": "{{ bundle.getName() }}",
+        "mainJsInclude": {
+            "folder": "Layout/",
+            "fileName": "_js_footer.html.twig"
+        }
     },
 
     "dist": {
-	"css": "<=distPath>css",
-	"js": "<=distPath>js",
-	"img": "<=distPath>img",
-	"fonts": "<=distPath>fonts",
-	"styleguide": "<=distPath>styleguide"
+        "css": "<=distPath>css",
+        "js": "<=distPath>js",
+        "img": "<=distPath>img",
+        "fonts": "<=distPath>fonts",
+        "styleguide": "<=distPath>styleguide"
     },
 
     "scssFolder": "<=resourcesPath>ui/scss/",
@@ -31,38 +31,37 @@
     "scss": "<=resourcesPath>ui/scss/**/*.scss",
 
     "js": {
-	"app": "<=resourcesPath>ui/js/**/*.js",
-	"footer": [
-	    "<=bowerComponentsPath>jquery/dist/jquery.min.js",
-	    "<=bowerComponentsPath>velocity/velocity.min.js",
+        "app": "<=resourcesPath>ui/js/**/*.js",
+        "footer": [
+            "node_modules/jquery/dist/jquery.js",
 {% if demosite %}
-	    "<=bowerComponentsPath>fitvids/jquery.fitvids.js",
-	    "<=bowerComponentsPath>modernizr/modernizr.js",
-	    "<=bowerComponentsPath>cargobay/src/toggle/js/jquery.toggle.js",
-	    "<=bowerComponentsPath>cargobay/src/sidebar-toggle/js/jquery.sidebar-toggle.js",
-	    "<=bowerComponentsPath>cargobay/src/cookie-consent/js/jquery.cookie-consent.js",
+            "node_modules/velocity-animate/velocity.js",
+            "<=bowerComponentsPath>fitvids/jquery.fitvids.js",
+            "<=bowerComponentsPath>modernizr/modernizr.js",
+            "node_modules/cargobay/src/toggle/js/jquery.toggle.js",
+            "node_modules/cargobay/src/sidebar-toggle/js/jquery.sidebar-toggle.js",
+            "node_modules/cargobay/src/cookie-consent/js/jquery.cookie-consent.js",
+            "node_modules/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
+            "node_modules/cargobay/src/videolink/js/jquery.videolink.js",
 {% endif %}
-	    "<=bowerComponentsPath>cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js",
-	    "<=bowerComponentsPath>cargobay/src/videolink/js/jquery.videolink.js",
-        "<=bowerComponentsPath>picturefill/dist/pictureFill.js",
-	    "<=resourcesPath>ui/js/**/*.js"
-	],
-	"other": [
-	    "<=bowerComponentsPath>html5shiv/dist/html5shiv.min.js"
-	],
-	"addAsync": "false"
+            "node_modules/picturefill/dist/pictureFill.js",
+            "<=resourcesPath>ui/js/**/*.js"
+        ],
+        "other": [
+            "<=bowerComponentsPath>html5shiv/dist/html5shiv.min.js"
+        ],
+        "addAsync": "false"
     },
 
     "browserSupport": [
-	"last 2 versions",
-	"ie 9",
-	"ie 10",
-	"ie 11"
+        "last 2 versions",
+        "ie 10",
+        "ie 11"
     ],
 
     "liveReloadFiles": [
-	"<=distPath>css/style.min.css",
-	"<=distPath>js/*.js",
-	"<=distPath>styleguide/css/style.min.css"
+        "<=distPath>css/style.min.css",
+        "<=distPath>js/*.js",
+        "<=distPath>styleguide/css/style.min.css"
     ]
 }

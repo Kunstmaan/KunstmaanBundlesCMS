@@ -20,7 +20,7 @@
 .sub-footer__info {
     margin: 0;
 
-    font-size: .75rem;
+    font-size: 1.4rem;
     text-align: center;
 
     @media(min-width: $screen-xs-min) {
@@ -41,7 +41,7 @@
 /* Credentials
    ========================================================================== */
 .sub-footer__credentials {
-    font-size: .75rem;
+    font-size: 1.4rem;
     text-align: center;
 
     margin: 0;
@@ -53,7 +53,7 @@
 
 .sub-footer__credentials__link {
     display: inline-block;
-    margin-left: .2rem;
+    margin-left: .25rem;
 
     vertical-align: text-top;
 }

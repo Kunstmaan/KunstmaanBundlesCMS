@@ -6,9 +6,9 @@
    ========================================================================== */
 a {
     color: $link-color;
+    transition: color .3s ease;
 {% if demosite %}
     text-decoration: none;
-    transition: color .3s ease;
 {% else %}
     text-decoration: underline;
 {% endif %}

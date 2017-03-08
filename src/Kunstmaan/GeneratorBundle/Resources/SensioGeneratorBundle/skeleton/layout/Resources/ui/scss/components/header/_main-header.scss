@@ -6,7 +6,7 @@
 /* General
    ========================================================================== */
 .main-header {
-    padding: .9rem 0;
+    padding: 1.4rem 0;
 }
 
 
@@ -52,7 +52,7 @@
     z-index: 2;
     position: absolute;
     top: 0;
-    left: 1rem;
+    left: 1.5rem;
 
     padding: 1.2em 1.2em 1.2em 0;
 
@@ -75,7 +75,7 @@
 
     @media(min-width: $screen-md-min) {
         display: block;
-        height: 3.5rem;
+        height: 5.8rem;
 
         border-bottom: 2px solid $hr-color;
     }

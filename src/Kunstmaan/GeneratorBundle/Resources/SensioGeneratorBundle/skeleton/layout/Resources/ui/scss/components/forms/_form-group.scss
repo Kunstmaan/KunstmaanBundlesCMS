@@ -9,7 +9,7 @@
 
     width: 100%;
     padding: 0;
-    margin: 1.5rem 0;
+    margin: 2.5rem 0;
 
     &:first-child {
         padding-top: 0;
@@ -23,14 +23,13 @@
 .form-group--has-error {
 
     .form-control {
-        border-color: $red;
+        border-color: $brand-danger;
     }
+}
 
-    .help-block {
-        font-size: .8rem;
-        font-weight: 400;
-        color: $red;
-    }
+.form-group__error {
+    font-size: .8em;
+    color: $brand-danger;
 }
 
 
@@ -41,25 +40,23 @@ name: 01_group
 category: Forms
 ---
 
-<strong>General</strong>
-
 ```html_example
+
+<h3>General</h3>
 <div class="form-group">
     <label for="fg1" class="form-control-label">
-    Name
+        Name
     </label>
-    <input type="text" id="fg1" name="fg1" class="{% if demosite %}js-form__input{% endif %} form-control form-control--input">
+    <input type="text" id="fg1" name="fg1" class="{% if demosite %}js-form__input {% endif %}form-control form-control--input">
 </div>
-```
 
-<strong>Has error</strong>
-
-```html_example
+<h3>Has error</h3>
 <div class="form-group form-group--has-error">
     <label for="fg2" class="form-control-label">
-    Name
+        Name
     </label>
-    <input type="text" id="fg2" name="fg2" class="{% if demosite %}js-form__input{% endif %} form-control form-control--input">
+    <input type="text" id="fg2" name="fg2" class="{% if demosite %}js-form__input {% endif %}form-control form-control--input">
+    <div class="form-group__error">Lorem ipsum dolor sit amet</div>
 </div>
 ```
 */

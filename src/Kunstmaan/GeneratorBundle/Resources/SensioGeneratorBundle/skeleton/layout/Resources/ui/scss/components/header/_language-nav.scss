@@ -5,6 +5,8 @@
 /* Default
    ========================================================================== */
 .language-nav {
+    font-size: 1.6rem;
+
     padding: 0 1em;
     border-bottom: 1px solid $grey--dark;
 
@@ -13,7 +15,7 @@
         position: relative;
 
         float: left;
-        padding: 0 .8rem;
+        padding: 0 1.4rem;
         border-bottom: 0;
 
         &:hover, &:focus {
@@ -39,10 +41,11 @@
 
     @media(min-width: $screen-md-min) {
         display: inline-block;
-        margin-left: .1rem;
+        margin-left: .2rem;
+        padding-bottom: .1rem;
 
-        font-size: .3rem;
-        line-height: 1rem;
+        font-size: .5em;
+        line-height: 1;
         vertical-align: middle;
     }
 }
@@ -58,11 +61,12 @@
         top: 100%;
         left: 0;
         z-index: 0;
+
         width: 100%;
         height: 0;
-
         overflow: hidden;
         padding: 0;
+
         background: $grey--lighter;
 
         transition: box-shadow .15s ease;
@@ -76,7 +80,7 @@
     display: inline-block;
     padding: 1.3em .5em;
 
-    font-size: .9rem;
+    font-size: 1.44rem;
     font-weight: 400;
     text-transform: uppercase;
 
@@ -86,9 +90,9 @@
 
     @media(min-width: $screen-md-min) {
         display: block;
-        padding: .5em .8rem;
+        padding: .5em 1.4rem;
 
-        font-size: .65rem;
+        font-size: 1.2rem;
         color: $grey;
         text-align: left;
     }
@@ -98,7 +102,7 @@
 /* Active lang
    ========================================================================== */
 .language-nav__active-lang {
-    font-size: .65rem;
+    font-size: 1.2rem;
     font-weight: 400;
     text-transform: uppercase;
 }

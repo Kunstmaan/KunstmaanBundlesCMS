@@ -2,15 +2,7 @@
     "name": "{{ bundle.getName() }}",
     "version": "1.0.0",
     "dependencies": {
-    "html5shiv": "~3.7",
-    "bootstrap-sass-official": "~3.3",
-    "jquery": "~2.1",
-    "velocity": "~1.2",
-    {% if demosite %}
-    "fitvids": "~1.1",
-    "modernizr": "~2.8",
-    {% endif %}
-    "cargobay": "~0.8",
-    "picturefill": "~3.0.1"
+        "fitvids": "~1.1",
+        "modernizr": "~2.8"
     }
 }

@@ -7,25 +7,24 @@
 .form-control {
     display: block;
     width: 100%;
-    max-width: 26rem;
-    min-height: 2.5rem;
+    max-width: 46rem;
+    min-height: 4.5rem;
     padding: 0 1em;
-
-    border: 0;
 
 {% if demosite %}
     border: 1px solid $hr-color;
     font-weight: 400;
+{% else %}
+    border: 1px solid $grey;
 {% endif %}
 
     &:focus {
         outline: none;
     }
-
 {% if demosite %}
     &:focus,
     &.form-control--filled {
-        border-color: $blue;
+        border-color: $brand-primary;
     }
 {% endif %}
 }
@@ -40,9 +39,10 @@
    ========================================================================== */
 .form-control--textarea {
 {% if demosite %}
-    min-height: 5.6rem;
+    min-height: 10rem;
 {% endif %}
     max-width: none;
+    padding: 1em;
 }
 
 
@@ -53,8 +53,8 @@
     z-index: 2;
     position: relative;
 
-    padding-right: 2.5rem;
-    height: 2.5rem;
+    padding-right: 4rem;
+    height: 4rem;
     width: 100%;
 
     border: none;
@@ -66,7 +66,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    font-size: .7rem;
+    font-size: 1.25rem;
 
     &:focus, &:valid {
         opacity: 1;
@@ -82,27 +82,18 @@ name: 02_form-control
 category: Forms
 ---
 
-<strong>Input</strong>
-
 ```html_example
 <input type="text" id="fc1" name="fc1" class="form-control form-control--input">
-```
 
-<strong>Textarea</strong>
-
-```html_example
+<h3>Textarea</h3>
 <textarea id="fc2" name="fc2" class="form-control form-control--textarea"></textarea>
-```
 
-<strong>Select</strong>
-
-```html_example
+<h3>Select</h3>
 <select id="fc3" name="fc3" class="form-control form-control--select">
     <option>1</option>
     <option>2</option>
     <option>3</option>
 </select>
+
 ```
-
-
 */

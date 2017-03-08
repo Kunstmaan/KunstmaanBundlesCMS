@@ -6,36 +6,36 @@
     position: relative;
     z-index: 100;
 
-    margin-bottom: -1.7rem;
+    margin-bottom: -2.6rem;
 
     text-align: center;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
 
     &:hover,
     &:focus,
     &:active {
         .demosite-msg {
-            background: lighten($blue, 5%);
+            background: lighten($brand-primary, 5%);
         }
 
         .demosite-msg__btn {
             &:after {
-                border-color: lighten($blue, 5%) transparent transparent transparent;
+                border-color: lighten($brand-primary, 5%) transparent transparent transparent;
             }
         }
     }
 
     @media(min-width: $screen-md-min) {
-        margin-bottom: -1.2rem;
+        margin-bottom: -1.92rem;
     }
 }
 
 .demosite-msg {
-    background: $blue;
+    background: $brand-primary;
 
     p {
         color: $white;
-        font-size: .8rem;
+        font-size: 1.28rem;
     }
 
     a {
@@ -45,12 +45,12 @@
         &:hover,
         &:focus,
         &:active {
-            color: $blue--dark;
+            color: $brand-primary--dark;
         }
     }
 
     .toggle-item__content {
-        padding: 1.5rem;
+        padding: 2.4rem;
 
         p {
             padding: 0;
@@ -62,16 +62,16 @@
 .demosite-msg__btn {
     position: relative;
 
-    width: 4rem;
-    height: 1.4rem;
-    margin-top: -.6rem;
+    width: 7.2rem;
+    height: 2.24rem;
+    margin-top: -1rem;
 
     background: none;
     box-shadow: none;
 
     color: $white;
     text-align: center;
-    font-size: .5rem;
+    font-size: .8rem;
 
     border: none;
 
@@ -84,8 +84,8 @@
         z-index: -5;
 
         border-style: solid;
-        border-width: 26px 36px 0 36px;
-        border-color: $blue transparent transparent transparent;
+        border-width: 2.6rem 3.6rem 0 3.6rem;
+        border-color: $brand-primary transparent transparent transparent;
         border-style: solid inset inset inset;
 
         transform:rotate(360deg);

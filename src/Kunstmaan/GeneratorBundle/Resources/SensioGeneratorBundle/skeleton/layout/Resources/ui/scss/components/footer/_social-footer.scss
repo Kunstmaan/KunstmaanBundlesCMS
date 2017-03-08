@@ -5,12 +5,12 @@
 /* Inner
    ========================================================================== */
 .social-footer__inner {
-    padding: 1.5rem 0;
+    padding: 1.5em 0;
 
     border-bottom: 2px solid $hr-color;
 
     @media(min-width: $screen-sm-min) {
-        padding: 2.5rem 0;
+        padding: 2.5em 0;
     }
 }
 
@@ -18,10 +18,10 @@
 /* Link
    ========================================================================== */
 .social-footer__link {
-    margin-right: 1rem;
+    margin-right: 1.5rem;
 
     color: $grey;
-    font-size: 1.1rem;
+    font-size: 1.1em;
 
     transition: color .3s ease;
 
