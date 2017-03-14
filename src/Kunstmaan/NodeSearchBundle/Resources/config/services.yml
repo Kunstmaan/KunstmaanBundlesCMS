@@ -24,7 +24,9 @@ services:
 
     kunstmaan_node_search.service.indexable_pageparts:
         class: Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%kunstmaan_node_search.contexts%'
 
     kunstmaan_node_search.twig.extension:
         class: Kunstmaan\NodeSearchBundle\Twig\KunstmaanNodeSearchTwigExtension
