@@ -323,6 +323,14 @@ Next command is used to delete the indexes. It will iterate over all SearchConfi
 kuma:search:delete
 ```
 
+### Extras
+
+In standard use cases, indexing the page parts from the main region will be enough. If you want index multiple regions you can add the following in your config.yml.
+```
+kunstmaan_node_search:
+    contexts: [main, header, footer]
+```
+
 [1]:  http://www.elasticsearch.org/
 [2]:  https://github.com/ruflin/Elastica
 [3]:  http://www.elasticsearch.org/guide/
