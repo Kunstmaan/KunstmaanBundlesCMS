@@ -8,7 +8,8 @@
     box-sizing: border-box;
 }
 
-*:before, *:after {
+*:before,
+*:after {
     box-sizing: border-box;
 }
 
@@ -17,14 +18,17 @@
    ========================================================================== */
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
     height: 100%;
 }
 
 body {
-    background-color: $white;
     min-height: 100%;
+
 {% if demosite %}
     background-color: $brand-primary;
+{% else %}
+    background-color: $white;
 {% endif %}
 }
 {% if demosite %}

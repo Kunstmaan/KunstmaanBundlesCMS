@@ -5,29 +5,33 @@
 /* Default
    ========================================================================== */
 .language-nav {
-    font-size: 1.6rem;
-
     padding: 0 1em;
+
     border-bottom: 1px solid $grey--dark;
 
-    @media(min-width: $screen-md-min) {
-        z-index: 5;
-        position: relative;
+    font-size: 1.6rem;
 
+    @media (min-width: $screen-md-min) {
         float: left;
+        position: relative;
+        z-index: 5;
+
         padding: 0 1.4rem;
+
         border-bottom: 0;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             background: $grey--lighter;
-            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, .2);
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
 
             transition: box-shadow .15s ease;
 
             .language-nav__nav {
                 z-index: 6;
+
                 height: auto;
-                box-shadow: 0 3px 4px 0px rgba(0, 0, 0, .2);
+                box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .2);
             }
         }
     }
@@ -39,10 +43,10 @@
 .language-nav__icon {
     display: none;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         display: inline-block;
-        margin-left: .2rem;
         padding-bottom: .1rem;
+        margin-left: .2rem;
 
         font-size: .5em;
         line-height: 1;
@@ -56,7 +60,7 @@
 .language-nav__nav {
     padding: 0 0 0 1em;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         position: absolute;
         top: 100%;
         left: 0;
@@ -64,8 +68,8 @@
 
         width: 100%;
         height: 0;
-        overflow: hidden;
         padding: 0;
+        overflow: hidden;
 
         background: $grey--lighter;
 
@@ -84,16 +88,17 @@
     font-weight: 400;
     text-transform: uppercase;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         text-decoration: none;
     }
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         display: block;
         padding: .5em 1.4rem;
 
-        font-size: 1.2rem;
         color: $grey;
+        font-size: 1.2rem;
         text-align: left;
     }
 }

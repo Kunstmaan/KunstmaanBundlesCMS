@@ -5,26 +5,25 @@
 /* General
    ========================================================================== */
 .searchbox-form {
-    z-index: 4;
     position: absolute;
     top: 1.12rem;
     right: .65rem;
+    z-index: 4;
 
     width: $search-height-mobile;
 
     transition: width .2s ease-in-out;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
+        float: left;
         position: relative;
         top: -.6rem;
         right: auto;
 
-        float: left;
         width: $search-height;
         margin: 0;
     }
 }
-
 
 
 /* Searchbox
@@ -35,69 +34,70 @@
     min-width: $search-height-mobile;
     overflow: hidden;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         min-width: $search-height;
     }
 }
 
 
-
 /* Content
    ========================================================================== */
 .searchbox__content {
+    float: right;
     position: relative;
 
-    float: right;
     width: $search-height-mobile;
     max-width: 100%;
 
     transition: width .2s ease-in-out;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         float: none;
+
         width: $search-height;
     }
 }
 
 
-
 /* Input
    ========================================================================== */
 .searchbox__input {
-    z-index: 2;
     position: relative;
+    z-index: 2;
 
     height: $search-height-mobile;
     padding: 0 $search-height-mobile 0 calc(#{$search-height-mobile} + 1rem);
 
-    font-size: 1.3rem;
+    opacity: 0;
+
+    border: none;
+
     color: $black;
+    font-size: 1.3rem;
     line-height: $search-height-mobile;
     vertical-align: top;
     cursor: pointer;
-    border: none;
 
-    opacity: 0;
     transition: opacity .2s ease-in-out;
 
-    &:focus, &:active {
+    &:focus,
+    &:active {
         outline: 0;
     }
 
-    @media(min-width: $screen-md-min) {
-        width: 34rem;
+    @media (min-width: $screen-md-min) {
         display: inline-block;
+        width: 34rem;
         height: $search-height;
-        line-height: $search-height;
+        padding: 1.1rem $search-height 1.1rem 1.6rem;
 
-        padding: 1.1rem 1.6rem;
         background-color: $grey--lighter;
+
         border: 1px solid $hr-color;
 
-        padding-right: $search-height;
+        line-height: $search-height;
     }
 }
-
 
 
 /* Back
@@ -107,39 +107,43 @@
     top: 0;
     left: 0;
 
-    text-align: center;
     display: inline-block;
-    cursor: pointer;
 
-    @media(min-width: $screen-md-min) {}
+    text-align: center;
+
+    cursor: pointer;
 }
 
-.searchbox__back, .searchbox__submit {
+.searchbox__back,
+.searchbox__submit {
     width: $search-height-mobile;
     height: $search-height-mobile;
+
     line-height: $search-height-mobile;
 }
-
 
 
 /* Submit
    ========================================================================== */
 .searchbox__submit {
-    text-align: center;
-    border: none;
-
     position: absolute;
     top: 0;
     right: 0;
-    background: $white;
-    color: $text-color;
 
-    @media(min-width: $screen-md-min) {
+    background: $white;
+
+    border: none;
+
+    color: $text-color;
+    text-align: center;
+
+    @media (min-width: $screen-md-min) {
         width: $search-height;
         height: $search-height;
-        line-height: $search-height - .8rem;
 
         background: none;
+
+        line-height: $search-height - .8rem;
     }
 }
 
@@ -147,7 +151,6 @@
     color: $brand-primary;
     font-size: 1.44rem;
 }
-
 
 
 /* Active
@@ -160,20 +163,23 @@
     }
 
     .searchbox__input {
-        opacity: 1;
         z-index: 0;
-        cursor: text;
+
+        width: 100%;
 
         background: $white;
-        width: 100%;
+        opacity: 1;
+
+        cursor: text;
     }
 
     .searchbox__back {
         z-index: 4;
+
         background: $white;
     }
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         width: 34rem;
 
         .searchbox {

@@ -73,9 +73,8 @@ bin/console kuma:generate:default-site
 
 This generates:
 
-* A Bower configuration ~ .bowerrc and bower.json. [Bower is a package manager for front-end code](http://bower.io). (e.g. jQuery, etc)
-* A Gulp configuration ~ gulpfile.js. [Gulp is a build tool to automate and enhance mostly front-end development workflows](http://gulpjs.com)
-* A Bundler configuration ~ Gemfile. [Bundler is a RubyGems package manager we use mostly for getting specific versions of Sass](http://bundler.io).
+* A Groundcontrol configuration ~ gulpfile.babel.js. [Groundcontrol is a build tool based on gulp to automate and enhance mostly front-end development workflows](http://gulpjs.com)
+* A Bundler configuration ~ Gemfile. [Bundler is a RubyGems package manager we use mostly for getting specific versions of Hologram](http://bundler.io).
 * A basic selection of user interface elements, sass files, etc
 * A barebones selection of controllers, entities, twig files, pageparts, etc
 * The needed fixtures to setup the CMS
@@ -107,31 +106,17 @@ Just accept the default bundle namespace at the prompt.
 ![bin/console kuma:generate:admin-tests](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/behattests.png)
 
 
-## Get all the front-end assets
+## Get all the front-end CMS assets
 
 Now that all your code is generated, let's make sure all front-end assets are available.
 
-First make sure you have Bower, Gulp, [UglifyCSS](https://github.com/fmarcia/UglifyCSS) and [UglifyJS](http://lisperator.net/uglifyjs/) installed globally.
+First make sure you have [UglifyCSS](https://github.com/fmarcia/UglifyCSS) and [UglifyJS](http://lisperator.net/uglifyjs/) installed globally.
 
 > UglifyCSS and UglifyJS are used via [Assetic](https://github.com/kriswallsmith/assetic) to minimize the javascript and css files in the administration interface, as per [this recipe on in the Symfony Cookbook: How to Minify CSS/JS Files (Using UglifyJS and UglifyCSS)](http://symfony.com/doc/current/cookbook/assetic/uglifyjs.html)
-
-Depending on your system you need `sudo` here.
-
-```
-npm install -g bower
-npm install -g gulp
-npm install -g uglify-js
-npm install -g uglifycss
-gem install bundler
-```
 
 Then execute the following commands:
 
 ```
-bundle install
-npm install
-bower install
-gulp build
 bin/console assets:install --symlink
 bin/console assetic:dump
 ```
@@ -141,3 +126,24 @@ At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/e
 ![Demo Site Admin](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/demositeadmin.png)
 
 > Note that the screenshots were made of a site using the `--demosite` option during generation
+
+
+## Get all the front-end website assets (KuMa workflow)
+
+First make sure you installed [node.js](https://node.js.org/) v7.7 (or higher).
+You can test your node version by running `node -v`.
+> Node comes with npm installed so you should have a version of npm. However, npm gets updated more frequently than Node does, so you'll want to make sure it's the latest version.
+>
+> ```npm install npm@latest -g```
+>
+> Test: Run `npm -v`. The version should be higher than 2.1.8.
+
+Then execute the following commands:
+
+```
+bundle install
+npm install
+npm run build
+```
+
+At this point browsing to [http://kunstmaan.cms](http://kunstmaan.cms) should show you the website with minimalistic styling.
