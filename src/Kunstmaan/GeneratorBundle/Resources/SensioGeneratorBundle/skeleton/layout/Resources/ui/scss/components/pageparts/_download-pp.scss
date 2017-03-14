@@ -7,11 +7,11 @@
 .download-pp {
 {% if demosite %}
     @extend .icon--arrow-tail-down;
+
 {% endif %}
-
     margin: $default-margin 0;
-
 {% if demosite %}
+
     font-size: 1.5rem;
 
     &:before {
@@ -29,7 +29,7 @@
 {% endif %}
 }
 
-/*doc
+/* doc
 ---
 title: download-pp
 name: 03_download-pp

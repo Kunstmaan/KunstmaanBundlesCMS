@@ -9,7 +9,7 @@
 
     border-bottom: 2px solid $hr-color;
 
-    @media(min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         padding: 2.5em 0;
     }
 }
@@ -25,7 +25,9 @@
 
     transition: color .3s ease;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         text-decoration: none;
     }
 }

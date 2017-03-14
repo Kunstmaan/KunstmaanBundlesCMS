@@ -5,7 +5,7 @@
 /* General
    ========================================================================== */
 .breadcrumb {
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         margin: 2.5rem 0 0;
     }
 }
@@ -35,8 +35,7 @@
 }
 
 
-
-/*doc
+/* doc
 ---
 title: Breadcrumb
 name: 02_breadcrumb

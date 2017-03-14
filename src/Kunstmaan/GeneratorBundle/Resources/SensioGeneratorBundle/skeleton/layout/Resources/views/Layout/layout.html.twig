@@ -80,7 +80,9 @@
     {% endblock %}
 
     {# JS Footer #}
-    {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
+    {% block jsBundle %}
+        {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
+    {% endblock %}
 <% if demosite %>
     </div>
 

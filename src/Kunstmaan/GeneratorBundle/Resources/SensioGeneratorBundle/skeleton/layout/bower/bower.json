@@ -1,8 +1,0 @@
-{
-    "name": "{{ bundle.getName() }}",
-    "version": "1.0.0",
-    "dependencies": {
-        "fitvids": "~1.1",
-        "modernizr": "~2.8"
-    }
-}

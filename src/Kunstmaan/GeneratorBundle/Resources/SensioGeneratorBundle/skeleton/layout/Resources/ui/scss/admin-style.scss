@@ -7,15 +7,15 @@
 /* Config (necessary only)
    ========================================================================== */
 @import "config/general/colors",
-        "config/general/typography/fonts",
-        "config/general/typography/bodycopy",
-        "config/general/sizes",
-        "config/general/paths";
+    "config/general/typography/fonts",
+    "config/general/typography/bodycopy",
+    "config/general/sizes",
+    "config/general/paths";
 
 /* Vendors - only vars!
    ========================================================================== */
 @import "config/vendors/bootstrap-vars"{% if demosite %},
-        "config/vendors/cargobay-vars"{% endif %};
+    "config/vendors/cargobay-vars"{% endif %};
 
 /* General
    ========================================================================== */
@@ -38,33 +38,31 @@
     /* Blocks
        ========================================================================== */
     @import "components/blocks/img",
-            "components/blocks/hr",
-            "components/blocks/lists",
-            "components/blocks/links",
-            "components/blocks/buttons",
-            "components/blocks/tables";
+        "components/blocks/hr",
+        "components/blocks/lists",
+        "components/blocks/links",
+        "components/blocks/buttons",
+        "components/blocks/tables";
 
     /* Structures
        ========================================================================== */
 {% if demosite %}
     @import "components/structures/header-visual",
-            "components/structures/submenu";
-{% else %}
-    // @import "structures/..";
+        "components/structures/submenu";
 {% endif %}
 
     /* Pageparts
        ========================================================================== */
     @import "components/pageparts/button-pp",
-            "components/pageparts/download-pp",
-            "components/pageparts/header-pp",
-            "components/pageparts/image-pp",
-            "components/pageparts/introtext-pp",
-            "components/pageparts/link-pp",
+        "components/pageparts/download-pp",
+        "components/pageparts/header-pp",
+        "components/pageparts/image-pp",
+        "components/pageparts/introtext-pp",
+        "components/pageparts/link-pp",
 {% if demosite %}
-            "components/pageparts/service-pp",
+        "components/pageparts/service-pp",
 {% endif %}
-            "components/pageparts/text-pp",
-            "components/pageparts/totop-pp",
-            "components/pageparts/video-pp";
+        "components/pageparts/text-pp",
+        "components/pageparts/totop-pp",
+        "components/pageparts/video-pp";
 }

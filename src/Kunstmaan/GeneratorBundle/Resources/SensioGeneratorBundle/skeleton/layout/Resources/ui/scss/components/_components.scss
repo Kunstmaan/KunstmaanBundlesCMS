@@ -8,75 +8,76 @@
 /* Blocks
    ========================================================================== */
 @import "blocks/img",
-        "blocks/hr",
-        "blocks/lists",
-        "blocks/links",
-        "blocks/buttons",
-        "blocks/tables"{% if demosite %},
-        "blocks/img-icon"
-{% endif %};
+    "blocks/hr",
+    "blocks/lists",
+    "blocks/links",
+    "blocks/buttons",
+    "blocks/tables"{% if demosite %},
+    "blocks/img-icon"{% endif %};
+
+
+/* Forms
+   ========================================================================== */
+@import "forms/form",
+    "forms/form-group",
+    "forms/form-control",
+    "forms/form-control-label",
+{% if demosite %}
+    "forms/form-widget",
+{% endif %}
+    "forms/radio-checkbox";
 
 
 /* Structures
    ========================================================================== */
-@import "structures/cookie-consent"{% if demosite %},
-        "structures/splash",
-        "structures/submenu",
-        "structures/blog-item",
-        "structures/search-results",
-        "structures/breadcrumb-nav",
-        "structures/header-visual",
-        "structures/newsletter",
-        "structures/pagination",
-        "structures/demosite-msg"
-{% endif %};
+@import "structures/cookie-consent",
+{% if demosite %}
+    "structures/splash",
+    "structures/submenu",
+    "structures/blog-item",
+    "structures/search-results",
+    "structures/breadcrumb-nav",
+    "structures/header-visual",
+    "structures/newsletter",
+    "structures/pagination",
+    "structures/demosite-msg",
+{% endif %}
+    "structures/videolink";
 
 
 /* Header
    ========================================================================== */
 @import "header/main-header"{% if demosite %},
-        "header/main-nav",
-        "header/site-nav",
-        "header/language-nav",
-        "header/contact-nav",
-        "header/search-form"
-{% endif %};
+    "header/main-nav",
+    "header/site-nav",
+    "header/language-nav",
+    "header/contact-nav",
+    "header/search-form"{% endif %};
 
 
 /* Footer
    ========================================================================== */
 @import "footer/main-footer",
 {% if demosite %}
-        "footer/social-footer",
+    "footer/social-footer",
 {% endif %}
-        "footer/sub-footer";
-
-
-/* Forms
-   ========================================================================== */
-@import "forms/form",
-        "forms/form-group",
-        "forms/form-control",
-        "forms/form-control-label",
-{% if demosite %}
-        "forms/form-widget",
-{% endif %}
-        "forms/radio-checkbox";
+    "footer/sub-footer";
 
 
 /* Pageparts
    ========================================================================== */
 @import "pageparts/button-pp",
-        "pageparts/text-pp",
-        "pageparts/introtext-pp",
-        "pageparts/image-pp",
-        "pageparts/link-pp",
-        "pageparts/download-pp",
-        "pageparts/header-pp",
-        "pageparts/totop-pp"{% if demosite %},
-        "pageparts/service-pp",
-        "pageparts/video-pp"
-{% endif %};
+    "pageparts/text-pp",
+    "pageparts/introtext-pp",
+    "pageparts/image-pp",
+    "pageparts/link-pp",
+    "pageparts/download-pp",
+    "pageparts/header-pp",
+    "pageparts/totop-pp",
+{% if demosite %}
+    "pageparts/service-pp",
+{% endif %}
+    "pageparts/video-pp";
 
 
 /* Vendors
