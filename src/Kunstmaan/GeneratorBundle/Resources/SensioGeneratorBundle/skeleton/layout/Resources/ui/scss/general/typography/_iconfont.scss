@@ -8,16 +8,20 @@
    ========================================================================== */
 @font-face {
     font-family: $iconfont-name;
+{% if demosite %}
     src:url('#{$iconfont-path}/#{$iconfont-name}.eot?8at4kw');
     src:url('#{$iconfont-path}/#{$iconfont-name}.eot?#iefix8at4kw') format('embedded-opentype'),
     url('#{$iconfont-path}/#{$iconfont-name}.woff?8at4kw') format('woff'),
     url('#{$iconfont-path}/#{$iconfont-name}.ttf?8at4kw') format('truetype'),
     url('#{$iconfont-path}/#{$iconfont-name}.svg?8at4kw##{$iconfont-name}') format('svg');
+{% else %}
+    src: url("data:application/x-font-ttf;charset=utf-8;base64,%BASE64%") format('truetype');
+{% endif %}
     font-weight: normal;
     font-style: normal;
 }
 
-[class^="icon--"], [class*=" icon--"] {
+.icon, %icon {
     font-family: $iconfont-name;
     speak: none;
     font-style: normal;
@@ -136,98 +140,98 @@ category: Typography
 <div class="container exampleOutput no-markup">
     <div class="row">
         <div class="col-md-4">
-        {% if demosite %}
-                <i class="icon icon--menu"></i>
-                <code class='styleguide__code'>icon icon--menu</code>
-                <br>
+{% if demosite %}
+            <i class="icon icon--menu"></i>
+            <code class='styleguide__code'>icon icon--menu</code>
+            <br>
 
-                <i class="icon icon--nav-location"></i>
-                <code class='styleguide__code'>icon icon--nav-location</code>
-                <br>
+            <i class="icon icon--nav-location"></i>
+            <code class='styleguide__code'>icon icon--nav-location</code>
+            <br>
 
-                <i class="icon icon--nav-mail"></i>
-                <code class='styleguide__code'>icon icon--nav-mail</code>
-                <br>
+            <i class="icon icon--nav-mail"></i>
+            <code class='styleguide__code'>icon icon--nav-mail</code>
+            <br>
 
-                <i class="icon icon--nav-phone"></i>
-                <code class='styleguide__code'>icon icon--nav-phone</code>
-                <br>
+            <i class="icon icon--nav-phone"></i>
+            <code class='styleguide__code'>icon icon--nav-phone</code>
+            <br>
 
-                <i class="icon icon--search"></i>
-                <code class='styleguide__code'>icon icon--search</code>
-                <br>
+            <i class="icon icon--search"></i>
+            <code class='styleguide__code'>icon icon--search</code>
+            <br>
 
-                <i class="icon icon--social-facebook"></i>
-                <code class='styleguide__code'>icon icon--social-facebook</code>
-                <br>
+            <i class="icon icon--social-facebook"></i>
+            <code class='styleguide__code'>icon icon--social-facebook</code>
+            <br>
 
-                <i class="icon icon--social-github"></i>
-                <code class='styleguide__code'>icon icon--social-github</code>
+            <i class="icon icon--social-github"></i>
+            <code class='styleguide__code'>icon icon--social-github</code>
 
-            </div>
-            <div class="col-md-4">
-                <i class="icon icon--social-linkedin"></i>
-                <code class='styleguide__code'>icon icon--social-linkedin</code>
-                <br>
+        </div>
+        <div class="col-md-4">
+            <i class="icon icon--social-linkedin"></i>
+            <code class='styleguide__code'>icon icon--social-linkedin</code>
+            <br>
 
-                <i class="icon icon--social-twitter"></i>
-                <code class='styleguide__code'>icon icon--social-twitter</code>
-                <br>
+            <i class="icon icon--social-twitter"></i>
+            <code class='styleguide__code'>icon icon--social-twitter</code>
+            <br>
 
-                <i class="icon icon--arrow-up"></i>
-                <code class='styleguide__code'>icon icon--arrow-up</code>
-                <br>
+            <i class="icon icon--arrow-up"></i>
+            <code class='styleguide__code'>icon icon--arrow-up</code>
+            <br>
 
-                <i class="icon icon--arrow-down"></i>
-                <code class='styleguide__code'>icon icon--arrow-down</code>
-                <br>
+            <i class="icon icon--arrow-down"></i>
+            <code class='styleguide__code'>icon icon--arrow-down</code>
+            <br>
 
-                <i class="icon icon--arrow-left"></i>
-                <code class='styleguide__code'>icon icon--arrow-left</code>
-                <br>
+            <i class="icon icon--arrow-left"></i>
+            <code class='styleguide__code'>icon icon--arrow-left</code>
+            <br>
 
-                <i class="icon icon--arrow-right"></i>
-                <code class='styleguide__code'>icon icon--arrow-right</code>
-                <br>
+            <i class="icon icon--arrow-right"></i>
+            <code class='styleguide__code'>icon icon--arrow-right</code>
+            <br>
 
-                <i class="icon icon--arrow-tail-down"></i>
-                <code class='styleguide__code'>icon icon--arrow-tail-down</code>
+            <i class="icon icon--arrow-tail-down"></i>
+            <code class='styleguide__code'>icon icon--arrow-tail-down</code>
 
-            </div>
-                <i class="icon icon--arrow-tail-left"></i>
-                <code class='styleguide__code'>icon icon--arrow-tail-left</code>
-                <br>
+        </div>
+        <div class="col-md-4">
+            <i class="icon icon--arrow-tail-left"></i>
+            <code class='styleguide__code'>icon icon--arrow-tail-left</code>
+            <br>
 
-                <i class="icon icon--arrow-tail-right"></i>
-                <code class='styleguide__code'>icon icon--arrow-tail-right</code>
-                <br>
+            <i class="icon icon--arrow-tail-right"></i>
+            <code class='styleguide__code'>icon icon--arrow-tail-right</code>
+            <br>
 
-                <i class="icon icon--arrow-tail-up"></i>
-                <code class='styleguide__code'>icon icon--arrow-tail-up</code>
-                <br>
+            <i class="icon icon--arrow-tail-up"></i>
+            <code class='styleguide__code'>icon icon--arrow-tail-up</code>
+            <br>
 
-                <i class="icon icon--triangle-down"></i>
-                <code class='styleguide__code'>icon icon--triangle-down</code>
-                <br>
+            <i class="icon icon--triangle-down"></i>
+            <code class='styleguide__code'>icon icon--triangle-down</code>
+            <br>
 
-                <i class="icon icon--triangle-left"></i>
-                <code class='styleguide__code'>icon icon--triangle-left</code>
-                <br>
+            <i class="icon icon--triangle-left"></i>
+            <code class='styleguide__code'>icon icon--triangle-left</code>
+            <br>
 
-                <i class="icon icon--triangle-right"></i>
-                <code class='styleguide__code'>icon icon--triangle-right</code>
-                <br>
+            <i class="icon icon--triangle-right"></i>
+            <code class='styleguide__code'>icon icon--triangle-right</code>
+            <br>
 
-                <i class="icon icon--triangle-up"></i>
-                <code class='styleguide__code'>icon icon--triangle-up</code>
+            <i class="icon icon--triangle-up"></i>
+            <code class='styleguide__code'>icon icon--triangle-up</code>
 
-            </div>
-        {% else %}
-                <i class="icon icon--"></i>
-                <code class='styleguide__code'>icon icon--</code>
-
-            </div>
-        {% endif %}
+        </div>
+{% else %}
+            <i class="icon icon--"></i>
+            <code class='styleguide__code'>icon icon--</code>
+        </div>
+{% endif %}
     </div>
 </div>
 

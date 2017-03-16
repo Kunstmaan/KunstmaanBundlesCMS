@@ -24,7 +24,7 @@ body {
     background-color: $white;
     min-height: 100%;
 {% if demosite %}
-    background-color: $blue;
+    background-color: $brand-primary;
 {% endif %}
 }
 {% if demosite %}

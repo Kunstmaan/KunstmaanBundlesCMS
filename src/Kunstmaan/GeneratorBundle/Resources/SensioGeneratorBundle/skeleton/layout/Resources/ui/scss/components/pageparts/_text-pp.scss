@@ -5,7 +5,7 @@
 /* General
    ========================================================================== */
 .text-pp {
-    max-width: 40rem;
+    max-width: 72rem;
     margin: $default-margin 0;
 
 {% if demosite %}
@@ -15,31 +15,31 @@
         li {
             position: relative;
 
-            padding-left: .9rem;
+            padding-left: 1em;
 
             &:before {
                 content: "•";
 
                 position: absolute;
-                top: 0;
+                top: .3rem;
                 left: 0;
 
-                font-size: .7rem;
-                color: $theme-color;
+                font-size: .8em;
+                color: $brand-primary;
             }
         }
     }
 
     ol {
-        padding-left: 1.4rem;
+        padding-left: 2.5rem;
     }
 
     ul, ol {
 
         li {
-            margin-bottom: .4rem;
+            margin-bottom: .7rem;
 
-            line-height: 150%;
+            line-height: 1.5;
         }
     }
 {% endif %}

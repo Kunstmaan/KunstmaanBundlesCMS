@@ -19,11 +19,8 @@
 
 /* Structures
    ========================================================================== */
-
-@import "structures/cookie-consent";
-
-{% if demosite %}
-@import "structures/splash",
+@import "structures/cookie-consent"{% if demosite %},
+        "structures/splash",
         "structures/submenu",
         "structures/blog-item",
         "structures/search-results",
@@ -31,8 +28,8 @@
         "structures/header-visual",
         "structures/newsletter",
         "structures/pagination",
-        "structures/demosite-msg";
-{% endif %}
+        "structures/demosite-msg"
+{% endif %};
 
 
 /* Header
@@ -61,7 +58,9 @@
         "forms/form-group",
         "forms/form-control",
         "forms/form-control-label",
+{% if demosite %}
         "forms/form-widget",
+{% endif %}
         "forms/radio-checkbox";
 
 

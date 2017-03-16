@@ -5,10 +5,10 @@
 /* General
    ========================================================================== */
 .site-nav {
-    margin: 2rem 0 0;
+    margin: 3.2rem 0 0;
 
     @media(min-width: $screen-md-min) {
-        margin: 0 2rem 0 0;
+        margin: 0 3.2rem 0 0;
     }
 }
 
@@ -25,7 +25,7 @@
     display: block;
     padding: .3em 1em;
 
-    font-size: 1.3rem;
+    font-size: 2.1rem;
     font-weight: 300;
     line-height: 2.3;
     color: $white;
@@ -35,7 +35,7 @@
         margin: 0 .5rem 0 0;
         padding: .5em 1em;
 
-        font-size: .65rem;
+        font-size: 1.1rem;
         line-height: 1;
         font-weight: 400;
         color: $text-color;
@@ -46,22 +46,22 @@
 // Active
 .site-nav__item--active {
     background-color: $grey--darker;
-    color: $theme-color;
+    color: $brand-primary;
 
     @media(min-width: $screen-md-min) {
         background: transparent;
-        color: $theme-color;
+        color: $brand-primary;
    }
 }
 
 // CTA
 .site-nav__item--cta {
-    color: $theme-color;
+    color: $brand-primary;
 }
 
 .site-nav__item--cta__icon {
     display: inline-block;
-    margin-left: .3rem;
+    margin-left: .5rem;
 
     font-size: .5em;
     vertical-align: middle;

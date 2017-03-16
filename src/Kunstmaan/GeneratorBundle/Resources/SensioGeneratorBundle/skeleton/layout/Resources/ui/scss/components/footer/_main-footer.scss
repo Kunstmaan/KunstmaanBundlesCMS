@@ -13,7 +13,7 @@
 /* Footer navigation
    ========================================================================== */
 .footer-nav {
-    margin: 2rem 0;
+    margin: 3.2rem 0;
 
     @media(max-width: $screen-xs-max) {
         text-align: center;
@@ -21,9 +21,9 @@
 }
 
 .footer-nav__title {
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.6rem 0;
 
-    font-size: .75rem;
+    font-size: .85em;
     text-transform: uppercase;
 }
 
@@ -38,10 +38,9 @@
 
 .footer-nav__item {
     display: block;
-    margin-bottom: .4rem;
+    margin-bottom: .6rem;
 
-    font-size: .9rem;
-    line-height: 150%;
+    line-height: 1.5;
     color: $grey;
 
     &:hover, &:focus, &:active {
@@ -54,14 +53,14 @@
 }
 
 .footer-nav--demosite {
+
     .footer-nav__title {
         color: $black;
         font-weight: 600;
     }
 
     p {
-        font-size: .9rem;
-        line-height: 150%;
+        line-height: 1.5;
         color: $grey;
     }
 }

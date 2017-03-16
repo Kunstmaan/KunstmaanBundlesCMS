@@ -5,7 +5,7 @@
 /* General
    ========================================================================== */
 .video-pp {
-    margin: 3rem 0;
+    margin: 5rem 0;
 }
 
 
@@ -26,17 +26,17 @@
             z-index: 1;
 
             display: block;
-            width: 5rem;
-            height: 5rem;
-            margin: -2.5rem 0 0 -2.5rem;
+            width: 9rem;
+            height: 9rem;
+            margin: -4.5rem 0 0 -4.5rem;
 
             background: rgba($black, .7);
 
             color: $white;
             font-family: $iconfont-name;
-            font-size: 2rem;
+            font-size: 3.5rem;
             text-align: center;
-            line-height: 5rem;
+            line-height: 9rem;
 
             border-radius: 50%;
         }

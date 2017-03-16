@@ -7,8 +7,8 @@
 .searchbox-form {
     z-index: 4;
     position: absolute;
-    top: .7rem;
-    right: .4rem;
+    top: 1.12rem;
+    right: .65rem;
 
     width: $search-height-mobile;
 
@@ -16,7 +16,7 @@
 
     @media(min-width: $screen-md-min) {
         position: relative;
-        top: -.4rem;
+        top: -.6rem;
         right: auto;
 
         float: left;
@@ -70,7 +70,7 @@
     height: $search-height-mobile;
     padding: 0 $search-height-mobile 0 calc(#{$search-height-mobile} + 1rem);
 
-    font-size: .8rem;
+    font-size: 1.3rem;
     color: $black;
     line-height: $search-height-mobile;
     vertical-align: top;
@@ -85,12 +85,12 @@
     }
 
     @media(min-width: $screen-md-min) {
-        width: 340px;
+        width: 34rem;
         display: inline-block;
         height: $search-height;
         line-height: $search-height;
 
-        padding: .65rem 1rem;
+        padding: 1.1rem 1.6rem;
         background-color: $grey--lighter;
         border: 1px solid $hr-color;
 
@@ -137,15 +137,15 @@
     @media(min-width: $screen-md-min) {
         width: $search-height;
         height: $search-height;
-        line-height: $search-height - 3px;
+        line-height: $search-height - .8rem;
 
         background: none;
     }
 }
 
 .searchbox__submit__icon {
-    color: $theme-color;
-    font-size: .8rem;
+    color: $brand-primary;
+    font-size: 1.44rem;
 }
 
 
@@ -153,7 +153,7 @@
 /* Active
    ========================================================================== */
 .searchbox-form--active {
-    width: 100%;
+    width: calc(100% - 1.5rem);
 
     .searchbox__content {
         width: 100%;
@@ -174,14 +174,14 @@
     }
 
     @media(min-width: $screen-md-min) {
-        width: 340px;
+        width: 34rem;
 
         .searchbox {
             @include box-shadow;
         }
 
         .searchbox__content {
-            width: 340px;
+            width: 34rem;
         }
     }
 }

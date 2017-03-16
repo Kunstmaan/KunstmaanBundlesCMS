@@ -12,18 +12,18 @@
 
     display: none;
     width: 100%;
-    padding: 1.5rem;
+    padding: 2rem;
 
-    border: .1rem solid rgba(86,86,86,0.95);
+    border: .1rem solid rgba($brand-primary--dark, .95);
 
-    background: rgba(86,86,86,0.95);
+    background: rgba($brand-primary--dark, .95);
 
     text-align: left;
     color: $white;
     line-height: 1.7;
     font: {
         family: Helvetica, Arial, sans-serif;
-        size: 1rem;
+        size: 1.4rem;
     }
 
     animation-name: cookieSlide;
@@ -47,8 +47,8 @@
         border-radius: 0;
         border: none;
 
-        font-size: 1rem;
-        color: rgba(86,86,86,0.95);
+        font-size: 1em;
+        color: rgba($brand-primary--dark, .95);
 
         background: $white;
     }
@@ -61,7 +61,7 @@
         color: $white;
         text-align: left;
 
-        font-size: 1rem;
+        font-size: 1em;
 
         a {
             color: $white;
@@ -72,10 +72,10 @@
         bottom: 1rem;
         left: 1rem;
 
-        max-width: 35rem;
+        max-width: 56rem;
 
         p {
-            max-width: 22.9rem;
+            max-width: 37rem;
         }
     }
 
@@ -83,14 +83,13 @@
         bottom: 1rem;
         left: 1rem;
 
-        max-width: 22rem;
+        max-width: 35rem;
 
         p {
-            max-width: 12.9rem;
+            max-width: 21rem;
         }
     }
 }
-
 
 .cookie-bar--visible {
     display: block;
@@ -98,11 +97,11 @@
 
 @keyframes cookieSlide {
     0% {
-        transform: translateY(6rem);
+        transform: translate3d(0, 6rem, 0);
         opacity: 0;
     }
     100% {
-        transform: translateY(0rem);
+        transform: translate3d(0, 0, 0);
         opacity: 1;
     }
 }

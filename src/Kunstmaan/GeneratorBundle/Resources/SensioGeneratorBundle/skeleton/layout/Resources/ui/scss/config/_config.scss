@@ -21,5 +21,7 @@
 @import "vendors/bootstrap-vars";
 @import "vendors/bootstrap-imports";
 
+{% if demosite %}
 @import "vendors/cargobay-vars";
 @import "vendors/cargobay-imports";
+{% endif %}

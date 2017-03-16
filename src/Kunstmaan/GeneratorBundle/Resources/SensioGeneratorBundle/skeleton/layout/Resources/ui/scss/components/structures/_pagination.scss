@@ -16,41 +16,41 @@
         list-style: none;
 
         color: $grey--dark;
-        font-size: .9rem;
 
         a {
             color: $grey--dark;
-            font-size: .9rem;
 
             &:hover,
             &:active,
             &:focus {
-                color: $blue;
+                color: $brand-primary;
             }
         }
 
         & + li {
-            margin-left: 2rem;
+            margin-left: 3.5rem;
         }
     }
 
     .active {
-        height: 2rem;
-        width: 2rem;
+        height: 4rem;
+        width: 4rem;
 
-        background: $blue;
+        background: $brand-primary;
 
         border-radius: 100%;
 
         span {
             color: $white;
-            line-height: 2rem;
+            line-height: 2.5;
         }
     }
 }
 
 .pagination__direction-icon {
-    font-size: .6rem;
+    @extend %icon;
+
+    font-size: .6875em;
 }
 
 /*doc

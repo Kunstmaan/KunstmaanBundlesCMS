@@ -12,14 +12,14 @@
     margin: $default-margin 0;
 
 {% if demosite %}
-    font-size: .85rem;
+    font-size: 1.5rem;
 
     &:before {
         @include iconfont-reset;
 
-        margin-right: .5rem;
+        margin-right: 1rem;
 
-        font-size: 11px;
+        font-size: 1.1rem;
     }
 
     a {

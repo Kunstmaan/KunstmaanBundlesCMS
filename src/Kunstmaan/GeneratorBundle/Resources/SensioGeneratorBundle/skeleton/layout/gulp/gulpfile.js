@@ -104,13 +104,7 @@ var addAsyncTag = function (filepath, file, i, length) {
 gulp.task('styles', function() {
     return gulp.src([config.scss, '!' + config.scssFolder + 'admin-style.scss'])
         // Sass
-        .pipe(plugins.rubySass({
-            loadPath: './',
-            bundleExec: true,
-        }))
-        .on('error', function (err) {
-            errorLogger('SASS Compilation Error', err.message);
-        })
+        .pipe(plugins.sass().on('error', plugins.sass.logError))
 
         // Combine Media Queries
         .pipe(plugins.combineMq())
@@ -141,13 +135,7 @@ gulp.task('styles', function() {
 gulp.task('admin-styles', function() {
     return gulp.src([config.scss, '!' + config.scssFolder + 'style.scss'])
         // Sass
-        .pipe(plugins.rubySass({
-            loadPath: './',
-            bundleExec: true,
-        }))
-        .on('error', function (err) {
-            errorLogger('SASS Compilation Error', err.message);
-        })
+        .pipe(plugins.sass().on('error', plugins.sass.logError))
 
         // Combine Media Queries
         .pipe(plugins.combineMq())

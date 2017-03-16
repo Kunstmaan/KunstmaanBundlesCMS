@@ -11,8 +11,8 @@
     background: $grey--lighter;
 
     .search-results__input {
-        width: calc(100% - 90px);
-        margin-right: .7rem;
+        width: calc(100% - 9rem);
+        margin-right: 1.3rem;
 
         max-width: 100%;
 
@@ -33,7 +33,7 @@
 }
 
 .search-results__button {
-    min-height: 2.5rem;
+    min-height: 4.5rem;
     padding: 0 1.5em;
 }
 
