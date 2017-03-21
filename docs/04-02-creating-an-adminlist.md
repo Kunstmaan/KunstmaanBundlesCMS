@@ -79,15 +79,15 @@ as well :
     ...
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	...
-	$builder->add(
-	    'picture',
-        MediaType::class,
-	    array(
-		'pattern'  => 'KunstmaanMediaBundle_chooser',
-		'required' => false,
-	    )
-	);
+        ...
+        $builder->add(
+            'picture',
+            MediaType::class,
+            [
+                'chooser'  => 'KunstmaanMediaBundle_chooser',
+                'required' => false,
+            ]
+        );
     }
 
 ```
@@ -148,16 +148,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 It would be neat to display the picture (if there is one) in the admin list as well, and while we're at it, we would like to use proper column names (instead of the field name) as well. So open `src/MyProject/WebsiteBundle/AdminList/EmployeeAdminListConfigurator.php` and make the following changes :
 
 ```php
-    /**
-     * Configure the visible columns
-     */
-    public function buildFields()
-    {
-	$this->addField('firstName', 'First name', true);
-	$this->addField('lastName', 'Last name', true);
-	$this->addField('twitterHandle', 'Twitter handle', true);
-	$this->addField('picture', 'Picture', false);
-    }
+/**
+ * Configure the visible columns
+ */
+public function buildFields()
+{
+    $this->addField('firstName', 'First name', true);
+    $this->addField('lastName', 'Last name', true);
+    $this->addField('twitterHandle', 'Twitter handle', true);
+    $this->addField('picture', 'Picture', false);
+}
 ```
 
 As the picture field has a toString method that just returns the id of the relevant record in the media table this will display a number instead of the actual image, which is not what we want. So let's fix that. First we'll add a template file to display the column. So create a new folder (we like a consistent naming scheme, so we'll add these custom column templates in `AdminList/entity-name/column-name.twig.html`) :
@@ -183,11 +183,11 @@ Add an extra entry for the `employee_thumbnail` filter to the `filter_sets` in `
 liip_imagine:
     ...
     filter_sets:
-    ...
-	employee_thumbnail:
-	    quality: 80
-	    filters:
-		thumbnail: { size: [100, 100], mode: outbound }
+        ...
+        employee_thumbnail:
+            quality: 80
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
 ```
 
 And finally specify this template in the `buildFields` method in `src/MyProject/WebsiteBundle/AdminList/EmployeeAdminListConfigurator.php` :
@@ -198,10 +198,10 @@ And finally specify this template in the `buildFields` method in `src/MyProject/
      */
     public function buildFields()
     {
-	$this->addField('firstName', 'First name', true);
-	$this->addField('lastName', 'Last name', true);
-	$this->addField('twitterHandle', 'Twitter handle', true);
-	$this->addField('picture', 'Picture', false, 'MyProjectWebsiteBundle:AdminList\Employee:picture.html.twig');
+        $this->addField('firstName', 'First name', true);
+        $this->addField('lastName', 'Last name', true);
+        $this->addField('twitterHandle', 'Twitter handle', true);
+        $this->addField('picture', 'Picture', false, 'MyProjectWebsiteBundle:AdminList\Employee:picture.html.twig');
     }
 ```
 
@@ -251,17 +251,18 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-	if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
-	    $menuItem = new TopMenuItem($menu);
-	    $menuItem->setRoute('MyProjectWebsitebundle_admin_employee');
-	    $menuItem->setInternalName('Employee');
-	    $menuItem->setParent($parent);
-	    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-		$menuItem->setActive(true);
-		$parent->setActive(true);
-	    }
-	    $children[] = $menuItem;
-	}
+        if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
+            $menuItem = new TopMenuItem($menu);
+            $menuItem->setRoute('MyProjectWebsitebundle_admin_employee');
+            $menuItem->setUniqueId('employee');
+            $menuItem->setLabel('Employee');
+            $menuItem->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+                $parent->setActive(true);
+            }
+            $children[] = $menuItem;
+        }
     }
 }
 ```
@@ -271,10 +272,10 @@ The route name used above (`MyProjectWebsitebundle_admin_employee`) should match
 And finally register this service in `src/MyProject/WebsiteBundle/Resources/config/services.yml` by adding the following snippet:
 
 ```yml
-    MyProjectWebsitebundle.menu.adaptor.modules:
-	class: MyProject\WebsiteBundle\Helper\Menu\ModulesMenuAdaptor
-	tags:
-	    -  { name: 'kunstmaan_admin.menu.adaptor' }
+MyProjectWebsitebundle.menu.adaptor.modules:
+    class: MyProject\WebsiteBundle\Helper\Menu\ModulesMenuAdaptor
+    tags:
+        -  { name: 'kunstmaan_admin.menu.adaptor' }
 ```
 
 If you reload the page in the backend, you should now see a new "Employee" menu item in the Modules menu.
