@@ -70,11 +70,11 @@ class {{ entity_class }}AdminListController extends AdminListController
     }
 
     /**
-     * The edit action
+     * The view action
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view")
+     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view")
      * @Method({"GET"})
      *
      * @return array
