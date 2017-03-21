@@ -5,12 +5,7 @@
    Never add styles directly to this file
    ========================================================================== */
 
-{% if demosite %}
-@import "app/Resources/vendor_bower/cargobay/src/cookie-consent/styles/scss/cookie-consent",
-        "app/Resources/vendor_bower/cargobay/src/toggle/styles/scss/toggle",
-        "app/Resources/vendor_bower/cargobay/src/sidebar-toggle/styles/scss/sidebar-toggle",
-        "app/Resources/vendor_bower/cargobay/src/videolink/styles/scss/videolink";
-{% else %}
-@import "app/Resources/vendor_bower/cargobay/src/cookie-consent/styles/scss/cookie-consent",
-        "app/Resources/vendor_bower/cargobay/src/videolink/styles/scss/videolink";
-{% endif %}
+@import "node_modules/cargobay/src/cookie-consent/styles/scss/cookie-consent",
+        "node_modules/cargobay/src/toggle/styles/scss/toggle",
+        "node_modules/cargobay/src/sidebar-toggle/styles/scss/sidebar-toggle",
+        "node_modules/cargobay/src/videolink/styles/scss/videolink";

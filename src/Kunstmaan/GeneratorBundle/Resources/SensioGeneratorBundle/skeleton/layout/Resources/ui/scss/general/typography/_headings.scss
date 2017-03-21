@@ -20,50 +20,49 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 h1 {
 {% if demosite %}
-    color: $theme-color;
+    color: $brand-primary;
 {% endif %}
-    font-size: 2rem;
+    font-size: 3.2rem;
     font-weight: 300;
 
     @media(min-width: $screen-md-min) {
-        font-size: 3rem;
+        font-size: 4.8rem;
     }
 }
 
 h2 {
 {% if demosite %}
-    color: $theme-color;
+    color: $brand-primary;
 {% endif %}
-    font-size: 1.8rem;
+    font-size: 2.8rem;
     font-weight: 300;
 
     @media(min-width: $screen-md-min) {
-        font-size: 2.8rem;
+        font-size: 4.5rem;
     }
 }
 
 h3 {
-    font-size: 1.4rem;
+    font-size: 2.2rem;
     text-transform: uppercase;
 }
 
 h4 {
-    font-size: 1rem;
+    font-size: 1.6rem;
     font-weight: 600;
 }
 
 h2, h3, h4 {
-    margin: 1.6rem 0;
+    margin: 2.5rem 0;
 }
 
 h5, h6 {
-    margin: 1.4rem 0;
+    margin: 2.2rem 0;
 
-    font-size: .9rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
     font-weight: 400;
 }
-
 
 
 

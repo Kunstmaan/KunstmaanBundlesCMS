@@ -53,13 +53,13 @@
 .service-pp__head {
     margin-top: 0;
 
-    color: $theme-color;
-    font-size: 2rem;
+    color: $brand-primary;
+    font-size: 3.6rem;
     font-weight: 300;
     line-height: 1.2;
 
     @media(min-width: $screen-md-min) {
-        font-size: 3rem;
+        font-size: 5.4rem;
     }
 }
 
@@ -67,7 +67,7 @@
 /* Image
    ========================================================================== */
 .service-pp__image {
-    max-width: 400px;
+    max-width: 40rem;
     margin: 0 auto;
     padding: 2em;
 

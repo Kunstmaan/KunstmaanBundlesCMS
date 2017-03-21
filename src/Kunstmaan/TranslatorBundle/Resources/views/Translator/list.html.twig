@@ -6,9 +6,8 @@
 
     {% stylesheets
     "@KunstmaanTranslatorBundle/Resources/ui/scss/style.scss"
-    output="KunstmaanTranslatorBundleAssets/css/TranslatorStyle.min.css" filter="scss"
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}">
+    output="KunstmaanTranslatorBundleAssets/css/TranslatorStyle.min.css" filter="scss" %}
+    <link rel="stylesheet" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
 
@@ -33,11 +32,11 @@
                                 {% if adminlist.canAdd() %}
                                     {% set adminaddlist = adminlist.getAddUrlFor(adminlist.getIndexUrl()['params']) %}
                                     {% for key,add in adminaddlist %}
-                                    <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
-                                        {{ 'settings.translator.add' | trans }}
-                                    </a>
+                                        <a class="btn btn-primary btn--raise-on-hover" href="{{ path(add["path"], add[("params")]) }}">
+                                            {{ 'settings.translator.add' | trans }}
+                                        </a>
                                     {% endfor %}
-                                {%  endif %}
+                                {% endif %}
 
                                 <a class="btn btn-default btn--raise-on-hover" href="{{ path('KunstmaanTranslatorBundle_command_clear_cache') }}">
                                     {{ 'settings.translator.refresh_live' | trans }}
@@ -45,18 +44,23 @@
 
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-                                        {{ 'settings.translator.import_translations' | trans }}
+                                        {{ 'settings.translator.actions' | trans }}
                                         <i class="fa fa-caret-down btn__icon"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li>
-                                            <a href="{{ path('KunstmaanTranslatorBundle_command_import') }}" >
+                                            <a href="{{ path('KunstmaanTranslatorBundle_command_import') }}">
                                                 {{ 'settings.translator.import_translations' | trans }}
                                             </a>
                                         </li>
                                         <li>
-                                            <a data-toggle="modal" data-target="#import-force-modal" >
+                                            <a data-toggle="modal" data-target="#import-force-modal">
                                                 {{ 'settings.translator.import_translations_forced' | trans }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('KunstmaanTranslatorBundle_command_export') }}">
+                                                {{ 'settings.translator.export_translations' | trans }}
                                             </a>
                                         </li>
                                     </ul>
@@ -91,8 +95,7 @@
     "@KunstmaanTranslatorBundle/Resources/ui/vendor_bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"
     "@KunstmaanTranslatorBundle/Resources/ui/js/_inline-edit.js"
     "@KunstmaanTranslatorBundle/Resources/ui/js/app.js"
-    output="KunstmaanTranslatorBundleAssets/js/translatorFooter.min.js" filter="uglifyjs2"
-    %}
-        <script src="{{ asset_url }}"></script>
+    output="KunstmaanTranslatorBundleAssets/js/translatorFooter.min.js" filter="uglifyjs2" %}
+    <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
