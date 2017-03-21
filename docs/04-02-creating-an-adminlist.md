@@ -83,10 +83,10 @@ as well :
 	$builder->add(
 	    'picture',
         MediaType::class,
-	    array(
-		'pattern'  => 'KunstmaanMediaBundle_chooser',
-		'required' => false,
-	    )
+	    [
+		    'chooser'  => 'KunstmaanMediaBundle_chooser',
+		    'required' => false,
+	    ]
 	);
     }
 
@@ -187,7 +187,7 @@ liip_imagine:
 	employee_thumbnail:
 	    quality: 80
 	    filters:
-		thumbnail: { size: [100, 100], mode: outbound }
+		    thumbnail: { size: [100, 100], mode: outbound }
 ```
 
 And finally specify this template in the `buildFields` method in `src/MyProject/WebsiteBundle/AdminList/EmployeeAdminListConfigurator.php` :
@@ -254,7 +254,8 @@ class ModulesMenuAdaptor implements MenuAdaptorInterface
 	if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
 	    $menuItem = new TopMenuItem($menu);
 	    $menuItem->setRoute('MyProjectWebsitebundle_admin_employee');
-	    $menuItem->setInternalName('Employee');
+	    $menuItem->setLabel('Employee');
+        $menuItem->setUniqueId('Employee');
 	    $menuItem->setParent($parent);
 	    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
 		$menuItem->setActive(true);
