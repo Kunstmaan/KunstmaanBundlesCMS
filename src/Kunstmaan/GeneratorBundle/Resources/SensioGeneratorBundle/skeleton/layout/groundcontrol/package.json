@@ -1,0 +1,54 @@
+{
+  "name": "{{ bundle.getName() }}",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "gulp startLocal --continueAfterTestError --speedupLocalDev",
+    "startOptimized": "gulp startOptimized",
+    "test": "gulp test",
+    "build": "gulp buildOptimized",
+    "testAndBuild": "gulp testAndBuildOptimized"
+  },
+  "author": "Kunstmaan",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.7.6",
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.4.0",
+    "babel-preset-env": "^1.2.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-register": "^6.23.0",
+    "browser-sync": "^2.18.8",
+    "chalk": "^1.1.3",
+    "cssnano": "^3.10.0",
+    "del": "^2.2.2",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-import": "^2.2.0",
+    "exports-loader": "^0.6.4",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-if": "^2.0.2",
+    "gulp-inject": "^4.2.0",
+    "gulp-postcss": "^6.3.0",
+    "gulp-rev": "^7.1.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "jest-cli": "^19.0.2",
+    "node-notifier": "^5.0.2",
+    "postcss-reporter": "^3.0.0",
+    "stylelint": "^7.9.0",
+    "stylelint-config-standard": "^16.0.0",
+    "stylelint-order": "^0.3.0",
+    "webpack": "^2.2.1",
+    "yargs": "^7.0.2"
+  },
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "ramda": "^0.23.0"{% if demosite %},
+    "cargobay": "Kunstmaan/cargobay#0.8.6-support",
+    "jquery": "^3.1.1",
+    "velocity-animate": "1.2.3"{% endif %}
+
+  }
+}

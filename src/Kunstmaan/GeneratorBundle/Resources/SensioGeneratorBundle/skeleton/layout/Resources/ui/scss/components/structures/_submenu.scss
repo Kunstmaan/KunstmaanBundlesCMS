@@ -13,7 +13,9 @@
    ========================================================================== */
 .submenu__link {
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         text-decoration: none;
     }
 }
@@ -40,8 +42,7 @@
 }
 
 
-
-/*doc
+/* doc
 ---
 title: Sub-menu
 name: 04_submenu
