@@ -4,7 +4,7 @@ namespace {{ namespace }}\Form\Pages;
 
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,20 +31,17 @@ class FormPageAdminType extends PageAdminType
     {
         parent::buildForm($builder, $options);
 
-	$builder->add('subject', TextType::class, array(
-	    'required' => false,
-	));
-	$builder->add('fromEmail', EmailType::class, array(
-	    'required' => false,
-	));
-	$builder->add('toEmail', EmailType::class, array(
-	    'required' => false,
-	));
-        $builder->add('thanks', TextareaType::class, array(
-	    'required' => false,
-	    'attr' => array(
-		'class' => 'js-rich-editor rich-editor'
-	    )
+        $builder->add('subject', TextType::class, array(
+            'required' => false,
+        ));
+        $builder->add('fromEmail', EmailType::class, array(
+            'required' => false,
+        ));
+        $builder->add('toEmail', EmailType::class, array(
+            'required' => false,
+        ));
+        $builder->add('thanks', WysiwygType::class, array(
+            'required' => false,
         ));
     }
 
