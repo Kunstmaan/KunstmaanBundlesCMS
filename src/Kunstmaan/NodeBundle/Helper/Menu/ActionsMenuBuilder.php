@@ -58,11 +58,11 @@ class ActionsMenuBuilder
 
 
     /**
-     * @param FactoryInterface              $factory               The factory
-     * @param EntityManager                 $em                    The entity manager
-     * @param RouterInterface               $router                The router
-     * @param EventDispatcherInterface      $dispatcher            The event dispatcher
-     * @param AuthorizationCheckerInterface $authorizationChecker  The security authorization checker
+     * @param FactoryInterface              $factory              The factory
+     * @param EntityManager                 $em                   The entity manager
+     * @param RouterInterface               $router               The router
+     * @param EventDispatcherInterface      $dispatcher           The event dispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker The security authorization checker
      * @param PagesConfiguration            $pagesConfiguration
      */
     public function __construct(
@@ -72,13 +72,14 @@ class ActionsMenuBuilder
         EventDispatcherInterface $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
         PagesConfiguration $pagesConfiguration
-    ) {
-        $this->factory              = $factory;
-        $this->em                   = $em;
-        $this->router               = $router;
-        $this->dispatcher           = $dispatcher;
+    )
+    {
+        $this->factory = $factory;
+        $this->em = $em;
+        $this->router = $router;
+        $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;
-        $this->pagesConfiguration   = $pagesConfiguration;
+        $this->pagesConfiguration = $pagesConfiguration;
     }
 
     /**
@@ -87,19 +88,19 @@ class ActionsMenuBuilder
     public function createSubActionsMenu()
     {
         $activeNodeVersion = $this->getActiveNodeVersion();
-        $menu              = $this->factory->createItem('root');
+        $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'page-sub-actions');
 
         if (null !== $activeNodeVersion && $this->isEditableNode) {
             $menu->addChild(
                 'subaction.versions',
-                array(
-                    'linkAttributes' => array(
-                        'data-toggle'   => 'modal',
+                [
+                    'linkAttributes' => [
+                        'data-toggle' => 'modal',
                         'data-keyboard' => 'true',
-                        'data-target'   => '#versions'
-                    )
-                )
+                        'data-target' => '#versions'
+                    ]
+                ]
             );
         }
 
@@ -130,7 +131,7 @@ class ActionsMenuBuilder
             }
         }
 
-        $menu              = $this->factory->createItem('root');
+        $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute(
             'class',
             'page-main-actions js-auto-collapse-buttons'
@@ -153,41 +154,41 @@ class ActionsMenuBuilder
             return $menu;
         }
 
-        $activeNodeTranslation       = $activeNodeVersion->getNodeTranslation();
-        $node                        = $activeNodeTranslation->getNode();
+        $activeNodeTranslation = $activeNodeVersion->getNodeTranslation();
+        $node = $activeNodeTranslation->getNode();
         $queuedNodeTranslationAction = $this->em->getRepository(
             'KunstmaanNodeBundle:QueuedNodeTranslationAction'
-        )->findOneBy(array('nodeTranslation' => $activeNodeTranslation));
+        )->findOneBy(['nodeTranslation' => $activeNodeTranslation]);
 
-        $isFirst    = true;
-        $canEdit    = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $node);
+        $isFirst = true;
+        $canEdit = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $node);
         $canPublish = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_PUBLISH, $node);
 
         if ($activeNodeVersion->isDraft() && $this->isEditableNode) {
             if ($canEdit) {
                 $menu->addChild(
                     'action.saveasdraft',
-                    array(
-                        'linkAttributes' => array(
-                            'type'  => 'submit',
+                    [
+                        'linkAttributes' => [
+                            'type' => 'submit',
                             'class' => 'js-save-btn btn btn--raise-on-hover btn-primary',
                             'value' => 'save',
-                            'name'  => 'save'
-                        ),
-                        'extras'         => array('renderType' => 'button')
-                    )
+                            'name' => 'save'
+                        ],
+                        'extras' => ['renderType' => 'button']
+                    ]
                 );
                 if ($canRecopy) {
                     $menu->addChild(
                         'action.recopyfromlanguage',
-                        array(
-                            'linkAttributes' => array(
+                        [
+                            'linkAttributes' => [
                                 'class' => 'btn btn-default btn--raise-on-hover',
                                 'data-toggle' => 'modal',
                                 'data-keyboard' => 'true',
                                 'data-target' => '#recopy'
-                            ),
-                        )
+                            ],
+                        ]
                     );
                 }
                 $isFirst = false;
@@ -195,31 +196,31 @@ class ActionsMenuBuilder
 
             $menu->addChild(
                 'action.preview',
-                array(
-                    'uri'            => $this->router->generate(
+                [
+                    'uri' => $this->router->generate(
                         '_slug_preview',
-                        array(
-                            'url'     => $activeNodeTranslation->getUrl(),
+                        [
+                            'url' => $activeNodeTranslation->getUrl(),
                             'version' => $activeNodeVersion->getId()
-                        )
+                        ]
                     ),
-                    'linkAttributes' => array(
+                    'linkAttributes' => [
                         'target' => '_blank',
-                        'class'  => 'btn btn-default btn--raise-on-hover'
-                    )
-                )
+                        'class' => 'btn btn-default btn--raise-on-hover'
+                    ]
+                ]
             );
 
             if (empty($queuedNodeTranslationAction) && $canPublish) {
                 $menu->addChild(
                     'action.publish',
-                    array(
-                        'linkAttributes' => array(
+                    [
+                        'linkAttributes' => [
                             'data-toggle' => 'modal',
                             'data-target' => '#pub',
-                            'class'       => 'btn btn--raise-on-hover'.($isFirst ? ' btn-primary btn-save' : ' btn-default')
-                        )
-                    )
+                            'class' => 'btn btn--raise-on-hover'.($isFirst ? ' btn-primary btn-save' : ' btn-default')
+                        ]
+                    ]
                 );
             }
 
@@ -227,15 +228,15 @@ class ActionsMenuBuilder
             if ($canEdit && $canPublish) {
                 $menu->addChild(
                     'action.save',
-                    array(
-                        'linkAttributes' => array(
-                            'type'  => 'submit',
+                    [
+                        'linkAttributes' => [
+                            'type' => 'submit',
                             'class' => 'js-save-btn btn btn--raise-on-hover btn-primary',
                             'value' => 'save',
-                            'name'  => 'save'
-                        ),
-                        'extras'         => array('renderType' => 'button')
-                    )
+                            'name' => 'save'
+                        ],
+                        'extras' => ['renderType' => 'button']
+                    ]
                 );
                 $isFirst = false;
             }
@@ -243,16 +244,16 @@ class ActionsMenuBuilder
             if ($this->isEditableNode) {
                 $menu->addChild(
                     'action.preview',
-                    array(
-                        'uri'            => $this->router->generate(
+                    [
+                        'uri' => $this->router->generate(
                             '_slug_preview',
-                            array('url' => $activeNodeTranslation->getUrl())
+                            ['url' => $activeNodeTranslation->getUrl()]
                         ),
-                        'linkAttributes' => array(
+                        'linkAttributes' => [
                             'target' => '_blank',
-                            'class'  => 'btn btn-default btn--raise-on-hover'
-                        )
-                    )
+                            'class' => 'btn btn-default btn--raise-on-hover'
+                        ]
+                    ]
                 );
 
                 if (empty($queuedNodeTranslationAction)
@@ -264,14 +265,14 @@ class ActionsMenuBuilder
                 ) {
                     $menu->addChild(
                         'action.unpublish',
-                        array(
-                            'linkAttributes' => array(
-                                'class'         => 'btn btn-default btn--raise-on-hover',
-                                'data-toggle'   => 'modal',
+                        [
+                            'linkAttributes' => [
+                                'class' => 'btn btn-default btn--raise-on-hover',
+                                'data-toggle' => 'modal',
                                 'data-keyboard' => 'true',
-                                'data-target'   => '#unpub'
-                            )
-                        )
+                                'data-target' => '#unpub'
+                            ]
+                        ]
                     );
                 } elseif (empty($queuedNodeTranslationAction)
                     && !$activeNodeTranslation->isOnline()
@@ -279,41 +280,41 @@ class ActionsMenuBuilder
                 ) {
                     $menu->addChild(
                         'action.publish',
-                        array(
-                            'linkAttributes' => array(
-                                'class'         => 'btn btn-default btn--raise-on-hover',
-                                'data-toggle'   => 'modal',
+                        [
+                            'linkAttributes' => [
+                                'class' => 'btn btn-default btn--raise-on-hover',
+                                'data-toggle' => 'modal',
                                 'data-keyboard' => 'true',
-                                'data-target'   => '#pub'
-                            )
-                        )
+                                'data-target' => '#pub'
+                            ]
+                        ]
                     );
                 }
 
                 if ($canEdit) {
                     $menu->addChild(
                         'action.saveasdraft',
-                        array(
-                            'linkAttributes' => array(
-                                'type'  => 'submit',
+                        [
+                            'linkAttributes' => [
+                                'type' => 'submit',
                                 'class' => 'btn btn--raise-on-hover'.($isFirst ? ' btn-primary btn-save' : ' btn-default'),
                                 'value' => 'saveasdraft',
-                                'name'  => 'saveasdraft'
-                            ),
-                            'extras'         => array('renderType' => 'button')
-                        )
+                                'name' => 'saveasdraft'
+                            ],
+                            'extras' => ['renderType' => 'button']
+                        ]
                     );
                     if ($canRecopy) {
                         $menu->addChild(
                             'action.recopyfromlanguage',
-                            array(
-                                'linkAttributes' => array(
+                            [
+                                'linkAttributes' => [
                                     'class' => 'btn btn-default btn--raise-on-hover',
                                     'data-toggle' => 'modal',
                                     'data-keyboard' => 'true',
                                     'data-target' => '#recopy'
-                                ),
-                            )
+                                ],
+                            ]
                         );
                     }
                 }
@@ -326,32 +327,32 @@ class ActionsMenuBuilder
         ) {
             $menu->addChild(
                 'action.addsubpage',
-                array(
-                    'linkAttributes' => array(
-                        'type'          => 'button',
-                        'class'         => 'btn btn-default btn--raise-on-hover',
-                        'data-toggle'   => 'modal',
+                [
+                    'linkAttributes' => [
+                        'type' => 'button',
+                        'class' => 'btn btn-default btn--raise-on-hover',
+                        'data-toggle' => 'modal',
                         'data-keyboard' => 'true',
-                        'data-target'   => '#add-subpage-modal'
-                    ),
-                    'extras'         => array('renderType' => 'button')
-                )
+                        'data-target' => '#add-subpage-modal'
+                    ],
+                    'extras' => ['renderType' => 'button']
+                ]
             );
         }
 
         if (null !== $node->getParent() && $canEdit) {
             $menu->addChild(
                 'action.duplicate',
-                array(
-                    'linkAttributes' => array(
-                        'type'          => 'button',
-                        'class'         => 'btn btn-default btn--raise-on-hover',
-                        'data-toggle'   => 'modal',
+                [
+                    'linkAttributes' => [
+                        'type' => 'button',
+                        'class' => 'btn btn-default btn--raise-on-hover',
+                        'data-toggle' => 'modal',
                         'data-keyboard' => 'true',
-                        'data-target'   => '#duplicate-page-modal'
-                    ),
-                    'extras'         => array('renderType' => 'button')
-                )
+                        'data-target' => '#duplicate-page-modal'
+                    ],
+                    'extras' => ['renderType' => 'button']
+                ]
             );
         }
 
@@ -363,17 +364,17 @@ class ActionsMenuBuilder
         ) {
             $menu->addChild(
                 'action.delete',
-                array(
-                    'linkAttributes' => array(
-                        'type'          => 'button',
-                        'class'         => 'btn btn-default btn--raise-on-hover',
-                        'onClick'       => 'oldEdited = isEdited; isEdited=false',
-                        'data-toggle'   => 'modal',
+                [
+                    'linkAttributes' => [
+                        'type' => 'button',
+                        'class' => 'btn btn-default btn--raise-on-hover',
+                        'onClick' => 'oldEdited = isEdited; isEdited=false',
+                        'data-toggle' => 'modal',
                         'data-keyboard' => 'true',
-                        'data-target'   => '#delete-page-modal'
-                    ),
-                    'extras'         => array('renderType' => 'button')
-                )
+                        'data-target' => '#delete-page-modal'
+                    ],
+                    'extras' => ['renderType' => 'button']
+                ]
             );
         }
 
@@ -416,16 +417,16 @@ class ActionsMenuBuilder
         );
         $menu->addChild(
             'action.addhomepage',
-            array(
-                'linkAttributes' => array(
-                    'type'          => 'button',
-                    'class'         => 'btn btn-default btn--raise-on-hover',
-                    'data-toggle'   => 'modal',
+            [
+                'linkAttributes' => [
+                    'type' => 'button',
+                    'class' => 'btn btn-default btn--raise-on-hover',
+                    'data-toggle' => 'modal',
                     'data-keyboard' => 'true',
-                    'data-target'   => '#add-homepage-modal'
-                ),
-                'extras'         => array('renderType' => 'button')
-            )
+                    'data-target' => '#add-homepage-modal'
+                ],
+                'extras' => ['renderType' => 'button']
+            ]
         );
 
         return $menu;
