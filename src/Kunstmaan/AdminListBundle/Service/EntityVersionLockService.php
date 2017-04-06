@@ -40,9 +40,9 @@ class EntityVersionLockService
     public function isEntityBelowThreshold(LockableEntityInterface $entity)
     {
         /** @var LockableEntity $lockable */
-        $lockable = $this->getLockableEntity($entity);
+        $lockable = $this->getLockableEntity($entity, false);
 
-        if ($this->lockEnabled) {
+        if ($this->lockEnabled && $lockable->getId() !== null) {
             $now = new \DateTime();
             $thresholdDate = clone $lockable->getUpdated();
             $thresholdDate->add(new \DateInterval("PT".$this->threshold."S"));
@@ -154,12 +154,15 @@ class EntityVersionLockService
      *
      * @return LockableEntity
      */
-    protected function getLockableEntity(LockableEntityInterface $entity)
+    protected function getLockableEntity(LockableEntityInterface $entity, $create = true)
     {
         /** @var LockableEntity $lockable */
         $lockable = $this->objectManager->getRepository('KunstmaanAdminListBundle:LockableEntity')->getOrCreate($entity->getId(), get_class($entity));
-        $this->objectManager->persist($lockable);
-        $this->objectManager->flush();
+
+        if ($create === true && $lockable->getId() === null) {
+            $this->objectManager->persist($lockable);
+            $this->objectManager->flush();
+        }
 
         return $lockable;
     }
