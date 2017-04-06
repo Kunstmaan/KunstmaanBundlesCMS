@@ -64,7 +64,7 @@ abstract class BaseUser extends AbstractUser
      *
      * @param int $id
      *
-     * @return User
+     * @return BaseUser
      */
     public function setId($id)
     {
@@ -118,7 +118,7 @@ abstract class BaseUser extends AbstractUser
      *
      * @param string $adminLocale
      *
-     * @return User
+     * @return BaseUser
      */
     public function setAdminLocale($adminLocale)
     {
@@ -192,4 +192,13 @@ abstract class BaseUser extends AbstractUser
      * @return string
      */
     abstract public function getFormTypeClass();
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAccountNonLocked()
+    {
+        return $this->isEnabled();
+    }
+
 }
