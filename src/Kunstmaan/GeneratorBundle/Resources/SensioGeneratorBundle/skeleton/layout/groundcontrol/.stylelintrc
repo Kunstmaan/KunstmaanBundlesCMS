@@ -26,6 +26,7 @@
                 ignore: ["after-comment"]
             }
         ],
+        "comment-whitespace-inside": null,
         "max-nesting-depth": 3,
         "order/declaration-block-property-groups-structure": [
             {
