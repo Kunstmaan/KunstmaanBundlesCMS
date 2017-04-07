@@ -115,6 +115,9 @@ kuma_admin:
             'deleted_success.%medianame%': Item '%medianame%' is verwijderd!
             drop_success:       Het bestand is succesvol geupload!
             drop_unrecognized:  Bestand wordt niet herkend!
+    login:
+        forgot_password: Wachtwoord vergeten
+        invalid_credentials: Verkeerde gebruikersnaam en/of wachtwoord
 
 kuma_js:
     auto_collapse:
