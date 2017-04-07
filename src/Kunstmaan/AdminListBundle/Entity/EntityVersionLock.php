@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EntityVersionLock
  *
  * @ORM\Table(name="kuma_entity_version_lock", indexes={
- *     @ORM\Index(name="nt_owner_public_idx", columns={"owner", "lockable_entity_id"}),
+ *     @ORM\Index(name="evl_owner_entity_idx", columns={"owner", "lockable_entity_id"}),
  * })
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminListBundle\Repository\EntityVersionLockRepository")
  */
