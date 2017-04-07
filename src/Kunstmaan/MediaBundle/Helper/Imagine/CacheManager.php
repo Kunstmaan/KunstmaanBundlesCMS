@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MediaBundle\Helper\Imagine;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
 {
     /**
@@ -9,10 +11,29 @@ class CacheManager extends \Liip\ImagineBundle\Imagine\Cache\CacheManager
      */
     public function generateUrl($path, $filter, array $runtimeConfig = array(), $resolver = null)
     {
+        $originalPath = $path;
         $filterConf = $this->filterConfig->get($filter);
         $path = $this->changeFileExtension(ltrim($path, '/'), $filterConf['format']);
 
-        return parent::generateUrl($path, $filter, $runtimeConfig, $resolver);
+        $params = array(
+            'path' => ltrim($path, '/'),
+            'filter' => $filter,
+        );
+
+        if ($resolver) {
+            $params['resolver'] = $resolver;
+        }
+
+        if (empty($runtimeConfig)) {
+            $filterUrl = $this->router->generate('liip_imagine_filter', $params, UrlGeneratorInterface::ABSOLUTE_URL);
+        } else {
+            $params['filters'] = $runtimeConfig;
+            $params['hash'] = $this->signer->sign($originalPath, $runtimeConfig);
+
+            $filterUrl = $this->router->generate('liip_imagine_filter_runtime', $params, UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+
+        return $filterUrl;
     }
 
     /**
