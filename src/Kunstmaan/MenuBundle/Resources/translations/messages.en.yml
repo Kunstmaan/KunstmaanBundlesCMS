@@ -1,10 +1,14 @@
 kuma_menu:
+    menus:
+        title: Menus
     menu:
         adminlist:
             field:
                 name:   Name
             filter:
                 name:   Name
+            action:
+                manage: Manage
     menu_item:
         adminlist:
             breadcrumb:

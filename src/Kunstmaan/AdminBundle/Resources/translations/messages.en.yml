@@ -35,6 +35,10 @@ tools:
     clear_all_caches: Clear all caches
     shutdown: Shutdown
 
+# Search
+search:
+    title: Search
+
 # Forms
 form:
     cancel: Cancel
