@@ -6,7 +6,7 @@ use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,8 +34,7 @@ class ServicePagePartAdminType extends \Symfony\Component\Form\AbstractType
 	$builder->add('title', TextType::class, array(
 	    'required' => true,
 	));
-	$builder->add('description', TextareaType::class, array(
-	    'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140),
+	$builder->add('description', WysiwygType::class, array(
 	    'required' => false,
 	));
 	$builder->add('linkUrl', URLChooserType::class, array(
