@@ -299,6 +299,17 @@ class Media extends AbstractEntity
     }
 
     /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        $contentType = $this->contentType;
+        $array       = explode("/", $contentType);
+
+        return $array[0];
+    }
+
+    /**
      * Get contentType
      *
      * @return string

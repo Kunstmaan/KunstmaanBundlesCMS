@@ -129,6 +129,12 @@ class ChooserController extends Controller
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
 
+        foreach($folder->getMedia() as $media) {
+            if($media->getType() !=  $type) {
+                $folder->removeMedia($media);
+            }
+        }
+
         $viewVariabels = array(
             'cKEditorFuncNum' => $cKEditorFuncNum,
             'linkChooser'     => $linkChooser,
