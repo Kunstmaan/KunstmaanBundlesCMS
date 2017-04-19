@@ -71,28 +71,26 @@
 
 
     <!-- Main-actions -->
-    <div class="page-main-actions {#js-auto-collapse-buttons#}">
+    <div class="page-main-actions js-auto-collapse-buttons">
         <div class="btn-group">
             {% block actions %}
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
-                        {{ 'media.media.add.action'|trans }} <i class="fa fa-caret-down"></i>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        {% for addaction in mediamanager.getFolderAddActions() %}
-                            <li>
-                                <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">
-                                    {{ addaction.name |trans }}
-                                </a>
-                            </li>
-                        {% endfor %}
+                <button type="button" class="btn btn-primary btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">
+                    {{ 'media.media.add.action'|trans }} <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    {% for addaction in mediamanager.getFolderAddActions() %}
                         <li>
-                            <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}">
-                                {{ 'media.bulkupload.bulkupload' |trans }}
+                            <a href="{{ path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': addaction.type }) }}">
+                                {{ addaction.name |trans }}
                             </a>
                         </li>
-                    </ul>
-                </div>
+                    {% endfor %}
+                    <li>
+                        <a href="{{ path('KunstmaanMediaBundle_media_bulk_upload', { 'folderId' : folder.id }) }}">
+                            {{ 'media.bulkupload.bulkupload' |trans }}
+                        </a>
+                    </li>
+                </ul>
                 <button class="btn btn-default btn--raise-on-hover" data-target="#addsub-modal" data-toggle="modal" type="button">
                     <span class="large-screen">{{ 'media.folder.addsub.action' |trans }}</span>
                     <span class="small-screen">{{ 'media.folder.addsub.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
