@@ -131,7 +131,7 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
             var funcNum = getUrlParam('CKEditorFuncNum');
 
             // Set val
-            window.opener.CKEDITOR.tools.callFunction(funcNum, itemUrl);
+            window.opener.CKEDITOR.tools.callFunction(funcNum, replacedUrl);
 
             // Close window
             window.close();
