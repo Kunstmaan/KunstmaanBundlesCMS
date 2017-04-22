@@ -50,12 +50,12 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
         $homePage = $nodeRepo->findOneBy(array('internalName' => 'homepage'));
 
         $overviewPage = new {{ entity_class }}OverviewPage();
-	$overviewPage->setTitle('{{ entity_class }}');
+        $overviewPage->setTitle('{{ entity_class }}');
 
         $translations = array();
         foreach ($languages as $lang) {
-	    $title = '{{ entity_class }}';
-	    $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title) {
+            $title = '{{ entity_class }}';
+            $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title) {
                 $translation->setTitle($title);
                 $translation->setWeight(30);
                 $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
@@ -65,27 +65,27 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
 
         $options = array(
             'parent' => $homePage,
-	    'page_internal_name' => '{{ entity_class|lower }}_overview_page',
+            'page_internal_name' => '{{ entity_class|lower }}_overview_page',
             'set_online' => true,
-	    'creator' => 'admin'
+            'creator' => 'admin'
         );
 
         $pageCreator->createPage($overviewPage, $translations, $options);
 
-	$fakerNL = Factory::create('nl_BE');
-	$fakerEN = Factory::create('en_US');
+        $fakerNL = Factory::create('nl_BE');
+        $fakerEN = Factory::create('en_US');
 
         // Create articles
-	for ($i=1; $i<=6; $i++) {
+        for ($i=1; $i<=6; $i++) {
 
-	    // Create author
-	    $author = new {{ entity_class }}Author();
-	    $author->setName($fakerNL->name);
-	    $manager->persist($author);
-	    $manager->flush();
+            // Create author
+            $author = new {{ entity_class }}Author();
+            $author->setName($fakerNL->name);
+            $manager->persist($author);
+            $manager->flush();
 
             $articlePage = new {{ entity_class }}Page();
-	    $articlePage->setTitle(Lorem::sentence(6));
+            $articlePage->setTitle(Lorem::sentence(6));
             $articlePage->setAuthor($author);
             $articlePage->setDate(DateTime::dateTimeBetween('-'.($i+1).' days', '-'.$i.' days'));
             $articlePage->setSummary(Lorem::paragraph(5));
@@ -93,12 +93,12 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
             $translations = array();
             foreach ($languages as $lang) {
                 if ($lang == 'nl') {
-		    $title = $fakerEN->sentence;
+                    $title = $fakerEN->sentence;
                 } else {
-		    $title = $fakerEN->sentence;
+                    $title = $fakerEN->sentence;
                 }
 
-		$translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title, $i) {
+                $translations[] = array('language' => $lang, 'callback' => function($page, $translation, $seo) use ($title, $i) {
                     $translation->setTitle($title);
                     $translation->setWeight(100 + $i);
                     $slugifier = $this->container->get('kunstmaan_utilities.slugifier');
@@ -110,7 +110,7 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
                 'parent' => $overviewPage,
                 'set_online' => true,
                 'hidden_from_nav' => true,
-		'creator' => 'admin'
+                'creator' => 'admin'
             );
 
             $articlePage = $pageCreator->createPage($articlePage, $translations, $options);
@@ -118,8 +118,8 @@ class {{ entity_class }}ArticleFixtures extends AbstractFixture implements Order
             foreach ($languages as $lang) {
                 $pageparts = array(
                     'main' => array(
-			$ppCreatorService->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\TextPagePart',
-			    array('setContent' => '<p>'.Lorem::paragraph(15).'</p>' . '<p>'.Lorem::paragraph(25).'</p>' .'<p>'.Lorem::paragraph(10).'</p>')
+                        $ppCreatorService->getCreatorArgumentsForPagePartAndProperties('{{ namespace }}\Entity\PageParts\TextPagePart',
+                            array('setContent' => '<p>'.Lorem::paragraph(15).'</p>' . '<p>'.Lorem::paragraph(25).'</p>' .'<p>'.Lorem::paragraph(10).'</p>')
                         )
                     )
                 );

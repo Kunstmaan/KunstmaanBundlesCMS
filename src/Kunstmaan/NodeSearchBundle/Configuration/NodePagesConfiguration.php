@@ -142,6 +142,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
             //build new index
             $index = $this->searchProvider->createIndex($this->indexName . '_' . $locale);
+            if ($index->exists()) {
+                continue;
+            }
 
             //create index with analysis
             $this->setAnalysis($index, $localeAnalysis->setupLanguage($language));
@@ -289,6 +292,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     public function deleteIndex()
     {
         foreach ($this->locales as $locale) {
+            /** @var Index $index */
+            $index = $this->searchProvider->getIndex($this->indexName . '_' . $locale);
+            if (!$index->exists()) {
+                continue;
+            }
+
             $this->searchProvider->deleteIndex($this->indexName . '_' . $locale);
         }
     }

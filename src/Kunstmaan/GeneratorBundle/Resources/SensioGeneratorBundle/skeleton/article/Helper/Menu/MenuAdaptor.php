@@ -20,7 +20,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
      */
     public function __construct(EntityManager $em)
     {
-	    $this->em = $em;
+            $this->em = $em;
     }
 
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
@@ -37,8 +37,8 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             // Page
             $menuItem = new TopMenuItem($menu);
             $menuItem
-		->setRoute('{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page')
-		->setLabel('{{ entity_class }} Pages')
+                ->setRoute('{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page')
+                ->setLabel('{{ entity_class }} Pages')
                 ->setUniqueId('{{ entity_class }}')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
@@ -50,7 +50,7 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
             // Author
             $menuItem = new TopMenuItem($menu);
             $menuItem
-		->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author')
+                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author')
                 ->setLabel('{{ entity_class }} Authors')
                 ->setUniqueId('{{ entity_class }} Authors')
                 ->setParent($parent);

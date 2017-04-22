@@ -13,6 +13,10 @@ use Kunstmaan\BehatBundle\Features\Context\FeatureContext as AbstractContext;
  * FeatureContext
  *
  * Provides the global context that includes the subcontexts
+ *
+ * @SuppressWarnings(PMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PMD.TooManyMethods)
+ * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 class FeatureContext extends AbstractContext
 {

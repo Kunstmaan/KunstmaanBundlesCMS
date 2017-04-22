@@ -39,9 +39,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setNiv($niv)
     {
-	$this->niv = $niv;
+        $this->niv = $niv;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -51,7 +51,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getNiv()
     {
-	return $this->niv;
+        return $this->niv;
     }
 
     /**
@@ -61,9 +61,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setTitle($title)
     {
-	$this->title = $title;
+        $this->title = $title;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -71,7 +71,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getTitle()
     {
-	return $this->title;
+        return $this->title;
     }
 
     /**
@@ -81,7 +81,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
     }
 
     /**
@@ -91,6 +91,6 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return new {{ adminType }}();
     }
 }

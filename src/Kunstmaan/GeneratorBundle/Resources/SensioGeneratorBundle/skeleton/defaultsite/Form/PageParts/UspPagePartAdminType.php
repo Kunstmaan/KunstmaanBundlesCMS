@@ -22,20 +22,20 @@ class UspPagePartAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
 
-	$builder->add('items', CollectionType::class, array(
-	    'entry_type' => UspItemAdminType::class,
-	    'allow_add' => true,
-	    'allow_delete' => true,
-	    'by_reference' => false,
-	    'attr' => array(
-		'nested_form' => true,
-		'nested_sortable' => true,
-		'nested_form_min' => 1,
-		'nested_form_max' => 3,
-	    )
-	));
+        $builder->add('items', CollectionType::class, array(
+            'entry_type' => UspItemAdminType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'attr' => array(
+                'nested_form' => true,
+                'nested_sortable' => true,
+                'nested_form_min' => 1,
+                'nested_form_max' => 3,
+            )
+        ));
     }
 
     /**
@@ -45,9 +45,9 @@ class UspPagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\UspPagePart',
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\UspPagePart',
+        ));
     }
 
     /**
@@ -57,6 +57,6 @@ class UspPagePartAdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return 'usppageparttype';
+        return 'usppageparttype';
     }
 }

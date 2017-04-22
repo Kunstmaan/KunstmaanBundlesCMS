@@ -22,11 +22,11 @@ class BikeAdminListController extends AdminListController
      */
     public function getAdminListConfigurator()
     {
-	if (!isset($this->configurator)) {
-	    $this->configurator = new BikeAdminListConfigurator($this->getEntityManager());
-	}
+        if (!isset($this->configurator)) {
+            $this->configurator = new BikeAdminListConfigurator($this->getEntityManager());
+        }
 
-	return $this->configurator;
+        return $this->configurator;
     }
 
     /**
@@ -36,7 +36,7 @@ class BikeAdminListController extends AdminListController
      */
     public function indexAction(Request $request)
     {
-	return parent::doIndexAction($this->getAdminListConfigurator(), $request);
+        return parent::doIndexAction($this->getAdminListConfigurator(), $request);
     }
 
     /**
@@ -48,7 +48,7 @@ class BikeAdminListController extends AdminListController
      */
     public function addAction(Request $request)
     {
-	return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
+        return parent::doAddAction($this->getAdminListConfigurator(), null, $request);
     }
 
     /**
@@ -63,7 +63,7 @@ class BikeAdminListController extends AdminListController
      */
     public function editAction(Request $request, $id)
     {
-	return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doEditAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
@@ -78,7 +78,7 @@ class BikeAdminListController extends AdminListController
      */
     public function deleteAction(Request $request, $id)
     {
-	return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
+        return parent::doDeleteAction($this->getAdminListConfigurator(), $id, $request);
     }
 
     /**
@@ -88,7 +88,7 @@ class BikeAdminListController extends AdminListController
      */
     public function exportAction(Request $request, $_format)
     {
-	return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+        return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
 
     /**

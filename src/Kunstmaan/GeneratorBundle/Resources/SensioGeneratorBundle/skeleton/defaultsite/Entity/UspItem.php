@@ -58,7 +58,7 @@ class UspItem extends AbstractEntity
      */
     public function setIcon($icon)
     {
-	$this->icon = $icon;
+        $this->icon = $icon;
     }
 
     /**
@@ -66,7 +66,7 @@ class UspItem extends AbstractEntity
      */
     public function getIcon()
     {
-	return $this->icon;
+        return $this->icon;
     }
 
     /**
@@ -74,7 +74,7 @@ class UspItem extends AbstractEntity
      */
     public function getTitle()
     {
-	return $this->title;
+        return $this->title;
     }
 
     /**
@@ -84,9 +84,9 @@ class UspItem extends AbstractEntity
      */
     public function setTitle($title)
     {
-	$this->title = $title;
+        $this->title = $title;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -94,7 +94,7 @@ class UspItem extends AbstractEntity
      */
     public function getDescription()
     {
-	return $this->description;
+        return $this->description;
     }
 
     /**
@@ -104,9 +104,9 @@ class UspItem extends AbstractEntity
      */
     public function setDescription($description)
     {
-	$this->description = $description;
+        $this->description = $description;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -114,7 +114,7 @@ class UspItem extends AbstractEntity
      */
     public function getWeight()
     {
-	return $this->weight;
+        return $this->weight;
     }
 
     /**
@@ -124,9 +124,9 @@ class UspItem extends AbstractEntity
      */
     public function setWeight($weight)
     {
-	$this->weight = $weight;
+        $this->weight = $weight;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -134,7 +134,7 @@ class UspItem extends AbstractEntity
      */
     public function setUspPagePart(UspPagePart $uspPagePart)
     {
-	$this->uspPagePart = $uspPagePart;
+        $this->uspPagePart = $uspPagePart;
     }
 
     /**
@@ -142,6 +142,6 @@ class UspItem extends AbstractEntity
      */
     public function getUspPagePart()
     {
-	return $this->uspPagePart;
+        return $this->uspPagePart;
     }
 }

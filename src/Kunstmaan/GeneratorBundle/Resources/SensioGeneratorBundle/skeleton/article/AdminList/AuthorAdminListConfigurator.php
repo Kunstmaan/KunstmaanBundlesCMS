@@ -26,6 +26,6 @@ class {{ entity_class }}AuthorAdminListConfigurator extends AbstractArticleAutho
      */
     public function getEntityName()
     {
-	return '{{ entity_class }}Author';
+        return '{{ entity_class }}Author';
     }
 }

@@ -28,9 +28,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setContent($content)
     {
-	$this->content = $content;
+        $this->content = $content;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -38,7 +38,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getContent()
     {
-	return $this->content;
+        return $this->content;
     }
 
     /**
@@ -48,7 +48,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
     }
 
     /**
@@ -58,6 +58,6 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return new {{ adminType }}();
     }
 }

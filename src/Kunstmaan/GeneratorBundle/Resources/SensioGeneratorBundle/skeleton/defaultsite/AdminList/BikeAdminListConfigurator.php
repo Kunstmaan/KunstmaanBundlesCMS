@@ -18,9 +18,9 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
-	parent::__construct($em, $aclHelper);
+        parent::__construct($em, $aclHelper);
 
-	$this->setAdminType(new BikeAdminType());
+        $this->setAdminType(new BikeAdminType());
 
     }
 
@@ -29,10 +29,10 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-	$this->addField('type', 'Type', true);
-	$this->addField('brand', 'Brand', true);
-	$this->addField('model', 'Model', true);
-	$this->addField('price', 'Price', true);
+        $this->addField('type', 'Type', true);
+        $this->addField('brand', 'Brand', true);
+        $this->addField('model', 'Model', true);
+        $this->addField('price', 'Price', true);
     }
 
     /**
@@ -40,10 +40,10 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-	$this->addFilter('type', new ORM\EnumerationFilterType('type'), 'Type', array_combine(Bike::$types, Bike::$types));
-	$this->addFilter('brand', new ORM\StringFilterType('brand'), 'Brand');
-	$this->addFilter('model', new ORM\StringFilterType('model'), 'Model');
-	$this->addFilter('price', new ORM\NumberFilterType('price'), 'Price');
+        $this->addFilter('type', new ORM\EnumerationFilterType('type'), 'Type', array_combine(Bike::$types, Bike::$types));
+        $this->addFilter('brand', new ORM\StringFilterType('brand'), 'Brand');
+        $this->addFilter('model', new ORM\StringFilterType('model'), 'Model');
+        $this->addFilter('price', new ORM\NumberFilterType('price'), 'Price');
     }
 
     /**
@@ -53,7 +53,7 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getBundleName()
     {
-	return '{{ bundle_name }}';
+        return '{{ bundle_name }}';
     }
 
     /**
@@ -63,7 +63,7 @@ class BikeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function getEntityName()
     {
-	return 'Bike';
+        return 'Bike';
     }
 
     /**

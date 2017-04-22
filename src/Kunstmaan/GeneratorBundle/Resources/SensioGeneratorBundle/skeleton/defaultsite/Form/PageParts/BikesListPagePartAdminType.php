@@ -22,7 +22,7 @@ class BikesListPagePartAdminType extends \Symfony\Component\Form\AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
     }
 
     /**
@@ -32,7 +32,7 @@ class BikesListPagePartAdminType extends \Symfony\Component\Form\AbstractType
      */
     public function getBlockPrefix()
     {
-	return 'bikeslistpageparttype';
+        return 'bikeslistpageparttype';
     }
 
     /**
@@ -42,8 +42,8 @@ class BikesListPagePartAdminType extends \Symfony\Component\Form\AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\BikesListPagePart'
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\BikesListPagePart'
+        ));
     }
 }
