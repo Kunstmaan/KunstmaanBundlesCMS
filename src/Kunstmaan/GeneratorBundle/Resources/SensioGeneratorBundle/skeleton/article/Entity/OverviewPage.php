@@ -25,7 +25,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getPagePartAdminConfigurations()
     {
-	return array('{{ bundle.getName() }}:main');
+        return array('{{ bundle.getName() }}:main');
     }
 
     /**
@@ -33,12 +33,12 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getPageTemplates()
     {
-	return array('{{ bundle.getName() }}:{{ entity_class|lower }}overviewpage');
+        return array('{{ bundle.getName() }}:{{ entity_class|lower }}overviewpage');
     }
 
     public function getArticleRepository($em)
     {
-	return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}Page');
+        return $em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}Page');
     }
 
     /**
@@ -46,7 +46,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getDefaultView()
     {
-	return '{{ bundle.getName() }}:Pages/{{ entity_class }}OverviewPage:view.html.twig';
+        return '{{ bundle.getName() }}:Pages/{{ entity_class }}OverviewPage:view.html.twig';
     }
 
     /**
@@ -54,7 +54,7 @@ class {{ entity_class }}OverviewPage extends AbstractArticleOverviewPage impleme
      */
     public function getSearchType()
     {
-	return '{{ entity_class }}';
+        return '{{ entity_class }}';
     }
 
     /**

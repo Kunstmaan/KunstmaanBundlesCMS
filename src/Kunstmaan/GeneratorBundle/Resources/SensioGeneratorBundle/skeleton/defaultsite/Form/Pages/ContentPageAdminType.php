@@ -30,14 +30,14 @@ class ContentPageAdminType extends PageAdminType
     {
         parent::buildForm($builder, $options);
 {% if demosite %}
-	$builder->add('menuImage', MediaType::class, array(
-	    'mediatype' => 'image',
-	    'required' => false
-	));
-	$builder->add('menuDescription', TextAreaType::class, array(
-	    'attr' => array('rows' => 3, 'cols' => 600),
-	    'required' => false
-	));
+        $builder->add('menuImage', MediaType::class, array(
+            'mediatype' => 'image',
+            'required' => false
+        ));
+        $builder->add('menuDescription', TextAreaType::class, array(
+            'attr' => array('rows' => 3, 'cols' => 600),
+            'required' => false
+        ));
 {% endif %}
     }
 
@@ -60,6 +60,6 @@ class ContentPageAdminType extends PageAdminType
      */
     public function getBlockPrefix()
     {
-	return 'contentpage';
+        return 'contentpage';
     }
 }

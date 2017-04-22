@@ -21,8 +21,8 @@ class ServicePagePart extends AbstractPagePart
      * @var array Supported positions
      */
     public static $imagePositions = array(
-	self::IMAGE_POSITION_LEFT,
-	self::IMAGE_POSITION_RIGHT
+        self::IMAGE_POSITION_LEFT,
+        self::IMAGE_POSITION_RIGHT
     );
 
     /**
@@ -87,9 +87,9 @@ class ServicePagePart extends AbstractPagePart
      */
     public function setTitle($title)
     {
-	$this->title = $title;
+        $this->title = $title;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -99,7 +99,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getTitle()
     {
-	return $this->title;
+        return $this->title;
     }
 
     /**
@@ -110,9 +110,9 @@ class ServicePagePart extends AbstractPagePart
      */
     public function setDescription($description)
     {
-	$this->description = $description;
+        $this->description = $description;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -122,7 +122,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getDescription()
     {
-	return $this->description;
+        return $this->description;
     }
 
     /**
@@ -133,9 +133,9 @@ class ServicePagePart extends AbstractPagePart
      */
     public function setLinkUrl($linkUrl)
     {
-	$this->linkUrl = $linkUrl;
+        $this->linkUrl = $linkUrl;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -145,7 +145,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getLinkUrl()
     {
-	return $this->linkUrl;
+        return $this->linkUrl;
     }
 
     /**
@@ -156,9 +156,9 @@ class ServicePagePart extends AbstractPagePart
      */
     public function setLinkText($linkText)
     {
-	$this->linkText = $linkText;
+        $this->linkText = $linkText;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -168,7 +168,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getLinkText()
     {
-	return $this->linkText;
+        return $this->linkText;
     }
 
     /**
@@ -179,9 +179,9 @@ class ServicePagePart extends AbstractPagePart
      */
     public function setLinkNewWindow($linkNewWindow)
     {
-	$this->linkNewWindow = $linkNewWindow;
+        $this->linkNewWindow = $linkNewWindow;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -191,7 +191,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getLinkNewWindow()
     {
-	return $this->linkNewWindow;
+        return $this->linkNewWindow;
     }
 
     /**
@@ -202,9 +202,9 @@ class ServicePagePart extends AbstractPagePart
      */
     public function setImage(Media $image = null)
     {
-	$this->image = $image;
+        $this->image = $image;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -214,7 +214,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getImage()
     {
-	return $this->image;
+        return $this->image;
     }
 
     /**
@@ -222,7 +222,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getImagePosition()
     {
-	return $this->imagePosition;
+        return $this->imagePosition;
     }
 
     /**
@@ -232,9 +232,9 @@ class ServicePagePart extends AbstractPagePart
      */
     public function setImagePosition($imagePosition)
     {
-	$this->imagePosition = $imagePosition;
+        $this->imagePosition = $imagePosition;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -244,7 +244,7 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle.getName() }}:PageParts:ServicePagePart/view.html.twig';
+        return '{{ bundle.getName() }}:PageParts:ServicePagePart/view.html.twig';
     }
 
     /**
@@ -254,6 +254,6 @@ class ServicePagePart extends AbstractPagePart
      */
     public function getDefaultAdminType()
     {
-	return new \{{ namespace }}\Form\PageParts\ServicePagePartAdminType();
+        return new \{{ namespace }}\Form\PageParts\ServicePagePartAdminType();
     }
 }

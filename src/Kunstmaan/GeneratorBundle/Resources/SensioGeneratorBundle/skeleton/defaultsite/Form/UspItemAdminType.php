@@ -25,22 +25,22 @@ class UspItemAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
 
-	$builder->add('icon', MediaType::class, array(
-	    'mediatype' => 'image',
-	    'required' => true
-	));
-	$builder->add('title', TextType::class, array(
-	    'required' => true
-	));
-	$builder->add('description', TextareaType::class, array(
-	    'attr' => array('rows' => 4, 'cols' => 600),
-	    'required' => false
-	));
-	$builder->add('weight', HiddenType::class, array(
-	    'required' => true,
-	));
+        $builder->add('icon', MediaType::class, array(
+            'mediatype' => 'image',
+            'required' => true
+        ));
+        $builder->add('title', TextType::class, array(
+            'required' => true
+        ));
+        $builder->add('description', TextareaType::class, array(
+            'attr' => array('rows' => 4, 'cols' => 600),
+            'required' => false
+        ));
+        $builder->add('weight', HiddenType::class, array(
+            'required' => true,
+        ));
     }
 
     /**
@@ -50,9 +50,9 @@ class UspItemAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\UspItem'
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\UspItem'
+        ));
     }
 
     /**
@@ -62,6 +62,6 @@ class UspItemAdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return 'uspitemtype';
+        return 'uspitemtype';
     }
 }
