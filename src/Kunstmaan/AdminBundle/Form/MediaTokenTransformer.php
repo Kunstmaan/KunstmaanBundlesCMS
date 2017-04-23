@@ -17,14 +17,8 @@ class MediaTokenTransformer implements DataTransformerInterface
      */
     public function transform($content)
     {
-        $html = utf8_encode("<!DOCTYPE html>
-        <html>
-            <body>
-                ".$content."
-            </body>
-        </html>");
-
-        $crawler = new Crawler($html);
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($content);
 
         $crawler->filter('img')->each(
             function (Crawler $node, $i) {
@@ -47,10 +41,8 @@ class MediaTokenTransformer implements DataTransformerInterface
      */
     public function reverseTransform($content)
     {
-        // All on one line because of HTML parsing and empty lines.
-        $html = utf8_encode("<!DOCTYPE html><html><body>".$content."</body></html>");
-
-        $crawler = new Crawler($html);
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($content);
 
         // Get all img tags and parse the token.
         $crawler->filter('img')->each(
