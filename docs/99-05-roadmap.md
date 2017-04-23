@@ -35,6 +35,7 @@ last release of v4 and will not be supported anymore.
 - [ ] Browser notifications
 - [ ] 2FA authentication
 - [ ] Webcomponents
+- [ ] Make language/domain switch more user friendly
 - [ ] Gulp instead of assetic #676
     - [ ] Part 1: Add Groundcontrol-simple #1481
     - [ ] Part 2: Implement Groundcontrol-simple to backend styles/js

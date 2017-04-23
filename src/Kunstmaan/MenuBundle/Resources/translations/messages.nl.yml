@@ -5,6 +5,8 @@ kuma_menu:
                 name:   Naam
             filter:
                 name:   Naam
+            action:
+                manage: Beheer
     menu_item:
         adminlist:
             field:
