@@ -1,5 +1,4 @@
-#  Using the Config bundle
-
+#  KunstmaanConfigBundle
 
 ## Installation
 
