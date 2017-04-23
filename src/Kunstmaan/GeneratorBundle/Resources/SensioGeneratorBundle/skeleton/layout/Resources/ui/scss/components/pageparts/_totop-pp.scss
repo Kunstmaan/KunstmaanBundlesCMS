@@ -3,14 +3,13 @@
    ========================================================================== */
 
 .totop-pp {
+    padding-bottom: 1rem;
     margin: 5rem 0;
 
-
-    padding-bottom: 1rem;
+    border-bottom: 1px solid $hr-color;
 
     font-size: 1.5rem;
     text-align: right;
-    border-bottom: 1px solid $hr-color;
 
     a {
         display: inline-block;

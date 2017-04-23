@@ -6,12 +6,13 @@
    ========================================================================== */
 .link-pp {
     margin: $default-margin 0;
-
 {% if demosite %}
+
     font-size: 1.5rem;
 
     a {
         display: inline-block;
+
         color: $black;
         font-weight: 600;
     }
@@ -23,6 +24,7 @@
    ========================================================================== */
 .link-pp__link {
     display: inline-block;
+
     color: $black;
     font-weight: 600;
 }
@@ -33,9 +35,10 @@
 .link-pp__icon {
     @extend .icon--arrow-right;
 
-    font-size: .9rem;
     display: inline-block;
     margin-left: .9rem;
+
+    font-size: .9rem;
 
     &:before {
         @include iconfont-reset;

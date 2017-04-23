@@ -1,3 +1,9 @@
 kuma_admin_list:
     form:
         export_to: Exporteer naar
+    action:
+        view: Bekijken
+        edit: Bewerken
+        delete: Verwijderen
+        move_up: Verplaats omhoog
+        move_down: Verplaats omlaag

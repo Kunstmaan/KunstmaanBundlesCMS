@@ -6,16 +6,18 @@
    ========================================================================== */
 a {
     color: $link-color;
-    transition: color .3s ease;
 {% if demosite %}
     text-decoration: none;
 {% else %}
     text-decoration: underline;
 {% endif %}
 
-    &:hover, &:focus {
-        text-decoration: none;
+    transition: color .3s ease;
+
+    &:hover,
+    &:focus {
         color: $link-color--hover;
+        text-decoration: none;
     }
 }
 

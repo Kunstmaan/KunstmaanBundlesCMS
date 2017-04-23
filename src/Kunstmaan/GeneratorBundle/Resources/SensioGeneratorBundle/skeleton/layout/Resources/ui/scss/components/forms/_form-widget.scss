@@ -25,23 +25,23 @@
         border-color: $brand-primary;
         outline: none;
     }
-
 {% endif %}
 }
 {% if demosite %}
+
 .select__icon {
     position: absolute;
     top: 0;
     right: .35rem;
     z-index: -1;
 
-    height: 4rem;
     width: 4rem;
+    height: 4rem;
 
+    color: $grey;
     font-size: .7rem;
     line-height: 4rem;
     text-align: center;
-    color: $grey;
 }
 {% endif %}
 
@@ -50,12 +50,12 @@
 .form-widget--choices {
 {% if demosite %}
     padding-top: .9rem;
-
 {% endif %}
 }
 
 .form-widget--choices--filled {
 {% if demosite %}
+
     ~ .form__label {
         @include control-label-active;
     }

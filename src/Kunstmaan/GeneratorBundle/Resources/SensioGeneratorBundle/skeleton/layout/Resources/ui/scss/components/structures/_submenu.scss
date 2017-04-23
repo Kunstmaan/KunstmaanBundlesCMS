@@ -13,7 +13,9 @@
    ========================================================================== */
 .submenu__link {
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         text-decoration: none;
     }
 }
@@ -38,7 +40,6 @@
 .submenu__text {
     color: $grey;
 }
-
 
 
 /*doc

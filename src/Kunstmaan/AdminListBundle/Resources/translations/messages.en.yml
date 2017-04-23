@@ -5,3 +5,9 @@ kuma_admin_list:
         flash:
             success: The entity has been edited
             locked: The entity is currently being edited by %user%
+    action:
+        view: View
+        edit: Edit
+        delete: Delete
+        move_up: Move up
+        move_down: Move down

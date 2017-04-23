@@ -7,10 +7,9 @@
 .text-pp {
     max-width: 72rem;
     margin: $default-margin 0;
-
 {% if demosite %}
+
     ul {
-        @include list-reset;
 
         li {
             position: relative;
@@ -24,8 +23,8 @@
                 top: .3rem;
                 left: 0;
 
-                font-size: .8em;
                 color: $brand-primary;
+                font-size: .8em;
             }
         }
     }
@@ -34,7 +33,8 @@
         padding-left: 2.5rem;
     }
 
-    ul, ol {
+    ul,
+    ol {
 
         li {
             margin-bottom: .7rem;

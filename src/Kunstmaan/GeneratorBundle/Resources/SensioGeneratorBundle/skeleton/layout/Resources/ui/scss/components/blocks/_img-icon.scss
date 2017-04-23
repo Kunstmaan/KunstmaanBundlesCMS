@@ -12,19 +12,18 @@
     margin: 0 auto;
 
     background: $brand-primary;
+
     border-radius: 100%;
 }
 
 .img-icon__img {
-    transform: translate3d(-50%, -50%, 0);
-
     position: absolute;
     top: 50%;
     left: 50%;
 
     width: 3.2rem;
+    transform: translate3d(-50%, -50%, 0);
 }
-
 
 
 /*doc

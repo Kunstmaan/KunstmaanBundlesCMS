@@ -11,10 +11,10 @@
 
 {% if demosite %}
 table {
-    margin: $default-margin 0;
     width: 100%;
+    margin: $default-margin 0;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         width: 70%;
     }
 }
@@ -23,24 +23,24 @@ tr {
     border-bottom: 1px solid $hr-color;
 }
 
-th, td {
+th,
+td {
     padding: .5em 1.5em .5em .1em;
+
     text-align: left;
 }
 
 th {
-    font-weight: 600;
     color: $brand-primary;
+    font-weight: 600;
 }
 
 td {
     font-weight: 300;
     text-align: left;
 }
+
 {% endif %}
-
-
-
 
 /*doc
 ---

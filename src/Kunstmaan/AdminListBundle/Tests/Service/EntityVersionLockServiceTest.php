@@ -14,7 +14,10 @@ use Kunstmaan\AdminListBundle\Tests\Model\TestLockableEntityInterfaceImplementat
 class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
 {
     protected static $TEST_CLASS = "Kunstmaan\\AdminListBundle\\Tests\\Model\\TestLockableEntityInterfaceImplementation";
+    protected static $TEST_NEW_ENTITY_ID = "1";
+    protected static $TEST_ID = "5";
     protected static $TEST_ENTITY_ID = "5";
+    protected static $ALTERNATIVE_TEST_ID = "391";
     protected static $ALTERNATIVE_TEST_ENTITY_ID = "391";
     protected static $USER_ID = "104";
     protected static $USER_NAME = "Kevin Test";
@@ -42,15 +45,28 @@ class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
         $user->setUsername(self::$USER_NAME);
         $this->user = $user;
 
-        $entity = new LockableEntity();
-        $entity->setEntityClass(self::$TEST_CLASS);
-        $entity->setEntityId(self::$TEST_ENTITY_ID);
-        $entity->setUpdated(new \DateTime());
+        $newEntity = $this->getMockBuilder(LockableEntity::class)->getMock();
+        $newEntity->method('getId')->willReturn(null);
+        $newEntity->method('getEntityClass')->willReturn(self::$TEST_CLASS);
+        $newEntity->method('getEntityId')->willReturn(self::$TEST_NEW_ENTITY_ID);
+        $newEntity->method('getUpdated')->willReturn(new \DateTime());
 
-        $outDatedEntity = new LockableEntity();
-        $outDatedEntity->setEntityClass(self::$TEST_CLASS);
-        $outDatedEntity->setEntityId(self::$ALTERNATIVE_TEST_ENTITY_ID);
-        $outDatedEntity->setUpdated(new \DateTime("-1 days"));
+        $entity = $this->getMockBuilder(LockableEntity::class)->getMock();
+        $entity->method('getId')->willReturn(self::$TEST_ID);
+        $entity->method('getEntityClass')->willReturn(self::$TEST_CLASS);
+        $entity->method('getEntityId')->willReturn(self::$TEST_ENTITY_ID);
+        $entity->method('getUpdated')->willReturn(new \DateTime());
+
+        $outDatedEntity = $this->getMockBuilder(LockableEntity::class)->getMock();
+        $outDatedEntity->method('getId')->willReturn(self::$ALTERNATIVE_TEST_ID);
+        $outDatedEntity->method('getEntityClass')->willReturn(self::$TEST_CLASS);
+        $outDatedEntity->method('getEntityId')->willReturn(self::$ALTERNATIVE_TEST_ENTITY_ID);
+        $outDatedEntity->method('getUpdated')->willReturn(new \DateTime("-1 days"));
+
+        $newEntityVersionLock = new EntityVersionLock();
+        $newEntityVersionLock->setOwner(self::$ALTERNATIVE_USER);
+        $newEntityVersionLock->setLockableEntity($newEntity);
+        $newEntityVersionLock->setCreatedAt(new \DateTime());
 
         $entityVersionLock = new EntityVersionLock();
         $entityVersionLock->setOwner(self::$ALTERNATIVE_USER);
@@ -59,10 +75,11 @@ class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
 
         $expiredEntityVersionLock = new EntityVersionLock();
         $expiredEntityVersionLock->setOwner($user->getUsername());
-        $expiredEntityVersionLock->setLockableEntity($entity);
+        $expiredEntityVersionLock->setLockableEntity($outDatedEntity);
         $expiredEntityVersionLock->setCreatedAt(new \DateTime('-1 days'));
 
         $locksMap = [
+            [$newEntity, self::$THRESHOLD, $this->user, [$newEntityVersionLock]],
             [$entity, self::$THRESHOLD, $this->user, [$entityVersionLock]],
             [$outDatedEntity, self::$THRESHOLD, $this->user, []],
         ];
@@ -83,6 +100,7 @@ class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValueMap($locksMap));
 
         $lockableMap = [
+            [self::$TEST_NEW_ENTITY_ID, self::$TEST_CLASS, $newEntity],
             [self::$TEST_ENTITY_ID, self::$TEST_CLASS, $entity],
             [self::$ALTERNATIVE_TEST_ENTITY_ID, self::$TEST_CLASS, $outDatedEntity],
         ];
@@ -115,6 +133,13 @@ class EntityVersionLockServiceTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+    }
+
+    public function testIsEntityBelowThresholdReturnsFalseWhenLockIsNew()
+    {
+        $result = $this->object->isEntityBelowThreshold(new TestLockableEntityInterfaceImplementation(self::$TEST_NEW_ENTITY_ID));
+
+        $this->assertFalse($result);
     }
 
     public function testIsEntityBelowThresholdReturnsTrueWhenEntityUpdatedAtIsBelowThreshold()

@@ -30,70 +30,92 @@ class LayoutGenerator extends KunstmaanGenerator
     private $demosite;
 
     /**
+     * @var string
+     */
+    private $browserSyncUrl;
+
+    /**
      * Generate the basic layout.
      *
      * @param BundleInterface $bundle  The bundle
      * @param string          $rootDir The root directory of the application
      */
-    public function generate(BundleInterface $bundle, $rootDir, $demosite)
+    public function generate(BundleInterface $bundle, $rootDir, $demosite, $browserSyncUrl)
     {
         $this->bundle   = $bundle;
         $this->rootDir  = $rootDir;
         $this->demosite = $demosite;
+        $this->browserSyncUrl = $browserSyncUrl;
 
         $this->shortBundleName = '@'.str_replace('Bundle', '', $bundle->getName());
 
-        if ($this->demosite) {
-            $this->generateBowerFiles();
-        }
-        $this->generateGulpFiles();
+        $this->generateGroundcontrolFiles();
         $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
     }
 
     /**
-     * Generate the bower configuration files.
+     * Generate the groundcontrol(gulp) configuration files.
      */
-    private function generateBowerFiles()
+    private function generateGroundcontrolFiles()
     {
         $this->renderFiles(
-            $this->skeletonDir . '/bower/',
-            $this->rootDir,
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            $this->skeletonDir . '/groundcontrol/bin/',
+            $this->rootDir . '/groundcontrol/',
+            array('bundle' => $this->bundle, 'demosite' => $this->demosite, 'browserSyncUrl' => $this->browserSyncUrl),
             true
         );
         $this->renderSingleFile(
-            $this->skeletonDir . '/bower/',
+            $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
-            '.bowerrc',
-            array('bundle' => $this->bundle),
-            true
-        );
-        $this->assistant->writeLine('Generating bower configuration : <info>OK</info>');
-    }
-
-    /**
-     * Generate the gulp configuration files.
-     */
-    private function generateGulpFiles()
-    {
-        $this->renderFiles($this->skeletonDir . '/gulp/', $this->rootDir, array('bundle' => $this->bundle, 'demosite' => $this->demosite), true);
-        $this->renderSingleFile(
-            $this->skeletonDir . '/gulp/',
-            $this->rootDir,
-            '.jshintrc',
+            '.babelrc',
             array('bundle' => $this->bundle),
             true
         );
         $this->renderSingleFile(
-            $this->skeletonDir . '/gulp/',
+            $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
-            '.groundcontrolrc',
+            '.eslintrc',
             array('bundle' => $this->bundle, 'demosite' => $this->demosite),
             true
         );
-        $this->assistant->writeLine('Generating gulp configuration : <info>OK</info>');
+        $this->renderSingleFile(
+            $this->skeletonDir . '/groundcontrol/',
+            $this->rootDir,
+            '.nvmrc',
+            array('bundle' => $this->bundle),
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/groundcontrol/',
+            $this->rootDir,
+            '.stylelintrc',
+            array('bundle' => $this->bundle),
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/groundcontrol/',
+            $this->rootDir,
+            'buildUI.sh',
+            array('bundle' => $this->bundle),
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/groundcontrol/',
+            $this->rootDir,
+            'gulpfile.babel.js',
+            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            true
+        );
+        $this->renderSingleFile(
+            $this->skeletonDir . '/groundcontrol/',
+            $this->rootDir,
+            'package.json',
+            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
+            true
+        );
+        $this->assistant->writeLine('Generating groundcontrol configuration : <info>OK</info>');
     }
 
     /**

@@ -4,32 +4,32 @@
 
 .cookie-bar {
     position: fixed;
-    bottom: 0;
     top: auto;
-    left: 0;
     right: auto;
+    bottom: 0;
+    left: 0;
     z-index: 500;
 
     display: none;
     width: 100%;
     padding: 2rem;
 
-    border: .1rem solid rgba($brand-primary--dark, .95);
-
     background: rgba($brand-primary--dark, .95);
 
-    text-align: left;
+    border: .1rem solid rgba($brand-primary--dark, .95);
+
     color: $white;
-    line-height: 1.7;
     font: {
         family: Helvetica, Arial, sans-serif;
         size: 1.4rem;
     }
+    line-height: 1.7;
+    text-align: left;
 
     animation-name: cookieSlide;
     animation-iteration-count: 1;
     animation-timing-function: ease-in-out;
-    animation-duration: 0.8s;
+    animation-duration: .8s;
 
     .cookie-bar__policy {
         color: $white;
@@ -41,34 +41,33 @@
         right: 0;
         bottom: 0;
 
-        margin: 1rem 0 0;
         padding: 1rem 1.5rem;
+        margin: 1rem 0 0;
+
+        background: $white;
 
         border-radius: 0;
         border: none;
 
-        font-size: 1em;
         color: rgba($brand-primary--dark, .95);
-
-        background: $white;
+        font-size: 1em;
     }
 
     p {
+        max-width: 60%;
         padding: 0;
         margin: 0;
-        max-width: 60%;
 
         color: $white;
-        text-align: left;
-
         font-size: 1em;
+        text-align: left;
 
         a {
             color: $white;
         }
     }
 
-    @media(min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         bottom: 1rem;
         left: 1rem;
 
@@ -79,7 +78,7 @@
         }
     }
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         bottom: 1rem;
         left: 1rem;
 
@@ -96,10 +95,12 @@
 }
 
 @keyframes cookieSlide {
+
     0% {
         transform: translate3d(0, 6rem, 0);
         opacity: 0;
     }
+
     100% {
         transform: translate3d(0, 0, 0);
         opacity: 1;

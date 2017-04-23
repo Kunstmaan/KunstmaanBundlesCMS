@@ -4,7 +4,8 @@
 
 /* General
    ========================================================================== */
-.radio, .checkbox {
+.radio,
+.checkbox {
 {% if demosite %}
     position: relative;
 
@@ -31,6 +32,7 @@
 
             width: 1.8rem;
             height: 1.8rem;
+
             border: 1px solid $hr-color;
         }
     }
@@ -39,7 +41,7 @@
 
         &:before {
             background: $brand-primary;
-            box-shadow:inset 0 0 0 .4rem $white;
+            box-shadow: inset 0 0 0 .4rem $white;
         }
     }
 {% endif %}
@@ -55,6 +57,7 @@
    ========================================================================== */
 .radio {
 {% if demosite %}
+
     label {
 
         &:before {

@@ -5,14 +5,15 @@
 /* General
    ========================================================================== */
 .blog-item--summary {
+    padding-bottom: 2em;
 
     border-bottom: 1px solid $grey--light;
-    padding-bottom: 2em;
 
     .blog-item__head__title {
         margin-bottom: 1rem;
-        text-transform: none;
+
         font-weight: 400;
+        text-transform: none;
     }
 }
 
@@ -24,9 +25,9 @@
 }
 
 .blog-item__head__meta {
+    color: $grey;
     font-size: 1.1rem;
     text-transform: uppercase;
-    color: $grey;
 }
 
 .blog-item__head__title {

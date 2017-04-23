@@ -13,6 +13,7 @@
 
 {% if demosite %}
     border: 1px solid $hr-color;
+
     font-weight: 400;
 {% else %}
     border: 1px solid $grey;
@@ -22,6 +23,7 @@
         outline: none;
     }
 {% if demosite %}
+
     &:focus,
     &.form-control--filled {
         border-color: $brand-primary;
@@ -38,10 +40,10 @@
 /* Textarea
    ========================================================================== */
 .form-control--textarea {
+    max-width: none;
 {% if demosite %}
     min-height: 10rem;
 {% endif %}
-    max-width: none;
     padding: 1em;
 }
 
@@ -50,25 +52,27 @@
    ========================================================================== */
 .form-control--select {
 {% if demosite %}
-    z-index: 2;
     position: relative;
+    z-index: 2;
 
-    padding-right: 4rem;
-    height: 4rem;
     width: 100%;
+    height: 4rem;
+    padding-right: 4rem;
 
-    border: none;
-
-    border-radius: 0;
-    box-shadow: none;
     background: transparent;
     background-image: none;
+    box-shadow: none;
+
+    border: none;
+    border-radius: 0;
+
     -webkit-appearance: none;
     -moz-appearance: none;
 
     font-size: 1.25rem;
 
-    &:focus, &:valid {
+    &:focus,
+    &:valid {
         opacity: 1;
     }
 {% endif %}

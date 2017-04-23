@@ -9,34 +9,38 @@
 @font-face {
     font-family: $iconfont-name;
 {% if demosite %}
-    src:url('#{$iconfont-path}/#{$iconfont-name}.eot?8at4kw');
-    src:url('#{$iconfont-path}/#{$iconfont-name}.eot?#iefix8at4kw') format('embedded-opentype'),
-    url('#{$iconfont-path}/#{$iconfont-name}.woff?8at4kw') format('woff'),
-    url('#{$iconfont-path}/#{$iconfont-name}.ttf?8at4kw') format('truetype'),
-    url('#{$iconfont-path}/#{$iconfont-name}.svg?8at4kw##{$iconfont-name}') format('svg');
+    src: url('#{$iconfont-path}/#{$iconfont-name}.eot?8at4kw');
+    src:
+        url('#{$iconfont-path}/#{$iconfont-name}.eot?#iefix8at4kw') format('embedded-opentype'),
+        url('#{$iconfont-path}/#{$iconfont-name}.woff?8at4kw') format('woff'),
+        url('#{$iconfont-path}/#{$iconfont-name}.ttf?8at4kw') format('truetype'),
+        url('#{$iconfont-path}/#{$iconfont-name}.svg?8at4kw##{$iconfont-name}') format('svg');
 {% else %}
     src: url("data:application/x-font-ttf;charset=utf-8;base64,%BASE64%") format('truetype');
 {% endif %}
+
     font-weight: normal;
     font-style: normal;
 }
 
-.icon, %icon {
-    font-family: $iconfont-name;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
+.icon,
+%icon {
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    font-family: $iconfont-name;
+    speak: none;
+
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-transform: none;
 }
 
-
 {% if demosite %}
+
 /* Modifiers
    ========================================================================== */
 .icon--small {
@@ -234,16 +238,5 @@ category: Typography
 {% endif %}
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 */

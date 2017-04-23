@@ -15,13 +15,13 @@
 .footer-nav {
     margin: 3.2rem 0;
 
-    @media(max-width: $screen-xs-max) {
+    @media (max-width: $screen-xs-max) {
         text-align: center;
     }
 }
 
 .footer-nav__title {
-    margin: 0 0 1.6rem 0;
+    margin: 0 0 1.6rem;
 
     font-size: .85em;
     text-transform: uppercase;
@@ -31,7 +31,9 @@
     color: $black;
     font-weight: 600;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         color: $black;
     }
 }
@@ -40,10 +42,12 @@
     display: block;
     margin-bottom: .6rem;
 
-    line-height: 1.5;
     color: $grey;
+    line-height: 1.5;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         text-decoration: none;
     }
 }
@@ -60,8 +64,8 @@
     }
 
     p {
-        line-height: 1.5;
         color: $grey;
+        line-height: 1.5;
     }
 }
 

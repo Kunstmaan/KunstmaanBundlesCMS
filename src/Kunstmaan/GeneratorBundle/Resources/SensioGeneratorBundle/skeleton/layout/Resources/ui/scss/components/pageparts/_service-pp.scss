@@ -17,14 +17,14 @@
 
     .service-pp__image {
 
-        @media(min-width: $screen-sm-min) {
+        @media (min-width: $screen-sm-min) {
             left: 0;
         }
     }
 
     .service-pp__text {
 
-        @media(min-width: $screen-sm-min) {
+        @media (min-width: $screen-sm-min) {
             float: right;
         }
     }
@@ -34,14 +34,14 @@
 
     .service-pp__image {
 
-        @media(min-width: $screen-sm-min) {
+        @media (min-width: $screen-sm-min) {
             right: 0;
         }
     }
 
     .service-pp__text {
 
-        @media(min-width: $screen-sm-min) {
+        @media (min-width: $screen-sm-min) {
             float: left;
         }
     }
@@ -58,7 +58,7 @@
     font-weight: 300;
     line-height: 1.2;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         font-size: 5.4rem;
     }
 }
@@ -68,15 +68,15 @@
    ========================================================================== */
 .service-pp__image {
     max-width: 40rem;
-    margin: 0 auto;
     padding: 2em;
+    margin: 0 auto;
 
-    @media(min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         max-width: none;
         padding: 0 2em;
     }
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         padding: 0 4em;
     }
 }

@@ -5,17 +5,18 @@
 /* General
    ========================================================================== */
 .newsletter {
-    margin-bottom: 0;
     padding: 2em 0 2.5em;
+    margin-bottom: 0;
 }
 
 
 /* Content
    ========================================================================== */
-.newsletter__content, .newsletter__text {
+.newsletter__content,
+.newsletter__text {
     @extend .container;
 
-    @media(min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         width: auto;
         max-width: 750px;
     }
@@ -28,8 +29,8 @@
     margin-top: 0;
     margin-bottom: 1.5rem;
 
-    font-size: 2rem;
     color: $white;
+    font-size: 2rem;
 }
 
 
@@ -53,7 +54,7 @@
 .newsletter__form {
     @extend .container;
 
-    @media(min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         width: auto;
         max-width: 75rem;
     }
@@ -62,21 +63,23 @@
 .newsletter__form__input {
     @include box-shadow;
 
+    display: block;
     width: 100%;
     max-width: 100%;
-    display: block;
     padding: .65em 1em;
 
-    font-size: 1.4rem;
-    color: $black;
     background-color: $white;
+
     border: 1px solid $hr-color;
+
+    color: $black;
+    font-size: 1.4rem;
 
     &.form-control {
         max-width: 100%;
     }
 
-    @media(min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         display: inline-block;
 
         &.form-control {
@@ -92,15 +95,13 @@
 
     font-size: 1.8rem;
 
-    @media(min-width: $screen-sm-min) {
+    @media (min-width: $screen-sm-min) {
         display: inline-block;
         width: auto;
         margin-left: 1rem;
         margin-top: 0;
     }
 }
-
-
 
 
 /*doc
