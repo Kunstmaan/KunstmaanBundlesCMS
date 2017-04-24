@@ -5,60 +5,6 @@
     MORE_BUTTON_LABEL = '{{ 'kuma_js.auto_collapse.more_button_label' | trans | e('js') }}';
 </script>
 
-{% javascripts
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/jquery/dist/jquery.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/bootstrap-sass-official/assets/javascripts/bootstrap.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/jstree/dist/jstree.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/velocity/velocity.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/cargobay/src/toggle/js/jquery.toggle.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/moment/min/moment.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/Sortable/Sortable.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/select2/dist/js/select2.full.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/vendor_bower/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-loading.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-tree.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-toggle.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-sidebar-search-focus.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-main-actions.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-node-version-lock.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-entity-version-lock.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-filter.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-sortable-table.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_app-check-if-edited.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_prevent-double-click.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_datepicker.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_auto-collapse-buttons.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_auto-collapse-tabs.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_rich-editor.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_ajax-modal.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_advanced-select.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_page-editor.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_pagepart-editor.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_slug-chooser.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_url-chooser.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_media-chooser.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_icon-chooser.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_bulk-actions.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_nested-form.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_tooltip.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_colorpicker.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_characters-left.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_input-range-slider.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/_google_oauth.js"
-    "@KunstmaanAdminBundle/Resources/ui/js/app.js"
-    output="KunstmaanAdminBundleAssets/js/footer.min.js" filter="?uglifyjs2"
-%}
-    <script src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
-{% javascripts
-    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/ckeditor.js"
-    "@KunstmaanAdminBundle/Resources/public/default-theme/ckeditor/adapters/jquery.js"
-    output="KunstmaanAdminBundleAssets/js/ckeditor.js"
-%}
-    <script src="{{ asset_url }}"></script>
-{% endjavascripts %}
+<script src="{{ asset('bundles/kunstmaanadmin/js/admin-bundle.min.js') }}"></script>
 
 {% include "@KunstmaanAdmin/Default/_js_footer_extra.html.twig" %}
