@@ -17,6 +17,10 @@ class MediaTokenTransformer implements DataTransformerInterface
      */
     public function transform($content)
     {
+        if (!trim($content)) {
+            return '';
+        }
+
         $crawler = new Crawler();
         $crawler->addHtmlContent($content);
 
@@ -41,6 +45,10 @@ class MediaTokenTransformer implements DataTransformerInterface
      */
     public function reverseTransform($content)
     {
+        if (!trim($content)) {
+            return '';
+        }
+
         $crawler = new Crawler();
         $crawler->addHtmlContent($content);
 
