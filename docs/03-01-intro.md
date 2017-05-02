@@ -132,7 +132,7 @@ At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/e
 
 First make sure you installed [node.js](https://node.js.org/) v7.7 (or higher).
 You can test your node version by running `node -v`.
-> You can use the [nvm](https://github.com/creationix/nvm) to use correct node version. Use `nvm install` command.
+> You can use the [nvm](https://github.com/creationix/nvm) to use correct node version. Use the `nvm install` command.
 >
 > Node comes with npm installed so you should have a version of npm. However, npm gets updated more frequently than Node does, so you'll want to make sure it's the latest version.
 >
