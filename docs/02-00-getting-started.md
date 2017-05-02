@@ -18,12 +18,20 @@ We can also recommend investing some time in reading these books:
 
 Documentation specific to the KunstmaanBundlesCMS can be found on:
 
+<<<<<<< HEAD
 * [Installation Guide](./03-00-installation.md)
+=======
+* [Installation Guide](./03-01-intro.md)
+>>>>>>> [Docs]: fix getting started links
     * [System requirements](./03-02-system-requirements.md)
     * [Development environment](./03-03-development-environment.md)
 * [Content Management Guide](./04-01-intro.md)
     * [Creating a pagepart](./04-02-creating-a-page-part.md)
+<<<<<<< HEAD
 	* [Creating an adminlist](./04-03-creating-an-adminlist.md)
+=======
+	* [Creating an adminlist](./06-02_02-creating-an-adminlist.md)
+>>>>>>> [Docs]: fix getting started links
 	* [Creating a pagetype](./04-04-creating-a-pagetype.md)
 	* [Adding a newssection or blog](./04-05-adding-a-newssection-or-blog.md)
 	* [Adding a search engine](./04-06-adding-a-search-engine.md)
