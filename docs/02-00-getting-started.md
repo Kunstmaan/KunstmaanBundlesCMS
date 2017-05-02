@@ -18,19 +18,19 @@ We can also recommend investing some time in reading these books:
 
 Documentation specific to the KunstmaanBundlesCMS can be found on:
 
-* [Installation Guide](./03-00-installation.md)
-    * [System requirements](./03-01-system-requirements.md)
-    * [Development environment](./03-02-development-environment.md)
-* [Content Management Guide](./04-00-content-management.md)
-    * [Creating a pagepart](./04-01-creating-a-page-part.md)
-	* [Creating an adminlist](./04-02-creating-an-adminlist.md)
-	* [Creating a pagetype](./04-03-creating-a-pagetype.md)
-	* [Adding a newssection or blog](./04-04-adding-a-newssection-or-blog.md)
-	* [Adding a search engine](./04-05-adding-a-search-engine.md)
-* [Cookbook](./05-00-cookbook.md)
-	* [Going single language](./05-01-going-single-language.md)
-	* [Managing translations](./05-02-manage-translations.md)
-	* [Google Analytics dashboard](./05-03-google-analytics-dashboard.md)
+* [Installation Guide](./03-01-intro.md)
+    * [System requirements](./03-02-system-requirements.md)
+    * [Development environment](./03-03-development-environment.md)
+* [Content Management Guide](./04-01-intro.md)
+    * [Creating a pagepart](./04-02-creating-a-page-part.md)
+	* [Creating an adminlist](./06-02_02-creating-an-adminlist.md)
+	* [Creating a pagetype](./04-04-creating-a-pagetype.md)
+	* [Adding a newssection or blog](./04-05-adding-a-newssection-or-blog.md)
+	* [Adding a search engine](./04-06-adding-a-search-engine.md)
+* [Cookbook](./05-01-intro.md)
+	* [Going single language](./05-02-going-single-language.md)
+	* [Managing translations](./05-03-manage-translations.md)
+	* [Google Analytics dashboard](./05-04-google-analytics-dashboard.md)
 
 > Writing documentation is hard. Especially if the writer is fully into the topic at hand. This results in the glossing over of obvious information for the writer, that might not be obvious for everyone else. We wholeheartedly appreciate pull requests or suggestions for this documentation.
 
@@ -38,10 +38,10 @@ Documentation specific to the KunstmaanBundlesCMS can be found on:
 
 We follow most of the procedures for contributions from the [Symfony](http://symfony.com/doc/current/contributing/index.html) and [Sylius](http://sylius.org) project, as such much of this info will look familiar as it embodies current best practices.
 
-* [Reporting a bug or a security issue](./07-01-reporting-issues.md)
-* [Submitting pull requests](./07-02-pull-requests.md)
-* [Coding standards](./07-03-coding-standards.md)
-* [Preparing a new release](./07-04-preparing-a-new-release.md)
+* [Reporting a bug or a security issue](./99-01-reporting-issues.md)
+* [Submitting pull requests](./99-02-pull-requests.md)
+* [Coding standards](./99-03-coding-standards.md)
+* [Preparing a new release](./99-04-preparing-a-new-release.md)
 
 ## Support
 
