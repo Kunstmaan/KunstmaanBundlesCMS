@@ -371,10 +371,10 @@ class KunstmaanGenerator extends Generator
      */
     public function removeDirectory($targetDir)
     {
-	// Make sure the target dir contain a trailing slash
-	$targetDir = rtrim($targetDir, '/') . '/';
+        // Make sure the target dir contain a trailing slash
+        $targetDir = rtrim($targetDir, '/') . '/';
 
-	$this->filesystem->remove($targetDir);
+        $this->filesystem->remove($targetDir);
     }
 
     /**
@@ -384,7 +384,7 @@ class KunstmaanGenerator extends Generator
      */
     public function removeFile($file)
     {
-	$this->filesystem->remove($file);
+        $this->filesystem->remove($file);
     }
 
     /**
