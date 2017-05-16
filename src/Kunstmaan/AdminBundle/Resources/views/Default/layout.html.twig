@@ -145,5 +145,10 @@
 
     <!-- JS - Extra -->
     {% block extrajavascript %}{% endblock %}
+
+    <!-- JS extension point for external users -->
+    {% include "KunstmaanAdminBundle:Default:_js_extra_footer.html.twig" %}
+
+
 </body>
 </html>
