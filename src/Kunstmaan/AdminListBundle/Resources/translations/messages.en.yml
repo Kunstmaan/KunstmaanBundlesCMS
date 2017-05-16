@@ -8,9 +8,35 @@ kuma_admin_list:
         delete: Delete
         move_up: Move up
         move_down: Move down
+<<<<<<< HEAD
 =======
     edit:
         flash:
             success: The entity has been edited
             locked: The entity is currently being edited by %user%
 >>>>>>> [AdminListBundle] Provide interface and backend logic for handling locking of individual entities in
+=======
+
+# Filters
+filter:
+    true: true
+    false: false
+    before: before
+    after: after
+    in: contains
+    notin: doesn't contain
+    eq: equals
+    neq: not equals
+    lt: lower than
+    lte: lower than or equal
+    gt: greater than
+    gte: greater than or equal
+    isnull: empty
+    isnotnull: not empty
+    contains: contains
+    doesnotcontain: doesn't contain
+    equals: equals
+    notequals: not equals
+    startswith: starts with
+    endswith: ends with
+>>>>>>> [AdminListBundle] add translation for filter types
