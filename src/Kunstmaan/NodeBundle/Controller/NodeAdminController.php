@@ -1021,6 +1021,10 @@ class NodeAdminController extends Controller
             'KunstmaanNodeBundle:QueuedNodeTranslationAction'
         )->findOneBy(array('nodeTranslation' => $nodeTranslation));
 
+        if (! $this->get('kunstmaan_node_search.search_configuration.node')->isSearchProviderAvailable()) {
+            $this->addFlash('warning', $this->get('translator')->trans('kuma_admin.edit.flash.search_provider_offline'));
+        }
+
         return array(
             'page' => $page,
             'entityname' => ClassLookup::getClass($page),

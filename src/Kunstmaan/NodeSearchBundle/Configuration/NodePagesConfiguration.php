@@ -19,6 +19,7 @@ use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
+use Kunstmaan\SearchBundle\Exception\SearchProviderException;
 use Kunstmaan\SearchBundle\Provider\SearchProviderInterface;
 use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -218,6 +219,23 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * Check if search provider service is running
+     *
+     * @return bool
+     */
+    public function isSearchProviderAvailable()
+    {
+        try {
+            $this->searchProvider->getClient()->getStatus();
+
+            return true;
+        } catch (\Exception $e) {
+
+            return false;
+        }
+    }
+
+    /**
      * Index a node translation
      *
      * @param NodeTranslation $nodeTranslation
@@ -249,7 +267,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         if ($this->isIndexable($page)) {
             $this->addPageToIndex($nodeTranslation, $node, $publicNodeVersion, $page);
             if ($add) {
-                $this->searchProvider->addDocuments($this->documents);
+                try {
+                    $this->searchProvider->addDocuments($this->documents);
+                } catch (SearchProviderException $e) {
+                }
                 $this->documents = array();
             }
         }
