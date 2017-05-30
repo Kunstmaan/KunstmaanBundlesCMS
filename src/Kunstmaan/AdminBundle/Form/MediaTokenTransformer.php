@@ -25,8 +25,8 @@ class MediaTokenTransformer implements DataTransformerInterface
         $crawler->addHtmlContent($content);
 
         $crawler->filter('img')->each(
-            function (Crawler $node, $i) {
-                $image = $node->getNode($i);
+            function (Crawler $node) {
+                $image = $node->getNode(0);
                 if ($image->hasAttribute('data-src')) {
                     $src = $image->getAttribute('data-src');
                     $image->setAttribute('src', $src);
@@ -54,14 +54,14 @@ class MediaTokenTransformer implements DataTransformerInterface
 
         // Get all img tags and parse the token.
         $crawler->filter('img')->each(
-            function (Crawler $node, $i) {
-                $image = $node->getNode($i);
+            function (Crawler $node) {
+                $image = $node->getNode(0);
                 $src = $image->getAttribute('src');
                 $parsed = parse_url($src, PHP_URL_QUERY);
                 parse_str($parsed, $query);
 
                 if ($query['token']) {
-                    $image->setAttribute('src', $query['token']);
+//                    $image->setAttribute('src', $query['token']);
                 }
                 $image->setAttribute('data-src', $src);
             }
