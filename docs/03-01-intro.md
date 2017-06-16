@@ -141,3 +141,31 @@ At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/e
 ![Demo Site Admin](https://raw.githubusercontent.com/kunstmaan/KunstmaanBundlesCMS/master/docs/images/demositeadmin.png)
 
 > Note that the screenshots were made of a site using the `--demosite` option during generation
+<<<<<<< HEAD
+=======
+
+
+## Get all the front-end website assets (KuMa workflow)
+
+First make sure you installed [node.js](https://node.js.org/) v7.7 (or higher).
+You can test your node version by running `node -v`.
+> You can use the [nvm](https://github.com/creationix/nvm) to use correct node version. Use the `nvm install` command.
+>
+> Node comes with npm installed so you should have a version of npm. However, npm gets updated more frequently than Node does, so you'll want to make sure it's the latest version.
+>
+> ```npm install npm@latest -g```
+>
+> Test: Run `npm -v`. The version should be higher than 2.1.8.
+
+Then execute the following commands:
+
+```
+bundle install
+npm install
+npm run build
+```
+
+At this point browsing to [http://kunstmaan.cms](http://kunstmaan.cms) should show you the website with minimalistic styling.
+=======
+>>>>>>> 4.0
+>>>>>>> Make buildUI.sh executable (#1504)
