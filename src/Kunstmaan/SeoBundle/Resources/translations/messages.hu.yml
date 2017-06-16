@@ -41,7 +41,7 @@ seo:
         seo:
             meta_title:
                 label: Cím
-                info_text: A cím mezőt gyakran használják a kereső motorok a találati listában. Kevesebb, mint 55 karakteresnek kell lennie.
+                info_text: A cím mezőt gyakran használják a kereső motorok a találati listában. Kevesebb, mint 70 karakteresnek kell lennie.
             meta_description:
                 label: Meta leírás
             meta_robots:
