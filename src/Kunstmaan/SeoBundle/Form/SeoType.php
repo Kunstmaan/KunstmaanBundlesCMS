@@ -30,13 +30,13 @@ class SeoType extends AbstractType
                 'label' => 'seo.form.seo.meta_title.label',
                 'attr' => array(
                     'info_text' => 'seo.form.seo.meta_title.info_text',
-                    'maxlength' => 55
+                    'maxlength' => 70
                 )
             ))
             ->add('metaDescription', null, array(
                 'label' => 'seo.form.seo.meta_description.label',
                 'attr' => array(
-                    'maxlength' => 155
+                    'maxlength' => 170
                 )
             ));
 

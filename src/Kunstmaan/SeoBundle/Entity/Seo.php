@@ -23,7 +23,7 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
-     * @Assert\Length(max=55)
+     * @Assert\Length(max=70)
      *
      */
     protected $metaTitle;
@@ -32,7 +32,7 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
-     * @Assert\Length(max=155)
+     * @Assert\Length(max=170)
      *
      */
     protected $metaDescription;
