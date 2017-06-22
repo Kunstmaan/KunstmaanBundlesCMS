@@ -36,7 +36,7 @@ adminBundle.tasks.copy = gulp.parallel(
     createCopyTask({src: [adminBundle.config.srcPath + 'img/**'], dest: adminBundle.config.distPath + 'img'})
 );
 
-adminBundle.tasks.cssLocal = createCssLocalTask({src: adminBundle.config.srcPath + 'scss/style.scss', dest: adminBundle.config.distPath + 'css'});
+adminBundle.tasks.cssLocal = createCssLocalTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});
 
 adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});
 
@@ -114,20 +114,6 @@ adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: adminBundle.config
 //     },
 //     logStats: true
 // });
-
-adminBundle.tasks.server = createServerTask({
-    config: {
-        ui: false,
-        ghostMode: false,
-        files: [
-            adminBundle.config.distPath + 'css/*.css',
-            adminBundle.config.distPath + 'js/*.js'
-        ],
-        open: false,
-        reloadOnRestart: true,
-        notify: true
-    }
-});
 
 adminBundle.tasks.scripts = createScriptsTask({
     src: [

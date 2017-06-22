@@ -5,7 +5,7 @@ import { adminBundle } from './groundcontrol/admin-bundle.tasks';
 import { dashboardBundle } from './groundcontrol/dashboard-bundle.tasks';
 import { mediaBundle } from './groundcontrol/media-bundle.tasks';
 import { translatorBundle } from './groundcontrol/translator-bundle.tasks';
-
+import startLocalTask, { buildOnChange } from './groundcontrol/start-local.task';
 
 // AdminBundle Tasks
 const analyzeAdminBundle = gulp.series(
@@ -75,5 +75,12 @@ const testAndBuildOptimized = gulp.series(
     buildOptimized
 );
 
+// Setting up server, local dev
+const startLocal = gulp.series(
+    buildOptimized,
+    startLocalTask,
+    buildOnChange
+);
+
 // Export public tasks
-export { test, buildOptimized, testAndBuildOptimized };
+export { test, buildOptimized, testAndBuildOptimized, startLocal };
