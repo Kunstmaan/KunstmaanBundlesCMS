@@ -141,8 +141,10 @@ adminBundle.tasks.scripts = createScriptsTask({
     filename: 'admin-bundle.min.js'
 });
 
-const extractCriticalCss = (urlToCheck, done) => {
-    const distPath = adminBundle.config.distPath;
+const extractCriticalCss = (item, done) => {
+    const basePath = item.basePath;
+    const distPath = item.distPath;
+    const urlToCheck = item.url;
     const CSS_REGEX = /(<link\s+rel=\"stylesheet\"\s+href=\").*(css\/.*\.css.*\"\s?(>|\/>))/gmi;
 
     http.get(urlToCheck, res => {
@@ -161,18 +163,19 @@ const extractCriticalCss = (urlToCheck, done) => {
                     return url.parse(cssPath).pathname;
                 });
                 for (const cssFile of cssFiles) {
-                    originalCssSize = originalCssSize + fs.statSync(cssFile).size;
+                    const fullPath = basePath + cssFile;
+                    originalCssSize = originalCssSize + fs.statSync(fullPath).size;
                     // Create a copy so we have the original
-                    const oldFilePath = path.parse(cssFile);
+                    const oldFilePath = path.parse(fullPath);
                     oldFilePath.base = oldFilePath.name + ".original" + oldFilePath.ext;
                     const newPath = path.format(oldFilePath);
-                    fs.createReadStream(cssFile).pipe(fs.createWriteStream(newPath));
+                    fs.createReadStream(fullPath).pipe(fs.createWriteStream(newPath));
                 }
             }
 
             critical.generate({
                 inline: false,
-                base: '.',
+                base: basePath,
                 html: data,
                 dest: 'critical-only.css',
                 minify: true,
@@ -186,13 +189,8 @@ const extractCriticalCss = (urlToCheck, done) => {
                 }
 
                 // Write the output to the original css so we can verify the result
-                fs.writeFileSync(cssFiles[0], output);
+                fs.writeFileSync(basePath + cssFiles[0], output);
 
-                // Verified result, css load time takes 230ms after processing with critical before 4.22s (on 3G good)
-                // Some issues found:
-                // 1. Hard to do for secured webpages as we are using a proxy to a php backend (altough if we load the main css in the background on the login page this should be more or less ok as on the second visit the bundle is there)
-                // 2. Inline option for cricitical css is preferred as it eliminates another http request, this is hard as we need to inject this into the template (twig) somehow
-                
                 console.log(`Reduced css size for url ${urlToCheck} from ${originalCssSize} to ${output.length}`);
                 done();
             });
@@ -202,16 +200,24 @@ const extractCriticalCss = (urlToCheck, done) => {
 }
 
 adminBundle.tasks.splitCriticalCss = function splitCriticalCss(done) {
-    const urlsToCheck = [
-        `${consoleArguments.backendProxy}en/admin/login`,
-        //`${consoleArguments.backendProxy}en`,
+    // Some issues found:
+    // 1. Hard to do for secured webpages as we are using a proxy to a php backend (altough if we load the main css in the background on the login page this should be more or less ok as on the second visit the bundle is there)
+    // 2. Inline option for cricitical css is preferred as it eliminates another http request, this is hard as we need to inject this into the template (twig) somehow
+    // 3. Loads css files from the file system, doesn't seem to work for dynamic css files
+
+    // Verified result on 3G good
+    const itemsToCheck = [
+        // css load time takes 230ms after processing with critical before 4.22s (size down to 5KB, from 200kb)
+        { url: `${consoleArguments.backendProxy}en/admin/login`, basePath: '.', distPath: adminBundle.config.distPath.substring(1) },
+        // css load time takes 230ms after processing with critical before 550ms (size down to 3,5KB, from 19kb)
+        { url: `${consoleArguments.backendProxy}en`, basePath: '../../', distPath: 'frontendpoc/data/frontendpoc/web/frontend/' }
     ];
 
-    let urlsProcessed = 0;
-    for (const urlToCheck of urlsToCheck) {
-        extractCriticalCss(urlToCheck, () => {
-            urlsProcessed++;
-            if (urlsProcessed === urlsToCheck.length) {
+    let itemsProcessed = 0;
+    for (const itemToCheck of itemsToCheck) {
+        extractCriticalCss(itemToCheck, () => {
+            itemsProcessed++;
+            if (itemsProcessed === itemsToCheck.length) {
                 done();
             }
         });
