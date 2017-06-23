@@ -82,5 +82,12 @@ const startLocal = gulp.series(
     buildOnChange
 );
 
+// POC critical css only
+const splitCriticalCssMain = gulp.series(
+    buildOptimized,
+    adminBundle.tasks.splitCriticalCss,
+    startLocalTask
+);
+
 // Export public tasks
-export { test, buildOptimized, testAndBuildOptimized, startLocal };
+export { test, buildOptimized, testAndBuildOptimized, startLocal, splitCriticalCssMain };
