@@ -309,7 +309,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
     return {
         init: init,
         subscribeToEvent: subscribeToEvent,
-        unSubscribeToEvent: unSubscribeToEvent
+        unSubscribeToEvent: unSubscribeToEvent,
+        reInit: reInit
     };
 
 }(window);
