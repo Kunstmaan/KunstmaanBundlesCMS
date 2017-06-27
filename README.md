@@ -10,9 +10,9 @@ Please refer to the documentation at [https://bundles.kunstmaan.be/documentation
 
 ### Contributing
 
-We love contributions! We've provide you with a [Contribution Guide](docs/07-00-contributing.md) to get you started.
-If you're submitting a pull request, please follow the guidelines in the [Submitting pull requests](docs/07-02-pull-requests.md)
-documentation and be sure to read our [Coding Standards](docs/07-03-coding-standards.md) as well.
+We love contributions! We've provide you with a [Contribution Guide](docs/99-00-contributing.md) to get you started.
+If you're submitting a pull request, please follow the guidelines in the [Submitting pull requests](docs/99-02-pull-requests.md)
+documentation and be sure to read our [Coding Standards](docs/99-03-coding-standards.md) as well.
 
 ### Browser support
 
