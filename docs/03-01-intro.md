@@ -1,6 +1,6 @@
 # Installation
 
-> For the sake of clarity we will perform this installation in a preconfigured Vagrant box built with [PuPHPet](https://puphpet.com). More info in [this chapter about the PuPHPet development environment](./03-02-development-environment.md). If you have a development environment, just adjust to match your specifics.
+> For the sake of clarity we will perform this installation in a preconfigured Vagrant box built with [PuPHPet](https://puphpet.com). More info in [this chapter about the PuPHPet development environment](./03-03-development-environment.md). If you have a development environment, just adjust to match your specifics.
 >
 > This chapter assumes you have started the box (`vagrant up`), ssh'ed into it (`vagrant ssh`) and have navigated to the `/var/www` folder (`cd /var/www`). If there is a folder there called `myprojectname` you should delete it by running: `rm -Rf myprojectname`
 
