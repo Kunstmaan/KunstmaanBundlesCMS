@@ -18,12 +18,12 @@ We can also recommend investing some time in reading these books:
 
 Documentation specific to the KunstmaanBundlesCMS can be found on:
 
-* [Installation Guide](./03-01-intro.md)
+* [Installation Guide](./03-00-installation.md)
     * [System requirements](./03-02-system-requirements.md)
     * [Development environment](./03-03-development-environment.md)
 * [Content Management Guide](./04-01-intro.md)
     * [Creating a pagepart](./04-02-creating-a-page-part.md)
-	* [Creating an adminlist](./06-02_02-creating-an-adminlist.md)
+	* [Creating an adminlist](./04-03-creating-an-adminlist.md)
 	* [Creating a pagetype](./04-04-creating-a-pagetype.md)
 	* [Adding a newssection or blog](./04-05-adding-a-newssection-or-blog.md)
 	* [Adding a search engine](./04-06-adding-a-search-engine.md)
@@ -45,7 +45,7 @@ We follow most of the procedures for contributions from the [Symfony](http://sym
 
 ## Support
 
-For questions you can always ask your question via a Github Issue ([following the same guidelines as bug reporting](./07-01-reporting-issues.md)) or shoot us an email at bundles AT kunstmaan.be.
+For questions you can always ask your question via a Github Issue ([following the same guidelines as bug reporting](./99-01-reporting-issues.md)) or shoot us an email at bundles AT kunstmaan.be.
 
 ## Installation Guide
 

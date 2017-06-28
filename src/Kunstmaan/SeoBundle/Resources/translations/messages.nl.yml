@@ -38,7 +38,7 @@ seo:
         seo:
             meta_title:
                 label:  Titel
-                info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s. De mag max. 55 karakters bevatten.
+                info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s.
             meta_description:
                 label: Meta omschrijving
             meta_robots:

@@ -42,7 +42,7 @@ seo:
         seo:
             meta_title:
                 label:  Title
-                info_text: The title tag is often used on search engine results pages. It should be less than 55 characters.
+                info_text: The title tag is often used on search engine results pages.
             meta_description:
                 label: Meta description
             meta_robots:
