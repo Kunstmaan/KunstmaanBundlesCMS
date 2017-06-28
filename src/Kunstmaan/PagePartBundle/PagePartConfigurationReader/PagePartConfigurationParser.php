@@ -78,8 +78,7 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
                 continue;
             }
 
-
-            $types[$type['name']] = ['name' => $type['name'], 'class' => $type['class']];
+            $types[$type['name']] = ['name' => $type['name'], 'class' => $type['class'], 'preview' => array_key_exists('preview', $type) ? $type['preview'] : ""];
             if (isset($type['pagelimit'])) {
                 $types[$type['name']]['pagelimit'] = $type['pagelimit'];
             }

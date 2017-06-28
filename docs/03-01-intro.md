@@ -1,6 +1,6 @@
 # Installation
 
-> For the sake of clarity we will perform this installation in a preconfigured Vagrant box built with [PuPHPet](https://puphpet.com). More info in [this chapter about the PuPHPet development environment](./03-02-development-environment.md). If you have a development environment, just adjust to match your specifics.
+> For the sake of clarity we will perform this installation in a preconfigured Vagrant box built with [PuPHPet](https://puphpet.com). More info in [this chapter about the PuPHPet development environment](./03-03-development-environment.md). If you have a development environment, just adjust to match your specifics.
 >
 > This chapter assumes you have started the box (`vagrant up`), ssh'ed into it (`vagrant ssh`) and have navigated to the `/var/www` folder (`cd /var/www`). If there is a folder there called `myprojectname` you should delete it by running: `rm -Rf myprojectname`
 
@@ -127,6 +127,8 @@ At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/e
 
 First make sure you installed [node.js](https://node.js.org/) v7.7 (or higher).
 You can test your node version by running `node -v`.
+> You can use the [nvm](https://github.com/creationix/nvm) to use correct node version. Use the `nvm install` command.
+>
 > Node comes with npm installed so you should have a version of npm. However, npm gets updated more frequently than Node does, so you'll want to make sure it's the latest version.
 >
 > ```npm install npm@latest -g```

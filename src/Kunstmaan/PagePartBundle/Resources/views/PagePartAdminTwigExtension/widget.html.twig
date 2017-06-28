@@ -1,15 +1,8 @@
 <div class="js-pp-container pp-container" data-context="{{ pagepartadmin.context }}" data-pageid="{{ pagepartadmin.page.id }}" data-pageclassname="{{ pagepartadmin.getClassName(pagepartadmin.page) }}">
 
     {% if pagepartadmin.possiblePagePartTypes | length > 0 %}
-    <!-- First New PP select -->
-    <div class="pp-container__add">
-        <select class="js-add-pp-select js-add-pp-select--first form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
-            <option value="">{{ 'Add a pagepart' | trans }}</option>
-            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
-                <option value="{{ pagePartType.class }}">{{ pagePartType.name|trans }}</option>
-            {% endfor %}
-        </select>
-    </div>
+        <!-- First New PP select -->
+        {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/add_pagepart.html.twig' %}
     {% endif %}
 
     <!-- Sortable container -->
@@ -20,4 +13,9 @@
     </div>
 </div>
 
+{% if extended %}
+    {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/modal.html.twig' with { 'pagepartadmin': pagepartadmin } %}
+{% endif %}
+
 <div id="pageparts-deleted-container"></div>
+
