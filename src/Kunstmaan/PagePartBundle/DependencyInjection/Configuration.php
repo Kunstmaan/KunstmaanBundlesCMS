@@ -21,6 +21,10 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $root = $treeBuilder->root('kunstmaan_page_part');
+        $root->children()
+            ->booleanNode('extended_pagepart_chooser')
+                ->defaultFalse()
+            ->end();
 
         /** @var ArrayNodeDefinition $pageparts */
         $pageparts = $root->children()->arrayNode('pageparts')->prototype('array');
@@ -33,6 +37,7 @@ class Configuration implements ConfigurationInterface
         $types = $pageparts->children()->arrayNode('types')->defaultValue([])->prototype('array');
         $types->children()->scalarNode('name')->isRequired();
         $types->children()->scalarNode('class')->isRequired();
+        $types->children()->scalarNode('preview');
         $types->children()->scalarNode('pagelimit');
 
         // *************************************************************************************************************
