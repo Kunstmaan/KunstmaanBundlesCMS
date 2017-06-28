@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
+                ->scalarNode('admin_prefix')->defaultValue('admin')->end()
                 ->arrayNode('admin_locales')
                     ->defaultValue(array('en'))
                     ->prototype('scalar')->end()
