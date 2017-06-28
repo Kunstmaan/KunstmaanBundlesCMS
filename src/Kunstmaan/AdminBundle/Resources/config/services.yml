@@ -243,6 +243,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    kunstmaan_admin.sidebar.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\SidebarTwigExtension
+        tags:
+            - { name: twig.extension }
+
     kunstmaan_admin.validator.password_restrictions:
         class: '%kunstmaan_admin.validator.password_restrictions.class%'
         arguments:
