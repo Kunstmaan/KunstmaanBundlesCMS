@@ -36,8 +36,6 @@
     }
 }
 
-
-
 /* Header
    ========================================================================== */
 // General
@@ -63,7 +61,6 @@
     }
 }
 
-
 // Move icon
 .pp__header__move-icon {
     position: absolute;
@@ -74,7 +71,6 @@
 
     transition: color .3s ease;
 }
-
 
 // Head
 .pp__header__head {
@@ -87,8 +83,6 @@
     font-size: 1.3rem;
     line-height: 3rem;
 }
-
-
 
 /* Header
    ========================================================================== */
@@ -164,7 +158,6 @@
     }
 }
 
-
 /* View
 ========================================================================== */
 .pp__view {
@@ -190,10 +183,67 @@
     }
 
     .container {
-        max-width: 100%!important;
+        max-width: 100% !important;
     }
 }
 
 .pp__view__block--hidden {
     display: none;
+}
+
+/* PP chooser modal
+   ========================================================================== */
+
+.pp_modal__preview {
+    display: block;
+    cursor: pointer;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    min-width: 100%;
+    height: 20rem;
+    position: relative;
+    overflow: hidden;
+    margin: 2rem 0;
+
+    > header {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: .5rem;
+        background: inherit;
+        background-attachment: fixed;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: -1rem;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: inherit;
+            background-attachment: fixed;
+            filter: blur(.4rem);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.25)
+        }
+    }
+}
+
+.pp_modal__preview__text {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    position: relative;
+    z-index: 1;
 }

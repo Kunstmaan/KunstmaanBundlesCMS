@@ -146,6 +146,7 @@ EOT
         Bundle $bundle,
         $entityClass
     ) {
+        $adminKey = $this->getContainer()->getParameter('kunstmaan_admin.admin_prefix');
         $auto      = true;
         $multilang = false;
         if ($input->isInteractive()) {
@@ -164,7 +165,7 @@ EOT
         $code = sprintf("%s:\n", strtolower($bundle->getName()) . '_' . strtolower($entityClass) . '_admin_list');
         $code .= sprintf("    resource: '@%s/Controller/%sAdminListController.php'\n", $bundle->getName(), $entityClass, "'");
         $code .= "    type:     annotation\n";
-        $code .= sprintf("    prefix:   %s/admin/%s/\n", $prefix, strtolower($entityClass));
+        $code .= sprintf("    prefix:   %s/%s/%s/\n", $prefix, $adminKey, strtolower($entityClass));
         if ($multilang) {
             $code .= "    requirements:\n";
             $code .= "         _locale: \"%requiredlocales%\"\n";
@@ -205,11 +206,10 @@ EOT
      * KunstmaanTestBundle_TestEntity:
      * resource: "@KunstmaanTestBundle/Controller/TestEntityAdminListController.php"
      * type:     annotation
-     * prefix:   /{_locale}/admin/testentity/
+     * prefix:   /{_locale}/%kunstmaan_admin.admin_prefix%/testentity/
      * requirements:
      * _locale: "%requiredlocales%"
      */
-
     protected function createGenerator()
     {
         return new AdminListGenerator(GeneratorUtils::getFullSkeletonPath('adminlist'));

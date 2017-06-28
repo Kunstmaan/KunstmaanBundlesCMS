@@ -94,7 +94,7 @@ class LayoutGenerator extends KunstmaanGenerator
             array('bundle' => $this->bundle),
             true
         );
-        $this->renderSingleFile(
+        $this->renderExecutableFile(
             $this->skeletonDir . '/groundcontrol/',
             $this->rootDir,
             'buildUI.sh',
