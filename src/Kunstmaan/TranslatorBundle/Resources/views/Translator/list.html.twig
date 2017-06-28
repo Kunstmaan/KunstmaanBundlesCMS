@@ -4,11 +4,7 @@
 {% block extracss %}
     {{ parent() }}
 
-    {% stylesheets
-    "@KunstmaanTranslatorBundle/Resources/ui/scss/style.scss"
-    output="KunstmaanTranslatorBundleAssets/css/TranslatorStyle.min.css" filter="scss" %}
-    <link rel="stylesheet" href="{{ asset_url }}">
-    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaantranslator/css/style.css') }}">
 {% endblock %}
 
 
@@ -91,11 +87,5 @@
 {% block extrajavascript %}
     {{ parent() }}
 
-    {% javascripts
-    "@KunstmaanTranslatorBundle/Resources/ui/vendor_bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"
-    "@KunstmaanTranslatorBundle/Resources/ui/js/_inline-edit.js"
-    "@KunstmaanTranslatorBundle/Resources/ui/js/app.js"
-    output="KunstmaanTranslatorBundleAssets/js/translatorFooter.min.js" filter="uglifyjs2" %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script src="{{ asset('bundles/kunstmaantranslator/js/translator-bundle.min.js') }}"></script>
 {% endblock %}

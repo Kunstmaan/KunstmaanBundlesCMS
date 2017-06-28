@@ -26,9 +26,6 @@
         * session.auto_start = Off
         * date.timezone should be configured
 * MySQL 5.x (some work on sqlite has been done but is not supported)
-* Node.js and NPM with these packages installed globally:
-    * uglify-js
-    * uglifycss
 * A webserver like Apache or Nginx (preferably with a Varnish server in front)
 * Imagemagick
 * Elasticsearch (1.7.3)

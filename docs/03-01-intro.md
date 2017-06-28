@@ -110,15 +110,10 @@ Just accept the default bundle namespace at the prompt.
 
 Now that all your code is generated, let's make sure all front-end assets are available.
 
-First make sure you have [UglifyCSS](https://github.com/fmarcia/UglifyCSS) and [UglifyJS](http://lisperator.net/uglifyjs/) installed globally.
-
-> UglifyCSS and UglifyJS are used via [Assetic](https://github.com/kriswallsmith/assetic) to minimize the javascript and css files in the administration interface, as per [this recipe on in the Symfony Cookbook: How to Minify CSS/JS Files (Using UglifyJS and UglifyCSS)](http://symfony.com/doc/current/cookbook/assetic/uglifyjs.html)
-
-Then execute the following commands:
+Execute the following command:
 
 ```
 bin/console assets:install --symlink
-bin/console assetic:dump
 ```
 
 At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/en/admin) should greet you with the following screens.
