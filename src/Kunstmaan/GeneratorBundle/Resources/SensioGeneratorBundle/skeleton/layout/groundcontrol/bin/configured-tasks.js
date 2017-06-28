@@ -41,7 +41,7 @@ export const bundleLocal = createBundleTask({
         output: {
             filename: './web/frontend/js/bundle.js'
         },
-        devtool: 'source-map',
+        devtool: 'cheap-module-source-map',
         module: {
             rules: [
                 {
