@@ -18,8 +18,6 @@ modal:
 pages:
     copynotavailable: "Vertaal eerst de bovenliggende pagina"
 
-"This list contains all the pages, chronologically ordered by updated date.": "Deze lijst bevat alle pagina's chronologisch gesorteerd op laatste wijziging."
-
 kuma_node:
     form:
         controller_action:
@@ -89,6 +87,9 @@ kuma_node:
                 created_at: Gemaakt op
                 updated_at: Bewerkt op
                 online:     Online
+            online: (Online)
+            offline: (Offline)
+            additional_title: Deze lijst bevat alle pagina's chronologisch gesorteerd op laatste wijziging.
 
     tab:
         properties:
@@ -124,7 +125,7 @@ kuma_node:
                 cancel:     Annuleer
         publish:
             title:          Publiceer
-            body:           Weet u zeker dat u deze pagina online wil zetten? 
+            body:           Weet u zeker dat u deze pagina online wil zetten?
             later:
                 label:      Publiceer later
                 button:     Publiceer later

@@ -5,14 +5,15 @@
 /* General
    ========================================================================== */
 .blog-item--summary {
-
-    border-bottom: 1px solid $grey--light;
     padding-bottom: 2em;
 
+    border-bottom: 1px solid $grey--light;
+
     .blog-item__head__title {
-        margin-bottom: .5rem;
-        text-transform: none;
+        margin-bottom: 1rem;
+
         font-weight: 400;
+        text-transform: none;
     }
 }
 
@@ -20,13 +21,13 @@
 /* Title
    ========================================================================== */
 .blog-item__head {
-    margin-top: 2rem;
+    margin-top: 3.5rem;
 }
 
 .blog-item__head__meta {
-    font-size: .6rem;
-    text-transform: uppercase;
     color: $grey;
+    font-size: 1.1rem;
+    text-transform: uppercase;
 }
 
 .blog-item__head__title {

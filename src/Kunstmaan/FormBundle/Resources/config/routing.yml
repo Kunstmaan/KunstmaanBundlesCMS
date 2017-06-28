@@ -1,4 +1,4 @@
 KunstmaanFormBundle_formsubmissions:
     resource: '@KunstmaanFormBundle/Controller/FormSubmissionsController.php'
     type:     annotation
-    prefix:   /admin/formsubmissions
+    prefix:   /%kunstmaan_admin.admin_prefix%/formsubmissions

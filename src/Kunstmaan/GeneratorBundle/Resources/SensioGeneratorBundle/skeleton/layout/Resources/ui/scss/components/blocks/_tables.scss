@@ -11,10 +11,10 @@
 
 {% if demosite %}
 table {
-    margin: $default-margin 0;
     width: 100%;
+    margin: $default-margin 0;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         width: 70%;
     }
 }
@@ -23,24 +23,24 @@ tr {
     border-bottom: 1px solid $hr-color;
 }
 
-th, td {
+th,
+td {
     padding: .5em 1.5em .5em .1em;
+
     text-align: left;
 }
 
 th {
+    color: $brand-primary;
     font-weight: 600;
-    color: $theme-color;
 }
 
 td {
     font-weight: 300;
     text-align: left;
 }
+
 {% endif %}
-
-
-
 
 /*doc
 ---
@@ -49,10 +49,9 @@ name: 06_tables
 category: Blocks
 ---
 
-<strong>Default</strong>
-
 ```html_example
 
+<h3>Default</h3>
 <table>
     <thead>
     <tr>
@@ -79,37 +78,34 @@ category: Blocks
     </tr>
     </tbody>
 </table>
-```
 
-<strong>Overflow container</strong>
-
-```html_example
+<h3>Overflow container</h3>
 <div class="table-overflow-container">
     <table>
-    <thead>
-        <tr>
-        <th>Header 1</th>
-        <th>Header 2</th>
-        <th>Header 3</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        </tr>
-        <tr>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        </tr>
-        <tr>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        <td>Lorem ipsum dolor sit amet.</td>
-        </tr>
-    </tbody>
+        <thead>
+            <tr>
+            <th>Header 1</th>
+            <th>Header 2</th>
+            <th>Header 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>Lorem ipsum dolor sit amet.</td>
+            <td>Lorem ipsum dolor sit amet.</td>
+            <td>Lorem ipsum dolor sit amet.</td>
+            </tr>
+            <tr>
+            <td>Lorem ipsum dolor sit amet.</td>
+            <td>Lorem ipsum dolor sit amet.</td>
+            <td>Lorem ipsum dolor sit amet.</td>
+            </tr>
+            <tr>
+            <td>Lorem ipsum dolor sit amet.</td>
+            <td>Lorem ipsum dolor sit amet.</td>
+            <td>Lorem ipsum dolor sit amet.</td>
+            </tr>
+        </tbody>
     </table>
 </div>
 ```

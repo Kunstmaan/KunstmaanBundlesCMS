@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.0.2 / 2017-03-21
+
+* [AdminListBundle] fixed type from string to array [#1483](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1483) ([@Devolicious](https://github.com/Devolicious)) 
+* [Documentation] Update adminlist documentation [#1482](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1482) ([@Devolicious](https://github.com/Devolicious)) 
+* [All] downgrade cmf routing right before bc break [#1477](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1477) ([@Devolicious](https://github.com/Devolicious)) 
+* [GeneratorBundle] fixed bug in adminlist view route [#1475](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1475) ([@deZinc](https://github.com/deZinc)) 
+* [AdminListBundle] Moved setting of sort weight on new items to a protected method (revised) [#1464](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1464) ([@mtnorthrop](https://github.com/mtnorthrop)) 
+* [GeneratorBundle]: make new entity extend AbstractEntity again [#1462](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1462) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminListBundle] export csv bug [#1460](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1460) ([@bakie](https://github.com/bakie)) 
+* [AdminBundle]: url chooser fix for media [#1453](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1453) ([@sandergo90](https://github.com/sandergo90)) 
+* [NodeBundle] ignore slug of structurenode when changing slug of page [#1450](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1450) ([@bakie](https://github.com/bakie)) 
+* [GeneratorBundle] Fix when using traits inside pages folder [#1449](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1449) ([@Devolicious](https://github.com/Devolicious)) 
+* [MenuBundle] View would not automatically switch to the menuitems of your new locale [#1439](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1439) ([@Numkil](https://github.com/Numkil)) 
+* [GeneratorBundle]: incorrect translation for search page [#1438](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1438) ([@sandergo90](https://github.com/sandergo90)) 
+* [ALL] updated twig includes to correct convention [#1436](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1436) ([@Devolicious](https://github.com/Devolicious)) 
+
+
 ## 4.0.1 / 2017-01-09
 
 * [FormBundle] Fixed form export when using multiple fields with same label [#1430](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1430) ([@marksel](https://github.com/marksel)) 

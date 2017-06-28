@@ -4,8 +4,8 @@ article:
     form:
         date:
             label: Date
-        summery:
-            label: Summery
+        summary:
+            label: Summary
     modal:
         add:
             label: Add %type% item to %page%

@@ -349,6 +349,25 @@ class KunstmaanGenerator extends Generator
     }
 
     /**
+     * Render a file and make it executable.
+     *
+     * @param string $sourceDir  The source directory where we need to look in
+     * @param string $targetDir  The target directory where we need to copy the files too
+     * @param string $filename   The name of the file that needs to be rendered
+     * @param array  $parameters The parameters that will be passed to the templates
+     * @param bool   $override   Whether to override an existing file or not
+     * @param int    $mode       The mode
+     */
+    public function renderExecutableFile($sourceDir, $targetDir, $filename, array $parameters, $override = false, $mode = 0774)
+    {
+        $this->renderSingleFile($sourceDir, $targetDir, $filename, $parameters, $override);
+
+        $targetDir = rtrim($targetDir, '/') . '/';
+        $targetFile = $targetDir . $filename;
+        $this->filesystem->chmod($targetFile, $mode);
+    }
+
+    /**
      * Copy all files in the source directory to the target directory.
      *
      * @param string $sourceDir The source directory where we need to look in
@@ -371,10 +390,10 @@ class KunstmaanGenerator extends Generator
      */
     public function removeDirectory($targetDir)
     {
-	// Make sure the target dir contain a trailing slash
-	$targetDir = rtrim($targetDir, '/') . '/';
+        // Make sure the target dir contain a trailing slash
+        $targetDir = rtrim($targetDir, '/') . '/';
 
-	$this->filesystem->remove($targetDir);
+        $this->filesystem->remove($targetDir);
     }
 
     /**
@@ -384,7 +403,7 @@ class KunstmaanGenerator extends Generator
      */
     public function removeFile($file)
     {
-	$this->filesystem->remove($file);
+        $this->filesystem->remove($file);
     }
 
     /**

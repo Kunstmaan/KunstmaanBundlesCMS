@@ -4,7 +4,7 @@ article:
     form:
         date:
             label: Datum
-        summery:
+        summary:
             label: Samenvatting
     modal:
         add:

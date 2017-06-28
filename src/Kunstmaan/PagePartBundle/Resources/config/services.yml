@@ -51,6 +51,8 @@ services:
         class: 'Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension'
         tags:
             -  { name: twig.extension }
+        calls:
+            - [ setUsesExtendedPagePartChooser, [ '%kunstmaan_page_part.extended%' ] ]
 
     kunstmaan_pageparts.twig.extension:
         class: 'Kunstmaan\PagePartBundle\Twig\Extension\PagePartTwigExtension'
@@ -58,7 +60,7 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: twig.extension }
-            
+
     kunstmaan_pagetemplate.twig.extension:
         class: 'Kunstmaan\PagePartBundle\Twig\Extension\PageTemplateTwigExtension'
         arguments:

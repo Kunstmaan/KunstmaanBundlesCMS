@@ -1,14 +1,14 @@
 KunstmaanNodeBundle_widgets:
     resource: '@KunstmaanNodeBundle/Controller/WidgetsController.php'
     type:     annotation
-    prefix:   /admin/nodewidgets
+    prefix:   /%kunstmaan_admin.admin_prefix%/nodewidgets
 
 KunstmaanNodeBundle_nodes:
     resource: '@KunstmaanNodeBundle/Controller/NodeAdminController.php'
     type:     annotation
-    prefix:   /admin/nodes
+    prefix:   /%kunstmaan_admin.admin_prefix%/nodes
 
 kunstmaan_node.url_replace.controller:
     resource: '@KunstmaanNodeBundle/Controller/UrlReplaceController.php'
     type:     annotation
-    prefix:   /admin/url-replace
+    prefix:   /%kunstmaan_admin.admin_prefix%/url-replace

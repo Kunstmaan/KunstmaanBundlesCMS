@@ -1,0 +1,23 @@
+parameters:
+    kunstmaan_cache.menu_adaptor.varnish.class: Kunstmaan\CacheBundle\Helper\Menu\VarnishMenuAdaptor
+    kunstmaan_cache.helper.varnish.class: Kunstmaan\CacheBundle\Helper\VarnishHelper
+
+services:
+  kunstmaan_cache.menu_adaptor.varnish:
+    class: "%kunstmaan_cache.menu_adaptor.varnish.class%"
+    tags:
+      -  { name: "kunstmaan_admin.menu.adaptor" }
+
+  kunstmaan_cache.helper.varnish:
+    class: "%kunstmaan_cache.helper.varnish.class%"
+    arguments:
+      - "@fos_http_cache.cache_manager"
+      - "@kunstmaan_admin.domain_configuration"
+
+  kunstmaan_cache.listener.varnish:
+    class: Kunstmaan\CacheBundle\EventListener\VarnishListener
+    arguments:
+        - "@security.authorization_checker"
+        - "@router"
+    tags:
+        - { name: 'kernel.event_listener', event: 'kunstmaan_node.configureActionMenu', method: 'onActionMenuConfigure' }
