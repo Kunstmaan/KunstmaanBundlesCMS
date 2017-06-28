@@ -6,6 +6,7 @@ import { dashboardBundle } from './groundcontrol/dashboard-bundle.tasks';
 import { mediaBundle } from './groundcontrol/media-bundle.tasks';
 import { translatorBundle } from './groundcontrol/translator-bundle.tasks';
 import startLocalTask, { buildOnChange } from './groundcontrol/start-local.task';
+import { generateStaticHtml, splitCriticalCss } from './groundcontrol/critical-css.task';
 
 // AdminBundle Tasks
 const analyzeAdminBundle = gulp.series(
@@ -83,11 +84,12 @@ const startLocal = gulp.series(
 );
 
 // POC critical css only
-const splitCriticalCssMain = gulp.series(
+const createCriticalCss = gulp.series(
     buildOptimized,
-    adminBundle.tasks.splitCriticalCss,
+    generateStaticHtml,
+    splitCriticalCss,
     startLocalTask
 );
 
 // Export public tasks
-export { test, buildOptimized, testAndBuildOptimized, startLocal, splitCriticalCssMain };
+export { test, buildOptimized, testAndBuildOptimized, startLocal, createCriticalCss };

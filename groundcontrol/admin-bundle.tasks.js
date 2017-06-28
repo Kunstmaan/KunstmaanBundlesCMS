@@ -1,11 +1,6 @@
 /* eslint-env node */
 
 import gulp from 'gulp';
-import critical from 'critical';
-import http from 'http';
-import fs from 'fs';
-import url from 'url';
-import path from 'path';
 // import webpack from 'webpack';
 
 import consoleArguments from './console-arguments';
@@ -140,86 +135,3 @@ adminBundle.tasks.scripts = createScriptsTask({
     dest: adminBundle.config.distPath + 'js',
     filename: 'admin-bundle.min.js'
 });
-
-const extractCriticalCss = (item, done) => {
-    const basePath = item.basePath;
-    const distPath = item.distPath;
-    const urlToCheck = item.url;
-    const CSS_REGEX = /(<link\s+rel=\"stylesheet\"\s+href=\").*(css\/.*\.css.*\"\s?(>|\/>))/gmi;
-
-    http.get(urlToCheck, res => {
-        const data = [];
-        res.on('data', function (chunk) {
-            const originalData = chunk.toString();
-            const data = originalData.replace(CSS_REGEX, `$1${distPath}$2`);
-
-            let cssFiles = [];
-            let originalCssSize = 0;
-            // Rewrite the url to the css bundles dist path
-            const cssTags = data.match(CSS_REGEX);
-            if (cssTags && cssTags.length > 0) {
-                cssFiles = cssTags.map(tag => {
-                    const cssPath = tag.match(/.*href=\"(.*)\".*/i)[1];
-                    return url.parse(cssPath).pathname;
-                });
-                for (const cssFile of cssFiles) {
-                    const fullPath = basePath + cssFile;
-                    originalCssSize = originalCssSize + fs.statSync(fullPath).size;
-                    // Create a copy so we have the original
-                    const oldFilePath = path.parse(fullPath);
-                    oldFilePath.base = oldFilePath.name + ".original" + oldFilePath.ext;
-                    const newPath = path.format(oldFilePath);
-                    fs.createReadStream(fullPath).pipe(fs.createWriteStream(newPath));
-                }
-            }
-
-            critical.generate({
-                inline: false,
-                base: basePath,
-                html: data,
-                dest: 'critical-only.css',
-                minify: true,
-                width: 1024,
-                height: 800
-            }, (err, output) => {
-                if (err) {
-                    console.log(err);
-                    done(err);
-                    return;
-                }
-
-                // Write the output to the original css so we can verify the result
-                fs.writeFileSync(basePath + cssFiles[0], output);
-
-                console.log(`Reduced css size for url ${urlToCheck} from ${originalCssSize} to ${output.length}`);
-                done();
-            });
-        });
-    });
-
-}
-
-adminBundle.tasks.splitCriticalCss = function splitCriticalCss(done) {
-    // Some issues found:
-    // 1. Hard to do for secured webpages as we are using a proxy to a php backend (altough if we load the main css in the background on the login page this should be more or less ok as on the second visit the bundle is there)
-    // 2. Inline option for cricitical css is preferred as it eliminates another http request, this is hard as we need to inject this into the template (twig) somehow
-    // 3. Loads css files from the file system, doesn't seem to work for dynamic css files
-
-    // Verified result on 3G good
-    const itemsToCheck = [
-        // css load time takes 230ms after processing with critical before 4.22s (size down to 5KB, from 200kb)
-        { url: `${consoleArguments.backendProxy}en/admin/login`, basePath: '.', distPath: adminBundle.config.distPath.substring(1) },
-        // css load time takes 230ms after processing with critical before 550ms (size down to 3,5KB, from 19kb)
-        { url: `${consoleArguments.backendProxy}en`, basePath: '../../', distPath: 'frontendpoc/data/frontendpoc/web/frontend/' }
-    ];
-
-    let itemsProcessed = 0;
-    for (const itemToCheck of itemsToCheck) {
-        extractCriticalCss(itemToCheck, () => {
-            itemsProcessed++;
-            if (itemsProcessed === itemsToCheck.length) {
-                done();
-            }
-        });
-    }
-};
