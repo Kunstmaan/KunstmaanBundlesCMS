@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Model\UserInterface;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
@@ -163,6 +164,7 @@ class ActionsMenuBuilder
         $isFirst = true;
         $canEdit = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_EDIT, $node);
         $canPublish = $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_PUBLISH, $node);
+        $isSuperAdmin = $this->authorizationChecker->isGranted(UserInterface::ROLE_SUPER_ADMIN);
 
         if ($activeNodeVersion->isDraft() && $this->isEditableNode) {
             if ($canEdit) {
@@ -178,6 +180,19 @@ class ActionsMenuBuilder
                         'extras' => ['renderType' => 'button']
                     ]
                 );
+                if ($isSuperAdmin) {
+                    $menu->addChild(
+                        'action.exportpagetemplate',
+                        [
+                            'linkAttributes' => [
+                                'class' => 'btn btn-default btn--raise-on-hover',
+                                'data-toggle' => 'modal',
+                                'data-keyboard' => 'true',
+                                'data-target' => '#exportPagetemplate'
+                            ],
+                        ]
+                    );
+                }
                 if ($canRecopy) {
                     $menu->addChild(
                         'action.recopyfromlanguage',
@@ -304,6 +319,19 @@ class ActionsMenuBuilder
                             'extras' => ['renderType' => 'button']
                         ]
                     );
+                    if ($isSuperAdmin) {
+                        $menu->addChild(
+                            'action.exportpagetemplate',
+                            [
+                                'linkAttributes' => [
+                                    'class' => 'btn btn-default btn--raise-on-hover',
+                                    'data-toggle' => 'modal',
+                                    'data-keyboard' => 'true',
+                                    'data-target' => '#exportPagetemplate'
+                                ],
+                            ]
+                        );
+                    }
                     if ($canRecopy) {
                         $menu->addChild(
                             'action.recopyfromlanguage',
