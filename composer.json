@@ -48,7 +48,7 @@
         "twig/extensions": "~1.0",
         "egulias/email-validator": "~1.2",
         "box/spout": "^2.5",
-        "ruflin/elastica": "^3.2"
+        "ruflin/elastica": "^5.1"
     },
     "require-dev": {
         "behat/behat": "3.1.0rc1",
