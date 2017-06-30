@@ -1,5 +1,5 @@
 <div class="pp-container__add">
-    {% if extended %}
+    {% if extended is defined and extended == true %}
         <a href="#" class="btn btn-default js-add-pp-select js-add-pp-select--first js-pp-modal-button"
            data-toggle="modal" data-target="#pagePartModal{{ pagepartadmin.context }}"
            data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">

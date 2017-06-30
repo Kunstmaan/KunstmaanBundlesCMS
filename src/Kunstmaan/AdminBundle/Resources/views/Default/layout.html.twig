@@ -47,12 +47,17 @@
         {% endif %}
     {% endif %}
 
+    {% if page is defined %}
+        {%  set hideSidebar = hideSidebarInNodeEditAdmin(page) %}
+    {%  else  %}
+        {%  set hideSidebar = false %}
+    {%  endif %}
 
     <!-- Main Content -->
-    <main role="main" id="app__main" class="container-fluid app__main{% if lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
+    <main role="main" id="app__main" class="container-fluid app__main{% if not hideSidebar and lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
 
         <div class="row">
-            {% if lowestTopChild and navigationChildren | length > 0 %}
+            {% if not hideSidebar and lowestTopChild and navigationChildren | length > 0 %}
 
                 <!-- App Sidebar -->
                 <aside id="app__sidebar" class="col-md-3 app__sidebar">
