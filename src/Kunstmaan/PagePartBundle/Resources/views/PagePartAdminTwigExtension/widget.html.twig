@@ -13,7 +13,7 @@
     </div>
 </div>
 
-{% if extended %}
+{% if extended is defined and extended == true %}
     {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/modal.html.twig' with { 'pagepartadmin': pagepartadmin } %}
 {% endif %}
 
