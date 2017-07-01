@@ -109,6 +109,8 @@
         <a href="{{ path(getOverviewRoute(page)) }}" class="btn btn-default" style="margin:20px 0 20px 0;"><i class="fa fa-arrow-left"></i>
             Back to overview
         </a>
+    {% else %}
+        {{ parent() }}
     {%  endif %}
 
 {% endblock %}
