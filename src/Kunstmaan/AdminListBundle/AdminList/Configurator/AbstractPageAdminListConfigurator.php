@@ -2,33 +2,38 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
-
 use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
 
 /**
- * An abstract admin list configurator that can be used for pages
+ * An abstract admin list configurator that can be used for pages.
  */
 abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdminListConfigurator
 {
-
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
 
+    /**
+     * @var string $locale
+     */
     private $locale;
 
-
     /**
-     * @param EntityManager $em The entity manager
-     * @param AclHelper $aclHelper The acl helper
+     * AbstractPageAdminListConfigurator constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param string                 $locale
      */
-    public function __construct(EntityManager $em, $locale)
+    public function __construct(EntityManagerInterface $em, $locale)
     {
         parent::__construct($em->getConnection());
+
         $this->em = $em;
         $this->locale = $locale;
     }
@@ -62,11 +67,11 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
      */
     public function getEditUrlFor($item)
     {
-        return array(
+        return [
             'path' => 'KunstmaanNodeBundle_nodes_edit',
-            'params' => array('id' => $item['node_id']),
+            'params' => ['id' => $item['node_id']],
 
-        );
+        ];
     }
 
     /**
@@ -74,10 +79,10 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
      */
     public function getDeleteUrlFor($item)
     {
-        return array(
+        return [
             'path' => 'KunstmaanNodeBundle_nodes_delete',
-            'params' => array('id' => $item['node_id']),
-        );
+            'params' => ['id' => $item['node_id']],
+        ];
     }
 
     /**
@@ -85,30 +90,29 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
      *
      * @return string
      */
-    public function getPageClass(){
+    public function getPageClass()
+    {
         return $this->em->getClassMetadata($this->getRepositoryName())->getName();
     }
 
     /**
      * @param QueryBuilder $queryBuilder
-     * @param array $params
+     * @param array        $params
      */
-    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = array())
+    public function adaptQueryBuilder(QueryBuilder $queryBuilder, array $params = [])
     {
-
-
         $qbQuery = clone $queryBuilder;
 
         $qbQuery
             ->select('nt.id, nt.title, n.id as node_id, nt.lang,
-                        IF(nt.lang = \'' . $this->locale . '\', nt.online, 0) as online,
-                        IF(nt.lang = \'' . $this->locale . '\', nt.updated, NULL) as updated,
-                        IF(nt.lang = \'' . $this->locale . '\', nt.created, NULL) as created')
-            ->from('kuma_node_translations','nt')
-            ->innerJoin('nt','kuma_nodes','n','nt.node_id = n.id')
+                        IF(nt.lang = \''.$this->locale.'\', nt.online, 0) as online,
+                        IF(nt.lang = \''.$this->locale.'\', nt.updated, NULL) as updated,
+                        IF(nt.lang = \''.$this->locale.'\', nt.created, NULL) as created')
+            ->from('kuma_node_translations', 'nt')
+            ->innerJoin('nt', 'kuma_nodes', 'n', 'nt.node_id = n.id')
             ->where('n.ref_entity_name = :pageClass')
             ->andWhere('n.deleted = 0')
-            ->orderBy('nt.updated','DESC');
+            ->orderBy('nt.updated', 'DESC');
 
         /**
          * This is necessary for the results query happening in the pagerfanta adapter,
@@ -118,17 +122,15 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         $qbHelper = clone $queryBuilder;
         $qbHelper
             ->select('a.*')
-            ->from('(' . $qbQuery->getSQL() . ')', 'a')
+            ->from('('.$qbQuery->getSQL().')', 'a')
             ->groupBy('a.node_id');
 
         $queryBuilder
             ->select('b.*')
-            ->from('(' . $qbHelper->getSQL() . ')', 'b')
+            ->from('('.$qbHelper->getSQL().')', 'b')
             ->orderBy('FIELD(b.lang, :lang)', 'DESC')
             ->setParameter('pageClass', $this->getPageClass())
             ->setParameter('lang', $this->locale);
-
-
     }
 
     /**
@@ -142,6 +144,11 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     }
 
     /**
+     * @return EntityInterface
+     */
+    abstract public function getOverviewPageClass();
+
+    /**
      * @return string
      */
     public function getListTemplate()
@@ -150,13 +157,11 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     }
 
     /**
-     * Returns the OverviewPage of these articles
-     *
-     * @return AbstractArticleOverviewPage
+     * Returns the overviewpage.
      */
     public function getOverviewPage()
     {
-        $repository = $this->em->getRepository($this->getRepositoryName());
+        $repository = $this->em->getRepository($this->getOverviewPageClass());
         $pages = $repository->findAll();
         if (isset($pages) and count($pages) > 0) {
             return $pages[0];
