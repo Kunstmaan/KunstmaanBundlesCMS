@@ -135,6 +135,11 @@ You can test your node version by running `node -v`.
 >
 > Test: Run `npm -v`. The version should be higher than 2.1.8.
 
+Also make sure you installed [gulp-cli](https://www.npmjs.com/package/gulp-cli) globally.
+> If you've previously installed gulp globally on your machine, run ```npm rm -gl gulp``` before following these instructions:
+>
+> Run ```npm install -g gulp-cli``` to install gulp-cli globally.
+
 Then execute the following commands:
 
 ```
