@@ -1,9 +1,7 @@
 {% extends '@KunstmaanNode/Default/layout.html.twig' %}
 {% set form = tabPane.getFormView() %}
 
-
 {% block extrabodyclasses %}{{ parent() }} js-check-if-edited{% if nodeVersionLockCheck %} js-node-version-lock{% endif %}{% endblock %}
-
 
 {% block messages %}
     {% if queuedNodeTranslationAction %}
