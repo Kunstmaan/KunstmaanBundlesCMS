@@ -22,6 +22,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('host_override_notice')
+                    ->defaultTrue()
+                ->end()
                 ->arrayNode('hosts')
                     ->isRequired()
                     ->requiresAtLeastOneElement()

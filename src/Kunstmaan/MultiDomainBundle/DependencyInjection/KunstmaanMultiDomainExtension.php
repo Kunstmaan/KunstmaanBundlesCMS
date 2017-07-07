@@ -23,6 +23,8 @@ class KunstmaanMultiDomainExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('kunstmaan_multi_domain.host_override_notice', $config['host_override_notice']);
+
         $hostConfigurations = $this->getHostConfigurations($config['hosts']);
 
         $container->setParameter(

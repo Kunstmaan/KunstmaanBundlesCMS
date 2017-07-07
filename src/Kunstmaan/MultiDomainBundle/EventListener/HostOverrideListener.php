@@ -34,21 +34,31 @@ class HostOverrideListener
     protected $adminRouteHelper;
 
     /**
-     * @param Session                      $session
-     * @param TranslatorInterface          $translator
+     * @var bool
+     */
+    protected $enabled;
+
+    /**
+     * HostOverrideListener constructor.
+     *
+     * @param Session $session
+     * @param TranslatorInterface $translator
      * @param DomainConfigurationInterface $domainConfiguration
      * @param AdminRouteHelper $adminRouteHelper
+     * @param bool $enabled
      */
     public function __construct(
         Session $session,
         TranslatorInterface $translator,
         DomainConfigurationInterface $domainConfiguration,
-        AdminRouteHelper $adminRouteHelper
+        AdminRouteHelper $adminRouteHelper,
+        $enabled
     ) {
-        $this->session             = $session;
-        $this->translator          = $translator;
+        $this->session = $session;
+        $this->translator = $translator;
         $this->domainConfiguration = $domainConfiguration;
-        $this->adminRouteHelper    = $adminRouteHelper;
+        $this->adminRouteHelper = $adminRouteHelper;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -56,6 +66,10 @@ class HostOverrideListener
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
+        if (false === $this->enabled) {
+            return;
+        }
+
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
