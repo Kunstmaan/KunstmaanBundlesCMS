@@ -74,6 +74,7 @@ export const bundleLocal = createBundleTask({
                 'window.jQuery': 'jquery'
             })
         ]{% endif %}
+
     }
 });
 
@@ -122,6 +123,53 @@ export const bundleOptimized = createBundleTask({
     logStats: true
 });
 
+export const bundleAdminExtraLocal = createBundleTask({
+    config: {
+        entry: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/admin/js/admin-bundle-extra.js',
+        output: {
+            filename: './web/frontend/js/admin-bundle-extra.js'
+        },
+        devtool: 'source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: getBabelLoaderOptions({
+                        transpileOnlyForLastChromes: consoleArguments.speedupLocalDevelopment
+                    })
+                }
+            ]
+        }
+    }
+});
+
+export const bundleAdminExtraOptimized = createBundleTask({
+    config: {
+        entry: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/admin/js/admin-bundle-extra.js',
+        output: {
+            filename: './web/frontend/js/admin-bundle-extra.js'
+        },
+        devtool: 'source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: getBabelLoaderOptions({
+                        optimize: true
+                    })
+                }
+            ]
+        },
+        plugins: [
+            new webpack.optimize.UglifyJsPlugin({mangle: true, sourceMap: true})
+        ]
+    }
+});
+
 export const server = createServerTask({
     config: {
         ui: false,
@@ -147,6 +195,7 @@ export const hologram = createHologramTask({cwd: 'src/{{ bundle.namespace|replac
 
 export function buildOnChange(done) {
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/!(*.spec).js', bundleLocal);
+    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/admin/js/**/!(*.spec).js', bundleAdminExtraLocal);
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', cssLocal);
     done();
 }
