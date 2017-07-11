@@ -44,7 +44,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     private function index(NodeEvent $event)
     {
         $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.search_configuration.node');
-        $nodeSearchConfiguration->indexNodeTranslation($event->getNodeTranslation(), true);
+        $nodeSearchConfiguration->indexNode($event->getNode(), $event->getNodeTranslation()->getLang());
     }
 
     /**
