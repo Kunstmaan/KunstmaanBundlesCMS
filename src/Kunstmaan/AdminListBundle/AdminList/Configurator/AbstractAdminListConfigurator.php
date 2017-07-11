@@ -625,7 +625,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $result->format('Y-m-d H:i:s');
         } else {
             if ($result instanceof PersistentCollection) {
-                $results = "";
+                $results = [];
                 /* @var Object $entry */
                 foreach ($result as $entry) {
                     $results[] = $entry->getName();
