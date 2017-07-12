@@ -13,6 +13,12 @@ const analyzeAdminBundle = gulp.series(
     adminBundle.tasks.stylelint
 );
 
+const buildLocalAdminBundle = gulp.series(
+    adminBundle.tasks.copy,
+    adminBundle.tasks.cssLocal,
+    adminBundle.tasks.scripts
+);
+
 const buildOptimizedAdminBundle = gulp.series(
     adminBundle.tasks.copy,
     adminBundle.tasks.cssOptimized,
@@ -25,6 +31,11 @@ const analyzeDashboardBundle = gulp.series(
     dashboardBundle.tasks.stylelint
 );
 
+const buildLocalDashboardBundle = gulp.series(
+    dashboardBundle.tasks.cssLocal,
+    dashboardBundle.tasks.scripts
+);
+
 const buildOptimizedDashboardBundle = gulp.series(
     dashboardBundle.tasks.cssOptimized,
     dashboardBundle.tasks.scripts
@@ -35,6 +46,10 @@ const analyzeMediaBundle = gulp.series(
     mediaBundle.tasks.eslint,
 );
 
+const buildLocalMediaBundle = gulp.series(
+    mediaBundle.tasks.scripts
+);
+
 const buildOptimizedMediaBundle = gulp.series(
     mediaBundle.tasks.scripts
 );
@@ -43,6 +58,11 @@ const buildOptimizedMediaBundle = gulp.series(
 const analyzeTranslatorBundle = gulp.series(
     translatorBundle.tasks.eslint,
     translatorBundle.tasks.stylelint
+);
+
+const buildLocalTranslatorBundle = gulp.series(
+    translatorBundle.tasks.cssLocal,
+    translatorBundle.tasks.scripts
 );
 
 const buildOptimizedTranslatorBundle = gulp.series(
@@ -63,6 +83,13 @@ const test = gulp.series(
     analyze
 );
 
+const buildLocal = gulp.series(
+    buildLocalAdminBundle,
+    buildLocalDashboardBundle,
+    buildLocalMediaBundle,
+    buildLocalTranslatorBundle
+);
+
 const buildOptimized = gulp.series(
     buildOptimizedAdminBundle,
     buildOptimizedDashboardBundle,
@@ -70,10 +97,28 @@ const buildOptimized = gulp.series(
     buildOptimizedTranslatorBundle
 );
 
+const startLocal = gulp.series(
+    buildLocal,
+    adminBundle.tasks.server,
+    buildOnChange
+);
+
 const testAndBuildOptimized = gulp.series(
     test,
     buildOptimized
 );
 
+// Watches
+export function buildOnChange(done) {
+    gulp.watch(adminBundle.config.srcPath + 'scss/**/*.scss', adminBundle.tasks.cssLocal);
+    gulp.watch(adminBundle.config.srcPath + 'js/**/!(*.spec).js', adminBundle.tasks.scripts);
+    gulp.watch(dashboardBundle.config.srcPath + 'scss/**/*.scss', dashboardBundle.tasks.cssLocal);
+    gulp.watch(dashboardBundle.config.srcPath + 'js/**/!(*.spec).js', dashboardBundle.tasks.scripts);
+    gulp.watch(mediaBundle.config.srcPath + 'js/**/!(*.spec).js', mediaBundle.tasks.scripts);
+    gulp.watch(translatorBundle.config.srcPath + 'scss/**/*.scss', translatorBundle.tasks.cssLocal);
+    gulp.watch(translatorBundle.config.srcPath + 'js/**/!(*.spec).js', translatorBundle.tasks.scripts);
+    done();
+}
+
 // Export public tasks
-export { test, buildOptimized, testAndBuildOptimized };
+export { test, buildOptimized, testAndBuildOptimized, startLocal };

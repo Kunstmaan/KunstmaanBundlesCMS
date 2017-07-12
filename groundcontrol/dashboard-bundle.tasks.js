@@ -22,7 +22,7 @@ dashboardBundle.tasks.eslint = createEslintTask({
 
 dashboardBundle.tasks.stylelint = createStylelintTask({src: dashboardBundle.config.srcPath + 'scss/**/*.scss'});
 
-dashboardBundle.tasks.cssLocal = createCssLocalTask({src: dashboardBundle.config.srcPath + 'scss/style.scss', dest: dashboardBundle.config.distPath + 'css'});
+dashboardBundle.tasks.cssLocal = createCssLocalTask({src: dashboardBundle.config.srcPath + 'scss/*.scss', dest: dashboardBundle.config.distPath + 'css'});
 
 dashboardBundle.tasks.cssOptimized = createCssOptimizedTask({src: dashboardBundle.config.srcPath + 'scss/*.scss', dest: dashboardBundle.config.distPath + 'css'});
 

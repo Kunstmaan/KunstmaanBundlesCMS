@@ -30,7 +30,7 @@ adminBundle.tasks.copy = gulp.parallel(
     createCopyTask({src: [adminBundle.config.srcPath + 'img/**'], dest: adminBundle.config.distPath + 'img'})
 );
 
-adminBundle.tasks.cssLocal = createCssLocalTask({src: adminBundle.config.srcPath + 'scss/style.scss', dest: adminBundle.config.distPath + 'css'});
+adminBundle.tasks.cssLocal = createCssLocalTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});
 
 adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});
 
@@ -39,11 +39,14 @@ adminBundle.tasks.server = createServerTask({
         ui: false,
         ghostMode: false,
         files: [
-            adminBundle.config.distPath + 'css/*.css',
-            adminBundle.config.distPath + 'js/*.js'
+            './src/Kunstmaan/*Bundle/Resources/public/css/*.css',
+            './src/Kunstmaan/*Bundle/Resources/public/js/*.js'
         ],
         open: false,
         reloadOnRestart: true,
+        proxy: {
+            target: 'http://myproject.dev'
+        },
         notify: true
     }
 });
