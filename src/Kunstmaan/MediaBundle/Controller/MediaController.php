@@ -92,9 +92,11 @@ class MediaController extends Controller
 
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_admin.media.flash.deleted_success.%medianame%', ['%medianame%' => $medianame])
+            $this->get('translator')->trans('kuma_admin.media.flash.deleted_success.%medianame%', [
+                '%medianame%' => $medianame
+            ])
         );
 
         // If the redirect url is passed via the url we use it
@@ -371,30 +373,35 @@ class MediaController extends Controller
         if ($request->isMethod('POST')) {
             $params = array('folderId' => $folder->getId());
             $params = array_merge($params, $extraParams);
-            
+
             $form->handleRequest($request);
-            
+
             if ($form->isValid()) {
                 $media = $helper->getMedia();
                 $media->setFolder($folder);
                 $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    'Media \'' . $media->getName() . '\' has been created!'
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('media.flash.created', array(
+                        '%medianame%' => $media->getName()
+                    ))
                 );
+
                 return new RedirectResponse($this->generateUrl($redirectUrl, $params));
             }
-            
+
             if ($isInModal) {
-                $this->get('session')->getFlashBag()->add(
-                    'error',
-                    'Media not created! ' . $form->getErrors(true, true)
+                $this->addFlash(
+                    FlashTypes::ERROR,
+                    $this->get('translator')->trans('media.flash.not_created', array(
+                        '%mediaerrors%' => $form->getErrors(true, true)
+                    ))
                 );
                 return new RedirectResponse($this->generateUrl($redirectUrl, $params));
             }
         }
-        
+
         return array(
             'type'   => $type,
             'form'   => $form->createView(),

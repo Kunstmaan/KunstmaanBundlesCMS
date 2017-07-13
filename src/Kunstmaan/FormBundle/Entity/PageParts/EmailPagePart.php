@@ -3,13 +3,13 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField;
 use Kunstmaan\FormBundle\Form\EmailFormSubmissionType;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * The email page part can be used to create forms with email input fields

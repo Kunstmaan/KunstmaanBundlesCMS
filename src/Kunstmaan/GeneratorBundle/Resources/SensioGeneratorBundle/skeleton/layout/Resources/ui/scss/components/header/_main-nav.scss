@@ -4,10 +4,8 @@
 
 /* Default
    ========================================================================== */
-// .main-nav {
-
-// }
-
+.main-nav {
+}
 
 
 /* Mobile
@@ -15,15 +13,8 @@
 .main-nav--mobile {
     background: #313131;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         display: none;
     }
 }
 
-
-
-/* Desktop
-   ========================================================================== */
-// .main-nav--desktop {
-
-// }

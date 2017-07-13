@@ -1,9 +1,7 @@
 {% extends '@KunstmaanNode/Default/layout.html.twig' %}
 {% set form = tabPane.getFormView() %}
 
-
 {% block extrabodyclasses %}{{ parent() }} js-check-if-edited{% if nodeVersionLockCheck %} js-node-version-lock{% endif %}{% endblock %}
-
 
 {% block messages %}
     {% if queuedNodeTranslationAction %}
@@ -101,6 +99,18 @@
     {{ form_end(form) }}
 
     {% include '@KunstmaanNode/NodeAdmin/_modals.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+
+    {% if getOverviewRoute(page) is not null %}
+        <a href="{{ path(getOverviewRoute(page)) }}" class="btn btn-default" style="margin:20px 0 20px 0;"><i class="fa fa-arrow-left"></i>
+            Back to overview
+        </a>
+    {% else %}
+        {{ parent() }}
+    {%  endif %}
+
 {% endblock %}
 
 {% block extracss %}

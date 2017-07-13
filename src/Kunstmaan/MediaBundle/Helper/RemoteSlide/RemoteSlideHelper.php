@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\MediaBundle\Helper\RemoteSlide;
 
+use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\Remote\AbstractRemoteHelper;
 use Kunstmaan\MediaBundle\Helper\Remote\RemoteInterface;
-use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
  * Kunstmaan\MediaBundle\Entity\Video

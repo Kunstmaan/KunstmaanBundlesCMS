@@ -3,50 +3,50 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
+use InvalidArgumentException;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
-use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
-use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
-use InvalidArgumentException;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\Common\Collections\ArrayCollection;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 
-use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Acl\Model\EntryInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\RevertNodeAction;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
+use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
+use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
-use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
-use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\EntryInterface;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * NodeAdminController
@@ -111,13 +111,11 @@ class NodeAdminController extends Controller
             $this->locale,
             PermissionMap::PERMISSION_VIEW,
             $this->authorizationChecker
-
         );
 
         $locale = $this->locale;
         $acl = $this->authorizationChecker;
         $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
-
             if ($acl->isGranted(PermissionMap::PERMISSION_VIEW, $item->getNode())) {
                 return array(
                     'path' => '_slug_preview',
@@ -125,8 +123,7 @@ class NodeAdminController extends Controller
                 );
             }
         };
-        $nodeAdminListConfigurator->addSimpleItemAction('Preview', $itemRoute, 'eye');
-
+        $nodeAdminListConfigurator->addSimpleItemAction('action.preview', $itemRoute, 'eye');
         $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
         $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN'));
 
@@ -314,7 +311,7 @@ class NodeAdminController extends Controller
                 $nodeTranslation,
                 $date
             );
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->get('translator')->trans('kuma_node.admin.publish.flash.success_scheduled')
             );
@@ -322,7 +319,7 @@ class NodeAdminController extends Controller
             $this->get('kunstmaan_node.admin_node.publisher')->publish(
                 $nodeTranslation
             );
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->get('translator')->trans('kuma_node.admin.publish.flash.success_published')
             );
@@ -357,13 +354,13 @@ class NodeAdminController extends Controller
         if ($request->get('unpub_date')) {
             $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
             $this->get('kunstmaan_node.admin_node.publisher')->unPublishLater($nodeTranslation, $date);
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->get('translator')->trans('kuma_node.admin.unpublish.flash.success_scheduled')
             );
         } else {
             $this->get('kunstmaan_node.admin_node.publisher')->unPublish($nodeTranslation);
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->get('translator')->trans('kuma_node.admin.unpublish.flash.success_unpublished')
             );
@@ -396,7 +393,7 @@ class NodeAdminController extends Controller
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $this->get('kunstmaan_node.admin_node.publisher')->unSchedulePublish($nodeTranslation);
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             FlashTypes::SUCCESS,
             $this->get('translator')->trans('kuma_node.admin.unschedule.flash.success')
         );
@@ -461,7 +458,7 @@ class NodeAdminController extends Controller
             $response = new RedirectResponse($url);
         }
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             FlashTypes::SUCCESS,
             $this->get('translator')->trans('kuma_node.admin.delete.flash.success')
         );
@@ -532,7 +529,7 @@ class NodeAdminController extends Controller
 
         $this->updateAcl($originalNode, $nodeNewPage);
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             FlashTypes::SUCCESS,
             $this->get('translator')->trans('kuma_node.admin.duplicate.flash.success')
         );
@@ -612,7 +609,7 @@ class NodeAdminController extends Controller
             )
         );
 
-        $this->get('session')->getFlashBag()->add(
+        $this->addFlash(
             FlashTypes::SUCCESS,
             $this->get('translator')->trans('kuma_node.admin.revert.flash.success')
         );
@@ -881,7 +878,7 @@ class NodeAdminController extends Controller
                 //Check the version timeout and make a new nodeversion if the timeout is passed
                 $thresholdDate = date(
                     "Y-m-d H:i:s",
-                    time() - $this->container->getParameter(
+                    time() - $this->getParameter(
                         "kunstmaan_node.version_timeout"
                     )
                 );
@@ -976,12 +973,12 @@ class NodeAdminController extends Controller
                 );
 
                 if ($nodeVersionIsLocked) {
-                    $this->get('session')->getFlashBag()->add(
+                    $this->addFlash(
                         FlashTypes::SUCCESS,
                         $this->get('translator')->trans('kuma_node.admin.edit.flash.locked_success')
                     );
                 } else {
-                    $this->get('session')->getFlashBag()->add(
+                    $this->addFlash(
                         FlashTypes::SUCCESS,
                         $this->get('translator')->trans('kuma_node.admin.edit.flash.success')
                     );

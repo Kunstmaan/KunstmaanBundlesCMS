@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs;
 
-use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

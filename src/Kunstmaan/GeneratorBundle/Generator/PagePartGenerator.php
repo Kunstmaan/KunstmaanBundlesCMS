@@ -2,13 +2,13 @@
 
 namespace Kunstmaan\GeneratorBundle\Generator;
 
-use Faker\Provider\Lorem;
-use Faker\Provider\DateTime;
 use Faker\Provider\Base;
+use Faker\Provider\DateTime;
+use Faker\Provider\Lorem;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Generates all classes/files for a new pagepart
@@ -99,9 +99,9 @@ class PagePartGenerator extends KunstmaanGenerator
         );
         $extraCode = $this->render('/Entity/PageParts/ExtraFunctions.php', $params);
 
-        $pos        = strrpos($entityCode, "}");
+        $pos        = strrpos($entityCode, "\n}");
         $trimmed    = substr($entityCode, 0, $pos);
-        $entityCode = $trimmed . "\n" . $extraCode . "\n}";
+        $entityCode = $trimmed . "\n" . $extraCode . "\n}\n";
 
         // Write class to filesystem
         $this->filesystem->mkdir(dirname($entityPath));
@@ -280,7 +280,7 @@ class PagePartGenerator extends KunstmaanGenerator
             $className = basename($parts[count($parts) - 1], '.php');
 
             $contents = file_get_contents($pageFile);
-            if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false) {
+            if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false && strpos($contents, 'trait ') === false) {
                 $classNamespace = '\\' . $this->bundle->getNamespace() . '\Entity\Pages\\' . $className;
                 $entity         = new $classNamespace;
 

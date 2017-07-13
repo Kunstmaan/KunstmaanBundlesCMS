@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\ConfigBundle\Helper\Menu;
 
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ConfigMenuAdaptor implements MenuAdaptorInterface
@@ -56,7 +56,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
                     $menuItem = new MenuItem($menu);
                     $menuItem
                       ->setRoute('kunstmaanconfigbundle_default')
-                      ->setRouteParams(array('internal_name' => $entity->getInternalName()))
+                      ->setRouteParams(array('internalName' => $entity->getInternalName()))
                       ->setLabel($entity->getLabel())
                       ->setUniqueId($entity->getInternalName())
                       ->setParent($parent);

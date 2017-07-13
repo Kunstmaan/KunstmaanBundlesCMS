@@ -1,10 +1,10 @@
 <?php
 namespace Kunstmaan\AdminBundle\Composer;
 
+use Composer\Script\Event;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
-use Composer\Script\Event;
 
 class ScriptHandler
 {

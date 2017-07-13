@@ -3,10 +3,10 @@
 namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Helper\Menu\SimpleTreeView;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -83,7 +83,7 @@ class WidgetsController extends Controller
         }
 
         // When the media bundle is available, we show a link in the header to the media chooser
-        $allBundles = $this->container->getParameter('kernel.bundles');
+        $allBundles = $this->getParameter('kernel.bundles');
         $mediaChooserLink = null;
 
         if (array_key_exists('KunstmaanMediaBundle', $allBundles)) {

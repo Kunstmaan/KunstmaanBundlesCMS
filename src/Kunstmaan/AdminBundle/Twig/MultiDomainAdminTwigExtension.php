@@ -36,9 +36,9 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
      * Render multidomain switcher widget.
      *
      * @param \Twig_Environment $env
-     * @param array $locales The locales
-     * @param string $route The route
-     * @param array $parameters The route parameters
+     * @param array             $locales    The locales
+     * @param string            $route      The route
+     * @param array             $parameters The route parameters
      *
      * @return string
      */
@@ -88,15 +88,5 @@ class MultiDomainAdminTwigExtension extends \Twig_Extension
     public function getAdminDomainHosts()
     {
         return $this->domainConfiguration->getHosts();
-    }
-
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'MultiDomainAdminTwigExtension';
     }
 }

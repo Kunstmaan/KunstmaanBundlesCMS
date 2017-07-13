@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\PagePartBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Reference between a page and a pagepart

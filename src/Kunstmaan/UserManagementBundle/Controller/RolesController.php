@@ -10,10 +10,10 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -70,9 +70,11 @@ class RolesController extends BaseSettingsController
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', ['%role%' => $role->getRole()])
+                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
+                        '%role%' => $role->getRole()
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
@@ -112,9 +114,11 @@ class RolesController extends BaseSettingsController
                 $em->persist($role);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
+                $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', ['%role%' => $role->getRole()])
+                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
+                        '%role%' => $role->getRole()
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_roles'));
@@ -147,13 +151,14 @@ class RolesController extends BaseSettingsController
         /* @var Role $role */
         $role = $em->getRepository('KunstmaanAdminBundle:Role')->find($id);
         if (!is_null($role)) {
-            $roleName = $role->getRole();
             $em->remove($role);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add(
+            $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', ['%role%' => $roleName])
+                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
+                    '%role%' => $role->getRole()
+                ])
             );
         }
 

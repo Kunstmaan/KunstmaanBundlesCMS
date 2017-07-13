@@ -209,7 +209,7 @@
                             {% set path = "[%s]" | format("M" ~ media.id) %}
 
                             <div class="col-sm-6 col-md-4 col-lg-3">
-                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ path }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
+                                <a href="javascript:void(0)" class="js-url-chooser-media-select thumbnail media-thumbnail" data-thumb-path="{{ imageurl }}" data-path="{{ media.url ~ '?token=' ~ path }}" data-title="{{ media.name|escape('js') }}" data-id="{{ media.id }}" data-cke="{% if cKEditorFuncNum %}true{% else %}false{% endif %}">
                                     <figure>
                                         {% if imageurl %}
                                             <img src="{{ imageurl }}" srcset="{{ imageurl }} 1x, {{ imageurlretina is defined ? ', ' ~ imageurlretina ~ " 2x" }}" alt="{{ media.name }}" class="media-thumbnail__img">

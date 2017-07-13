@@ -1,6 +1,4 @@
-var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
-
-{{ bundle.getName() }}.search = (function($, window, undefined) {
+const search = (function() {
 
     var init, initSearch;
 
@@ -26,5 +24,6 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     return {
         init: init
     };
+}());
 
-}(jQuery, window));
+module.exports = search;

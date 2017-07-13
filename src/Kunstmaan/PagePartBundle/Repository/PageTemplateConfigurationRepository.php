@@ -3,9 +3,9 @@
 namespace Kunstmaan\PagePartBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * PageTemplateConfigurationRepository

@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
-use Twig_Environment;
-use Twig_Extension;
-
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
+use Twig_Environment;
+
+use Twig_Extension;
 
 /**
  * Extension to render tabs
@@ -40,13 +40,4 @@ class TabsTwigExtension extends Twig_Extension
             'tabPane' => $tabPane
         )));
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'tabs_twig_extension';
-    }
-
 }

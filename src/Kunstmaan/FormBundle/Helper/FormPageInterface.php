@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\FormBundle\Helper;
 
-use Symfony\Component\Routing\RouterInterface;
-
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * FormPageInterface

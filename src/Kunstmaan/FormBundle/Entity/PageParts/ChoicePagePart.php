@@ -4,9 +4,9 @@ namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Kunstmaan\FormBundle\Form\ChoiceFormSubmissionType;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 

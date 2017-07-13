@@ -3,12 +3,12 @@
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
 use ArrayObject;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * The file upload page part can be used to create forms with the possibility to upload files

@@ -31,7 +31,8 @@ class NodeMenuTabTranslationAdminType extends AbstractType
             'choices'     => array_combine(range(-50, 50), range(-50, 50)),
             'placeholder' => false,
             'required'    => false,
-            'attr'        => array('title' => 'kuma_node.form.menu_tab_translation.weight.title')
+            'attr'        => array('title' => 'kuma_node.form.menu_tab_translation.weight.title'),
+            'choice_translation_domain' => false
         ));
     }
 

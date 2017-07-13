@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\MultiDomainBundle\Helper;
 
-use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration as BaseDomainConfiguration;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DomainConfiguration extends BaseDomainConfiguration
@@ -27,6 +27,11 @@ class DomainConfiguration extends BaseDomainConfiguration
     protected $aliases = array();
 
     /**
+     * @var AdminRouteHelper
+     */
+    protected $adminRouteHelper;
+
+    /**
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -41,6 +46,8 @@ class DomainConfiguration extends BaseDomainConfiguration
                 }
             }
         }
+
+        $this->adminRouteHelper = $container->get('kunstmaan_admin.adminroute.helper');
     }
 
     /**
@@ -82,6 +89,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return bool
      */
     public function isMultiLanguage($host = null)
@@ -98,6 +107,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return array
      */
     public function getFrontendLocales($host = null)
@@ -112,6 +123,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return array
      */
     public function getBackendLocales($host = null)
@@ -137,6 +150,10 @@ class DomainConfiguration extends BaseDomainConfiguration
 
     /**
      * Fetch the root node for the current host
+     *
+     * @param string|null $host
+     *
+     * @return Node|null
      */
     public function getRootNode($host = null)
     {
@@ -192,7 +209,7 @@ class DomainConfiguration extends BaseDomainConfiguration
         $request = $this->getMasterRequest();
 
         return !is_null($request) &&
-        $this->isAdminRoute($request->getRequestUri()) &&
+        $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
         $request->hasPreviousSession() &&
         $request->getSession()->has(self::OVERRIDE_HOST);
     }
@@ -205,7 +222,7 @@ class DomainConfiguration extends BaseDomainConfiguration
         $request = $this->getMasterRequest();
 
         return !is_null($request) &&
-        $this->isAdminRoute($request->getRequestUri()) &&
+        $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
         $request->hasPreviousSession() &&
         $request->getSession()->has(self::SWITCH_HOST);
     }
@@ -239,28 +256,17 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @param string $url
-     *
-     * @return bool
+     * @return array
      */
-    protected function isAdminRoute($url)
+    public function getFullHostConfig()
     {
-        preg_match(
-            '/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/',
-            $url,
-            $matches
-        );
-
-        // Check if path is part of admin area
-        if (count($matches) === 0) {
-            return false;
-        }
-
-        return true;
+        return $this->hosts;
     }
 
     /**
-     * @return array()
+     * @param string|null $host
+     *
+     * @return array
      */
     public function getFullHost($host = null)
     {
@@ -275,7 +281,9 @@ class DomainConfiguration extends BaseDomainConfiguration
 
 
     /**
-     * @return array()
+     * @param int $id
+     *
+     * @return array
      */
     public function getFullHostById($id)
     {
@@ -291,6 +299,8 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
+     * @param string|null $host
+     *
      * @return string
      */
     public function getHostBaseUrl($host = null)
@@ -300,6 +310,11 @@ class DomainConfiguration extends BaseDomainConfiguration
         return sprintf('%s://%s', $config['protocol'], $config['host']);
     }
 
+    /**
+     * @param string|null $host
+     *
+     * @return null|string
+     */
     private function getRealHost($host = null)
     {
         if (!$host) {

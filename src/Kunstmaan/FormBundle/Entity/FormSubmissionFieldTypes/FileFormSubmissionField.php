@@ -2,19 +2,19 @@
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionField;
+use Doctrine\ORM\Mapping as ORM;
 
 use Gedmo\Sluggable\Util\Urlizer;
 
+use Kunstmaan\FormBundle\Entity\FormSubmissionField;
 use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints as Assert;
 
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The ChoiceFormSubmissionField can be used to store files to a FormSubmission

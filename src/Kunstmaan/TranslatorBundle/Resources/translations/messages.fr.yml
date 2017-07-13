@@ -9,6 +9,8 @@ settings:
         refresh_live: Rafraîchir live
         import_translations: Importer des traductions
         import_translations_forced: Importer des traductions et écraser
+        actions: Actions
+        export_translations: Exporter vers csv
         not_live_warning: "Les traductions sur le site live ne sont pas à jour, appuyer sur 'Rafraîchir live' pour mettre à jour."
         choose_language: "Choisir une langue"
         succesful_added: "Traduction ajoutée avec succès"

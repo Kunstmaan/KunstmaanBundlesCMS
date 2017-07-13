@@ -1,12 +1,12 @@
 KunstmaanTranslatorBundle_translations:
     resource: '@KunstmaanTranslatorBundle/Controller/TranslatorController.php'
     type:     annotation
-    prefix:   /admin/settings/translations
+    prefix:   /%kunstmaan_admin.admin_prefix%/settings/translations
 
 KunstmaanTranslatorBundle_translations_commands:
     resource: '@KunstmaanTranslatorBundle/Controller/TranslatorCommandController.php'
     type:     annotation
-    prefix:   /admin/settings/translations
+    prefix:   /%kunstmaan_admin.admin_prefix%/settings/translations
 
 #KunstmaanTranslatorBundle_settings_translations_add:
 #    pattern:   /add/{domain}/{locale}/{keyword}

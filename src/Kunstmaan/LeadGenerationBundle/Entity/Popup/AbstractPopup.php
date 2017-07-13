@@ -3,11 +3,11 @@
 namespace Kunstmaan\LeadGenerationBundle\Entity\Popup;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
-use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity

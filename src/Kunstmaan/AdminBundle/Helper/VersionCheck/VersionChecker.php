@@ -3,7 +3,8 @@
 namespace Kunstmaan\AdminBundle\Helper\VersionCheck;
 
 use Doctrine\Common\Cache\Cache;
-use Guzzle\Http\Client;
+use Exception;
+use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -99,21 +100,19 @@ class VersionChecker
         ));
 
         try {
-            $client = new Client($this->webserviceUrl, array(
-                'curl.options' => array(
-                    CURLOPT_TIMEOUT        => 3,
-                    CURLOPT_CONNECTTIMEOUT => 1
-                )
-            ));
-            $request = $client->post('', null, $jsonData);
-            $call = $request->send();
-            $data = $call->json();
+            $client = new Client(array('connect_timeout' => 3, 'timeout' => 1));
+            $response = $client->post($this->webserviceUrl, ['body' => $jsonData]);
+            $data = json_decode($response->getBody()->getContents());
+
+            if (null === $data) {
+                return false;
+            }
 
             // Save the result in the cache to make sure we don't do the check too often
             $this->cache->save('version_check', $data, $this->cacheTimeframe);
 
             return $data;
-        } catch (\RuntimeException $e) {
+        } catch (Exception $e) {
             // We did not receive valid json
             return false;
         }

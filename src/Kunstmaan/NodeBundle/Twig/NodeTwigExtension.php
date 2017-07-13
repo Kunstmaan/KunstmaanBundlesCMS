@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
@@ -48,10 +49,11 @@ class NodeTwigExtension extends Twig_Extension
         UrlGeneratorInterface $generator,
         NodeMenu $nodeMenu,
         RequestStack $requestStack
-    ) {
-        $this->em           = $em;
-        $this->generator    = $generator;
-        $this->nodeMenu     = $nodeMenu;
+    )
+    {
+        $this->em = $em;
+        $this->generator = $generator;
+        $this->nodeMenu = $nodeMenu;
         $this->requestStack = $requestStack;
     }
 
@@ -102,13 +104,17 @@ class NodeTwigExtension extends Twig_Extension
                 'get_node_trans_by_node_id',
                 array($this, 'getNodeTranslationByNodeId')
             ),
+            new \Twig_SimpleFunction(
+                'getOverviewRoute',
+                array($this, 'getOverviewRoute')
+            ),
         );
     }
 
-        /**
+    /**
      * Get the node translation object based on node id and language.
      *
-     * @param int $nodeId
+     * @param int    $nodeId
      * @param string $lang
      * @return NodeTranslation
      */
@@ -213,7 +219,7 @@ class NodeTwigExtension extends Twig_Extension
      */
     public function getNodeMenu($locale, Node $node = null, $includeHiddenFromNav = false)
     {
-        $request   = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMasterRequest();
         $isPreview = $request->attributes->has('preview') && $request->attributes->get('preview') === true;
         $this->nodeMenu->setLocale($locale);
         $this->nodeMenu->setCurrentNode($node);
@@ -242,7 +248,7 @@ class NodeTwigExtension extends Twig_Extension
      */
     private function getRouteParametersByInternalName($internalName, $locale, $parameters = array())
     {
-        $url         = '';
+        $url = '';
         $translation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
             ->getNodeTranslationByLanguageAndInternalName($locale, $internalName);
 
@@ -252,18 +258,20 @@ class NodeTwigExtension extends Twig_Extension
 
         return array_merge(
             array(
-                'url'     => $url,
+                'url' => $url,
                 '_locale' => $locale
             ),
             $parameters
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'node_twig_extension';
+    public function getOverviewRoute($node){
+        if($node instanceof OverviewNavigationInterface){
+            return $node->getOverViewRoute();
+        }
+
+        return null;
     }
+
+
 }

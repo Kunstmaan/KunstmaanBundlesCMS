@@ -8,8 +8,8 @@
     @include clearfix;
 
     padding: 1em 0;
-
 {% if demosite %}
+
     border-top: 2px solid $hr-color;
 {% endif %}
 }
@@ -20,19 +20,22 @@
 .sub-footer__info {
     margin: 0;
 
-    font-size: .75rem;
+    font-size: 1.4rem;
     text-align: center;
 
-    @media(min-width: $screen-xs-min) {
+    @media (min-width: $screen-xs-min) {
         float: left;
     }
 }
+
 .sub-footer__info__link {
     display: inline-block;
 
     color: $text-color;
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         color: $text-color;
     }
 }
@@ -41,19 +44,19 @@
 /* Credentials
    ========================================================================== */
 .sub-footer__credentials {
-    font-size: .75rem;
-    text-align: center;
-
     margin: 0;
 
-    @media(min-width: $screen-xs-min) {
+    font-size: 1.4rem;
+    text-align: center;
+
+    @media (min-width: $screen-xs-min) {
         float: right;
     }
 }
 
 .sub-footer__credentials__link {
     display: inline-block;
-    margin-left: .2rem;
+    margin-left: .25rem;
 
     vertical-align: text-top;
 }

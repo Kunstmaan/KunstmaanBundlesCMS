@@ -9,8 +9,8 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 {

@@ -7,8 +7,8 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for FileUploadPagePart

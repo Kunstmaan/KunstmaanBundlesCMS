@@ -83,6 +83,7 @@ class PagePartAdminController extends Controller
             'form'          => $formview,
             'pagepart'      => $pagePart,
             'pagepartadmin' => $pagePartAdmin,
+            'page'          => $pagePartAdmin->getPage(),
             'editmode'      => true
         ];
     }

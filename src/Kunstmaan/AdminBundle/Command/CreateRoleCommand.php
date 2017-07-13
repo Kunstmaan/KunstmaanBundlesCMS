@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
+
 use Symfony\Component\Console\Input\InputInterface;
+
 use Symfony\Component\Console\Output\OutputInterface;
-
-use Doctrine\ORM\EntityManager;
-
-use Kunstmaan\AdminBundle\Entity\Role;
 
 /**
  * Symfony CLI command to create a group using bin/console kuma:role:create <NAME_OF_THE_ROLE>

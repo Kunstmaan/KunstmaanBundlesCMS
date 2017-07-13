@@ -28,7 +28,7 @@ class GoogleAnalyticsController extends Controller
 
         // if token not set
         if (!$configHelper->tokenIsSet()) {
-            if ($this->container->getParameter('google.api.client_id') != '' && $this->container->getParameter('google.api.client_secret') != '' && $this->container->getParameter('google.api.dev_key') != '' ) {
+            if ($this->getParameter('google.api.client_id') != '' && $this->getParameter('google.api.client_secret') != '' && $this->getParameter('google.api.dev_key') != '' ) {
                 $params['authUrl'] = $configHelper->getAuthUrl($params['redirect_uri']);
             }
 

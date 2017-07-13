@@ -120,9 +120,9 @@ class PageGenerator extends KunstmaanGenerator
         );
         $extraCode = $this->render('/Entity/Pages/ExtraFunctions.php', $params);
 
-        $pos        = strrpos($entityCode, '}');
+        $pos        = strrpos($entityCode, "\n}");
         $trimmed    = substr($entityCode, 0, $pos);
-        $entityCode = $trimmed . $extraCode . "\n}";
+        $entityCode = $trimmed . $extraCode . "\n}\n";
 
         // Write class to filesystem
         $this->filesystem->mkdir(dirname($entityPath));

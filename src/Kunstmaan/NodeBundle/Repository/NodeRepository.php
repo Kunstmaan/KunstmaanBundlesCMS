@@ -11,8 +11,8 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\NodeBundle\Helper\HiddenFromNavInterface;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * NodeRepository
