@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeSearchBundle\EventListener;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -14,12 +16,29 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     /** @var ContainerInterface $container */
     private $container;
 
+    /** @var  */
+    private $entityChangeSet;
+
     /**
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function preUpdate(LifecycleEventArgs $args)
+    {
+        if ($args->getObject() instanceof NodeTranslation) {
+            // unfortunately we have to keep a state to see what has changed
+            $this->entityChangeSet = [
+                'nodeTranslationId' => $args->getObject()->getId(),
+                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject())
+            ];
+        }
     }
 
     /**
@@ -35,16 +54,27 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
      */
     public function onPostPersist(NodeEvent $event)
     {
-        $this->index($event);
+        $reIndexChildren = (
+            !is_null($this->entityChangeSet)
+            && $this->entityChangeSet['nodeTranslationId'] == $event->getNodeTranslation()->getId()
+            && isset($this->entityChangeSet['changeSet']['url'])
+        );
+        $this->index($event, $reIndexChildren);
     }
 
     /**
      * @param NodeEvent $event
+     * @param bool      $reIndexChildren
      */
-    private function index(NodeEvent $event)
+    private function index(NodeEvent $event, $reIndexChildren = false)
     {
         $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.search_configuration.node');
-        $nodeSearchConfiguration->indexNodeTranslation($event->getNodeTranslation(), true);
+        $nodeTranslation = $event->getNodeTranslation();
+        $nodeSearchConfiguration->indexNodeTranslation($nodeTranslation, true);
+
+        if ($reIndexChildren) {
+            $nodeSearchConfiguration->indexChildren($event->getNode(), $nodeTranslation->getLang());
+        }
     }
 
     /**
