@@ -217,6 +217,9 @@ class LayoutGenerator extends KunstmaanGenerator
             $this->removeDirectory($targetDir . $relPath . '/scss/helpers/mixins/');
         }
 
+        $relPath = '/Resources/admin/';
+        $this->copyFiles($sourceDir . $relPath, $targetDir . $relPath, true);
+
         $this->assistant->writeLine('Generating ui assets : <info>OK</info>');
     }
 

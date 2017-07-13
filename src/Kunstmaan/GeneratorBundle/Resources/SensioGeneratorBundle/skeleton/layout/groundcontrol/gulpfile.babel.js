@@ -12,6 +12,8 @@ import {
     cssOptimized,
     bundleLocal,
     bundleOptimized,
+    bundleAdminExtraLocal,
+    bundleAdminExtraOptimized,
     hologram,
     server,
     buildOnChange,
@@ -32,6 +34,7 @@ const buildLocal = gulp.series(
     copy,
     cssLocal,
     bundleLocal,
+    bundleAdminExtraLocal,
     hologram
 );
 
@@ -40,6 +43,7 @@ const buildOptimized = gulp.series(
     copy,
     cssOptimized,
     bundleOptimized,
+    bundleAdminExtraOptimized,
     hologram
 );
 
