@@ -13,7 +13,7 @@ use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
 class LinePagePart extends AbstractPagePart
 {
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -21,7 +21,7 @@ class LinePagePart extends AbstractPagePart
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getDefaultView()
     {
@@ -29,10 +29,10 @@ class LinePagePart extends AbstractPagePart
     }
 
     /**
-     * @return LinePagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new LinePagePartAdminType();
+        return LinePagePartAdminType::class;
     }
 }

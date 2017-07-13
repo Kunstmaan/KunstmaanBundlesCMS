@@ -23,11 +23,11 @@ class StringFormSubmissionField extends FormSubmissionField
     /**
      * Returns the default form type for this FormSubmissionField
      *
-     * @return StringFormSubmissionType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new StringFormSubmissionType($this->getLabel());
+        return StringFormSubmissionType::class;
     }
 
     /**

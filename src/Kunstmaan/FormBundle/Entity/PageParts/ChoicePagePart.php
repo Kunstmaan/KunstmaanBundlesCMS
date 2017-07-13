@@ -127,11 +127,11 @@ class ChoicePagePart extends AbstractFormPagePart
     /**
      * Returns the default backend form type for this FormSubmissionField
      *
-     * @return ChoicePagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new ChoicePagePartAdminType();
+        return ChoicePagePartAdminType::class;
     }
 
     /**

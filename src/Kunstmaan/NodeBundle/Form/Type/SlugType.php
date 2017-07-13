@@ -9,7 +9,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
- * Sype
+ * Class SlugType.
+ *
+ * @package Kunstmaan\NodeBundle\Form\Type
  */
 class SlugType extends AbstractType
 {

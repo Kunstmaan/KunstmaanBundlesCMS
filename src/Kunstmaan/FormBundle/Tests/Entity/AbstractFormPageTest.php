@@ -85,9 +85,7 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $adminType = $this->object->getDefaultAdminType();
-        $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof AbstractFormPageAdminType);
+        $this->assertEquals(AbstractFormPageAdminType::class, $this->object->getDefaultAdminType());
     }
 
     /**

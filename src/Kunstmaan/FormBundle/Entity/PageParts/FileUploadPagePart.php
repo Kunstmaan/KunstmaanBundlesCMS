@@ -134,10 +134,10 @@ class FileUploadPagePart extends AbstractFormPagePart
     /**
      * Returns the default backend form type for this page part
      *
-     * @return FileUploadPagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new FileUploadPagePartAdminType();
+        return FileUploadPagePartAdminType::class;
     }
 }

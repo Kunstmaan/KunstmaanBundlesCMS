@@ -47,7 +47,8 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     {
         parent::__construct($em);
 
-        $this->setAdminType(new MediaType($mediaManager, $em));
+        $this->setAdminType(MediaType::class);
+
         $this->folder = $folder;
         $this->request = $request;
     }

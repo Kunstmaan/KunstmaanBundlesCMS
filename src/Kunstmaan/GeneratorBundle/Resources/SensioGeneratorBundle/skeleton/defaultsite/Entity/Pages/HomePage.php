@@ -19,13 +19,11 @@ use {{ namespace }}\Form\Pages\HomePageAdminType;
 class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchTypeInterface, HomePageInterface
 {
     /**
-     * Returns the default backend form type for this page
-     *
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new HomePageAdminType();
+        return HomePageAdminType::class;
     }
 
     /**
