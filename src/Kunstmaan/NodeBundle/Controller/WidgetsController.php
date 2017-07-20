@@ -2,15 +2,17 @@
 
 namespace Kunstmaan\NodeBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
+use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
-use Kunstmaan\NodeBundle\Helper\Menu\SimpleTreeView;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * WidgetsController
@@ -26,7 +28,7 @@ class WidgetsController extends Controller
      */
     public function ckSelectLinkAction(Request $request)
     {
-        $params        = $this->getTemplateParameters($request);
+        $params = $this->getTemplateParameters($request);
         $params['cke'] = true;
         $params['multilanguage'] = $this->getParameter('multilanguage');
 
@@ -36,7 +38,7 @@ class WidgetsController extends Controller
     /**
      * Select a link
      *
-     * @Route   ("/selecturl", name="KunstmaanNodeBundle_selecturl")
+     * @Route("/selecturl", name="KunstmaanNodeBundle_selecturl")
      * @Template("KunstmaanNodeBundle:Widgets:selectLink.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -44,11 +46,71 @@ class WidgetsController extends Controller
      */
     public function selectLinkAction(Request $request)
     {
-        $params        = $this->getTemplateParameters($request);
+        $params = $this->getTemplateParameters($request);
         $params['cke'] = false;
         $params['multilanguage'] = $this->getParameter('multilanguage');
 
         return $params;
+    }
+
+    /**
+     * Select a link
+     *
+     * @Route("/select-nodes-lazy_search", name="KunstmaanNodeBundle_nodes_lazy_search")
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    public function selectNodesLazySearch(Request $request)
+    {
+        /* @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        $locale = $request->getLocale();
+        $search = $request->query->get('str');
+
+        $results = [];
+        if ($search) {
+            $nts = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationsLikeTitle($search, $locale);
+            /** @var NodeTranslation $nt */
+            foreach ($nts as $nt) {
+                $node = $nt->getNode();
+                $results[] = $node->getId();
+                while ($node->getParent()) {
+                    $node = $node->getParent();
+                    $results[] = $node->getId();
+                }
+            }
+            $results = array_unique($results);
+            sort($results);
+        }
+
+        return new JsonResponse($results);
+    }
+
+    /**
+     * Select a link
+     *
+     * @Route("/select-nodes-lazy", name="KunstmaanNodeBundle_nodes_lazy")
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return JsonResponse
+     */
+    public function selectNodesLazy(Request $request)
+    {
+        /* @var EntityManagerInterface $em */
+        $em = $this->getDoctrine()->getManager();
+        $locale = $request->getLocale();
+        $id = $request->query->get('id');
+        $depth = $this->getParameter('kunstmaan_node.url_chooser.lazy_increment');
+
+        if (!$id || $id == '#') {
+            $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->getAllTopNodes();
+        } else {
+            $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->find($id)->getChildren();
+        }
+
+        $results = $this->nodesToArray($locale, $rootItems, $depth);
+        return new JsonResponse($results);
     }
 
     /**
@@ -60,34 +122,12 @@ class WidgetsController extends Controller
      */
     private function getTemplateParameters(Request $request)
     {
-        /* @var EntityManager $em */
-        $em     = $this->getDoctrine()->getManager();
-        $host = $request->getSession()->get(DomainConfiguration::SWITCH_HOST);
-        $locale = $request->getLocale();
-
-        $result = $em->getRepository('KunstmaanNodeBundle:Node')
-            ->getAllMenuNodes(
-                $locale,
-                PermissionMap::PERMISSION_VIEW,
-                $this->get('kunstmaan_admin.acl.native.helper'),
-                true,
-                $this->get('kunstmaan_admin.domain_configuration')->getRootNode($host)
-            );
-
-        $simpleTreeView = new SimpleTreeView();
-        foreach ($result as $data) {
-            if ($this->isStructureNode($data['ref_entity_name'])) {
-                $data['online'] = true;
-            }
-            $simpleTreeView->addItem($data['parent'], $data);
-        }
-
         // When the media bundle is available, we show a link in the header to the media chooser
         $allBundles = $this->getParameter('kernel.bundles');
         $mediaChooserLink = null;
 
         if (array_key_exists('KunstmaanMediaBundle', $allBundles)) {
-            $params          = array('linkChooser' => 1);
+            $params = ['linkChooser' => 1];
             $cKEditorFuncNum = $request->get('CKEditorFuncNum');
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
@@ -98,10 +138,9 @@ class WidgetsController extends Controller
             );
         }
 
-        return array(
-            'tree'             => $simpleTreeView,
+        return [
             'mediaChooserLink' => $mediaChooserLink
-        );
+        ];
     }
 
     /**
@@ -111,15 +150,64 @@ class WidgetsController extends Controller
      *
      * @return bool
      */
-    private function isStructureNode($refEntityName)
+    protected function isStructureNode($refEntityName)
     {
         $structureNode = false;
         if (class_exists($refEntityName)) {
-            $page          = new $refEntityName();
+            $page = new $refEntityName();
             $structureNode = ($page instanceof StructureNode);
             unset($page);
         }
 
         return $structureNode;
+    }
+
+    /**
+     * Determine if current node is a structure node.
+     *
+     * @param string $locale
+     * @param Node[]|ArrayCollection $rootNodes
+     * @param integer $depth
+     *
+     * @return array
+     */
+    protected function nodesToArray($locale, $rootNodes, $depth = 2)
+    {
+        /** @var DomainConfiguration $domainconfig */
+        $domainconfig = $this->get('kunstmaan_admin.domain_configuration');
+        $isMultiDomain = $domainconfig->isMultiDomainHost();
+        $switchedHost = $domainconfig->getHostSwitched()['host'];
+        $switched = $domainconfig->getHost() == $switchedHost;
+
+        $results = [];
+
+        /** @var Node $rootNode */
+        foreach ($rootNodes as $rootNode) {
+            if ($nodeTranslation = $rootNode->getNodeTranslation($locale, true)) {
+                if ($isMultiDomain && !$switched) {
+                    $slug = sprintf("[%s:%s]", $switchedHost, "NT" . $nodeTranslation->getId());
+                } else {
+                    $slug = sprintf("[%s]", "NT" . $nodeTranslation->getId());
+                }
+
+                $root = [
+                    'id' => $rootNode->getId(),
+                    'type' => $nodeTranslation->isOnline() ? "default" : "offline",
+                    'text' => $nodeTranslation->getTitle(),
+                    'li_attr' => ['class' => 'js-url-chooser-link-select', 'data-slug' => $slug, 'data-id' => $rootNode->getId()]
+                ];
+
+                if ($rootNode->getChildren()->count()) {
+                    if ($depth - 1) {
+                        $root['children'] = $this->nodesToArray($locale, $rootNode->getChildren(), --$depth);
+                    } else {
+                        $root['children'] = true;
+                    }
+                }
+                $results[] = $root;
+            }
+        }
+
+        return $results;
     }
 }

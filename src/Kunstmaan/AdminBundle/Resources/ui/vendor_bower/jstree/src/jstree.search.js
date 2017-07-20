@@ -27,10 +27,10 @@
 	 */
 	$.jstree.defaults.search = {
 		/**
-		 * a jQuery-like AJAX config, which jstree uses if a server should be queried for results. 
-		 * 
+		 * a jQuery-like AJAX config, which jstree uses if a server should be queried for results.
+		 *
 		 * A `str` (which is the search string) parameter will be added with the request, an optional `inside` parameter will be added if the search is limited to a node id. The expected result is a JSON array with nodes that need to be opened so that matching nodes will be revealed.
-		 * Leave this setting as `false` to not query the server. You can also set this to a function, which will be invoked in the instance's scope and receive 3 parameters - the search string, the callback to call with the array of nodes to load, and the optional node ID to limit the search to 
+		 * Leave this setting as `false` to not query the server. You can also set this to a function, which will be invoked in the instance's scope and receive 3 parameters - the search string, the callback to call with the array of nodes to load, and the optional node ID to limit the search to
 		 * @name $.jstree.defaults.search.ajax
 		 * @plugin search
 		 */
@@ -48,12 +48,19 @@
 		 */
 		case_sensitive : false,
 		/**
-		 * Indicates if the tree should be filtered (by default) to show only matching nodes (keep in mind this can be a heavy on large trees in old browsers). 
+		 * Indicates if the tree should be filtered (by default) to show only matching nodes (keep in mind this can be a heavy on large trees in old browsers).
 		 * This setting can be changed at runtime when calling the search method. Default is `false`.
 		 * @name $.jstree.defaults.search.show_only_matches
 		 * @plugin search
 		 */
 		show_only_matches : false,
+		/**
+		 * Indicates if the children of matched element are shown (when show_only_matches is true)
+		 * This setting can be changed at runtime when calling the search method. Default is `false`.
+		 * @name $.jstree.defaults.search.show_only_matches_children
+		 * @plugin search
+		 */
+		show_only_matches_children : false,
 		/**
 		 * Indicates if all nodes opened to reveal the search result, should be closed when the search is cleared or a new search is performed. Default is `true`.
 		 * @name $.jstree.defaults.search.close_opened_onclear
@@ -84,39 +91,36 @@
 			this._data.search.res = [];
 			this._data.search.opn = [];
 			this._data.search.som = false;
+			this._data.search.smc = false;
+			this._data.search.hdn = [];
 
 			this.element
-				.on('before_open.jstree', $.proxy(function (e, data) {
-						var i, j, f, r = this._data.search.res, s = [], o = $();
-						if(r && r.length) {
-							this._data.search.dom = $(this.element[0].querySelectorAll('#' + $.map(r, function (v) { return "0123456789".indexOf(v[0]) !== -1 ? '\\3' + v[0] + ' ' + v.substr(1).replace($.jstree.idregex,'\\$&') : v.replace($.jstree.idregex,'\\$&'); }).join(', #')));
-							this._data.search.dom.children(".jstree-anchor").addClass('jstree-search');
-							if(this._data.search.som && this._data.search.res.length) {
-								for(i = 0, j = r.length; i < j; i++) {
-									s = s.concat(this.get_node(r[i]).parents);
-								}
-								s = $.vakata.array_remove_item($.vakata.array_unique(s),'#');
-								o = s.length ? $(this.element[0].querySelectorAll('#' + $.map(s, function (v) { return "0123456789".indexOf(v[0]) !== -1 ? '\\3' + v[0] + ' ' + v.substr(1).replace($.jstree.idregex,'\\$&') : v.replace($.jstree.idregex,'\\$&'); }).join(', #'))) : $();
-
-								this.element.find(".jstree-node").hide().filter('.jstree-last').filter(function() { return this.nextSibling; }).removeClass('jstree-last');
-								o = o.add(this._data.search.dom);
-								o.parentsUntil(".jstree").addBack().show()
-									.filter(".jstree-children").each(function () { $(this).children(".jstree-node:visible").eq(-1).addClass("jstree-last"); });
-							}
-						}
-					}, this))
 				.on("search.jstree", $.proxy(function (e, data) {
-						if(this._data.search.som) {
-							if(data.nodes.length) {
-								this.element.find(".jstree-node").hide().filter('.jstree-last').filter(function() { return this.nextSibling; }).removeClass('jstree-last');
-								data.nodes.parentsUntil(".jstree").addBack().show()
-									.filter(".jstree-children").each(function () { $(this).children(".jstree-node:visible").eq(-1).addClass("jstree-last"); });
+						if(this._data.search.som && data.res.length) {
+							var m = this._model.data, i, j, p = [], k, l;
+							for(i = 0, j = data.res.length; i < j; i++) {
+								if(m[data.res[i]] && !m[data.res[i]].state.hidden) {
+									p.push(data.res[i]);
+									p = p.concat(m[data.res[i]].parents);
+									if(this._data.search.smc) {
+										for (k = 0, l = m[data.res[i]].children_d.length; k < l; k++) {
+											if (m[m[data.res[i]].children_d[k]] && !m[m[data.res[i]].children_d[k]].state.hidden) {
+												p.push(m[data.res[i]].children_d[k]);
+											}
+										}
+									}
+								}
 							}
+							p = $.vakata.array_remove_item($.vakata.array_unique(p), $.jstree.root);
+							this._data.search.hdn = this.hide_all(true);
+							this.show_node(p, true);
+							this.redraw(true);
 						}
 					}, this))
 				.on("clear_search.jstree", $.proxy(function (e, data) {
-						if(this._data.search.som && data.nodes.length) {
-							this.element.find(".jstree-node").css("display","").filter('.jstree-last').filter(function() { return this.nextSibling; }).removeClass('jstree-last');
+						if(this._data.search.som && data.res.length) {
+							this.show_node(this._data.search.hdn, true);
+							this.redraw(true);
 						}
 					}, this));
 		};
@@ -131,7 +135,7 @@
 		 * @plugin search
 		 * @trigger search.jstree
 		 */
-		this.search = function (str, skip_async, show_only_matches, inside, append) {
+		this.search = function (str, skip_async, show_only_matches, inside, append, show_only_matches_children) {
 			if(str === false || $.trim(str.toString()) === "") {
 				return this.clear_search();
 			}
@@ -150,13 +154,16 @@
 			if(show_only_matches === undefined) {
 				show_only_matches = s.show_only_matches;
 			}
+			if(show_only_matches_children === undefined) {
+				show_only_matches_children = s.show_only_matches_children;
+			}
 			if(!skip_async && a !== false) {
 				if($.isFunction(a)) {
 					return a.call(this, str, $.proxy(function (d) {
 							if(d && d.d) { d = d.d; }
 							this._load_nodes(!$.isArray(d) ? [] : $.vakata.array_unique(d), function () {
-								this.search(str, true, show_only_matches, inside, append);
-							}, true);
+								this.search(str, true, show_only_matches, inside, append, show_only_matches_children);
+							});
 						}, this), inside);
 				}
 				else {
@@ -166,7 +173,10 @@
 					if(inside) {
 						a.data.inside = inside;
 					}
-					return $.ajax(a)
+					if (this._data.search.lastRequest) {
+						this._data.search.lastRequest.abort();
+					}
+					this._data.search.lastRequest = $.ajax(a)
 						.fail($.proxy(function () {
 							this._data.core.last_error = { 'error' : 'ajax', 'plugin' : 'search', 'id' : 'search_01', 'reason' : 'Could not load search parents', 'data' : JSON.stringify(a) };
 							this.settings.core.error.call(this, this._data.core.last_error);
@@ -174,9 +184,10 @@
 						.done($.proxy(function (d) {
 							if(d && d.d) { d = d.d; }
 							this._load_nodes(!$.isArray(d) ? [] : $.vakata.array_unique(d), function () {
-								this.search(str, true, show_only_matches, inside, append);
-							}, true);
+								this.search(str, true, show_only_matches, inside, append, show_only_matches_children);
+							});
 						}, this));
+					return this._data.search.lastRequest;
 				}
 			}
 			if(!append) {
@@ -185,19 +196,24 @@
 				this._data.search.res = [];
 				this._data.search.opn = [];
 				this._data.search.som = show_only_matches;
+				this._data.search.smc = show_only_matches_children;
 			}
 
 			f = new $.vakata.search(str, true, { caseSensitive : s.case_sensitive, fuzzy : s.fuzzy });
-			$.each(m[inside ? inside : '#'].children_d, function (ii, i) {
+			$.each(m[inside ? inside : $.jstree.root].children_d, function (ii, i) {
 				var v = m[i];
-				if(v.text && ( (s.search_callback && s.search_callback.call(this, str, v)) || (!s.search_callback && f.search(v.text).isMatch) ) && (!s.search_leaves_only || (v.state.loaded && v.children.length === 0)) ) {
+				if(v.text && !v.state.hidden && (!s.search_leaves_only || (v.state.loaded && v.children.length === 0)) && ( (s.search_callback && s.search_callback.call(this, str, v)) || (!s.search_callback && f.search(v.text).isMatch) ) ) {
 					r.push(i);
 					p = p.concat(v.parents);
 				}
 			});
 			if(r.length) {
 				p = $.vakata.array_unique(p);
-				this._search_open(p);
+				for(i = 0, j = p.length; i < j; i++) {
+					if(p[i] !== $.jstree.root && m[p[i]] && this.open_node(p[i], null, 0) === true) {
+						this._data.search.opn.push(p[i]);
+					}
+				}
 				if(!append) {
 					this._data.search.dom = $(this.element[0].querySelectorAll('#' + $.map(r, function (v) { return "0123456789".indexOf(v[0]) !== -1 ? '\\3' + v[0] + ' ' + v.substr(1).replace($.jstree.idregex,'\\$&') : v.replace($.jstree.idregex,'\\$&'); }).join(', #')));
 					this._data.search.res = r;
@@ -226,7 +242,6 @@
 		 * @trigger clear_search.jstree
 		 */
 		this.clear_search = function () {
-			this._data.search.dom.children(".jstree-anchor").removeClass("jstree-search");
 			if(this.settings.search.close_opened_onclear) {
 				this.close_node(this._data.search.opn, 0);
 			}
@@ -240,30 +255,35 @@
 			 * @plugin search
 			 */
 			this.trigger('clear_search', { 'nodes' : this._data.search.dom, str : this._data.search.str, res : this._data.search.res });
+			if(this._data.search.res.length) {
+				this._data.search.dom = $(this.element[0].querySelectorAll('#' + $.map(this._data.search.res, function (v) {
+					return "0123456789".indexOf(v[0]) !== -1 ? '\\3' + v[0] + ' ' + v.substr(1).replace($.jstree.idregex,'\\$&') : v.replace($.jstree.idregex,'\\$&');
+				}).join(', #')));
+				this._data.search.dom.children(".jstree-anchor").removeClass("jstree-search");
+			}
 			this._data.search.str = "";
 			this._data.search.res = [];
 			this._data.search.opn = [];
 			this._data.search.dom = $();
 		};
-		/**
-		 * opens nodes that need to be opened to reveal the search results. Used only internally.
-		 * @private
-		 * @name _search_open(d)
-		 * @param {Array} d an array of node IDs
-		 * @plugin search
-		 */
-		this._search_open = function (d) {
-			var t = this;
-			$.each(d.concat([]), function (i, v) {
-				if(v === "#") { return true; }
-				try { v = $('#' + v.replace($.jstree.idregex,'\\$&'), t.element); } catch(ignore) { }
-				if(v && v.length) {
-					if(t.is_closed(v)) {
-						t._data.search.opn.push(v[0].id);
-						t.open_node(v, function () { t._search_open(d); }, 0);
+
+		this.redraw_node = function(obj, deep, callback, force_render) {
+			obj = parent.redraw_node.apply(this, arguments);
+			if(obj) {
+				if($.inArray(obj.id, this._data.search.res) !== -1) {
+					var i, j, tmp = null;
+					for(i = 0, j = obj.childNodes.length; i < j; i++) {
+						if(obj.childNodes[i] && obj.childNodes[i].className && obj.childNodes[i].className.indexOf("jstree-anchor") !== -1) {
+							tmp = obj.childNodes[i];
+							break;
+						}
+					}
+					if(tmp) {
+						tmp.className += ' jstree-search';
 					}
 				}
-			});
+			}
+			return obj;
 		};
 	};
 
