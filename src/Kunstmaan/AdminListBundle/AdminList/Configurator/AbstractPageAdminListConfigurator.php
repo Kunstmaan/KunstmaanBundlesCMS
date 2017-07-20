@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType;
@@ -161,13 +162,16 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
      */
     public function getOverviewPage()
     {
+        /** @var EntityRepository $repository */
         $repository = $this->em->getRepository($this->getOverviewPageClass());
-        $pages = $repository->findAll();
-        if (isset($pages) and count($pages) > 0) {
-            return $pages[0];
-        }
 
-        return null;
+        $overviewPage = $repository->createQueryBuilder('o')
+            ->orderBy('o.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $overviewPage;
     }
 
     /**

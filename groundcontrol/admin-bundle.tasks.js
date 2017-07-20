@@ -64,6 +64,7 @@ adminBundle.tasks.scripts = createScriptsTask({
         adminBundle.config.srcPath + 'vendor_bower/cargobay/src/scroll-to-top/js/jquery.scroll-to-top.js',
         adminBundle.config.srcPath + 'vendor_bower/Sortable/Sortable.js',
         adminBundle.config.srcPath + 'vendor_bower/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
+        adminBundle.config.srcPath + 'vendor_bower/jquery-typewatch/jquery.typewatch.js',
         './src/Kunstmaan/AdminBundle/Resources/public/default-theme/ckeditor/ckeditor.js',
         './src/Kunstmaan/AdminBundle/Resources/public/default-theme/ckeditor/adapters/jquery.js',
         adminBundle.config.srcPath + 'js/**/*.js'

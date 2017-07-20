@@ -4,7 +4,7 @@ namespace Kunstmaan\MultiDomainBundle\Twig;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 
-class MultiDomainTwigExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+class MultiDomainTwigExtension extends \Twig_Extension
 {
     /**
      * @var DomainConfigurationInterface
