@@ -1,6 +1,6 @@
 # Adding a custom controller to a page
 
-Before CMS version 3.1 we used a the `service()` method in a specific entiry to write any custom controller logic. This was a poor solution. We decided to refactor this.
+Before CMS version 3.1 we used a the `service()` method in a specific entity to write any custom controller logic. This was a poor solution. We decided to refactor this.
 
 ## Creating a full controller
 ### Modify the entity
