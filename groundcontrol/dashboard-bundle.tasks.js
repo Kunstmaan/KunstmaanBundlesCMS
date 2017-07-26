@@ -11,6 +11,7 @@ export const dashboardBundle = {
     config: {
         srcPath: './src/Kunstmaan/DashboardBundle/Resources/ui/',
         distPath: './src/Kunstmaan/DashboardBundle/Resources/public/',
+        publicPath: '/bundles/kunstmaandashboard'
     },
     tasks: {}
 };
