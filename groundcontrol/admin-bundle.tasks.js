@@ -15,6 +15,7 @@ export const adminBundle = {
     config: {
         srcPath: './src/Kunstmaan/AdminBundle/Resources/ui/',
         distPath: './src/Kunstmaan/AdminBundle/Resources/public/',
+        publicPath: '/bundles/kunstmaanadmin'
     },
     tasks: {}
 };

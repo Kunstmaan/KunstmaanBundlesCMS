@@ -6,10 +6,12 @@ import postcss from 'gulp-postcss';
 import rev from 'gulp-rev';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
+import debug from 'gulp-debug';
 
-export function createCssLocalTask({src = undefined, dest = undefined}) {
+export function createCssLocalTask({ src = undefined, dest = undefined }) {
     return function cssLocal() {
         return gulp.src(src)
+            .pipe(debug({ title: 'Building' }))
             .pipe(sourcemaps.init())
             .pipe(sass().on('error', sassErrorHandler))
             .pipe(postcss([autoprefixer()]))
@@ -18,9 +20,10 @@ export function createCssLocalTask({src = undefined, dest = undefined}) {
     };
 }
 
-export function createCssOptimizedTask({src = undefined, dest = undefined, cssnanoConfig = {safe: true}}) {
+export function createCssOptimizedTask({ src = undefined, dest = undefined, cssnanoConfig = { safe: true } }) {
     return function cssOptimized() {
         return gulp.src(src)
+            .pipe(debug({ title: 'Building' }))
             .pipe(sass().on('error', sassErrorHandler))
             .pipe(postcss([autoprefixer(), cssnano(cssnanoConfig)]))
             //.pipe(rev())

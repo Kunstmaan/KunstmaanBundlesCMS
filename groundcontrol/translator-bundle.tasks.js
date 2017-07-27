@@ -11,6 +11,7 @@ export const translatorBundle = {
     config: {
         srcPath: './src/Kunstmaan/TranslatorBundle/Resources/ui/',
         distPath: './src/Kunstmaan/TranslatorBundle/Resources/public/',
+        publicPath: '/bundles/kunstmaantranslator'
     },
     tasks: {}
 };

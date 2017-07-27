@@ -9,6 +9,7 @@ export const mediaBundle = {
     config: {
         srcPath: './src/Kunstmaan/MediaBundle/Resources/ui/',
         distPath: './src/Kunstmaan/MediaBundle/Resources/public/',
+        publicPath: '/bundles/kunstmaanmedia'
     },
     tasks: {}
 };
