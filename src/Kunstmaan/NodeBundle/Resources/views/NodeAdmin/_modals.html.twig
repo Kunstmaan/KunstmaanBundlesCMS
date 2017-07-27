@@ -14,5 +14,9 @@
 {% include '@KunstmaanNode/NodeAdmin/Modals/_duplicate.html.twig' %}
 <!-- Modal - ReCopy content from other language -->
 {% include '@KunstmaanNode/NodeAdmin/Modals/_recopy.html.twig' %}
+
+{# Check if Page HasPageTemplateInterface method #}
+{% if page.pageTemplates is defined %}
 <!-- Modal - Export page template -->
 {% include '@KunstmaanNode/NodeAdmin/Modals/_export_pagetemplate.html.twig' %}
+{% endif %}
