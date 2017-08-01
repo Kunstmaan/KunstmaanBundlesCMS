@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeSearchBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,7 @@ class NodeSearchAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('boost', null, array(
+        $builder->add('boost', TextType::class, array(
             'label' => 'node_search.form.search.boost.label',
         ));
     }
