@@ -40,7 +40,7 @@ class ImporterTest extends BaseTestCase
         }
 
         $translation = $this->translationRepository->findOneBy(array('keyword' => 'headers.frontpage', 'locale' => 'en'));
-        $this->assertEquals('FrontPage', $translation->getText());
+        $this->assertEquals('a not yet updated frontpage header', $translation->getText());
     }
 
     /**
@@ -53,7 +53,7 @@ class ImporterTest extends BaseTestCase
         }
 
         $translation = $this->translationRepository->findOneBy(array('keyword' => 'headers.frontpage', 'locale' => 'en'));
-        $this->assertEquals('a not yet updated frontpage header', $translation->getText());
+        $this->assertEquals('FrontPage', $translation->getText());
     }
 
     public function getNewDomainTestFinder()
