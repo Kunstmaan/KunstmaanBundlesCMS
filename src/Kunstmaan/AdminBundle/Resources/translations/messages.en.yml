@@ -35,6 +35,10 @@ tools:
     clear_all_caches: Clear all caches
     shutdown: Shutdown
 
+# Search
+search:
+    title: Search
+
 # Forms
 form:
     cancel: Cancel
@@ -115,6 +119,9 @@ kuma_admin:
             'deleted_success.%medianame%': Entry '%medianame%' has been deleted!
             drop_success:       File was uploaded successfuly!
             drop_unrecognized:  Could not recognize what you dropped!
+    login:
+        forgot_password: Forgot my password
+        invalid_credentials: Wrong password or email
 
 kuma_js:
     auto_collapse:

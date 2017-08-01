@@ -13,6 +13,7 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postLoad }
             - { name: kernel.event_listener, event: kunstmaan_node.postPersist, method: postNodePersist }
+            - { name: kernel.event_listener, event: kunstmaan_pagepart.postPersist, method: postPagePartPersist }
 
     kuma_tagging.clone.listener:
         class: Kunstmaan\TaggingBundle\EventListener\CloneListener

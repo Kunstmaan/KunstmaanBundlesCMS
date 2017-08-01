@@ -3,7 +3,7 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,9 +26,8 @@ class {{ pagepart }}AdminType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('content', TextareaType::class, array(
+        $builder->add('content', WysiwygType::class, array(
             'required' => true,
-            'attr' => array('rows' => 10, 'cols' => 600, 'class' => 'js-rich-editor rich-editor', 'height' => 140)
         ));
     }
 

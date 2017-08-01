@@ -1,0 +1,16 @@
+<div class="pp-container__add">
+    {% if extended is defined and extended == true %}
+        <a href="#" class="btn btn-default js-add-pp-select{% if first is defined and first %} js-add-pp-select--first{% endif %} js-pp-modal-button"
+           data-toggle="modal" data-target="#pagePartModal{{ pagepartadmin.context }}"
+           data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
+            {{ 'kuma_pagepart.select.add' | trans }}
+        </a>
+    {% else %}
+        <select class="js-add-pp-select {% if first is defined and first %}js-add-pp-select--first{% endif %} form-control input-sm pp-container__add__select" data-url="{{ path('KunstmaanPagePartBundle_admin_newpagepart') }}">
+            <option value="">{{ 'Add a pagepart' | trans }}</option>
+            {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+                <option value="{{ pagePartType.class }}">{{ pagePartType.name|trans }}</option>
+            {% endfor %}
+        </select>
+    {% endif %}
+</div>

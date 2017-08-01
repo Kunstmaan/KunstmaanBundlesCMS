@@ -1,0 +1,33 @@
+{
+  "name": "jquery-typewatch",
+  "version": "3.0.0",
+  "main": [
+    "./jquery.typewatch.js"
+  ],
+  "dependencies": {
+    "jquery": ">=1.5"
+  },
+  "ignore": [
+    "test",
+    "*.markdown",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "homepage": "https://github.com/dennyferra/TypeWatch",
+  "authors": [
+    "Denny Ferrassoli <denny.ferrassoli@gmail.com>"
+  ],
+  "description": "TypeWatch calls a function when a user has typed text in an input or textarea (including HTML 5 input types) and after the user has stopped typing for a specified amount of time.",
+  "license": "MIT",
+  "_release": "3.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.0.0",
+    "commit": "10f6621f5a1b17018011fa22ea81f65088d4e934"
+  },
+  "_source": "https://github.com/dennyferra/TypeWatch.git",
+  "_target": "~3.0",
+  "_originalSource": "jquery-typewatch"
+}

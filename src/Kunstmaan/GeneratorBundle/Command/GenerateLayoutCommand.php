@@ -15,6 +15,8 @@ class GenerateLayoutCommand extends KunstmaanGenerateCommand
      */
     private $bundle;
 
+    private $browserSyncUrl;
+
     /**
      * @see Command
      */
@@ -59,7 +61,7 @@ EOT
         }
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
-        $this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'));
+        $this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'), $this->browserSyncUrl);
 
         if (!$this->isSubCommand()) {
             $this->assistant->writeSection('Layout successfully created', 'bg=green;fg=black');
@@ -80,6 +82,8 @@ EOT
          */
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('layout', $bundleNamespace);
+
+        $this->browserSyncUrl = $this->assistant->ask('Which URL would you like to configure for browserSync?', 'http://myproject.dev');
     }
 
     /**

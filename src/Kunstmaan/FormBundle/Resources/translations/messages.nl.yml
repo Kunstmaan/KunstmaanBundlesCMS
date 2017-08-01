@@ -81,6 +81,9 @@ kuma_form:
             title:      Titel
             language:   Taal
             path:       Form path
+        filter:
+            title: Titel
+            online: Online
     submission:
         list:
             header:

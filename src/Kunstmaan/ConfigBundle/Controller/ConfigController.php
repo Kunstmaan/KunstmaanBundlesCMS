@@ -133,7 +133,7 @@ class ConfigController
                 $this->em->persist($config);
                 $this->em->flush();
 
-                return new RedirectResponse($this->router->generate('kunstmaanconfigbundle_default', array('internal_name' => $internalName)));
+                return new RedirectResponse($this->router->generate('kunstmaanconfigbundle_default', array('internalName' => $internalName)));
             }
         }
 

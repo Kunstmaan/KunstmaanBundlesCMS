@@ -5,6 +5,7 @@ namespace Kunstmaan\TaggingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use DoctrineExtensions\Taggable\Entity\Tag as BaseTag;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="kuma_tags")
  * @UniqueEntity("name")
  */
-class Tag extends BaseTag
+class Tag extends BaseTag implements Translatable
 {
 
     /**
@@ -25,6 +26,7 @@ class Tag extends BaseTag
     protected $id;
 
     /**
+     * @Gedmo\Translatable()
      * @ORM\Column(name="name", type="string", unique=true)
      */
     protected $name;
@@ -45,6 +47,15 @@ class Tag extends BaseTag
      * @ORM\OneToMany(targetEntity="Kunstmaan\TaggingBundle\Entity\Tagging", mappedBy="tag", fetch="LAZY")
      */
     protected $tagging;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    protected $locale;
 
     /**
      * Get id
@@ -119,11 +130,31 @@ class Tag extends BaseTag
     /**
      * Get updatedAt
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslatableLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return Tag
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+
+        return $this;
     }
 
     public function getDefaultAdminType()

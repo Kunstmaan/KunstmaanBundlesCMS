@@ -19,6 +19,29 @@
 	};
 })(jQuery);
 
+// mapping
+(function ($, undefined) {
+	"use strict";
+	// use this if you need any options
+	$.jstree.defaults.mapper = {
+		option_key : "option_value"
+	};
+	$.jstree.plugins.mapper = function () {
+		this._parse_model_from_json = function (d, p, ps) {
+			// d is the node from the server, it will be called recursively for children,
+			// so you do not need to process at once
+			/* // for example
+			for(var i in d) {
+				if(d.hasOwnProperty(i)) {
+					d[i.toLowerCase()] = d[i];
+				}
+			}
+			*/
+			return parent._parse_model_from_json.call(this, d, p, ps);
+		};
+	};
+})(jQuery);
+
 // no hover
 (function ($, undefined) {
 	"use strict";
@@ -27,16 +50,14 @@
 	};
 })(jQuery);
 
-// conditional select
+// force multiple select
 (function ($, undefined) {
 	"use strict";
-	$.jstree.defaults.conditionalselect = function () { return true; };
-	$.jstree.plugins.conditionalselect = function (options, parent) {
-		// own function
+	$.jstree.defaults.multiselect = {};
+	$.jstree.plugins.multiselect = function (options, parent) {
 		this.activate_node = function (obj, e) {
-			if(this.settings.conditionalselect.call(this, this.get_node(obj))) {
-				parent.activate_node.call(this, obj, e);
-			}
+			e.ctrlKey = true;
+			parent.activate_node.call(this, obj, e);
 		};
 	};
 })(jQuery);
@@ -123,24 +144,6 @@
 	};
 })(jQuery);
 
-// allow search results expanding
-(function ($, undefined) {
-	"use strict";
-	$.jstree.plugins.show_matches_children = function (options, parent) {
-		this.bind = function () {
-			parent.bind.call(this);
-			this.element
-				.on('search.jstree before_open.jstree', function (e, data) {
-					if(data.instance.settings.search && data.instance.settings.search.show_only_matches) {
-						data.instance._data.search.dom.find('.jstree-node')
-							.show().filter('.jstree-last').filter(function() { return this.nextSibling; }).removeClass('jstree-last')
-							.end().end().end().find(".jstree-children").each(function () { $(this).children(".jstree-node:visible").eq(-1).addClass("jstree-last"); });
-					}
-				});
-		};
-	};
-})(jQuery);
-
 // additional icon on node (outside of anchor)
 (function ($, undefined) {
 	"use strict";
@@ -215,6 +218,47 @@
 	};
 })(jQuery);
 
+// additional icon on node (inside anchor)
+(function ($, undefined) {
+	"use strict";
+	var _s = document.createElement('SPAN');
+	_s.className = 'fa-stack jstree-stackedicon';
+	var _i = document.createElement('I');
+	_i.className = 'jstree-icon';
+	_i.setAttribute('role', 'presentation');
+
+	$.jstree.plugins.stackedicon = function (options, parent) {
+		this.teardown = function () {
+			this.element.find(".jstree-stackedicon").remove();
+			parent.teardown.call(this);
+		};
+		this.redraw_node = function(obj, deep, is_callback, force_render) {
+			obj = parent.redraw_node.apply(this, arguments);
+			if(obj) {
+				var i, j, tmp = null, icon = null, temp = null;
+				for(i = 0, j = obj.childNodes.length; i < j; i++) {
+					if(obj.childNodes[i] && obj.childNodes[i].className && obj.childNodes[i].className.indexOf("jstree-anchor") !== -1) {
+						tmp = obj.childNodes[i];
+						break;
+					}
+				}
+				if(tmp) {
+					if(this._model.data[obj.id].state.icons && this._model.data[obj.id].state.icons.length) {
+						icon = _s.cloneNode(false);
+						for(i = 0, j = this._model.data[obj.id].state.icons.length; i < j; i++) {
+							temp = _i.cloneNode(false);
+							temp.className += ' ' + this._model.data[obj.id].state.icons[i];
+							icon.appendChild(temp);
+						}
+						tmp.insertBefore(icon, tmp.childNodes[0]);
+					}
+				}
+			}
+			return obj;
+		};
+	};
+})(jQuery);
+
 // selecting a node opens it
 (function ($, undefined) {
 	"use strict";
@@ -222,45 +266,6 @@
 		this.bind = function () {
 			parent.bind.call(this);
 			this.element.on('select_node.jstree', function (e, data) { data.instance.open_node(data.node); });
-		};
-	};
-})(jQuery);
-
-// massloading
-(function ($, undefined) {
-	"use strict";
-	$.jstree.defaults.massload = function (nodes, callback) {
-		callback(false);
-	};
-	$.jstree.plugins.massload = function (options, parent) {
-		this.init = function (el, options) {
-			parent.init.call(this, el, options);
-			this._data.massload = {};
-		};
-		this._load_nodes = function (nodes, callback, is_callback) {
-			if(is_callback && !$.isEmptyObject(this._data.massload)) {
-				return parent._load_nodes.call(this, nodes, callback, is_callback);
-			}
-			this.settings.massload.call(this, nodes, $.proxy(function (data) {
-				if(data) {
-					for(var i in data) {
-						if(data.hasOwnProperty(i)) {
-							this._data.massload[i] = data[i];
-						}
-					}
-				}
-				parent._load_nodes.call(this, nodes, callback, is_callback);
-			}, this));
-		};
-		this._load_node = function (obj, callback) {
-			var d = this._data.massload[obj.id];
-			if(d) {
-				return this[typeof d === 'string' ? '_append_html_data' : '_append_json_data'](obj, typeof d === 'string' ? $($.parseHTML(d)).filter(function () { return this.nodeType !== 3; }) : d, function (status) {
-					callback.call(this, status);
-					delete this._data.massload[obj.id];
-				});
-			}
-			return parent._load_node.call(this, obj, callback);
 		};
 	};
 })(jQuery);
@@ -303,57 +308,294 @@
 		};
 	};
 })(jQuery);
-/* demo of the above
-function treeNode(val) {
-	var id = ++treeNode.counter;
-	this.getID = function () {
-		return id;
-	};
-	this.getText = function () {
-		return val.toString();
-	};
-	this.getExtra = function (obj) {
-		obj.icon = false;
-		return obj;
-	};
-	this.hasChildren = function () {
-		return true;
-	};
-	this.getChildren = function () {
-		return [
-			new treeNode(Math.pow(val, 2)),
-			new treeNode(Math.sqrt(val)),
-		];
-	};
-}
-treeNode.counter = 0;
-			
-$('#jstree').jstree({
-	'core': {
-		'data': [
-					new treeNode(2),
-					new treeNode(3),
-					new treeNode(4),
-					new treeNode(5)
-				]
-	},
-	plugins : ['datamodel']
-});
+/*
+	demo of the above
+	function treeNode(val) {
+		var id = ++treeNode.counter;
+		this.getID = function () {
+			return id;
+		};
+		this.getText = function () {
+			return val.toString();
+		};
+		this.getExtra = function (obj) {
+			obj.icon = false;
+			return obj;
+		};
+		this.hasChildren = function () {
+			return true;
+		};
+		this.getChildren = function () {
+			return [
+				new treeNode(Math.pow(val, 2)),
+				new treeNode(Math.sqrt(val)),
+			];
+		};
+	}
+	treeNode.counter = 0;
+
+	$('#jstree').jstree({
+		'core': {
+			'data': [
+						new treeNode(2),
+						new treeNode(3),
+						new treeNode(4),
+						new treeNode(5)
+					]
+		},
+		plugins : ['datamodel']
+	});
 */
 
-// paste override
+// untested sample plugin to keep all nodes in the DOM
 (function ($, undefined) {
 	"use strict";
-	$.jstree.plugins.pastewithpos = function () {
-		this.paste = function (obj, pos) {
-			obj = this.get_node(obj);
-			if(!obj || !ccp_mode || !ccp_mode.match(/^(copy_node|move_node)$/) || !ccp_node) { return false; }
-			if(this[ccp_mode](ccp_node, obj, pos)) {
-				this.trigger('paste', { "parent" : obj.id, "node" : ccp_node, "mode" : ccp_mode });
+	$.jstree.plugins.dom = function (options, parent) {
+		this.redraw_node = function (node, deep, is_callback, force_render) {
+			return parent.redraw_node.call(this, node, deep, is_callback, true);
+		};
+		this.close_node = function (obj, animation) {
+			var t1, t2, t, d;
+			if($.isArray(obj)) {
+				obj = obj.slice();
+				for(t1 = 0, t2 = obj.length; t1 < t2; t1++) {
+					this.close_node(obj[t1], animation);
+				}
+				return true;
 			}
-			ccp_node = false;
-			ccp_mode = false;
-			ccp_inst = false;
+			obj = this.get_node(obj);
+			if(!obj || obj.id === $.jstree.root) {
+				return false;
+			}
+			if(this.is_closed(obj)) {
+				return false;
+			}
+			animation = animation === undefined ? this.settings.core.animation : animation;
+			t = this;
+			d = this.get_node(obj, true);
+			if(d.length) {
+				if(!animation) {
+					d[0].className = d[0].className.replace('jstree-open', 'jstree-closed');
+					d.attr("aria-expanded", false);
+				}
+				else {
+					d
+						.children(".jstree-children").attr("style","display:block !important").end()
+						.removeClass("jstree-open").addClass("jstree-closed").attr("aria-expanded", false)
+						.children(".jstree-children").stop(true, true).slideUp(animation, function () {
+							this.style.display = "";
+							t.trigger("after_close", { "node" : obj });
+						});
+				}
+			}
+			obj.state.opened = false;
+			this.trigger('close_node',{ "node" : obj });
+			if(!animation || !d.length) {
+				this.trigger("after_close", { "node" : obj });
+			}
 		};
 	};
 })(jQuery);
+
+// customize plugin by @Lusito
+// https://github.com/Lusito/jstree/blob/node-customize/src/jstree-node-customize.js
+/**
+ * ### Node Customize plugin
+ *
+ * Allows to customize nodes when they are drawn.
+ */
+(function (factory) {
+	"use strict";
+	if (typeof define === 'function' && define.amd) {
+		define('jstree.node_customize', ['jquery','jstree'], factory);
+	}
+	else if(typeof exports === 'object') {
+		factory(require('jquery'), require('jstree'));
+	}
+	else {
+		factory(jQuery, jQuery.jstree);
+	}
+}(function ($, jstree, undefined) {
+	"use strict";
+
+	if($.jstree.plugins.node_customize) { return; }
+
+	/**
+	 * the settings object.
+	 * key is the attribute name to select the customizer function from switch.
+	 * switch is a key => function(el, node) map.
+	 * default: function(el, node) will be called if the type could not be mapped
+	 * @name $.jstree.defaults.node_customize
+	 * @plugin node_customize
+	 */
+	$.jstree.defaults.node_customize = {
+		"key": "type",
+		"switch": {},
+		"default": null
+	};
+
+	$.jstree.plugins.node_customize = function (options, parent) {
+		this.redraw_node = function (obj, deep, callback, force_draw) {
+			var node_id = obj;
+			var el = parent.redraw_node.apply(this, arguments);
+			if (el) {
+				var node = this._model.data[node_id];
+				var cfg = this.settings.node_customize;
+				var key = cfg.key;
+				var type =  (node && node.original && node.original[key]);
+				var customizer = (type && cfg.switch[type]) || cfg.default;
+				if(customizer)
+					customizer(el, node);
+			}
+			return el;
+		};
+	}
+}));
+
+
+// parentsload plugin by @ashl1
+/**
+ * ### Parentsload plugin
+ *
+ * Change load_node() functionality in jsTree, to possible load not yes downloaded node with all it parent in a single request (only useful with lazy loading).
+ *
+ * version 1.0.0 (Alexey Shildyakov - ashl1future@gmail.com)
+ * 2015: Compatible with jsTree-3.2.1
+ */
+/*globals jQuery, define, exports, require, document */
+(function (factory) {
+        "use strict";
+        if (typeof define === 'function' && define.amd) {
+                define('jstree.parentsload', ['jquery','jstree'], factory);
+        }
+        else if(typeof exports === 'object') {
+                factory(require('jquery'), require('jstree'));
+        }
+        else {
+                factory(jQuery, jQuery.jstree);
+        }
+}(function ($, jstree, undefined) {
+        "use strict";
+
+        if($.jstree.plugins.parentsload) { return; }
+
+        /**
+         * parentsload configuration
+         *
+         * The configuration syntax is almost the same as for core.data option. You must set parenstload.data the following:
+         *
+         * parentsload: {
+         *      data: function(){} // this function overwrites core data.data options
+         * }
+         *
+         * OR
+         *
+         * parentsload: {
+         *      data: {
+         *              url: function(node){} OR string,
+         *              data: function(node){} OR associative array as json{data} jQuery parameter
+         *      }
+         * }
+         *
+         * In last case at least on of 'url' or 'data' must be presented.
+         *
+         * At first, the plugin load_node() detects if the node already downloaded. If is - uses the core.data settings, if not - uses parentsload.data settings
+         * to fetch in one query the specified node and all its parent. The data must be in the first mentioned JSON format with set nested children[].
+         * Each node level should consist of all nodes on the level to properly work with the tree in the future. Otherwise, you must manually call load_node
+         * on every parent node to fetch all children nodes on that level.
+         *
+         * @name $.jstree.defaults.parentsload
+         * @plugin parentsload
+         */
+        $.jstree.defaults.parentsload = null;
+        $.jstree.plugins.parentsload = function (options, parent) {
+                this.init = function (el, options) {
+                        parent.init.call(this, el, options);
+                        this.patch_data()
+                };
+                this.patch_data = function(){
+                        var parentsloadSettings = this.settings.parentsload;
+                        var jsTreeDataSettings = this.settings.core.data;
+                        var self = this;
+
+                        var callError = function(number, message) {
+                                self._data.core.last_error = { 'error' : 'configuration', 'plugin' : 'parentsload', 'id' : 'parentsload_' + number, 'reason' : message, 'data' : JSON.stringify({config: parentsloadSettings}) };
+                                self.settings.core.error.call(self, self._data.core.last_error);
+                        }
+
+                        if(!parentsloadSettings) {
+                                callError('01', 'The configuration must be presented')
+                                return
+                        }
+                        parentsloadSettings = parentsloadSettings.data;
+
+                        var patchSettingsProperty = function (propertyName) {
+                                var property = parentsloadSettings[propertyName],
+                                    coreProperty = jsTreeDataSettings[propertyName];
+                                if (property) {
+                                        jsTreeDataSettings[propertyName] = function(node) {
+                                                if (this.get_node(node).parentsload_required) {
+                                                        if ($.isFunction(property)) {
+                                                                return property.call(this, node)
+                                                        } else {// (typeof property === 'string')
+                                                                return property
+                                                        }
+                                                } else {
+                                                        if ($.isFunction(coreProperty)) {
+                                                                return coreProperty.call(this, node)
+                                                        } else { // (typeof coreProperty === 'string')
+                                                                return coreProperty
+                                                        }
+                                                }
+                                        }
+                                } /* else {
+                                        use jstree the same data[propertyName] settings
+                                }*/
+                        }
+
+                        if($.isFunction(parentsloadSettings)) {
+                                this.settings.data = parentsloadSettings
+                        } else if (typeof parentsloadSettings === 'object') {
+                                if (! (parentsloadSettings.url || parentsloadSettings.data)) {
+                                        callError('02', 'The "data.url" or "data.data" must be presented in configuration')
+                                        return
+                                }
+                                patchSettingsProperty('url')
+                                patchSettingsProperty('data')
+
+                        } else {
+                                callError('03', 'The appropriate "data.url" or "data.data" must be presented in configuration')
+                        }
+                }
+
+                this.load_node = function (obj, callback) {
+                        if($.isArray(obj)) {
+                                // FIXME: _load_nodes will not load nodes not presented in the tree
+                                this._load_nodes(obj.slice(), callback);
+                                return true;
+                        }
+                        var foundObj = this.get_node(obj);
+                        if (foundObj) {
+                                return parent.load_node.apply(this, arguments)
+                        } else {
+                                // node hasn't been loaded
+                                var id = obj.id? obj.id: obj;
+                                this._model.data[id] = {
+                                        id : id,
+                                        parent : '#',
+                                        parents : [],
+                                        children : [],
+                                        children_d : [],
+                                        state : { loaded : false },
+                                        li_attr : {},
+                                        a_attr : {},
+                                        parentsload_required : true,
+                                };
+                                return parent.load_node.call(this, obj, function(obj, status){
+                                        obj.parentsload_required = !status
+                                        callback.call(this, obj, status)
+                                })
+                        }
+                }
+        };
+}));

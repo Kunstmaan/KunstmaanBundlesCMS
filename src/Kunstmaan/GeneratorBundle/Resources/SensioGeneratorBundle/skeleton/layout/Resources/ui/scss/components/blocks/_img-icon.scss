@@ -7,24 +7,23 @@
 .img-icon {
     position: relative;
 
-    width: 5rem;
-    height: 5rem;
+    width: 8rem;
+    height: 8rem;
     margin: 0 auto;
 
-    background: $blue;
+    background: $brand-primary;
+
     border-radius: 100%;
 }
 
 .img-icon__img {
-    transform: translateY(-50%);
-
     position: absolute;
     top: 50%;
-    left: 1.5rem;
+    left: 50%;
 
-    width: 2rem;
+    width: 3.2rem;
+    transform: translate3d(-50%, -50%, 0);
 }
-
 
 
 /*doc

@@ -15,6 +15,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
 
         kunstmaanbundles.sidebartoggle.init();
         kunstmaanbundles.sidebartree.init();
+        kunstmaanbundles.urlchoosertree.init();
         kunstmaanbundles.sidebarsearchfocus.init();
         kunstmaanbundles.filter.init();
         kunstmaanbundles.sortableTable.init();
@@ -43,6 +44,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.rangeslider.init();
         kunstmaanbundles.googleOAuth.init();
         kunstmaanbundles.appNodeVersionLock.init();
+        kunstmaanbundles.appEntityVersionLock.init();
     };
 
 

@@ -16,10 +16,10 @@ kunstmaanbundles.urlChooser = (function (window, undefined) {
     urlChooser = function () {
 
         // Link Chooser select
-        $body.on('click', '.js-url-chooser-link-select', function (e) {
+        $body.on('click', '.js-url-chooser-link-select a', function (e) {
             e.preventDefault();
 
-            var $this = $(this),
+            var $this = $(this).parent(),
                 slug = $this.data('slug'),
                 id = $this.data('id'),
                 replaceUrl = $this.closest('nav').data('replace-url');

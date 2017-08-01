@@ -8,7 +8,7 @@
 A bundle which enables editing translations in the admin interface without need for editing the translations files.
 Translations will be stored in a (default) database and retrieved on the most efficient way possible.
 
-![Symfony2 Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_preview.png)
+![Symfony Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_preview.png)
 
 Installation requirements
 -------------------------
@@ -150,7 +150,7 @@ bin/console kuma:translator:import --globals
 How does the cache work
 -------------------------------------
 
-Translations are stored in a database, but cached (as Symfony2 normally does) when not running in debug mode.
+Translations are stored in a database, but cached (as Symfony normally does) when not running in debug mode.
 
 ```php
 $kernel = new AppKernel('prod', false); // translations are cached an read from this cache
@@ -198,13 +198,13 @@ You instead of "Hello world" you might see `header.hello_world (messages)`. This
 Symfony Profiler integration
 -----------------------------
 
-The Symfony2 Profiler show the number of translations used on the current request:
+The Symfony Profiler show the number of translations used on the current request:
 
-![Symfony2 Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_bar.png)
+![Symfony Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_bar.png)
 
 When you click on this item, you can see all translations used on the current request and a link to add or edit them in the Kunstmaan Admin backend.
 
-![Symfony2 Profiler Example Table](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_table.png)
+![Symfony Profiler Example Table](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_table.png)
 
 
 Workflow example (new project)

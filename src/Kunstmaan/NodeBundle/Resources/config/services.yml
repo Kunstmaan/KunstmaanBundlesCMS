@@ -4,12 +4,13 @@ parameters:
     kunstmaan_node.sluglistener.class: 'Kunstmaan\NodeBundle\EventListener\SlugListener'
     kunstmaan_node.helper.url.class: Kunstmaan\NodeBundle\Helper\URLHelper
     kunstmaan_node.url_replace.twig.class: Kunstmaan\NodeBundle\Twig\UrlReplaceTwigExtension
+    kunstmaan_node.url_chooser.lazy_increment: 2
     kunstmaan_multi_domain.url_replace.controller.class: Kunstmaan\NodeBundle\Controller\UrlReplaceController
 
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: ['@session', '@kunstmaan_admin.logger' , '@kunstmaan_utilities.slugifier', '@kunstmaan_admin.domain_configuration']
+        arguments: ['@session', '@kunstmaan_admin.logger' , '@kunstmaan_utilities.slugifier', '@kunstmaan_admin.domain_configuration', '@kunstmaan_node.pages_configuration']
         calls:
             - [ 'setRequestStack', ['@request_stack'] ]
         tags:

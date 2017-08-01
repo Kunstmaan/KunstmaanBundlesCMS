@@ -162,20 +162,8 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
         showOrHideActions($form);
 
-        // Init new rich editors
-        kunstmaanbundles.richEditor.init();
-
-        kunstmaanbundles.nestedForm.init();
-        kunstmaanbundles.advancedSelect.init();
-
-        // Init new tooltips
-        kunstmaanbundles.tooltip.init();
-
-        // Init new colorpickers
-        kunstmaanbundles.colorpicker.init();
-
-        // Init new datepickers
-        kunstmaanbundles.datepicker.reInit();
+        // Reinit all modules
+        kunstmaanbundles.pagepartEditor.reInit($newItem);
 
         // Init Ajax Modals
         kunstmaanbundles.ajaxModal.resetAjaxModals();

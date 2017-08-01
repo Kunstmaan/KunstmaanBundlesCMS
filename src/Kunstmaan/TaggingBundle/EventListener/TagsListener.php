@@ -5,6 +5,7 @@ namespace Kunstmaan\TaggingBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use DoctrineExtensions\Taggable\Taggable;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Kunstmaan\PagePartBundle\Event\PagePartEvent;
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 
 class TagsListener
@@ -75,4 +76,14 @@ class TagsListener
             $this->getTagManager()->saveTagging($page);
         }
     }
+
+    public function postPagePartPersist(PagePartEvent $event)
+    {
+        $pagePart = $event->getPagePart();
+
+        if ($pagePart instanceof Taggable) {
+            $this->getTagManager()->saveTagging($pagePart);
+        }
+    }
+
 }
