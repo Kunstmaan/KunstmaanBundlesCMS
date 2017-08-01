@@ -67,7 +67,7 @@ class DefaultController extends Controller
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $em->persist($dashboardConfiguration);
                 $em->flush($dashboardConfiguration);
 

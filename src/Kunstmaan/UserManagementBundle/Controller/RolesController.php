@@ -66,7 +66,7 @@ class RolesController extends BaseSettingsController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $em->persist($role);
                 $em->flush();
 
@@ -110,7 +110,7 @@ class RolesController extends BaseSettingsController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $em->persist($role);
                 $em->flush();
 

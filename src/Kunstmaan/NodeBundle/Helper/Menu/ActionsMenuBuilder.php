@@ -11,6 +11,7 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
+use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -180,7 +181,7 @@ class ActionsMenuBuilder
                         'extras' => ['renderType' => 'button']
                     ]
                 );
-                if ($isSuperAdmin) {
+                if ($isSuperAdmin && is_subclass_of($node->getRefEntityName(), HasPageTemplateInterface::class)) {
                     $menu->addChild(
                         'action.exportpagetemplate',
                         [
@@ -319,7 +320,7 @@ class ActionsMenuBuilder
                             'extras' => ['renderType' => 'button']
                         ]
                     );
-                    if ($isSuperAdmin) {
+                    if ($isSuperAdmin && is_subclass_of($node->getRefEntityName(), HasPageTemplateInterface::class)) {
                         $menu->addChild(
                             'action.exportpagetemplate',
                             [

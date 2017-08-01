@@ -1,7 +1,12 @@
 {% set handler = mediamanager.getHandler(media) %}
 {% set helper = handler.getFormHelper(media) %}
-{% if helper.type == 'soundcloud' %}
+
+{% if helper.type is defined and helper.type == 'soundcloud' %}
     <div class="embed-responsive embed-responsive-16by9">
         <iframe width="560" height="315" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{ helper.code }}&amp;auto_play=false&amp;hide_related=false&amp;visual=true" class="embed-responsive-item"></iframe>
     </div>
+{% elseif 'audio' in media.contentType %}
+    <audio controls>
+        <source src="{{ media.url }}" />
+    </audio>
 {% endif %}
