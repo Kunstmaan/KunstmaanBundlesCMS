@@ -69,7 +69,7 @@ class GroupsController extends BaseSettingsController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $em->persist($group);
                 $em->flush();
 
@@ -113,7 +113,7 @@ class GroupsController extends BaseSettingsController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $em->persist($group);
                 $em->flush();
 

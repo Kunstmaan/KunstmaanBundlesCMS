@@ -40,7 +40,7 @@ abstract class AbstractNewsletterController extends Controller
         $form = $this->createSubscriptionForm($thePopup);
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->handleSubscription($request, $form->getData(), $thePopup);
 
             return $this->render($this->getThanksTemplate(), array(

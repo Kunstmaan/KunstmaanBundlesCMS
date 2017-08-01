@@ -101,7 +101,7 @@ class TranslatorController extends AdminListController
                 $form->get('keyword')->addError($error);
             }
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // Create translation
                 $em->getRepository('KunstmaanTranslatorBundle:Translation')->createTranslations($data);
                 $em->flush();
@@ -171,7 +171,7 @@ class TranslatorController extends AdminListController
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // Update translations
                 $em->getRepository('KunstmaanTranslatorBundle:Translation')->updateTranslations($translation, $id);
                 $em->flush();

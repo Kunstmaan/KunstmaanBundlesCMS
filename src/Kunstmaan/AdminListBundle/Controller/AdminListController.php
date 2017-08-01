@@ -142,7 +142,7 @@ abstract class AdminListController extends Controller
             }
 
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
-            if ($form->isValid() && !$request->isXmlHttpRequest()) {
+            if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
                 $this->container->get('event_dispatcher')->dispatch(
                     AdminListEvents::PRE_ADD,
@@ -265,7 +265,7 @@ abstract class AdminListController extends Controller
             }
 
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
-            if ($form->isValid() && !$request->isXmlHttpRequest()) {
+            if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
                 $this->container->get('event_dispatcher')->dispatch(
                     AdminListEvents::PRE_EDIT,

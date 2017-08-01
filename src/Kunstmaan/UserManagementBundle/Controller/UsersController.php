@@ -105,7 +105,7 @@ class UsersController extends BaseSettingsController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPasswordChanged(true);
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('fos_user.user_manager');
@@ -185,7 +185,7 @@ class UsersController extends BaseSettingsController
                 $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
