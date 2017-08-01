@@ -162,6 +162,10 @@ class Media extends AbstractEntity
     public function getFileSize()
     {
         $size = $this->filesize;
+        if ($size === null) {
+            return '';
+        }
+
         if ($size < 1024) {
             return $size . "b";
         } else {
