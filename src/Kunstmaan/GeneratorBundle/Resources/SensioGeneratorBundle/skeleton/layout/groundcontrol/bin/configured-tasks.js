@@ -186,6 +186,10 @@ export const server = createServerTask({
         proxy: {
             target: '{{ browserSyncUrl }}'
         },
+{% else %}
+        server: {
+            baseDir: '.'
+        },
 {% endif %}
         notify: true
     }

@@ -35,23 +35,6 @@ adminBundle.tasks.cssLocal = createCssLocalTask({src: adminBundle.config.srcPath
 
 adminBundle.tasks.cssOptimized = createCssOptimizedTask({src: adminBundle.config.srcPath + 'scss/*.scss', dest: adminBundle.config.distPath + 'css'});
 
-adminBundle.tasks.server = createServerTask({
-    config: {
-        ui: false,
-        ghostMode: false,
-        files: [
-            './src/Kunstmaan/*Bundle/Resources/public/css/*.css',
-            './src/Kunstmaan/*Bundle/Resources/public/js/*.js'
-        ],
-        open: false,
-        reloadOnRestart: true,
-        proxy: {
-            target: 'http://myproject.dev'
-        },
-        notify: true
-    }
-});
-
 adminBundle.tasks.scripts = createScriptsTask({
     src: [
         adminBundle.config.srcPath + 'vendor_bower/jquery/dist/jquery.js',
