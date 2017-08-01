@@ -22,6 +22,33 @@ article:
                 label: Name
             link:
                 label: Link
+    category:
+        list:
+            header:
+                name:   Name
+                link:   Link
+            filter:
+                name:   Name
+                link:   Link
+        form:
+            name:
+                label: Name
+            link:
+                label: Link
+        page:
+            url: category
+    tag:
+        list:
+            header:
+                name:   Name
+            filter:
+                name:   Name
+        form:
+            name:
+                label: Name
+        page:
+            url: tag
+
     page:
         list:
             header:
@@ -34,3 +61,15 @@ article:
                 created_at: Created at
                 updated_at: Updated at
                 online:     Online
+
+
+
+
+article_overview_page:
+    filter: Filter
+    category: Categories
+    tag: Tags
+    all: All
+    route:
+        category: category
+        tag: tag

@@ -222,10 +222,12 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
      *
      * @param string      $objectName The thing we are going to create (pagepart, bundle, layout, ...)
      * @param string|null $namespace  The namespace provided as input option
+     * @param string      $questionMoreBundles
+     * @param string      $questionOneBundle
      *
      * @return BundleInterface
      */
-    protected function askForBundleName($objectName, $namespace = null)
+    protected function askForBundleName($objectName, $namespace = null, $questionMoreBundles = "\nIn which bundle do you want to create the %s", $questionOneBundle = "The %s will be created for the <comment>%s</comment> bundle.\n")
     {
         $ownBundles = $this->getOwnBundles();
         if (count($ownBundles) <= 0) {
@@ -257,8 +259,8 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                 foreach ($ownBundles as $key => $bundleInfo) {
                     $bundleSelect[$key] = $bundleInfo['name'];
                 }
-                $bundleId = $this->assistant->askSelect(
-                    'In which bundle do you want to create the '.$objectName,
+                $bundleId   = $this->assistant->askSelect(
+                    sprintf($questionMoreBundles, $objectName),
                     $bundleSelect
                 );
                 $bundleName = $ownBundles[$bundleId]['name'];
@@ -267,7 +269,7 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
             } else {
                 $bundleName = $ownBundles[1]['name'];
                 $this->assistant->writeLine(
-                    array("The $objectName will be created for the <comment>$bundleName</comment> bundle.\n")
+                    array(sprintf($questionOneBundle, $objectName, $bundleName))
                 );
             }
         }

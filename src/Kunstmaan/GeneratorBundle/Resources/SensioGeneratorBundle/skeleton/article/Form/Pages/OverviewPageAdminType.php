@@ -18,7 +18,7 @@ class {{ entity_class }}OverviewPageAdminType extends AbstractArticleOverviewPag
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-	    'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}OverviewPage'
+	        'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}OverviewPage'
         ));
     }
 
@@ -27,6 +27,6 @@ class {{ entity_class }}OverviewPageAdminType extends AbstractArticleOverviewPag
      */
     public function getBlockPrefix()
     {
-	return '{{ entity_class|lower }}_overview_page_type';
+	    return '{{ entity_class|lower }}_overview_page_type';
     }
 }

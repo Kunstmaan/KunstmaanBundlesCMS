@@ -5,6 +5,8 @@ namespace {{ namespace }}\Form\Pages;
 use Kunstmaan\ArticleBundle\Form\AbstractArticlePageAdminType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * The admin type for {{ entity_class }} pages
@@ -21,9 +23,7 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add(
-            'author'
-        );
+        //%PageAdminTypePartial.php.twig%
     }
 
     /**
@@ -34,7 +34,7 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-	    'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}Page'
+	        'data_class' => '{{ namespace }}\Entity\Pages\{{ entity_class }}Page'
         ));
     }
 
@@ -44,6 +44,6 @@ class {{ entity_class }}PageAdminType extends AbstractArticlePageAdminType
      */
     public function getBlockPrefix()
     {
-	return '{{ entity_class|lower }}_page_type';
+	    return '{{ entity_class|lower }}_page_type';
     }
 }
