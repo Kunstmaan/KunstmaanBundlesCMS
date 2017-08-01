@@ -170,7 +170,7 @@ class FolderController extends Controller
         $form = $this->createForm(FolderType::class, $folder);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
                 $this->addFlash(
                     FlashTypes::SUCCESS,
@@ -230,7 +230,7 @@ class FolderController extends Controller
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
                 $data = $form->getData();
                 $alsoDeleteFolders = $data['checked'];
