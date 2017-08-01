@@ -2,7 +2,7 @@
 
     {% if pagepartadmin.possiblePagePartTypes | length > 0 %}
         <!-- First New PP select -->
-        {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/add_pagepart.html.twig' %}
+        {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/add_pagepart.html.twig' with {first: true} %}
     {% endif %}
 
     <!-- Sortable container -->
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-{% if extended %}
+{% if extended is defined and extended == true %}
     {% include '@KunstmaanPagePart/PagePartAdminTwigExtension/modal.html.twig' with { 'pagepartadmin': pagepartadmin } %}
 {% endif %}
 

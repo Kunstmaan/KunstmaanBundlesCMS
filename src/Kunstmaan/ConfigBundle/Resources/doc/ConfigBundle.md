@@ -26,7 +26,7 @@ By extending this class you will have to implement some methods from the Configu
     **/
     public function getAccessRoles()
     {
-        return array('ROLE_ADMIN_');
+        return array('ROLE_ADMIN');
     }
 
     /**

@@ -67,10 +67,10 @@ class SlidePagePart extends AbstractPagePart
     }
 
     /**
-     * @return SlidePagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new SlidePagePartAdminType();
+        return SlidePagePartAdminType::class;
     }
 }

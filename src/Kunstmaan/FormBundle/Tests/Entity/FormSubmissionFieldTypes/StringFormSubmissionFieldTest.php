@@ -49,9 +49,7 @@ class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $adminType = $this->object->getDefaultAdminType();
-        $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof StringFormSubmissionType);
+        $this->assertEquals(StringFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
     /**

@@ -5,12 +5,18 @@ import { adminBundle } from './groundcontrol/admin-bundle.tasks';
 import { dashboardBundle } from './groundcontrol/dashboard-bundle.tasks';
 import { mediaBundle } from './groundcontrol/media-bundle.tasks';
 import { translatorBundle } from './groundcontrol/translator-bundle.tasks';
-
+import startLocalTask, { buildOnChange } from './groundcontrol/start-local.task';
 
 // AdminBundle Tasks
 const analyzeAdminBundle = gulp.series(
     adminBundle.tasks.eslint,
     adminBundle.tasks.stylelint
+);
+
+const buildLocalAdminBundle = gulp.series(
+    adminBundle.tasks.copy,
+    adminBundle.tasks.cssLocal,
+    adminBundle.tasks.scripts
 );
 
 const buildOptimizedAdminBundle = gulp.series(
@@ -25,6 +31,11 @@ const analyzeDashboardBundle = gulp.series(
     dashboardBundle.tasks.stylelint
 );
 
+const buildLocalDashboardBundle = gulp.series(
+    dashboardBundle.tasks.cssLocal,
+    dashboardBundle.tasks.scripts
+);
+
 const buildOptimizedDashboardBundle = gulp.series(
     dashboardBundle.tasks.cssOptimized,
     dashboardBundle.tasks.scripts
@@ -35,6 +46,10 @@ const analyzeMediaBundle = gulp.series(
     mediaBundle.tasks.eslint,
 );
 
+const buildLocalMediaBundle = gulp.series(
+    mediaBundle.tasks.scripts
+);
+
 const buildOptimizedMediaBundle = gulp.series(
     mediaBundle.tasks.scripts
 );
@@ -43,6 +58,11 @@ const buildOptimizedMediaBundle = gulp.series(
 const analyzeTranslatorBundle = gulp.series(
     translatorBundle.tasks.eslint,
     translatorBundle.tasks.stylelint
+);
+
+const buildLocalTranslatorBundle = gulp.series(
+    translatorBundle.tasks.cssLocal,
+    translatorBundle.tasks.scripts
 );
 
 const buildOptimizedTranslatorBundle = gulp.series(
@@ -63,6 +83,13 @@ const test = gulp.series(
     analyze
 );
 
+const buildLocal = gulp.series(
+    buildLocalAdminBundle,
+    buildLocalDashboardBundle,
+    buildLocalMediaBundle,
+    buildLocalTranslatorBundle
+);
+
 const buildOptimized = gulp.series(
     buildOptimizedAdminBundle,
     buildOptimizedDashboardBundle,
@@ -75,5 +102,12 @@ const testAndBuildOptimized = gulp.series(
     buildOptimized
 );
 
+// Setting up server, local dev
+const startLocal = gulp.series(
+    buildLocal,
+    startLocalTask,
+    buildOnChange
+);
+
 // Export public tasks
-export { test, buildOptimized, testAndBuildOptimized };
+export { test, buildOptimized, testAndBuildOptimized, startLocal };

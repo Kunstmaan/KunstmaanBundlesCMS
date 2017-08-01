@@ -60,7 +60,6 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $defaultAdminType = $this->object->getDefaultAdminType();
-        $this->assertTrue($defaultAdminType instanceof DownloadPagePartAdminType);
+        $this->assertEquals(DownloadPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

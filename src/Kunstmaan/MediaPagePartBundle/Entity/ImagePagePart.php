@@ -154,10 +154,10 @@ class ImagePagePart extends AbstractPagePart
     }
 
     /**
-     * @return ImagePagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new ImagePagePartAdminType();
+        return ImagePagePartAdminType::class;
     }
 }

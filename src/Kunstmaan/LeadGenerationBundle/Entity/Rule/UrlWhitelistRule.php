@@ -66,10 +66,10 @@ class UrlWhitelistRule extends AbstractRule
     }
 
     /**
-     * @return UrlWhiteListAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return new UrlWhiteListAdminType();
+        return UrlWhiteListAdminType::class;
     }
 }

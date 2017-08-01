@@ -28,25 +28,23 @@ bin/console kuma:generate:article --namespace=Kunstmaan\\NewsBundle --entity=new
 
 The following files will be generated :
 
-* Kunstmaan/NewsBundle/AdminList/News/NewsAuthorAdminListConfigurator.php
-* Kunstmaan/NewsBundle/AdminList/News/NewsPageAdminListConfigurator.php
-* Kunstmaan/NewsBundle/Controler/News/NewsAuthorAdminListController.php
-* Kunstmaan/NewsBundle/Controler/News/NewsPageAdminListController.php
-* Kunstmaan/NewsBundle/Entity/News/NewsAuthor.php
-* Kunstmaan/NewsBundle/Entity/News/NewsOverviewPage.php
-* Kunstmaan/NewsBundle/Entity/News/NewsPage.php
-* Kunstmaan/NewsBundle/Form/News/NewsAuthorAdminType.php
-* Kunstmaan/NewsBundle/Form/News/NewsPageAdminType.php
+* Kunstmaan/NewsBundle/AdminList/NewsAuthorAdminListConfigurator.php
+* Kunstmaan/NewsBundle/AdminList/NewsPageAdminListConfigurator.php
+* Kunstmaan/NewsBundle/Controller/NewsAuthorAdminListController.php
+* Kunstmaan/NewsBundle/Controller/NewsPageAdminListController.php
+* Kunstmaan/NewsBundle/Entity/Pages/NewsAuthor.php
+* Kunstmaan/NewsBundle/Entity/Pages/NewsOverviewPage.php
+* Kunstmaan/NewsBundle/Entity/Pages/NewsPage.php
+* Kunstmaan/NewsBundle/Form/NewsAuthorAdminType.php
+* Kunstmaan/NewsBundle/Form/Pages/NewsPageAdminType.php
 * Kunstmaan/NewsBundle/Helper/Menu/NewsMenuAdaptor.php
-* Kunstmaan/NewsBundle/PagePartAdmin/News/NewsOverviewPagePartAdminConfigurator.php
-* Kunstmaan/NewsBundle/PagePartAdmin/News/NewsPagePartAdminConfigurator.php
-* Kunstmaan/NewsBundle/Repository/News/NewsAuthorRepository
-* Kunstmaan/NewsBundle/Repository/News/NewsPageRepository
+* Kunstmaan/NewsBundle/Repository/NewsPageRepository.php
+* Kunstmaan/NewsBundle/Repository/NewsOverviewPageRepository.php
 * Kunstmaan/NewsBundle/Resources/config/routing.yml
 * Kunstmaan/NewsBundle/Resources/config/services.yml
-* Kunstmaan/NewsBundle/views/AdminList/NewsPageAdminList/list.html.twig
-* Kunstmaan/NewsBundle/views/News/NewsOverviewPage/view.html.twig
-* Kunstmaan/NewsBundle/views/News/NewsPage/view.html.twig
+* Kunstmaan/NewsBundle/Resources/views/AdminList/NewsPageAdminList/list.html.twig
+* Kunstmaan/NewsBundle/Resources/views/Pages/NewsOverviewPage/view.html.twig
+* Kunstmaan/NewsBundle/Resources/views/Pages/NewsPage/view.html.twig
 
 ### Entities
 

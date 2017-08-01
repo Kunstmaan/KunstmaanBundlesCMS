@@ -18,6 +18,11 @@ const OPTIONS = {
         describe: 'Should local dev be speeded up, but at cost of slightly different setup vs. the prod build?',
         default: false,
         type: 'boolean'
+    },
+    backendProxy: {
+        describe: 'Proxy to the backend (PHP) server',
+        default: 'http://kunstmaan.cms',
+        type: 'string'
     }
 };
 

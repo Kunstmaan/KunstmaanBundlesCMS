@@ -11,13 +11,14 @@ export const translatorBundle = {
     config: {
         srcPath: './src/Kunstmaan/TranslatorBundle/Resources/ui/',
         distPath: './src/Kunstmaan/TranslatorBundle/Resources/public/',
+        publicPath: '/bundles/kunstmaantranslator'
     },
     tasks: {}
 };
 
 translatorBundle.tasks.stylelint = createStylelintTask({src: translatorBundle.config.srcPath + 'scss/**/*.scss'});
 
-translatorBundle.tasks.cssLocal = createCssLocalTask({src: translatorBundle.config.srcPath + 'scss/style.scss', dest: translatorBundle.config.distPath + 'css'});
+translatorBundle.tasks.cssLocal = createCssLocalTask({src: translatorBundle.config.srcPath + 'scss/*.scss', dest: translatorBundle.config.distPath + 'css'});
 
 translatorBundle.tasks.cssOptimized = createCssOptimizedTask({src: translatorBundle.config.srcPath + 'scss/*.scss', dest: translatorBundle.config.distPath + 'css'});
 

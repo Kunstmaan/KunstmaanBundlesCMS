@@ -84,7 +84,6 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $defaultAdminType = $this->object->getDefaultAdminType();
-        $this->assertTrue($defaultAdminType instanceof ImagePagePartAdminType);
+        $this->assertEquals(ImagePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }
