@@ -22,7 +22,7 @@ class ChoicePagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array(
+            ->add('label', TextType::class, array(
                 'label' => 'kuma_form.form.choice_page_part.label.label',
                 'required' => false,
             ))
