@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Form;
 
+use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,12 +24,9 @@ class AbstractFormPageAdminType extends AbstractType
         $builder->add('title', TextType::class, array(
             'label' => 'kuma_form.form.page_admin.title.label',
         ));
-        $builder->add('thanks', TextareaType::class, array(
+        $builder->add('thanks', WysiwygType::class, array(
             'label' => 'kuma_form.form.page_admin.thanks.label',
             'required' => false,
-            'attr' => array(
-                'class' => 'js-rich-editor rich-editor'
-            ),
         ));
         $builder->add('subject', TextType::class, array(
             'label' => 'kuma_form.form.page_admin.subject.label',

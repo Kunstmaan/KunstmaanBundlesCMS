@@ -4,7 +4,6 @@ namespace Kunstmaan\SeoBundle\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\SeoBundle\Form\SeoType;
@@ -23,7 +22,6 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
-     * @Assert\Length(max=55)
      *
      */
     protected $metaTitle;
@@ -32,7 +30,6 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
-     * @Assert\Length(max=155)
      *
      */
     protected $metaDescription;

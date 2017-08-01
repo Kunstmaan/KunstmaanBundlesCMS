@@ -9,14 +9,17 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
  */
 class PagePartAdminTwigExtension extends \Twig_Extension
 {
+
+    private $usesExtendedPagePartChooser = false;
+
     /**
      * @return array
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('pagepartadmin_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('pagepartadmin_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+        ];
     }
 
     /**
@@ -33,33 +36,46 @@ class PagePartAdminTwigExtension extends \Twig_Extension
      *     {{ pagepartadmin_widget(ppAdmin, {'separator': '+++++'}) }}
      *
      * @param \Twig_Environment $env
-     * @param PagePartAdmin $ppAdmin The pagepart admin to render
-     * @param Form $form The form
-     * @param array $parameters Additional variables passed to the template
-     * @param string $templateName
+     * @param PagePartAdmin     $ppAdmin    The pagepart admin to render
+     * @param Form              $form       The form
+     * @param array             $parameters Additional variables passed to the template
+     * @param string            $templateName
+     *
      * @return string The html markup
      */
-    public function renderWidget(
-        \Twig_Environment $env,
-        PagePartAdmin $ppAdmin ,
-        $form = null,
-        array $parameters = array(),
-        $templateName = 'KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig'
-    )
+    public function renderWidget(\Twig_Environment $env, PagePartAdmin $ppAdmin, $form = null, array $parameters = [], $templateName = null)
     {
+        if ($templateName === null) {
+            $templateName = 'KunstmaanPagePartBundle:PagePartAdminTwigExtension:widget.html.twig';
+        }
+
         $template = $env->loadTemplate($templateName);
 
-        return $template->render(array_merge($parameters, array(
+        return $template->render(array_merge($parameters, [
             'pagepartadmin' => $ppAdmin,
-            'form' => $form
-        )));
+            'page' => $ppAdmin->getPage(),
+            'form' => $form,
+            'extended' => $this->usesExtendedPagePartChooser,
+        ]));
     }
 
     /**
-     * @return string
+     * Get usesExtendedPagePartChooser.
+     *
+     * @return usesExtendedPagePartChooser.
      */
-    public function getName()
+    public function getUsesExtendedPagePartChooser()
     {
-        return 'pagepartadmin_twig_extension';
+        return $this->usesExtendedPagePartChooser;
+    }
+
+    /**
+     * Set usesExtendedPagePartChooser.
+     *
+     * @param usesExtendedPagePartChooser the value to set.
+     */
+    public function setUsesExtendedPagePartChooser($usesExtendedPagePartChooser)
+    {
+        $this->usesExtendedPagePartChooser = $usesExtendedPagePartChooser;
     }
 }

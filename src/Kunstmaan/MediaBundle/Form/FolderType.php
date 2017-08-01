@@ -46,7 +46,6 @@ class FolderType extends AbstractType
                         'slideshow' => 'slideshow',
                         'video' => 'video'
                     ),
-                    'choices_as_values' => true,
                     'label' => 'media.folder.addsub.form.rel'
                 )
             )

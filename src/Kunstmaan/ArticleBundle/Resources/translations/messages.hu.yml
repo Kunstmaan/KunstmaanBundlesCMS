@@ -4,7 +4,7 @@ article:
     form:
         date:
             label: Dátum
-        summery:
+        summary:
             label: Összegzés
     modal:
         add:

@@ -1,7 +1,8 @@
 # Media
 seo:
     robots:
-        tip: Tip:
+        title: Robots
+        tip: 'Tip:'
         warning: Dit is een standaard waarde en voorbeeld. Er is geen eigen robots.txt ingesteld.
         moreinfo: Meer informatie over de Kunstmaan robots.txt staat op onze
 
@@ -37,7 +38,7 @@ seo:
         seo:
             meta_title:
                 label:  Titel
-                info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s. De mag max. 55 karakters bevatten.
+                info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s.
             meta_description:
                 label: Meta omschrijving
             meta_robots:

@@ -57,7 +57,7 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
                 $parameters,
                 array(
                     'locales' => $locales,
-                    'route'   => $route
+                    'route' => $route
                 )
             )
         );
@@ -74,18 +74,8 @@ class LocaleSwitcherTwigExtension extends \Twig_Extension
     /**
      * @return array
      */
-    public function getBackendLocales()
+    public function getBackendLocales($switchedHost = null)
     {
-        return $this->domainConfiguration->getBackendLocales();
-    }
-
-    /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'localeswitcher_twig_extension';
+        return $this->domainConfiguration->getBackendLocales($switchedHost);
     }
 }

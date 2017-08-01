@@ -3,11 +3,13 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
+use Symfony\Component\Security\Acl\Permission\MaskBuilderInterface;
+use Symfony\Component\Security\Acl\Permission\MaskBuilderRetrievalInterface;
 
 /**
  * PermissionMap which stores all the possible permissions, this is based on the BasicPermissionMap
  */
-class PermissionMap implements PermissionMapInterface
+class PermissionMap implements PermissionMapInterface, MaskBuilderRetrievalInterface
 {
 
     const PERMISSION_VIEW       = 'VIEW';
@@ -77,5 +79,15 @@ class PermissionMap implements PermissionMapInterface
     public function getPossiblePermissions()
     {
         return array_keys($this->map);
+    }
+
+    /**
+     * Returns a new instance of the MaskBuilder used in the permissionMap.
+     *
+     * @return MaskBuilderInterface
+     */
+    public function getMaskBuilder()
+    {
+        return new MaskBuilder();
     }
 }

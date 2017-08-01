@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Menu;
 
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
+use Symfony\Component\HttpFoundation\Request;
 
 class TranslatorMenuAdaptor implements MenuAdaptorInterface
 {

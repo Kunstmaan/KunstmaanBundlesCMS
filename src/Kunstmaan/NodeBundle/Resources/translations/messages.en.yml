@@ -4,6 +4,7 @@ subaction:
 action:
     saveasdraft: "Save as draft"
     recopyfromlanguage: "Copy content from other language"
+    exportpagetemplate: "Export pagetemplate"
     publish: "Publish"
     unpublish: "Unpublish"
     preview: "Preview"
@@ -73,6 +74,8 @@ kuma_node:
         edit:
             flash:
                 success: The page has been edited
+                locked: The page is currently being edited by %users%
+                locked_success: An automatic backup has been created because the page is being edited by another user
         new_page:
             title:
                 default: New page
@@ -87,6 +90,9 @@ kuma_node:
                 created_at: Created At
                 updated_at: Updated At
                 online:     Online
+            online: (Online)
+            offline: (Offline)
+            additional_title: This list contains all the pages, chronologically ordered by updated date.
 
     tab:
         properties:
@@ -165,3 +171,6 @@ kuma_node:
             button:
                 copy:   Copy
                 cancel: Cancel
+        export_pagetemplate:
+            button:
+                title:   Export pagetemplate

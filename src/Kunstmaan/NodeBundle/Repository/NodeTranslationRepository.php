@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -138,7 +139,7 @@ class NodeTranslationRepository extends EntityRepository
      * Get all online child node translations for a given node and (optional)
      * language
      *
-     * @param Node   $parent
+     * @param Node $parent
      * @param string $lang (optional, if not specified all languages will be
      *                     returned)
      *
@@ -151,24 +152,23 @@ class NodeTranslationRepository extends EntityRepository
     }
 
     /**
-     * @deprecated Use getOnlineNodeTranslationsQueryBuilder instead
+     * Finds all nodetranslations where title is like the given $title parameter
      *
-     * This returns the node translations that are currently published
+     *
+     * @param string $title
+     * @param string $lang (optional, if not specified all languages will be
+     *                     returned)
      *
      * @return array
      */
-    public function getOnlineNodes()
+    public function getNodeTranslationsLikeTitle($title, $lang = null)
     {
-        return $this->createQueryBuilder('b')
-            ->select('b', 'v')
-            ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
-            ->leftJoin(
-                'b.publicNodeVersion',
-                'v',
-                'WITH',
-                'b.publicNodeVersion = v.id'
-            )
-            ->where('n.deleted != 1 AND b.online = 1');
+        /** @var QueryBuilder $qb */
+        $qb = $this->getNodeTranslationsQueryBuilder($lang);
+        $qb->andWhere('nt.title like :title')
+            ->setParameter('title', '%' . $title . '%');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -195,7 +195,7 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get the node translation for a given slug string
      *
-     * @param string               $slug       The slug
+     * @param string $slug The slug
      * @param NodeTranslation|null $parentNode The parentnode
      *
      * @return NodeTranslation|null
@@ -203,13 +203,14 @@ class NodeTranslationRepository extends EntityRepository
     public function getNodeTranslationForSlug(
         $slug,
         NodeTranslation $parentNode = null
-    ) {
+    )
+    {
         if (empty($slug)) {
             return $this->getNodeTranslationForSlugPart(null, $slug);
         }
 
         $slugParts = explode('/', $slug);
-        $result    = $parentNode;
+        $result = $parentNode;
         foreach ($slugParts as $slugPart) {
             $result = $this->getNodeTranslationForSlugPart($result, $slugPart);
         }
@@ -221,14 +222,15 @@ class NodeTranslationRepository extends EntityRepository
      * Returns the node translation for a given slug
      *
      * @param NodeTranslation|null $parentNode The parentNode
-     * @param string               $slugPart   The slug part
+     * @param string $slugPart The slug part
      *
      * @return NodeTranslation|null
      */
     private function getNodeTranslationForSlugPart(
         NodeTranslation $parentNode = null,
         $slugPart = ''
-    ) {
+    )
+    {
         $qb = $this->createQueryBuilder('t')
             ->select('t', 'v', 'n')
             ->innerJoin('t.node', 'n', 'WITH', 't.node = n.id')
@@ -239,7 +241,6 @@ class NodeTranslationRepository extends EntityRepository
                 't.publicNodeVersion = v.id'
             )
             ->where('n.deleted != 1')
-            ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -265,23 +266,24 @@ class NodeTranslationRepository extends EntityRepository
     /**
      * Get the node translation for a given url
      *
-     * @param string          $urlSlug        The full url
-     * @param string          $locale         The locale
-     * @param boolean         $includeDeleted Include deleted nodes
-     * @param NodeTranslation $toExclude      Optional NodeTranslation instance
+     * @param string $urlSlug The full url
+     * @param string $locale The locale
+     * @param boolean $includeDeleted Include deleted nodes
+     * @param NodeTranslation $toExclude Optional NodeTranslation instance
      *                                        you wish to exclude
-     * @param Node            $rootNode       Optional Root node of the tree you
+     * @param Node $rootNode Optional Root node of the tree you
      *                                        wish to use
      *
-     * @return NodeTranslation|null
+     * @return array
      */
-    public function getNodeTranslationForUrl(
+    public function getAllNodeTranslationsForUrl(
         $urlSlug,
         $locale = '',
         $includeDeleted = false,
         NodeTranslation $toExclude = null,
         Node $rootNode = null
-    ) {
+    )
+    {
         $qb = $this->createQueryBuilder('b')
             ->select('b', 'v')
             ->innerJoin('b.node', 'n', 'WITH', 'b.node = n.id')
@@ -292,7 +294,6 @@ class NodeTranslationRepository extends EntityRepository
                 'b.publicNodeVersion = v.id'
             )
             ->addOrderBy('b.online', 'DESC')
-            ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
 
@@ -324,7 +325,37 @@ class NodeTranslationRepository extends EntityRepository
                 ->setParameter('right', $rootNode->getRight());
         }
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get the node translation for a given url
+     *
+     * @param string $urlSlug The full url
+     * @param string $locale The locale
+     * @param boolean $includeDeleted Include deleted nodes
+     * @param NodeTranslation $toExclude Optional NodeTranslation instance
+     *                                        you wish to exclude
+     * @param Node $rootNode Optional Root node of the tree you
+     *                                        wish to use
+     *
+     * @return NodeTranslation|null
+     */
+    public function getNodeTranslationForUrl(
+        $urlSlug,
+        $locale = '',
+        $includeDeleted = false,
+        NodeTranslation $toExclude = null,
+        Node $rootNode = null
+    )
+    {
+        $translations = $this->getAllNodeTranslationsForUrl($urlSlug, $locale, $includeDeleted, $toExclude, $rootNode);
+
+        if (empty($translations)) {
+            return null;
+        }
+
+        return $translations[0];
     }
 
     /**
@@ -353,9 +384,9 @@ class NodeTranslationRepository extends EntityRepository
      * Create a node translation for a given node
      *
      * @param HasNodeInterface $hasNode The hasNode
-     * @param string           $lang    The locale
-     * @param Node             $node    The node
-     * @param BaseUser         $owner   The user
+     * @param string $lang The locale
+     * @param Node $node The node
+     * @param BaseUser $owner The user
      *
      * @throws \InvalidArgumentException
      *
@@ -366,12 +397,13 @@ class NodeTranslationRepository extends EntityRepository
         $lang,
         Node $node,
         BaseUser $owner
-    ) {
-        $em        = $this->getEntityManager();
+    )
+    {
+        $em = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);
         if (!$hasNode->getId() > 0) {
             throw new \InvalidArgumentException(
-                "The entity of class ".$className.
+                "The entity of class " . $className .
                 " has no id, maybe you forgot to flush first"
             );
         }
@@ -407,9 +439,9 @@ class NodeTranslationRepository extends EntityRepository
      * Add a draft node version for a given node
      *
      * @param HasNodeInterface $hasNode The hasNode
-     * @param string           $lang    The locale
-     * @param Node             $node    The node
-     * @param BaseUser         $owner   The user
+     * @param string $lang The locale
+     * @param Node $node The node
+     * @param BaseUser $owner The user
      *
      * @throws \InvalidArgumentException
      *
@@ -420,17 +452,18 @@ class NodeTranslationRepository extends EntityRepository
         $lang,
         Node $node,
         BaseUser $owner
-    ) {
-        $em        = $this->getEntityManager();
+    )
+    {
+        $em = $this->getEntityManager();
         $className = ClassLookup::getClass($hasNode);
         if (!$hasNode->getId() > 0) {
             throw new \InvalidArgumentException(
-                "The entity of class ".$className.
+                "The entity of class " . $className .
                 " has no id, maybe you forgot to flush first"
             );
         }
 
-        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->findOneBy(array('lang' => $lang, 'node' => $node));
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->findOneBy(['lang' => $lang, 'node' => $node]);
 
         $em->getRepository('KunstmaanNodeBundle:NodeVersion')
             ->createNodeVersionFor(
@@ -451,7 +484,7 @@ class NodeTranslationRepository extends EntityRepository
      * Find best match for given URL and locale
      *
      * @param string $urlSlug The slug
-     * @param string $locale  The locale
+     * @param string $locale The locale
      *
      * @return NodeTranslation
      */
@@ -487,14 +520,15 @@ class NodeTranslationRepository extends EntityRepository
      * translation for the specified language
      *
      * @param NodeTranslation $nodeTranslation The node translation
-     * @param string          $language        The locale
+     * @param string $language The locale
      *
      * @return bool
      */
     public function hasParentNodeTranslationsForLanguage(
         NodeTranslation $nodeTranslation,
         $language
-    ) {
+    )
+    {
         $parentNode = $nodeTranslation->getNode()->getParent();
         if ($parentNode !== null) {
             $parentNodeTranslation = $parentNode->getNodeTranslation(
@@ -528,7 +562,8 @@ class NodeTranslationRepository extends EntityRepository
     public function getNodeTranslationByLanguageAndInternalName(
         $language,
         $internalName
-    ) {
+    )
+    {
         $qb = $this->createQueryBuilder('nt')
             ->select('nt', 'v')
             ->innerJoin('nt.node', 'n', 'WITH', 'nt.node = n.id')
@@ -540,7 +575,6 @@ class NodeTranslationRepository extends EntityRepository
             )
             ->where('n.deleted != 1')
             ->andWhere('nt.online = 1')
-            ->addOrderBy('n.sequenceNumber', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1);
 

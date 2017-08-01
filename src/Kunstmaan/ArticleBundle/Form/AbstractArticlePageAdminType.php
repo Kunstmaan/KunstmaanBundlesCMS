@@ -38,6 +38,7 @@ class AbstractArticlePageAdminType extends PageAdminType
                 'date_format' => 'dd/MM/yyyy'
             )
         );
+
         $builder->add('summary', TextType::class, array(
             'label' => 'article.form.summery.label'
         ));

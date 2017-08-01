@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\EventListener;
 
-use Kunstmaan\PagePartBundle\EventListener\CloneListener;
-use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
+use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
+use Kunstmaan\PagePartBundle\EventListener\CloneListener;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfigurator;

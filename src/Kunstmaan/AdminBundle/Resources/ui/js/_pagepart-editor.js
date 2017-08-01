@@ -8,10 +8,20 @@ kunstmaanbundles.pagepartEditor = function (window) {
         delete: []
     };
 
-    var init, addPagePart, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent, reInit, reOrder;
+    var init, addPagePart, addPagePartExtended, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent, reInit, reOrder, target;
 
     init = function () {
         var $body = $('body');
+
+        // Add
+        $body.on('click', '.js-pp-modal-button', function (e) {
+            target = $(e.target);
+        });
+
+        // Add
+        $body.on('click', '.js-add-pp-button', function () {
+            addPagePartExtended($(this));
+        });
 
         // Add
         $body.on('change', '.js-add-pp-select', function () {
@@ -48,7 +58,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
             e.preventDefault();
         });
     };
-
 
     // Add
     addPagePart = function ($select) {
@@ -107,12 +116,72 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 // Reset ajax-modals
                 kunstmaanbundles.ajaxModal.resetAjaxModals();
 
-                executeEvent('add')
+                executeEvent('add');
             }
         });
 
         // Reset select
         $select.val('');
+    };
+
+    // Add
+    addPagePartExtended = function ($select) {
+        var $targetContainer = target.closest('.js-pp-container'),
+            requestUrl = target.data('url');
+
+        // Get necessary data
+        var pageClassName = $targetContainer.data('pageclassname'),
+            pageId = $targetContainer.data('pageid'),
+            context = $targetContainer.data('context'),
+            ppType = $select.data('pagepartclass');
+
+        // Set Loading
+        kunstmaanbundles.appLoading.addLoading();
+
+        // Ajax Request
+        $.ajax({
+            url: requestUrl,
+            data: {
+                'pageclassname': pageClassName,
+                'pageid': pageId,
+                'context': context,
+                'type': ppType
+            },
+            async: true,
+            success: function (data) {
+                // Add PP
+                var firstSelect = target.hasClass('js-add-pp-select--first');
+                var elem;
+                if (firstSelect) {
+                    elem = $('#parts-' + context).prepend(data);
+                } else {
+                    elem = target.closest('.js-sortable-item').after(data);
+                }
+
+                // Create a temporary node of the new PP
+                var $temp = $('<div>');
+                $temp.append(data);
+
+                // Check if some javascript needs to be reinitialised for this PP
+                reInit($temp);
+
+                // Remove Loading
+                kunstmaanbundles.appLoading.removeLoading();
+
+                // Enable leave-page modal
+                kunstmaanbundles.checkIfEdited.edited();
+
+                // Reinit custom selects
+                kunstmaanbundles.advancedSelect.init();
+
+                // Reset ajax-modals
+                kunstmaanbundles.ajaxModal.resetAjaxModals();
+
+                executeEvent('add');
+            }
+        });
+
+        $('#' + $select.data('pagepartmodalname')).modal('hide');
     };
 
 
@@ -309,7 +378,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
     return {
         init: init,
         subscribeToEvent: subscribeToEvent,
-        unSubscribeToEvent: unSubscribeToEvent
+        unSubscribeToEvent: unSubscribeToEvent,
+        reInit: reInit
     };
 
 }(window);

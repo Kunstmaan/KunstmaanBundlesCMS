@@ -5,13 +5,13 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 use Doctrine\ORM\PersistentCollection;
 use InvalidArgumentException;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
+use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
-use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
+use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
-use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
-use Kunstmaan\AdminListBundle\AdminList\Field;
+use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -616,7 +616,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $result->format('Y-m-d H:i:s');
         } else {
             if ($result instanceof PersistentCollection) {
-                $results = "";
+                $results = [];
                 /* @var Object $entry */
                 foreach ($result as $entry) {
                     $results[] = $entry->getName();

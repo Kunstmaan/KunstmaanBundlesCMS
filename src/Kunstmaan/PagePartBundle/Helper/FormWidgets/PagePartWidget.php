@@ -4,15 +4,15 @@ namespace Kunstmaan\PagePartBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
-use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
+use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
 
 class PagePartWidget extends FormWidget
 {

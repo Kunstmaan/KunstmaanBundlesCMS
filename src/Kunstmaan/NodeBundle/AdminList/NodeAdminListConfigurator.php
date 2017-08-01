@@ -6,12 +6,12 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -107,7 +107,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->addListAction(
             new SimpleListAction(
                 $addHomepageRoute,
-                'Add homepage',
+                'kuma_node.modal.add_homepage.h',
                 null,
                 'KunstmaanNodeBundle:Admin:list_action_button.html.twig'
             )

@@ -3,9 +3,9 @@
 namespace Kunstmaan\LeadGenerationBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
 class PopupAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {

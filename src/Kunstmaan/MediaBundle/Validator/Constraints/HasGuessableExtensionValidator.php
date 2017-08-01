@@ -5,10 +5,10 @@ namespace Kunstmaan\MediaBundle\Validator\Constraints;
 use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface;
 use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class hasGuessableExtensionValidator

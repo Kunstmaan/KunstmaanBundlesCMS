@@ -4,8 +4,8 @@ namespace Kunstmaan\FormBundle\Helper;
 
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The form handler handles everything from creating the form to handling the submitted form

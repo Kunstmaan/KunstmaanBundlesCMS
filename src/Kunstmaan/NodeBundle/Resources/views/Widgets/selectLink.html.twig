@@ -1,23 +1,9 @@
 {% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 
-{% import _self as macros %}
-{% macro selectLinkRecTreeView(tree, item) %}
-    {% import _self as macros %}
-    <li rel="page" class="{% if item.online == 0 %}jstree-node--offline{% endif %}"{% if item.online == 0 %} data-jstree='{"type":"offline"}'{% endif %}>
-        <a href="#" class="js-url-chooser-link-select" data-slug="{{ item.url }}"  data-id="{{ item.id }}">
-            {{ item.title }}
-        </a>
-        <ul>
-            {% for item in tree.children(item.id) %}
-                {{ macros.selectLinkRecTreeView(tree, item) }}
-            {% endfor %}
-        </ul>
-    </li>
-{% endmacro %}
+{% set switchedHost = get_switched_host() %}
 
 {% block body %}
     <header role="banner">
-
         <!-- App Header -->
         <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -26,7 +12,8 @@
                 <div class="navbar-header">
 
                     <!--Header - Toggle -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-bar">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#main-nav-bar">
                         <span class="sr-only">Toggle</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -56,7 +43,11 @@
                     <!-- Navigation - Right -->
                     <ul class="nav navbar-nav navbar-right">
                         {% set route = app.request.attributes.get('_route') %}
-                        {{ localeswitcher_widget(get_backend_locales(), route) }}
+                        {{ localeswitcher_widget(get_backend_locales(is_multidomain_site() ? switchedHost.host), route) }}
+
+                        {% if is_multidomain_site() %}
+                            {{ multidomain_widget(route) }}
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -68,25 +59,24 @@
     <main role="main" id="app__main" class="container-fluid app__main url-chooser">
 
         <!-- Modal Sidebar -->
-        <aside id="app__sidebar" class="app__sidebar app__sidebar--static url-chooser__tree">
+        <aside id="app__sidebar" class="url-chooser__tree">
             <!-- Tree Search -->
-            <div class="form-group app__sidebar__module app__sidebar__search">
+            <div class="form-group app_urlchooser__search">
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="fa fa-search"></i>
                     </span>
-                    <input type="text" placeholder="{{ 'Search' | trans }}" id="app__sidebar__search" class="form-control">
+                    <input type="text" placeholder="{{ 'Search' | trans }}" id="app__urlchooser__search"
+                           class="form-control">
                 </div>
                 <hr>
             </div>
 
-            {% if multilanguage %}{% set baseURL = "/" ~ app.request.locale %}{% else %}{% set baseURL = "" %}{% endif %}
-            <nav role="navigation" id="app__sidebar__navigation" class="app__sidebar__module app__sidebar__navigation" data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}" data-base-url={{ baseURL }}>
-                <ul>
-                    {% for item in tree.rootItems %}
-                        {{ macros.selectLinkRecTreeView(tree, item) }}
-                    {% endfor %}
-                </ul>
+            <nav role="navigation" id="app__urlchooser__navigation"
+                    class="app__urlchooser__module app__urlchooser__navigation"
+                    data-replace-url="{{ path("KunstmaanNodeBundle_urlchooser_replace") }}"
+                    data-reorder-url="{{ path('KunstmaanNodeBundle_nodes_reorder') }}"
+                    data-src="{{  path('KunstmaanNodeBundle_nodes_lazy') }}">
             </nav>
         </aside>
 
@@ -96,12 +86,15 @@
             <p id="url-chooser__selection-preview">
                 Selection: empty
             </p>
-            <button type="button" id="save-url-chooser-modal" class="btn btn-primary btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
+            <button type="button" id="save-url-chooser-modal" class="btn btn-primary btn--raise-on-hover"
+                    data-cke="{% if cke %}true{% else %}false{% endif %}">
                 Ok
             </button>
-            <button type="button" id="cancel-url-chooser-modal" class="btn btn-default btn--raise-on-hover" data-cke="{% if cke %}true{% else %}false{% endif %}">
+            <button type="button" id="cancel-url-chooser-modal" class="btn btn-default btn--raise-on-hover"
+                    data-cke="{% if cke %}true{% else %}false{% endif %}">
                 Cancel
             </button>
         </div>
+
     </main>
 {% endblock %}

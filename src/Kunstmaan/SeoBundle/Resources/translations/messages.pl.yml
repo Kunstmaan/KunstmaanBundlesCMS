@@ -1,0 +1,62 @@
+# Media
+seo:
+    robots:
+        title: Robots
+        tip: 'Rada:'
+        warning: To są domyślne ustawienia dla pliku robots.txt, indywidualny plik dla projektu nie został utworzony
+        moreinfo: Więcej informacji pliku robots.txt możesz znaleźć w
+
+    action:
+        save: Zapisz
+        cancel: Anuluj
+        preview: Podgląd
+
+    form:
+        og:
+            title: OG Tytuł
+            description: OG Opis
+            url: OG Url
+            type: OG Typ
+            image: OG Zdjęcie
+            article:
+                author:     OG Autor
+                publisher:  OG Wydawca
+                section:    OG Sekcja artykułu
+        twitter:
+            title: Tytuł
+            title_info_text: The title of your twitter card. Falls back to SEO Meta title
+            description: Opis
+            description_info_text: The description of your twitter card. Falls back to SEO Meta description
+            sitehandle: Witryna
+            sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
+            creatorhandle: Twórca
+            creatorhandle_info_text: Twitter handle of your page publisher.
+            image: Zdjęcie
+        robots:
+            noindex: No index
+            nofollow: No follow
+            noarchive: No archive
+            nosnippet: No snippet
+            notranslate: No translate
+            noimageindex: No image index
+        seo:
+            meta_title:
+                label:  Tytuł
+                info_text: Tytuł jest częśto wykorzystywany przez wyszukiwarki
+            meta_description:
+                label: Opis meta
+            meta_robots:
+                label: Meta robots
+                placeholder: Wybierz tagi dla wyszukiwarek
+            extra_metadata:
+                label: Dodatkowe meta dane
+
+    pagetabs:
+        opengraph: Open Graph
+        twittercards: Twitter Cards
+
+    tab:
+        seo:
+            title: SEO
+        social:
+            title: Społeczności

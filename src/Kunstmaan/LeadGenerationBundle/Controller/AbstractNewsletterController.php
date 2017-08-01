@@ -4,12 +4,12 @@ namespace Kunstmaan\LeadGenerationBundle\Controller;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 use Kunstmaan\LeadGenerationBundle\Form\NewsletterSubscriptionType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractNewsletterController extends Controller
 {

@@ -11,8 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * UserType defines the form used for {@link User}
@@ -65,7 +65,6 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                     'label'       => 'settings.user.adminlang',
                     'required'    => true,
                     'placeholder' => false,
-                    'choices_as_values' => true,
                 ));
 
         if ($this->canEditAllFields) {

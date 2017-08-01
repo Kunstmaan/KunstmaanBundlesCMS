@@ -13,13 +13,13 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
@@ -41,16 +41,11 @@ class UsersController extends BaseSettingsController
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
-        $userObject = $this->getUserClassInstance();
         $configuratorClassName = '';
         if ($this->container->hasParameter('kunstmaan_user_management.user_admin_list_configurator.class')) {
             $configuratorClassName = $this->getParameter(
                 'kunstmaan_user_management.user_admin_list_configurator.class'
             );
-        }
-        // Fallback for backwards compatibility - will be removed in the future!
-        if (empty($configuratorClassName)) {
-            $configuratorClassName = $userObject->getAdminListConfiguratorClass();
         }
 
         $configurator = new $configuratorClassName($em);

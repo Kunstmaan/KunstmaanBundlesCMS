@@ -71,6 +71,10 @@ class NodeChoiceType extends AbstractType
 
     private function getCurrentLocale()
     {
+        if ($this->requestStack->getCurrentRequest() === null) {
+            return null;
+        }
+
         return $this->requestStack->getCurrentRequest()->getLocale();
     }
 }

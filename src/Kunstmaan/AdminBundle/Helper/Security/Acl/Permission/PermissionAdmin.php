@@ -2,22 +2,22 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Entity\Role;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -233,7 +233,7 @@ class PermissionAdmin
             $user = $this->tokenStorage->getToken()->getUser();
             $this->createAclChangeSet($this->resource, $changes, $user);
 
-            $cmd = 'php ' . $this->kernel->getRootDir() . '/console kuma:acl:apply';
+            $cmd = 'php bin/console kuma:acl:apply';
             $cmd .= ' --env=' . $this->kernel->getEnvironment();
 
             $this->shellHelper->runInBackground($cmd);

@@ -3,18 +3,18 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 
 class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 {

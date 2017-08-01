@@ -2,14 +2,14 @@
 
 namespace Kunstmaan\FormBundle\AdminList;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Adminlist configuration to list all the form pages
@@ -40,8 +40,8 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function buildFilters()
     {
         $builder = $this->getFilterBuilder();
-        $builder->add('title', new StringFilterType('title'), 'Title')
-            ->add('online', new BooleanFilterType('online'), 'Online');
+        $builder->add('title', new StringFilterType('title'), 'kuma_form.list.filter.title')
+            ->add('online', new BooleanFilterType('online'), 'kuma_form.list.filter.online');
     }
 
     /**
@@ -185,6 +185,6 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
             ->andWhere(
                 'n.id IN (SELECT m.id FROM Kunstmaan\FormBundle\Entity\FormSubmission s join s.node m)'
             )
-            ->addOrderBy('n.sequenceNumber', 'DESC');
+            ->addOrderBy('n.id', 'DESC');
     }
 }

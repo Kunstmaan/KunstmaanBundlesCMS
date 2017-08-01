@@ -3,13 +3,13 @@
 namespace Kunstmaan\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

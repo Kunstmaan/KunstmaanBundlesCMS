@@ -3,15 +3,15 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Security\Acl\Domain\Acl;
-use Symfony\Component\Security\Acl\Domain\Entry;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Security\Acl\Domain\Acl;
+use Symfony\Component\Security\Acl\Domain\Entry;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
  * Permissions update of ACL entries for all nodes for given role.
@@ -46,7 +46,7 @@ class UpdateAclCommand extends ContainerAwareCommand
 
         // Select Permission(s)
         $permissionMap = $this->getContainer()->get('security.acl.permission.map');
-        $question = new ChoiceQuestion('Select permissions(s) (seperate by ",")',
+        $question = new ChoiceQuestion('Select permissions(s) (separate by ",")',
             $permissionMap->getPossiblePermissions());
         $question->setMultiselect(true);
         $mask = array_reduce($helper->ask($input, $output, $question), function ($a, $b) use ($permissionMap) {

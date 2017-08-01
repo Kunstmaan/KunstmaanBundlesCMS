@@ -11,7 +11,7 @@
         {% endif %}
 
         {% if resource.linkUrl and resource.linkText %}
-            <a href="{{ resource.linkUrl }}" class="link-pp__link" {% if resource.linkNewWindow %}target="_blank"{% endif %}>
+            <a href="{{ resource.linkUrl | replace_url }}" class="link-pp__link" {% if resource.linkNewWindow %}target="_blank"{% endif %}>
                 {{ resource.linkText }}
                 <i class="icon icon--arrow-right icon--small"></i>
             </a>

@@ -2,15 +2,16 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection;
 
+use FOS\UserBundle\Form\Type\ResettingFormType;
 use InvalidArgumentException;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 
 /**
@@ -30,7 +31,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $container->setParameter('security.acl.permission.map.class', 'Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap');
         $container->setParameter('version_checker.url', 'https://bundles.kunstmaan.be/version-check');
         $container->setParameter('version_checker.timeframe', 60*60*24);
         $container->setParameter('version_checker.enabled', true);
@@ -50,10 +50,18 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.session_security.ip_check', $config['session_security']['ip_check']);
         $container->setParameter('kunstmaan_admin.session_security.user_agent_check', $config['session_security']['user_agent_check']);
 
+        $container->setParameter('kunstmaan_admin.admin_prefix', $this->normalizeUrlSlice($config['admin_prefix']));
+
         $container->setParameter('kunstmaan_admin.google_signin.enabled', $config['google_signin']['enabled']);
         $container->setParameter('kunstmaan_admin.google_signin.client_id', $config['google_signin']['client_id']);
         $container->setParameter('kunstmaan_admin.google_signin.client_secret', $config['google_signin']['client_secret']);
         $container->setParameter('kunstmaan_admin.google_signin.hosted_domains', $config['google_signin']['hosted_domains']);
+
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_digits' , $config['password_restrictions']['min_digits']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_uppercase' , $config['password_restrictions']['min_uppercase']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_special_characters' , $config['password_restrictions']['min_special_characters']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.min_length' , $config['password_restrictions']['min_length']);
+        $container->setParameter('kunstmaan_admin.password_restrictions.max_length' , $config['password_restrictions']['max_length']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -83,7 +91,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $fosUserConfig['resetting']['email']['from_email']['address']        = 'admin@kunstmaan.be';
         $fosUserConfig['resetting']['email']['from_email']['sender_name']    = 'admin';
         $fosUserConfig['resetting']['email']['template']    = 'FOSUserBundle:Resetting:email.txt.twig';
-        $fosUserConfig['resetting']['form']['type']                 = 'fos_user_resetting';
+        $fosUserConfig['resetting']['form']['type']                 = ResettingFormType::class;
         $fosUserConfig['resetting']['form']['name']                 = 'fos_user_resetting_form';
         $fosUserConfig['resetting']['form']['validation_groups']    = ['ResetPassword'];
         $container->prependExtensionConfig('fos_user', $fosUserConfig);
@@ -122,5 +130,24 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $definition->addTag('kunstmaan_admin.menu.adaptor');
 
         $container->setDefinition('kunstmaan_admin.menu.adaptor.simple', $definition);
+    }
+
+    /**
+     * @param string $urlSlice
+     *
+     * @return string
+     */
+    protected function normalizeUrlSlice($urlSlice)
+    {
+        /* Get rid of exotic characters that would break the url */
+        $urlSlice = filter_var($urlSlice, FILTER_SANITIZE_URL);
+
+        /* Remove leading and trailing slashes */
+        $urlSlice = trim($urlSlice, '/');
+
+        /* Make sure our $urlSlice is literally used in our regex */
+        $urlSlice = preg_quote($urlSlice);
+
+        return $urlSlice;
     }
 }
