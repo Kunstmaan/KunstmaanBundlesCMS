@@ -176,6 +176,7 @@
                 {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}
                 {% if form.vars.allow_add %}
                     data-prototype="{{ form_widget(form.vars.prototype)|e }}"
+                    data-prototype-name="{{ form.vars.name }}"
                     data-add-button-label="{{ attr['nested_add_button_label']|default('form.add')|trans }}"
                 {% endif %}
                 data-initialized="false" data-initializing="false" data-reinit-js='["nestedForm"]'>
