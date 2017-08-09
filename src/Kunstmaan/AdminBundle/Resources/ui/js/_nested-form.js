@@ -135,9 +135,11 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
             $newItem;
 
         // Update prototype with new index
-        var nestedLevelProtoName = prototype.match(/__[a-z]+__/g)[0];
-        var regExpName = new RegExp(nestedLevelProtoName, 'g');
-        prototype = prototype.replace(regExpName, currentIndex);
+        if (prototype.match(/__[a-z]+__/g)) {
+            var nestedLevelProtoName = prototype.match(/__[a-z]+__/g)[0];
+            var regExpName = new RegExp(nestedLevelProtoName, 'g');
+            prototype = prototype.replace(regExpName, currentIndex);
+        }
 
         // Increase the index with one for the next item
         $form.data('index', currentIndex + 1);
