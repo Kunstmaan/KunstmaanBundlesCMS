@@ -35,12 +35,14 @@ const analyzeDashboardBundle = gulp.series(
 
 const buildLocalDashboardBundle = gulp.series(
     dashboardBundle.tasks.cssLocal,
-    dashboardBundle.tasks.scripts
+    dashboardBundle.tasks.scripts,
+    dashboardBundle.tasks.scriptsSetup
 );
 
 const buildOptimizedDashboardBundle = gulp.series(
     dashboardBundle.tasks.cssOptimized,
-    dashboardBundle.tasks.scripts
+    dashboardBundle.tasks.scripts,
+    dashboardBundle.tasks.scriptsSetup
 );
 
 // MediaBundle Tasks
