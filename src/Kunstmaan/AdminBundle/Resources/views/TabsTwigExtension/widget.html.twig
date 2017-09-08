@@ -3,40 +3,42 @@
 
 {% form_theme formView '@KunstmaanAdmin/Form/fields.html.twig' %}
 
-<ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
-{% for tab in tabPane.tabs %}
-    {% set tabIdentifier = tab.identifier %}
-    {% set formErrors = tab.getFormErrors(formView) %}
-
-    <li {% if activeTab == tabIdentifier %} class="active" {% endif %}>
-        <a href="#{{ tabIdentifier }}" data-toggle="tab">
-            {{ tab.title|trans }}
-            {% if formErrors|length > 0 %}
-                <span class="error-label">
-                    {{formErrors|length}}
-                </span>
-            {% endif %}
-        </a>
-    </li>
-{%  endfor %}
-    <li class="tab__more dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            {{ 'form.button.dropdown.more' | trans }} <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
-    </li>
-</ul>
-
-<div class="tab-content">
-    <input type="hidden" name="currenttab" id="currenttab" value="{{ activeTab }}">
-
+{% block content %}
+    <ul class="nav nav-tabs page-main-tabs js-auto-collapse-tabs">
     {% for tab in tabPane.tabs %}
         {% set tabIdentifier = tab.identifier %}
+        {% set formErrors = tab.getFormErrors(formView) %}
 
-        <div class="tab-pane{% if activeTab == tabIdentifier %} active{% endif %}" id="{{ tabIdentifier }}">
-            {% include tab.template with {'tab' : tab, 'formView': formView} %}
-        </div>
-    {% endfor %}
-</div>
+        <li {% if activeTab == tabIdentifier %} class="active" {% endif %}>
+            <a href="#{{ tabIdentifier }}" data-toggle="tab">
+                {{ tab.title|trans }}
+                {% if formErrors|length > 0 %}
+                    <span class="error-label">
+                        {{formErrors|length}}
+                    </span>
+                {% endif %}
+            </a>
+        </li>
+    {%  endfor %}
+        <li class="tab__more dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                {{ 'form.button.dropdown.more' | trans }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
+        </li>
+    </ul>
 
-{{ form_rest(formView) }}
+    <div class="tab-content">
+        <input type="hidden" name="currenttab" id="currenttab" value="{{ activeTab }}">
+
+        {% for tab in tabPane.tabs %}
+            {% set tabIdentifier = tab.identifier %}
+
+            <div class="tab-pane{% if activeTab == tabIdentifier %} active{% endif %}" id="{{ tabIdentifier }}">
+                {% include tab.template with {'tab' : tab, 'formView': formView} %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {{ form_rest(formView) }}
+{% endblock %}
