@@ -72,7 +72,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                 ],
                 'title' => [
                     'type' => 'string',
-                    'boost' => 2,
                     'include_in_all' => true
                 ],
                 'slug' => [
