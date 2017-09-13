@@ -2,6 +2,7 @@
 
 {% block extra_actions_header %}
     {% if adminlistconfigurator.overviewPage %}
+        {% if adminlistconfigurator.canAdd %}
         <div class='col-sm-6 col-md-4'>
             <!-- Main-actions -->
             <div class='page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header'>
@@ -47,6 +48,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     {% else %}
         <div class='alert alert-warning'>
             <strong>Warning: </strong> You need to create at least one overview page before you can create a {{ adminlistconfigurator.readableName  }}
