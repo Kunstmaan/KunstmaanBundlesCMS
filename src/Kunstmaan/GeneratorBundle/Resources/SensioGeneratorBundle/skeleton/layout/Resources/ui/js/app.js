@@ -9,6 +9,7 @@ import search from './search';
 import demoMsg from './demoMsg';
 {% endif %}
 import CookieConsent from './CookieConsent';
+import {VideoPagePart} from './VideoPagePart';
 import Videolink from './Videolink';
 
 {% if demosite %}
@@ -20,12 +21,14 @@ $(function() {
     search.init();
     demoMsg.init();
     new CookieConsent();
+    VideoPagePart.init();
     new Videolink();
 });
 
 {% else %}
 document.addEventListener('DOMContentLoaded', () => {
     new CookieConsent();
+    VideoPagePart.init();
     new Videolink();
 });
 {% endif %}

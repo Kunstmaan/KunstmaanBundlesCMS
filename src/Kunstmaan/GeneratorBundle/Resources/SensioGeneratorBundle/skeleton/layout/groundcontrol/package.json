@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
+    "plyr": "^2.0.13",
     "ramda": "^0.23.0"{% if demosite %},
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
     "jquery": "^3.1.1",
