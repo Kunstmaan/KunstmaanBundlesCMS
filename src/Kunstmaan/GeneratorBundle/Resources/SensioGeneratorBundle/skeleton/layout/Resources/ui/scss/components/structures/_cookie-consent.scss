@@ -12,16 +12,16 @@
 
     display: none;
     width: 100%;
-    padding: 2rem;
+    padding: 20px;
 
     background: rgba($brand-primary--dark, .95);
 
-    border: .1rem solid rgba($brand-primary--dark, .95);
+    border: 1px solid rgba($brand-primary--dark, .95);
 
     color: $white;
     font: {
         family: Helvetica, Arial, sans-serif;
-        size: 1.4rem;
+        size: 14px;
     }
     line-height: 1.7;
     text-align: left;
@@ -41,8 +41,8 @@
         right: 0;
         bottom: 0;
 
-        padding: 1rem 1.5rem;
-        margin: 1rem 0 0;
+        padding: 10px 15px;
+        margin: 10px 0 0;
 
         background: $white;
 
@@ -68,24 +68,24 @@
     }
 
     @media (min-width: $screen-sm-min) {
-        bottom: 1rem;
-        left: 1rem;
+        bottom: 10px;
+        left: 10px;
 
-        max-width: 56rem;
+        max-width: 560px;
 
         p {
-            max-width: 37rem;
+            max-width: 370px;
         }
     }
 
     @media (min-width: $screen-md-min) {
-        bottom: 1rem;
-        left: 1rem;
+        bottom: 10px;
+        left: 10px;
 
-        max-width: 35rem;
+        max-width: 350px;
 
         p {
-            max-width: 21rem;
+            max-width: 210px;
         }
     }
 }
@@ -97,7 +97,7 @@
 @keyframes cookieSlide {
 
     0% {
-        transform: translate3d(0, 6rem, 0);
+        transform: translate3d(0, 60px, 0);
         opacity: 0;
     }
 

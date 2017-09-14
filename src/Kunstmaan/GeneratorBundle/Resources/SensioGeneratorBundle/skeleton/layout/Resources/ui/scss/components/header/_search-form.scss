@@ -6,8 +6,8 @@
    ========================================================================== */
 .searchbox-form {
     position: absolute;
-    top: 1.12rem;
-    right: .65rem;
+    top: 11px;
+    right: 7px;
     z-index: 4;
 
     width: $search-height-mobile;
@@ -17,7 +17,7 @@
     @media (min-width: $screen-md-min) {
         float: left;
         position: relative;
-        top: -.6rem;
+        top: -6px;
         right: auto;
 
         width: $search-height;
@@ -66,14 +66,14 @@
     z-index: 2;
 
     height: $search-height-mobile;
-    padding: 0 $search-height-mobile 0 calc(#{$search-height-mobile} + 1rem);
+    padding: 0 $search-height-mobile 0 calc(#{$search-height-mobile} + 10px);
 
     opacity: 0;
 
     border: none;
 
     color: $black;
-    font-size: 1.3rem;
+    font-size: 13px;
     line-height: $search-height-mobile;
     vertical-align: top;
     cursor: pointer;
@@ -87,9 +87,9 @@
 
     @media (min-width: $screen-md-min) {
         display: inline-block;
-        width: 34rem;
+        width: 340px;
         height: $search-height;
-        padding: 1.1rem $search-height 1.1rem 1.6rem;
+        padding: 11px $search-height 11px 16px;
 
         background-color: $grey--lighter;
 
@@ -143,20 +143,20 @@
 
         background: none;
 
-        line-height: $search-height - .8rem;
+        line-height: $search-height - 8px;
     }
 }
 
 .searchbox__submit__icon {
     color: $brand-primary;
-    font-size: 1.44rem;
+    font-size: 14px;
 }
 
 
 /* Active
    ========================================================================== */
 .searchbox-form--active {
-    width: calc(100% - 1.5rem);
+    width: calc(100% - 15px);
 
     .searchbox__content {
         width: 100%;
@@ -180,14 +180,14 @@
     }
 
     @media (min-width: $screen-md-min) {
-        width: 34rem;
+        width: 340px;
 
         .searchbox {
             @include box-shadow;
         }
 
         .searchbox__content {
-            width: 34rem;
+            width: 340px;
         }
     }
 }

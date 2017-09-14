@@ -5,7 +5,7 @@
 /* General
    ========================================================================== */
 .text-pp {
-    max-width: 72rem;
+    max-width: 720px;
     margin: $default-margin 0;
 {% if demosite %}
 
@@ -20,7 +20,7 @@
                 content: "•";
 
                 position: absolute;
-                top: .3rem;
+                top: 3px;
                 left: 0;
 
                 color: $brand-primary;
@@ -30,14 +30,14 @@
     }
 
     ol {
-        padding-left: 2.5rem;
+        padding-left: 25px;
     }
 
     ul,
     ol {
 
         li {
-            margin-bottom: .7rem;
+            margin-bottom: 7px;
 
             line-height: 1.5;
         }

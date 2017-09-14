@@ -6,7 +6,7 @@
    ========================================================================== */
 .breadcrumb {
     @media (min-width: $screen-md-min) {
-        margin: 2.5rem 0 0;
+        margin: 25px 0 0;
     }
 }
 
@@ -16,7 +16,7 @@
 .breadcrumb__item {
     display: inline-block;
 
-    font-size: 1.4rem;
+    font-size: 14px;
     font-weight: 400;
 
     & .search-results__breadcrumb__item--current {
@@ -28,9 +28,9 @@
 /* Icon
    ========================================================================== */
 .breadcrumb__icon {
-    margin: 0 1rem;
+    margin: 0 10px;
 
-    font-size: 1rem;
+    font-size: 10px;
     vertical-align: middle;
 }
 

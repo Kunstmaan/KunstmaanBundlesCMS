@@ -15,8 +15,8 @@
 {% if demosite %}
     position: relative;
 
-    max-width: 45rem;
-    min-height: 4rem;
+    max-width: 450px;
+    min-height: 40px;
     padding: 0;
 
     border: 1px solid $hr-color;
@@ -32,15 +32,15 @@
 .select__icon {
     position: absolute;
     top: 0;
-    right: .35rem;
+    right: 4px;
     z-index: -1;
 
-    width: 4rem;
-    height: 4rem;
+    width: 40px;
+    height: 40px;
 
     color: $grey;
-    font-size: .7rem;
-    line-height: 4rem;
+    font-size: 7px;
+    line-height: 40px;
     text-align: center;
 }
 {% endif %}
@@ -49,7 +49,7 @@
    ========================================================================== */
 .form-widget--choices {
 {% if demosite %}
-    padding-top: .9rem;
+    padding-top: 9px;
 {% endif %}
 }
 
@@ -67,14 +67,14 @@
    ========================================================================== */
 .form-widget--file-upload {
 {% if demosite %}
-    padding-top: .5rem;
+    padding-top: 5px;
 
     .form-control {
         line-height: 80%;
     }
 
     .form__label {
-        top: -1.2rem;
+        top: -12px;
     }
 
     ~ .form__label {
@@ -89,7 +89,7 @@
 {% if demosite %}
 .form-widget--textarea {
     width: 100%;
-    max-width: 45rem;
+    max-width: 450px;
 }
 {% endif %}
 

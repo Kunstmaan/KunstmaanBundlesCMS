@@ -6,7 +6,7 @@
     position: relative;
     z-index: 100;
 
-    margin-bottom: -2.6rem;
+    margin-bottom: -26px;
     transform: translate3d(0, 0, 0);
 
     text-align: center;
@@ -28,7 +28,7 @@
     }
 
     @media (min-width: $screen-md-min) {
-        margin-bottom: -1.92rem;
+        margin-bottom: -20px;
     }
 }
 
@@ -37,7 +37,7 @@
 
     p {
         color: $white;
-        font-size: 1.28rem;
+        font-size: 12.8px;
     }
 
     a {
@@ -52,7 +52,7 @@
     }
 
     .toggle-item__content {
-        padding: 2.4rem;
+        padding: 24px;
 
         p {
             padding: 0;
@@ -64,9 +64,9 @@
 .demosite-msg__btn {
     position: relative;
 
-    width: 7.2rem;
-    height: 2.24rem;
-    margin-top: -1rem;
+    width: 72px;
+    height: 22px;
+    margin-top: -10px;
 
     background: none;
     box-shadow: none;
@@ -74,7 +74,7 @@
     border: none;
 
     color: $white;
-    font-size: .8rem;
+    font-size: 8px;
     text-align: center;
 
     &:after {
@@ -87,7 +87,7 @@
 
         transform: rotate(360deg);
 
-        border-width: 2.6rem 3.6rem 0;
+        border-width: 26px 36px 0;
         border-color: $brand-primary transparent transparent transparent;
         border-style: solid inset inset;
     }
