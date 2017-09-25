@@ -77,6 +77,7 @@ class PagePartAdminController extends Controller
         $formBuilder->setData($data);
         $form     = $formBuilder->getForm();
         $formview = $form->createView();
+        $extended = $this->getParameter('kunstmaan_page_part.extended');
 
         return [
             'id'            => $id,
@@ -84,7 +85,8 @@ class PagePartAdminController extends Controller
             'pagepart'      => $pagePart,
             'pagepartadmin' => $pagePartAdmin,
             'page'          => $pagePartAdmin->getPage(),
-            'editmode'      => true
+            'editmode'      => true,
+            'extended'      => $extended,
         ];
     }
 }
