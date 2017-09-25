@@ -20,10 +20,10 @@ class {{ entity_class }}Category extends AbstractCategory
     /**
      * Returns the default backend form type for this page
      *
-     * @return AbstractType
+     * @return string
      */
     public function getAdminType()
     {
-        return new {{ entity_class }}CategoryAdminType();
+        return {{ entity_class }}CategoryAdminType::class;
     }
 }
