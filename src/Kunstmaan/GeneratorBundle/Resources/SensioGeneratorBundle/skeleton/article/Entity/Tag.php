@@ -20,10 +20,10 @@ class {{ entity_class }}Tag extends AbstractTag
     /**
      * Returns the default backend form type for this page
      *
-     * @return AbstractType
+     * @return string
      */
     public function getAdminType()
     {
-        return new {{ entity_class }}TagAdminType();
+        return {{ entity_class }}TagAdminType::class;
     }
 }

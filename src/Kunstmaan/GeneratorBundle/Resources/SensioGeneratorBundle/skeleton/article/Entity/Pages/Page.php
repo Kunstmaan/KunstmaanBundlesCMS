@@ -29,11 +29,11 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
     /**
      * Returns the default backend form type for this page
      *
-     * @return AbstractType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new {{ entity_class }}PageAdminType();
+        return {{ entity_class }}PageAdminType::class;
     }
 
     /**
@@ -41,7 +41,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getSearchType()
     {
-	    return '{{ entity_class }}';
+        return '{{ entity_class }}';
     }
 
     /**
@@ -49,7 +49,7 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPagePartAdminConfigurations()
     {
-	    return array('{{ bundle.getName() }}:{{ entity_class|lower }}main');
+        return array('{{ bundle.getName() }}:{{ entity_class|lower }}main');
     }
 
     /**
@@ -57,12 +57,12 @@ class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTempl
      */
     public function getPageTemplates()
     {
-	    return array('{{ bundle.getName() }}:{{ entity_class|lower }}page');
+        return array('{{ bundle.getName() }}:{{ entity_class|lower }}page');
     }
 
     public function getDefaultView()
     {
-	    return '{{ bundle.getName() }}:Pages/{{ entity_class }}Page:view.html.twig';
+        return '{{ bundle.getName() }}:Pages/{{ entity_class }}Page:view.html.twig';
     }
 
     /**

@@ -19,16 +19,16 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
     }
 
     /**
      * Get the admin form type.
      *
-     * @return {{ adminType }}
+     * @return string
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return {{ adminType }}::class;
     }
 }
