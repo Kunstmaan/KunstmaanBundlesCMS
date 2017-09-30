@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 import gulp from 'gulp';
+import webpack from 'webpack';
 
 import consoleArguments from './console-arguments';
 
@@ -10,6 +11,7 @@ import createCopyTask from './tasks/copy';
 import {createCssLocalTask, createCssOptimizedTask} from './tasks/css';
 import createScriptsTask from './tasks/scripts';
 import createServerTask from './tasks/server';
+import createBundleTask, {getBabelLoaderOptions} from './tasks/bundle';
 
 export const adminBundle = {
     config: {
@@ -55,4 +57,59 @@ adminBundle.tasks.scripts = createScriptsTask({
     ],
     dest: adminBundle.config.distPath + 'js',
     filename: 'admin-bundle.min.js'
+});
+
+adminBundle.tasks.bundle = createBundleTask({
+    config: {
+        entry: adminBundle.config.srcPath + 'jsnext/app.js',
+        output: {
+            filename: adminBundle.config.distPath + 'js/admin-bundle.next.js',
+        },
+        devtool: 'cheap-module-source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: getBabelLoaderOptions({
+                        transpileOnlyForLastChromes: consoleArguments.speedupLocalDevelopment
+                    })
+                }
+            ]
+        }
+    }
+});
+
+adminBundle.tasks.bundleOptimized = createBundleTask({
+    config: {
+        // TODO Create a new polyfill task and only load the bundle when the browser needs it. This adds about 90KB minified extra code..
+        entry: ['babel-polyfill', adminBundle.config.srcPath + 'jsnext/app.js'],
+        output: {
+            filename: adminBundle.config.distPath + 'js/admin-bundle.next.js',
+        },
+        devtool: 'source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: getBabelLoaderOptions({
+                        optimize: true
+                    })
+                }
+            ]
+        },
+        plugins: [
+            new webpack.optimize.UglifyJsPlugin({
+                mangle: true,
+                sourceMap: true,
+                output: {
+                    comments: false
+                }
+            })
+        ]
+    },
+    logStats: true
 });

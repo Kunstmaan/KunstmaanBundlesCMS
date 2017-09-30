@@ -50,10 +50,12 @@
     "yargs": "^7.0.2"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bootstrap-sass": "^3.3.7",
     "cargobay": "Kunstmaan/cargobay#0.8.6-support",
     "ckeditor": "4.5.6",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "fuse.js": "^3.1.0",
     "jstree": "^3.3.3",
     "ramda": "^0.23.0",
     "select2": "^4.0.3",
