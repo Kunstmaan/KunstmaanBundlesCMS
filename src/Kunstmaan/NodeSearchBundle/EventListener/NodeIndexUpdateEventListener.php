@@ -70,6 +70,11 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     {
         $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.search_configuration.node');
         $nodeTranslation = $event->getNodeTranslation();
+
+        if ($this->hasOfflineParents($nodeTranslation)) {
+            return;
+        }
+
         $nodeSearchConfiguration->indexNodeTranslation($nodeTranslation, true);
 
         if ($reIndexChildren) {
@@ -100,5 +105,23 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     {
         $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.search_configuration.node');
         $nodeSearchConfiguration->deleteNodeTranslation($event->getNodeTranslation());
+    }
+
+    /**
+     * @param $nodeTranslation
+     *
+     * @return bool
+     */
+    private function hasOfflineParents(NodeTranslation $nodeTranslation)
+    {
+        $lang = $nodeTranslation->getLang();
+        foreach ($nodeTranslation->getNode()->getParents() as $node) {
+            $nodeNT = $node->getNodeTranslation($lang, true);
+            if ($nodeNT && !$nodeNT->isOnline()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
