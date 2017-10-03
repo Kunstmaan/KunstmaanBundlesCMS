@@ -31,7 +31,7 @@ abstract class AbstractEntity implements EntityInterface
      *
      * @param int $id The unique identifier
      *
-     * @return AbstractEntity
+     * @return $this
      */
     public function setId($id)
     {
