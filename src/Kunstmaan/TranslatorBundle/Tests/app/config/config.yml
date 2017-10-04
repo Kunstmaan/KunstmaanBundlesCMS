@@ -1,5 +1,9 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
 framework:
-    secret:          secret
+    secret: "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: "%kernel.debug%"
@@ -43,3 +47,10 @@ doctrine:
                 connection:       default
                 mappings:
                     KunstmaanTranslatorBundle: ~
+
+fos_user:
+    firewall_name: main
+    user_class: Kunstmaan\AdminBundle\Entity\User
+    from_email:
+        address:        admin@kunstmaan.be
+        sender_name:    Admin

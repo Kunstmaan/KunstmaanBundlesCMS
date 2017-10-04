@@ -54,3 +54,9 @@ kuma_translator:
             keyword:    Keyword
             text:       Tekst
             locale:     Lokaal
+
+# Toolbar
+toolbar:
+    translations:
+        title: Vertalingen
+        count: Aantal

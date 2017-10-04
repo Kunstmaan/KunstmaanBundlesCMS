@@ -27,6 +27,14 @@ settings:
       toupdate: kan worden geupdate naar
       unknown: versie information onbekend
 
+# Toolbar
+toolbar:
+    bundle_version:
+        unknown: Onbekend
+        uptodate: Up-to-date
+        toupdate: Verouderd
+        version: Bundle versie
+        status: Bundle status
 # Tools
 tools:
   title: Tools

@@ -22,3 +22,7 @@ It is possible to configure your pageparts to display a preview image of how
 the pagepart will look when added to the page. You can find more information
 about enabling and configuring this new view in the README of the
 PagePartBundle.
+
+## New datacollectors for symfony toolbar and custom toolbar##
+
+You can find more detailed information on how to use this [here](https://github.com/Kunstmaan/KunstmaanAdminBundle/blob/master/Resources/doc/DataCollectors.md).

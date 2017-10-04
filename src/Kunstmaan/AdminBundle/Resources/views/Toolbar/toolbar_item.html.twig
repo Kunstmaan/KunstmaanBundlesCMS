@@ -1,0 +1,10 @@
+<div class="sf-toolbar-block kuma-toolbar-block" {% if status_color is defined %} style="background-color: {{ status_color }}" {% endif %}>
+    {% if link is defined and link %}
+        <a href="{{ link }}">
+    {% endif %}
+    <div class="sf-toolbar-icon">{{ icon|default('') }}</div>
+    {% if link is defined and link %}
+        </a>
+    {% endif %}
+    <div class="sf-toolbar-info">{{ text|default('') }}</div>
+</div>

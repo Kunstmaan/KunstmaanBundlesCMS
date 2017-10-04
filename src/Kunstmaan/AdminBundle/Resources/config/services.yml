@@ -15,6 +15,8 @@ parameters:
     kunstmaan_admin.validator.password_restrictions.class: 'Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictionsValidator'
     kunstmaan_admin.adminroute.helper.class: 'Kunstmaan\AdminBundle\Helper\AdminRouteHelper'
     kunstmaan_admin.adminroute.twig.class: 'Kunstmaan\AdminBundle\Twig\AdminRouteHelperTwigExtension'
+    kunstmaan_admin.toolbar.listener.class: 'Kunstmaan\AdminBundle\EventListener\ToolbarListener'
+    kunstmaan_admin.toolbar.collector.bundle.class: 'Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -258,3 +260,43 @@ services:
             - '%kunstmaan_admin.password_restrictions.max_length%'
         tags:
             - { name: validator.constraint_validator, alias: password_restrictions }
+
+    ### TOOLBAR DATA COLLECTOR ###
+
+    kunstmaan_admin.toolbar.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\ToolbarTwigExtension
+        tags:
+            - { name: twig.extension }
+
+    kunstmaan_admin.toolbar.datacollector:
+        class: Kunstmaan\AdminBundle\Helper\Toolbar\DataCollector
+        arguments:
+             - '@router'
+
+    Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector:
+        abstract: true
+        calls:
+            - [setAdminRouteHelper, ['@kunstmaan_admin.adminroute.helper']]
+
+    kunstmaan_admin.toolbar.listener:
+        class: '%kunstmaan_admin.toolbar.listener.class%'
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments:
+            - '@twig'
+            - '@router'
+            - '@kunstmaan_admin.toolbar.datacollector'
+            - '@security.authorization_checker'
+            - '@security.token_storage'
+            - '%kunstmaan_admin.enable_toolbar_helper%'
+            - '%debug_toolbar%'
+            - '@kunstmaan_admin.adminroute.helper'
+
+    kunstmaan_admin.datacollector.bundleversion:
+        class: '%kunstmaan_admin.toolbar.collector.bundle.class%'
+        arguments:
+            - '@kunstmaan_admin.versionchecker'
+            - '@logger'
+            - '@kunstmaan_admin.cache'
+        tags:
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:bundles_version.html.twig', id: kuma_bundle_versions}
