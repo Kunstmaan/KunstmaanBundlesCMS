@@ -58,8 +58,15 @@ const startLocalTask = createServerTask({
 export const buildOnChange = (done) => {
     for (const bundle of BUNDLES) {
         const srcPath = bundle.config.srcPath;
+
         const jsAssets = srcPath + 'js/**/!(*.spec).js';
         gulp.watch(jsAssets, bundle.tasks.scripts);
+
+        if (bundle.tasks.bundle) {
+            const jsNextAssets = srcPath + 'jsnext/**/!(*.spec).js';
+            gulp.watch(jsNextAssets, bundle.tasks.bundle);
+        }
+
         const styleAssets = srcPath + 'scss/**/*.scss';
         gulp.watch(styleAssets, bundle.tasks.cssOptimized);
     }

@@ -41,3 +41,29 @@ export default function createBundleTask({config = undefined, watch = false, log
         }
     };
 }
+
+export function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChromes = false}) {
+    if (optimize || !transpileOnlyForLastChromes) {
+        return {
+            babelrc: false,
+            presets: [
+                ['es2015', {
+                    // TODO
+                    modules: false
+                }]
+            ]
+        };
+    }
+
+    return {
+        babelrc: false,
+        presets: [
+            ['env', {
+                targets: {
+                    browsers: ['last 2 Chrome versions']
+                }
+            }]
+        ],
+        cacheDirectory: true
+    };
+}
