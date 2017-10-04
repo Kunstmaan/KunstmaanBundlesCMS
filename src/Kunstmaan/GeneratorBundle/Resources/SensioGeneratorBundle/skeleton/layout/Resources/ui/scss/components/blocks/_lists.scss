@@ -12,31 +12,20 @@
 }
 
 
-/*doc
----
-title: Lists
-name: 05_lists
-category: Blocks
----
+/**
+ * @section Lists
+ * @sectionof Blocks
+ */
 
-```html_example
 
-<h3>Unorderd list</h3>
-<ul>
-    <li>Unorderd list</li>
-    <li>Unorderd list</li>
-    <li>Unorderd list</li>
-    <li>Unorderd list</li>
-</ul>
+/**
+ * @doc docs/list-ul.md
+ * @section
+ * @sectionof Blocks.Lists
+ */
 
-<h3>Orderd list</h3>
-
-<ol>
-    <li>Orderd list</li>
-    <li>Orderd list</li>
-    <li>Orderd list</li>
-    <li>Orderd list</li>
-</ol>
-
-```
-*/
+/**
+ * @doc docs/list-ol.md
+ * @section
+ * @sectionof Blocks.Lists
+ */

@@ -57,84 +57,53 @@ $link-color--hover:     darken($link-color, 15%);
 {% endif %}
 
 
-/*doc
----
-title: Colors
-name: 01_colors
-category: General
----
+/**
+ * @section Colors
+ * @page Index
+ */
+
 {% if demosite %}
-<div class="container exampleOutput no-markup">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Greyscale</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #373737;'></i><code class='styleguide__code'>#373737<br>$black</code></code></div>
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #E2E2E2;'></i><code class='styleguide__code'>#E2E2E2<br>$grey--light</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #444444;'></i><code class='styleguide__code'>#444444<br>$grey--darker</code></code></div>
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #F9F9F9;'></i><code class='styleguide__code'>#F9F9F9<br>$grey--lighter</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #606060;'></i><code class='styleguide__code'>#606060<br>$grey--dark</code></code></div>
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example styleguide__color-template__example--border' style='background: #FFFFFF;'></i><code class='styleguide__code'>#FFFFFF<br>$white</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #9D9D9D;'></i><code class='styleguide__code'>#9D9D9D<br>$grey</code></code></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Brand colors</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #5CB8E6;'></i><code class='styleguide__code'>#5CB8E6<br>$brand-primary</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #053046;'></i><code class='styleguide__code'>#053046<br>$brand-primary--dark</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #FF4600;'></i><code class='styleguide__code'>#FF4600<br>$brand-danger</code></code></div>
-        </div>
-    </div>
-</div>
-{% else %}
-<div class="container exampleOutput no-markup">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Greyscale</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #373737;'></i><code class='styleguide__code'>#373737<br>$black</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example styleguide__color-template__example--border' style='background: #FFFFFF;'></i><code class='styleguide__code'>#FFFFFF<br>$white</code></code></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Brand colors</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #5CB8E6;'></i><code class='styleguide__code'>#5CB8E6<br>$brand-primary</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #053046;'></i><code class='styleguide__code'>#053046<br>$brand-primary--dark</code></code></div>
-        </div>
-        <div class="col-md-3">
-            <div class='styleguide__color-template'><i class='styleguide__color-template__example' style='background: #FF4600;'></i><code class='styleguide__code'>#FF4600<br>$brand-danger</code></code></div>
-        </div>
-    </div>
-</div>
-{% endif %}
+{% raw %}
+/**
+ * @section Greyscale
+ * @sectionof Colors
+ *
+ * @color {#373737} Black - [Colors.Greyscale]
+ * @color {#444444} Grey darker - [Colors.Greyscale]
+ * @color {#606060} Grey dark - [Colors.Greyscale]
+ * @color {#9D9D9D} Grey - [Colors.Greyscale]
+ * @color {#E2E2E2} Grey light - [Colors.Greyscale]
+ * @color {#F9F9F9} Grey lighter - [Colors.Greyscale]
+ * @color {#FFFFFF} White - [Colors.Greyscale]
+ */
+
+/**
+* @section Brand colors
+* @sectionof Colors
+*
+* @color {#5CB8E6} Brand primary - [Colors.Brand colors]
+* @color {#053046} Brand primary dark - [Colors.Brand colors]
+* @color {#FF4600} Brand danger - [Colors.Brand colors]
 */
+{% endraw %}
+{% else %}
+{% raw %}
+/**
+ * @section Greyscale
+ * @sectionof Colors
+ *
+ * @color {#373737} Black - [Colors.Greyscale]
+ * @color {#FFFFFF} White - [Colors.Greyscale]
+ */
+
+/**
+* @section Brand colors
+* @sectionof Colors
+*
+* @color {#5CB8E6} Brand primary - [Colors.Brand colors]
+* @color {#053046} Brand primary dark - [Colors.Brand colors]
+* @color {#FF4600} Brand danger - [Colors.Brand colors]
+*/
+{% endraw %}
+{% endif %}
+

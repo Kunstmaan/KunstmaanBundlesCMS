@@ -33,30 +33,8 @@
 }
 
 
-/*doc
----
-title: Form Group
-name: 01_group
-category: Forms
----
-
-```html_example
-
-<h3>General</h3>
-<div class="form-group">
-    <label for="fg1" class="form-control-label">
-        Name
-    </label>
-    <input type="text" id="fg1" name="fg1" class="{% if demosite %}js-form__input {% endif %}form-control form-control--input">
-</div>
-
-<h3>Has error</h3>
-<div class="form-group form-group--has-error">
-    <label for="fg2" class="form-control-label">
-        Name
-    </label>
-    <input type="text" id="fg2" name="fg2" class="{% if demosite %}js-form__input {% endif %}form-control form-control--input">
-    <div class="form-group__error">Lorem ipsum dolor sit amet</div>
-</div>
-```
-*/
+/**
+ * @doc docs/form-group.md
+ * @section
+ * @sectionof Forms
+ */

@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Blocks - Code
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.sg-styleguide {
+
+    code:not(.sg-code) {
+        padding: 1px 3px;
+
+        background: $grey--light;
+
+        border: 1px solid $grey;
+        border-radius: 3px;
+
+        color: $red;
+        font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', 'monospace';
+        font-size: 12px;
+
+        white-space: nowrap;
+    }
+
+    pre {
+        background: $primary-color--dark;
+
+        code:not(.sg-code) {
+        }
+    }
+}
