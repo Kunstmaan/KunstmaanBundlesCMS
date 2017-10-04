@@ -44,7 +44,7 @@ class DataCollectorPass implements CompilerPassInterface
 
         // If debug is true, do not add a new toolbar, but add the datacollectors to the symfony toolbar.
         // Code taken from the ProfilerPass class.
-        if ($debug) {
+        if ($debug && false !== $container->hasDefinition('profiler')) {
             $definition = $container->getDefinition('profiler');
 
             $collectors = new \SplPriorityQueue();
