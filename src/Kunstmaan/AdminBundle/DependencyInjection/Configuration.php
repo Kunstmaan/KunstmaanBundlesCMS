@@ -43,6 +43,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
                 ->booleanNode('enable_console_exception_listener')->defaultTrue()->end()
+                ->booleanNode('enable_toolbar_helper')->defaultFalse()->end()
                 ->arrayNode('menu_items')
                     ->defaultValue([])
                     ->useAttributeAsKey('route', false)

@@ -168,3 +168,10 @@ kuma_node:
             button:
                 copy:   Kopieer
                 cancel: Annuleer
+
+
+# Toolbar
+toolbar:
+    node:
+        edit: Bewerken
+        title: Titel

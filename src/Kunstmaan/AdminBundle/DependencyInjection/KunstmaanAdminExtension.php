@@ -62,6 +62,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.password_restrictions.min_special_characters' , $config['password_restrictions']['min_special_characters']);
         $container->setParameter('kunstmaan_admin.password_restrictions.min_length' , $config['password_restrictions']['min_length']);
         $container->setParameter('kunstmaan_admin.password_restrictions.max_length' , $config['password_restrictions']['max_length']);
+        $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

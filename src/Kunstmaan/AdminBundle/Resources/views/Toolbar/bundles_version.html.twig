@@ -1,0 +1,46 @@
+{% block toolbar %}
+    {% if collector is defined and collector.getTemplateData() %}
+        {% set data = collector.getTemplateData().data %}
+    {% endif %}
+
+    {% set status_color = '#00529B' %}
+    {% set txt = 'toolbar.bundle_version.unknown'|trans %}
+    {% set version = null %}
+
+    {% if data is iterable %}
+        {% for bundle in data %}
+            {% if bundle.name == "kunstmaan/bundles-cms" %}
+                {% set version = bundle.version %}
+                {% if bundle.status == 'UP_TO_DATE' %}
+                    {% set status_color = '#4F8A10' %}
+                    {% set txt = 'toolbar.bundle_version.uptodate'|trans %}
+                {% elseif bundle.status == 'TO_UPDATE' %}
+                    {% set status_color = '#9F6000' %}
+                    {% set txt = 'toolbar.bundle_version.toupdate'|trans %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="alert-error">{{ 'settings.version.error'|trans }}</div>
+    {% endif %}
+
+    {% set icon %}
+        {{ include('@WebProfiler/Icon/time.svg') }}
+        <span class="sf-toolbar-value">{{ txt }}</span>
+        <span class="sf-toolbar-label">{{ version }}</span>
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b> {{ 'toolbar.bundle_version.version'|trans }}</b>
+            <span>{{ version }}</span>
+        </div>
+        <div class="sf-toolbar-info-piece">
+            <b> {{ 'toolbar.bundle_version.status'|trans }}</b>
+            <span>{{ txt }} </span>
+        </div>
+    {% endset %}
+
+    {{ include('@KunstmaanAdmin/Toolbar/toolbar_item.html.twig', { status: status_color }) }}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% block toolbar %}
+    {% if collector is defined and collector.getTemplateData() %}
+        {% set data = collector.getTemplateData().data %}
+    {% endif %}
+
+    {% if data is defined %}
+        {% set icon %}
+            {{ include('@WebProfiler/Icon/translation.svg') }}
+            <span class="sf-toolbar-value">{{ 'toolbar.translations.title' | trans }}</span>
+            <span class="sf-toolbar-label">{{ data.translations | length }}</span>
+        {% endset %}
+
+        {% set text %}
+            {% for translation in data.translations %}
+                <div class="sf-toolbar-info-piece">
+                    <a href="{{ translation.route }}" style="text-decoration: none !important;">
+                        <b> {{ translation.id }}</b>
+                    </a>
+                </div>
+            {% endfor %}
+        {% endset %}
+
+        {% include '@KunstmaanAdmin/Toolbar/toolbar_item.html.twig' with {'link': data.route} %}
+    {% endif %}
+{% endblock %}

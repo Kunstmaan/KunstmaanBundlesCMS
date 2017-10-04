@@ -6,6 +6,7 @@ parameters:
     kunstmaan_node.url_replace.twig.class: Kunstmaan\NodeBundle\Twig\UrlReplaceTwigExtension
     kunstmaan_node.url_chooser.lazy_increment: 2
     kunstmaan_multi_domain.url_replace.controller.class: Kunstmaan\NodeBundle\Controller\UrlReplaceController
+    kunstmaan_node.toolbar.collector.node.class: Kunstmaan\NodeBundle\Toolbar\NodeDataCollector
 
 services:
     kunstmaan_node.nodetranslation.listener:
@@ -170,3 +171,13 @@ services:
         class: "%kunstmaan_multi_domain.url_replace.controller.class%"
         arguments:
             - "@kunstmaan_node.helper.url"
+
+    ### TOOLBAR DATA COLLECTOR ###
+    kunstmaan_node.datacollector.node:
+        class: '%kunstmaan_node.toolbar.collector.node.class%'
+        parent: Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector
+        arguments:
+            - '@kunstmaan_node.node_menu'
+            - '@router'
+        tags:
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanNodeBundle:Toolbar:node.html.twig', id: kuma_node}
