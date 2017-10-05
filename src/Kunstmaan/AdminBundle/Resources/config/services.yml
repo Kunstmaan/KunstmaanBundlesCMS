@@ -289,7 +289,7 @@ services:
             - '@security.authorization_checker'
             - '@security.token_storage'
             - '%kunstmaan_admin.enable_toolbar_helper%'
-            - '%debug_toolbar%'
+            - '@service_container'
             - '@kunstmaan_admin.adminroute.helper'
 
     kunstmaan_admin.datacollector.bundleversion:

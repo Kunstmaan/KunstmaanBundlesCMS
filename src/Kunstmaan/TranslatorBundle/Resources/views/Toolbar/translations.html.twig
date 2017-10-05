@@ -5,7 +5,7 @@
 
     {% if data is defined %}
         {% set icon %}
-            {{ include('@WebProfiler/Icon/translation.svg') }}
+            {{ include('@KunstmaanTranslator/Toolbar/Icon/translation.svg') }}
             <span class="sf-toolbar-value">{{ 'toolbar.translations.title' | trans }}</span>
             <span class="sf-toolbar-label">{{ data.translations | length }}</span>
         {% endset %}

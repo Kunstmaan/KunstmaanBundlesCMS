@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\Toolbar\DataCollector;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -50,9 +51,9 @@ class ToolbarListener implements EventSubscriberInterface
     protected $enabled;
 
     /**
-     * @var bool
+     * @var ContainerInterface
      */
-    protected $debug;
+    private $container;
 
     /**
      * @var AdminRouteHelper
@@ -68,10 +69,10 @@ class ToolbarListener implements EventSubscriberInterface
      * @param AuthorizationChecker  $authorizationChecker
      * @param TokenStorageInterface $tokenStorage
      * @param bool                  $enabled
-     * @param bool                  $debug
+     * @param ContainerInterface    $container
      * @param AdminRouteHelper      $adminRouteHelper
      */
-    public function __construct(\Twig_Environment $twig, UrlGeneratorInterface $urlGenerator, DataCollector $dataCollector, AuthorizationChecker $authorizationChecker, TokenStorageInterface $tokenStorage, $enabled, $debug, AdminRouteHelper $adminRouteHelper)
+    public function __construct(\Twig_Environment $twig, UrlGeneratorInterface $urlGenerator, DataCollector $dataCollector, AuthorizationChecker $authorizationChecker, TokenStorageInterface $tokenStorage, $enabled, ContainerInterface $container, AdminRouteHelper $adminRouteHelper)
     {
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
@@ -79,7 +80,7 @@ class ToolbarListener implements EventSubscriberInterface
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->enabled = $enabled;
-        $this->debug = $debug;
+        $this->container = $container;
         $this->adminRouteHelper = $adminRouteHelper;
     }
 
@@ -98,7 +99,7 @@ class ToolbarListener implements EventSubscriberInterface
      */
     public function isEnabled()
     {
-        return !$this->debug && $this->enabled;
+        return !$this->container->has('profiler') && $this->enabled;
     }
 
     /**
