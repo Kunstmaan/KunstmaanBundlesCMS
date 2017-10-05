@@ -24,7 +24,7 @@ class DataCollectorPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds('kunstmaan_admin.toolbar_collector');
 
         // Check if debug enabled
-        $debug = $container->getParameter('debug_toolbar');
+        $debug = $container->hasDefinition('profiler');
         // Check if toolbar enabled
         $enabled = $container->getParameter('kunstmaan_admin.enable_toolbar_helper');
 
@@ -44,7 +44,7 @@ class DataCollectorPass implements CompilerPassInterface
 
         // If debug is true, do not add a new toolbar, but add the datacollectors to the symfony toolbar.
         // Code taken from the ProfilerPass class.
-        if ($debug && false !== $container->hasDefinition('profiler')) {
+        if ($debug) {
             $definition = $container->getDefinition('profiler');
 
             $collectors = new \SplPriorityQueue();
