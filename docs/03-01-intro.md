@@ -74,7 +74,6 @@ bin/console kuma:generate:default-site
 This generates:
 
 * A Groundcontrol configuration ~ gulpfile.babel.js. [Groundcontrol is a build tool based on gulp to automate and enhance mostly front-end development workflows](http://gulpjs.com)
-* A Bundler configuration ~ Gemfile. [Bundler is a RubyGems package manager we use mostly for getting specific versions of Hologram](http://bundler.io).
 * A basic selection of user interface elements, sass files, etc
 * A barebones selection of controllers, entities, twig files, pageparts, etc
 * The needed fixtures to setup the CMS
@@ -143,7 +142,6 @@ Also make sure you installed [gulp-cli](https://www.npmjs.com/package/gulp-cli) 
 Then execute the following commands:
 
 ```
-bundle install
 npm install
 npm run build
 ```
