@@ -5,12 +5,31 @@
     MORE_BUTTON_LABEL = '{{ 'kuma_js.auto_collapse.more_button_label' | trans | e('js') }}';
 </script>
 
-<script src="{{ asset('bundles/kunstmaanadmin/js/admin-bundle.min.js') }}"></script>
-<script src="{{ asset('bundles/kunstmaanadmin/js/admin-bundle.next.js') }}"></script>
+{# Dynamically load the scripts, and only add the Polyfills when they are necessary #}
+<script>
+    {# scripts without polyfills #}
+    var scripts = [
+        '{{ asset('bundles/kunstmaanadmin/js/admin-bundle.min.js') }}',
+        '{{ asset('bundles/kunstmaanadmin/js/admin-bundle.next.js') }}',
 
-{% set jsPath = 'frontend/js/admin-bundle-extra.js' %}
-{% if file_exists(jsPath) %}
-    <script src="{{ asset('/' ~ jsPath) }}"></script>
-{% endif %}
+        {%- set jsPath = 'frontend/js/admin-bundle-extra.js' %}
+        {% if file_exists(jsPath) %}'{{ asset('/' ~ jsPath) }}'{% endif %}
+    ];
+
+    if (!('fetch' in window &&
+        'Promise' in window &&
+        'assign' in Object &&
+        'keys' in Object
+    )) {
+        scripts.unshift('{{ asset('bundles/kunstmaanadmin/js/admin-bundle-polyfills.js') }}');
+    }
+
+    scripts.forEach(function(src) {
+        var scriptEl = document.createElement('script');
+        scriptEl.src = src;
+        scriptEl.async = false;
+        document.head.appendChild(scriptEl);
+    });
+</script>
 
 {% include "@KunstmaanAdmin/Default/_js_footer_extra.html.twig" %}

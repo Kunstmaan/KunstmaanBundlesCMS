@@ -83,10 +83,41 @@ adminBundle.tasks.bundle = createBundleTask({
 
 adminBundle.tasks.bundleOptimized = createBundleTask({
     config: {
-        // TODO Create a new polyfill task and only load the bundle when the browser needs it. This adds about 90KB minified extra code..
-        entry: ['babel-polyfill', adminBundle.config.srcPath + 'jsnext/app.js'],
+        entry: adminBundle.config.srcPath + 'jsnext/app.js',
         output: {
             filename: adminBundle.config.distPath + 'js/admin-bundle.next.js',
+        },
+        devtool: 'source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: getBabelLoaderOptions({
+                        optimize: true
+                    })
+                }
+            ]
+        },
+        plugins: [
+            new webpack.optimize.UglifyJsPlugin({
+                mangle: true,
+                sourceMap: true,
+                output: {
+                    comments: false
+                }
+            })
+        ]
+    },
+    logStats: true
+});
+
+adminBundle.tasks.bundlePolyfills = createBundleTask({
+    config: {
+        entry: ['babel-polyfill', adminBundle.config.srcPath + 'jsnext/polyfills.js'],
+        output: {
+            filename: adminBundle.config.distPath + 'js/admin-bundle-polyfills.js',
         },
         devtool: 'source-map',
         module: {
