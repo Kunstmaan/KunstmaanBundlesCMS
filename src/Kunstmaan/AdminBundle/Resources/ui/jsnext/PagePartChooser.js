@@ -44,7 +44,7 @@ const initSearch = (ppChooser) => {
     });
 
     const searchField = ppChooser.querySelector(SELECTORS.PP_SEARCH_FIELD);
-    ppList = ppChooser.querySelectorAll(SELECTORS.PP_SEARCH_ITEM);
+    ppList = Array.prototype.slice.call(ppChooser.querySelectorAll(SELECTORS.PP_SEARCH_ITEM));
 
     const fuse = new Fuse(ppTypes, {
         keys: [{
