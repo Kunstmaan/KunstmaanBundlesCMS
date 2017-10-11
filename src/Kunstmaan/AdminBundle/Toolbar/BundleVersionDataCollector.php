@@ -46,7 +46,7 @@ class BundleVersionDataCollector extends AbstractDataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         if (!$this->isEnabled()) {
-            $this->data = false;
+            $this->data = [];
         } else {
             $this->data = $this->collectData();
         }

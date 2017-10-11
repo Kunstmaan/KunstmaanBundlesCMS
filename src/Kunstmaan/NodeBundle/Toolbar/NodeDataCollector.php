@@ -60,7 +60,7 @@ class NodeDataCollector extends AbstractDataCollector
             return ['data' => $data];
         }
 
-        return null;
+        return [];
     }
 
     /**
