@@ -13,6 +13,7 @@ settings:
       password: Wachtwoord
       repeatedpassword: Herhaal wachtwoord
       adminlang: Admin interface taal
+      api_key: API key
       email: E-mail
       enabled: Ingeschakeld
       roles: Groepen
@@ -56,6 +57,9 @@ kuma_user:
         delete:
             flash:
                 'success.%username%': Gebruiker '%username%' werd aangemaakt!
+        key_generate:
+            flash:
+                'success.%username%': Gebruiker '%username%' heeft een nieuwe api key!
     group:
         adminlist:
             header:

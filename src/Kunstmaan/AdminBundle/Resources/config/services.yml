@@ -223,6 +223,12 @@ services:
             - '%kunstmaan_admin.google_signin.client_id%'
             - '%kunstmaan_admin.google_signin.client_secret%'
 
+    kunstmaan_admin.api_authenticator:
+        class: Kunstmaan\AdminBundle\Security\ApiKeyAuthenticator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%fos_user.model.user.class%'
+
     kunstmaan_admin.oauth_user_creator:
         class: Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator
         arguments:
