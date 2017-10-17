@@ -13,6 +13,7 @@ settings:
         password: Password
         repeatedpassword: Repeat password
         adminlang: Admin interface language
+        api_key: API key
         email: E-mail
         enabled: Enabled
         roles: Groups
@@ -57,6 +58,9 @@ kuma_user:
         delete:
             flash:
                 'success.%username%': User '%username%' has been deleted!
+        key_generate:
+            flash:
+                'success.%username%': User '%username%' has a new api key!
     group:
         adminlist:
             header:

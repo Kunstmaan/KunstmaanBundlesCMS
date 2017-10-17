@@ -49,6 +49,7 @@ search:
 
 # Forms
 form:
+  generate_api_key: Genereer API key
   cancel: Annuleer
   delete: Verwijder
   deletesure: Weet u zeker dat u dit wilt verwijderen?

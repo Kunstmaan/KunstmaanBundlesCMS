@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Kunstmaan\Rest\TranslationsBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Controller,Features,Model,DependencyInjection}'

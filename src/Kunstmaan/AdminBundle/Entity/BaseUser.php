@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-abstract class BaseUser extends AbstractUser
+abstract class BaseUser extends AbstractUser implements HasApiKeyInterface
 {
     /**
      * @ORM\Id
@@ -30,6 +30,11 @@ abstract class BaseUser extends AbstractUser
      * @ORM\Column(type="string", name="admin_locale", length=5, nullable=true)
      */
     protected $adminLocale;
+
+    /**
+     * @ORM\Column(type="string", name="api_key", nullable=true)
+     */
+    protected $apiKey;
 
     /**
      * @ORM\Column(type="boolean", name="password_changed", nullable=true)
@@ -166,6 +171,22 @@ abstract class BaseUser extends AbstractUser
     public function setGoogleId($googleId)
     {
         $this->googleId = $googleId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @param mixed $apiKey
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
     }
 
     /**
