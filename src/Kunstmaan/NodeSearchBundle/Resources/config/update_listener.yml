@@ -6,6 +6,7 @@ services:
         class: '%kunstmaan_node_search.node_index_update.listener.class%'
         arguments: ['@service_container']
         tags:
+            - { name: doctrine.event_listener, event: preUpdate,   method: preUpdate }
             - { name: kernel.event_listener, event: kunstmaan_node.postPublish,   method: onPostPublish }
             - { name: kernel.event_listener, event: kunstmaan_node.postPersist,   method: onPostPersist }
             - { name: kernel.event_listener, event: kunstmaan_node.postDelete,    method: onPostDelete }
