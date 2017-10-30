@@ -1,5 +1,33 @@
 # Changelog
 
+## 4.0.3 / 2017-10-30
+
+* [DOCS] Fix typos in documentation [#1622](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1622) ([@Devolicious](https://github.com/Devolicious)) 
+* [Docs] Update list of generated classes [#1552](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1552) ([@svenluijten](https://github.com/svenluijten)) 
+* [NodeSearchBundle] Bugfix for indexing StructuredNodes and children [#1550](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1550) ([@treeleaf](https://github.com/treeleaf)) 
+* [KunstmaanConfigBundle]: change typo [#1546](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1546) ([@sandergo90](https://github.com/sandergo90)) 
+* [MediaBundle] Fix audio display if media type isn't soundcloud [#1543](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1543) ([@piszczek](https://github.com/piszczek)) 
+* [NodeBundle] Fix export pagetemplate [#1542](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1542) ([@piszczek](https://github.com/piszczek)) 
+* [AdminBundle] [NodeBundle] rewrite urlchooser in scalable manner [#1537](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1537) ([@Numkil](https://github.com/Numkil)) 
+* [MultiDomainBundle] Removed unused and invalid interface from TwigExtension [#1535](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1535) ([@wesleylancel](https://github.com/wesleylancel)) 
+* [Docs]: change documentation paths [#1525](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1525) ([@sandergo90](https://github.com/sandergo90)) 
+* [KunstmaanAdminBundle]: reinit modules javascript on nested forms [#1521](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1521) ([@sandergo90](https://github.com/sandergo90)) 
+* [SeoBundle]: change meta length [#1519](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1519) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle]: fix #1514 [#1517](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1517) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminListBundle] Use getStringValue for adminlist view template [#1507](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1507) ([@wesleylancel](https://github.com/wesleylancel)) 
+* [AdminBundle] Fix MediaTokenTransformer with null values [#1506](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1506) ([@peterbxyz](https://github.com/peterbxyz)) 
+* [KunstmaanAdminBundle]: use addHtmlContent for domcrawler [#1502](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1502) ([@sandergo90](https://github.com/sandergo90)) 
+* [DOCS]: add all doc information from bundles [#1501](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1501) ([@sandergo90](https://github.com/sandergo90)) 
+* [AllBundles]: fix ckeditor media tokens [#1492](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1492) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle]: add replace_url by default [#1491](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1491) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle]: fix fos user enabled state [#1489](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1489) ([@sandergo90](https://github.com/sandergo90)) 
+* [ArticleBundle] Fix typo in translations [#1486](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1486) ([@pix-art](https://github.com/pix-art)) 
+* [AdminBundle]: fix permissionadmin for sf3 [#1484](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1484) ([@sandergo90](https://github.com/sandergo90)) 
+* [AllBundles] Add form isSubmitted before isValid [#1403](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1403) ([@dannyvw](https://github.com/dannyvw)) 
+* [AllBundles] Add missing translations [#1400](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1400) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] Add missing translations for admin login [#1398](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1398) ([@dannyvw](https://github.com/dannyvw)) 
+
+
 ## 4.0.2 / 2017-03-21
 
 * [AdminListBundle] fixed type from string to array [#1483](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1483) ([@Devolicious](https://github.com/Devolicious)) 
