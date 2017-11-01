@@ -9,8 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminListBundle\Repository\LockableEntityRepository")
  * @ORM\Table(name="kuma_lockable_entity",
- *    uniqueConstraints={@ORM\UniqueConstraint(name="ix_kuma_lockable_entity_id_class", columns={"entityId", "entityClass"})},
- *    indexes={@ORM\Index(name="idx__lockable_entity_id_class", columns={"entityId", "entityClass"})}
+ *    uniqueConstraints={@ORM\UniqueConstraint(name="ix_kuma_lockable_entity_id_class", columns={"entity_id", "entity_class"})},
+ *    indexes={@ORM\Index(name="idx__lockable_entity_id_class", columns={"entity_id", "entity_class"})}
  * )
  */
 class LockableEntity extends AbstractEntity
