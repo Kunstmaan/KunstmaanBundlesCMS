@@ -26,6 +26,7 @@ const buildOptimizedAdminBundle = gulp.series(
     adminBundle.tasks.copy,
     adminBundle.tasks.cssOptimized,
     adminBundle.tasks.scripts,
+    adminBundle.tasks.bundlePolyfills,
     adminBundle.tasks.bundleOptimized
 );
 
