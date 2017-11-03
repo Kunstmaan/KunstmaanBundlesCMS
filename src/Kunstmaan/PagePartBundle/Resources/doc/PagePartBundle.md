@@ -603,9 +603,6 @@ There are a few options you can use when you add a collection field in a FormTyp
     * how many objects the collection can maximally contain
     * optional, default no maximum limit
 
-
-# PagePartBundle Documentation
-
 ## Creating PageParts in Your Code
 
 We've provided a ```PagePartCreatorService``` that simplifies the creation of pageparts for your pages.
@@ -693,4 +690,33 @@ Below is an example of what you can do with this with all the styles interchange
         );
 
         $ppCreatorService->addPagePartsToPage('homepage', $pageparts, 'en');
+```
+
+## PagePart chooser
+
+You can configure the PagePartBundle to use either one of two different ways of adding
+pageparts to a page via the admin interface. The first way is simply a select
+dropdown with a list of all the available PageParts for that region. A
+different more elaborate option can be chosen, it shows a modal with small
+screenshots for each possible PagePart. This takes more time to setup for
+the developer but will make the ui more user friendly for end users.
+
+### Configuration in yaml
+You can add these lines to your app/config/config.yml to enable the elaborate
+modal view.
+```YAML
+kunstmaan_page_part:
+    extended_pagepart_chooser: true
+```
+In your PageParts yaml files you can add an extra parameter to each of your
+types in the following manner to decide which picture you want to show as a
+preview for that PagePart. Any valid input for symfonies asset() function will
+do.
+```YAML
+name: Example
+context: Example
+types:
+    - { name: BikesList, class: Kunstmaan\AppBundle\Entity\PageParts\BikesListPagePart } //Will display only pagepart name
+    - { name: Audio, class: Kunstmaan\AppBundle\Entity\PageParts\AudioPagePart, preview: 'bundles/kunstmaanapp/images/example-image.svg' }
+    - { name: Button, class: Kunstmaan\AppBundle\Entity\PageParts\ButtonPagePart, preview: 'www.internet.be/imageurl' }
 ```

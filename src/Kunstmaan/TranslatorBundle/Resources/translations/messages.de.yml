@@ -15,6 +15,8 @@ settings:
         refresh_live: Liveseite Aktualisieren
         import_translations: Importieren
         import_translations_forced: Importieren und Überschreiben
+        actions: Aktionen
+        export_translations: Export nach csv
         not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
         not_live_warning: "Die Übersetzungen der Liveseite sind nicht aktuell. Bitte 'Liveseite Aktualisieren' klicken."
         choose_language: "Sprache Auswählen"

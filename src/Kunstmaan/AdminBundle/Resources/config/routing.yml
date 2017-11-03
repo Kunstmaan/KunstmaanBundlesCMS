@@ -1,21 +1,21 @@
 KunstmaanAdminBundle_default:
     resource: '@KunstmaanAdminBundle/Controller/DefaultController.php'
     type:     annotation
-    prefix:   /admin  
+    prefix:   /%kunstmaan_admin.admin_prefix%
 
 KunstmaanAdminBundle_modules:
     resource: '@KunstmaanAdminBundle/Controller/ModulesController.php'
     type:     annotation
-    prefix:   /admin/modules
-        
+    prefix:   /%kunstmaan_admin.admin_prefix%/modules
+
 KunstmaanAdminBundle_settings:
     resource: '@KunstmaanAdminBundle/Controller/SettingsController.php'
     type:     annotation
-    prefix:   /admin/settings      
+    prefix:   /%kunstmaan_admin.admin_prefix%/settings
 
 # Change user password route
 KunstmaanAdminBundle_user_change_password:
-    path: /admin/settings/users/{id}/edit
+    path: /%kunstmaan_admin.admin_prefix%/settings/users/{id}/edit
     defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
     methods: [GET, POST]
 
@@ -24,27 +24,27 @@ KunstmaanAdminBundle_user_change_password:
 ###########################
 
 fos_user_security_login:
-    path: /admin/login
+    path: /%kunstmaan_admin.admin_prefix%/login
     defaults: { _controller: FOSUserBundle:Security:login }
 
 fos_user_security_check:
-    path: /admin/login_check
+    path: /%kunstmaan_admin.admin_prefix%/login_check
     defaults: { _controller: FOSUserBundle:Security:check }
-        
+
 fos_user_security_logout:
-    path: /admin/logout
+    path: /%kunstmaan_admin.admin_prefix%/logout
     defaults: { _controller: FOSUserBundle:Security:logout }
 
 fos_user_profile:
     resource: '@FOSUserBundle/Resources/config/routing/profile.xml'
-    prefix: /admin/profile
+    prefix: /%kunstmaan_admin.admin_prefix%/profile
 
 fos_user_resetting:
     resource: '@FOSUserBundle/Resources/config/routing/resetting.xml'
-    prefix: /admin/resetting
+    prefix: /%kunstmaan_admin.admin_prefix%/resetting
 
 fos_user_change_password:
-    path: /admin/profile/change-password
+    path: /%kunstmaan_admin.admin_prefix%/profile/change-password
     defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
     methods: [GET, POST]
 
@@ -52,5 +52,5 @@ fos_user_change_password:
 ## Google OAuth Sign In ##
 ##########################
 KunstmaanAdminBundle_oauth_signin:
-    path: /admin/google_signin_check
+    path: /%kunstmaan_admin.admin_prefix%/google_signin_check
     defaults: { _controller: KunstmaanAdminBundle:OAuth:check }

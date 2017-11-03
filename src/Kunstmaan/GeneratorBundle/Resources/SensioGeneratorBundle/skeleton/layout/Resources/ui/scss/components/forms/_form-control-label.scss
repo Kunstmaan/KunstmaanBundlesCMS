@@ -8,12 +8,10 @@
 .form-control-label {
 {% if demosite %}
     color: $grey;
-    font-size: .9rem;
 
     pointer-events: none;
 {% endif %}
 }
-
 
 
 /*doc

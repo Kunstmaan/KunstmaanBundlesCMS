@@ -1,6 +1,6 @@
 parameters:
     kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
-
+    kunstmaan_translator.service.exporter.csv.class: Kunstmaan\TranslatorBundle\Service\Command\Exporter\CSVFileExporter
 services:
     kunstmaan_translator.menu.adaptor:
         class: '%kunstmaan_translator.menu.adaptor.class%'
@@ -35,6 +35,11 @@ services:
         class: 'Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter'
         tags:
             - { name: 'translation.exporter', alias: 'yml' }
+
+    kunstmaan_translator.service.exporter.csv:
+        class: "%kunstmaan_translator.service.exporter.csv.class%"
+        tags:
+            - { name: 'translation.exporter', alias: 'csv' }
 
     kunstmaan_translator.service.file_explorer:
         class: 'Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer'

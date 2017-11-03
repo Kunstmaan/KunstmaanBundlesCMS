@@ -14,13 +14,13 @@ $default-margin: 1.5rem;
 {% if demosite %}
 /* Navigation sizes
    ========================================================================== */
-$search-height: 48px;
+$search-height: 4.8rem;
 $logo-height: $search-height;
 $mainnav-height: $search-height;
 
-$search-height-mobile: 30px;
+$search-height-mobile: 3rem;
 $logo-height-mobile: $search-height-mobile;
 $mainnav-height-mobile: $search-height-mobile;
 
-$mobile-nav-width: 260px;
+$mobile-nav-width: 26rem;
 {% endif %}
