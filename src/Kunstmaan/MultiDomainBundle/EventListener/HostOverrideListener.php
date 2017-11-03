@@ -3,6 +3,7 @@
 namespace Kunstmaan\MultiDomainBundle\EventListener;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -28,18 +29,26 @@ class HostOverrideListener
     protected $domainConfiguration;
 
     /**
+     * @var AdminRouteHelper
+     */
+    protected $adminRouteHelper;
+
+    /**
      * @param Session                      $session
      * @param TranslatorInterface          $translator
      * @param DomainConfigurationInterface $domainConfiguration
+     * @param AdminRouteHelper $adminRouteHelper
      */
     public function __construct(
         Session $session,
         TranslatorInterface $translator,
-        DomainConfigurationInterface $domainConfiguration
+        DomainConfigurationInterface $domainConfiguration,
+        AdminRouteHelper $adminRouteHelper
     ) {
         $this->session             = $session;
         $this->translator          = $translator;
         $this->domainConfiguration = $domainConfiguration;
+        $this->adminRouteHelper    = $adminRouteHelper;
     }
 
     /**
@@ -61,7 +70,7 @@ class HostOverrideListener
             return;
         }
 
-        if (!$this->isAdminRoute($request->getRequestUri())) {
+        if (!$this->adminRouteHelper->isAdminRoute($request->getRequestUri())) {
             return;
         }
 
@@ -72,30 +81,5 @@ class HostOverrideListener
                 $this->translator->trans('multi_domain.host_override_active')
             );
         }
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    protected function isAdminRoute($url)
-    {
-        preg_match(
-            '/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/',
-            $url,
-            $matches
-        );
-
-        // Check if path is part of admin area
-        if (count($matches) === 0) {
-            return false;
-        }
-
-        if (strpos($url, '/admin/preview') !== false) {
-            return false;
-        }
-
-        return true;
     }
 }

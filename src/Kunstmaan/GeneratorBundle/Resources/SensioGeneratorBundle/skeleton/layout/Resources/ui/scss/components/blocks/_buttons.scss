@@ -9,22 +9,27 @@
     @include box-shadow;
 {% endif %}
     display: inline-block;
-    margin: 0;
     padding: .7em 1.5em;
+    margin: 0;
 
     background: none;
-    border: 1px solid $text-color;
-    -webkit-appearance: none;
-
 {% if demosite %}
     background-color: $white;
-    border: 1px solid $hr-color;
 {% endif %}
+
+{% if demosite %}
+    border: 1px solid $hr-color;
+{% else %}
+    border: 1px solid $text-color;
+{% endif %}
+
+    -webkit-appearance: none;
+
     color: $text-color;
+    line-height: 1;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
-    line-height: 1;
 
     cursor: pointer;
     white-space: nowrap;
@@ -32,19 +37,24 @@
 
     transition: background .3s ease-in-out;
 
-    &:hover, &:focus, &:active {
-        text-decoration: none;
-        color: $text-color;
+    &:hover,
+    &:focus,
+    &:active {
 {% if demosite %}
         background-color: darken($white, 5%);
 {% endif %}
+
+        color: $text-color;
+        text-decoration: none;
     }
 
-    &:active, &:focus {
+    &:active,
+    &:focus {
         outline: 0;
     }
 
-    &[disabled], fieldset[disabled] & {
+    &[disabled],
+    fieldset[disabled] & {
         cursor: not-allowed;
         pointer-events: none;
         opacity: .65;
@@ -57,12 +67,17 @@
 // Primary
 .btn--primary {
 {% if demosite %}
-    background-color: $theme-color;
-    color: $white;
-    border-color: $theme-color;
+    background-color: $brand-primary;
 
-    &:hover, &:focus, &:active {
-        background-color: lighten($theme-color, 5%);
+    border-color: $brand-primary;
+
+    color: $white;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: lighten($brand-primary, 5%);
+
         color: $white;
     }
 {% endif %}
@@ -71,18 +86,21 @@
 // Secondary
 .btn--secondary {
 {% if demosite %}
-    background-color: $theme-color--dark;
-    color: $white;
-    border-color: $theme-color--dark;
+    background-color: $brand-primary--dark;
 
-    &:hover, &:focus, &:active {
-        background-color: lighten($theme-color--dark, 5%);
+    border-color: $brand-primary--dark;
+
+    color: $white;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: lighten($brand-primary--dark, 5%);
+
         color: $white;
     }
 {% endif %}
 }
-
-
 
 
 /*doc
@@ -92,17 +110,14 @@ name: 01_buttons
 category: Blocks
 ---
 
-<strong>General</strong>
-
 ```html_example
+
+<h3>General</h3>
 <button type="button" class="btn">
     Button
 </button>
-```
 
-<strong>Types</strong>
-
-```html_example
+<h3>Types</h3>
 <button type="button" class="btn btn--primary">
     Primary
 </button>

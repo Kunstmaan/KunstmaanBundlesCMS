@@ -1,0 +1,106 @@
+kuma_form:
+    form:
+        page_admin:
+            title:
+                label:  Tytuł
+            thanks:
+                label:  Wiadomość po pomyslnym wysłaniu
+            subject:
+                label:  Temat
+            from_email:
+                label:  Nadawca e-mail
+            to_email:
+                label:  Odbiorca e-mail
+        checkbox_page_part:
+            label:
+                label:  Etykieta
+            required:
+                label:  Wymagane
+            errormessage_required:
+                label:  Komunikat błędu w przypadku nieuzupełnienia
+        choice_page_part:
+            label:
+                label: Etykieta
+            required:
+                label: Wymagane
+            errormessage_required:
+                label: Komunikat błędu w przypadku nieuzupełnienia
+            expanded:
+                label: Rozwinięta
+            multiple:
+                label: Wielokrotnego wyboru
+            choices:
+                label: Opcje
+            empty_value:
+                label: Pusta wartośc
+        email_page_part:
+            label:
+                label: Etykieta
+            required:
+                label: Wymagane
+            errorMessageRequired:
+                label: Komunikat błędu w przypadku nieuzupełnienia
+            errorMessageInvalid:
+                label: Komunikat błędu w przypadku błędnego maila
+        file_upload_page_part:
+            label:
+                label: Etykieta
+            required:
+                label: Wymagane
+            errormessage_required:
+                label: Komunikat błędu w przypadku nieuzupełnienia
+        multi_line_text_page_part:
+            label:
+                label: Etykieta
+            required:
+                label: Wymagane
+            errormessage_required:
+                label: Komunikat błędu w przypadku nieuzupełnienia
+            regex:
+                label: regex
+            errormessage_regex:
+                label: Komunikat błędu w przypadku nieuzupełnienia
+        single_line_text_page_part:
+            label:
+                label: Etykieta
+            required:
+                label: Wymagane
+            errormessage_required:
+                label: Komunikat błędu w przypadku nieuzupełnienia
+            regex:
+                label: Wyrażenia regularne
+            errormessage_regex:
+                label: Komunikat błędu
+        submit_button_page_part:
+            label:
+                label: Etykieta
+    button:
+        export_to:  Export to
+    list:
+        header:
+            title:      Tytuł
+            language:   Język
+            path:       Ścieżka formularza
+        filter:
+            title: Tytuł
+            online: Online
+    submission:
+        list:
+            header:
+                created:    Data
+                language:   Język
+                ip_address: Address IP
+
+# Form Submissions
+formsubmissions:
+    index:
+        title: Strony z wysłanymi formularzami
+    menu:
+        title: Wysłane formularze
+    list:
+        title: Wysłane formularze dla strony
+    edit:
+        title: Wysłane formularze dla strony
+
+subaction:
+    formsubmissions: "Przesłane formularze"

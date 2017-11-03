@@ -1,0 +1,33 @@
+<div class="modal fade" id="pagePartModal{{ pagepartadmin.context }}" tabindex="-1" role="dialog" aria-labelledby="pagePartModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{ 'kuma_pagepart.select.add' | trans }}</h4>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="row">
+                    {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
+                        <div class="col-sm-6 col-md-4">
+                            {% if pagePartType.preview %}
+                                {% set background = asset(pagePartType.preview) %}
+                            {% else %}
+                                {% set background = asset('bundles/kunstmaanadmin/default-theme/img/kunstmaan/guy.svg') %}
+                            {% endif %}
+                            <a class="js-add-pp-button pp_modal__preview" data-pagepartclass="{{ pagePartType.class }}" data-pagepartmodalname="pagePartModal{{ pagepartadmin.context }}" style="background: url('{{ background }}');">
+                                <header>
+                                    <p class="pp_modal__preview__text">
+                                        {{ pagePartType.name|trans }}
+                                    </p>
+                                </header>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

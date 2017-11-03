@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Twig;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminListBundle\Entity\OverviewNavigationInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\PageInterface;
@@ -102,6 +103,10 @@ class NodeTwigExtension extends Twig_Extension
             new \Twig_SimpleFunction(
                 'get_node_trans_by_node_id',
                 array($this, 'getNodeTranslationByNodeId')
+            ),
+            new \Twig_SimpleFunction(
+                'getOverviewRoute',
+                array($this, 'getOverviewRoute')
             ),
         );
     }
@@ -259,4 +264,14 @@ class NodeTwigExtension extends Twig_Extension
             $parameters
         );
     }
+
+    public function getOverviewRoute($node){
+        if($node instanceof OverviewNavigationInterface){
+            return $node->getOverViewRoute();
+        }
+
+        return null;
+    }
+
+
 }

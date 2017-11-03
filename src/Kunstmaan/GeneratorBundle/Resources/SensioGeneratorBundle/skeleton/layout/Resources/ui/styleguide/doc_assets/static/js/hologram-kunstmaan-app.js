@@ -3,7 +3,7 @@ var hologramKunstmaan = hologramKunstmaan || {};
 hologramKunstmaan.app = (function(window, undefined) {
 
     var init,
-        scrollOffset = 70;
+        scrollOffset = 70,
         scrollSpeed = 300;
 
     init = function() {
@@ -11,10 +11,18 @@ hologramKunstmaan.app = (function(window, undefined) {
 
         // Update selected menu item on scrolling
         $('.styleguide__content-container > h1').waypoint({
+            offset: scrollOffset,
             handler: function() {
                 selectMenuItem('#' + $(this.element).attr('id'));
-          }
+            }
         });
+
+        // Initially select menu item
+        if (window.location.hash) {
+            setTimeout(function () {
+                selectMenuItem(window.location.hash);
+            }, 0);
+        }
 
         // Smoothly scroll to clicked menu item content
         $('.styleguide__block-navigation__item').on('click', function (event) {
@@ -27,15 +35,6 @@ hologramKunstmaan.app = (function(window, undefined) {
                 selectMenuItem(hash);
             });
         });
-
-        // Initially select menu item
-        if (window.location.hash) {
-            setTimeout(function () {
-                selectMenuItem(window.location.hash);
-            }, 0);
-        } else {
-            $('.styleguide__block-navigation__item:first-child').addClass('selected');
-        }
     };
 
     selectMenuItem = function(hash) {

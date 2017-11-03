@@ -1,0 +1,50 @@
+<div id="versions" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>{{ 'kuma_node.modal.versions.title'|trans() }}</h3>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>{{ 'kuma_node.modal.versions.table.type'|trans() }}</th>
+                        <th>{{ 'kuma_node.modal.versions.table.last_modified'|trans() }}</th>
+                        <th>{{ 'kuma_node.modal.versions.table.user'|trans() }}</th>
+                        <th>{{ 'kuma_node.modal.versions.table.actions'|trans() }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set publicVersion = nodeTranslation.getPublicNodeVersion() %}
+                    {% for nodeVersion in nodeVersions %}
+                        <tr>
+                            <td>{{ nodeVersion.type }}</td>
+                            <td>{{ nodeVersion.updated | date('Y-m-d H:i:s') }}</td>
+                            <td>{{ nodeVersion.owner }}</td>
+                            <td class="table__actions">
+                                <a href="{{ path('_slug_preview', { 'url': nodeTranslation.url, 'version': nodeVersion.id }) }}" target="_blank" class="link--text table__actions__item table__actions__item--block">
+                                    <i class="fa fa-eye"></i>
+                                    {{ 'kuma_node.modal.versions.actions.preview'|trans() }}
+                                </a>
+                                {% if (draftNodeVersion is null or nodeVersion.id != draftNodeVersion.id) and (publicVersion is null or nodeVersion.id != publicVersion.id) %}
+                                    <a href="{{ path('KunstmaanNodeBundle_nodes_revert', { 'id': node.id, 'version': nodeVersion.id }) }}" class="link--text table__actions__item table__actions__item--block">
+                                        <i class="fa fa-refresh"></i>
+                                        {{ 'kuma_node.modal.versions.actions.revert'|trans() }}
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

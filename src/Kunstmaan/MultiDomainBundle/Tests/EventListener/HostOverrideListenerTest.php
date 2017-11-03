@@ -37,7 +37,6 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::isAdminRoute
      */
     public function testHostOverrideMessageIsSetForAdmin()
     {
@@ -56,7 +55,6 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::isAdminRoute
      */
     public function testHostOverrideMessageIsNotSetForAdminRedirectResponse()
     {
@@ -74,7 +72,6 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::isAdminRoute
      */
     public function testHostOverrideMessageIsNotSetForSubRequest()
     {
@@ -92,7 +89,6 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::isAdminRoute
      */
     public function testHostOverrideMessageIsNotSetForXmlRequest()
     {
@@ -110,7 +106,6 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::isAdminRoute
      */
     public function testHostOverrideMessageIsNotSetForPreview()
     {
@@ -128,7 +123,6 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
      * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
-     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::isAdminRoute
      */
     public function testHostOverrideMessageIsNotSetForFrontend()
     {
@@ -158,7 +152,21 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
         $translator->method('trans')
             ->willReturnArgument(0);
 
-        $listener = new HostOverrideListener($session, $translator, $domainConfiguration);
+        $adminRouteReturnValueMap = array(
+            array('/nl/admin/preview/some-uri', false),
+            array('/nl/some-uri', false),
+            array('/nl/admin/some-admin-uri', true)
+        );
+
+        $adminRouteHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\AdminRouteHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $adminRouteHelper
+            ->expects($this->any())
+            ->method('isAdminRoute')
+            ->will($this->returnValueMap($adminRouteReturnValueMap));
+
+        $listener = new HostOverrideListener($session, $translator, $domainConfiguration, $adminRouteHelper);
 
         return $listener;
     }

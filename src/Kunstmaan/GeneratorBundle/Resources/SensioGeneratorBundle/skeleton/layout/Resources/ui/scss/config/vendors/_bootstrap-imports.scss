@@ -7,62 +7,62 @@
 
 /* Vars and mixins
    ========================================================================== */
-@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/variables";
-@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
 
 /* Reset and dependencies
    ========================================================================== */
-@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/normalize";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/print";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/glyphicons";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
 
 
 /* Core CSS
    ========================================================================== */
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/scaffolding";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/type";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/code";
-@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/grid";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/tables";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/forms";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/buttons";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/forms";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
 
 
 /* Components
    ========================================================================== */
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/component-animations";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/dropdowns";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/button-groups";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/input-groups";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/navs";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/navbar";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/breadcrumbs";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/pagination";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/pager";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/labels";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/badges";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/jumbotron";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/thumbnails";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/alerts";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/progress-bars";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/media";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/list-group";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/panels";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/responsive-embed";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/wells";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/close";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navs";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/pager";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/labels";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/badges";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/media";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/list-group";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/panels";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/wells";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/close";
 
 
 /* Components /w javascript
    ========================================================================== */
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/modals";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/tooltip";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/popovers";
-//@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/carousel";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/modals";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/carousel";
 
 
 /* Utility classes
    ========================================================================== */
-@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/utilities";
-@import "app/Resources/vendor_bower/bootstrap-sass-official/assets/stylesheets/bootstrap/responsive-utilities";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";

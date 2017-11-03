@@ -3,6 +3,6 @@
    ========================================================================== */
 
 @mixin control-label-active {
+    color: $brand-primary;
     font-weight: 400;
-    color: $theme-color;
 }

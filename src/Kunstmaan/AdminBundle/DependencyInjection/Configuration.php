@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
+                ->scalarNode('admin_prefix')->defaultValue('admin')->end()
                 ->arrayNode('admin_locales')
                     ->defaultValue(array('en'))
                     ->prototype('scalar')->end()
@@ -88,6 +89,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('password_restrictions')
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('min_digits')->defaultNull()->end()
+                        ->integerNode('min_uppercase')->defaultNull()->end()
+                        ->integerNode('min_special_characters')->defaultNull()->end()
+                        ->integerNode('min_length')->defaultNull()->end()
+                        ->integerNode('max_length')->defaultNull()->end()
+                    ->end()
             ->end();
 
         return $treeBuilder;
