@@ -15,6 +15,8 @@ settings:
         refresh_live: Live herladen
         import_translations: Importeer
         import_translations_forced: Importeer geforceerd
+        actions: Acties
+        export_translations: Exporteer naar CSV
         not_live_warning: "De live vertalingen zijn niet up-to-date. Klik op 'Live herladen' om deze te updaten."
         choose_language: "Kies een taal"
         succesful_added: "Nieuwe vertaling is succesvol aangemaakt"

@@ -12,6 +12,9 @@ parameters:
     kunstmaan_admin.password_check.listener.class: 'Kunstmaan\AdminBundle\EventListener\PasswordCheckListener'
     kunstmaan_admin.firewall.provider_key: 'main'
     kunstmaan_admin.domain_configuration.class: 'Kunstmaan\AdminBundle\Helper\DomainConfiguration'
+    kunstmaan_admin.validator.password_restrictions.class: 'Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictionsValidator'
+    kunstmaan_admin.adminroute.helper.class: 'Kunstmaan\AdminBundle\Helper\AdminRouteHelper'
+    kunstmaan_admin.adminroute.twig.class: 'Kunstmaan\AdminBundle\Twig\AdminRouteHelperTwigExtension'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -34,13 +37,13 @@ services:
 
     kunstmaan_admin.login.listener:
         class: '%kunstmaan_admin.login.listener.class%'
-        arguments: ['@kunstmaan_admin.logger', '@kunstmaan_admin.versionchecker']
+        arguments: ['@kunstmaan_admin.logger', '@kunstmaan_admin.versionchecker', '@kunstmaan_admin.adminroute.helper']
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
     kunstmaan_admin.admin_locale.listener:
         class: '%kunstmaan_admin.admin_locale.listener.class%'
-        arguments: ['@security.token_storage', '@translator', '%kunstmaan_admin.default_admin_locale%', '%kunstmaan_admin.firewall.provider_key%']
+        arguments: ['@security.token_storage', '@translator', '@kunstmaan_admin.adminroute.helper', '%kunstmaan_admin.default_admin_locale%', '%kunstmaan_admin.firewall.provider_key%']
         tags:
             - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
 
@@ -105,6 +108,16 @@ services:
     kunstmaan_admin.clone.helper:
         class: Kunstmaan\AdminBundle\Helper\CloneHelper
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
+
+    kunstmaan_admin.adminroute.helper:
+        class: '%kunstmaan_admin.adminroute.helper.class%'
+        arguments: ['%kunstmaan_admin.admin_prefix%', '@request_stack']
+
+    kunstmaan_admin.adminroute.twig.extension:
+        class: '%kunstmaan_admin.adminroute.twig.class%'
+        arguments: ['@kunstmaan_admin.adminroute.helper']
+        tags:
+            -  { name: 'twig.extension' }
 
     kunstmaan_admin.clone.listener:
         class: '%kunstmaan_admin.clone.listener.class%'
@@ -184,7 +197,7 @@ services:
 
     kunstmaan_admin.password_check.listener:
         class: '%kunstmaan_admin.password_check.listener.class%'
-        arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session', '@translator']
+        arguments: ['@security.authorization_checker', '@security.token_storage', '@router.default', '@session', '@translator', '@kunstmaan_admin.adminroute.helper']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
 
@@ -229,3 +242,19 @@ services:
             - '%kunstmaan_admin.google_signin.client_id%'
         tags:
             - { name: twig.extension }
+
+    kunstmaan_admin.sidebar.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\SidebarTwigExtension
+        tags:
+            - { name: twig.extension }
+
+    kunstmaan_admin.validator.password_restrictions:
+        class: '%kunstmaan_admin.validator.password_restrictions.class%'
+        arguments:
+            - '%kunstmaan_admin.password_restrictions.min_digits%'
+            - '%kunstmaan_admin.password_restrictions.min_uppercase%'
+            - '%kunstmaan_admin.password_restrictions.min_special_characters%'
+            - '%kunstmaan_admin.password_restrictions.min_length%'
+            - '%kunstmaan_admin.password_restrictions.max_length%'
+        tags:
+            - { name: validator.constraint_validator, alias: password_restrictions }

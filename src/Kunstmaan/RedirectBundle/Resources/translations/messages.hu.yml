@@ -14,6 +14,8 @@ redirect:
                 label: redirect.form.redirect.target.label
             permanent:
                 label: Állandó
+            note:
+                label: Jegyzet
 
     adminlist:
         header:
@@ -21,8 +23,10 @@ redirect:
             origin:     Eredeti
             target:     Cél
             permanent:  Állandó?
+            note:       Jegyzet
         filter:
             domain:     Domain
             origin:     Eredeti
             target:     Cél
             permanent:  Állandó
+            note:       Jegyzet

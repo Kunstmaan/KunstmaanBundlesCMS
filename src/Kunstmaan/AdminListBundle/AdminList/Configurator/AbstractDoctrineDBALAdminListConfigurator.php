@@ -149,6 +149,7 @@ abstract class AbstractDoctrineDBALAdminListConfigurator extends AbstractAdminLi
     public function getQueryBuilder()
     {
         if (is_null($this->queryBuilder)) {
+
             $this->queryBuilder = new QueryBuilder($this->connection);
             $this->adaptQueryBuilder($this->queryBuilder);
 

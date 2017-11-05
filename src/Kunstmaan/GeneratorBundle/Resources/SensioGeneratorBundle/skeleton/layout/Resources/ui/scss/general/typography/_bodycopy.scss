@@ -5,29 +5,39 @@
 /* General
    ========================================================================== */
 * {
-   -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-        font-smoothing: antialiased;
 }
 
-html, body {
-    font-family: $font-family--base;
+html {
     font-size: $font-size--base;
-    line-height: $line-height--base;
+}
+
+body {
     color: $text-color;
+    font-family: $font-family--base;
+    font-size: $font-size--default;
+    line-height: $line-height--base;
 }
 
 p {
-    margin: 1rem 0;
+    margin: 1.6rem 0;
 
     @media (min-width: $screen-md-min) {
-        margin: 1.5rem 0;
+        margin: 2.4rem 0;
     }
 }
 
-p, .pp--text {
-    + h1, + h2, + h3, + h4, + h5, + h6 {
-        margin-top: 3rem;
+p,
+.pp--text {
+
+    + h1,
+    + h2,
+    + h3,
+    + h4,
+    + h5,
+    + h6 {
+        margin-top: 4.8rem;
     }
 }
 
@@ -50,12 +60,11 @@ p, .pp--text {
 /* Intro text
    ========================================================================== */
 .text--intro {
-    font-size: 1.2rem;
-    line-height: 1.3;
-
+    font-size: $font-size--big;
 {% if demosite %}
     font-weight: 300;
 {% endif %}
+    line-height: 1.3;
 }
 
 

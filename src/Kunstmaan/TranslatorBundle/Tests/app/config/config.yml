@@ -13,6 +13,12 @@ framework:
     session:         ~
     fragments:       ~
 
+services:
+    translation.loader.yml:
+        class: Symfony\Component\Translation\Loader\YamlFileLoader
+        tags:
+            - { name: translation.loader, alias: yml }
+
 kunstmaan_translator:
     managed_locales: ['nl','en','de']
     cache_dir: "%kernel.cache_dir%/translations"
