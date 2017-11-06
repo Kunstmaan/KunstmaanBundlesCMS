@@ -119,7 +119,7 @@ class RedirectRouter implements RouterInterface
             if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
                 $this->routeCollection->add(
                     '_redirect_route_' . $redirect->getId(),
-                    new Route($redirect->getOrigin(), array(
+                    new Route(rtrim($redirect->getOrigin(), '/'), array(
                         '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                         'path' => $redirect->getTarget(),
                         'permanent' => $redirect->isPermanent(),
