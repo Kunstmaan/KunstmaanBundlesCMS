@@ -491,6 +491,24 @@ abstract class AdminListController extends Controller
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+     * @param LockableEntityInterface $entity
+     * @return bool
+     */
+    protected function isLockableEntityLocked(LockableEntityInterface $entity)
+    {
+        /** @var EntityVersionLockService $entityVersionLockService */
+        $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+
+        return $entityVersionLockService->isEntityBelowThreshold($entity) && $entityVersionLockService->isEntityLocked(
+                $this->getUser(),
+                $entity
+            );
+    }
+
+    /**
+>>>>>>> [AdminListBundle] Incorrect logic checking if version lock is active
      * Sets the sort weight on a new item. Can be overridden if a non-default sorting implementation is being used.
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
