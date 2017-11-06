@@ -32,6 +32,9 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     private $request;
 
+    /** @var int $limit */
+    private $limit;
+
     /**
      * @param EntityManager $em The entity manager
      * @param MediaManager $mediaManager The media manager
@@ -50,6 +53,10 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $this->setAdminType(new MediaType($mediaManager, $em));
         $this->folder = $folder;
         $this->request = $request;
+
+        // Thumbnail view should display 24 images, list view 250
+        $viewMode = $request->get('viewMode');
+        $viewMode == 'thumb-view' ? $this->setLimit(24) : $this->setLimit(250);
     }
 
     /**
@@ -112,10 +119,22 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     /**
      * @return int
      */
-    public function getLimit()
+    public function getLimit() : int
     {
-        return 250;
+        return $this->limit;
     }
+
+    /**
+     * @param int $limit
+     * @return MediaAdminListConfigurator
+     */
+    private function setLimit(int $limit): MediaAdminListConfigurator
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+
 
     /**
      * Add item actions buttons
