@@ -119,7 +119,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     /**
      * @return int
      */
-    public function getLimit() : int
+    public function getLimit()
     {
         return $this->limit;
     }
@@ -128,7 +128,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      * @param int $limit
      * @return MediaAdminListConfigurator
      */
-    private function setLimit(int $limit): MediaAdminListConfigurator
+    private function setLimit($limit)
     {
         $this->limit = $limit;
         return $this;
