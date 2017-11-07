@@ -50,6 +50,7 @@
         "box/spout": "^2.5",
         "timeinc/swagger-bundle": "^0.2.2",
         "zircote/swagger-php": "^2.0",
+        "harmbandstra/swagger-ui-bundle": "^1.0",
         "ruflin/elastica": "^5.1",
         "friendsofsymfony/rest-bundle": "^2.2",
         "jms/serializer-bundle": "^2.2"
