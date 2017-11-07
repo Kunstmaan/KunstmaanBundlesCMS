@@ -32,14 +32,14 @@ class LockableEntity extends AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="entity_class")
      */
     protected $entityClass;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="bigint", name="entity_id")
      */
     protected $entityId;
 
