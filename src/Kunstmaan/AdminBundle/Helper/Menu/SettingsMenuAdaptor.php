@@ -67,6 +67,20 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 }
             }
         }
-    }
 
+        if (!is_null($parent) &&'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+            $menuItem = new MenuItem($menu);
+            $menuItem
+                ->setRoute('kunstmaanadminbundle_admin_exception')
+                ->setLabel('settings.exceptions.title')
+                ->setUniqueId('exceptions')
+                ->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+                $parent->setActive(true);
+            }
+            $children[] = $menuItem;
+        }
+
+    }
 }

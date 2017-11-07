@@ -26,6 +26,13 @@ settings:
         uptodate: jest aktualny
         toupdate: może być aktualizowany do
         unknown: wersji nieznanych informacji
+    exceptions:
+        title: Wyjątki
+        code: Kod
+        url: URL
+        urlReferer: URL Referer
+        createdAt: Data utworzenia
+        isMark: Aktywny?
 
 # Tools
 tools:
