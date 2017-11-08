@@ -17,7 +17,7 @@ parameters:
     kunstmaan_admin.adminroute.twig.class: 'Kunstmaan\AdminBundle\Twig\AdminRouteHelperTwigExtension'
     kunstmaan_admin.toolbar.listener.class: 'Kunstmaan\AdminBundle\EventListener\ToolbarListener'
     kunstmaan_admin.toolbar.collector.bundle.class: 'Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector'
-    kunstmaan_admin.exception.listener.class: 'Kunstmaan\AdminBundle\EventListener\ExceptionListener'
+    kunstmaan_admin.exception.listener.class: 'Kunstmaan\AdminBundle\EventListener\ExceptionSubscriber'
 
 
 services:
@@ -268,7 +268,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+            - { name: kernel.event_subscriber }
 
     ### TOOLBAR DATA COLLECTOR ###
 

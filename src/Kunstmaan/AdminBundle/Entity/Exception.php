@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\ExceptionRepository")
  * @ORM\Table(name="kuma_exception")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Exception extends AbstractEntity
 {
@@ -154,6 +155,14 @@ class Exception extends AbstractEntity
     public function setUpdatedAt(DateTimeInterface $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->setUpdatedAt(new \DateTime());
     }
 
 }
