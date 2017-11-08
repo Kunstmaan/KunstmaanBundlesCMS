@@ -30,11 +30,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @SWG\Definition(
  *   definition="listTranslation",
  *   type="array",
- *   allOf={
- *       @SWG\Schema(
- *             @SWG\Items(ref="#/definitions/singleTranslation")
- *       )
- *   }
+ *   @SWG\Items(
+ *     allOf={
+ *          @SWG\Schema(ref="#/definitions/singleTranslation")
+ *     }
+ *   )
  * )
  *
  * @SWG\Definition(
@@ -60,20 +60,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @SWG\Definition(
  *   definition="postTranslations",
  *   type="array",
- *   allOf={
- *       @SWG\Schema(
- *             @SWG\Items(ref="#/definitions/postTranslation")
- *       )
- *   }
+ *   @SWG\Items(
+ *      allOf={
+ *          @SWG\Schema(ref="#/definitions/postTranslation")
+ *      }
+ *   )
  * )
  * @SWG\Definition(
  *   definition="keywordCollection",
  *   type="array",
- *   allOf={
- *       @SWG\Schema(
- *           @SWG\Items(ref="#/definitions/deprecateKeyword")
- *       )
- *   }
+ *   @SWG\Items(
+ *     allOf={
+ *       @SWG\Schema(ref="#/definitions/deprecateKeyword")
+ *      }
+ *   )
  * )
  *
  * @SWG\Definition(
@@ -97,6 +97,34 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *       )
  *   }
  * )
+ *
+ * @SWG\Definition(
+ *     definition="ErrorModel",
+ *     type="object",
+ *     required={"code", "message"},
+ *     @SWG\Property(
+ *         property="code",
+ *         type="integer",
+ *         format="int32",
+ *          example="404"
+ *     ),
+ *     @SWG\Property(
+ *         property="message",
+ *         type="string",
+ *         example="Not found"
+ *     ),
+ *     @SWG\Property(
+ *         property="mensuraCode",
+ *         type="string",
+ *     ),
+ *     @SWG\Property(
+ *         property="extraData",
+ *         type="array",
+ *          items={},
+ *     )
+ * )
+ *
+ *
  */
 class TranslationsController extends FOSRestController
 {
@@ -150,6 +178,7 @@ class TranslationsController extends FOSRestController
 
         $translations = $this->getDoctrine()->getRepository('KunstmaanTranslatorBundle:Translation')
             ->findAllNotDisabled($locale);
+
         return $translations;
     }
 
@@ -161,7 +190,7 @@ class TranslationsController extends FOSRestController
      * @Rest\QueryParam(name="locale", nullable=false, description="locale")
      * @Rest\Get("/public/translations/{keyword}")
      *
-     * @param string                $keyword
+     * @param string $keyword
      * @param ParamFetcherInterface $paramFetcher
      *
      * @return Translation
