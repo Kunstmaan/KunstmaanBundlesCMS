@@ -33,6 +33,7 @@ settings:
         urlReferer: URL Referer
         createdAt: Data utworzenia
         isMark: Aktywny?
+        used: Wykorzystano
 
 # Tools
 tools:

@@ -4,10 +4,12 @@ namespace Kunstmaan\AdminBundle\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\ExceptionRepository")
  * @ORM\Table(name="kuma_exception")
+ * @UniqueEntity("hash")
  * @ORM\HasLifecycleCallbacks()
  */
 class Exception extends AbstractEntity
@@ -32,6 +34,20 @@ class Exception extends AbstractEntity
      * @ORM\Column(type="string", nullable=true)
      */
     private $urlReferer;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=false, unique=true, length=32)
+     */
+    private $hash;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $used;
 
     /**
      * @var bool
@@ -59,6 +75,7 @@ class Exception extends AbstractEntity
         $this->isMark = false;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
+        $this->setUsed(1);
     }
 
     /**
@@ -107,6 +124,46 @@ class Exception extends AbstractEntity
     public function setUrlReferer($urlReferer)
     {
         $this->urlReferer = $urlReferer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUsed()
+    {
+        return $this->used;
+    }
+
+    /**
+     * @param int $used
+     */
+    public function setUsed($used)
+    {
+        $this->used = $used;
+    }
+
+    /**
+     * @param int $used
+     */
+    public function increaseUsed()
+    {
+        $this->used++;
     }
 
     /**

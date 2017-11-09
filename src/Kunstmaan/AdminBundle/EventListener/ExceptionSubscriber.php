@@ -31,11 +31,23 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $exception = $event->getException();
 
         if ( $exception instanceof HttpExceptionInterface ) {
-            $model = new Exception;
-            $model->setCode($exception->getStatusCode());
-            $model->setUrl($request->getUri());
-            $model->setUrlReferer($request->headers->get('referer'));
 
+            $hash = md5(
+                $exception->getStatusCode() . $request->getUri() . $request->headers->get('referer')
+            );
+
+            if ( $model = $this->em->getRepository(Exception::class)->findOneBy(['hash' => $hash]) ) {
+                $model->increaseUsed();
+                $model->setIsMark(false);
+
+            } else {
+                $model = new Exception;
+                $model->setCode($exception->getStatusCode());
+                $model->setUrl($request->getUri());
+                $model->setUrlReferer($request->headers->get('referer'));
+                $model->setHash($hash);
+
+            }
             $this->em->persist($model);
             $this->em->flush();
         }
