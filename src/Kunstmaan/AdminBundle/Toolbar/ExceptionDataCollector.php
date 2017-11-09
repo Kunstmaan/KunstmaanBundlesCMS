@@ -34,13 +34,13 @@ class ExceptionDataCollector extends AbstractDataCollector
     public function collectData()
     {
         $model = $this->em->getRepository(Exception::class)->findExceptionStatistics();
-        if ( null === $model ) {
+        if ( isset($model['cp_all'], $model['cp_sum']) ) {
+            return [
+                'data' => $model
+            ];
+        } else {
             return [];
         }
-
-        return [
-            'data' => $model
-        ];
     }
 
     /**
