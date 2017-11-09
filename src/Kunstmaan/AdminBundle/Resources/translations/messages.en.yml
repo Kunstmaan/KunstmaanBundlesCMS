@@ -134,3 +134,8 @@ kuma_admin:
 kuma_js:
     auto_collapse:
         more_button_label: More
+
+toolbar:
+    exception:
+        title: Exceptions
+        message: "<strong>%X%</strong> exceptions within <strong>%Y%</strong> time"

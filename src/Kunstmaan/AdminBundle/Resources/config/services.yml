@@ -15,10 +15,10 @@ parameters:
     kunstmaan_admin.validator.password_restrictions.class: 'Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictionsValidator'
     kunstmaan_admin.adminroute.helper.class: 'Kunstmaan\AdminBundle\Helper\AdminRouteHelper'
     kunstmaan_admin.adminroute.twig.class: 'Kunstmaan\AdminBundle\Twig\AdminRouteHelperTwigExtension'
+    kunstmaan_admin.exception.listener.class: 'Kunstmaan\AdminBundle\EventListener\ExceptionSubscriber'
     kunstmaan_admin.toolbar.listener.class: 'Kunstmaan\AdminBundle\EventListener\ToolbarListener'
     kunstmaan_admin.toolbar.collector.bundle.class: 'Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector'
-    kunstmaan_admin.exception.listener.class: 'Kunstmaan\AdminBundle\EventListener\ExceptionSubscriber'
-
+    kunstmaan_admin.toolbar.collector.exception.class: 'Kunstmaan\AdminBundle\Toolbar\ExceptionDataCollector'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -308,4 +308,9 @@ services:
             - '@logger'
             - '@kunstmaan_admin.cache'
         tags:
-            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:bundles_version.html.twig', id: kuma_bundle_versions}
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:bundles_version.html.twig', id: kuma_bundle_versions }
+    kunstmaan_admin.datacollector.exception:
+        class: '%kunstmaan_admin.toolbar.collector.exception.class%'
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:exception.html.twig', id: kuma_exception }

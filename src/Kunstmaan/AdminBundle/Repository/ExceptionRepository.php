@@ -15,4 +15,13 @@ class ExceptionRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findExceptionStatistics()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id) as cp_all, SUM(e.used) as cp_sum')
+            ->where('e.isMark = 0')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
