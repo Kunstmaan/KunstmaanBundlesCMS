@@ -9,14 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Kunstmaan\ApiBundle\Controller;
+namespace Kunstmaan\Rest\NodeBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -25,15 +27,16 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
  *
  * @Route(service="kunstmaan_api.controller.nodes")
+ *
  */
 class NodesController
 {
     use ControllerTrait;
 
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -41,23 +44,57 @@ class NodesController
     /**
      * Retrieve nodes paginated
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Get all nodes",
-     *  resourceDescription="Get all nodes",
-     *  output="Kunstmaan\NodeBundle\Entity\Node",
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      403="Returned when the user is not authorized to fetch nodes",
-     *      500="Something went wrong"
-     *  }
+     * @SWG\Get(
+     *     path="/api/nodes",
+     *     description="Get all nodes",
+     *     operationId="getNodes",
+     *     produces={"application/json"},
+     *     tags={"nodes"},
+     *     @SWG\Parameter(
+     *         name="internalName",
+     *         in="query",
+     *         type="string",
+     *         description="The internal name of the node",
+     *         required=false,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="hiddenFromNav",
+     *         in="query",
+     *         type="boolean",
+     *         description="If 1, only nodes hidden from nav will be returned",
+     *         required=false,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="refEntityName",
+     *         in="query",
+     *         type="string",
+     *         description="Which pages you want to have returned",
+     *         required=false,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returned when successful"
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
      * )
      *
      * @Annotations\QueryParam(name="internalName", nullable=true, description="The internal name of the node")
      * @Annotations\QueryParam(name="hiddenFromNav", nullable=true, default=false, description="If 1, only nodes hidden from nav will be returned")
      * @Annotations\QueryParam(name="refEntityName", nullable=true, description="Which pages you want to have returned")
+     *
+     * @param ParamFetcher $paramFetcher
+     * @return Response
      */
-    public function getNodesAction(ParamFetcherInterface $paramFetcher)
+    public function getNodesAction(ParamFetcher $paramFetcher)
     {
         $params = [];
 
@@ -67,7 +104,7 @@ class NodesController
             }
         }
 
-        $data = $this->em->getRepository('KunstmaanNodeBundle:Node')->findBy($params);
+        $data = $this->em->getRepository(Node::class)->findBy($params);
 
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
@@ -75,24 +112,34 @@ class NodesController
     /**
      * Retrieve a single node
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Get a node",
-     *  resourceDescription="Get a node",
-     *  output="Kunstmaan\NodeBundle\Entity\Node",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The node ID"
-     *      }
-     *  },
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      403="Returned when the user is not authorized to fetch nodes",
-     *      500="Something went wrong"
-     *  }
+     * @SWG\Get(
+     *     path="/api/nodes/{id}",
+     *     description="Get a node by ID",
+     *     operationId="getNode",
+     *     produces={"application/json"},
+     *     tags={"nodes"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="query",
+     *         type="integer",
+     *         description="The node ID",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/Node")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
      * )
      */
     public function getNodeAction($id)
@@ -105,7 +152,7 @@ class NodesController
     /**
      * Retrieve a single node's translations
      *
-     * @ApiDoc(
+     * ApiDoc(
      *  resource=true,
      *  description="Retrieve a single node's translations",
      *  resourceDescription="Retrieve a single node's translations",
@@ -144,7 +191,7 @@ class NodesController
     /**
      * Retrieve a single node's children
      *
-     * @ApiDoc(
+     * ApiDoc(
      *  resource=true,
      *  description="Get a node's children",
      *  resourceDescription="Get a node's children",
@@ -175,7 +222,7 @@ class NodesController
     /**
      * Retrieve a single node's parent
      *
-     * @ApiDoc(
+     * ApiDoc(
      *  resource=true,
      *  description="Get a node's parent",
      *  resourceDescription="Get a node's parent",

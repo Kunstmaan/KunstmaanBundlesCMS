@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ApiBundle\DependencyInjection;
+namespace Kunstmaan\Rest\NodeBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
-class KunstmaanApiExtension extends Extension
+class KunstmaanRestNodeExtension extends Extension
 {
     /**
      * {@inheritdoc}

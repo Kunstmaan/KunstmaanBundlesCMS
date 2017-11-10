@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ApiBundle\DependencyInjection\Compiler;
+namespace Kunstmaan\Rest\NodeBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

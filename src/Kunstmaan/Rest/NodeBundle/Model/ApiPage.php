@@ -1,32 +1,73 @@
 <?php
 
-namespace Kunstmaan\ApiBundle\Model;
+/*
+ * This file is part of the KunstmaanBundlesCMS package.
+ *
+ * (c) Kunstmaan <https://github.com/Kunstmaan/KunstmaanBundlesCMS/>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Kunstmaan\Rest\NodeBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Swagger\Annotations as SWG;
 
+/**
+ * Class ApiPage
+ * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
+ *
+ * @SWG\Definition()
+ */
 class ApiPage
 {
-    /** @var string */
+    /**
+     * @var string
+     * @SWG\Property(type="string", example="Kunstmaan\SomeBundle\Entity\Pages\HomePage")
+     */
     private $type;
 
-    /** @var HasPagePartsInterface */
+    /**
+     * @var HasPagePartsInterface
+     * @SWG\Property(type="object")
+     */
     private $page;
 
-    /** @var array|ArrayCollection */
+    /**
+     * @var ApiPagePart[]
+     * @SWG\Property(
+     *     type="array",
+     *     @SWG\Items(
+     *      allOf={
+     *          @SWG\Schema(ref="#/definitions/ApiPagePart")
+     *      }
+     *    )
+     * )
+     */
     private $pageParts;
 
-    /** @var Node */
+    /**
+     * @var Node
+     * @SWG\Property(ref="#/definitions/Node")
+     */
     private $node;
 
-    /** @var NodeTranslation */
+    /**
+     * @var NodeTranslation
+     * @SWG\Property(ref="#/definitions/NodeTranslation")
+     */
     private $nodeTranslation;
 
-    /** @var NodeVersion */
+    /**
+     * @var NodeVersion
+     * @SWG\Property(ref="#/definitions/NodeVersion")
+     */
     private $nodeVersion;
 
     /**
@@ -39,10 +80,13 @@ class ApiPage
 
     /**
      * @param string $type
+     * @return $this
      */
     public function setType($type)
     {
         $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -55,11 +99,14 @@ class ApiPage
 
     /**
      * @param HasPagePartsInterface $page
+     * @return $this
      */
     public function setPage(HasPagePartsInterface $page)
     {
         $this->page = $page;
-        $this->type = get_class($page);
+        $this->type = ClassLookup::getClass($page);
+
+        return $this;
     }
 
     /**
@@ -72,10 +119,13 @@ class ApiPage
 
     /**
      * @param array|ArrayCollection $pageParts
+     * @return $this
      */
     public function setPageParts($pageParts)
     {
         $this->pageParts = $pageParts;
+
+        return $this;
     }
 
     /**
@@ -88,10 +138,13 @@ class ApiPage
 
     /**
      * @param Node $node
+     * @return $this
      */
     public function setNode(Node $node)
     {
         $this->node = $node;
+
+        return $this;
     }
 
     /**
@@ -104,10 +157,13 @@ class ApiPage
 
     /**
      * @param NodeTranslation $nodeTranslation
+     * @return $this
      */
     public function setNodeTranslation(NodeTranslation $nodeTranslation)
     {
         $this->nodeTranslation = $nodeTranslation;
+
+        return $this;
     }
 
     /**
@@ -120,10 +176,12 @@ class ApiPage
 
     /**
      * @param NodeVersion $nodeVersion
+     * @return $this
      */
     public function setNodeVersion(NodeVersion $nodeVersion)
     {
         $this->nodeVersion = $nodeVersion;
-    }
 
+        return $this;
+    }
 }

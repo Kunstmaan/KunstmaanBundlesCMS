@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\ApiBundle\Tests\Controller;
+namespace Kunstmaan\Rest\NodeBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

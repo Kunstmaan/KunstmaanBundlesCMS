@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Kunstmaan\ApiBundle\Controller;
+namespace Kunstmaan\Rest\NodeBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\ControllerTrait;
-use Kunstmaan\ApiBundle\Model\ApiPage;
-use Kunstmaan\ApiBundle\Service\DataTransformerService;
+use Kunstmaan\Rest\NodeBundle\Service\DataTransformerService;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -34,13 +33,13 @@ class PagesController
 {
     use ControllerTrait;
 
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
     /** @var DataTransformerService */
     private $dataTransformer;
 
-    public function __construct(EntityManager $em, DataTransformerService $dataTransformer)
+    public function __construct(EntityManagerInterface $em, DataTransformerService $dataTransformer)
     {
         $this->em = $em;
         $this->dataTransformer = $dataTransformer;
@@ -49,7 +48,7 @@ class PagesController
     /**
      * Retrieve nodes paginated
      *
-     * @ApiDoc(
+     * ApiDoc(
      *  resource=true,
      *  description="Get a page",
      *  resourceDescription="Get a page",
@@ -77,6 +76,43 @@ class PagesController
      *      500="Something went wrong"
      *  }
      * )
+     *
+     * @SWG\Get(
+     *     path="/api/pages/{id}",
+     *     description="Get a page of a certain type by ID",
+     *     operationId="getPages",
+     *     produces={"application/json"},
+     *     tags={"pages"},
+     *     @SWG\Parameter(
+     *         name="type",
+     *         in="query",
+     *         type="string",
+     *         description="The FQCN of the page",
+     *         required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="locale",
+     *         in="query",
+     *         type="string",
+     *         description="The language of your content",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
+     * )
      */
     public function getPagesAction(Request $request, $id)
     {
@@ -84,7 +120,7 @@ class PagesController
             throw new HttpException(400, "Missing locale");
         }
 
-        $locale = $request->query->get('locale');
+        $locale = $request->getLocale();
 
         $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineNodeTranslationsQueryBuilder($locale);
         $qb
