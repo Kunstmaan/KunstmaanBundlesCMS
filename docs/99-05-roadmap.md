@@ -19,12 +19,12 @@ last release of v4 and will not be supported anymore.
 - [ ] Varnish cache clear / ban #1331
 - [ ] Allow `/admin` url to be configurable in parameters.yml #1323
 - [ ] New custom kunstmaan debug toolbar #1274
+- [ ] page entity should be validated on publish action, otherwise possible to publish page with empty fields.
 
 ## v6.x
 - [ ] Set minimum PHP requirement to 7.0 #1445
 - [ ] Make `Kunstmaan\FormBundle\Entity\FormSubmissionField` more flexible by removing the discriminator map #1416
 - [ ] Elasticsearch 5.x
-
 
 ## Feature requests
 - [ ] Health page, list of all 404's
