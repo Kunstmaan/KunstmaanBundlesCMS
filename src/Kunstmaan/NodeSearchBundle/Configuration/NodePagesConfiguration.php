@@ -72,6 +72,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /** @var array */
     protected $properties = [];
+    
+    /** @var integer */
+    protected $numberOfShards;
+
+    /** @var integer */
+    protected $numberOfReplicas;
 
     /** @var Node */
     protected $currentTopNode = null;
@@ -85,7 +91,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param string                  $name
      * @param string                  $type
      */
-    public function __construct($container, $searchProvider, $name, $type)
+    public function __construct($container, $searchProvider, $name, $type, $numberOfShards = 1, $numberOfReplicas = 0)
     {
         $this->container           = $container;
         $this->indexName           = $name;
@@ -95,6 +101,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $this->locales             = $this->domainConfiguration->getBackendLocales();
         $this->analyzerLanguages   = $this->container->getParameter('analyzer_languages');
         $this->em                  = $this->container->get('doctrine')->getManager();
+        $this->numberOfShards      = $numberOfShards;
+        $this->numberOfReplicas    = $numberOfReplicas;
     }
 
     /**
@@ -336,8 +344,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     {
         $index->create(
             array(
-                'number_of_shards'   => 4,
-                'number_of_replicas' => 1,
+                'number_of_shards'   => $this->numberOfShards,
+                'number_of_replicas' => $this->numberOfReplicas,
                 'analysis'           => $analysis->build()
             )
         );
