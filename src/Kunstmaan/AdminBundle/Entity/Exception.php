@@ -8,7 +8,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="Kunstmaan\AdminBundle\Repository\ExceptionRepository")
- * @ORM\Table(name="kuma_exception")
+ * @ORM\Table(
+ *      name="kuma_exception",
+ *      indexes={
+ *          @ORM\Index(name="idx_exception_is_mark", columns={"is_mark"})
+ *      }
+ * )
  * @UniqueEntity("hash")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -52,7 +57,7 @@ class Exception extends AbstractEntity
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", name="is_mark")
      */
     private $isMark;
 
