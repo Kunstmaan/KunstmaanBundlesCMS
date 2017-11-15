@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
                             ->booleanNode('indexable')->end()
                             ->scalarNode('icon')->defaultNull()->end()
                             ->scalarNode('hidden_from_tree')->end()
-                            ->booleanNode('is_homepage')->defaultFalse()->end()
+                            ->booleanNode('is_homepage')->end()
                             ->arrayNode('allowed_children')
                                 ->prototype('array')
                                     ->beforeNormalization()

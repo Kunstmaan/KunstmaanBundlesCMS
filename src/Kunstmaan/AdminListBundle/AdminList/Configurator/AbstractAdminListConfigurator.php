@@ -263,11 +263,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      *
      * @throws InvalidArgumentException
      *
-     * @return AbstractType
+     * @return string
      */
     public function getAdminType($entity)
     {
-        if (!is_null($this->type)) {
+        if (null !== $this->type) {
             return $this->type;
         }
 
@@ -282,11 +282,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param AbstractType $type
+     * @param string $type
      *
      * @return AbstractAdminListConfigurator
      */
-    public function setAdminType(AbstractType $type)
+    public function setAdminType($type)
     {
         $this->type = $type;
 
@@ -616,7 +616,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
             return $result->format('Y-m-d H:i:s');
         } else {
             if ($result instanceof PersistentCollection) {
-                $results = "";
+                $results = [];
                 /* @var Object $entry */
                 foreach ($result as $entry) {
                     $results[] = $entry->getName();

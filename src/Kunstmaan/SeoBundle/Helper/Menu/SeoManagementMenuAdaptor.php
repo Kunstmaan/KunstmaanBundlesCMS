@@ -37,7 +37,7 @@ class SeoManagementMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanSeoBundle_settings_robots')
-                ->setLabel('Robots')
+                ->setLabel('seo.robots.title')
                 ->setUniqueId('robots_settings')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {

@@ -1,0 +1,17 @@
+<!-- START of Kunstmaan admin toolbar -->
+<div id="kunstmaan-toolbar" class="clear-fix" data-no-turbolink>
+    {% for collector in collectors %}
+        {{ block_render(collector.template, 'toolbar', collector.collectData()) }}
+    {% endfor %}
+    <a class="hide-button" title="Close Toolbar" tabindex="-1" accesskey="D" onclick="
+            var p = this.parentNode;
+            p.style.display = 'none';
+            ">
+        {{ include('@KunstmaanAdmin/Toolbar/Icon/close.svg') }}
+    </a>
+</div>
+
+<style>
+    {{ include('@KunstmaanAdmin/Toolbar/toolbar.css.twig', { 'position': 'bottom', 'floatable': true }) }}
+</style>
+<!-- END of Kunstmaan admin toolbar -->

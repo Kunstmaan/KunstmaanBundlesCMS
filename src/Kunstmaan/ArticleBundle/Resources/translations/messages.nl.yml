@@ -4,7 +4,7 @@ article:
     form:
         date:
             label: Datum
-        summery:
+        summary:
             label: Samenvatting
     modal:
         add:
@@ -34,3 +34,12 @@ article:
                 created_at: Gemaakt op
                 updated_at: Bewerkt op
                 online:     Online
+
+article_overview_page:
+    filter: Filter
+    category: Categories
+    tag: Tags
+    all: Alle
+    route:
+        category: categorie
+        tag: tag

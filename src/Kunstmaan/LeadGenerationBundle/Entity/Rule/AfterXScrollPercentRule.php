@@ -70,10 +70,10 @@ class AfterXScrollPercentRule extends AbstractRule
     }
 
     /**
-     * @return AfterXScrollPercentAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return new AfterXScrollPercentRuleAdminType();
+        return AfterXScrollPercentRuleAdminType::class;
     }
 }

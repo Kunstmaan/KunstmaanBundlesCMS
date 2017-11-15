@@ -111,13 +111,11 @@ class NodeAdminController extends Controller
             $this->locale,
             PermissionMap::PERMISSION_VIEW,
             $this->authorizationChecker
-
         );
 
         $locale = $this->locale;
         $acl = $this->authorizationChecker;
         $itemRoute = function (EntityInterface $item) use ($locale, $acl) {
-
             if ($acl->isGranted(PermissionMap::PERMISSION_VIEW, $item->getNode())) {
                 return array(
                     'path' => '_slug_preview',
@@ -125,8 +123,7 @@ class NodeAdminController extends Controller
                 );
             }
         };
-        $nodeAdminListConfigurator->addSimpleItemAction('Preview', $itemRoute, 'eye');
-
+        $nodeAdminListConfigurator->addSimpleItemAction('action.preview', $itemRoute, 'eye');
         $nodeAdminListConfigurator->setDomainConfiguration($this->get('kunstmaan_admin.domain_configuration'));
         $nodeAdminListConfigurator->setShowAddHomepage($this->getParameter('kunstmaan_node.show_add_homepage') && $this->isGranted('ROLE_SUPER_ADMIN'));
 
@@ -918,27 +915,19 @@ class NodeAdminController extends Controller
 
         // Building the form
         $propertiesWidget = new FormWidget();
-        $pageAdminType = $page->getDefaultAdminType();
-        if (!is_object($pageAdminType) && is_string($pageAdminType)) {
-            $pageAdminType = $this->container->get($pageAdminType);
-        }
-        $propertiesWidget->addType('main', $pageAdminType, $page);
-
-        $nodeAdminType = $node->getDefaultAdminType();
-        if (!is_object($nodeAdminType) && is_string($nodeAdminType)) {
-            $nodeAdminType = $this->container->get($nodeAdminType);
-        }
-        $propertiesWidget->addType('node', $nodeAdminType, $node);
+        $propertiesWidget->addType('main', $page->getDefaultAdminType(), $page);
+        $propertiesWidget->addType('node', $node->getDefaultAdminType(), $node);
         $tabPane->addTab(new Tab('kuma_node.tab.properties.title', $propertiesWidget));
 
         // Menu tab
         $menuWidget = new FormWidget();
         $menuWidget->addType(
             'menunodetranslation',
-            new NodeMenuTabTranslationAdminType($isStructureNode),
-            $nodeTranslation
+            NodeMenuTabTranslationAdminType::class,
+            $nodeTranslation,
+            ['slugable' => !$isStructureNode]
         );
-        $menuWidget->addType('menunode', new NodeMenuTabAdminType($isStructureNode), $node);
+        $menuWidget->addType('menunode', NodeMenuTabAdminType::class, $node, ['available_in_nav' => !$isStructureNode]);
         $tabPane->addTab(new Tab('kuma_node.tab.menu.title', $menuWidget));
 
         $this->get('event_dispatcher')->dispatch(

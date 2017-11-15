@@ -1,0 +1,19 @@
+        {% if type == 'Author' %}
+        $builder->add('author');
+        {% else %}
+        $builder->add('{{ pluralType }}', EntityType::class, array(
+            'class' => '{{ bundle.name }}:{{ entity_class }}{{ type }}',
+            'choice_label' => 'name',
+            'query_builder' => function(EntityRepository $er) {
+                 return $er->createQueryBuilder('t')
+                           ->orderBy('t.name', 'ASC')
+                 ;
+            },
+            'multiple' => true,
+            'expanded' => false,
+            'attr' => array(
+                 'data-placeholder' => 'Choose the related {{ pluralType }}'
+            ),
+            'required' => false
+        ));
+        {% endif %}

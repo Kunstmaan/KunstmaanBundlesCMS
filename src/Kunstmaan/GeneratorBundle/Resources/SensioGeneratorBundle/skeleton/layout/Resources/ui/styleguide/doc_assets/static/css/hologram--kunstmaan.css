@@ -275,7 +275,7 @@ body {
 /* Color template
    ========================================================================== */
 .styleguide__color-template {
-    display: inline-block;
+    display: block;
     margin: 0 0 20px 0;
 
     text-align: center;
@@ -339,13 +339,6 @@ body {
     border-bottom: 1px solid !important;
     border-color: #ddd !important;
     border-bottom-right-radius: 4px !important;
-}
-
-.exampleOutput > h3 {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 6px;
-
-    color: #5B9E99;
 }
 
 .exampleOutput.no-markup {

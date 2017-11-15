@@ -7,13 +7,7 @@
 {% endblock %}
 
 {% block extracss %}
-    {% stylesheets
-    "@KunstmaanDashboardBundle/Resources/ui/scss/_dashboard.scss"
-        output='KunstmaanDashboardBundleAssets/css/DashboardStyle.min.css'
-        filter="scss"
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
-    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaandashboard/css/dashboard.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -32,10 +26,5 @@
 {% endblock %}
 
 {% block extrajavascript %}
-    {% javascripts
-    '@KunstmaanDashboardBundle/Resources/ui/js/setup/setup.js'
-    output='KunstmaanDashboardBundleAssets/js/ga-widget-setup.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script src="{{ asset('bundles/kunstmaandashboard/js/dashboard-bundle-setup.min.js') }}"></script>
 {% endblock %}

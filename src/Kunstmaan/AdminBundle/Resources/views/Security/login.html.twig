@@ -1,5 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% trans_default_domain 'FOSUserBundle' %}
+
 {% block fos_user_content %}
     <form id="app__login__form" action="{{ path("fos_user_security_check") }}" method="post">
         {% if google_signin_enabled() %}
@@ -7,7 +9,7 @@
         {% endif %}
         {% if error %}
             <div class="alert alert-danger">
-                {{ 'Wrong password or email' | trans }}
+                {{ 'kuma_admin.login.invalid_credentials'|trans({}, 'messages') }}
                 <button type="button" class="close" aria-label="Close" data-dismiss="alert">
                     <i class="fa fa-times"></i>
                 </button>
@@ -16,29 +18,29 @@
 
         <div class="form-group form-group--icon-in-control">
             <label for="username" class="label--lighter">
-                {{ 'Username:' | trans }}
+                {{ 'security.login.username'|trans }}
             </label>
-            <input class="form-control form-group--icon-in-control__form-control" id="username" type="text" name="_username" value="{{ last_username }}" placeholder="{{ 'Username' | trans }}" autofocus>
+            <input class="form-control form-group--icon-in-control__form-control" id="username" type="text" name="_username" value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans }}" autofocus>
             <i class="fa fa-user form-group--icon-in-control__icon"></i>
         </div>
 
         <div class="form-group form-group--icon-in-control">
             <label for="password" class="label--lighter">
-                {{ 'Password:' | trans }}
+                {{ 'security.login.password'|trans }}
             </label>
-            <input class="form-control form-group--icon-in-control__form-control" id="password" type="password" name="_password" value="" placeholder="{{ 'Password' | trans }}">
+            <input class="form-control form-group--icon-in-control__form-control" id="password" type="password" name="_password" value="" placeholder="{{ 'security.login.password'|trans }}">
             <i class="fa fa-key form-group--icon-in-control__icon"></i>
         </div>
 
         <div class="form-group login__form__remember-me">
             <label class="checkbox login__form__remember-me__check">
                 <input type="checkbox" id="remember_me" name="_remember_me" value="on">
-                {{ 'Remember Me' | trans }}
+                {{ 'security.login.remember_me'|trans }}
             </label>
         </div>
 
         <button type="submit" id="_submit" name="_submit" class="btn btn-brand btn-block btn--raise-on-hover">
-            {{ 'Log In' | trans }}
+            {{ 'security.login.submit'|trans }}
         </button>
     </form>
 

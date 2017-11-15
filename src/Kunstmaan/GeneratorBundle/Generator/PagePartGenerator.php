@@ -101,7 +101,7 @@ class PagePartGenerator extends KunstmaanGenerator
 
         $pos        = strrpos($entityCode, "\n}");
         $trimmed    = substr($entityCode, 0, $pos);
-        $entityCode = $trimmed . "\n" . $extraCode . "\n}\n";
+        $entityCode = $trimmed."\n\n".$extraCode."\n}\n";
 
         // Write class to filesystem
         $this->filesystem->mkdir(dirname($entityPath));
@@ -280,7 +280,7 @@ class PagePartGenerator extends KunstmaanGenerator
             $className = basename($parts[count($parts) - 1], '.php');
 
             $contents = file_get_contents($pageFile);
-            if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false) {
+            if (strpos($contents, 'abstract class') === false && strpos($contents, 'interface ') === false && strpos($contents, 'trait ') === false) {
                 $classNamespace = '\\' . $this->bundle->getNamespace() . '\Entity\Pages\\' . $className;
                 $entity         = new $classNamespace;
 
@@ -308,15 +308,8 @@ class PagePartGenerator extends KunstmaanGenerator
 
                             // Page template found
                             if (array_key_exists($ptConfigFilename, $sectionInfo[$ppConfigFilename]['pagetempates'])) {
-                                $formType = $entity->getDefaultAdminType();
-                                if (!is_object($formType)) {
-                                    $formType = $this->container->get($formType);
-                                }
-
-                                $formFqn = get_class($formType);
-
                                 // Get all page properties
-                                $form     = $this->container->get('form.factory')->create($formFqn);
+                                $form     = $this->container->get('form.factory')->create($entity->getDefaultAdminType());
                                 $children = $form->createView()->children;
 
                                 $pageFields = array();

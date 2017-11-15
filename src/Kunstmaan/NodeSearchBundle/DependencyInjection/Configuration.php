@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
         $properties = $rootNode->children()->arrayNode('mapping')->useAttributeAsKey('name')->prototype('array');
 
         $properties->children()->scalarNode('type')->beforeNormalization()->ifNotInArray($types = [
-            'string', 'token_count',
+            'string', 'token_count', 'text',
             'float', 'double', 'byte', 'short', 'integer', 'long',
             'date',
             'boolean',
@@ -44,6 +44,13 @@ class Configuration implements ConfigurationInterface
         $properties->children()->scalarNode('analyzer');
         $properties->children()->scalarNode('index_analyzer');
         $properties->children()->scalarNode('copy_to');
+
+        $rootNode
+            ->children()
+                ->arrayNode('contexts')
+                ->defaultValue([])
+                ->prototype('scalar')->end()
+            ->end();
 
         return $treeBuilder;
     }

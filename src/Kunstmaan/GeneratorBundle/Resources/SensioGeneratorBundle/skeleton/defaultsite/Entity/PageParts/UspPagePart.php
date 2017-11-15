@@ -28,7 +28,7 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function __construct()
     {
-	$this->items = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     /**
@@ -36,9 +36,9 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function setItems($items)
     {
-	foreach ($items as $item) {
-	    $this->addItem($item);
-	}
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
     }
 
     /**
@@ -46,7 +46,7 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function getItems()
     {
-	return $this->items;
+        return $this->items;
     }
 
     /**
@@ -54,9 +54,9 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function addItem(UspItem $item)
     {
-	$item->setUspPagePart($this);
+        $item->setUspPagePart($this);
 
-	$this->items->add($item);
+        $this->items->add($item);
     }
 
     /**
@@ -64,7 +64,7 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function removeItem(UspItem $item)
     {
-	$this->items->removeElement($item);
+        $this->items->removeElement($item);
     }
 
     /**
@@ -74,17 +74,17 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function getDefaultView()
     {
-	return '{{ bundle.getName() }}:PageParts:UspPagePart/view.html.twig';
+        return '{{ bundle.getName() }}:PageParts:UspPagePart/view.html.twig';
     }
 
     /**
      * Get the admin form type.
      *
-     * @return \{{ namespace }}\Form\PageParts\UspPagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-	return new \{{ namespace }}\Form\PageParts\UspPagePartAdminType();
+        return \{{ namespace }}\Form\PageParts\UspPagePartAdminType::class;
     }
 
     /**
@@ -92,11 +92,11 @@ class UspPagePart extends AbstractPagePart implements DeepCloneInterface
      */
     public function deepClone()
     {
-	$items = $this->getItems();
-	$this->items = new ArrayCollection();
-	foreach ($items as $item) {
-	    $cloneItem = clone $item;
-	    $this->addItem($cloneItem);
-	}
+        $items = $this->getItems();
+        $this->items = new ArrayCollection();
+        foreach ($items as $item) {
+            $cloneItem = clone $item;
+            $this->addItem($cloneItem);
+        }
     }
 }

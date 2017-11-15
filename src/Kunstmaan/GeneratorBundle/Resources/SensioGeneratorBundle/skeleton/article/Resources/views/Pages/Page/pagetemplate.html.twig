@@ -1,0 +1,21 @@
+<% if uses_author %>{% set author = page.getAuthor() %}<% endif %>
+
+<div class="container">
+    <article class="blog-item">
+        <header class="blog-item__head">
+            <time class="blog-item__head__meta">
+                {{ page.date | date("d/m/Y")}}
+                <% if uses_author %>
+                {% if author is not empty %}
+                    | <strong>{{ author.name }}</strong>
+                {% endif %}
+                <% endif %>
+            </time>
+            <h1 class="blog-item__head__title">
+                {{ page.title }}
+            </h1>
+        </header>
+
+        {{ render_pageparts(page, '<%= entity_class|lower %>main') }}
+    </article>
+</div>

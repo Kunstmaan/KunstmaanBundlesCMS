@@ -7,11 +7,7 @@
 
 /* Line-height
    ========================================================================== */
-{% if demosite %}
-$line-height--base:     1.7;
-{% else %}
 $line-height--base:     1.6;
-{% endif %}
 
 $line-height--small:    1.1;
 $line-height--medium:   1.2;
@@ -19,10 +15,7 @@ $line-height--medium:   1.2;
 
 /* Font sizes
    ========================================================================== */
-{% if demosite %}
-$font-size--base:               18px;
-{% else %}
-$font-size--base:               100%;
-{% endif %}
-$font-size--small:              .75rem;
-$font-size--big:                1.125rem;
+$font-size--base:               10px;
+$font-size--default:            1.6rem;
+$font-size--small:              1.2rem;
+$font-size--big:                1.8rem;

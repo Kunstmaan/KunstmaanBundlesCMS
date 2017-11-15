@@ -107,7 +107,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->addListAction(
             new SimpleListAction(
                 $addHomepageRoute,
-                'Add homepage',
+                'kuma_node.modal.add_homepage.h',
                 null,
                 'KunstmaanNodeBundle:Admin:list_action_button.html.twig'
             )

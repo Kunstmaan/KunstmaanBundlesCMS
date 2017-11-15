@@ -27,6 +27,14 @@ settings:
       toupdate: kan worden geupdate naar
       unknown: versie information onbekend
 
+# Toolbar
+toolbar:
+    bundle_version:
+        unknown: Onbekend
+        uptodate: Up-to-date
+        toupdate: Verouderd
+        version: Bundle versie
+        status: Bundle status
 # Tools
 tools:
   title: Tools
@@ -34,6 +42,10 @@ tools:
   clear_backend_cache: Backend cache legen
   clear_all_caches: Alle caches legen
   shutdown: Uitschakelen
+
+# Search
+search:
+    title: Zoeken
 
 # Forms
 form:
@@ -115,6 +127,9 @@ kuma_admin:
             'deleted_success.%medianame%': Item '%medianame%' is verwijderd!
             drop_success:       Het bestand is succesvol geupload!
             drop_unrecognized:  Bestand wordt niet herkend!
+    login:
+        forgot_password: Wachtwoord vergeten
+        invalid_credentials: Verkeerde gebruikersnaam en/of wachtwoord
 
 kuma_js:
     auto_collapse:

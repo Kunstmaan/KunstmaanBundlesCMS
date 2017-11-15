@@ -1,0 +1,7 @@
+{% if tags|length > 0 %}
+    <div class="blog-filter__top__section js-toggle-btn {% if activeTags is defined %} toggle-btn--active{% endif %} blog-filter__top__section--clickable" data-target="#blog-tags" data-level="main" data-hide-others="true">
+        {{ 'article_overview_page.tag'|trans }}
+        <i class="icon--chevron-down blog-filter__top__section__icon toggle-btn__icon--show"></i>
+        <i class="icon--cross blog-filter__top__section__icon  toggle-btn__icon--hide"></i>
+    </div>
+{% endif %}

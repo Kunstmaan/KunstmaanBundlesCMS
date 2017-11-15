@@ -26,7 +26,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         parent::__construct($em, $aclHelper);
 
         $this->domainConfiguration = $domainConfiguration;
-        $this->setAdminType(new RedirectAdminType($domainConfiguration));
+
+        $this->setAdminType(RedirectAdminType::class);
         $this->setAdminTypeOptions(array('domainConfiguration' => $domainConfiguration));
     }
 
@@ -41,6 +42,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         $this->addField('origin', 'redirect.adminlist.header.origin', true);
         $this->addField('target', 'redirect.adminlist.header.target', true);
         $this->addField('permanent', 'redirect.adminlist.header.permanent', true);
+        $this->addField('note', 'redirect.adminlist.header.note', true);
     }
 
     /**
@@ -57,6 +59,7 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         $this->addFilter('origin', new ORM\StringFilterType('origin'), 'redirect.adminlist.filter.origin');
         $this->addFilter('target', new ORM\StringFilterType('target'), 'redirect.adminlist.filter.target');
         $this->addFilter('permanent', new ORM\BooleanFilterType('permanent'), 'redirect.adminlist.filter.permanent');
+        $this->addFilter('note', new ORM\StringFilterType('note'), 'redirect.adminlist.filter.note');
     }
 
     /**

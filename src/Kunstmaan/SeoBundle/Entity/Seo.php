@@ -8,7 +8,6 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\SeoBundle\Form\SeoType;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Seo metadata for entities
@@ -23,7 +22,6 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_title", type="string", nullable=true)
-     * @Assert\Length(max=55)
      *
      */
     protected $metaTitle;
@@ -32,7 +30,6 @@ class Seo extends AbstractEntity
      * @var string
      *
      * @ORM\Column(name="meta_description", type="text", nullable=true)
-     * @Assert\Length(max=155)
      *
      */
     protected $metaDescription;
@@ -557,10 +554,10 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * @return SeoType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new SeoType();
+        return SeoType::class;
     }
 }

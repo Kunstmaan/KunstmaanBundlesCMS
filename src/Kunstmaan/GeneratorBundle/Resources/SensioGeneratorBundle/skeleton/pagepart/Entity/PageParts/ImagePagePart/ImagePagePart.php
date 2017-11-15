@@ -48,7 +48,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getOpenInNewWindow()
     {
-	return $this->openInNewWindow;
+        return $this->openInNewWindow;
     }
 
     /**
@@ -60,9 +60,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setOpenInNewWindow($openInNewWindow)
     {
-	$this->openInNewWindow = $openInNewWindow;
+        $this->openInNewWindow = $openInNewWindow;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -74,9 +74,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setLink($link)
     {
-	$this->link = $link;
+        $this->link = $link;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -86,7 +86,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getLink()
     {
-	return $this->link;
+        return $this->link;
     }
 
     /**
@@ -98,9 +98,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setAltText($altText)
     {
-	$this->altText = $altText;
+        $this->altText = $altText;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -110,7 +110,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getAltText()
     {
-	return $this->altText;
+        return $this->altText;
     }
 
     /**
@@ -120,7 +120,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getMedia()
     {
-	return $this->media;
+        return $this->media;
     }
 
     /**
@@ -132,9 +132,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setMedia(Media $media)
     {
-	$this->media = $media;
+        $this->media = $media;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -146,9 +146,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setCaption($caption)
     {
-	$this->caption = $caption;
+        $this->caption = $caption;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -158,7 +158,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getCaption()
     {
-	return $this->caption;
+        return $this->caption;
     }
 
     /**
@@ -168,16 +168,16 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
+        return '{{ bundle }}:PageParts:{{ pagepart }}/view.html.twig';
     }
 
     /**
      * Get the admin form type.
      *
-     * @return {{ adminType }}
+     * @return string
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return {{ adminType }}::class;
     }
 }

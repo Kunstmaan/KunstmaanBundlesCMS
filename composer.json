@@ -1,7 +1,7 @@
 {
     "name": "kunstmaan/bundles-cms",
     "type": "library",
-    "description": "The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony2 framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much more.",
+    "description": "The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much more.",
     "keywords": ["cms"],
     "homepage": "http://bundles.kunstmaan.be",
     "license": "MIT",
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
         "symfony/symfony": "~3.0",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
@@ -24,13 +24,13 @@
         "doctrine/doctrine-cache-bundle": "^1.2",
         "symfony/assetic-bundle": "~2.7",
         "symfony/swiftmailer-bundle": "^2.3",
-        "symfony/monolog-bundle": "^2.8",
+        "symfony/monolog-bundle": "~2.8|~3.0",
         "symfony/security-acl": "~2.8|~3.0",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
-        "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "friendsofsymfony/user-bundle": "~2.0",
         "knplabs/knp-menu-bundle": "~2.0",
         "guzzlehttp/guzzle": "~6.1",
         "white-october/pagerfanta-bundle": "~1.0",
@@ -42,14 +42,13 @@
         "liip/imagine-bundle": "v1.4.3",
         "imagine/imagine": "v0.5.0",
         "knplabs/knp-gaufrette-bundle": "~0.1",
-        "symfony-cmf/routing-bundle": "dev-master",
-        "symfony-cmf/routing": "~1.4",
+        "symfony-cmf/routing-bundle": "~2.0",
         "fpn/doctrine-extensions-taggable": "~0.9",
         "sensio/generator-bundle": "~3.0",
         "twig/extensions": "~1.0",
         "egulias/email-validator": "~1.2",
         "box/spout": "^2.5",
-        "ruflin/elastica": "^3.2"
+        "ruflin/elastica": "^5.1"
     },
     "require-dev": {
         "behat/behat": "3.1.0rc1",
@@ -94,7 +93,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Kunstmaan\ConfigBundle\Entity;
 interface ConfigurationInterface
 {
     /**
-     * Returns the form type to use for this configuratble entity.
+     * Returns the form type to use for this configurable entity.
      *
      * @return string
      */
@@ -26,4 +26,11 @@ interface ConfigurationInterface
      * @return string
      */
     public function getLabel();
+
+    /**
+     * Returns the roles that have access to the configuration.
+     *
+     * @return array
+     */
+    public function getRoles();
 }

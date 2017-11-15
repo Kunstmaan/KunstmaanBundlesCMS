@@ -12,6 +12,7 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Bridge\Monolog\Logger;
@@ -44,6 +45,11 @@ class NodeTranslationListener
     private $domainConfiguration;
 
     /**
+     * @var PagesConfiguration
+     */
+    private $pagesConfiguration;
+
+    /**
      * @param Session $session The session
      * @param Logger  $logger  The logger
      */
@@ -51,13 +57,15 @@ class NodeTranslationListener
         Session $session,
         $logger,
         SlugifierInterface $slugifier,
-        DomainConfigurationInterface $domainConfiguration
+        DomainConfigurationInterface $domainConfiguration,
+        PagesConfiguration $pagesConfiguration
     ) {
         $this->nodeTranslations    = array();
         $this->session             = $session;
         $this->logger              = $logger;
         $this->slugifier           = $slugifier;
         $this->domainConfiguration = $domainConfiguration;
+        $this->pagesConfiguration  = $pagesConfiguration;
     }
 
     public function setRequestStack(RequestStack $requestStack)
@@ -310,7 +318,7 @@ class NodeTranslationListener
         $translation->setUrl($translation->getFullSlug());
 
         // Find all translations with this new URL, whose nodes are not deleted.
-        $translations = $nodeTranslationRepository->getNodeTranslationForUrl(
+        $translations = $nodeTranslationRepository->getAllNodeTranslationsForUrl(
             $translation->getUrl(),
             $translation->getLang(),
             false,
@@ -324,7 +332,16 @@ class NodeTranslationListener
             ).' node(s) that match url \''.$translation->getUrl().'\''
         );
 
-        if (count($translations) > 0) {
+        $translationsWithSameUrl = array();
+
+        /** @var NodeTranslation $trans */
+        foreach ($translations as $trans) {
+            if (!$this->pagesConfiguration->isStructureNode($trans->getPublicNodeVersion()->getRefEntityName())) {
+                $translationsWithSameUrl[] = $trans;
+            }
+        }
+
+        if (count($translationsWithSameUrl) > 0) {
             $oldUrl = $translation->getFullSlug();
             $translation->setSlug(
                 $this->slugifier->slugify(

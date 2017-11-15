@@ -20,15 +20,15 @@ When you choose for an internal link type, you will need to choose a link in the
 
 When clicking a node in the left node tree, a token is generated and saved for the URL. 
 
-##For example: in a single domain website##
+## For example: in a single domain website
 
 Selecting the node in the tree with node translation id 50, will generate a token like "[NT50]".
 
-##For example: in a multi domain website##
+## For example: in a multi domain website
 
 Selecting the node in the tree with node translation id 50, on domain "my_domain_en" will generate a token like "[my_domain_en:NT50]".
 
-##MAJOR CHANGE##
+## MAJOR CHANGE
 
 For the new URL chooser to work, we have added a new twig filter "replace_url". This filter needs to be used to generate the correct url automatically.
 
@@ -47,6 +47,31 @@ The AdminListEvent has been changed, properties Form, Request and function Respo
 ##Node version locking
 
 See https://github.com/Kunstmaan/KunstmaanBundlesCMS/tree/master/src/Kunstmaan/NodeBundle/Resources/doc/Locking.md
+
+## Forms must be referenced via FQCN [brakes BC]
+
+All forms were upgraded to be used by **fully qualified class name** instead of creating new form instance.
+
+See more in [Symfony upgrade v2->v3 doc](https://github.com/symfony/symfony/blob/master/UPGRADE-3.0.md#form)
+
+Before:
+```
+public function getDefaultAdminType()
+{
+    return new MyPageAdminType();
+}
+```
+
+After:
+```
+public function getDefaultAdminType()
+{
+    return MyPageAdminType::class;
+}
+```
+
+A tip: use regex to search part of new form type instances creations (`new .+Type\(`).
+"
 
 ## VotingBundle
 

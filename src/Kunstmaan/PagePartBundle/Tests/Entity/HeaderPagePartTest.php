@@ -95,6 +95,6 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $this->assertInstanceOf('Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType', $this->object->getDefaultAdminType());
+        $this->assertEquals('Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType', $this->object->getDefaultAdminType());
     }
 }
