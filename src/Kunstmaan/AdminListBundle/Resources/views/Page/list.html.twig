@@ -2,54 +2,100 @@
 
 {% block extra_actions_header %}
     {% if adminlistconfigurator.overviewPage %}
-        <div class='col-sm-6 col-md-4'>
-            <!-- Main-actions -->
-            <div class='page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header'>
-                <div class='btn-group'>
-                    <a href='#' data-target='#add-subpage-modal' data-toggle='modal' class='btn btn-primary btn--raise-on-hover'>
-                        {{ 'form.add'|trans }}
-                    </a>
+        {% if adminlist.canAdd() or adminlist.canExport() or adminlist.hasListActions() %}
+            <div class="col-sm-6 col-md-4">
+                <div class="app__content__header__extra-actions">
+                    {% if adminlist.canAdd() %}
+                        <div class="btn-group">
+                            <a href='#' data-target='#add-subpage-modal' data-toggle='modal' class='btn btn-primary btn--raise-on-hover'>
+                                {{ 'form.add'|trans }}
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    {% if adminlist.canExport() %}
+                        <div class="btn-group dropdown">
+                            <a class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown" href="#">
+                                {{ 'kuma_admin_list.form.export_to' | trans }}
+                                <i class="fa fa-caret-down btn__icon"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                {% set exportparams = adminlist.filterbuilder.currentparameters|merge(adminlist.getExportUrl()[("params")]) %}
+                                {% for name, ext in supported_export_extensions() %}
+                                    {% set exportparams = exportparams|merge({"_format": ext}) %}
+                                    <li>
+                                        <a href="{{ path(adminlist.getExportUrl()["path"], exportparams) }}">
+                                            <i class="fa fa-file-{{ name | lower }}-o btn__icon"></i>
+                                            {{ name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    {% if adminlist.hasListActions() %}
+                        <div class="btn-group">
+                            {% for action in adminlist.getListActions() %}
+                                {% if action.template is not null %}
+                                    {% include action.template with {'action': action} %}
+                                {% else %}
+                                    <a href="{{ path(action.getUrl()["path"], action.getUrl()[("params")] ) }}" class="btn">
+                                        {% if action.getIcon() is not null %}
+                                            <i class="fa fa-{{ action.getIcon() }}"></i>
+                                            {{ action.getLabel()|trans }}
+                                        {% else %}
+                                            {{ action.getLabel()|trans }}
+                                        {% endif %}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
-        </div>
+        {% endif %}
 
-        <div id='add-subpage-modal' class='modal fade'>
-            <div class='modal-dialog'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <button class='close' data-dismiss='modal'>
-                            <i class='fa fa-times'></i>
-                        </button>
-                        <h3>
-                            Add {{  adminlistconfigurator.readableName  }}
-                        </h3>
-                    </div>
+        {% if adminlistconfigurator.canAdd %}
+            <div id='add-subpage-modal' class='modal fade'>
+                <div class='modal-dialog'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <button class='close' data-dismiss='modal'>
+                                <i class='fa fa-times'></i>
+                            </button>
+                            <h3>
+                                Add {{ adminlistconfigurator.readableName }}
+                            </h3>
+                        </div>
 
-                    <form action='{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : adminlistconfigurator.pageclass}) }}' method='post' novalidate='novalidate'>
-                        <div class='modal-body'>
-                            <div class='form-group'>
-                                <label for='addpage_title'>
-                                    Title
-                                </label>
-                                <input type='text' name='title' id='addpage_title' class='form-control'>
+                        <form action='{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : adminlistconfigurator.pageclass}) }}' method='post' novalidate='novalidate'>
+                            <div class='modal-body'>
+                                <div class='form-group'>
+                                    <label for='addpage_title'>
+                                        Title
+                                    </label>
+                                    <input type='text' name='title' id='addpage_title' class='form-control'>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class='modal-footer'>
-                            <button type='submit' name='submit' class='btn btn-primary btn--raise-on-hover'>
-                                Add
-                            </button>
-                            <button class='btn btn-default btn--raise-on-hover' data-dismiss='modal'>
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
+                            <div class='modal-footer'>
+                                <button type='submit' name='submit' class='btn btn-primary btn--raise-on-hover'>
+                                    Add
+                                </button>
+                                <button class='btn btn-default btn--raise-on-hover' data-dismiss='modal'>
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     {% else %}
         <div class='alert alert-warning'>
-            <strong>Warning: </strong> You need to create at least one overview page before you can create a {{ adminlistconfigurator.readableName  }}
+            <strong>Warning: </strong> You need to create at least one overview page before you can create a {{ adminlistconfigurator.readableName }}
             <button class='close' data-dismiss='alert'>
                 <i class='fa fa-times'></i>
             </button>
