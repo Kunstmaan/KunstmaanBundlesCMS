@@ -182,7 +182,7 @@ class Exception extends AbstractEntity
     /**
      * @param bool $isMark
      */
-    public function setIsMark($isMark)
+    public function setMark($isMark)
     {
         $this->isMark = $isMark;
     }
@@ -226,5 +226,4 @@ class Exception extends AbstractEntity
     {
         $this->setUpdatedAt(new \DateTime());
     }
-
 }

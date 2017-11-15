@@ -50,7 +50,7 @@ class ExceptionDataCollector extends AbstractDataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        if ( false == $this->isEnabled() ) {
+        if ( false === $this->isEnabled() ) {
             $this->data = false;
         } else {
             $this->data = $this->collectData();

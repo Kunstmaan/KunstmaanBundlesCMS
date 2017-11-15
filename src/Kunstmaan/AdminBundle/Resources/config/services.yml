@@ -35,7 +35,7 @@ services:
 
     kunstmaan_admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
-        arguments: ['@service_container']
+        arguments: ['@security.authorization_checker', "%version_checker.enabled%"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 

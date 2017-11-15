@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExceptionController extends AdminListController
 {
-    public function getAdminListConfigurator()
+    private function getAdminListConfigurator()
     {
         if ( !isset($this->configurator) ) {
             $this->configurator = new ExceptionAdminListConfigurator($this->getEntityManager());
@@ -39,7 +39,7 @@ class ExceptionController extends AdminListController
 
         $this->getAdminListConfigurator();
 
-        $model->setIsMark( !$model->isMark() );
+        $model->setMark( !$model->isMark() );
 
         $em->persist($model);
         $em->flush();
