@@ -26,3 +26,32 @@ PagePartBundle.
 ## New datacollectors for symfony toolbar and custom toolbar##
 
 You can find more detailed information on how to use this [here](https://github.com/Kunstmaan/KunstmaanAdminBundle/blob/master/Resources/doc/DataCollectors.md).
+
+## [AdminListBundle] ExportService refactored and new option ods added
+BC breaks: Since new option has been added to excelservice (ods) it is necessary to fix all adminlistcontrollers that have the old format requirement regex. ods is not in that list yet.
+
+old:
+```php
+    /**
+     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx"}, name="{{ bundle_name|lower }}_admin_bike_export")
+     * @Method({"GET", "POST"})
+     * @return array
+     */
+    public function exportAction(Request $request, $_format)
+    {
+	return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+    }
+```
+
+new:
+```php
+    /**
+     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="{{ bundle_name|lower }}_admin_bike_export")
+     * @Method({"GET", "POST"})
+     * @return array
+     */
+    public function exportAction(Request $request, $_format)
+    {
+	return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
+    }
+```
