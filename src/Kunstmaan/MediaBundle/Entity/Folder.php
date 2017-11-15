@@ -35,6 +35,20 @@ class Folder extends AbstractEntity implements GedmoNode
     /**
      * @var string
      *
+     * @Gedmo\Translatable
+     * @Gedmo\Slug(handlers={
+     *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\TreeSlugHandler", options={
+     *          @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
+     *          @Gedmo\SlugHandlerOption(name="separator", value="/")
+     *      })
+     * }, fields={"name"})
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     *
      * @Gedmo\Locale
      * Used locale to override Translation listener`s locale
      * this is not a mapped field of entity metadata, just a simple property
@@ -514,5 +528,23 @@ class Folder extends AbstractEntity implements GedmoNode
     public function preUpdate()
     {
         $this->setUpdatedAt(new \DateTime());
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return Folder
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
     }
 }
