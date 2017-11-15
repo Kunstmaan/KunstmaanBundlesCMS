@@ -1,54 +1,55 @@
-
-form.back: 'Indietro'
+---
+form:
+  back: 'Back'
 dashboard:
-    ga:
-        tab:
-            today: Oggi
-            yesterday: Ieri
-            last_7_days: Ultimi 7 giorni
-            last_30_days: Ultimi 30 giorni
-            last_12_months: Ultimi 12 mesi
-            year_to_date: Da inizio anno
-        chart:
-            users: Utenti
-            pct_new_sessions: "% Nuove Sessioni"
-            sessions: Sessioni
-            pageviews: Visualizzazioni Pagina
-            avg_pages_p_session: Pagine / Sessione
-            avg_session_duration: Durata Media Sessione
-        setup:
-            goals:
-                disable: Disattiva obiettivi
-            title: Configura il tuo widget Google Analytics in dashboard 
-            content: "Per imparare come configurare il widget Google Analytics , fai riferimento"
-            docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
-            docs: alla documentazione
-            redirect: "Questo è il tuo redirect URI:"
-            refresh: "Quando tutto è stato configurato, aggiorna questa pagina."
-            connect: Collega il tuo Account Google 
-            confirm: Collega ora
-            profile:
-                title: Seleziona un profilo
-                select: Seleziona un profilo..
-                content: Seleziona un profilo per il sito web selezionato
-            property:
-              title: Seleziona un sito web da tenerne traccia
-              select: Seleziona un sito web..
-              content: Seleziona un dominio registrato nel tuo account Google Analytics.
-            account:
-                title: Seleziona un account
-                select: Seleziona un account..
-            link: Configura dashboard
-            back: Vai alla dashboard
-            segment:
-                add: Aggiungi segmento
-                info: 'Per creare segmenti, puoi usare i segment ID (e anche combinarli), o scrivere le tue query. Google fornisce segment ID predefiniti (di seguito elencati), e puoi creare i tuoi tramite lo strumento Google Segment Builder in Google Analytics. Per la documentazione su come creare le tue query, clicca'
-                here: qui
-                own: Tuoi segmenti
-                builtin: Segmenti predefiniti
-            segments: Configurazione segmento
-            accounts: Configurazione account
-        reset:
-            property: Cambia il link Google Analytics
-        last_update: "Ultimo aggiornamento:"
-        unavailable: Dati non disponibili, clicca il pulsante aggiorna.
+  ga:
+    tab:
+      today: Oggi
+      yesterday: Ieri
+      last_7_days: Ultimi 7 giorni
+      last_30_days: Ultimi 30 giorni
+      last_12_months: Ultimi 12 mesi
+      year_to_date: Da inizio anno
+    chart:
+      users: Utenti
+      pct_new_sessions: "% Nuove Sessioni"
+      sessions: Sessioni
+      pageviews: Visualizzazioni Pagina
+      avg_pages_p_session: Pagine / Sessione
+      avg_session_duration: Durata Media Sessione
+    setup:
+      goals:
+        disable: Disattiva obiettivi
+      title: Configura il tuo widget Google Analytics in dashboard
+      content: "Per imparare come configurare il widget Google Analytics , fai riferimento"
+      docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
+      docs: alla documentazione
+      redirect: "Questo è il tuo redirect URI:"
+      refresh: "Quando tutto è stato configurato, aggiorna questa pagina."
+      connect: Collega il tuo Account Google
+      confirm: Collega ora
+      profile:
+        title: Seleziona un profilo
+        select: Seleziona un profilo..
+        content: Seleziona un profilo per il sito web selezionato
+      property:
+        title: Seleziona un sito web da tenerne traccia
+        select: Seleziona un sito web..
+        content: Seleziona un dominio registrato nel tuo account Google Analytics.
+      account:
+        title: Seleziona un account
+        select: Seleziona un account..
+      link: Configura dashboard
+      back: Vai alla dashboard
+      segment:
+        add: Aggiungi segmento
+        info: 'Per creare segmenti, puoi usare i segment ID (e anche combinarli), o scrivere le tue query. Google fornisce segment ID predefiniti (di seguito elencati), e puoi creare i tuoi tramite lo strumento Google Segment Builder in Google Analytics. Per la documentazione su come creare le tue query, clicca'
+        here: qui
+        own: Tuoi segmenti
+        builtin: Segmenti predefiniti
+      segments: Configurazione segmento
+      accounts: Configurazione account
+    reset:
+      property: Cambia il link Google Analytics
+    last_update: "Ultimo aggiornamento:"
+    unavailable: Dati non disponibili, clicca il pulsante aggiorna.

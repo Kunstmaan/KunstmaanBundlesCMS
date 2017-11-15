@@ -1,11 +1,16 @@
-# Media
+---
 media:
   aviary:
     title: Aviary
     nothing: Hier gibt es nichts zu sehen.
-
   media:
-    no: Noch keine Dateien in diesem Verzeichnis.
+    "no": Noch keine Dateien in diesem Verzeichnis.
+    dnd:
+      tip: "Tip:"
+      tiptext: did you know you can just drop multiple files here?
+      alert:
+        title: Incoming!
+        text: Drop your files to instantly upload them to this folder.
     bulkupload:
       addto: Upload in das Verzeichnis "%folder%"
     contenttab:
@@ -13,6 +18,8 @@ media:
     propertiestab:
       title: Eigenschaften
     title: Medien
+    add:
+      action: Add media
     edit:
       action: Bearbeiten
     download:
@@ -26,7 +33,6 @@ media:
     addto: Datei-Upload in das Verzeichnis "%folder%"
     deletesure: Soll diese Datei wirklich gelöscht werden?
     new: Datei-Upload in das Verzeichnis "%folder%"
-
   folder:
     addsub:
       action: Unterverzeichnis Erstellen
@@ -34,20 +40,44 @@ media:
       modal:
         title: Unterverzeichnis Erstellen
         save: Erstellen
+      form:
+        name: Name
+        rel: Rel
+        parent: Parent
+        internal_name: Internal name
+      success:
+        text: Folder '%folder%' has been created!
+    empty:
+      action: Empty folder
+      action_short: Empty
+      modal:
+        title: Empty folder
+        text: Are you sure you want to delete the content of folder "%folder%"?
+        checkbox: Also delete subfolders
+        save: Empty
+      success:
+        text: Folder '%folder%' has been emptied!
     sub:
-      no: Noch keine Unterverzeichnisse vorhanden.
+      "no": Noch keine Unterverzeichnisse vorhanden.
     delete:
       action: Verzeichnis Löschen
       action_short: Löschen
       modal:
         title: Verzeichnis Löschen
         text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden?
+      failure:
+        text: You can't delete the %folder% folder!
+      success:
+        text: Folder '%folder%' has been deleted!
     save: Speichern
     contenttab:
       title: Inhalt
     propertiestab:
       title: Eigenschaften
-
+    sortby: Sort by
+    show:
+      success:
+        text: Folder %folder% has been updated!
   bulkupload:
     upload: Upload
     bulkupload: Massen-Upload
@@ -56,7 +86,6 @@ media:
     back_to_folder: Zurück zum Verzeichnis
     upload_finished: Upload abgeschlossen.
     not_available: Der Massen-Upload ist nicht verfügbar. Ihr Browser unterstützt kein Flash, Silverlight oder HTML5.
-
   slide:
     add: Folie Hinzufügen
     modal:
@@ -72,13 +101,62 @@ media:
     modal:
       title: Audio Hinzufügen
       save: Hinzufügen
-
   file:
     add: Datei Hinzufügen
     modal:
       title: Datei Hinzufügen
       save: Hinzufügen
-
   widget:
     choose: Auswählen
     delete: Löschen
+    media_chooser: Media-chooser
+    icon_chooser: Icon-chooser
+  adminlist:
+    configurator:
+      name: Name
+      type: Type
+      date: Date
+      filesize: Filesize
+      filter:
+        name: Name
+        type: Type
+        updated_at: Date
+        filesize: Filesize (in bytes)
+  form:
+    remote:
+      name:
+        label: Name
+      code:
+        label: Code
+      type:
+        label: Type
+      copyright:
+        label: Copyright
+      description:
+        label: Description
+    bulk_upload:
+      files:
+        label: Files
+    file:
+      name:
+        label: Name
+      file:
+        label: File
+      copyright:
+        label: Copyright
+      description:
+        label: Description
+      originalFilename:
+        label: Original filename
+    remote_audio:
+      type:
+        label: Type
+    remote_slide:
+      type:
+        label: Type
+    remote_video:
+      type:
+        label: Type
+  flash:
+    created: Media %medianame% has been created!
+    not_created: Media not created! %mediaerrors%

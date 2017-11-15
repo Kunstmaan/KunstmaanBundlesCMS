@@ -1,13 +1,13 @@
+---
 kuma_tagging:
-    form:
-        tag:
-            name:
-                label: Nazwa
-
-    adminlist:
-        header:
-            name:       Nazwa
-            created_at: Utworzono
-            updated_at: Zaktualizowano
-        filter:
-            name:       Nazwa
+  form:
+    tag:
+      name:
+        label: Nazwa
+  adminlist:
+    header:
+      name: Nazwa
+      created_at: Utworzono
+      updated_at: Zaktualizowano
+    filter:
+      name: Nazwa

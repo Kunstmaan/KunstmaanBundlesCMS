@@ -1,17 +1,54 @@
+---
 translator:
-    translator:
-        title: Traductions
-
+  translator:
+    title: Traductions
+    inline_edit_title: Enter translation
+    emptytext: Not translated
+    invalid_translation: Invalid translation!
+    fatal_error_occurred: A fatal error occured while saving the translation. Please try again later.
+  translations: Translations
+  translation_not_unique: The translation should be unique
 settings:
-    translator:
-        add: Ajouter une traduction
-        edit: Modifier une traduction
-        refresh_live: Rafraîchir live
-        import_translations: Importer des traductions
-        import_translations_forced: Importer des traductions et écraser
-        actions: Actions
-        export_translations: Exporter vers csv
-        not_live_warning: "Les traductions sur le site live ne sont pas à jour, appuyer sur 'Rafraîchir live' pour mettre à jour."
-        choose_language: "Choisir une langue"
-        succesful_added: "Traduction ajoutée avec succès"
-        succesful_edited: "Traduction modifiée avec succès"
+  translator:
+    add: Ajouter une traduction
+    edit: Modifier une traduction
+    refresh_live: Rafraîchir live
+    import_translations_forced: Importer des traductions et écraser
+    import_translations: Importer des traductions
+    actions: Actions
+    export_translations: Exporter vers csv
+    not_live_warning: "Les traductions sur le site live ne sont pas à jour, appuyer sur 'Rafraîchir live' pour mettre à jour."
+    choose_language: "Choisir une langue"
+    succesful_added: "Traduction ajoutée avec succès"
+    succesful_edited: "Traduction modifiée avec succès"
+kuma_translator:
+  form:
+    text_with_locale:
+      locale:
+        label: Locale
+      text:
+        label: Text
+  command:
+    clear:
+      flash:
+        success: All live translations are up to date.
+    import:
+      flash:
+        success: Translations successfully imported, none existing translations were overwritten.
+        force_success: Translations successfully imported, all existing translations were overwritten.
+  modal:
+    confirmation:
+      force_import:
+        title: Are you sure you want to force an import?
+        body: All existing translations will be overwritten.
+        confirm_button: Import
+        cancel_button: Cancel
+  adminlist:
+    header:
+      domain: Domain
+      keyword: Keyword
+    filter:
+      domain: Domain
+      keyword: Keyword
+      text: Text
+      locale: Locale

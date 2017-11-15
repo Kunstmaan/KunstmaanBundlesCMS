@@ -1,171 +1,162 @@
-# Media
+---
 media:
-    aviary:
-      title: Aviary
-      nothing: Niczego tutaj nie ma.
-
-    media:
-        no: W tym folderze nie ma na razie żadnych plików.
-        dnd:
-            tip: "Rada:"
-            tiptext: Czy wiesz, że tutaj możesz wgrać wiele plików jednocześnie?
-            alert:
-                title: Przychodzace!
-                text: Wrzuć swoje pliki do tego folderu w celu nieustannej aktualizacji.
-        bulkupload:
-            addto: Wgraj pliki do  "%folder%"
-        contenttab:
-            title: Treść
-        propertiestab:
-           title: Właściwości
-        title: Media
-        add:
-            action: Dodaj media
-        edit:
-            action: Edytuj
-        download:
-            action: Pobierz
-        mediainfo:
-            name: Nazwa
-            contenttype: Typ treści
-            createdat: Dodane
-            updatedat: Zaktualizowane
-            downloadlink: Pobierz link
-        addto: Dodaj plik do "%folder%"
-        deletesure: Jesteś pewien, że chcesz usunąć?
-        new: Dodaj plik do "%folder%"
-
-    folder:
-        addsub:
-            action: Dodaj folder
-            action_short: Dodaj
-            modal:
-                title: Dodaj folder
-                save: Dodaj
-            form:
-                name: Nazwa
-                rel: Typ
-                parent: Rodzic
-                internal_name: Nazwa wewnętrzna
-            success:
-                text: Folder '%folder%' został utworzony!
-        empty:
-            action: Wyczyść folder
-            action_short: Wyczyść
-            modal:
-                title: Wyczyśc folder
-                text: Czy na pewno chcesz usunąc zawartośc "%folder%"?
-                checkbox: Usuń też podfoldery
-                save: Czyść
-            success:
-                text: Folder '%folder%' został wyczyszczony!
-        sub:
-            no: Brak podfolderów.
-        delete:
-            action: Usuń ten folder
-            action_short: Usuń
-            modal:
-                title: Usuń folder
-                text: Jesteś pewien, że chcesz usunąć "%folder%"?
-            failure:
-                text: Nie możesz usunąć folderu %folder%!
-            success:
-                text: Folder '%folder%' został pomyślnie usunięty!
-        save: Save
-        contenttab:
-            title: Treść
-        propertiestab:
-            title: Właściwości
-        sortby: Sortuj
-        show:
-            success:
-                text: Folder %folder% został zaktualizowany!
-
+  aviary:
+    title: Aviary
+    nothing: Niczego tutaj nie ma.
+  media:
+    "no": W tym folderze nie ma na razie żadnych plików.
+    dnd:
+      tip: "Rada:"
+      tiptext: Czy wiesz, że tutaj możesz wgrać wiele plików jednocześnie?
+      alert:
+        title: Przychodzace!
+        text: Wrzuć swoje pliki do tego folderu w celu nieustannej aktualizacji.
     bulkupload:
-        upload: Wgraj
-        bulkupload: Wgraj wiele plików jednocześnie
-        select_files: Wybierz pliki
-        upload_more: Wgraj więcej plików
-        back_to_folder: Wróć do folderu
-        upload_finished: Wgrywanie pliku zostało zakończone
-        not_available: "Wgrywanie wielu plików jednocześnie nie działa poprawnie. Twoja przeglądarka nie ma zainstalowanych programów: Flash, Silverlight lub HTML5 support."
-
-    slide:
-        add: Dodaj slajd
-        modal:
-            title: Dodaj slajd
-            save: Dodaj
-    video:
-        add: Dodaj plik video
-        modal:
-            title: Dodaj plik video
-            save: Dodaj
-    audio:
-        add: Dodaj plik audio
-        modal:
-              title: Dodaj plik audio
-              save: Dodaj
-
-    file:
-      add: Dodaj plik
+      addto: Wgraj pliki do  "%folder%"
+    contenttab:
+      title: Treść
+    propertiestab:
+      title: Właściwości
+    title: Media
+    add:
+      action: Dodaj media
+    edit:
+      action: Edytuj
+    download:
+      action: Pobierz
+    mediainfo:
+      name: Nazwa
+      contenttype: Typ treści
+      createdat: Dodane
+      updatedat: Zaktualizowane
+      downloadlink: Pobierz link
+    addto: Dodaj plik do "%folder%"
+    deletesure: Jesteś pewien, że chcesz usunąć?
+    new: Dodaj plik do "%folder%"
+  folder:
+    addsub:
+      action: Dodaj folder
+      action_short: Dodaj
       modal:
-        title: Dodaj plik
+        title: Dodaj folder
         save: Dodaj
-
-    widget:
-      choose: Wybierz
-      delete: Usuń
-      media_chooser: Wybierz media
-      icon_chooser: Wybierz ikonę
-
-    adminlist:
-        configurator:
-            name: Nazwa
-            type: Typ
-            date: Data
-            filesize: Rozmiar
-            filter:
-                name:       Nazwa
-                type:       Typ
-                updated_at: Data
-                filesize:   Rozmiar (w bajtach)
-
-    form:
-        remote:
-            name:
-                label: Nazwa
-            code:
-                label: Kod
-            type:
-                label: Typ
-            copyright:
-                label: Copyright
-            description:
-                label: Opis
-        bulk_upload:
-            files:
-                label: Pliki
-        file:
-            name:
-                label: Nazwa
-            file:
-                label: Plik
-            copyright:
-                label: Copyright
-            description:
-                label: Opis
-            originalFilename:
-                label: Nazwa źródłowa
-        remote_audio:
-            type:
-                label: Typ
-        remote_slide:
-            type:
-                label: Typ
-        remote_video:
-            type:
-                label: Typ
-
-    flash:
-        created: Media %medianame% został utworzony!
-        not_created: Media nie utworzone! %mediaerrors%
+      form:
+        name: Nazwa
+        rel: Typ
+        parent: Rodzic
+        internal_name: Nazwa wewnętrzna
+      success:
+        text: Folder '%folder%' został utworzony!
+    empty:
+      action: Wyczyść folder
+      action_short: Wyczyść
+      modal:
+        title: Wyczyśc folder
+        text: Czy na pewno chcesz usunąc zawartośc "%folder%"?
+        checkbox: Usuń też podfoldery
+        save: Czyść
+      success:
+        text: Folder '%folder%' został wyczyszczony!
+    sub:
+      "no": Brak podfolderów.
+    delete:
+      action: Usuń ten folder
+      action_short: Usuń
+      modal:
+        title: Usuń folder
+        text: Jesteś pewien, że chcesz usunąć "%folder%"?
+      failure:
+        text: Nie możesz usunąć folderu %folder%!
+      success:
+        text: Folder '%folder%' został pomyślnie usunięty!
+    save: Zapisz
+    contenttab:
+      title: Treść
+    propertiestab:
+      title: Właściwości
+    sortby: Sortuj
+    show:
+      success:
+        text: Folder %folder% został zaktualizowany!
+  bulkupload:
+    upload: Wgraj
+    bulkupload: Wgraj wiele plików jednocześnie
+    select_files: Wybierz pliki
+    upload_more: Wgraj więcej plików
+    back_to_folder: Wróć do folderu
+    upload_finished: Wgrywanie pliku zostało zakończone
+    not_available: 'Wgrywanie wielu plików jednocześnie nie działa poprawnie. Twoja przeglądarka nie ma zainstalowanych programów: Flash, Silverlight lub HTML5 support.'
+  slide:
+    add: Dodaj slajd
+    modal:
+      title: Dodaj slajd
+      save: Dodaj
+  video:
+    add: Dodaj plik video
+    modal:
+      title: Dodaj plik video
+      save: Dodaj
+  audio:
+    add: Dodaj plik audio
+    modal:
+      title: Dodaj plik audio
+      save: Dodaj
+  file:
+    add: Dodaj plik
+    modal:
+      title: Dodaj plik
+      save: Dodaj
+  widget:
+    choose: Wybierz
+    delete: Usuń
+    media_chooser: Wybierz media
+    icon_chooser: Wybierz ikonę
+  adminlist:
+    configurator:
+      name: Nazwa
+      type: Typ
+      date: Data
+      filesize: Rozmiar
+      filter:
+        name: Nazwa
+        type: Typ
+        updated_at: Data
+        filesize: Rozmiar (w bajtach)
+  form:
+    remote:
+      name:
+        label: Nazwa
+      code:
+        label: Kod
+      type:
+        label: Typ
+      copyright:
+        label: Prawa autorskie
+      description:
+        label: Opis
+    bulk_upload:
+      files:
+        label: Pliki
+    file:
+      name:
+        label: Nazwa
+      file:
+        label: Plik
+      copyright:
+        label: Prawa autorskie
+      description:
+        label: Opis
+      originalFilename:
+        label: Nazwa źródłowa
+    remote_audio:
+      type:
+        label: Typ
+    remote_slide:
+      type:
+        label: Typ
+    remote_video:
+      type:
+        label: Typ
+  flash:
+    created: Media %medianame% został utworzony!
+    not_created: Media nie utworzone! %mediaerrors%

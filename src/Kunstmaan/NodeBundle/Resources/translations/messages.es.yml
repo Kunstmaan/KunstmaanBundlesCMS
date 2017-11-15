@@ -1,19 +1,171 @@
+---
 subaction:
-    versions: "Versiones"
-
+  versions: "Versiones"
 action:
-    saveasdraft: "Guarda como borrador"
-    recopyfromlanguage: "Copy content from other language"
-    publish: "Publicar"
-    unpublish: "Despublicar"
-    preview: "Vista Previa"
-    save: "Guardar"
-    delete: "Borrar"
-    addsubpage: "Agregar subpágina"
-
+  saveasdraft: "Guarda como borrador"
+  recopyfromlanguage: "Copy content from other language"
+  exportpagetemplate: "Export pagetemplate"
+  publish: "Publicar"
+  unpublish: "Despublicar"
+  preview: "Vista Previa"
+  save: "Guardar"
+  delete: "Borrar"
+  addsubpage: "Agregar subpágina"
+  duplicate: "Duplicate"
 modal:
-    sourcelanguage: "Source language"
-
+  sourcelanguage: "Source language"
 pages:
-    copynotavailable: "Por favor, traduzca la página padre primero"
-
+  copynotavailable: "Por favor, traduzca la página padre primero"
+kuma_node:
+  form:
+    controller_action:
+      title:
+        label: Title
+    menu_tab:
+      hidden_from_menu:
+        label: Hidden from menu
+      internal_name:
+        label: Internal name
+    menu_tab_translation:
+      slug:
+        label: Slug
+      weight:
+        label: Weight
+        title: Used to reorder the pages.
+    page:
+      title:
+        label: Navigation title
+      page_title:
+        label: Page title
+        info_text: Used as title inside the page.
+  status:
+    "will_be_publish_at.%date%.raw": This page will be published at %date%
+    "will_be_unpublish_at.%date%.raw": This page will be unpublished at %date%
+    button:
+      schedulle_cancel: Cancel
+    "offline_draft.%public_url%.raw": Offline / Draft version (Go to <a href="%public_url%">public version</a>)
+    online_public.raw: Online / Public version
+    offline.raw: Offline
+    "go_to_draft_version.%url%.raw": (Go to <a href="%url%">draft version</a>)
+  admin:
+    publish:
+      flash:
+        success_published: The page has been published
+        success_scheduled: Publishing of the page has been scheduled
+    unpublish:
+      flash:
+        success_unpublished: The page has been unpublished
+        success_scheduled: Unpublishing of the page has been scheduled
+    unschedule:
+      flash:
+        success: The scheduling has been canceled
+    delete:
+      flash:
+        success: The page is deleted!
+    duplicate:
+      flash:
+        success: The page has been duplicated!
+    revert:
+      flash:
+        success: The page contents has been reverted
+    edit:
+      flash:
+        success: The page has been edited
+        locked: The page is currently being edited by %users%
+        locked_success: An automatic backup has been created because the page is being edited by another user
+    new_page:
+      title:
+        default: New page
+    list:
+      header:
+        title: Title
+        created_at: Created At
+        updated_at: Updated At
+        online: Online
+      filter:
+        title: Title
+        created_at: Created At
+        updated_at: Updated At
+        online: Online
+      online: (Online)
+      offline: (Offline)
+      additional_title: This list contains all the pages, chronologically ordered by updated date.
+  tab:
+    properties:
+      title: Properties
+    menu:
+      title: Menu
+    permissions:
+      title: Permissions
+    searcher:
+      title: Searcher
+  modal:
+    add_homepage:
+      h: Add homepage
+      form:
+        title:
+          label: Title
+        type:
+          label: Type
+        add:
+          label: Add
+        cancel:
+          label: Cancel
+    unpublish:
+      title: Unpublish
+      body: Are you sure you want to unpublish this page? If you do this, the page will be offline!
+      later:
+        label: Unpublish later
+        button: Unpublish later
+        cancel: Cancel
+      now:
+        button: Unpublish
+        cancel: Cancel
+    publish:
+      title: Publish
+      body: Are you sure you want to publish this page? If you do this, the page will be online!
+      later:
+        label: Publish later
+        button: Publish later
+        cancel: Cancel
+      now:
+        button: Publish
+        cancel: Cancel
+    versions:
+      title: Versions
+      table:
+        type: Type
+        last_modified: Last modified
+        user: User
+        actions: Actions
+      actions:
+        preview: Preview
+        revert: Revert
+    add_subpage:
+      title: Add subpage
+      label:
+        title: Title
+        type: Type
+      button:
+        add: Add
+        cancel: Cancel
+    delete_page:
+      'title.%page%': Delete page '%page%'
+      'body.%page%': This will remove the page completely in all languages! Are you really sure about this?
+      button:
+        delete: Delete
+        cancel: Cancel
+    duplicate_page:
+      'title.%page%': Duplicate page '%page%'
+      label:
+        new_title: New title
+      button:
+        duplicate: Duplicate
+        cancel: Cancel
+    recopyfromlanguage:
+      button:
+        copy: Copy
+        cancel: Cancel
+    export_pagetemplate:
+      button:
+        title: Export pagetemplate

@@ -1,36 +1,35 @@
+---
 kuma_admin_list:
-    form:
-        export_to: Export to
-    edit:
-        flash:
-            success: Encje została zmodyfikowana
-            locked: Encja jest aktualnie edytowana przez %user%
-    action:
-        view: Pokaż
-        edit: Edytuj
-        delete: Usuń
-        move_up: Przesuń w górę
-        move_down: Przesuń w dół
-
-# Filters
+  form:
+    export_to: Eksportuj do
+  edit:
+    flash:
+      success: Encje została zmodyfikowana
+      locked: Encja jest aktualnie edytowana przez %user%
+  action:
+    view: Pokaż
+    edit: Edytuj
+    delete: Usuń
+    move_up: Przesuń w górę
+    move_down: Przesuń w dół
 filter:
-    true: prawda
-    false: fałsz
-    before: przed
-    after: za
-    in: zawiera
-    notin: nie zawiera
-    eq: równe
-    neq: różne
-    lt: mniejsze niż
-    lte: mniejsze lub równe
-    gt: większe niż
-    gte: większe lub równe niż
-    isnull: puste
-    isnotnull: nie jest puste
-    contains: zawiera
-    doesnotcontain: nie zawiera
-    equals: równe
-    notequals: różne
-    startswith: zaczyna się od
-    endswith: kończy się na
+  "true": true
+  "false": false
+  before: przed
+  after: za
+  in: zawiera
+  notin: nie zawiera
+  eq: równe
+  neq: różne
+  lt: mniejsze niż
+  lte: mniejsze lub równe
+  gt: większe niż
+  gte: większe lub równe niż
+  isnull: puste
+  isnotnull: nie jest puste
+  contains: zawiera
+  doesnotcontain: nie zawiera
+  equals: równe
+  notequals: różne
+  startswith: zaczyna się od
+  endswith: kończy się na

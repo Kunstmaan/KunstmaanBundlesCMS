@@ -9,3 +9,4 @@ We follow most of the procedures for contributions from the [Symfony](http://sym
 * [Roadmap](./99-05-roadmap.md)
 * [Community bundles](./99-06-community-bundles.md)
 * [Release process](./99-07-release-process.md)
+* [Translations](./99-08-contributing-translations.md)
