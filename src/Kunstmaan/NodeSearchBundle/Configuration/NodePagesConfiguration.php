@@ -15,7 +15,6 @@ use Kunstmaan\NodeBundle\Entity\PageInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
-use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface;
@@ -137,14 +136,23 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         );
 
         foreach ($this->locales as $locale) {
-            $localeAnalysis = clone($analysis);
-            $language = $this->analyzerLanguages[$locale]['analyzer'];
+            // Multilanguage check
+            if (count(preg_grep('/[a-z]{2}_?+[a-zA-Z]{2}/', [$locale])) > 0) {
+                $locale = strtolower($locale);
+            }
 
-            //build new index
+            // Build new index
             $index = $this->searchProvider->createIndex($this->indexName . '_' . $locale);
 
-            //create index with analysis
-            $this->setAnalysis($index, $localeAnalysis->setupLanguage($language));
+            if (array_key_exists($locale, $this->analyzerLanguages)) {
+                $localeAnalysis = clone $analysis;
+                $language = $this->analyzerLanguages[$locale]['analyzer'];
+
+                // Create index with analysis
+                $this->setAnalysis($index, $localeAnalysis->setupLanguage($language));
+            } else {
+                $index->create([]);
+            }
 
             $this->setMapping($index, $locale);
         }
@@ -334,7 +342,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param Index  $index
      * @param string $lang
      */
-    protected function setMapping(Index $index, $lang = 'en')
+    protected function setMapping(Index $index, $lang='en')
     {
         $mapping = $this->createDefaultSearchFieldsMapping($index, $lang);
         $mapping->send();
