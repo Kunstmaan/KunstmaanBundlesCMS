@@ -6,86 +6,13 @@
    ========================================================================== */
 .video-pp {
     margin: 3rem 0;
-
-    .video-pp__link__img {
-        width: 100%;
-    }
 }
 
-
-/* videolink
-   ========================================================================== */
-.videolink {
-
-    a {
-        position: relative;
-
-        display: block;
-    }
-
-    .video-link__video-link__icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-
-        display: block;
-        width: 10rem;
-        height: 10rem;
-        margin: -5rem 0 0 -5rem;
-
-        background: rgba($white, .9);
-
-        border-radius: 50%;
-
-        color: $brand-primary;
-        font-size: 6.6rem;
-        line-height: 10rem;
-        text-align: center;
-
-        &:before {
-            content: '';
-
-            position: relative;
-            top: .25rem;
-            left: .5rem;
-
-            display: inline-block;
-
-            border-style: solid;
-            border-width: 2.5rem 0 2.5rem 4rem;
-            border-color: transparent transparent transparent currentColor;
-        }
-    }
-}
 
 .video-pp__caption {
     margin: 1rem 0 0;
 
     font-size: 1.4rem;
-}
-
-.video-pp__full-width-wrapper {
-    position: relative;
-
-    padding: 0 1.5rem;
-
-    @media (min-width: $screen-md-min) {
-        width: 150%;
-
-        .video-pp__caption {
-            width: calc(((100% - 1.5rem) / 3) * 2);
-        }
-
-        .video-pp__caption__text {
-            max-width: 67rem;
-            padding: 0 1.5rem;
-            margin: 0 auto;
-        }
-
-        .video-pp__link__img {
-            width: 100%;
-        }
-    }
 }
 
 
@@ -98,13 +25,7 @@ category: Pageparts
 
 ```html_example
 <div class="video-pp">
-    <div class="videolink">
-        <a href="//www.youtube.com/embed/WPx-Oe2WrUE" target="_blank" class="js-videolink-play-link videolink__video-link" data-video-provider="youtube" data-video-id="WPx-Oe2WrUE" data-make-fluid="true">
-            <img src="http://placehold.it/1450x820" alt="Some text here" class="videolink__video-link__image">
-        </a>
-        <div class="js-videolink-container videolink__video-container"></div>
-    </div>
-    <div class="caption">Some text here</div>
+    <div data-type="youtube" data-video-id="WPx-Oe2WrUE"></div>
 </div>
 ```
 
