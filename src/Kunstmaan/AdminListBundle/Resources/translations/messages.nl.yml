@@ -1,33 +1,35 @@
+---
 kuma_admin_list:
-    form:
-        export_to: Exporteer naar
-    action:
-        view: Bekijken
-        edit: Bewerken
-        delete: Verwijderen
-        move_up: Verplaats omhoog
-        move_down: Verplaats omlaag
-
-# Filters
+  form:
+    export_to: Exporteer naar
+  edit:
+    flash:
+      success: The entity has been edited
+      locked: The entity is currently being edited by %user%
+  action:
+    view: Bekijken
+    edit: Bewerken
+    delete: Verwijderen
+    move_up: Verplaats omhoog
+    move_down: Verplaats omlaag
 filter:
-    true: true
-    false: false
-    before: before
-    after: after
-    in: contains
-    notin: doesn't contain
-    eq: equals
-    neq: not equals
-    lt: lower than
-    lte: lower than or equal
-    gt: greater than
-    gte: greater than or equal
-    isnull: empty
-    isnotnull: not empty
-    contains: contains
-    doesnotcontain: doesn't contain
-    equals: equals
-    notequals: not equals
-    startswith: starts with
-    endswith: ends with
-
+  "true": true
+  "false": false
+  before: before
+  after: after
+  in: bevat
+  notin: doesn't contain
+  eq: equals
+  neq: not equals
+  lt: lower than
+  lte: lower than or equal
+  gt: greater than
+  gte: greater than or equal
+  isnull: empty
+  isnotnull: not empty
+  contains: bevat
+  doesnotcontain: doesn't contain
+  equals: is gelijk aan
+  notequals: not equals
+  startswith: starts with
+  endswith: ends with

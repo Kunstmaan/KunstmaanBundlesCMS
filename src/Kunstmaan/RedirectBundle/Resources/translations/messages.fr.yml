@@ -1,0 +1,31 @@
+---
+redirect:
+  title: Redirects
+  all: All domains
+  origin_info: The URL that you want to redirect, eg. /contest
+  target_info: The destination redirect URL, eg. /en/contests/summer-contest
+  form:
+    redirect:
+      domain:
+        label: Domain
+      origin:
+        label: Origin
+      target:
+        label: Target
+      permanent:
+        label: Permanent
+      note:
+        label: Note
+  adminlist:
+    header:
+      domain: Domain
+      origin: Origin
+      target: Target
+      permanent: Permanent?
+      note: Note
+    filter:
+      domain: Domain
+      origin: Origin
+      target: Target
+      permanent: Permanent
+      note: Note

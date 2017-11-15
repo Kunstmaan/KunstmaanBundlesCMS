@@ -1,36 +1,37 @@
+---
 article:
-    warning:
-        create_overview_page: Musisz stworzyć przynajmniej jedną stronę agregującą, żeby dodać stronę %type%
+  warning:
+    create_overview_page: Musisz stworzyć przynajmniej jedną stronę agregującą, żeby dodać stronę %type%
+  form:
+    date:
+      label: Data
+    summary:
+      label: Podsumowanie
+  modal:
+    add:
+      label: Dodaj %type% do %page%
+  author:
+    list:
+      header:
+        name: Nazwa
+        link: Link
+      filter:
+        name: Nazwa
+        link: Link
     form:
-        date:
-            label: Data
-        summary:
-            label: Podsumowanie
-    modal:
-        add:
-            label: Dodaj %type% do %page%
-    author:
-        list:
-            header:
-                name:   Nazwa
-                link:   Link
-            filter:
-                name:   Nazwa
-                link:   Link
-        form:
-            name:
-                label: Nazwa
-            link:
-                label: Link
-    page:
-        list:
-            header:
-                title:      Tytuł
-                created_at: Utworzono
-                updated_at: Zaktualizowano
-                online:     Online
-            filter:
-                title:      Tytuł
-                created_at: Utworzono
-                updated_at: Zaktualizowano
-                online:     Online
+      name:
+        label: Nazwa
+      link:
+        label: Link
+  page:
+    list:
+      header:
+        title: Tytuł
+        created_at: Utworzono
+        updated_at: Zaktualizowano
+        online: Online
+      filter:
+        title: Tytuł
+        created_at: Utworzono
+        updated_at: Zaktualizowano
+        online: Online

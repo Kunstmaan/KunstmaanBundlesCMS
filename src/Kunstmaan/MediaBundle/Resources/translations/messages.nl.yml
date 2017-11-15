@@ -1,11 +1,10 @@
-# Media
+---
 media:
   aviary:
     title: Aviary
-    nothing: Hier is niets te zien.
-
+    nothing: Niets te zien hier.
   media:
-    no: Er staan nog geen bestanden in deze map.
+    "no": Er staan nog geen bestanden in deze map.
     dnd:
       tip: "Tip:"
       tiptext: wist u dat u meerdere bestanden hier naartoe kunt slepen?
@@ -13,7 +12,7 @@ media:
         title: Incoming!
         text: Sleep uw bestanden hier naartoe om ze direct in deze map te uploaden.
     bulkupload:
-      addto: Upload bstanden naar "%folder%"
+      addto: Uploaden van bestanden naar "%folder%"
     contenttab:
       title: Inhoud
     propertiestab:
@@ -34,7 +33,6 @@ media:
     addto: Voeg media toe aan '%folder%'
     deletesure: Weet u zeker dat u dit wilt verwijderen?
     new: Voeg media toe aan '%folder%'
-
   folder:
     addsub:
       action: Submap toevoegen
@@ -45,7 +43,7 @@ media:
       form:
         name: Naam
         rel: Rel
-        parent: Ouder
+        parent: Bovenliggende
         internal_name: Interne naam
       success:
         text: Map '%folder%' is aangemaakt!
@@ -55,12 +53,12 @@ media:
       modal:
         title: Verwijder inhoud map
         text: Weet u zeker dat u de inhoud van '%folder%' wilt verwijderen?
-        checkbox: Verwijder ook de subfolders
+        checkbox: Ook submappen verwijderen
         save: Verwijder inhoud
       success:
         text: Map '%folder%' is leeggemaakt!
     sub:
-      no: Er zijn nog geen submappen.
+      "no": Nog geen submappen.
     delete:
       action: Verwijder deze map
       action_short: Verwijder
@@ -80,7 +78,6 @@ media:
     show:
       success:
         text: Map '%folder%' is geüpdatet!
-
   bulkupload:
     upload: Upload
     bulkupload: Bulk upload
@@ -89,7 +86,6 @@ media:
     back_to_folder: Terug naar map
     upload_finished: Het uploaden is afgerond.
     not_available: De bulk upload functie is niet beschikbaar voor u. Uw browser biedt geen ondersteuning voor Flash, Silverlight of HTML5.
-
   slide:
     add: Slide toevoegen
     modal:
@@ -103,61 +99,64 @@ media:
   audio:
     add: Audio toevoegen
     modal:
-          title: Audio toevoegen
-          save: Toevoegen
-
+      title: Audio toevoegen
+      save: Toevoegen
   file:
     add: Bestand toevoegen
     modal:
       title: Bestand toevoegen
-      save: toevoegen
-
+      save: Toevoegen
   widget:
     choose: Kies
     delete: Verwijder
     media_chooser: Media-keuze
     icon_chooser: Icoon-keuze
-
   adminlist:
     configurator:
       name: Naam
       type: Type
       date: Datum
       filesize: Bestandsgrootte
-
+      filter:
+        name: Name
+        type: Type
+        updated_at: Date
+        filesize: Filesize (in bytes)
   form:
     remote:
-        name:
-            label: Naam
-        code:
-            label: Code
-        type:
-            label: Type
-        copyright:
-            label: Copyright
-        description:
-            label: Omschrijving
+      name:
+        label: Naam
+      code:
+        label: Code
+      type:
+        label: Type
+      copyright:
+        label: Copyright
+      description:
+        label: Omschrijving
     bulk_upload:
-        files:
-            label: Bestanden
+      files:
+        label: Bestanden
     file:
-        name:
-            label: Naam
-        file:
-            label: Bestand
-        copyright:
-            label: Copyright
-        description:
-            label: Omschrijving
-        originalFilename:
-            label: Originele bestandsnaam
+      name:
+        label: Naam
+      file:
+        label: Bestand
+      copyright:
+        label: Copyright
+      description:
+        label: Omschrijving
+      originalFilename:
+        label: Originele bestandsnaam
     remote_audio:
-        type:
-            label: Type
+      type:
+        label: Type
     remote_slide:
-        type:
-            label: Type
+      type:
+        label: Type
     remote_video:
-        type:
-            label: Type
-
+      type:
+        label: Type
+  flash:
+    created: Media %medianame% has been created!
+    not_created: Media not created! %mediaerrors%

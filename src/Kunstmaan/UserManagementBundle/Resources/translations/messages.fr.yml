@@ -1,23 +1,80 @@
-# Settings
+---
 settings:
   groups: Groupes
   group:
-      name: Nom
-      edit: Modifier le groupe
-      add: Ajouter un groupe
-      roles: Rôles
+    name: Nom
+    edit: Modifier le groupe
+    add: Ajouter un groupe
+    roles: Rôles
+    roles_placeholder: Choose the roles...
   users: Utilisateurs
   user:
-      username: Utilisateur
-      password: Mot de passe
-      repeatedpassword: Répéter le mot de passe
-      email: E-mail
-      enabled: Activé
-      roles: Groupes
-      add: Ajouter un Utilisateur
-      edit: Modifier l'Utilisateur
+    username: Utilisateur
+    password: Mot de passe
+    repeatedpassword: Répéter le mot de passe
+    adminlang: Admin interface language
+    email: E-mail
+    enabled: Activé
+    roles: Groupes
+    roles_placeholder: Choose the permission groups...
+    add: Ajouter un Utilisateur
+    edit: Modifier l'Utilisateur
   roles: Rôles
   role:
-      role: Rôle
-      add: Ajouter un Rôle
-      edit: Modifier un Rôle
+    role: Rôle
+    add: Ajouter un Rôle
+    edit: Modifier un Rôle
+kuma_user:
+  roles:
+    add:
+      flash:
+        'success.%role%': Role '%role%' has been created!
+    edit:
+      flash:
+        'success.%role%': Role '%role%' has been edited!
+    delete:
+      flash:
+        'success.%role%': Role '%role%' has been deleted!
+  users:
+    adminlist:
+      header:
+        username: Username
+        email: E-mail
+        enabled: Enabled
+        last_login: Last login
+        groups: Groups
+      filter:
+        username: Username
+        email: E-mail
+        enabled: Enabled
+    add:
+      flash:
+        'success.%username%': User '%username%' has been created!
+    edit:
+      flash:
+        'success.%username%': User '%username%' has been edited!
+    delete:
+      flash:
+        'success.%username%': User '%username%' has been deleted!
+  group:
+    adminlist:
+      header:
+        name: Name
+        roles: Roles
+      filter:
+        name: Name
+    add:
+      flash:
+        success: Group %groupname% has been created!
+    edit:
+      flash:
+        success: Group %groupname% has been edited!
+    delete:
+      flash:
+        success: Group %groupname% has been deleted!
+  role:
+    adminlist:
+      header:
+        role: Role
+      filter:
+        role: Role
