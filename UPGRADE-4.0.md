@@ -12,7 +12,7 @@ You now have the option to add the following type of links:
 
 - Internal
 - External (external links or for example anchors)
-- Email (mailto: will be automatically added)
+- Email (`mailto:` will be automatically added)
 
 We have added this rewrite especially for the MultiDomainBundle but it's completely integrated in the KunstmaanBundlesCMS.
 
@@ -20,17 +20,17 @@ When you choose for an internal link type, you will need to choose a link in the
 
 When clicking a node in the left node tree, a token is generated and saved for the URL. 
 
-##For example: in a single domain website##
+## For example: in a single domain website
 
-Selecting the node in the tree with node translation id 50, will generate a token like "[NT50]".
+Selecting the node in the tree with node translation id 50, will generate a token like `[NT50]`.
 
-##For example: in a multi domain website##
+## For example: in a multi domain website
 
-Selecting the node in the tree with node translation id 50, on domain "my_domain_en" will generate a token like "[my_domain_en:NT50]".
+Selecting the node in the tree with node translation id 50, on domain `my_domain_en` will generate a token like `[my_domain_en:NT50]`.
 
-##MAJOR CHANGE##
+## MAJOR CHANGE
 
-For the new URL chooser to work, we have added a new twig filter "replace_url". This filter needs to be used to generate the correct url automatically.
+For the new URL chooser to work, we have added a new twig filter `replace_url`. This filter needs to be used to generate the correct url automatically.
 
 When creating a new pagePart with an url field, the twig filter is automatically being added. 
 
@@ -40,10 +40,10 @@ When adding a rich text field or a wysiwyg field, you will need to pipe the outp
  
 The DomainConfigurationInterface has also been changed. If you have implemented this interface, please be sure to check the required methods.
 
-##EventListener
+## EventListener
 
 The AdminListEvent has been changed, properties Form, Request and function Response have been added.
 
-##Node version locking
+## Node version locking
 
 See https://github.com/Kunstmaan/KunstmaanBundlesCMS/tree/master/src/Kunstmaan/NodeBundle/Resources/doc/Locking.md
