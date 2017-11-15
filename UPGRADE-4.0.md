@@ -72,3 +72,9 @@ public function getDefaultAdminType()
 
 A tip: use regex to search part of new form type instances creations (`new .+Type\(`).
 "
+
+## VotingBundle
+
+VotingBundle is refactored. If using custom voters implement the new abstract classes
+* VoteListener is renamed to AbstractVoteListener
+* VotingHelper is renamed to AbstractVotingHelper
