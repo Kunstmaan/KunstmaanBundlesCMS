@@ -24,6 +24,7 @@ use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -640,6 +641,15 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function removeHtml($text)
     {
+        // Remove Styles and Scripts
+        $crawler = new Crawler($text);
+        $crawler->filter('style, script')->each(function (Crawler $crawler) {
+            foreach ($crawler as $node) {
+                $node->parentNode->removeChild($node);
+            }
+        });
+        $text = $crawler->html();
+
         // Remove HTML markup
         $result = strip_tags($text);
 
