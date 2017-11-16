@@ -353,7 +353,6 @@ class FolderRepository extends NestedTreeRepository
 
     public function findOneBySlug($slug)
     {
-        $entity = null;
         $entity = $this->findOneBy(['slug' => $slug]);
 
         if ($entity === null) {
