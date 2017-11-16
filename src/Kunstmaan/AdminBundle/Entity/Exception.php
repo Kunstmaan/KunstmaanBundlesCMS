@@ -52,7 +52,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $used;
+    private $triggered;
 
     /**
      * @var bool
@@ -80,7 +80,7 @@ class Exception extends AbstractEntity
         $this->isMark = false;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-        $this->setUsed(1);
+        $this->setTriggered(1);
     }
 
     /**
@@ -150,25 +150,22 @@ class Exception extends AbstractEntity
     /**
      * @return int
      */
-    public function getUsed()
+    public function getTriggered()
     {
-        return $this->used;
+        return $this->triggered;
     }
 
     /**
-     * @param int $used
+     * @param int $triggered
      */
-    public function setUsed($used)
+    public function setTriggered($triggered)
     {
-        $this->used = $used;
+        $this->triggered = $triggered;
     }
 
-    /**
-     * @param int $used
-     */
-    public function increaseUsed()
+    public function increaseTriggered()
     {
-        $this->used++;
+        $this->triggered++;
     }
 
     /**

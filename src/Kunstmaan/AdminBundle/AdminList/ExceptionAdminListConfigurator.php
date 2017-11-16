@@ -22,7 +22,7 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
         $this->addField('code', 'settings.exceptions.code', true);
         $this->addField('url', 'settings.exceptions.url', true);
         $this->addField('urlReferer', 'settings.exceptions.urlReferer', true);
-        $this->addField('used', 'settings.exceptions.used', true);
+        $this->addField('triggered', 'settings.exceptions.triggered', true);
         $this->addField('createdAt', 'settings.exceptions.createdAt', true);
     }
 
