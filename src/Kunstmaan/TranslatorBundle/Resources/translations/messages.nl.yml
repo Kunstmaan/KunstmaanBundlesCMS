@@ -4,7 +4,7 @@ translator:
     title: Translations
     inline_edit_title: Enter translation
     emptytext: Not translated
-    invalid_translation: Invalid translation!
+    invalid_translation: Ongeldige vertaling
     fatal_error_occurred: A fatal error occured while saving the translation. Please try again later.
   translations: Translations
   translation_not_unique: The translation should be unique
@@ -16,7 +16,7 @@ settings:
     import_translations_forced: Import forced
     import_translations: Import
     actions: Actions
-    export_translations: Export to CSV
+    export_translations: Exporteer naar CSV
     not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
     choose_language: "Choose a language"
     succesful_added: "Translation succesfully created"
