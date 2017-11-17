@@ -4,34 +4,34 @@ article:
     create_overview_page: Létre kell hoznod egy áttekintő oldalt, hogy csinálhass %type% oldalt!
   form:
     date:
-      label: Date
+      label: Dátum
     summary:
-      label: Summary
+      label: Összegzés
   modal:
     add:
       label: '%type% hozzáadása a(z) %page% oldalhoz'
   author:
     list:
       header:
-        name: Name
+        name: Név
         link: Link
       filter:
-        name: Name
+        name: Név
         link: Link
     form:
       name:
-        label: Name
+        label: Név
       link:
         label: Link
   page:
     list:
       header:
-        title: Title
-        created_at: Created at
-        updated_at: Updated at
+        title: Cím
+        created_at: Létrehozva
+        updated_at: Frissítve
         online: Online
       filter:
-        title: Title
-        created_at: Created at
-        updated_at: Updated at
+        title: Cím
+        created_at: Létrehozva
+        updated_at: Frissítve
         online: Online
