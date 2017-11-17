@@ -2,20 +2,20 @@
 kuma_lead_generation:
   newsletter_popup:
     button:
-      close: Zamknij
-      subscribe: Subskrybuj
-      no_thanks: Nie, dziękuję!
+      close: Close
+      subscribe: Subscribe
+      no_thanks: No Thanks!
     label:
       email: E-mail
     message:
-      thanks: Dziękuję!
+      thanks: Thanks!
   on_exit_intent:
     sensitivity:
-      label: Czułość
+      label: Sensitivity
     timer:
-      label: Czas (milisekundy)
+      label: Timer (milliseconds)
     delay:
-      label: Opóźnienie (milisekundy)
+      label: Delay (milliseconds)
     sensitivity_info: The popup fires when the mouse cursor moves close to (or passes) the top of the viewport. You can define how far the mouse has to be before the popup fires. The higher value, the more sensitive, and the more quickly the event will fire. Defaults to 20.
     timer_info: Set a min time (milliseconds) before the popup fires. By default, the popup won't fire in the first second to prevent false positives, as it's unlikely the user will be able to exit the page within less than a second. If you want to change the amount of time that firing is surpressed for, you can pass in a number of milliseconds to timer.
     delay_info: By default, the popup will show immediately. You could instead configure it to wait x milliseconds before showing the popup. If the user's mouse re-enters the body before delay ms have passed, the popup will not appear. This can be used to provide a "grace period" for visitors instead of immediately presenting the popup.
@@ -25,87 +25,87 @@ kuma_lead_generation:
         label: E-mail
     popup:
       name:
-        label: Nazwa
-        info_text: 'Ostrzeżenie: Jeżeli zmienisz tą wartość, osoby które już widziały ten popup, lub osoby które zostały już przekształcone zobaczą ten popup ponownie.'
+        label: Name
+        info_text: 'Warning: if you change this value, the people who already saw this popup, or the people who were already converted will see the popup again.'
     after_x_scroll_percent_rule:
       percentage:
-        label: Procentowo
+        label: Percentage
     after_x_seconds:
       seconds:
-        label: Sekundy
+        label: Seconds
     locale_black_list:
       locale:
-        label: Język
-        info_text: Defniuje języki do czarnej listy
+        label: Locale
+        info_text: Defines the locale that should be blacklisted
     locale_white_list:
       locale:
-        label: Język
-        info_text: Definiuje języki do białej listy
+        label: Locale
+        info_text: Defines the locale that should be whitelisted
     max_x_time:
       times:
-        label: Czasy
+        label: Times
     recurring_every_x_time:
       days:
-        label: Dni
+        label: Days
       hours:
-        label: Godziny
+        label: Hours
       minutes:
-        label: Minuty
+        label: Minutes
       times:
-        label: Czasy
+        label: Times
     url_black_list:
       urls:
         label: Urls
         info_text: |
-          Zdefiniuj listę adresów znajdujących się na czarnej liście (patterny).
-          Każdy z adresów url oddziel linią
-          Możesz używać wyrażeń regularnych.
-          Przykłady: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+          Define a list of blacklist url (patterns).
+          Each url on a separate line.
+          You can also use regex expressions.
+          Examples: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
     url_white_list:
       urls:
         label: Urls
         info_text: |
-          Zdefiniuj listę przyjaznych adresów (patternów).
-          Każdy z adresów url oddziel linią
-          Możesz używać wyrażeń regularnych.
-          Przykłady: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+          Define a list of whitelist url (patterns).
+          Each url on a separate line.
+          You can also use regex expressions.
+          Examples: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
   popup:
     add:
       modal:
-        title: Dodaj okienko
+        title: Add popup
         button:
-          open: Dodaj okienko
-          add: Dodaj
-          cancel: Anuluj
+          open: Add popup
+          add: Add
+          cancel: Cancel
     type:
-      label: Typ
+      label: Type
     list:
       header:
         id: Id
-        name: Nazwa
-        type: Typ
+        name: Name
+        type: Type
         html_id: Html ID
-        rule_count: '# z Reguł'
+        rule_count: '# of Rules'
       filter:
-        name: Nazwa
+        name: Name
         html_id: Html ID
   rules:
-    'page_title.%name%': Reguła dla %name%
+    'page_title.%name%': Rules for %name%
     add:
       modal:
-        title: Dodaj regułe
+        title: Add Rule
         button:
-          open: Dodaj regułe
-          add: Dodaj
-          cancel: Anuluj
+          open: Add Rule
+          add: Add
+          cancel: Cancel
     list:
       header:
         id: Id
-        type: Typ
-        properties: Właściwości
+        type: Type
+        properties: Properties
       filter:
         id: Id
   breadcrumbs:
-    modules: Moduły
-    popups: Okienka
-    rules: Reguły
+    modules: Modules
+    popups: Popups
+    rules: Rules
