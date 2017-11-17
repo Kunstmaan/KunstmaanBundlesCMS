@@ -1,55 +1,55 @@
 ---
 form:
-  back: 'Back'
+  back: 'Wstecz'
 dashboard:
   ga:
     tab:
-      today: Today
-      yesterday: Yesterday
-      last_7_days: Last 7 days
-      last_30_days: Last 30 days
-      last_12_months: Last 12 months
-      year_to_date: Year to date
+      today: Dzisiaj
+      yesterday: Wczoraj
+      last_7_days: Ostatnich 7 dni
+      last_30_days: Ostatnich 30 dni
+      last_12_months: Ostatnich 12 miesięcy
+      year_to_date: Od początku roku
     chart:
-      users: Users
-      pct_new_sessions: "% New Sessions"
-      sessions: Sessions
-      pageviews: Pageviews
-      avg_pages_p_session: Pages / Session
-      avg_session_duration: Avg. Session Duration
+      users: Użytkownicy
+      pct_new_sessions: "% nowych sesji"
+      sessions: Sesje
+      pageviews: Odsłony
+      avg_pages_p_session: Strony / sesja
+      avg_session_duration: Śr. czas trwania sesji
     setup:
       goals:
-        disable: Disable goals
+        disable: Wyłączone cele
       title: Utwórz widget panelu informacyjnego Google Analytics
       content: "Jeśli chcesz dowiedzieć się, w jaki sposób utworzyć widget Google Analytics zapoznaj się z:"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
-      docs: the documentation
-      redirect: "This is your redirect URI:"
-      refresh: "Once everything is set up, refresh this page."
-      connect: Connect your Google Account
-      confirm: Connect now
+      docs: dokumentacją
+      redirect: "To jest adres URL Twojego przekierowania:"
+      refresh: "Jak tylko wszystko zostanie utworzone, odśwież tę stronę."
+      connect: Połącz się ze swoim kontem Google
+      confirm: Połącz się teraz
       profile:
-        title: Select a profile
-        select: Select a profile..
-        content: Select a profile for the selected website
+        title: Wybierz profil
+        select: Wybierz profil..
+        content: Wybierz profil dla wybranej strony
       property:
-        title: Select a website to track
-        select: Select a website..
+        title: Wybierz stronę do śledzenia
+        select: Wybierz stronę..
         content: Wybierz domenę zarejestrowaną na Twoim koncie Google Analytics.
       account:
-        title: Select an account
-        select: Select an account..
-      link: Setup dashboard
-      back: Go to dashboard
+        title: Wybierz konto
+        select: Wybierz konto..
+      link: Utwórz panel
+      back: Przejdź do panelu
       segment:
-        add: Add segment
+        add: Dodaj segment
         info: 'W celu utworzenia segmentów, możesz użyć segmentów IDs (oraz ich kombinacji) albo napisać swoje własne zapytania. Google posiada predefiniowane segmenty IDs (lista poniżej), możesz również kreować swoje własne za pomocą narzędzia Google Segment Builder w Google Analytics. Aby dowiedzieć się jak stworzyć własny segment, kliknij'
-        here: here
-        own: Own segments
-        builtin: Built-in segments
-      segments: Segment setup
-      accounts: Account setup
+        here: tutaj
+        own: Własne segmenty
+        builtin: Wbudowane segmenty
+      segments: Utworzenie segmentu
+      accounts: Utworzenie konta
     reset:
       property: Zmień link Google Analytics
-    last_update: "Last update:"
-    unavailable: No data available, please click this update button.
+    last_update: "Ostatnia aktualizacja:"
+    unavailable: Brak dostępnych danych, kliknij w ten przycisk aktualizacyjny.
