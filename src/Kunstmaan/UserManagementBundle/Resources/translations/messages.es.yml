@@ -1,29 +1,29 @@
 ---
 settings:
-  groups: Groups
+  groups: Grupos
   group:
-    name: Name
-    edit: Edit group
+    name: Nombre
+    edit: Editar grupo
     add: Agregar groupo
     roles: Roles
     roles_placeholder: Choose the roles...
-  users: Users
+  users: Usuarios
   user:
-    username: Username
-    password: Password
-    repeatedpassword: Repeat password
+    username: Nombre de usuarios
+    password: Contraseña
+    repeatedpassword: Repetir contraseña
     adminlang: Admin interface language
     email: E-mail
-    enabled: Enabled
-    roles: Groups
+    enabled: Habilitado
+    roles: Grupos
     roles_placeholder: Choose the permission groups...
-    add: Add User
-    edit: Edit User
+    add: Agregar Usuario
+    edit: Editar Usuario
   roles: Roles
   role:
-    role: Role
-    add: Add Role
-    edit: Edit Role
+    role: Rol
+    add: Agregar Rol
+    edit: Editar Rol
 kuma_user:
   roles:
     add:
