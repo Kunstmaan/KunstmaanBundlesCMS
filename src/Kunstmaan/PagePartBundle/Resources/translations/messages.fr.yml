@@ -1,7 +1,7 @@
 ---
 pagepart:
   header:
-    type: 'Header type'
+    type: 'Type de Header'
     title: 'Title'
   link:
     internal: Internal
