@@ -31,16 +31,16 @@ kuma_node:
         label: Slug
       weight:
         label: Weight
-        title: Used to reorder the pages.
+        title: Do sortowania stron
     page:
       title:
         label: Navigation title
       page_title:
         label: Page title
-        info_text: Used as title inside the page.
+        info_text: Używany jako nagłówke w konkretnej stronie.
   status:
     "will_be_publish_at.%date%.raw": This page will be published at %date%
-    "will_be_unpublish_at.%date%.raw": This page will be unpublished at %date%
+    "will_be_unpublish_at.%date%.raw": Strona zostanie odpubliczniona w %date%
     button:
       schedulle_cancel: Cancel
     "offline_draft.%public_url%.raw": Offline / Draft version (Go to <a href="%public_url%">public version</a>)
@@ -54,8 +54,8 @@ kuma_node:
         success_scheduled: Publishing of the page has been scheduled
     unpublish:
       flash:
-        success_unpublished: The page has been unpublished
-        success_scheduled: Unpublishing of the page has been scheduled
+        success_unpublished: Strona została odpublikowana
+        success_scheduled: Odpublikowanie zostało zaplanowane
     unschedule:
       flash:
         success: The scheduling has been canceled
@@ -64,10 +64,10 @@ kuma_node:
         success: The page is deleted!
     duplicate:
       flash:
-        success: The page has been duplicated!
+        success: Strona została zduplikowana!
     revert:
       flash:
-        success: The page contents has been reverted
+        success: Zawartośc strony została przywrócona
     edit:
       flash:
         success: The page has been edited
@@ -89,7 +89,7 @@ kuma_node:
         online: Online
       online: (Online)
       offline: (Offline)
-      additional_title: This list contains all the pages, chronologically ordered by updated date.
+      additional_title: Ta lista zawiera wszystkie strony, posortowane wg. ostatniej aktualizacji
   tab:
     properties:
       title: Properties
@@ -115,15 +115,15 @@ kuma_node:
       title: Unpublish
       body: Are you sure you want to unpublish this page? If you do this, the page will be offline!
       later:
-        label: Unpublish later
-        button: Unpublish later
+        label: Cofnij publikację późnije
+        button: Cofnij publikację poźniej
         cancel: Cancel
       now:
         button: Unpublish
         cancel: Cancel
     publish:
       title: Publish
-      body: Are you sure you want to publish this page? If you do this, the page will be online!
+      body: Czy na pewno chcesz opublikować tą stronę?
       later:
         label: Publish later
         button: Publish later
@@ -150,7 +150,7 @@ kuma_node:
         add: Add
         cancel: Cancel
     delete_page:
-      'title.%page%': Delete page '%page%'
+      'title.%page%': Usuń stornę '%page%'
       'body.%page%': This will remove the page completely in all languages! Are you really sure about this?
       button:
         delete: Delete
