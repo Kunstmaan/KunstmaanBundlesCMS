@@ -7,12 +7,12 @@ media:
     "no": No files in this folder yet.
     dnd:
       tip: "Tip:"
-      tiptext: did you know you can just drop multiple files here?
+      tiptext: Czy wiesz, że tutaj możesz wgrać wiele plików jednocześnie?
       alert:
-        title: Incoming!
+        title: Przychodzace!
         text: Drop your files to instantly upload them to this folder.
     bulkupload:
-      addto: Upload files to "%folder%"
+      addto: Wgraj pliki do  "%folder%"
     contenttab:
       title: Content
     propertiestab:
@@ -51,8 +51,8 @@ media:
       action: Empty folder
       action_short: Empty
       modal:
-        title: Empty folder
-        text: Are you sure you want to delete the content of folder "%folder%"?
+        title: Wyczyśc folder
+        text: Czy na pewno chcesz usunąc zawartośc "%folder%"?
         checkbox: Also delete subfolders
         save: Empty
       success:
@@ -84,8 +84,8 @@ media:
     select_files: Select files
     upload_more: Upload more files
     back_to_folder: Back to folder
-    upload_finished: The file upload has finished.
-    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
+    upload_finished: Wgrywanie pliku zostało zakończone
+    not_available: 'Wgrywanie wielu plików jednocześnie nie działa poprawnie. Twoja przeglądarka nie ma zainstalowanych programów: Flash, Silverlight lub HTML5 support.'
   slide:
     add: Add Slide
     modal:
