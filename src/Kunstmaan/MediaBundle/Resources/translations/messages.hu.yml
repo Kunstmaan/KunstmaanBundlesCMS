@@ -2,12 +2,12 @@
 media:
   aviary:
     title: Aviary
-    nothing: Nothing to see here.
+    nothing: Nincs megjeleníthető elem
   media:
     "no": No files in this folder yet.
     dnd:
       tip: "Tip:"
-      tiptext: did you know you can just drop multiple files here?
+      tiptext: Tudtad, hogy a fájlokat egyből ebbe a mappába is feltöltheted?
       alert:
         title: Incoming!
         text: Drop your files to instantly upload them to this folder.
@@ -29,10 +29,10 @@ media:
       contenttype: Content-type
       createdat: Added
       updatedat: Updated
-      downloadlink: Download link
-    addto: Add media to "%folder%"
+      downloadlink: 'Letölthető innen:'
+    addto: ehhez
     deletesure: Are you sure you want to delete this item?
-    new: Add media to "%folder%"
+    new: Új hozzáadása
   folder:
     addsub:
       action: Add subfolder
@@ -46,19 +46,19 @@ media:
         parent: Parent
         internal_name: Internal name
       success:
-        text: Folder '%folder%' has been created!
+        text: A(z) `%folder%` mappa sikeresen létrehozva
     empty:
       action: Empty folder
       action_short: Empty
       modal:
         title: Empty folder
-        text: Are you sure you want to delete the content of folder "%folder%"?
+        text: Bitzos benne, hogy törölni akarja a(z) `%folder%` mappa tartalmát?
         checkbox: Also delete subfolders
         save: Empty
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": No subfolders yet.
+      "no": Még nincsenek almappák
     delete:
       action: Delete this folder
       action_short: Delete
@@ -68,7 +68,7 @@ media:
       failure:
         text: You can't delete the %folder% folder!
       success:
-        text: Folder '%folder%' has been deleted!
+        text: A(z) `%folder%` mappa sikeresen törölve!
     save: Save
     contenttab:
       title: Content
@@ -77,15 +77,15 @@ media:
     sortby: Sort by
     show:
       success:
-        text: Folder %folder% has been updated!
+        text: A(z) `%folder%` mappa módosítva!
   bulkupload:
     upload: Upload
     bulkupload: Bulk upload
     select_files: Select files
     upload_more: Upload more files
     back_to_folder: Back to folder
-    upload_finished: The file upload has finished.
-    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
+    upload_finished: Feltöltés sikeres volt
+    not_available: Tömeges feltöltés nem lehetséges. A böngészőjében nem elérhető Flash, Silverlight vagy HTML5 támogatás.
   slide:
     add: Add Slide
     modal:
@@ -97,9 +97,9 @@ media:
       title: Add Video
       save: Add
   audio:
-    add: Add Audio
+    add: Audió hozzáadása
     modal:
-      title: Add Audio
+      title: Audió hozzáadása
       save: Add
   file:
     add: Add File
