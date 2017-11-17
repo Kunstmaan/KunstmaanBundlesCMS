@@ -13,7 +13,7 @@ action:
   addsubpage: "Add subpage"
   duplicate: "Duplicate"
 modal:
-  sourcelanguage: "Source language"
+  sourcelanguage: "modal.sourcelanguage"
 pages:
   copynotavailable: "Please translate the parent page first"
 kuma_node:
@@ -28,10 +28,10 @@ kuma_node:
         label: Internal name
     menu_tab_translation:
       slug:
-        label: Slug
+        label: Elérési útaz URL-ben
       weight:
         label: Weight
-        title: Used to reorder the pages.
+        title: Az oldalak újrarendezéséhez használd
     page:
       title:
         label: Navigation title
@@ -40,13 +40,13 @@ kuma_node:
         info_text: Used as title inside the page.
   status:
     "will_be_publish_at.%date%.raw": This page will be published at %date%
-    "will_be_unpublish_at.%date%.raw": This page will be unpublished at %date%
+    "will_be_unpublish_at.%date%.raw": 'Az oldal rejtett lesz (publikálás visszavonása): %date%'
     button:
       schedulle_cancel: Cancel
     "offline_draft.%public_url%.raw": Offline / Draft version (Go to <a href="%public_url%">public version</a>)
     online_public.raw: Online / Public version
     offline.raw: Offline
-    "go_to_draft_version.%url%.raw": (Go to <a href="%url%">draft version</a>)
+    "go_to_draft_version.%url%.raw": Ugrás a <a href="%url%">piszkozat verzióhoz</a>
   admin:
     publish:
       flash:
@@ -70,7 +70,7 @@ kuma_node:
         success: The page contents has been reverted
     edit:
       flash:
-        success: The page has been edited
+        success: Az oldal módosítva.
         locked: The page is currently being edited by %users%
         locked_success: An automatic backup has been created because the page is being edited by another user
     new_page:
@@ -156,7 +156,7 @@ kuma_node:
         delete: Delete
         cancel: Cancel
     duplicate_page:
-      'title.%page%': Duplicate page '%page%'
+      'title.%page%': A(z) '%page%' oldal duplikálása
       label:
         new_title: New title
       button:
