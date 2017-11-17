@@ -1,31 +1,31 @@
 ---
 redirect:
-  title: Átirányítások
-  all: Minden domain
-  origin_info: 'Az URL amit át akarsz irányítani, pl: /contest'
-  target_info: 'Az URL, ahova átirányítasz, pl: /en/contest/summer-contest'
+  title: Redirects
+  all: All domains
+  origin_info: The URL that you want to redirect, eg. /contest
+  target_info: The destination redirect URL, eg. /en/contests/summer-contest
   form:
     redirect:
       domain:
         label: Domain
       origin:
-        label: Eredeti
+        label: Origin
       target:
-        label: redirect.form.redirect.target.label
+        label: Target
       permanent:
-        label: Állandó
+        label: Permanent
       note:
-        label: Jegyzet
+        label: Note
   adminlist:
     header:
       domain: Domain
-      origin: Eredeti
-      target: Cél
-      permanent: Állandó?
-      note: Jegyzet
+      origin: Origin
+      target: Target
+      permanent: Permanent?
+      note: Note
     filter:
       domain: Domain
-      origin: Eredeti
-      target: Cél
-      permanent: Állandó
-      note: Jegyzet
+      origin: Origin
+      target: Target
+      permanent: Permanent
+      note: Note
