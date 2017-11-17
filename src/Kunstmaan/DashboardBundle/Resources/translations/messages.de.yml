@@ -16,11 +16,11 @@ dashboard:
       sessions: Sessions
       pageviews: Pageviews
       avg_pages_p_session: Pages / Session
-      avg_session_duration: Avg. Session Duration
+      avg_session_duration: Durchschn. Sitzungsdauer
     setup:
       goals:
         disable: Disable goals
-      title: Setup your Google Analytics dashboard widget
+      title: Google Analytics dashboard widget einrichten
       content: "To learn how to setup the Google Analytics widget, please refer to"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
       docs: the documentation
@@ -39,8 +39,8 @@ dashboard:
       account:
         title: Select an account
         select: Select an account..
-      link: Setup dashboard
-      back: Go to dashboard
+      link: Dashboard einrichten
+      back: Zum Dashboard
       segment:
         add: Add segment
         info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
