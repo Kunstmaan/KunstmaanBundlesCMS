@@ -2,7 +2,7 @@
 search:
   search: Search
   results: Results
-  looking_for: You were looking for "%query%"
+  looking_for: Szukałeś "%zapytania%"
 node_search:
   form:
     search:
