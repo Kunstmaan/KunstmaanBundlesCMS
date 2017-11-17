@@ -3,7 +3,7 @@ seo:
   robots:
     title: Robots
     tip: 'Tip:'
-    warning: This is a default value and example, no custom robots.txt has been defined.
+    warning: To są domyślne ustawienia dla pliku robots.txt, indywidualny plik dla projektu nie został utworzony
     moreinfo: You can find more information about the Kunstmaan robots.txt at our
   action:
     save: Save
@@ -11,15 +11,15 @@ seo:
     preview: Preview
   form:
     og:
-      title: OG Title
-      description: OG Description
+      title: OG Tytuł
+      description: OG Opis
       url: OG Url
-      type: OG Type
-      image: OG Image
+      type: OG Typ
+      image: OG Zdjęcie
       article:
-        author: OG Article Author
-        publisher: OG Article Publisher
-        section: OG Article Section
+        author: OG Autor
+        publisher: OG Wydawca
+        section: OG Sekcja artykułu
     twitter:
       title: Title
       title_info_text: The title of your twitter card. Falls back to SEO Meta title
@@ -32,7 +32,7 @@ seo:
       image: Image
     robots:
       noindex: No index
-      nofollow: No follow
+      nofollow: Blokuj korzystanie z linków dla GoogleBota
       noarchive: No archive
       nosnippet: No snippet
       notranslate: No translate
@@ -40,7 +40,7 @@ seo:
     seo:
       meta_title:
         label: Title
-        info_text: The title tag is often used on search engine results pages.
+        info_text: Tytuł jest częśto wykorzystywany przez wyszukiwarki
       meta_description:
         label: Meta description
       meta_robots:
