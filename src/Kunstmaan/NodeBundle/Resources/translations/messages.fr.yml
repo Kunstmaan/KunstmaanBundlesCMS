@@ -7,7 +7,7 @@ action:
   exportpagetemplate: "Export pagetemplate"
   publish: "Publish"
   unpublish: "Unpublish"
-  preview: "Preview"
+  preview: "preview"
   save: "Save"
   delete: "Delete"
   addsubpage: "Add subpage"
