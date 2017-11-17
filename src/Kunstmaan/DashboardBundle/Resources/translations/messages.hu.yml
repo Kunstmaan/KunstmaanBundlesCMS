@@ -20,12 +20,12 @@ dashboard:
     setup:
       goals:
         disable: Disable goals
-      title: Setup your Google Analytics dashboard widget
-      content: "To learn how to setup the Google Analytics widget, please refer to"
+      title: Állítsd be a Google Analytics  widgetet
+      content: "Bővebben a Google Analytics widget beállításairól ezen a linket találhat információkat:"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
       docs: the documentation
       redirect: "This is your redirect URI:"
-      refresh: "Once everything is set up, refresh this page."
+      refresh: "Amennyiben mindent beállított, frissítse az oldalt"
       connect: Connect your Google Account
       confirm: Connect now
       profile:
@@ -34,8 +34,8 @@ dashboard:
         content: Select a profile for the selected website
       property:
         title: Select a website to track
-        select: Select a website..
-        content: Select a domain registered in your Google Analytics account.
+        select: Válasszon egy weboldalt
+        content: Válaszd ki azt a domaint, ami a Google Analyticshez van rendelve.
       account:
         title: Select an account
         select: Select an account..
@@ -43,13 +43,13 @@ dashboard:
       back: Go to dashboard
       segment:
         add: Add segment
-        info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
+        info: 'Szegmens létrehozásához használható az ID-k (és lehet őket kombinálni), vagy írja meg a saját lekérdezését. A Google előre definiált szegmens ID-kat biztosít, vagy a Google Segment Builder segítségével sajátot is készíthetsz.'
         here: here
         own: Own segments
         builtin: Built-in segments
       segments: Segment setup
       accounts: Account setup
     reset:
-      property: Change Google Analytics link
-    last_update: "Last update:"
+      property: Google Analytics link megváltoztatása
+    last_update: "Utolsó frissítés;"
     unavailable: No data available, please click this update button.
