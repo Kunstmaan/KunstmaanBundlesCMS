@@ -60,7 +60,7 @@ kuma_form:
       regex:
         label: regex
       errormessage_regex:
-        label: Error message regex
+        label: Foutmelding regex
     single_line_text_page_part:
       label:
         label: Label
@@ -71,7 +71,7 @@ kuma_form:
       regex:
         label: regex
       errormessage_regex:
-        label: Error message regex
+        label: Foutmelding regex
     submit_button_page_part:
       label:
         label: Label
