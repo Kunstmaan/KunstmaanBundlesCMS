@@ -8,7 +8,7 @@ pages:
   createemptypage: Create as an empty page
   movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 modules:
-  title: Modules
+  title: Modulos
 settings:
   title: Settings
   maintanance: Maintenance
@@ -16,16 +16,16 @@ settings:
   version:
     bundle: Bundle versions
     composer_lock_not_found: No composer.lock file found in your project root
-    error_parsing_composer: Error parsing composer.lock file, no valid json
-    error: Something went wrong while fetching the version information. Please try again later.
-    moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+    error_parsing_composer: Error al analizar el archivo composer.lock, no es un json válido
+    error: Algo salió mal mientras al rescuperar la información sobre la versión. Por favor, intente más tarde.
+    moreinfo: Para actualizar los bundles, corra composer update. Es posible que tenga que actualizar otros bundles si existieran conflictos a la hora de actualizar.
     uptodate: is up-to-date
     toupdate: can be updated to
     unknown: version information unknown
 tools:
   title: Tools
-  clear_frontend_cache: Clear frontend cache
-  clear_backend_cache: Clear backend cache
+  clear_frontend_cache: Borrar caché frontend
+  clear_backend_cache: Borrar caché backend
   clear_all_caches: Clear all caches
   shutdown: Shutdown
 search:
@@ -39,7 +39,7 @@ form:
   'add.%subject%': 'Add New %subject%'
   save: Save
   publish: Publish
-  unpublish: Unpublish
+  unpublish: Despublicar
   saveasdraft: Save as draft
   name: Name
   type: Type
@@ -47,7 +47,7 @@ form:
   warning: Warning
   headsup: Heads up
   forgot:
-    password: Forgot my password.
+    password: Olvidó contraseña
   permissions: Permissions
   properties: Properties
   createdat: Created At
