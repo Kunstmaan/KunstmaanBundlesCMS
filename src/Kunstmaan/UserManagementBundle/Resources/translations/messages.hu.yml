@@ -1,68 +1,68 @@
 ---
 settings:
-  groups: Csoportok
+  groups: Groups
   group:
-    name: Csoport neve
-    edit: Csoport szerkesztése
-    add: Csoport hozzáadása
-    roles: Csoport szerepkörök
-    roles_placeholder: Válassz egy jogosultságot...
-  users: Felhasználók
+    name: Name
+    edit: Edit group
+    add: Add group
+    roles: Roles
+    roles_placeholder: Choose the roles...
+  users: Users
   user:
-    username: Felhasználónév
-    password: Jelszó
-    repeatedpassword: Megismételt jelszó
-    adminlang: Felhasználó nyelve az admin felületen
-    email: E-mail cím
-    enabled: Engedélyezett
-    roles: Felhasználó szerepkörei
-    roles_placeholder: Válassz ki a jogosultság csoportokat...
-    add: Felhasználó hozzáadása
-    edit: Felhasználó szerkesztése
-  roles: Szerepkörök
+    username: Username
+    password: Password
+    repeatedpassword: Repeat password
+    adminlang: Admin interface language
+    email: E-mail
+    enabled: Enabled
+    roles: Groups
+    roles_placeholder: Choose the permission groups...
+    add: Add User
+    edit: Edit User
+  roles: Roles
   role:
-    role: Szerepkör engedélyek
-    add: Szerepkör hozzáadása
-    edit: Szerepkör szerkesztése
+    role: Role
+    add: Add Role
+    edit: Edit Role
 kuma_user:
   roles:
     add:
       flash:
-        'success.%role%': A(z) '%role%' jogosultság létrehozva!
+        'success.%role%': Role '%role%' has been created!
     edit:
       flash:
-        'success.%role%': A(z) '%role%' jogosultság módosítva!
+        'success.%role%': Role '%role%' has been edited!
     delete:
       flash:
-        'success.%role%': A(z) '%role%' jogosultság törölve!
+        'success.%role%': Role '%role%' has been deleted!
   users:
     adminlist:
       header:
-        username: Felhasználónév
+        username: Username
         email: E-mail
-        enabled: Elfogadva
-        last_login: Utolsó belépés
-        groups: Csoportok
+        enabled: Enabled
+        last_login: Last login
+        groups: Groups
       filter:
-        username: Felhasználónév
+        username: Username
         email: E-mail
-        enabled: Elfogadva
+        enabled: Enabled
     add:
       flash:
-        'success.%username%': A(z) '%username%' felhasználó létrehozva!
+        'success.%username%': User '%username%' has been created!
     edit:
       flash:
-        'success.%username%': A(z) '%username%' felhasználó módosítva!
+        'success.%username%': User '%username%' has been edited!
     delete:
       flash:
-        'success.%username%': A(z) '%username%' felhasználó törölve!
+        'success.%username%': User '%username%' has been deleted!
   group:
     adminlist:
       header:
-        name: Név
-        roles: Jogok
+        name: Name
+        roles: Roles
       filter:
-        name: Név
+        name: Name
     add:
       flash:
         success: Group %groupname% has been created!
@@ -75,6 +75,6 @@ kuma_user:
   role:
     adminlist:
       header:
-        role: Jog
+        role: Role
       filter:
-        role: Jog
+        role: Role

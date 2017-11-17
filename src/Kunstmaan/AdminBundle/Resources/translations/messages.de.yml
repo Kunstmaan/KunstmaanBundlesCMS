@@ -1,61 +1,61 @@
 ---
 pages:
-  title: Seiten
-  parts: SeitenTeile
-  draft: Entwurf
-  pagenottranslated: Diese Seite ist nicht übersetzt
-  copyfrom: Aus anderer Sprache kopieren
-  createemptypage: Als leere Seite erstellen
+  title: Pages
+  parts: PageParts
+  draft: Draft
+  pagenottranslated: This page is not translated
+  copyfrom: Copy from language
+  createemptypage: Create as an empty page
   movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 modules:
-  title: Module
+  title: Modules
 settings:
-  title: Einstellungen
-  maintanance: Wartung
-  scheduled: Geplante Aufgaben
+  title: Settings
+  maintanance: Maintenance
+  scheduled: Scheduled Jobs
   version:
-    bundle: Bundle Versionen
-    composer_lock_not_found: Keine composer.lock im Projekt Root gefunden.
-    error_parsing_composer: Fehler beim Parsen der composer.lock Datei, kein gültiges JSON.
-    error: Beim Abrufen der Versionen trat ein Fehler auf. Bitte später erneut versuchen.
-    moreinfo: Zum Aktualisieren composer update ausführen. Bei Konflikten müssen eventuell weitere Bundles aktualisiert.
-    uptodate: ist aktuell
-    toupdate: kann aktualisiert werden auf
-    unknown: unbekannte Version
+    bundle: Bundle versions
+    composer_lock_not_found: No composer.lock file found in your project root
+    error_parsing_composer: Error parsing composer.lock file, no valid json
+    error: Something went wrong while fetching the version information. Please try again later.
+    moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+    uptodate: is up-to-date
+    toupdate: can be updated to
+    unknown: version information unknown
 tools:
-  title: Helfer
-  clear_frontend_cache: Frontend Cache löschen
-  clear_backend_cache: Frontend Cache löschen
-  clear_all_caches: Alle Caches löschen
-  shutdown: Herunterfahren
+  title: Tools
+  clear_frontend_cache: Clear frontend cache
+  clear_backend_cache: Clear backend cache
+  clear_all_caches: Clear all caches
+  shutdown: Shutdown
 search:
   title: Search
 form:
-  cancel: Abrechen
-  delete: Löschen
-  deletesure: Sind Sie sicher, Sie wollen diese löschen?
-  edit: Bearbeiten
-  add: Neu
-  'add.%subject%': 'Neu %subject%'
-  save: Speichern
-  publish: Publizieren
-  unpublish: Depublizieren
-  saveasdraft: Entwurf Speichern
+  cancel: Cancel
+  delete: Delete
+  deletesure: Are you sure you want to delete this?
+  edit: Edit
+  add: Add New
+  'add.%subject%': 'Add New %subject%'
+  save: Save
+  publish: Publish
+  unpublish: Unpublish
+  saveasdraft: Save as draft
   name: Name
-  type: Typ
-  error: Fehler
-  warning: Warnung
-  headsup: Achtung
+  type: Type
+  error: Error
+  warning: Warning
+  headsup: Heads up
   forgot:
-    password: Passwort vergessen.
-  permissions: Rechte
-  properties: Eigentschaften
-  createdat: Erstellt
-  updatedat: Aktualisiert
-  actions: Aktionen
-  addfilter: Filter hinzufügen
-  choosetypefilter: Filter aktiv
-  versions: Versionen
+    password: Forgot my password.
+  permissions: Permissions
+  properties: Properties
+  createdat: Created At
+  updatedat: Updated At
+  actions: Actions
+  addfilter: Add filter
+  choosetypefilter: Filter on
+  versions: Versions
   button:
     dropdown:
       more: More
@@ -64,9 +64,9 @@ form:
       filter: Filter
 omnext:
   home: Home
-  title: Willkommen!
-  welcome: Willkommen.
-  information: <strong>Information.</strong> Keine neuen Benachrichtigungen vorhanden.
+  title: Welcome!
+  welcome: Welcome.
+  information: <strong>Information.</strong> There are no new notifications.
 permissions:
   you_made_changes: You have made changes to the permissions on this page.
   apply_recursively: Apply these changes recursively on all child pages

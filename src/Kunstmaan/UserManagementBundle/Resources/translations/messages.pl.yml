@@ -1,77 +1,77 @@
 ---
 settings:
-  groups: Grupy
+  groups: Groups
   group:
-    name: Nazwa
-    edit: Edytuj grupę
-    add: Dodaj grupę
-    roles: Role
-    roles_placeholder: Wybierz role...
-  users: Użytkownicy
+    name: Name
+    edit: Edit group
+    add: Add group
+    roles: Roles
+    roles_placeholder: Choose the roles...
+  users: Users
   user:
-    username: Nazwa użytkownika
-    password: Hasło
-    repeatedpassword: Powtórz hasło
-    adminlang: Język interfejsu administratora
+    username: Username
+    password: Password
+    repeatedpassword: Repeat password
+    adminlang: Admin interface language
     email: E-mail
-    enabled: Aktywny
-    roles: Grupy
-    roles_placeholder: Wybierz uprawnienia dla grupy...
-    add: Dodaj użytkownika
-    edit: Edytuj użytkownika
-  roles: Role
+    enabled: Enabled
+    roles: Groups
+    roles_placeholder: Choose the permission groups...
+    add: Add User
+    edit: Edit User
+  roles: Roles
   role:
     role: Role
-    add: Dodaj role
-    edit: Edytuj role
+    add: Add Role
+    edit: Edit Role
 kuma_user:
   roles:
     add:
       flash:
-        'success.%role%': Rola '%role%' została utworzona!
+        'success.%role%': Role '%role%' has been created!
     edit:
       flash:
-        'success.%role%': Rola '%role%' została zmodyfikowana!
+        'success.%role%': Role '%role%' has been edited!
     delete:
       flash:
-        'success.%role%': Rola '%role%' została usunięta!
+        'success.%role%': Role '%role%' has been deleted!
   users:
     adminlist:
       header:
-        username: Nazwa użytkownika
+        username: Username
         email: E-mail
-        enabled: Aktywny
-        last_login: Ostatnie logowanie
-        groups: Grupy
+        enabled: Enabled
+        last_login: Last login
+        groups: Groups
       filter:
-        username: Nazwa użytkownika
+        username: Username
         email: E-mail
-        enabled: Aktywny
+        enabled: Enabled
     add:
       flash:
-        'success.%username%': Użytkownik '%username%' został utworzony!
+        'success.%username%': User '%username%' has been created!
     edit:
       flash:
-        'success.%username%': Użytkownik '%username%' został zmodyfikowany!
+        'success.%username%': User '%username%' has been edited!
     delete:
       flash:
-        'success.%username%': Użytkownik '%username%' został usunięty!
+        'success.%username%': User '%username%' has been deleted!
   group:
     adminlist:
       header:
-        name: Nazwa
-        roles: Role
+        name: Name
+        roles: Roles
       filter:
-        name: Nazwa
+        name: Name
     add:
       flash:
-        success: Grupa %groupname% została utworzona!
+        success: Group %groupname% has been created!
     edit:
       flash:
-        success: Grupa %groupname% została zmodyfikowana!
+        success: Group %groupname% has been edited!
     delete:
       flash:
-        success: Grupa %groupname% została usunięta!
+        success: Group %groupname% has been deleted!
   role:
     adminlist:
       header:

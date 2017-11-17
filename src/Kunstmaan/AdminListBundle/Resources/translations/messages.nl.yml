@@ -1,23 +1,23 @@
 ---
 kuma_admin_list:
   form:
-    export_to: Exporteer naar
+    export_to: Export to
   edit:
     flash:
       success: The entity has been edited
       locked: The entity is currently being edited by %user%
   action:
-    view: Bekijken
-    edit: Bewerken
-    delete: Verwijderen
-    move_up: Verplaats omhoog
-    move_down: Verplaats omlaag
+    view: View
+    edit: Edit
+    delete: Delete
+    move_up: Move up
+    move_down: Move down
 filter:
   "true": true
   "false": false
   before: before
   after: after
-  in: bevat
+  in: contains
   notin: doesn't contain
   eq: equals
   neq: not equals
@@ -27,9 +27,9 @@ filter:
   gte: greater than or equal
   isnull: empty
   isnotnull: not empty
-  contains: bevat
+  contains: contains
   doesnotcontain: doesn't contain
-  equals: is gelijk aan
+  equals: equals
   notequals: not equals
   startswith: starts with
   endswith: ends with

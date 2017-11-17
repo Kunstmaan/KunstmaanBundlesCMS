@@ -1,50 +1,50 @@
 ---
 pagepart:
   header:
-    type: 'Rodzaj nagłówka'
-    title: 'Tytuł'
+    type: 'Header type'
+    title: 'Title'
   link:
-    internal: Wewnętrzny
-    external: Zawenętrzny
-    email: Adres email
-    choose: 'Wybierz link'
-    openinnewwindow: 'Otwórz w nowym oknie'
-    text: 'Tekst'
+    internal: Internal
+    external: External
+    email: Email
+    choose: 'Choose link'
+    openinnewwindow: 'Open in new window'
+    text: 'Text'
   html:
-    content: 'Treści'
+    content: 'Contents'
   text:
-    content: 'Treści'
+    content: 'Contents'
   buttons:
-    move_up: Przesuń w górę
-    move_down: Przesuń w dół
-    edit: Edytuj
-    delete: Usuń
-    resize: Minimalizuj-Maksymalizuj
+    move_up: Move up
+    move_down: Move down
+    edit: Edit
+    delete: Delete
+    resize: Minimize-Maximize
 region:
   button:
-    min: Minimalizuj
-    max: Maksymalizuj
+    min: Minimize
+    max: Maximize
 kuma_pagepart:
   tab:
     content:
-      title: Treść
+      title: Content
   modal:
     delete:
-      'title.%type%': "Usuń element strony '%type%'"
-      'text.%type%': To spowoduje usunięcie elementu strony kompletnie. Zapisz stronę aby potwierdzić akcje.
+      'title.%type%': "Delete pagepart '%type%'"
+      'text.%type%': This will not remove the pagepart completely, save the page to remove this pagepart permanently.
       button:
-        delete: Usuń
-        cancel: Anuluj
+        delete: Delete
+        cancel: Cancel
   select:
-    add: Dodaj element strony
+    add: Add a pagepart
   template:
     modal:
       change:
-        current: Aktualny
-        title: Zmień szablon
+        current: Current
+        title: Change template
         button:
-          open: Zmień szablon
-          change: Zmień
-          cancel: Anuluj
+          open: Change template
+          change: Change
+          cancel: Cancel
         message:
-          'no_admin_found.%name%': Nie znaleziono administratora dla nazwy %name%
+          'no_admin_found.%name%': NO ADMIN FOUND for %name%
