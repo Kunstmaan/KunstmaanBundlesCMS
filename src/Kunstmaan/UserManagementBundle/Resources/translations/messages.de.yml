@@ -12,7 +12,7 @@ settings:
     username: Username
     password: Password
     repeatedpassword: Repeat password
-    adminlang: Admin interface language
+    adminlang: Sprache der Admin-Oberfläche
     email: E-mail
     enabled: Enabled
     roles: Groups
