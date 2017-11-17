@@ -1,54 +1,54 @@
 ---
 translator:
   translator:
-    title: Fordítás
-    inline_edit_title: translator.translator.inline_edit_title
-    emptytext: Üres
-    invalid_translation: A fordítás nem megfelelő
-    fatal_error_occurred: Sajnos hiba történt, próbálja meg újra
-  translations: Fordítások
-  translation_not_unique: Nem egyedi
+    title: Translations
+    inline_edit_title: Enter translation
+    emptytext: Not translated
+    invalid_translation: Invalid translation!
+    fatal_error_occurred: A fatal error occured while saving the translation. Please try again later.
+  translations: Translations
+  translation_not_unique: The translation should be unique
 settings:
   translator:
-    add: Fordítás hozzáadása
-    edit: Szerkesztése
-    refresh_live: Azonnali frissítés
-    import_translations_forced: Kényszerített import
+    add: Add translation
+    edit: Edit translation
+    refresh_live: Refresh live
+    import_translations_forced: Import forced
     import_translations: Import
     actions: Actions
     export_translations: Export to CSV
-    not_live_warning: "A fordítás nem azonnali idejű!"
-    choose_language: "Válassz egy nyelvet"
-    succesful_added: "Sikeresen hozzá lett adva."
-    succesful_edited: "Sikeres szerkesztés"
+    not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
+    choose_language: "Choose a language"
+    succesful_added: "Translation succesfully created"
+    succesful_edited: "Translation succesfully edited"
 kuma_translator:
   form:
     text_with_locale:
       locale:
-        label: Nyelv
+        label: Locale
       text:
-        label: Szöveg
+        label: Text
   command:
     clear:
       flash:
-        success: Minden élő fordítás friss.
+        success: All live translations are up to date.
     import:
       flash:
-        success: A fordítások sikeresen importálva, a létező fordítások nem változtak.
-        force_success: A fordítások sikeresen importálva, minden létező fordítás felül lett írva.
+        success: Translations successfully imported, none existing translations were overwritten.
+        force_success: Translations successfully imported, all existing translations were overwritten.
   modal:
     confirmation:
       force_import:
-        title: Biztos benne, hogy erőltetve szeretne importálni?
-        body: Minden létező fordítás felül lesz írva.
-        confirm_button: Importálás
-        cancel_button: Mégse
+        title: Are you sure you want to force an import?
+        body: All existing translations will be overwritten.
+        confirm_button: Import
+        cancel_button: Cancel
   adminlist:
     header:
-      domain: Névtér
-      keyword: Kulcsszó
+      domain: Domain
+      keyword: Keyword
     filter:
-      domain: Névtér
-      keyword: Kulcsszó
-      text: Szöveg
-      locale: Nyelv
+      domain: Domain
+      keyword: Keyword
+      text: Text
+      locale: Locale
