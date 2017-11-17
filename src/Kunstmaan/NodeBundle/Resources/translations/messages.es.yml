@@ -6,11 +6,11 @@ action:
   recopyfromlanguage: "Copy content from other language"
   exportpagetemplate: "Export pagetemplate"
   publish: "Publish"
-  unpublish: "Unpublish"
+  unpublish: "Despublicar"
   preview: "Preview"
   save: "Save"
   delete: "Delete"
-  addsubpage: "Add subpage"
+  addsubpage: "Agregar subpágina"
   duplicate: "Duplicate"
 modal:
   sourcelanguage: "Source language"
