@@ -12,7 +12,7 @@ media:
         title: Incoming!
         text: Drop your files to instantly upload them to this folder.
     bulkupload:
-      addto: Upload files to "%folder%"
+      addto: Upload in das Verzeichnis "%folder%"
     contenttab:
       title: Content
     propertiestab:
@@ -30,9 +30,9 @@ media:
       createdat: Added
       updatedat: Updated
       downloadlink: Download link
-    addto: Add media to "%folder%"
+    addto: Datei-Upload in das Verzeichnis "%folder%"
     deletesure: Are you sure you want to delete this item?
-    new: Add media to "%folder%"
+    new: Datei-Upload in das Verzeichnis "%folder%"
   folder:
     addsub:
       action: Add subfolder
@@ -80,12 +80,12 @@ media:
         text: Folder %folder% has been updated!
   bulkupload:
     upload: Upload
-    bulkupload: Bulk upload
+    bulkupload: Massen-Upload
     select_files: Select files
-    upload_more: Upload more files
+    upload_more: Upload weiterer Dateien
     back_to_folder: Back to folder
-    upload_finished: The file upload has finished.
-    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
+    upload_finished: Upload abgeschlossen.
+    not_available: Der Massen-Upload ist nicht verfügbar. Ihr Browser unterstützt kein Flash, Silverlight oder HTML5.
   slide:
     add: Add Slide
     modal:
@@ -97,9 +97,9 @@ media:
       title: Add Video
       save: Add
   audio:
-    add: Add Audio
+    add: Audio Hinzufügen
     modal:
-      title: Add Audio
+      title: Audio Hinzufügen
       save: Add
   file:
     add: Add File
