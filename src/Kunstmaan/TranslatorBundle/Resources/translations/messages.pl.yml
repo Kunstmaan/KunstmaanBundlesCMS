@@ -16,7 +16,7 @@ settings:
     import_translations_forced: Import forced
     import_translations: Import
     actions: Actions
-    export_translations: Export to CSV
+    export_translations: Eksportuj do CSV
     not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
     choose_language: "Choose a language"
     succesful_added: "Translation succesfully created"
@@ -34,7 +34,7 @@ kuma_translator:
         success: All live translations are up to date.
     import:
       flash:
-        success: Translations successfully imported, none existing translations were overwritten.
+        success: Translacje pomyślnie zaimporotwane, żadne aktualne translacje nie zostały nadpisane.
         force_success: Translations successfully imported, all existing translations were overwritten.
   modal:
     confirmation:
