@@ -12,12 +12,12 @@ settings:
     username: Username
     password: Password
     repeatedpassword: Repeat password
-    adminlang: Admin interface language
+    adminlang: Lingua interfaccia Admin
     email: E-mail
     enabled: Enabled
     roles: Groups
     roles_placeholder: Choose the permission groups...
-    add: Add User
+    add: Aggiugi Utente
     edit: Edit User
   roles: Roles
   role:
