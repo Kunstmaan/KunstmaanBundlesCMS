@@ -1,21 +1,21 @@
 ---
 form:
-  back: 'Back'
+  back: 'Zurück'
 dashboard:
   ga:
     tab:
-      today: Today
-      yesterday: Yesterday
-      last_7_days: Last 7 days
-      last_30_days: Last 30 days
-      last_12_months: Last 12 months
-      year_to_date: Year to date
+      today: Heute
+      yesterday: Gestern
+      last_7_days: Letzte 7 Tage
+      last_30_days: Letzte 30 Tage
+      last_12_months: Letzte 12 Monate
+      year_to_date: Jahr bis heute
     chart:
-      users: Users
-      pct_new_sessions: "% New Sessions"
-      sessions: Sessions
-      pageviews: Pageviews
-      avg_pages_p_session: Pages / Session
+      users: Besucher
+      pct_new_sessions: "% Neue Sitzungen"
+      sessions: Sitzungen
+      pageviews: Seitenaufrufe
+      avg_pages_p_session: Seiten / Sitzung
       avg_session_duration: Durchschn. Sitzungsdauer
     setup:
       goals:
@@ -51,5 +51,5 @@ dashboard:
       accounts: Account setup
     reset:
       property: Change Google Analytics link
-    last_update: "Last update:"
-    unavailable: No data available, please click this update button.
+    last_update: "Letzte Aktualisierung:"
+    unavailable: Keine Daten verfügbar, bitte Aktualisieren Button klicken.
