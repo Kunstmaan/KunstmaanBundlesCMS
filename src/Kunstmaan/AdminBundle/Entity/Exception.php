@@ -52,7 +52,7 @@ class Exception extends AbstractEntity
      *
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $triggered;
+    private $events;
 
     /**
      * @var bool
@@ -80,7 +80,7 @@ class Exception extends AbstractEntity
         $this->isMark = false;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
-        $this->setTriggered(1);
+        $this->setEvents(1);
     }
 
     /**
@@ -150,22 +150,22 @@ class Exception extends AbstractEntity
     /**
      * @return int
      */
-    public function getTriggered()
+    public function getEvents()
     {
-        return $this->triggered;
+        return $this->events;
     }
 
     /**
      * @param int $triggered
      */
-    public function setTriggered($triggered)
+    public function setEvents($events)
     {
-        $this->triggered = $triggered;
+        $this->events = $events;
     }
 
-    public function increaseTriggered()
+    public function increaseEvents()
     {
-        $this->triggered++;
+        $this->events++;
     }
 
     /**

@@ -33,7 +33,7 @@ settings:
         urlReferer: URL Referer
         createdAt: Created at
         isMark: Is mark
-        triggered: Triggered
+        events: Events
 
 # Tools
 tools:
@@ -138,4 +138,4 @@ kuma_js:
 toolbar:
     exception:
         title: Exceptions
-        message: "<strong>%X%</strong> exception triggerd by <strong>%Y%</strong> events"
+        message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

@@ -19,7 +19,7 @@ class ExceptionRepository extends EntityRepository
     public function findExceptionStatistics()
     {
         return $this->createQueryBuilder('e')
-            ->select('COUNT(e.id) as cp_all, SUM(e.triggered) as cp_sum')
+            ->select('COUNT(e.id) as cp_all, SUM(e.events) as cp_sum')
             ->where('e.isMark = 0')
             ->getQuery()
             ->getOneOrNullResult();
