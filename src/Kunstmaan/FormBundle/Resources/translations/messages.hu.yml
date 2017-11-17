@@ -3,102 +3,102 @@ kuma_form:
   form:
     page_admin:
       title:
-        label: Cím
+        label: Title
       thanks:
-        label: Köszönet
+        label: Thanks
       subject:
-        label: Tárgy
+        label: Subject
       from_email:
-        label: Feladó e-mailcíme
+        label: From e-mail
       to_email:
-        label: Címzett e-mailcíme
+        label: To e-mail
     checkbox_page_part:
       label:
-        label: Felirat
+        label: Label
       required:
-        label: Kötelező
+        label: Required
       errormessage_required:
-        label: '''Kötelező'' hibaüzenet'
+        label: Error message required
     choice_page_part:
       label:
-        label: Felirat
+        label: Label
       required:
-        label: Kötelező
+        label: Required
       errormessage_required:
-        label: '''Kötelező'' hibaüzenet'
+        label: Error message required
       expanded:
-        label: Nem legördülő
+        label: Expanded
       multiple:
-        label: Több érték is választható
+        label: Multiple
       choices:
-        label: Választási lehetőségek
+        label: Choices
       empty_value:
-        label: Üres érték
+        label: Empty value
     email_page_part:
       label:
-        label: Felirat
+        label: Label
       required:
-        label: Kötelező
+        label: Required
       errorMessageRequired:
-        label: '''Kötelező'' hibaüzenet'
+        label: Error message required
       errorMessageInvalid:
-        label: '''Érvénytelen'' hibaüzenet'
+        label: Error message invalid
     file_upload_page_part:
       label:
-        label: Felirat
+        label: Label
       required:
-        label: Kötelező
+        label: Required
       errormessage_required:
-        label: '''Kötelező'' hibaüzenet'
+        label: Error message required
     multi_line_text_page_part:
       label:
-        label: Felirat
+        label: Label
       required:
-        label: Kötelező
+        label: Required
       errormessage_required:
-        label: '''Kötelező'' hibaüzenet'
+        label: Error message required
       regex:
-        label: Regex
+        label: regex
       errormessage_regex:
-        label: '''Regex'' hibaüzenet'
+        label: Error message regex
     single_line_text_page_part:
       label:
-        label: Felirat
+        label: Label
       required:
-        label: Kötelező
+        label: Required
       errormessage_required:
-        label: '''Kötelező'' hibaüzenet'
+        label: Error message required
       regex:
-        label: Regex
+        label: regex
       errormessage_regex:
-        label: '''Regex'' hibaüzenet'
+        label: Error message regex
     submit_button_page_part:
       label:
-        label: Felirat
+        label: Label
   button:
-    export_to: Exportálás
+    export_to: Export to
   list:
     header:
-      title: Cím
-      language: Nyelv
-      path: Űrlap útvonala
+      title: Title
+      language: Language
+      path: Form path
     filter:
       title: Title
       online: Online
   submission:
     list:
       header:
-        created: Dátum
-        language: Nyelv
-        ip_address: IP cím
+        created: Date
+        language: Language
+        ip_address: IP address
 formsubmissions:
   index:
-    title: Űrlapos oldalak
+    title: Form pages with submissions
   menu:
-    title: Űrlap kitöltések
+    title: Form submissions
   list:
-    title: Kitöltött űrlapok
+    title: Form submissions for page
   edit:
-    title: Űrlap kitöltés
+    title: Form submission for page
 subaction:
-  formsubmissions: "Űrlap kitöltések"
+  formsubmissions: "Submissions"

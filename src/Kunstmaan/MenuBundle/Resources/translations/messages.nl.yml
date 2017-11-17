@@ -5,11 +5,11 @@ kuma_menu:
   menu:
     adminlist:
       field:
-        name: Naam
+        name: Name
       filter:
-        name: Naam
+        name: Name
       action:
-        manage: Beheer
+        manage: Manage
   menu_item:
     adminlist:
       breadcrumb:
@@ -20,11 +20,11 @@ kuma_menu:
       online: (Online)
       offline: (Offline)
       field:
-        title: Titel
+        title: Title
         online: Online
         type: Type
         url: Url
-        new_window: Nieuw scherm
+        new_window: New window
   form:
     parent: Parent menu item
     parent_placeholder: Select the parent menu item...

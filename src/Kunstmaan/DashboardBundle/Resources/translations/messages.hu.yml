@@ -1,55 +1,55 @@
 ---
 form:
-  back: 'Vissza'
+  back: 'Back'
 dashboard:
   ga:
     tab:
-      today: Ma
-      yesterday: Tegnap
-      last_7_days: Legutóbbi 7 nap
-      last_30_days: Legutóbbi 30 nap
-      last_12_months: Legutóbbi 12 hónap
-      year_to_date: Idei év
+      today: Today
+      yesterday: Yesterday
+      last_7_days: Last 7 days
+      last_30_days: Last 30 days
+      last_12_months: Last 12 months
+      year_to_date: Year to date
     chart:
-      users: Felhasználók
-      pct_new_sessions: "Új munkamenet"
-      sessions: Munkamenetek
-      pageviews: Oldalmegtekintések
-      avg_pages_p_session: Oldalak / Munkamenetek
-      avg_session_duration: Átlagos munkamenet időtartam
+      users: Users
+      pct_new_sessions: "% New Sessions"
+      sessions: Sessions
+      pageviews: Pageviews
+      avg_pages_p_session: Pages / Session
+      avg_session_duration: Avg. Session Duration
     setup:
       goals:
-        disable: Célok leállítása
-      title: Állítsd be a Google Analytics  widgetet
-      content: "Bővebben a Google Analytics widget beállításairól ezen a linket találhat információkat:"
+        disable: Disable goals
+      title: Setup your Google Analytics dashboard widget
+      content: "To learn how to setup the Google Analytics widget, please refer to"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
-      docs: a dokumentáció
-      redirect: "Ez az átirányított URI:"
-      refresh: "Amennyiben mindent beállított, frissítse az oldalt"
-      connect: Kapcsolódás a Google fiókhoz
-      confirm: Kapcsolódás
+      docs: the documentation
+      redirect: "This is your redirect URI:"
+      refresh: "Once everything is set up, refresh this page."
+      connect: Connect your Google Account
+      confirm: Connect now
       profile:
-        title: Válassz egy profilt
-        select: Válassz egy profilt..
-        content: Válassz egy profilt a kiválasztott weboldalhoz
+        title: Select a profile
+        select: Select a profile..
+        content: Select a profile for the selected website
       property:
-        title: Válassz egy weboldalt a követéshez
-        select: Válasszon egy weboldalt
-        content: Válaszd ki azt a domaint, ami a Google Analyticshez van rendelve.
+        title: Select a website to track
+        select: Select a website..
+        content: Select a domain registered in your Google Analytics account.
       account:
-        title: Válassz egy felhasználót
-        select: Válasszon egy fiókot..
-      link: Beállítások
-      back: Vissza a vezérlőpultra
+        title: Select an account
+        select: Select an account..
+      link: Setup dashboard
+      back: Go to dashboard
       segment:
-        add: Szegmens hozzáadása
-        info: 'Szegmens létrehozásához használható az ID-k (és lehet őket kombinálni), vagy írja meg a saját lekérdezését. A Google előre definiált szegmens ID-kat biztosít, vagy a Google Segment Builder segítségével sajátot is készíthetsz.'
-        here: itt
-        own: Saját szegmensek
-        builtin: Beépített szegmensek
-      segments: Szegmensek
-      accounts: Fiókok
+        add: Add segment
+        info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
+        here: here
+        own: Own segments
+        builtin: Built-in segments
+      segments: Segment setup
+      accounts: Account setup
     reset:
-      property: Google Analytics link megváltoztatása
-    last_update: "Utolsó frissítés;"
-    unavailable: Nem érhetőek el információk, kattintson a frissítés gombra.
+      property: Change Google Analytics link
+    last_update: "Last update:"
+    unavailable: No data available, please click this update button.

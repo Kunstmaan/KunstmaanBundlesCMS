@@ -2,8 +2,8 @@
 kunstmaan_cache:
   varnish:
     ban:
-      path: Aktualizuj
-      submit: Blokuj!
-      all_domains: Zablokuj na wszystkich domenach
-      success: Pomyślnie zablokowano!
-      menu: Usuń z cache
+      path: Path
+      submit: Ban!
+      all_domains: Ban on all domains
+      success: Banned successfully!
+      menu: Remove from cache

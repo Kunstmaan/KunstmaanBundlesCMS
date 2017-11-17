@@ -1,58 +1,58 @@
 ---
 seo:
   robots:
-    title: Roboty
-    tip: 'Rada:'
-    warning: To są domyślne ustawienia dla pliku robots.txt, indywidualny plik dla projektu nie został utworzony
-    moreinfo: Więcej informacji pliku robots.txt możesz znaleźć w
+    title: Robots
+    tip: 'Tip:'
+    warning: This is a default value and example, no custom robots.txt has been defined.
+    moreinfo: You can find more information about the Kunstmaan robots.txt at our
   action:
-    save: Zapisz
-    cancel: Anuluj
-    preview: Podgląd
+    save: Save
+    cancel: Cancel
+    preview: Preview
   form:
     og:
-      title: OG Tytuł
-      description: OG Opis
+      title: OG Title
+      description: OG Description
       url: OG Url
-      type: OG Typ
-      image: OG Zdjęcie
+      type: OG Type
+      image: OG Image
       article:
-        author: OG Autor
-        publisher: OG Wydawca
-        section: OG Sekcja artykułu
+        author: OG Article Author
+        publisher: OG Article Publisher
+        section: OG Article Section
     twitter:
-      title: Tytuł
+      title: Title
       title_info_text: The title of your twitter card. Falls back to SEO Meta title
-      description: Opis
+      description: Description
       description_info_text: The description of your twitter card. Falls back to SEO Meta description
-      sitehandle: Witryna
+      sitehandle: Site Handle
       sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
-      creatorhandle: Twórca
+      creatorhandle: Creator Handle
       creatorhandle_info_text: Twitter handle of your page publisher.
-      image: Zdjęcie
+      image: Image
     robots:
-      noindex: Blokuj indeksowanie
-      nofollow: Blokuj korzystanie z linków dla GoogleBota
-      noarchive: Blokuj archiwizację
-      nosnippet: Blokuj wyświetlanie krótkiego opisu
-      notranslate: Blokuj tłumaczenie
-      noimageindex: Blokuj indeksowanie zdjęć
+      noindex: No index
+      nofollow: No follow
+      noarchive: No archive
+      nosnippet: No snippet
+      notranslate: No translate
+      noimageindex: No image index
     seo:
       meta_title:
-        label: Tytuł
-        info_text: Tytuł jest częśto wykorzystywany przez wyszukiwarki
+        label: Title
+        info_text: The title tag is often used on search engine results pages.
       meta_description:
-        label: Opis meta
+        label: Meta description
       meta_robots:
-        label: Meta roboty
-        placeholder: Wybierz tagi dla wyszukiwarek
+        label: Meta robots
+        placeholder: Choose robot tags
       extra_metadata:
-        label: Dodatkowe meta dane
+        label: Extra metadata
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter
+    twittercards: Twitter Cards
   tab:
     seo:
       title: SEO
     social:
-      title: Społeczności
+      title: Social

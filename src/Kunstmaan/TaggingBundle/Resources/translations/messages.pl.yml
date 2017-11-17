@@ -3,11 +3,11 @@ kuma_tagging:
   form:
     tag:
       name:
-        label: Nazwa
+        label: Name
   adminlist:
     header:
-      name: Nazwa
-      created_at: Utworzono
-      updated_at: Zaktualizowano
+      name: Name
+      created_at: Created at
+      updated_at: Updated at
     filter:
-      name: Nazwa
+      name: Name
