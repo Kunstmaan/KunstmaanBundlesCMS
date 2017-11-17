@@ -46,7 +46,7 @@ class SetupIndexCommand extends ContainerAwareCommand
                     ['No', 'Yes']
                 );
                 $question->setErrorMessage('Answer %s is invalid.');
-                if ( $helper->ask($input, $output, $question) === 'no' ) {
+                if ( $helper->ask($input, $output, $question) === 'No' ) {
                     return;
                 }
             }
