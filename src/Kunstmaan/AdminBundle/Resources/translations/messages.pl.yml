@@ -16,16 +16,16 @@ settings:
   version:
     bundle: Bundle versions
     composer_lock_not_found: No composer.lock file found in your project root
-    error_parsing_composer: Error parsing composer.lock file, no valid json
+    error_parsing_composer: Błąd przetwarzania pliku composer.lock, format json nieprawidłowy
     error: Something went wrong while fetching the version information. Please try again later.
-    moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+    moreinfo: Aby zaktualizować moduły, użyj komendy composer update. Możliwe, że będziesz musiał zaktualizować pozostałe moduły w przypadku konfliktów
     uptodate: is up-to-date
     toupdate: can be updated to
     unknown: version information unknown
 tools:
   title: Tools
-  clear_frontend_cache: Clear frontend cache
-  clear_backend_cache: Clear backend cache
+  clear_frontend_cache: Wyczyść frontend cache
+  clear_backend_cache: Wyczyść backend cache
   clear_all_caches: Clear all caches
   shutdown: Shutdown
 search:
@@ -54,7 +54,7 @@ form:
   updatedat: Updated At
   actions: Actions
   addfilter: Add filter
-  choosetypefilter: Filter on
+  choosetypefilter: Filtruj wg.
   versions: Versions
   button:
     dropdown:
@@ -66,7 +66,7 @@ omnext:
   home: Home
   title: Welcome!
   welcome: Welcome.
-  information: <strong>Information.</strong> There are no new notifications.
+  information: <strong>Informacja.</strong> Brak nowych powiadomień
 permissions:
   you_made_changes: You have made changes to the permissions on this page.
   apply_recursively: Apply these changes recursively on all child pages
@@ -77,7 +77,7 @@ permissions:
   role_name: Role name
 errors:
   oauth:
-    invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.
+    invalid: Nie możesz zalogować się do Google OAuth, twoja domena jest prawdopodobnie niedozwolona.
 kuma_admin:
   flash_type:
     success: Success
@@ -88,9 +88,9 @@ kuma_admin:
   dashboard:
     configuration:
       title:
-        label: Title
+        label: Tytul
       content:
-        label: Content (raw html)
+        label: Zawartość (raw html)
   edit:
     flash:
       success: The welcome page has been edited!
@@ -107,7 +107,7 @@ kuma_admin:
       drop_unrecognized: Could not recognize what you dropped!
   login:
     forgot_password: Forgot my password
-    invalid_credentials: Wrong password or email
+    invalid_credentials: Błędne hasło lub email
 kuma_js:
   auto_collapse:
     more_button_label: More
