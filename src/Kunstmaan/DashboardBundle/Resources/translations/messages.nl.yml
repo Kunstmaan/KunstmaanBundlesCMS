@@ -20,11 +20,11 @@ dashboard:
     setup:
       goals:
         disable: Disable goals
-      title: Setup your Google Analytics dashboard widget
-      content: "To learn how to setup the Google Analytics widget, please refer to"
+      title: Instellen van uw Google Analytics-dashboard-widget
+      content: "Om te leren hoe de Google Analytics widget werkt, verwijzen we u door naar"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
       docs: the documentation
-      redirect: "This is your redirect URI:"
+      redirect: "Dit is uw redirect URI:"
       refresh: "Once everything is set up, refresh this page."
       connect: Connect your Google Account
       confirm: Connect now
@@ -35,7 +35,7 @@ dashboard:
       property:
         title: Select a website to track
         select: Select a website..
-        content: Select a domain registered in your Google Analytics account.
+        content: Selecteer een domein geregistreerd in uw Google Analytics-account.
       account:
         title: Select an account
         select: Select an account..
@@ -43,13 +43,13 @@ dashboard:
       back: Go to dashboard
       segment:
         add: Add segment
-        info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
+        info: 'Om segmenten aan te maken kan u segment IDs gebruiken (en deze ook combinereren), of kan u eigen queries schrijven. Google biedt voorgedefinieerde segment ID''s  (zie hieronder), en u kan er zelf ook toevoegen d.m.v. de Google Segment Builder tool in Google Analytics. Voor documentatie over hoe je je eigen segment queries te maken, klikt u'
         here: here
         own: Own segments
         builtin: Built-in segments
       segments: Segment setup
       accounts: Account setup
     reset:
-      property: Change Google Analytics link
+      property: Google Analytics link ' wijzigen '
     last_update: "Last update:"
     unavailable: No data available, please click this update button.
