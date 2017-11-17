@@ -93,12 +93,12 @@ kuma_form:
         ip_address: IP address
 formsubmissions:
   index:
-    title: Form pages with submissions
+    title: Pagine con Modulo d'invio
   menu:
-    title: Form submissions
+    title: Invii
   list:
-    title: Form submissions for page
+    title: Moduli d'invio per pagina
   edit:
-    title: Form submission for page
+    title: Modulo d'invio per pagina
 subaction:
-  formsubmissions: "Submissions"
+  formsubmissions: "Invii"
