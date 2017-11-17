@@ -1,171 +1,171 @@
 ---
 subaction:
-  versions: "Wersje"
+  versions: "Versions"
 action:
-  saveasdraft: "Zapisz jako szkic"
-  recopyfromlanguage: "Skopiuj z innego języka"
-  exportpagetemplate: "Eksportuj szablon strony"
-  publish: "Opublikuj"
-  unpublish: "Cofnij publikację"
-  preview: "Podgląd"
-  save: "Zapisz"
-  delete: "Usuń"
-  addsubpage: "Dodaj podstronę"
-  duplicate: "Powielaj"
+  saveasdraft: "Save as draft"
+  recopyfromlanguage: "Copy content from other language"
+  exportpagetemplate: "Export pagetemplate"
+  publish: "Publish"
+  unpublish: "Unpublish"
+  preview: "Preview"
+  save: "Save"
+  delete: "Delete"
+  addsubpage: "Add subpage"
+  duplicate: "Duplicate"
 modal:
-  sourcelanguage: "Język źródłowy"
+  sourcelanguage: "Source language"
 pages:
-  copynotavailable: "Przetłumacz najpierw stronę bazową"
+  copynotavailable: "Please translate the parent page first"
 kuma_node:
   form:
     controller_action:
       title:
-        label: Tytuł
+        label: Title
     menu_tab:
       hidden_from_menu:
-        label: Ukryj w menu
+        label: Hidden from menu
       internal_name:
-        label: Nazwa wewnętrzna
+        label: Internal name
     menu_tab_translation:
       slug:
-        label: Przyjazny link
+        label: Slug
       weight:
-        label: Priorytet
-        title: Do sortowania stron
+        label: Weight
+        title: Used to reorder the pages.
     page:
       title:
-        label: Tytuł w menu
+        label: Navigation title
       page_title:
-        label: Tytuł strony
-        info_text: Używany jako nagłówke w konkretnej stronie.
+        label: Page title
+        info_text: Used as title inside the page.
   status:
-    "will_be_publish_at.%date%.raw": Strona zostanie opublikowana w %date%
-    "will_be_unpublish_at.%date%.raw": Strona zostanie odpubliczniona w %date%
+    "will_be_publish_at.%date%.raw": This page will be published at %date%
+    "will_be_unpublish_at.%date%.raw": This page will be unpublished at %date%
     button:
-      schedulle_cancel: Anuluj
-    "offline_draft.%public_url%.raw": Offline / Wersja robocza (Przejdź do <a href="%public_url%">wersja publiczna</a>)
-    online_public.raw: Online / Wersja publiczna
+      schedulle_cancel: Cancel
+    "offline_draft.%public_url%.raw": Offline / Draft version (Go to <a href="%public_url%">public version</a>)
+    online_public.raw: Online / Public version
     offline.raw: Offline
-    "go_to_draft_version.%url%.raw": (Przejdź do <a href="%url%">wersja robocza</a>)
+    "go_to_draft_version.%url%.raw": (Go to <a href="%url%">draft version</a>)
   admin:
     publish:
       flash:
-        success_published: Strona została opublikowana
-        success_scheduled: Publikowanie strony zostało zaplanowane
+        success_published: The page has been published
+        success_scheduled: Publishing of the page has been scheduled
     unpublish:
       flash:
-        success_unpublished: Strona została odpublikowana
-        success_scheduled: Odpublikowanie zostało zaplanowane
+        success_unpublished: The page has been unpublished
+        success_scheduled: Unpublishing of the page has been scheduled
     unschedule:
       flash:
-        success: Planowanie zostało anulowane
+        success: The scheduling has been canceled
     delete:
       flash:
-        success: Strona usunięta!
+        success: The page is deleted!
     duplicate:
       flash:
-        success: Strona została zduplikowana!
+        success: The page has been duplicated!
     revert:
       flash:
-        success: Zawartośc strony została przywrócona
+        success: The page contents has been reverted
     edit:
       flash:
-        success: Strona została zmodyfikowana
-        locked: Strona jest aktualnie edytowana przez %users%
-        locked_success: Automatyczna kopia zapasowa została utworzona ponieważ inny użytkownik również modyfikuje tą stronę
+        success: The page has been edited
+        locked: The page is currently being edited by %users%
+        locked_success: An automatic backup has been created because the page is being edited by another user
     new_page:
       title:
-        default: Nowa strona
+        default: New page
     list:
       header:
-        title: Tytuł
-        created_at: Utworzono
-        updated_at: Zaktualizowano
+        title: Title
+        created_at: Created At
+        updated_at: Updated At
         online: Online
       filter:
-        title: Tytuł
-        created_at: Utworzono
-        updated_at: Zaktualizowano
+        title: Title
+        created_at: Created At
+        updated_at: Updated At
         online: Online
       online: (Online)
       offline: (Offline)
-      additional_title: Ta lista zawiera wszystkie strony, posortowane wg. ostatniej aktualizacji
+      additional_title: This list contains all the pages, chronologically ordered by updated date.
   tab:
     properties:
-      title: Właściwości
+      title: Properties
     menu:
       title: Menu
     permissions:
-      title: Uprawnienia
+      title: Permissions
     searcher:
-      title: Wyszukiwarka
+      title: Searcher
   modal:
     add_homepage:
-      h: Dodaj stronę główną
+      h: Add homepage
       form:
         title:
-          label: Tytuł
+          label: Title
         type:
-          label: Typ
+          label: Type
         add:
-          label: Dodaj
+          label: Add
         cancel:
-          label: Anuluj
+          label: Cancel
     unpublish:
-      title: Cofnij publikację
-      body: Czy na pewno chcesz cofnąć publikację? Strona zostanie wyłączona!
+      title: Unpublish
+      body: Are you sure you want to unpublish this page? If you do this, the page will be offline!
       later:
-        label: Cofnij publikację późnije
-        button: Cofnij publikację poźniej
-        cancel: Anuluj
+        label: Unpublish later
+        button: Unpublish later
+        cancel: Cancel
       now:
-        button: Cofnij publikacje
-        cancel: Anuluj
+        button: Unpublish
+        cancel: Cancel
     publish:
-      title: Publikuj
-      body: Czy na pewno chcesz opublikować tą stronę?
+      title: Publish
+      body: Are you sure you want to publish this page? If you do this, the page will be online!
       later:
-        label: Publikuj później
-        button: Publikuj później
-        cancel: Anuluj
+        label: Publish later
+        button: Publish later
+        cancel: Cancel
       now:
-        button: Publikuj
-        cancel: Anuluj
+        button: Publish
+        cancel: Cancel
     versions:
-      title: Wersja
+      title: Versions
       table:
-        type: Typ
-        last_modified: Ostatnia modyfikacja
-        user: Użytkownik
-        actions: Akcje
+        type: Type
+        last_modified: Last modified
+        user: User
+        actions: Actions
       actions:
-        preview: Podgląd
-        revert: Przywróć
+        preview: Preview
+        revert: Revert
     add_subpage:
-      title: Dodaj podstronę
+      title: Add subpage
       label:
-        title: Tytuł
-        type: Typ
+        title: Title
+        type: Type
       button:
-        add: Dodaj
-        cancel: Anuluj
+        add: Add
+        cancel: Cancel
     delete_page:
-      'title.%page%': Usuń stornę '%page%'
-      'body.%page%': To spowoduje usunięcie stron z wszystkich języków! Czy na pewno chcesz to usunąć?
+      'title.%page%': Delete page '%page%'
+      'body.%page%': This will remove the page completely in all languages! Are you really sure about this?
       button:
-        delete: Usuń
-        cancel: Anuluj
+        delete: Delete
+        cancel: Cancel
     duplicate_page:
-      'title.%page%': Duplikuj stronę '%page%'
+      'title.%page%': Duplicate page '%page%'
       label:
-        new_title: Nowy tytuł
+        new_title: New title
       button:
-        duplicate: Duplikuj
-        cancel: Anuluj
+        duplicate: Duplicate
+        cancel: Cancel
     recopyfromlanguage:
       button:
-        copy: Kopiuj
-        cancel: Anuluj
+        copy: Copy
+        cancel: Cancel
     export_pagetemplate:
       button:
-        title: Eksportuj szablon strony
+        title: Export pagetemplate
