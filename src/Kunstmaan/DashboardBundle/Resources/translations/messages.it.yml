@@ -4,52 +4,52 @@ form:
 dashboard:
   ga:
     tab:
-      today: Oggi
-      yesterday: Ieri
-      last_7_days: Ultimi 7 giorni
-      last_30_days: Ultimi 30 giorni
-      last_12_months: Ultimi 12 mesi
-      year_to_date: Da inizio anno
+      today: Today
+      yesterday: Yesterday
+      last_7_days: Last 7 days
+      last_30_days: Last 30 days
+      last_12_months: Last 12 months
+      year_to_date: Year to date
     chart:
-      users: Utenti
-      pct_new_sessions: "% Nuove Sessioni"
-      sessions: Sessioni
-      pageviews: Visualizzazioni Pagina
-      avg_pages_p_session: Pagine / Sessione
-      avg_session_duration: Durata Media Sessione
+      users: Users
+      pct_new_sessions: "% New Sessions"
+      sessions: Sessions
+      pageviews: Pageviews
+      avg_pages_p_session: Pages / Session
+      avg_session_duration: Avg. Session Duration
     setup:
       goals:
-        disable: Disattiva obiettivi
-      title: Configura il tuo widget Google Analytics in dashboard
-      content: "Per imparare come configurare il widget Google Analytics , fai riferimento"
+        disable: Disable goals
+      title: Setup your Google Analytics dashboard widget
+      content: "To learn how to setup the Google Analytics widget, please refer to"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
-      docs: alla documentazione
-      redirect: "Questo è il tuo redirect URI:"
-      refresh: "Quando tutto è stato configurato, aggiorna questa pagina."
-      connect: Collega il tuo Account Google
-      confirm: Collega ora
+      docs: the documentation
+      redirect: "This is your redirect URI:"
+      refresh: "Once everything is set up, refresh this page."
+      connect: Connect your Google Account
+      confirm: Connect now
       profile:
-        title: Seleziona un profilo
-        select: Seleziona un profilo..
-        content: Seleziona un profilo per il sito web selezionato
+        title: Select a profile
+        select: Select a profile..
+        content: Select a profile for the selected website
       property:
-        title: Seleziona un sito web da tenerne traccia
-        select: Seleziona un sito web..
-        content: Seleziona un dominio registrato nel tuo account Google Analytics.
+        title: Select a website to track
+        select: Select a website..
+        content: Select a domain registered in your Google Analytics account.
       account:
-        title: Seleziona un account
-        select: Seleziona un account..
-      link: Configura dashboard
-      back: Vai alla dashboard
+        title: Select an account
+        select: Select an account..
+      link: Setup dashboard
+      back: Go to dashboard
       segment:
-        add: Aggiungi segmento
-        info: 'Per creare segmenti, puoi usare i segment ID (e anche combinarli), o scrivere le tue query. Google fornisce segment ID predefiniti (di seguito elencati), e puoi creare i tuoi tramite lo strumento Google Segment Builder in Google Analytics. Per la documentazione su come creare le tue query, clicca'
-        here: qui
-        own: Tuoi segmenti
-        builtin: Segmenti predefiniti
-      segments: Configurazione segmento
-      accounts: Configurazione account
+        add: Add segment
+        info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
+        here: here
+        own: Own segments
+        builtin: Built-in segments
+      segments: Segment setup
+      accounts: Account setup
     reset:
-      property: Cambia il link Google Analytics
-    last_update: "Ultimo aggiornamento:"
-    unavailable: Dati non disponibili, clicca il pulsante aggiorna.
+      property: Change Google Analytics link
+    last_update: "Last update:"
+    unavailable: No data available, please click this update button.
