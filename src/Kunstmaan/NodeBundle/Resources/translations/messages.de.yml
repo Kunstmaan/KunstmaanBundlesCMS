@@ -1,16 +1,16 @@
 ---
 subaction:
-  versions: "Versions"
+  versions: "Versionen"
 action:
-  saveasdraft: "Save as draft"
-  recopyfromlanguage: "Copy content from other language"
+  saveasdraft: "Entwurf Speichern"
+  recopyfromlanguage: "Inhalte kopieren von anderen Sprach"
   exportpagetemplate: "Export pagetemplate"
-  publish: "Publish"
+  publish: "Publizieren"
   unpublish: "Depublizieren"
-  preview: "Preview"
-  save: "Save"
-  delete: "Delete"
-  addsubpage: "Add subpage"
+  preview: "Vorschau"
+  save: "Speichern"
+  delete: "Löschen"
+  addsubpage: "Unterseite Erstellen"
   duplicate: "Duplicate"
 modal:
   sourcelanguage: "Source language"
