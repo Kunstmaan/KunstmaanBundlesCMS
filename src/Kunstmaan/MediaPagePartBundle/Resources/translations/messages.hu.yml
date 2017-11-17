@@ -1,15 +1,15 @@
 ---
 mediapagepart:
   download:
-    choosefile: 'Choose file'
+    choosefile: 'Fájl kiválasztása'
   image:
-    choosefile: 'Choose file'
-    alttext: 'Alternative text'
+    choosefile: 'Fájl kiválasztása'
+    alttext: 'Kép hiánya esetén megjelenítendő szöveg'
     link: 'Ide linkkeljen a kép'
     openinnewwindow: 'Új ablakban nyíljon meg'
   slide:
     choose: 'Slide oldalelem'
   video:
-    choose: 'Choose video'
+    choose: 'Videó oldalelem'
   audio:
-    choose: 'Choose audio'
+    choose: 'Hanganyag oldalelem'
