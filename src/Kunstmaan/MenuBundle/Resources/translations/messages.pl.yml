@@ -1,36 +1,36 @@
 ---
 kuma_menu:
   menus:
-    title: Menus
+    title: Moduł menu
   menu:
     adminlist:
       field:
-        name: Name
+        name: Nazwa
       filter:
-        name: Name
+        name: Nazwa
       action:
-        manage: Manage
+        manage: Zarządzaj
   menu_item:
     adminlist:
       breadcrumb:
-        modules: Modules
-        menu: Menu's
-        menu_items: Menu items
-      title: Menu items for %name% and language %locale%
+        modules: Moduły
+        menu: Moduł menu
+        menu_items: Menu
+      title: Menu %name% dla języka %locale%
       online: (Online)
       offline: (Offline)
       field:
-        title: Title
+        title: Tytuł
         online: Online
-        type: Type
+        type: Typ
         url: Adres url
-        new_window: New window
+        new_window: Nowe okno
   form:
-    parent: Parent menu item
+    parent: Menu rodzic
     parent_placeholder: Wbierz menu rodzica...
-    type: Type
-    node_translation: Link page
+    type: Typ
+    node_translation: Link do strony
     node_translation_placeholder: Wybierz strone do której linkować...
-    title: Title
+    title: Tytuł
     url: Adres url
-    new_window: New window
+    new_window: Nowe okno
