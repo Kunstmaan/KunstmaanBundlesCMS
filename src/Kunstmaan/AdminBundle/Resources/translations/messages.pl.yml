@@ -1,90 +1,90 @@
 ---
 pages:
-  title: Pages
-  parts: PageParts
-  draft: Draft
-  pagenottranslated: This page is not translated
-  copyfrom: Copy from language
-  createemptypage: Create as an empty page
-  movingconfirmation: You are moving "%title%" to "%target%", are you sure?
+  title: Strony
+  parts: Części strony
+  draft: Szkic
+  pagenottranslated: Ta strona nie jest przetłumaczona
+  copyfrom: Kopiuj z języka
+  createemptypage: Utwórz jako pustą stronę
+  movingconfirmation: Przenosisz "%title%" do "%target%", jesteś pewien?
 modules:
-  title: Modules
+  title: Moduły
 settings:
-  title: Settings
-  maintanance: Maintenance
-  scheduled: Scheduled Jobs
+  title: Ustawienia
+  maintanance: Utrzymanie
+  scheduled: Zaplanowane zadania
   version:
-    bundle: Bundle versions
-    composer_lock_not_found: No composer.lock file found in your project root
+    bundle: Wersje modułów
+    composer_lock_not_found: Brak pliku composer.lock w katalogu głównym
     error_parsing_composer: Błąd przetwarzania pliku composer.lock, format json nieprawidłowy
-    error: Something went wrong while fetching the version information. Please try again later.
+    error: Wystąpił błąd podczas pobierania wersji informacji. Spróbuj jeszcze raz później.
     moreinfo: Aby zaktualizować moduły, użyj komendy composer update. Możliwe, że będziesz musiał zaktualizować pozostałe moduły w przypadku konfliktów
-    uptodate: is up-to-date
-    toupdate: can be updated to
-    unknown: version information unknown
+    uptodate: jest aktualny
+    toupdate: może być aktualizowany do
+    unknown: wersji nieznanych informacji
 tools:
-  title: Tools
+  title: Narzędzia
   clear_frontend_cache: Wyczyść frontend cache
   clear_backend_cache: Wyczyść backend cache
-  clear_all_caches: Clear all caches
-  shutdown: Shutdown
+  clear_all_caches: Wyczyść wszystkie cache
+  shutdown: Zamknij
 search:
-  title: Search
+  title: Szukaj
 form:
-  cancel: Cancel
-  delete: Delete
-  deletesure: Are you sure you want to delete this?
-  edit: Edit
-  add: Add New
-  'add.%subject%': 'Add New %subject%'
-  save: Save
-  publish: Publish
-  unpublish: Unpublish
-  saveasdraft: Save as draft
-  name: Name
-  type: Type
-  error: Error
-  warning: Warning
-  headsup: Heads up
+  cancel: Anuluj
+  delete: Usuń
+  deletesure: Jesteś pewien, że chcesz usunąć ten element?
+  edit: Edytuj
+  add: Dodaj
+  'add.%subject%': 'Utwórz nowy %subject%'
+  save: Zapisz
+  publish: Opublikuj
+  unpublish: Cofnij publikację
+  saveasdraft: Zapisz w postaci szkicu
+  name: Nazwa
+  type: Typ
+  error: Błąd
+  warning: Ostrzeżenie
+  headsup: Ostrzeżenie
   forgot:
-    password: Forgot my password.
-  permissions: Permissions
-  properties: Properties
-  createdat: Created At
-  updatedat: Updated At
-  actions: Actions
-  addfilter: Add filter
+    password: Nie pamiętam hasła.
+  permissions: Uprawnienia
+  properties: Właściwości
+  createdat: Utworzono
+  updatedat: Zaktualizowano
+  actions: Akcje
+  addfilter: Dodaj filtr
   choosetypefilter: Filtruj wg.
-  versions: Versions
+  versions: Wersje
   button:
     dropdown:
-      more: More
+      more: Więcej
     filter:
-      clear: Clear
-      filter: Filter
+      clear: Wyczyść
+      filter: Filtruj
 omnext:
-  home: Home
-  title: Welcome!
-  welcome: Welcome.
+  home: Strona główna
+  title: Witamy!
+  welcome: Witamy.
   information: <strong>Informacja.</strong> Brak nowych powiadomień
 permissions:
-  you_made_changes: You have made changes to the permissions on this page.
-  apply_recursively: Apply these changes recursively on all child pages
-  review_changes: Review your changes
-  changes: Permission changes
-  permissions_added: 'The following permissions will be <strong>added</strong>:'
-  permissions_removed: 'The following permissions will be <strong>removed</strong>:'
-  role_name: Role name
+  you_made_changes: Wprowadziłeś zmiany uprawnień na tej stronie.
+  apply_recursively: Zastosuj zmiany dla wszystkich podrzędnych stron
+  review_changes: Przejrzyj wprowadzone zmiany
+  changes: Zmiany w pozwoleniach
+  permissions_added: 'Następujące uprawnienia zostaną <strong>dodane</strong>:'
+  permissions_removed: 'Następujące uprawnienia zostaną <strong>usunięte</strong>:'
+  role_name: Nazwa roli
 errors:
   oauth:
     invalid: Nie możesz zalogować się do Google OAuth, twoja domena jest prawdopodobnie niedozwolona.
 kuma_admin:
   flash_type:
-    success: Success
-    warning: Warning
-    error: Error
-    info: Info
-    danger: Danger
+    success: Sukces
+    warning: Ostrzeżenie
+    error: Błąd
+    info: Informacja
+    danger: Uwaga
   dashboard:
     configuration:
       title:
@@ -93,21 +93,21 @@ kuma_admin:
         label: Zawartość (raw html)
   edit:
     flash:
-      success: The welcome page has been edited!
+      success: Strona powitalna została zmodyfikowana!
   password_check:
     flash:
-      error: Your password has not yet been changed
+      error: Twoje hasło nie zostało zmienione
   ga_ajax_controller:
     flash:
-      success: Succesfully saved!
+      success: Pomyślnie zapisano!
   media:
     flash:
-      'deleted_success.%medianame%': Entry '%medianame%' has been deleted!
-      drop_success: File was uploaded successfuly!
-      drop_unrecognized: Could not recognize what you dropped!
+      'deleted_success.%medianame%': Wpis '%medianame%' został usunięty!
+      drop_success: Pomyślnie wgrano plik!
+      drop_unrecognized: Nieznany format!
   login:
-    forgot_password: Forgot my password
+    forgot_password: Zapomniałeś hasła
     invalid_credentials: Błędne hasło lub email
 kuma_js:
   auto_collapse:
-    more_button_label: More
+    more_button_label: Więcej
