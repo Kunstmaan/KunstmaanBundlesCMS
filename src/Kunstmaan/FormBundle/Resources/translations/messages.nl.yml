@@ -3,60 +3,60 @@ kuma_form:
   form:
     page_admin:
       title:
-        label: Title
+        label: Titel
       thanks:
-        label: Thanks
+        label: Dank u
       subject:
-        label: Subject
+        label: Onderwerp
       from_email:
-        label: From e-mail
+        label: Van e-mail
       to_email:
-        label: To e-mail
+        label: Aan e-mail
     checkbox_page_part:
       label:
         label: Label
       required:
-        label: Required
+        label: Verplicht
       errormessage_required:
-        label: Error message required
+        label: Foutmelding verplicht
     choice_page_part:
       label:
         label: Label
       required:
-        label: Required
+        label: Verplicht
       errormessage_required:
-        label: Error message required
+        label: Foutmelding verplicht
       expanded:
-        label: Expanded
+        label: Uitgeklapt
       multiple:
-        label: Multiple
+        label: Meerdere
       choices:
-        label: Choices
+        label: Keuzes
       empty_value:
-        label: Empty value
+        label: Lege waarde
     email_page_part:
       label:
         label: Label
       required:
-        label: Required
+        label: Verplicht
       errorMessageRequired:
-        label: Error message required
+        label: Foutmelding verplicht
       errorMessageInvalid:
         label: Error message invalid
     file_upload_page_part:
       label:
         label: Label
       required:
-        label: Required
+        label: Verplicht
       errormessage_required:
-        label: Error message required
+        label: Foutmelding verplicht
     multi_line_text_page_part:
       label:
         label: Label
       required:
-        label: Required
+        label: Verplicht
       errormessage_required:
-        label: Error message required
+        label: Foutmelding verplicht
       regex:
         label: regex
       errormessage_regex:
@@ -65,9 +65,9 @@ kuma_form:
       label:
         label: Label
       required:
-        label: Required
+        label: Verplicht
       errormessage_required:
-        label: Error message required
+        label: Foutmelding verplicht
       regex:
         label: regex
       errormessage_regex:
@@ -76,29 +76,29 @@ kuma_form:
       label:
         label: Label
   button:
-    export_to: Export to
+    export_to: Exporteer naar
   list:
     header:
-      title: Title
-      language: Language
+      title: Titel
+      language: Taal
       path: Form path
     filter:
-      title: Title
+      title: Titel
       online: Online
   submission:
     list:
       header:
-        created: Date
-        language: Language
+        created: Datum
+        language: Taal
         ip_address: IP address
 formsubmissions:
   index:
-    title: Form pages with submissions
+    title: Formulierpagina's met inzendingen
   menu:
-    title: Form submissions
+    title: Formulier inzendingen
   list:
-    title: Form submissions for page
+    title: Formulier inzendingen voor pagina
   edit:
-    title: Form submission for page
+    title: Formulier inzendingen voor pagina
 subaction:
-  formsubmissions: "Submissions"
+  formsubmissions: "Inzendingen"
