@@ -1,14 +1,14 @@
 ---
 seo:
   robots:
-    title: Robots
-    tip: 'Tip:'
+    title: Roboty
+    tip: 'Rada:'
     warning: To są domyślne ustawienia dla pliku robots.txt, indywidualny plik dla projektu nie został utworzony
-    moreinfo: You can find more information about the Kunstmaan robots.txt at our
+    moreinfo: Więcej informacji pliku robots.txt możesz znaleźć w
   action:
-    save: Save
-    cancel: Cancel
-    preview: Preview
+    save: Zapisz
+    cancel: Anuluj
+    preview: Podgląd
   form:
     og:
       title: OG Tytuł
@@ -21,38 +21,38 @@ seo:
         publisher: OG Wydawca
         section: OG Sekcja artykułu
     twitter:
-      title: Title
+      title: Tytuł
       title_info_text: The title of your twitter card. Falls back to SEO Meta title
-      description: Description
+      description: Opis
       description_info_text: The description of your twitter card. Falls back to SEO Meta description
-      sitehandle: Site Handle
+      sitehandle: Witryna
       sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
-      creatorhandle: Creator Handle
+      creatorhandle: Twórca
       creatorhandle_info_text: Twitter handle of your page publisher.
-      image: Image
+      image: Zdjęcie
     robots:
-      noindex: No index
+      noindex: Blokuj indeksowanie
       nofollow: Blokuj korzystanie z linków dla GoogleBota
-      noarchive: No archive
-      nosnippet: No snippet
-      notranslate: No translate
-      noimageindex: No image index
+      noarchive: Blokuj archiwizację
+      nosnippet: Blokuj wyświetlanie krótkiego opisu
+      notranslate: Blokuj tłumaczenie
+      noimageindex: Blokuj indeksowanie zdjęć
     seo:
       meta_title:
-        label: Title
+        label: Tytuł
         info_text: Tytuł jest częśto wykorzystywany przez wyszukiwarki
       meta_description:
-        label: Meta description
+        label: Opis meta
       meta_robots:
-        label: Meta robots
-        placeholder: Choose robot tags
+        label: Meta roboty
+        placeholder: Wybierz tagi dla wyszukiwarek
       extra_metadata:
-        label: Extra metadata
+        label: Dodatkowe meta dane
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter Cards
+    twittercards: Twitter
   tab:
     seo:
       title: SEO
     social:
-      title: Social
+      title: Społeczności
