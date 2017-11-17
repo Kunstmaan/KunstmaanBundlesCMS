@@ -1,55 +1,55 @@
 ---
 form:
-  back: 'Terug'
+  back: 'Back'
 dashboard:
   ga:
     tab:
-      today: Vandaag
-      yesterday: Gisteren
-      last_7_days: Laatste 7 dagen
-      last_30_days: Laatste 30 dagen
-      last_12_months: Afgelopen 12 maanden
-      year_to_date: Jaar naar datum
+      today: Today
+      yesterday: Yesterday
+      last_7_days: Last 7 days
+      last_30_days: Last 30 days
+      last_12_months: Last 12 months
+      year_to_date: Year to date
     chart:
-      users: Gebruikers
-      pct_new_sessions: "% Nieuwe sessies"
-      sessions: Sessies
-      pageviews: Pagina weergaven
-      avg_pages_p_session: Pagina's / Sessies
-      avg_session_duration: Gemiddelde sessie duur
+      users: Users
+      pct_new_sessions: "% New Sessions"
+      sessions: Sessions
+      pageviews: Pageviews
+      avg_pages_p_session: Pages / Session
+      avg_session_duration: Avg. Session Duration
     setup:
       goals:
-        disable: Doelen uitschakelen
-      title: Instellen van uw Google Analytics-dashboard-widget
-      content: "Om te leren hoe de Google Analytics widget werkt, verwijzen we u door naar"
+        disable: Disable goals
+      title: Setup your Google Analytics dashboard widget
+      content: "To learn how to setup the Google Analytics widget, please refer to"
       docs_url: "http://bundles.kunstmaan.be/getting-started/advanced/setting-up-the-google-analytics-dashboard"
-      docs: de documentatie
-      redirect: "Dit is uw redirect URI:"
-      refresh: "Zodra alles is ingesteld, vernieuw deze pagina."
-      connect: Uw Google-Account koppelen
-      confirm: Verbind nu
+      docs: the documentation
+      redirect: "This is your redirect URI:"
+      refresh: "Once everything is set up, refresh this page."
+      connect: Connect your Google Account
+      confirm: Connect now
       profile:
-        title: Selecteer een profiel
-        select: Selecteer een profiel..
-        content: Selecteer een profiel voor de geselecteerde website
+        title: Select a profile
+        select: Select a profile..
+        content: Select a profile for the selected website
       property:
-        title: Selecteer een website waarvan u de data wilt capteren
-        select: Selecteer een website..
-        content: Selecteer een domein geregistreerd in uw Google Analytics-account.
+        title: Select a website to track
+        select: Select a website..
+        content: Select a domain registered in your Google Analytics account.
       account:
-        title: Selecteer een account
-        select: Selecteer een account..
+        title: Select an account
+        select: Select an account..
       link: Setup dashboard
-      back: Ga naar het dashboard
+      back: Go to dashboard
       segment:
-        add: Segment toevoegen
-        info: 'Om segmenten aan te maken kan u segment IDs gebruiken (en deze ook combinereren), of kan u eigen queries schrijven. Google biedt voorgedefinieerde segment ID''s  (zie hieronder), en u kan er zelf ook toevoegen d.m.v. de Google Segment Builder tool in Google Analytics. Voor documentatie over hoe je je eigen segment queries te maken, klikt u'
-        here: hier
-        own: Eigen segmenten
-        builtin: Ingebouwde segmenten
-      segments: Configureer segment
-      accounts: Accountconfiguratie
+        add: Add segment
+        info: 'To create segments, you can use segment IDs (and also combine them), or write your own queries. Google provides predefined segment IDs (listed below), and you can create your own with the Google Segment Builder tool in Google Analytics. For documentation on how to create your own segment queries, click'
+        here: here
+        own: Own segments
+        builtin: Built-in segments
+      segments: Segment setup
+      accounts: Account setup
     reset:
-      property: Google Analytics link ' wijzigen '
-    last_update: "Laatste wijziging:"
-    unavailable: Geen gegevens beschikbaar, gelieve op de update knop te drukken.
+      property: Change Google Analytics link
+    last_update: "Last update:"
+    unavailable: No data available, please click this update button.
