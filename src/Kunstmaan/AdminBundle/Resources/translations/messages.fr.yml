@@ -12,11 +12,11 @@ modules:
 settings:
   title: Settings
   maintanance: Maintenance
-  scheduled: Scheduled Jobs
+  scheduled: Tâches plannifiées
   version:
-    bundle: Bundle versions
-    composer_lock_not_found: No composer.lock file found in your project root
-    error_parsing_composer: Error parsing composer.lock file, no valid json
+    bundle: Versions des Bundles
+    composer_lock_not_found: Pas de composer.lock trouvé dans le root du projet
+    error_parsing_composer: Erreur dans composer.lock, json pas valide
     error: Something went wrong while fetching the version information. Please try again later.
     moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
     uptodate: is up-to-date
@@ -24,8 +24,8 @@ settings:
     unknown: version information unknown
 tools:
   title: Tools
-  clear_frontend_cache: Clear frontend cache
-  clear_backend_cache: Clear backend cache
+  clear_frontend_cache: Vider le cache frontend
+  clear_backend_cache: Vider le cache backend
   clear_all_caches: Clear all caches
   shutdown: Shutdown
 search:
