@@ -1,67 +1,67 @@
 ---
 subaction:
-  versions: "Versions"
+  versions: "Wersje"
 action:
-  saveasdraft: "Save as draft"
-  recopyfromlanguage: "Copy content from other language"
-  exportpagetemplate: "Export pagetemplate"
-  publish: "Publish"
-  unpublish: "Unpublish"
-  preview: "Preview"
-  save: "Save"
-  delete: "Delete"
-  addsubpage: "Add subpage"
-  duplicate: "Duplicate"
+  saveasdraft: "Zapisz jako szkic"
+  recopyfromlanguage: "Skopiuj z innego języka"
+  exportpagetemplate: "Eksportuj szablon strony"
+  publish: "Opublikuj"
+  unpublish: "Cofnij publikację"
+  preview: "Podgląd"
+  save: "Zapisz"
+  delete: "Usuń"
+  addsubpage: "Dodaj podstronę"
+  duplicate: "Powielaj"
 modal:
-  sourcelanguage: "Source language"
+  sourcelanguage: "Język źródłowy"
 pages:
-  copynotavailable: "Please translate the parent page first"
+  copynotavailable: "Przetłumacz najpierw stronę bazową"
 kuma_node:
   form:
     controller_action:
       title:
-        label: Title
+        label: Tytuł
     menu_tab:
       hidden_from_menu:
-        label: Hidden from menu
+        label: Ukryj w menu
       internal_name:
-        label: Internal name
+        label: Nazwa wewnętrzna
     menu_tab_translation:
       slug:
-        label: Slug
+        label: Przyjazny link
       weight:
-        label: Weight
+        label: Priorytet
         title: Do sortowania stron
     page:
       title:
-        label: Navigation title
+        label: Tytuł w menu
       page_title:
-        label: Page title
+        label: Tytuł strony
         info_text: Używany jako nagłówke w konkretnej stronie.
   status:
-    "will_be_publish_at.%date%.raw": This page will be published at %date%
+    "will_be_publish_at.%date%.raw": Strona zostanie opublikowana w %date%
     "will_be_unpublish_at.%date%.raw": Strona zostanie odpubliczniona w %date%
     button:
-      schedulle_cancel: Cancel
-    "offline_draft.%public_url%.raw": Offline / Draft version (Go to <a href="%public_url%">public version</a>)
-    online_public.raw: Online / Public version
+      schedulle_cancel: Anuluj
+    "offline_draft.%public_url%.raw": Offline / Wersja robocza (Przejdź do <a href="%public_url%">wersja publiczna</a>)
+    online_public.raw: Online / Wersja publiczna
     offline.raw: Offline
-    "go_to_draft_version.%url%.raw": (Go to <a href="%url%">draft version</a>)
+    "go_to_draft_version.%url%.raw": (Przejdź do <a href="%url%">wersja robocza</a>)
   admin:
     publish:
       flash:
-        success_published: The page has been published
-        success_scheduled: Publishing of the page has been scheduled
+        success_published: Strona została opublikowana
+        success_scheduled: Publikowanie strony zostało zaplanowane
     unpublish:
       flash:
         success_unpublished: Strona została odpublikowana
         success_scheduled: Odpublikowanie zostało zaplanowane
     unschedule:
       flash:
-        success: The scheduling has been canceled
+        success: Planowanie zostało anulowane
     delete:
       flash:
-        success: The page is deleted!
+        success: Strona usunięta!
     duplicate:
       flash:
         success: Strona została zduplikowana!
@@ -70,102 +70,102 @@ kuma_node:
         success: Zawartośc strony została przywrócona
     edit:
       flash:
-        success: The page has been edited
-        locked: The page is currently being edited by %users%
-        locked_success: An automatic backup has been created because the page is being edited by another user
+        success: Strona została zmodyfikowana
+        locked: Strona jest aktualnie edytowana przez %users%
+        locked_success: Automatyczna kopia zapasowa została utworzona ponieważ inny użytkownik również modyfikuje tą stronę
     new_page:
       title:
-        default: New page
+        default: Nowa strona
     list:
       header:
-        title: Title
-        created_at: Created At
-        updated_at: Updated At
+        title: Tytuł
+        created_at: Utworzono
+        updated_at: Zaktualizowano
         online: Online
       filter:
-        title: Title
-        created_at: Created At
-        updated_at: Updated At
+        title: Tytuł
+        created_at: Utworzono
+        updated_at: Zaktualizowano
         online: Online
       online: (Online)
       offline: (Offline)
       additional_title: Ta lista zawiera wszystkie strony, posortowane wg. ostatniej aktualizacji
   tab:
     properties:
-      title: Properties
+      title: Właściwości
     menu:
       title: Menu
     permissions:
-      title: Permissions
+      title: Uprawnienia
     searcher:
-      title: Searcher
+      title: Wyszukiwarka
   modal:
     add_homepage:
-      h: Add homepage
+      h: Dodaj stronę główną
       form:
         title:
-          label: Title
+          label: Tytuł
         type:
-          label: Type
+          label: Typ
         add:
-          label: Add
+          label: Dodaj
         cancel:
-          label: Cancel
+          label: Anuluj
     unpublish:
-      title: Unpublish
-      body: Are you sure you want to unpublish this page? If you do this, the page will be offline!
+      title: Cofnij publikację
+      body: Czy na pewno chcesz cofnąć publikację? Strona zostanie wyłączona!
       later:
         label: Cofnij publikację późnije
         button: Cofnij publikację poźniej
-        cancel: Cancel
+        cancel: Anuluj
       now:
-        button: Unpublish
-        cancel: Cancel
+        button: Cofnij publikacje
+        cancel: Anuluj
     publish:
-      title: Publish
+      title: Publikuj
       body: Czy na pewno chcesz opublikować tą stronę?
       later:
-        label: Publish later
-        button: Publish later
-        cancel: Cancel
+        label: Publikuj później
+        button: Publikuj później
+        cancel: Anuluj
       now:
-        button: Publish
-        cancel: Cancel
+        button: Publikuj
+        cancel: Anuluj
     versions:
-      title: Versions
+      title: Wersja
       table:
-        type: Type
-        last_modified: Last modified
-        user: User
-        actions: Actions
+        type: Typ
+        last_modified: Ostatnia modyfikacja
+        user: Użytkownik
+        actions: Akcje
       actions:
-        preview: Preview
-        revert: Revert
+        preview: Podgląd
+        revert: Przywróć
     add_subpage:
-      title: Add subpage
+      title: Dodaj podstronę
       label:
-        title: Title
-        type: Type
+        title: Tytuł
+        type: Typ
       button:
-        add: Add
-        cancel: Cancel
+        add: Dodaj
+        cancel: Anuluj
     delete_page:
       'title.%page%': Usuń stornę '%page%'
-      'body.%page%': This will remove the page completely in all languages! Are you really sure about this?
+      'body.%page%': To spowoduje usunięcie stron z wszystkich języków! Czy na pewno chcesz to usunąć?
       button:
-        delete: Delete
-        cancel: Cancel
+        delete: Usuń
+        cancel: Anuluj
     duplicate_page:
-      'title.%page%': Duplicate page '%page%'
+      'title.%page%': Duplikuj stronę '%page%'
       label:
-        new_title: New title
+        new_title: Nowy tytuł
       button:
-        duplicate: Duplicate
-        cancel: Cancel
+        duplicate: Duplikuj
+        cancel: Anuluj
     recopyfromlanguage:
       button:
-        copy: Copy
-        cancel: Cancel
+        copy: Kopiuj
+        cancel: Anuluj
     export_pagetemplate:
       button:
-        title: Export pagetemplate
+        title: Eksportuj szablon strony
