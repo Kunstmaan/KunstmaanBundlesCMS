@@ -1,0 +1,109 @@
+---
+base_path: src/Kunstmaan
+files:
+  -
+    source: /AdminBundle/Resources/translations/messages.en.yml
+    translation: /AdminBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /AdminListBundle/Resources/translations/messages.en.yml
+    translation: /AdminListBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /ArticleBundle/Resources/translations/messages.en.yml
+    translation: /ArticleBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /CacheBundle/Resources/translations/messages.en.yml
+    translation: /CacheBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /ConfigBundle/Resources/translations/messages.en.yml
+    translation: /ConfigBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /DashboardBundle/Resources/translations/messages.en.yml
+    translation: /DashboardBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /FixturesBundle/Resources/translations/messages.en.yml
+    translation: /FixturesBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /FormBundle/Resources/translations/messages.en.yml
+    translation: /FormBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /GeneratorBundle/Resources/translations/messages.en.yml
+    translation: /GeneratorBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /LeadGenerationBundle/Resources/translations/messages.en.yml
+    translation: /LeadGenerationBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /MediaBundle/Resources/translations/messages.en.yml
+    translation: /MediaBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /MediaPagePartBundle/Resources/translations/messages.en.yml
+    translation: /MediaPagePartBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /MenuBundle/Resources/translations/messages.en.yml
+    translation: /MenuBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /MultiDomainBundle/Resources/translations/messages.en.yml
+    translation: /MultiDomainBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /NodeBundle/Resources/translations/messages.en.yml
+    translation: /NodeBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /NodeSearchBundle/Resources/translations/messages.en.yml
+    translation: /NodeSearchBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /PagePartBundle/Resources/translations/messages.en.yml
+    translation: /PagePartBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /RedirectBundle/Resources/translations/messages.en.yml
+    translation: /RedirectBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /SearchBundle/Resources/translations/messages.en.yml
+    translation: /SearchBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /SeoBundle/Resources/translations/messages.en.yml
+    translation: /SeoBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /SitemapBundle/Resources/translations/messages.en.yml
+    translation: /SitemapBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /TaggingBundle/Resources/translations/messages.en.yml
+    translation: /TaggingBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /TranslatorBundle/Resources/translations/messages.en.yml
+    translation: /TranslatorBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /UserManagementBundle/Resources/translations/messages.en.yml
+    translation: /UserManagementBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /UtilitiesBundle/Resources/translations/messages.en.yml
+    translation: /UtilitiesBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+  -
+    source: /VotingBundle/Resources/translations/messages.en.yml
+    translation: /VotingBundle/Resources/translations/messages.%two_letters_code%.yml
+    update_option: update_as_unapproved
+preserve_hierarchy: true
+project_identifier: kunstmaanbundlescms

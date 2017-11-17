@@ -1,2 +1,3 @@
+---
 multi_domain:
-    host_override_active: Nadpisywanie hostów jest aktywne!
+  host_override_active: Nadpisywanie hostów jest aktywne!
