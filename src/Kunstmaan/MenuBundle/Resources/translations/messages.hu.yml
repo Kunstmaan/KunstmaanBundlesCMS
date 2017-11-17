@@ -5,9 +5,9 @@ kuma_menu:
   menu:
     adminlist:
       field:
-        name: Name
+        name: Név
       filter:
-        name: Name
+        name: Név
       action:
         manage: Manage
   menu_item:
@@ -20,11 +20,11 @@ kuma_menu:
       online: (Online)
       offline: (Offline)
       field:
-        title: Title
+        title: Cím
         online: Online
-        type: Type
+        type: Típus
         url: Url
-        new_window: New window
+        new_window: Új ablakban
   form:
     parent: Parent menu item
     parent_placeholder: Select the parent menu item...
