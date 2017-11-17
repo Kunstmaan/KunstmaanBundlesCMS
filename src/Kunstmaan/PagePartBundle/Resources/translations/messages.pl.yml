@@ -5,8 +5,8 @@ pagepart:
     title: 'Title'
   link:
     internal: Internal
-    external: External
-    email: Email
+    external: Zawenętrzny
+    email: Adres email
     choose: 'Choose link'
     openinnewwindow: 'Open in new window'
     text: 'Text'
