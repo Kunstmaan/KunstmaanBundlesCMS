@@ -12,7 +12,7 @@ media:
         title: Incoming!
         text: Drop your files to instantly upload them to this folder.
     bulkupload:
-      addto: Upload files to "%folder%"
+      addto: Carica i files in "%folder%"
     contenttab:
       title: Content
     propertiestab:
@@ -35,10 +35,10 @@ media:
     new: Add media to "%folder%"
   folder:
     addsub:
-      action: Add subfolder
+      action: Aggiungi sottocartella
       action_short: Add
       modal:
-        title: Add subfolder
+        title: Aggiungi sottocartella
         save: Add
       form:
         name: Name
@@ -81,15 +81,15 @@ media:
   bulkupload:
     upload: Upload
     bulkupload: Bulk upload
-    select_files: Select files
+    select_files: Seleleziona i file
     upload_more: Upload more files
     back_to_folder: Back to folder
     upload_finished: The file upload has finished.
-    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
+    not_available: La funzionalità di caricamento multiplo non funzionerà per te. Il tuo browser non ha il supporto Flash, Silverlight o HTML5.
   slide:
-    add: Add Slide
+    add: Aggiungi Slide
     modal:
-      title: Add Slide
+      title: Aggiungi Slide
       save: Add
   video:
     add: Add Video
