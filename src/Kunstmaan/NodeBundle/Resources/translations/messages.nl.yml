@@ -10,7 +10,7 @@ action:
   preview: "Preview"
   save: "Save"
   delete: "Delete"
-  addsubpage: "Add subpage"
+  addsubpage: "Subpagina toevoegen"
   duplicate: "Duplicate"
 modal:
   sourcelanguage: "Source language"
@@ -43,10 +43,10 @@ kuma_node:
     "will_be_unpublish_at.%date%.raw": This page will be unpublished at %date%
     button:
       schedulle_cancel: Cancel
-    "offline_draft.%public_url%.raw": Offline / Draft version (Go to <a href="%public_url%">public version</a>)
+    "offline_draft.%public_url%.raw": Offline / Draft versie (Ga naar <a href="%public_url%">publieke versie</a>)
     online_public.raw: Online / Public version
     offline.raw: Offline
-    "go_to_draft_version.%url%.raw": (Go to <a href="%url%">draft version</a>)
+    "go_to_draft_version.%url%.raw": (Ga naar <a href="%url%">draft versie</a>)
   admin:
     publish:
       flash:
@@ -142,7 +142,7 @@ kuma_node:
         preview: Preview
         revert: Revert
     add_subpage:
-      title: Add subpage
+      title: Subpagina toevoegen
       label:
         title: Title
         type: Type
