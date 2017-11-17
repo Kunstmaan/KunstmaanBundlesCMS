@@ -1,7 +1,7 @@
 ---
 article:
   warning:
-    create_overview_page: You need to create at least one overview page before you can create a %type% page
+    create_overview_page: Létre kell hoznod egy áttekintő oldalt, hogy csinálhass %type% oldalt!
   form:
     date:
       label: Date
@@ -9,7 +9,7 @@ article:
       label: Summary
   modal:
     add:
-      label: Add %type% item to %page%
+      label: '%type% hozzáadása a(z) %page% oldalhoz'
   author:
     list:
       header:
