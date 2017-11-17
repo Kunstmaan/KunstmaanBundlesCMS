@@ -1,13 +1,13 @@
 ---
 redirect:
-  title: Redirects
-  all: All domains
-  origin_info: The URL that you want to redirect, eg. /contest
+  title: Omleidingen
+  all: Alle domeinen
+  origin_info: De URL die u wilt omleiden, bijvoorbeeld. /contest
   target_info: Het adres waar naartoe wordt verwezen, bijv. /en/contests/summer-contest
   form:
     redirect:
       domain:
-        label: Domain
+        label: Domein
       origin:
         label: Origin
       target:
@@ -15,17 +15,17 @@ redirect:
       permanent:
         label: Permanent
       note:
-        label: Note
+        label: Notitie
   adminlist:
     header:
-      domain: Domain
+      domain: Domein
       origin: Origin
       target: Target
       permanent: Permanent?
-      note: Note
+      note: Notitie
     filter:
-      domain: Domain
+      domain: Domein
       origin: Origin
       target: Target
       permanent: Permanent
-      note: Note
+      note: Notitie
