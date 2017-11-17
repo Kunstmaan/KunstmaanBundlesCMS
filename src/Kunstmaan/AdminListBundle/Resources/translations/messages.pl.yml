@@ -1,35 +1,35 @@
 ---
 kuma_admin_list:
   form:
-    export_to: Export to
+    export_to: Eksportuj do
   edit:
     flash:
-      success: The entity has been edited
-      locked: The entity is currently being edited by %user%
+      success: Encje została zmodyfikowana
+      locked: Encja jest aktualnie edytowana przez %user%
   action:
-    view: View
-    edit: Edit
-    delete: Delete
-    move_up: Move up
-    move_down: Move down
+    view: Pokaż
+    edit: Edytuj
+    delete: Usuń
+    move_up: Przesuń w górę
+    move_down: Przesuń w dół
 filter:
   "true": true
   "false": false
-  before: before
-  after: after
-  in: contains
-  notin: doesn't contain
-  eq: equals
-  neq: not equals
-  lt: lower than
-  lte: lower than or equal
-  gt: greater than
-  gte: greater than or equal
-  isnull: empty
-  isnotnull: not empty
-  contains: contains
-  doesnotcontain: doesn't contain
-  equals: equals
-  notequals: not equals
-  startswith: starts with
-  endswith: ends with
+  before: przed
+  after: za
+  in: zawiera
+  notin: nie zawiera
+  eq: równe
+  neq: różne
+  lt: mniejsze niż
+  lte: mniejsze lub równe
+  gt: większe niż
+  gte: większe lub równe niż
+  isnull: puste
+  isnotnull: nie jest puste
+  contains: zawiera
+  doesnotcontain: nie zawiera
+  equals: równe
+  notequals: różne
+  startswith: zaczyna się od
+  endswith: kończy się na
