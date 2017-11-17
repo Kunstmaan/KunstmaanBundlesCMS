@@ -1,31 +1,31 @@
 ---
 redirect:
-  title: Redirects
-  all: All domains
-  origin_info: The URL that you want to redirect, eg. /contest
+  title: Przekierowania
+  all: Wszystkie domeny
+  origin_info: URL, które chcesz przekierować, np. /treść
   target_info: Docelowe URL do przekierowania, np. /en/contests/summer-contest
   form:
     redirect:
       domain:
-        label: Domain
+        label: Domena
       origin:
-        label: Origin
+        label: Pochodzenie
       target:
-        label: Target
+        label: Cel
       permanent:
-        label: Permanent
+        label: Stałe
       note:
-        label: Note
+        label: Notka
   adminlist:
     header:
-      domain: Domain
-      origin: Origin
-      target: Target
-      permanent: Permanent?
-      note: Note
+      domain: Domena
+      origin: Pochodzenie
+      target: Cel
+      permanent: Stałe?
+      note: Notka
     filter:
-      domain: Domain
-      origin: Origin
-      target: Target
-      permanent: Permanent
-      note: Note
+      domain: Domena
+      origin: Pochodzenie
+      target: Cel
+      permanent: Stałe
+      note: Notka
