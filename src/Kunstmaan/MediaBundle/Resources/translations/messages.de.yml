@@ -2,9 +2,9 @@
 media:
   aviary:
     title: Aviary
-    nothing: Nothing to see here.
+    nothing: Hier gibt es nichts zu sehen.
   media:
-    "no": No files in this folder yet.
+    "no": Noch keine Dateien in diesem Verzeichnis.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -14,32 +14,32 @@ media:
     bulkupload:
       addto: Upload in das Verzeichnis "%folder%"
     contenttab:
-      title: Content
+      title: Inhalt
     propertiestab:
-      title: Properties
-    title: Media
+      title: Eigenschaften
+    title: Medien
     add:
       action: Add media
     edit:
-      action: Edit
+      action: Bearbeiten
     download:
       action: Download
     mediainfo:
       name: Name
-      contenttype: Content-type
-      createdat: Added
-      updatedat: Updated
-      downloadlink: Download link
+      contenttype: Medien-Typ
+      createdat: Hinzugefügt
+      updatedat: Aktualisiert
+      downloadlink: Download Link
     addto: Datei-Upload in das Verzeichnis "%folder%"
-    deletesure: Are you sure you want to delete this item?
+    deletesure: Soll diese Datei wirklich gelöscht werden?
     new: Datei-Upload in das Verzeichnis "%folder%"
   folder:
     addsub:
-      action: Add subfolder
-      action_short: Add
+      action: Unterverzeichnis Erstellen
+      action_short: Erstellen
       modal:
-        title: Add subfolder
-        save: Add
+        title: Unterverzeichnis Erstellen
+        save: Erstellen
       form:
         name: Name
         rel: Rel
@@ -58,22 +58,22 @@ media:
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": No subfolders yet.
+      "no": Noch keine Unterverzeichnisse vorhanden.
     delete:
-      action: Delete this folder
-      action_short: Delete
+      action: Verzeichnis Löschen
+      action_short: Löschen
       modal:
-        title: Delete folder
-        text: Are you sure you want to delete "%folder%"?
+        title: Verzeichnis Löschen
+        text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden?
       failure:
         text: You can't delete the %folder% folder!
       success:
         text: Folder '%folder%' has been deleted!
-    save: Save
+    save: Speichern
     contenttab:
-      title: Content
+      title: Inhalt
     propertiestab:
-      title: Properties
+      title: Eigenschaften
     sortby: Sort by
     show:
       success:
@@ -81,34 +81,34 @@ media:
   bulkupload:
     upload: Upload
     bulkupload: Massen-Upload
-    select_files: Select files
+    select_files: Dateien Auswählen
     upload_more: Upload weiterer Dateien
-    back_to_folder: Back to folder
+    back_to_folder: Zurück zum Verzeichnis
     upload_finished: Upload abgeschlossen.
     not_available: Der Massen-Upload ist nicht verfügbar. Ihr Browser unterstützt kein Flash, Silverlight oder HTML5.
   slide:
-    add: Add Slide
+    add: Folie Hinzufügen
     modal:
-      title: Add Slide
-      save: Add
+      title: Folie Hinzufügen
+      save: Hinzufügen
   video:
-    add: Add Video
+    add: Video Hinzufügen
     modal:
-      title: Add Video
-      save: Add
+      title: Video Hinzufügen
+      save: Hinzufügen
   audio:
     add: Audio Hinzufügen
     modal:
       title: Audio Hinzufügen
-      save: Add
+      save: Hinzufügen
   file:
-    add: Add File
+    add: Datei Hinzufügen
     modal:
-      title: Add File
-      save: Add
+      title: Datei Hinzufügen
+      save: Hinzufügen
   widget:
-    choose: Choose
-    delete: Delete
+    choose: Auswählen
+    delete: Löschen
     media_chooser: Media-chooser
     icon_chooser: Icon-chooser
   adminlist:
