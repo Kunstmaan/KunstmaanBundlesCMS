@@ -1,7 +1,7 @@
 ---
 kuma_admin_list:
   form:
-    export_to: Export to
+    export_to: Exportálás
   edit:
     flash:
       success: The entity has been edited
