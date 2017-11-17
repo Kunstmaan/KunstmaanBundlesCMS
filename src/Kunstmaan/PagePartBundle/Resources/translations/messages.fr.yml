@@ -2,18 +2,18 @@
 pagepart:
   header:
     type: 'Type de Header'
-    title: 'Title'
+    title: 'Titre'
   link:
     internal: Internal
     external: External
     email: Email
-    choose: 'Choose link'
-    openinnewwindow: 'Open in new window'
-    text: 'Text'
+    choose: 'Choisir un lien'
+    openinnewwindow: 'Ouvrir dans une autre fenêtre'
+    text: 'Texte'
   html:
-    content: 'Contents'
+    content: 'Contenu'
   text:
-    content: 'Contents'
+    content: 'Contenu'
   buttons:
     move_up: Move up
     move_down: Move down
