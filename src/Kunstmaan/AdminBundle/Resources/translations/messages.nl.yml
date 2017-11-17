@@ -14,17 +14,17 @@ settings:
   maintanance: Maintenance
   scheduled: Scheduled Jobs
   version:
-    bundle: Bundle versions
+    bundle: Bundle versies
     composer_lock_not_found: No composer.lock file found in your project root
-    error_parsing_composer: Error parsing composer.lock file, no valid json
+    error_parsing_composer: Fout bij het parsen van het composer.lock bestand, geen geldige json
     error: Something went wrong while fetching the version information. Please try again later.
-    moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+    moreinfo: Voer composer update uit om de bundles te updaten. Het is mogelijk dat andere bundles moeten worden geüpgraded in het geval van conflicten.
     uptodate: is up-to-date
-    toupdate: can be updated to
+    toupdate: kan worden geüpdated naar
     unknown: version information unknown
 tools:
   title: Tools
-  clear_frontend_cache: Clear frontend cache
+  clear_frontend_cache: Frontend cache legen
   clear_backend_cache: Clear backend cache
   clear_all_caches: Clear all caches
   shutdown: Shutdown
@@ -45,7 +45,7 @@ form:
   type: Type
   error: Error
   warning: Warning
-  headsup: Heads up
+  headsup: Heads-up
   forgot:
     password: Forgot my password.
   permissions: Permissions
@@ -77,7 +77,7 @@ permissions:
   role_name: Role name
 errors:
   oauth:
-    invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.
+    invalid: Het was niet mogelijk om in te loggen via Google OAuth, waarschijnlijk is je domeinnaam niet toegelaten.
 kuma_admin:
   flash_type:
     success: Success
@@ -90,7 +90,7 @@ kuma_admin:
       title:
         label: Title
       content:
-        label: Content (raw html)
+        label: Inhoud (raw html)
   edit:
     flash:
       success: The welcome page has been edited!
@@ -103,7 +103,7 @@ kuma_admin:
   media:
     flash:
       'deleted_success.%medianame%': Entry '%medianame%' has been deleted!
-      drop_success: File was uploaded successfuly!
+      drop_success: Bestand is met succes geupload!
       drop_unrecognized: Could not recognize what you dropped!
   login:
     forgot_password: Forgot my password
