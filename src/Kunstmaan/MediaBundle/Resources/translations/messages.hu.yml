@@ -4,159 +4,159 @@ media:
     title: Aviary
     nothing: Nincs megjeleníthető elem
   media:
-    "no": No files in this folder yet.
+    "no": Még nincs fájl ebben a könyvtárban.
     dnd:
       tip: "Tip:"
       tiptext: Tudtad, hogy a fájlokat egyből ebbe a mappába is feltöltheted?
       alert:
-        title: Incoming!
-        text: Drop your files to instantly upload them to this folder.
+        title: Érkezik!
+        text: Húzd ide a fájlokat az azonnali feltöltéshez ebbe a könyvtárba.
     bulkupload:
-      addto: Upload files to "%folder%"
+      addto: Fájlok feltöltése a "%folder%" mappába
     contenttab:
-      title: Content
+      title: Tartalom
     propertiestab:
-      title: Properties
-    title: Media
+      title: Részletek
+    title: Média
     add:
-      action: Add media
+      action: Hozzáadása
     edit:
-      action: Edit
+      action: Szerkesztés
     download:
-      action: Download
+      action: Letöltés
     mediainfo:
-      name: Name
-      contenttype: Content-type
-      createdat: Added
-      updatedat: Updated
+      name: Név
+      contenttype: Információ
+      createdat: Létrehozva
+      updatedat: Frissítve
       downloadlink: 'Letölthető innen:'
     addto: ehhez
-    deletesure: Are you sure you want to delete this item?
+    deletesure: Biztos, hogy törölni szeretné?
     new: Új hozzáadása
   folder:
     addsub:
-      action: Add subfolder
-      action_short: Add
+      action: Almappa létrehozása
+      action_short: Almappa hozzáadása
       modal:
-        title: Add subfolder
-        save: Add
+        title: Almappa hozzáadása
+        save: Mentés
       form:
-        name: Name
+        name: Név
         rel: Rel
-        parent: Parent
-        internal_name: Internal name
+        parent: Szülő
+        internal_name: Belső név
       success:
         text: A(z) `%folder%` mappa sikeresen létrehozva
     empty:
-      action: Empty folder
-      action_short: Empty
+      action: Mappa ürítése
+      action_short: Ürítés
       modal:
-        title: Empty folder
+        title: Mappa ürítése
         text: Bitzos benne, hogy törölni akarja a(z) `%folder%` mappa tartalmát?
-        checkbox: Also delete subfolders
-        save: Empty
+        checkbox: Alkönyvtárak törlése is
+        save: Ürítés
       success:
-        text: Folder '%folder%' has been emptied!
+        text: A `%folder%` mappa üres!
     sub:
       "no": Még nincsenek almappák
     delete:
-      action: Delete this folder
-      action_short: Delete
+      action: Törlés
+      action_short: Törlés
       modal:
-        title: Delete folder
-        text: Are you sure you want to delete "%folder%"?
+        title: Mappa törlése
+        text: Biztosan törölni akarja a `%folder%` mappát?
       failure:
-        text: You can't delete the %folder% folder!
+        text: Nem törölhető a `%folder%` mappa!
       success:
         text: A(z) `%folder%` mappa sikeresen törölve!
-    save: Save
+    save: Mentés
     contenttab:
-      title: Content
+      title: Tartalom
     propertiestab:
-      title: Properties
-    sortby: Sort by
+      title: Részletek
+    sortby: Rendezés
     show:
       success:
         text: A(z) `%folder%` mappa módosítva!
   bulkupload:
-    upload: Upload
-    bulkupload: Bulk upload
-    select_files: Select files
-    upload_more: Upload more files
-    back_to_folder: Back to folder
+    upload: Feltöltés
+    bulkupload: Tömeges feltöltés
+    select_files: Fájlok kiválasztása
+    upload_more: További fájlok feltöltése
+    back_to_folder: Vissza a mappába
     upload_finished: Feltöltés sikeres volt
     not_available: Tömeges feltöltés nem lehetséges. A böngészőjében nem elérhető Flash, Silverlight vagy HTML5 támogatás.
   slide:
-    add: Add Slide
+    add: Bemutató hozzáadása
     modal:
-      title: Add Slide
-      save: Add
+      title: Bemutató hozzáadása
+      save: Hozzáadás
   video:
-    add: Add Video
+    add: Videó hozzáadása
     modal:
-      title: Add Video
-      save: Add
+      title: Videó hozzáadása
+      save: Hozzáadás
   audio:
     add: Audió hozzáadása
     modal:
       title: Audió hozzáadása
-      save: Add
+      save: Hozzáadás
   file:
-    add: Add File
+    add: Fájl feltöltése
     modal:
-      title: Add File
-      save: Add
+      title: Fájl hozzáadása
+      save: Hozzáadás
   widget:
-    choose: Choose
-    delete: Delete
-    media_chooser: Media-chooser
-    icon_chooser: Icon-chooser
+    choose: Válassz
+    delete: Törlés
+    media_chooser: Média választó
+    icon_chooser: Ikon választó
   adminlist:
     configurator:
-      name: Name
-      type: Type
-      date: Date
-      filesize: Filesize
+      name: Név
+      type: Típus
+      date: Dátum
+      filesize: Fájlméret
       filter:
-        name: Name
-        type: Type
-        updated_at: Date
-        filesize: Filesize (in bytes)
+        name: Név
+        type: Típus
+        updated_at: Dátum
+        filesize: Fájlméret (byte-ban)
   form:
     remote:
       name:
-        label: Name
+        label: Név
       code:
-        label: Code
+        label: Kód
       type:
-        label: Type
+        label: Típus
       copyright:
-        label: Copyright
+        label: Szerzői jog
       description:
-        label: Description
+        label: Leírás
     bulk_upload:
       files:
-        label: Files
+        label: Fájlok
     file:
       name:
-        label: Name
+        label: Név
       file:
-        label: File
+        label: Fájl
       copyright:
-        label: Copyright
+        label: Szerzői jog
       description:
-        label: Description
+        label: Leírás
       originalFilename:
-        label: Original filename
+        label: Eredeti fájlnév
     remote_audio:
       type:
-        label: Type
+        label: Típus
     remote_slide:
       type:
-        label: Type
+        label: Típus
     remote_video:
       type:
-        label: Type
+        label: Típus
   flash:
     created: Media %medianame% has been created!
     not_created: Media not created! %mediaerrors%
