@@ -17,8 +17,8 @@ settings:
     import_translations: Import
     actions: Actions
     export_translations: Export to CSV
-    not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
-    choose_language: "Choose a language"
+    not_live_warning: "Las traducciones en el sitio en vivo no están actualizadas, haga click en 'Actualizar en vivo' para actulizar a las últimas traducciones."
+    choose_language: "Elegir lenguage"
     succesful_added: "Translation succesfully created"
     succesful_edited: "Translation succesfully edited"
 kuma_translator:
