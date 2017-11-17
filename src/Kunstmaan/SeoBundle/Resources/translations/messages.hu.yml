@@ -3,7 +3,7 @@ seo:
   robots:
     title: Robots
     tip: 'Tip:'
-    warning: This is a default value and example, no custom robots.txt has been defined.
+    warning: Ez csak egy alapértelmezett érték és példa, nincsen robots.txt feltöltve
     moreinfo: You can find more information about the Kunstmaan robots.txt at our
   action:
     save: Save
@@ -13,20 +13,20 @@ seo:
     og:
       title: OG Title
       description: OG Description
-      url: OG Url
+      url: url
       type: OG Type
       image: OG Image
       article:
-        author: OG Article Author
-        publisher: OG Article Publisher
-        section: OG Article Section
+        author: OG cikk szerző
+        publisher: OG cikk közlő
+        section: OG cikk szekció
     twitter:
       title: Title
-      title_info_text: The title of your twitter card. Falls back to SEO Meta title
+      title_info_text: A Twitter kártyád címe. Háttérbe szorítja a SEO Meta címet
       description: Description
-      description_info_text: The description of your twitter card. Falls back to SEO Meta description
+      description_info_text: A twitter kártyád leírása. Háttérbe szorítja a SEO Meta leírást
       sitehandle: Site Handle
-      sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
+      sitehandle_info_text: A weblap tulajdonos Twitter kezelője. Ez az érték szükséges ahhoz, hogy működjenek a twitter kártyák.
       creatorhandle: Creator Handle
       creatorhandle_info_text: Twitter handle of your page publisher.
       image: Image
@@ -42,15 +42,15 @@ seo:
         label: Title
         info_text: The title tag is often used on search engine results pages.
       meta_description:
-        label: Meta description
+        label: Meta leírás
       meta_robots:
-        label: Meta robots
-        placeholder: Choose robot tags
+        label: Meta robotok
+        placeholder: Válassz robot tageket
       extra_metadata:
-        label: Extra metadata
+        label: Extra meta adat
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter Cards
+    twittercards: Twitter
   tab:
     seo:
       title: SEO
