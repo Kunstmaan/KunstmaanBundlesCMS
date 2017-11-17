@@ -6,13 +6,13 @@ settings:
     edit: Edit group
     add: Add group
     roles: Roles
-    roles_placeholder: Choose the roles...
+    roles_placeholder: Kies rollen…
   users: Users
   user:
     username: Username
     password: Password
     repeatedpassword: Repeat password
-    adminlang: Admin interface language
+    adminlang: Admin interface taal
     email: E-mail
     enabled: Enabled
     roles: Groups
@@ -41,7 +41,7 @@ kuma_user:
         username: Username
         email: E-mail
         enabled: Enabled
-        last_login: Last login
+        last_login: Laatste login
         groups: Groups
       filter:
         username: Username
