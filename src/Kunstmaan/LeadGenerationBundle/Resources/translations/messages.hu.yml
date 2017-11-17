@@ -2,20 +2,20 @@
 kuma_lead_generation:
   newsletter_popup:
     button:
-      close: Close
-      subscribe: Subscribe
-      no_thanks: No Thanks!
+      close: Bezár
+      subscribe: Feliratkozás
+      no_thanks: Nem, köszönöm!
     label:
       email: E-mail
     message:
-      thanks: Thanks!
+      thanks: Köszönjük!
   on_exit_intent:
     sensitivity:
-      label: Sensitivity
+      label: Érzékenység
     timer:
-      label: Timer (milliseconds)
+      label: Idő (ezredmásodperc)
     delay:
-      label: Delay (milliseconds)
+      label: Késleltetés (ezredmásodperc)
     sensitivity_info: A popup akkor jelenik meg, ha az egérkurzor elég közel kerül (vagy teljesen rákerül) látható rész tetejéhez. Itt megadható, hogy ez az érzékeny terület a felső résztől milyen nagy legyen. Minél nagyobb az érték, annál hamarabb és gyorsabban fog megjelenni a popup. Az alapértelmezett értéke 20.
     timer_info: Beállítható egy minimum idő (ezredmásodpercben), amíg a popup biztosan nem jelenik meg. Alapból az első másodpercben biztosan nem fog felvillani, hogy a felhasználónak legyen ideje az oldalt nézni. Amennyiben szeretne ezen az időn változtatni, adja meg ezredmásodpercben.
     delay_info: Alapértelmezetten az előugró ablak (popup) azonnal megjelenik. Itt lehetőség van beállítani ezredmásodpercben egy türelmi időt, amíg a popup nem villan fel. Amennyiben ezen idő letelte előtt az egér elhagyja az érzékeny területet, akkor nem fog megjelenni a popup!
@@ -25,34 +25,34 @@ kuma_lead_generation:
         label: E-mail
     popup:
       name:
-        label: Name
+        label: Név
         info_text: 'Figyelmeztetés: ha megváltoztatja ezt az értéket, a popup ismét meg fog jelenni azoknak, akiknek egyszer már megjelent vagy konvertálódtak!'
     after_x_scroll_percent_rule:
       percentage:
-        label: Percentage
+        label: Százalék
     after_x_seconds:
       seconds:
-        label: Seconds
+        label: Másodperc
     locale_black_list:
       locale:
-        label: Locale
+        label: Nyelvi környezet
         info_text: Megadhatsz nyelvi környezeteket, amik fekete listára kerülnek.
     locale_white_list:
       locale:
-        label: Locale
+        label: Nyelvi környezet
         info_text: Megadhatsz nyelvi környezeteket, amik fehér listára kerülnek.
     max_x_time:
       times:
-        label: Times
+        label: Idő
     recurring_every_x_time:
       days:
-        label: Days
+        label: Nap
       hours:
-        label: Hours
+        label: Óra
       minutes:
-        label: Minutes
+        label: Perc
       times:
-        label: Times
+        label: Alkalmak
     url_black_list:
       urls:
         label: Urls
@@ -72,40 +72,40 @@ kuma_lead_generation:
   popup:
     add:
       modal:
-        title: Add popup
+        title: Felugró ablak hozzáadása
         button:
-          open: Add popup
-          add: Add
-          cancel: Cancel
+          open: Felugró ablak hozzáadása
+          add: Hozzáadás
+          cancel: Mégse
     type:
       label: Type
     list:
       header:
         id: Id
-        name: Name
-        type: Type
+        name: Név
+        type: Típus
         html_id: Html ID
-        rule_count: '# of Rules'
+        rule_count: '# szabály'
       filter:
-        name: Name
+        name: Név
         html_id: Html ID
   rules:
-    'page_title.%name%': Rules for %name%
+    'page_title.%name%': 'Jogosultsági beállítások: %name%'
     add:
       modal:
-        title: Add Rule
+        title: Jogosultság hozzáadása
         button:
-          open: Add Rule
-          add: Add
-          cancel: Cancel
+          open: Jogosultság hozzáadása
+          add: Hozzáadás
+          cancel: Mégse
     list:
       header:
         id: Id
-        type: Type
-        properties: Properties
+        type: Típus
+        properties: Tulajdonságok
       filter:
         id: Id
   breadcrumbs:
-    modules: Modules
-    popups: Popups
-    rules: Rules
+    modules: Modulok
+    popups: Felugró ablakok
+    rules: Jogosultságok
