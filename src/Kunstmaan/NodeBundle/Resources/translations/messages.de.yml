@@ -6,7 +6,7 @@ action:
   recopyfromlanguage: "Copy content from other language"
   exportpagetemplate: "Export pagetemplate"
   publish: "Publish"
-  unpublish: "Unpublish"
+  unpublish: "Depublizieren"
   preview: "Preview"
   save: "Save"
   delete: "Delete"
@@ -15,7 +15,7 @@ action:
 modal:
   sourcelanguage: "Source language"
 pages:
-  copynotavailable: "Please translate the parent page first"
+  copynotavailable: "Bitte zuerst die übergeordnete Seite übersetzen."
 kuma_node:
   form:
     controller_action:
