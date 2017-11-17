@@ -1,7 +1,7 @@
 ---
 pages:
   title: Pages
-  parts: PageParts
+  parts: SeitenTeile
   draft: Draft
   pagenottranslated: This page is not translated
   copyfrom: Copy from language
@@ -14,11 +14,11 @@ settings:
   maintanance: Maintenance
   scheduled: Scheduled Jobs
   version:
-    bundle: Bundle versions
-    composer_lock_not_found: No composer.lock file found in your project root
-    error_parsing_composer: Error parsing composer.lock file, no valid json
+    bundle: Bundle Versionen
+    composer_lock_not_found: Keine composer.lock im Projekt Root gefunden.
+    error_parsing_composer: Fehler beim Parsen der composer.lock Datei, kein gültiges JSON.
     error: Something went wrong while fetching the version information. Please try again later.
-    moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+    moreinfo: Zum Aktualisieren composer update ausführen. Bei Konflikten müssen eventuell weitere Bundles aktualisiert.
     uptodate: is up-to-date
     toupdate: can be updated to
     unknown: version information unknown
@@ -31,7 +31,7 @@ tools:
 search:
   title: Search
 form:
-  cancel: Cancel
+  cancel: Abrechen
   delete: Delete
   deletesure: Are you sure you want to delete this?
   edit: Edit
@@ -39,7 +39,7 @@ form:
   'add.%subject%': 'Add New %subject%'
   save: Save
   publish: Publish
-  unpublish: Unpublish
+  unpublish: Depublizieren
   saveasdraft: Save as draft
   name: Name
   type: Type
@@ -49,7 +49,7 @@ form:
   forgot:
     password: Forgot my password.
   permissions: Permissions
-  properties: Properties
+  properties: Eigentschaften
   createdat: Created At
   updatedat: Updated At
   actions: Actions
