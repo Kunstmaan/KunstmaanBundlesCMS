@@ -1,171 +1,171 @@
 ---
 subaction:
-  versions: "Verziók"
+  versions: "Versions"
 action:
-  saveasdraft: "Mentés piszkozatként"
-  recopyfromlanguage: "Másik nyelvről másolás"
+  saveasdraft: "Save as draft"
+  recopyfromlanguage: "Copy content from other language"
   exportpagetemplate: "Export pagetemplate"
-  publish: "Publikálás"
-  unpublish: "Publikálás visszavonása"
-  preview: "Előnézet"
-  save: "Mentés"
-  delete: "Törlés"
-  addsubpage: "Aloldal hozzáadása"
-  duplicate: "Másolás"
+  publish: "Publish"
+  unpublish: "Unpublish"
+  preview: "Preview"
+  save: "Save"
+  delete: "Delete"
+  addsubpage: "Add subpage"
+  duplicate: "Duplicate"
 modal:
-  sourcelanguage: "modal.sourcelanguage"
+  sourcelanguage: "Source language"
 pages:
-  copynotavailable: "Másolás nem lehetséges"
+  copynotavailable: "Please translate the parent page first"
 kuma_node:
   form:
     controller_action:
       title:
-        label: Cím
+        label: Title
     menu_tab:
       hidden_from_menu:
-        label: Elrejtés a menüből
+        label: Hidden from menu
       internal_name:
-        label: Belső név
+        label: Internal name
     menu_tab_translation:
       slug:
-        label: Elérési útaz URL-ben
+        label: Slug
       weight:
-        label: Súlyozás
-        title: Az oldalak újrarendezéséhez használd
+        label: Weight
+        title: Used to reorder the pages.
     page:
       title:
-        label: Navigációs cím
+        label: Navigation title
       page_title:
-        label: Oldal cím
-        info_text: Belső hivatkozásoknál használd.
+        label: Page title
+        info_text: Used as title inside the page.
   status:
-    "will_be_publish_at.%date%.raw": 'Ez az oldal publikálva lesz: %date%'
-    "will_be_unpublish_at.%date%.raw": 'Az oldal rejtett lesz (publikálás visszavonása): %date%'
+    "will_be_publish_at.%date%.raw": This page will be published at %date%
+    "will_be_unpublish_at.%date%.raw": This page will be unpublished at %date%
     button:
-      schedulle_cancel: Mégse
-    "offline_draft.%public_url%.raw": Nem elérhető / Piszkozat verzió (Ugrás a <a href="%public_url%">publikus verzióhoz</a>)
-    online_public.raw: Elérhető / Nyilvános verzió
-    offline.raw: Nem elérhető
-    "go_to_draft_version.%url%.raw": Ugrás a <a href="%url%">piszkozat verzióhoz</a>
+      schedulle_cancel: Cancel
+    "offline_draft.%public_url%.raw": Offline / Draft version (Go to <a href="%public_url%">public version</a>)
+    online_public.raw: Online / Public version
+    offline.raw: Offline
+    "go_to_draft_version.%url%.raw": (Go to <a href="%url%">draft version</a>)
   admin:
     publish:
       flash:
-        success_published: Az oldal nyilvános
-        success_scheduled: Az oldal időzítve lesz nyilvános
+        success_published: The page has been published
+        success_scheduled: Publishing of the page has been scheduled
     unpublish:
       flash:
-        success_unpublished: Az oldal el lett rejtve
-        success_scheduled: Az oldal elrejtése időzítve
+        success_unpublished: The page has been unpublished
+        success_scheduled: Unpublishing of the page has been scheduled
     unschedule:
       flash:
-        success: Az időzítés vissza lett vonva
+        success: The scheduling has been canceled
     delete:
       flash:
-        success: Az oldal sikeresen törölve!
+        success: The page is deleted!
     duplicate:
       flash:
-        success: Az oldal duplikálva!
+        success: The page has been duplicated!
     revert:
       flash:
-        success: A tartalom vissza lett állítva
+        success: The page contents has been reverted
     edit:
       flash:
-        success: Az oldal módosítva.
+        success: The page has been edited
         locked: The page is currently being edited by %users%
         locked_success: An automatic backup has been created because the page is being edited by another user
     new_page:
       title:
-        default: Új oldal
+        default: New page
     list:
       header:
-        title: Cím
-        created_at: Létrehozva
-        updated_at: Frissítve
+        title: Title
+        created_at: Created At
+        updated_at: Updated At
         online: Online
       filter:
-        title: Cím
-        created_at: Létrehozva
-        updated_at: Frissítve
+        title: Title
+        created_at: Created At
+        updated_at: Updated At
         online: Online
       online: (Online)
       offline: (Offline)
       additional_title: This list contains all the pages, chronologically ordered by updated date.
   tab:
     properties:
-      title: Tulajdonságok
+      title: Properties
     menu:
-      title: Menü
+      title: Menu
     permissions:
-      title: Jogosultságok
+      title: Permissions
     searcher:
-      title: Kereső
+      title: Searcher
   modal:
     add_homepage:
-      h: Nyitólap hozzáadása
+      h: Add homepage
       form:
         title:
-          label: Cím
+          label: Title
         type:
-          label: Típus
+          label: Type
         add:
-          label: Hozzáadás
+          label: Add
         cancel:
-          label: Mégse
+          label: Cancel
     unpublish:
-      title: Elrejtés
-      body: Biztos benne, hogy el szeretné rejteni az oldalt - publikálás visszavonása? Ha elrejti, nem lesz az oldal elérhető!
+      title: Unpublish
+      body: Are you sure you want to unpublish this page? If you do this, the page will be offline!
       later:
-        label: Elrejtés később
-        button: Elrejtés később
-        cancel: Mégse
+        label: Unpublish later
+        button: Unpublish later
+        cancel: Cancel
       now:
-        button: Elrejtés
-        cancel: Mégse
+        button: Unpublish
+        cancel: Cancel
     publish:
-      title: Publikálás
-      body: Biztos benne, hogy nyilvánossá szeretné tenni ezt az oldalt? Ha nyilvánossá teszi, elérhető lesz!
+      title: Publish
+      body: Are you sure you want to publish this page? If you do this, the page will be online!
       later:
-        label: Publikálás később
-        button: Publikálás később
-        cancel: Mégse
+        label: Publish later
+        button: Publish later
+        cancel: Cancel
       now:
-        button: Publikálás
-        cancel: Mégse
+        button: Publish
+        cancel: Cancel
     versions:
-      title: Verziók
+      title: Versions
       table:
-        type: Típus
-        last_modified: Utolsó módosítás
-        user: Felhasználó
-        actions: Műveletek
+        type: Type
+        last_modified: Last modified
+        user: User
+        actions: Actions
       actions:
-        preview: Előnézet
-        revert: Visszaállít
+        preview: Preview
+        revert: Revert
     add_subpage:
-      title: Aloldal hozzáadása
+      title: Add subpage
       label:
-        title: Cím
-        type: Típus
+        title: Title
+        type: Type
       button:
-        add: Hozzáad
-        cancel: Mégse
+        add: Add
+        cancel: Cancel
     delete_page:
-      'title.%page%': '''%page%'' oldal törlése'
-      'body.%page%': A törlés végleges és teljes! Biztosan törölni szeretné az oldalt?
+      'title.%page%': Delete page '%page%'
+      'body.%page%': This will remove the page completely in all languages! Are you really sure about this?
       button:
-        delete: Törlés
-        cancel: Mégse
+        delete: Delete
+        cancel: Cancel
     duplicate_page:
-      'title.%page%': A(z) '%page%' oldal duplikálása
+      'title.%page%': Duplicate page '%page%'
       label:
-        new_title: Új cím
+        new_title: New title
       button:
-        duplicate: Duplikálás
-        cancel: Mégse
+        duplicate: Duplicate
+        cancel: Cancel
     recopyfromlanguage:
       button:
-        copy: Másol
-        cancel: Mégse
+        copy: Copy
+        cancel: Cancel
     export_pagetemplate:
       button:
         title: Export pagetemplate
