@@ -1,37 +1,37 @@
 ---
 article:
   warning:
-    create_overview_page: Musisz stworzyć przynajmniej jedną stronę agregującą, żeby dodać stronę %type%
+    create_overview_page: You need to create at least one overview page before you can create a %type% page
   form:
     date:
-      label: Data
+      label: Date
     summary:
-      label: Podsumowanie
+      label: Summary
   modal:
     add:
-      label: Dodaj %type% do %page%
+      label: Add %type% item to %page%
   author:
     list:
       header:
-        name: Nazwa
+        name: Name
         link: Link
       filter:
-        name: Nazwa
+        name: Name
         link: Link
     form:
       name:
-        label: Nazwa
+        label: Name
       link:
         label: Link
   page:
     list:
       header:
-        title: Tytuł
-        created_at: Utworzono
-        updated_at: Zaktualizowano
+        title: Title
+        created_at: Created at
+        updated_at: Updated at
         online: Online
       filter:
-        title: Tytuł
-        created_at: Utworzono
-        updated_at: Zaktualizowano
+        title: Title
+        created_at: Created at
+        updated_at: Updated at
         online: Online
