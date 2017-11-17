@@ -23,14 +23,14 @@ kuma_menu:
         title: Title
         online: Online
         type: Type
-        url: Url
+        url: Adres url
         new_window: New window
   form:
     parent: Parent menu item
-    parent_placeholder: Select the parent menu item...
+    parent_placeholder: Wbierz menu rodzica...
     type: Type
     node_translation: Link page
-    node_translation_placeholder: Select the page to link to...
+    node_translation_placeholder: Wybierz strone do której linkować...
     title: Title
-    url: Url
+    url: Adres url
     new_window: New window
