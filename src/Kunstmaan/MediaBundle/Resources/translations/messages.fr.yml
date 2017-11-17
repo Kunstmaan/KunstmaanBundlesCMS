@@ -2,9 +2,9 @@
 media:
   aviary:
     title: Aviary
-    nothing: Nothing to see here.
+    nothing: Rien à voir ici.
   media:
-    "no": No files in this folder yet.
+    "no": Pas encore de fichier dans ce dossier.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -12,34 +12,34 @@ media:
         title: Incoming!
         text: Drop your files to instantly upload them to this folder.
     bulkupload:
-      addto: Upload files to "%folder%"
+      addto: Charger des fichiers dans "%folder%"
     contenttab:
-      title: Content
+      title: Contenu
     propertiestab:
-      title: Properties
-    title: Media
+      title: Propriétés
+    title: Média
     add:
       action: Add media
     edit:
-      action: Edit
+      action: Modifier
     download:
-      action: Download
+      action: Télécharger
     mediainfo:
-      name: Name
+      name: Nom
       contenttype: Content-type
-      createdat: Added
-      updatedat: Updated
-      downloadlink: Download link
-    addto: Add media to "%folder%"
+      createdat: Ajouté
+      updatedat: Modifié
+      downloadlink: Lien de téléchargement
+    addto: Ajouter le média dans "%folder%"
     deletesure: Etes-vous certain de vouloir supprimer cet élément ?
-    new: Add media to "%folder%"
+    new: Ajouter un média dans "%folder%"
   folder:
     addsub:
-      action: Add subfolder
-      action_short: Add
+      action: Ajouter un sous-dossier
+      action_short: Ajouter
       modal:
-        title: Add subfolder
-        save: Add
+        title: Ajouter un sous-dossier
+        save: Ajouter
       form:
         name: Name
         rel: Rel
@@ -58,22 +58,22 @@ media:
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": No subfolders yet.
+      "no": Pas encore de sous-dossiers.
     delete:
-      action: Delete this folder
-      action_short: Delete
+      action: Supprimer ce dossier
+      action_short: Supprimer
       modal:
-        title: Delete folder
+        title: Supprimer le dossier
         text: Etes-vous certain de vouloir supprimer "%folder%"?
       failure:
         text: You can't delete the %folder% folder!
       success:
         text: Folder '%folder%' has been deleted!
-    save: Save
+    save: Sauver
     contenttab:
-      title: Content
+      title: Contenu
     propertiestab:
-      title: Properties
+      title: Propriétés
     sortby: Sort by
     show:
       success:
@@ -90,25 +90,25 @@ media:
     add: Ajouer un slide
     modal:
       title: Ajouter un slide
-      save: Add
+      save: Ajouter
   video:
-    add: Add Video
+    add: Ajouter une vidéo
     modal:
-      title: Add Video
-      save: Add
+      title: Ajouter une vidéo
+      save: Ajouter
   audio:
-    add: Add Audio
+    add: Ajouter de l'audio
     modal:
-      title: Add Audio
-      save: Add
+      title: Ajouter de l'audio
+      save: Ajouter
   file:
-    add: Add File
+    add: Ajouter un fichier
     modal:
-      title: Add File
-      save: Add
+      title: Ajouter un fichier
+      save: Ajouter
   widget:
-    choose: Choose
-    delete: Delete
+    choose: Choisir
+    delete: Supprimer
     media_chooser: sélecteur de médias
     icon_chooser: sélecteur des icônes
   adminlist:
