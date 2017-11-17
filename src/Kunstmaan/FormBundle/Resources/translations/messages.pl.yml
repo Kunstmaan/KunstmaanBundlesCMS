@@ -5,7 +5,7 @@ kuma_form:
       title:
         label: Title
       thanks:
-        label: Thanks
+        label: Wiadomość po pomyslnym wysłaniu
       subject:
         label: Subject
       from_email:
@@ -33,7 +33,7 @@ kuma_form:
       choices:
         label: Choices
       empty_value:
-        label: Empty value
+        label: Pusta wartośc
     email_page_part:
       label:
         label: Label
@@ -69,7 +69,7 @@ kuma_form:
       errormessage_required:
         label: Error message required
       regex:
-        label: regex
+        label: Wyrażenia regularne
       errormessage_regex:
         label: Error message regex
     submit_button_page_part:
@@ -90,7 +90,7 @@ kuma_form:
       header:
         created: Date
         language: Language
-        ip_address: IP address
+        ip_address: Address IP
 formsubmissions:
   index:
     title: Form pages with submissions
