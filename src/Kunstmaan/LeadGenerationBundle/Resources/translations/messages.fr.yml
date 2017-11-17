@@ -2,13 +2,13 @@
 kuma_lead_generation:
   newsletter_popup:
     button:
-      close: Close
-      subscribe: Subscribe
-      no_thanks: No Thanks!
+      close: Fermer
+      subscribe: Inscrire
+      no_thanks: Non, merci !
     label:
       email: Email
     message:
-      thanks: Thanks!
+      thanks: Merci!
   on_exit_intent:
     sensitivity:
       label: Sensitivity
