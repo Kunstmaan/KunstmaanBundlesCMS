@@ -1,26 +1,26 @@
 ---
 translator:
   translator:
-    title: Translations
-    inline_edit_title: Enter translation
-    emptytext: Not translated
-    invalid_translation: Invalid translation!
-    fatal_error_occurred: A fatal error occured while saving the translation. Please try again later.
-  translations: Translations
-  translation_not_unique: The translation should be unique
+    title: Traduzioni
+    inline_edit_title: Aggiungi traduzione
+    emptytext: Non tradotto
+    invalid_translation: Traduzione invalida!
+    fatal_error_occurred: Un grave errore si è verificato durante il salvataggio della traduzione. Riprova più tardi.
+  translations: Traduzioni
+  translation_not_unique: La traduzione dovrebbe essere unica
 settings:
   translator:
     add: Aggiungi taduzione
     edit: Modifica taduzione
-    refresh_live: Refresh live
-    import_translations_forced: Import forced
-    import_translations: Import
+    refresh_live: Aggiorna
+    import_translations_forced: Forza importazione
+    import_translations: Importa
     actions: Actions
     export_translations: Export to CSV
-    not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
-    choose_language: "Choose a language"
-    succesful_added: "Translation succesfully created"
-    succesful_edited: "Translation succesfully edited"
+    not_live_warning: "Le traduzioni sul sito non sono aggiornate, clicca 'Aggiorna' per avere l'ultima traduzione."
+    choose_language: "Seleziona una lingua"
+    succesful_added: "Traduzione creata con successo"
+    succesful_edited: "Traduzione modificata con successo"
 kuma_translator:
   form:
     text_with_locale:
