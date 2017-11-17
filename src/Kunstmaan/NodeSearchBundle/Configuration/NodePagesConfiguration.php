@@ -126,6 +126,26 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * @param $locale
+     * @return array
+     */
+    public function checkAnalyzerLanguages()
+    {
+        $errors = [];
+        foreach ($this->locales as $locale) {
+            if (preg_match('/[a-z]{2}_?+[a-zA-Z]{2}/', $locale)) {
+                $locale = strtolower($locale);
+            }
+
+            if ( false === array_key_exists($locale, $this->analyzerLanguages) ) {
+                $errors[] = $locale;
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
      * Create node index
      */
     public function createIndex()
@@ -137,7 +157,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
         foreach ($this->locales as $locale) {
             // Multilanguage check
-            if (count(preg_grep('/[a-z]{2}_?+[a-zA-Z]{2}/', [$locale])) > 0) {
+            if (preg_match('/[a-z]{2}_?+[a-zA-Z]{2}/', $locale)) {
                 $locale = strtolower($locale);
             }
 
@@ -151,7 +171,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
                 // Create index with analysis
                 $this->setAnalysis($index, $localeAnalysis->setupLanguage($language));
             } else {
-                $index->create([]);
+                $index->create();
             }
 
             $this->setMapping($index, $locale);
