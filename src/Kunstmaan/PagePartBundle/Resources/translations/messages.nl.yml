@@ -1,50 +1,50 @@
 ---
 pagepart:
   header:
-    type: 'Header type'
-    title: 'Title'
+    type: 'Kop type'
+    title: 'Titel'
   link:
-    internal: Internal
-    external: External
+    internal: Intern
+    external: Extern
     email: Email
-    choose: 'Choose link'
-    openinnewwindow: 'Open in new window'
-    text: 'Text'
+    choose: 'Kies link'
+    openinnewwindow: 'Open in nieuw venster'
+    text: 'Tekst'
   html:
-    content: 'Contents'
+    content: 'Inhoud'
   text:
-    content: 'Contents'
+    content: 'Inhoud'
   buttons:
-    move_up: Move up
-    move_down: Move down
-    edit: Edit
-    delete: Delete
-    resize: Minimize-Maximize
+    move_up: Verplaats omhoog
+    move_down: Verplaats omlaag
+    edit: Bewerk
+    delete: Verwijder
+    resize: Minimaliseer / Maximaliseer
 region:
   button:
-    min: Minimize
-    max: Maximize
+    min: Minimaliseer
+    max: Maximaliseer
 kuma_pagepart:
   tab:
     content:
-      title: Content
+      title: Inhoud
   modal:
     delete:
       'title.%type%': "Verwijderen van pagepart '%type%'"
       'text.%type%': Dit zal de pagepart niet volledig verwijderen, bewaar de pagina om de pagepart permanent te verwijderen.
       button:
-        delete: Delete
-        cancel: Cancel
+        delete: Verwijder
+        cancel: Annuleer
   select:
     add: Een pagepart toevoegen
   template:
     modal:
       change:
-        current: Current
-        title: Change template
+        current: Huidige
+        title: Wijzig template
         button:
-          open: Change template
-          change: Change
-          cancel: Cancel
+          open: Wijzig template
+          change: Wijzig
+          cancel: Annuleer
         message:
           'no_admin_found.%name%': GEEN ADMIN gevonden voor %name%
