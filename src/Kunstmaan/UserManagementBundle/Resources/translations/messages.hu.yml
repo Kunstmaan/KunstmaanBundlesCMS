@@ -1,29 +1,29 @@
 ---
 settings:
-  groups: Groups
+  groups: Csoportok
   group:
-    name: Name
-    edit: Edit group
-    add: Add group
-    roles: Roles
-    roles_placeholder: Choose the roles...
-  users: Users
+    name: Csoport neve
+    edit: Csoport szerkesztése
+    add: Csoport hozzáadása
+    roles: Csoport szerepkörök
+    roles_placeholder: Válassz egy jogosultságot...
+  users: Felhasználók
   user:
-    username: Username
-    password: Password
-    repeatedpassword: Repeat password
+    username: Felhasználónév
+    password: Jelszó
+    repeatedpassword: Megismételt jelszó
     adminlang: Felhasználó nyelve az admin felületen
-    email: E-mail
-    enabled: Enabled
-    roles: Groups
-    roles_placeholder: Choose the permission groups...
-    add: Add User
-    edit: Edit User
-  roles: Roles
+    email: E-mail cím
+    enabled: Engedélyezett
+    roles: Felhasználó szerepkörei
+    roles_placeholder: Válassz ki a jogosultság csoportokat...
+    add: Felhasználó hozzáadása
+    edit: Felhasználó szerkesztése
+  roles: Szerepkörök
   role:
-    role: Role
-    add: Add Role
-    edit: Edit Role
+    role: Szerepkör engedélyek
+    add: Szerepkör hozzáadása
+    edit: Szerepkör szerkesztése
 kuma_user:
   roles:
     add:
@@ -38,15 +38,15 @@ kuma_user:
   users:
     adminlist:
       header:
-        username: Username
+        username: Felhasználónév
         email: E-mail
-        enabled: Enabled
-        last_login: Last login
-        groups: Groups
+        enabled: Elfogadva
+        last_login: Utolsó belépés
+        groups: Csoportok
       filter:
-        username: Username
+        username: Felhasználónév
         email: E-mail
-        enabled: Enabled
+        enabled: Elfogadva
     add:
       flash:
         'success.%username%': A(z) '%username%' felhasználó létrehozva!
@@ -59,10 +59,10 @@ kuma_user:
   group:
     adminlist:
       header:
-        name: Name
-        roles: Roles
+        name: Név
+        roles: Jogok
       filter:
-        name: Name
+        name: Név
     add:
       flash:
         success: Group %groupname% has been created!
@@ -75,6 +75,6 @@ kuma_user:
   role:
     adminlist:
       header:
-        role: Role
+        role: Jog
       filter:
-        role: Role
+        role: Jog
