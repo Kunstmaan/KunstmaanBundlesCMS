@@ -1,19 +1,19 @@
 ---
 pagepart:
   header:
-    type: 'Header type'
-    title: 'Title'
+    type: 'Überschriftstil'
+    title: 'Titel'
   link:
     internal: Internal
     external: External
     email: Email
-    choose: 'Choose link'
-    openinnewwindow: 'Open in new window'
+    choose: 'Link Auswählen'
+    openinnewwindow: 'In neuem Fenster öffnen'
     text: 'Text'
   html:
-    content: 'Contents'
+    content: 'Inhalt'
   text:
-    content: 'Contents'
+    content: 'Inhalt'
   buttons:
     move_up: Move up
     move_down: Move down
