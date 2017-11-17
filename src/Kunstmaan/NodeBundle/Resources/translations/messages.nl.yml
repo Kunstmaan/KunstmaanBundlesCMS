@@ -1,171 +1,171 @@
 ---
 subaction:
-  versions: "Versions"
+  versions: "Versies"
 action:
-  saveasdraft: "Save as draft"
-  recopyfromlanguage: "Copy content from other language"
+  saveasdraft: "Als concept opslaan"
+  recopyfromlanguage: "Kopieer de inhoud van een andere taal"
   exportpagetemplate: "Export pagetemplate"
-  publish: "Publish"
-  unpublish: "Unpublish"
+  publish: "Publiceer"
+  unpublish: "Publiceren ongedaan maken"
   preview: "Preview"
-  save: "Save"
-  delete: "Delete"
+  save: "Opslaan"
+  delete: "Verwijder"
   addsubpage: "Subpagina toevoegen"
-  duplicate: "Duplicate"
+  duplicate: "Dupliceer"
 modal:
-  sourcelanguage: "Source language"
+  sourcelanguage: "Bron taal"
 pages:
-  copynotavailable: "Please translate the parent page first"
+  copynotavailable: "Gelieve de bovenliggende pagina eerst te vertalen"
 kuma_node:
   form:
     controller_action:
       title:
-        label: Title
+        label: Titel
     menu_tab:
       hidden_from_menu:
-        label: Hidden from menu
+        label: Verborgen in menu
       internal_name:
-        label: Internal name
+        label: Interne naam
     menu_tab_translation:
       slug:
         label: Slug
       weight:
-        label: Weight
-        title: Used to reorder the pages.
+        label: Gewicht
+        title: Wordt gebruikt om de pagina te sorteren.
     page:
       title:
-        label: Navigation title
+        label: Navigatie titel
       page_title:
-        label: Page title
-        info_text: Used as title inside the page.
+        label: Pagina titel
+        info_text: Wordt gebruikt als titel op de pagina.
   status:
-    "will_be_publish_at.%date%.raw": This page will be published at %date%
-    "will_be_unpublish_at.%date%.raw": This page will be unpublished at %date%
+    "will_be_publish_at.%date%.raw": Deze pagina zal worden gepubliceerd op %date%
+    "will_be_unpublish_at.%date%.raw": Deze pagina wordt offline gezet op %date%
     button:
       schedulle_cancel: Cancel
     "offline_draft.%public_url%.raw": Offline / Draft versie (Ga naar <a href="%public_url%">publieke versie</a>)
-    online_public.raw: Online / Public version
+    online_public.raw: Online / Publieke versie
     offline.raw: Offline
     "go_to_draft_version.%url%.raw": (Ga naar <a href="%url%">draft versie</a>)
   admin:
     publish:
       flash:
-        success_published: The page has been published
-        success_scheduled: Publishing of the page has been scheduled
+        success_published: De pagina staat online
+        success_scheduled: De publicatie van de pagina staat ingepland
     unpublish:
       flash:
-        success_unpublished: The page has been unpublished
-        success_scheduled: Unpublishing of the page has been scheduled
+        success_unpublished: De pagina staat offline
+        success_scheduled: Het offline zetten van de pagina staat ingepland
     unschedule:
       flash:
-        success: The scheduling has been canceled
+        success: De geplande taak is geannuleerd
     delete:
       flash:
-        success: The page is deleted!
+        success: De pagina is verwijderd!
     duplicate:
       flash:
-        success: The page has been duplicated!
+        success: De pagina is gedupliceerd!
     revert:
       flash:
         success: The page contents has been reverted
     edit:
       flash:
-        success: The page has been edited
+        success: De pagina is bewerkt
         locked: The page is currently being edited by %users%
         locked_success: An automatic backup has been created because the page is being edited by another user
     new_page:
       title:
-        default: New page
+        default: Nieuwe pagina
     list:
       header:
-        title: Title
-        created_at: Created At
-        updated_at: Updated At
+        title: Titel
+        created_at: Gemaakt op
+        updated_at: Bewerkt op
         online: Online
       filter:
-        title: Title
-        created_at: Created At
-        updated_at: Updated At
+        title: Titel
+        created_at: Gemaakt op
+        updated_at: Bewerkt op
         online: Online
       online: (Online)
       offline: (Offline)
-      additional_title: This list contains all the pages, chronologically ordered by updated date.
+      additional_title: Deze lijst bevat alle pagina's chronologisch gesorteerd op laatste wijziging.
   tab:
     properties:
       title: Properties
     menu:
       title: Menu
     permissions:
-      title: Permissions
+      title: Permissies
     searcher:
-      title: Searcher
+      title: Zoeker
   modal:
     add_homepage:
-      h: Add homepage
+      h: Voeg homepagina toe
       form:
         title:
-          label: Title
+          label: Titel
         type:
           label: Type
         add:
-          label: Add
+          label: Toevoegen
         cancel:
-          label: Cancel
+          label: Annuleer
     unpublish:
-      title: Unpublish
-      body: Are you sure you want to unpublish this page? If you do this, the page will be offline!
+      title: Publiceren ongedaan maken
+      body: Weet u zeker dat u wilt de publicatie van deze pagina ongedaan maken? Als u dit doet, zal de pagina offline worden gehaald!
       later:
         label: Unpublish later
         button: Unpublish later
-        cancel: Cancel
+        cancel: Annuleer
       now:
         button: Unpublish
-        cancel: Cancel
+        cancel: Annuleer
     publish:
-      title: Publish
-      body: Are you sure you want to publish this page? If you do this, the page will be online!
+      title: Publiceer
+      body: Weet u zeker dat u deze pagina wilt publiceren? Als u dit doet, zal de pagina online zijn!
       later:
-        label: Publish later
-        button: Publish later
-        cancel: Cancel
+        label: Publiceer later
+        button: Publiceer later
+        cancel: Annuleer
       now:
         button: Publish
-        cancel: Cancel
+        cancel: Annuleer
     versions:
-      title: Versions
+      title: Versies
       table:
         type: Type
-        last_modified: Last modified
+        last_modified: Laatst gewijzigd
         user: User
-        actions: Actions
+        actions: Acties
       actions:
         preview: Preview
-        revert: Revert
+        revert: Terug draaien
     add_subpage:
       title: Subpagina toevoegen
       label:
-        title: Title
+        title: Titel
         type: Type
       button:
-        add: Add
-        cancel: Cancel
+        add: Voeg toe
+        cancel: Annuleer
     delete_page:
-      'title.%page%': Delete page '%page%'
-      'body.%page%': This will remove the page completely in all languages! Are you really sure about this?
+      'title.%page%': Verwijderen van de pagina '%page%'
+      'body.%page%': Hiermee verwijdert u de pagina volledig in alle talen! Bent u echt zeker over dit?
       button:
-        delete: Delete
-        cancel: Cancel
+        delete: Verwijder
+        cancel: Annuleer
     duplicate_page:
-      'title.%page%': Duplicate page '%page%'
+      'title.%page%': Dupliceer pagina '%page%'
       label:
-        new_title: New title
+        new_title: Nieuwe titel
       button:
-        duplicate: Duplicate
-        cancel: Cancel
+        duplicate: Dupliceer
+        cancel: Annuleer
     recopyfromlanguage:
       button:
-        copy: Copy
-        cancel: Cancel
+        copy: Kopieer
+        cancel: Annuleer
     export_pagetemplate:
       button:
         title: Export pagetemplate
