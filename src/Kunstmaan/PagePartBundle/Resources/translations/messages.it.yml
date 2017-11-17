@@ -1,19 +1,19 @@
 ---
 pagepart:
   header:
-    type: 'Tipo di intestazione'
-    title: 'Titolo'
+    type: 'Header type'
+    title: 'Title'
   link:
     internal: Internal
     external: External
     email: Email
-    choose: 'Scegli link'
-    openinnewwindow: 'Apri in una nuova finestra'
-    text: 'Testo'
+    choose: 'Choose link'
+    openinnewwindow: 'Open in new window'
+    text: 'Text'
   html:
-    content: 'Contenuti'
+    content: 'Contents'
   text:
-    content: 'Contenuti'
+    content: 'Contents'
   buttons:
     move_up: Move up
     move_down: Move down
