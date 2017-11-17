@@ -35,10 +35,10 @@ media:
     new: Add media to "%folder%"
   folder:
     addsub:
-      action: Add subfolder
+      action: Submap toevoegen
       action_short: Add
       modal:
-        title: Add subfolder
+        title: Submap toevoegen
         save: Add
       form:
         name: Name
@@ -53,12 +53,12 @@ media:
       modal:
         title: Empty folder
         text: Are you sure you want to delete the content of folder "%folder%"?
-        checkbox: Also delete subfolders
+        checkbox: Ook submappen verwijderen
         save: Empty
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": No subfolders yet.
+      "no": Nog geen submappen.
     delete:
       action: Delete this folder
       action_short: Delete
@@ -85,11 +85,11 @@ media:
     upload_more: Upload more files
     back_to_folder: Back to folder
     upload_finished: The file upload has finished.
-    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
+    not_available: De bulk upload functie is niet beschikbaar voor u. Uw browser biedt geen ondersteuning voor Flash, Silverlight of HTML5.
   slide:
-    add: Add Slide
+    add: Slide toevoegen
     modal:
-      title: Add Slide
+      title: Slide toevoegen
       save: Add
   video:
     add: Add Video
