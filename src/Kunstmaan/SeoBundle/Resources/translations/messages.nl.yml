@@ -3,11 +3,11 @@ seo:
   robots:
     title: Robots
     tip: 'Tip:'
-    warning: This is a default value and example, no custom robots.txt has been defined.
-    moreinfo: You can find more information about the Kunstmaan robots.txt at our
+    warning: Dit is een standaard waarde en voorbeeld. Er is geen eigen robots.txt ingesteld.
+    moreinfo: U kunt meer informatie vinden over de Kunstmaan robots.txt op onze
   action:
-    save: Save
-    cancel: Cancel
+    save: Opslaan
+    cancel: Annuleren
     preview: Preview
   form:
     og:
@@ -23,29 +23,29 @@ seo:
     twitter:
       title: Title
       title_info_text: De titel van uw twitter card. Falls back to SEO Meta title
-      description: Description
+      description: Omschrijving
       description_info_text: De omschrijving van uw twitter card. Falls back to SEO Meta description
       sitehandle: Site Handle
       sitehandle_info_text: Twitter handle van de website of uw organisatie. Deze waarde is verplicht om twitter cards te laten werken.
       creatorhandle: Creator Handle
       creatorhandle_info_text: Twitter handle van de publisher van uw pagina.
-      image: Image
+      image: Foto
     robots:
-      noindex: No index
+      noindex: Geen index
       nofollow: Geen follow
       noarchive: Geen archive
       nosnippet: Geen snippet
-      notranslate: No translate
-      noimageindex: No image index
+      notranslate: Geen vertaling
+      noimageindex: Geen image index
     seo:
       meta_title:
-        label: Title
+        label: Titel
         info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s.
       meta_description:
-        label: Meta description
+        label: Meta omschrijving
       meta_robots:
         label: Meta robots
-        placeholder: Choose robot tags
+        placeholder: Kies robot tags
       extra_metadata:
         label: Extra metadata
   pagetabs:
