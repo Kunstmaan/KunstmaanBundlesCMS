@@ -2,10 +2,10 @@
 translator:
   translator:
     title: Translations
-    inline_edit_title: Enter translation
+    inline_edit_title: translator.translator.inline_edit_title
     emptytext: Not translated
-    invalid_translation: Invalid translation!
-    fatal_error_occurred: A fatal error occured while saving the translation. Please try again later.
+    invalid_translation: A fordítás nem megfelelő
+    fatal_error_occurred: Sajnos hiba történt, próbálja meg újra
   translations: Translations
   translation_not_unique: The translation should be unique
 settings:
@@ -17,9 +17,9 @@ settings:
     import_translations: Import
     actions: Actions
     export_translations: Export to CSV
-    not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
+    not_live_warning: "A fordítás nem azonnali idejű!"
     choose_language: "Choose a language"
-    succesful_added: "Translation succesfully created"
+    succesful_added: "Sikeresen hozzá lett adva."
     succesful_edited: "Translation succesfully edited"
 kuma_translator:
   form:
