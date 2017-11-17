@@ -14,26 +14,26 @@ settings:
   maintanance: Maintenance
   scheduled: Scheduled Jobs
   version:
-    bundle: Bundle versions
-    composer_lock_not_found: No composer.lock file found in your project root
-    error_parsing_composer: Error parsing composer.lock file, no valid json
+    bundle: Versioni dei Bundle
+    composer_lock_not_found: Il file composer.lock non è stato trovato nella root del tuo progetto
+    error_parsing_composer: Errore in composer.lock, non è un json valido
     error: Something went wrong while fetching the version information. Please try again later.
-    moreinfo: To update the bundles, run a composer update. It might be possible that you need to upgrade other bundles if you get conflicts.
+    moreinfo: Per aggiornare i bundle esegui composer update. Se hai conflitti è probabile che devi aggiornare altri bundle.
     uptodate: is up-to-date
     toupdate: can be updated to
     unknown: version information unknown
 tools:
   title: Tools
-  clear_frontend_cache: Clear frontend cache
-  clear_backend_cache: Clear backend cache
-  clear_all_caches: Clear all caches
-  shutdown: Shutdown
+  clear_frontend_cache: Cancella la cache frontend
+  clear_backend_cache: Cancella la cache frontend backend
+  clear_all_caches: Cancella tutte le cache
+  shutdown: Speghi
 search:
   title: Search
 form:
   cancel: Cancel
   delete: Delete
-  deletesure: Are you sure you want to delete this?
+  deletesure: Sei sicuro di voler eliminare questo ?
   edit: Edit
   add: Add New
   'add.%subject%': 'Add New %subject%'
