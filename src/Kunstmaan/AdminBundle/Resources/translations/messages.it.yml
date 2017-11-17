@@ -1,29 +1,29 @@
 ---
 pages:
-  title: Pages
-  parts: PageParts
-  draft: Draft
-  pagenottranslated: This page is not translated
-  copyfrom: Copy from language
-  createemptypage: Create as an empty page
+  title: Pagine
+  parts: Parte delle Pagine
+  draft: Bozza
+  pagenottranslated: Questa pagina non è tradotta
+  copyfrom: Copia dalla lingua
+  createemptypage: Crea come pagina vuota
   movingconfirmation: You are moving "%title%" to "%target%", are you sure?
 modules:
-  title: Modules
+  title: Moduli
 settings:
-  title: Settings
-  maintanance: Maintenance
-  scheduled: Scheduled Jobs
+  title: Impostazioni
+  maintanance: Manutenzione
+  scheduled: Lavori Pianificati
   version:
     bundle: Versioni dei Bundle
     composer_lock_not_found: Il file composer.lock non è stato trovato nella root del tuo progetto
     error_parsing_composer: Errore in composer.lock, non è un json valido
-    error: Something went wrong while fetching the version information. Please try again later.
+    error: Qualcosa è andato storto leggendo le informazioni sulla versione. Per favore riprova nuovamente.
     moreinfo: Per aggiornare i bundle esegui composer update. Se hai conflitti è probabile che devi aggiornare altri bundle.
-    uptodate: is up-to-date
-    toupdate: can be updated to
-    unknown: version information unknown
+    uptodate: è aggiornato
+    toupdate: può essere aggiornato a
+    unknown: informazioni sulla versione sconosciute
 tools:
-  title: Tools
+  title: Accessori
   clear_frontend_cache: Cancella la cache frontend
   clear_backend_cache: Cancella la cache frontend backend
   clear_all_caches: Cancella tutte le cache
@@ -31,31 +31,31 @@ tools:
 search:
   title: Search
 form:
-  cancel: Cancel
-  delete: Delete
+  cancel: Cancella
+  delete: Elimina
   deletesure: Sei sicuro di voler eliminare questo ?
-  edit: Edit
-  add: Add New
-  'add.%subject%': 'Add New %subject%'
-  save: Save
-  publish: Publish
-  unpublish: Unpublish
-  saveasdraft: Save as draft
-  name: Name
-  type: Type
-  error: Error
-  warning: Warning
-  headsup: Heads up
+  edit: Modifica
+  add: Aggiungi nuovo
+  'add.%subject%': 'Aggiungi nuovo %subject%'
+  save: Salva
+  publish: Pubblica
+  unpublish: Sospendi
+  saveasdraft: Salva come bozza
+  name: Nome
+  type: Tipo
+  error: Errore
+  warning: Avvertimento
+  headsup: Avviso
   forgot:
-    password: Forgot my password.
-  permissions: Permissions
-  properties: Properties
-  createdat: Created At
-  updatedat: Updated At
-  actions: Actions
-  addfilter: Add filter
-  choosetypefilter: Filter on
-  versions: Versions
+    password: Password dimenticata.
+  permissions: Permessi
+  properties: Proprietà
+  createdat: Creato il
+  updatedat: Modificato il
+  actions: Azioni
+  addfilter: Aggiungi filtro
+  choosetypefilter: Filtro su
+  versions: Versioni
   button:
     dropdown:
       more: More
@@ -64,9 +64,9 @@ form:
       filter: Filter
 omnext:
   home: Home
-  title: Welcome!
-  welcome: Welcome.
-  information: <strong>Information.</strong> There are no new notifications.
+  title: Benvenuto!
+  welcome: Benvenuto.
+  information: <strong>Informazione.</strong> Non ci sono nuove notifiche.
 permissions:
   you_made_changes: You have made changes to the permissions on this page.
   apply_recursively: Apply these changes recursively on all child pages
