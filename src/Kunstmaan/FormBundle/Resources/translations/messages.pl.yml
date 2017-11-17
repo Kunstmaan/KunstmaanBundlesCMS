@@ -3,102 +3,102 @@ kuma_form:
   form:
     page_admin:
       title:
-        label: Title
+        label: Tytuł
       thanks:
         label: Wiadomość po pomyslnym wysłaniu
       subject:
-        label: Subject
+        label: Temat
       from_email:
-        label: From e-mail
+        label: Nadawca e-mail
       to_email:
-        label: To e-mail
+        label: Odbiorca e-mail
     checkbox_page_part:
       label:
-        label: Label
+        label: Etykieta
       required:
-        label: Required
+        label: Wymagane
       errormessage_required:
-        label: Error message required
+        label: Komunikat błędu w przypadku nieuzupełnienia
     choice_page_part:
       label:
-        label: Label
+        label: Etykieta
       required:
-        label: Required
+        label: Wymagane
       errormessage_required:
-        label: Error message required
+        label: Komunikat błędu w przypadku nieuzupełnienia
       expanded:
-        label: Expanded
+        label: Rozwinięta
       multiple:
-        label: Multiple
+        label: Wielokrotnego wyboru
       choices:
-        label: Choices
+        label: Opcje
       empty_value:
         label: Pusta wartośc
     email_page_part:
       label:
-        label: Label
+        label: Etykieta
       required:
-        label: Required
+        label: Wymagane
       errorMessageRequired:
-        label: Error message required
+        label: Komunikat błędu w przypadku nieuzupełnienia
       errorMessageInvalid:
-        label: Error message invalid
+        label: Komunikat błędu w przypadku błędnego maila
     file_upload_page_part:
       label:
-        label: Label
+        label: Etykieta
       required:
-        label: Required
+        label: Wymagane
       errormessage_required:
-        label: Error message required
+        label: Komunikat błędu w przypadku nieuzupełnienia
     multi_line_text_page_part:
       label:
-        label: Label
+        label: Etykieta
       required:
-        label: Required
+        label: Wymagane
       errormessage_required:
-        label: Error message required
+        label: Komunikat błędu w przypadku nieuzupełnienia
       regex:
-        label: regex
+        label: wyrażenie regularne
       errormessage_regex:
-        label: Error message regex
+        label: Komunikat błędu w przypadku nieuzupełnienia
     single_line_text_page_part:
       label:
-        label: Label
+        label: Etykieta
       required:
-        label: Required
+        label: Wymagane
       errormessage_required:
-        label: Error message required
+        label: Komunikat błędu w przypadku nieuzupełnienia
       regex:
         label: Wyrażenia regularne
       errormessage_regex:
-        label: Error message regex
+        label: Komunikat błędu
     submit_button_page_part:
       label:
-        label: Label
+        label: Etykieta
   button:
-    export_to: Export to
+    export_to: Eksportuj do
   list:
     header:
-      title: Title
-      language: Language
-      path: Form path
+      title: Tytuł
+      language: Język
+      path: Ścieżka formularza
     filter:
-      title: Title
+      title: Tytuł
       online: Online
   submission:
     list:
       header:
-        created: Date
-        language: Language
+        created: Data
+        language: Język
         ip_address: Address IP
 formsubmissions:
   index:
-    title: Form pages with submissions
+    title: Strony z wysłanymi formularzami
   menu:
-    title: Form submissions
+    title: Wysłane formularze
   list:
-    title: Form submissions for page
+    title: Wysłane formularze dla strony
   edit:
-    title: Form submission for page
+    title: Wysłane formularze dla strony
 subaction:
-  formsubmissions: "Submissions"
+  formsubmissions: "Przesłane formularze"
