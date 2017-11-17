@@ -4,7 +4,7 @@ settings:
   group:
     name: Name
     edit: Edit group
-    add: Add group
+    add: Agregar groupo
     roles: Roles
     roles_placeholder: Choose the roles...
   users: Users
