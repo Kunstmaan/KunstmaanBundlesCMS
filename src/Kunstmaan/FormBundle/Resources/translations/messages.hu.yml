@@ -58,9 +58,9 @@ kuma_form:
       errormessage_required:
         label: Error message required
       regex:
-        label: regex
+        label: Regex
       errormessage_regex:
-        label: Error message regex
+        label: '''Regex'' hibaüzenet'
     single_line_text_page_part:
       label:
         label: Label
@@ -69,9 +69,9 @@ kuma_form:
       errormessage_required:
         label: Error message required
       regex:
-        label: regex
+        label: Regex
       errormessage_regex:
-        label: Error message regex
+        label: '''Regex'' hibaüzenet'
     submit_button_page_part:
       label:
         label: Label
