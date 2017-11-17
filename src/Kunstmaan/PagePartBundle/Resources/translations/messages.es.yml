@@ -7,7 +7,7 @@ pagepart:
     internal: Internal
     external: External
     email: Email
-    choose: 'Choose link'
+    choose: 'Elija un link'
     openinnewwindow: 'Open in new window'
     text: 'Text'
   html:
