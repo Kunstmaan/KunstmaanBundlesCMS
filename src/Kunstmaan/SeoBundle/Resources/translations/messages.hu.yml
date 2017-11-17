@@ -4,32 +4,32 @@ seo:
     title: Robots
     tip: 'Tip:'
     warning: Ez csak egy alapértelmezett érték és példa, nincsen robots.txt feltöltve
-    moreinfo: You can find more information about the Kunstmaan robots.txt at our
+    moreinfo: További információk
   action:
-    save: Save
-    cancel: Cancel
-    preview: Preview
+    save: Mentés
+    cancel: Mégse
+    preview: Előnézet
   form:
     og:
-      title: OG Title
-      description: OG Description
+      title: Cím
+      description: Leírás
       url: url
-      type: OG Type
-      image: OG Image
+      type: Típus
+      image: Kép
       article:
         author: OG cikk szerző
         publisher: OG cikk közlő
         section: OG cikk szekció
     twitter:
-      title: Title
+      title: Cím
       title_info_text: A Twitter kártyád címe. Háttérbe szorítja a SEO Meta címet
-      description: Description
+      description: Leírás
       description_info_text: A twitter kártyád leírása. Háttérbe szorítja a SEO Meta leírást
-      sitehandle: Site Handle
+      sitehandle: Oldal kezelője
       sitehandle_info_text: A weblap tulajdonos Twitter kezelője. Ez az érték szükséges ahhoz, hogy működjenek a twitter kártyák.
-      creatorhandle: Creator Handle
+      creatorhandle: Oldal létrehozója
       creatorhandle_info_text: Twitter handle of your page publisher.
-      image: Image
+      image: Kép
     robots:
       noindex: No index
       nofollow: No follow
@@ -39,8 +39,8 @@ seo:
       noimageindex: No image index
     seo:
       meta_title:
-        label: Title
-        info_text: The title tag is often used on search engine results pages.
+        label: Cím
+        info_text: A cím mezőt gyakran használják a kereső motorok a találati listában.
       meta_description:
         label: Meta leírás
       meta_robots:
@@ -55,4 +55,4 @@ seo:
     seo:
       title: SEO
     social:
-      title: Social
+      title: Közösség
