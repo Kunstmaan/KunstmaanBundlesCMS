@@ -1,50 +1,50 @@
 ---
 pagepart:
   header:
-    type: 'Fejléc típusa'
-    title: 'Cím'
+    type: 'Header type'
+    title: 'Title'
   link:
     internal: Internal
     external: External
     email: Email
-    choose: 'Link oldalelem'
-    openinnewwindow: 'Új ablakban nyissa meg'
-    text: 'Link szövege'
+    choose: 'Choose link'
+    openinnewwindow: 'Open in new window'
+    text: 'Text'
   html:
-    content: 'Html tartalom'
+    content: 'Contents'
   text:
-    content: 'Tartalom'
+    content: 'Contents'
   buttons:
-    move_up: Felfelé mozgatás
-    move_down: Lefelé mozgatás
-    edit: Szerkesztés
-    delete: Törlés
-    resize: Gomb újraméretezése
+    move_up: Move up
+    move_down: Move down
+    edit: Edit
+    delete: Delete
+    resize: Minimize-Maximize
 region:
   button:
-    min: Minimalizálás
-    max: Maximalizálás
+    min: Minimize
+    max: Maximize
 kuma_pagepart:
   tab:
     content:
-      title: Tartalom
+      title: Content
   modal:
     delete:
-      'title.%type%': "'%type%' oldalelem törlése"
-      'text.%type%': Ez nem távolítja el teljesen az oldalelemet, mentsd az oldalt, hogy a módosítás végleges legyen.
+      'title.%type%': "Delete pagepart '%type%'"
+      'text.%type%': This will not remove the pagepart completely, save the page to remove this pagepart permanently.
       button:
-        delete: Törlés
-        cancel: Mégse
+        delete: Delete
+        cancel: Cancel
   select:
-    add: Oldalelem hozzáadása
+    add: Add a pagepart
   template:
     modal:
       change:
-        current: Jelenlegi
-        title: Sablon módosítása
+        current: Current
+        title: Change template
         button:
-          open: Sablon módosítása
-          change: Módosítás
-          cancel: Mégse
+          open: Change template
+          change: Change
+          cancel: Cancel
         message:
-          'no_admin_found.%name%': 'NINCS ADMINJA a következőnek: %name%'
+          'no_admin_found.%name%': NO ADMIN FOUND for %name%
