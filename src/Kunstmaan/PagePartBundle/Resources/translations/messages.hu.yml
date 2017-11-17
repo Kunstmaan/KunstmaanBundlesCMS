@@ -11,7 +11,7 @@ pagepart:
     openinnewwindow: 'Open in new window'
     text: 'Text'
   html:
-    content: 'Contents'
+    content: 'Html tartalom'
   text:
     content: 'Contents'
   buttons:
@@ -47,4 +47,4 @@ kuma_pagepart:
           change: Change
           cancel: Cancel
         message:
-          'no_admin_found.%name%': NO ADMIN FOUND for %name%
+          'no_admin_found.%name%': 'NINCS ADMINJA a következőnek: %name%'
