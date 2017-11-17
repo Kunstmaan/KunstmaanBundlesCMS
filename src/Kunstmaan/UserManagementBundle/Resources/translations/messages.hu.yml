@@ -12,7 +12,7 @@ settings:
     username: Username
     password: Password
     repeatedpassword: Repeat password
-    adminlang: Admin interface language
+    adminlang: Felhasználó nyelve az admin felületen
     email: E-mail
     enabled: Enabled
     roles: Groups
@@ -28,13 +28,13 @@ kuma_user:
   roles:
     add:
       flash:
-        'success.%role%': Role '%role%' has been created!
+        'success.%role%': A(z) '%role%' jogosultság létrehozva!
     edit:
       flash:
-        'success.%role%': Role '%role%' has been edited!
+        'success.%role%': A(z) '%role%' jogosultság módosítva!
     delete:
       flash:
-        'success.%role%': Role '%role%' has been deleted!
+        'success.%role%': A(z) '%role%' jogosultság törölve!
   users:
     adminlist:
       header:
@@ -49,13 +49,13 @@ kuma_user:
         enabled: Enabled
     add:
       flash:
-        'success.%username%': User '%username%' has been created!
+        'success.%username%': A(z) '%username%' felhasználó létrehozva!
     edit:
       flash:
-        'success.%username%': User '%username%' has been edited!
+        'success.%username%': A(z) '%username%' felhasználó módosítva!
     delete:
       flash:
-        'success.%username%': User '%username%' has been deleted!
+        'success.%username%': A(z) '%username%' felhasználó törölve!
   group:
     adminlist:
       header:
