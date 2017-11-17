@@ -1,113 +1,113 @@
 ---
 pages:
-  title: Pages
+  title: Pagina's
   parts: PageParts
-  draft: Draft
-  pagenottranslated: This page is not translated
-  copyfrom: Copy from language
-  createemptypage: Create as an empty page
-  movingconfirmation: You are moving "%title%" to "%target%", are you sure?
+  draft: Concept
+  pagenottranslated: Deze pagina is niet vertaald
+  copyfrom: Kopieer van taal
+  createemptypage: Als lege pagina aanmaken
+  movingconfirmation: U gaat "%title%" verplaatsen naar "%target%". Weet u dit zeker?
 modules:
   title: Modules
 settings:
-  title: Settings
-  maintanance: Maintenance
-  scheduled: Scheduled Jobs
+  title: Instellingen
+  maintanance: Onderhoud
+  scheduled: Geplande taken
   version:
     bundle: Bundle versies
-    composer_lock_not_found: No composer.lock file found in your project root
+    composer_lock_not_found: Geen composer.lock bestand gevonden in de project root
     error_parsing_composer: Fout bij het parsen van het composer.lock bestand, geen geldige json
-    error: Something went wrong while fetching the version information. Please try again later.
+    error: Er ging iets fout bij het ophalen van de versie informatie. Probeer het later nog eens.
     moreinfo: Voer composer update uit om de bundles te updaten. Het is mogelijk dat andere bundles moeten worden geüpgraded in het geval van conflicten.
     uptodate: is up-to-date
     toupdate: kan worden geüpdated naar
-    unknown: version information unknown
+    unknown: versiegegevens onbekend
 tools:
   title: Tools
   clear_frontend_cache: Frontend cache legen
-  clear_backend_cache: Clear backend cache
-  clear_all_caches: Clear all caches
-  shutdown: Shutdown
+  clear_backend_cache: Backend cache legen
+  clear_all_caches: Alle caches legen
+  shutdown: Uitschakelen
 search:
-  title: Search
+  title: Zoeken
 form:
-  cancel: Cancel
-  delete: Delete
-  deletesure: Are you sure you want to delete this?
-  edit: Edit
-  add: Add New
-  'add.%subject%': 'Add New %subject%'
-  save: Save
-  publish: Publish
-  unpublish: Unpublish
-  saveasdraft: Save as draft
-  name: Name
+  cancel: Annuleer
+  delete: Verwijder
+  deletesure: Weet u zeker dat u dit wilt verwijderen?
+  edit: Bewerken
+  add: Toevoegen
+  'add.%subject%': 'Toevoegen van nieuwe %subject%'
+  save: Opslaan
+  publish: Publiceren
+  unpublish: Publicatie ongedaan maken
+  saveasdraft: Als concept opslaan
+  name: Naam
   type: Type
-  error: Error
-  warning: Warning
+  error: Fout
+  warning: Waarschuwing
   headsup: Heads-up
   forgot:
-    password: Forgot my password.
-  permissions: Permissions
-  properties: Properties
-  createdat: Created At
-  updatedat: Updated At
-  actions: Actions
-  addfilter: Add filter
-  choosetypefilter: Filter on
-  versions: Versions
+    password: Ik ben mijn wachtwoord vergeten.
+  permissions: Permissies
+  properties: Eigenschappen
+  createdat: Aangemaakt op
+  updatedat: Gewijzigd op
+  actions: Acties
+  addfilter: Filter toevoegen
+  choosetypefilter: Filter op
+  versions: Versies
   button:
     dropdown:
-      more: More
+      more: Meer
     filter:
-      clear: Clear
-      filter: Filter
+      clear: Wissen
+      filter: Filteren
 omnext:
   home: Home
-  title: Welcome!
-  welcome: Welcome.
-  information: <strong>Information.</strong> There are no new notifications.
+  title: Welkom!
+  welcome: Welkom.
+  information: <strong>Informatie.</strong> Er zijn geen nieuwe notificaties.
 permissions:
-  you_made_changes: You have made changes to the permissions on this page.
-  apply_recursively: Apply these changes recursively on all child pages
-  review_changes: Review your changes
-  changes: Permission changes
-  permissions_added: 'The following permissions will be <strong>added</strong>:'
-  permissions_removed: 'The following permissions will be <strong>removed</strong>:'
-  role_name: Role name
+  you_made_changes: U heeft de permissies op deze pagina gewijzigd.
+  apply_recursively: Deze wijzigingen recursief toepassen op alle onderliggende pagina 's
+  review_changes: Controleer uw wijzigingen
+  changes: Permissie wijzigingen
+  permissions_added: 'De volgende permissies worden <strong>toegevoegd</strong>:'
+  permissions_removed: 'De volgende permissies worden <strong>verwijderd</strong>:'
+  role_name: Rol naam
 errors:
   oauth:
     invalid: Het was niet mogelijk om in te loggen via Google OAuth, waarschijnlijk is je domeinnaam niet toegelaten.
 kuma_admin:
   flash_type:
-    success: Success
-    warning: Warning
-    error: Error
+    success: Succes
+    warning: Waarschuwing
+    error: Fout
     info: Info
-    danger: Danger
+    danger: Gevaar
   dashboard:
     configuration:
       title:
-        label: Title
+        label: Titel
       content:
         label: Inhoud (raw html)
   edit:
     flash:
-      success: The welcome page has been edited!
+      success: De welkomstpagina is bewerkt!
   password_check:
     flash:
-      error: Your password has not yet been changed
+      error: U heeft uw wachtwoord nog niet gewijzigd
   ga_ajax_controller:
     flash:
-      success: Succesfully saved!
+      success: Met succes opgeslagen!
   media:
     flash:
-      'deleted_success.%medianame%': Entry '%medianame%' has been deleted!
+      'deleted_success.%medianame%': Item '%medianame%' is verwijderd!
       drop_success: Bestand is met succes geupload!
-      drop_unrecognized: Could not recognize what you dropped!
+      drop_unrecognized: Bestand wordt niet herkend!
   login:
-    forgot_password: Forgot my password
-    invalid_credentials: Wrong password or email
+    forgot_password: Ik ben mijn wachtwoord vergeten
+    invalid_credentials: Verkeerde gebruikersnaam en/of wachtwoord
 kuma_js:
   auto_collapse:
-    more_button_label: More
+    more_button_label: Meer
