@@ -6,7 +6,7 @@ kuma_lead_generation:
       subscribe: Subscribe
       no_thanks: No Thanks!
     label:
-      email: E-mail
+      email: Email
     message:
       thanks: Thanks!
   on_exit_intent:
