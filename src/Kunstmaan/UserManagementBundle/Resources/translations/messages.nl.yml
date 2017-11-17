@@ -1,68 +1,68 @@
 ---
 settings:
-  groups: Groepen
+  groups: Groups
   group:
-    name: Naam
-    edit: Bewerk groep
-    add: Groep toevoegen
-    roles: Rollen
-    roles_placeholder: Kies rollen…
-  users: Gebruikers
+    name: Name
+    edit: Edit group
+    add: Add group
+    roles: Roles
+    roles_placeholder: Choose the roles...
+  users: Users
   user:
-    username: Gebruikersnaam
-    password: Wachtwoord
-    repeatedpassword: Herhaal wachtwoord
-    adminlang: Admin interface taal
+    username: Username
+    password: Password
+    repeatedpassword: Repeat password
+    adminlang: Admin interface language
     email: E-mail
-    enabled: Ingeschakeld
-    roles: Groepen
+    enabled: Enabled
+    roles: Groups
     roles_placeholder: Choose the permission groups...
-    add: Gebruiker toevoegen
-    edit: Gebruiker bewerken
-  roles: Rollen
+    add: Add User
+    edit: Edit User
+  roles: Roles
   role:
-    role: Rol
-    add: Rol toevoegen
-    edit: Rol bewerken
+    role: Role
+    add: Add Role
+    edit: Edit Role
 kuma_user:
   roles:
     add:
       flash:
-        'success.%role%': Rol '%role%' werd aangemaakt!
+        'success.%role%': Role '%role%' has been created!
     edit:
       flash:
-        'success.%role%': Rol '%role%' werd gewijzigd!
+        'success.%role%': Role '%role%' has been edited!
     delete:
       flash:
-        'success.%role%': Rol '%role%' werd verwijderd!
+        'success.%role%': Role '%role%' has been deleted!
   users:
     adminlist:
       header:
-        username: Gebruikersnaam
+        username: Username
         email: E-mail
-        enabled: Ingeschakeld
-        last_login: Laatste login
-        groups: Groepen
+        enabled: Enabled
+        last_login: Last login
+        groups: Groups
       filter:
-        username: Gebruikersnaam
+        username: Username
         email: E-mail
-        enabled: Ingeschakeld
+        enabled: Enabled
     add:
       flash:
-        'success.%username%': Gebruiker '%username%' werd aangemaakt!
+        'success.%username%': User '%username%' has been created!
     edit:
       flash:
-        'success.%username%': Gebruiker '%username%' werd aangemaakt!
+        'success.%username%': User '%username%' has been edited!
     delete:
       flash:
-        'success.%username%': Gebruiker '%username%' werd aangemaakt!
+        'success.%username%': User '%username%' has been deleted!
   group:
     adminlist:
       header:
-        name: Naam
-        roles: Rollen
+        name: Name
+        roles: Roles
       filter:
-        name: Naam
+        name: Name
     add:
       flash:
         success: Group %groupname% has been created!
@@ -75,6 +75,6 @@ kuma_user:
   role:
     adminlist:
       header:
-        role: Rol
+        role: Role
       filter:
-        role: Rol
+        role: Role
