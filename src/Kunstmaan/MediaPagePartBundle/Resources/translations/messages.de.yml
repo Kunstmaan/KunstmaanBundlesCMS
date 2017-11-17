@@ -8,8 +8,8 @@ mediapagepart:
     link: 'Choose link'
     openinnewwindow: 'Open in new window?'
   slide:
-    choose: 'Choose presentation'
+    choose: 'Presentation Auswählen'
   video:
     choose: 'Choose video'
   audio:
-    choose: 'Choose audio'
+    choose: 'Audio Auswählen'
