@@ -1,7 +1,7 @@
 ---
 translator:
   translator:
-    title: Translations
+    title: Traductions
     inline_edit_title: Enter translation
     emptytext: Not translated
     invalid_translation: Invalid translation!
@@ -10,17 +10,17 @@ translator:
   translation_not_unique: The translation should be unique
 settings:
   translator:
-    add: Add translation
-    edit: Edit translation
-    refresh_live: Refresh live
-    import_translations_forced: Import forced
-    import_translations: Import
+    add: Ajouter une traduction
+    edit: Modifier une traduction
+    refresh_live: Rafraîchir live
+    import_translations_forced: Importer des traductions et écraser
+    import_translations: Importer des traductions
     actions: Actions
     export_translations: Exporter vers csv
-    not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
-    choose_language: "Choose a language"
-    succesful_added: "Translation succesfully created"
-    succesful_edited: "Translation succesfully edited"
+    not_live_warning: "Les traductions sur le site live ne sont pas à jour, appuyer sur 'Rafraîchir live' pour mettre à jour."
+    choose_language: "Choisir une langue"
+    succesful_added: "Traduction ajoutée avec succès"
+    succesful_edited: "Traduction modifiée avec succès"
 kuma_translator:
   form:
     text_with_locale:
