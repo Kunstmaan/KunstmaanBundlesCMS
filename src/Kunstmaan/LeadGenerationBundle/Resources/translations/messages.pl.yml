@@ -36,7 +36,7 @@ kuma_lead_generation:
     locale_black_list:
       locale:
         label: Locale
-        info_text: Defines the locale that should be blacklisted
+        info_text: Defniuje języki do czarnej listy
     locale_white_list:
       locale:
         label: Locale
@@ -57,18 +57,18 @@ kuma_lead_generation:
       urls:
         label: Urls
         info_text: |
-          Define a list of blacklist url (patterns).
-          Each url on a separate line.
-          You can also use regex expressions.
-          Examples: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+          Zdefiniuj listę adresów znajdujących się na czarnej liście (patterny).
+          Każdy z adresów url oddziel linią
+          Możesz używać wyrażeń regularnych.
+          Przykłady: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
     url_white_list:
       urls:
         label: Urls
         info_text: |
-          Define a list of whitelist url (patterns).
-          Each url on a separate line.
-          You can also use regex expressions.
-          Examples: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+          Zdefiniuj listę przyjaznych adresów (patternów).
+          Każdy z adresów url oddziel linią
+          Możesz używać wyrażeń regularnych.
+          Przykłady: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
   popup:
     add:
       modal:
@@ -93,9 +93,9 @@ kuma_lead_generation:
     'page_title.%name%': Rules for %name%
     add:
       modal:
-        title: Add Rule
+        title: Dodaj regułe
         button:
-          open: Add Rule
+          open: Dodaj regułe
           add: Add
           cancel: Cancel
     list:
