@@ -11,36 +11,36 @@ seo:
     preview: Preview
   form:
     og:
-      title: OG Title
-      description: OG Description
+      title: OG titel
+      description: OG beschrijving
       url: OG Url
       type: OG Type
-      image: OG Image
+      image: OG Foto
       article:
         author: OG Article Author
         publisher: OG Article Publisher
         section: OG Article Section
     twitter:
       title: Title
-      title_info_text: The title of your twitter card. Falls back to SEO Meta title
+      title_info_text: De titel van uw twitter card. Falls back to SEO Meta title
       description: Description
-      description_info_text: The description of your twitter card. Falls back to SEO Meta description
+      description_info_text: De omschrijving van uw twitter card. Falls back to SEO Meta description
       sitehandle: Site Handle
-      sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
+      sitehandle_info_text: Twitter handle van de website of uw organisatie. Deze waarde is verplicht om twitter cards te laten werken.
       creatorhandle: Creator Handle
-      creatorhandle_info_text: Twitter handle of your page publisher.
+      creatorhandle_info_text: Twitter handle van de publisher van uw pagina.
       image: Image
     robots:
       noindex: No index
-      nofollow: No follow
-      noarchive: No archive
-      nosnippet: No snippet
+      nofollow: Geen follow
+      noarchive: Geen archive
+      nosnippet: Geen snippet
       notranslate: No translate
       noimageindex: No image index
     seo:
       meta_title:
         label: Title
-        info_text: The title tag is often used on search engine results pages.
+        info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s.
       meta_description:
         label: Meta description
       meta_robots:
