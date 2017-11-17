@@ -10,8 +10,8 @@ translator:
   translation_not_unique: The translation should be unique
 settings:
   translator:
-    add: Add translation
-    edit: Edit translation
+    add: Aggiungi taduzione
+    edit: Modifica taduzione
     refresh_live: Refresh live
     import_translations_forced: Import forced
     import_translations: Import
