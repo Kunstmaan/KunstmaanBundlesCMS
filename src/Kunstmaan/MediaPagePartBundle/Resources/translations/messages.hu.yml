@@ -5,10 +5,10 @@ mediapagepart:
   image:
     choosefile: 'Choose file'
     alttext: 'Alternative text'
-    link: 'Choose link'
-    openinnewwindow: 'Open in new window?'
+    link: 'Ide linkkeljen a kép'
+    openinnewwindow: 'Új ablakban nyíljon meg'
   slide:
-    choose: 'Choose presentation'
+    choose: 'Slide oldalelem'
   video:
     choose: 'Choose video'
   audio:
