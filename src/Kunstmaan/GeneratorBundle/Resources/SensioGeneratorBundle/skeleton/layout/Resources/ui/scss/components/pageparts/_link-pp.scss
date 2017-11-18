@@ -8,7 +8,7 @@
     margin: $default-margin 0;
 {% if demosite %}
 
-    font-size: 1.5rem;
+    font-size: 15px;
 
     a {
         display: inline-block;
@@ -36,9 +36,9 @@
     @extend .icon--arrow-right;
 
     display: inline-block;
-    margin-left: .9rem;
+    margin-left: 9px;
 
-    font-size: .9rem;
+    font-size: 9px;
 
     &:before {
         @include iconfont-reset;

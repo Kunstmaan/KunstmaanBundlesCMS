@@ -5,11 +5,11 @@
 .header-visual {
     position: relative;
 
-    margin-bottom: 7rem;
+    margin-bottom: 70px;
 
     @media (min-width: $screen-md-min) {
         height: 70vh;
-        max-height: 72rem;
+        max-height: 720px;
         overflow: hidden;
     }
 }
@@ -29,7 +29,7 @@
 }
 
 .header-visual__content {
-    margin-bottom: 4rem;
+    margin-bottom: 40px;
 
     text-align: center;
 
@@ -59,7 +59,7 @@
         margin-top: 0;
 
         color: $white;
-        font-size: 10rem;
+        font-size: 100px;
         font-weight: 100;
     }
 }
@@ -68,7 +68,7 @@
 
     @media (min-width: $screen-md-min) {
         max-width: 50%;
-        margin-bottom: 4.5rem;
+        margin-bottom: 45px;
 
         color: $white;
     }
@@ -78,7 +78,7 @@
     padding: .9em 1.5em;
 
     color: $brand-primary--dark;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 300;
     text-transform: uppercase;
 

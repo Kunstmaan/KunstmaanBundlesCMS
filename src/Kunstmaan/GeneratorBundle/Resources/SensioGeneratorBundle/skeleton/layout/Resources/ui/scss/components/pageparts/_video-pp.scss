@@ -5,7 +5,7 @@
 /* General
    ========================================================================== */
 .video-pp {
-    margin: 3rem 0;
+    margin: 30px 0;
 
     .video-pp__link__img {
         width: 100%;
@@ -29,56 +29,56 @@
         left: 50%;
 
         display: block;
-        width: 10rem;
-        height: 10rem;
-        margin: -5rem 0 0 -5rem;
+        width: 100px;
+        height: 100px;
+        margin: -50px 0 0 -50px;
 
         background: rgba($white, .9);
 
         border-radius: 50%;
 
         color: $brand-primary;
-        font-size: 6.6rem;
-        line-height: 10rem;
+        font-size: 66px;
+        line-height: 100px;
         text-align: center;
 
         &:before {
             content: '';
 
             position: relative;
-            top: .25rem;
-            left: .5rem;
+            top: 3px;
+            left: 5px;
 
             display: inline-block;
 
             border-style: solid;
-            border-width: 2.5rem 0 2.5rem 4rem;
+            border-width: 25px 0 25px 40px;
             border-color: transparent transparent transparent currentColor;
         }
     }
 }
 
 .video-pp__caption {
-    margin: 1rem 0 0;
+    margin: 10px 0 0;
 
-    font-size: 1.4rem;
+    font-size: 14px;
 }
 
 .video-pp__full-width-wrapper {
     position: relative;
 
-    padding: 0 1.5rem;
+    padding: 0 15px;
 
     @media (min-width: $screen-md-min) {
         width: 150%;
 
         .video-pp__caption {
-            width: calc(((100% - 1.5rem) / 3) * 2);
+            width: calc(((100% - 15px) / 3) * 2);
         }
 
         .video-pp__caption__text {
-            max-width: 67rem;
-            padding: 0 1.5rem;
+            max-width: 670px;
+            padding: 0 15px;
             margin: 0 auto;
         }
 

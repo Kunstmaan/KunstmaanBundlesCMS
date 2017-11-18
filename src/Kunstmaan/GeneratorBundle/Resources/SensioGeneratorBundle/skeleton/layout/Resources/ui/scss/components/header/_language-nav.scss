@@ -9,14 +9,14 @@
 
     border-bottom: 1px solid $grey--dark;
 
-    font-size: 1.6rem;
+    font-size: 16px;
 
     @media (min-width: $screen-md-min) {
         float: left;
         position: relative;
         z-index: 5;
 
-        padding: 0 1.4rem;
+        padding: 0 14px;
 
         border-bottom: 0;
 
@@ -45,8 +45,8 @@
 
     @media (min-width: $screen-md-min) {
         display: inline-block;
-        padding-bottom: .1rem;
-        margin-left: .2rem;
+        padding-bottom: 1px;
+        margin-left: 2px;
 
         font-size: .5em;
         line-height: 1;
@@ -84,7 +84,7 @@
     display: inline-block;
     padding: 1.3em .5em;
 
-    font-size: 1.44rem;
+    font-size: 14px;
     font-weight: 400;
     text-transform: uppercase;
 
@@ -95,10 +95,10 @@
 
     @media (min-width: $screen-md-min) {
         display: block;
-        padding: .5em 1.4rem;
+        padding: .5em 14px;
 
         color: $grey;
-        font-size: 1.2rem;
+        font-size: 12px;
         text-align: left;
     }
 }
@@ -107,7 +107,7 @@
 /* Active lang
    ========================================================================== */
 .language-nav__active-lang {
-    font-size: 1.2rem;
+    font-size: 12px;
     font-weight: 400;
     text-transform: uppercase;
 }

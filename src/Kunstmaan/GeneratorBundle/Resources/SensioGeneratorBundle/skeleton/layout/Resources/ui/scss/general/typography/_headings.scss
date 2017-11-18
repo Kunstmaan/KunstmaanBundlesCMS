@@ -10,7 +10,7 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 2rem 0 .8rem;
+    margin: 20px 0 8px;
 
     font-family: $font-family--headings;
     line-height: 1.2;
@@ -28,11 +28,11 @@ h1 {
 {% if demosite %}
     color: $brand-primary;
 {% endif %}
-    font-size: 3.2rem;
+    font-size: 32px;
     font-weight: 300;
 
     @media (min-width: $screen-md-min) {
-        font-size: 4.8rem;
+        font-size: 48px;
     }
 }
 
@@ -40,35 +40,35 @@ h2 {
 {% if demosite %}
     color: $brand-primary;
 {% endif %}
-    font-size: 2.8rem;
+    font-size: 28px;
     font-weight: 300;
 
     @media (min-width: $screen-md-min) {
-        font-size: 4.5rem;
+        font-size: 45px;
     }
 }
 
 h3 {
-    font-size: 2.2rem;
+    font-size: 22px;
     text-transform: uppercase;
 }
 
 h4 {
-    font-size: 1.6rem;
+    font-size: 16px;
     font-weight: 600;
 }
 
 h2,
 h3,
 h4 {
-    margin: 2.5rem 0;
+    margin: 25px 0;
 }
 
 h5,
 h6 {
-    margin: 2.2rem 0;
+    margin: 22px 0;
 
-    font-size: 1.4rem;
+    font-size: 14px;
     font-weight: 400;
     text-transform: uppercase;
 }

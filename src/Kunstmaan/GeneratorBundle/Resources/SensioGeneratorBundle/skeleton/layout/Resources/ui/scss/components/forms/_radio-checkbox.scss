@@ -21,17 +21,17 @@
         position: relative;
 
         display: inline-block;
-        padding-left: 3rem;
+        padding-left: 30px;
 
         &:before {
             content: " ";
 
             position: absolute;
-            top: .4rem;
+            top: 4px;
             left: 0;
 
-            width: 1.8rem;
-            height: 1.8rem;
+            width: 18px;
+            height: 18px;
 
             border: 1px solid $hr-color;
         }
@@ -41,7 +41,7 @@
 
         &:before {
             background: $brand-primary;
-            box-shadow: inset 0 0 0 .4rem $white;
+            box-shadow: inset 0 0 0 4px $white;
         }
     }
 {% endif %}
