@@ -15,13 +15,13 @@
         <header class="app__content__header">
             <div class="row">
                 {% if adminmenu.current %}
-                    <div class="col-sm-6 col-md-8">
+                    <div class="col-sm-6">
                         <h1 class="app__content__header__title">
                             {{ adminmenu.current.label | trans }} {% block page_header_addition %}{% endblock %}
                         </h1>
                     </div>
                 {% endif %}
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-6">
                     <!-- Main-actions -->
                     <div class="js-auto-collapse-buttons page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
                         <div class="btn-group">
@@ -29,6 +29,9 @@
                                 <button type="submit" class="btn btn-primary btn--raise-on-hover">
                                     {{ 'settings.user.edit' | trans }}
                                 </button>
+                                <a href="{{ path('KunstmaanUserManagementBundle_settings_users_key_generate', { 'id' : user.id }) }}" class="btn btn-warning btn--raise-on-hover">
+                                    {{ 'form.generate_api_key' | trans }}
+                                </a>
                                 <a href="{{ path('KunstmaanUserManagementBundle_settings_users') }}" class="btn btn-default btn--raise-on-hover">
                                     {{ 'form.cancel' | trans }}
                                 </a>
@@ -55,6 +58,11 @@
                 {{ tabs_widget(tabPane) }}
             {% else %}
                 {{ form_rest(form) }}
+            {% endif %}
+
+            {% if user.apiKey is defined %}
+                <label class="required" for="user_apiKey">{{ 'settings.user.api_key' | trans }}</label>
+                <input readonly="readonly" class="form-control" value="{{ user.apiKey }}" type="text">
             {% endif %}
         </fieldset>
 
