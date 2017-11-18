@@ -103,27 +103,25 @@
 }
 
 
-/*doc
----
-title: Buttons
-name: 01_buttons
-category: Blocks
----
+/**
+ * @section Buttons
+ * @sectionof Blocks
+ */
 
-```html_example
+/**
+ * @doc docs/buttons.md
+ * @section
+ * @sectionof Blocks.Buttons
+ */
 
-<h3>General</h3>
-<button type="button" class="btn">
-    Button
-</button>
+/**
+ * @doc docs/buttons-types.md
+ * @section
+ * @sectionof Blocks.Buttons
+ */
 
-<h3>Types</h3>
-<button type="button" class="btn btn--primary">
-    Primary
-</button>
-
-<button type="button" class="btn btn--secondary">
-    Secondary
-</button>
-```
-*/
+/**
+ * @doc docs/buttons-sizes.md
+ * @section
+ * @sectionof Blocks.Buttons
+ */

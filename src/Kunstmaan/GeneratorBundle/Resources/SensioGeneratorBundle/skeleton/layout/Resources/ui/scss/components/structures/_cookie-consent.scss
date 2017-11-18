@@ -107,22 +107,8 @@
     }
 }
 
-/*doc
----
-title: Cookie consent
-name: 09_cookieconsent
-category: Structures
----
-
-```html_example
-<div style="height: 400px; width: 100%; position: relative;">
-    <div id="cookie-bar" class="cookie-bar" style="position: absolute;">
-    <p>
-        Deze website gebruikt <br>cookies om uw surf- <br>ervaring makkelijker te maken.
-    </p>
-    <button type="button" id="cookie-bar__consent-btn" class="btn btn-warning cookie-bar__btn">Doorgaan</button>
-    </div>
-</div>
-```
-
+/**
+* @doc docs/cookie-consent.md
+* @section
+* @sectionof Structures
 */

@@ -53,32 +53,9 @@
     font-size: .6875em;
 }
 
-/*doc
----
-title: Pagination
-name: 08_pagination
-category: Structures
----
 
-```html_example
-<div class="pagination">
-    <ul>
-    <li class="prev disabled">
-        <span><span class="icon--arrow-left pagination__direction-icon"></span></span>
-    </li>
-    <li class="active">
-        <span>1</span>
-    </li>
-    <li>
-        <a href="/app_dev.php/nl/blog?page=2">2</a>
-    </li>
-    <li class="next">
-        <a href="/app_dev.php/nl/blog?page=2">
-        <span class="icon--arrow-right pagination__direction-icon"></span>
-        </a>
-    </li>
-    </ul>
-</div>
-```
-
+/**
+* @doc docs/pagination.md
+* @section
+* @sectionof Structures
 */

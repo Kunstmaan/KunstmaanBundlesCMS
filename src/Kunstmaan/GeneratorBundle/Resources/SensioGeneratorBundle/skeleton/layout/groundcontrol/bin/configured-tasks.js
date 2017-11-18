@@ -12,7 +12,7 @@ import createCopyTask from './tasks/copy';
 import {createCssLocalTask, createCssOptimizedTask} from './tasks/css';
 import createBundleTask from './tasks/bundle';
 import createServerTask from './tasks/server';
-import createHologramTask from './tasks/hologram';
+import createStyleguideTask from './tasks/livingcss';
 
 export const eslint = createEslintTask({
     src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/*.js',
@@ -195,7 +195,49 @@ export const server = createServerTask({
     }
 });
 
-export const hologram = createHologramTask({cwd: 'src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide'});
+export const generateStyleguide = createStyleguideTask({
+    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss',
+    dest: './web/frontend/styleguide',
+    template: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/templates/layout.hbs',
+    partials: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/templates/partials/*.hbs',
+    sortOrder: [
+        {
+            'Index': [
+                'Colors',
+                'Typography',
+                'Blocks',
+                'Pageparts'
+            ]
+        }
+    ]
+});
+
+export const cssStyleguideOptimized = createCssOptimizedTask({src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/scss/*.scss', dest: './web/frontend/styleguide/css'});
+
+export const bundleStyleguideOptimized = createBundleTask({
+    config: {
+        entry: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/js/styleguide.js',
+        output: {
+            filename: './web/frontend/styleguide/js/styleguide.js'
+        },
+        devtool: 'source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: getBabelLoaderOptions({
+                        optimize: true
+                    })
+                }
+            ]
+        },
+        plugins: [
+            new webpack.optimize.UglifyJsPlugin({mangle: true, sourceMap: true})
+        ]
+    }
+});
 
 export function buildOnChange(done) {
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/!(*.spec).js', bundleLocal);
@@ -207,6 +249,12 @@ export function buildOnChange(done) {
 export function testOnChange(done) {
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/*.js', eslint);
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', stylelint);
+    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', cssLocal);
+    gulp.watch([
+        './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.md',
+        './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/**/*.hbs'
+    ], generateStyleguide);
+    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/scss/**/*.scss', cssStyleguideOptimized);
     done();
 }
 
@@ -215,10 +263,10 @@ function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChromes = 
         return {
             babelrc: false,
             presets: [
-                ['es2015', {
+                require.resolve('babel-preset-env', {
                     // TODO
                     modules: false
-                }]
+                })
             ]
         };
     }
@@ -226,11 +274,12 @@ function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChromes = 
     return {
         babelrc: false,
         presets: [
-            ['env', {
+            require.resolve('babel-preset-env', {
                 targets: {
                     browsers: ['last 2 Chrome versions']
-                }
-            }]
+                },
+                debug: true
+            })
         ],
         cacheDirectory: true
     };

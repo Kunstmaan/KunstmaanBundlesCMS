@@ -79,25 +79,25 @@
 }
 
 
-/*doc
----
-title: Form Control
-name: 02_form-control
-category: Forms
----
+/**
+ * @section Form control
+ * @sectionof Forms
+ */
 
-```html_example
-<input type="text" id="fc1" name="fc1" class="form-control form-control--input">
+/**
+ * @doc docs/input-text.md
+ * @section
+ * @sectionof Forms.Form control
+ */
 
-<h3>Textarea</h3>
-<textarea id="fc2" name="fc2" class="form-control form-control--textarea"></textarea>
+/**
+ * @doc docs/input-textarea.md
+ * @section
+ * @sectionof Forms.Form control
+ */
 
-<h3>Select</h3>
-<select id="fc3" name="fc3" class="form-control form-control--select">
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-</select>
-
-```
-*/
+/**
+ * @doc docs/input-select.md
+ * @section
+ * @sectionof Forms.Form control
+ */

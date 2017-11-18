@@ -14,7 +14,9 @@ import {
     bundleOptimized,
     bundleAdminExtraLocal,
     bundleAdminExtraOptimized,
-    hologram,
+    generateStyleguide,
+    cssStyleguideOptimized,
+    bundleStyleguideOptimized,
     server,
     buildOnChange,
     testOnChange
@@ -29,13 +31,19 @@ const test = gulp.series(
     analyze
 );
 
+const buildStyleguide = gulp.series(
+    cssStyleguideOptimized,
+    bundleStyleguideOptimized,
+    generateStyleguide
+);
+
 const buildLocal = gulp.series(
     clean,
     copy,
     cssLocal,
     bundleLocal,
     bundleAdminExtraLocal,
-    hologram
+    buildStyleguide
 );
 
 const buildOptimized = gulp.series(
@@ -44,7 +52,7 @@ const buildOptimized = gulp.series(
     cssOptimized,
     bundleOptimized,
     bundleAdminExtraOptimized,
-    hologram
+    buildStyleguide
 );
 
 const testAndBuildOptimized = gulp.series(

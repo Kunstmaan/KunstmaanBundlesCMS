@@ -68,34 +68,14 @@
 }
 
 
-/*doc
----
-title: Checkboxes & Radiobuttons
-name: 04_checkradio
-category: Forms
----
+/**
+ * @doc docs/checkboxes.md
+ * @section
+ * @sectionof Forms.Form control
+ */
 
-```html_example
-<h3>Checkboxes</h3>
-<div class="form-group">
-    <div class="checkbox">
-    <input id="examplecheckbox" type="checkbox">
-    <label for="examplecheckbox">
-        Check me out
-    </label>
-    </div>
-</div>
-
-<h3>Radiobuttons</h3>
-<div class="form-group">
-    <div class="radio">
-    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-    <label for="optionsRadios1">Option one is this and that&mdash;be sure to include why it's great</label>
-    </div>
-    <div class="radio">
-    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-    <label for="optionsRadios2">Option two can be something else and selecting it will deselect option one</label>
-    </div>
-</div>
-```
-*/
+/**
+ * @doc docs/radiobuttons.md
+ * @section
+ * @sectionof Forms.Form control
+ */

@@ -50,7 +50,6 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->shortBundleName = '@'.str_replace('Bundle', '', $bundle->getName());
 
         $this->generateGroundcontrolFiles();
-        $this->generateGemsFile();
         $this->generateAssets();
         $this->generateTemplate();
     }
@@ -119,15 +118,6 @@ class LayoutGenerator extends KunstmaanGenerator
     }
 
     /**
-     * Generate the gems configuration file.
-     */
-    private function generateGemsFile()
-    {
-        $this->renderFiles($this->skeletonDir . '/gems/', $this->rootDir, array('bundle' => $this->bundle), true);
-        $this->assistant->writeLine('Generating gems configuration : <info>OK</info>');
-    }
-
-    /**
      * Generate the ui asset files.
      */
     private function generateAssets()
@@ -146,12 +136,6 @@ class LayoutGenerator extends KunstmaanGenerator
         $this->renderFiles(
             $sourceDir . $relPath . '/scss/',
             $targetDir . $relPath . '/scss/',
-            array('bundle' => $this->bundle, 'demosite' => $this->demosite),
-            true
-        );
-        $this->renderFiles(
-            $sourceDir . $relPath . '/styleguide/',
-            $targetDir . $relPath . '/styleguide/',
             array('bundle' => $this->bundle, 'demosite' => $this->demosite),
             true
         );
@@ -187,13 +171,22 @@ class LayoutGenerator extends KunstmaanGenerator
 
             // SCSS - Structures
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_splash.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/splash.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_submenu.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/submenu.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_blog-item.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/blog-item.md');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/blog-item-summary.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_search-results.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/search-results.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_breadcrumb-nav.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/breadcrumb.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_header-visual.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/header-visual.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_newsletter.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/newsletter.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_pagination.scss');
+            $this->removeFile($targetDir . $relPath . '/scss/components/structures/docs/pagination.md');
             $this->removeFile($targetDir . $relPath . '/scss/components/structures/_demosite-msg.scss');
 
             // SCSS - Header

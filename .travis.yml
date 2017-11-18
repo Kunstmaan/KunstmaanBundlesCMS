@@ -23,8 +23,6 @@ before_install:
   - wget https://scrutinizer-ci.com/ocular.phar
   - nvm install
   - npm install
-  - gem install bundler
-  - bundle install --gemfile=./src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/gems/Gemfile
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 
