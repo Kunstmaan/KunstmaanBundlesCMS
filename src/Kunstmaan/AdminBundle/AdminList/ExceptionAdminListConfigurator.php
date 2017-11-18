@@ -31,7 +31,7 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
         $this->addFilter('code', new ORM\NumberFilterType('code'), 'settings.exceptions.code');
         $this->addFilter('url', new ORM\StringFilterType('url'), 'settings.exceptions.url');
         $this->addFilter('urlReferer', new ORM\StringFilterType('urlReferer'), 'settings.exceptions.urlReferer');
-        $this->addFilter('isMark', new ORM\BooleanFilterType('isMark'), 'settings.exceptions.isMark');
+        $this->addFilter('isResolved', new ORM\BooleanFilterType('isResolved'), 'settings.exceptions.isResolved');
         $this->addFilter('createdAt', new ORM\DateFilterType('createdAt'), 'settings.exceptions.createdAt');
     }
 
@@ -56,7 +56,7 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
 
     public function finishQueryBuilder(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->orderBy('b.isMark', 'ASC');
+        $queryBuilder->orderBy('b.isResolved', 'ASC');
         $queryBuilder->addOrderBy('b.createdAt', 'DESC');
     }
 

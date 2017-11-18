@@ -32,8 +32,10 @@ settings:
         url: URL
         urlReferer: URL Referer
         createdAt: Created at
-        isMark: Is mark
+        isResolved: Is resolved
         events: Events
+        resolved: Resolved
+        unresolved: Unresolved
 
 # Tools
 tools:

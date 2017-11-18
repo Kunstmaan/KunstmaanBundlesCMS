@@ -32,8 +32,11 @@ settings:
         url: URL
         urlReferer: URL Referer
         createdAt: Data utworzenia
-        isMark: Aktywny?
+        isResolved: Rozwiązany?
         events: Liczba zdarzeń
+        resolved: Rozwiązany
+        unresolved: Nierozwiązany
+
 
 # Tools
 tools:

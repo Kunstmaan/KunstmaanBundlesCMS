@@ -38,7 +38,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
             if ( $model = $this->em->getRepository(Exception::class)->findOneBy(['hash' => $hash]) ) {
                 $model->increaseEvents();
-                $model->setMark(false);
+                $model->setResolved(false);
 
             } else {
                 $model = new Exception;

@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(
  *      name="kuma_exception",
  *      indexes={
- *          @ORM\Index(name="idx_exception_is_mark", columns={"is_mark"})
+ *          @ORM\Index(name="idx_exception_is_resolved", columns={"is_resolved"})
  *      }
  * )
  * @UniqueEntity("hash")
@@ -57,9 +57,9 @@ class Exception extends AbstractEntity
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="is_mark")
+     * @ORM\Column(type="boolean", name="is_resolved")
      */
-    private $isMark;
+    private $isResolved;
 
     /**
      * @var \DateTime
@@ -77,7 +77,7 @@ class Exception extends AbstractEntity
 
     public function __construct()
     {
-        $this->isMark = false;
+        $this->isResolved = false;
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->setEvents(1);
@@ -171,17 +171,17 @@ class Exception extends AbstractEntity
     /**
      * @return bool
      */
-    public function isMark()
+    public function isResolved()
     {
-        return (bool) $this->isMark;
+        return (bool) $this->isResolved;
     }
 
     /**
-     * @param bool $isMark
+     * @param bool $isResolved
      */
-    public function setMark($isMark)
+    public function setResolved($isResolved)
     {
-        $this->isMark = $isMark;
+        $this->isResolved = $isResolved;
     }
 
     /**

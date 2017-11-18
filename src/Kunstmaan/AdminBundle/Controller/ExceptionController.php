@@ -39,7 +39,7 @@ class ExceptionController extends AdminListController
 
         $this->getAdminListConfigurator();
 
-        $model->setMark( !$model->isMark() );
+        $model->setResolved( !$model->isResolved() );
 
         $em->persist($model);
         $em->flush();
