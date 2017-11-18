@@ -121,15 +121,15 @@ class ArticleGenerator extends KunstmaanGenerator
 
         if ($parameters['uses_author']) {
             $twigParameters['type'] = 'Author';
-            $partial .= $this->render('/menuAdaptorPartial.php.twig', $twigParameters);
+            $partial .= $this->render('/MenuAdaptorPartial.php.twig', $twigParameters);
         }
         if ($parameters['uses_category']) {
             $twigParameters['type'] = 'Category';
-            $partial .= $this->render('/menuAdaptorPartial.php.twig', $twigParameters);
+            $partial .= $this->render('/MenuAdaptorPartial.php.twig', $twigParameters);
         }
         if ($parameters['uses_tag']) {
             $twigParameters['type'] = 'Tag';
-            $partial .= $this->render('/menuAdaptorPartial.php.twig', $twigParameters);
+            $partial .= $this->render('/MenuAdaptorPartial.php.twig', $twigParameters);
         }
         GeneratorUtils::replace('//%menuAdaptorPartial.php.twig%', $partial, $dirPath . '/' . $this->entity . $filename);
 

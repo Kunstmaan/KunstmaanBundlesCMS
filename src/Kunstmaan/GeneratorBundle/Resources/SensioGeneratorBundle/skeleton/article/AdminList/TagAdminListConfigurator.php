@@ -18,7 +18,7 @@ class {{ entity_class }}TagAdminListConfigurator extends AbstractArticleTagAdmin
     public function __construct(EntityManagerInterface $em, AclHelper $aclHelper)
     {
         parent::__construct($em, $aclHelper);
-        $this->setAdminType(new {{ entity_class }}TagAdminType());
+        $this->setAdminType({{ entity_class }}TagAdminType::class);
     }
 
     /**

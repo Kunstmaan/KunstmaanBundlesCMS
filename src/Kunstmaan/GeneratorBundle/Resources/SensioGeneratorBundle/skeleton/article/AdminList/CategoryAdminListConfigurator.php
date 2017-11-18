@@ -19,7 +19,7 @@ class {{ entity_class }}CategoryAdminListConfigurator extends AbstractArticleCat
     public function __construct(EntityManagerInterface $em, AclHelper $aclHelper)
     {
         parent::__construct($em, $aclHelper);
-        $this->setAdminType(new {{ entity_class }}CategoryAdminType());
+        $this->setAdminType({{ entity_class }}CategoryAdminType::class);
     }
 
     /**
