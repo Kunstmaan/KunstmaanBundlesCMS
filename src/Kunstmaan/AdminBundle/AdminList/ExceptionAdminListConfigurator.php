@@ -41,7 +41,7 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
             new SimpleItemAction(
                 function(Exception $row) {
                     return [
-                        'path' => 'kunstmaanadminbundle_admin_exception_toggle_mark',
+                        'path' => 'kunstmaanadminbundle_admin_exception_toggle_resolve',
                         'params' => [
                             'id' => $row->getId()
                         ]
@@ -49,7 +49,7 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
                 },
                 null,
                 null,
-                '@KunstmaanAdmin/Settings/button_mark.html.twig'
+                '@KunstmaanAdmin/Settings/button_resolve.html.twig'
             )
         );
     }

@@ -30,9 +30,9 @@ class ExceptionController extends AdminListController
     }
 
     /**
-     * @Route("/toggle_mark/{id}", name="kunstmaanadminbundle_admin_exception_toggle_mark")
+     * @Route("/toggle_resolve/{id}", name="kunstmaanadminbundle_admin_exception_toggle_resolve")
      */
-    public function toggleMarkAction(Request $request, Exception $model)
+    public function toggleResolveAction(Request $request, Exception $model)
     {
         /* @var EntityManager $em */
         $em = $this->getEntityManager();

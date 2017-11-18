@@ -15,7 +15,7 @@ class ExceptionCommand extends ContainerAwareCommand
         parent::configure();
 
         $this->setName('kuma:exception:clear')
-            ->setDescription('Remove mark exception based on days.')
+            ->setDescription('Remove resolved exceptions based on days.')
             ->setDefinition(
                 [
                     new InputArgument('days', InputArgument::OPTIONAL, 'Days', 7)
