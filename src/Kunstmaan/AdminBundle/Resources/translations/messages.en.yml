@@ -26,6 +26,16 @@ settings:
         uptodate: is up-to-date
         toupdate: can be updated to
         unknown: version information unknown
+    exceptions:
+        title: Exceptions
+        code: Code
+        url: URL
+        urlReferer: URL Referer
+        createdAt: Created at
+        isResolved: Is resolved
+        events: Events
+        resolved: Resolved
+        unresolved: Unresolved
 
 # Tools
 tools:
@@ -126,3 +136,8 @@ kuma_admin:
 kuma_js:
     auto_collapse:
         more_button_label: More
+
+toolbar:
+    exception:
+        title: Exceptions
+        message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

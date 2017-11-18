@@ -26,6 +26,17 @@ settings:
         uptodate: jest aktualny
         toupdate: może być aktualizowany do
         unknown: wersji nieznanych informacji
+    exceptions:
+        title: Wyjątki
+        code: Kod
+        url: URL
+        urlReferer: URL Referer
+        createdAt: Data utworzenia
+        isResolved: Rozwiązany?
+        events: Liczba zdarzeń
+        resolved: Rozwiązany
+        unresolved: Nierozwiązany
+
 
 # Tools
 tools:
@@ -126,3 +137,8 @@ kuma_admin:
 kuma_js:
     auto_collapse:
         more_button_label: Więcej
+
+toolbar:
+    exception:
+        title: Wyjątki
+        message: "<strong>%X%</strong> wyjątków wywołanych <strong>%Y%</strong> razy"

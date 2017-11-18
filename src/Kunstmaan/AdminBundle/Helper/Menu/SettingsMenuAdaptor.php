@@ -6,7 +6,7 @@ use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -15,18 +15,24 @@ use Symfony\Component\HttpFoundation\Request;
 class SettingsMenuAdaptor implements MenuAdaptorInterface
 {
     /**
-     * @var ContainerInterface
+     * @var AuthorizationCheckerInterface
      */
-    private $container;
+    private $authorizationChecker;
+
+    /**
+     * @var boolean
+     */
+    private $isEnabledVersionChecker;
 
     /**
      * Constructor
      *
-     * @param ContainerInterface $container
+     * @param AuthorizationCheckerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, $isEnabledVersionChecker)
     {
-        $this->container = $container;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->isEnabledVersionChecker = (bool) $isEnabledVersionChecker;
     }
 
     /**
@@ -52,8 +58,8 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuItem;
         } elseif ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
-            if ($this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-                if ($this->container->getParameter('version_checker.enabled')) {
+            if ( $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN') ) {
+                if ( $this->isEnabledVersionChecker ) {
                     $menuItem = new MenuItem($menu);
                     $menuItem
                         ->setRoute('KunstmaanAdminBundle_settings_bundle_version')
@@ -67,6 +73,20 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
                 }
             }
         }
-    }
 
+        if (!is_null($parent) &&'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+            $menuItem = new MenuItem($menu);
+            $menuItem
+                ->setRoute('kunstmaanadminbundle_admin_exception')
+                ->setLabel('settings.exceptions.title')
+                ->setUniqueId('exceptions')
+                ->setParent($parent);
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+                $parent->setActive(true);
+            }
+            $children[] = $menuItem;
+        }
+
+    }
 }

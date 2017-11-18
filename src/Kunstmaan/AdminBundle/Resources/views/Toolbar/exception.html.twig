@@ -1,0 +1,21 @@
+{% block toolbar %}
+    {% if collector is defined and collector.getTemplateData() %}
+        {% set data = collector.getTemplateData().data %}
+    {% endif %}
+
+    {% if data is defined %}
+        {% set icon %}
+            <span class="sf-toolbar-value">{{ 'toolbar.exception.title' | trans }}</span>
+        {% endset %}
+
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <span>
+                    {{ 'toolbar.exception.message' | trans({'%X%': data['cp_all'], '%Y%': data['cp_sum']}) | raw }}
+                </span>
+            </div>
+        {% endset %}
+
+        {{ include('@KunstmaanAdmin/Toolbar/toolbar_item.html.twig', { status_color: '#a21919' }) }}
+    {% endif %}
+{% endblock %}
