@@ -523,6 +523,10 @@ abstract class KunstmaanGenerateCommand extends GenerateDoctrineCommand
                     'type' => $typeStrings [$typeId],
                     'extra' => $extra,
                     'mimeTypes' => $mimeTypes,
+                    'minHeight' => null,
+                    'maxHeight' => null,
+                    'minWidth' => null,
+                    'maxWidth' => null
                 );
 
                 if ($extra == 'image') {

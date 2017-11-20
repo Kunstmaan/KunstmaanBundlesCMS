@@ -16,7 +16,7 @@ kunstmaanbundles.rangeslider = (function(window, undefined) {
     //Initialize
     initRangePercentage = function($el) {
 
-        $('.range--value')
+        $el.find('.range--value')
             .text($el.val());
     };
 

@@ -490,7 +490,7 @@ abstract class AdminListController extends Controller
         /** @var EntityVersionLockService $entityVersionLockService */
         $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
-        return $entityVersionLockService->isEntityBelowThreshold($entity) || $entityVersionLockService->isEntityLocked(
+        return $entityVersionLockService->isEntityBelowThreshold($entity) && $entityVersionLockService->isEntityLocked(
                 $this->getUser(),
                 $entity
             );

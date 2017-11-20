@@ -1,116 +1,111 @@
+---
 kuma_lead_generation:
-    newsletter_popup:
-        button:
-            close: Bezár
-            subscribe: Feliratkozás
-            no_thanks: Nem, köszönöm!
-        label:
-            email: E-mail
-        message:
-            thanks: Köszönjük!
-
-    # @todo backward compatible, need move to kuma_lead_generation.form...
-    on_exit_intent:
-        sensitivity:
-            label:  Érzékenység
-        timer:
-            label: Idő (ezredmásodperc)
-        delay:
-            label: Késleltetés (ezredmásodperc)
-        sensitivity_info: A popup akkor jelenik meg, ha az egérkurzor elég közel kerül (vagy teljesen rákerül) látható rész tetejéhez. Itt megadható, hogy ez az érzékeny terület a felső résztől milyen nagy legyen. Minél nagyobb az érték, annál hamarabb és gyorsabban fog megjelenni a popup. Az alapértelmezett értéke 20.
-        timer_info: Beállítható egy minimum idő (ezredmásodpercben), amíg a popup biztosan nem jelenik meg. Alapból az első másodpercben biztosan nem fog felvillani, hogy a felhasználónak legyen ideje az oldalt nézni. Amennyiben szeretne ezen az időn változtatni, adja meg ezredmásodpercben.
-        delay_info: Alapértelmezetten az előugró ablak (popup) azonnal megjelenik. Itt lehetőség van beállítani ezredmásodpercben egy türelmi időt, amíg a popup nem villan fel. Amennyiben ezen idő letelte előtt az egér elhagyja az érzékeny területet, akkor nem fog megjelenni a popup!
-
-    form:
-        newsletter_subscription:
-            email:
-                label: E-mail
-        popup:
-            name:
-                label: Név
-                info_text: "Figyelmeztetés: ha megváltoztatja ezt az értéket, a popup ismét meg fog jelenni azoknak, akiknek egyszer már megjelent vagy konvertálódtak!"
-        after_x_scroll_percent_rule:
-            percentage:
-                label: Százalék
-        after_x_seconds:
-            seconds:
-                label: Másodperc
-        locale_black_list:
-            locale:
-                label: Nyelvi környezet
-                info_text: Megadhatsz nyelvi környezeteket, amik fekete listára kerülnek.
-        locale_white_list:
-            locale:
-                label: Nyelvi környezet
-                info_text: Megadhatsz nyelvi környezeteket, amik fehér listára kerülnek.
-        max_x_time:
-            times:
-                label: Idő
-        recurring_every_x_time:
-            days:
-                label: Nap
-            hours:
-                label: Óra
-            minutes:
-                label: Perc
-            times:
-                label: Alkalmak
-        url_black_list:
-            urls:
-                label: Urls
-                info_text: |
-                    Megadhat fekete listás URL-eket (vagy mintákat).
-                    Minden URL külön sorba kerüljön.
-                    Használhat reguláris kifejezéseket.
-                    Például: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
-        url_white_list:
-            urls:
-                label: Urls
-                info_text: |
-                    Megadhat fehér listás URL-eket (vagy mintákat).
-                    Minden URL külön sorba kerüljön.
-                    Használhat reguláris kifejezéseket.
-                    Például: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
-
+  newsletter_popup:
+    button:
+      close: Bezár
+      subscribe: Feliratkozás
+      no_thanks: Nem, köszönöm!
+    label:
+      email: E-mail
+    message:
+      thanks: Köszönjük!
+  on_exit_intent:
+    sensitivity:
+      label: Érzékenység
+    timer:
+      label: Idő (ezredmásodperc)
+    delay:
+      label: Késleltetés (ezredmásodperc)
+    sensitivity_info: A popup akkor jelenik meg, ha az egérkurzor elég közel kerül (vagy teljesen rákerül) látható rész tetejéhez. Itt megadható, hogy ez az érzékeny terület a felső résztől milyen nagy legyen. Minél nagyobb az érték, annál hamarabb és gyorsabban fog megjelenni a popup. Az alapértelmezett értéke 20.
+    timer_info: Beállítható egy minimum idő (ezredmásodpercben), amíg a popup biztosan nem jelenik meg. Alapból az első másodpercben biztosan nem fog felvillani, hogy a felhasználónak legyen ideje az oldalt nézni. Amennyiben szeretne ezen az időn változtatni, adja meg ezredmásodpercben.
+    delay_info: Alapértelmezetten az előugró ablak (popup) azonnal megjelenik. Itt lehetőség van beállítani ezredmásodpercben egy türelmi időt, amíg a popup nem villan fel. Amennyiben ezen idő letelte előtt az egér elhagyja az érzékeny területet, akkor nem fog megjelenni a popup!
+  form:
+    newsletter_subscription:
+      email:
+        label: E-mail
     popup:
-        add:
-            modal:
-                title:      Felugró ablak hozzáadása
-                button:
-                    open:   Felugró ablak hozzáadása
-                    add:    Hozzáadás
-                    cancel: Mégse
-        type:
-            label: Type
-        list:
-            header:
-                id:         Id
-                name:       Név
-                type:       Típus
-                html_id:    Html ID
-                rule_count: '# szabály'
-            filter:
-                name:       Név
-                html_id:    Html ID
-
-    rules:
-        'page_title.%name%': 'Jogosultsági beállítások: %name%'
-        add:
-            modal:
-                title:  Jogosultság hozzáadása
-                button:
-                    open:   Jogosultság hozzáadása
-                    add:    Hozzáadás
-                    cancel: Mégse
-        list:
-            header:
-                id:         Id
-                type:       Típus
-                properties: Tulajdonságok
-            filter:
-                id:         Id
-
-    breadcrumbs:
-        modules:    Modulok
-        popups:     Felugró ablakok
-        rules:      Jogosultságok
+      name:
+        label: Név
+        info_text: 'Figyelmeztetés: ha megváltoztatja ezt az értéket, a popup ismét meg fog jelenni azoknak, akiknek egyszer már megjelent vagy konvertálódtak!'
+    after_x_scroll_percent_rule:
+      percentage:
+        label: Százalék
+    after_x_seconds:
+      seconds:
+        label: Másodperc
+    locale_black_list:
+      locale:
+        label: Nyelvi környezet
+        info_text: Megadhatsz nyelvi környezeteket, amik fekete listára kerülnek.
+    locale_white_list:
+      locale:
+        label: Nyelvi környezet
+        info_text: Megadhatsz nyelvi környezeteket, amik fehér listára kerülnek.
+    max_x_time:
+      times:
+        label: Idő
+    recurring_every_x_time:
+      days:
+        label: Nap
+      hours:
+        label: Óra
+      minutes:
+        label: Perc
+      times:
+        label: Alkalmak
+    url_black_list:
+      urls:
+        label: Urls
+        info_text: |
+          Megadhat fekete listás URL-eket (vagy mintákat).
+          Minden URL külön sorba kerüljön.
+          Használhat reguláris kifejezéseket.
+          Például: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+    url_white_list:
+      urls:
+        label: Urls
+        info_text: |
+          Megadhat fehér listás URL-eket (vagy mintákat).
+          Minden URL külön sorba kerüljön.
+          Használhat reguláris kifejezéseket.
+          Például: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+  popup:
+    add:
+      modal:
+        title: Felugró ablak hozzáadása
+        button:
+          open: Felugró ablak hozzáadása
+          add: Hozzáadás
+          cancel: Mégse
+    type:
+      label: Type
+    list:
+      header:
+        id: Id
+        name: Név
+        type: Típus
+        html_id: Html ID
+        rule_count: '# szabály'
+      filter:
+        name: Név
+        html_id: Html ID
+  rules:
+    'page_title.%name%': 'Jogosultsági beállítások: %name%'
+    add:
+      modal:
+        title: Jogosultság hozzáadása
+        button:
+          open: Jogosultság hozzáadása
+          add: Hozzáadás
+          cancel: Mégse
+    list:
+      header:
+        id: Id
+        type: Típus
+        properties: Tulajdonságok
+      filter:
+        id: Id
+  breadcrumbs:
+    modules: Modulok
+    popups: Felugró ablakok
+    rules: Jogosultságok

@@ -1,7 +1,7 @@
 # System Requirements
 
 * PHP
-    * minimum version of PHP 5.4, but we prefer 5.5 or 5.6.
+    * minimum version is PHP 5.6, but also working great with PHP 7.0 or PHP 7.1.
     * JSON needs to be enabled
     * ctype needs to be enabled
     * curl needs to be enabled
@@ -16,7 +16,7 @@
     * POSIX needs to be enabled (only on *nix)
     * Intl needs to be installed with ICU 4+
     * An opcode cache needs to be enabled (APC <= 5.4 or the built in Opcode cache >= 5.5)
-    * A userland cache APC (<= PHP 5.4) or APCu (>= PHP 5.5)
+    * A userland cache APCu
     * PDO with the MySQL binding enabled
     * pecl_http needs to be enabled
     * php.ini recommended settings

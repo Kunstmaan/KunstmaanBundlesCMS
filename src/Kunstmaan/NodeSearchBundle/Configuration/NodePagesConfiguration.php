@@ -23,6 +23,7 @@ use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -44,7 +45,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected $searchProvider;
 
     /** @var array */
-    protected $locales = array();
+    protected $locales = [];
 
     /** @var array */
     protected $analyzerLanguages;
@@ -53,7 +54,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     protected $em;
 
     /** @var array */
-    protected $documents = array();
+    protected $documents = [];
 
     /** @var ContainerInterface */
     protected $container;
@@ -70,10 +71,14 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /** @var DomainConfigurationInterface */
     protected $domainConfiguration;
 
-    private $properties = [];
+    /** @var array */
+    protected $properties = [];
 
     /** @var Node */
-    private $currentTopNode = null;
+    protected $currentTopNode = null;
+
+    /** @var array */
+    protected $nodeRefs = [];
 
     /**
      * @param ContainerInterface      $container
@@ -195,7 +200,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
         if (!empty($this->documents)) {
             $this->searchProvider->addDocuments($this->documents);
-            $this->documents = array();
+            $this->documents = [];
         }
     }
 
@@ -211,7 +216,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
         if (!empty($this->documents)) {
             $this->searchProvider->addDocuments($this->documents);
-            $this->documents = array();
+            $this->documents = [];
         }
     }
 
@@ -223,7 +228,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     public function createNodeDocuments(Node $node, $lang)
     {
-        $nodeTranslation = $node->getNodeTranslation($lang);
+        $nodeTranslation = $node->getNodeTranslation($lang, true);
         if ($nodeTranslation) {
             if ($this->indexNodeTranslation($nodeTranslation)) {
                 $this->indexChildren($node, $lang);
@@ -261,10 +266,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
             return false;
         }
 
-        // Retrieve the referenced entity from the public NodeVersion
-        $page = $publicNodeVersion->getRef($this->em);
-
-        if ($page->isStructureNode()) {
+        $refPage = $this->getNodeRefPage($publicNodeVersion);
+        if ($refPage->isStructureNode()) {
             return true;
         }
 
@@ -274,11 +277,14 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         $node = $nodeTranslation->getNode();
-        if ($this->isIndexable($page)) {
+        if ($this->isIndexable($refPage)) {
+            // Retrieve the referenced entity from the public NodeVersion
+            $page = $publicNodeVersion->getRef($this->em);
+
             $this->addPageToIndex($nodeTranslation, $node, $publicNodeVersion, $page);
             if ($add) {
                 $this->searchProvider->addDocuments($this->documents);
-                $this->documents = array();
+                $this->documents = [];
             }
         }
 
@@ -482,7 +488,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
         if ($parent) {
             $doc['parent'] = $parent->getId();
-            $ancestors     = array();
+            $ancestors     = [];
             do {
                 $ancestors[] = $parent->getId();
                 $parent      = $parent->getParent();
@@ -498,7 +504,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param HasNodeInterface $page
      * @param array            $doc
      *
-     * @return array
+     * @return null
      */
     protected function addPageContent(NodeTranslation $nodeTranslation, $page, &$doc)
     {
@@ -522,13 +528,13 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         if ($page instanceof SearchViewTemplateInterface) {
             $doc['content'] = $this->renderCustomSearchView($nodeTranslation, $page, $renderer);
 
-            return;
+            return null;
         }
 
         if ($page instanceof HasPagePartsInterface) {
             $doc['content'] = $this->renderDefaultSearchView($nodeTranslation, $page, $renderer);
 
-            return;
+            return null;
         }
     }
 
@@ -668,6 +674,15 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function removeHtml($text)
     {
+        // Remove Styles and Scripts
+        $crawler = new Crawler($text);
+        $crawler->filter('style, script')->each(function (Crawler $crawler) {
+            foreach ($crawler as $node) {
+                $node->parentNode->removeChild($node);
+            }
+        });
+        $text = $crawler->html();
+
         // Remove HTML markup
         $result = strip_tags($text);
 
@@ -686,7 +701,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function getAclPermissions($object)
     {
-        $roles = array();
+        $roles = [];
         try {
             $objectIdentity = ObjectIdentity::fromDomainObject($object);
 
@@ -710,5 +725,21 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         }
 
         return $roles;
+    }
+
+    /**
+     * @param $publicNodeVersion
+     *
+     * @return mixed
+     */
+    private function getNodeRefPage(NodeVersion $publicNodeVersion)
+    {
+        $refEntityName = $publicNodeVersion->getRefEntityName();
+
+        if (!isset($this->nodeRefs[$refEntityName])) {
+            $this->nodeRefs[$refEntityName] = new $refEntityName();
+        }
+
+        return $this->nodeRefs[$refEntityName];
     }
 }
