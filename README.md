@@ -28,5 +28,6 @@ Enjoy!
 [![Monthly Downloads](https://poser.pugx.org/kunstmaan/bundles-cms/d/monthly)](https://packagist.org/packages/kunstmaan/bundles-cms)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/313ff798-9e67-4c0c-9a04-ee4d5cdde1e6/mini.png)](https://insight.sensiolabs.com/projects/313ff798-9e67-4c0c-9a04-ee4d5cdde1e6)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/34aece18-3640-47ea-8e9f-96b79919905b/mini.png)](https://insight.sensiolabs.com/projects/34aece18-3640-47ea-8e9f-96b79919905b)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/kunstmaanbundlescms/localized.svg)](http://translatebundles.kunstmaan.be/project/kunstmaanbundlescms)
 [![License](https://poser.pugx.org/kunstmaan/bundles-cms/license)](https://packagist.org/packages/kunstmaan/bundles-cms)
