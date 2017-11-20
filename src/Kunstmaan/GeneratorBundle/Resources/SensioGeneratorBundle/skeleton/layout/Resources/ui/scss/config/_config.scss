@@ -7,13 +7,13 @@
 
 /* General
    ========================================================================== */
-@import "general/paths",
-    "general/colors",
-    "general/sizes",
-    "general/z-index";
+@import "general/paths";
+@import "general/colors";
+@import "general/sizes";
+@import "general/z-index";
 
-@import "general/typography/fonts",
-    "general/typography/bodycopy";
+@import "general/typography/fonts";
+@import "general/typography/bodycopy";
 
 
 /* Vendors

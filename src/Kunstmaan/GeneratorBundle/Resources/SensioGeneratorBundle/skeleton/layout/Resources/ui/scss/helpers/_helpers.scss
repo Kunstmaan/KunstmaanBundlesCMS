@@ -13,11 +13,11 @@
 /* Mixins
    ========================================================================== */
 {% if demosite %}
-@import "mixins/iconfont-reset",
-    "mixins/horizontal-list",
-    "mixins/introtext",
-    "mixins/box-shadow",
-    "mixins/control-label";
+@import "mixins/iconfont-reset";
+@import "mixins/horizontal-list";
+@import "mixins/introtext";
+@import "mixins/box-shadow";
+@import "mixins/control-label";
 {% else %}
 // @import "mixins/..";
 {% endif %}
