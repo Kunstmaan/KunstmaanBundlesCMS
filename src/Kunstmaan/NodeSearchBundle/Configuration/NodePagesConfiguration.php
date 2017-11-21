@@ -645,6 +645,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function removeHtml($text)
     {
+        if (!trim($text)) {
+            return '';
+        }
+        
         // Remove Styles and Scripts
         $crawler = new Crawler($text);
         $crawler->filter('style, script')->each(function (Crawler $crawler) {
