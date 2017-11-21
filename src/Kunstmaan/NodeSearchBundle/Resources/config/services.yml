@@ -1,5 +1,7 @@
 parameters:
     kunstmaan_node_search.search_configuration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration
+    kunstmaan_node_search.search_configuration.number_of_shards: 1
+    kunstmaan_node_search.search_configuration.number_of_replicas: 0
     kunstmaan_node_search.indexname: 'nodeindex'
     kunstmaan_node_search.indextype: 'page'
     kunstmaan_node_search.search.node.class: Kunstmaan\NodeSearchBundle\Search\NodeSearcher
@@ -36,7 +38,7 @@ services:
 
     kunstmaan_node_search.search_configuration.node:
         class: "%kunstmaan_node_search.search_configuration.node.class%"
-        arguments: ['@service_container', '@kunstmaan_search.search', '%kunstmaan_node_search.indexname%', '%kunstmaan_node_search.indextype%']
+        arguments: ['@service_container', '@kunstmaan_search.search', '%kunstmaan_node_search.indexname%', '%kunstmaan_node_search.indextype%', '%kunstmaan_node_search.search_configuration.number_of_shards%', '%kunstmaan_node_search.search_configuration.number_of_replicas%']
         calls:
             - [ setAclProvider, ['@security.acl.provider']]
             - [ setIndexablePagePartsService, ['@kunstmaan_node_search.service.indexable_pageparts']]
