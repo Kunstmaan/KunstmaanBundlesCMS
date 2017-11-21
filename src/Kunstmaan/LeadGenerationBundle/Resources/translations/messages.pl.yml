@@ -16,9 +16,9 @@ kuma_lead_generation:
       label: Czas (milisekundy)
     delay:
       label: Opóźnienie (milisekundy)
-    sensitivity_info: The popup fires when the mouse cursor moves close to (or passes) the top of the viewport. You can define how far the mouse has to be before the popup fires. The higher value, the more sensitive, and the more quickly the event will fire. Defaults to 20.
-    timer_info: Set a min time (milliseconds) before the popup fires. By default, the popup won't fire in the first second to prevent false positives, as it's unlikely the user will be able to exit the page within less than a second. If you want to change the amount of time that firing is surpressed for, you can pass in a number of milliseconds to timer.
-    delay_info: By default, the popup will show immediately. You could instead configure it to wait x milliseconds before showing the popup. If the user's mouse re-enters the body before delay ms have passed, the popup will not appear. This can be used to provide a "grace period" for visitors instead of immediately presenting the popup.
+    sensitivity_info: Wyskakujące okienko jest uruchamiane, gdy kursor myszy zbliża się (lub przesuwa) w górnej części widoku. Możesz określić, jak daleko musi być mysz przed uruchomieniem wyskakującego okienka. Im wyższa wartość, tym bardziej czuły i im szybciej wydarzenie się rozpocznie. Domyślna wartość to 20.
+    timer_info: Ustaw minimalny czas (milisekundy) przed uruchomieniem wyskakującego okienka. Domyślnie popup nie uruchamia się w pierwszej sekundzie, aby zapobiec fałszywym alarmom, ponieważ jest mało prawdopodobne, że użytkownik będzie mógł wyjść ze strony w czasie krótszym niż sekunda.
+    delay_info: Domyślnie popup pojawi się natychmiast. Zamiast tego możesz skonfigurować go tak, aby czekał x milisekund przed wyświetleniem wyskakującego okienka. Jeżeli użytkownik kliknie ponownie w "ciało" przed upływem czasu, popup nie pokaże się. Może to zostać wykorzystane do zapewnienia "okresu przejściowego" dla odwiedzających zamiast natychmiastowego wyświetlenia okienka.
   form:
     newsletter_subscription:
       email:
