@@ -57,7 +57,6 @@ export default function createBuildGroundControlSkeletonTask(skeletonPath, names
             fs.ensureDirSync(scssPath);
             fs.writeFileSync(scssPath + '/style.scss', 'body { font-size: 20px; }\n');
             // Style guide
-            fs.copySync(skeletonPath + '/../gems/Gemfile', distPath + '/Gemfile');
             fs.copySync(skeletonPath + '/../Resources/ui/styleguide', appPath + '/Resources/ui/styleguide');
             // Index.html
             const html = `
