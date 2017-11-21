@@ -92,15 +92,41 @@
 
 
         <!-- Select Button -->
-        <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn" data-toggle="modal" data-target="#{{ id }}-mediaChooserModal" data-link="{{ path(chooser, {'type': mediatype}) }}">
+        <button type="button" class="btn btn-default btn--raise-on-hover media-chooser__choose-btn" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-picture-o btn__icon media-chooser__choose-btn__icon"></i>
             {{ 'media.widget.choose' | trans }}
+            <span class="caret"></span>
         </button>
+        <ul class="dropdown-menu">
+            <li><a data-toggle="modal" data-target="#{{ id }}-mediaChooserModal" data-link="{{ path(chooser, {'type': mediatype}) }}" href="#">Media Chooser</a></li>
+            <li><a href="#" data-toggle="modal" class="upload-modal-button" data-target="#{{ id }}-mediaUploadModal" data-link="{{ path('KunstmaanMediaBundle_upload_file', {'type': 'image'}) }}" >Upload</a></li>
+        </ul>
     </div>
 
 
     <!-- Media Chooser Modal -->
     <div class="js-ajax-modal modal fade" id="{{ id }}-mediaChooserModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3 class="modal-title">
+                        {{ 'media.widget.media_chooser' | trans }}
+                    </h3>
+                </div>
+
+                <!-- Body -->
+                <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Direct Upload Modal -->
+    <div class="js-ajax-modal upload-modal modal fade" id="{{ id }}-mediaUploadModal" role="dialog" aria-labelledby="mediaChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}" data-media-chooser="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 

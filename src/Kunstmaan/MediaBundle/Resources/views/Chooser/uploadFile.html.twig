@@ -1,0 +1,110 @@
+{% set adminmenu = get_admin_menu() %}
+{% set extraclasshtml %}{% block extraclasshtml %}{% endblock %}{% endset %}
+
+<!DOCTYPE html>
+<html class="{{ extraclasshtml }}" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>{% block title %}{{ websitetitle | trans }}{% endblock %}</title>
+
+    <!-- Favicons -->
+    {% include "@KunstmaanAdmin/Default/_favicons.html.twig" %}
+
+    <!-- Styles -->
+    {% include "@KunstmaanAdmin/Default/_css.html.twig" %}
+
+    <!-- Extra CSS -->
+    {% block extracss %}{% endblock %}
+
+    <!-- JS -->
+    {% include "@KunstmaanAdmin/Default/_js_header.html.twig" %}
+
+    {% if google_signin_enabled() %}
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+    {% endif %}
+</head>
+
+<body {% block extraparamsinbody %}{% endblock %} class="app {% block extrabodyclasses %}{% endblock %}"
+                                                  data-file-browse-url="{% if nodebundleisactive is defined and nodebundleisactive %}{{ path('KunstmaanNodeBundle_ckselecturl') }}{% endif %}"
+                                                  data-image-browse-url="{% if mediabundleisactive is defined %}{{ path('KunstmaanMediaBundle_chooser', {'type': 'image'}) }}{% endif %}">
+
+<!-- Body block -->
+{% block body %}
+
+    <!-- Header -->
+    {% block appHeader %}
+
+    {% endblock %}
+
+
+    <!-- Nav settings -->
+    {% if lowestTopChild is not defined %}
+        {% set lowestTopChild = adminmenu.lowestTopChild %}
+        {% if lowestTopChild %}
+            {% set navigationChildren = lowestTopChild.navigationChildren %}
+        {% endif %}
+    {% endif %}
+
+
+    <!-- Main Content -->
+    <main role="main" id="app__main"
+          class="container-fluid app__main{% if lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
+
+        <div class="row">
+            {% set urlParams = {'type': type} %}
+
+
+            {% block breadcrumb %}
+
+            {% endblock %}
+
+
+            {% block sidebar %}
+
+            {% endblock %}
+
+
+            {% block header %}
+                {% block extra_actions_header %}{% endblock %}
+            {% endblock %}
+
+
+            {% block content %}
+                <div style="width: 50%; margin-right: auto; margin-left: auto">
+                {% set urlParams = urlParams|merge({'folderId': folder.id}) %}
+                {% for type, form in forms %}
+                    {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
+                    {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_modal_create', urlParams|merge({'type': type, 'redirect' : 'KunstmaanMediaBundle_media_uploaded'}))}) }}
+
+                    {{ form_widget(form) }}
+
+                    {% set save = 'media.' ~ type ~ '.modal.save' %}
+                    <button id="ajax-upload-media" type="submit" class="ajax-upload-media js-add-app-loading--formsXX btn btn-primary btn--raise-on-hover">
+                        {{ save | trans }}
+                    </button>
+                    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'form.cancel' | trans }}
+                    </button>
+                    {{ form_end(form) }}
+                {% endfor %}
+                </div>
+            {% endblock %}
+            {% block footer %}{% endblock %}
+        </div>
+    </main>
+
+
+{% endblock %}
+
+{% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+<!-- JS - Extra -->
+{% block extrajavascript %}{% endblock %}
+</body>
+</html>
+
+
+

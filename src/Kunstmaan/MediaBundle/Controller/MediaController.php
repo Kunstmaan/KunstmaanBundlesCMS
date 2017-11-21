@@ -381,6 +381,9 @@ class MediaController extends Controller
                 $media->setFolder($folder);
                 $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
+                $mediaId = $media->getId();
+                $params['mediaId'] = $mediaId;
+
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('media.flash.created', array(
@@ -424,6 +427,7 @@ class MediaController extends Controller
     {
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
         $linkChooser     = $request->get('linkChooser');
+        $redirect        = $request->get('redirect') ?: 'KunstmaanMediaBundle_chooser_show_folder';
 
         $extraParams = array();
         if (!empty($cKEditorFuncNum)) {
@@ -437,7 +441,7 @@ class MediaController extends Controller
             $request,
             $folderId,
             $type,
-            'KunstmaanMediaBundle_chooser_show_folder',
+            $redirect,
             $extraParams,
             true
         );

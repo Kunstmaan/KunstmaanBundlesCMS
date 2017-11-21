@@ -45,6 +45,7 @@ kunstmaanbundles.app = (function($, window, undefined) {
         kunstmaanbundles.googleOAuth.init();
         kunstmaanbundles.appNodeVersionLock.init();
         kunstmaanbundles.appEntityVersionLock.init();
+        kunstmaanbundles.ajaxPost.init();
     };
 
 
