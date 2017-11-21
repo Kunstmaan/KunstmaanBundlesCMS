@@ -4,8 +4,8 @@ kuma_admin_list:
     export_to: Exporteer naar
   edit:
     flash:
-      success: The entity has been edited
-      locked: The entity is currently being edited by %user%
+      success: De entiteit is bewerkt
+      locked: De entiteit wordt momenteel bewerkt door %user%
   action:
     view: Bekijken
     edit: Bewerken
@@ -15,21 +15,21 @@ kuma_admin_list:
 filter:
   "true": true
   "false": false
-  before: before
-  after: after
+  before: voor
+  after: na
   in: bevat
-  notin: doesn't contain
-  eq: equals
-  neq: not equals
-  lt: lower than
-  lte: lower than or equal
-  gt: greater than
-  gte: greater than or equal
-  isnull: empty
-  isnotnull: not empty
+  notin: bevat niet
+  eq: is gelijk aan
+  neq: is niet gelijk aan
+  lt: kleiner dan
+  lte: kleiner dan of gelijk aan
+  gt: groter dan
+  gte: groter dan of gelijk aan
+  isnull: leeg
+  isnotnull: niet leeg
   contains: bevat
-  doesnotcontain: doesn't contain
+  doesnotcontain: bevat niet
   equals: is gelijk aan
-  notequals: not equals
-  startswith: starts with
-  endswith: ends with
+  notequals: is niet gelijk aan
+  startswith: begint met
+  endswith: eindigt met
