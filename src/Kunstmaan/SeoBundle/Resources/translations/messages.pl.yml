@@ -26,9 +26,9 @@ seo:
       description: Opis
       description_info_text: Opis wyświetlany na karcie twitter-a
       sitehandle: Witryna
-      sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
+      sitehandle_info_text: Twoja strona Twitter. To pole jest wymagane aby uruchomić kartę Twitter.
       creatorhandle: Twórca
-      creatorhandle_info_text: Twitter handle of your page publisher.
+      creatorhandle_info_text: Zarządca twojej strony Twitter.
       image: Zdjęcie
     robots:
       noindex: Blokuj indeksowanie
