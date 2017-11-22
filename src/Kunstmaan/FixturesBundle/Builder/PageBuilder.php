@@ -220,7 +220,7 @@ class PageBuilder implements BuilderInterface
         $translationWithSameUrl = $this->nodeTranslationRepo->getNodeTranslationForUrl($translation->getUrl(), $translation->getLang(), false, $translation);
 
         if ($translationWithSameUrl instanceof NodeTranslation) {
-            $translation->setSlug($this->slugifier->slugify($this->incrementString($translation->getSlug())));
+            $translation->setSlug($this->slugifier->slugify(static::incrementString($translation->getSlug())));
             $this->ensureUniqueUrl($translation, $page);
         }
 

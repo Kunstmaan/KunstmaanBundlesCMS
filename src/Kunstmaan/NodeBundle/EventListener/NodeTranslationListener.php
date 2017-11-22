@@ -345,7 +345,7 @@ class NodeTranslationListener
             $oldUrl = $translation->getFullSlug();
             $translation->setSlug(
                 $this->slugifier->slugify(
-                    $this->incrementString($translation->getSlug())
+                    static::incrementString($translation->getSlug())
                 )
             );
             $newUrl = $translation->getFullSlug();
