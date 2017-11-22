@@ -42,11 +42,6 @@ class URLHelper
     private $mediaMap = null;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var DomainConfigurationInterface
      */
     private $domainConfiguration;
@@ -63,7 +58,6 @@ class URLHelper
         $this->em = $em;
         $this->router = $router;
         $this->logger = $logger;
-        $this->requestStack = $requestStack;
         $this->domainConfiguration = $domainConfiguration;
     }
 
