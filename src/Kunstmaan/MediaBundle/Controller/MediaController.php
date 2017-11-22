@@ -130,6 +130,7 @@ class MediaController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param int     $folderId
      *
      * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit")
@@ -137,7 +138,7 @@ class MediaController extends Controller
      *
      * @return array|RedirectResponse
      */
-    public function bulkUploadSubmitAction($folderId)
+    public function bulkUploadSubmitAction(Request $request, $folderId)
     {
         // Make sure file is not cached (as it happens for example on iOS devices)
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -162,10 +163,10 @@ class MediaController extends Controller
         }
 
         // Get a file name
-        if (array_key_exists('name', $_REQUEST)) {
-            $fileName = $_REQUEST['name'];
-        } elseif (0 !== count($_FILES)) {
-            $fileName = $_FILES['file']['name'];
+        if ($request->request->has('name')) {
+            $fileName = $request->request->get('name');
+        } elseif (0 !== $request->files->count()) {
+            $fileName = $request->files->get('file')['name'];
         } else {
             $fileName = uniqid('file_', false);
         }
@@ -174,11 +175,11 @@ class MediaController extends Controller
         $chunk = 0;
         $chunks = 0;
         // Chunking might be enabled
-        if (array_key_exists('chunk', $_REQUEST)) {
-            $chunk = (int)$_REQUEST['chunk'];
+        if ($request->request->has('chunk')) {
+            $chunk = $request->request->getInt('chunk');
         }
-        if (array_key_exists('chunks', $_REQUEST)) {
-            $chunks = (int)$_REQUEST['chunks'];
+        if ($request->request->has('chunks')) {
+            $chunks = $request->request->getInt('chunks');
         }
 
         // Remove old temp files
@@ -215,14 +216,14 @@ class MediaController extends Controller
             return $this->returnJsonError('102', 'Failed to open output stream.');
         }
 
-        if (0 !== count($_FILES)) {
-            if ($_FILES['file']['error'] || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+        if (0 !== $request->files->count()) {
+            if ($request->files->get('file')['error'] || !is_uploaded_file($request->files->get('file')['tmp_name'])) {
 
                 return $this->returnJsonError('103', 'Failed to move uploaded file.');
             }
 
             // Read binary input stream and append it to temp file
-            if (!$input = @fopen($_FILES['file']['tmp_name'], 'rb')) {
+            if (!$input = @fopen($request->files->get('file')['tmp_name'], 'rb')) {
 
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
@@ -307,7 +308,7 @@ class MediaController extends Controller
 
         $drop = null;
 
-        if (array_key_exists('files', $_FILES) && $_FILES['files']['error'] === 0) {
+        if ($request->files->has('files') && $request->files->get('files')['error'] === 0) {
             $drop = $request->files->get('files');
         } else if ($request->files->get('file')) {
             $drop = $request->files->get('file');
