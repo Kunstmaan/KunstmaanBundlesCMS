@@ -122,10 +122,10 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.save'));
 
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
-            $this->assertNotNull($menu->getChild('action.delete'));;
+            $this->assertNotNull($menu->getChild('action.delete'));
         }
         else {
-            $this->assertNull($menu->getChild('action.delete'));;
+            $this->assertNull($menu->getChild('action.delete'));
         }
 
         $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
@@ -154,10 +154,10 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.publish'));
         $this->assertNull($menu->getChild('action.unpublish'));
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
-            $this->assertNotNull($menu->getChild('action.delete'));;
+            $this->assertNotNull($menu->getChild('action.delete'));
         }
         else {
-            $this->assertNull($menu->getChild('action.delete'));;
+            $this->assertNull($menu->getChild('action.delete'));
         }
 
         $nodeTranslation->setOnline(true);
@@ -169,10 +169,10 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.publish'));
         $this->assertNotNull($menu->getChild('action.unpublish'));
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
-            $this->assertNotNull($menu->getChild('action.delete'));;
+            $this->assertNotNull($menu->getChild('action.delete'));
         }
         else {
-            $this->assertNull($menu->getChild('action.delete'));;
+            $this->assertNull($menu->getChild('action.delete'));
         }
 
         $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));

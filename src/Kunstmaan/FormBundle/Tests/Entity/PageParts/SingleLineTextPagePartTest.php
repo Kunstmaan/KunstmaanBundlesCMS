@@ -7,7 +7,7 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 
-use Symfony\Component\Form\FormBuilderInterface;;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for SingleLineTextPagePart
