@@ -18,7 +18,7 @@ class PasswordResettingListener
     /**
      * @param UserManager $userManager
      */
-    function __construct(UserManager $userManager)
+    public function __construct(UserManager $userManager)
     {
         $this->userManager = $userManager;
     }

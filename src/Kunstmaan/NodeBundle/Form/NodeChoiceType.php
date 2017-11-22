@@ -17,7 +17,7 @@ class NodeChoiceType extends AbstractType
     /**
      * @param RequestStack $requestStack
      */
-    function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
     }
