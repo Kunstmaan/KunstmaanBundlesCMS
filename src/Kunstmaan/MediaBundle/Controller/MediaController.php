@@ -443,33 +443,4 @@ class MediaController extends Controller
             true
         );
     }
-
-    /**
-     * @param Request $request
-     *
-     * @Route("move/", name="KunstmaanMediaBundle_media_move")
-     * @Method({"POST"})
-     *
-     * @return string
-     */
-    public function moveMedia(Request $request)
-    {
-        $mediaId = $request->request->get('mediaId');
-        $folderId = $request->request->get('folderId');
-
-        if (empty($mediaId) || empty($folderId)) {
-            return new JsonResponse(['error' => ['title' => 'Missing media id or folder id']], 400);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $mediaRepo = $em->getRepository('KunstmaanMediaBundle:Media');
-
-        $media = $mediaRepo->getMedia($mediaId);
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-
-        $media->setFolder($folder);
-        $mediaRepo->save($media);
-
-        return new JsonResponse();
-    }
 }

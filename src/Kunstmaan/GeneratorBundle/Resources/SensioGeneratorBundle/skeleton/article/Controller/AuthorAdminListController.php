@@ -19,7 +19,7 @@ class {{ entity_class }}AuthorAdminListController extends AbstractArticleAuthorA
     /**
      * @return AdminListConfiguratorInterface
      */
-    public function createAdminListConfigurator()
+    protected function createAdminListConfigurator()
     {
         return new {{ entity_class }}AuthorAdminListConfigurator($this->getEntityManager(), $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
     }

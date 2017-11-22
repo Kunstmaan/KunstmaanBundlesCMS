@@ -19,7 +19,7 @@ class {{ entity_class }}PageAdminListController extends AbstractArticlePageAdmin
     /**
      * @return AdminListConfiguratorInterface
      */
-    public function createAdminListConfigurator()
+    protected function createAdminListConfigurator()
     {
         return new {{ entity_class }}PageAdminListConfigurator($this->getEntityManager(), $this->aclHelper, $this->locale, PermissionMap::PERMISSION_EDIT);
     }

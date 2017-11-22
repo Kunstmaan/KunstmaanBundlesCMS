@@ -20,7 +20,7 @@ class TagAdminListController extends AdminListController
     /**
      * @return AdminListConfiguratorInterface
      */
-    public function getAdminListConfigurator()
+    protected function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {
             $this->configurator = new TagAdminListConfigurator($this->getEntityManager());
