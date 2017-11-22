@@ -357,6 +357,6 @@ class SlugRouter implements RouterInterface
             $escapedLocales[] = str_replace('-', '\-', $locale);
         }
 
-        return join('|', $escapedLocales);
+        return implode('|', $escapedLocales);
     }
 }
