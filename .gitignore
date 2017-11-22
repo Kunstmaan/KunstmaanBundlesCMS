@@ -3,6 +3,5 @@ composer.lock
 composer.phar
 autoload.php
 /vendor/
-.DS_Store
 npm-debug.log
 *~
