@@ -317,9 +317,12 @@
 
 {% endblock %}
 
-
-{% block extrajavascript %}
-    {{ parent() }}
-
-    <script src="{{ asset('bundles/kunstmaanmedia/js/media-bundle.min.js') }}"></script>
+{% block js_footer %}
+    <!-- JS -->
+    {% embed "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+        {% block extra_async_javascripts %}
+            {{ parent() }}
+            '{{ asset('bundles/kunstmaanmedia/js/media-bundle.min.js') }}',
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

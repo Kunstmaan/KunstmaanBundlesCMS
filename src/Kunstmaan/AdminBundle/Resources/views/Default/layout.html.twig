@@ -142,9 +142,10 @@
     {% endblock %}
 {% endblock %}
 
-
-    <!-- JS -->
-    {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+    {% block js_footer %}
+        <!-- JS -->
+        {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+    {% endblock %}
 
 
     <!-- JS - Extra -->

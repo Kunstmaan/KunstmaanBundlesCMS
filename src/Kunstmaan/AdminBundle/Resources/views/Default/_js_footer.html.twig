@@ -12,7 +12,9 @@
         '{{ asset('bundles/kunstmaanadmin/js/admin-bundle.min.js') }}',
         '{{ asset('bundles/kunstmaanadmin/js/admin-bundle.next.js') }}',
 
-        {%- set jsPath = 'frontend/js/admin-bundle-extra.js' %}
+        {%- block extra_async_javascripts %}{% endblock -%}
+
+        {%- set jsPath = 'frontend/js/admin-bundle-extra.js' -%}
         {% if file_exists(jsPath) %}'{{ asset('/' ~ jsPath) }}'{% endif %}
     ];
 
