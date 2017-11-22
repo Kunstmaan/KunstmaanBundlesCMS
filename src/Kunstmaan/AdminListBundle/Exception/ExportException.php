@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminListBundle\EventSubscriber;
 /**
  * class ExportException
  */
-class ExportException extends \RuntimeException implements ExceptionInterface
+class ExportException extends \RuntimeException
 {
     /** @var mixed */
     protected $data;
