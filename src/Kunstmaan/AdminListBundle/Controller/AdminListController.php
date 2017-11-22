@@ -77,7 +77,7 @@ abstract class AdminListController extends Controller
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
     {
         if (!$configurator->canExport()) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         $em = $this->getEntityManager();
@@ -103,7 +103,7 @@ abstract class AdminListController extends Controller
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
     {
         if (!$configurator->canAdd()) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         /* @var EntityManager $em */
@@ -211,7 +211,7 @@ abstract class AdminListController extends Controller
         }
 
         if (!$configurator->canEdit($helper)) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         if ($helper instanceof LockableEntityInterface) {
@@ -326,7 +326,7 @@ abstract class AdminListController extends Controller
         }
 
         if (!$configurator->canView($helper)) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         $MetaData = $em->getClassMetadata($configurator->getRepositoryName());
@@ -366,7 +366,7 @@ abstract class AdminListController extends Controller
             throw new NotFoundHttpException("Entity not found.");
         }
         if (!$configurator->canDelete($helper)) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         $indexUrl = $configurator->getIndexUrl();
