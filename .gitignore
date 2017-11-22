@@ -3,7 +3,6 @@ composer.lock
 composer.phar
 autoload.php
 /vendor/
-.idea
 .DS_Store
 npm-debug.log
 *~
