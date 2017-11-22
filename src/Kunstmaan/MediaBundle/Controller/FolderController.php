@@ -4,6 +4,7 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\EmptyType;
@@ -14,31 +15,113 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * FolderController.
+ * Class FolderController
+ * @package Kunstmaan\MediaBundle\Controller
  */
 class FolderController extends Controller
 {
+    /** @var EntityManager $em */
+    private $em;
+
+    /** @var AdminList $adminList */
+    private $adminList;
+
+    /** @var MediaManager $mediaManager */
+    private $mediaManager;
+
+    /** @var Form $editForm */
+    private $editForm;
+
+    /** @var Form $subForm */
+    private $subForm;
+
+    /** @var Form $emptyForm */
+    private $emptyForm;
+
+    /** @var Folder $folder */
+    private $folder;
+
     /**
-     * @param Request $request
-     * @param int     $folderId The folder id
-     *
      * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_show")
      * @Template()
+     * @param Request $request
+     * @param $folderId
+     * @throws \Exception
      *
-     * @return array
+     * @return array|RedirectResponse
      */
     public function showAction(Request $request, $folderId)
     {
-        /** @var EntityManager $em */
-        $em      = $this->getDoctrine()->getManager();
+        $this->em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
+        $this->setViewMode($request, $session);
+        $this->prepareForms($request, $folderId);
 
+        if ($request->isMethod('POST')) {
+            $this->editForm->handleRequest($request);
+            if ($this->editForm->isValid()) {
+                $this->em->getRepository('KunstmaanMediaBundle:Folder')->save($this->folder);
+                $translation = $this->get('translator')->trans('media.folder.show.success.text', ['%folder%' => $this->folder->getName()]);
+                $this->addFlash(FlashTypes::SUCCESS, $translation);
+                $url = $this->generateUrl('KunstmaanMediaBundle_folder_show',['folderId' => $folderId]);
+                return new RedirectResponse($url);
+            }
+        }
+
+        return $this->getShowActionViewVars();
+    }
+
+    /**
+     * @param Request $request
+     * @param $folderId
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
+    private function prepareForms(Request $request, $folderId)
+    {
+        $this->mediaManager = $this->get('kunstmaan_media.media_manager');
+        $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $adminListConfigurator = new MediaAdminListConfigurator($this->em, $this->mediaManager, $this->folder, $request);
+        $this->adminList  = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $this->adminList->bindRequest($request);
+        $sub = new Folder();
+        $sub->setParent($this->folder);
+        $this->subForm  = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
+        $this->emptyForm = $this->createEmptyForm();
+        $this->editForm = $this->createForm(FolderType::class, $this->folder, ['folder' => $this->folder]);
+    }
+
+    /**
+     * @return array
+     */
+    private function getShowActionViewVars()
+    {
+        return [
+            'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
+            'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
+            'subform'       => $this->subForm->createView(),
+            'emptyform'     => $this->emptyForm->createView(),
+            'editform'      => $this->editForm->createView(),
+            'folder'        => $this->folder,
+            'adminlist'     => $this->adminList,
+            'type'          => null,
+        ];
+    }
+
+
+    /**
+     * @param Request $request
+     * @param SessionInterface $session
+     */
+    private function setViewMode(Request $request, SessionInterface $session)
+    {
         // Check when user switches between thumb -and list view
         $viewMode = $request->query->get('viewMode');
         if ($viewMode && $viewMode == 'list-view') {
@@ -46,63 +129,14 @@ class FolderController extends Controller
         } elseif ($viewMode && $viewMode == 'thumb-view') {
             $session->remove('media-list-view');
         }
-
-        /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-
-        $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
-        $adminList->bindRequest($request);
-
-        $sub = new Folder();
-        $sub->setParent($folder);
-        $subForm  = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
-
-        $emptyForm = $this->createEmptyForm();
-
-        $editForm = $this->createForm(FolderType::class, $folder, array('folder' => $folder));
-
-        if ($request->isMethod('POST')) {
-            $editForm->handleRequest($request);
-            if ($editForm->isValid()) {
-                $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
-
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.show.success.text', array(
-                        '%folder%' => $folder->getName()
-                    ))
-                );
-
-                return new RedirectResponse(
-                    $this->generateUrl(
-                        'KunstmaanMediaBundle_folder_show',
-                        array('folderId' => $folderId)
-                    )
-                );
-            }
-        }
-
-        return array(
-            'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
-            'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
-            'subform'       => $subForm->createView(),
-            'emptyform'     => $emptyForm->createView(),
-            'editform'      => $editForm->createView(),
-            'folder'        => $folder,
-            'adminlist'     => $adminList,
-            'type'          => null,
-        );
     }
 
+
     /**
-     * @param Request $request
-     * @param int     $folderId
-     *
      * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_delete")
+     * @param Request $request
+     * @param $folderId
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
      * @return RedirectResponse
      */
@@ -150,74 +184,62 @@ class FolderController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $folderId
-     *
      * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_sub_create")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @param Request $request
+     * @param $folderId
+     * @throws \Exception
      *
-     * @return Response
+     * @return RedirectResponse|Response
      */
     public function subCreateAction(Request $request, $folderId)
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
+        $this->em = $this->getDoctrine()->getManager();
         /* @var Folder $parent */
         $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $folder = new Folder();
-        $folder->setParent($parent);
-        $form = $this->createForm(FolderType::class, $folder);
+        $this->folder = new Folder();
+        $this->folder->setParent($parent);
+        $form = $this->createForm(FolderType::class, $this->folder);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.addsub.success.text', array(
-                        '%folder%' => $folder->getName()
-                    ))
-                );
-                if (strpos($request->server->get('HTTP_REFERER', ''),'chooser') !== false) {
-                    $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
-                } else $redirect = 'KunstmaanMediaBundle_folder_show';
-
-                $type = $request->get('type');
-
-                return new RedirectResponse(
-                    $this->generateUrl( $redirect,
-                        array(
-                            'folderId' => $folder->getId(),
-                            'type' => $type,
-                        )
-                    )
-                );
+                return $this->subCreateSaveAndRedirect($request);
             }
         }
-
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')->getAllFolders();
 
-        return $this->render(
-            'KunstmaanMediaBundle:Folder:addsub-modal.html.twig',
-            array(
-                'subform'   => $form->createView(),
-                'galleries' => $galleries,
-                'folder'    => $folder,
-                'parent'    => $parent
-            )
-        );
+        return $this->render('KunstmaanMediaBundle:Folder:addsub-modal.html.twig', [
+            'subform' => $form->createView(), 'galleries' => $galleries, 'folder' => $this->folder, 'parent' => $parent
+        ]);
     }
 
     /**
      * @param Request $request
-     * @param int     $folderId
-     *
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    private function subCreateSaveAndRedirect(Request $request)
+    {
+        $this->em->getRepository('KunstmaanMediaBundle:Folder')->save($this->folder);
+        $translation = $this->get('translator')->trans('media.folder.addsub.success.text', ['%folder%' => $this->folder->getName()]);
+        $this->addFlash(FlashTypes::SUCCESS, $translation);
+        $redirect = (strpos($request->server->get('HTTP_REFERER', ''),'chooser') !== false)
+            ? 'KunstmaanMediaBundle_chooser_show_folder'
+            : 'KunstmaanMediaBundle_folder_show';
+        $type = $request->get('type');
+        $url = $this->generateUrl( $redirect, ['folderId' => $this->folder->getId(), 'type' => $type]);
+        return new RedirectResponse($url);
+    }
+
+    /**
      * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_empty")
      * @Method({"GET", "POST"})
      * @Template()
+     * @param Request $request
+     * @param $folderId
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
-     * @return Response
+     * @return RedirectResponse|Response
      */
     public function emptyAction(Request $request, $folderId)
     {
@@ -301,11 +323,14 @@ class FolderController extends Controller
         );
     }
 
+    /**
+     * @return Form|\Symfony\Component\Form\FormInterface
+     */
     private function createEmptyForm()
     {
-        $defaultData = array('checked' => false);
+        $defaultData = ['checked' => false];
         $form = $this->createFormBuilder($defaultData)
-            ->add('checked', CheckboxType::class, array('required' => false, 'label' => 'media.folder.empty.modal.checkbox'))
+            ->add('checked', CheckboxType::class, ['required' => false, 'label' => 'media.folder.empty.modal.checkbox'])
             ->getForm();
         return $form;
     }

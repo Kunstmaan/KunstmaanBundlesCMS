@@ -70,13 +70,17 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
         $builder
             ->expects($this->at(0))
             ->method('add')
-            ->with('origin');
+            ->with('domain');
         $builder
             ->expects($this->at(1))
             ->method('add')
-            ->with('target');
+            ->with('origin');
         $builder
             ->expects($this->at(2))
+            ->method('add')
+            ->with('target');
+        $builder
+            ->expects($this->at(3))
             ->method('add')
             ->with('permanent');
 

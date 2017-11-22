@@ -2,14 +2,19 @@
 
 namespace Kunstmaan\TranslatorBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Exception;
+use InvalidArgumentException;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
+use Kunstmaan\TranslatorBundle\Model\Translation as TranslationModel;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
+use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
+use Kunstmaan\TranslatorBundle\Service\Exception\TranslationsNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -19,24 +24,43 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Translation\TranslatorInterface;
 
-
+/**
+ * Class TranslatorController
+ * @package Kunstmaan\TranslatorBundle\Controller
+ */
 class TranslatorController extends AdminListController
 {
 
     /**
-     * @var AbstractAdminListConfigurator
+     * @var TranslationAdminListConfigurator
      */
     private $adminListConfigurator;
+
+    /** @var ObjectManager $em */
+    private $em;
+
+    /** @var TranslationRepository $repo */
+    private $repo;
+
+    /**
+     * TranslatorController constructor.
+     */
+    public function __construct()
+    {
+        $this->em = $this->getDoctrine()->getManager();
+        $this->repo = $this->em->getRepository('KunstmaanTranslatorBundle:Translation');
+    }
 
 
     /**
      * @Route("/", name="KunstmaanTranslatorBundle_settings_translations")
      * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -51,16 +75,14 @@ class TranslatorController extends AdminListController
         $debugMode = $this->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
-            $this->addFlash(
-                FlashTypes::INFO,
-                $this->get('translator')->trans('settings.translator.not_live_warning')
-            );
+            $msg = $this->get('translator')->trans('settings.translator.not_live_warning');
+            $this->addFlash(FlashTypes::INFO, $msg);
         }
 
-        return array(
+        return [
             'adminlist' => $adminList,
             'adminlistconfigurator' => $configurator
-        );
+        ];
     }
 
     /**
@@ -74,56 +96,50 @@ class TranslatorController extends AdminListController
      * @param string $keyword
      * @param string $domain
      * @param string $locale
+     *
      * @return array|RedirectResponse
      */
     public function addAction(Request $request, $keyword = '', $domain = '', $locale = '')
     {
-        /* @var $em EntityManager */
-        $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
         $translator = $this->get('translator');
-
-        $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
-        $locales = $this->getParameter('kuma_translator.managed_locales');
-        foreach ($locales as $locale) {
-            $translation->addText($locale, '');
-        }
-
+        $translation = new TranslationModel();
+        $this->addLocales($translation);
         $form = $this->createForm(TranslationAdminType::class, $translation, array('csrf_token_id' => 'add'));
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
-
-            // Fetch form data
             $data = $form->getData();
-            if (!$em->getRepository('KunstmaanTranslatorBundle:Translation')->isUnique($data)) {
+            if (!$this->repo->isUnique($data)) {
                 $error = new FormError($translator->trans('translator.translation_not_unique'));
                 $form->get('domain')->addError($error);
                 $form->get('keyword')->addError($error);
             }
 
             if ($form->isSubmitted() && $form->isValid()) {
-                // Create translation
-                $em->getRepository('KunstmaanTranslatorBundle:Translation')->createTranslations($data);
-                $em->flush();
-
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('settings.translator.succesful_added')
-                );
-
+                $this->repo->createTranslations($data);
+                $this->em->flush();
+                $msg = $this->get('translator')->trans('settings.translator.succesful_added');
+                $this->addFlash(FlashTypes::SUCCESS, $msg);
                 $indexUrl = $configurator->getIndexUrl();
+                $params = isset($indexUrl['params']) ? $indexUrl['params'] : [];
+                $url = $this->generateUrl($indexUrl['path'], $params);
 
-                return new RedirectResponse($this->generateUrl(
-                    $indexUrl['path'],
-                    isset($indexUrl['params']) ? $indexUrl['params'] : array()
-                ));
+                return new RedirectResponse($url);
             }
         }
 
-        return array(
-            'form' => $form->createView(),
-            'adminlistconfigurator' => $configurator
-        );
+        return ['form' => $form->createView(), 'adminlistconfigurator' => $configurator];
+    }
+
+    /**
+     * @param TranslationModel $translation
+     */
+    private function addLocales(TranslationModel $translation)
+    {
+        $locales = $this->getParameter('kuma_translator.managed_locales');
+        foreach ($locales as $locale) {
+            $translation->addText($locale, '');
+        }
     }
 
     /**
@@ -136,20 +152,58 @@ class TranslatorController extends AdminListController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param $id
      * @throws \InvalidArgumentException
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
+        $translations = $this->getTranslationsById($id);
+        $translation = $this->getTranslationToEdit($translations);
+        $form = $this->createForm(TranslationAdminType::class, $translation, array('intention' => 'edit'));
 
+        if ('POST' == $request->getMethod()) {
+            $form->handleRequest($request);
 
-        $translations = $em->getRepository('KunstmaanTranslatorBundle:Translation')->findBy(array('translationId' => $id));
-        if (count($translations) < 1) {
-            throw new \InvalidArgumentException('No existing translations found for this id');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->repo->updateTranslations($translation, $id);
+                $this->em->flush();
+                $msg = $this->get('translator')->trans('settings.translator.succesful_edited');
+                $this->addFlash(FlashTypes::SUCCESS, $msg);
+                $indexUrl = $configurator->getIndexUrl();
+                $params = isset($indexUrl['params']) ? $indexUrl['params'] : [];
+                $url = $this->generateUrl($indexUrl['path'], $params);
+
+                return new RedirectResponse($url);
+            }
         }
 
-        $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
+        return ['form' => $form->createView(), 'translation' => $translation, 'adminlistconfigurator' => $configurator];
+    }
+
+    /**
+     * @param $id
+     *
+     * @return Translation[]
+     */
+    private function getTranslationsById($id)
+    {
+        /** @var Translation[] $translations */
+        $translations = $this->repo->findBy(array('translationId' => $id));
+        if (count($translations) < 1) {
+            throw new InvalidArgumentException('No existing translations found for this id');
+        }
+        return $translations;
+    }
+
+    /**
+     * @param array $translations
+     *
+     * @return TranslationModel
+     */
+    private function getTranslationToEdit(array $translations)
+    {
+        $translation = new TranslationModel();
         $translation->setDomain($translations[0]->getDomain());
         $translation->setKeyword($translations[0]->getKeyword());
         $locales = $this->getParameter('kuma_translator.managed_locales');
@@ -165,36 +219,7 @@ class TranslatorController extends AdminListController
                 $translation->addText($locale, '');
             }
         }
-
-        $form = $this->createForm(TranslationAdminType::class, $translation, array('intention' => 'edit'));
-
-        if ('POST' == $request->getMethod()) {
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                // Update translations
-                $em->getRepository('KunstmaanTranslatorBundle:Translation')->updateTranslations($translation, $id);
-                $em->flush();
-
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('settings.translator.succesful_edited')
-                );
-
-                $indexUrl = $configurator->getIndexUrl();
-
-                return new RedirectResponse($this->generateUrl(
-                    $indexUrl['path'],
-                    isset($indexUrl['params']) ? $indexUrl['params'] : array()
-                ));
-            }
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'translation' => $translation,
-            'adminlistconfigurator' => $configurator
-        );
+        return $translation;
     }
 
     /**
@@ -217,17 +242,18 @@ class TranslatorController extends AdminListController
         }
 
         $editUrl = $configurator->getEditUrlFor(array('id' => $translation->getId()));
+        $url = $this->generateUrl($editUrl['path'], $editUrl['params']);
 
-        return new RedirectResponse($this->generateUrl($editUrl['path'], $editUrl['params']));
+        return new RedirectResponse($url);
     }
 
     /**
      * @param $id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws NotFoundHttpException
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanTranslatorBundle_settings_translations_delete")
      * @Method({"GET", "POST"})
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -238,19 +264,24 @@ class TranslatorController extends AdminListController
         if ($request->isMethod('POST')) {
             $em->getRepository('KunstmaanTranslatorBundle:Translation')->removeTranslations($id);
         }
+        $params = isset($indexUrl['params']) ? $indexUrl['params'] : [];
+        $url = $this->generateUrl($indexUrl['path'], $params);
 
-        return new RedirectResponse($this->generateUrl($indexUrl['path'], isset($indexUrl['params']) ? $indexUrl['params'] : array()));
+        return new RedirectResponse($url);
     }
 
+    /**
+     * @param $adminListConfigurator
+     */
     public function setAdminListConfigurator($adminListConfigurator)
     {
         $this->adminListConfigurator = $adminListConfigurator;
     }
 
     /**
-     * @return AbstractAdminListConfigurator
+     * @return TranslationAdminListConfigurator
      */
-    public function getAdminListConfigurator()
+    protected function getAdminListConfigurator()
     {
         $locales = explode('|', $this->getParameter('requiredlocales'));
 
@@ -265,6 +296,9 @@ class TranslatorController extends AdminListController
     /**
      * @Route("/inline-edit", name="KunstmaanTranslatorBundle_settings_translations_inline_edit")
      * @Method({"POST"})
+     * @param Request $request
+     *
+     * @return JsonResponse|Response
      */
     public function inlineEditAction(Request $request)
     {
@@ -277,37 +311,48 @@ class TranslatorController extends AdminListController
 
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
-        /**
-         * @var TranslatorInterface $translator
-         */
         $translator = $this->get('translator');
 
         try {
-            if ($id !== 0) {
-                // Find existing translation
-                $translation = $em->getRepository('KunstmaanTranslatorBundle:Translation')->find($id);
-
-                if (is_null($translation)) {
-                    return new Response($translator->trans('translator.translator.invalid_translation'), 500);
-                }
-            } else {
-                // Create new translation
-                $translation = new Translation();
-                $translation->setDomain($values['domain']);
-                $translation->setKeyword($values['keyword']);
-                $translation->setLocale($values['locale']);
-                $translation->setTranslationId($values['translationId']);
-            }
-            $translation->setText($values['value']);
+            $translation = $this->getInlineEditTranslation($id, $translator, $values);
             $em->persist($translation);
             $em->flush();
 
-            return new JsonResponse(array(
-              'success' => true,
-              'uid' => $translation->getId()
-            ), 200);
-        } catch (\Exception $e) {
+            return new JsonResponse(['success' => true, 'uid' => $translation->getId()], 200);
+        } catch (TranslationsNotFoundException $e) {
+            throw new HttpException($e->getCode(), $e->getMessage());
+        } catch (Exception $e) {
             return new Response($translator->trans('translator.translator.fatal_error_occurred'), 500);
         }
+    }
+
+    /**
+     * @param $id
+     * @param TranslatorInterface $translator
+     * @param array $values
+     * @throws TranslationsNotFoundException
+     * 
+     * @return Translation|null|object
+     */
+    private function getInlineEditTranslation($id, TranslatorInterface $translator, array $values)
+    {
+        if ($id !== 0) {
+            // Find existing translation
+            $translation = $this->em->getRepository('KunstmaanTranslatorBundle:Translation')->find($id);
+
+            if (is_null($translation)) {
+                throw new TranslationsNotFoundException($translator->trans('translator.translator.invalid_translation'), 404);
+            }
+        } else {
+            // Create new translation
+            $translation = new Translation();
+            $translation->setDomain($values['domain']);
+            $translation->setKeyword($values['keyword']);
+            $translation->setLocale($values['locale']);
+            $translation->setTranslationId($values['translationId']);
+        }
+        $translation->setText($values['value']);
+
+        return $translation;
     }
 }

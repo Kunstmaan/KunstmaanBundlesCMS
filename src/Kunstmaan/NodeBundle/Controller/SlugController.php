@@ -4,14 +4,19 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
+use Kunstmaan\NodeBundle\Helper\NodeMenu;
+use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,6 +27,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class SlugController extends Controller
 {
+    /** @var EventDispatcher $eventDispatcher */
+    protected $eventDispatcher;
 
     /**
      * Handle the page requests
@@ -38,9 +45,31 @@ class SlugController extends Controller
     public function slugAction(Request $request, $url = null, $preview = false)
     {
         /* @var EntityManager $em */
-        $em     = $this->getDoctrine()->getManager();
-        $locale = $request->getLocale();
+        $em              = $this->getDoctrine()->getManager();
+        $locale          = $request->getLocale();
+        $nodeTranslation = $this->getNodeTranslation($request, $url);
+        $entity          = $this->getPageEntity($request, $preview, $em, $nodeTranslation);
+        $node            = $nodeTranslation->getNode();
+        $securityEvent   = $this->getSecurityEvent($node, $entity, $request, $nodeTranslation);
+        $nodeMenu        = $this->getNodeMenu($locale, $node, $preview);
+        $renderContext   = $this->getRenderContext($nodeTranslation, $url, $entity, $nodeMenu, $securityEvent);
+        /** @noinspection PhpUndefinedMethodInspection */
+        $response        = $entity->service($this->container, $request, $renderContext);
+        $postEvent       = new SlugEvent($response, $renderContext);
+        $this->eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
+        $response        = $postEvent->getResponse();
+        $renderContext   = $postEvent->getRenderContext();
 
+        return $this->returnResult($request, $url, $renderContext, $response);
+    }
+
+    /**
+     * @param Request $request
+     * @param $url
+     * @return NodeTranslation
+     */
+    private function getNodeTranslation(Request $request, $url)
+    {
         /* @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $request->attributes->get('_nodeTranslation');
 
@@ -49,14 +78,18 @@ class SlugController extends Controller
             throw $this->createNotFoundException('No page found for slug ' . $url);
         }
 
-        $entity = $this->getPageEntity(
-            $request,
-            $preview,
-            $em,
-            $nodeTranslation
-        );
-        $node   = $nodeTranslation->getNode();
+        return $nodeTranslation;
+    }
 
+    /**
+     * @param Node $node
+     * @param EntityInterface $entity
+     * @param Request $request
+     * @param NodeTranslation $nodeTranslation
+     * @return SlugSecurityEvent
+     */
+    private function getSecurityEvent(Node $node, EntityInterface $entity, Request $request, NodeTranslation $nodeTranslation)
+    {
         $securityEvent = new SlugSecurityEvent();
         $securityEvent
             ->setNode($node)
@@ -64,41 +97,69 @@ class SlugController extends Controller
             ->setRequest($request)
             ->setNodeTranslation($nodeTranslation);
 
+        return $securityEvent;
+    }
+
+    /**
+     * @param $locale
+     * @param Node $node
+     * @param bool $preview
+     *
+     * @return NodeMenu
+     */
+    private function getNodeMenu($locale, Node $node, $preview)
+    {
+        /** @var NodeMenu $nodeMenu */
         $nodeMenu = $this->container->get('kunstmaan_node.node_menu');
         $nodeMenu->setLocale($locale);
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($preview);
 
-        $eventDispatcher = $this->get('event_dispatcher');
-        $eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
+        return $nodeMenu;
+    }
 
-        //render page
-        $renderContext = new RenderContext(
-            array(
-                'nodetranslation' => $nodeTranslation,
-                'slug'            => $url,
-                'page'            => $entity,
-                'resource'        => $entity,
-                'nodemenu'        => $nodeMenu,
-            )
-        );
+    /**
+     * @param NodeTranslation $nodeTranslation
+     * @param $url
+     * @param EntityInterface $entity
+     * @param NodeMenu $nodeMenu
+     * @param SlugSecurityEvent $securityEvent
+     * @return RenderContext
+     */
+    private function getRenderContext(NodeTranslation $nodeTranslation, $url, EntityInterface $entity, NodeMenu $nodeMenu, SlugSecurityEvent $securityEvent)
+    {
+        $this->eventDispatcher = $this->get('event_dispatcher');
+        $this->eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
+
+        $renderContext = new RenderContext([
+            'nodetranslation' => $nodeTranslation,
+            'slug'            => $url,
+            'page'            => $entity,
+            'resource'        => $entity,
+            'nodemenu'        => $nodeMenu,
+        ]);
+
         if (method_exists($entity, 'getDefaultView')) {
             /** @noinspection PhpUndefinedMethodInspection */
             $renderContext->setView($entity->getDefaultView());
         }
+
         $preEvent = new SlugEvent(null, $renderContext);
-        $eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
+        $this->eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
         $renderContext = $preEvent->getRenderContext();
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        $response = $entity->service($this->container, $request, $renderContext);
+        return $renderContext;
+    }
 
-        $postEvent = new SlugEvent($response, $renderContext);
-        $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
-
-        $response      = $postEvent->getResponse();
-        $renderContext = $postEvent->getRenderContext();
-
+    /**
+     * @param Request $request
+     * @param Response|null $response
+     * @param $url
+     * @param RenderContext $renderContext
+     * @return array|Response
+     */
+    private function returnResult(Request $request, $url, RenderContext $renderContext, Response $response = null)
+    {
         if ($response instanceof Response) {
             return $response;
         }
@@ -110,7 +171,6 @@ class SlugController extends Controller
 
         $template = new Template(array());
         $template->setTemplate($view);
-
         $request->attributes->set('_template', $template);
 
         return $renderContext->getArrayCopy();

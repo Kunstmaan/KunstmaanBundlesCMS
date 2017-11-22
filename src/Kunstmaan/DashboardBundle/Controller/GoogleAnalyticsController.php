@@ -1,16 +1,26 @@
 <?php
 namespace Kunstmaan\DashboardBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper;
 use Kunstmaan\DashboardBundle\Repository\AnalyticsConfigRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * Class GoogleAnalyticsController
+ * @package Kunstmaan\DashboardBundle\Controller
+ */
 class GoogleAnalyticsController extends Controller
 {
+    /** @var ObjectManager $em */
+    protected $em;
 
     /**
      * The index action will render the main screen the users see when they log in in to the admin
@@ -19,63 +29,68 @@ class GoogleAnalyticsController extends Controller
      * @Template()
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return array
+     * @return Response|array
      */
     public function widgetAction(Request $request)
     {
-        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+        $params['redirect_uri'] = $this->get('router')->generate('KunstmaanDashboardBundle_setToken', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        /** @var ConfigHelper $configHelper */
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
 
-        // if token not set
-        if (!$configHelper->tokenIsSet()) {
-            if ($this->getParameter('google.api.client_id') != '' && $this->getParameter('google.api.client_secret') != '' && $this->getParameter('google.api.dev_key') != '' ) {
-                $params['authUrl'] = $configHelper->getAuthUrl($params['redirect_uri']);
-            }
-
-            return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
+        switch (false) {
+            case $configHelper->tokenIsSet() :
+                return $this->connectToGoogle($configHelper, $params);
+            case $configHelper->accountIsSet() :
+                return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
+            case $configHelper->propertyIsSet() :
+                return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
+            case $configHelper->profileIsSet() :
+                return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
         }
 
-        // if propertyId not set
-        if (!$configHelper->accountIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_Config'));
-        }
-
-        // if propertyId not set
-        if (!$configHelper->propertyIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_PropertySelection'));
-        }
-
-        // if profileId not set
-        if (!$configHelper->profileIsSet()) {
-            return $this->redirect($this->generateUrl('KunstmaanDashboardBundle_ProfileSelection'));
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        // get the segment id
+        $this->em = $this->getDoctrine()->getManager();
         $segmentId = $request->query->get('id');
-        $params['segments'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst()->getSegments();
-        $params['segmentId'] = $segmentId;
-
-        // set the overviews param
-        $params['token'] = true;
-        if ($segmentId) {
-            $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->find($segmentId)->getOverviews();
-        } else {
-            $overviews = $em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getDefaultOverviews();
-        }
-
-        $params['disableGoals'] = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst()->getDisableGoals();
-        $params['overviews'] = $overviews;
+        $overviews = $this->getOverviews($segmentId);
         /** @var AnalyticsConfigRepository $analyticsConfigRepository */
-        $analyticsConfigRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $analyticsConfigRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+        $params['segmentId'] = $segmentId;
+        $params['token'] = true;
+        $params['overviews'] = $overviews;
+        $params['disableGoals'] = $analyticsConfigRepository->findFirst()->getDisableGoals();
+        $params['segments'] = $analyticsConfigRepository->findFirst()->getSegments();
         $date = $analyticsConfigRepository->findFirst()->getLastUpdate();
-        if ($date) {
-            $params['last_update'] = $date->format('d-m-Y H:i');
-        } else {
-            $params['last_update'] = "never";
-        }
+        $params['last_update'] = ($date) ? $date->format('d-m-Y H:i') : 'never';
+
         return $params;
+    }
+
+    /**
+     * @param null|int $segmentId
+     * @return mixed
+     */
+    private function getOverviews($segmentId = null)
+    {
+        if ($segmentId) {
+            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsSegment')->find($segmentId)->getOverviews();
+        } else {
+            $overviews = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview')->getDefaultOverviews();
+        }
+        return $overviews;
+    }
+
+
+    /**
+     * @param ConfigHelper $configHelper
+     * @param array $params
+     * @return Response
+     */
+    private function connectToGoogle(ConfigHelper $configHelper, array $params)
+    {
+        if ($this->getParameter('google.api.client_id') != '' && $this->getParameter('google.api.client_secret') != '' && $this->getParameter('google.api.dev_key') != '' ) {
+            $params['authUrl'] = $configHelper->getAuthUrl($params['redirect_uri']);
+        }
+
+        return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);
     }
 
 
@@ -86,7 +101,7 @@ class GoogleAnalyticsController extends Controller
      *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @return array|Response
      */
     public function setTokenAction(Request $request)
     {
@@ -115,27 +130,44 @@ class GoogleAnalyticsController extends Controller
      *
      * @throws AccessDeniedException
      *
-     * @return array
+     * @return array|Response
      */
     public function configAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
-        $params = array();
-        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
-
         if (null !== $request->request->get('accounts')) {
             return $this->redirect($this->generateUrl('kunstmaan_dashboard'));
         }
 
+        /** @var ConfigHelper $configHelper */
+        $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $em = $this->getDoctrine()->getManager();
+        /** @var AnalyticsConfig $config */
         $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->findFirst();
+        $params = $this->getConfigParams($configHelper, $config);
 
+        return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:setupcontainer.html.twig', $params);
+    }
+
+    /**
+     * @param ConfigHelper $configHelper
+     * @param AnalyticsConfig $config
+     * @return array
+     */
+    private function getConfigParams(ConfigHelper $configHelper, AnalyticsConfig $config)
+    {
+        $params = [];
         $params['accountId'] = $config->getAccountId();
         $params['propertyId'] = 0;
         $params['profileId'] = 0;
-        $params['properties'] = array();
-        $params['profiles'] = array();
+        $params['properties'] = [];
+        $params['profiles'] = [];
+        $params['accounts'] = $configHelper->getAccounts();
+        $params['segments'] = $config->getSegments();
+        $params['disableGoals'] = $config->getDisableGoals();
+        $params['configId'] = $config->getId();
+        $params['profileSegments'] = $configHelper->getProfileSegments();
 
         if ($params['accountId']) {
             $params['propertyId'] = $config->getPropertyId();
@@ -145,18 +177,7 @@ class GoogleAnalyticsController extends Controller
             $params['profiles'] = $configHelper->getProfiles();
         }
 
-        $params['accounts'] = $configHelper->getAccounts();
-        $params['segments'] = $config->getSegments();
-        $params['disableGoals'] = $config->getDisableGoals();
-        $params['configId'] = $config->getId();
-
-
-        $params['profileSegments'] = $configHelper->getProfileSegments();
-
-        return $this->render(
-            'KunstmaanDashboardBundle:GoogleAnalytics:setupcontainer.html.twig',
-            $params
-        );
+        return $params;
     }
 
     /**

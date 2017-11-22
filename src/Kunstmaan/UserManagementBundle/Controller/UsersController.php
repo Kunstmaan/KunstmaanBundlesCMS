@@ -2,20 +2,25 @@
 
 namespace Kunstmaan\UserManagementBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Event\UserEvent;
 use FOS\UserBundle\Model\UserInterface;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
+use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,6 +31,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class UsersController extends BaseSettingsController
 {
+    /** @var ObjectManager $em */
+    protected $em;
+
     /**
      * List users
      *
@@ -137,31 +145,17 @@ class UsersController extends BaseSettingsController
      * @Template()
      *
      * @throws AccessDeniedException
-     * @return array
+     * @return RedirectResponse|array
      */
     public function editAction(Request $request, $id)
     {
-        // The logged in user should be able to change his own password/username/email and not for other users
-        if ($id == $this->get('security.token_storage')->getToken()->getUser()->getId()) {
-            $requiredRole = 'ROLE_ADMIN';
-        } else {
-            $requiredRole = 'ROLE_SUPER_ADMIN';
-        }
+        $requiredRole = $this->getRequiredRole($id);
         $this->denyAccessUnlessGranted($requiredRole);
-
-        /* @var $em EntityManager */
-        $em = $this->getDoctrine()->getManager();
-
-        /** @var UserInterface $user */
-        $user = $em->getRepository($this->getParameter('fos_user.model.user.class'))->find($id);
-        if ($user === null) {
-            throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
-        }
-
+        $this->em = $this->getDoctrine()->getManager();
+        $user = $this->getUserById($id);
         $userEvent = new UserEvent($user, $request);
         $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
-
-        $options = array('password_required' => false, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user));
+        $options = ['password_required' => false, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user)];
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
 
@@ -171,51 +165,84 @@ class UsersController extends BaseSettingsController
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
+        /** @var AdaptSimpleFormEvent $event */
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
-
         $form = $this->createForm($formFqn, $user, $options);
 
         if ($request->isMethod('POST')) {
-
-            if ($tabPane) {
-                $tabPane->bindRequest($request);
-                $form = $tabPane->getForm();
-            } else {
-                $form->handleRequest($request);
-            }
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                /* @var UserManager $userManager */
-                $userManager = $this->container->get('fos_user.user_manager');
-                $userManager->updateUser($user, true);
-
-                $this->addFlash(
-                    FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
-                        '%username%' => $user->getUsername()
-                    ])
-                );
-
-                return new RedirectResponse(
-                    $this->generateUrl(
-                        'KunstmaanUserManagementBundle_settings_users_edit',
-                        array('id' => $id)
-                    )
-                );
+            $response = $this->handleEditForm($request, $form, $user, $tabPane);
+            if ($response instanceof RedirectResponse) {
+                return $response;
             }
         }
-
-        $params = array(
-            'form' => $form->createView(),
-            'user' => $user,
-        );
-
-        if ($tabPane) {
-            $params = array_merge($params, array('tabPane' => $tabPane));
-        }
-
+        $params = ['form' => $form->createView(), 'user' => $user];
+        $params = $tabPane ? array_merge($params, ['tabPane' => $tabPane]) : $params;
         return $params;
+    }
+
+    /**
+     * @param Request $request
+     * @param Form $form
+     * @param User $user
+     * @param TabPane|null $tabPane
+     * @return null|RedirectResponse
+     */
+    private function handleEditForm(Request $request, Form $form, User $user, TabPane $tabPane = null)
+    {
+        if ($tabPane instanceof TabPane) {
+            $tabPane->bindRequest($request);
+            $form = $tabPane->getForm();
+        } else {
+            $form->handleRequest($request);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /* @var UserManager $userManager */
+            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager->updateUser($user, true);
+
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
+                    '%username%' => $user->getUsername()
+                ])
+            );
+
+            $url = $this->generateUrl('KunstmaanUserManagementBundle_settings_users_edit', ['id' => $user->getId()]);
+            return new RedirectResponse($url);
+        }
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    private function getRequiredRole($id)
+    {
+        // The logged in user should be able to change his own password/username/email and not for other users
+        if ($id == $this->get('security.token_storage')->getToken()->getUser()->getId()) {
+            $requiredRole = 'ROLE_ADMIN';
+        } else {
+            $requiredRole = 'ROLE_SUPER_ADMIN';
+        }
+        return $requiredRole;
+    }
+
+    /**
+     * @param $id
+     * @throws NotFoundHttpException
+     *
+     * @return User
+     */
+    private function getUserById($id)
+    {
+        /** @var User $user */
+        $user = $this->em->getRepository($this->getParameter('fos_user.model.user.class'))->find($id);
+        if ($user === null) {
+            throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
+        }
+        return $user;
     }
 
     /**

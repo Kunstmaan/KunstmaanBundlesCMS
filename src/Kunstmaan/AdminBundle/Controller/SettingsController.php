@@ -7,7 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * Main settings controller
+ * Class SettingsController
+ * @package Kunstmaan\AdminBundle\Controller
  */
 class SettingsController extends BaseSettingsController
 {

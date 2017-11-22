@@ -3,6 +3,7 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
+use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -14,12 +15,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * ChooserController.
  */
 class ChooserController extends Controller
 {
+    protected $em;
+
 
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_chooser")
@@ -76,16 +80,44 @@ class ChooserController extends Controller
      */
     public function chooserShowFolderAction(Request $request, $folderId)
     {
-        $em      = $this->getDoctrine()->getManager();
-        $session = $request->getSession();
-
+        $this->em        = $this->getDoctrine()->getManager();
+        $session         = $request->getSession();
         $type            = $request->get('type');
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
         $linkChooser     = $request->get('linkChooser');
-
-        // Remember the last visited folder in the session
+        $linkChooserLink = $this->getLinkChooserLink($linkChooser, $cKEditorFuncNum);
+        /* @var MediaManager $mediaManager */
+        $mediaManager = $this->get('kunstmaan_media.media_manager');
         $session->set('last-media-folder', $folderId);
+        $this->setViewMode($request, $session);
+        /* @var Folder $folder */
+        $folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $handler = $this->getHandler($mediaManager, $type);
+        $adminList = $this->getAdminList($request, $mediaManager, $folder);
+        $subForm = $this->getSubForm($folder);
 
+        $viewVars = ['cKEditorFuncNum' => $cKEditorFuncNum,
+            'linkChooser' => $linkChooser,
+            'linkChooserLink' => $linkChooserLink,
+            'mediamanager' => $mediaManager,
+            'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
+            'handler' => $handler,
+            'type' => $type,
+            'folder' => $folder,
+            'adminlist' => $adminList,
+            'subform' => $subForm->createView()
+        ];
+
+        $viewVars = $this->addFormsToVariables($mediaManager, $viewVars);
+        return $viewVars;
+    }
+
+    /**
+     * @param Request $request
+     * @param SessionInterface $session
+     */
+    private function setViewMode(Request $request, SessionInterface $session)
+    {
         // Check when user switches between thumb -and list view
         $viewMode = $request->query->get('viewMode');
         if ($viewMode && $viewMode == 'list-view') {
@@ -93,33 +125,18 @@ class ChooserController extends Controller
         } elseif ($viewMode && $viewMode == 'thumb-view') {
             $session->remove('media-list-view');
         }
+    }
 
-        /* @var MediaManager $mediaHandler */
-        $mediaHandler = $this->get('kunstmaan_media.media_manager');
-
-        /* @var Folder $folder */
-        $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-
-        /** @var AbstractMediaHandler $handler */
-        $handler = null;
-        if ($type) {
-            $handler = $mediaHandler->getHandlerForType($type);
-        }
-
-        /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
-
-        $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
-        $adminList->bindRequest($request);
-
-        $sub = new Folder();
-        $sub->setParent($folder);
-        $subForm  = $this->createForm(FolderType::class, $sub, array('folder' => $sub));
-
+    /**
+     * @param $linkChooser
+     * @param $cKEditorFuncNum
+     * @return null|string
+     */
+    private function getLinkChooserLink($linkChooser, $cKEditorFuncNum)
+    {
         $linkChooserLink = null;
         if (!empty($linkChooser)) {
-            $params = array();
+            $params = [];
             if (!empty($cKEditorFuncNum)) {
                 $params['CKEditorFuncNum'] = $cKEditorFuncNum;
                 $routeName                 = 'KunstmaanNodeBundle_ckselecturl';
@@ -128,30 +145,66 @@ class ChooserController extends Controller
             }
             $linkChooserLink = $this->generateUrl($routeName, $params);
         }
+        return $linkChooserLink;
+    }
 
-        $viewVariabels = array(
-            'cKEditorFuncNum' => $cKEditorFuncNum,
-            'linkChooser'     => $linkChooser,
-            'linkChooserLink' => $linkChooserLink,
-            'mediamanager'    => $mediaManager,
-            'foldermanager'   => $this->get('kunstmaan_media.folder_manager'),
-            'handler'         => $handler,
-            'type'            => $type,
-            'folder'          => $folder,
-            'adminlist'       => $adminList,
-            'subform'         => $subForm->createView()
-        );
+    /**
+     * @param MediaManager $mediaManager
+     * @param string $type
+     * @return AbstractMediaHandler|null
+     */
+    private function getHandler(MediaManager $mediaManager, $type)
+    {
+        /** @var AbstractMediaHandler $handler */
+        $handler = null;
+        if ($type) {
+            $handler = $mediaManager->getHandlerForType($type);
+        }
+        return $handler;
+    }
 
-        /* generate all forms */
-        $forms = array();
+    /**
+     * @param Request $request
+     * @param MediaManager $mediaManager
+     * @param $folder
+     * @return AdminList
+     */
+    private function getAdminList(Request $request, MediaManager $mediaManager, $folder)
+    {
+        $adminListConfigurator = new MediaAdminListConfigurator($this->em, $mediaManager, $folder, $request);
+        /** @var AdminList $adminList */
+        $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList->bindRequest($request);
+        return $adminList;
+    }
+
+    /**
+     * @param $folder
+     * @return \Symfony\Component\Form\Form
+     */
+    private function getSubForm($folder)
+    {
+        $sub = new Folder();
+        $sub->setParent($folder);
+        $subForm  = $this->createForm(FolderType::class, $sub, ['folder' => $sub]);
+        return $subForm;
+    }
+
+    /**
+     * @param MediaManager $mediaManager
+     * @param array $viewVars
+     * @return array
+     */
+    public function addFormsToVariables(MediaManager $mediaManager, array $viewVars)
+    {
+        $forms = [];
 
         foreach($mediaManager->getFolderAddActions()  as $addAction ) {
-            $forms[$addAction['type']] = $this->createTypeFormView($mediaHandler,$addAction['type']);
+            $forms[$addAction['type']] = $this->createTypeFormView($mediaManager, $addAction['type']);
         }
 
-        $viewVariabels['forms'] = $forms;
-
-        return $viewVariabels;
+        $viewVars['forms'] = $forms;
+        return $viewVars;
     }
 
     /**

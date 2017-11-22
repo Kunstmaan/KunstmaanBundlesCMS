@@ -187,14 +187,11 @@ class GoogleAnalyticsAJAXController extends Controller
      */
     public function saveConfigAction(Request $request)
     {
-        // get params
         $configId     = $request->query->get('configId');
         $accountId    = $request->query->get('accountId');
         $propertyId   = $request->query->get('propertyId');
         $profileId    = $request->query->get('profileId');
         $disableGoals = $request->query->get('disableGoals');
-
-        // edit the config
         $em     = $this->getDoctrine()->getManager();
         $config = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->find($configId);
         if ($accountId && $propertyId && $profileId) {
@@ -202,24 +199,17 @@ class GoogleAnalyticsAJAXController extends Controller
             $config->setPropertyId($propertyId);
             $config->setProfileId($profileId);
         }
-
         $em->persist($config);
         $em->flush();
-
-        // set the config name
         $configHelper = $this->container->get('kunstmaan_dashboard.helper.google.analytics.config');
         $configHelper->init($configId);
         $profile = $configHelper->getActiveProfile();
         $config->setName($profile['profileName']);
         $config->setDisableGoals($disableGoals);
-
         $em->persist($config);
         $em->flush();
-
-        $this->addFlash(
-            FlashTypes::SUCCESS,
-            $this->get('translator')->trans('kuma_admin.ga_ajax_controller.flash.success')
-        );
+        $translation = $this->get('translator')->trans('kuma_admin.ga_ajax_controller.flash.success');
+        $this->addFlash(FlashTypes::SUCCESS, $translation);
 
         return new JsonResponse();
     }
