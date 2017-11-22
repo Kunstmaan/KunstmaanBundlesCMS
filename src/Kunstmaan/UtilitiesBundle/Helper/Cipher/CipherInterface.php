@@ -7,6 +7,7 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
  */
 interface CipherInterface
 {
+    const CIPHER_METHOD = 'AES-256-CBC';
 
     /**
      * Encrypt the given value to an unreadable string.
