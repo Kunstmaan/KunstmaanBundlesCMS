@@ -68,3 +68,4 @@ exclude_patterns:
     - app/SymfonyRequirements.php
     - web/config.php
     - web/app_*.php
+    - *.xml.dist
