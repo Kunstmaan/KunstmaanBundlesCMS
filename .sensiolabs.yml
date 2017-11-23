@@ -10,7 +10,7 @@ commit_failure_conditions:
     # # By other severities count
     # - "project.severity.minor > 0"
     # - "project.severity.info >= 15"
-    
+
     # # By categories count
     # - "project.category.architecture > 0"
     # - "project.category.bugrisk > 0"
@@ -68,4 +68,4 @@ exclude_patterns:
     - app/SymfonyRequirements.php
     - web/config.php
     - web/app_*.php
-    - *.xml.dist
+    - src/Kunstmaan/*/phpunit.xml.dist
