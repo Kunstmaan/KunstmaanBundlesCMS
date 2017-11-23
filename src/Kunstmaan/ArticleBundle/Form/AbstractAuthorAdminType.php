@@ -18,7 +18,7 @@ class AbstractAuthorAdminType extends AbstractType
         ));
     }
 
-    function getBlockPrefix()
+    public function getBlockPrefix()
     {
         return "abstactauthor_form";
     }
