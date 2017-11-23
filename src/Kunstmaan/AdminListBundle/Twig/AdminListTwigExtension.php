@@ -14,19 +14,6 @@ use Symfony\Component\Routing\Router;
 class AdminListTwigExtension extends \Twig_Extension
 {
     /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /**
      * Returns a list of functions to add to the existing list.
      *
      * @return array An array of functions
