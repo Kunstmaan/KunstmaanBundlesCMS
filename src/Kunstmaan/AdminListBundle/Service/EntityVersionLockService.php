@@ -66,7 +66,7 @@ class EntityVersionLockService
             $this->removeExpiredLocks($lockable);
             $locks = $this->getEntityVersionLocksByLockableEntity($lockable, $user);
 
-            if($locks == null || !count($locks)) {
+            if($locks === null || !count($locks)) {
                 $this->createEntityVersionLock($user, $lockable);
 
                 $lockable->setUpdated(new \DateTime());
