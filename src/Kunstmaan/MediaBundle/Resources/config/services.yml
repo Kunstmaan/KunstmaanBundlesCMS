@@ -78,6 +78,11 @@ services:
         calls:
             - [setContainer, ['@service_container'] ]
 
+    kunstmaan_media.command.generatefolderslugs:
+        class: Kunstmaan\MediaBundle\Command\MigrationFolderSlugsCommand
+        calls:
+            - [setContainer, ['@service_container'] ]
+
     kunstmaan_media.command.rebuildfoldertree:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
         calls:
