@@ -12,7 +12,7 @@
                 <div class="row">
                     {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
                         <div class="col-sm-6 col-md-4">
-                            {% if pagePartType.preview %}
+                            {% if pagePartType.preview is defined %}
                                 {% set background = asset(pagePartType.preview) %}
                             {% else %}
                                 {% set background = asset('bundles/kunstmaanadmin/default-theme/img/kunstmaan/guy.svg') %}
