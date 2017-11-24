@@ -23,7 +23,7 @@ settings:
     toupdate: kan worden geüpdated naar
     unknown: versiegegevens onbekend
 tools:
-  title: Tools
+  title: Hulpmiddelen
   clear_frontend_cache: Frontend cache legen
   clear_backend_cache: Backend cache legen
   clear_all_caches: Alle caches legen
