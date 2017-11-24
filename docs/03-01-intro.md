@@ -145,7 +145,10 @@ Then execute the following commands:
 ```
 bundle install
 npm install
-npm run build
+bower install
+gulp build
+bin/console assets:install --symlink
+bin/console assetic:dump
 ```
 
 At this point browsing to [http://kunstmaan.cms](http://kunstmaan.cms) should show you the website with minimalistic styling.
