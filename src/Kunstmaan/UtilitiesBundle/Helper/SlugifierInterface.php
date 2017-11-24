@@ -11,9 +11,10 @@ interface SlugifierInterface
 {
 
     /**
-     * @param $text
+     * @param string $text
+     * @param string $delimiter
      * @return mixed
      */
-    public function slugify($text);
+    public function slugify($text, $delimiter = '-');
 
 }
