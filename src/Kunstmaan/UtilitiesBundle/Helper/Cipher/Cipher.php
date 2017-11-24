@@ -1,7 +1,10 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
+    namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
+use Defuse\Crypto\Crypto;
+use Defuse\Crypto\File;
+use Defuse\Crypto\Key;
 use Webmozart\Assert\Assert;
 
 /**
@@ -15,63 +18,82 @@ class Cipher implements CipherInterface
     private $secret;
 
     /**
-     * @var array $replacements
-     */
-    private static $replacements = [
-        ['+', '/', '='],
-        ['_', '-', '.']
-    ];
-
-    /**
      * @param string $secret
-     * @throws \InvalidArgumentException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
+     * @throws \Defuse\Crypto\Exception\BadFormatException
      */
     public function __construct($secret)
     {
-        if (empty($secret)) {
-            throw new \InvalidArgumentException("You need to configure a Cipher secret in your parameters.yml before you can use this!");
-        }
-        $this->secret = md5($secret);
+        Assert::stringNotEmpty($secret, 'You need to configure a Cipher secret in your parameters.yml before you can use this!');
+
+        $this->secret = Key::loadFromAsciiSafeString(
+            $this->generateSecret($secret)
+        );
     }
 
     /**
      * Encrypt the given value to an unreadable string.
      *
      * @param string $value
-     *
+     * @param bool $raw_binary
      * @return string
-     * @throws \RuntimeException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function encrypt($value)
+    public function encrypt($value, $raw_binary=false)
     {
-        Assert::stringNotEmpty($value);
-
-        $isSourceStrong = true;
-        $iv_length = openssl_cipher_iv_length(self::CIPHER_METHOD);
-        $iv = openssl_random_pseudo_bytes($iv_length, $isSourceStrong);
-        if (false === $isSourceStrong || false === $iv) {
-            throw new \RuntimeException('IV generation failed');
-        }
-        $value = openssl_encrypt($iv.$value, self::CIPHER_METHOD, $this->secret, 0, $iv);
-        return str_replace(self::$replacements[0], self::$replacements[1], $value);
+        return Crypto::encrypt($value, $this->secret, $raw_binary);
     }
 
     /**
      * Decrypt the given value so that it's readable again.
      *
      * @param string $value
-     *
+     * @param bool $raw_binary
+     * @return string
+     * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
+     */
+    public function decrypt($value, $raw_binary=false)
+    {
+        return Crypto::decrypt($value, $this->secret, $raw_binary);
+    }
+
+    /**
+     * @param string $inputFile
+     * @param string $outputFile
+     * @return void
+     * @throws \Defuse\Crypto\Exception\IOException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
+     */
+    public function encryptFile($inputFile, $outputFile)
+    {
+        File::encryptFile($inputFile, $outputFile, $this->secret);
+    }
+
+    /**
+     * @param string $inputFile
+     * @param string $outputFile
+     * @return void
+     * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
+     * @throws \Defuse\Crypto\Exception\IOException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
+     */
+    public function decryptFile($inputFile, $outputFile)
+    {
+        File::decryptFile($inputFile, $outputFile, $this->secret);
+    }
+
+    /**
+     * @param string $secret
      * @return string
      */
-    public function decrypt($value)
+    private function generateSecret($secret)
     {
-        $value = base64_decode(str_replace(self::$replacements[1], self::$replacements[0], $value));
-        Assert::stringNotEmpty($value);
+        // Need to be implement if we wont use secret like that
+        // def00000290a4b250a1b24c41f3076b5e3955e1a51d8535a5dbcf209d17f1eb8d772349cbd12af5dc8f4b05d43ca900489c0fb5aa5c4c5190ccffb5663ae4831e3022fc6
 
-        $iv_length = openssl_cipher_iv_length(self::CIPHER_METHOD);
-        $body_data = base64_encode(substr($value, $iv_length));
-        $iv = substr($value, 0, $iv_length);
-        return openssl_decrypt($body_data, self::CIPHER_METHOD, $this->secret, 0, $iv);
+        return $secret;
     }
 
 }
+
