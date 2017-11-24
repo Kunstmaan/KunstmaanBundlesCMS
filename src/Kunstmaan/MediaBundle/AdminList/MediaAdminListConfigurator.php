@@ -32,7 +32,9 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     private $request;
 
-    /** @var int $limit */
+    /**
+     * @var int $limit
+     */
     private $limit;
 
     /**
@@ -55,8 +57,8 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $this->request = $request;
 
         // Thumbnail view should display 24 images, list view 250
-        $viewMode = $request->get('viewMode');
-        $viewMode == 'thumb-view' ? $this->setLimit(24) : $this->setLimit(250);
+        $viewMode = $request->get('viewMode', 'thumb-view');
+        $this->limit = ($viewMode == 'thumb-view') ? 24 : 250;
     }
 
     /**
@@ -128,7 +130,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      * @param int $limit
      * @return MediaAdminListConfigurator
      */
-    private function setLimit($limit)
+    protected function setLimit($limit)
     {
         $this->limit = $limit;
         return $this;
