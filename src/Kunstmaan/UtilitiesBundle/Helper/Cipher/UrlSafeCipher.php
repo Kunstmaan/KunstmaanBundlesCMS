@@ -19,7 +19,7 @@ class UrlSafeCipher extends Cipher
      */
     public function encrypt($value, $raw_binary=false)
     {
-        return bin2hex(parent::encrypt($value));
+        return bin2hex(parent::encrypt($value, $raw_binary));
     }
 
     /**
@@ -34,7 +34,7 @@ class UrlSafeCipher extends Cipher
      */
     public function decrypt($value, $raw_binary=false)
     {
-        return parent::decrypt($this->hex2bin($value));
+        return parent::decrypt($this->hex2bin($value), $raw_binary);
     }
 
     /**

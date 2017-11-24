@@ -65,7 +65,7 @@ class CipherCommand extends ContainerAwareCommand
                         throw new \Exception('The input file path cannot be empty');
                     }
 
-                    if (false===$fs->exists($value)) {
+                    if (false === $fs->exists($value)) {
                         throw new \Exception('The input file must exists');
                     }
 
@@ -94,7 +94,7 @@ class CipherCommand extends ContainerAwareCommand
                 if($method === 2) {
                     $this->cipher->encryptFile($inputFilePath, $outputFilePath);
                 } else {
-                    if (false===$fs->exists($outputFilePath)) {
+                    if (false === $fs->exists($outputFilePath)) {
                         $fs->touch($outputFilePath);
                     }
                     $this->cipher->decryptFile($inputFilePath, $outputFilePath);
