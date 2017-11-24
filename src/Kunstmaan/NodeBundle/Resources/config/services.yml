@@ -164,7 +164,6 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@router"
             - "@logger"
-            - "@request_stack"
             - "@kunstmaan_admin.domain_configuration"
 
     kunstmaan_node.url_replace.controller:
