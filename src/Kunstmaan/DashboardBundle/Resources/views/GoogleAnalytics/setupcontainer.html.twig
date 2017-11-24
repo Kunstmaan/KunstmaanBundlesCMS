@@ -25,6 +25,12 @@
     %}
 {% endblock %}
 
-{% block extrajavascript %}
-    <script src="{{ asset('bundles/kunstmaandashboard/js/dashboard-bundle-setup.min.js') }}"></script>
+{% block js_footer %}
+    <!-- JS -->
+    {% embed "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+        {% block extra_async_javascripts %}
+            {{ parent() }}
+            '{{ asset('bundles/kunstmaandashboard/js/dashboard-bundle-setup.min.js') }}',
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
