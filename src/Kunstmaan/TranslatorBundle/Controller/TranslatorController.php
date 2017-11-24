@@ -272,7 +272,7 @@ class TranslatorController extends AdminListController
 
         $adminListConfigurator = $this->getAdminListConfigurator();
         if (!$adminListConfigurator->canEditInline($values)) {
-            throw new AccessDeniedHttpException("Not allowed to edit this translation");
+            throw $this->createAccessDeniedException('Not allowed to edit this translation');
         }
 
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
