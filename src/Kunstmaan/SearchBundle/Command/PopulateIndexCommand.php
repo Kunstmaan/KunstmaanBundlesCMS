@@ -25,18 +25,20 @@ class PopulateIndexCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return null|int  null or 0 if everything went fine, or an error code
+     * @throws \LogicException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getArgument('full')) {
             $deleteCommand = $this->getContainer()->get('kunstmaan_search.command.delete');
-            $deleteCommand->execute(new ArrayInput(array()), $output);
+            $deleteCommand->execute(new ArrayInput([]), $output);
             $setupCommand = $this->getContainer()->get('kunstmaan_search.command.setup');
-            $setupCommand->execute(new ArrayInput(array()), $output);
+            $setupCommand->setHelperSet($this->getHelperSet());
+            $setupCommand->execute(new ArrayInput([]), $output);
         }
 
         $searchConfigurationChain = $this->getContainer()->get('kunstmaan_search.search_configuration_chain');
