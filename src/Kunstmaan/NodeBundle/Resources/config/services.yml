@@ -23,6 +23,18 @@ services:
             - { name: 'doctrine.event_listener', event: 'prePersist', method: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate', method: 'preUpdate' }
 
+    kunstmaan_node.repository:
+          class: Doctrine\ORM\EntityRepository
+          factory: ['@doctrine.orm.default_entity_manager', getRepository]
+          arguments:
+              - Kunstmaan\NodeBundle\Entity\Node
+
+    kunstmaan_node.translation_repository:
+          class: Doctrine\ORM\EntityRepository
+          factory: ['@doctrine.orm.default_entity_manager', getRepository]
+          arguments:
+              - Kunstmaan\NodeBundle\Entity\NodeTranslation
+
     kunstmaan_node.menu.adaptor.pages:
         class: Kunstmaan\NodeBundle\Helper\Menu\PageMenuAdaptor
         arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_admin.acl.native.helper', '@kunstmaan_node.pages_configuration', '@kunstmaan_admin.domain_configuration']
@@ -116,10 +128,7 @@ services:
 
     kunstmaan_node.page_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\PageCreatorService
-        calls:
-            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
-            - [ setACLPermissionCreatorService, [ '@kunstmaan_node.acl_permission_creator_service' ] ]
-            - [ setUserEntityClass, [ '%fos_user.model.user.class%' ] ]
+        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_node.acl_permission_creator_service','%fos_user.model.user.class%']
 
     kunstmaan_node.acl_permission_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService

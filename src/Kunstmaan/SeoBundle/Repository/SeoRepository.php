@@ -3,8 +3,7 @@
 namespace Kunstmaan\SeoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
-use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
@@ -13,25 +12,29 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class SeoRepository extends EntityRepository
 {
-
     /**
      * Find the seo information for the given entity
      *
-     * @param AbstractEntity $entity
+     * @param EntityInterface $entity
      *
      * @return Seo
      */
-    public function findFor(AbstractEntity $entity)
+    public function findFor(EntityInterface $entity)
     {
-        return $this->findOneBy(array('refId' => $entity->getId(), 'refEntityName' => ClassLookup::getClass($entity)));
+        /** @var Seo $seo */
+        $seo = $this->findOneBy([
+            'refId' => $entity->getId(),
+            'refEntityName' => ClassLookup::getClass($entity)
+        ]);
+        return $seo;
     }
 
     /**
-     * @param AbstractEntity $entity
+     * @param EntityInterface $entity
      *
      * @return Seo
      */
-    public function findOrCreateFor(AbstractEntity $entity)
+    public function findOrCreateFor(EntityInterface $entity)
     {
         $seo = $this->findFor($entity);
 
@@ -42,5 +45,4 @@ class SeoRepository extends EntityRepository
 
         return $seo;
     }
-
 }

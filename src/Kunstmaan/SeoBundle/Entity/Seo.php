@@ -5,6 +5,7 @@ namespace Kunstmaan\SeoBundle\Entity;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\SeoBundle\Form\SeoType;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -531,11 +532,11 @@ class Seo extends AbstractEntity
     }
 
     /**
-     * @param AbstractEntity $entity
+     * @param EntityInterface $entity
      *
      * @return Seo
      */
-    public function setRef(AbstractEntity $entity)
+    public function setRef(EntityInterface $entity)
     {
         $this->setRefId($entity->getId());
         $this->setRefEntityName(ClassLookup::getClass($entity));
@@ -546,11 +547,13 @@ class Seo extends AbstractEntity
     /**
      * @param EntityManager $em
      *
-     * @return AbstractEntity
+     * @return EntityInterface
      */
     public function getRef(EntityManager $em)
     {
-        return $em->getRepository($this->getRefEntityName())->find($this->getRefId());
+        /** @var EntityInterface $object */
+        $object = $em->getRepository($this->getRefEntityName())->find($this->getRefId());
+        return $object;
     }
 
     /**
