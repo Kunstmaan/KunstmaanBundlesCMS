@@ -38,7 +38,7 @@ class SetupIndexCommand extends ContainerAwareCommand
          */
         foreach ($searchConfigurationChain->getConfigurations() as $alias => $searchConfiguration) {
 
-            if (count($searchConfiguration->checkAnalyzerLanguages()) > 0) {
+            if (method_exists($searchConfiguration, 'checkAnalyzerLanguages') && count($searchConfiguration->checkAnalyzerLanguages()) > 0) {
                 $question = new ChoiceQuestion(
                     sprintf('Languages analyzer is not available for: %s. Do you want continue?',
                         implode(', ', $searchConfiguration->checkAnalyzerLanguages())
