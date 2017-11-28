@@ -23,7 +23,9 @@ interface SearchConfigurationInterface
     public function deleteIndex();
 
     /**
+     * This method returns an array of languages that are not analyzed.
+     *
      * @return array
      */
-    public function checkAnalyzerLanguages();
+    public function getLanguagesNotAnalyzed();
 }

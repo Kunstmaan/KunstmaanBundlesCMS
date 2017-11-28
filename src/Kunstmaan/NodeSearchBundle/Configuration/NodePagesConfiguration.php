@@ -141,20 +141,20 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * @return array
      */
-    public function checkAnalyzerLanguages()
+    public function getLanguagesNotAnalyzed()
     {
-        $errors = [];
+        $notAnalyzed = [];
         foreach ($this->locales as $locale) {
             if (preg_match('/[a-z]{2}_?+[a-zA-Z]{2}/', $locale)) {
                 $locale = strtolower($locale);
             }
 
             if ( false === array_key_exists($locale, $this->analyzerLanguages) ) {
-                $errors[] = $locale;
+                $notAnalyzed[] = $locale;
             }
         }
 
-        return $errors;
+        return $notAnalyzed;
     }
 
     /**

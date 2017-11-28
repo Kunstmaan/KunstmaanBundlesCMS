@@ -14,6 +14,32 @@ When you have created some extra extensions on elastica you should read the chan
 https://github.com/ruflin/Elastica/blob/master/CHANGELOG.md
 
 
+## [SearchBundle]
+BC break: SearchConfigurationInterface contains a new method getLanguagesNotAnalyzed
+This method already exists in the NodePagesConfiguration. If you have created your own class that implements SearchConfigurationInterface, you will need to add the method.
+
+```php
+
+    /**
+     * @return array
+     */
+    public function getLanguagesNotAnalyzed()
+    {
+        $notAnalyzed = [];
+        foreach ($this->locales as $locale) {
+            if (preg_match('/[a-z]{2}_?+[a-zA-Z]{2}/', $locale)) {
+                $locale = strtolower($locale);
+            }
+
+            if ( false === array_key_exists($locale, $this->analyzerLanguages) ) {
+                $notAnalyzed[] = $locale;
+            }
+        }
+
+        return $notAnalyzed;
+    }
+```
+
 ## [PagePartBundle] Add pagepart to page view changed
 New ui implemented in the backend to add pageparts to a
 page. This new UI is opt-in because we do not want to force older projects to
