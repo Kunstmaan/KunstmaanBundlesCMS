@@ -26,9 +26,7 @@ class Cipher implements CipherInterface
     {
         Assert::stringNotEmpty($secret, 'You need to configure a Cipher secret in your parameters.yml before you can use this!');
 
-        $this->secret = Key::loadFromAsciiSafeString(
-            $this->generateSecret($secret)
-        );
+        $this->secret = $secret;
     }
 
     /**
@@ -41,7 +39,7 @@ class Cipher implements CipherInterface
      */
     public function encrypt($value, $raw_binary=false)
     {
-        return Crypto::encrypt($value, $this->secret, $raw_binary);
+        return Crypto::encryptWithPassword($value, $this->secret, $raw_binary);
     }
 
     /**
@@ -55,7 +53,7 @@ class Cipher implements CipherInterface
      */
     public function decrypt($value, $raw_binary=false)
     {
-        return Crypto::decrypt($value, $this->secret, $raw_binary);
+        return Crypto::decryptWithPassword($value, $this->secret, $raw_binary);
     }
 
     /**
@@ -67,7 +65,7 @@ class Cipher implements CipherInterface
      */
     public function encryptFile($inputFile, $outputFile)
     {
-        File::encryptFile($inputFile, $outputFile, $this->secret);
+        File::encryptFileWithPassword($inputFile, $outputFile, $this->secret);
     }
 
     /**
@@ -80,20 +78,7 @@ class Cipher implements CipherInterface
      */
     public function decryptFile($inputFile, $outputFile)
     {
-        File::decryptFile($inputFile, $outputFile, $this->secret);
-    }
-
-    /**
-     * @param string $secret
-     * @return string
-     */
-    private function generateSecret($secret)
-    {
-        // Need to be implement if we wont use secret like that
-        // def00000290a4b250a1b24c41f3076b5e3955e1a51d8535a5dbcf209d17f1eb8d772349cbd12af5dc8f4b05d43ca900489c0fb5aa5c4c5190ccffb5663ae4831e3022fc6
-
-        return $secret;
+        File::decryptFileWithPassword($inputFile, $outputFile, $this->secret);
     }
 
 }
-
