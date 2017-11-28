@@ -5,6 +5,7 @@ namespace Kunstmaan\ArticleBundle\Controller;
 
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,7 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  * Class AbstractArticleOverviewPageController
  * @package Kunstmaan\ArticleBundle\Controller
  */
-class AbstractArticleOverviewPageController extends Controller{
+class AbstractArticleOverviewPageController extends AbstractController
+{
 
     /**
      * @param Request $request

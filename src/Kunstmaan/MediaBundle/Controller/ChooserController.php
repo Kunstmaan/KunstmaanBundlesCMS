@@ -3,6 +3,8 @@
 namespace Kunstmaan\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityNotFoundException;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\AdminListFactoryTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -11,6 +13,7 @@ use Kunstmaan\MediaBundle\Helper\Media\AbstractMediaHandler;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * ChooserController.
  */
-class ChooserController extends Controller
+class ChooserController extends AbstractController
 {
+    use EntityManagerTrait,
+        AdminListFactoryTrait;
 
     /**
      * @Route("/chooser", name="KunstmaanMediaBundle_chooser")
@@ -30,7 +35,7 @@ class ChooserController extends Controller
      */
     public function chooserIndexAction(Request $request)
     {
-        $em       = $this->getDoctrine()->getManager();
+        $em       = $this->getEntityManager();
         $session  = $request->getSession();
         $folderId = false;
 
@@ -76,7 +81,7 @@ class ChooserController extends Controller
      */
     public function chooserShowFolderAction(Request $request, $folderId)
     {
-        $em      = $this->getDoctrine()->getManager();
+        $em      = $this->getEntityManager();
         $session = $request->getSession();
 
         $type            = $request->get('type');
@@ -95,7 +100,7 @@ class ChooserController extends Controller
         }
 
         /* @var MediaManager $mediaHandler */
-        $mediaHandler = $this->get('kunstmaan_media.media_manager');
+        $mediaHandler = $this->container->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
@@ -107,10 +112,10 @@ class ChooserController extends Controller
         }
 
         /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
+        $mediaManager = $this->container->get('kunstmaan_media.media_manager');
 
         $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList             = $this->getAdminListFactory()->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 
         $sub = new Folder();
@@ -134,7 +139,7 @@ class ChooserController extends Controller
             'linkChooser'     => $linkChooser,
             'linkChooserLink' => $linkChooserLink,
             'mediamanager'    => $mediaManager,
-            'foldermanager'   => $this->get('kunstmaan_media.folder_manager'),
+            'foldermanager'   => $this->container->get('kunstmaan_media.folder_manager'),
             'handler'         => $handler,
             'type'            => $type,
             'folder'          => $folder,

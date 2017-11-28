@@ -26,6 +26,7 @@ class KunstmaanLeadGenerationExtension extends Extension
         $container->setParameter('kunstmaan_lead_generation.debug', $config['debug']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
     }
 }

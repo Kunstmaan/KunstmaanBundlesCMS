@@ -1,0 +1,9 @@
+services:
+    Kunstmaan\LeadGenerationBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Resources,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\LeadGenerationBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true

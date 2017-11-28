@@ -20,6 +20,7 @@ class KunstmaanPagePartExtension extends Extension
     {
         $configs = $this->processConfiguration(new Configuration(), $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
 
         $container->setParameter('kunstmaan_page_part.extended', $configs['extended_pagepart_chooser']);

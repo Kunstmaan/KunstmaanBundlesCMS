@@ -39,6 +39,7 @@ class KunstmaanTranslatorExtension extends Extension
         $container->setParameter('kuma_translator.debug', is_null($config['debug']) ? $container->getParameter('kernel.debug') : $config['debug']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
         $loader->load('repositories.yml');
 

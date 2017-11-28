@@ -29,6 +29,7 @@ class KunstmaanAdminListExtension extends Extension implements PrependExtensionI
         $container->setParameter('kunstmaan_entity.lock_threshold', $config['lock']['threshold']);
         $container->setParameter('kunstmaan_entity.lock_enabled', $config['lock']['enabled']);
 
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
     }
 

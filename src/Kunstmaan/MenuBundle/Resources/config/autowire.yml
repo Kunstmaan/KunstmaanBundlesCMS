@@ -1,0 +1,9 @@
+services:
+    Kunstmaan\MenuBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Resources,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\MenuBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true

@@ -4,6 +4,9 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\AdminListFactoryTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\TranslatorTrait;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Form\EmptyType;
@@ -12,6 +15,7 @@ use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,8 +26,12 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * FolderController.
  */
-class FolderController extends Controller
+class FolderController extends AbstractController
 {
+    use EntityManagerTrait,
+        AdminListFactoryTrait,
+        TranslatorTrait;
+
     /**
      * @param Request $request
      * @param int     $folderId The folder id
@@ -36,7 +44,7 @@ class FolderController extends Controller
     public function showAction(Request $request, $folderId)
     {
         /** @var EntityManager $em */
-        $em      = $this->getDoctrine()->getManager();
+        $em      = $this->getEntityManager();
         $session = $request->getSession();
 
         // Check when user switches between thumb -and list view
@@ -48,13 +56,13 @@ class FolderController extends Controller
         }
 
         /* @var MediaManager $mediaManager */
-        $mediaManager = $this->get('kunstmaan_media.media_manager');
+        $mediaManager = $this->container->get('kunstmaan_media.media_manager');
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
         $adminListConfigurator = new MediaAdminListConfigurator($em, $mediaManager, $folder, $request);
-        $adminList             = $this->get('kunstmaan_adminlist.factory')->createList($adminListConfigurator);
+        $adminList             = $this->getAdminListFactory()->createList($adminListConfigurator);
         $adminList->bindRequest($request);
 
         $sub = new Folder();
@@ -72,7 +80,7 @@ class FolderController extends Controller
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.show.success.text', array(
+                    $this->getTranslator()->trans('media.folder.show.success.text', array(
                         '%folder%' => $folder->getName()
                     ))
                 );
@@ -87,8 +95,8 @@ class FolderController extends Controller
         }
 
         return array(
-            'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
-            'mediamanager'  => $this->get('kunstmaan_media.media_manager'),
+            'foldermanager' => $this->container->get('kunstmaan_media.folder_manager'),
+            'mediamanager'  => $this->container->get('kunstmaan_media.media_manager'),
             'subform'       => $subForm->createView(),
             'emptyform'     => $emptyForm->createView(),
             'editform'      => $editForm->createView(),
@@ -108,7 +116,7 @@ class FolderController extends Controller
     public function deleteAction($folderId)
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
 
         /* @var Folder $folder */
         $folder       = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
@@ -118,7 +126,7 @@ class FolderController extends Controller
         if (is_null($parentFolder)) {
             $this->addFlash(
                 FlashTypes::ERROR,
-                $this->get('translator')->trans('media.folder.delete.failure.text', array(
+                $this->getTranslator()->trans('media.folder.delete.failure.text', array(
                     '%folder%' => $folderName
                 ))
             );
@@ -126,7 +134,7 @@ class FolderController extends Controller
             $em->getRepository('KunstmaanMediaBundle:Folder')->delete($folder);
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('media.folder.delete.success.text', array(
+                $this->getTranslator()->trans('media.folder.delete.success.text', array(
                     '%folder%' => $folderName
                 ))
             );
@@ -136,7 +144,7 @@ class FolderController extends Controller
             $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
         } else $redirect = 'KunstmaanMediaBundle_folder_show';
 
-        $type = $this->get('request_stack')->getCurrentRequest()->get('type');
+        $type = $this->container->get('request_stack')->getCurrentRequest()->get('type');
 
         return new RedirectResponse(
             $this->generateUrl($redirect,
@@ -161,7 +169,7 @@ class FolderController extends Controller
     public function subCreateAction(Request $request, $folderId)
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
 
         /* @var Folder $parent */
         $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
@@ -174,7 +182,7 @@ class FolderController extends Controller
                 $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.addsub.success.text', array(
+                    $this->getTranslator()->trans('media.folder.addsub.success.text', array(
                         '%folder%' => $folder->getName()
                     ))
                 );
@@ -221,7 +229,7 @@ class FolderController extends Controller
     public function emptyAction(Request $request, $folderId)
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
 
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
@@ -239,7 +247,7 @@ class FolderController extends Controller
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('media.folder.empty.success.text', array(
+                    $this->getTranslator()->trans('media.folder.empty.success.text', array(
                         '%folder%' => $folder->getName()
                     ))
                 );
@@ -278,7 +286,7 @@ class FolderController extends Controller
         $folders         = array();
         $nodeIds       = $request->get('nodes');
 
-        $em              = $this->getDoctrine()->getManager();
+        $em              = $this->getEntityManager();
         $repository = $em->getRepository('KunstmaanMediaBundle:Folder');
 
         foreach ($nodeIds as $id) {

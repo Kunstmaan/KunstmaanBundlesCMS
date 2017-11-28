@@ -3,13 +3,14 @@
 namespace Kunstmaan\NodeSearchBundle\Controller;
 
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AbstractSearchPageController
  */
-class AbstractSearchPageController extends Controller
+class AbstractSearchPageController extends AbstractController
 {
     /**
      * @param Request $request

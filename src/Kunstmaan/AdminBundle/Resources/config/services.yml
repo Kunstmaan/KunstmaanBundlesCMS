@@ -89,6 +89,8 @@ services:
         class: '%kunstmaan_admin.acl.helper.class%'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
 
+    Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper: '@kunstmaan_admin.acl.helper'
+
     kunstmaan_admin.acl.native.helper:
         class: '%kunstmaan_admin.acl.native.helper.class%'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
@@ -213,6 +215,7 @@ services:
 
     kunstmaan_admin.domain_configuration:
         class: '%kunstmaan_admin.domain_configuration.class%'
+        public: true
         arguments: ['@service_container']
 
     kunstmaan_admin.oauth_authenticator:
@@ -309,6 +312,7 @@ services:
             - '@kunstmaan_admin.cache'
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:bundles_version.html.twig', id: kuma_bundle_versions }
+
     kunstmaan_admin.datacollector.exception:
         class: '%kunstmaan_admin.toolbar.collector.exception.class%'
         arguments: ["@doctrine.orm.entity_manager"]

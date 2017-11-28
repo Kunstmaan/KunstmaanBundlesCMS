@@ -1,0 +1,9 @@
+services:
+    Kunstmaan\DashboardBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Resources,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\DashboardBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true

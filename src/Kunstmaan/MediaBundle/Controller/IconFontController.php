@@ -4,13 +4,14 @@ namespace Kunstmaan\MediaBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * IconFontController
  */
-class IconFontController extends Controller
+class IconFontController extends AbstractController
 {
     /**
      * @param Request $request
@@ -25,7 +26,7 @@ class IconFontController extends Controller
         $loader = $request->query->get('loader');
         $loaderData = json_decode($request->query->get('loader_data'), true);
 
-        $iconFontManager = $this->get('kunstmaan_media.icon_font_manager');
+        $iconFontManager = $this->container->get('kunstmaan_media.icon_font_manager');
         if (empty($loader)) {
             $loader = $iconFontManager->getDefaultLoader();
         } else {

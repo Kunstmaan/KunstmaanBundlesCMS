@@ -2,13 +2,17 @@
 
 namespace Kunstmaan\SeoBundle\Controller;
 
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class RobotsController extends Controller
+class RobotsController extends AbstractController
 {
+    use EntityManagerTrait;
+
     /**
      * Generates the robots.txt content when available in the database and falls back to normal robots.txt if exists
      *
@@ -20,8 +24,8 @@ class RobotsController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $entity = $this->getDoctrine()->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
-        $robots = $this->getParameter('robots_default');
+        $entity = $this->getEntityManager()->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
+        $robots = $this->container->getParameter('robots_default');
 
         if ($entity && $entity->getRobotsTxt()) {
             $robots = $entity->getRobotsTxt();

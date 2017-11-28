@@ -1,0 +1,9 @@
+services:
+    Kunstmaan\RedirectBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Resources,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\RedirectBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true

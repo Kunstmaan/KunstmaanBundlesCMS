@@ -4,10 +4,11 @@ namespace Kunstmaan\SitemapBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class SitemapController extends Controller
+class SitemapController extends AbstractController
 {
     /**
      * This will generate a sitemap for the specified locale.
@@ -24,7 +25,7 @@ class SitemapController extends Controller
      */
     public function sitemapAction($locale)
     {
-        $nodeMenu = $this->get('kunstmaan_node.node_menu');
+        $nodeMenu = $this->container->get('kunstmaan_node.node_menu');
         $nodeMenu->setLocale($locale);
         $nodeMenu->setIncludeOffline(false);
         $nodeMenu->setIncludeHiddenFromNav(true);
@@ -53,7 +54,7 @@ class SitemapController extends Controller
      */
     public function sitemapIndexAction(Request $request)
     {
-        $locales = $this->get('kunstmaan_admin.domain_configuration')
+        $locales = $this->container->get('kunstmaan_admin.domain_configuration')
             ->getBackendLocales();
 
         return array(

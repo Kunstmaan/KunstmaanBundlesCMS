@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Entity
  * @ORM\Table(name="kuma_groups")
  */
-class Group implements RoleInterface, GroupInterface
+class Group extends \Symfony\Component\Security\Core\Role\Role implements GroupInterface
 {
     /**
      * @ORM\Id

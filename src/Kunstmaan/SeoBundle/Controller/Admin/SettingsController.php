@@ -30,7 +30,7 @@ class SettingsController extends BaseSettingsController
         $em = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository("KunstmaanSeoBundle:Robots");
         $robot = $repo->findOneBy(array());
-        $default = $this->getParameter('robots_default');
+        $default = $this->container->getParameter('robots_default');
         $isSaved = true;
 
         if (!$robot) {
@@ -59,7 +59,7 @@ class SettingsController extends BaseSettingsController
         if (!$isSaved) {
             $this->addFlash(
                 FlashTypes::WARNING,
-                $this->get('translator')->trans('seo.robots.warning')
+                $this->getTranslator()->trans('seo.robots.warning')
             );
         }
 

@@ -2,26 +2,36 @@
 
 namespace Kunstmaan\AdminListBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\TranslatorTrait;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * EntityLockCheckController
  */
-class EntityLockCheckController extends Controller
+class EntityLockCheckController extends AbstractController
 {
+    use EntityManagerTrait,
+        TranslatorTrait;
+
     /**
-     * You can override this method to return the correct entity manager when using multiple databases ...
+     * EntityLockCheckController constructor.
      *
-     * @return \Doctrine\Common\Persistence\ObjectManager|object
+     * @param EntityManagerInterface|null $entityManager
+     * @param TranslatorInterface|null    $translator
      */
-    protected function getEntityManager()
+    public function __construct(EntityManagerInterface $entityManager = null, TranslatorInterface $translator = null)
     {
-        return $this->getDoctrine()->getManager();
+        $this->setEntityManager($entityManager);
+        $this->setTranslator($translator);
     }
 
     /**
@@ -45,13 +55,13 @@ class EntityLockCheckController extends Controller
 
         try {
             /** @var EntityVersionLockService $entityVersionLockservice */
-            $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+            $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
             $entityIsLocked = $entityVersionLockService->isEntityLocked($this->getUser(), $entity);
 
             if ($entityIsLocked) {
                 $user = $entityVersionLockService->getUsersWithEntityVersionLock($entity, $this->getUser());
-                $message = $this->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
+                $message = $this->getTranslator()->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
             }
 
         } catch (AccessDeniedException $ade) {}

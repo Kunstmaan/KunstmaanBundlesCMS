@@ -1,0 +1,9 @@
+services:
+    Kunstmaan\TaggingBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Resources,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\TaggingBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true

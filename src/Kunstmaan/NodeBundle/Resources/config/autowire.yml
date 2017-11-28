@@ -1,0 +1,15 @@
+services:
+    Kunstmaan\NodeBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\NodeBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true
+
+    Kunstmaan\NodeBundle\Helper\:
+        resource: '../../Helper/*'
+        autowire: false
+        autoconfigure: false
+        public: true

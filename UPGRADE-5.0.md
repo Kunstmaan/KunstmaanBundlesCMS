@@ -1,5 +1,11 @@
 # UPGRADE FROM 4.* to 5.0
 
+## Autowire and refactoring controllers
+
+We have refactored controllers to extend the Symfony 'AbstractController' instead of 'Controller' and we have enabled autowire for the controllers.
+This change enables us to start making use of the autowiring function. When extending the controller, you should also make use of autowire or inject at least the container.
+With this change we have taken a first step to remove at least at some points the container.
+
 ## Elastica
 
 The ruflin/elastica bundle has been upgraded to the latest 5.1 version.
