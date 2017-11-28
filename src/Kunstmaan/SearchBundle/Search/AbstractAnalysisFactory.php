@@ -104,7 +104,7 @@ abstract class AbstractAnalysisFactory implements AnalysisFactoryInterface
             'type'     => 'nGram',
             'min_gram' => 4,
             'max_gram' => 30,
-            'token_chars' => [ "letter", "digit" ]
+            'token_chars' => [ "letter", "digit", "punctuation" ]
         );
         return $this;
     }
