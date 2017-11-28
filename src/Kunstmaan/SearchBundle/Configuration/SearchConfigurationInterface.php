@@ -22,4 +22,8 @@ interface SearchConfigurationInterface
      */
     public function deleteIndex();
 
+    /**
+     * @return array
+     */
+    public function checkAnalyzerLanguages();
 }

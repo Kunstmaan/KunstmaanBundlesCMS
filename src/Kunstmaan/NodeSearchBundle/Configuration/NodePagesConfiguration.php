@@ -139,7 +139,6 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
-     * @param $locale
      * @return array
      */
     public function checkAnalyzerLanguages()
