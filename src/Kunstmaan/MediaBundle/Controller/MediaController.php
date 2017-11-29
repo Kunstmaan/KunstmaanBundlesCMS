@@ -136,17 +136,10 @@ class MediaController extends Controller
      * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit")
      * @Template()
      *
-     * @return array|RedirectResponse
+     * @return JsonResponse
      */
     public function bulkUploadSubmitAction(Request $request, $folderId)
     {
-        // Make sure file is not cached (as it happens for example on iOS devices)
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
-
         // Settings
         if (ini_get('upload_tmp_dir')) {
             $tempDir = ini_get('upload_tmp_dir');
@@ -270,12 +263,19 @@ class MediaController extends Controller
         }
 
 
-        // Return Success JSON-RPC response
-        return new JsonResponse(array(
+        // Send headers making sure that the file is not cached (as it happens for example on iOS devices)
+        $response = new JsonResponse([
             'jsonrpc' => '2.0',
             'result'  => '',
             'id'      => 'id'
-        ));
+        ], JsonResponse::HTTP_OK, [
+            'Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT',
+            'Last-Modified' => '' . gmdate('D, d M Y H:i:s') . ' GMT',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+            'Pragma' => 'no-cache',
+        ]);
+
+        return $response;
     }
 
     private function returnJsonError($code, $message){
