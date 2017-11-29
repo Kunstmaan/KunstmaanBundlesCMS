@@ -95,10 +95,10 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
 
         $fields = new ArrayObject();
 
-        $this->assertTrue(sizeof($fields) == 0);
+        $this->assertTrue(count($fields) == 0);
         /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields, 0);
-        $this->assertTrue(sizeof($fields) > 0);
+        $this->assertTrue(count($fields) > 0);
     }
 
     /**

@@ -62,7 +62,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $loader->load('console_listener.yml');
         }
 
-        if (0 !== sizeof($config['menu_items'])) {
+        if (0 !== count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
     }

@@ -199,7 +199,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
         foreach ($configs as $config) {
             // add overviews if none exist yet
-            if (sizeof($config->getOverviews()) == 0) {
+            if (count($config->getOverviews()) == 0) {
                 $overviewRepository->addOverviews($config);
             }
 

@@ -31,7 +31,7 @@ class MappingListener
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs)
     {
         $classMetadata = $eventArgs->getClassMetadata();
-        $entityName = strval($classMetadata->getName());
+        $entityName = (string)$classMetadata->getName();
 
         // We dynamically set the user class that was configured in the configuration
         if ($entityName == 'Kunstmaan\AdminBundle\Entity\AclChangeset') {

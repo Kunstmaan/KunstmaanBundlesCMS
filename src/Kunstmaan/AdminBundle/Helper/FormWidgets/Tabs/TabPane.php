@@ -125,7 +125,7 @@ class TabPane
             $tab->setIdentifier($this->generateIdentifier($tab));
         }
 
-        if (!is_null($position) && is_numeric($position) && $position < sizeof($this->tabs)) {
+        if (!is_null($position) && is_numeric($position) && $position < count($this->tabs)) {
             array_splice($this->tabs, $position, 0, array($tab));
         } else {
             $this->tabs[] = $tab;
@@ -175,7 +175,7 @@ class TabPane
      */
     public function removeTabByPosition($position)
     {
-        if (is_numeric($position) && $position < sizeof($this->tabs)) {
+        if (is_numeric($position) && $position < count($this->tabs)) {
             array_splice($this->tabs, $position, 1);
         }
 
@@ -213,7 +213,7 @@ class TabPane
      */
     public function getTabByPosition($position)
     {
-        if (is_numeric($position) && $position < sizeof($this->tabs)) {
+        if (is_numeric($position) && $position < count($this->tabs)) {
             return $this->tabs[$position];
         }
 

@@ -45,10 +45,10 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
         $timespan = $overview->getTimespan() - $overview->getStartOffset();
         foreach ($rows as $row) {
             // metrics
-            $sessions = $row[sizeof($row) - 4];
-            $users = $row[sizeof($row) - 3];
-            $newusers = $row[sizeof($row) - 2];
-            $pageviews = $row[sizeof($row) - 1];
+            $sessions = $row[count($row) - 4];
+            $users = $row[count($row) - 3];
+            $newusers = $row[count($row) - 2];
+            $pageviews = $row[count($row) - 1];
 
             $maxvalue = max($sessions, $users, $newusers, $pageviews);
             // set max chartdata value

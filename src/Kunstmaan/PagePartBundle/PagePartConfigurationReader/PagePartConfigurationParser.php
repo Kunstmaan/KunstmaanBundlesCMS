@@ -108,7 +108,7 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
         }
 
         $nameParts = explode(':', $name);
-        if (2 !== sizeof($nameParts)) {
+        if (2 !== count($nameParts)) {
             throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").',
                 $name));
         }
