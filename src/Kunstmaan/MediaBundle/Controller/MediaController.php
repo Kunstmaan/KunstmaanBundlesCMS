@@ -297,7 +297,7 @@ class MediaController extends Controller
      * @Route("drop/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_drop_upload")
      * @Method({"GET", "POST"})
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function dropAction(Request $request, $folderId)
     {
@@ -320,7 +320,7 @@ class MediaController extends Controller
             $media->setFolder($folder);
             $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
 
-            return new Response(\json_encode(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_success')]));
+            return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_success')]);
         }
 
         $request->getSession()->getFlashBag()->add(
@@ -328,7 +328,7 @@ class MediaController extends Controller
             $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')
         );
 
-        return new Response(\json_encode(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')]));
+        return new JsonResponse(['status' => $this->get('translator')->trans('kuma_admin.media.flash.drop_unrecognized')]);
     }
 
     /**
