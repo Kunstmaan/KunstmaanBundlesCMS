@@ -2,42 +2,15 @@
 
 namespace Kunstmaan\SeoBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Kunstmaan\SeoBundle\Form\Type\RobotsType as RobotsFormType;
 
 /**
- * SeoType
+ * Class RobotsType
+ * @package Kunstmaan\SeoBundle\Form
+ *
+ * @deprecated Use Kunstmaan\SeoBundle\Form\Type\RobotsType instead
  */
-class RobotsType extends AbstractType
+class RobotsType extends RobotsFormType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('robotsTxt', TextareaType::class, array(
-            'label' => 'robots.txt',
-            'attr' => array(
-                'rows' => 15
-            )
-        ));
-    }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'kunstmaanseobundle_settings_form_type';
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\SeoBundle\Entity\Robots',
-        ));
-    }
 }

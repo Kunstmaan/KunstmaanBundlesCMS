@@ -2,25 +2,15 @@
 
 namespace Kunstmaan\ArticleBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Kunstmaan\ArticleBundle\Form\Type\AbstractAuthorAdminType as AbstractAuthorAdminFormType;
 
-class AbstractAuthorAdminType extends AbstractType
+/**
+ * Class AbstractAuthorAdminType
+ * @package Kunstmaan\ArticleBundle\Form
+ *
+ * @deprecated Use Kunstmaan\ArticleBundle\Form\Type\AbstractAuthorAdminType instead
+ */
+class AbstractAuthorAdminType extends AbstractAuthorAdminFormType
 {
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('name', null, array(
-            'label' => 'article.author.form.name.label',
-        ));
-        $builder->add('link', null, array(
-            'label' => 'article.author.form.link.label',
-        ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return "abstactauthor_form";
-    }
 
 }

@@ -2,24 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Kunstmaan\AdminBundle\Form\Type\ColorType as ColorFormType;
 
-class ColorType extends AbstractType
+/**
+ * Class ColorType
+ * @package Kunstmaan\AdminBundle\Form
+ *
+ * @deprecated Use Kunstmaan\AdminBundle\Form\Type\ColorType instead
+ */
+class ColorType extends ColorFormType
 {
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(TextType::class));
-    }
 
-    public function getParent()
-    {
-        return TextType::class;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'color';
-    }
 }

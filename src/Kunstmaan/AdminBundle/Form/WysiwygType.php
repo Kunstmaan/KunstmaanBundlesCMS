@@ -2,40 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormBuilderInterface;
-
+use Kunstmaan\AdminBundle\Form\Type\WysiwygType as WysiwygFormType;
 
 /**
  * Class WysiwygType
  * @package Kunstmaan\AdminBundle\Form
+ *
+ * @deprecated Use Kunstmaan\AdminBundle\Form\Type\WysiwygType instead
  */
-class WysiwygType extends AbstractType
+class WysiwygType extends WysiwygFormType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $transformer = new MediaTokenTransformer();
-        $builder->addModelTransformer($transformer);
-    }
 
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return TextareaType::class;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'wysiwyg';
-    }
 }

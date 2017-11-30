@@ -2,31 +2,15 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Form\Popup;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Kunstmaan\LeadGenerationBundle\Form\Type\Popup\AbstractPopupAdminType as AbstractPopupAdminFormType;
 
-abstract class AbstractPopupAdminType extends AbstractType
+/**
+ * Class AbstractPopupAdminType
+ * @package Kunstmaan\LeadGenerationBundle\Form\Popup
+ *
+ * @deprecated Use Kunstmaan\LeadGenerationBundle\Form\Type\Popup\AbstractPopupAdminType instead
+ */
+abstract class AbstractPopupAdminType extends AbstractPopupAdminFormType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('name', TextType::class, array(
-            'label' => 'kuma_lead_generation.form.popup.name.label',
-            'attr' => array(
-                'info_text' => 'kuma_lead_generation.form.popup.name.info_text',
-            )
-        ));
-        $builder->add('htmlId', TextType::class);
-    }
+
 }

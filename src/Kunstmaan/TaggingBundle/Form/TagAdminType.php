@@ -2,22 +2,15 @@
 
 namespace Kunstmaan\TaggingBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Kunstmaan\TaggingBundle\Form\Type\TagAdminType as TagAdminFormType;
 
-class TagAdminType extends AbstractType
+/**
+ * Class TagAdminType
+ * @package Kunstmaan\TaggingBundle\Form
+ *
+ * @deprecated Use Kunstmaan\TaggingBundle\Form\Type\TagAdminType instead
+ */
+class TagAdminType extends TagAdminFormType
 {
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('name', null, array(
-            'label' => 'kuma_tagging.form.tag.name.label',
-        ));
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'tag_admin_form';
-    }
 
 }
