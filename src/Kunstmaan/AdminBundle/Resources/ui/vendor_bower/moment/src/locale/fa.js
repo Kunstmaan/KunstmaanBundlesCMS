@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : Persian (fa)
+//! locale : Persian [fa]
 //! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 import moment from '../moment';
@@ -34,13 +34,14 @@ export default moment.defineLocale('fa', {
     weekdays : 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'),
     weekdaysShort : 'یک\u200cشنبه_دوشنبه_سه\u200cشنبه_چهارشنبه_پنج\u200cشنبه_جمعه_شنبه'.split('_'),
     weekdaysMin : 'ی_د_س_چ_پ_ج_ش'.split('_'),
+    weekdaysParseExact : true,
     longDateFormat : {
         LT : 'HH:mm',
-        LTS : 'LT:ss',
+        LTS : 'HH:mm:ss',
         L : 'DD/MM/YYYY',
         LL : 'D MMMM YYYY',
-        LLL : 'D MMMM YYYY LT',
-        LLLL : 'dddd, D MMMM YYYY LT'
+        LLL : 'D MMMM YYYY HH:mm',
+        LLLL : 'dddd, D MMMM YYYY HH:mm'
     },
     meridiemParse: /قبل از ظهر|بعد از ظهر/,
     isPM: function (input) {
@@ -64,7 +65,7 @@ export default moment.defineLocale('fa', {
     relativeTime : {
         future : 'در %s',
         past : '%s پیش',
-        s : 'چندین ثانیه',
+        s : 'چند ثانیه',
         m : 'یک دقیقه',
         mm : '%d دقیقه',
         h : 'یک ساعت',
@@ -86,7 +87,7 @@ export default moment.defineLocale('fa', {
             return symbolMap[match];
         }).replace(/,/g, '،');
     },
-    ordinalParse: /\d{1,2}م/,
+    dayOfMonthOrdinalParse: /\d{1,2}م/,
     ordinal : '%dم',
     week : {
         dow : 6, // Saturday is the first day of the week.

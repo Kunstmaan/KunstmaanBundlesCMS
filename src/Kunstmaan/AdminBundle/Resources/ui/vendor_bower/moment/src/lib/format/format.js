@@ -1,6 +1,7 @@
 import zeroFill from '../utils/zero-fill';
+import isFunction from '../utils/is-function';
 
-export var formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g;
+export var formattingTokens = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g;
 
 var localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g;
 
@@ -53,9 +54,9 @@ function makeFormatFunction(format) {
     }
 
     return function (mom) {
-        var output = '';
+        var output = '', i;
         for (i = 0; i < length; i++) {
-            output += array[i] instanceof Function ? array[i].call(mom, format) : array[i];
+            output += isFunction(array[i]) ? array[i].call(mom, format) : array[i];
         }
         return output;
     };
@@ -68,10 +69,7 @@ export function formatMoment(m, format) {
     }
 
     format = expandFormat(format, m.localeData());
-
-    if (!formatFunctions[format]) {
-        formatFunctions[format] = makeFormatFunction(format);
-    }
+    formatFunctions[format] = formatFunctions[format] || makeFormatFunction(format);
 
     return formatFunctions[format](m);
 }
@@ -92,4 +90,3 @@ export function expandFormat(format, locale) {
 
     return format;
 }
-
