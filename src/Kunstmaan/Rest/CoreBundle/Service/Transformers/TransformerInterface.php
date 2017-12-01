@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Kunstmaan\Rest\NodeBundle\Service\Transformers;
+namespace Kunstmaan\Rest\CoreBundle\Service\Transformers;
 
 /**
  * Interface TransformerInterface

@@ -13,6 +13,7 @@ namespace Kunstmaan\Rest\NodeBundle\Service\Transformers;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\Rest\CoreBundle\Service\Transformers\TransformerInterface;
 use Kunstmaan\Rest\NodeBundle\Model\ApiPage;
 use Kunstmaan\Rest\NodeBundle\Model\ApiPagePart;
 

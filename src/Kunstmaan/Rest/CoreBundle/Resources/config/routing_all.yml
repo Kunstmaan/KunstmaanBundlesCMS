@@ -13,4 +13,3 @@ kunstmaan_rest_node:
 kunstmaan_rest_trans:
     resource: "@KunstmaanRestTranslationsBundle/Resources/config/routing.yml"
     prefix:   /
-

@@ -25,7 +25,7 @@ namespace Kunstmaan\Rest\NodeBundle\Swagger;
  *              type="array",
  *              @SWG\Items(
  *                  allOf={
- *                      @SWG\Schema(ref="#/definitions/NodeTranslation")
+ *                      @SWG\Schema(type="object")
  *                  }
  *              )
  *          ),

@@ -146,6 +146,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
      */
     public function getQuery()
     {
+        $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationsQueryBuilder('nl');
         if (is_null($this->query)) {
             $queryBuilder = $this->getQueryBuilder();
             $this->adaptQueryBuilder($queryBuilder);

@@ -1,1 +1,4 @@
 services:
+    kunstmaan_rest_core.service.data_transformer:
+        class: Kunstmaan\Rest\CoreBundle\Service\DataTransformerService
+

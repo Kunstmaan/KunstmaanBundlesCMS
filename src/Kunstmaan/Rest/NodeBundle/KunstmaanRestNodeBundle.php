@@ -11,17 +11,8 @@
 
 namespace Kunstmaan\Rest\NodeBundle;
 
-use Kunstmaan\Rest\NodeBundle\DependencyInjection\Compiler\TransformerCompilerPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KunstmaanRestNodeBundle extends Bundle
 {
-    /**
-     * @inheritdoc
-     */
-    public function build(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new TransformerCompilerPass());
-    }
 }

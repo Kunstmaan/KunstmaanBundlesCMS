@@ -13,12 +13,15 @@ namespace Kunstmaan\Rest\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\ControllerTrait;
-use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -29,7 +32,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @Route(service="kunstmaan_api.controller.nodes")
  *
  */
-class NodesController
+class NodesController extends AbstractApiController
 {
     use ControllerTrait;
 
@@ -50,6 +53,20 @@ class NodesController
      *     operationId="getNodes",
      *     produces={"application/json"},
      *     tags={"nodes"},
+     *     @SWG\Parameter(
+     *         name="page",
+     *         in="query",
+     *         type="integer",
+     *         description="The current page",
+     *         required=false,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         type="integer",
+     *         description="Amount of items (default 100, max 1000)",
+     *         required=false,
+     *     ),
      *     @SWG\Parameter(
      *         name="internalName",
      *         in="query",
@@ -87,9 +104,11 @@ class NodesController
      *     )
      * )
      *
-     * @Annotations\QueryParam(name="internalName", nullable=true, description="The internal name of the node")
-     * @Annotations\QueryParam(name="hiddenFromNav", nullable=true, default=false, description="If 1, only nodes hidden from nav will be returned")
-     * @Annotations\QueryParam(name="refEntityName", nullable=true, description="Which pages you want to have returned")
+     * @QueryParam(name="internalName", nullable=true, description="The internal name of the node")
+     * @QueryParam(name="hiddenFromNav", nullable=true, default=false, description="If 1, only nodes hidden from nav will be returned")
+     * @QueryParam(name="refEntityName", nullable=true, description="Which pages you want to have returned")
+     * @QueryParam(name="page", nullable=false, default="1", requirements="\d+", description="The current page")
+     * @QueryParam(name="limit", nullable=false, default="100", requirements="[1-1000]", description="Amount of items")
      *
      * @param ParamFetcher $paramFetcher
      * @return Response
@@ -98,19 +117,27 @@ class NodesController
     {
         $params = [];
 
+        $page = $paramFetcher->get('page');
+        $limit = $paramFetcher->get('limit');
         foreach ($paramFetcher->all() as $key => $param) {
-            if (null !== $param) {
+            if (null !== $param && ($key != 'page' || $key != 'limit')) {
                 $params[$key] = $param;
             }
         }
 
-        $data = $this->em->getRepository(Node::class)->findBy($params);
+        $qb = $this->em->getRepository(Node::class)->createQueryBuilder('n');
 
-        return $this->handleView($this->view($data, Response::HTTP_OK));
+        $paginatedCollection = $this->createORMPaginatedCollection($qb, $page, $limit);
+
+        return $this->handleView($this->view($paginatedCollection, Response::HTTP_OK));
     }
 
     /**
      * Retrieve a single node
+     *
+     * @View(
+     *     statusCode=200
+     * )
      *
      * @SWG\Get(
      *     path="/api/nodes/{id}",
@@ -120,7 +147,7 @@ class NodesController
      *     tags={"nodes"},
      *     @SWG\Parameter(
      *         name="id",
-     *         in="query",
+     *         in="path",
      *         type="integer",
      *         description="The node ID",
      *         required=true,
@@ -148,6 +175,60 @@ class NodesController
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
+    /**
+     * Retrieve a single node
+     *
+     * @View(
+     *     statusCode=204
+     * )
+     *
+     * @SWG\Post(
+     *     path="/api/nodes/{id}",
+     *     description="Update a node by ID",
+     *     operationId="postNode",
+     *     produces={"application/json"},
+     *     tags={"nodes"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         type="integer",
+     *         description="The node ID",
+     *         required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="node",
+     *         in="body",
+     *         type="object",
+     *         required=true,
+     *         @SWG\Schema(ref="#/definitions/Node"),
+     *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/Node")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
+     * )
+     *
+     * @param Request $request
+     */
+    public function postNodeAction(Request $request)
+    {
+        $json = $request->getContent();
+        $node = json_decode($json, true);
+
+        $this->em->flush();
+    }
+
 
     /**
      * Retrieve a single node's translations
@@ -172,7 +253,7 @@ class NodesController
      *  }
      * )
      *
-     * @Annotations\QueryParam(name="lang", nullable=true, description="Set language if you want only to retrieve the node translation in this language")
+     * @QueryParam(name="lang", nullable=true, description="Set language if you want only to retrieve the node translation in this language")
      */
     public function getNodeTranslationsAction($id, ParamFetcherInterface $paramFetcher)
     {

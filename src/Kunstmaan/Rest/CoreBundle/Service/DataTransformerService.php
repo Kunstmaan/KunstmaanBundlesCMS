@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Kunstmaan\Rest\NodeBundle\Service;
+namespace Kunstmaan\Rest\CoreBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\Rest\NodeBundle\Service\Transformers\TransformerInterface;
+use Kunstmaan\Rest\CoreBundle\Service\Transformers\TransformerInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**

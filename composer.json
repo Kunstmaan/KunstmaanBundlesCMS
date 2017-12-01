@@ -48,6 +48,7 @@
         "twig/extensions": "~1.0",
         "egulias/email-validator": "~1.2",
         "box/spout": "^2.5",
+        "api-platform/core": "~2.1",
         "timeinc/swagger-bundle": "^0.2.2",
         "zircote/swagger-php": "^2.0",
         "harmbandstra/swagger-ui-bundle": "^1.0",

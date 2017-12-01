@@ -12,9 +12,13 @@
 namespace Kunstmaan\Rest\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\ControllerTrait;
-use Kunstmaan\Rest\NodeBundle\Service\DataTransformerService;
+use FOS\RestBundle\Request\ParamFetcher;
+use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\Rest\CoreBundle\Helper\DataTransformerTrait;
+use Kunstmaan\Rest\CoreBundle\Service\DataTransformerService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,9 +33,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *
  * @Route(service="kunstmaan_api.controller.pages")
  */
-class PagesController
+class PagesController extends AbstractApiController
 {
     use ControllerTrait;
+    use DataTransformerTrait;
 
     /** @var EntityManagerInterface */
     private $em;
@@ -48,38 +53,9 @@ class PagesController
     /**
      * Retrieve nodes paginated
      *
-     * ApiDoc(
-     *  resource=true,
-     *  description="Get a page",
-     *  resourceDescription="Get a page",
-     *  parameters={
-     *      {
-     *          "name"="type",
-     *          "dataType"="string",
-     *          "requirement"="\s+",
-     *          "required"=true,
-     *          "description"="The FQCN of the page"
-     *      },
-     *      {
-     *          "name"="locale",
-     *          "dataType"="string",
-     *          "required"=true,
-     *          "requirement"="\s+",
-     *          "description"="The language of your content"
-     *      },
-     *  },
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      400="Returned when the there are missing required parameters",
-     *      403="Returned when the user is not authorized to fetch nodes",
-     *      404="Returned when nothing was found for given ID",
-     *      500="Something went wrong"
-     *  }
-     * )
-     *
      * @SWG\Get(
-     *     path="/api/pages/{id}",
-     *     description="Get a page of a certain type by ID",
+     *     path="/api/pages",
+     *     description="Get a pages of a certain type",
      *     operationId="getPages",
      *     produces={"application/json"},
      *     tags={"pages"},
@@ -113,8 +89,70 @@ class PagesController
      *         @SWG\Schema(ref="#/definitions/ErrorModel")
      *     )
      * )
+     *
+     * @param Request $request
+     * @param ParamFetcher $paramFetcher
+     * @return Response
      */
-    public function getPagesAction(Request $request, $id)
+    public function getPagesAction(Request $request, ParamFetcher $paramFetcher)
+    {
+        if (!$request->query->has('locale')) {
+            throw new HttpException(400, "Missing locale");
+        }
+
+        // TODO: validate query params
+        $locale = $request->query->get('locale');
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 2);
+
+        $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineNodeTranslationsQueryBuilder($locale);
+
+        $paginatedCollection = $this->createORMPaginatedCollection($qb, $page, $limit, $this->createTransformerDecorator());
+
+        return $this->handleView($this->view($paginatedCollection, Response::HTTP_OK));
+    }
+
+    /**
+     * Retrieve nodes paginated
+     *
+     * @SWG\Get(
+     *     path="/api/pages/{id}",
+     *     description="Get a page of a certain type by Node ID",
+     *     operationId="getPage",
+     *     produces={"application/json"},
+     *     tags={"pages"},
+     *     @SWG\Parameter(
+     *         name="type",
+     *         in="query",
+     *         type="string",
+     *         description="The FQCN of the page",
+     *         required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="locale",
+     *         in="query",
+     *         type="string",
+     *         description="The language of your content",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
+     * )
+     */
+    public function getPageAction(Request $request, $id)
     {
         if (!$request->query->has('locale')) {
             throw new HttpException(400, "Missing locale");
