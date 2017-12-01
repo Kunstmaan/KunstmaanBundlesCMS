@@ -5,7 +5,8 @@ namespace Kunstmaan\AdminListBundle\AdminList\FilterType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * FilterTypeInterface
+ * Interface FilterTypeInterface
+ * @package Kunstmaan\AdminListBundle\AdminList\FilterType
  */
 interface FilterTypeInterface
 {
@@ -27,3 +28,4 @@ interface FilterTypeInterface
      */
     public function getTemplate();
 }
+

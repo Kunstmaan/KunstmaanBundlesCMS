@@ -146,44 +146,7 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
             $goalEntry = array();
             foreach ($rows as $row) {
                 // Create a timestamp for each goal visit (this depends on the timespan of the overview: split per hour, day, week, month)
-                if ($timespan <= 1) {
-                    $timestamp = mktime(
-                        $row[1],
-                        0,
-                        0,
-                        substr($row[0], 4, 2),
-                        substr($row[0], 6, 2),
-                        substr($row[0], 0, 4)
-                    );
-                    $timestamp = date('Y-m-d H:00', $timestamp);
-                } else {
-                    if ($timespan <= 7) {
-                        $timestamp = mktime(
-                            $row[1],
-                            0,
-                            0,
-                            substr($row[0], 4, 2),
-                            substr($row[0], 6, 2),
-                            substr($row[0], 0, 4)
-                        );
-                        $timestamp = date('Y-m-d H:00', $timestamp);
-                    } else {
-                        if ($timespan <= 31) {
-                            $timestamp = mktime(
-                                0,
-                                0,
-                                0,
-                                substr($row[2], 4, 2),
-                                substr($row[2], 6, 2),
-                                substr($row[2], 0, 4)
-                            );
-                            $timestamp = date('Y-m-d H:00', $timestamp);
-                        } else {
-                            $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
-                            $timestamp = date('Y-m-d H:00', $timestamp);
-                        }
-                    }
-                }
+                $timestamp = $this->getTimeStamp($timespan, $row);
                 $goalEntry[$timestamp] = $row[$i + $start];
             }
             $goalCollection['goal' . $goaldata[$i]['position']]['name']     = $goaldata[$i]['name'];

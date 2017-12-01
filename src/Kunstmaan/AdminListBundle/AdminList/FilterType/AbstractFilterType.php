@@ -3,9 +3,8 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType;
 
 /**
- * AbstractFilterType
- *
- * Abstract base class for all admin list filters
+ * Class AbstractFilterType
+ * @package Kunstmaan\AdminListBundle\AdminList\FilterType
  */
 abstract class AbstractFilterType implements FilterTypeInterface
 {
@@ -47,3 +46,4 @@ abstract class AbstractFilterType implements FilterTypeInterface
         return $this->alias . '.';
     }
 }
+

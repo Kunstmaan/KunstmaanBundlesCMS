@@ -57,19 +57,7 @@ class ChartDataCommandHelper extends AbstractAnalyticsCommandHelper
             }
 
             // timestamp
-            if ($timespan <= 1) {
-                $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
-                $timestamp = date('Y-m-d H:00', $timestamp);
-            } else if ($timespan <= 7) {
-                $timestamp = mktime($row[1], 0, 0, substr($row[0], 4, 2), substr($row[0], 6, 2), substr($row[0], 0, 4));
-                $timestamp = date('Y-m-d H:00', $timestamp);
-            } else if ($timespan <= 31) {
-                $timestamp = mktime(0, 0, 0, substr($row[2], 4, 2), substr($row[2], 6, 2), substr($row[2], 0, 4));
-                $timestamp = date('Y-m-d H:00', $timestamp);
-            } else {
-                $timestamp = strtotime(substr($row[0], 0, 4) . 'W' . substr($row[0], 4, 2));
-                $timestamp = date('Y-m-d H:00', $timestamp);
-            }
+            $timestamp = $this->getTimeStamp($timespan, $row);
 
             // add to chart array
             $chartEntry = array(

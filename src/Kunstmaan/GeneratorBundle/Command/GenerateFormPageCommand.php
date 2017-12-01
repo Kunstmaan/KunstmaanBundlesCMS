@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
+use Kunstmaan\GeneratorBundle\Command\Traits\GenerationValidationTrait;
 use Kunstmaan\GeneratorBundle\Generator\FormPageGenerator;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -45,6 +46,8 @@ class GenerateFormPageCommand extends KunstmaanGenerateCommand
      * @var array
      */
     private $parentPages;
+
+    use GenerationValidationTrait;
 
     /**
      * @see Command
@@ -132,33 +135,8 @@ EOT
         ));
         $generator = $this->getGenerator();
         $bundlePath = $this->bundle->getPath();
-
-        $name = $this->assistant->askAndValidate(
-            'FormPage name',
-            function ($name) use ($generator, $bundlePath) {
-                // Check reserved words
-                if ($generator->isReservedKeyword($name)){
-                    throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
-                }
-
-                // Name should end on Page
-                if (!preg_match('/Page$/', $name)) {
-                    throw new \InvalidArgumentException('The page name must end with Page');
-                }
-
-                // Name should contain more characters than Page
-                if (strlen($name) <= strlen('Page') || !preg_match('/^[a-zA-Z]+$/', $name)) {
-                    throw new \InvalidArgumentException('Invalid page name');
-                }
-
-                // Check that entity does not already exist
-                if (file_exists($bundlePath . '/Entity/Pages/' . $name . '.php')) {
-                    throw new \InvalidArgumentException(sprintf('Page or entity "%s" already exists', $name));
-                }
-
-                return $name;
-            }
-        );
+        $question = 'FormPage name';
+        $name = $this->getNameByValidationClosure($question, $generator, $bundlePath);
         $this->pageName = $name;
 
         /**

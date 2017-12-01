@@ -21,10 +21,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
- * AdminListController
+ * Class AdminListController
+ * @package Kunstmaan\AdminListBundle\Controller
  */
 abstract class AdminListController extends Controller
 {
+    /**
+     * @var
+     */
+    protected $tabPane;
+
     /**
      * You can override this method to return the correct entity manager when using multiple databases ...
      *
@@ -64,14 +70,22 @@ abstract class AdminListController extends Controller
      * Export a list of Entities
      *
      * @param AbstractAdminListConfigurator $configurator The adminlist configurator
-     * @param string $_format The format to export to
+     * @param string $_format
      * @param null|Request $request
      *
      * @throws AccessDeniedHttpException
      *
      * @return Response
      */
-    protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
+
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     * @param string $_format The format to export to
+     * @param Request|null $request
+     * @return Response|\Symfony\Component\HttpFoundation\StreamedResponse
+     * @throws \Exception
+     */
+    protected function doExportAction(AbstractAdminListConfigurator $configurator, $format, Request $request = null)
     {
         if (!$configurator->canExport()) {
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
@@ -83,7 +97,7 @@ abstract class AdminListController extends Controller
         $adminList = $this->get("kunstmaan_adminlist.factory")->createExportList($configurator, $em);
         $adminList->bindRequest($request);
 
-        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $_format);
+        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $format);
     }
 
     /**
@@ -118,33 +132,15 @@ abstract class AdminListController extends Controller
         $helper = new $classname();
         $helper = $configurator->decorateNewEntity($helper);
 
-        $formType = $configurator->getAdminType($helper);
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-        $formFqn = get_class($formType);
-
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
-        $tabPane = $event->getTabPane();
-
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->getForm($configurator, $request, $helper);
 
         if ($request->isMethod('POST')) {
-            if ($tabPane) {
-                $tabPane->bindRequest($request);
-                $form = $tabPane->getForm();
-            } else {
-                $form->handleRequest($request);
-            }
+
 
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::PRE_ADD,
-                    $adminListEvent
-                );
+                $this->triggerEvent(AdminListEvents::PRE_ADD, $adminListEvent);
 
                 // Check if Response is given
                 if ($adminListEvent->getResponse() instanceof Response) {
@@ -156,10 +152,7 @@ abstract class AdminListController extends Controller
 
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::POST_ADD,
-                    $adminListEvent
-                );
+                $this->triggerEvent(AdminListEvents::POST_ADD, $adminListEvent);
 
                 // Check if Response is given
                 if ($adminListEvent->getResponse() instanceof Response) {
@@ -176,13 +169,76 @@ abstract class AdminListController extends Controller
 
         $params = array('form' => $form->createView(), 'adminlistconfigurator' => $configurator);
 
-        if ($tabPane) {
-            $params = array_merge($params, array('tabPane' => $tabPane));
+        if ($this->tabPane) {
+            $params = array_merge($params, array('tabPane' => $this->tabPane));
         }
 
         return new Response(
             $this->renderView($configurator->getAddTemplate(), $params)
         );
+    }
+
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     * @param $helper
+     * @return string
+     */
+    protected function getFormFqn(AbstractAdminListConfigurator $configurator, $helper)
+    {
+        $formType = $configurator->getAdminType($helper);
+        if (!is_object($formType) && is_string($formType)) {
+            $formType = $this->container->get($formType);
+        }
+        $formFqn = get_class($formType);
+
+        return $formFqn;
+    }
+
+
+    /**
+     * @param $request
+     * @param $formFqn
+     * @param $helper
+     * @param $configurator
+     * @return mixed
+     */
+    protected function getTabPane(Request $request, $formFqn, $helper, AbstractAdminListConfigurator $configurator)
+    {
+        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
+        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
+        $this->tabPane = $event->getTabPane();
+        return $this->tabPane;
+    }
+
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     * @param Request $request
+     * @param $helper
+     * @return \Symfony\Component\Form\Form
+     */
+    protected function getForm(AbstractAdminListConfigurator $configurator, Request $request, $helper)
+    {
+        $formFqn = $this->getFormFqn($configurator, $helper);
+        $tabPane = $this->getTabPane($request, $formFqn, $helper, $configurator);
+        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        if ($request->isMethod('POST')) {
+            if ($tabPane) {
+                $tabPane->bindRequest($request);
+                $form = $tabPane->getForm();
+            } else {
+                $form->handleRequest($request);
+            }
+        }
+        return $form;
+    }
+
+    /**
+     * @param $name
+     * @param AdminListEvent $adminListEvent
+     */
+    protected function triggerEvent($name, AdminListEvent $adminListEvent)
+    {
+        $this->container->get('event_dispatcher')->dispatch($name, $adminListEvent);
     }
 
     /**
@@ -210,33 +266,13 @@ abstract class AdminListController extends Controller
             throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
-        $formType = $configurator->getAdminType($helper);
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-        $formFqn = get_class($formType);
-
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
-        $tabPane = $event->getTabPane();
-
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->getForm($configurator, $request, $helper);
 
         if ($request->isMethod('POST')) {
-            if ($tabPane) {
-                $tabPane->bindRequest($request);
-                $form = $tabPane->getForm();
-            } else {
-                $form->handleRequest($request);
-            }
-
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::PRE_EDIT,
-                    $adminListEvent
-                );
+                $this->triggerEvent(AdminListEvents::PRE_EDIT, $adminListEvent);
 
                 // Check if Response is given
                 if ($adminListEvent->getResponse() instanceof Response) {
@@ -245,10 +281,7 @@ abstract class AdminListController extends Controller
 
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(
-                    AdminListEvents::POST_EDIT,
-                    $adminListEvent
-                );
+                $this->triggerEvent(AdminListEvents::POST_EDIT, $adminListEvent);
 
                 // Check if Response is given
                 if ($adminListEvent->getResponse() instanceof Response) {
@@ -273,8 +306,8 @@ abstract class AdminListController extends Controller
 
         $params = array('form' => $form->createView(), 'entity' => $helper, 'adminlistconfigurator' => $configurator);
 
-        if ($tabPane) {
-            $params = array_merge($params, array('tabPane' => $tabPane));
+        if ($this->tabPane) {
+            $params = array_merge($params, array('tabPane' => $this->tabPane));
         }
 
         return new Response(
@@ -496,3 +529,4 @@ abstract class AdminListController extends Controller
         }
     }
 }
+
