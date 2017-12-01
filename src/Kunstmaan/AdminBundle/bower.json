@@ -11,7 +11,7 @@
     "jquery-typewatch": "~3.0",
     "eonasdan-bootstrap-datetimepicker": "~4.0",
     "cargobay": "0.5.2",
-    "moment": "~2.10",
+    "moment": "~2.19",
     "Sortable": "1.2.0",
     "select2": "4.0.0",
     "mjolnic-bootstrap-colorpicker" : "~2.1"

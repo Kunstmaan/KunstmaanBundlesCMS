@@ -1,6 +1,6 @@
 //! moment.js locale configuration
-//! locale : Tagalog/Filipino (tl-ph)
-//! author : Dan Hagman
+//! locale : Tagalog (Philippines) [tl-ph]
+//! author : Dan Hagman : https://github.com/hagmandan
 
 import moment from '../moment';
 
@@ -12,18 +12,18 @@ export default moment.defineLocale('tl-ph', {
     weekdaysMin : 'Li_Lu_Ma_Mi_Hu_Bi_Sab'.split('_'),
     longDateFormat : {
         LT : 'HH:mm',
-        LTS : 'LT:ss',
+        LTS : 'HH:mm:ss',
         L : 'MM/D/YYYY',
         LL : 'MMMM D, YYYY',
-        LLL : 'MMMM D, YYYY LT',
-        LLLL : 'dddd, MMMM DD, YYYY LT'
+        LLL : 'MMMM D, YYYY HH:mm',
+        LLLL : 'dddd, MMMM DD, YYYY HH:mm'
     },
     calendar : {
-        sameDay: '[Ngayon sa] LT',
-        nextDay: '[Bukas sa] LT',
-        nextWeek: 'dddd [sa] LT',
-        lastDay: '[Kahapon sa] LT',
-        lastWeek: 'dddd [huling linggo] LT',
+        sameDay: 'LT [ngayong araw]',
+        nextDay: '[Bukas ng] LT',
+        nextWeek: 'LT [sa susunod na] dddd',
+        lastDay: 'LT [kahapon]',
+        lastWeek: 'LT [noong nakaraang] dddd',
         sameElse: 'L'
     },
     relativeTime : {
@@ -41,7 +41,7 @@ export default moment.defineLocale('tl-ph', {
         y : 'isang taon',
         yy : '%d taon'
     },
-    ordinalParse: /\d{1,2}/,
+    dayOfMonthOrdinalParse: /\d{1,2}/,
     ordinal : function (number) {
         return number;
     },

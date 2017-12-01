@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : Lithuanian (lt)
+//! locale : Lithuanian [lt]
 //! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 import moment from '../moment';
@@ -15,8 +15,7 @@ var units = {
     'MM': 'mėnesiai_mėnesių_mėnesius',
     'y' : 'metai_metų_metus',
     'yy': 'metai_metų_metus'
-},
-weekDays = 'sekmadienis_pirmadienis_antradienis_trečiadienis_ketvirtadienis_penktadienis_šeštadienis'.split('_');
+};
 function translateSeconds(number, withoutSuffix, key, isFuture) {
     if (withoutSuffix) {
         return 'kelios sekundės';
@@ -47,29 +46,32 @@ function translate(number, withoutSuffix, key, isFuture) {
         }
     }
 }
-function relativeWeekDay(moment, format) {
-    var nominative = format.indexOf('dddd HH:mm') === -1,
-        weekDay = weekDays[moment.day()];
-    return nominative ? weekDay : weekDay.substring(0, weekDay.length - 2) + 'į';
-}
-
 export default moment.defineLocale('lt', {
-    months : 'sausio_vasario_kovo_balandžio_gegužės_birželio_liepos_rugpjūčio_rugsėjo_spalio_lapkričio_gruodžio'.split('_'),
+    months : {
+        format: 'sausio_vasario_kovo_balandžio_gegužės_birželio_liepos_rugpjūčio_rugsėjo_spalio_lapkričio_gruodžio'.split('_'),
+        standalone: 'sausis_vasaris_kovas_balandis_gegužė_birželis_liepa_rugpjūtis_rugsėjis_spalis_lapkritis_gruodis'.split('_'),
+        isFormat: /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?|MMMM?(\[[^\[\]]*\]|\s)+D[oD]?/
+    },
     monthsShort : 'sau_vas_kov_bal_geg_bir_lie_rgp_rgs_spa_lap_grd'.split('_'),
-    weekdays : relativeWeekDay,
+    weekdays : {
+        format: 'sekmadienį_pirmadienį_antradienį_trečiadienį_ketvirtadienį_penktadienį_šeštadienį'.split('_'),
+        standalone: 'sekmadienis_pirmadienis_antradienis_trečiadienis_ketvirtadienis_penktadienis_šeštadienis'.split('_'),
+        isFormat: /dddd HH:mm/
+    },
     weekdaysShort : 'Sek_Pir_Ant_Tre_Ket_Pen_Šeš'.split('_'),
     weekdaysMin : 'S_P_A_T_K_Pn_Š'.split('_'),
+    weekdaysParseExact : true,
     longDateFormat : {
         LT : 'HH:mm',
-        LTS : 'LT:ss',
+        LTS : 'HH:mm:ss',
         L : 'YYYY-MM-DD',
         LL : 'YYYY [m.] MMMM D [d.]',
-        LLL : 'YYYY [m.] MMMM D [d.], LT [val.]',
-        LLLL : 'YYYY [m.] MMMM D [d.], dddd, LT [val.]',
+        LLL : 'YYYY [m.] MMMM D [d.], HH:mm [val.]',
+        LLLL : 'YYYY [m.] MMMM D [d.], dddd, HH:mm [val.]',
         l : 'YYYY-MM-DD',
         ll : 'YYYY [m.] MMMM D [d.]',
-        lll : 'YYYY [m.] MMMM D [d.], LT [val.]',
-        llll : 'YYYY [m.] MMMM D [d.], ddd, LT [val.]'
+        lll : 'YYYY [m.] MMMM D [d.], HH:mm [val.]',
+        llll : 'YYYY [m.] MMMM D [d.], ddd, HH:mm [val.]'
     },
     calendar : {
         sameDay : '[Šiandien] LT',
@@ -94,7 +96,7 @@ export default moment.defineLocale('lt', {
         y : translateSingular,
         yy : translate
     },
-    ordinalParse: /\d{1,2}-oji/,
+    dayOfMonthOrdinalParse: /\d{1,2}-oji/,
     ordinal : function (number) {
         return number + '-oji';
     },
