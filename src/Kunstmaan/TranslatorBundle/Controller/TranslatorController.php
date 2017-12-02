@@ -252,7 +252,7 @@ class TranslatorController extends AdminListController
      */
     public function getAdminListConfigurator()
     {
-        $locales = explode('|', $this->getParameter('requiredlocales'));
+        $locales = $this->getParameter('kuma_translator.managed_locales');
 
         if (!isset($this->adminListConfigurator)) {
             $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getManager()
