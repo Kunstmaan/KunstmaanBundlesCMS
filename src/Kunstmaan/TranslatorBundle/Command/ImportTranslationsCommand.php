@@ -3,13 +3,38 @@
 namespace Kunstmaan\TranslatorBundle\Command;
 
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
+use Kunstmaan\TranslatorBundle\Service\Command\Importer\ImportCommandHandler;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @final since 5.0
+ * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
+ */
 class ImportTranslationsCommand extends ContainerAwareCommand
 {
+    /**
+     * @var ImportCommandHandler
+     */
+    private $importCommandHandler;
+
+    public function __construct($importCommandHandler = null)
+    {
+        parent::__construct();
+
+        if (!$importCommandHandler instanceof ImportCommandHandler) {
+            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
+
+            $this->setName(null === $importCommandHandler ? 'kuma:translator:import' : $importCommandHandler);
+
+            return;
+        }
+
+        $this->importCommandHandler = $importCommandHandler;
+    }
+
     protected function configure()
     {
         $this
@@ -30,6 +55,9 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         $globals        = $input->getOption('globals');
         $defaultBundle  = $input->getOption('defaultbundle') ;
         $bundles        = $input->hasOption('bundles') ? array_map('trim', explode(',', $input->getOption('bundles'))) : array();
+        if (null === $this->importCommandHandler) {
+            $this->importCommandHandler = $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler');
+        }
 
         $importCommand = new ImportCommand();
         $importCommand
@@ -39,7 +67,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
             ->setDefaultBundle($defaultBundle)
             ->setBundles($bundles);
 
-        $imported = $this->getContainer()->get('kunstmaan_translator.service.importer.command_handler')->executeImportCommand($importCommand);
+        $imported = $this->importCommandHandler->executeImportCommand($importCommand);
         
         $output->writeln(sprintf("Translation imported: %d", $imported));
 
