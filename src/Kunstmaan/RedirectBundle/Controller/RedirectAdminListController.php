@@ -85,7 +85,7 @@ class RedirectAdminListController extends AdminListController
      *
      * @param string $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx"}, name="kunstmaanredirectbundle_admin_redirect_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="kunstmaanredirectbundle_admin_redirect_export")
      * @Method({"GET", "POST"})
      * @return array
      */
