@@ -7,23 +7,44 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
  */
 interface CipherInterface
 {
-
     /**
      * Encrypt the given value to an unreadable string.
      *
      * @param string $value
      *
+     * @param bool $raw_binary
      * @return string
      */
-    public function encrypt($value);
+    public function encrypt($value, $raw_binary=false);
 
     /**
      * Decrypt the given value so that it's readable again.
      *
-     * @param string $value
-     *
+     * @param $value
+     * @param $raw_binary
      * @return string
+     * @internal param string $value
+     *
      */
-    public function decrypt($value);
+    public function decrypt($value, $raw_binary=false);
+
+    /**
+     * @param string $inputFile
+     * @param string $outputFile
+     * @return void
+     * @throws \Defuse\Crypto\Exception\IOException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
+     */
+    public function encryptFile($inputFile, $outputFile);
+
+    /**
+     * @param string $inputFile
+     * @param string $outputFile
+     * @return void
+     * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
+     * @throws \Defuse\Crypto\Exception\IOException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
+     */
+    public function decryptFile($inputFile, $outputFile);
 
 }
