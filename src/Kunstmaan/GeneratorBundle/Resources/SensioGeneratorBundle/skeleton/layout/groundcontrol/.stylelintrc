@@ -23,19 +23,16 @@
         "block-no-empty": null,
         "rule-empty-line-before": [
             "always-multi-line", {
-                ignore: ["after-comment"]
+                "except": ["first-nested"],
+                "ignore": ["after-comment"]
             }
         ],
         "comment-whitespace-inside": null,
+        "at-rule-no-unknown": [ true, {
+            "ignoreAtRules": ["extend", "at-root", "debug", "warn", "error", "if", "else", "for", "each", "while", "mixin", "include", "content", "return", "function"]
+        }],
         "max-nesting-depth": 3,
-        "order/declaration-block-property-groups-structure": [
-            {
-                "emptyLineBefore": "always",
-                "properties": [
-                    "include",
-                    "extend"
-                ]
-            },
+        "order/properties-order": [
             {
                 "emptyLineBefore": "always",
                 "properties": [
@@ -44,6 +41,7 @@
             },
             {
                 "emptyLineBefore": "always",
+                "order": "flexible",
                 "properties": [
                     "float",
                     "position",
@@ -56,10 +54,19 @@
             },
             {
                 "emptyLineBefore": "always",
+                "order": "flexible",
                 "properties": [
                     "display",
                     "flex",
+                    "flex-basis",
+                    "flex-direction",
+                    "flex-grow",
+                    "flex-shrink",
+                    "flex-wrap",
                     "justify-content",
+                    "align-items",
+                    "align-content",
+                    "align-self",
                     "width",
                     "height",
                     "max-width",
@@ -67,43 +74,124 @@
                     "min-height",
                     "min-width",
                     "padding",
+                    "padding-top",
+                    "padding-right",
+                    "padding-bottom",
+                    "padding-left",
                     "margin",
+                    "margin-top",
+                    "margin-right",
+                    "margin-bottom",
+                    "margin-left",
                     "overflow",
-                    "transform"
+                    "transform",
+                    "transform-origin"
                 ]
             },
             {
                 "emptyLineBefore": "always",
+                "order": "flexible",
                 "properties": [
-                    "background"
+                    "background",
+                    "background-attachment",
+                    "background-blend-mode",
+                    "background-clip",
+                    "background-color",
+                    "background-image",
+                    "background-origin",
+                    "background-position",
+                    "background-repeat",
+                    "background-size"
                 ]
             },
             {
                 "emptyLineBefore": "always",
+                "order": "flexible",
                 "properties": [
                     "border",
-                    "outline"
+                    "border-block-end",
+                    "border-block-end-color",
+                    "border-block-end-style",
+                    "border-block-end-width",
+                    "border-block-start",
+                    "border-block-start-color",
+                    "border-block-start-style",
+                    "border-block-start-width",
+                    "border-bottom",
+                    "border-bottom-color",
+                    "border-bottom-left-radius",
+                    "border-bottom-right-radius",
+                    "border-bottom-style",
+                    "border-bottom-width",
+                    "border-collapse",
+                    "border-color",
+                    "border-image",
+                    "border-image-outset",
+                    "border-image-repeat",
+                    "border-image-slice",
+                    "border-image-source",
+                    "border-image-width",
+                    "border-inline-end",
+                    "border-inline-end-color",
+                    "border-inline-end-style",
+                    "border-inline-end-width",
+                    "border-inline-start",
+                    "border-inline-start-color",
+                    "border-inline-start-style",
+                    "border-inline-start-width",
+                    "border-left",
+                    "border-left-color",
+                    "border-left-style",
+                    "border-left-width",
+                    "border-radius",
+                    "border-right",
+                    "border-right-color",
+                    "border-right-style",
+                    "border-right-width",
+                    "border-spacing",
+                    "border-style",
+                    "border-top",
+                    "border-top-color",
+                    "border-top-left-radius",
+                    "border-top-right-radius",
+                    "border-top-style",
+                    "border-top-width",
+                    "border-width",
+                    "outline",
+                    "outline-color",
+                    "outline-offset",
+                    "outline-style",
+                    "outline-width"
                 ]
             },
             {
                 "emptyLineBefore": "always",
+                "order": "flexible",
                 "properties": [
                     "color",
-                    "font",
+                    "font-family",
+                    "font-size",
+                    "font-style",
+                    "font-weight",
                     "line-height",
-                    "text",
+                    "text-align",
+                    "text-decoration",
+                    "text-transform",
                     "white-space",
-                    "word"
+                    "word-break",
+                    "word-wrap"
                 ]
             },
             {
                 "emptyLineBefore": "always",
+                "order": "flexible",
                 "properties": [
                     "list-style"
                 ]
             },
             {
                 "emptyLineBefore": "always",
+                "order": "flexible",
                 "properties": [
                     "transition",
                     "will-change",
