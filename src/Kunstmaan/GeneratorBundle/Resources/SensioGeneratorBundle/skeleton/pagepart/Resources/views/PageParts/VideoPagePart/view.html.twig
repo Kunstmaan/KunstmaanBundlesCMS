@@ -43,7 +43,7 @@
         {% endif %}
 
         <div class="videolink">
-            <a href="{{ videoEmbedUrl }}" target="_blank" class="js-videolink-play-link videolink__video-link" data-video-provider="{{ helper.type }}" data-video-id="{{ helper.code }}" data-make-fluid="true">
+            <a href="{{ videoEmbedUrl }}" target="_blank" rel="noopener" class="js-videolink-play-link videolink__video-link" data-video-provider="{{ helper.type }}" data-video-id="{{ helper.code }}" data-make-fluid="true">
                 <i class="videolink__video-link__icon icon icon--play"></i>
                 {% if resource.thumbnail is not empty %}
                     {{ buildImage.setFilters(resource.thumbnail.url, resource.caption, imageType) }}
