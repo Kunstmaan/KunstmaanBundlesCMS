@@ -115,6 +115,11 @@ class RedirectRouter implements RouterInterface
 
         /** @var Redirect $redirect */
         foreach ($redirects as $redirect) {
+            // Check for wildcard routing and adjust as required
+            if ($this->isWildcardRedirect($redirect)) {
+                $this->calculateWildcardDestination($redirect);
+            }
+
             // Only add the route when the domain matches or the domain is empty
             if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
                 $this->routeCollection->add(
@@ -127,6 +132,45 @@ class RedirectRouter implements RouterInterface
                 );
             }
         }
+    }
+
+    /**
+     * @param Redirect $redirect
+     * @return bool
+     */
+    private function isWildcardRedirect(Redirect $redirect)
+    {
+        $origin = $redirect->getOrigin();
+        $matchSegment = substr($origin, 0, -1);
+        if (substr($origin, -2) == '/*') {
+            return $this->isPathInfoWildcardMatch($matchSegment);
+        }
+        return false;
+    }
+
+    private function isPathInfoWildcardMatch($matchSegment)
+    {
+        $path = $this->context->getPathInfo();
+        return strstr($path, $matchSegment);
+    }
+
+    /**
+     * @param Redirect $redirect
+     */
+    private function calculateWildcardDestination(Redirect $redirect)
+    {
+        $origin = $redirect->getOrigin();
+        $target = $redirect->getTarget();
+        $url = $this->context->getPathInfo();
+
+        $redirect->setOrigin($url);
+
+        $origin = substr($origin, 0, -1);
+        $target = substr($target, 0, -1);
+        $url = str_replace($origin, $target, $url);
+
+        $this->context->setPathInfo($url);
+        $redirect->setTarget($url);
     }
 
     /**
