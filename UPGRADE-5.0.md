@@ -81,3 +81,18 @@ new:
 	return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
 ```
+
+## [LiipImagine]
+We upgraded the version of LiipImagine bundle. What this means is that when you're using symlinks for your deployments that those are not supported anymore.
+It only works on absolute paths now. To make this work you neet to add the following into you `config_prod.yml` or `config.yml` if you want it for all environments.
+
+```yaml
+liip_imagine:
+    loaders:
+        default:
+            filesystem:
+                data_root:
+                    - "%kernel.root_dir%/../link/to/your/symlinked/path/web"
+                    - "%kernel.root_dir%/../web"
+```
+
