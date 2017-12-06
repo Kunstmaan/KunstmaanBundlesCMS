@@ -32,6 +32,6 @@
     "commit": "607c3d047dbede1f802931aeff323d8c43ba9d59"
   },
   "_source": "https://github.com/moment/moment.git",
-  "_target": ">=2.8.0",
+  "_target": "~2.19",
   "_originalSource": "moment"
 }
