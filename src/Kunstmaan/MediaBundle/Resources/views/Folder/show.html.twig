@@ -10,8 +10,8 @@
 {% endblock %}
 
 
-
 {% block sidebar %}
+
     <!-- Search -->
     <button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
         <i class="fa fa-search"></i>
@@ -193,6 +193,7 @@
                         </p>
                     {% endif %}
                 {% else %}
+                    {{ adminthumb_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()['params']) }}
                     <div class="row list-group">
                         <div class="col-xs-12">
                             <div class="btn-group pull-right btn-group-md" role="group">
