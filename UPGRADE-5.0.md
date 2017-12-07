@@ -95,4 +95,14 @@ liip_imagine:
                     - "%kernel.root_dir%/../link/to/your/symlinked/path/web"
                     - "%kernel.root_dir%/../web"
 ```
-
+## Deprecated Form Types
+All existing form types have been deprecated in order to satisfy Sensio Insight requirements that form type classes go in a `Form/Type` folder instead of justr `Form`. Existing projects will not break, the old classes are still there, but the logic has been moved into the new classes in the correct folder, and the old classes now extend the new one, and have a `@deprecated` tag.
+#### Refactoring your form types
+It is very simple, just add `Type` into your use statement.
+```php
+use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
+```
+becomes
+```php
+use Kunstmaan\NodeBundle\Form\Type\ControllerActionAdminType;
+```
