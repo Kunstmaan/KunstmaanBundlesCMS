@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *     }
  * )
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
- * @UniqueEntity(fields={"domain", "origin"})
+ * @UniqueEntity(fields={"origin", "domain"})
  */
 class Redirect extends AbstractEntity
 {

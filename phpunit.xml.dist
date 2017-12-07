@@ -22,6 +22,7 @@
     <testsuites>
         <testsuite name="Kunstmaan Test Suite">
             <directory suffix="Test.php">./src/Kunstmaan/*/Tests</directory>
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
 
@@ -35,6 +36,8 @@
                 <directory>./src/Kunstmaan/*/vendor</directory>
                 <directory>./src/Kunstmaan/*/Twig</directory>
                 <directory>./src/Kunstmaan/*/Tests</directory>
+                <directory>./tests</directory>
+                <directory>./TestListener.php</directory>
             </exclude>
         </whitelist>
     </filter>
@@ -48,6 +51,7 @@
 
     <logging>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+        <!--<log type="coverage-html" target="/path/to/report/folder" />-->
     </logging>
 
     <listeners>
