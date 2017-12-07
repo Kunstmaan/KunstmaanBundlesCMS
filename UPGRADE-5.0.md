@@ -1,5 +1,9 @@
 # UPGRADE FROM 4.* to 5.0
 
+## Symfony
+
+The minimum symfony version is set to 3.4.
+
 ## Elastica
 
 The ruflin/elastica bundle has been upgraded to the latest 5.1 version.
