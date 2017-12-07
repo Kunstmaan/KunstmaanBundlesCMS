@@ -26,8 +26,8 @@ class RedirectAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
         parent::__construct($em, $aclHelper);
 
         $this->domainConfiguration = $domainConfiguration;
-        $this->setAdminType(new RedirectAdminType($domainConfiguration));
-        $this->setAdminTypeOptions(array('domainConfiguration' => $domainConfiguration));
+        $this->setAdminType(new RedirectAdminType());
+        $this->setAdminTypeOptions(['domainConfiguration' => $domainConfiguration]);
     }
 
     /**
