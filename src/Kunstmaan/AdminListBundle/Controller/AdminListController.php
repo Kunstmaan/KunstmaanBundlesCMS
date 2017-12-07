@@ -3,18 +3,30 @@
 namespace Kunstmaan\AdminListBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\AdminListFactoryTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\ContainerTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityVersionLockTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EventDispatcherTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\TranslatorTrait;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
+use Kunstmaan\AdminListBundle\Service\ExportService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,20 +34,70 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * AdminListController
  */
-abstract class AdminListController extends Controller
+abstract class AdminListController extends AbstractController
 {
+    use AdminListFactoryTrait,
+        EventDispatcherTrait,
+        EntityManagerTrait,
+        EntityVersionLockTrait,
+        TranslatorTrait;
+
     /**
-     * You can override this method to return the correct entity manager when using multiple databases ...
-     *
-     * @return \Doctrine\Common\Persistence\ObjectManager|object
+     * @var ExportService
      */
-    protected function getEntityManager()
+    protected $exportService;
+
+    /**
+     * AdminListController constructor.
+     *
+     * @param EventDispatcherInterface|null $eventDispatcher
+     * @param EntityManagerInterface|null   $entityManager
+     * @param int                           $entityVersionLockInterval
+     * @param bool                          $entityVersionLockCheck
+     */
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher = null,
+        EntityManagerInterface $entityManager = null,
+        AdminListFactory $adminListFactory = null,
+        TranslatorInterface $translator = null,
+        $entityVersionLockInterval = 15,
+        $entityVersionLockCheck = false)
     {
-        return $this->getDoctrine()->getManager();
+        $this->setEventDispatcher($eventDispatcher);
+        $this->setEntityManager($entityManager);
+        $this->setAdminListFactory($adminListFactory);
+        $this->setTranslator($translator);
+        $this->setEntityVersionLockInterval($entityVersionLockInterval);
+        $this->setEntityVersionLockCheck($entityVersionLockCheck);
+    }
+
+    /**
+     * @return AdminListFactory
+     */
+    public function getExportService()
+    {
+        if (null !== $this->container && null === $this->exportService) {
+            $this->exportService = $this->container->get("kunstmaan_adminlist.service.export");
+        }
+
+        return $this->exportService;
+    }
+
+    /**
+     * @param ExportService $exportService
+     */
+    public function setExportService(ExportService $exportService)
+    {
+        if (null !== $this->container && null === $this->exportService) {
+            $this->exportService = $this->container->get("kunstmaan_adminlist.service.export");
+        }
+
+        $this->exportService = $exportService;
     }
 
     /**
@@ -50,7 +112,7 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
+        $adminList = $this->getAdminListFactory()->createList($configurator, $em);
         $adminList->bindRequest($request);
 
         $this->buildSortableFieldActions($configurator);
@@ -77,16 +139,16 @@ abstract class AdminListController extends Controller
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
     {
         if (!$configurator->canExport()) {
-            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
         $em = $this->getEntityManager();
 
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createExportList($configurator, $em);
+        $adminList = $this->getAdminListFactory()->createExportList($configurator, $em);
         $adminList->bindRequest($request);
 
-        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $_format);
+        return $this->getExportService()->getDownloadableResponse($adminList, $_format);
     }
 
     /**
@@ -103,7 +165,7 @@ abstract class AdminListController extends Controller
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
     {
         if (!$configurator->canAdd()) {
-            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
         /* @var EntityManager $em */
@@ -124,7 +186,7 @@ abstract class AdminListController extends Controller
         $formType = $configurator->getAdminType($helper);
 
         $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
+        $event = $this->getEventDispatcher()->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
@@ -140,7 +202,7 @@ abstract class AdminListController extends Controller
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
-                $this->container->get('event_dispatcher')->dispatch(
+                $this->getEventDispatcher()->dispatch(
                     AdminListEvents::PRE_ADD,
                     $adminListEvent
                 );
@@ -155,7 +217,7 @@ abstract class AdminListController extends Controller
 
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(
+                $this->getEventDispatcher()->dispatch(
                     AdminListEvents::POST_ADD,
                     $adminListEvent
                 );
@@ -211,7 +273,7 @@ abstract class AdminListController extends Controller
         }
 
         if (!$configurator->canEdit($helper)) {
-            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
         if ($helper instanceof LockableEntityInterface) {
@@ -221,10 +283,10 @@ abstract class AdminListController extends Controller
                 // Don't redirect to listing when coming from ajax request, needed for url chooser.
                 if (!$request->isXmlHttpRequest()) {
                     /** @var EntityVersionLockService $entityVersionLockService*/
-                    $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+                    $entityVersionLockService = $this->getEntityVersionLockService();
 
                     $user = $entityVersionLockService->getUsersWithEntityVersionLock($helper, $this->getUser());
-                    $message = $this->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
+                    $message = $this->getTranslator()->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
                     $this->addFlash(
                         FlashTypes::WARNING,
                         $message
@@ -242,7 +304,7 @@ abstract class AdminListController extends Controller
         $formType = $configurator->getAdminType($helper);
 
         $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
-        $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
+        $event = $this->getEventDispatcher()->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
         $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
@@ -259,7 +321,7 @@ abstract class AdminListController extends Controller
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest()) {
                 $adminListEvent = new AdminListEvent($helper, $request, $form);
-                $this->container->get('event_dispatcher')->dispatch(
+                $this->getEventDispatcher()->dispatch(
                     AdminListEvents::PRE_EDIT,
                     $adminListEvent
                 );
@@ -271,7 +333,7 @@ abstract class AdminListController extends Controller
 
                 $em->persist($helper);
                 $em->flush();
-                $this->container->get('event_dispatcher')->dispatch(
+                $this->getEventDispatcher()->dispatch(
                     AdminListEvents::POST_EDIT,
                     $adminListEvent
                 );
@@ -300,8 +362,8 @@ abstract class AdminListController extends Controller
         $params = [
             'form' => $form->createView(),
             'entity' => $helper, 'adminlistconfigurator' => $configurator,
-            'entityVersionLockInterval' => $this->container->getParameter('kunstmaan_entity.lock_check_interval'),
-            'entityVersionLockCheck' => $this->container->getParameter('kunstmaan_entity.lock_enabled') && $helper instanceof LockableEntityInterface,
+            'entityVersionLockInterval' => $this->getEntityVersionLockInterval(),
+            'entityVersionLockCheck' => $this->isEntityVersionLockCheck() && $helper instanceof LockableEntityInterface,
         ];
 
         if ($tabPane) {
@@ -316,6 +378,13 @@ abstract class AdminListController extends Controller
         );
     }
 
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     * @param mixed                         $entityId
+     * @param Request                       $request
+     *
+     * @return Response
+     */
     protected function doViewAction(AbstractAdminListConfigurator $configurator, $entityId, Request $request)
     {
         /* @var EntityManager $em */
@@ -326,7 +395,7 @@ abstract class AdminListController extends Controller
         }
 
         if (!$configurator->canView($helper)) {
-            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
         $MetaData = $em->getClassMetadata($configurator->getRepositoryName());
@@ -366,13 +435,13 @@ abstract class AdminListController extends Controller
             throw new NotFoundHttpException("Entity not found.");
         }
         if (!$configurator->canDelete($helper)) {
-            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
+            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
         }
 
         $indexUrl = $configurator->getIndexUrl();
         if ($request->isMethod('POST')) {
             $adminListEvent = new AdminListEvent($helper, $request);
-            $this->container->get('event_dispatcher')->dispatch(
+            $this->getEventDispatcher()->dispatch(
                 AdminListEvents::PRE_DELETE,
                 $adminListEvent
             );
@@ -384,7 +453,7 @@ abstract class AdminListController extends Controller
 
             $em->remove($helper);
             $em->flush();
-            $this->container->get('event_dispatcher')->dispatch(
+            $this->getEventDispatcher()->dispatch(
                 AdminListEvents::POST_DELETE,
                 $adminListEvent
             );
@@ -471,6 +540,12 @@ abstract class AdminListController extends Controller
         );
     }
 
+    /**
+     * @param $repo
+     * @param $sort
+     *
+     * @return int
+     */
     private function getMaxSortableField($repo, $sort)
     {
         $maxWeight = $repo->createQueryBuilder('i')
@@ -488,9 +563,9 @@ abstract class AdminListController extends Controller
     protected function isLockableEntityLocked(LockableEntityInterface $entity)
     {
         /** @var EntityVersionLockService $entityVersionLockService */
-        $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+        $entityVersionLockService = $this->getEntityVersionLockService();
 
-        return $entityVersionLockService->isEntityBelowThreshold($entity) && $entityVersionLockService->isEntityLocked(
+        return $entityVersionLockService->isEntityBelowThreshold($entity) || $entityVersionLockService->isEntityLocked(
                 $this->getUser(),
                 $entity
             );
@@ -516,6 +591,9 @@ abstract class AdminListController extends Controller
         return $item;
     }
 
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     */
     protected function buildSortableFieldActions(AbstractAdminListConfigurator $configurator)
     {
         // Check if Sortable interface is implemented

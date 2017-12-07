@@ -65,6 +65,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
 
         if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {

@@ -4,6 +4,9 @@ namespace Kunstmaan\FormBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\AclHelperTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\AdminListFactoryTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\TranslatorTrait;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\ExportList;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
@@ -13,6 +16,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,8 +25,12 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * The controller which will handle everything related with form pages and form submissions
  */
-class FormSubmissionsController extends Controller
+class FormSubmissionsController extends AbstractController
 {
+    use TranslatorTrait,
+        AclHelperTrait,
+        AdminListFactoryTrait;
+
     /**
      * The index action will use an admin list to list all the form pages
      *
@@ -35,10 +43,10 @@ class FormSubmissionsController extends Controller
     {
         /* @var EntityManager $em */
         $em        = $this->getDoctrine()->getManager();
-        $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+        $aclHelper = $this->getAclHelper();
 
         /* @var AdminList $adminList */
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
+        $adminList = $this->getAdminListFactory()->createList(
             new FormPageAdminListConfigurator($em, $aclHelper, PermissionMap::PERMISSION_VIEW),
             $em
         );
@@ -65,7 +73,7 @@ class FormSubmissionsController extends Controller
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
 
         /** @var AdminList $adminList */
-        $adminList = $this->get('kunstmaan_adminlist.factory')->createList(
+        $adminList = $this->getAdminListFactory()->createList(
             new FormSubmissionAdminListConfigurator($em, $nodeTranslation),
             $em
         );
@@ -115,12 +123,12 @@ class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $translator      = $this->get('translator');
+        $translator      = $this->getTranslator();
 
         /** @var ExportList $exportList */
         $configurator = new FormSubmissionExportListConfigurator($em, $nodeTranslation, $translator);
-        $exportList   = $this->get('kunstmaan_adminlist.factory')->createExportList($configurator);
+        $exportList   = $this->getAdminListFactory()->createExportList($configurator);
 
-        return $this->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
+        return $this->container->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
     }
 }

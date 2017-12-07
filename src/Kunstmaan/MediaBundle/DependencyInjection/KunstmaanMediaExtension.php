@@ -41,6 +41,7 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_media.enable_pdf_preview', $config['enable_pdf_preview']);
         $container->setParameter('kunstmaan_media.blacklisted_extensions', $config['blacklisted_extensions']);
 
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
         $loader->load('handlers.yml');
 

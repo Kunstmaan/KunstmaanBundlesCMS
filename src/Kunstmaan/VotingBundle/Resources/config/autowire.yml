@@ -1,0 +1,9 @@
+services:
+    Kunstmaan\VotingBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Resources,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\VotingBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true

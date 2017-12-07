@@ -5,16 +5,23 @@ namespace Kunstmaan\ArticleBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\AclHelperTrait;
+use Kunstmaan\AdminListBundle\AdminList\AdminListFactory;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\ArticleBundle\AdminList\AbstractArticlePageAdminListConfigurator;
+use Symfony\Component\CssSelector\XPath\TranslatorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class AbstractArticleEntityAdminListController
  */
 abstract class AbstractArticleEntityAdminListController extends AdminListController
 {
+    use AclHelperTrait;
+
     /**
      * @var AdminListConfiguratorInterface
      */
@@ -36,9 +43,32 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
     protected $user;
 
     /**
-     * @var AclHelper $aclHelper
+     * @var TokenStorageInterface
      */
-    protected $aclHelper;
+    protected $tokenStorage;
+
+    /**
+     * AbstractArticleEntityAdminListController constructor.
+     *
+     * @param EventDispatcherInterface|null $eventDispatcher
+     * @param EntityManagerInterface|null   $entityManager
+     * @param AclHelper|null                $aclHelper
+     * @param int                           $entityVersionLockInterval
+     * @param bool                          $entityVersionLockCheck
+     */
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher = null,
+        EntityManagerInterface $entityManager = null,
+        AdminListFactory $adminListFactory = null,
+        AclHelper $aclHelper = null,
+        TranslatorInterface $translator = null,
+        $entityVersionLockInterval = 15,
+        $entityVersionLockCheck = false)
+    {
+        parent::__construct($eventDispatcher, $entityManager, $adminListFactory, $translator, $entityVersionLockInterval, $entityVersionLockCheck);
+
+        $this->setAclHelper($aclHelper);
+    }
 
     /**
      * @return AdminListConfiguratorInterface
@@ -65,7 +95,10 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
     {
         $this->em = $this->getEntityManager();
         $this->locale = $request->getLocale();
-        $this->user = $this->container->get('security.token_storage')->getToken()->getUser();
-        $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+        $this->user = $this->getUser();
+
+        if (null !== $this->container && null === $this->aclHelper) {
+            $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+        }
     }
 }

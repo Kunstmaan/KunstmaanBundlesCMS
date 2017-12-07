@@ -1,5 +1,5 @@
 <?php
-namespace Kunstmaan\AdminListBundle\EventSubscriber;
+namespace Kunstmaan\AdminListBundle\Exception;
 
 /**
  * class ExportException

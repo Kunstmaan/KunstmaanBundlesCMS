@@ -3,11 +3,12 @@
 namespace Kunstmaan\FormBundle\Controller;
 
 use Kunstmaan\NodeBundle\Helper\RenderContext;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AbstractFormPageController extends Controller
+class AbstractFormPageController extends AbstractController
 {
     /**
      * @param Request $request

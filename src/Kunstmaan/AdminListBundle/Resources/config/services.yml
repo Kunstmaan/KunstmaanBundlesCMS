@@ -5,6 +5,8 @@ services:
     kunstmaan_adminlist.factory:
         class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
 
+    Kunstmaan\AdminListBundle\AdminList\AdminListFactory: "@kunstmaan_adminlist.factory"
+
     kunstmaan_adminlist.service.export:
         class:  '%kunstmaan_adminlist.service.export.class%'
         calls:

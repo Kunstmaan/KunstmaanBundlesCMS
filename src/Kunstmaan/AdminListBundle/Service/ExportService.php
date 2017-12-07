@@ -7,7 +7,7 @@ use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Writer\WriterInterface;
 use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
-use Kunstmaan\AdminListBundle\EventSubscriber\ExportException;
+use Kunstmaan\AdminListBundle\Exception\ExportException;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;

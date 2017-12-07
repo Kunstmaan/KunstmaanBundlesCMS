@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\VotingBundle\Controller;
 
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EventDispatcherTrait;
 use Kunstmaan\VotingBundle\Event\Events;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookSendEvent;
@@ -11,12 +12,14 @@ use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class VotingController extends Controller
+class VotingController extends AbstractController
 {
-
+    use EventDispatcherTrait;
+    
     /**
      * @Route("/voting-upvote", name="voting_upvote")
      * @Template("KunstmaanVotingBundle:UpDown:voted.html.twig")
@@ -26,7 +29,7 @@ class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::VOTE_UP, new UpVoteEvent($request, $reference, $value));
+        $this->getEventDispatcher()->dispatch(Events::VOTE_UP, new UpVoteEvent($request, $reference, $value));
 
         return;
     }
@@ -40,7 +43,7 @@ class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::VOTE_DOWN, new DownVoteEvent($request, $reference, $value));
+        $this->getEventDispatcher()->dispatch(Events::VOTE_DOWN, new DownVoteEvent($request, $reference, $value));
 
         return;
     }
@@ -53,7 +56,7 @@ class VotingController extends Controller
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_LIKE, new FacebookLikeEvent($request, $response, $value));
+        $this->getEventDispatcher()->dispatch(Events::FACEBOOK_LIKE, new FacebookLikeEvent($request, $response, $value));
     }
 
     /**
@@ -64,7 +67,7 @@ class VotingController extends Controller
     {
         $response = $request->get('response');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::FACEBOOK_SEND, new FacebookSendEvent($request, $response, $value));
+        $this->getEventDispatcher()->dispatch(Events::FACEBOOK_SEND, new FacebookSendEvent($request, $response, $value));
     }
 
     /**
@@ -75,7 +78,7 @@ class VotingController extends Controller
     {
         $reference = $request->get('reference');
         $value = $request->get('value');
-        $this->get('event_dispatcher')->dispatch(Events::LINKEDIN_SHARE, new LinkedInShareEvent($request, $reference, $value));
+        $this->getEventDispatcher()->dispatch(Events::LINKEDIN_SHARE, new LinkedInShareEvent($request, $reference, $value));
     }
 
 }

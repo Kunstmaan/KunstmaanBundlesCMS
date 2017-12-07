@@ -7,11 +7,12 @@ use Kunstmaan\LeadGenerationBundle\Form\NewsletterSubscriptionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class AbstractNewsletterController extends Controller
+abstract class AbstractNewsletterController extends AbstractController
 {
     /**
      * @Route("/{popup}", name="popup_newsletter_index", requirements={"popup": "\d+"})

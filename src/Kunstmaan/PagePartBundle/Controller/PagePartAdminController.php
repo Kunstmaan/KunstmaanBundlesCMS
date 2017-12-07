@@ -2,11 +2,13 @@
 
 namespace Kunstmaan\PagePartBundle\Controller;
 
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Controller for the pagepart administration
  */
-class PagePartAdminController extends Controller
+class PagePartAdminController extends AbstractController
 {
+    use EntityManagerTrait;
+
     /**
      * @Route("/newPagePart", name="KunstmaanPagePartBundle_admin_newpagepart")
      * @Template("KunstmaanPagePartBundle:PagePartAdminTwigExtension:pagepart.html.twig")
@@ -26,7 +30,7 @@ class PagePartAdminController extends Controller
      */
     public function newPagePartAction(Request $request)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
+        $em = $this->getEntityManager();
 
         $pageId        = $request->get('pageid');
         $pageClassName = $request->get('pageclassname');
@@ -77,7 +81,7 @@ class PagePartAdminController extends Controller
         $formBuilder->setData($data);
         $form     = $formBuilder->getForm();
         $formview = $form->createView();
-        $extended = $this->getParameter('kunstmaan_page_part.extended');
+        $extended = $this->container->getParameter('kunstmaan_page_part.extended');
 
         return [
             'id'            => $id,

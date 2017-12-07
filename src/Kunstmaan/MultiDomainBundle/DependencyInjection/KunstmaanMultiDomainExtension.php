@@ -34,6 +34,7 @@ class KunstmaanMultiDomainExtension extends Extension
             $container,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
 
         /**

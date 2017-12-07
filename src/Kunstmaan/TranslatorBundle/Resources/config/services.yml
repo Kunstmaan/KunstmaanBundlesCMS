@@ -83,7 +83,7 @@ services:
         arguments:
             - '@service_container'
             - '@translator.selector'
-            - {}
+            - '%defaultlocale%'
             - { cache_dir: '%kuma_translator.cache_dir%', debug: '%kuma_translator.debug%' }
             - ['@session']
         calls:

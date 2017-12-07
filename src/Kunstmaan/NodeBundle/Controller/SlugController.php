@@ -4,6 +4,8 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EventDispatcherTrait;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
@@ -11,6 +13,7 @@ use Kunstmaan\NodeBundle\Event\SlugEvent;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +23,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * This controller is for showing frontend pages based on slugs
  */
-class SlugController extends Controller
+class SlugController extends AbstractController
 {
+    use EntityManagerTrait,
+        EventDispatcherTrait;
 
     /**
      * Handle the page requests
@@ -38,7 +43,7 @@ class SlugController extends Controller
     public function slugAction(Request $request, $url = null, $preview = false)
     {
         /* @var EntityManager $em */
-        $em     = $this->getDoctrine()->getManager();
+        $em     = $this->getEntityManager();
         $locale = $request->getLocale();
 
         /* @var NodeTranslation $nodeTranslation */
@@ -69,7 +74,7 @@ class SlugController extends Controller
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($preview);
 
-        $eventDispatcher = $this->get('event_dispatcher');
+        $eventDispatcher = $this->getEventDispatcher();
         $eventDispatcher->dispatch(Events::SLUG_SECURITY, $securityEvent);
 
         //render page

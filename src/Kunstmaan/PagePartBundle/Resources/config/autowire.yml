@@ -1,0 +1,9 @@
+services:
+    Kunstmaan\PagePartBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Resources,Tests,Controller,Features,Helper}'
+
+    Kunstmaan\PagePartBundle\Controller\:
+        resource: '../../Controller/*'
+        autowire: true
+        public: true

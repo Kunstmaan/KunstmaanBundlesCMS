@@ -40,6 +40,7 @@ class KunstmaanNodeExtension extends Extension implements PrependExtensionInterf
         $container->setParameter('kunstmaan_node.lock_threshold', $config['lock']['threshold']);
         $container->setParameter('kunstmaan_node.lock_enabled', $config['lock']['enabled']);
 
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
     }
 

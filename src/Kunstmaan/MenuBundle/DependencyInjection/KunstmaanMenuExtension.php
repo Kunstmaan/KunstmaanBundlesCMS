@@ -31,6 +31,7 @@ class KunstmaanMenuExtension extends Extension
 	$container->setParameter('kunstmaan_menu.form.menuitem_admintype.class', $config['menuitem_form']);
 
 	$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('autowire.yml');
         $loader->load('services.yml');
     }
 }

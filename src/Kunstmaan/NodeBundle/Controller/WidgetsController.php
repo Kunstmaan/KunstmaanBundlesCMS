@@ -4,12 +4,14 @@ namespace Kunstmaan\NodeBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\EntityManagerTrait;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,8 +19,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * WidgetsController
  */
-class WidgetsController extends Controller
+class WidgetsController extends AbstractController
 {
+    use EntityManagerTrait;
+
     /**
      * @Route("/ckselecturl", name="KunstmaanNodeBundle_ckselecturl")
      * @Template("KunstmaanNodeBundle:Widgets:selectLink.html.twig")
@@ -30,7 +34,7 @@ class WidgetsController extends Controller
     {
         $params = $this->getTemplateParameters($request);
         $params['cke'] = true;
-        $params['multilanguage'] = $this->getParameter('multilanguage');
+        $params['multilanguage'] = $this->container->getParameter('multilanguage');
 
         return $params;
     }
@@ -48,7 +52,7 @@ class WidgetsController extends Controller
     {
         $params = $this->getTemplateParameters($request);
         $params['cke'] = false;
-        $params['multilanguage'] = $this->getParameter('multilanguage');
+        $params['multilanguage'] = $this->container->getParameter('multilanguage');
 
         return $params;
     }
@@ -64,7 +68,7 @@ class WidgetsController extends Controller
     public function selectNodesLazySearch(Request $request)
     {
         /* @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
         $locale = $request->getLocale();
         $search = $request->query->get('str');
 
@@ -98,10 +102,10 @@ class WidgetsController extends Controller
     public function selectNodesLazy(Request $request)
     {
         /* @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEntityManager();
         $locale = $request->getLocale();
         $id = $request->query->get('id');
-        $depth = $this->getParameter('kunstmaan_node.url_chooser.lazy_increment');
+        $depth = $this->container->getParameter('kunstmaan_node.url_chooser.lazy_increment');
 
         if (!$id || $id == '#') {
             $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->getAllTopNodes();
@@ -123,7 +127,7 @@ class WidgetsController extends Controller
     private function getTemplateParameters(Request $request)
     {
         // When the media bundle is available, we show a link in the header to the media chooser
-        $allBundles = $this->getParameter('kernel.bundles');
+        $allBundles = $this->container->getParameter('kernel.bundles');
         $mediaChooserLink = null;
 
         if (array_key_exists('KunstmaanMediaBundle', $allBundles)) {
@@ -174,7 +178,7 @@ class WidgetsController extends Controller
     protected function nodesToArray($locale, $rootNodes, $depth = 2)
     {
         /** @var DomainConfiguration $domainconfig */
-        $domainconfig = $this->get('kunstmaan_admin.domain_configuration');
+        $domainconfig = $this->container->get('kunstmaan_admin.domain_configuration');
         $isMultiDomain = $domainconfig->isMultiDomainHost();
         $switchedHost = $domainconfig->getHostSwitched()['host'];
         $switched = $domainconfig->getHost() == $switchedHost;

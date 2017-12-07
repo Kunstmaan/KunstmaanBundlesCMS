@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleType;
+use Kunstmaan\AdminBundle\Traits\DependencyInjection\AdminListFactoryTrait;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -37,7 +38,7 @@ class RolesController extends BaseSettingsController
 
         $em        = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator($em));
+        $adminlist = $this->getAdminListFactory()->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -72,7 +73,7 @@ class RolesController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
+                    $this->getTranslator()->trans('kuma_user.roles.add.flash.success.%role%', [
                         '%role%' => $role->getRole()
                     ])
                 );
@@ -116,7 +117,7 @@ class RolesController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
+                    $this->getTranslator()->trans('kuma_user.roles.edit.flash.success.%role%', [
                         '%role%' => $role->getRole()
                     ])
                 );
@@ -156,7 +157,7 @@ class RolesController extends BaseSettingsController
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
+                $this->getTranslator()->trans('kuma_user.roles.delete.flash.success.%role%', [
                     '%role%' => $role->getRole()
                 ])
             );
