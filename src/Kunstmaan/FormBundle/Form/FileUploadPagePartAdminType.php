@@ -22,7 +22,7 @@ class FileUploadPagePartAdminType extends AbstractType
     {
         $builder
             ->add('label', null, array(
-                'required' => false,
+                'required' => true,
                 'label' => 'kuma_form.form.file_upload_page_part.label.label',
             ))
             ->add('required', CheckboxType::class, array(
