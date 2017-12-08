@@ -9,10 +9,10 @@ interface ShellInterface
 {
 
     /**
-     * @param string $command  The command
-     * @param int    $priority The priority
+     * @param string $command The command
+     * @deprecated int $priority
      *
-     * @return string
+     * @return int
      */
     public function runInBackground($command, $priority = 0);
 
