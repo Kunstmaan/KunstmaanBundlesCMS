@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
 
+use Symfony\Component\Process\Process;
+
 /**
  * A wrapper class which makes it possible to execute shell commands in the background.
  */
@@ -9,32 +11,41 @@ class Shell implements ShellInterface
 {
 
     /**
-     * @param string $command  The command
-     * @param int    $priority The priority
+     * @param string $command The command
+     * @deprecated int $priority
      *
-     * @return string The process id
+     * @return int The process id
+     *
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
     public function runInBackground($command, $priority = 0)
     {
-        if ($priority) {
-            $pid = shell_exec("nohup nice -n $priority $command > /dev/null & echo $!");
-        } else {
-            $pid = shell_exec("nohup $command > /dev/null & echo $!");
-        }
+        $process = new Process($command);
+        $process->disableOutput();
+        $process->start();
 
-        return $pid;
+        return $process->getPid();
     }
 
     /**
      * @param int $pid
      *
      * @return boolean
+     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
     public function isRunning($pid)
     {
-        exec("ps $pid", $processState);
+        $process = new Process(
+            sprintf('ps -p %s -o pid', $pid)
+        );
+        $process->run();
 
-        return (count($processState) >= 2);
+        $output = trim($process->getOutput());
+        $processState = explode("\n", $output);
+
+        return (2 >= count($processState));
     }
 
     /**
@@ -43,12 +54,16 @@ class Shell implements ShellInterface
      * @param int $pid
      *
      * @return boolean true when the process was successfully killed, false when the process wasn't running.
+     * @throws \Symfony\Component\Process\Exception\RuntimeException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
     public function kill($pid)
     {
         if ($this->isRunning($pid)) {
-            exec("kill -KILL $pid");
-
+            $process = new Process(
+                sprintf('kill -KILL %d', $pid)
+            );
+            $process->run();
             return true;
         }
 
