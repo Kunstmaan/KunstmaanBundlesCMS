@@ -4,7 +4,6 @@ namespace Kunstmaan\FormBundle\Form;
 
 use Kunstmaan\FormBundle\Form\Type\FileUploadPagePartAdminType as FileUploadPagePartAdminFormType;
 
-
 /**
  * Class FileUploadPagePartAdminType
  * @package Kunstmaan\FormBundle\Form
@@ -13,5 +12,5 @@ use Kunstmaan\FormBundle\Form\Type\FileUploadPagePartAdminType as FileUploadPage
  */
 class FileUploadPagePartAdminType extends FileUploadPagePartAdminFormType
 {
-
+    
 }
