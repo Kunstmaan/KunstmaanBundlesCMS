@@ -1,8 +1,11 @@
 {% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
+{% import "@KunstmaanAdmin/Form/macro_tabbed_form.twig" as forms %}
+
 
 {% block header %}
-    {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
+    {% set formParams = {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}} %}
+    {{ forms.tabbed_form_start(formParams) }}
     {{ parent() }}
 {% endblock %}
 
