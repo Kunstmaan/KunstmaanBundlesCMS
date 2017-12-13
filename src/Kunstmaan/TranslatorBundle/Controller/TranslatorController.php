@@ -44,16 +44,16 @@ class TranslatorController extends AdminListController
         $configurator = $this->getAdminListConfigurator();
 
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator);
+        $adminList = $this->container->get("kunstmaan_adminlist.factory")->createList($configurator);
         $adminList->bindRequest($request);
 
-        $cacheFresh = $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-        $debugMode = $this->getParameter('kuma_translator.debug') === true;
+        $cacheFresh = $this->container->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
+        $debugMode = $this->container->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
             $this->addFlash(
                 FlashTypes::INFO,
-                $this->get('translator')->trans('settings.translator.not_live_warning')
+                $this->container->get('translator')->trans('settings.translator.not_live_warning')
             );
         }
 
@@ -81,10 +81,10 @@ class TranslatorController extends AdminListController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $configurator = $this->getAdminListConfigurator();
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
 
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
-        $locales = $this->getParameter('kuma_translator.managed_locales');
+        $locales = $this->container->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $translation->addText($locale, '');
         }
@@ -108,7 +108,7 @@ class TranslatorController extends AdminListController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('settings.translator.succesful_added')
+                    $this->container->get('translator')->trans('settings.translator.succesful_added')
                 );
 
                 $indexUrl = $configurator->getIndexUrl();
@@ -152,7 +152,7 @@ class TranslatorController extends AdminListController
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
         $translation->setDomain($translations[0]->getDomain());
         $translation->setKeyword($translations[0]->getKeyword());
-        $locales = $this->getParameter('kuma_translator.managed_locales');
+        $locales = $this->container->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $found = false;
             foreach ($translations as $t) {
@@ -178,7 +178,7 @@ class TranslatorController extends AdminListController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('settings.translator.succesful_edited')
+                    $this->container->get('translator')->trans('settings.translator.succesful_edited')
                 );
 
                 $indexUrl = $configurator->getIndexUrl();
@@ -252,7 +252,7 @@ class TranslatorController extends AdminListController
      */
     public function getAdminListConfigurator()
     {
-        $locales = $this->getParameter('kuma_translator.managed_locales');
+        $locales = $this->container->getParameter('kuma_translator.managed_locales');
 
         if (!isset($this->adminListConfigurator)) {
             $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getManager()
@@ -280,7 +280,7 @@ class TranslatorController extends AdminListController
         /**
          * @var TranslatorInterface $translator
          */
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
 
         try {
             if ($id !== 0) {
