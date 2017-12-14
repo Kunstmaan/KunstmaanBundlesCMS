@@ -21,7 +21,7 @@ settings:
     edit: Edytuj użytkownika
   roles: Role
   role:
-    role: Role
+    role: Uprawnienia
     add: Dodaj role
     edit: Edytuj role
 kuma_user:
@@ -75,6 +75,6 @@ kuma_user:
   role:
     adminlist:
       header:
-        role: Role
+        role: Uprawnienia
       filter:
-        role: Role
+        role: Uprawnienia

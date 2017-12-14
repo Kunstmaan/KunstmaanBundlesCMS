@@ -4,8 +4,6 @@ composer.phar
 autoload.php
 /vendor/
 node_modules/
-.idea
-.DS_Store
 npm-debug.log
 *~
 *test.db

@@ -79,8 +79,8 @@ media:
       success:
         text: Map '%folder%' is geüpdatet!
   bulkupload:
-    upload: Upload
-    bulkupload: Bulk upload
+    upload: Uploaden
+    bulkupload: Bulkupload
     select_files: Selecteer bestanden
     upload_more: Upload meer bestanden
     back_to_folder: Terug naar map
@@ -118,7 +118,7 @@ media:
       date: Datum
       filesize: Bestandsgrootte
       filter:
-        name: Name
+        name: Naam
         type: Type
         updated_at: Date
         filesize: Filesize (in bytes)

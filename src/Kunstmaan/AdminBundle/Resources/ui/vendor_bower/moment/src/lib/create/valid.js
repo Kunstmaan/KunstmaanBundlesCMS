@@ -1,21 +1,37 @@
 import extend from '../utils/extend';
 import { createUTC } from './utc';
+import getParsingFlags from '../create/parsing-flags';
+import some from '../utils/some';
 
 export function isValid(m) {
     if (m._isValid == null) {
-        m._isValid = !isNaN(m._d.getTime()) &&
-            m._pf.overflow < 0 &&
-            !m._pf.empty &&
-            !m._pf.invalidMonth &&
-            !m._pf.nullInput &&
-            !m._pf.invalidFormat &&
-            !m._pf.userInvalidated;
+        var flags = getParsingFlags(m);
+        var parsedParts = some.call(flags.parsedDateParts, function (i) {
+            return i != null;
+        });
+        var isNowValid = !isNaN(m._d.getTime()) &&
+            flags.overflow < 0 &&
+            !flags.empty &&
+            !flags.invalidMonth &&
+            !flags.invalidWeekday &&
+            !flags.weekdayMismatch &&
+            !flags.nullInput &&
+            !flags.invalidFormat &&
+            !flags.userInvalidated &&
+            (!flags.meridiem || (flags.meridiem && parsedParts));
 
         if (m._strict) {
-            m._isValid = m._isValid &&
-                m._pf.charsLeftOver === 0 &&
-                m._pf.unusedTokens.length === 0 &&
-                m._pf.bigHour === undefined;
+            isNowValid = isNowValid &&
+                flags.charsLeftOver === 0 &&
+                flags.unusedTokens.length === 0 &&
+                flags.bigHour === undefined;
+        }
+
+        if (Object.isFrozen == null || !Object.isFrozen(m)) {
+            m._isValid = isNowValid;
+        }
+        else {
+            return isNowValid;
         }
     }
     return m._isValid;
@@ -24,10 +40,10 @@ export function isValid(m) {
 export function createInvalid (flags) {
     var m = createUTC(NaN);
     if (flags != null) {
-        extend(m._pf, flags);
+        extend(getParsingFlags(m), flags);
     }
     else {
-        m._pf.userInvalidated = true;
+        getParsingFlags(m).userInvalidated = true;
     }
 
     return m;

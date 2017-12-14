@@ -42,7 +42,7 @@ kuma_form:
       errorMessageRequired:
         label: Foutmelding verplicht
       errorMessageInvalid:
-        label: Error message invalid
+        label: Foutbericht ongeldig
     file_upload_page_part:
       label:
         label: Label
@@ -81,7 +81,7 @@ kuma_form:
     header:
       title: Titel
       language: Taal
-      path: Form path
+      path: Formulier pad
     filter:
       title: Titel
       online: Online
@@ -90,7 +90,7 @@ kuma_form:
       header:
         created: Datum
         language: Taal
-        ip_address: IP address
+        ip_address: IP-adres
 formsubmissions:
   index:
     title: Formulierpagina's met inzendingen

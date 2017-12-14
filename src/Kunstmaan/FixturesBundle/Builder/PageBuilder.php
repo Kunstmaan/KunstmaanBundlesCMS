@@ -227,7 +227,7 @@ class PageBuilder implements BuilderInterface
         return $translation;
     }
 
-    private static function incrementString($string, $append = '-v')
+    private function incrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
         $matches = array();

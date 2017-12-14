@@ -99,7 +99,7 @@ class NodeListener
                         continue;
                     }
                 }
-                $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), $pagePartWidget), sizeof($tabPane->getTabs()));
+                $tabPane->addTab(new Tab($pagePartAdminConfiguration->getName(), $pagePartWidget), count($tabPane->getTabs()));
 
 
             }

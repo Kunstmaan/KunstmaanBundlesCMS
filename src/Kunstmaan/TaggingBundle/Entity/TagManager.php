@@ -31,7 +31,7 @@ class TagManager extends BaseTagManager
     {
         $tags = clone $resource->getTags();
         parent::saveTagging($resource);
-        if (sizeof($tags) !== sizeof($resource->getTags())) {
+        if (count($tags) !== count($resource->getTags())) {
             // parent::saveTagging uses getTags by reference and removes elements, so it ends up empty :-/
             // this causes all tags to be deleted when an entity is persisted more than once in a request
             // Restore:

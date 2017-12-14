@@ -21,7 +21,7 @@
                 <div class="row">
                     {% for pagePartType in pagepartadmin.possiblePagePartTypes %}
                         <div class="pp-search__item js-pp-search-item col-sm-6 col-lg-4" data-pp-name="{{ pagePartType.name }}">
-                            {% if pagePartType.preview %}
+                            {% if pagePartType.preview is defined and pagePartType.preview is not empty %}
                                 {% set background = asset(pagePartType.preview) %}
                             {% else %}
                                 {% set background = asset('bundles/kunstmaanadmin/default-theme/img/kunstmaan/ppchooser-placeholder.svg') %}

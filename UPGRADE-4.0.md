@@ -47,34 +47,3 @@ The AdminListEvent has been changed, properties Form, Request and function Respo
 ## Node version locking
 
 See https://github.com/Kunstmaan/KunstmaanBundlesCMS/tree/master/src/Kunstmaan/NodeBundle/Resources/doc/Locking.md
-
-## Forms must be referenced via FQCN [brakes BC]
-
-All forms were upgraded to be used by **fully qualified class name** instead of creating new form instance.
-
-See more in [Symfony upgrade v2->v3 doc](https://github.com/symfony/symfony/blob/master/UPGRADE-3.0.md#form)
-
-Before:
-```
-public function getDefaultAdminType()
-{
-    return new MyPageAdminType();
-}
-```
-
-After:
-```
-public function getDefaultAdminType()
-{
-    return MyPageAdminType::class;
-}
-```
-
-A tip: use regex to search part of new form type instances creations (`new .+Type\(`).
-"
-
-## VotingBundle
-
-VotingBundle is refactored. If using custom voters implement the new abstract classes
-* VoteListener is renamed to AbstractVoteListener
-* VotingHelper is renamed to AbstractVotingHelper
