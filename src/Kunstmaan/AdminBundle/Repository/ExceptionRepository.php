@@ -16,12 +16,20 @@ class ExceptionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findAllNotResolved()
+    /**
+     * @return mixed
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    public function markAllAsResolved()
     {
         return $this->createQueryBuilder('e')
+            ->update()
+            ->set('e.isResolved', 1)
             ->where('e.isResolved = 0')
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
     }
 
     public function findExceptionStatistics()

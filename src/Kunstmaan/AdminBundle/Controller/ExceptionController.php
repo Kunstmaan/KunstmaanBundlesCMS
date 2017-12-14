@@ -34,28 +34,15 @@ class ExceptionController extends AdminListController
      *
      * @return RedirectResponse
      *
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      * @throws \InvalidArgumentException
      */
     public function resolveAllAction()
     {
-        /* @var EntityManager $em */
-        $em = $this->getEntityManager();
+        $this->getEntityManager()->getRepository(Exception::class)->markAllAsResolved();
 
-        $this->getAdminListConfigurator();
-
-        $exceptions = $em->getRepository(Exception::class)->findAllNotResolved();
-        if ($exceptions) {
-            /** @var Exception $exception */
-            foreach ($exceptions as $exception) {
-                $exception->setResolved(true);
-                $em->persist($exception);
-            }
-            $em->flush();
-        }
-
-        $indexUrl = $this->configurator->getIndexUrl();
+        $indexUrl = $this->getAdminListConfigurator()->getIndexUrl();
 
         return new RedirectResponse(
             $this->generateUrl(
