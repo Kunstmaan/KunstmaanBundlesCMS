@@ -9,6 +9,7 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
+use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 
 class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -33,6 +34,23 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
         $this->addFilter('urlReferer', new ORM\StringFilterType('urlReferer'), 'settings.exceptions.urlReferer');
         $this->addFilter('isResolved', new ORM\BooleanFilterType('isResolved'), 'settings.exceptions.isResolved');
         $this->addFilter('createdAt', new ORM\DateFilterType('createdAt'), 'settings.exceptions.createdAt');
+    }
+
+    public function buildListActions()
+    {
+        $listRoute = [
+            'path' => 'kunstmaanadminbundle_admin_exception_resolve_all',
+            'params' => [],
+       ];
+
+        $this->addListAction(
+            new SimpleListAction(
+                $listRoute,
+                'settings.exceptions.resolve_all',
+                null,
+                'KunstmaanAdminBundle:Settings:button_resolve_all.html.twig'
+            )
+        );
     }
 
     public function buildItemActions()
@@ -94,4 +112,5 @@ class ExceptionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigu
     {
         return 'Exception';
     }
+
 }
