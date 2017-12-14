@@ -37,6 +37,11 @@ class RedirectAdminType extends AbstractType
                 'expanded' => false,
                 'multiple' => false
             ]);
+        } else {
+            $host = $options['domainConfiguration']->getHost();
+            $builder->add('domain', HiddenType::class, [
+                'data' => $host,
+            ]);
         }
 
         $builder->add('origin', TextType::class, [

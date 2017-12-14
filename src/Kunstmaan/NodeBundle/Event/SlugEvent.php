@@ -28,7 +28,7 @@ class SlugEvent extends Event
      * @param Response $response
      * @param RenderContext $renderContext
      */
-    function __construct(Response $response = null, RenderContext $renderContext)
+    public function __construct(Response $response = null, RenderContext $renderContext)
     {
         $this->response = $response;
         $this->renderContext = $renderContext;

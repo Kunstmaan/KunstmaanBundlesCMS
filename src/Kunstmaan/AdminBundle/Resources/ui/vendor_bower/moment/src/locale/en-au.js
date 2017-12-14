@@ -1,5 +1,6 @@
 //! moment.js locale configuration
-//! locale : australian english (en-au)
+//! locale : English (Australia) [en-au]
+//! author : Jared Morse : https://github.com/jarcoal
 
 import moment from '../moment';
 
@@ -14,8 +15,8 @@ export default moment.defineLocale('en-au', {
         LTS : 'h:mm:ss A',
         L : 'DD/MM/YYYY',
         LL : 'D MMMM YYYY',
-        LLL : 'D MMMM YYYY LT',
-        LLLL : 'dddd, D MMMM YYYY LT'
+        LLL : 'D MMMM YYYY h:mm A',
+        LLLL : 'dddd, D MMMM YYYY h:mm A'
     },
     calendar : {
         sameDay : '[Today at] LT',
@@ -40,7 +41,7 @@ export default moment.defineLocale('en-au', {
         y : 'a year',
         yy : '%d years'
     },
-    ordinalParse: /\d{1,2}(st|nd|rd|th)/,
+    dayOfMonthOrdinalParse: /\d{1,2}(st|nd|rd|th)/,
     ordinal : function (number) {
         var b = number % 10,
             output = (~~(number % 100 / 10) === 1) ? 'th' :
