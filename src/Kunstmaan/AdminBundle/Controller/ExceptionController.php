@@ -30,7 +30,52 @@ class ExceptionController extends AdminListController
     }
 
     /**
+     * @Route("/resolve_all", name="kunstmaanadminbundle_admin_exception_resolve_all")
+     *
+     * @return RedirectResponse
+     *
+     * @throws \Doctrine\ORM\ORMInvalidArgumentException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \InvalidArgumentException
+     */
+    public function resolveAllAction()
+    {
+        /* @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $this->getAdminListConfigurator();
+
+        $exceptions = $em->getRepository(Exception::class)->findAllNotResolved();
+        if ($exceptions) {
+            /** @var Exception $exception */
+            foreach ($exceptions as $exception) {
+                $exception->setResolved(true);
+                $em->persist($exception);
+            }
+            $em->flush();
+        }
+
+        $indexUrl = $this->configurator->getIndexUrl();
+
+        return new RedirectResponse(
+            $this->generateUrl(
+                $indexUrl['path'],
+                isset($indexUrl['params']) ? $indexUrl['params'] : array()
+            )
+        );
+    }
+
+    /**
      * @Route("/toggle_resolve/{id}", name="kunstmaanadminbundle_admin_exception_toggle_resolve")
+     *
+     * @param Request $request
+     * @param Exception $model
+     *
+     * @return RedirectResponse
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \InvalidArgumentException
+     * @throws \Doctrine\ORM\ORMInvalidArgumentException
      */
     public function toggleResolveAction(Request $request, Exception $model)
     {

@@ -16,6 +16,14 @@ class ExceptionRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findAllNotResolved()
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.isResolved = 0')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findExceptionStatistics()
     {
         return $this->createQueryBuilder('e')
