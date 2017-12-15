@@ -17,6 +17,14 @@ When you have created some extra extensions on elastica you should read the chan
 
 https://github.com/ruflin/Elastica/blob/master/CHANGELOG.md
 
+## [AdminBundle] Possibility to exclude certain stuff from the exception list
+You can use few regex to exclude certain stuff from the exception list.
+
+```yaml
+kunstmaan_admin:
+    admin_exception_excludes:
+        - '/^\.|\.jpg$|\.gif$|.png$/i'
+```
 
 ## [SearchBundle]
 BC break: SearchConfigurationInterface contains a new method getLanguagesNotAnalyzed
