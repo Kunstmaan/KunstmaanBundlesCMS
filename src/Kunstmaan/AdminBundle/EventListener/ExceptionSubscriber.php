@@ -11,8 +11,19 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
 
+    /**
+     * @var array
+     */
+    private $excludes;
+
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -20,20 +31,40 @@ class ExceptionSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * ExceptionSubscriber constructor.
+     * @param EntityManagerInterface $em
+     * @param array $excludes
+     */
+    public function __construct(EntityManagerInterface $em, array $excludes = [])
     {
         $this->em = $em;
+        $this->excludes = $excludes;
     }
 
+    /**
+     * @param GetResponseForExceptionEvent $event
+     */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $request = $event->getRequest();
         $exception = $event->getException();
 
         if ( $exception instanceof HttpExceptionInterface ) {
+            $uri = $request->getUri();
+
+            if(count($this->excludes) > 0) {
+                $excludes = array_filter($this->excludes, function($pattern) use($uri) {
+                   return preg_match($pattern, $uri);
+                });
+
+                if(count($excludes) > 0) {
+                    return ;
+                }
+            }
 
             $hash = md5(
-                $exception->getStatusCode() . $request->getUri() . $request->headers->get('referer')
+                $exception->getStatusCode() . $uri . $request->headers->get('referer')
             );
 
             if ( $model = $this->em->getRepository(Exception::class)->findOneBy(['hash' => $hash]) ) {
@@ -43,7 +74,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
             } else {
                 $model = new Exception;
                 $model->setCode($exception->getStatusCode());
-                $model->setUrl($request->getUri());
+                $model->setUrl($uri);
                 $model->setUrlReferer($request->headers->get('referer'));
                 $model->setHash($hash);
 
