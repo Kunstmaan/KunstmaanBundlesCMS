@@ -50,7 +50,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $exception = $event->getException();
 
-        if ( $exception instanceof HttpExceptionInterface ) {
+        if ($exception instanceof HttpExceptionInterface) {
             $uri = $request->getUri();
 
             if(count($this->excludes) > 0) {
@@ -64,10 +64,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
             }
 
             $hash = md5(
-                $exception->getStatusCode() . $uri . $request->headers->get('referer')
+                $exception->getStatusCode().$uri.$request->headers->get('referer')
             );
 
-            if ( $model = $this->em->getRepository(Exception::class)->findOneBy(['hash' => $hash]) ) {
+            if ($model = $this->em->getRepository(Exception::class)->findOneBy(['hash' => $hash])) {
                 $model->increaseEvents();
                 $model->setResolved(false);
 
