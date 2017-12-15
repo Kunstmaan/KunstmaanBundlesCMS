@@ -27,6 +27,11 @@ class DomainBasedLocaleRouter extends SlugRouter
     private $otherSite;
 
     /**
+     * @var array
+     */
+    private $cachedNodeTranslations = [];
+
+    /**
      * Generate an url for a supplied route
      *
      * @param string $name The path
@@ -124,21 +129,26 @@ class DomainBasedLocaleRouter extends SlugRouter
      */
     protected function getNodeTranslation($matchResult)
     {
-        $rootNode = $this->domainConfiguration->getRootNode();
+        $key = $matchResult['_controller'].$matchResult['url'].$matchResult['_locale'].$matchResult['_route'];
+        if (!isset($this->cachedNodeTranslations[$key])) {
+            $rootNode = $this->domainConfiguration->getRootNode();
 
-        // Lookup node translation
-        $nodeTranslationRepo = $this->getNodeTranslationRepository();
+            // Lookup node translation
+            $nodeTranslationRepo = $this->getNodeTranslationRepository();
 
-        /* @var NodeTranslation $nodeTranslation */
-        $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl(
-            $matchResult['url'],
-            $matchResult['_locale'],
-            false,
-            null,
-            $rootNode
-        );
+            /* @var NodeTranslation $nodeTranslation */
+            $nodeTranslation = $nodeTranslationRepo->getNodeTranslationForUrl(
+                $matchResult['url'],
+                $matchResult['_locale'],
+                false,
+                null,
+                $rootNode
+            );
+            $this->cachedNodeTranslations[$key] = $nodeTranslation;
+        }
 
-        return $nodeTranslation;
+
+        return $this->cachedNodeTranslations[$key];
     }
 
     /**
