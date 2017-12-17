@@ -128,7 +128,6 @@ EOT
             ));
 
             $generator = $this->getGenerator();
-            $bundlePath = $this->bundle->getPath();
             $this->entity = $this->assistant->askAndValidate(
                 'Article class name',
                 function ($name) use ($generator) {
