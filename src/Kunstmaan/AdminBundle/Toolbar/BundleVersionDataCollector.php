@@ -11,19 +11,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BundleVersionDataCollector extends AbstractDataCollector
 {
-    /** @var VersionChecker */
+    /**
+     * @var VersionChecker
+     */
     private $versionChecker;
 
-    /** @var Logger */
-    private $logger;
-
-    /** @var Cache */
+    /**
+     * @var Cache
+     */
     private $cache;
 
-    public function __construct(VersionChecker $versionChecker, Logger $logger, Cache $cache)
+    /**
+     * BundleVersionDataCollector constructor.
+     *
+     * @param VersionChecker $versionChecker
+     * @param Cache $cache
+     */
+    public function __construct(VersionChecker $versionChecker, Cache $cache)
     {
         $this->versionChecker = $versionChecker;
-        $this->logger = $logger;
         $this->cache = $cache;
     }
 
