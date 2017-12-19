@@ -36,6 +36,7 @@ settings:
         events: Events
         resolved: Resolved
         unresolved: Unresolved
+        resolve_all: Resolve all
 
 # Tools
 tools:

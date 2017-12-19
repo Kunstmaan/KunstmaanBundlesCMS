@@ -267,6 +267,7 @@ services:
         class: "%kunstmaan_admin.exception.listener.class%"
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "%kunstmaan_admin.admin_exception_excludes%"
         tags:
             - { name: kernel.event_subscriber }
 

@@ -70,7 +70,8 @@ class URLChooserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => null,
-            'link_types' => []
+            'link_types' => [],
+            'error_bubbling' => false,
         ));
     }
 

@@ -52,6 +52,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $container->setParameter('kunstmaan_admin.admin_prefix', $this->normalizeUrlSlice($config['admin_prefix']));
 
+        $container->setParameter('kunstmaan_admin.admin_exception_excludes', $config['admin_exception_excludes']);
+
         $container->setParameter('kunstmaan_admin.google_signin.enabled', $config['google_signin']['enabled']);
         $container->setParameter('kunstmaan_admin.google_signin.client_id', $config['google_signin']['client_id']);
         $container->setParameter('kunstmaan_admin.google_signin.client_secret', $config['google_signin']['client_secret']);
@@ -71,7 +73,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
             $loader->load('console_listener.yml');
         }
 
-        if (0 !== sizeof($config['menu_items'])) {
+        if (0 !== count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
         }
     }

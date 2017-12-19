@@ -22,13 +22,13 @@ seo:
         section: OG Sekcja artykułu
     twitter:
       title: Tytuł
-      title_info_text: The title of your twitter card. Falls back to SEO Meta title
+      title_info_text: Tytuł wyświetlany na karcie twitter-a
       description: Opis
-      description_info_text: The description of your twitter card. Falls back to SEO Meta description
+      description_info_text: Opis wyświetlany na karcie twitter-a
       sitehandle: Witryna
-      sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
+      sitehandle_info_text: Twoja strona Twitter. To pole jest wymagane aby uruchomić kartę Twitter.
       creatorhandle: Twórca
-      creatorhandle_info_text: Twitter handle of your page publisher.
+      creatorhandle_info_text: Zarządca twojej strony Twitter.
       image: Zdjęcie
     robots:
       noindex: Blokuj indeksowanie

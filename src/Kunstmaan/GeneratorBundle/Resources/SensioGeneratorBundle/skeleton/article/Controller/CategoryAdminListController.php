@@ -88,7 +88,7 @@ class {{ entity_class }}CategoryAdminListController extends AbstractArticleCateg
      *
      * @param string $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}category_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}category_export")
      * @Method({"GET", "POST"})
      * @return array
      */

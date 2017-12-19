@@ -105,7 +105,7 @@ class FormSubmissionsController extends Controller
      * @param int $nodeTranslationId
      *
      * @Route("/export/{nodeTranslationId}.{_format}", requirements={"nodeTranslationId" = "\d+","_format" =
-     *                                                 "csv|xlsx"}, name="KunstmaanFormBundle_formsubmissions_export")
+     *                                                 "csv|xlsx|ods"}, name="KunstmaanFormBundle_formsubmissions_export")
      * @Method({"GET"})
      *
      * @return Response
