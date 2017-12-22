@@ -148,3 +148,7 @@ A tip: use regex to search part of new form type instances creations (`new .+Typ
 VotingBundle is refactored. If using custom voters implement the new abstract classes
 * VoteListener is renamed to AbstractVoteListener
 * VotingHelper is renamed to AbstractVotingHelper
+
+## NodeBundle
+
+The nodetranslationlistener has been cleaned for a better flush event. The postFlush event has been removed and everything has been moved to the onFlush event.
