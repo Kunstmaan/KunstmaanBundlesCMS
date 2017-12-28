@@ -2,12 +2,11 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
 use Kunstmaan\AdminListBundle\AdminList\Filter;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\AbstractORMFilterType;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
@@ -21,7 +20,7 @@ use Traversable;
 abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminListConfigurator
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -46,10 +45,12 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     protected $aclHelper = null;
 
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
+     * AbstractDoctrineORMAdminListConfigurator constructor.
+     *
+     * @param EntityManagerInterface    $em
+     * @param AclHelper|null            $aclHelper
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null)
+    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper = null)
     {
         $this->em        = $em;
         $this->aclHelper = $aclHelper;
@@ -230,11 +231,11 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      *
      * @return AbstractDoctrineORMAdminListConfigurator
      */
-    public function setEntityManager($em)
+    public function setEntityManager(EntityManagerInterface $em)
     {
         $this->em = $em;
 
@@ -242,7 +243,7 @@ abstract class AbstractDoctrineORMAdminListConfigurator extends AbstractAdminLis
     }
 
     /**
-     * @return EntityManager
+     * @return EntityManagerInterface
      */
     public function getEntityManager()
     {

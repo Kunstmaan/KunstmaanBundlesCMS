@@ -5,21 +5,16 @@
 
 ## [View the manual and demos](http://eonasdan.github.io/bootstrap-datetimepicker/)
 
-#v4
-v4 is out now! For v4 related bugs and issues see: /Eonasdan/bootstrap-datetimepicker/labels/v4.
+## [Installation instructions](http://eonasdan.github.io/bootstrap-datetimepicker/Installing/)
 
-v3 is going into an archive state. Please be sure to check the documents. v4 has breaking changes and is a major rewrite.
+## [Change Log](http://eonasdan.github.io/bootstrap-datetimepicker/Changelog/)
 
-## Submitting Issues
-If you have issues, please check the following first:
-* Have you read the docs?
-* Do you have the latest version of momentjs?
-* Do you have the latest version of jQuery?
-* Please test and/or fork [this jsfiddle](http://jsfiddle.net/Eonasdan/0Ltv25o8/) with an example of your issue before you post an issue here.
+### This issue tracker is no longer actively monitored.
 
-## Where do you use this?
-I'd love to know if your public site is using this plugin and list your logo on the documentation site. Please email me `eonasdan at outlook dot com`. Do not submit issue/feature request to this email, they will be ignored.
+# Version 5
 
-## [Installation instructions](https://github.com/Eonasdan/bootstrap-datetimepicker/wiki/Installation)
+Version 5 is being completely rewritten in ES6 and modularized as Tempus Dominus.
 
-## [Change Log](https://github.com/Eonasdan/bootstrap-datetimepicker/wiki/Version-4-changelog)
+v5 is [in alpha](https://github.com/tempusdominus/bootstrap-3).
+
+
