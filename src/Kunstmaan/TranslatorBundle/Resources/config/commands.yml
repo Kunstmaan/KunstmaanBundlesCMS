@@ -1,0 +1,6 @@
+services:
+    Kunstmaan\TranslatorBundle\Command\ImportTranslationsCommand:
+        class: Kunstmaan\TranslatorBundle\Command\ImportTranslationsCommand
+        arguments: '@kunstmaan_translator.service.importer.command_handler'
+        tags:
+            - { name: console.command }
