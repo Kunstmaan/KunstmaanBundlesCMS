@@ -283,7 +283,8 @@ class NodeRepository extends NestedTreeRepository
                 case 'sqlite':
                     $statement = 'CASE WHEN %s THEN %s ELSE %s END';
                     break;
-
+                case 'postgresql':
+                    return sprintf('COALESCE(%s, %s)', $trueValue, $falseValue);
                 default:
                     $statement = 'IF(%s, %s, %s)';
             }
@@ -295,7 +296,7 @@ class NodeRepository extends NestedTreeRepository
 n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
 {$createIfStatement('t.weight IS NULL', 'v.weight', 't.weight')} AS weight,
 {$createIfStatement('t.title IS NULL', 'v.title', 't.title')} AS title,
-{$createIfStatement('t.online IS NULL', '0', 't.online')} AS online,
+t.online AS online,
 n.hidden_from_nav AS hidden,
 n.ref_entity_name AS ref_entity_name
 SQL;
