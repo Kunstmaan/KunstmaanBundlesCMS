@@ -6,6 +6,7 @@ use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Tests\Kunstmaan\NodeBundle\Stubs\TestRepository;
 use Tests\Kunstmaan\FormBundle\Stubs\TestConfiguration;
+use Tests\Kunstmaan\TaggingBundle\Entity\FakePage;
 
 /**
  * This test tests the FormPageAdminListConfigurator
@@ -77,5 +78,46 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
 
         /* @var $queryBuilder QueryBuilder */
         $this->object->adaptQueryBuilder($queryBuilder);
+    }
+
+
+
+    public function testFixedGetters()
+    {
+        $item = new FakePage();
+        $item->setId(123);
+        $this->assertEquals('', $this->object->getAddUrlFor([]));
+        $this->assertEquals('KunstmaanNodeBundle', $this->object->getBundleName());
+        $this->assertEquals('NodeTranslation', $this->object->getEntityName());
+        $this->assertEquals('KunstmaanFormBundle:FormSubmissions', $this->object->getControllerPath());
+        $this->assertCount(0, $this->object->getDeleteUrlFor($item));
+        $this->assertCount(1, $this->object->getIndexUrl());
+        $this->assertCount(2, $this->object->getEditUrlFor($item));
+        $this->assertFalse($this->object->canAdd());
+        $this->assertFalse($this->object->canEdit($item));
+        $this->assertFalse($this->object->canDelete($item));
+    }
+
+
+
+    public function testBuildFilters()
+    {
+        $this->object->buildFilters();
+        $filters = $this->object->getFilterBuilder()->getFilterDefinitions();
+        $this->assertCount(2, $filters);
+    }
+
+    public function testBuildFields()
+    {
+        $this->object->buildFields();
+        $fields = $this->object->getFields();
+        $this->assertCount(3, $fields);
+    }
+
+    public function testBuildItemActions()
+    {
+        $this->object->buildItemActions();
+        $actions = $this->object->getItemActions();
+        $this->assertCount(1, $actions);
     }
 }
