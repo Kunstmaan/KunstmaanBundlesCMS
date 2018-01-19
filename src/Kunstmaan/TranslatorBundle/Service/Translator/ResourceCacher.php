@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Finder\Finder;
 
@@ -10,26 +11,19 @@ use Symfony\Component\Finder\Finder;
  */
 class ResourceCacher
 {
-    /**
-     * @var boolean
-     */
+    /* @var boolean */
     private $debug;
 
-    /**
-     * Where to store cache files
-     * @var string
-     */
+    /* @var string */
     private $cacheDir;
 
-    /**
-     * Logger
-     * @var \Symfony\Component\HttpKernel\Log\LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $logger;
 
     /**
      * Retrieve resources from cache file (if any)
-     * @return resources false if empty
+     *
+     * @return mixed false if empty
      */
     public function getCachedResources()
     {
@@ -48,7 +42,9 @@ class ResourceCacher
 
     /**
      * Cache an array of resources into the given cache
+     *
      * @param  array $resources
+     *
      * @return void
      */
     public function cacheResources(array $resources)
@@ -61,6 +57,7 @@ class ResourceCacher
 
     /**
      * Get cache file location
+     *
      * @return string
      */
     public function getCacheFileLocation()
@@ -70,30 +67,41 @@ class ResourceCacher
 
     /**
      * Remove all cached files (translations/resources)
-     * @return void
+     *
+     * @return bool
      */
     public function flushCache()
     {
         $finder = new Finder();
+        $finder->files()->in($this->cacheDir)->name('*.php');
 
-        foreach ($finder->files()->in($this->cacheDir)->name('*.php') as $file) {
-            unlink($file->getRealpath());
+        foreach ($finder as $file) {
+            unlink($file->getRealPath());
         }
 
         return true;
     }
 
-    public function setDebug($debug)
+    /**
+     * @param bool $debug
+     */
+    public function setDebug(bool $debug)
     {
         $this->debug = $debug;
     }
 
-    public function setCacheDir($cacheDir)
+    /**
+     * @param string $cacheDir
+     */
+    public function setCacheDir(string $cacheDir)
     {
         $this->cacheDir = $cacheDir;
     }
 
-    public function setLogger($logger)
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
