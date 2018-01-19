@@ -1,5 +1,9 @@
 # UPGRADE FROM 4.* to 5.0
 
+## Symfony
+
+The minimum symfony version is set to 3.4.
+
 ## Elastica
 
 The ruflin/elastica bundle has been upgraded to the latest 5.1 version.
@@ -13,6 +17,14 @@ When you have created some extra extensions on elastica you should read the chan
 
 https://github.com/ruflin/Elastica/blob/master/CHANGELOG.md
 
+## [AdminBundle] Possibility to exclude certain stuff from the exception list
+You can use few regex to exclude certain stuff from the exception list.
+
+```yaml
+kunstmaan_admin:
+    admin_exception_excludes:
+        - '/^\.|\.jpg$|\.gif$|.png$/i'
+```
 
 ## [SearchBundle]
 BC break: SearchConfigurationInterface contains a new method getLanguagesNotAnalyzed
@@ -80,4 +92,82 @@ new:
     {
 	return parent::doExportAction($this->getAdminListConfigurator(), $_format, $request);
     }
+```
+
+## [LiipImagine]
+We upgraded the version of LiipImagine bundle. What this means is that when you're using symlinks for your deployments that those are not supported anymore.
+It only works on absolute paths now. To make this work you neet to add the following into you `config_prod.yml` or `config.yml` if you want it for all environments.
+
+```yaml
+liip_imagine:
+    loaders:
+        default:
+            filesystem:
+                data_root:
+                    - "%kernel.root_dir%/../link/to/your/symlinked/path/web"
+                    - "%kernel.root_dir%/../web"
+```
+## Deprecated Form Types
+All existing form types have been deprecated in order to satisfy Sensio Insight requirements that form type classes go in a `Form/Type` folder instead of justr `Form`. Existing projects will not break, the old classes are still there, but the logic has been moved into the new classes in the correct folder, and the old classes now extend the new one, and have a `@deprecated` tag.
+#### Refactoring your form types
+It is very simple, just add `Type` into your use statement.
+```php
+use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
+```
+becomes
+```php
+use Kunstmaan\NodeBundle\Form\Type\ControllerActionAdminType;
+```
+## Forms must be referenced via FQCN [brakes BC]
+
+All forms were upgraded to be used by **fully qualified class name** instead of creating new form instance.
+
+See more in [Symfony upgrade v2->v3 doc](https://github.com/symfony/symfony/blob/master/UPGRADE-3.0.md#form)
+
+Before:
+```
+public function getDefaultAdminType()
+{
+    return new MyPageAdminType();
+}
+```
+
+After:
+```
+public function getDefaultAdminType()
+{
+    return MyPageAdminType::class;
+}
+```
+
+A tip: use regex to search part of new form type instances creations (`new .+Type\(`).
+"
+
+## VotingBundle
+
+VotingBundle is refactored. If using custom voters implement the new abstract classes
+* VoteListener is renamed to AbstractVoteListener
+* VotingHelper is renamed to AbstractVotingHelper
+
+## NodeBundle
+
+The nodetranslationlistener has been cleaned for a better flush event. The postFlush event has been removed and everything has been moved to the onFlush event.
+
+## FormBundle
+
+The Discriminator map has been removed from the abstract entity `Kunstmaan\FormBundle\Entity\FormSubmissionField`. This makes it a whole lot easier to
+extend the FormSubmission with your own FormSubmission fields. So what happens. If you are using the standard formsubmission, basically nothing. Everything just keeps working. 
+
+Now if you have customized the standard formsubmission you probably will have to do some changes. Most vital part is that the `discriminator` value will change from for instance "string" to "stringformsubmissionfield".
+As you can see it now uses the entity class name to dynamically map the inheritance. This is where stuff will start to break during querying the database and no result will be found. So for this you will have to manually generate the following migration.
+
+```PHP
+    ...
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "stringformsubmissionfield" WHERE discr = "string"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "textformsubmissionfield" WHERE discr = "text"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "booleanformsubmissionfield" WHERE discr = "boolean"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "choiceformsubmissionfield" WHERE discr = "choice"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "fileformsubmissionfield" WHERE discr = "file"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "emailformsubmissionfield" WHERE discr = "email"');
+    ...
 ```

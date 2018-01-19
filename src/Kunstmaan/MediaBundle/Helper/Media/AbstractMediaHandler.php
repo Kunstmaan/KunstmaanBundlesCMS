@@ -13,7 +13,7 @@ abstract class AbstractMediaHandler
     /**
      * @param int $priority
      */
-    function __construct($priority = 0)
+    public function __construct($priority = 0)
     {
         $this->priority = $priority;
     }

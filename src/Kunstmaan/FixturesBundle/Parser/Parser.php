@@ -74,7 +74,7 @@ class Parser
 
         foreach ($array as $key => $item) {
             if (is_array($item)) {
-                $array[$key] = $this->parseArray($item, $providers, $fixtures);
+                $array[$key] = $this->parseArray($item, $providers, $fixtures, $additional);
             } else {
                 $array[$key] = $this->parse($item, $providers, $fixtures, $additional);
             }

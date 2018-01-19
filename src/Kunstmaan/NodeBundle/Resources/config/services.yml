@@ -11,12 +11,15 @@ parameters:
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: ['@session', '@kunstmaan_admin.logger' , '@kunstmaan_utilities.slugifier', '@kunstmaan_admin.domain_configuration', '@kunstmaan_node.pages_configuration']
-        calls:
-            - [ 'setRequestStack', ['@request_stack'] ]
+        arguments:
+          - '@session.flash_bag'
+          - '@kunstmaan_admin.logger'
+          - '@kunstmaan_utilities.slugifier'
+          - '@request_stack'
+          - '@kunstmaan_admin.domain_configuration'
+          - '@kunstmaan_node.pages_configuration'
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
-            - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
             - { name: 'doctrine.event_listener', event: 'prePersist', method: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate', method: 'preUpdate' }
 
