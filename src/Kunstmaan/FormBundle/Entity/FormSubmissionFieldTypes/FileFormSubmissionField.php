@@ -224,11 +224,11 @@ class FileFormSubmissionField extends FormSubmissionField
     /**
      * Returns the default form type for this FormSubmissionField
      *
-     * @return FileFormSubmissionType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new FileFormSubmissionType();
+        return FileFormSubmissionType::class;
     }
 
 }

@@ -15,7 +15,7 @@ class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-	    'data_class' => '{{ namespace }}\Entity\{{ entity_class }}Author'
+	        'data_class' => '{{ namespace }}\Entity\{{ entity_class }}Author'
         ));
     }
 
@@ -24,6 +24,6 @@ class {{ entity_class }}AuthorAdminType extends AbstractAuthorAdminType
      */
     function getBlockPrefix()
     {
-	return '{{ entity_class|lower }}_author_type';
+	    return '{{ entity_class|lower }}_author_type';
     }
 }

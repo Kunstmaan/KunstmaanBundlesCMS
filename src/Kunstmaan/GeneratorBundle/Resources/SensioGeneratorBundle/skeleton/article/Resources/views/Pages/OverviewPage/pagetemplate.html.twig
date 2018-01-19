@@ -1,0 +1,73 @@
+{% set currentUrl = app.request.attributes.get('_nodeTranslation').url %}
+{% set baseRoute = '_slug' ~ (app.request.attributes.get('preview') ? '_preview' : '') %}
+{% set basePath = path(baseRoute, { 'url': currentUrl, '_locale': app.request.locale }) %}
+<% if uses_category %>{% set categoryContext = get_article_categories(app.request, '<%= bundle.name %>:<%= entity_class %>Category') %}<% endif %>
+<% if uses_tag %>{% set tagContext = get_article_tags(app.request, '<%= bundle.name %>:<%= entity_class %>Tag') %}<% endif %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="blog-filter js-toggle-container">
+                <div class="blog-filter__top">
+                    <div class="blog-filter__top__section blog-filter__top__section--filters">
+                        <strong>{{ 'article_overview_page.filter'|trans }}</strong>
+                    </div>
+     <% if uses_tag %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_filter-tag.html.twig' with {'tags': tagContext.tags} %}<% endif %>
+<% if uses_category %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_filter-category.html.twig' with {'categories': categoryContext.categories} %}<% endif %>
+                </div>
+
+                <% if uses_tag or uses_category %><div class="blog-filter__filters"><% endif %>
+                    <% if uses_tag %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_list-tag.html.twig' with {'tagContext': tagContext} %}<% endif %>
+                    <% if uses_category %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_list-category.html.twig' with {'categoryContext': categoryContext} %}<% endif %>
+                <% if uses_tag or uses_category %></div><% endif %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            {% set count = 0 %}
+            {% if pagerfanta.nbResults > 0 %}
+                {% for article in pagerfanta.currentPageResults %}
+                    {% set articlenode = get_node_translation_for(article) %}
+                    <article class="blog-item blog-item--summary">
+                        <header class="blog-item__head">
+                            <time class="blog-item__head__meta">
+                                {{ article.date | date("d/m/Y")}}
+                                <% if uses_author %>
+                                {% if article.author is not empty %}
+                                    | <strong>{{ article.author.name }}</strong>
+                                {% endif %}
+                                <% endif %>
+                            </time>
+                            <h3 class="blog-item__head__title">
+                                <a href="{{ articlenode.url }}">
+                                    {{ article.title }}
+                                </a>
+                            </h3>
+                        </header>
+
+                        {{ article.summary }}
+
+                        <p class="text--right blog-item__read-more">
+                            <a href="{{ articlenode.url }}" class="blog-item__read-more__link">
+                                {{ 'article.readmore'|trans }}
+                            </a>
+                        </p>
+                    </article>
+                    {% set count = count + 1 %}
+                {% endfor %}
+
+                {% if  pagerfanta.haveToPaginate() %}
+                    {{ pagerfanta(pagerfanta, null, {
+                        'pageParameter': '[page]',
+                        'prev_message':'<span class="icon--arrow-left pagination__direction-icon"></span>',
+                        'next_message':'<span class="icon--arrow-right pagination__direction-icon"></span>'
+                    }) }}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>

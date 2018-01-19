@@ -52,7 +52,6 @@ class SlidePagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $defaultAdminType = $this->object->getDefaultAdminType();
-        $this->assertTrue($defaultAdminType instanceof SlidePagePartAdminType);
+        $this->assertEquals(SlidePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

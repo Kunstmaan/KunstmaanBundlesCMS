@@ -5,7 +5,3 @@
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}page/
 
-{{ bundle.getName()|lower }}_{{ entity_class|lower }}author_admin_list:
-    resource: '@{{ bundle.getName() }}/Controller/{{ entity_class }}AuthorAdminListController.php'
-    type:     annotation
-    prefix:   /%kunstmaan_admin.admin_prefix%/{{ entity_class|lower }}author/

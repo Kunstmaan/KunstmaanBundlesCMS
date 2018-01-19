@@ -114,16 +114,19 @@ EOT
             // Generate a blog
             $command = $this->getApplication()->find('kuma:generate:article');
             $arguments = array(
-                'command'      => 'kuma:generate:article',
-                '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-                '--prefix'     => $this->prefix,
-                '--entity'     => 'Blog',
-                '--dummydata'  => true,
-                '--quiet'      => true
+                'command'           => 'kuma:generate:article',
+                '--namespace'       => str_replace('\\', '/', $this->bundle->getNamespace()),
+                '--prefix'          => $this->prefix,
+                '--entity'          => 'Blog',
+                '--with-author'     => true,
+                '--with-category'   => true,
+                '--with-tag'        => true,
+                '--dummydata'       => true,
             );
-            $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
+            $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_NORMAL);
             $input = new ArrayInput($arguments);
             $command->run($input, $output);
+
             $this->assistant->writeLine('Generating blog : <info>OK</info>');
         }
 

@@ -1,0 +1,17 @@
+/* ==========================================================================
+   Structures - Sections
+   ========================================================================== */
+
+.section {
+
+    & + & {
+        margin-top: 50px;
+    }
+}
+
+.section__title {
+    margin-bottom: 20px;
+
+    color: $black;
+    font-family: $primary-font;
+}

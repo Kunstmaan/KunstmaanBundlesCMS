@@ -1,0 +1,21 @@
+{% block toolbar %}
+    {% if collector is defined and collector.getTemplateData() %}
+        {% set data = collector.getTemplateData().data %}
+    {% endif %}
+
+    {% if data is defined %}
+        {% set icon %}
+            {{ include('@KunstmaanNode/Toolbar/Icon/router.svg') }}
+            <span class="sf-toolbar-value">{{ 'toolbar.node.edit' | trans }}</span>
+        {% endset %}
+
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <b> {{ 'toolbar.node.title'|trans }}</b>
+                <span>{{ data.nt.title }}</span>
+            </div>
+        {% endset %}
+
+        {% include '@KunstmaanAdmin/Toolbar/toolbar_item.html.twig' with {'link': data.route} %}
+    {% endif %}
+{% endblock %}

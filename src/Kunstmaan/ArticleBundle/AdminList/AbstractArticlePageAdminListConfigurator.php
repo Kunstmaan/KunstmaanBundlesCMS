@@ -10,6 +10,8 @@ use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminLis
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
+use Kunstmaan\NodeBundle\Entity\Node;
 
 /**
  * The AdminList configurator for the AbstractArticlePage
@@ -172,11 +174,6 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    abstract public function getOverviewPageRepository();
-
-    /**
      * @return string
      */
     public function getListTemplate()
@@ -192,4 +189,9 @@ abstract class AbstractArticlePageAdminListConfigurator extends AbstractDoctrine
     {
         return $this->em->getRepository($this->getRepositoryName())->getClassName();
     }
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    abstract public function getOverviewPageRepository();
 }

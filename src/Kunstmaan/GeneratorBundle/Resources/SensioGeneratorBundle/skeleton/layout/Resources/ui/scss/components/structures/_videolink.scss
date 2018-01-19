@@ -55,30 +55,30 @@
     left: 50%;
 
     display: block;
-    width: 10rem;
-    height: 10rem;
-    margin: -5rem 0 0 -5rem;
+    width: 100px;
+    height: 100px;
+    margin: -50px 0 0 -50px;
 
     background: rgba($white, .9);
 
     border-radius: 50%;
 
     color: $brand-primary;
-    font-size: 6.6rem;
-    line-height: 10rem;
+    font-size: 66px;
+    line-height: 100px;
     text-align: center;
 
     &:before {
         content: '';
 
         position: relative;
-        top: .25rem;
-        left: .5rem;
+        top: 3px;
+        left: 5px;
 
         display: inline-block;
 
         border-style: solid;
-        border-width: 2.5rem 0 2.5rem 4rem;
+        border-width: 25px 0 25px 40px;
         border-color: transparent transparent transparent currentColor;
     }
 }

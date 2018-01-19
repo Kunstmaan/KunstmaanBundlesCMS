@@ -57,7 +57,6 @@
     <main role="main" id="app__main" class="container-fluid app__main{% if not hideSidebar and lowestTopChild and navigationChildren | length > 0 %} app__main--has-sidebar{% else %} app__main--no-sidebar{% endif %}">
 
         <div class="row">
-
             {% if not hideSidebar and lowestTopChild and navigationChildren | length > 0 %}
 
                 <!-- App Sidebar -->
@@ -143,9 +142,10 @@
     {% endblock %}
 {% endblock %}
 
-
-    <!-- JS -->
-    {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+    {% block js_footer %}
+        <!-- JS -->
+        {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+    {% endblock %}
 
 
     <!-- JS - Extra -->

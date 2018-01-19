@@ -100,7 +100,6 @@ class ConfigController
          */
         $entity = $this->getConfigEntityByInternalName($internalName);
         $entityClass = get_class($entity);
-        $formType = $entity->getDefaultAdminType();
 
         // Check if current user has permission for the site config.
         foreach ($entity->getRoles() as $role) {
@@ -114,15 +113,8 @@ class ConfigController
             $config = new $entityClass();
         }
 
-        // If the formType is a service, get it from the container.
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-
-        $formFqn = get_class($formType);
-
         $form = $this->formFactory->create(
-            $formFqn,
+            $entity->getDefaultAdminType(),
             $config
         );
 

@@ -77,7 +77,7 @@ abstract class AdminListController extends Controller
     protected function doExportAction(AbstractAdminListConfigurator $configurator, $_format, Request $request = null)
     {
         if (!$configurator->canExport()) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         $em = $this->getEntityManager();
@@ -103,17 +103,13 @@ abstract class AdminListController extends Controller
     protected function doAddAction(AbstractAdminListConfigurator $configurator, $type = null, Request $request)
     {
         if (!$configurator->canAdd()) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
         $entityName = null;
-        if (isset($type)) {
-            $entityName = $type;
-        } else {
-            $entityName = $configurator->getRepositoryName();
-        }
+        $entityName = (isset($type)) ? $type : $configurator->getRepositoryName();
 
         $classMetaData = $em->getClassMetadata($entityName);
         // Creates a new instance of the mapped class, without invoking the constructor.
@@ -122,16 +118,12 @@ abstract class AdminListController extends Controller
         $helper = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-        $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
+        $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
@@ -215,7 +207,7 @@ abstract class AdminListController extends Controller
         }
 
         if (!$configurator->canEdit($helper)) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         if ($helper instanceof LockableEntityInterface) {
@@ -244,16 +236,12 @@ abstract class AdminListController extends Controller
         }
 
         $formType = $configurator->getAdminType($helper);
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-        $formFqn = get_class($formType);
 
-        $event = new AdaptSimpleFormEvent($request, $formFqn, $helper, $configurator->getAdminTypeOptions());
+        $event = new AdaptSimpleFormEvent($request, $formType, $helper, $configurator->getAdminTypeOptions());
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formFqn, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
 
         if ($request->isMethod('POST')) {
 
@@ -334,7 +322,7 @@ abstract class AdminListController extends Controller
         }
 
         if (!$configurator->canView($helper)) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         $MetaData = $em->getClassMetadata($configurator->getRepositoryName());
@@ -374,7 +362,7 @@ abstract class AdminListController extends Controller
             throw new NotFoundHttpException("Entity not found.");
         }
         if (!$configurator->canDelete($helper)) {
-            throw new AccessDeniedHttpException('You do not have sufficient rights to access this page.');
+            throw $this->createAccessDeniedException('You do not have sufficient rights to access this page.');
         }
 
         $indexUrl = $configurator->getIndexUrl();

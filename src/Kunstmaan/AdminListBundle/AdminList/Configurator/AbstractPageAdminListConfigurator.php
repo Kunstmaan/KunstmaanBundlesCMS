@@ -177,7 +177,7 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     /**
      * @return
      */
-    abstract function getReadableName();
+    abstract public function getReadableName();
 
 
 }

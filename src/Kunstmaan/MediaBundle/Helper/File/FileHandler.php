@@ -320,7 +320,7 @@ class FileHandler extends AbstractMediaHandler
         $filename  = str_replace(array('/', '\\', '%'), '', $filename);
 
         if (!empty($this->blacklistedExtensions)) {
-            $filename = preg_replace('/\.('.join('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
+            $filename = preg_replace('/\.('.implode('|', $this->blacklistedExtensions).')$/', '.txt', $filename);
         }
 
         $parts    = pathinfo($filename);

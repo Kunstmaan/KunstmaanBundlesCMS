@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\NodeBundle\Tests;
+
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
@@ -25,18 +26,13 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
     }
     /**
      * @param string $text    The text to slugify
-     * @param string $default The default alternative
      * @param string $result  The slug it should generate
      *
      * @dataProvider getSlugifyData
      */
-    public function testSlugify($text, $default, $result)
+    public function testSlugify($text,  $result)
     {
-        if (!is_null($default)) {
-            $this->assertEquals($result, $this->slugifier->slugify($text, $default));
-        } else {
-            $this->assertEquals($result, $this->slugifier->slugify($text));
-        }
+        $this->assertEquals($result, $this->slugifier->slugify($text));
     }
 
     /**
@@ -46,16 +42,15 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
      */
     public function getSlugifyData()
     {
-        return array(
-            array('', '', ''),
-            array('', null, ''),
-            array('test', '', 'test'),
-            array('een titel met spaties', '', 'een-titel-met-spaties'),
-            array('à partir d\'aujourd\'hui', null, 'a-partir-d-aujourd-hui'),
-            array('CaPs ShOulD be LoweRCasEd', null, 'caps-should-be-lowercased'),
-            array('áàäåéèëíìïóòöúùüñßæ', null, 'aaaaeeeiiiooouuunssae'),
-            array('polish-ążśźęćńół', null, 'polish-azszecnol'),
-        );
+        return [
+            ['', ''],
+            ['test', 'test'],
+            ['een titel met spaties', 'een-titel-met-spaties'],
+            ['à partir d\'aujourd\'hui', 'a-partir-daujourdhui'],
+            ['CaPs ShOulD be LoweRCasEd', 'caps-should-be-lowercased'],
+            ['áàäåéèëíìïóòöúùüñßæ', 'aaaaeeeiiiooouuunssae'],
+            ['polish-ążśźęćńół', 'polish-azszecnol']
+        ];
     }
 
     /**

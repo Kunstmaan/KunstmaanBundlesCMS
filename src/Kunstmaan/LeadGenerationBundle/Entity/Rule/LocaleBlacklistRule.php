@@ -74,10 +74,10 @@ class LocaleBlacklistRule extends AbstractRule
     }
 
     /**
-     * @return LocaleBlackListAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return 'kunstmaan_lead_generation.rule.form.localeblacklistrule';
+        return LocaleBlackListAdminType::class;
     }
 }

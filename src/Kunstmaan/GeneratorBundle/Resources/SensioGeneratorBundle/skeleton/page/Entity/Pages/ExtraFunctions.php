@@ -1,11 +1,11 @@
     /**
-     * Returns the default backend form type for this page
+     * Returns the default backend form type for this page.
      *
-     * @return {{ adminType }}
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new {{ adminType }}();
+        return {{ adminType }}::class;
     }
 
     /**

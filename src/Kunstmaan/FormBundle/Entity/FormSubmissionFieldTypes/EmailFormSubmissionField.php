@@ -23,11 +23,11 @@ class EmailFormSubmissionField extends FormSubmissionField
     /**
      * Returns the default form type for this FormSubmissionField
      *
-     * @return EmailFormSubmissionType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new EmailFormSubmissionType();
+        return EmailFormSubmissionType::class;
     }
 
     /**

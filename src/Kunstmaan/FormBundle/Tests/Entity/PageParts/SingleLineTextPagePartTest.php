@@ -7,7 +7,7 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
 
-use Symfony\Component\Form\FormBuilderInterface;;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for SingleLineTextPagePart
@@ -90,10 +90,10 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
 
         $fields = new ArrayObject();
 
-        $this->assertTrue(sizeof($fields) == 0);
+        $this->assertTrue(count($fields) == 0);
         /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields, 0);
-        $this->assertTrue(sizeof($fields) > 0);
+        $this->assertTrue(count($fields) > 0);
     }
 
     /**
@@ -101,8 +101,6 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $adminType = $this->object->getDefaultAdminType();
-        $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof SingleLineTextPagePartAdminType);
+        $this->assertEquals(SingleLineTextPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

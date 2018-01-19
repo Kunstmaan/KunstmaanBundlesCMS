@@ -198,7 +198,7 @@ abstract class AbstractPopup implements EntityInterface
     abstract protected function getControllerAction();
 
     /**
-     * @return AbstractPopupAdminType
+     * @return string
      */
     abstract protected function getAdminType();
 }

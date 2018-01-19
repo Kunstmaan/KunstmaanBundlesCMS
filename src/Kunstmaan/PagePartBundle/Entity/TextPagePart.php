@@ -56,10 +56,10 @@ class TextPagePart extends AbstractPagePart
     }
 
     /**
-     * @return TextPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new TextPagePartAdminType();
+        return TextPagePartAdminType::class;
     }
 }

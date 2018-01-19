@@ -54,6 +54,6 @@ class ToTopPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $this->assertInstanceOf('Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType', $this->object->getDefaultAdminType());
+        $this->assertEquals('Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType', $this->object->getDefaultAdminType());
     }
 }

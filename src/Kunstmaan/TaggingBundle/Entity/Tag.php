@@ -159,7 +159,7 @@ class Tag extends BaseTag implements Translatable
 
     public function getDefaultAdminType()
     {
-        return new TagAdminType();
+        return TagAdminType::class;
     }
 
     public function __toString()

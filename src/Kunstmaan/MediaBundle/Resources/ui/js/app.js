@@ -9,7 +9,6 @@ kunstmaanMediaBundle.app = (function($, window, undefined) {
         kunstmaanMediaBundle.dndUpload.init();
     };
 
-
     return {
         init: init
     };

@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : Hebrew (he)
+//! locale : Hebrew [he]
 //! author : Tomer Cohen : https://github.com/tomer
 //! author : Moshe Simantov : https://github.com/DevelopmentIL
 //! author : Tal Ater : https://github.com/TalAter
@@ -14,15 +14,15 @@ export default moment.defineLocale('he', {
     weekdaysMin : 'א_ב_ג_ד_ה_ו_ש'.split('_'),
     longDateFormat : {
         LT : 'HH:mm',
-        LTS : 'LT:ss',
+        LTS : 'HH:mm:ss',
         L : 'DD/MM/YYYY',
         LL : 'D [ב]MMMM YYYY',
-        LLL : 'D [ב]MMMM YYYY LT',
-        LLLL : 'dddd, D [ב]MMMM YYYY LT',
+        LLL : 'D [ב]MMMM YYYY HH:mm',
+        LLLL : 'dddd, D [ב]MMMM YYYY HH:mm',
         l : 'D/M/YYYY',
         ll : 'D MMM YYYY',
-        lll : 'D MMM YYYY LT',
-        llll : 'ddd, D MMM YYYY LT'
+        lll : 'D MMM YYYY HH:mm',
+        llll : 'ddd, D MMM YYYY HH:mm'
     },
     calendar : {
         sameDay : '[היום ב־]LT',
@@ -67,6 +67,23 @@ export default moment.defineLocale('he', {
                 return number + ' שנה';
             }
             return number + ' שנים';
+        }
+    },
+    meridiemParse: /אחה"צ|לפנה"צ|אחרי הצהריים|לפני הצהריים|לפנות בוקר|בבוקר|בערב/i,
+    isPM : function (input) {
+        return /^(אחה"צ|אחרי הצהריים|בערב)$/.test(input);
+    },
+    meridiem : function (hour, minute, isLower) {
+        if (hour < 5) {
+            return 'לפנות בוקר';
+        } else if (hour < 10) {
+            return 'בבוקר';
+        } else if (hour < 12) {
+            return isLower ? 'לפנה"צ' : 'לפני הצהריים';
+        } else if (hour < 18) {
+            return isLower ? 'אחה"צ' : 'אחרי הצהריים';
+        } else {
+            return 'בערב';
         }
     }
 });
