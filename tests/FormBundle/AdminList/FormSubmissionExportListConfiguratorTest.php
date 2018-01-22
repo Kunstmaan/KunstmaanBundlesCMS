@@ -2,13 +2,23 @@
 
 namespace Tests\Kunstmaan\FormBundle\AdminList;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
 use Tests\Kunstmaan\NodeBundle\Stubs\TestRepository;
 use Tests\Kunstmaan\FormBundle\Stubs\TestConfiguration;
+
+class FakeFormSubmission extends FormSubmission
+{
+    public function setFields(ArrayCollection $fields)
+    {
+        $this->fields = $fields;
+    }
+}
 
 /**
  * This test tests the FormPageAdminListConfigurator
@@ -48,10 +58,15 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->disableOriginalConstructor()
             ->getMock();
 
-        $sub = $this->getMockBuilder(FormSubmission::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        
+        $field = new BooleanFormSubmissionField();
+        $field->setFieldName('check');
+        $field->setValue(true);
+
+        $sub = new FakeFormSubmission();
+        $sub->setFields(new ArrayCollection([
+            $field,
+        ]));
+
 
         $submissions = [
             [$sub],
@@ -129,5 +144,11 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
         $this->object->buildIterator();
         $filters = $this->object->getIterator();
         $this->assertInstanceOf(\ArrayIterator::class, $filters);
+        $first = $filters->current();
+        $this->assertCount(1, $first);
+        $first = $first[0];
+        $this->assertArrayHasKey('check', $first);
+        $this->assertEquals('true', $first['check']);
+
     }
 }
