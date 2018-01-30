@@ -1,9 +1,8 @@
+---
 '{0} search.no_results|{1} one.result|]1,Inf[ many.results.%count%.%search_for%': '{0} Brak wyników dla `%search_for%`|{1} %count% wynik|]1, Inf[ %count% wyników'
-
 search:
-    filter: Filtruj
-    no_results: Brak wyników
-
+  filter: Filtruj
+  no_results: Brak wyników
 pagerfanta:
-    prev:   Wstecz
-    next:   Dalej
+  prev: Wstecz
+  next: Dalej

@@ -43,11 +43,11 @@ class SeoType extends AbstractType
             ->add('metaDescription', TextareaType::class, array(
                 'label' => 'seo.form.seo.meta_description.label',
                 'attr' => array(
-                    'maxlength' => 170
+                    'maxlength' => 300
                 ),
                 'constraints' => [
                     new Length([
-                        'max' => 170
+                        'max' => 300
                     ])
                 ]
             ));

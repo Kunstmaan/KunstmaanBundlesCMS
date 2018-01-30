@@ -1,56 +1,54 @@
+---
 translator:
-    translator:
-        title: Tłumaczenia
-        inline_edit_title: Wpisz tłumaczenie
-        emptytext: Nieprzetłumaczone
-        invalid_translation: Niepoprawne tłumaczenie!
-        fatal_error_occurred: Pojawił się błąd podczas zapisywania tłumaczenia. Spróbuj jeszcze raz później.
-    translations: Tłumaczenia
-    translation_not_unique: Tłumaczenie powinno być unikalne
-
+  translator:
+    title: Tłumaczenia
+    inline_edit_title: Wpisz tłumaczenie
+    emptytext: Nieprzetłumaczone
+    invalid_translation: Niepoprawne tłumaczenie!
+    fatal_error_occurred: Pojawił się błąd podczas zapisywania tłumaczenia. Spróbuj jeszcze raz później.
+  translations: Tłumaczenia
+  translation_not_unique: Tłumaczenie powinno być unikalne
 settings:
-    translator:
-        add: Dodaj tłumaczenie
-        edit: Edytuj tłumaczenie
-        refresh_live: Odśwież
-        import_translations_forced: Wymuszony import
-        import_translations: Importuj
-        actions: Akcje
-        export_translations: Eksportuj do CSV
-        not_live_warning: "Tłumaczenia aktywnej strony nie zostały zaktualizowane, wybierz „odśwież” aby wgrać ostatnie zmiany tłumaczeń."
-        choose_language: "Wybierz język"
-        succesful_added: "Tłumaczenie zostało pomyślnie utworzone"
-        succesful_edited: "Tłumaczenie zostało pomyślnie zmodyfikowane"
-
+  translator:
+    add: Dodaj tłumaczenie
+    edit: Edytuj tłumaczenie
+    refresh_live: Odśwież
+    import_translations_forced: Wymuszony import
+    import_translations: Importuj
+    actions: Akcje
+    export_translations: Eksportuj do CSV
+    not_live_warning: "Tłumaczenia aktywnej strony nie zostały zaktualizowane, wybierz „odśwież” aby wgrać ostatnie zmiany tłumaczeń."
+    choose_language: "Wybierz język"
+    succesful_added: "Tłumaczenie zostało pomyślnie utworzone"
+    succesful_edited: "Tłumaczenie zostało pomyślnie zmodyfikowane"
 kuma_translator:
-    form:
-        text_with_locale:
-            locale:
-                label:  Język
-            text:
-                label:  Treść
-    command:
-        clear:
-            flash:
-                success:    Wszystkie translacje są aktualne.
-        import:
-            flash:
-                success:        Translacje pomyślnie zaimporotwane, żadne aktualne translacje nie zostały nadpisane.
-                force_success:  Translacje pomyślnie zaimportowane, aktualne translacje zostały nadpisane.
-    modal:
-        confirmation:
-            force_import:
-                title:  Na pewno chcesz użyć nadpisującego importu?
-                body:   Wszystkie istniejące translacje zostaną nadpisane.
-                confirm_button: Import
-                cancel_button:  Anuluj
-
-    adminlist:
-        header:
-            domain:     Domena
-            keyword:    Słowo kluczowe
-        filter:
-            domain:     Domena
-            keyword:    Słowo kluczowe
-            text:       Treść
-            locale:     Język
+  form:
+    text_with_locale:
+      locale:
+        label: Język
+      text:
+        label: Treść
+  command:
+    clear:
+      flash:
+        success: Wszystkie translacje są aktualne.
+    import:
+      flash:
+        success: Translacje pomyślnie zaimporotwane, żadne aktualne translacje nie zostały nadpisane.
+        force_success: Translacje pomyślnie zaimportowane, aktualne translacje zostały nadpisane.
+  modal:
+    confirmation:
+      force_import:
+        title: Na pewno chcesz użyć nadpisującego importu?
+        body: Wszystkie istniejące translacje zostaną nadpisane.
+        confirm_button: Importuj
+        cancel_button: Anuluj
+  adminlist:
+    header:
+      domain: Domena
+      keyword: Słowo kluczowe
+    filter:
+      domain: Domena
+      keyword: Słowo kluczowe
+      text: Treść
+      locale: Język

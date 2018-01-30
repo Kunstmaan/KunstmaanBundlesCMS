@@ -1,15 +1,36 @@
+---
 kuma_menu:
-    menu:
-        adminlist:
-            field:
-                name:   Név
-            filter:
-                name:   Név
-    menu_item:
-        adminlist:
-            field:
-                title:      Cím
-                online:     Online
-                type:       Típus
-                url:        Url
-                new_window: Új ablakban
+  menus:
+    title: Menus
+  menu:
+    adminlist:
+      field:
+        name: Név
+      filter:
+        name: Név
+      action:
+        manage: Manage
+  menu_item:
+    adminlist:
+      breadcrumb:
+        modules: Modules
+        menu: Menu's
+        menu_items: Menu items
+      title: Menu items for %name% and language %locale%
+      online: (Online)
+      offline: (Offline)
+      field:
+        title: Cím
+        online: Online
+        type: Típus
+        url: Url
+        new_window: Új ablakban
+  form:
+    parent: Parent menu item
+    parent_placeholder: Select the parent menu item...
+    type: Type
+    node_translation: Link page
+    node_translation_placeholder: Select the page to link to...
+    title: Title
+    url: Url
+    new_window: New window

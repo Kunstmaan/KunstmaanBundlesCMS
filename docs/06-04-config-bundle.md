@@ -23,7 +23,7 @@ By extending this class you will have to implement some methods from the Configu
     /**
     * This function is optional. Implement it if you would like a other ROLE to access the configuration section.
     **/
-    public function getAccessRoles()
+    public function getRoles()
     {
         return array('ROLE_ADMIN');
     }

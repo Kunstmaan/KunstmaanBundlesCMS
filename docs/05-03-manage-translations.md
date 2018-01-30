@@ -2,7 +2,7 @@ Manage translations
 ====================
 
 For those who want to make a multi-language website and edit translations easily, life became much easier.
-We've created a Translator bundle to edit your translations from withing our backend.
+We've created a Translator bundle to edit your translations from within our backend.
 
 Features
 ---------------------------------------
@@ -50,7 +50,7 @@ bin/console kuma:translator:import --bundle=superCoolNewApplicationBundle
 ```
 bin/console kuma:translator:import --locales=nl,fr,de
 ```
-- Import translations from the global Resources (```app/Resoureces/translations```)
+- Import translations from the global Resources (```app/Resources/translations```)
 
 ```
 bin/console kuma:translator:import --globals

@@ -109,11 +109,7 @@ abstract class AdminListController extends Controller
         /* @var EntityManager $em */
         $em = $this->getEntityManager();
         $entityName = null;
-        if (isset($type)) {
-            $entityName = $type;
-        } else {
-            $entityName = $configurator->getRepositoryName();
-        }
+        $entityName = (isset($type)) ? $type : $configurator->getRepositoryName();
 
         $classMetaData = $em->getClassMetadata($entityName);
         // Creates a new instance of the mapped class, without invoking the constructor.
@@ -122,7 +118,7 @@ abstract class AdminListController extends Controller
         $helper = $configurator->decorateNewEntity($helper);
 
         $formType = $configurator->getAdminType($helper);
-        if (!is_object($formType) && is_string($formType)) {
+        if (is_string($formType)) {
             $formType = $this->container->get($formType);
         }
         $formFqn = get_class($formType);
@@ -498,7 +494,7 @@ abstract class AdminListController extends Controller
         /** @var EntityVersionLockService $entityVersionLockService */
         $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
-        return $entityVersionLockService->isEntityBelowThreshold($entity) || $entityVersionLockService->isEntityLocked(
+        return $entityVersionLockService->isEntityBelowThreshold($entity) && $entityVersionLockService->isEntityLocked(
                 $this->getUser(),
                 $entity
             );

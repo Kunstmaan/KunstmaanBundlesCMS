@@ -1,24 +1,54 @@
+---
 translator:
-    translator:
-        title: Übersetzungen
-        inline_edit_title: Übersetzung Einfügen
-        emptytext: Nicht übersetzt
-        invalid_translation: Ungültige Übersetzung!
-        fatal_error_occurred: Während des Speicherns ist ein Fehler aufgetreten. Bitte später erneut versuchen.
-    translations: Übersetzungen
-    translation_not_unique: Die Übersetzung sollte eindeutig sein.
-
+  translator:
+    title: Übersetzungen
+    inline_edit_title: Übersetzung Einfügen
+    emptytext: Nicht übersetzt
+    invalid_translation: Ungültige Übersetzung!
+    fatal_error_occurred: Während des Speicherns ist ein Fehler aufgetreten. Bitte später erneut versuchen.
+  translations: Übersetzungen
+  translation_not_unique: Die Übersetzung sollte eindeutig sein.
 settings:
-    translator:
-        add: Übersetzung Erstellen
-        edit: Übersetzung Bearbeiten
-        refresh_live: Liveseite Aktualisieren
-        import_translations: Importieren
-        import_translations_forced: Importieren und Überschreiben
-        actions: Aktionen
-        export_translations: Export nach csv
-        not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
-        not_live_warning: "Die Übersetzungen der Liveseite sind nicht aktuell. Bitte 'Liveseite Aktualisieren' klicken."
-        choose_language: "Sprache Auswählen"
-        succesful_added: "Übersetzung wurde erfolgreich angelegt"
-        succesful_edited: "Übersetzung wurde erfolgreich bearbeitet"
+  translator:
+    add: Übersetzung Erstellen
+    edit: Übersetzung Bearbeiten
+    refresh_live: Liveseite Aktualisieren
+    import_translations_forced: Importieren und Überschreiben
+    import_translations: Importieren
+    actions: Aktionen
+    export_translations: Export nach csv
+    not_live_warning: "Die Übersetzungen der Liveseite sind nicht aktuell. Bitte 'Liveseite Aktualisieren' klicken."
+    choose_language: "Sprache Auswählen"
+    succesful_added: "Übersetzung wurde erfolgreich angelegt"
+    succesful_edited: "Übersetzung wurde erfolgreich bearbeitet"
+kuma_translator:
+  form:
+    text_with_locale:
+      locale:
+        label: Locale
+      text:
+        label: Text
+  command:
+    clear:
+      flash:
+        success: All live translations are up to date.
+    import:
+      flash:
+        success: Translations successfully imported, none existing translations were overwritten.
+        force_success: Translations successfully imported, all existing translations were overwritten.
+  modal:
+    confirmation:
+      force_import:
+        title: Are you sure you want to force an import?
+        body: All existing translations will be overwritten.
+        confirm_button: Import
+        cancel_button: Cancel
+  adminlist:
+    header:
+      domain: Domain
+      keyword: Keyword
+    filter:
+      domain: Domain
+      keyword: Keyword
+      text: Text
+      locale: Locale

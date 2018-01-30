@@ -60,7 +60,7 @@ class MediaTokenTransformer implements DataTransformerInterface
                 $parsed = parse_url($src, PHP_URL_QUERY);
                 parse_str($parsed, $query);
 
-                if ($query['token']) {
+                if (isset($query['token'])) {
                     $image->setAttribute('src', $query['token']);
                 }
                 $image->setAttribute('data-src', $src);

@@ -1,128 +1,113 @@
-# Pages
+---
 pages:
-    title: Strony
-    parts: Części strony
-    draft: Szkic
-    pagenottranslated: Ta strona nie jest przetłumaczona
-    copyfrom: Kopiuj z języka
-    createemptypage: Utwórz jako pustą stronę
-    movingconfirmation: Przenosisz "%title%" do "%target%", jesteś pewien?
-
-# Modules
+  title: Strony
+  parts: Części strony
+  draft: Szkic
+  pagenottranslated: Ta strona nie jest przetłumaczona
+  copyfrom: Kopiuj z języka
+  createemptypage: Utwórz jako pustą stronę
+  movingconfirmation: Przenosisz "%title%" do "%target%", jesteś pewien?
 modules:
-    title: Moduły
-
-# Settings
+  title: Moduły
 settings:
-    title: Ustawienia
-    maintanance: Utrzymanie
-    scheduled: Zaplanowane zadania
-    version:
-        bundle: Wersje modułów
-        composer_lock_not_found: Brak pliku composer.lock w katalogu głównym
-        error_parsing_composer: Błąd przetwarzania pliku composer.lock, format json nieprawidłowy
-        error: Wystąpił błąd podczas pobierania wersji informacji. Spróbuj jeszcze raz później.
-        moreinfo: Aby zaktualizować moduły, użyj komendy composer update. Możliwe, że będziesz musiał zaktualizować pozostałe moduły w przypadku konfliktów
-        uptodate: jest aktualny
-        toupdate: może być aktualizowany do
-        unknown: wersji nieznanych informacji
-
-# Tools
+  title: Ustawienia
+  maintanance: Utrzymanie
+  scheduled: Zaplanowane zadania
+  version:
+    bundle: Wersje modułów
+    composer_lock_not_found: Brak pliku composer.lock w katalogu głównym
+    error_parsing_composer: Błąd przetwarzania pliku composer.lock, format json nieprawidłowy
+    error: Wystąpił błąd podczas pobierania wersji informacji. Spróbuj jeszcze raz później.
+    moreinfo: Aby zaktualizować moduły, użyj komendy composer update. Możliwe, że będziesz musiał zaktualizować pozostałe moduły w przypadku konfliktów
+    uptodate: jest aktualny
+    toupdate: może być aktualizowany do
+    unknown: wersji nieznanych informacji
 tools:
-    title: Narzędzia
-    clear_frontend_cache: Wyczyść frontend cache
-    clear_backend_cache: Wyczyść backend cache
-    clear_all_caches: Wyczyść wszystkie cache
-    shutdown: Zamknij
-
-# Search
+  title: Narzędzia
+  clear_frontend_cache: Wyczyść frontend cache
+  clear_backend_cache: Wyczyść backend cache
+  clear_all_caches: Wyczyść wszystkie cache
+  shutdown: Zamknij
 search:
-    title: Szukaj
-
-# Forms
+  title: Szukaj
 form:
-    cancel: Anuluj
-    delete: Usuń
-    deletesure: Jesteś pewien, że chcesz usunąć ten element?
-    edit: Edytuj
-    add: Dodaj
-    'add.%subject%': 'Utwórz nowy %subject%'
-    save: Zapisz
-    publish: Opublikuj
-    unpublish: Cofnij publikację
-    saveasdraft: Zapisz w postaci szkicu
-    name: Nazwa
-    type: Typ
-    error: Błąd
-    warning: Ostrzeżenie
-    headsup: Ostrzeżenie
-    forgot:
-        password: Nie pamiętam hasła.
-    permissions: Uprawnienia
-    properties: Właściwości
-    createdat: Utworzono
-    updatedat: Zaktualizowano
-    actions: Akcje
-    addfilter: Dodaj filtr
-    choosetypefilter: Filtruj wg.
-    versions: Wersje
-    button:
-        dropdown:
-            more: Więcej
-        filter:
-            clear: Wyczyść
-            filter: Filtruj
-
+  cancel: Anuluj
+  delete: Usuń
+  deletesure: Jesteś pewien, że chcesz usunąć ten element?
+  edit: Edytuj
+  add: Dodaj
+  'add.%subject%': 'Utwórz nowy %subject%'
+  save: Zapisz
+  publish: Opublikuj
+  unpublish: Cofnij publikację
+  saveasdraft: Zapisz w postaci szkicu
+  name: Nazwa
+  type: Typ
+  error: Błąd
+  warning: Ostrzeżenie
+  headsup: Ostrzeżenie
+  forgot:
+    password: Nie pamiętam hasła.
+  permissions: Uprawnienia
+  properties: Właściwości
+  createdat: Utworzono
+  updatedat: Zaktualizowano
+  actions: Akcje
+  addfilter: Dodaj filtr
+  choosetypefilter: Filtruj wg.
+  versions: Wersje
+  button:
+    dropdown:
+      more: Więcej
+    filter:
+      clear: Wyczyść
+      filter: Filtruj
 omnext:
-    home: Strona główna
-    title: Witamy!
-    welcome: Witamy.
-    information: <strong>Informacja.</strong> Brak nowych powiadomień
-
+  home: Strona główna
+  title: Witamy!
+  welcome: Witamy.
+  information: <strong>Informacja.</strong> Brak nowych powiadomień
 permissions:
-    you_made_changes: Wprowadziłeś zmiany uprawnień na tej stronie.
-    apply_recursively: Zastosuj zmiany dla wszystkich podrzędnych stron
-    review_changes: Przejrzyj wprowadzone zmiany
-    changes: Zmiany w pozwoleniach
-    permissions_added: 'Następujące uprawnienia zostaną <strong>dodane</strong>:'
-    permissions_removed: 'Następujące uprawnienia zostaną <strong>usunięte</strong>:'
-    role_name: Nazwa roli
-
+  you_made_changes: Wprowadziłeś zmiany uprawnień na tej stronie.
+  apply_recursively: Zastosuj zmiany dla wszystkich podrzędnych stron
+  review_changes: Przejrzyj wprowadzone zmiany
+  changes: Zmiany w pozwoleniach
+  permissions_added: 'Następujące uprawnienia zostaną <strong>dodane</strong>:'
+  permissions_removed: 'Następujące uprawnienia zostaną <strong>usunięte</strong>:'
+  role_name: Nazwa roli
 errors:
-    oauth:
-        invalid: You are not able to login to Google OAuth, your domain name is probably not allowed.
-
+  oauth:
+    invalid: Nie możesz zalogować się do Google OAuth, twoja domena jest prawdopodobnie niedozwolona.
 kuma_admin:
-    flash_type:
-        success: Sukces
-        warning: Ostrzeżenie
-        error:   Błąd
-        info:    Informacja
-        danger:  Uwaga
-    dashboard:
-        configuration:
-            title:
-                label: Tytul
-            content:
-                label: Zawartość (raw html)
-    edit:
-        flash:
-            success: Strona powitalna została zmodyfikowana!
-    password_check:
-        flash:
-            error: Twoje hasło nie zostało zmienione
-    ga_ajax_controller:
-        flash:
-            success: Pomyślnie zapisano!
-    media:
-        flash:
-            'deleted_success.%medianame%': Wpis '%medianame%' został usunięty!
-            drop_success:       Pomyślnie wgrano plik!
-            drop_unrecognized:  Nieznany format!
-    login:
-        forgot_password: Zapomniałeś hasła
-        invalid_credentials: Błędne hasło lub email
-
+  flash_type:
+    success: Sukces
+    warning: Ostrzeżenie
+    error: Błąd
+    info: Informacja
+    danger: Uwaga
+  dashboard:
+    configuration:
+      title:
+        label: Tytul
+      content:
+        label: Zawartość (raw html)
+  edit:
+    flash:
+      success: Strona powitalna została zmodyfikowana!
+  password_check:
+    flash:
+      error: Twoje hasło nie zostało zmienione
+  ga_ajax_controller:
+    flash:
+      success: Pomyślnie zapisano!
+  media:
+    flash:
+      'deleted_success.%medianame%': Wpis '%medianame%' został usunięty!
+      drop_success: Pomyślnie wgrano plik!
+      drop_unrecognized: Nieznany format!
+  login:
+    forgot_password: Zapomniałeś hasła
+    invalid_credentials: Błędne hasło lub email
 kuma_js:
-    auto_collapse:
-        more_button_label: Więcej
+  auto_collapse:
+    more_button_label: Więcej

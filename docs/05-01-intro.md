@@ -15,5 +15,7 @@ The cookbook is a continuously growing collection of recipes that explain how to
 * [Adding a custom controller](./05-12-adding-a-custom-controller.md)
 * [Using a custom filesystem for the media bundle](./05-13-using-a-custom-filesystem-for-the-media-bundle.md)
 * [Enabling google login](./05-14-enabling-google-auth-login.md)
+* [Using the cache bundle](./05-15-using-the-cache-bundle.md)
+* [Using anacrontab](./05-16-using-anacrontab.md)
 
 > Have some cool insight or thing you did with the CMS? Please share it with us and other developers by [sending a pull request](./07-00-contributing.md)!

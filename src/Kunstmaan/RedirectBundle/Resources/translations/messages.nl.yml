@@ -1,32 +1,31 @@
+---
 redirect:
-    title: Verwijzingen
-    all: Alle domeinen
-    origin_info: Het adres wat moet worden doorverwezen, bijv. /contest
-    target_info: Het adres waar naartoe wordt verwezen, bijv. /en/contests/summer-contest
-
-    form:
-        redirect:
-            domain:
-                label: Domein
-            origin:
-                label: Origin
-            target:
-                label: Target
-            permanent:
-                label: Permanent
-            note:
-                label: Notitie
-
-    adminlist:
-        header:
-            domain:     Domein
-            origin:     Origin
-            target:     Target
-            permanent:  Permanent?
-            note:       Notitie
-        filter:
-            domain:     Domein
-            origin:     Origin
-            target:     Target
-            permanent:  Permanent
-            note:       Notitie
+  title: Omleidingen
+  all: Alle domeinen
+  origin_info: De URL die u wilt omleiden, bijvoorbeeld. /contest
+  target_info: Het adres waar naartoe wordt verwezen, bijv. /en/contests/summer-contest
+  form:
+    redirect:
+      domain:
+        label: Domein
+      origin:
+        label: Origin
+      target:
+        label: Target
+      permanent:
+        label: Permanent
+      note:
+        label: Notitie
+  adminlist:
+    header:
+      domain: Domein
+      origin: Origin
+      target: Target
+      permanent: Permanent?
+      note: Notitie
+    filter:
+      domain: Domein
+      origin: Origin
+      target: Target
+      permanent: Permanent
+      note: Notitie

@@ -53,7 +53,7 @@ class {{ entity_class }}PageRepository extends AbstractArticlePageRepository
         }
 
 	if ($limit) {
-	    $qb->setMaxResults(1);
+	    $qb->setMaxResults($limit);
 
 	    if ($offset) {
 		$qb->setFirstResult($offset);

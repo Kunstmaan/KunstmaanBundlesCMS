@@ -1,36 +1,37 @@
+---
 article:
-    warning:
-        create_overview_page: U moet minstens één overview pagina maken alvorens u een %type% pagina kan aanmaken
+  warning:
+    create_overview_page: U moet ten minste één overzichtspagina maken voordat u een %type%-pagina kunt maken
+  form:
+    date:
+      label: Datum
+    summary:
+      label: Samenvatting
+  modal:
+    add:
+      label: '%type% item toevoegen aan %page%'
+  author:
+    list:
+      header:
+        name: Naam
+        link: Koppeling
+      filter:
+        name: Naam
+        link: Koppeling
     form:
-        date:
-            label: Datum
-        summary:
-            label: Samenvatting
-    modal:
-        add:
-            label: Voeg %type% item toe aan %page%
-    author:
-        list:
-            header:
-                name:   Naam
-                link:   Link
-            filter:
-                name:   Naam
-                link:   Link
-        form:
-            name:
-                label: Naam
-            link:
-                label: Link
-    page:
-        list:
-            header:
-                title:      Titel
-                created_at: Gemaakt op
-                updated_at: Bewerkt op
-                online:     Online
-            filter:
-                title:      Titel
-                created_at: Gemaakt op
-                updated_at: Bewerkt op
-                online:     Online
+      name:
+        label: Naam
+      link:
+        label: Koppeling
+  page:
+    list:
+      header:
+        title: Titel
+        created_at: Aangemaakt op
+        updated_at: Gewijzigd op
+        online: Online
+      filter:
+        title: Titel
+        created_at: Aangemaakt op
+        updated_at: Gewijzigd op
+        online: Online

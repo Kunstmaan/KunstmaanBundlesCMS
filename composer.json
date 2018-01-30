@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
         "symfony/symfony": "~3.0",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
@@ -30,7 +30,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
-        "friendsofsymfony/user-bundle": "2.0.0-beta1",
+        "friendsofsymfony/user-bundle": "~2.0",
         "knplabs/knp-menu-bundle": "~2.0",
         "guzzlehttp/guzzle": "~6.1",
         "white-october/pagerfanta-bundle": "~1.0",
@@ -39,8 +39,8 @@
         "gedmo/doctrine-extensions": "~2.3",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "liip/imagine-bundle": "v1.4.3",
-        "imagine/imagine": "v0.5.0",
+        "liip/imagine-bundle": "~1.7",
+        "imagine/imagine": "~0.6",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "~2.0",
         "fpn/doctrine-extensions-taggable": "~0.9",
@@ -48,7 +48,8 @@
         "twig/extensions": "~1.0",
         "egulias/email-validator": "~1.2",
         "box/spout": "^2.5",
-        "ruflin/elastica": "^3.2"
+        "ruflin/elastica": "^3.2",
+        "defuse/php-encryption": "v2.1.0"
     },
     "require-dev": {
         "behat/behat": "3.1.0rc1",
@@ -93,7 +94,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.1-dev"
+            "dev-master": "4.2-dev"
         }
     }
 }

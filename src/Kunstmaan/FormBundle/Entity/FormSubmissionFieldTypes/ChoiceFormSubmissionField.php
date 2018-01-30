@@ -74,7 +74,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
             $values = $this->getValue();
             $choices = $this->getChoices();
 
-            if (is_array($values) && sizeof($values) > 0) {
+            if (is_array($values) && count($values) > 0) {
                 $result = array();
                 foreach ($values as $value) {
                     $result[] = array_key_exists($value, $choices) ? trim($choices[$value]) : $value;
@@ -99,7 +99,7 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     {
         $values = $this->getValue();
         if (is_array($values)) {
-            return empty($values) || sizeof($values) <= 0;
+            return empty($values) || count($values) <= 0;
         } elseif (is_string($values)) {
             return (!isset($values) || trim($values) === '');
         } else {

@@ -16,7 +16,7 @@ class UtilitiesTwigExtension extends Twig_Extension
     /**
      * @param $slugifier
      */
-    function __construct($slugifier)
+    public function __construct($slugifier)
     {
         $this->slugifier = $slugifier;
     }

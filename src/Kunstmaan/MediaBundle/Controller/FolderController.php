@@ -99,13 +99,14 @@ class FolderController extends Controller
     }
 
     /**
-     * @param int $folderId
+     * @param Request $request
+     * @param int     $folderId
      *
      * @Route("/delete/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_delete")
      *
      * @return RedirectResponse
      */
-    public function deleteAction($folderId)
+    public function deleteAction(Request $request, $folderId)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -132,7 +133,7 @@ class FolderController extends Controller
             );
             $folderId = $parentFolder->getId();
         }
-        if (strpos($_SERVER['HTTP_REFERER'],'chooser')) {
+        if (strpos($request->server->get('HTTP_REFERER', ''),'chooser')) {
             $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
         } else $redirect = 'KunstmaanMediaBundle_folder_show';
 
@@ -178,7 +179,7 @@ class FolderController extends Controller
                         '%folder%' => $folder->getName()
                     ))
                 );
-                if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
+                if (strpos($request->server->get('HTTP_REFERER', ''),'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
                 } else $redirect = 'KunstmaanMediaBundle_folder_show';
 
@@ -243,7 +244,7 @@ class FolderController extends Controller
                         '%folder%' => $folder->getName()
                     ))
                 );
-                if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
+                if (strpos($request->server->get('HTTP_REFERER', ''),'chooser') !== false) {
                     $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
                 } else $redirect = 'KunstmaanMediaBundle_folder_show';
 

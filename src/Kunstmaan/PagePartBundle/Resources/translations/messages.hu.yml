@@ -1,53 +1,50 @@
+---
 pagepart:
-    header:
-        type: Fejléc típusa
-        title: Cím
-
-    link:
-        choose: Link oldalelem
-        openinnewwindow: Új ablakban nyissa meg
-        text: Link szövege
-
-    html:
-        content: Html tartalom
-
-    text:
-        content: Tartalom
-
-    buttons:
-        move_up: Felfelé mozgatás
-        move_down: Lefelé mozgatás
-        edit: Szerkesztés
-        delete: Törlés
-        resize: Gomb újraméretezése
-
+  header:
+    type: 'Fejléc típusa'
+    title: 'Cím'
+  link:
+    internal: Internal
+    external: External
+    email: Email
+    choose: 'Link oldalelem'
+    openinnewwindow: 'Új ablakban nyissa meg'
+    text: 'Link szövege'
+  html:
+    content: 'Html tartalom'
+  text:
+    content: 'Tartalom'
+  buttons:
+    move_up: Felfelé mozgatás
+    move_down: Lefelé mozgatás
+    edit: Szerkesztés
+    delete: Törlés
+    resize: Gomb újraméretezése
 region:
-    button:
-        min: Minimalizálás
-        max: Maximalizálás
-
+  button:
+    min: Minimalizálás
+    max: Maximalizálás
 kuma_pagepart:
-    tab:
-        content:
-            title: Tartalom
+  tab:
+    content:
+      title: Tartalom
+  modal:
+    delete:
+      'title.%type%': "'%type%' oldalelem törlése"
+      'text.%type%': Ez nem távolítja el teljesen az oldalelemet, mentsd az oldalt, hogy a módosítás végleges legyen.
+      button:
+        delete: Törlés
+        cancel: Mégse
+  select:
+    add: Oldalelem hozzáadása
+  template:
     modal:
-        delete:
-            'title.%type%':  "'%type%' oldalelem törlése"
-            'text.%type%': Ez nem távolítja el teljesen az oldalelemet, mentsd az oldalt, hogy a módosítás végleges legyen.
-            button:
-                delete: Törlés
-                cancel: Mégse
-    select:
-        add:  Oldalelem hozzáadása
-
-    template:
-        modal:
-            change:
-                current:    Jelenlegi
-                title:      Sablon módosítása
-                button:
-                    open:   Sablon módosítása
-                    change: Módosítás
-                    cancel: Mégse
-                message:
-                    'no_admin_found.%name%':    'NINCS ADMINJA a következőnek: %name%'
+      change:
+        current: Jelenlegi
+        title: Sablon módosítása
+        button:
+          open: Sablon módosítása
+          change: Módosítás
+          cancel: Mégse
+        message:
+          'no_admin_found.%name%': 'NINCS ADMINJA a következőnek: %name%'
