@@ -74,7 +74,7 @@ class NodeRepository extends NestedTreeRepository
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('b.deleted = 0')
+            ->where('b.deleted = false')
             ->setParameter('lang', $lang)
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
@@ -283,7 +283,8 @@ class NodeRepository extends NestedTreeRepository
                 case 'sqlite':
                     $statement = 'CASE WHEN %s THEN %s ELSE %s END';
                     break;
-
+                case 'postgresql':
+                    return sprintf('COALESCE(%s, %s)', $trueValue, $falseValue);
                 default:
                     $statement = 'IF(%s, %s, %s)';
             }
@@ -295,7 +296,7 @@ class NodeRepository extends NestedTreeRepository
 n.id, n.parent_id AS parent, t.url, t.id AS nt_id,
 {$createIfStatement('t.weight IS NULL', 'v.weight', 't.weight')} AS weight,
 {$createIfStatement('t.title IS NULL', 'v.title', 't.title')} AS title,
-{$createIfStatement('t.online IS NULL', '0', 't.online')} AS online,
+t.online AS online,
 n.hidden_from_nav AS hidden,
 n.ref_entity_name AS ref_entity_name
 SQL;
@@ -315,8 +316,8 @@ SQL;
                 'v',
                 '(v.node_id = n.id AND v.lang <> :lang)'
             )
-            ->where('n.deleted = 0')
-            ->addGroupBy('n.id')
+            ->where('n.deleted = false')
+            ->addGroupBy('n.id, t.id, v.id')
             ->addOrderBy('t.weight', 'ASC')
             ->addOrderBy('t.title', 'ASC');
 
@@ -370,7 +371,7 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('node.deleted = 0');
+            ->where('node.deleted = false');
 
         if ($lang) {
             $qb->andWhere('t.lang = :lang')
@@ -414,7 +415,7 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('node.deleted = 0')
+            ->where('node.deleted = false')
             ->andWhere('node.parent IS NULL');
 
         if ($lang) {
@@ -446,7 +447,7 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('b.deleted = 0')
+            ->where('b.deleted = false')
             ->andWhere('b.parent IS NULL');
 
         $result = $qb->getQuery()->getResult();
@@ -479,7 +480,7 @@ SQL;
                 'WITH',
                 't.publicNodeVersion = v.id'
             )
-            ->where('n.deleted = 0')
+            ->where('n.deleted = false')
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName)
             ->andWhere('t.lang = :lang')
@@ -516,7 +517,7 @@ SQL;
     {
         $qb = $this->createQueryBuilder('n')
             ->select('n')
-            ->where('n.deleted = 0')
+            ->where('n.deleted = false')
             ->andWhere('n.internalName = :internalName')
             ->setParameter('internalName', $internalName);
 
