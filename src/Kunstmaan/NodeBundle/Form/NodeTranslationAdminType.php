@@ -2,37 +2,15 @@
 
 namespace Kunstmaan\NodeBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Kunstmaan\NodeBundle\Form\Type\NodeTranslationAdminType as NodeTranslationAdminFormType;
 
 /**
- * NodeTranslationAdminType
+ * Class NodeTranslationAdminType
+ * @package Kunstmaan\NodeBundle\Form
+ *
+ * @deprecated Use Kunstmaan\NodeBundle\Form\Type\NodeTranslationAdminType instead
  */
-class NodeTranslationAdminType extends AbstractType
+class NodeTranslationAdminType extends NodeTranslationAdminFormType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('id', HiddenType::class);
-    }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'nodetranslation';
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\NodeBundle\Entity\NodeTranslation',
-        ));
-    }
 }

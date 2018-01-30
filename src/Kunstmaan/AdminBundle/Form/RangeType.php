@@ -7,40 +7,15 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Kunstmaan\AdminBundle\Form\Type\RangeType as RangeFormType;
 
 /**
- * HTML5 range type field
+ * Class RangeType
+ * @package Kunstmaan\AdminBundle\Form
+ *
+ * @deprecated Use Kunstmaan\AdminBundle\Form\Type\RangeType instead
  */
-class RangeType extends AbstractType
+class RangeType extends RangeFormType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array('attr' => array('min' => 0, 'max' => 100, 'step' => 1)));
-    }
 
-    /**
-     * Get parent
-     *
-     * @return string
-     */
-    public function getParent()
-    {
-        return IntegerType::class;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'range';
-    }
 }

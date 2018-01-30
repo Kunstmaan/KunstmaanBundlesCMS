@@ -1,0 +1,38 @@
+<?php
+
+namespace Kunstmaan\NodeBundle\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * NodeAdminType
+ */
+class NodeAdminType extends AbstractType
+{
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('id', HiddenType::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'node';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Kunstmaan\NodeBundle\Entity\Node',
+        ));
+    }
+}

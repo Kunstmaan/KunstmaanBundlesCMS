@@ -2,48 +2,15 @@
 
 namespace Kunstmaan\ArticleBundle\Form;
 
-use Kunstmaan\NodeBundle\Form\PageAdminType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Kunstmaan\ArticleBundle\Form\Type\AbstractArticleOverviewPageAdminType as AbstractArticleOverviewPageAdminFormType;
 
 /**
- * The admin type for abstract article overview pages
+ * Class AbstractArticleOverviewPageAdminType
+ * @package Kunstmaan\ArticleBundle\Form
+ *
+ * @deprecated Use Kunstmaan\ArticleBundle\Form\Type\AbstractArticleOverviewPageAdminType instead
  */
-class AbstractArticleOverviewPageAdminType extends PageAdminType
+class AbstractArticleOverviewPageAdminType extends AbstractArticleOverviewPageAdminFormType
 {
-    /**
-     * Builds the form.
-     *
-     * This method is called for each type in the hierarchy starting form the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        parent::buildForm($builder, $options);
-    }
 
-    /**
-     * Sets the default options for this type.
-     *
-     * @param OptionsResolver $resolver The resolver for the options.
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\ArticleBundle\Entity\AbstractOverviewArticlePage'
-        ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'AbstractArticleOverviewPage';
-    }
 }

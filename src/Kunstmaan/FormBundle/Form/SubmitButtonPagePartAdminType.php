@@ -2,41 +2,15 @@
 
 namespace Kunstmaan\FormBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Kunstmaan\FormBundle\Form\Type\SubmitButtonPagePartAdminType as SubmitButtonPagePartAdminFormType;
 
 /**
- * This class represents the type for the SubmitButtonPagePart
+ * Class SubmitButtonPagePartAdminType
+ * @package Kunstmaan\FormBundle\Form
+ *
+ * @deprecated Use Kunstmaan\FormBundle\Form\Type\SubmitButtonPagePartAdminType instead
  */
-class SubmitButtonPagePartAdminType extends AbstractType
+class SubmitButtonPagePartAdminType extends SubmitButtonPagePartAdminFormType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('label', null, array(
-                'required' => false,
-                'label' => 'kuma_form.form.submit_button_page_part.label.label'
-            ));
-    }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'kunstmaan_formbundle_singlelinetextpageparttype';
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart'));
-    }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminBundle\Form\RoleType;
+use Kunstmaan\AdminBundle\Form\Type\RoleType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\AdminList\RoleAdminListConfigurator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

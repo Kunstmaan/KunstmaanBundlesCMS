@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\GeneratorBundle\Command;
 
-use Kunstmaan\AdminBundle\Form\WysiwygType;
+use Kunstmaan\AdminBundle\Form\Type\WysiwygType;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
 use Kunstmaan\MediaBundle\Form\Type\MediaType;

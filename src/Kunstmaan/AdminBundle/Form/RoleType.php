@@ -2,31 +2,17 @@
 
 namespace Kunstmaan\AdminBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Kunstmaan\AdminBundle\Form\Type\RoleType as RoleFormType;
 
 /**
+ * Class RoleType
+ * @package Kunstmaan\AdminBundle\Form
+ *
  * RoleType defines the form used for {@link Role}
+ *
+ * @deprecated Use Kunstmaan\AdminBundle\Form\Type\RoleType instead
  */
-class RoleType extends AbstractType
+class RoleType extends RoleFormType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('role', TextType::class, array (
-            'required' => true,
-            'label' => 'settings.role.role',
-        ));
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'role';
-    }
 }

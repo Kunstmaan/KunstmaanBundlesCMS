@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminBundle\Form\GroupType;
+use Kunstmaan\AdminBundle\Form\Type\GroupType;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 
 use Kunstmaan\UserManagementBundle\AdminList\GroupAdminListConfigurator;

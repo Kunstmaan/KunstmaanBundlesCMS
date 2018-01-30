@@ -5,7 +5,7 @@ namespace Kunstmaan\AdminBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Entity\DashboardConfiguration;
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
-use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
+use Kunstmaan\AdminBundle\Form\Type\DashboardConfigurationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
