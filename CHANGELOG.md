@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.1.1 / 2018-01-30
+
+* [NodeSearchBundle] Added extra properties for elasticsearch mapping [#1794](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1794) ([@deZinc](https://github.com/deZinc)) 
+* [SeoBundle] Refactor seo description to be longer according to google's new length [#1780](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1780) ([@rebelchris](https://github.com/rebelchris)) 
+* [AllBundles] Postgres compatibility fixes [#1778](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1778) ([@acrobat](https://github.com/acrobat)) 
+* [AdminListBundle]: fix divs [#1770](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1770) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 4.1.0 / 2017-12-28
 
 * [AdminListBundle] Fix property visibility [#1766](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1766) ([@cv65kr](https://github.com/cv65kr)) 
