@@ -1,0 +1,15 @@
+{% macro tabbed_form_start(formParams) %}
+    {% if tabPane is defined %}
+        {{ form_start(tabPane.formView, formParams) }}
+    {% else %}
+        {{ form_start(form, formParams) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro tabbed_form_end() %}
+    {% if tabPane is defined %}
+        {{ form_end(tabPane.formView) }}
+    {% else %}
+        {{ form_end(form) }}
+    {% endif %}
+{% endmacro %}
