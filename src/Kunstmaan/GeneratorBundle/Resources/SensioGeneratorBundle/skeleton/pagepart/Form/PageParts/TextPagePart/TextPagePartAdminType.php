@@ -3,7 +3,7 @@
 namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\Form\AbstractType;
-use Kunstmaan\AdminBundle\Form\WysiwygType;
+use Kunstmaan\AdminBundle\Form\Type\WysiwygType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
