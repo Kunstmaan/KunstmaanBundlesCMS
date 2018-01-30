@@ -5,11 +5,11 @@ namespace Kunstmaan\AdminBundle\EventListener;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\Toolbar\DataCollector;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -61,6 +61,11 @@ class ToolbarListener implements EventSubscriberInterface
     protected $adminRouteHelper;
 
     /**
+     * @var array
+     */
+    protected $providerKeys;
+
+    /**
      * ToolbarListener constructor.
      *
      * @param \Twig_Environment     $twig
@@ -71,9 +76,19 @@ class ToolbarListener implements EventSubscriberInterface
      * @param bool                  $enabled
      * @param ContainerInterface    $container
      * @param AdminRouteHelper      $adminRouteHelper
+     * @param array                 $providerKeys
      */
-    public function __construct(\Twig_Environment $twig, UrlGeneratorInterface $urlGenerator, DataCollector $dataCollector, AuthorizationChecker $authorizationChecker, TokenStorageInterface $tokenStorage, $enabled, ContainerInterface $container, AdminRouteHelper $adminRouteHelper)
-    {
+    public function __construct(
+        \Twig_Environment $twig,
+        UrlGeneratorInterface $urlGenerator,
+        DataCollector $dataCollector,
+        AuthorizationChecker $authorizationChecker,
+        TokenStorageInterface $tokenStorage,
+        bool $enabled,
+        ContainerInterface $container,
+        AdminRouteHelper $adminRouteHelper,
+        array $providerKeys
+    ) {
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
         $this->dataCollector = $dataCollector;
@@ -82,6 +97,7 @@ class ToolbarListener implements EventSubscriberInterface
         $this->enabled = $enabled;
         $this->container = $container;
         $this->adminRouteHelper = $adminRouteHelper;
+        $this->providerKeys = $providerKeys;
     }
 
     /**
@@ -116,12 +132,25 @@ class ToolbarListener implements EventSubscriberInterface
         $url = $event->getRequest()->getRequestUri();
         $token = $this->tokenStorage->getToken();
 
+        // Only enable toolbar when the firewall name equals the provided config value kunstmaan_admin.provider_key.
+        if (null !== $token && method_exists($token, 'getProviderKey')) {
+            $key = $token->getProviderKey();
+        } else {
+            $key = 'main';
+        }
+
         // Do not capture redirects or modify XML HTTP Requests
-        if (!$event->isMasterRequest() || $request->isXmlHttpRequest() || $this->adminRouteHelper->isAdminRoute($url) || !$token || !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$token || !\in_array($key, $this->providerKeys, false) || !$event->isMasterRequest() || $request->isXmlHttpRequest(
+            ) || $this->adminRouteHelper->isAdminRoute(
+                $url
+            ) || !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             return;
         }
 
-        if ($response->isRedirection() || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'html'))
+        if ($response->isRedirection() || ($response->headers->has('Content-Type') && false === strpos(
+                    $response->headers->get('Content-Type'),
+                    'html'
+                ))
             || 'html' !== $request->getRequestFormat()
             || false !== stripos($response->headers->get('Content-Disposition'), 'attachment;')
         ) {
