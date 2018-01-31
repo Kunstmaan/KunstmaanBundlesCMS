@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.0.0 / 2018-01-31
+
+* [ArticleBundle]: set correct translation [#1801](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1801) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] twig files should use the generated article class name [#1800](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1800) ([@sandergo90](https://github.com/sandergo90)) 
+* [KunstmaanNodeSearchBundle] add keyword as data type [#1793](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1793) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle] add option to specify provider keys for toolbar listener [#1787](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1787) ([@sandergo90](https://github.com/sandergo90)) 
+* [DashboardBundle] fix javascript error [#1786](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1786) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] Update babel env [#1755](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1755) ([@dbeerten](https://github.com/dbeerten)) 
+
 ## 5.0.0-RC2 / 2018-01-02
 
 * [NodeBundle]: better node translation listener [#1772](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1772) ([@sandergo90](https://github.com/sandergo90)) 
