@@ -61,7 +61,6 @@ EOT
             $this->assistant->writeSection('Layout generation');
         }
 
-        $this->browserSyncUrl = $this->assistant->getOptionOrDefault('browsersync', null);
         $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
         $this->createGenerator()->generate($this->bundle, $rootDir, $this->assistant->getOption('demosite'), $this->browserSyncUrl);
 
@@ -84,6 +83,7 @@ EOT
          */
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('layout', $bundleNamespace);
+        $this->browserSyncUrl = $this->assistant->getOptionOrDefault('browsersync', null);
 
         if (null === $this->browserSyncUrl) {
             $this->browserSyncUrl = $this->assistant->ask('Which URL would you like to configure for browserSync?', 'http://myproject.dev');
