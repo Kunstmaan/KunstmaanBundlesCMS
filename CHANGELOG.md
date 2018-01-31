@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.2.0 / 2018-01-31
+
+* [GeneratorBundle] Fix missing browser sync option for generate commands [#1798](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1798) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminListBundle] translatable adminlists [#1586](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1586) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 4.1.1 / 2018-01-30
 
 * [NodeSearchBundle] Added extra properties for elasticsearch mapping [#1794](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1794) ([@deZinc](https://github.com/deZinc)) 
