@@ -34,35 +34,37 @@ class FileFormSubmissionTypeTest extends TypeTestCase
 //        );
 //    }
 //
-//    public function testFormType()
-//    {
-//        $formData = [
-//            'file' => [
-//                'label' => 'file',
-//                'fieldName' => 'photo',
-//                'url' => 'https://cia.gov',
-//                'sequence' => 'ABC',
-//                'fileName' => 'most-wanted.jpg',
-//                'uuid' => '123',
-//            ],
-//        ];
-//
-//        $form = $this->factory->create(FileFormSubmissionType::class);
-//
-//        $field = new FileFormSubmissionField();
-//        $field->setLabel('file');
-//        $field->setFieldName('photo');
-//        $field->setUrl('https://cia.gov');
-//        $field->setSequence('ABC');
-//        $field->setFileName('most-wanted.jpg');
-//        $field->setUuid('123');
-//        $field;
-//
-//        $form->submit($formData);
-//
-//        $this->assertTrue($form->isSynchronized());
-//        $this->assertTrue($form->isValid());
-//
-//        $this->assertEquals($field, $form->getData());
-//    }
+    public function testFormType()
+    {
+        $formData = [
+            'file' => [
+                'label' => 'file',
+                'fieldName' => 'photo',
+                'url' => 'https://cia.gov',
+                'sequence' => 'ABC',
+                'fileName' => 'most-wanted.jpg',
+                'uuid' => '123',
+            ],
+        ];
+
+        $form = $this->factory->create(FileFormSubmissionType::class);
+
+        $field = new FileFormSubmissionField();
+        $field->setLabel('file');
+        $field->setFieldName('photo');
+        $field->setUrl('https://cia.gov');
+        $field->setSequence('ABC');
+        $field->setFileName('most-wanted.jpg');
+        $field->setUuid('123');
+
+        $form->submit($formData);
+
+        $this->assertTrue($form->isSynchronized());
+        $this->assertTrue($form->isValid());
+
+        /**
+         * @todo
+         */
+        //$this->assertEquals($field, $form->getData());
+    }
 }
