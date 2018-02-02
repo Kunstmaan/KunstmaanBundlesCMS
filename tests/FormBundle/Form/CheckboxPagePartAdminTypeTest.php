@@ -2,9 +2,7 @@
 
 namespace Tests\Kunstmaan\FormBundle\Entity;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
-use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
