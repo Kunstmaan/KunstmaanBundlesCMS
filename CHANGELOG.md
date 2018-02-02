@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.2 / 2018-02-02
+
+* [AdminBundle] fixed z-index of modal [#1805](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1805) ([@deZinc](https://github.com/deZinc)) 
+* [NodeBundle] fixed triple page tree [#1804](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1804) ([@deZinc](https://github.com/deZinc)) 
+
+
 ## 4.2.0 / 2018-01-31
 
 * [GeneratorBundle] Fix missing browser sync option for generate commands [#1798](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1798) ([@Devolicious](https://github.com/Devolicious)) 
