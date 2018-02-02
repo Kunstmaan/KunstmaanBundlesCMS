@@ -7,7 +7,7 @@ use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
- * Class ChoiceFormSubmissionTypeTest
+ * Class ChoicePagePartAdminTypeTest
  */
 class ChoicePagePartAdminTypeTest extends TypeTestCase
 {
