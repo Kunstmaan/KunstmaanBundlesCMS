@@ -29,9 +29,9 @@ class BooleanFormSubmissionType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField',
-        ));
+        ]);
     }
 
     /**
