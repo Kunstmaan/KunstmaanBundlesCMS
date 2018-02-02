@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.2 / 2018-02-02
+
+* [AdminBundle] fixed z-index of modal [#1805](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1805) ([@deZinc](https://github.com/deZinc)) 
+* [NodeBundle] fixed triple page tree [#1804](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1804) ([@deZinc](https://github.com/deZinc)) 
+
+
 ## 4.1.1 / 2018-01-30
 
 * [NodeSearchBundle] Added extra properties for elasticsearch mapping [#1794](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1794) ([@deZinc](https://github.com/deZinc)) 
