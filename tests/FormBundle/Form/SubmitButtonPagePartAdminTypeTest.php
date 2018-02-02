@@ -2,9 +2,7 @@
 
 namespace Tests\Kunstmaan\FormBundle\Entity;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
-use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
 use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
