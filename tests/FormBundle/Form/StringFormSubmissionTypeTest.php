@@ -27,7 +27,13 @@ class StringFormSubmissionTypeTest extends TypeTestCase
 
         $this->assertTrue($form->isSynchronized());
         $this->assertTrue($form->isValid());
-
         $this->assertEquals($object, $form->getData());
+
+        $view = $form->createView();
+        $children = $view->children;
+
+        foreach (array_keys($formData) as $key) {
+            $this->assertArrayHasKey($key, $children);
+        }
     }
 }

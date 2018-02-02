@@ -73,5 +73,14 @@ class AbstractFormPageAdminTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertTrue($form->isValid());
         $this->assertEquals($formPage, $form->getData());
+
+
+
+        $view = $form->createView();
+        $children = $view->children;
+
+        foreach (array_keys($formData) as $key) {
+            $this->assertArrayHasKey($key, $children);
+        }
     }
 }
