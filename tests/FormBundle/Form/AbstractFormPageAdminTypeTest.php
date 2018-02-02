@@ -1,38 +1,12 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Entity;
+namespace Tests\Kunstmaan\FormBundle\Form;
 
-use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tests\Kunstmaan\FormBundle\Entity\FormPage;
 
-class FormPage extends AbstractFormPage
-{
-    public function getPossibleChildTypes()
-    {
-        return null;
-    }
-
-    public function getPagePartAdminConfigurations()
-    {
-        return [
-            [
-                'name'  => 'ContentPage',
-                'class' => '{{ namespace }}\Entity\Pages\ContentPage'
-            ],
-            [
-                'name'  => 'FormPage',
-                'class' => '{{ namespace }}\Entity\Pages\FormPage'
-            ]
-        ];
-    }
-
-    public function getDefaultView()
-    {
-        return 'some.twig';
-    }
-}
 
 class NonAbstractFormPageAdminType extends AbstractFormPageAdminType
 {

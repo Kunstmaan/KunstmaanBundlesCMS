@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Entity;
+namespace Tests\Kunstmaan\FormBundle\Form;
 
 use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
 use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
