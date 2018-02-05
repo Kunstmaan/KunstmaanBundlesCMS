@@ -52,3 +52,7 @@ kuma_translator:
       keyword: Kulcsszó
       text: Szöveg
       locale: Nyelv
+toolbar:
+  translations:
+    title: Translations
+    count: Count
