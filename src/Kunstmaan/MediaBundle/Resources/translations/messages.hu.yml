@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Nincs megjeleníthető elem
   media:
-    "no": Még nincs fájl ebben a könyvtárban.
+    no: Még nincs fájl ebben a könyvtárban.
     dnd:
       tip: "Tip:"
       tiptext: Tudtad, hogy a fájlokat egyből ebbe a mappába is feltöltheted?
@@ -58,7 +58,7 @@ media:
       success:
         text: A `%folder%` mappa üres!
     sub:
-      "no": Még nincsenek almappák
+      no: Még nincsenek almappák
     delete:
       action: Törlés
       action_short: Törlés
