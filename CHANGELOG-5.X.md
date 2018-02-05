@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.0.2 / 2018-02-05
+
+* [KunstmaanAdminBundle]: rebuild styling [#1806](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1806) ([@sandergo90](https://github.com/sandergo90)) 
+
+
+## 5.0.1 / 2018-02-02
+
+* [All]: Bump version for upmerged bugfix 
+
+
 ## 5.0.0 / 2018-01-31
 
 * [ArticleBundle]: set correct translation [#1801](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1801) ([@sandergo90](https://github.com/sandergo90)) 
