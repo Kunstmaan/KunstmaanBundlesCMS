@@ -52,3 +52,7 @@ kuma_translator:
       keyword: Keyword
       text: Text
       locale: Locale
+toolbar:
+  translations:
+    title: Translations
+    count: Count
