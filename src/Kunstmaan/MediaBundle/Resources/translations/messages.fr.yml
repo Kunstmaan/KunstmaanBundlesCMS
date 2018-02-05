@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Rien à voir ici.
   media:
-    "no": Pas encore de fichier dans ce dossier.
+    no: Pas encore de fichier dans ce dossier.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -58,7 +58,7 @@ media:
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": Pas encore de sous-dossiers.
+      no: Pas encore de sous-dossiers.
     delete:
       action: Supprimer ce dossier
       action_short: Supprimer
