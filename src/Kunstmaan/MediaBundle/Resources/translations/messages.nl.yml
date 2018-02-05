@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Niets te zien hier.
   media:
-    "no": Er staan nog geen bestanden in deze map.
+    no: Er staan nog geen bestanden in deze map.
     dnd:
       tip: "Tip:"
       tiptext: wist u dat u meerdere bestanden hier naartoe kunt slepen?
@@ -58,7 +58,7 @@ media:
       success:
         text: Map '%folder%' is leeggemaakt!
     sub:
-      "no": Nog geen submappen.
+      no: Nog geen submappen.
     delete:
       action: Verwijder deze map
       action_short: Verwijder
