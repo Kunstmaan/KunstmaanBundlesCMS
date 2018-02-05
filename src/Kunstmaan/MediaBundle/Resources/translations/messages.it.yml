@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Niente da vedere qui.
   media:
-    "no": Non sono presenti file in questa cartella.
+    no: Non sono presenti file in questa cartella.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -58,7 +58,7 @@ media:
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": Sottocartelle non presenti.
+      no: Sottocartelle non presenti.
     delete:
       action: Cancella questa cartella
       action_short: Cancella
