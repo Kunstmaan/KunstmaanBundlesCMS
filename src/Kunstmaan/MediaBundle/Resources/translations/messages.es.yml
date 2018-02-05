@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Nothing to see here.
   media:
-    "no": No files in this folder yet.
+    no: No files in this folder yet.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -58,7 +58,7 @@ media:
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": No subfolders yet.
+      no: No subfolders yet.
     delete:
       action: Delete this folder
       action_short: Delete
