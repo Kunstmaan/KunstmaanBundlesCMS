@@ -10,7 +10,7 @@ class SearchConfigurationChainTest extends \PHPUnit_Framework_TestCase
 {
     public function testAddAndGetConfiguration()
     {
-        $configuration = $this->getMock('Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface');
+        $configuration = $this->createMock('Kunstmaan\SearchBundle\Configuration\SearchConfigurationInterface');
 
         $chain = new SearchConfigurationChain();
         $chain->addConfiguration($configuration, 'configuration');

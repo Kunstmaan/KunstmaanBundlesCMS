@@ -58,7 +58,7 @@ class RedirectAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
 
     public function testBuildFilters()
     {
-        $filterBuilder = $this->getMock('Kunstmaan\AdminListBundle\AdminList\FilterBuilder');
+        $filterBuilder = $this->createMock('Kunstmaan\AdminListBundle\AdminList\FilterBuilder');
         $filterBuilder
             ->expects($this->at(0))
             ->method('add')

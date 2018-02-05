@@ -21,7 +21,7 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->emMock = $this->getMock('\Doctrine\ORM\EntityManager',
+        $this->emMock = $this->createMock('\Doctrine\ORM\EntityManager',
             array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
     }
 
@@ -69,7 +69,7 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
      */
     protected function entityWithName($name)
     {
-        $this->entityMock = $this->getMock('Kunstmaan\NodeBundle\Entity\AbstractPage');
+        $this->entityMock = $this->createMock('Kunstmaan\NodeBundle\Entity\AbstractPage');
         $this->entityMock->expects($this->once())->method('getTitle')->will($this->returnValue($name));
     }
 
@@ -92,7 +92,7 @@ class TwigExtensionTests extends \PHPUnit_Framework_TestCase
     protected function ensureSeoRepoMock()
     {
         if (is_null($this->seoRepoMock)) {
-            $this->seoRepoMock = $this->getMock('Kunstmaan\SeoBundle\Repository\SeoRepository', array(), array(), '', false);
+            $this->seoRepoMock = $this->createMock('Kunstmaan\SeoBundle\Repository\SeoRepository', array(), array(), '', false);
         }
     }
 

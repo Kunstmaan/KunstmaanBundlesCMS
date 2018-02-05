@@ -34,12 +34,12 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateFromTemplate($template = null)
     {
-        $adminList = $this->getMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
-        $iterator = $this->getMock('\Iterator');
+        $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
+        $iterator = $this->createMock('\Iterator');
         $adminList->expects($this->once())->method('getIterator')->willReturn($iterator);
 
         $templateName = is_null($template) ? 'KunstmaanAdminListBundle:Default:export.csv.twig' : $template;
-        $renderer = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
+        $renderer = $this->createMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $renderer->expects($this->once())
             ->method('render')
             ->with($templateName,
@@ -64,7 +64,7 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testStreamExcelSheet()
     {
-        $adminList = $this->getMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
+        $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
 
         $response = $this->object->streamExcelSheet($adminList);
 

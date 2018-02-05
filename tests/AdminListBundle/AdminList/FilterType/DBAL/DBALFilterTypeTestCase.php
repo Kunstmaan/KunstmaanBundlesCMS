@@ -14,7 +14,7 @@ abstract class DBALFilterTypeTestCase extends \PHPUnit_Framework_TestCase
     protected function getQueryBuilder()
     {
         /* @var Connection $conn */
-        $conn = $this->getMock('Doctrine\DBAL\Connection', array(), array(), '', false);
+        $conn = $this->createMock('Doctrine\DBAL\Connection', array(), array(), '', false);
 
         $expressionBuilder = new ExpressionBuilder($conn);
 

@@ -68,7 +68,7 @@ class CloneListenerTest extends PHPUnit_Framework_TestCase
         $this->configurator = new PagePartAdminConfigurator();
         $this->configurator->setContext('main');
 
-        $this->reader = $this->getMock(PagePartConfigurationReaderInterface::class);
+        $this->reader = $this->createMock(PagePartConfigurationReaderInterface::class);
         $this->reader
             ->expects($this->any())
             ->method('getPagePartAdminConfigurators')
@@ -86,7 +86,7 @@ class CloneListenerTest extends PHPUnit_Framework_TestCase
 
     public function testClonePagePart()
     {
-        $entity = $this->getMock(HasPagePartsInterface::class);
+        $entity = $this->createMock(HasPagePartsInterface::class);
 
         $clone = clone $entity;
 
@@ -100,7 +100,7 @@ class CloneListenerTest extends PHPUnit_Framework_TestCase
 
     public function testClonePageTemplate()
     {
-        $entity = $this->getMock(HasPageTemplateInterface::class);
+        $entity = $this->createMock(HasPageTemplateInterface::class);
 
         /** @var HasPageTemplateInterface|\PHPUnit_Framework_MockObject_MockObject $clone */
         $clone = clone $entity;

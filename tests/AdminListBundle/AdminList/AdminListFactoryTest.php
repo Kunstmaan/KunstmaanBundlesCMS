@@ -27,7 +27,7 @@ class AdminListFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateList()
     {
         /* @var AdminListConfiguratorInterface $mockConfig */
-        $mockConfig = $this->getMock('Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface');
+        $mockConfig = $this->createMock('Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface');
         $list = $this->object->createList($mockConfig);
 
         $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\AdminList', $list);
@@ -36,7 +36,7 @@ class AdminListFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateExportList()
     {
         /* @var ExportListConfiguratorInterface $mockConfig */
-        $mockConfig = $this->getMock('Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface');
+        $mockConfig = $this->createMock('Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface');
         $list = $this->object->createExportList($mockConfig);
 
         $this->assertInstanceOf('Kunstmaan\AdminListBundle\AdminList\ExportList', $list);

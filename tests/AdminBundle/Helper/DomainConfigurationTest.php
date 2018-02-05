@@ -92,7 +92,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
 
     private function getContainer($map)
     {
-        $this->container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
 
         $this->container
             ->method('getParameter')
@@ -108,7 +108,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
 
     private function getRequestStack()
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($this->getRequest());
 
         return $requestStack;

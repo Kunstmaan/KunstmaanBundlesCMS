@@ -59,7 +59,7 @@ class SeoTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetOgImageWithImage()
     {
-        $media = $this->getMock('Kunstmaan\MediaBundle\Entity\Media');
+        $media = $this->createMock('Kunstmaan\MediaBundle\Entity\Media');
         $this->object->setOgImage($media);
         $this->assertEquals($media, $this->object->getOgImage());
     }
@@ -108,7 +108,7 @@ class SeoTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetTwitterImageWithImage()
     {
-        $media = $this->getMock('Kunstmaan\MediaBundle\Entity\Media');
+        $media = $this->createMock('Kunstmaan\MediaBundle\Entity\Media');
         $this->object->setTwitterImage($media);
         $this->assertEquals($media, $this->object->getTwitterImage());
     }

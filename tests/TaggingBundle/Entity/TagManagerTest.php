@@ -301,11 +301,11 @@ class TagManagerTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->em->expects($this->any())
+        $config->expects($this->any())
             ->method('getCustomHydrationMode')
             ->will($this->returnValue(null));
 
-        $this->em->expects($this->any())
+        $config->expects($this->any())
             ->method('addCustomHydrationMode')
             ->will($this->returnValue(null));
 
@@ -323,11 +323,11 @@ class TagManagerTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->em->expects($this->any())
+        $config->expects($this->any())
             ->method('getCustomHydrationMode')
             ->will($this->returnValue(null));
 
-        $this->em->expects($this->any())
+        $config->expects($this->any())
             ->method('addCustomHydrationMode')
             ->will($this->returnValue(null));
 

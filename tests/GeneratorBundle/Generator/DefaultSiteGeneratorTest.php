@@ -31,7 +31,7 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
 
     protected function getBundle($path)
     {
-        $bundle = $this->getMock('Symfony\Component\HttpKernel\Bundle\BundleInterface');
+        $bundle = $this->createMock('Symfony\Component\HttpKernel\Bundle\BundleInterface');
         $bundle
             ->expects($this->any())
             ->method('getNamespace')
@@ -55,14 +55,14 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
 
     protected function getRegistry()
     {
-        $registry = $this->getMock('Symfony\Bridge\Doctrine\RegistryInterface');
+        $registry = $this->createMock('Symfony\Bridge\Doctrine\RegistryInterface');
 
         return $registry;
     }
 
     protected function getAssistant()
     {
-        $output = $this->getMock('Symfony\Component\Console\Output\OutputInterface');
+        $output = $this->createMock('Symfony\Component\Console\Output\OutputInterface');
 
         $commandAssistant = new CommandAssistant();
         $commandAssistant->setOutput($output);

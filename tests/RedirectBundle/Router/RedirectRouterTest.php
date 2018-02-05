@@ -45,7 +45,7 @@ class RedirectRouterTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()->getMock();
         $secondDomainConfiguration->expects($this->any())->method('getHost')->will($this->returnValue('other.domain.com'));
 
-        $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
         $this->repository->expects($this->any())->method('findAll')->will($this->returnValue($this->getRedirects()));
 
         $this->firstObject     = new RedirectRouter($this->repository, $firstDomainConfiguration);

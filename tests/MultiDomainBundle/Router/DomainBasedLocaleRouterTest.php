@@ -59,7 +59,7 @@ class DomainBasedLocaleRouterTest extends PHPUnit_Framework_TestCase
 
     private function getContainer($request, $nodeTranslation = null)
     {
-        $container    = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container    = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration()),
@@ -75,7 +75,7 @@ class DomainBasedLocaleRouterTest extends PHPUnit_Framework_TestCase
 
     private function getRequestStack($request)
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;
@@ -83,7 +83,7 @@ class DomainBasedLocaleRouterTest extends PHPUnit_Framework_TestCase
 
     private function getDomainConfiguration()
     {
-        $domainConfiguration = $this->getMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
 
@@ -99,7 +99,7 @@ class DomainBasedLocaleRouterTest extends PHPUnit_Framework_TestCase
         $domainConfiguration->method('getFrontendLocales')
             ->willReturn(array('nl', 'en'));
 
-        $node = $this->getMock('Kunstmaan\NodeBundle\Entity\Node');
+        $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
@@ -118,7 +118,7 @@ class DomainBasedLocaleRouterTest extends PHPUnit_Framework_TestCase
 
     private function getEntityManager($nodeTranslation = null)
     {
-        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
         $em
             ->method('getRepository')
             ->with($this->equalTo('KunstmaanNodeBundle:NodeTranslation'))

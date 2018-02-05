@@ -42,13 +42,13 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testGetGroupIds()
     {
-        $group1 = $this->getMock('FOS\UserBundle\Model\GroupInterface');
+        $group1 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
         $group1
             ->expects($this->once())
             ->method('getId')
             ->will($this->returnValue(1));
 
-        $group2 = $this->getMock('FOS\UserBundle\Model\GroupInterface');
+        $group2 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
         $group2
             ->expects($this->once())
             ->method('getId')
@@ -65,9 +65,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testGetGroups()
     {
         /* @var $group1 GroupInterface */
-        $group1 = $this->getMock('FOS\UserBundle\Model\GroupInterface');
+        $group1 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
         /* @var $group2 GroupInterface */
-        $group2 = $this->getMock('FOS\UserBundle\Model\GroupInterface');
+        $group2 = $this->createMock('FOS\UserBundle\Model\GroupInterface');
         $this->object->addGroup($group1);
         $this->object->addGroup($group2);
 

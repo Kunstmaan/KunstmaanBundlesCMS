@@ -95,7 +95,7 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->willReturn($query);
 
 
-        $emMock  = $this->getMock('\Doctrine\ORM\EntityManager', [], [], '', false);
+        $emMock  = $this->createMock('\Doctrine\ORM\EntityManager', [], [], '', false);
         $emMock->expects($this->any())
             ->method('getRepository')
             ->will($this->returnValue(new TestRepository()));

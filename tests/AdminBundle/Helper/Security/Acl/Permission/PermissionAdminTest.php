@@ -41,7 +41,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     {
         $object = $this->getInitializedPermissionAdmin();
 
-        $role = $this->getMock('Symfony\Component\Security\Core\Role\RoleInterface');
+        $role = $this->createMock('Symfony\Component\Security\Core\Role\RoleInterface');
         $role->expects($this->once())
             ->method('getRole')
             ->will($this->returnValue('ROLE_TEST'));
@@ -96,7 +96,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $object = new PermissionAdmin($em, $context, $aclProvider, $retrievalStrategy, $dispatcher, $shell, $kernel);
 
         $permissions = array('PERMISSION1', 'PERMISSION2');
-        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
+        $permissionMap = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
         $permissionMap
             ->expects($this->any())
             ->method('getPossiblePermissions')
@@ -151,7 +151,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function getAclProvider()
     {
-        return $this->getMock('Symfony\Component\Security\Acl\Model\AclProviderInterface');
+        return $this->createMock('Symfony\Component\Security\Acl\Model\AclProviderInterface');
     }
 
     /**
@@ -161,7 +161,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function getTokenStorage()
     {
-        return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        return $this->createMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
     }
 
     /**
@@ -171,7 +171,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function getOidRetrievalStrategy()
     {
-        return $this->getMock('Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface');
+        return $this->createMock('Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface');
     }
 
     /**
@@ -181,7 +181,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function getEventDispatcher()
     {
-        return $this->getMock('Symfony\Component\EventDispatcher\EventDispatcher');
+        return $this->createMock('Symfony\Component\EventDispatcher\EventDispatcher');
     }
 
     /**
@@ -197,7 +197,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function getKernel()
     {
-        return $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
+        return $this->createMock('Symfony\Component\HttpKernel\KernelInterface');
     }
 
     /**
@@ -239,7 +239,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($acl));
 
         $retrievalStrategy = $this->getOidRetrievalStrategy();
-        $objectIdentity = $this->getMock('Symfony\Component\Security\Acl\Model\ObjectIdentityInterface');
+        $objectIdentity = $this->createMock('Symfony\Component\Security\Acl\Model\ObjectIdentityInterface');
         $retrievalStrategy
             ->expects($this->once())
             ->method('getObjectIdentity')
@@ -272,7 +272,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $object = $this->getPermissionAdmin();
         $entity = $this->getEntity();
         /* @var $permissionMap PermissionMapInterface */
-        $permissionMap = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
+        $permissionMap = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface');
         $object->initialize($entity, $permissionMap);
 
         return $object;

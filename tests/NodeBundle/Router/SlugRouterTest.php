@@ -37,7 +37,7 @@ class SlugRouterTest extends PHPUnit_Framework_TestCase
 
     public function testSetContext()
     {
-        $context = $this->getMock('Symfony\Component\Routing\RequestContext');
+        $context = $this->createMock('Symfony\Component\Routing\RequestContext');
         $container = $this->getContainer(null);
         $object    = new SlugRouter($container);
         $object->setContext($context);
@@ -67,7 +67,7 @@ class SlugRouterTest extends PHPUnit_Framework_TestCase
 
     private function getContainer($request, $multiLanguage = false, $nodeTranslation = null)
     {
-        $container    = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container    = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration($multiLanguage)),
@@ -83,7 +83,7 @@ class SlugRouterTest extends PHPUnit_Framework_TestCase
 
     private function getRequestStack($request)
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;
@@ -91,7 +91,7 @@ class SlugRouterTest extends PHPUnit_Framework_TestCase
 
     private function getDomainConfiguration($multiLanguage = false)
     {
-        $domainConfiguration = $this->getMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
         $domainConfiguration->method('getHost')
             ->willReturn('domain.tld');
 
@@ -126,7 +126,7 @@ class SlugRouterTest extends PHPUnit_Framework_TestCase
 
     private function getEntityManager($nodeTranslation = null)
     {
-        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
         $em
             ->method('getRepository')
             ->with($this->equalTo('KunstmaanNodeBundle:NodeTranslation'))

@@ -53,7 +53,7 @@ class RedirectAdminTypeTest extends PHPUnit_Framework_TestCase
 
     public function testBuildForm()
     {
-        $builder = $this->getMock('Symfony\Component\Form\Test\FormBuilderInterface');
+        $builder = $this->createMock('Symfony\Component\Form\Test\FormBuilderInterface');
 
         $builder
             ->expects($this->at(0))
@@ -74,7 +74,7 @@ class RedirectAdminTypeTest extends PHPUnit_Framework_TestCase
 
         $this->objectSingleDomain->buildForm($builder, array('domainConfiguration' => $this->singleDomainConfiguration));
 
-        $builder = $this->getMock('Symfony\Component\Form\Test\FormBuilderInterface');
+        $builder = $this->createMock('Symfony\Component\Form\Test\FormBuilderInterface');
         $builder
             ->expects($this->at(0))
             ->method('add')

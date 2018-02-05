@@ -25,7 +25,7 @@ class ExportListTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->configurator = $this->getMock('Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface');
+        $this->configurator = $this->createMock('Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface');
         $this->configurator
             ->expects($this->once())
             ->method('buildExportFields');
@@ -49,7 +49,7 @@ class ExportListTest extends \PHPUnit_Framework_TestCase
 
     public function testGetIterator()
     {
-        $iterator = $this->getMock('\Iterator');
+        $iterator = $this->createMock('\Iterator');
         $this->configurator
             ->expects($this->once())
             ->method('getIterator')

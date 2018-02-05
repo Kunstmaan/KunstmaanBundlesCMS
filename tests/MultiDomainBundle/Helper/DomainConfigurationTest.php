@@ -187,7 +187,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
 
     private function getContainer($map, $request)
     {
-        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
 
         $container
             ->method('getParameter')
@@ -207,7 +207,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
 
     private function getEntityManager()
     {
-        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
         $em
             ->method('getRepository')
             ->with($this->equalTo('KunstmaanNodeBundle:Node'))
@@ -230,14 +230,14 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
 
     private function getRootNode()
     {
-        $this->node = $this->getMock('Kunstmaan\NodeBundle\Entity\Node');
+        $this->node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
 
         return $this->node;
     }
 
     private function getRequestStack($request)
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;
