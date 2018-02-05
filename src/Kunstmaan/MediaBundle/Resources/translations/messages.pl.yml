@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Niczego tutaj nie ma.
   media:
-    "no": W tym folderze nie ma na razie żadnych plików.
+    no: W tym folderze nie ma na razie żadnych plików.
     dnd:
       tip: "Rada:"
       tiptext: Czy wiesz, że tutaj możesz wgrać wiele plików jednocześnie?
@@ -58,7 +58,7 @@ media:
       success:
         text: Folder '%folder%' został wyczyszczony!
     sub:
-      "no": Brak podfolderów.
+      no: Brak podfolderów.
     delete:
       action: Usuń ten folder
       action_short: Usuń
