@@ -59,7 +59,7 @@
         "behat/mink-goutte-driver": "dev-master",
         "behat/mink-sahi-driver": "dev-master",
         "symfony/phpunit-bridge": "~3.0",
-        "phpunit/phpunit": "~4.4",
+        "phpunit/phpunit": "^5.3.27",
         "fzaninotto/faker": "~1.6",
         "nelmio/alice": "^2.1.4"
     },
