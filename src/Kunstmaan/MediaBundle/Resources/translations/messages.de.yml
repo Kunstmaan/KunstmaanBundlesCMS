@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Hier gibt es nichts zu sehen.
   media:
-    "no": Noch keine Dateien in diesem Verzeichnis.
+    no: Noch keine Dateien in diesem Verzeichnis.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -58,7 +58,7 @@ media:
       success:
         text: Folder '%folder%' has been emptied!
     sub:
-      "no": Noch keine Unterverzeichnisse vorhanden.
+      no: Noch keine Unterverzeichnisse vorhanden.
     delete:
       action: Verzeichnis Löschen
       action_short: Löschen
