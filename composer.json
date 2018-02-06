@@ -62,7 +62,8 @@
         "phpunit/phpunit": "^5.3.27",
         "fzaninotto/faker": "~1.6",
         "nelmio/alice": "^2.1.4",
-        "matthiasnoback/symfony-config-test": "2.2.0"
+        "matthiasnoback/symfony-config-test": "2.2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "1.2.0"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",
