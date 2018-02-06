@@ -220,9 +220,9 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertContains('\'ROLE_SUBJECT\'', $aclQuery);
-        $this->assertContains('\'ROLE_KING\'', $aclQuery);
-        $this->assertContains('\'IS_AUTHENTICATED_ANONYMOUSLY\'', $aclQuery);
+        $this->assertContains('"ROLE_SUBJECT"', $aclQuery);
+        $this->assertContains('"ROLE_KING"', $aclQuery);
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
         $this->assertContains('MyUser', $aclQuery);
     }
 
@@ -277,7 +277,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('n', $query->getHint('acl.entityRootTableDqlAlias'));
 
         $aclQuery = $query->getHint('acl.extra.query');
-        $this->assertContains('\'IS_AUTHENTICATED_ANONYMOUSLY\'', $aclQuery);
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
     }
 
     /**

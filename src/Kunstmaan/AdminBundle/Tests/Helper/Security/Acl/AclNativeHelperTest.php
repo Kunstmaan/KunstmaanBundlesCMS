@@ -167,9 +167,9 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertContains('\'ROLE_SUBJECT\'', $query);
-        $this->assertContains('\'ROLE_KING\'', $query);
-        $this->assertContains('\'IS_AUTHENTICATED_ANONYMOUSLY\'', $query);
+        $this->assertContains('"ROLE_SUBJECT"', $query);
+        $this->assertContains('"ROLE_KING"', $query);
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
         $this->assertContains('MyUser', $query);
     }
 
@@ -210,7 +210,7 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
         $qb = $this->object->apply($queryBuilder, $permissionDef);
         $query = $qb->getSQL();
 
-        $this->assertContains('\'IS_AUTHENTICATED_ANONYMOUSLY\'', $query);
+        $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
     }
 
     /**
