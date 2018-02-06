@@ -95,9 +95,7 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the Configuration to test
-     *
-     * @return Configuration
+     * @return KunstmaanVotingExtension
      */
     protected function getExtension()
     {
