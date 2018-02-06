@@ -3,22 +3,55 @@
 namespace Tests\Kunstmaan\MultiDomainBundle\Entity;
 
 use Kunstmaan\MultiDomainBundle\DependencyInjection\Configuration;
+use Kunstmaan\MultiDomainBundle\DependencyInjection\KunstmaanMultiDomainExtension;
+use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Config\Definition\ArrayNode;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class ConfigurationTest
  */
 class ConfigurationTest extends PHPUnit_Framework_TestCase
 {
-    public function testConfiguration()
+    use ConfigurationTestCaseTrait;
+
+    /**
+     * @return \Symfony\Component\Config\Definition\ConfigurationInterface
+     */
+    protected function getConfiguration()
     {
-        $object = new Configuration();
-        $builder = $object->getConfigTreeBuilder();
-        $this->assertInstanceOf(TreeBuilder::class, $builder);
-        $tree = $builder->buildTree();
-        $this->assertInstanceOf(ArrayNode::class, $tree);
-        $this->assertEquals('kunstmaan_multi_domain', $tree->getName());
+        return new Configuration();
+    }
+
+
+    public function testInvalidConfiguration()
+    {
+        $this->assertConfigurationIsInvalid( [[]], 'The child node "hosts" at path "kunstmaan_multi_domain" must be configured.');
+    }
+
+    public function testProcessedValueContainsRequiredValue()
+    {
+        $array = [
+            'hosts' => [
+                [
+                    'host' => 'cia.gov',
+                    'protocol' => 'https',
+                    'aliases' => ['cia.com'],
+                    'type' => 'single_lang',
+                    'root' => 'homepage',
+                    'default_locale' => 'nl',
+                    'locales' => [
+                        [
+                            'uri_locale' => '/nl',
+                            'locale' => 'nl',
+                            'extra' => 'huh?',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertProcessedConfigurationEquals([$array], $array);
     }
 }
