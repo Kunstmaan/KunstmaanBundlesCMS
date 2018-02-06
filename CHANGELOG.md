@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.3 / 2018-02-06
+
+* [AllBundles] Revert "Postgres compatibility fixes (#1778)" [#1810](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1810) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 4.1.2 / 2018-02-02
 
 * [AdminBundle] fixed z-index of modal [#1805](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1805) ([@deZinc](https://github.com/deZinc)) 
