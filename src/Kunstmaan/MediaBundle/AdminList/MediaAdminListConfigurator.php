@@ -179,7 +179,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     {
         $queryBuilder->andWhere('b.folder = :folder')
             ->setParameter('folder', $this->folder->getId())
-            ->andWhere('b.deleted = false')
+            ->andWhere('b.deleted = 0')
             ->orderBy('b.updatedAt', 'DESC');
 
         if ($this->request->get('_route') == 'KunstmaanMediaBundle_chooser_show_folder') {

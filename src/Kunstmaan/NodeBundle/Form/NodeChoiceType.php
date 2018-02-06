@@ -49,7 +49,7 @@ class NodeChoiceType extends AbstractType
                     ->innerJoin('nt.publicNodeVersion', 'nv')
                     ->andWhere('nt.online = :online')
                     ->andWhere('nt.lang = :lang')
-                    ->andWhere('n.deleted != true')
+                    ->andWhere('n.deleted != 1')
                     ->andWhere('n.refEntityName IN(:refEntityName)')
                     ->setParameter('lang', $options['locale'] ? $options['locale'] : $this->getCurrentLocale())
                     ->setParameter('refEntityName', $options['page_class'])
