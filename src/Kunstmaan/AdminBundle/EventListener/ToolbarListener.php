@@ -84,7 +84,7 @@ class ToolbarListener implements EventSubscriberInterface
         DataCollector $dataCollector,
         AuthorizationChecker $authorizationChecker,
         TokenStorageInterface $tokenStorage,
-        bool $enabled,
+        $enabled,
         ContainerInterface $container,
         AdminRouteHelper $adminRouteHelper,
         array $providerKeys
