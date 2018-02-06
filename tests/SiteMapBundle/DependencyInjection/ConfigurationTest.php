@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\SiteMapBundle\Entity;
+namespace Tests\Kunstmaan\SiteMapBundle\DependencyInjection;
 
 use Kunstmaan\SiteMapBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaBundle\Entity;
+namespace Tests\Kunstmaan\MediaBundle\DependencyInjection;
 
 use Kunstmaan\MediaBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;

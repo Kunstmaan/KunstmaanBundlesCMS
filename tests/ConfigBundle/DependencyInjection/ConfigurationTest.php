@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\ConfigBundle\Entity;
+namespace Tests\Kunstmaan\ConfigBundle\DependencyInjection;
 
 use Kunstmaan\ConfigBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;

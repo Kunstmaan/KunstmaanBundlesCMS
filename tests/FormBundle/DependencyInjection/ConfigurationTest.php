@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Entity;
+namespace Tests\Kunstmaan\FormBundle\DependencyInjection;
 
 use Kunstmaan\FormBundle\DependencyInjection\Configuration;
 use PHPUnit_Framework_TestCase;

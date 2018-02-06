@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\SeoBundle\Entity;
+namespace Tests\Kunstmaan\SeoBundle\DependencyInjection;
 
 use Kunstmaan\SeoBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
