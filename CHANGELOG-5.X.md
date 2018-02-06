@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.3 / 2018-02-06
+
+* [KunstmaanAdminBundle] change php7 to php5 code [#1807](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1807) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 5.0.2 / 2018-02-05
 
 * [KunstmaanAdminBundle]: rebuild styling [#1806](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1806) ([@sandergo90](https://github.com/sandergo90)) 
