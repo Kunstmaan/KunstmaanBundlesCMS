@@ -3,11 +3,8 @@
 namespace Tests\Kunstmaan\MultiDomainBundle\Entity;
 
 use Kunstmaan\MultiDomainBundle\DependencyInjection\Configuration;
-use Kunstmaan\MultiDomainBundle\DependencyInjection\KunstmaanMultiDomainExtension;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class ConfigurationTest
