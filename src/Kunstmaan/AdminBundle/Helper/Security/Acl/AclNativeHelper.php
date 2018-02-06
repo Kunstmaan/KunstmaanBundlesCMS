@@ -59,15 +59,13 @@ class AclNativeHelper
     {
         $aclConnection = $this->em->getConnection();
 
+        $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
         $rootEntity     = $permissionDef->getEntity();
         $linkAlias      = $permissionDef->getAlias();
         // Only tables with a single ID PK are currently supported
         $linkField      = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
-        $databasePlatform = $this->em->getConnection()->getDatabasePlatform()->getName();
 
-        if ($databasePlatform === 'mysql') {
-            $rootEntity = str_replace('\\', '\\\\', $rootEntity);
-        }
+        $rootEntity = '"' . str_replace('\\', '\\\\', $rootEntity) . '"';
         $query      = $queryBuilder;
 
         $builder = new MaskBuilder();
@@ -86,43 +84,37 @@ class AclNativeHelper
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array('\'IS_AUTHENTICATED_ANONYMOUSLY\'');
+        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
 
         /* @var $role RoleInterface */
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
             if ($role->getRole() !== 'ROLE_USER') {
-                $uR[] = '\'' . $role->getRole() . '\'';
+                $uR[] = '"' . $role->getRole() . '"';
             }
         }
         $uR       = array_unique($uR);
         $inString = implode(' OR s.identifier = ', (array) $uR);
 
         if (is_object($user)) {
-            $userClass = get_class($user);
-            if ($databasePlatform === 'mysql') {
-                $userClass = str_replace('\\',  '\\\\', $userClass);
-            }
-
-            $inString .= ' OR s.identifier = \'' . $userClass . '-' . $user->getUserName() . '\'';
-        }
-
-        $objectIdentifierColumn = 'o.object_identifier';
-        if ($databasePlatform === 'postgresql') {
-            $objectIdentifierColumn = 'o.object_identifier::BIGINT';
+            $inString .= ' OR s.identifier = "' . str_replace(
+                    '\\',
+                    '\\\\',
+                    get_class($user)
+                ) . '-' . $user->getUserName() . '"';
         }
 
         $joinTableQuery = <<<SELECTQUERY
-SELECT DISTINCT {$objectIdentifierColumn} as id FROM acl_object_identities as o
-INNER JOIN acl_classes c ON c.id = o.class_id
-LEFT JOIN acl_entries e ON (
+SELECT DISTINCT o.object_identifier as id FROM {$databasePrefix}acl_object_identities as o
+INNER JOIN {$databasePrefix}acl_classes c ON c.id = o.class_id
+LEFT JOIN {$databasePrefix}acl_entries e ON (
     e.class_id = o.class_id AND (e.object_identity_id = o.id
     OR {$aclConnection->getDatabasePlatform()->getIsNullExpression('e.object_identity_id')})
 )
-LEFT JOIN acl_security_identities s ON (
+LEFT JOIN {$databasePrefix}acl_security_identities s ON (
 s.id = e.security_identity_id
 )
-WHERE c.class_type = '{$rootEntity}'
+WHERE c.class_type = {$rootEntity}
 AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
