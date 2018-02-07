@@ -10,7 +10,7 @@
             <div class="blog-filter js-toggle-container">
                 <div class="blog-filter__top">
                     <div class="blog-filter__top__section blog-filter__top__section--filters">
-                        <strong>{{ 'article_overview_page.filter'|trans }}</strong>
+                        <h4>{{ 'article_overview_page.filter'|trans }}</h4>
                     </div>
                     <% if uses_tag %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_filter-tag.html.twig' with {'tags': tagContext.tags} %}<% endif %>
                     <% if uses_category %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_filter-category.html.twig' with {'categories': categoryContext.categories} %}<% endif %>
