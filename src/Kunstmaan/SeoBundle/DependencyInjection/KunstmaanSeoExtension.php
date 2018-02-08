@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 
-
 /**
  * This is the class that loads and manages your bundle configuration
  *
@@ -32,7 +31,7 @@ class KunstmaanSeoExtension extends Extension implements PrependExtensionInterfa
 
     public function prepend(ContainerBuilder $container)
     {
-        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());

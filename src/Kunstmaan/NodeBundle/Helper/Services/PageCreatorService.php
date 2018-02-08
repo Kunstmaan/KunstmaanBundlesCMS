@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Kunstmaan\AdminBundle\Repository\UserRepository;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class PageCreatorService
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $entityManager;
 
@@ -31,7 +32,6 @@ class PageCreatorService
      * @var string
      */
     protected $userEntityClass;
-
 
     public function setEntityManager($entityManager)
     {

@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 class AclNativeHelper
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em = null;
 
@@ -36,15 +36,15 @@ class AclNativeHelper
     /**
      * Constructor.
      *
-     * @param EntityManager            $em The entity manager
-     * @param TokenStorageInterface    $tokenStorage The security context
-     * @param RoleHierarchyInterface   $rh The role hierarchies
+     * @param EntityManagerInterface $em           The entity manager
+     * @param TokenStorageInterface  $tokenStorage The security context
+     * @param RoleHierarchyInterface $rh           The role hierarchies
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, RoleHierarchyInterface $rh)
     {
-        $this->em              = $em;
-        $this->tokenStorage    = $tokenStorage;
-        $this->roleHierarchy   = $rh;
+        $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
+        $this->roleHierarchy = $rh;
     }
 
     /**
@@ -60,48 +60,48 @@ class AclNativeHelper
         $aclConnection = $this->em->getConnection();
 
         $databasePrefix = is_file($aclConnection->getDatabase()) ? '' : $aclConnection->getDatabase().'.';
-        $rootEntity     = $permissionDef->getEntity();
-        $linkAlias      = $permissionDef->getAlias();
+        $rootEntity = $permissionDef->getEntity();
+        $linkAlias = $permissionDef->getAlias();
         // Only tables with a single ID PK are currently supported
-        $linkField      = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
+        $linkField = $this->em->getClassMetadata($rootEntity)->getSingleIdentifierColumnName();
 
-        $rootEntity = '"' . str_replace('\\', '\\\\', $rootEntity) . '"';
-        $query      = $queryBuilder;
+        $rootEntity = '"'.str_replace('\\', '\\\\', $rootEntity).'"';
+        $query = $queryBuilder;
 
         $builder = new MaskBuilder();
         foreach ($permissionDef->getPermissions() as $permission) {
-            $mask = constant(get_class($builder) . '::MASK_' . strtoupper($permission));
+            $mask = constant(get_class($builder).'::MASK_'.strtoupper($permission));
             $builder->add($mask);
         }
         $mask = $builder->get();
 
         /* @var $token TokenInterface */
-        $token     = $this->tokenStorage->getToken();
-        $userRoles = array();
+        $token = $this->tokenStorage->getToken();
+        $userRoles = [];
         if (!is_null($token)) {
-            $user      = $token->getUser();
+            $user = $token->getUser();
             $userRoles = $this->roleHierarchy->getReachableRoles($token->getRoles());
         }
 
         // Security context does not provide anonymous role automatically.
-        $uR = array('"IS_AUTHENTICATED_ANONYMOUSLY"');
+        $uR = ['"IS_AUTHENTICATED_ANONYMOUSLY"'];
 
         /* @var $role RoleInterface */
         foreach ($userRoles as $role) {
             // The reason we ignore this is because by default FOSUserBundle adds ROLE_USER for every user
             if ($role->getRole() !== 'ROLE_USER') {
-                $uR[] = '"' . $role->getRole() . '"';
+                $uR[] = '"'.$role->getRole().'"';
             }
         }
-        $uR       = array_unique($uR);
+        $uR = array_unique($uR);
         $inString = implode(' OR s.identifier = ', (array) $uR);
 
         if (is_object($user)) {
-            $inString .= ' OR s.identifier = "' . str_replace(
+            $inString .= ' OR s.identifier = "'.str_replace(
                     '\\',
                     '\\\\',
                     get_class($user)
-                ) . '-' . $user->getUserName() . '"';
+                ).'-'.$user->getUserName().'"';
         }
 
         $joinTableQuery = <<<SELECTQUERY
@@ -119,7 +119,7 @@ AND (s.identifier = {$inString})
 AND e.mask & {$mask} > 0
 SELECTQUERY;
 
-        $query->join($linkAlias, '(' . $joinTableQuery . ')', 'perms_', 'perms_.id = ' . $linkAlias . '.' . $linkField);
+        $query->join($linkAlias, '('.$joinTableQuery.')', 'perms_', 'perms_.id = '.$linkAlias.'.'.$linkField);
 
         return $query;
     }
