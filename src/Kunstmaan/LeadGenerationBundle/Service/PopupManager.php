@@ -2,9 +2,14 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 
+/**
+ * Class PopupManager
+ *
+ * @package Kunstmaan\LeadGenerationBundle\Service
+ */
 class PopupManager
 {
     /**
@@ -13,14 +18,14 @@ class PopupManager
     private $popups = null;
 
     /**
-     * @var EntityManager $em
+     * @var EntityManagerInterface $em
      */
     private $em;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -32,7 +37,7 @@ class PopupManager
      */
     public function getPopups()
     {
-        if (is_null($this->popups)) {
+        if (null === $this->popups) {
             $this->popups = $this->em->getRepository('KunstmaanLeadGenerationBundle:Popup\AbstractPopup')->findAll();
         }
 
@@ -46,7 +51,7 @@ class PopupManager
      */
     public function getUniqueJsIncludes()
     {
-        $includes = array();
+        $includes = [];
         foreach ($this->getPopups() as $popup) {
             foreach ($popup->getRules() as $rule) {
                 $includes[] = $rule->getJsFilePath();
@@ -58,22 +63,23 @@ class PopupManager
 
     /**
      * @param AbstractPopup $popup
+     *
      * @return array
      */
     public function getAvailableRules(AbstractPopup $popup)
     {
-        if (!is_null($popup->getAvailableRules())) {
+        if (null !== $popup->getAvailableRules()) {
             return $popup->getAvailableRules();
-        } else {
-            return array(
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXSecondsRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXScrollPercentRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\MaxXTimesRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\RecurringEveryXTimeRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlWhitelistRule',
-                'Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule'
-            );
         }
+
+        return [
+            'Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXSecondsRule',
+            'Kunstmaan\LeadGenerationBundle\Entity\Rule\AfterXScrollPercentRule',
+            'Kunstmaan\LeadGenerationBundle\Entity\Rule\MaxXTimesRule',
+            'Kunstmaan\LeadGenerationBundle\Entity\Rule\RecurringEveryXTimeRule',
+            'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule',
+            'Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlWhitelistRule',
+            'Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule',
+        ];
     }
 }

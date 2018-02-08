@@ -79,4 +79,12 @@ abstract class AbstractDataCollector extends BaseDataCollector implements DataCo
 
         return true;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reset()
+    {
+        $this->data = array();
+    }
 }

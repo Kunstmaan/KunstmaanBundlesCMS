@@ -8,6 +8,11 @@ use Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ExceptionDataCollector
+ *
+ * @package Kunstmaan\AdminBundle\Toolbar
+ */
 class ExceptionDataCollector extends AbstractDataCollector
 {
     /**
@@ -15,6 +20,11 @@ class ExceptionDataCollector extends AbstractDataCollector
      */
     private $em;
 
+    /**
+     * ExceptionDataCollector constructor.
+     *
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -34,9 +44,9 @@ class ExceptionDataCollector extends AbstractDataCollector
     public function collectData()
     {
         $model = $this->em->getRepository(Exception::class)->findExceptionStatistics();
-        if ( isset($model['cp_all'], $model['cp_sum']) ) {
+        if (isset($model['cp_all'], $model['cp_sum'])) {
             return [
-                'data' => $model
+                'data' => $model,
             ];
         } else {
             return [];
@@ -50,7 +60,7 @@ class ExceptionDataCollector extends AbstractDataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        if ( false === $this->isEnabled() ) {
+        if (false === $this->isEnabled()) {
             $this->data = false;
         } else {
             $this->data = $this->collectData();
