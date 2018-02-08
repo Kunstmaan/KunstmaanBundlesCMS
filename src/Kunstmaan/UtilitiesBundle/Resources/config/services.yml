@@ -5,19 +5,17 @@ parameters:
     kunstmaan_utilities.cipher.secret: ''
 
 services:
-    kunstmaan_utilities.shell:
-        class: '%kunstmaan_utilities.shell.class%'
+    Kunstmaan\UtilitiesBundle\Helper\Shell\Shell: ~
 
-    kunstmaan_utilities.cipher:
-        class: '%kunstmaan_utilities.cipher.class%'
-        arguments: ['%kunstmaan_utilities.cipher.secret%']
+    Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher:
+        arguments:
+            - '%kunstmaan_utilities.cipher.secret%'
 
-    kunstmaan_utilities.slugifier:
-        class: '%kunstmaan_utilities.slugifier.class%'
+    Kunstmaan\UtilitiesBundle\Helper\Slugifier: ~
 
-    kunstmaan_utilities.twig.extension:
-        class: Kunstmaan\UtilitiesBundle\Twig\UtilitiesTwigExtension
-        arguments: ['@kunstmaan_utilities.slugifier']
+    Kunstmaan\UtilitiesBundle\Twig\UtilitiesTwigExtension:
+        arguments:
+            - '@Kunstmaan\UtilitiesBundle\Helper\Slugifier'
         tags:
             - { name: twig.extension }
 

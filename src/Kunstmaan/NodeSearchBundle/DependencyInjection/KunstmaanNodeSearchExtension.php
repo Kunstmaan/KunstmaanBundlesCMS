@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\NodeSearchBundle\DependencyInjection;
 
+use Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration;
+use Kunstmaan\NodeSearchBundle\Search\NodeSearcher;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -31,11 +33,11 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
         }
 
         if (array_key_exists('use_match_query_for_title', $config)) {
-            $container->getDefinition('kunstmaan_node_search.search.node')
+            $container->getDefinition(NodeSearcher::class)
                 ->addMethodCall('setUseMatchQueryForTitle', [$config['use_match_query_for_title']]);
         }
 
-        $container->getDefinition('kunstmaan_node_search.search_configuration.node')
+        $container->getDefinition(NodePagesConfiguration::class)
             ->addMethodCall('setDefaultProperties', [$config['mapping']]);
 
         $container->setParameter('kunstmaan_node_search.contexts', $config['contexts']);
@@ -48,67 +50,70 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
      */
     public function prepend(ContainerBuilder $container)
     {
-        $container->prependExtensionConfig('kunstmaan_node_search', [
-            'mapping' => [
-                'root_id' => [
-                    'type' => 'integer',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'node_id' => [
-                    'type' => 'integer',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'nodetranslation_id' => [
-                    'type' => 'integer',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'nodeversion_id' => [
-                    'type' => 'integer',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'title' => [
-                    'type' => 'string',
-                    'include_in_all' => true
-                ],
-                'slug' => [
-                    'type' => 'string',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'type' => [
-                    'type' => 'string',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'page_class' => [
-                    'type' => 'string',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'content' => [
-                    'type' => 'string',
-                    'include_in_all' => true
-                ],
-                'created' => [
-                    'type' => 'date',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'updated' => [
-                    'type' => 'date',
-                    'include_in_all' => false,
-                    'index' => 'not_analyzed'
-                ],
-                'view_roles' => [
-                    'type' => 'string',
-                    'include_in_all' => true,
-                    'index' => 'not_analyzed',
+        $container->prependExtensionConfig(
+            'kunstmaan_node_search',
+            [
+                'mapping' => [
+                    'root_id' => [
+                        'type' => 'integer',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'node_id' => [
+                        'type' => 'integer',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'nodetranslation_id' => [
+                        'type' => 'integer',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'nodeversion_id' => [
+                        'type' => 'integer',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'title' => [
+                        'type' => 'string',
+                        'include_in_all' => true,
+                    ],
+                    'slug' => [
+                        'type' => 'string',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'type' => [
+                        'type' => 'string',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'page_class' => [
+                        'type' => 'string',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'content' => [
+                        'type' => 'string',
+                        'include_in_all' => true,
+                    ],
+                    'created' => [
+                        'type' => 'date',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'updated' => [
+                        'type' => 'date',
+                        'include_in_all' => false,
+                        'index' => 'not_analyzed',
+                    ],
+                    'view_roles' => [
+                        'type' => 'string',
+                        'include_in_all' => true,
+                        'index' => 'not_analyzed',
+                    ],
                 ],
             ]
-        ]);
+        );
     }
 }

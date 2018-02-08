@@ -2,30 +2,25 @@ parameters:
     kunstmaan_adminlist.service.export.class: Kunstmaan\AdminListBundle\Service\ExportService
 
 services:
-    kunstmaan_adminlist.factory:
-        class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
+    Kunstmaan\AdminListBundle\AdminList\AdminListFactory: ~
 
-    kunstmaan_adminlist.service.export:
-        class:  '%kunstmaan_adminlist.service.export.class%'
+    Kunstmaan\AdminListBundle\Service\ExportService:
         calls:
             -  [ setRenderer, [ '@templating' ] ]
             -  [ setTranslator, [ '@translator' ] ]
 
-    kunstmaan_adminlist.twig.extension:
-        class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
+    Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension:
         tags:
             -  { name: twig.extension }
 
-    kunstmaan_entity.admin_entity.entity_version_lock_service:
-        class: Kunstmaan\AdminListBundle\Service\EntityVersionLockService
+    Kunstmaan\AdminListBundle\Service\EntityVersionLockService:
         arguments:
-            -  '@doctrine.orm.entity_manager'
+            -  '@Doctrine\ORM\EntityManagerInterface'
             -  '%kunstmaan_entity.lock_threshold%'
             -  '%kunstmaan_entity.lock_enabled%'
 
-    kunstmaan_adminlist.subscriber.adminlist:
-        class: Kunstmaan\AdminListBundle\EventSubscriber\AdminListSubscriber
+    Kunstmaan\AdminListBundle\EventSubscriber\AdminListSubscriber:
         arguments:
-            - "@router"
+            - '@Symfony\Component\Routing\RouterInterface'
         tags:
             - { name: kernel.event_subscriber }

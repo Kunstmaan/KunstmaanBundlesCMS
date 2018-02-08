@@ -1,114 +1,96 @@
 parameters:
-    kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
+    kunstmaan_translator.menu.adaptor.class: Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor
     kunstmaan_translator.service.exporter.csv.class: Kunstmaan\TranslatorBundle\Service\Command\Exporter\CSVFileExporter
     kunstmaan_translator.toolbar.collector.translator.class: Kunstmaan\TranslatorBundle\Toolbar\TranslatorDataCollector
 
 services:
-    kunstmaan_translator.menu.adaptor:
-        class: '%kunstmaan_translator.menu.adaptor.class%'
+    Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor:
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_translator.service.abstract_command_handler:
+    Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler:
         abstract: true
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler'
         calls:
             - [setManagedLocales, ['%kuma_translator.managed_locales%']]
             - [setKernel, ['@kernel']]
 
-    kunstmaan_translator.service.importer.command_handler:
-        parent: kunstmaan_translator.service.abstract_command_handler
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\Importer\ImportCommandHandler'
+    Kunstmaan\TranslatorBundle\Service\Command\Importer\ImportCommandHandler:
+        parent: Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler
         calls:
-            - [setTranslationFileExplorer, ['@kunstmaan_translator.service.file_explorer']]
-            - [setImporter, ['@kunstmaan_translator.service.importer.importer']]
+            - [setTranslationFileExplorer, ['@Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer']]
+            - [setImporter, ['@Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer']]
 
-    kunstmaan_translator.service.exporter.command_handler:
+    Kunstmaan\TranslatorBundle\Service\Command\Exporter\ExportCommandHandler:
         parent: kunstmaan_translator.service.abstract_command_handler
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\Exporter\ExportCommandHandler'
         calls:
-            - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
-            - [setExporter, ['@kunstmaan_translator.service.exporter.exporter']]
+            - [setTranslationRepository, ['@Kunstmaan\TranslatorBundle\Repository\TranslationRepository']]
+            - [setExporter, ['@Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter']]
 
-    kunstmaan_translator.service.exporter.exporter:
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter'
+    Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter: ~
 
-    kunstmaan_translator.service.exporter.yaml:
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter'
+    Kunstmaan\TranslatorBundle\Service\Command\Exporter\YamlFileExporter:
         tags:
             - { name: 'translation.exporter', alias: 'yml' }
 
-    kunstmaan_translator.service.exporter.csv:
-        class: "%kunstmaan_translator.service.exporter.csv.class%"
+    Kunstmaan\TranslatorBundle\Service\Command\Exporter\CSVFileExporter:
         tags:
             - { name: 'translation.exporter', alias: 'csv' }
 
-    kunstmaan_translator.service.file_explorer:
-        class: 'Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer'
+    Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer:
         calls:
             - [setFileFormats, ['%kuma_translator.file_formats%']]
 
-    kunstmaan_translator.service.importer.importer:
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer'
+    Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer:
         calls:
-            - [setTranslationGroupManager, ['@kunstmaan_translator.service.group_manager']] # default, maken via config var
+            - [setTranslationGroupManager, ['@Kunstmaan\TranslatorBundle\Service\TranslationGroupManager']] # default, maken via config var
 
-    kunstmaan_translator.service.group_manager:
-        class: 'Kunstmaan\TranslatorBundle\Service\TranslationGroupManager'
+    Kunstmaan\TranslatorBundle\Service\TranslationGroupManager:
         calls:
-            - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
+            - [setTranslationRepository, ['@Kunstmaan\TranslatorBundle\Repository\TranslationRepository']]
 
-    kunstmaan_translator.service.translator.loader:
-        class: Kunstmaan\TranslatorBundle\Service\Translator\Loader
+    Kunstmaan\TranslatorBundle\Service\Translator\Loader:
         tags:
             - { name: 'translation.loader', alias: 'database' }
         calls:
-            - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
+            - [setTranslationRepository, ['@Kunstmaan\TranslatorBundle\Repository\TranslationRepository']]
 
-    kunstmaan_translator.service.translator.resource_cacher:
-        class: Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
+    Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher:
         calls:
             - [setDebug, ['%kuma_translator.debug%']]
             - [setCacheDir, ['%kuma_translator.cache_dir%']]
-            - [setLogger, ['@logger']]
+            - [setLogger, ['@Psr\Log\LoggerInterface']]
 
-    kunstmaan_translator.service.translator.cache_validator:
-        class: Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator
+    Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator:
         calls:
             - [setCacheDir, ['%kuma_translator.cache_dir%']]
-            - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
+            - [setTranslationRepository, ['@Kunstmaan\TranslatorBundle\Repository\TranslationRepository']]
 
-    kunstmaan_translator.service.translator.translator:
-        class: Kunstmaan\TranslatorBundle\Service\Translator\Translator
+    Kunstmaan\TranslatorBundle\Service\Translator\Translator:
         arguments:
-            - '@service_container'
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
             - '@translator.selector'
             - {}
             - { cache_dir: '%kuma_translator.cache_dir%', debug: '%kuma_translator.debug%' }
-            - ['@session']
+            - ['@Symfony\Component\HttpFoundation\Session\SessionInterface']
         calls:
-            - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
-            - [setResourceCacher, ['@kunstmaan_translator.service.translator.resource_cacher']]
+            - [setTranslationRepository, ['@Kunstmaan\TranslatorBundle\Repository\TranslationRepository']]
+            - [setResourceCacher, ['@Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher']]
 
-    kunstmaan_translator.service.migrations.migrations:
-        class: 'Kunstmaan\TranslatorBundle\Service\Migrations\MigrationsService'
+    Kunstmaan\TranslatorBundle\Service\Migrations\MigrationsService:
         calls:
-            - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
+            - [setTranslationRepository, ['@Kunstmaan\TranslatorBundle\Repository\TranslationRepository']]
             - [setEntityManager, ['@doctrine.orm.default_entity_manager']]
 
-    kunstmaan_translator.service.command.diff:
-        class: 'Kunstmaan\TranslatorBundle\Service\Command\DiffCommand'
+    Kunstmaan\TranslatorBundle\Service\Command\DiffCommand: ~
 
-    kunstmaan_translator.datacollector:
-        class: Kunstmaan\TranslatorBundle\Toolbar\DataCollectorTranslator
+    Kunstmaan\TranslatorBundle\Toolbar\DataCollectorTranslator:
         arguments:
-            - '@translator.default'
+            - '@Kunstmaan\TranslatorBundle\Service\Translator\Translator'
 
-    kunstmaan_translator.datacollector.translations:
-        class: '%kunstmaan_translator.toolbar.collector.translator.class%'
+    Kunstmaan\TranslatorBundle\Toolbar\TranslatorDataCollector:
         parent: Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector
         arguments:
-            - '@kunstmaan_translator.datacollector'
-            - '@router'
+            - '@Kunstmaan\TranslatorBundle\Toolbar\DataCollectorTranslator'
+            - '@Symfony\Component\Routing\RouterInterface'
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanTranslatorBundle:Toolbar:translations.html.twig', id: kuma_translation}

@@ -2,22 +2,23 @@
 
 namespace Kunstmaan\NodeBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Validation\URLValidator;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * A helper for replacing url's
+ * Class URLHelper
+ *
+ * @package Kunstmaan\NodeBundle\Helper
  */
 class URLHelper
 {
     use URLValidator;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -47,13 +48,17 @@ class URLHelper
     private $domainConfiguration;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param RouterInterface $router
      * @param LoggerInterface $logger
      * @param DomainConfigurationInterface $domainConfiguration
      */
-    public function __construct(EntityManager $em, RouterInterface $router, LoggerInterface $logger, DomainConfigurationInterface $domainConfiguration)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        RouterInterface $router,
+        LoggerInterface $logger,
+        DomainConfigurationInterface $domainConfiguration
+    ) {
         $this->em = $em;
         $this->router = $router;
         $this->logger = $logger;
@@ -61,10 +66,10 @@ class URLHelper
     }
 
     /**
-     * Replace a given text, according to the node translation id and the multidomain site id.
-     *
      * @param $text
-     * @return mixed
+     *
+     * @return mixed|string
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function replaceUrl($text)
     {
@@ -102,12 +107,12 @@ class URLHelper
 
                             $url = $this->router->generate('_slug', $urlParams);
 
-                            $text = str_replace($fullTag, $hostId ? $hostBaseUrl . $url : $url, $text);
+                            $text = str_replace($fullTag, $hostId ? $hostBaseUrl.$url : $url, $text);
                         }
                     }
 
                     if (!$nodeTranslationFound) {
-                        $this->logger->error('No NodeTranslation found in the database when replacing url tag ' . $fullTag);
+                        $this->logger->error('No NodeTranslation found in the database when replacing url tag '.$fullTag);
                     }
                 }
             }
@@ -131,7 +136,7 @@ class URLHelper
                     }
 
                     if (!$mediaFound) {
-                        $this->logger->error('No Media found in the database when replacing url tag ' . $fullTag);
+                        $this->logger->error('No Media found in the database when replacing url tag '.$fullTag);
                     }
                 }
             }
