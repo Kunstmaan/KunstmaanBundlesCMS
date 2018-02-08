@@ -9,6 +9,11 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * Class ExceptionSubscriber
+ *
+ * @package Kunstmaan\AdminBundle\EventListener
+ */
 class ExceptionSubscriber implements EventSubscriberInterface
 {
     /**
@@ -27,14 +32,15 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::EXCEPTION => 'onKernelException'
+            KernelEvents::EXCEPTION => 'onKernelException',
         ];
     }
 
     /**
      * ExceptionSubscriber constructor.
+     *
      * @param EntityManagerInterface $em
-     * @param array $excludes
+     * @param array                  $excludes
      */
     public function __construct(EntityManagerInterface $em, array $excludes = [])
     {
@@ -53,13 +59,16 @@ class ExceptionSubscriber implements EventSubscriberInterface
         if ($exception instanceof HttpExceptionInterface) {
             $uri = $request->getUri();
 
-            if(count($this->excludes) > 0) {
-                $excludes = array_filter($this->excludes, function($pattern) use($uri) {
-                   return preg_match($pattern, $uri);
-                });
+            if (count($this->excludes) > 0) {
+                $excludes = array_filter(
+                    $this->excludes,
+                    function ($pattern) use ($uri) {
+                        return preg_match($pattern, $uri);
+                    }
+                );
 
-                if(count($excludes) > 0) {
-                    return ;
+                if (count($excludes) > 0) {
+                    return;
                 }
             }
 

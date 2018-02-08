@@ -3,20 +3,22 @@ parameters:
     kunstmaan_multi_domain.domain_configuration.class: Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration
 
 services:
-    kunstmaan_multi_domain.admin_panel.sites:
-        class: Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor
+    Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor:
         tags:
             -  { name: 'kunstmaan_admin.admin_panel.adaptor', priority: 100 }
 
-    kunstmaan_multi_domain.twig.extension:
-        class: Kunstmaan\MultiDomainBundle\Twig\MultiDomainTwigExtension
-        arguments: ['@kunstmaan_admin.domain_configuration']
+    Kunstmaan\MultiDomainBundle\Twig\MultiDomainTwigExtension:
+        arguments:
+            - '@Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface'
         tags:
-              -  { name: 'twig.extension' }
+            -  { name: 'twig.extension' }
 
-    kunstmaan_multi_domain.host_override_listener:
-        class: Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener
-        arguments: ['@session', '@translator', '@kunstmaan_admin.domain_configuration', '@kunstmaan_admin.adminroute.helper']
+    Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener:
+        arguments:
+            - '@Symfony\Component\HttpFoundation\Session\SessionInterface'
+            - '@Symfony\Component\Translation\TranslatorInterface'
+            - '@Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface'
+            - '@Kunstmaan\AdminBundle\Helper\AdminRouteHelper'
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 

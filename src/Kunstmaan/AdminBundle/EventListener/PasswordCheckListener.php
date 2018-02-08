@@ -3,14 +3,14 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\RouterInterface as Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 
 /**
  * PasswordCheckListener to check if the user has to change his password
@@ -33,7 +33,7 @@ class PasswordCheckListener
     private $router;
 
     /**
-     * @var Session
+     * @var SessionInterface
      */
     private $session;
 
@@ -49,14 +49,20 @@ class PasswordCheckListener
 
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TokenStorageInterface $tokenStorage
-     * @param Router $router
-     * @param Session $session
-     * @param TranslatorInterface $translator
-     * @param AdminRouteHelper $adminRouteHelper
+     * @param TokenStorageInterface         $tokenStorage
+     * @param Router                        $router
+     * @param SessionInterface              $session
+     * @param TranslatorInterface           $translator
+     * @param AdminRouteHelper              $adminRouteHelper
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, Router $router, Session $session, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper)
-    {
+    public function __construct(
+        AuthorizationCheckerInterface $authorizationChecker,
+        TokenStorageInterface $tokenStorage,
+        Router $router,
+        SessionInterface $session,
+        TranslatorInterface $translator,
+        AdminRouteHelper $adminRouteHelper
+    ) {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
@@ -73,7 +79,7 @@ class PasswordCheckListener
         $url = $event->getRequest()->getRequestUri();
         if ($this->tokenStorage->getToken() && $this->adminRouteHelper->isAdminRoute($url)) {
             $route = $event->getRequest()->get('_route');
-            if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $route != 'fos_user_change_password') {
+            if ($route !== 'fos_user_change_password' && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
                 $user = $this->tokenStorage->getToken()->getUser();
                 if ($user->isPasswordChanged() === false) {
                     $response = new RedirectResponse($this->router->generate('fos_user_change_password'));

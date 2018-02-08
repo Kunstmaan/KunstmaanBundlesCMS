@@ -1,7 +1,24 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
+use Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand;
+use Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand;
+use Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener;
+use Kunstmaan\MediaBundle\Form\Type\IconFontType;
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
+use Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactory;
+use Kunstmaan\MediaBundle\Helper\FolderManager;
+use Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader;
+use Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager;
+use Kunstmaan\MediaBundle\Helper\MediaManager;
+use Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor;
+use Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory;
+use Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
@@ -25,15 +42,15 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config        = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter(
             'twig.form.resources',
             array_merge(
                 $container->getParameter('twig.form.resources'),
-                array('KunstmaanMediaBundle:Form:formWidgets.html.twig')
+                ['KunstmaanMediaBundle:Form:formWidgets.html.twig']
             )
         );
         $container->setParameter('kunstmaan_media.soundcloud_api_key', $config['soundcloud_api_key']);
@@ -55,8 +72,51 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('imagine.xml');
+
+        // === BEGIN ALIASES ====
+        $container->addAliases(
+            [
+                'kunstmaan_media.media_manager' => new Alias(MediaManager::class),
+                'kunstmaan_media.listener.doctrine' => new Alias(DoctrineMediaListener::class),
+                'form.type.media' => new Alias(MediaType::class),
+                'form.type.iconfont' => new Alias(IconFontType::class),
+                'kunstmaan_media.icon_font_manager' => new Alias(IconFontManager::class),
+                'kunstmaan_media.icon_font.default_loader' => new Alias(DefaultIconFontLoader::class),
+                'kunstmaan_media.media_creator_service' => new Alias(MediaCreatorService::class),
+                'kunstmaan_media.repository.folder' => new Alias(FolderRepository::class),
+                'kunstmaan_media.menu.adaptor' => new Alias(MediaMenuAdaptor::class),
+                'kunstmaan_media.folder_manager' => new Alias(FolderManager::class),
+                'kunstmaan_media.mimetype_guesser.factory' => new Alias(MimeTypeGuesserFactory::class),
+                'kunstmaan_media.extension_guesser.factory' => new Alias(ExtensionGuesserFactory::class),
+                'kunstmaan_media.command.rebuildfoldertree' => new Alias(RebuildFolderTreeCommand::class),
+                'kunstmaan_media.command.cleandeletedmedia' => new Alias(CleanDeletedMediaCommand::class),
+                'kunstmaan_media.validator.has_guessable_extension' => new Alias(HasGuessableExtensionValidator::class),
+            ]
+        );
+
+        $this->addParameteredAliases(
+            $container,
+            [
+                ['kunstmaan_media.media_manager.class', MediaManager::class, true],
+                ['kunstmaan_media.folder_manager.class', FolderManager::class, true],
+                ['kunstmaan_media.menu.adaptor.class', MediaMenuAdaptor::class, true],
+                ['kunstmaan_media.listener.doctrine.class', DoctrineMediaListener::class, true],
+                ['kunstmaan_media.form.type.media.class', MediaType::class, true],
+                ['kunstmaan_media.form.type.iconfont.class', IconFontType::class, true],
+                ['kunstmaan_media.icon_font_manager.class', IconFontManager::class, true],
+                ['kunstmaan_media.icon_font.default_loader.class', DefaultIconFontLoader::class, true],
+                ['kunstmaan_media.media_creator_service.class', MediaCreatorService::class, true],
+                ['kunstmaan_media.mimetype_guesser.factory.class', MimeTypeGuesserFactory::class, true],
+                ['kunstmaan_media.extension_guesser.factory.class', ExtensionGuesserFactory::class, true],
+                ['kunstmaan_media.validator.has_guessable_extension.class', HasGuessableExtensionValidator::class, true],
+            ]
+        );
+        // === END ALIASES ====
     }
 
+    /**
+     * @param ContainerBuilder $container
+     */
     public function prepend(ContainerBuilder $container)
     {
 
@@ -64,17 +124,34 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
             $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
         }
 
-        $twigConfig = array();
-        $twigConfig['globals']['upload_dir']          = $container->getParameter('kunstmaan_media.upload_dir');
+        $twigConfig = [];
+        $twigConfig['globals']['upload_dir'] = $container->getParameter('kunstmaan_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
-        $twigConfig['globals']['mediamanager']        = "@kunstmaan_media.media_manager";
+        $twigConfig['globals']['mediamanager'] = "@kunstmaan_media.media_manager";
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array            $aliases
+     */
+    private function addParameteredAliases(ContainerBuilder $container, $aliases)
+    {
+        foreach ($aliases as $alias) {
+            // Don't allow service with same name as class.
+            if ($container->getParameter($alias[0]) !== $alias[1]) {
+                $container->setAlias(
+                    $container->getParameter($alias[0]),
+                    new Alias($alias[1], $alias[2])
+                );
+            }
+        }
     }
 
     /**

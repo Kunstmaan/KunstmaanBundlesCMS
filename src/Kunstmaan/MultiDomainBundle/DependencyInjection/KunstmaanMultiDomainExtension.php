@@ -2,7 +2,14 @@
 
 namespace Kunstmaan\MultiDomainBundle\DependencyInjection;
 
+use Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener;
+use Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor;
+use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
+use Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler;
+use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
+use Kunstmaan\MultiDomainBundle\Twig\MultiDomainTwigExtension;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -32,7 +39,7 @@ class KunstmaanMultiDomainExtension extends Extension
 
         $loader = new Loader\YamlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yml');
 
@@ -53,6 +60,42 @@ class KunstmaanMultiDomainExtension extends Extension
             'kunstmaan_admin.domain_configuration.class',
             $container->getParameter('kunstmaan_multi_domain.domain_configuration.class')
         );
+
+        // === BEGIN ALIASES ====
+        $container->addAliases(
+            [
+                'kunstmaan_multi_domain.admin_panel.sites' => new Alias(SitesAdminPanelAdaptor::class),
+                'kunstmaan_multi_domain.twig.extension' => new Alias(MultiDomainTwigExtension::class),
+                'kunstmaan_multi_domain.host_override_listener' => new Alias(HostOverrideListener::class),
+                'kunstmaan_multi_domain.host_override_cleanup' => new Alias(HostOverrideCleanupHandler::class),
+            ]
+        );
+
+        $this->addParameteredAliases(
+            $container,
+            [
+                ['kunstmaan_multi_domain.router.class', DomainBasedLocaleRouter::class, true],
+                ['kunstmaan_multi_domain.domain_configuration.class', DomainConfiguration::class, true],
+            ]
+        );
+        // === END ALIASES ====
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array            $aliases
+     */
+    private function addParameteredAliases(ContainerBuilder $container, $aliases)
+    {
+        foreach ($aliases as $alias) {
+            // Don't allow service with same name as class.
+            if ($container->getParameter($alias[0]) !== $alias[1]) {
+                $container->setAlias(
+                    $container->getParameter($alias[0]),
+                    new Alias($alias[1], $alias[2])
+                );
+            }
+        }
     }
 
     /**
@@ -64,7 +107,7 @@ class KunstmaanMultiDomainExtension extends Extension
      */
     private function getHostConfigurations($hosts)
     {
-        $hostConfigurations = array();
+        $hostConfigurations = [];
         foreach ($hosts as $name => $settings) {
             $host = $settings['host'];
             // Set the key of the host as id.
@@ -92,7 +135,7 @@ class KunstmaanMultiDomainExtension extends Extension
      */
     private function getHostLocales($localeSettings)
     {
-        $hostLocales = array();
+        $hostLocales = [];
         foreach ($localeSettings as $key => $localeMapping) {
             $hostLocales[$localeMapping['uri_locale']] = $localeMapping['locale'];
         }
@@ -109,9 +152,9 @@ class KunstmaanMultiDomainExtension extends Extension
      */
     private function getLocalesExtra($localeSettings)
     {
-        $localesExtra = array();
+        $localesExtra = [];
         foreach ($localeSettings as $key => $localeMapping) {
-            $localesExtra[$localeMapping['uri_locale']] = array_key_exists('extra', $localeMapping) ? $localeMapping['extra'] : array();
+            $localesExtra[$localeMapping['uri_locale']] = array_key_exists('extra', $localeMapping) ? $localeMapping['extra'] : [];
         }
 
         return $localesExtra;

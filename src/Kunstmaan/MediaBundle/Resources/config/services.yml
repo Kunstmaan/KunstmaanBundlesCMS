@@ -1,10 +1,10 @@
 parameters:
     kunstmaan_media.media_manager.class: 'Kunstmaan\MediaBundle\Helper\MediaManager'
-    kunstmaan_media.folder_manager.class: 'Kunstmaan\MediaBundle\Helper\FolderManager'
-    kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     kunstmaan_media.listener.doctrine.class: 'Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener'
     kunstmaan_media.form.type.media.class: 'Kunstmaan\MediaBundle\Form\Type\MediaType'
     kunstmaan_media.form.type.iconfont.class: 'Kunstmaan\MediaBundle\Form\Type\IconFontType'
+    kunstmaan_media.folder_manager.class: 'Kunstmaan\MediaBundle\Helper\FolderManager'
+    kunstmaan_media.menu.adaptor.class: 'Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor'
     kunstmaan_media.icon_font_manager.class: 'Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager'
     kunstmaan_media.icon_font.default_loader.class: 'Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader'
     kunstmaan_media.media_creator_service.class: 'Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService'
@@ -13,14 +13,13 @@ parameters:
     kunstmaan_media.validator.has_guessable_extension.class: 'Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator'
 
 services:
-    kunstmaan_media.media_manager:
-        class: '%kunstmaan_media.media_manager.class%'
+    Kunstmaan\MediaBundle\Helper\MediaManager:
         calls:
             - [ setDefaultHandler, [ '@kunstmaan_media.media_handlers.file' ] ]
 
-    kunstmaan_media.listener.doctrine:
-        class: '%kunstmaan_media.listener.doctrine.class%'
-        arguments: ['@kunstmaan_media.media_manager']
+    Kunstmaan\MediaBundle\EventListener\DoctrineMediaListener:
+        arguments:
+            - '@Kunstmaan\MediaBundle\Helper\MediaManager'
         tags:
             - { name: 'doctrine.event_listener', event: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate' }
@@ -28,63 +27,57 @@ services:
             - { name: 'doctrine.event_listener', event: 'postUpdate' }
             - { name: 'doctrine.event_listener', event: 'preRemove' }
 
-    form.type.media:
-        class: '%kunstmaan_media.form.type.media.class%'
+    Kunstmaan\MediaBundle\Form\Type\MediaType:
         arguments:
-            - '@kunstmaan_media.media_manager'
-            - '@doctrine.orm.entity_manager'
+            - '@Kunstmaan\MediaBundle\Helper\MediaManager'
+            - '@Doctrine\ORM\EntityManagerInterface'
         tags:
             - { name: form.type}
 
-    form.type.iconfont:
-        class: '%kunstmaan_media.form.type.iconfont.class%'
-        arguments: ['@kunstmaan_media.icon_font_manager']
+    Kunstmaan\MediaBundle\Form\Type\IconFontType:
+        arguments:
+            - '@Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager'
         tags:
             - { name: form.type }
 
-    kunstmaan_media.icon_font_manager:
-        class: '%kunstmaan_media.icon_font_manager.class%'
+    Kunstmaan\MediaBundle\Helper\IconFont\IconFontManager:
         calls:
             - [ setDefaultLoader, [ '@kunstmaan_media.icon_font.default_loader' ] ]
 
-    kunstmaan_media.icon_font.default_loader:
-        class: '%kunstmaan_media.icon_font.default_loader.class%'
-        arguments: ['@kernel']
+    Kunstmaan\MediaBundle\Helper\IconFont\DefaultIconFontLoader:
+        arguments:
+            - '@kernel'
         tags:
             -  { name: 'kunstmaan_media.icon_font.loader' }
 
-    kunstmaan_media.media_creator_service:
-        class: '%kunstmaan_media.media_creator_service.class%'
-        arguments: ['@service_container']
+    Kunstmaan\MediaBundle\Helper\Services\MediaCreatorService:
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
 
-    kunstmaan_media.repository.folder:
-        class:            Kunstmaan\MediaBundle\Repository\FolderRepository
-        factory:          ['@doctrine.orm.entity_manager', getRepository]
-        arguments:        ['KunstmaanMediaBundle:Folder']
+    Kunstmaan\MediaBundle\Repository\FolderRepository:
+        factory: ['@Doctrine\ORM\EntityManagerInterface', getRepository]
+        arguments:
+            - 'KunstmaanMediaBundle:Folder'
 
-    kunstmaan_media.menu.adaptor:
-        class: '%kunstmaan_media.menu.adaptor.class%'
-        arguments: ['@kunstmaan_media.repository.folder']
+    Kunstmaan\MediaBundle\Helper\Menu\MediaMenuAdaptor:
+        arguments:
+            - '@Kunstmaan\MediaBundle\Repository\FolderRepository'
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-    kunstmaan_media.folder_manager:
-        class: '%kunstmaan_media.folder_manager.class%'
-        arguments: ['@kunstmaan_media.repository.folder']
+    Kunstmaan\MediaBundle\Helper\FolderManager:
+        arguments:
+            - '@Kunstmaan\MediaBundle\Repository\FolderRepository'
 
-    kunstmaan_media.mimetype_guesser.factory:
-        class: '%kunstmaan_media.mimetype_guesser.factory.class%'
+    Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactory: ~
 
-    kunstmaan_media.extension_guesser.factory:
-        class: '%kunstmaan_media.extension_guesser.factory.class%'
+    Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactory: ~
 
-    kunstmaan_media.command.rebuildfoldertree:
-        class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
+    Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand:
         calls:
             - [setContainer, ['@service_container'] ]
 
-    kunstmaan_media.command.cleandeletedmedia:
-        class: Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand
+    Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand:
         calls:
             - [setContainer, ['@service_container'] ]
 
@@ -99,8 +92,7 @@ services:
         arguments:
             - '@kunstmaan_media.filesystem_adapter'
 
-    kunstmaan_media.validator.has_guessable_extension:
-        class: '%kunstmaan_media.validator.has_guessable_extension.class%'
+    Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtensionValidator:
         tags:
             - { name: validator.constraint_validator, alias: has_guessable_extension }
         calls:
