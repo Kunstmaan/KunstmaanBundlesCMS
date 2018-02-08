@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\FixturesBundle\Builder;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\FixturesBundle\Populator\Populator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -19,11 +19,17 @@ use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 class PageBuilder implements BuilderInterface
 {
     private $manager;
+
     private $userRepo;
+
     private $nodeRepo;
+
     private $nodeTranslationRepo;
+
     private $aclPermissionCreatorService;
+
     private $populator;
+
     private $slugifier;
 
     /**
@@ -31,8 +37,17 @@ class PageBuilder implements BuilderInterface
      */
     private $pagesConfiguration;
 
+    /**
+     * PageBuilder constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param ACLPermissionCreatorService $aclPermissionCreatorService
+     * @param Populator $populator
+     * @param Slugifier $slugifier
+     * @param PagesConfiguration $pagesConfiguration
+     */
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         ACLPermissionCreatorService $aclPermissionCreatorService,
         Populator $populator,
         Slugifier $slugifier,
@@ -68,7 +83,7 @@ class PageBuilder implements BuilderInterface
         $fixtureParams = $fixture->getParameters();
         $translations = $fixture->getTranslations();
         if (empty($translations)) {
-            throw new \Exception('No translations detected for page fixture ' . $fixture->getName() . ' (' . $fixture->getClass() . ')');
+            throw new \Exception('No translations detected for page fixture '.$fixture->getName().' ('.$fixture->getClass().')');
         }
 
         $internalName = array_key_exists('page_internal_name', $fixtureParams) ?
@@ -92,9 +107,9 @@ class PageBuilder implements BuilderInterface
                 $translationNode->setOnline(isset($fixtureParams['set_online']) ? $fixtureParams['set_online'] : true);
             }
 
-            $fixture->addAdditional($fixture->getName() . '_' . $language, $page);
-            $fixture->addAdditional('translationNode_' . $language, $translationNode);
-            $fixture->addAdditional('nodeVersion_' . $language, $translationNode->getPublicNodeVersion());
+            $fixture->addAdditional($fixture->getName().'_'.$language, $page);
+            $fixture->addAdditional('translationNode_'.$language, $translationNode);
+            $fixture->addAdditional('nodeVersion_'.$language, $translationNode->getPublicNodeVersion());
             $fixture->addAdditional('rootNode', $rootNode);
 
             $this->populator->populate($translationNode, $data);
@@ -119,12 +134,12 @@ class PageBuilder implements BuilderInterface
 
         foreach ($fixture->getTranslations() as $language => $data) {
             /** @var HasNodeInterface $page */
-            $page = $entities[$fixture->getName() . '_' . $language];
+            $page = $entities[$fixture->getName().'_'.$language];
             /** @var NodeTranslation $translationNode */
-            $translationNode = $entities['translationNode_' . $language];
+            $translationNode = $entities['translationNode_'.$language];
 
             $pagecreator = array_key_exists('creator', $fixtureParams) ? $fixtureParams['creator'] : 'pagecreator';
-            $creator = $this->userRepo->findOneBy(array('username' => $pagecreator));
+            $creator = $this->userRepo->findOneBy(['username' => $pagecreator]);
 
             $nodeVersion = new NodeVersion();
             $nodeVersion->setNodeTranslation($translationNode);
@@ -184,7 +199,11 @@ class PageBuilder implements BuilderInterface
 
             if (!$this->canHaveChild($parent->getRefEntityName(), get_class($page))) {
                 throw new \Exception(
-                    sprintf('A %s can\'t have a %s as child. Forgot to add in allowed_children or getPossibleChildTypes?', $parent->getRefEntityName(), get_class($page))
+                    sprintf(
+                        'A %s can\'t have a %s as child. Forgot to add in allowed_children or getPossibleChildTypes?',
+                        $parent->getRefEntityName(),
+                        get_class($page)
+                    )
                 );
             }
         }
@@ -217,7 +236,12 @@ class PageBuilder implements BuilderInterface
         $translation->setUrl($translation->getFullSlug());
 
         // Find all translations with this new URL, whose nodes are not deleted.
-        $translationWithSameUrl = $this->nodeTranslationRepo->getNodeTranslationForUrl($translation->getUrl(), $translation->getLang(), false, $translation);
+        $translationWithSameUrl = $this->nodeTranslationRepo->getNodeTranslationForUrl(
+            $translation->getUrl(),
+            $translation->getLang(),
+            false,
+            $translation
+        );
 
         if ($translationWithSameUrl instanceof NodeTranslation) {
             $translation->setSlug($this->slugifier->slugify($this->incrementString($translation->getSlug())));
@@ -230,7 +254,7 @@ class PageBuilder implements BuilderInterface
     private function incrementString($string, $append = '-v')
     {
         $finalDigitGrabberRegex = '/\d+$/';
-        $matches = array();
+        $matches = [];
 
         preg_match($finalDigitGrabberRegex, $string, $matches);
 
@@ -241,13 +265,14 @@ class PageBuilder implements BuilderInterface
             // Replace the integer with the new digit.
             return preg_replace($finalDigitGrabberRegex, $digit, $string);
         } else {
-            return $string . $append . '1';
+            return $string.$append.'1';
         }
     }
 
     /**
      * @param string $parentPageClass
      * @param string $childPageClass
+     *
      * @return bool
      */
     private function canHaveChild($parentPageClass, $childPageClass)

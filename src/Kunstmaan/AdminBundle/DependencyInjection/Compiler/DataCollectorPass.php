@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection\Compiler;
 
+use Kunstmaan\AdminBundle\Helper\Toolbar\DataCollector;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -16,11 +17,11 @@ class DataCollectorPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_admin.toolbar.datacollector')) {
+        if (!$container->hasDefinition(DataCollector::class)) {
             return;
         }
 
-        $definition = $container->getDefinition('kunstmaan_admin.toolbar.datacollector');
+        $definition = $container->getDefinition(DataCollector::class);
         $taggedServices = $container->findTaggedServiceIds('kunstmaan_admin.toolbar_collector');
 
         // Check if debug enabled

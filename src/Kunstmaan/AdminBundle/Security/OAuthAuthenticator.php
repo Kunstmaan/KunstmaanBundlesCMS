@@ -8,7 +8,7 @@ use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -22,7 +22,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     /** @var RouterInterface */
     private $router;
 
-    /** @var Session */
+    /** @var SessionInterface */
     private $session;
 
     /** @var TranslatorInterface */
@@ -39,15 +39,22 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * OAuthAuthenticator constructor.
-     * @param RouterInterface $router
-     * @param Session $session
-     * @param TranslatorInterface $translator
+     *
+     * @param RouterInterface           $router
+     * @param SessionInterface          $session
+     * @param TranslatorInterface       $translator
      * @param OAuthUserCreatorInterface $oAuthUserCreator
-     * @param $clientId
-     * @param $clientSecret
+     * @param                           $clientId
+     * @param                           $clientSecret
      */
-    public function __construct(RouterInterface $router, Session $session, TranslatorInterface $translator, OAuthUserCreatorInterface $oAuthUserCreator, $clientId, $clientSecret)
-    {
+    public function __construct(
+        RouterInterface $router,
+        SessionInterface $session,
+        TranslatorInterface $translator,
+        OAuthUserCreatorInterface $oAuthUserCreator,
+        $clientId,
+        $clientSecret
+    ) {
         $this->router = $router;
         $this->session = $session;
         $this->translator = $translator;
@@ -69,7 +76,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      *  B) For an API token authentication system, you return a 401 response
      *      return new Response('Auth header required', 401);
      *
-     * @param Request $request The request that resulted in an AuthenticationException
+     * @param Request                 $request       The request that resulted in an AuthenticationException
      * @param AuthenticationException $authException The exception that started the authentication process
      *
      * @return Response
@@ -99,18 +106,15 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      *
      * @param Request $request
      *
-     * @return mixed|null
+     * @return array
      */
     public function getCredentials(Request $request)
     {
-        if ($request->attributes->get('_route') != 'KunstmaanAdminBundle_oauth_signin' || !$request->request->has('_google_id_token')) {
-            return null;
-        }
-
         $token = $request->request->get('_google_id_token');
-        return array(
+
+        return [
             'token' => $token,
-        );
+        ];
     }
 
     /**
@@ -121,7 +125,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * You may throw an AuthenticationException if you wish. If you return
      * null, then a UsernameNotFoundException is thrown for you.
      *
-     * @param mixed $credentials
+     * @param mixed                 $credentials
      * @param UserProviderInterface $userProvider
      *
      * @throws AuthenticationException
@@ -156,7 +160,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      *
      * The *credentials* are the return value from getCredentials()
      *
-     * @param mixed $credentials
+     * @param mixed         $credentials
      * @param UserInterface $user
      *
      * @return bool
@@ -177,7 +181,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * If you return null, the request will continue, but the user will
      * not be authenticated. This is probably not what you want to do.
      *
-     * @param Request $request
+     * @param Request                 $request
      * @param AuthenticationException $exception
      *
      * @return Response|null
@@ -185,6 +189,7 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $this->session->getFlashBag()->add(FlashTypes::ERROR, $this->translator->trans('errors.oauth.invalid'));
+
         return new RedirectResponse($this->router->generate('fos_user_security_login'));
     }
 
@@ -197,15 +202,29 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      * If you return null, the current request will continue, and the user
      * will be authenticated. This makes sense, for example, with an API.
      *
-     * @param Request $request
+     * @param Request        $request
      * @param TokenInterface $token
-     * @param string $providerKey The provider (i.e. firewall) key
+     * @param string         $providerKey The provider (i.e. firewall) key
      *
      * @return Response|null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         return new RedirectResponse($this->router->generate('KunstmaanAdminBundle_homepage'));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        if ($request->attributes->get('_route') !== 'KunstmaanAdminBundle_oauth_signin' || !$request->request->has('_google_id_token')) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
