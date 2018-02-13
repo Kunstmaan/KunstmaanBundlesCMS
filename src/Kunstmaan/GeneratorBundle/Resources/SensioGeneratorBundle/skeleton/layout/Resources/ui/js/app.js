@@ -8,8 +8,8 @@ import cbToggle from 'cargobay/src/toggle/js/jquery.toggle';
 import search from './search';
 import demoMsg from './demoMsg';
 {% endif %}
-import CookieConsent from './CookieConsent';
-import Videolink from './Videolink';
+import cookieConsent from './cookieConsent';
+import videolink from './videolink';
 
 {% if demosite %}
 $(function() {
@@ -19,13 +19,13 @@ $(function() {
 
     search.init();
     demoMsg.init();
-    new CookieConsent();
-    new Videolink();
+    cookieConsent();
+    videolink();
 });
 
 {% else %}
 document.addEventListener('DOMContentLoaded', () => {
-    new CookieConsent();
-    new Videolink();
+    cookieConsent();
+    videolink();
 });
 {% endif %}

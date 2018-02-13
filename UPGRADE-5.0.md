@@ -148,3 +148,26 @@ A tip: use regex to search part of new form type instances creations (`new .+Typ
 VotingBundle is refactored. If using custom voters implement the new abstract classes
 * VoteListener is renamed to AbstractVoteListener
 * VotingHelper is renamed to AbstractVotingHelper
+
+## NodeBundle
+
+The nodetranslationlistener has been cleaned for a better flush event. The postFlush event has been removed and everything has been moved to the onFlush event.
+
+## FormBundle
+
+The Discriminator map has been removed from the abstract entity `Kunstmaan\FormBundle\Entity\FormSubmissionField`. This makes it a whole lot easier to
+extend the FormSubmission with your own FormSubmission fields. So what happens. If you are using the standard formsubmission, basically nothing. Everything just keeps working. 
+
+Now if you have customized the standard formsubmission you probably will have to do some changes. Most vital part is that the `discriminator` value will change from for instance "string" to "stringformsubmissionfield".
+As you can see it now uses the entity class name to dynamically map the inheritance. This is where stuff will start to break during querying the database and no result will be found. So for this you will have to manually generate the following migration.
+
+```PHP
+    ...
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "stringformsubmissionfield" WHERE discr = "string"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "textformsubmissionfield" WHERE discr = "text"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "booleanformsubmissionfield" WHERE discr = "boolean"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "choiceformsubmissionfield" WHERE discr = "choice"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "fileformsubmissionfield" WHERE discr = "file"');
+    $this->addSql('UPDATE kuma_form_submission_fields SET discr = "emailformsubmissionfield" WHERE discr = "email"');
+    ...
+```
