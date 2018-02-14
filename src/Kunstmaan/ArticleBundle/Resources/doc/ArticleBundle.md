@@ -96,7 +96,9 @@ To enable it, you have to add an entry in the 'services.yml' of your bundle.
 ```
     mynewsbundle.router.tagcategory:
         class: Kunstmaan\ArticleBundle\Router\TagCategoryRouter
-        arguments: ['@service_container']
+        parent: Kunstmaan\NodeBundle\Router\SlugRouter
+        calls:
+            - [ setTranslator, ['@Kunstmaan\TranslatorBundle\Service\Translator\Translator']]
         tags:
             - { name: router, priority: 1 }
 ```

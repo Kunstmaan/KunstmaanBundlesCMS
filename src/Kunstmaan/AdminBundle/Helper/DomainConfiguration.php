@@ -56,7 +56,7 @@ class DomainConfiguration implements DomainConfigurationInterface
 
         $this->multiLanguage = $multiLanguage;
         $this->defaultLocale = $defaultLocale;
-        $this->requiredLocales = $requiredLocales;
+        $this->requiredLocales = explode('|', $requiredLocales);
         $this->requestStack = $requestStack;
     }
 

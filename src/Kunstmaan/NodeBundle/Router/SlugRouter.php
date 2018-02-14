@@ -112,7 +112,7 @@ class SlugRouter implements RouterInterface
 
         if (!empty($result)) {
             $nodeTranslation = $this->getNodeTranslation($result);
-            if (is_null($nodeTranslation)) {
+            if (null === $nodeTranslation) {
                 throw new ResourceNotFoundException(
                     'No page found for slug '.$pathinfo
                 );
