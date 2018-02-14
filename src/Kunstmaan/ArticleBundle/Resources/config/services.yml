@@ -1,5 +1,7 @@
 services:
     Kunstmaan\ArticleBundle\Twig\ArticleTwigExtension:
-        arguments: ['@doctrine.orm.entity_manager', '@router']
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Symfony\Component\Routing\RouterInterface'
         tags:
             -  { name: twig.extension }
