@@ -2,7 +2,11 @@
 
 namespace Kunstmaan\ArticleBundle\Router;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
+use Kunstmaan\TranslatorBundle\Service\Translator\Translator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -16,16 +20,32 @@ class TagCategoryRouter extends SlugRouter
     /** @var TranslatorInterface */
     private $translator;
 
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function setTranslator(TranslatorInterface $translator)
-    {
+    public function __construct(
+        /* DomainConfigurationInterface */ $domainConfiguration,
+        RequestStack $requestStack,
+        EntityManagerInterface $em,
+        $adminKey,
+        TranslatorInterface $translator
+    ) {
+
+        if ($domainConfiguration instanceof ContainerInterface) {
+            @trigger_error(
+                'Container injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+                E_USER_DEPRECATED
+            );
+
+            parent::__construct($domainConfiguration);
+            $this->translator = $domainConfiguration->get(Translator::class);
+
+            return;
+        }
+
+        parent::__construct($domainConfiguration, $requestStack, $em, $adminKey);
         $this->translator = $translator;
     }
 
     /**
-     * @return \Symfony\Component\Routing\RouteCollection
+     * @return RouteCollection
      */
     public function getRouteCollection()
     {
@@ -33,6 +53,7 @@ class TagCategoryRouter extends SlugRouter
             return $this->routeCollection;
         }
 
+        // Create empty route collection.
         $this->routeCollection = new RouteCollection();
 
         $extendParameters = ['category' => null, 'tag' => null];

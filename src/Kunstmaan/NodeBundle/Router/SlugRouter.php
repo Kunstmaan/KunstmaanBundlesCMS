@@ -35,10 +35,10 @@ class SlugRouter implements RouterInterface
     protected $domainConfiguration;
 
     /** @var RequestStack */
-    private $requestStack;
+    protected $requestStack;
 
     /** @var EntityManagerInterface */
-    private $em;
+    protected $em;
 
     /** @var string */
     protected $adminKey;

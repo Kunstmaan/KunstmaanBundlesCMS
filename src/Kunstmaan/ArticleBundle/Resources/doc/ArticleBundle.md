@@ -94,11 +94,10 @@ e.g. http://example.com/en/news/category/tech/tag/wearables
 To enable it, you have to add an entry in the 'services.yml' of your bundle.
 
 ```
-    mynewsbundle.router.tagcategory:
-        class: Kunstmaan\ArticleBundle\Router\TagCategoryRouter
+    Kunstmaan\ArticleBundle\Router\TagCategoryRouter:
         parent: Kunstmaan\NodeBundle\Router\SlugRouter
-        calls:
-            - [ setTranslator, ['@Kunstmaan\TranslatorBundle\Service\Translator\Translator']]
+        arguments:
+            - '@Kunstmaan\TranslatorBundle\Service\Translator\Translator'
         tags:
             - { name: router, priority: 1 }
 ```
