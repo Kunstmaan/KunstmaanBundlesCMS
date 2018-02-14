@@ -2,37 +2,69 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
-
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder,
-    Symfony\Component\DependencyInjection\ContainerInterface;
-
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity,
-    Symfony\Component\Security\Acl\Exception\AclNotFoundException,
-    Symfony\Component\Security\Acl\Model\MutableAclProviderInterface,
-    Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
+ * Class ACLPermissionCreatorService
+ *
  * Service to add the correct permissions to new HasNodeInterface objects.
  *
+ * @package Kunstmaan\NodeBundle\Helper\Services
  */
 class ACLPermissionCreatorService
 {
-
-    /* @var MutableAclProviderInterface $aclProvider */
+    /* @var MutableAclProviderInterface */
     protected $aclProvider;
-    public function setAclProvider($aclProvider)
-    {
-        $this->aclProvider = $aclProvider;
+
+    /* @var ObjectIdentityRetrievalStrategyInterface */
+    protected $oidStrategy;
+
+    /**
+     * ACLPermissionCreatorService constructor.
+     *
+     * @param MutableAclProviderInterface|null $aclProvider
+     * @param ObjectIdentityRetrievalStrategyInterface|null $oidStrategy
+     */
+    public function __construct(
+        MutableAclProviderInterface $aclProvider = null,
+        ObjectIdentityRetrievalStrategyInterface $oidStrategy = null
+    ) {
+        if ($aclProvider instanceof MutableAclProviderInterface) {
+            $this->aclProvider = $aclProvider;
+        }
+        if ($oidStrategy instanceof ObjectIdentityRetrievalStrategyInterface) {
+            $this->oidStrategy = $oidStrategy;
+        }
     }
 
-    /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
-    protected $oidStrategy;
+    /**
+     * @param $oidStrategy
+     */
     public function setObjectIdentityRetrievalStrategy($oidStrategy)
     {
+        @trigger_error(
+            'Setter injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+            E_USER_DEPRECATED
+        );
         $this->oidStrategy = $oidStrategy;
     }
 
+    /**
+     * @param $aclProvider
+     */
+    public function setAclProvider($aclProvider)
+    {
+        @trigger_error(
+            'Setter injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+            E_USER_DEPRECATED
+        );
+        $this->aclProvider = $aclProvider;
+    }
 
     /**
      * Sets the Container. This is still here for backwards compatibility.
@@ -43,8 +75,13 @@ class ACLPermissionCreatorService
      *
      * @api
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container)
     {
+        @trigger_error(
+            'Container injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+            E_USER_DEPRECATED
+        );
+
         $this->setAclProvider($container->get('security.acl.provider'));
         $this->setObjectIdentityRetrievalStrategy($container->get('security.acl.object_identity_retrieval_strategy'));
     }
@@ -56,17 +93,13 @@ class ACLPermissionCreatorService
      */
     public function createPermission($object)
     {
-        $aclProvider = $this->aclProvider;
-
-        $oidStrategy = $this->oidStrategy;
-
-        $objectIdentity = $oidStrategy->getObjectIdentity($object);
+        $objectIdentity = $this->oidStrategy->getObjectIdentity($object);
         try {
-            $aclProvider->deleteAcl($objectIdentity);
+            $this->aclProvider->deleteAcl($objectIdentity);
         } catch (AclNotFoundException $e) {
             // Don't fail when the ACL didn't exist yet.
         }
-        $acl = $aclProvider->createAcl($objectIdentity);
+        $acl = $this->aclProvider->createAcl($objectIdentity);
 
         $securityIdentity = new RoleSecurityIdentity('IS_AUTHENTICATED_ANONYMOUSLY');
         $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_VIEW);
@@ -79,7 +112,6 @@ class ACLPermissionCreatorService
 
         $securityIdentity = new RoleSecurityIdentity('ROLE_SUPER_ADMIN');
         $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_IDDQD);
-        $aclProvider->updateAcl($acl);
+        $this->aclProvider->updateAcl($acl);
     }
-
 }

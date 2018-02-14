@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Helper\Services;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Kunstmaan\AdminBundle\Repository\UserRepository;
@@ -14,37 +13,73 @@ use Kunstmaan\SeoBundle\Repository\SeoRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
+ * Class PageCreatorService
+ *
  * Service to create new pages.
+ *
+ * @package Kunstmaan\NodeBundle\Helper\Services
  */
 class PageCreatorService
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
+    /** @var EntityManagerInterface */
+    protected $em;
 
-    /**
-     * @var ACLPermissionCreatorService
-     */
+    /** @var ACLPermissionCreatorService */
     protected $aclPermissionCreatorService;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $userEntityClass;
 
-    public function setEntityManager($entityManager)
-    {
-        $this->entityManager = $entityManager;
+    /**
+     * PageCreatorService constructor.
+     *
+     * @param EntityManagerInterface|null      $em
+     * @param ACLPermissionCreatorService|null $aclPermissionCreatorService
+     * @param string|null                      $userEntityClass
+     */
+    public function __construct(
+        EntityManagerInterface $em = null,
+        ACLPermissionCreatorService $aclPermissionCreatorService = null,
+        $userEntityClass = null
+    ) {
+        $this->em = $em;
+        $this->aclPermissionCreatorService = $aclPermissionCreatorService;
+        $this->userEntityClass = $userEntityClass;
     }
 
-    public function setACLPermissionCreatorService($aclPermissionCreatorService)
+    /**
+     * @param EntityManagerInterface $em
+     */
+    public function setEntityManager(EntityManagerInterface $em)
     {
+        @trigger_error(
+            'Setter injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+            E_USER_DEPRECATED
+        );
+        $this->em = $em;
+    }
+
+    /**
+     * @param ACLPermissionCreatorService $aclPermissionCreatorService
+     */
+    public function setAclPermissionCreatorService(ACLPermissionCreatorService $aclPermissionCreatorService)
+    {
+        @trigger_error(
+            'Setter injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+            E_USER_DEPRECATED
+        );
         $this->aclPermissionCreatorService = $aclPermissionCreatorService;
     }
 
-    public function setUserEntityClass($userEntityClass)
+    /**
+     * @param string $userEntityClass
+     */
+    public function setUserEntityClass(string $userEntityClass)
     {
+        @trigger_error(
+            'Setter injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+            E_USER_DEPRECATED
+        );
         $this->userEntityClass = $userEntityClass;
     }
 
@@ -58,36 +93,40 @@ class PageCreatorService
      *
      * @api
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container)
     {
-        $this->setEntityManager($container->get('doctrine.orm.entity_manager'));
-        $this->setACLPermissionCreatorService($container->get('kunstmaan_node.acl_permission_creator_service'));
+        @trigger_error(
+            'Container injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+            E_USER_DEPRECATED
+        );
+        $this->setEntityManager($container->get(EntityManagerInterface::class));
+        $this->setAclPermissionCreatorService($container->get(ACLPermissionCreatorService::class));
         $this->setUserEntityClass($container->getParameter('fos_user.model.user.class'));
     }
 
     /**
      * @param HasNodeInterface $pageTypeInstance The page.
      * @param array            $translations     Containing arrays. Sample:
-     * [
-     *  [   "language" => "nl",
-     *      "callback" => function($page, $translation) {
-     *          $translation->setTitle('NL titel');
-     *      }
-     *  ],
-     *  [   "language" => "fr",
-     *      "callback" => function($page, $translation) {
-     *          $translation->setTitle('FR titel');
-     *      }
-     *  ]
-     * ]
-     * Perhaps it's cleaner when you create one array and append another array for each language.
+     *                                           [
+     *                                           [   "language" => "nl",
+     *                                           "callback" => function($page, $translation) {
+     *                                           $translation->setTitle('NL titel');
+     *                                           }
+     *                                           ],
+     *                                           [   "language" => "fr",
+     *                                           "callback" => function($page, $translation) {
+     *                                           $translation->setTitle('FR titel');
+     *                                           }
+     *                                           ]
+     *                                           ]
+     *                                           Perhaps it's cleaner when you create one array and append another array for each language.
      *
      * @param array            $options          Possible options:
-     *      parent: type node, nodetransation or page.
-     *      page_internal_name: string. name the page will have in the database.
-     *      set_online: bool. if true the page will be set as online after creation.
-     *      hidden_from_nav: bool. if true the page will not be show in the navigation
-     *      creator: username
+     *                                           parent: type node, nodetransation or page.
+     *                                           page_internal_name: string. name the page will have in the database.
+     *                                           set_online: bool. if true the page will be set as online after creation.
+     *                                           hidden_from_nav: bool. if true the page will not be show in the navigation
+     *                                           creator: username
      *
      * Automatically calls the ACL + sets the slugs to empty when the page is an Abstract node.
      *
@@ -95,17 +134,17 @@ class PageCreatorService
      *
      * @throws \InvalidArgumentException
      */
-    public function createPage(HasNodeInterface $pageTypeInstance, array $translations, array $options = array())
+    public function createPage(HasNodeInterface $pageTypeInstance, array $translations, array $options = [])
     {
         if (is_null($options)) {
-            $options = array();
+            $options = [];
         }
 
         if (is_null($translations) || (count($translations) == 0)) {
             throw new \InvalidArgumentException('There has to be at least 1 translation in the translations array');
         }
 
-        $em = $this->entityManager;
+        $em = $this->em;
 
         /** @var NodeRepository $nodeRepo */
         $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
@@ -119,7 +158,7 @@ class PageCreatorService
         }
 
         $pagecreator = array_key_exists('creator', $options) ? $options['creator'] : 'pagecreator';
-        $creator     = $userRepo->findOneBy(array('username' => $pagecreator));
+        $creator = $userRepo->findOneBy(['username' => $pagecreator]);
 
         $parent = isset($options['parent']) ? $options['parent'] : null;
 
@@ -129,10 +168,10 @@ class PageCreatorService
 
         // We need to get the language of the first translation so we can create the rootnode.
         // This will also create a translationnode for that language attached to the rootnode.
-        $first    = true;
+        $first = true;
         $rootNode = null;
 
-        /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo*/
+        /* @var \Kunstmaan\NodeBundle\Repository\NodeTranslationRepository $nodeTranslationRepo */
         $nodeTranslationRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
 
         foreach ($translations as $translation) {
