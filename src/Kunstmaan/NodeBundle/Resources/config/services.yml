@@ -57,8 +57,8 @@ services:
 
     Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper:
         arguments:
-            - '@Symfony\Component\DependencyInjection\ContainerInterface'
             - '@Doctrine\ORM\EntityManagerInterface'
+            - '%kunstmaan_node.lock_threshold%'
 
     Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder:
         arguments:
@@ -109,7 +109,10 @@ services:
 
     Kunstmaan\NodeBundle\Router\SlugRouter:
         arguments:
-            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface'
+            - '@Symfony\Component\HttpFoundation\RequestStack'
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '%kunstmaan_admin.admin_prefix%'
         tags:
             - { name: router, priority: 0 }
 
@@ -127,15 +130,15 @@ services:
             - { name: twig.extension }
 
     Kunstmaan\NodeBundle\Helper\Services\PageCreatorService:
-        calls:
-            - [ setEntityManager, [ '@Doctrine\ORM\EntityManagerInterface' ] ]
-            - [ setACLPermissionCreatorService, [ '@Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService' ] ]
-            - [ setUserEntityClass, [ '%fos_user.model.user.class%' ] ]
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService'
+            - '%fos_user.model.user.class%'
 
     Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService:
-        calls:
-            - [ setAclProvider, [ '@Symfony\Component\Security\Acl\Model\AclProviderInterface' ] ]
-            - [ setObjectIdentityRetrievalStrategy, [ '@security.acl.object_identity_retrieval_strategy' ] ]
+        arguments:
+            - '@security.acl.provider'
+            - '@security.acl.object_identity_retrieval_strategy'
 
     Kunstmaan\NodeBundle\EventListener\MappingListener:
         arguments:
