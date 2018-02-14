@@ -16,6 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class NodeVersionLockHelper
 {
+    /** @var ContainerInterface */
+    private $container;
+
     /** @var EntityManagerInterface */
     private $em;
 
@@ -25,20 +28,18 @@ class NodeVersionLockHelper
     /**
      * NodeVersionLockHelper constructor.
      *
-     * @param EntityManagerInterface|null $em
+     * @param EntityManagerInterface|ContainerInterface|null $em
      * @param string                      $threshold
      */
-    public function __construct(
-        /* EntityManagerInterface */
-        $em = null,
-        $threshold = null
-    ) {
+    public function __construct(/* EntityManagerInterface */ $em = null, $threshold = null)
+    {
         if ($em instanceof ContainerInterface) {
             @trigger_error(
                 'Container injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
                 E_USER_DEPRECATED
             );
 
+            $this->container = $em;
             $this->em = $em->get(EntityManagerInterface::class);
             $this->threshold = $em->getParameter('kunstmaan_node.lock_threshold');
 

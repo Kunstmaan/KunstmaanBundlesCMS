@@ -28,6 +28,9 @@ class SlugRouter implements RouterInterface
 
     public static $SLUG_PREVIEW = '_slug_preview';
 
+    /** @var ContainerInterface */
+    protected $container;
+
     /** @var DomainConfigurationInterface */
     protected $domainConfiguration;
 
@@ -74,6 +77,7 @@ class SlugRouter implements RouterInterface
                 E_USER_DEPRECATED
             );
 
+            $this->container = $domainConfiguration;
             $this->domainConfiguration = $domainConfiguration->get(DomainConfigurationInterface::class);
             $this->adminKey = $domainConfiguration->getParameter('kunstmaan_admin.admin_prefix');
             $this->requestStack = $domainConfiguration->get('request_stack');
