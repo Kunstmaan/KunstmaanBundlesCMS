@@ -3,14 +3,8 @@
 namespace Kunstmaan\NodeSearchBundle\DependencyInjection;
 
 use Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration;
-use Kunstmaan\NodeSearchBundle\EventListener\NodeIndexUpdateEventListener;
-use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
-use Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher;
 use Kunstmaan\NodeSearchBundle\Search\NodeSearcher;
-use Kunstmaan\NodeSearchBundle\Services\SearchService;
-use Kunstmaan\NodeSearchBundle\Twig\KunstmaanNodeSearchTwigExtension;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
@@ -38,30 +32,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
             $loader->load('update_listener.yml');
         }
 
-        // === BEGIN ALIASES ====
-        $container->addAliases(
-            [
-                'kunstmaan_node_search.node_index_update.listener' => new Alias(NodeIndexUpdateEventListener::class),
-                'kunstmaan_node_search.search.abstract_elastica_searcher' => new Alias(AbstractElasticaSearcher::class),
-                'kunstmaan_node_search.search.node' => new Alias(NodeSearcher::class),
-                'kunstmaan_node_search.service.indexable_pageparts' => new Alias(IndexablePagePartsService::class),
-                'kunstmaan_node_search.twig.extension' => new Alias(KunstmaanNodeSearchTwigExtension::class),
-                'kunstmaan_node_search.search_configuration.node' => new Alias(NodePagesConfiguration::class),
-                'kunstmaan_node_search.search.service' => new Alias(SearchService::class),
-            ]
-        );
-
-        $this->addParameteredAliases(
-            $container,
-            [
-                ['kunstmaan_node_search.node_index_update.listener.class', NodeIndexUpdateEventListener::class, true],
-                ['kunstmaan_node_search.search_configuration.node.class', NodePagesConfiguration::class, true],
-                ['kunstmaan_node_search.search.node.class', NodeSearcher::class, true],
-                ['kunstmaan_node_search.search_service.class', SearchService::class, true],
-            ]
-        );
-        // === END ALIASES ====
-
         if (array_key_exists('use_match_query_for_title', $config)) {
             $container->getDefinition(NodeSearcher::class)
                 ->addMethodCall('setUseMatchQueryForTitle', [$config['use_match_query_for_title']]);
@@ -71,23 +41,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
             ->addMethodCall('setDefaultProperties', [$config['mapping']]);
 
         $container->setParameter('kunstmaan_node_search.contexts', $config['contexts']);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $aliases
-     */
-    private function addParameteredAliases(ContainerBuilder $container, $aliases)
-    {
-        foreach ($aliases as $alias) {
-            // Don't allow service with same name as class.
-            if ($container->getParameter($alias[0]) !== $alias[1]) {
-                $container->setAlias(
-                    $container->getParameter($alias[0]),
-                    new Alias($alias[1], $alias[2])
-                );
-            }
-        }
     }
 
     /**

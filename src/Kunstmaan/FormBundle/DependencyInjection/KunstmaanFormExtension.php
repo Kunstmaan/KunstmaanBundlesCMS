@@ -2,11 +2,8 @@
 
 namespace Kunstmaan\FormBundle\DependencyInjection;
 
-use Kunstmaan\FormBundle\EventListener\ConfigureActionsMenuListener;
 use Kunstmaan\FormBundle\Helper\FormHandler;
 use Kunstmaan\FormBundle\Helper\FormHandlerInterface;
-use Kunstmaan\FormBundle\Helper\FormMailer;
-use Kunstmaan\FormBundle\Helper\Menu\FormSubmissionsMenuAdaptor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -32,25 +29,7 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        // === BEGIN ALIASES ====
-        $container->addAliases(
-            [
-                'kunstmaan_form.menu.adaptor.forms' => new Alias(FormSubmissionsMenuAdaptor::class),
-                'kunstmaan_form.form_mailer' => new Alias(FormMailer::class),
-                'kunstmaan_form.form_handler' => new Alias(FormHandler::class),
-                FormHandlerInterface::class => new Alias(FormHandler::class),
-                'kunstmaan_form.configure_sub_actions_menu_listener' => new Alias(ConfigureActionsMenuListener::class),
-            ]
-        );
-
-        $this->addParameteredAliases(
-            $container,
-            [
-                ['kunstmaan_form.form_mailer.class', FormMailer::class, true],
-                ['kunstmaan_form.form_handler.class', FormHandler::class, true],
-            ]
-        );
-        // === END ALIASES ====
+        $container->setAlias(FormHandlerInterface::class, new Alias(FormHandler::class));
     }
 
     /**
@@ -73,22 +52,5 @@ class KunstmaanFormExtension extends Extension implements PrependExtensionInterf
         $container->prependExtensionConfig('twig', $twigConfig);
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $aliases
-     */
-    private function addParameteredAliases(ContainerBuilder $container, $aliases)
-    {
-        foreach ($aliases as $alias) {
-            // Don't allow service with same name as class.
-            if ($container->getParameter($alias[0]) !== $alias[1]) {
-                $container->setAlias(
-                    $container->getParameter($alias[0]),
-                    new Alias($alias[1], $alias[2])
-                );
-            }
-        }
     }
 }
