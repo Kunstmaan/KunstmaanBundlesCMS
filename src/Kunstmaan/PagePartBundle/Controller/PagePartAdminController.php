@@ -8,6 +8,7 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,7 +55,7 @@ class PagePartAdminController extends Controller
             throw new \RuntimeException(sprintf('No page part admin configurator found for context "%s".', $context));
         }
 
-        $pagePartAdmin = new PagePartAdmin($pagePartAdminConfigurator, $em, $page, $context, $this->container);
+        $pagePartAdmin = new PagePartAdmin($pagePartAdminConfigurator, $em, $page, $context, $this->container->get(EventDispatcherInterface::class));
         /** @var PagePartInterface $pagePart */
         $pagePart      = new $pagePartClass();
 

@@ -44,7 +44,7 @@ services:
 
     Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminFactory:
         arguments:
-          - '@Symfony\Component\DependencyInjection\ContainerInterface'
+          - '@Symfony\Component\HttpFoundation\RequestStack'
 
     Kunstmaan\PagePartBundle\Twig\Extension\PagePartAdminTwigExtension:
         tags:
