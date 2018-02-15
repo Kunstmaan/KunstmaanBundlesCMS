@@ -5,26 +5,44 @@ namespace Kunstmaan\NodeSearchBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * EventListener which will be triggered when a Node has been updated in order to update its related documents
- * in the index
+ * Class NodeIndexUpdateEventListener
+ *
+ * EventListener which will be triggered when a Node has been updated in order to update its related documents in the index
+ *
+ * @package Kunstmaan\NodeSearchBundle\EventListener
  */
 class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterface
 {
-    /** @var ContainerInterface $container */
+    /** @var ContainerInterface */
     private $container;
 
-    /** @var  */
+    /** @var NodePagesConfiguration */
+    private $nodePagesConfiguration;
+
+    /** @var array */
     private $entityChangeSet;
 
     /**
-     * @param ContainerInterface $container
+     * @param ContainerInterface|NodePagesConfiguration $nodePagesConfiguration
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(/* NodePagesConfiguration */ $nodePagesConfiguration)
     {
-        $this->container = $container;
+        if ($nodePagesConfiguration instanceof ContainerInterface) {
+            @trigger_error(
+                'Container injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+                E_USER_DEPRECATED
+            );
+            $this->container = $nodePagesConfiguration;
+            $this->nodePagesConfiguration = $this->container->get(NodePagesConfiguration::class);
+
+            return;
+        }
+
+        $this->nodePagesConfiguration = $nodePagesConfiguration;
     }
 
     /**
@@ -36,7 +54,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
             // unfortunately we have to keep a state to see what has changed
             $this->entityChangeSet = [
                 'nodeTranslationId' => $args->getObject()->getId(),
-                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject())
+                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject()),
             ];
         }
     }
@@ -55,7 +73,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
     public function onPostPersist(NodeEvent $event)
     {
         $reIndexChildren = (
-            !is_null($this->entityChangeSet)
+            null !== $this->entityChangeSet
             && $this->entityChangeSet['nodeTranslationId'] == $event->getNodeTranslation()->getId()
             && isset($this->entityChangeSet['changeSet']['url'])
         );
@@ -68,17 +86,16 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
      */
     private function index(NodeEvent $event, $reIndexChildren = false)
     {
-        $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.search_configuration.node');
         $nodeTranslation = $event->getNodeTranslation();
 
         if ($this->hasOfflineParents($nodeTranslation)) {
             return;
         }
 
-        $nodeSearchConfiguration->indexNodeTranslation($nodeTranslation, true);
+        $this->nodePagesConfiguration->indexNodeTranslation($nodeTranslation, true);
 
         if ($reIndexChildren) {
-            $nodeSearchConfiguration->indexChildren($event->getNode(), $nodeTranslation->getLang());
+            $this->nodePagesConfiguration->indexChildren($event->getNode(), $nodeTranslation->getLang());
         }
     }
 
@@ -103,8 +120,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
      */
     public function delete(NodeEvent $event)
     {
-        $nodeSearchConfiguration = $this->container->get('kunstmaan_node_search.search_configuration.node');
-        $nodeSearchConfiguration->deleteNodeTranslation($event->getNodeTranslation());
+        $this->nodePagesConfiguration->deleteNodeTranslation($event->getNodeTranslation());
     }
 
     /**
