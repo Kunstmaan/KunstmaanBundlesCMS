@@ -21,6 +21,8 @@ services:
             - [ setTokenStorage, ['@Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface']]
             - [ setDomainConfiguration, ['@Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface']]
             - [ setEntityManager, ['@Doctrine\ORM\EntityManagerInterface']]
+        tags:
+            - { name: kunstmaan_node_search.node_searcher }
 
     Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService:
         arguments:
@@ -52,3 +54,5 @@ services:
         arguments:
             - '@Symfony\Component\DependencyInjection\ContainerInterface'
             - '@Symfony\Component\HttpFoundation\RequestStack'
+            - 10
+            - !tagged kunstmaan_node_search.node_searcher
