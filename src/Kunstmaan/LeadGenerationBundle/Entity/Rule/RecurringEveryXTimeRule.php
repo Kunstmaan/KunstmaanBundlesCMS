@@ -150,10 +150,10 @@ class RecurringEveryXTimeRule extends AbstractRule
     }
 
     /**
-     * @return RecurringEveryXTimeAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return new RecurringEveryXTimeAdminType();
+        return RecurringEveryXTimeAdminType::class;
     }
 }

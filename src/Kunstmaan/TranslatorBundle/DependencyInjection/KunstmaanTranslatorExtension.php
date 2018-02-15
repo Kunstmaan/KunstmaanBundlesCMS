@@ -43,6 +43,7 @@ class KunstmaanTranslatorExtension extends Extension
         $loader->load('repositories.yml');
 
         $this->setTranslationConfiguration($config, $container);
+        $container->getDefinition('kunstmaan_translator.datacollector')->setDecoratedService('translator');
     }
 
     public function setTranslationConfiguration($config, $container)

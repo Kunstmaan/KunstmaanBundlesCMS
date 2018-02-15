@@ -7,13 +7,7 @@
 {% endblock %}
 
 {% block extracss %}
-    {% stylesheets
-    "@KunstmaanDashboardBundle/Resources/ui/scss/_dashboard.scss"
-        output='KunstmaanDashboardBundleAssets/css/DashboardStyle.min.css'
-        filter="scss"
-    %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
-    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/kunstmaandashboard/css/dashboard.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -31,11 +25,12 @@
     %}
 {% endblock %}
 
-{% block extrajavascript %}
-    {% javascripts
-    '@KunstmaanDashboardBundle/Resources/ui/js/setup/setup.js'
-    output='KunstmaanDashboardBundleAssets/js/ga-widget-setup.js'
-    %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% block js_footer %}
+    <!-- JS -->
+    {% embed "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+        {% block extra_async_javascripts %}
+            {{ parent() }}
+            '{{ asset('bundles/kunstmaandashboard/js/dashboard-bundle-setup.min.js') }}',
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

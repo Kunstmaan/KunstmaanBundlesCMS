@@ -1,0 +1,18 @@
+.pp-chooser {}
+
+.pp-chooser__header__content {
+
+    @media(min-width: $screen-sm) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .modal-title {
+            flex: 0 0 auto;
+        }
+
+        .pp-search__field-wrapper {
+            margin-right: 20px;
+        }
+    }
+}

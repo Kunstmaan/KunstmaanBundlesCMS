@@ -68,9 +68,9 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function setTitle($title)
     {
-	$this->title = $title;
+        $this->title = $title;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -80,7 +80,7 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function getTitle()
     {
-	return $this->title;
+        return $this->title;
     }
 
     /**
@@ -91,9 +91,9 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function setDescription($description)
     {
-	$this->description = $description;
+        $this->description = $description;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -103,7 +103,7 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function getDescription()
     {
-	return $this->description;
+        return $this->description;
     }
 
     /**
@@ -114,9 +114,9 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function setButtonUrl($buttonUrl)
     {
-	$this->buttonUrl = $buttonUrl;
+        $this->buttonUrl = $buttonUrl;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -126,7 +126,7 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function getButtonUrl()
     {
-	return $this->buttonUrl;
+        return $this->buttonUrl;
     }
 
     /**
@@ -137,9 +137,9 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function setButtonText($buttonText)
     {
-	$this->buttonText = $buttonText;
+        $this->buttonText = $buttonText;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -149,7 +149,7 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function getButtonText()
     {
-	return $this->buttonText;
+        return $this->buttonText;
     }
 
     /**
@@ -160,9 +160,9 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function setButtonNewWindow($buttonNewWindow)
     {
-	$this->buttonNewWindow = $buttonNewWindow;
+        $this->buttonNewWindow = $buttonNewWindow;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -172,7 +172,7 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function getButtonNewWindow()
     {
-	return $this->buttonNewWindow;
+        return $this->buttonNewWindow;
     }
 
     /**
@@ -183,9 +183,9 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function setBackgroundImage(Media $backgroundImage = null)
     {
-	$this->backgroundImage = $backgroundImage;
+        $this->backgroundImage = $backgroundImage;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -195,7 +195,7 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function getBackgroundImage()
     {
-	return $this->backgroundImage;
+        return $this->backgroundImage;
     }
 
     /**
@@ -205,16 +205,16 @@ class PageBannerPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return '{{ bundle.getName() }}:PageParts:PageBannerPagePart/view.html.twig';
+        return '{{ bundle.getName() }}:PageParts:PageBannerPagePart/view.html.twig';
     }
 
     /**
      * Get the admin form type.
      *
-     * @return \{{ namespace }}\Form\PageParts\PageBannerPagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-	return new \{{ namespace }}\Form\PageParts\PageBannerPagePartAdminType();
+	return \{{ namespace }}\Form\PageParts\PageBannerPagePartAdminType::class;
     }
 }

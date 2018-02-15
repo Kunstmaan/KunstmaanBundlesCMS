@@ -1,0 +1,14 @@
+{% if categoryContext.categories|length > 0 %}
+    <div id="blog-categories" class="toggle-item {% if categoryContext.activeCategories is defined %}toggle-item--active{% endif %} blog-filter__filters__list">
+        <ul class="toggle-item__content">
+            <li class="blog__tagcat {% if categoryContext.activeCategories is not defined %}blog__tagcat--active{% endif %}">
+                <a href="{{ basePath }}">{{ 'article_overview_page.all'|trans }}</a>
+            </li>
+            {% for category in categoryContext.categories %}
+                <li class="blog__tagcat {% if categoryContext.activeCategories is defined and category.name in categoryContext.activeCategories %}blog__tagcat--active{% endif %}">
+                    <a href="{{ get_article_category_path(currentUrl, category.name|trans, app.request.locale) }}">{{ category.name|trans }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

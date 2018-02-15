@@ -25,7 +25,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
     {
         parent::__construct($em, $aclHelper);
 {% if generate_admin_type %}
-        $this->setAdminType(new {{ entity_class }}AdminType());
+        $this->setAdminType({{ entity_class }}AdminType::class);
 {% endif %}
     }
 

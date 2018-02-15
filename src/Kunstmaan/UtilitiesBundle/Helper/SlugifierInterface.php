@@ -11,12 +11,10 @@ interface SlugifierInterface
 {
 
     /**
-     * @param $text
-     * @param $default
-     * @param $replace
-     * @param $delimiter
+     * @param string $text
+     * @param string $delimiter
      * @return mixed
      */
-    public function slugify($text, $default = 'n-a', $replace = array("'"), $delimiter = '-');
+    public function slugify($text, $delimiter = '-');
 
 }

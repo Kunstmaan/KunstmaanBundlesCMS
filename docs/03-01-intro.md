@@ -74,7 +74,6 @@ bin/console kuma:generate:default-site
 This generates:
 
 * A Groundcontrol configuration ~ gulpfile.babel.js. [Groundcontrol is a build tool based on gulp to automate and enhance mostly front-end development workflows](http://gulpjs.com)
-* A Bundler configuration ~ Gemfile. [Bundler is a RubyGems package manager we use mostly for getting specific versions of Hologram](http://bundler.io).
 * A basic selection of user interface elements, sass files, etc
 * A barebones selection of controllers, entities, twig files, pageparts, etc
 * The needed fixtures to setup the CMS
@@ -110,15 +109,10 @@ Just accept the default bundle namespace at the prompt.
 
 Now that all your code is generated, let's make sure all front-end assets are available.
 
-First make sure you have [UglifyCSS](https://github.com/fmarcia/UglifyCSS) and [UglifyJS](http://lisperator.net/uglifyjs/) installed globally.
-
-> UglifyCSS and UglifyJS are used via [Assetic](https://github.com/kriswallsmith/assetic) to minimize the javascript and css files in the administration interface, as per [this recipe on in the Symfony Cookbook: How to Minify CSS/JS Files (Using UglifyJS and UglifyCSS)](http://symfony.com/doc/current/cookbook/assetic/uglifyjs.html)
-
-Then execute the following commands:
+Execute the following command:
 
 ```
 bin/console assets:install --symlink
-bin/console assetic:dump
 ```
 
 At this point browsing to [http://kunstmaan.cms/en/admin](http://kunstmaan.cms/en/admin) should greet you with the following screens.
@@ -140,10 +134,14 @@ You can test your node version by running `node -v`.
 >
 > Test: Run `npm -v`. The version should be higher than 2.1.8.
 
+Also make sure you installed [gulp-cli](https://www.npmjs.com/package/gulp-cli) globally.
+> If you've previously installed gulp globally on your machine, run ```npm rm -gl gulp``` before following these instructions:
+>
+> Run ```npm install -g gulp-cli``` to install gulp-cli globally.
+
 Then execute the following commands:
 
 ```
-bundle install
 npm install
 npm run build
 ```

@@ -10,11 +10,10 @@ interface ShellInterface
 
     /**
      * @param string $command The command
-     * @deprecated int $priority
      *
      * @return int
      */
-    public function runInBackground($command, $priority = 0);
+    public function runInBackground($command);
 
     /**
      * @param int $pid

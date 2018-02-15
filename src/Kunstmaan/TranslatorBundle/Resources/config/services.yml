@@ -1,6 +1,8 @@
 parameters:
     kunstmaan_translator.menu.adaptor.class: 'Kunstmaan\TranslatorBundle\Service\Menu\TranslatorMenuAdaptor'
     kunstmaan_translator.service.exporter.csv.class: Kunstmaan\TranslatorBundle\Service\Command\Exporter\CSVFileExporter
+    kunstmaan_translator.toolbar.collector.translator.class: Kunstmaan\TranslatorBundle\Toolbar\TranslatorDataCollector
+
 services:
     kunstmaan_translator.menu.adaptor:
         class: '%kunstmaan_translator.menu.adaptor.class%'
@@ -96,3 +98,17 @@ services:
 
     kunstmaan_translator.service.command.diff:
         class: 'Kunstmaan\TranslatorBundle\Service\Command\DiffCommand'
+
+    kunstmaan_translator.datacollector:
+        class: Kunstmaan\TranslatorBundle\Toolbar\DataCollectorTranslator
+        arguments:
+            - '@translator.default'
+
+    kunstmaan_translator.datacollector.translations:
+        class: '%kunstmaan_translator.toolbar.collector.translator.class%'
+        parent: Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector
+        arguments:
+            - '@kunstmaan_translator.datacollector'
+            - '@router'
+        tags:
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanTranslatorBundle:Toolbar:translations.html.twig', id: kuma_translation}

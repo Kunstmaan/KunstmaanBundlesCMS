@@ -27,7 +27,7 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
      */
     public function getEntityName()
     {
-	return 'Pages\{{ entity_class }}Page';
+	    return 'Pages\{{ entity_class }}Page';
     }
 
     /**
@@ -37,7 +37,7 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
     {
         parent::adaptQueryBuilder($queryBuilder);
 
-	$queryBuilder->setParameter('class', '{{ namespace }}\Entity\Pages\{{ entity_class }}Page');
+	    $queryBuilder->setParameter('class', '{{ namespace }}\Entity\Pages\{{ entity_class }}Page');
     }
 
     /**
@@ -45,7 +45,7 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
      */
     public function getOverviewPageRepository()
     {
-	return $this->em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}OverviewPage');
+	    return $this->em->getRepository('{{ bundle.getName() }}:Pages\{{ entity_class }}OverviewPage');
     }
 
     /**
@@ -53,6 +53,6 @@ class {{ entity_class }}PageAdminListConfigurator extends AbstractArticlePageAdm
      */
     public function getListTemplate()
     {
-	return '{{ bundle.getName() }}:AdminList/{{ entity_class }}PageAdminList:list.html.twig';
+	    return '{{ bundle.getName() }}:AdminList/{{ entity_class }}PageAdminList:list.html.twig';
     }
 }

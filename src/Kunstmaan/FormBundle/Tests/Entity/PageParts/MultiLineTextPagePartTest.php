@@ -100,8 +100,6 @@ class MultiLineTextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $adminType = $this->object->getDefaultAdminType();
-        $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof MultiLineTextPagePartAdminType);
+        $this->assertEquals(MultiLineTextPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

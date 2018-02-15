@@ -13,7 +13,7 @@
 /* Footer navigation
    ========================================================================== */
 .footer-nav {
-    margin: 3.2rem 0;
+    margin: 32px 0;
 
     @media (max-width: $screen-xs-max) {
         text-align: center;
@@ -21,7 +21,7 @@
 }
 
 .footer-nav__title {
-    margin: 0 0 1.6rem;
+    margin: 0 0 16px;
 
     font-size: .85em;
     text-transform: uppercase;
@@ -40,7 +40,7 @@
 
 .footer-nav__item {
     display: block;
-    margin-bottom: .6rem;
+    margin-bottom: 6px;
 
     color: $grey;
     line-height: 1.5;

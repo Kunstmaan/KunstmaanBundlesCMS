@@ -192,6 +192,6 @@ class SeoTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $this->assertInstanceOf('Kunstmaan\SeoBundle\Form\SeoType', $this->object->getDefaultAdminType());
+        $this->assertEquals('Kunstmaan\SeoBundle\Form\SeoType', $this->object->getDefaultAdminType());
     }
 }

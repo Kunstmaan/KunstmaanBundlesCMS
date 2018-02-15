@@ -73,13 +73,11 @@ abstract class AbstractArticlePage extends AbstractPage implements HasPagePartsI
     }
 
     /**
-     * Returns the default backend form type for this page
-     *
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new AbstractArticlePageAdminType();
+        return AbstractArticlePageAdminType::class;
     }
 
     public function getAdminType()

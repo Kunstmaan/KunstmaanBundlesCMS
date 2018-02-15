@@ -95,10 +95,10 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * @return HeaderPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new HeaderPagePartAdminType();
+        return HeaderPagePartAdminType::class;
     }
 }

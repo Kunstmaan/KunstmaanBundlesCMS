@@ -16,7 +16,8 @@
     "require": {
         "php": ">=5.5.0",
         "symfony/symfony": "~2.8",
-        "doctrine/orm": "~2.2,>=2.2.3"
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "behat/transliterator": "~1.2"
     },
     "suggest": {
         "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
