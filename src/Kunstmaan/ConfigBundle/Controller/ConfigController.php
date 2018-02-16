@@ -49,11 +49,6 @@ class ConfigController
     private $configuration;
 
     /**
-     * @var ContainerInterface $container
-     */
-    private $container;
-
-    /**
      * @var FormFactoryInterface $formFactory
      */
     private $formFactory;
@@ -73,7 +68,6 @@ class ConfigController
         AuthorizationCheckerInterface $authorizationChecker,
         EntityManagerInterface $em,
         array $configuration,
-        ContainerInterface $container,
         FormFactoryInterface $formFactory
     ) {
         $this->router = $router;
@@ -81,7 +75,6 @@ class ConfigController
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
         $this->configuration = $configuration;
-        $this->container = $container;
         $this->formFactory = $formFactory;
     }
 

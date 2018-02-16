@@ -25,21 +25,14 @@ class ArticleTwigExtension extends Twig_Extension
     private $router;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * ArticleTwigExtension constructor.
      *
      * @param EntityManagerInterface $em
      * @param RouterInterface        $router
-     * @param RequestStack           $requestStack
      */
-    public function __construct(EntityManagerInterface $em, RouterInterface $router, RequestStack $requestStack) {
+    public function __construct(EntityManagerInterface $em, RouterInterface $router) {
         $this->em = $em;
         $this->router = $router;
-        $this->requestStack = $requestStack;
     }
 
     /**
