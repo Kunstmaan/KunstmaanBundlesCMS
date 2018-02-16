@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Kunstmaan\SiteMapBundle\DependencyInjection;
+namespace Tests\Kunstmaan\SitemapBundle\DependencyInjection;
 
-use Kunstmaan\SiteMapBundle\DependencyInjection\Configuration;
+use Kunstmaan\SitemapBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit_Framework_TestCase;
 
