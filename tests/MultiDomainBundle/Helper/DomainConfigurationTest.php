@@ -5,6 +5,7 @@ namespace Tests\Kunstmaan\MultiDomainBundle\Helper;
 use Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -50,6 +51,20 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
         $request = $this->getRequestWithOverride('/nl/admin/backend-uri');
         $object  = $this->getDomainConfiguration($request);
         $this->assertEquals('singlelangdomain.tld', $object->getHost());
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testHostOverrideReturnsNull()
+    {
+        $request = new Request();
+        $object  = $this->getDomainConfiguration($request);
+        $reflection = new ReflectionClass(DomainConfiguration::class);
+        $method = $reflection->getMethod('getHostOverride');
+        $method->setAccessible(true);
+
+        $this->assertNull($method->invoke($object));
     }
 
     public function testGetHosts()
@@ -148,6 +163,67 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
         $request = $this->getSingleLanguageRequest();
         $object  = $this->getDomainConfiguration($request);
         $this->assertEquals(array('en'), $object->getFrontendLocales());
+    }
+
+    public function testGetHostBaseUrl()
+    {
+        $request = $this->getSingleLanguageRequest();
+        $object  = $this->getDomainConfiguration($request);
+        $this->assertEquals('http://multilangdomain.tld', $object->getHostBaseUrl('multilangdomain.tld'));
+    }
+
+    public function testGetFullHost()
+    {
+        $request = $this->getSingleLanguageRequest();
+        $object  = $this->getDomainConfiguration($request);
+        $this->assertNull($object->getFullHost('not-here.tld'));
+    }
+
+    public function testGetLocalesExtraData()
+    {
+        $request = $this->getSingleLanguageRequest();
+        $object  = $this->getDomainConfiguration($request);
+        $data = $object->getLocalesExtraData();
+        $this->assertEmpty($data);
+        $request = $this->getMultiLanguageRequest();
+        $object  = $this->getDomainConfiguration($request);
+        $data = $object->getLocalesExtraData();
+        $this->assertArrayHasKey('foo', $data);
+    }
+
+    public function testGetFullHostConfig()
+    {
+        $request = $this->getSingleLanguageRequest();
+        $object  = $this->getDomainConfiguration($request);
+        $array = $object->getFullHostConfig();
+        $this->assertArrayHasKey('multilangdomain.tld', $array);
+        $this->assertArrayHasKey('singlelangdomain.tld', $array);
+    }
+
+    public function testHasHostSwitched()
+    {
+        $request = $this->getRequestWithOverride('/admin/somewhere');
+        $object  = $this->getDomainConfiguration($request);
+        $this->assertTrue($object->hasHostSwitched());
+    }
+
+    public function testGetHostSwitched()
+    {
+        $request = $this->getRequestWithOverride('/admin/somewhere');
+        $object  = $this->getDomainConfiguration($request);
+        $switched = $object->getHostSwitched();
+        $this->assertArrayHasKey('id', $switched);
+        $this->assertArrayHasKey('host', $switched);
+        $this->assertArrayHasKey('protocol', $switched);
+        $this->assertArrayHasKey('type', $switched);
+    }
+
+    public function testFullHostById()
+    {
+        $request = $this->getMultiLanguageRequest();
+        $object  = $this->getDomainConfiguration($request);
+        $this->assertNull($object->getFullHostById(666));
+        $this->assertNotNull($object->getFullHostById(123));
     }
 
     public function testGetFrontendLocalesWithMultiLanguage()
@@ -275,6 +351,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     {
         $session = new Session(new MockArraySessionStorage());
         $session->set(DomainConfiguration::OVERRIDE_HOST, 'singlelangdomain.tld');
+        $session->set(DomainConfiguration::SWITCH_HOST, 'multilangdomain.tld');
 
         $request = Request::create('http://multilangdomain.tld' . $uri);
         $request->setSession($session);
@@ -286,25 +363,29 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
     private function getDomainConfiguration($request)
     {
         $hostMap = array(
-            'multilangdomain.tld'  => array(
+            'multilangdomain.tld'  => [
+                'id'              => 456,
                 'host'            => 'multilangdomain.tld',
+                'protocol'        => 'http',
                 'type'            => 'multi_lang',
                 'default_locale'  => 'en_GB',
-                'locales'         => array('nl' => 'nl_BE', 'fr' => 'fr_BE', 'en' => 'en_GB'),
-                'reverse_locales' => array('nl_BE' => 'nl', 'fr_BE' => 'fr', 'en_GB' => 'en'),
+                'locales'         => ['nl' => 'nl_BE', 'fr' => 'fr_BE', 'en' => 'en_GB'],
+                'reverse_locales' => ['nl_BE' => 'nl', 'fr_BE' => 'fr', 'en_GB' => 'en'],
                 'root'            => 'homepage_multi',
-                'aliases'         => array('multi-alias.tld'),
-                'extra'           => array('foo' => 'bar'),
-            ),
-            'singlelangdomain.tld' => array(
+                'aliases'         => ['multi-alias.tld'],
+                'extra'           => ['foo' => 'bar'],
+                'locales_extra'   => ['foo' => 'bar'],
+            ],
+            'singlelangdomain.tld' => [
+                'id'              => 123,
                 'host'            => 'singlelangdomain.tld',
                 'type'            => 'single_lang',
                 'default_locale'  => 'en_GB',
-                'locales'         => array('en' => 'en_GB'),
-                'reverse_locales' => array('en_GB' => 'en'),
+                'locales'         => ['en' => 'en_GB'],
+                'reverse_locales' => ['en_GB' => 'en'],
                 'root'            => 'homepage_single',
-                'aliases'         => array('single-alias.tld'),
-            )
+                'aliases'         => ['single-alias.tld'],
+            ]
         );
 
         $map = array(

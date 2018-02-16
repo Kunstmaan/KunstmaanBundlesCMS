@@ -214,10 +214,11 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $request = $this->getMasterRequest();
 
-        return !is_null($request) &&
-        $this->isAdminRoute($request->getRequestUri()) &&
-        $request->hasPreviousSession() &&
-        $request->getSession()->has(self::SWITCH_HOST);
+        $adminRoute = $this->isAdminRoute($request->getRequestUri());
+        $prev = $request->hasPreviousSession();
+        $hasHost = $request->getSession()->has(self::SWITCH_HOST);
+
+        return !is_null($request) && $adminRoute && $prev && $hasHost;
     }
 
     /**
@@ -233,7 +234,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @return string|null
+     * @return array|string|null
      */
     public function getHostSwitched()
     {
@@ -286,7 +287,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $host = $this->getRealHost($host);
 
-        if ($host) {
+        if ($host && isset($this->hosts[$host])) {
             return $this->hosts[$host];
         }
 
