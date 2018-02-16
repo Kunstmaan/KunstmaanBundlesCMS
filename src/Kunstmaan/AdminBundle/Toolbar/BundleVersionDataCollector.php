@@ -11,14 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BundleVersionDataCollector extends AbstractDataCollector
 {
-    /**
-     * @var VersionChecker
-     */
+    /** @var VersionChecker */
     private $versionChecker;
 
-    /**
-     * @var Cache
-     */
+    /** @var Cache */
     private $cache;
 
     /**
