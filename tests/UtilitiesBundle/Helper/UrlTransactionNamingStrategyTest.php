@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\UtilitiesBundle\Helper\Cipher;
+namespace Tests\Kunstmaan\UtilitiesBundle\Helper;
 
 use Kunstmaan\UtilitiesBundle\Helper\UrlTransactionNamingStrategy;
 use Symfony\Component\HttpFoundation\Request;

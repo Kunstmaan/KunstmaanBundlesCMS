@@ -1,6 +1,7 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests;
+namespace Tests\Kunstmaan\NodeBundle\Helper;
+
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 

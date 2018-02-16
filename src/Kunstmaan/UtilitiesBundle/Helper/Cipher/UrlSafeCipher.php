@@ -29,7 +29,7 @@ class UrlSafeCipher extends Cipher
      */
     public function decrypt($value)
     {
-        return parent::decrypt($this->hex2bin($value));
+        return parent::decrypt(hex2bin($value));
     }
 
     /**
@@ -42,19 +42,7 @@ class UrlSafeCipher extends Cipher
      */
     public function hex2bin($hexString)
     {
-        $pos = 0;
-        $result = '';
-        while ($pos < strlen($hexString)) {
-            if (strpos(" \t\n\r", $hexString{$pos}) !== false) {
-                $pos++;
-            } else {
-                $code = hexdec(substr($hexString, $pos, 2));
-                $pos = $pos + 2;
-                $result .= chr($code);
-            }
-        }
-
-        return $result;
+        return hex2bin($hexString);
     }
 
 }
