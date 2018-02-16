@@ -3,13 +3,13 @@
 namespace Tests\Kunstmaan\AdminListBundle\DependencyInjection;
 
 use Kunstmaan\AdminListBundle\DependencyInjection\KunstmaanAdminListExtension;
-use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanAdminExtensionTest
  */
-class KunstmaanAdminListExtensionTest extends AbstractExtensionTestCase
+class KunstmaanAdminListExtensionTest extends AbstractPrependableExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -22,6 +22,7 @@ class KunstmaanAdminListExtensionTest extends AbstractExtensionTestCase
 
     public function testCorrectParametersHaveBeenSet()
     {
+        $this->container->setParameter('datePicker_startDate', '2014-09-18 10:00:00');
         $this->load();
 
         $this->assertContainerBuilderHasParameter('kunstmaan_adminlist.service.export.class');

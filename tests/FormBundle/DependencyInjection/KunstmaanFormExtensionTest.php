@@ -3,13 +3,13 @@
 namespace Tests\Kunstmaan\FormBundle\DependencyInjection;
 
 use Kunstmaan\FormBundle\DependencyInjection\KunstmaanFormExtension;
-use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanFormExtensionTest
  */
-class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
+class KunstmaanFormExtensionTest extends AbstractPrependableExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -22,6 +22,7 @@ class KunstmaanFormExtensionTest extends AbstractExtensionTestCase
 
     public function testCorrectParametersHaveBeenSet()
     {
+        $this->container->setParameter('kernel.root_dir', '/somewhere/over/the/rainbow');
         $this->load();
 
         $this->assertContainerBuilderHasParameter('kunstmaan_form.form_mailer.class');

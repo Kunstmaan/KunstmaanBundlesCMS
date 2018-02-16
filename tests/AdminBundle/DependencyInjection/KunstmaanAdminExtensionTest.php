@@ -3,13 +3,13 @@
 namespace Tests\Kunstmaan\AdminBundle\DependencyInjection;
 
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
-use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanAdminExtensionTest
  */
-class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
+class KunstmaanAdminExtensionTest extends AbstractPrependableExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
@@ -22,6 +22,8 @@ class KunstmaanAdminExtensionTest extends AbstractExtensionTestCase
 
     public function testCorrectParametersHaveBeenSet()
     {
+        $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');
+        $this->container->setParameter('kernel.environment', 'staging');
         $this->load();
 
         $this->assertContainerBuilderHasParameter('version_checker.url', 'https://bundles.kunstmaan.be/version-check');

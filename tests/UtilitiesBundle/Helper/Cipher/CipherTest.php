@@ -35,4 +35,10 @@ class CipherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($decryptedValue, self::CONTENT);
     }
 
+    public function testException()
+    {
+        $this->expectException(\Exception::class);
+        new Cipher('');
+    }
+
 }

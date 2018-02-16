@@ -3,13 +3,13 @@
 namespace Tests\Kunstmaan\DashboardBundle\DependencyInjection;
 
 use Kunstmaan\DashboardBundle\DependencyInjection\KunstmaanDashboardExtension;
-use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanDashboardExtensionTest
  */
-class KunstmaanDashboardExtensionTest extends AbstractExtensionTestCase
+class KunstmaanDashboardExtensionTest extends AbstractPrependableExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]

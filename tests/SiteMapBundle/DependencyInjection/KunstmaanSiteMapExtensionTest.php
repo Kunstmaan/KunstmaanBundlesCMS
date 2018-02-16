@@ -1,22 +1,22 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaPagePartBundle\DependencyInjection;
+namespace Tests\Kunstmaan\SiteMapBundle\DependencyInjection;
 
-use Kunstmaan\MediaPagePartBundle\DependencyInjection\KunstmaanMediaPagePartExtension;
+use Kunstmaan\SiteMapBundle\DependencyInjection\KunstmaanSiteMapExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
 
 /**
- * Class KunstmaanMediaPagePartExtensionTest
+ * Class KunstmaanSiteMapExtensionTest
  */
-class KunstmaanMediaPagePartExtensionTest extends AbstractPrependableExtensionTestCase
+class KunstmaanSiteMapExtensionTest extends AbstractPrependableExtensionTestCase
 {
     /**
      * @return ExtensionInterface[]
      */
     protected function getContainerExtensions()
     {
-        return [new KunstmaanMediaPagePartExtension()];
+        return [new KunstmaanSiteMapExtension()];
     }
 
 
@@ -25,6 +25,6 @@ class KunstmaanMediaPagePartExtensionTest extends AbstractPrependableExtensionTe
         $this->container->setParameter('empty_extension', true);
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('empty_extension', true);
+        $this->assertContainerBuilderHasParameter('empty_extension', true );
     }
 }

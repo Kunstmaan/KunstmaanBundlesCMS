@@ -11,7 +11,7 @@ class UrlSafeCipherTest extends \PHPUnit_Framework_TestCase
 {
 
     const SECRET = "secret";
-    const CONTENT = "This is a random sentence which will be encrypted and then decrypted!";
+    const CONTENT = "This is a random sentence which will be \t\n\rencrypted and then decrypted!";
 
     /**
      * @var UrlSafeCipher
