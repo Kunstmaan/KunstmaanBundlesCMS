@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\SearchBundle\DependencyInjection\Compiler;
 
+use Kunstmaan\SearchBundle\Provider\SearchProviderChain;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,11 +19,11 @@ class SearchProviderCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_search.search_provider_chain')) {
+        if (!$container->hasDefinition(SearchProviderChain::class)) {
             return;
         }
 
-        $definition = $container->getDefinition('kunstmaan_search.search_provider_chain');
+        $definition = $container->getDefinition(SearchProviderChain::class);
         $taggedServices = $container->findTaggedServiceIds('kunstmaan_search.search_provider');
 
         foreach ($taggedServices as $id => $tagAttributes) {

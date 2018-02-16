@@ -2,10 +2,16 @@
 
 namespace Kunstmaan\FixturesBundle\DependencyInjection\Compiler;
 
+use Kunstmaan\FixturesBundle\Parser\Parser;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class ParserCompilerPass
+ *
+ * @package Kunstmaan\FixturesBundle\DependencyInjection\Compiler
+ */
 class ParserCompilerPass implements CompilerPassInterface
 {
     /**
@@ -13,18 +19,18 @@ class ParserCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_fixtures.parser.parser')) {
+        if (!$container->hasDefinition(Parser::class)) {
             return;
         }
 
-        $definition = $container->getDefinition('kunstmaan_fixtures.parser.parser');
+        $definition = $container->getDefinition(Parser::class);
         $taggedServices = $container->findTaggedServiceIds('kunstmaan_fixtures.parser.property');
 
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
                     'addParser',
-                    array(new Reference($id), $attributes['alias'])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }
@@ -35,7 +41,7 @@ class ParserCompilerPass implements CompilerPassInterface
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
                     'addSpecParser',
-                    array(new Reference($id), $attributes['alias'])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }

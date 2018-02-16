@@ -16,13 +16,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class SearchService
+ *
  * @package Kunstmaan\NodeSearchBundle\Services
  */
 class SearchService
 {
     /**
      * @var RenderContext
-     *
      */
     protected $renderContext;
 
@@ -42,17 +42,22 @@ class SearchService
      */
     protected $defaultPerPage;
 
+    /** @var iterable */
+    protected $searchers;
+
     /**
      * @param ContainerInterface $container
-     * @param RequestStack $requestStack
-     * @param int $defaultPerPage
+     * @param RequestStack       $requestStack
+     * @param int                $defaultPerPage
+     * @param iterable           $searchers
      */
-    public function __construct(ContainerInterface $container, RequestStack $requestStack, $defaultPerPage = 10)
+    public function __construct(ContainerInterface $container, RequestStack $requestStack, $defaultPerPage = 10, $searchers)
     {
         $this->container = $container;
         $this->requestStack = $requestStack;
         $this->defaultPerPage = $defaultPerPage;
         $this->renderContext = new RenderContext();
+        $this->searchers = $searchers;
     }
 
     /**
@@ -120,13 +125,29 @@ class SearchService
         $request = $this->requestStack->getCurrentRequest();
 
         // Retrieve the current page number from the URL, if not present of lower than 1, set it to 1
+        $pageNumber = $this->getRequestedPage($request);
         $entity = $request->attributes->get('_entity');
 
-        $pageNumber = $this->getRequestedPage($request);
-        $searcher   = $this->container->get($entity->getSearcher());
+        if (!empty($this->searchers)) {
+            foreach ($this->searchers as $possibleSearcher) {
+                if ($entity->getSearcher() === \get_class($possibleSearcher)) {
+                    $searcher = $possibleSearcher;
+                    break;
+                }
+            }
+        }
+
+        if (!isset($searcher)) {
+            @trigger_error(
+                sprintf('Getting the node searcher "%s" from the container is deprecated in KunstmaanNodeSearchBundle 5.1 and will be removed in KunstmaanNodeSearchBundle 6.0.
+                Tag your service with the "kunstmaan_node_search.node_searcher" tag to add a searcher.', $entity->getSearcher()),
+                E_USER_DEPRECATED
+            );
+            $searcher = $this->container->get($entity->getSearcher());
+        }
         $this->applySearchParams($searcher, $request, $this->renderContext);
 
-        $adapter    = new SearcherRequestAdapter($searcher);
+        $adapter = new SearcherRequestAdapter($searcher);
         $pagerfanta = new Pagerfanta($adapter);
         try {
             $pagerfanta
@@ -148,11 +169,11 @@ class SearchService
     {
         // Retrieve the search parameters
         $queryString = trim($request->query->get('query'));
-        $queryType   = $request->query->get('type');
-        $lang        = $request->getLocale();
+        $queryType = $request->query->get('type');
+        $lang = $request->getLocale();
 
         $context['q_query'] = $queryString;
-        $context['q_type']  = $queryType;
+        $context['q_type'] = $queryType;
 
         $searcher
             ->setData($this->sanitizeSearchQuery($queryString))
@@ -177,7 +198,7 @@ class SearchService
      */
     protected function sanitizeSearchQuery($query)
     {
-        return '"' . $query . '"';
+        return '"'.$query.'"';
     }
 
     /**

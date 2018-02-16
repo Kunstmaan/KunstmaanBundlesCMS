@@ -4,6 +4,7 @@ namespace Kunstmaan\NodeSearchBundle\Entity;
 
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeSearchBundle\Search\NodeSearcher;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 
 /**
@@ -24,7 +25,7 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface, Slu
      */
     public function getPossibleChildTypes()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -48,6 +49,6 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface, Slu
      */
     public function getSearcher()
     {
-        return 'kunstmaan_node_search.search.node';
+        return NodeSearcher::class;
     }
 }

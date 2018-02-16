@@ -2,10 +2,16 @@
 
 namespace Kunstmaan\FixturesBundle\DependencyInjection\Compiler;
 
+use Kunstmaan\FixturesBundle\Populator\Populator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * Class PopulatorCompilerPass
+ *
+ * @package Kunstmaan\FixturesBundle\DependencyInjection\Compiler
+ */
 class PopulatorCompilerPass implements CompilerPassInterface
 {
     /**
@@ -13,18 +19,18 @@ class PopulatorCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_fixtures.builder.builder')) {
+        if (!$container->hasDefinition(Populator::class)) {
             return;
         }
 
-        $definition = $container->getDefinition('kunstmaan_fixtures.populator.populator');
+        $definition = $container->getDefinition(Populator::class);
         $taggedServices = $container->findTaggedServiceIds('kunstmaan_fixtures.populator');
 
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
                     'addPopulator',
-                    array(new Reference($id), $attributes['alias'])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }
