@@ -1,0 +1,24 @@
+services:
+    Kunstmaan\TranslatorBundle\Command\ImportTranslationsCommand:
+        arguments: ['@kunstmaan_translator.service.importer.command_handler']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\TranslatorBundle\Command\ExportTranslationsCommand:
+        arguments: ['@kunstmaan_translator.service.exporter.command_handler']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\TranslatorBundle\Command\TranslationCacheCommand:
+        arguments: ['@kunstmaan_translator.service.translator.resource_cacher', '@kunstmaan_translator.service.translator.cache_validator']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\TranslatorBundle\Command\TranslationFlagCommand:
+        arguments: ['@kunstmaan_translator.repository.translation']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\TranslatorBundle\Command\MigrationsDiffCommand:
+        tags:
+            - { name: console.command }
