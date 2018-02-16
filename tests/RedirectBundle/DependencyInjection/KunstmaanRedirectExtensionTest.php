@@ -2,7 +2,7 @@
 
 namespace Tests\Kunstmaan\RedirectBundle\DependencyInjection;
 
-use Kunstmaan\PagePartBundle\DependencyInjection\KunstmaanPagePartExtension;
+use Kunstmaan\RedirectBundle\DependencyInjection\KunstmaanRedirectExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
 
@@ -17,15 +17,15 @@ class KunstmaanRedirectExtensionTest extends AbstractPrependableExtensionTestCas
      */
     protected function getContainerExtensions()
     {
-        return [new KunstmaanPagePartExtension()];
+        return [new KunstmaanRedirectExtension()];
     }
 
 
     public function testCorrectParametersHaveBeenSet()
     {
+        $this->container->setParameter('empty_extension', true);
         $this->load();
 
-        $this->assertContainerBuilderHasParameter('kunstmaan_page_part.page_parts_presets' );
-        $this->assertContainerBuilderHasParameter('kunstmaan_page_part.page_templates_presets' );
+        $this->assertContainerBuilderHasParameter('empty_extension', true );
     }
 }

@@ -16,5 +16,7 @@ class SearchConfigurationChainTest extends \PHPUnit_Framework_TestCase
         $chain->addConfiguration($configuration, 'configuration');
 
         $this->assertEquals($configuration, $chain->getConfiguration('configuration'));
+        $this->assertNotEmpty($chain->getConfigurations());
+        $this->assertNull($chain->getConfiguration('youwontfindthis'));
     }
 }
