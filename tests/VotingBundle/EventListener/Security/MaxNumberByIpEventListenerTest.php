@@ -2,15 +2,22 @@
 
 namespace Tests\Kunstmaan\VotingBundle\EventListener\Security;
 
+use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
 * Test Max Number by Ip event listener
 */
 class MaxNumberByIpEventListenerTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @param $returnNull
+     * @param int $voteNumber
+     * @return \Kunstmaan\VotingBundle\Services\RepositoryResolver
+     */
     protected function mockRepositoryResolver($returnNull, $voteNumber = 0)
     {
         $mockedRepository = null ;
@@ -29,6 +36,7 @@ class MaxNumberByIpEventListenerTest extends \PHPUnit_Framework_TestCase
              ->method('getRepositoryForEvent')
              ->will($this->returnValue($mockedRepository));
 
+        /** @var \Kunstmaan\VotingBundle\Services\RepositoryResolver $mockedResolver */
         return $mockedResolver;
 
     }
@@ -59,6 +67,22 @@ class MaxNumberByIpEventListenerTest extends \PHPUnit_Framework_TestCase
         $listener = new MaxNumberByIpEventListener($resolver, $maxNumber);
 
         $listener->onVote($mockedEvent);
+
+    }
+
+    /**
+     * @dataProvider dataTestOnVote
+     */
+    public function testOnVoteReturnsNothing($maxNumber, $number, $stopPropagation)
+    {
+
+        $event = new FacebookLikeEvent(new Request, new Response(), 2);
+
+        $resolver = $this->mockRepositoryResolver(false, $number);
+
+        $listener = new MaxNumberByIpEventListener($resolver, $maxNumber);
+
+        $this->assertNull($listener->onVote($event));
 
     }
 

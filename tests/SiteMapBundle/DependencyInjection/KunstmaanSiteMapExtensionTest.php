@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Kunstmaan\SiteMapBundle\DependencyInjection;
+namespace Tests\Kunstmaan\SitemapBundle\DependencyInjection;
 
-use Kunstmaan\SiteMapBundle\DependencyInjection\KunstmaanSiteMapExtension;
+use Kunstmaan\SitemapBundle\DependencyInjection\KunstmaanSitemapExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
 
@@ -16,7 +16,7 @@ class KunstmaanSiteMapExtensionTest extends AbstractPrependableExtensionTestCase
      */
     protected function getContainerExtensions()
     {
-        return [new KunstmaanSiteMapExtension()];
+        return [new KunstmaanSitemapExtension()];
     }
 
 
