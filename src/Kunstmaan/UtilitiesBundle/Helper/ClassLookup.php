@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kunstmaan\UtilitiesBundle\Helper;
 
 use Doctrine\ORM\Proxy\Proxy;
@@ -16,9 +18,11 @@ class ClassLookup
      *
      * @return string the name of the class and if the given $object isn't a vaid Object false will be returned.
      */
-    public static function getClass($object)
+    public static function getClass($object): string
     {
-        return ($object instanceof Proxy) ? get_parent_class($object) : get_class($object);
+        return ($object instanceof Proxy)
+            ? get_parent_class($object)
+            : get_class($object);
     }
 
     /**
@@ -28,11 +32,15 @@ class ClassLookup
      *
      * @return string
      */
-    public static function getClassName($reference)
+    public static function getClassName($reference): string
     {
-        $reference = is_string($reference) ? $reference : ClassLookup::getClass($reference);
+        $reference = is_string($reference)
+            ? $reference
+            : ClassLookup::getClass($reference);
+
         $className = explode('\\', $reference);
 
         return array_pop($className);
     }
+
 }

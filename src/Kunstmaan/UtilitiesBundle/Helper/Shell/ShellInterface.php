@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
 
 /**
@@ -13,14 +15,14 @@ interface ShellInterface
      *
      * @return int
      */
-    public function runInBackground($command);
+    public function runInBackground(string $command): int;
 
     /**
      * @param int $pid
      *
      * @return boolean
      */
-    public function isRunning($pid);
+    public function isRunning(int $pid): bool;
 
     /**
      * BE AWARE: when you use this method, make sure you don't use for example a http parameter as $pid because then you have a security hole !!!
@@ -29,6 +31,6 @@ interface ShellInterface
      *
      * @return boolean
      */
-    public function kill($pid);
+    public function kill(int $pid): bool;
 
 }

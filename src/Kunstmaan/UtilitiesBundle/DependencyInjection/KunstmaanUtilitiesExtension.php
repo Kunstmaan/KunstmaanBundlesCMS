@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kunstmaan\UtilitiesBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -17,7 +19,7 @@ class KunstmaanUtilitiesExtension extends Extension
     /**
      * {@inheritDoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);

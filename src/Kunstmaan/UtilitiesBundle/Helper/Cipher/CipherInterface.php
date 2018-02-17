@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
 /**
@@ -15,7 +17,7 @@ interface CipherInterface
      * @param bool $raw_binary
      * @return string
      */
-    public function encrypt($value, $raw_binary=false);
+    public function encrypt(string $value, bool $raw_binary=false): string;
 
     /**
      * Decrypt the given value so that it's readable again.
@@ -26,7 +28,7 @@ interface CipherInterface
      * @internal param string $value
      *
      */
-    public function decrypt($value, $raw_binary=false);
+    public function decrypt(string $value, bool $raw_binary=false): string;
 
     /**
      * @param string $inputFile
@@ -35,7 +37,7 @@ interface CipherInterface
      * @throws \Defuse\Crypto\Exception\IOException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function encryptFile($inputFile, $outputFile);
+    public function encryptFile(string $inputFile, string $outputFile): void;
 
     /**
      * @param string $inputFile
@@ -45,6 +47,6 @@ interface CipherInterface
      * @throws \Defuse\Crypto\Exception\IOException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function decryptFile($inputFile, $outputFile);
+    public function decryptFile(string $inputFile, string $outputFile): void;
 
 }

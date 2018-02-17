@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
 /**
@@ -17,7 +19,7 @@ class UrlSafeCipher extends Cipher
      * @return string
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function encrypt($value, $raw_binary=false)
+    public function encrypt(string $value, bool $raw_binary=false): string
     {
         return bin2hex(parent::encrypt($value, $raw_binary));
     }
@@ -32,7 +34,7 @@ class UrlSafeCipher extends Cipher
      * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function decrypt($value, $raw_binary=false)
+    public function decrypt(string $value, bool $raw_binary=false): string
     {
         return parent::decrypt($this->hex2bin($value), $raw_binary);
     }
@@ -45,7 +47,7 @@ class UrlSafeCipher extends Cipher
      *
      * @return string
      */
-    public function hex2bin($hexString)
+    public function hex2bin(string $hexString): string
     {
         $pos = 0;
         $result = '';

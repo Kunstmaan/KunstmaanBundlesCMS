@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
 
 use Symfony\Component\Process\Process;
@@ -18,7 +20,7 @@ class Shell implements ShellInterface
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      */
-    public function runInBackground($command)
+    public function runInBackground(string $command): int
     {
         $process = new Process($command);
         $process->disableOutput();
@@ -34,7 +36,7 @@ class Shell implements ShellInterface
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
-    public function isRunning($pid)
+    public function isRunning(int $pid): bool
     {
         $process = new Process(
             sprintf('ps -p %s -o pid', $pid)
@@ -56,7 +58,7 @@ class Shell implements ShellInterface
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      */
-    public function kill($pid)
+    public function kill(int $pid): bool
     {
         if ($this->isRunning($pid)) {
             $process = new Process(

@@ -8,15 +8,17 @@
     "authors": [
         {
             "name": "Kunstmaan Team",
-            "homepage": "http://www.kunstmaan.be/",
-            "email": "support@kunstmaan.be"
+            "email": "bundles@kunstmaan.be"
+        },
+        {
+            "name": "The Community",
+            "homepage": "https://github.com/Kunstmaan/KunstmaanBundlesCMS/graphs/contributors"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "doctrine/orm": "~2.2,>=2.2.3",
+        "php": "^7.1",
+        "symfony/symfony": "~3.4",
+        "defuse/php-encryption": "v2.1.0",
         "behat/transliterator": "~1.2"
     },
     "suggest": {
@@ -27,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "6.0-dev"
         }
     }
 }

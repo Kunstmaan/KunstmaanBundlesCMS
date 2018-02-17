@@ -1,7 +1,8 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Helper;
+declare(strict_types=1);
 
+namespace Kunstmaan\UtilitiesBundle\Helper;
 
 /**
  * Interface SlugifierInterface
@@ -9,12 +10,11 @@ namespace Kunstmaan\UtilitiesBundle\Helper;
  */
 interface SlugifierInterface
 {
-
     /**
      * @param string $text
      * @param string $delimiter
-     * @return mixed
+     * @return string
      */
-    public function slugify($text, $delimiter = '-');
+    public function slugify(string $text, string $delimiter = '-'): string;
 
 }

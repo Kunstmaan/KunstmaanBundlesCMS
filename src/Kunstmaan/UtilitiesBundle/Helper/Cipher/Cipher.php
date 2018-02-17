@@ -1,6 +1,8 @@
 <?php
 
-    namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
+declare(strict_types=1);
+
+namespace Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
 use Defuse\Crypto\Crypto;
 use Defuse\Crypto\File;
@@ -22,7 +24,7 @@ class Cipher implements CipherInterface
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      * @throws \Defuse\Crypto\Exception\BadFormatException
      */
-    public function __construct($secret)
+    public function __construct(string $secret)
     {
         Assert::stringNotEmpty($secret, 'You need to configure a Cipher secret in your parameters.yml before you can use this!');
 
@@ -37,7 +39,7 @@ class Cipher implements CipherInterface
      * @return string
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function encrypt($value, $raw_binary=false)
+    public function encrypt(string $value, bool $raw_binary=false): string
     {
         return Crypto::encryptWithPassword($value, $this->secret, $raw_binary);
     }
@@ -51,7 +53,7 @@ class Cipher implements CipherInterface
      * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function decrypt($value, $raw_binary=false)
+    public function decrypt(string $value, bool $raw_binary=false): string
     {
         return Crypto::decryptWithPassword($value, $this->secret, $raw_binary);
     }
@@ -63,7 +65,7 @@ class Cipher implements CipherInterface
      * @throws \Defuse\Crypto\Exception\IOException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function encryptFile($inputFile, $outputFile)
+    public function encryptFile(string $inputFile, string $outputFile): void
     {
         File::encryptFileWithPassword($inputFile, $outputFile, $this->secret);
     }
@@ -76,7 +78,7 @@ class Cipher implements CipherInterface
      * @throws \Defuse\Crypto\Exception\IOException
      * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function decryptFile($inputFile, $outputFile)
+    public function decryptFile(string $inputFile, string $outputFile): void
     {
         File::decryptFileWithPassword($inputFile, $outputFile, $this->secret);
     }

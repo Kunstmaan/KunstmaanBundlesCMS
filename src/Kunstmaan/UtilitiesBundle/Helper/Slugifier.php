@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kunstmaan\UtilitiesBundle\Helper;
 
 use Behat\Transliterator\Transliterator;
@@ -17,8 +19,9 @@ final class Slugifier implements SlugifierInterface
      *
      * @return string
      */
-    public function slugify($text, $delimiter = '-')
+    public function slugify(string $text, string $delimiter = '-'): string
     {
         return Transliterator::transliterate($text, $delimiter);
     }
+
 }
