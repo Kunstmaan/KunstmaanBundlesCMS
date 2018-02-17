@@ -32,6 +32,7 @@ security:
         main:
             pattern: .*
             guard:
+                provider: fos_userbundle
                 authenticators:
                     - kunstmaan_admin.oauth_authenticator
             form_login:

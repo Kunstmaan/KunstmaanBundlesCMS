@@ -3,6 +3,7 @@
 namespace Kunstmaan\FixturesBundle;
 
 use Kunstmaan\FixturesBundle\DependencyInjection\Compiler\BuilderCompilerPass;
+use Kunstmaan\FixturesBundle\DependencyInjection\Compiler\DeprecationsCompilerPass;
 use Kunstmaan\FixturesBundle\DependencyInjection\Compiler\ParserCompilerPass;
 use Kunstmaan\FixturesBundle\DependencyInjection\Compiler\PopulatorCompilerPass;
 use Kunstmaan\FixturesBundle\DependencyInjection\Compiler\ProviderCompilerPass;
@@ -19,5 +20,6 @@ class KunstmaanFixturesBundle extends Bundle
         $container->addCompilerPass(new PopulatorCompilerPass());
         $container->addCompilerPass(new ParserCompilerPass());
         $container->addCompilerPass(new ProviderCompilerPass());
+        $container->addCompilerPass(new DeprecationsCompilerPass());
     }
 }

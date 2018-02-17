@@ -6,52 +6,93 @@ use Doctrine\Common\Cache\Cache;
 use Exception;
 use GuzzleHttp\Client;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\Exception\ParseException;
+use Kunstmaan\TranslatorBundle\Service\Translator\Translator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Version checker
  */
 class VersionChecker
 {
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     private $container;
 
-    /**
-     * @var Cache
-     */
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var Cache */
     private $cache;
 
-    /**
-     * @var string
-     */
+    /** @var TranslatorInterface */
+    private $translator;
+
+    /** @var string */
+    private $rootDir;
+
+    /** @var string */
     private $webserviceUrl;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $cacheTimeframe;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $enabled;
 
+    /** @var string */
+    private $websiteTitle;
+
     /**
-     * Constructor
+     * VersionChecker constructor.
      *
-     * @param ContainerInterface $container
-     * @param Cache $cache
+     * @param ContainerInterface|RequestStack $requestStack
+     * @param Cache                           $cache
+     * @param TranslatorInterface|null        $translator
+     * @param string|null                     $rootDir
+     * @param string|null                     $webserviceUrl
+     * @param int|null                        $cacheTimeframe
+     * @param bool|null                       $enabled
+     * @param string|null                     $websiteTitle
      */
-    public function __construct(ContainerInterface $container, Cache $cache)
-    {
-        $this->container = $container;
+    public function __construct(
+        /** RequestStack */ $requestStack,
+        Cache $cache,
+        TranslatorInterface $translator = null,
+        $rootDir = null,
+        $webserviceUrl = null,
+        $cacheTimeframe = null,
+        $enabled = null,
+        $websiteTitle = null
+    ) {
+
         $this->cache = $cache;
 
-        $this->webserviceUrl = $this->container->getParameter('version_checker.url');
-        $this->cacheTimeframe = $this->container->getParameter('version_checker.timeframe');
-        $this->enabled = $this->container->getParameter('version_checker.enabled');
+        if ($requestStack instanceof ContainerInterface) {
+            @trigger_error(
+                'Container injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+                E_USER_DEPRECATED
+            );
+
+            $this->container = $requestStack;
+            $this->requestStack = $requestStack->get('request_stack');
+            $this->translator = $requestStack->get(Translator::class);
+            $this->rootDir = $requestStack->getParameter('kernel.root_dir');
+            $this->webserviceUrl = $requestStack->getParameter('version_checker.url');
+            $this->cacheTimeframe = $requestStack->getParameter('version_checker.timeframe');
+            $this->enabled = $requestStack->getParameter('version_checker.enabled');
+            $this->websiteTitle = $requestStack->getParameter('websitetitle');
+
+            return;
+        }
+
+        $this->requestStack = $requestStack;
+        $this->translator = $translator;
+        $this->rootDir = $rootDir;
+        $this->webserviceUrl = $webserviceUrl;
+        $this->cacheTimeframe = $cacheTimeframe;
+        $this->enabled = $enabled;
+        $this->websiteTitle = $websiteTitle;
     }
 
     /**
@@ -67,7 +108,7 @@ class VersionChecker
     /**
      * Check if we recently did a version check, if not do one now.
      *
-     * @return void
+     * @throws ParseException
      */
     public function periodicallyCheck()
     {
@@ -76,15 +117,14 @@ class VersionChecker
         }
 
         $data = $this->cache->fetch('version_check');
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             $this->check();
         }
     }
 
     /**
-     * Get the version details via webservice.
-     *
-     * @return mixed A list of bundles if available.
+     * @return bool|mixed|void
+     * @throws ParseException
      */
     public function check()
     {
@@ -92,15 +132,17 @@ class VersionChecker
             return;
         }
 
-        $jsonData = json_encode(array(
-            'host' => $this->container->get('request_stack')->getCurrentRequest()->getHttpHost(),
-            'installed' => filectime($this->container->get('kernel')->getRootDir().'/../bin/console'),
-            'bundles' => $this->parseComposer(),
-            'project' => $this->container->getParameter('websitetitle')
-        ));
+        $jsonData = json_encode(
+            [
+                'host' => $this->requestStack->getCurrentRequest()->getHttpHost(),
+                'installed' => filectime($this->rootDir.'/../bin/console'),
+                'bundles' => $this->parseComposer(),
+                'project' => $this->websiteTitle,
+            ]
+        );
 
         try {
-            $client = new Client(array('connect_timeout' => 3, 'timeout' => 1));
+            $client = new Client(['connect_timeout' => 3, 'timeout' => 1]);
             $response = $client->post($this->webserviceUrl, ['body' => $jsonData]);
             $data = json_decode($response->getBody()->getContents());
 
@@ -125,7 +167,7 @@ class VersionChecker
      */
     protected function getLockPath()
     {
-        $rootPath = dirname($this->container->get('kernel')->getRootDir());
+        $rootPath = \dirname($this->rootDir);
 
         return $rootPath.'/composer.lock';
     }
@@ -134,17 +176,16 @@ class VersionChecker
      * Returns a list of composer packages.
      *
      * @return array
-     * @throws Exception\ParseException
+     * @throws ParseException
      */
     protected function getPackages()
     {
-        $translator = $this->container->get('translator');
-        $errorMessage = $translator->trans('settings.version.error_parsing_composer');
+        $errorMessage = $this->translator->trans('settings.version.error_parsing_composer');
 
         $composerPath = $this->getLockPath();
         if (!file_exists($composerPath)) {
             throw new ParseException(
-                $translator->trans('settings.version.composer_lock_not_found')
+                $this->translator->trans('settings.version.composer_lock_not_found')
             );
         }
 
@@ -155,7 +196,7 @@ class VersionChecker
             throw new ParseException($errorMessage.' (#'.json_last_error().')');
         }
 
-        if (array_key_exists('packages', $result) && is_array($result['packages'])) {
+        if (array_key_exists('packages', $result) && \is_array($result['packages'])) {
             return $result['packages'];
         }
 
@@ -167,18 +208,18 @@ class VersionChecker
      * Parse the composer.lock file to get the currently used versions of the kunstmaan bundles.
      *
      * @return array
-     * @throws Exception\ParseException
+     * @throws ParseException
      */
     protected function parseComposer()
     {
-        $bundles = array();
+        $bundles = [];
         foreach ($this->getPackages() as $package) {
-            if (!strncmp($package['name'], 'kunstmaan/', strlen('kunstmaan/'))) {
-                $bundles[] = array(
+            if (!strncmp($package['name'], 'kunstmaan/', \strlen('kunstmaan/'))) {
+                $bundles[] = [
                     'name' => $package['name'],
                     'version' => $package['version'],
-                    'reference' => $package['source']['reference']
-                );
+                    'reference' => $package['source']['reference'],
+                ];
             }
         }
 

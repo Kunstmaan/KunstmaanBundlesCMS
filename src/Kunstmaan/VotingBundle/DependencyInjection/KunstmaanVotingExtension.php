@@ -34,18 +34,21 @@ class KunstmaanVotingExtension extends Extension
                 $definition = new Definition('Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener');
                 $definition->addArgument(new Reference('kunstmaan_voting.services.repository_resolver'));
                 $definition->addArgument($value['max_number_by_ip']);
-                $definition->addTag('kernel.event_listener', array(
-                    'event' => 'kunstmaan_voting.' . lcfirst(ContainerBuilder::camelize($key)),
-                    'method' => 'onVote',
-                    'priority' => 100,
-                ));
+                $definition->addTag(
+                    'kernel.event_listener',
+                    [
+                        'event' => 'kunstmaan_voting.'.lcfirst(ContainerBuilder::camelize($key)),
+                        'method' => 'onVote',
+                        'priority' => 100,
+                    ]
+                );
 
-                $container->setDefinition('kunstmaan_voting.security.' . $key . '.max_number_by_ip_event_listener', $definition);
+                $container->setDefinition('kunstmaan_voting.security.'.$key.'.max_number_by_ip_event_listener', $definition);
             }
 
         }
 
-        $possibleActions = array('up_vote', 'down_vote', 'facebook_like', 'facebook_send', 'linkedin_share');
+        $possibleActions = ['up_vote', 'down_vote', 'facebook_like', 'facebook_send', 'linkedin_share'];
 
         $votingDefaultValue = $config['voting_default_value'];
 
@@ -55,9 +58,9 @@ class KunstmaanVotingExtension extends Extension
         }
 
         // When no values are defined, initialize with defaults
-        foreach($possibleActions as $action) {
-            if (!isset($config['actions'][$action]) || !is_array($config['actions'][$action])) {
-                $config['actions'][$action]['default_value'] = ( $action == 'down_vote' ? -1 * $votingDefaultValue : $votingDefaultValue );
+        foreach ($possibleActions as $action) {
+            if (!isset($config['actions'][$action]) || !\is_array($config['actions'][$action])) {
+                $config['actions'][$action]['default_value'] = ($action === 'down_vote' ? -1 * $votingDefaultValue : $votingDefaultValue);
             }
         }
 

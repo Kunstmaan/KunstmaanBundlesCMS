@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
@@ -13,14 +13,16 @@ use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
 class PagePartTwigExtension extends \Twig_Extension
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
     /**
-     * @param EntityManager $em
+     * PagePartTwigExtension constructor.
+     *
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -65,7 +67,7 @@ class PagePartTwigExtension extends \Twig_Extension
      *
      * @return PagePartInterface[]
      */
-    public function getPageParts(HasPagePartsInterface $page, $context = "main")
+    public function getPageParts(HasPagePartsInterface $page, $context = 'main')
     {
         /**@var $entityRepository PagePartRefRepository */
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');

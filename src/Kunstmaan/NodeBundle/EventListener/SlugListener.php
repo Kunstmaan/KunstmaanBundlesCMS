@@ -2,20 +2,24 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
+/**
+ * Class SlugListener
+ *
+ * @package Kunstmaan\NodeBundle\EventListener
+ */
 class SlugListener
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
@@ -32,11 +36,11 @@ class SlugListener
     /**
      * SlugListener constructor.
      *
-     * @param EntityManager               $em
+     * @param EntityManagerInterface      $em
      * @param ControllerResolverInterface $resolver
      * @param EventDispatcherInterface    $eventDispatcher
      */
-    public function __construct(EntityManager $em, ControllerResolverInterface $resolver, EventDispatcherInterface $eventDispatcher)
+    public function __construct(EntityManagerInterface $em, ControllerResolverInterface $resolver, EventDispatcherInterface $eventDispatcher)
     {
         $this->em = $em;
         $this->resolver = $resolver;
@@ -45,6 +49,7 @@ class SlugListener
 
     /**
      * @param FilterControllerEvent $event
+     *
      * @throws \Exception
      */
     public function onKernelController(FilterControllerEvent $event)

@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Helper\Menu;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * The MenuBuilder will build the top menu and the side menu of the admin interface
@@ -13,17 +14,17 @@ class MenuBuilder
     /**
      * @var MenuAdaptorInterface[] $adaptors
      */
-    private $adaptors = array();
+    private $adaptors = [];
 
     /**
      * @var MenuAdaptorInterface[] $adaptors
      */
-    private $sorted = array();
+    private $sorted = [];
 
     /**
      * @var TopMenuItem[] $topMenuItems
      */
-    private $topMenuItems = null;
+    private $topMenuItems;
 
     /**
      * @var ContainerInterface $container
@@ -31,25 +32,40 @@ class MenuBuilder
     private $container;
 
     /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    /**
      * @var MenuItem|null
      */
-    private $currentCache = null;
-
+    private $currentCache;
 
     /**
      * Constructor
      *
-     * @param ContainerInterface $container The container
+     * @param RequestStack|ContainerInterface $requestStack
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(/* RequestStack */ $requestStack)
     {
-        $this->container = $container;
+        if ($requestStack instanceof ContainerInterface) {
+            @trigger_error(
+                'Container injection is deprecated in KunstmaanAdminBundle 5.1 and will be removed in KunstmaanAdminBundle 6.0.',
+                E_USER_DEPRECATED
+            );
+
+            $this->container = $requestStack;
+            $this->requestStack = $requestStack->get(RequestStack::class);
+
+            return;
+        }
+
+        $this->requestStack = $requestStack;
     }
 
     /**
-     * Add menu adaptor
-     *
      * @param MenuAdaptorInterface $adaptor
+     * @param int                  $priority
      */
     public function addAdaptMenu(MenuAdaptorInterface $adaptor, $priority = 0)
     {
@@ -71,12 +87,12 @@ class MenuBuilder
         $active = null;
         do {
             /* @var MenuItem[] $children */
-            $children         = $this->getChildren($active);
+            $children = $this->getChildren($active);
             $foundActiveChild = false;
             foreach ($children as $child) {
                 if ($child->getActive()) {
                     $foundActiveChild = true;
-                    $active           = $child;
+                    $active = $child;
                     break;
                 }
             }
@@ -93,9 +109,9 @@ class MenuBuilder
      */
     public function getBreadCrumb()
     {
-        $result  = array();
+        $result = [];
         $current = $this->getCurrent();
-        while (!is_null($current)) {
+        while (null !== $current) {
             array_unshift($result, $current);
             $current = $current->getParent();
         }
@@ -111,7 +127,7 @@ class MenuBuilder
     public function getLowestTopChild()
     {
         $current = $this->getCurrent();
-        while (!is_null($current)) {
+        while (null !== $current) {
 
             if ($current instanceof TopMenuItem) {
                 return $current;
@@ -129,10 +145,10 @@ class MenuBuilder
      */
     public function getTopChildren()
     {
-        if (is_null($this->topMenuItems)) {
+        if (null === $this->topMenuItems) {
             /* @var $request Request */
-            $request            = $this->container->get('request_stack')->getCurrentRequest();
-            $this->topMenuItems = array();
+            $request = $this->requestStack->getCurrentRequest();
+            $this->topMenuItems = [];
             foreach ($this->getAdaptors() as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
             }
@@ -154,8 +170,8 @@ class MenuBuilder
             return $this->getTopChildren();
         }
         /* @var $request Request */
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-        $result  = array();
+        $request = $this->requestStack->getCurrentRequest();
+        $result = [];
         foreach ($this->getAdaptors() as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }
@@ -177,11 +193,11 @@ class MenuBuilder
      */
     private function sortAdaptors()
     {
-        $this->sorted = array();
+        $this->sorted = [];
 
         if (isset($this->adaptors)) {
             krsort($this->adaptors);
-            $this->sorted = call_user_func_array('array_merge', $this->adaptors);
+            $this->sorted = \call_user_func_array('array_merge', $this->adaptors);
         }
     }
 }

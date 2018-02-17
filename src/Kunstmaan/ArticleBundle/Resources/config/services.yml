@@ -1,8 +1,8 @@
-parameters:
-
 services:
-    kunstmaan_articlebundle.twig.extension:
-        class: 'Kunstmaan\ArticleBundle\Twig\ArticleTwigExtension'
-        arguments: ['@doctrine.orm.entity_manager', '@router', '@request_stack']
+    Kunstmaan\ArticleBundle\Twig\ArticleTwigExtension:
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Symfony\Component\Routing\RouterInterface'
+            - '@Symfony\Component\HttpFoundation\RequestStack'
         tags:
             -  { name: twig.extension }

@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Kunstmaan\NodeBundle\Helper\NodeMenu;
@@ -10,36 +10,41 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+/**
+ * Class SlugSecurityListener
+ *
+ * @package Kunstmaan\NodeBundle\EventListener
+ */
 class SlugSecurityListener
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $em;
+
     /**
      * @var AuthorizationCheckerInterface
      */
     protected $authorizationChecker;
 
     /**
-     * @var EntityManager
-     */
-    protected $em;
-    
-    /**
      * @var NodeMenu
      */
     protected $nodeMenu;
 
     /**
-     * @param EntityManager                 $entityManager
+     * @param EntityManagerInterface        $entityManager
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param NodeMenu                      $nodeMenu
      */
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         AuthorizationCheckerInterface $authorizationChecker,
         NodeMenu $nodeMenu
     ) {
-        $this->em                   = $entityManager;
+        $this->em = $entityManager;
         $this->authorizationChecker = $authorizationChecker;
-        $this->nodeMenu             = $nodeMenu;
+        $this->nodeMenu = $nodeMenu;
     }
 
     /**
@@ -52,9 +57,9 @@ class SlugSecurityListener
      */
     public function onSlugSecurityEvent(SlugSecurityEvent $event)
     {
-        $node            = $event->getNode();
+        $node = $event->getNode();
         $nodeTranslation = $event->getNodeTranslation();
-        $request         = $event->getRequest();
+        $request = $event->getRequest();
 
         if (false === $this->authorizationChecker->isGranted(PermissionMap::PERMISSION_VIEW, $node)) {
             throw new AccessDeniedException(
@@ -67,12 +72,12 @@ class SlugSecurityListener
         if (!$isPreview && !$nodeTranslation->isOnline()) {
             throw new NotFoundHttpException('The requested page is not online');
         }
-        
+
         $nodeMenu = $this->nodeMenu;
         $nodeMenu->setLocale($nodeTranslation->getLang());
         $nodeMenu->setCurrentNode($node);
         $nodeMenu->setIncludeOffline($isPreview);
-        
+
         $request->attributes->set('_nodeMenu', $nodeMenu);
     }
 }
