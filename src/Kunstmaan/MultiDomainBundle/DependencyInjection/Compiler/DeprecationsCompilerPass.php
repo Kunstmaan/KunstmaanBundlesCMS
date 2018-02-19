@@ -53,8 +53,15 @@ class DeprecationsCompilerPass implements CompilerPassInterface
     {
         foreach ($deprecations as $deprecation) {
             // Don't allow service with same name as class.
-            if ($parametered && $container->getParameter($deprecation[0]) === $deprecation[1]) {
-                continue;
+            if ($parametered) {
+                if ($container->hasParameter($deprecation[0])) {
+                    if ($container->getParameter($deprecation[0]) === $deprecation[1]) {
+                        continue;
+                    }
+                }
+                else {
+                    continue;
+                }
             }
 
             $definition = new ChildDefinition($deprecation[1]);
@@ -63,13 +70,12 @@ class DeprecationsCompilerPass implements CompilerPassInterface
             }
 
             if ($parametered) {
-                $class = $container->getParameter($deprecation[0]);
-                $definition->setClass($class);
+                $definition = $container->getDefinition($deprecation[1]);
+                $definition->setClass($container->getParameter($deprecation[0]));
                 $definition->setDeprecated(
                     true,
                     'Override service class with "%service_id%" is deprecated since KunstmaanMultiDomainBundle 5.1 and will be removed in 6.0. Override the service instance instead.'
                 );
-                $container->setDefinition($class, $definition);
             } else {
                 $definition->setClass($deprecation[1]);
                 $definition->setDeprecated(

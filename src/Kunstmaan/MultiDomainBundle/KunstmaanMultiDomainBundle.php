@@ -22,6 +22,5 @@ class KunstmaanMultiDomainBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new DeprecationsCompilerPass());
-        $container->addCompilerPass(new MultiDomainCompilerPass());
     }
 }

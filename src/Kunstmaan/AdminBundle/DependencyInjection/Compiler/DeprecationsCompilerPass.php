@@ -164,13 +164,12 @@ class DeprecationsCompilerPass implements CompilerPassInterface
             }
 
             if ($parametered) {
-                $class = $container->getParameter($deprecation[0]);
-                $definition->setClass($class);
+                $definition = $container->getDefinition($deprecation[1]);
+                $definition->setClass($container->getParameter($deprecation[0]));
                 $definition->setDeprecated(
                     true,
                     'Override service class with "%service_id%" is deprecated since KunstmaanAdminBundle 5.1 and will be removed in 6.0. Override the service instance instead.'
                 );
-                $container->setDefinition($class, $definition);
             } else {
                 $definition->setClass($deprecation[1]);
                 $definition->setDeprecated(

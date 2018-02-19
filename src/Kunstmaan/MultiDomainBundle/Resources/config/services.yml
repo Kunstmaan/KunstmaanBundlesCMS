@@ -1,3 +1,7 @@
+parameters:
+    kunstmaan_multi_domain.router.class: Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter
+    kunstmaan_multi_domain.domain_configuration.class: Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration
+
 services:
     Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor:
         tags:
@@ -18,10 +22,4 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    kunstmaan_multi_domain.host_override_cleanup:
-        class: Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler
-
-    Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration:
-        parent: Kunstmaan\AdminBundle\Helper\DomainConfiguration
-        arguments:
-            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+    Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler: ~
