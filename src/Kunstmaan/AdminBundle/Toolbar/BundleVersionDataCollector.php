@@ -5,10 +5,14 @@ namespace Kunstmaan\AdminBundle\Toolbar;
 use Doctrine\Common\Cache\Cache;
 use Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector;
 use Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker;
-use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class BundleVersionDataCollector
+ *
+ * @package Kunstmaan\AdminBundle\Toolbar
+ */
 class BundleVersionDataCollector extends AbstractDataCollector
 {
     /** @var VersionChecker */
@@ -44,7 +48,7 @@ class BundleVersionDataCollector extends AbstractDataCollector
         $data = $this->cache->fetch('version_check');
 
         return [
-            'data' => $data
+            'data' => $data,
         ];
     }
 

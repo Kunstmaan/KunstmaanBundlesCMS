@@ -1,13 +1,13 @@
-parameters:
-
 services:
-    kuma_tagging.tag_manager:
-        class: Kunstmaan\TaggingBundle\Entity\TagManager
-        arguments: ['@doctrine.orm.entity_manager', 'Kunstmaan\TaggingBundle\Entity\Tag', 'Kunstmaan\TaggingBundle\Entity\Tagging']
+    Kunstmaan\TaggingBundle\Entity\TagManager:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - 'Kunstmaan\TaggingBundle\Entity\Tag'
+            - 'Kunstmaan\TaggingBundle\Entity\Tagging'
 
-    kuma_tagging.listener:
-        class: Kunstmaan\TaggingBundle\EventListener\TagsListener
-        arguments: ['@kuma_tagging.tag_manager']
+    Kunstmaan\TaggingBundle\EventListener\TagsListener:
+        arguments:
+            - '@Kunstmaan\TaggingBundle\Entity\TagManager'
         tags:
             - { name: doctrine.event_listener, event: postUpdate }
             - { name: doctrine.event_listener, event: postPersist }
@@ -15,24 +15,22 @@ services:
             - { name: kernel.event_listener, event: kunstmaan_node.postPersist, method: postNodePersist }
             - { name: kernel.event_listener, event: kunstmaan_pagepart.postPersist, method: postPagePartPersist }
 
-    kuma_tagging.clone.listener:
-        class: Kunstmaan\TaggingBundle\EventListener\CloneListener
-        arguments: ['@doctrine.orm.entity_manager']
+    Kunstmaan\TaggingBundle\EventListener\CloneListener:
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
         tags:
             - { name: kernel.event_listener, event: kunstmaan_admin.postDeepCloneAndSave, method: postDeepCloneAndSave }
 
-    kuma_tagging.index_node.listener:
-        class: Kunstmaan\TaggingBundle\EventListener\IndexNodeEventListener
+    Kunstmaan\TaggingBundle\EventListener\IndexNodeEventListener:
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node_search.onIndexNode, method: onIndexNode }
 
-    kuma_tagging.menu.adaptor:
-        class: Kunstmaan\TaggingBundle\Helper\Menu\TagMenuAdaptor
+    Kunstmaan\TaggingBundle\Helper\Menu\TagMenuAdaptor:
         tags:
           -  { name: kunstmaan_admin.menu.adaptor }
 
-    form.type.tags:
-        class: Kunstmaan\TaggingBundle\Form\TagsAdminType
-        arguments: ['@kuma_tagging.tag_manager']
+    Kunstmaan\TaggingBundle\Form\TagsAdminType:
+        arguments:
+            - '@Kunstmaan\TaggingBundle\Entity\TagManager'
         tags:
             - { name: form.type }

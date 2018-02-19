@@ -1,50 +1,54 @@
 parameters:
-    kunstmaan_node_search.search_configuration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration
     kunstmaan_node_search.search_configuration.number_of_shards: 1
     kunstmaan_node_search.search_configuration.number_of_replicas: 0
     kunstmaan_node_search.indexname: 'nodeindex'
     kunstmaan_node_search.indextype: 'page'
     kunstmaan_node_search.search.node.class: Kunstmaan\NodeSearchBundle\Search\NodeSearcher
+    kunstmaan_node_search.search_configuration.node.class: Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration
     kunstmaan_node_search.search_service.class: Kunstmaan\NodeSearchBundle\Services\SearchService
 
 services:
-    kunstmaan_node_search.search.abstract_elastica_searcher:
-        class: Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher
+    Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher:
         abstract: true
         calls:
-            - [ setSearch, ['@kunstmaan_search.search']]
+            - [ setSearch, ['@Kunstmaan\SearchBundle\Search\Search']]
 
-    kunstmaan_node_search.search.node:
-        class: "%kunstmaan_node_search.search.node.class%"
-        parent: kunstmaan_node_search.search.abstract_elastica_searcher
+    Kunstmaan\NodeSearchBundle\Search\NodeSearcher:
+        parent: Kunstmaan\NodeSearchBundle\Search\AbstractElasticaSearcher
         calls:
             - [ setIndexName, ['%kunstmaan_node_search.indexname%']]
             - [ setIndexType, ['%kunstmaan_node_search.indextype%']]
-            - [ setTokenStorage, ['@security.token_storage']]
-            - [ setDomainConfiguration, ['@kunstmaan_admin.domain_configuration']]
-            - [ setEntityManager, ['@doctrine.orm.entity_manager']]
+            - [ setTokenStorage, ['@Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface']]
+            - [ setDomainConfiguration, ['@Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface']]
+            - [ setEntityManager, ['@Doctrine\ORM\EntityManagerInterface']]
 
-    kunstmaan_node_search.service.indexable_pageparts:
-        class: Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService
+    Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService:
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@Doctrine\ORM\EntityManagerInterface'
             - '%kunstmaan_node_search.contexts%'
 
-    kunstmaan_node_search.twig.extension:
-        class: Kunstmaan\NodeSearchBundle\Twig\KunstmaanNodeSearchTwigExtension
-        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_node_search.service.indexable_pageparts']
+    Kunstmaan\NodeSearchBundle\Twig\KunstmaanNodeSearchTwigExtension:
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService'
         tags:
             - { name: twig.extension }
 
-    kunstmaan_node_search.search_configuration.node:
-        class: "%kunstmaan_node_search.search_configuration.node.class%"
-        arguments: ['@service_container', '@kunstmaan_search.search', '%kunstmaan_node_search.indexname%', '%kunstmaan_node_search.indextype%', '%kunstmaan_node_search.search_configuration.number_of_shards%', '%kunstmaan_node_search.search_configuration.number_of_replicas%']
+    Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration:
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@Kunstmaan\SearchBundle\Search\Search'
+            - '%kunstmaan_node_search.indexname%'
+            - '%kunstmaan_node_search.indextype%'
+            - '%kunstmaan_node_search.search_configuration.number_of_shards%'
+            - '%kunstmaan_node_search.search_configuration.number_of_replicas%'
         calls:
             - [ setAclProvider, ['@security.acl.provider']]
-            - [ setIndexablePagePartsService, ['@kunstmaan_node_search.service.indexable_pageparts']]
+            - [ setIndexablePagePartsService, ['@Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService']]
         tags:
             - { name: kunstmaan_search.search_configuration, alias: Node }
 
-    kunstmaan_node_search.search.service:
-        class: "%kunstmaan_node_search.search_service.class%"
-        arguments: ['@service_container', '@request_stack']
+    Kunstmaan\NodeSearchBundle\Services\SearchService:
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@Symfony\Component\HttpFoundation\RequestStack'

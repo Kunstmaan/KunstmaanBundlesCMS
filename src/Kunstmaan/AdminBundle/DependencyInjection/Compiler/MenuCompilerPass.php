@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection\Compiler;
 
+use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -16,11 +17,11 @@ class MenuCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_admin.menubuilder')) {
+        if (!$container->hasDefinition(MenuBuilder::class)) {
             return;
         }
 
-        $definition = $container->getDefinition('kunstmaan_admin.menubuilder');
+        $definition = $container->getDefinition(MenuBuilder::class);
 
         foreach ($container->findTaggedServiceIds('kunstmaan_admin.menu.adaptor') as $id => $attributes) {
             $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;

@@ -2,20 +2,29 @@
 
 namespace Kunstmaan\FixturesBundle\Provider;
 
+use Doctrine\ORM\EntityManagerInterface;
 
-use Doctrine\ORM\EntityManager;
-
+/**
+ * Class NodeTranslation
+ *
+ * @package Kunstmaan\FixturesBundle\Provider
+ */
 class NodeTranslation
 {
     private $nodeTransRepo;
 
-    public function __construct(EntityManager $em)
+    /**
+     * NodeTranslation constructor.
+     *
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
     {
         $this->nodeTransRepo = $em->getRepository('KunstmaanNodeBundle:NodeTranslation');
     }
 
     public function getTranslationByTitle($title, $lang)
     {
-        return $this->nodeTransRepo->findOneBy(array('title' => $title, 'lang' => $lang));
+        return $this->nodeTransRepo->findOneBy(['title' => $title, 'lang' => $lang]);
     }
 }

@@ -2,15 +2,10 @@
 
 namespace Kunstmaan\SeoBundle\Twig;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
-
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
-
 use Kunstmaan\SeoBundle\Entity\Seo;
-
-use Twig_Environment;
-
 use Twig_Extension;
 
 /**
@@ -18,14 +13,14 @@ use Twig_Extension;
  */
 class SeoTwigExtension extends Twig_Extension
 {
-
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
     /**
      * Website title defined in your parameters
+     *
      * @var string
      */
     private $websiteTitle;
@@ -33,14 +28,15 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * Saves querying the db multiple times, if you happen to use any of the defined
      * functions more than once in your templates
+     *
      * @var array
      */
     private $seoCache = [];
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -52,14 +48,16 @@ class SeoTwigExtension extends Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('render_seo_metadata_for', array($this, 'renderSeoMetadataFor'), array('is_safe' => array('html'), 'needs_environment' => true)),
-            new \Twig_SimpleFunction('get_seo_for', array($this, 'getSeoFor')),
-            new \Twig_SimpleFunction('get_title_for', array($this, 'getTitleFor')),
-            new \Twig_SimpleFunction('get_title_for_page_or_default', array($this, 'getTitleForPageOrDefault')),
-            new \Twig_SimpleFunction('get_absolute_url', array($this, 'getAbsoluteUrl')),
-            new \Twig_SimpleFunction('get_image_dimensions', array($this, 'getImageDimensions')),
-        );
+        return [
+            new \Twig_SimpleFunction(
+                'render_seo_metadata_for', [$this, 'renderSeoMetadataFor'], ['is_safe' => ['html'], 'needs_environment' => true]
+            ),
+            new \Twig_SimpleFunction('get_seo_for', [$this, 'getSeoFor']),
+            new \Twig_SimpleFunction('get_title_for', [$this, 'getTitleFor']),
+            new \Twig_SimpleFunction('get_title_for_page_or_default', [$this, 'getTitleForPageOrDefault']),
+            new \Twig_SimpleFunction('get_absolute_url', [$this, 'getAbsoluteUrl']),
+            new \Twig_SimpleFunction('get_image_dimensions', [$this, 'getImageDimensions']),
+        ];
     }
 
     /**
@@ -68,6 +66,7 @@ class SeoTwigExtension extends Twig_Extension
      *
      * @param string $url
      * @param string $host
+     *
      * @return string
      */
     public function getAbsoluteUrl($url, $host = null)
@@ -114,7 +113,7 @@ class SeoTwigExtension extends Twig_Extension
      */
     public function getTitleFor(AbstractPage $entity)
     {
-        $arr = array();
+        $arr = [];
 
         $arr[] = $this->getSeoTitle($entity);
 
@@ -135,7 +134,7 @@ class SeoTwigExtension extends Twig_Extension
             return $default;
         }
 
-        $arr = array();
+        $arr = [];
 
         $arr[] = $this->getSeoTitle($entity);
 
@@ -154,17 +153,21 @@ class SeoTwigExtension extends Twig_Extension
      *
      * @return string
      */
-    public function renderSeoMetadataFor(\Twig_Environment $environment, AbstractEntity $entity, $currentNode = null, $template = 'KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig')
-    {
+    public function renderSeoMetadataFor(
+        \Twig_Environment $environment,
+        AbstractEntity $entity,
+        $currentNode = null,
+        $template = 'KunstmaanSeoBundle:SeoTwigExtension:metadata.html.twig'
+    ) {
         $seo = $this->getSeoFor($entity);
         $template = $environment->loadTemplate($template);
 
         return $template->render(
-            array(
+            [
                 'seo' => $seo,
                 'entity' => $entity,
                 'currentNode' => $currentNode,
-            )
+            ]
         );
     }
 
@@ -245,6 +248,6 @@ class SeoTwigExtension extends Twig_Extension
             return null;
         }
 
-        return array('width' => $width, 'height' => $height);
+        return ['width' => $width, 'height' => $height];
     }
 }

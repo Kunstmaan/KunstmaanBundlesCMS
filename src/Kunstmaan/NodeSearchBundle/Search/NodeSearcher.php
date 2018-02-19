@@ -3,6 +3,7 @@
 namespace Kunstmaan\NodeSearchBundle\Search;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
@@ -59,12 +60,12 @@ class NodeSearcher extends AbstractElasticaSearcher
 
     /**
      *
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-     public function setEntityManager(EntityManager $em)
-     {
-         $this->em = $em;
-     }
+    public function setEntityManager(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * @param bool $useMatchQueryForTitle
@@ -92,15 +93,15 @@ class NodeSearcher extends AbstractElasticaSearcher
         if ($this->useMatchQueryForTitle) {
             $elasticaQueryTitle = new Match();
             $elasticaQueryTitle
-              ->setFieldQuery('title', $query)
-              ->setFieldMinimumShouldMatch('title', '80%')
-              ->setFieldBoost(2);
+                ->setFieldQuery('title', $query)
+                ->setFieldMinimumShouldMatch('title', '80%')
+                ->setFieldBoost(2);
 
         } else {
             $elasticaQueryTitle = new QueryString();
             $elasticaQueryTitle
-              ->setDefaultField('title')
-              ->setQuery($query);
+                ->setDefaultField('title')
+                ->setQuery($query);
         }
 
         $elasticaQueryBool = new BoolQuery();
@@ -130,16 +131,16 @@ class NodeSearcher extends AbstractElasticaSearcher
         $this->query->setQuery($elasticaQueryBool);
         $this->query->setRescore($rescore);
         $this->query->setHighlight(
-            array(
-                'pre_tags'  => array('<strong>'),
-                'post_tags' => array('</strong>'),
-                'fields'    => array(
-                    'content' => array(
-                        'fragment_size'       => 150,
-                        'number_of_fragments' => 3
-                    )
-                )
-            )
+            [
+                'pre_tags' => ['<strong>'],
+                'post_tags' => ['</strong>'],
+                'fields' => [
+                    'content' => [
+                        'fragment_size' => 150,
+                        'number_of_fragments' => 3,
+                    ],
+                ],
+            ]
         );
     }
 
@@ -164,7 +165,7 @@ class NodeSearcher extends AbstractElasticaSearcher
      */
     protected function getCurrentUserRoles()
     {
-        $roles = array();
+        $roles = [];
         if (!is_null($this->tokenStorage)) {
             $user = $this->tokenStorage->getToken()->getUser();
             if ($user instanceof BaseUser) {
@@ -191,10 +192,10 @@ class NodeSearcher extends AbstractElasticaSearcher
 
         //Apply page type boosts
         $pageClasses = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAllDistinctPageClasses();
-        foreach($pageClasses as $pageClass) {
+        foreach ($pageClasses as $pageClass) {
             $page = new $pageClass['refEntityName']();
 
-            if($page instanceof SearchBoostInterface) {
+            if ($page instanceof SearchBoostInterface) {
                 $elasticaQueryTypeBoost = new QueryString();
                 $elasticaQueryTypeBoost
                     ->setBoost($page->getSearchBoost())

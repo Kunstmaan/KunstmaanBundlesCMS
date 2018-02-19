@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\DependencyInjection\Compiler;
 
+use Kunstmaan\AdminBundle\Helper\AdminPanel\AdminPanel;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -16,11 +17,11 @@ class AdminPanelCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('kunstmaan_admin.admin_panel')) {
+        if (!$container->hasDefinition(AdminPanel::class)) {
             return;
         }
 
-        $definition = $container->getDefinition('kunstmaan_admin.admin_panel');
+        $definition = $container->getDefinition(AdminPanel::class);
 
         foreach ($container->findTaggedServiceIds('kunstmaan_admin.admin_panel.adaptor') as $id => $attributes) {
             $priority = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
