@@ -1,34 +1,33 @@
 <?php
 
-namespace Test\Kunstmaan\DashboardBundle\DependencyInjection\Compiler;
+namespace Test\Kunstmaan\FixturesBundle\DependencyInjection\Compiler;
 
-use Kunstmaan\DashboardBundle\DependencyInjection\Compiler\WidgetCompilerPass;
+use Kunstmaan\FixturesBundle\DependencyInjection\Compiler\ProviderCompilerPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class WidgetCompilerPassTest extends AbstractCompilerPassTestCase
+class ProviderCompilerPassTest extends AbstractCompilerPassTestCase
 {
     protected function registerCompilerPass(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new WidgetCompilerPass());
+        $container->addCompilerPass(new ProviderCompilerPass());
     }
 
     public function testContainerKeys()
     {
-        $svcId = 'kunstmaan_dashboard.manager.widgets';
+        $svcId = 'kunstmaan_fixtures.builder.builder';
         $svc = new Definition();
-        $svc->addTag('kunstmaan_dashboard.widget');
-        $svc->addTag('kunstmaan_dashboard.widget', ['method' => 'someMethod']);
+        $svc->addTag('kunstmaan_fixtures.provider', ['alias' => 'someAlias']);
         $this->setDefinition($svcId, $svc);
 
         $this->compile();
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
-            'addWidget',
-            [ new Reference($svcId)]
+            'addProvider',
+            [ new Reference($svcId), 'someAlias']
         );
     }
 }

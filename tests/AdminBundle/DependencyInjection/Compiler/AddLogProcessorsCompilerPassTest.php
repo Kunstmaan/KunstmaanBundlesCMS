@@ -1,5 +1,7 @@
 <?php
 
+namespace Test\Kunstmaan\AdminBundle\DependencyInjection\Compiler;
+
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
