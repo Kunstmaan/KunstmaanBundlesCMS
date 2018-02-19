@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -25,15 +26,15 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config        = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter(
             'twig.form.resources',
             array_merge(
                 $container->getParameter('twig.form.resources'),
-                array('KunstmaanMediaBundle:Form:formWidgets.html.twig')
+                ['KunstmaanMediaBundle:Form:formWidgets.html.twig']
             )
         );
         $container->setParameter('kunstmaan_media.soundcloud_api_key', $config['soundcloud_api_key']);
@@ -57,6 +58,9 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
         $loader->load('imagine.xml');
     }
 
+    /**
+     * @param ContainerBuilder $container
+     */
     public function prepend(ContainerBuilder $container)
     {
 
@@ -64,13 +68,13 @@ class KunstmaanMediaExtension extends Extension implements PrependExtensionInter
             $container->setParameter('kunstmaan_media.upload_dir', '/uploads/media/');
         }
 
-        $twigConfig = array();
-        $twigConfig['globals']['upload_dir']          = $container->getParameter('kunstmaan_media.upload_dir');
+        $twigConfig = [];
+        $twigConfig['globals']['upload_dir'] = $container->getParameter('kunstmaan_media.upload_dir');
         $twigConfig['globals']['mediabundleisactive'] = true;
-        $twigConfig['globals']['mediamanager']        = "@kunstmaan_media.media_manager";
+        $twigConfig['globals']['mediamanager'] = "@kunstmaan_media.media_manager";
         $container->prependExtensionConfig('twig', $twigConfig);
 
-        $liipConfig = Yaml::parse(file_get_contents(__DIR__ . '/../Resources/config/imagine_filters.yml'));
+        $liipConfig = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/imagine_filters.yml'));
         $container->prependExtensionConfig('liip_imagine', $liipConfig['liip_imagine']);
 
         $configs = $container->getExtensionConfig($this->getAlias());

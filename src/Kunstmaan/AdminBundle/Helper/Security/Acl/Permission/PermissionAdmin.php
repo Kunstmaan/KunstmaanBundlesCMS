@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Entity\Role;
@@ -27,7 +27,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class PermissionAdmin
 {
-    const ADD    = 'ADD';
+    const ADD = 'ADD';
+
     const DELETE = 'DEL';
 
     /**
@@ -36,7 +37,7 @@ class PermissionAdmin
     protected $resource = null;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em = null;
 
@@ -83,7 +84,7 @@ class PermissionAdmin
     /**
      * Constructor
      *
-     * @param EntityManager                            $em                   The EntityManager
+     * @param EntityManagerInterface                   $em                   The EntityManager
      * @param TokenStorageInterface                    $tokenStorage         The token storage
      * @param AclProviderInterface                     $aclProvider          The ACL provider
      * @param ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy The object retrieval strategy
@@ -92,22 +93,21 @@ class PermissionAdmin
      * @param KernelInterface                          $kernel               The kernel
      */
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         TokenStorageInterface $tokenStorage,
         AclProviderInterface $aclProvider,
         ObjectIdentityRetrievalStrategyInterface $oidRetrievalStrategy,
         EventDispatcherInterface $eventDispatcher,
         Shell $shellHelper,
         KernelInterface $kernel
-    )
-    {
-        $this->em                   = $em;
-        $this->tokenStorage         = $tokenStorage;
-        $this->aclProvider          = $aclProvider;
+    ) {
+        $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
+        $this->aclProvider = $aclProvider;
         $this->oidRetrievalStrategy = $oidRetrievalStrategy;
-        $this->eventDispatcher      = $eventDispatcher;
-        $this->shellHelper          = $shellHelper;
-        $this->kernel               = $kernel;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->shellHelper = $shellHelper;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -118,16 +118,16 @@ class PermissionAdmin
      */
     public function initialize(AbstractEntity $resource, PermissionMapInterface $permissionMap)
     {
-        $this->resource      = $resource;
+        $this->resource = $resource;
         $this->permissionMap = $permissionMap;
-        $this->permissions   = array();
+        $this->permissions = [];
 
         // Init permissions
         try {
             $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
             /* @var $acl AclInterface */
-            $acl            = $this->aclProvider->findAcl($objectIdentity);
-            $objectAces     = $acl->getObjectAces();
+            $acl = $this->aclProvider->findAcl($objectIdentity);
+            $objectAces = $acl->getObjectAces();
             /* @var $ace AuditableEntryInterface */
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
@@ -234,7 +234,7 @@ class PermissionAdmin
             $this->createAclChangeSet($this->resource, $changes, $user);
 
             $cmd = 'php bin/console kuma:acl:apply';
-            $cmd .= ' --env=' . $this->kernel->getEnvironment();
+            $cmd .= ' --env='.$this->kernel->getEnvironment();
 
             $this->shellHelper->runInBackground($cmd);
         }
@@ -298,7 +298,7 @@ class PermissionAdmin
         // Process permissions in changeset
         foreach ($changeset as $role => $roleChanges) {
             $index = $this->getObjectAceIndex($acl, $role);
-            $mask  = 0;
+            $mask = 0;
             if (false !== $index) {
                 $mask = $this->getMaskAtIndex($acl, $index);
             }
@@ -360,9 +360,9 @@ class PermissionAdmin
      */
     private function getMaskAtIndex(AclInterface $acl, $index)
     {
-        $objectAces       = $acl->getObjectAces();
+        $objectAces = $acl->getObjectAces();
         /* @var $ace AuditableEntryInterface */
-        $ace              = $objectAces[$index];
+        $ace = $objectAces[$index];
         $securityIdentity = $ace->getSecurityIdentity();
         if ($securityIdentity instanceof RoleSecurityIdentity) {
             return $ace->getMask();

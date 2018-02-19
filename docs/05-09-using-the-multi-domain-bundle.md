@@ -96,10 +96,10 @@ current browser session.
     firewalls:
         main:
             pattern: ^/([^/]*)/admin
+            provider: fos_userbundle
             form_login:
                 login_path: fos_user_security_login
                 check_path: fos_user_security_check
-                provider: fos_userbundle
             logout:
                 path:   fos_user_security_logout
                 target: KunstmaanAdminBundle_homepage
