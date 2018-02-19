@@ -90,10 +90,7 @@ class SlugController extends Controller
         $eventDispatcher->dispatch(Events::PRE_SLUG_ACTION, $preEvent);
         $renderContext = $preEvent->getRenderContext();
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        $response = $entity->service($this->container, $request, $renderContext);
-
-        $postEvent = new SlugEvent($response, $renderContext);
+        $postEvent = new SlugEvent(null, $renderContext);
         $eventDispatcher->dispatch(Events::POST_SLUG_ACTION, $postEvent);
 
         $response      = $postEvent->getResponse();

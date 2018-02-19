@@ -36,15 +36,19 @@ services:
 
     Kunstmaan\NodeSearchBundle\Configuration\NodePagesConfiguration:
         arguments:
-            - '@Symfony\Component\DependencyInjection\ContainerInterface'
             - '@Kunstmaan\SearchBundle\Search\Search'
+            - '@Kunstmaan\NodeSearchBundle\Helper\PageHelper'
+            - '@Kunstmaan\NodeBundle\Helper\PagesConfiguration'
+            - '@Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface'
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Kunstmaan\SearchBundle\Search\LanguageAnalysisFactory'
+            - '%analyzer_languages%'
             - '%kunstmaan_node_search.indexname%'
             - '%kunstmaan_node_search.indextype%'
             - '%kunstmaan_node_search.search_configuration.number_of_shards%'
             - '%kunstmaan_node_search.search_configuration.number_of_replicas%'
         calls:
             - [ setAclProvider, ['@security.acl.provider']]
-            - [ setIndexablePagePartsService, ['@Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService']]
         tags:
             - { name: kunstmaan_search.search_configuration, alias: Node }
 
@@ -52,3 +56,12 @@ services:
         arguments:
             - '@Symfony\Component\DependencyInjection\ContainerInterface'
             - '@Symfony\Component\HttpFoundation\RequestStack'
+
+    Kunstmaan\NodeSearchBundle\Helper\PageHelper:
+        arguments:
+            - '@Symfony\Bundle\FrameworkBundle\Templating\EngineInterface'
+            - '@Symfony\Component\HttpFoundation\RequestStack'
+            - '@Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService'
+            - '@Symfony\Component\Routing\RouterInterface'
+            - '@Psr\Log\LoggerInterface'
+            - '@Symfony\Component\EventDispatcher\EventDispatcherInterface'
