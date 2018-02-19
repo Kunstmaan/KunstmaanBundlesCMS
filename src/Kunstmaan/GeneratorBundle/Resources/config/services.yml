@@ -47,3 +47,7 @@ services:
       tags:
         - { name: console.command }
 
+    Kunstmaan\GeneratorBundle\Command\InstallCommand:
+        arguments: ['%kernel.root_dir%']
+        tags:
+            - { name: console.command }
