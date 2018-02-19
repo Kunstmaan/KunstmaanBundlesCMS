@@ -23,12 +23,12 @@ class KunstmaanMediaExtensionTest extends AbstractPrependableExtensionTestCase
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('twig.form.resources', []);
-        $this->load();
+        $this->load(['enable_pdf_preview' => true]);
 
         $this->assertContainerBuilderHasParameter('twig.form.resources');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.soundcloud_api_key', 'YOUR_CLIENT_ID');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.remote_video');
-        $this->assertContainerBuilderHasParameter('kunstmaan_media.enable_pdf_preview', false);
+        $this->assertContainerBuilderHasParameter('kunstmaan_media.enable_pdf_preview', true);
         $this->assertContainerBuilderHasParameter('kunstmaan_media.blacklisted_extensions');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.media_manager.class', 'Kunstmaan\MediaBundle\Helper\MediaManager');
         $this->assertContainerBuilderHasParameter('kunstmaan_media.folder_manager.class', 'Kunstmaan\MediaBundle\Helper\FolderManager');
