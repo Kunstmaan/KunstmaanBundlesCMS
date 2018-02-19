@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\MultiDomainBundle\DependencyInjection;
 
+use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
+use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
+use Kunstmaan\NodeBundle\Router\SlugRouter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -35,24 +38,6 @@ class KunstmaanMultiDomainExtension extends Extension
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yml');
-
-        /**
-         * We override the default slug router here. You can use a custom one by
-         * setting kunstmaan_multi_domain.router.class to your own implementation.
-         */
-        $container->setParameter(
-            'kunstmaan_node.slugrouter.class',
-            $container->getParameter('kunstmaan_multi_domain.router.class')
-        );
-
-        /**
-         * We override the default domain configuration service here. You can use a custom one by
-         * setting kunstmaan_multi_domain.domain_configuration.class to your own implementation.
-         */
-        $container->setParameter(
-            'kunstmaan_admin.domain_configuration.class',
-            $container->getParameter('kunstmaan_multi_domain.domain_configuration.class')
-        );
     }
 
     /**

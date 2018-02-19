@@ -3,6 +3,7 @@
 namespace Kunstmaan\MultiDomainBundle;
 
 use Kunstmaan\MultiDomainBundle\DependencyInjection\Compiler\DeprecationsCompilerPass;
+use Kunstmaan\MultiDomainBundle\DependencyInjection\Compiler\MultiDomainCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -21,5 +22,6 @@ class KunstmaanMultiDomainBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new DeprecationsCompilerPass());
+        $container->addCompilerPass(new MultiDomainCompilerPass());
     }
 }
