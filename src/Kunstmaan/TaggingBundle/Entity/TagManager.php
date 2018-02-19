@@ -11,7 +11,6 @@ use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 class TagManager extends BaseTagManager
 {
-
     const TAGGING_HYDRATOR = 'taggingHydrator';
 
     public function loadTagging(BaseTaggable $resource)

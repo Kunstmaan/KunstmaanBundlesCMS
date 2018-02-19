@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Router;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
@@ -23,9 +24,21 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class SlugRouter implements RouterInterface
 {
+    public static $SLUG = '_slug';
 
-    public static $SLUG = "_slug";
-    public static $SLUG_PREVIEW = "_slug_preview";
+    public static $SLUG_PREVIEW = '_slug_preview';
+
+    /** @var DomainConfigurationInterface */
+    protected $domainConfiguration;
+
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var string */
+    protected $adminKey;
 
     /** @var RequestContext */
     protected $context;
@@ -36,29 +49,43 @@ class SlugRouter implements RouterInterface
     /** @var UrlGenerator */
     protected $urlGenerator;
 
-    /** @var ContainerInterface */
-    protected $container;
-
     /** @var string */
     protected $slugPattern;
 
-    /** @var DomainConfigurationInterface */
-    protected $domainConfiguration;
-
-    /** @var string */
-    protected $adminKey;
-
     /**
-     * The constructor for this service
+     * SlugRouter constructor.
      *
-     * @param ContainerInterface $container
+     * @param ContainerInterface|DomainConfigurationInterface|null $domainConfiguration
+     * @param RequestStack|null                                    $requestStack
+     * @param EntityManagerInterface|null                          $em
+     * @param string|null                                          $adminKey
      */
-    public function __construct($container)
-    {
-        $this->container = $container;
+    public function __construct(
+        /* DomainConfigurationInterface */ $domainConfiguration = null,
+        RequestStack $requestStack = null,
+        EntityManagerInterface $em = null,
+        $adminKey = null
+    ) {
         $this->slugPattern = "[a-zA-Z0-9\-_\/]*";
-        $this->domainConfiguration = $container->get('kunstmaan_admin.domain_configuration');
-        $this->adminKey            = $container->getParameter('kunstmaan_admin.admin_prefix');
+
+        if ($domainConfiguration instanceof ContainerInterface) {
+            @trigger_error(
+                'Container injection is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.',
+                E_USER_DEPRECATED
+            );
+
+            $this->domainConfiguration = $domainConfiguration->get(DomainConfigurationInterface::class);
+            $this->adminKey = $domainConfiguration->getParameter('kunstmaan_admin.admin_prefix');
+            $this->requestStack = $domainConfiguration->get('request_stack');
+            $this->em = $domainConfiguration->get(EntityManagerInterface::class);
+
+            return;
+        }
+
+        $this->domainConfiguration = $domainConfiguration;
+        $this->adminKey = $adminKey;
+        $this->requestStack = $requestStack;
+        $this->em = $em;
     }
 
     /**
@@ -69,7 +96,6 @@ class SlugRouter implements RouterInterface
      * @param string $pathinfo
      *
      * @throws ResourceNotFoundException
-     *
      * @return array
      */
     public function match($pathinfo)
@@ -84,7 +110,7 @@ class SlugRouter implements RouterInterface
             $nodeTranslation = $this->getNodeTranslation($result);
             if (is_null($nodeTranslation)) {
                 throw new ResourceNotFoundException(
-                    'No page found for slug ' . $pathinfo
+                    'No page found for slug '.$pathinfo
                 );
             }
             $result['_nodeTranslation'] = $nodeTranslation;
@@ -97,12 +123,11 @@ class SlugRouter implements RouterInterface
      * Gets the request context.
      *
      * @return RequestContext The context
-     *
      * @api
      */
     public function getContext()
     {
-        if (!isset($this->context)) {
+        if (null === $this->context) {
             /** @var Request $request */
             $request = $this->getMasterRequest();
 
@@ -128,13 +153,13 @@ class SlugRouter implements RouterInterface
     /**
      * Generate an url for a supplied route.
      *
-     * @param string $name The path
-     * @param array $parameters The route parameters
+     * @param string   $name          The path
+     * @param array    $parameters    The route parameters
      * @param int|bool $referenceType The type of reference to be generated (one of the UrlGeneratorInterface constants)
      *
      * @return null|string
      */
-    public function generate($name, $parameters = array(), $referenceType = UrlGenerator::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = UrlGenerator::ABSOLUTE_PATH)
     {
         $this->urlGenerator = new UrlGenerator(
             $this->getRouteCollection(),
@@ -151,7 +176,7 @@ class SlugRouter implements RouterInterface
      */
     public function getRouteCollection()
     {
-        if (is_null($this->routeCollection)) {
+        if (null === $this->routeCollection) {
             $this->routeCollection = new RouteCollection();
 
             $this->addPreviewRoute();
@@ -166,13 +191,11 @@ class SlugRouter implements RouterInterface
      */
     protected function getMasterRequest()
     {
-        /** @var RequestStack $requestStack */
-        $requestStack = $this->container->get('request_stack');
-        if (is_null($requestStack)) {
+        if (null === $this->requestStack) {
             return null;
         }
 
-        return $requestStack->getMasterRequest();
+        return $this->requestStack->getMasterRequest();
     }
 
     /**
@@ -200,28 +223,28 @@ class SlugRouter implements RouterInterface
      */
     protected function getPreviewRouteParameters()
     {
-        $previewPath         = sprintf('/%s/preview/{url}', $this->adminKey);
-        $previewDefaults     = array(
+        $previewPath = sprintf('/%s/preview/{url}', $this->adminKey);
+        $previewDefaults = [
             '_controller' => 'KunstmaanNodeBundle:Slug:slug',
             'preview' => true,
             'url' => '',
-            '_locale' => $this->getDefaultLocale()
-        );
-        $previewRequirements = array(
-            'url' => $this->getSlugPattern()
-        );
+            '_locale' => $this->getDefaultLocale(),
+        ];
+        $previewRequirements = [
+            'url' => $this->getSlugPattern(),
+        ];
 
         if ($this->isMultiLanguage()) {
-            $previewPath = '/{_locale}' . $previewPath;
+            $previewPath = '/{_locale}'.$previewPath;
             unset($previewDefaults['_locale']);
             $previewRequirements['_locale'] = $this->getEscapedLocales($this->getBackendLocales());
         }
 
-        return array(
+        return [
             'path' => $previewPath,
             'defaults' => $previewDefaults,
-            'requirements' => $previewRequirements
-        );
+            'requirements' => $previewRequirements,
+        ];
     }
 
     /**
@@ -232,27 +255,27 @@ class SlugRouter implements RouterInterface
     protected function getSlugRouteParameters()
     {
         $slugPath = '/{url}';
-        $slugDefaults = array(
+        $slugDefaults = [
             '_controller' => 'KunstmaanNodeBundle:Slug:slug',
             'preview' => false,
             'url' => '',
-            '_locale' => $this->getDefaultLocale()
-        );
-        $slugRequirements = array(
-            'url' => $this->getSlugPattern()
-        );
+            '_locale' => $this->getDefaultLocale(),
+        ];
+        $slugRequirements = [
+            'url' => $this->getSlugPattern(),
+        ];
 
         if ($this->isMultiLanguage()) {
-            $slugPath = '/{_locale}' . $slugPath;
+            $slugPath = '/{_locale}'.$slugPath;
             unset($slugDefaults['_locale']);
             $slugRequirements['_locale'] = $this->getEscapedLocales($this->getFrontendLocales());
         }
 
-        return array(
+        return [
             'path' => $slugPath,
             'defaults' => $slugDefaults,
-            'requirements' => $slugRequirements
-        );
+            'requirements' => $slugRequirements,
+        ];
     }
 
     /**
@@ -305,9 +328,9 @@ class SlugRouter implements RouterInterface
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param array  $parameters
      */
-    protected function addRoute($name, array $parameters = array())
+    protected function addRoute($name, array $parameters = [])
     {
         $this->routeCollection->add(
             $name,
@@ -343,10 +366,8 @@ class SlugRouter implements RouterInterface
      */
     protected function getNodeTranslationRepository()
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
         /* @var NodeTranslationRepository $nodeTranslationRepo */
-        $nodeTranslationRepo = $em->getRepository(
+        $nodeTranslationRepo = $this->em->getRepository(
             'KunstmaanNodeBundle:NodeTranslation'
         );
 
@@ -360,7 +381,7 @@ class SlugRouter implements RouterInterface
      */
     protected function getEscapedLocales($locales)
     {
-        $escapedLocales = array();
+        $escapedLocales = [];
         foreach ($locales as $locale) {
             $escapedLocales[] = str_replace('-', '\-', $locale);
         }

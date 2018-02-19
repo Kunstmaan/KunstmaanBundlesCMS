@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Translation\DataCollectorTranslator;
 
 class TranslatorDataCollector extends AbstractDataCollector
 {

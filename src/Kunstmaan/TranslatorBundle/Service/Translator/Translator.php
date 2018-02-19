@@ -4,25 +4,22 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Translator
  */
 class Translator extends SymfonyTranslator
 {
-
+    /** @var TranslationRepository */
     private $translationRepository;
 
-    /**
-     * Resource Cacher
-     * @var Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
-     */
+    /** @var ResourceCacher */
     private $resourceCacher;
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
+    /** @var Request */
     protected $request;
 
     /**
@@ -36,7 +33,7 @@ class Translator extends SymfonyTranslator
             $this->addResourcesFromDatabaseAndCacheThem();
         }
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -75,7 +72,7 @@ class Translator extends SymfonyTranslator
             if ($cacheResources === true) {
                 $this->resourceCacher->cacheResources($resources);
             }
-        } catch (\Exception $ex){
+        } catch (\Exception $ex) {
             // don't load if the database doesn't work
         }
     }
@@ -107,7 +104,7 @@ class Translator extends SymfonyTranslator
         return parent::loadCatalogue($locale);
     }
 
-    public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
+    public function trans($id, array $parameters = [], $domain = 'messages', $locale = null)
     {
         if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
             return parent::trans($id, $parameters, $domain, $locale);
@@ -148,7 +145,7 @@ class Translator extends SymfonyTranslator
             $translationCollection = new ArrayCollection;
         }
 
-        $translationCollection->set($domain . $id . $locale, $translation);
+        $translationCollection->set($domain.$id.$locale, $translation);
 
         $this->request->request->set('usedTranslations', $translationCollection);
 
