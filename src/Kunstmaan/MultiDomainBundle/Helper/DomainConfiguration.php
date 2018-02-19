@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MultiDomainBundle\Helper;
 
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration as BaseDomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\DependencyInjection\ContainerInterface;

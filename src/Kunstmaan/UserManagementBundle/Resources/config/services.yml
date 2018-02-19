@@ -3,8 +3,8 @@ parameters:
   kunstmaan_user_management.menu.adaptor.class: Kunstmaan\UserManagementBundle\Helper\Menu\UserManagementMenuAdaptor
 
 services:
-    kunstmaan_user_management.menu.adaptor:
-        class: '%kunstmaan_user_management.menu.adaptor.class%'
-        arguments: ['@security.authorization_checker']
+    Kunstmaan\UserManagementBundle\Helper\Menu\UserManagementMenuAdaptor:
+        arguments:
+            - '@Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface'
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor', priority: 100 }

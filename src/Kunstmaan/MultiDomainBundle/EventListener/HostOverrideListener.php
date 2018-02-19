@@ -6,15 +6,20 @@ use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * Class HostOverrideListener
+ *
+ * @package Kunstmaan\MultiDomainBundle\EventListener
+ */
 class HostOverrideListener
 {
     /**
-     * @var Session
+     * @var SessionInterface
      */
     protected $session;
 
@@ -34,21 +39,21 @@ class HostOverrideListener
     protected $adminRouteHelper;
 
     /**
-     * @param Session                      $session
+     * @param SessionInterface             $session
      * @param TranslatorInterface          $translator
      * @param DomainConfigurationInterface $domainConfiguration
-     * @param AdminRouteHelper $adminRouteHelper
+     * @param AdminRouteHelper             $adminRouteHelper
      */
     public function __construct(
-        Session $session,
+        SessionInterface $session,
         TranslatorInterface $translator,
         DomainConfigurationInterface $domainConfiguration,
         AdminRouteHelper $adminRouteHelper
     ) {
-        $this->session             = $session;
-        $this->translator          = $translator;
+        $this->session = $session;
+        $this->translator = $translator;
         $this->domainConfiguration = $domainConfiguration;
-        $this->adminRouteHelper    = $adminRouteHelper;
+        $this->adminRouteHelper = $adminRouteHelper;
     }
 
     /**

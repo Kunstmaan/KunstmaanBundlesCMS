@@ -32,7 +32,7 @@ class KunstmaanMultiDomainExtension extends Extension
 
         $loader = new Loader\YamlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yml');
 
@@ -64,7 +64,7 @@ class KunstmaanMultiDomainExtension extends Extension
      */
     private function getHostConfigurations($hosts)
     {
-        $hostConfigurations = array();
+        $hostConfigurations = [];
         foreach ($hosts as $name => $settings) {
             $host = $settings['host'];
             // Set the key of the host as id.
@@ -92,7 +92,7 @@ class KunstmaanMultiDomainExtension extends Extension
      */
     private function getHostLocales($localeSettings)
     {
-        $hostLocales = array();
+        $hostLocales = [];
         foreach ($localeSettings as $key => $localeMapping) {
             $hostLocales[$localeMapping['uri_locale']] = $localeMapping['locale'];
         }
@@ -109,9 +109,9 @@ class KunstmaanMultiDomainExtension extends Extension
      */
     private function getLocalesExtra($localeSettings)
     {
-        $localesExtra = array();
+        $localesExtra = [];
         foreach ($localeSettings as $key => $localeMapping) {
-            $localesExtra[$localeMapping['uri_locale']] = array_key_exists('extra', $localeMapping) ? $localeMapping['extra'] : array();
+            $localesExtra[$localeMapping['uri_locale']] = array_key_exists('extra', $localeMapping) ? $localeMapping['extra'] : [];
         }
 
         return $localesExtra;

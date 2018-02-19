@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Helper\Creators;
 
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 class ACLPermissionCreator
 {
     /**
-     * @var MutableAclProviderInterface
+     * @var AclProviderInterface
      */
     private $aclProvider;
 

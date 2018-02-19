@@ -3,17 +3,20 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminRouteHelperTest extends \PHPUnit_Framework_TestCase
 {
     protected static $ADMIN_KEY = 'admin';
+
     protected static $ALTERNATIVE_ADMIN_KEY = 'vip';
+
     protected static $NON_ADMIN_URL = '/en/some_path/%s/nodes';
+
     protected static $ADMIN_URL = '/en/%s/nodes';
+
     protected static $PREVIEW_ADMIN_URL = '/en/%s/preview/blog/page/1';
 
     /**
@@ -81,6 +84,6 @@ class AdminRouteHelperTest extends \PHPUnit_Framework_TestCase
 
     private function getPreviewRequest()
     {
-        return Request::create('http://domain.tld/', 'GET', array('_route' => SlugRouter::$SLUG_PREVIEW));
+        return Request::create('http://domain.tld/', 'GET', ['_route' => SlugRouter::$SLUG_PREVIEW]);
     }
 }
