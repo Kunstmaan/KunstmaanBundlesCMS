@@ -126,7 +126,10 @@ class MediaController extends Controller
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
 
-        return ['folder' => $folder];
+        return [
+            'folder' => $folder,
+            'foldermanager' => $this->get('kunstmaan_media.folder_manager')
+        ];
     }
 
     /**
@@ -404,9 +407,10 @@ class MediaController extends Controller
         }
 
         return [
-            'type'   => $type,
-            'form'   => $form->createView(),
-            'folder' => $folder
+            'type' => $type,
+            'form' => $form->createView(),
+            'folder' => $folder,
+            'foldermanager' => $this->get('kunstmaan_media.folder_manager')
         ];
     }
 

@@ -1,11 +1,9 @@
-{% extends '@KunstmaanMedia/Default/layout.html.twig' %}
+{% extends '@KunstmaanMedia/Media/sidebarLayout.html.twig' %}
 {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
 {% block title %}
     {{ 'media.media.new' | trans({'%folder%': folder.name|trans }) | raw }}
 {% endblock %}
-
-{% block header %}{% endblock %}
 
 {% block content %}
     {{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_create', { 'folderId' : folder.id, 'type': type }), 'attr': {'novalidate': 'novalidate'}}) }}
