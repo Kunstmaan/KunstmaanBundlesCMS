@@ -33,6 +33,10 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object->setMedia($media);
         $this->assertEquals(5, $this->object->getMedia()->getId());
         $this->assertEquals(5, $this->object->getMedia()->__toString());
+        $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
+        $media = new Media();
+        $this->assertEquals('', $media->__toString());
+
     }
 
     public function testGetDefaultView()
