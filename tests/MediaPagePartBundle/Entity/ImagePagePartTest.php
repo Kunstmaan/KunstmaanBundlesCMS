@@ -48,8 +48,8 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(5, $this->object->getMedia()->getId());
         $this->assertEquals(5, $this->object->getMedia()->__toString());
         $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
-        $media = new Media();
-        $this->assertEquals('', $media->__toString());
+        $pp = new ImagePagePart();
+        $this->assertEquals('', $pp->__toString());
     }
 
     public function testSetGetAlttext()
