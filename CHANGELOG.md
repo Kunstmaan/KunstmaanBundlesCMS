@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.4 / 2018-02-20
+
+* [PagePartBundle] Fix for PHP 7.2 - value passed to count() cannot be null [#1849](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1849) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminBundle] fixed delete pagepart modal issue [#1823](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1823) ([@deZinc](https://github.com/deZinc)) 
+
+
 ## 4.1.3 / 2018-02-06
 
 * [AllBundles] Revert "Postgres compatibility fixes (#1778)" [#1810](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1810) ([@sandergo90](https://github.com/sandergo90)) 
