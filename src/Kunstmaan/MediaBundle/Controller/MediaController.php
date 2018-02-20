@@ -210,13 +210,14 @@ class MediaController extends Controller
         }
 
         if (0 !== $request->files->count()) {
-            if ($request->files->get('file')['error'] || !\is_uploaded_file($request->files->get('file')['tmp_name'])) {
 
+            $_file = $request->files->get('file');
+            if ($_file->getError() > 0 || !\is_uploaded_file($_file->getRealPath())) {
                 return $this->returnJsonError('103', 'Failed to move uploaded file.');
             }
 
             // Read binary input stream and append it to temp file
-            if (!$input = @\fopen($request->files->get('file')['tmp_name'], 'rb')) {
+            if (!$input = @\fopen($_file->getRealPath(), 'rb')) {
 
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
@@ -250,9 +251,8 @@ class MediaController extends Controller
             /* @var Media $media */
             $media = $this->get('kunstmaan_media.media_manager')->getHandler($file)->createNew($file);
             $media->setFolder($folder);
-            $em->getRepository('KunstmaanMediaBundle:Media')->save($media);
+            $em->getRepository(Media::class)->save($media);
         } catch (Exception $e) {
-
             return $this->returnJsonError('104', 'Failed performing save on media-manager');
         }
 
@@ -282,11 +282,11 @@ class MediaController extends Controller
 
         return new JsonResponse([
             'jsonrpc' => '2.0',
-            'error '  => [
+            'error ' => [
                 'code' => $code,
                 'message' => $message,
             ],
-            'id'      => 'id'
+            'id' => 'id'
         ]);
     }
 
