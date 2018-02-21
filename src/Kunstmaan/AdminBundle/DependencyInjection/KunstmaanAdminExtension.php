@@ -105,6 +105,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $monologConfig['handlers']['main']['level'] = 'debug';
         $container->prependExtensionConfig('monolog', $monologConfig);
 
+        $twigConfig['paths'][] = ['value' => dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
+        $container->prependExtensionConfig('twig', $twigConfig);
+
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);
     }
