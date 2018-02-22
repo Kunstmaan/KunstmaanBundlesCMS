@@ -58,6 +58,33 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('ROLE_CUSTOM', $this->object->getRole());
     }
 
+    public function testGetSetChildren()
+    {
+        $this->object->setChildren(['test' => 'ok']);
+        $this->assertNotEmpty($this->object->getChildren());
+        $this->assertNotNull($this->object->getChildren()['test']);
+    }
+
+    public function testGetSetOffline()
+    {
+        $this->object->setOffline(true);
+        $this->assertTrue($this->object->getOffline());
+        $this->object->setOffline(false);
+        $this->assertFalse($this->object->getOffline());
+        $this->object->setOffline(true);
+        $this->assertTrue($this->object->getOffline());
+    }
+
+    public function testGetSetFolder()
+    {
+        $this->object->setFolder(true);
+        $this->assertTrue($this->object->getFolder());
+        $this->object->setFolder(false);
+        $this->assertFalse($this->object->getFolder());
+        $this->object->setFolder(true);
+        $this->assertTrue($this->object->getFolder());
+    }
+
     public function testGetSetParent()
     {
         /* @var $menuBuilder MenuBuilder */
