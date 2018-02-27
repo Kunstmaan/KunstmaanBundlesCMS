@@ -13,7 +13,7 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var SlugifierInterface
+     * @var Slugifier
      */
     private $slugifier;
 
