@@ -1,7 +1,6 @@
 'use strict';
 
-(function(window, document, undefined) {
-
+(function(window, document, undefined) {    
     window.kunstmaan = window.kunstmaan || {};
     window.kunstmaan.leadGeneration = window.kunstmaan.leadGeneration || {};
 
