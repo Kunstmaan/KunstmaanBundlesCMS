@@ -1,7 +1,6 @@
 'use strict';
 
-(function(window, document, $, undefined) {
-
+(function(window, document, undefined) {
     window.kunstmaan = window.kunstmaan || {};
     window.kunstmaan.leadGeneration = window.kunstmaan.leadGeneration || {};
 
@@ -10,11 +9,11 @@
             'name': name
         };
 
-        var _rules = [],
-            _$popup = $('#' + htmlId),
-            _$close = $('.' + htmlId + '--close'),
-            _$noThanks = $('.' + htmlId + '--no-thanks'),
-            _$submit = $('.' + htmlId + '--submit');
+        var RULES = [],
+            POPUP = document.querySelector('#' + htmlId),
+            CLOSE = document.querySelector('.' + htmlId + '--close'),
+            CANCEL = document.querySelector('.' + htmlId + '--no-thanks'),
+            SUBMIT = document.querySelector('.' + htmlId + '--submit');
 
         var _listenToHtmlClicks, _listenToEvents, _conditionsMet, _forEachRule, _doConditionsMetLogic,
             _htmlNoThanks, _noThanks, _htmlClose, _close, _conversion, _htmlSubmit, _submit,
@@ -22,7 +21,7 @@
 
         instance.addRule = function(rule) {
             rule.setPopup(instance);
-            _rules.push(rule);
+            RULES.push(rule);
         };
 
         instance.activate = function() {
@@ -37,7 +36,7 @@
             var data = _getData();
             // if not converted && not clicked "no thanks", activate & listen to rules
             if (data === null || (!data.already_converted && !data.no_thanks)) {
-                if (_rules.length === 0) {
+                if (RULES.length === 0) {
                     // when there are nu rules, directly show the popup
                     _doConditionsMetLogic();
                 } else {
@@ -52,13 +51,14 @@
             window.kunstmaan.leadGeneration.log(instance.name + ": show popup");
             document.dispatchEvent(new window.CustomEvent(window.kunstmaan.leadGeneration.events.BEFORE_SHOWING, { detail: {popup: instance.name} }));
 
-            $('#' + htmlId).removeClass('popup--hide').addClass('popup--show');
+            POPUP.classList.remove('popup--hide');
+            POPUP.classList.add('popup--show');
 
             var data = _getData();
             data.last_shown = new window.Date().getTime();
             _setData(data);
 
-            document.dispatchEvent(new window.CustomEvent(window.kunstmaan.leadGeneration.events.IS_SHOWING,  { detail: {popup: instance.name} }));
+            document.dispatchEvent(new window.CustomEvent(window.kunstmaan.leadGeneration.events.IS_SHOWING, { detail: {popup: instance.name} }));
         };
 
         instance.setRuleProperty = function(ruleId, id, value) {
@@ -90,9 +90,9 @@
         };
 
         _listenToHtmlClicks = function() {
-            _$close.click(_htmlClose);
-            _$noThanks.click(_htmlNoThanks);
-            _$submit.click(_htmlSubmit);
+            CLOSE.addEventListener('click', _htmlClose);
+            CANCEL.addEventListener('click', _htmlNoThanks);
+            SUBMIT.addEventListener('click', _htmlSubmit);
         };
 
         _listenToEvents = function() {
@@ -112,8 +112,8 @@
 
         _forEachRule = function(cb) {
             var i = 0;
-            for (; i < _rules.length; i++) {
-                cb(_rules[i]);
+            for (; i < RULES.length; i++) {
+                cb(RULES[i]);
             }
         };
 
@@ -167,7 +167,8 @@
                 document.dispatchEvent(new window.CustomEvent(window.kunstmaan.leadGeneration.events.BEFORE_CLOSING, {detail: {popup: instance.name}}));
                 window.kunstmaan.leadGeneration.log(instance.name + ": close event catched");
 
-                _$popup.removeClass('popup--show').addClass('popup--hide');
+                POPUP.classList.remove('popup--show')
+                POPUP.classList.add('popup--hide');
                 document.dispatchEvent(new window.CustomEvent(window.kunstmaan.leadGeneration.events.IS_CLOSING, {detail: {popup: instance.name}}));
             }
         };
@@ -185,25 +186,53 @@
             event.preventDefault();
             window.kunstmaan.leadGeneration.log(instance.name + ': html submit form');
 
-            var $form = _$submit.parents('form');
-            document.dispatchEvent(new window.CustomEvent(window.kunstmaan.leadGeneration.events.DO_SUBMIT_FORM, {detail: {popup: instance.name, form: $form}}));
+            function findAncestor(el, sel) {
+                while ((el = el.parentElement) && !((el.matches || el.matchesSelector).call(el,sel)));
+                return el;
+            }
+
+            document.dispatchEvent(new window.CustomEvent(window.kunstmaan.leadGeneration.events.DO_SUBMIT_FORM, {detail: {popup: instance.name, form: findAncestor(SUBMIT, 'form')}}));
         };
 
         _submit = function(event) {
+            function serialize(form) {
+                var field, s = [];
+                if (typeof form == 'object' && form.nodeName == "FORM") {
+                    var len = form.elements.length;
+                    for (var i=0; i<len; i++) {
+                        field = form.elements[i];
+                        if (field.name && !field.disabled && field.type != 'file' && field.type != 'reset' && field.type != 'submit' && field.type != 'button') {
+                            if (field.type == 'select-multiple') {
+                                for (j=form.elements[i].options.length-1; j>=0; j--) {
+                                    if(field.options[j].selected)
+                                        s[s.length] = encodeURIComponent(field.name) + "=" + encodeURIComponent(field.options[j].value);
+                                }
+                            } else if ((field.type != 'checkbox' && field.type != 'radio') || field.checked) {
+                                s[s.length] = encodeURIComponent(field.name) + "=" + encodeURIComponent(field.value);
+                            }
+                        }
+                    }
+                }
+                return s.join('&').replace(/%20/g, '+');
+            }
             if (event.detail.popup === instance.name) {
                 window.kunstmaan.leadGeneration.log(instance.name + ': submit form');
 
-                var url = $(event.detail.form).attr('action');
-                var data = $(event.detail.form).serialize();
+                var url = event.detail.form.action;
+                var data = serialize(event.detail.form);
 
-                $.post(url, data, _onSubmitSuccess);
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = _onSubmitSuccess(request.responseText)
+                request.open('POST', url);
+                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                request.send(data);
             }
         };
 
         _onSubmitSuccess = function(data) {
             window.kunstmaan.leadGeneration.log(instance.name + ': onSubmitSuccess');
 
-            $('#' + htmlId + '--content').html(data);
+            document.querySelector('#' + htmlId + '--content').innerHTML = data;
             _listenToHtmlClicks();
         };
 
@@ -230,4 +259,4 @@
         return instance;
     };
 
-})(window, document, $);
+})(window, document);

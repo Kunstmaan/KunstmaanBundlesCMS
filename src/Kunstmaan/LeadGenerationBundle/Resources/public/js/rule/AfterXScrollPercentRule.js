@@ -1,10 +1,6 @@
 'use strict';
 
-(function(window, document, $, undefined) {
-
-    var _$window = $(window),
-        _$document = $(document);
-
+(function(window, document, undefined) {
     window.kunstmaan = window.kunstmaan || {};
     window.kunstmaan.leadGeneration = window.kunstmaan.leadGeneration || {};
     window.kunstmaan.leadGeneration.rules = window.kunstmaan.leadGeneration.rules || {};
@@ -34,9 +30,9 @@
             }
             _locked = true;
 
-            var wintop = _$window.scrollTop(),
-                docheight = _$document.height(),
-                winheight = _$window.height(),
+            var wintop = window.scrollTop,
+                docheight = document.height,
+                winheight = window.height,
                 percentage = (wintop / (docheight - winheight)) * 100;
 
             if (percentage > properties.percentage) {
