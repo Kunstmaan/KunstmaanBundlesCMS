@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.5 / 2018-03-05
+
+*  [AdminBundle] Fix escaping of img src attributes in WYSIWYG fields [#1858](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1858) ([@mtnorthrop](https://github.com/mtnorthrop)) 
+
+
 ## 5.0.4 / 2018-02-20
 
 * [AdminListBundle]: ->loadTemplate() is only for internal use.. [#1846](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1846) ([@sandergo90](https://github.com/sandergo90)) 
