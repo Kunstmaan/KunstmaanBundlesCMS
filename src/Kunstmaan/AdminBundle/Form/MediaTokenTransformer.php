@@ -63,10 +63,21 @@ class MediaTokenTransformer implements DataTransformerInterface
                 if (isset($query['token'])) {
                     $image->setAttribute('src', $query['token']);
                 }
-                $image->setAttribute('data-src', urldecode($src));
+                $image->setAttribute('data-src', $src);
             }
         );
 
-        return $crawler->filter('body')->html();
+        $html = $crawler->filter('body')->html();
+
+        // URL-decode square brackets in img and a tags
+        $html = preg_replace_callback(
+            '/<(img|a)\s+[^>]*>/',
+            function($matches) {
+                return str_replace(['%5B', '%5D'], ['[', ']'], $matches[0]);
+            },
+            $html
+        );
+
+        return $html;
     }
 }
