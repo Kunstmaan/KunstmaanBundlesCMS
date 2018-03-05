@@ -43,7 +43,7 @@
                                 <% endif %>
                             </time>
                             <h3 class="blog-item__head__title">
-                                <a href="{{ articlenode.url }}">
+                                <a href="{{ path('_slug', {'url': articlenode.url}) }}">
                                     {{ article.title }}
                                 </a>
                             </h3>
@@ -52,7 +52,7 @@
                         {{ article.summary }}
 
                         <p class="text--right blog-item__read-more">
-                            <a href="{{ articlenode.url }}" class="blog-item__read-more__link">
+                            <a href="{{ path('_slug', {'url': articlenode.url}) }}" class="blog-item__read-more__link">
                                 {{ 'article.readmore'|trans }}
                             </a>
                         </p>
