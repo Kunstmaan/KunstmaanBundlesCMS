@@ -29,6 +29,7 @@ class SeoType extends AbstractType
     {
         $builder->add('id', HiddenType::class)
             ->add('metaTitle', TextType::class, array(
+                'required' => false,
                 'label' => 'seo.form.seo.meta_title.label',
                 'attr' => array(
                     'info_text' => 'seo.form.seo.meta_title.info_text',
@@ -41,6 +42,7 @@ class SeoType extends AbstractType
                 ]
             ))
             ->add('metaDescription', TextareaType::class, array(
+                'required' => false,
                 'label' => 'seo.form.seo.meta_description.label',
                 'attr' => array(
                     'maxlength' => 300
