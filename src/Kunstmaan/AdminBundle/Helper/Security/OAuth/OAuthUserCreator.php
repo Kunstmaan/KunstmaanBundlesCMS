@@ -3,11 +3,12 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
 
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Model\GroupInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 
 class OAuthUserCreator implements OAuthUserCreatorInterface
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
     /** @var array */
@@ -21,9 +22,10 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
 
     /**
      * OAuthUserCreator constructor.
+     *
      * @param EntityManagerInterface   $em
-     * @param                          $hostedDomains
-     * @param                          $userClass
+     * @param array                    $hostedDomains
+     * @param string                   $userClass
      * @param OAuthUserFinderInterface $userFinder
      */
     public function __construct(EntityManagerInterface $em, $hostedDomains, $userClass, OAuthUserFinderInterface $userFinder)
@@ -56,7 +58,11 @@ class OAuthUserCreator implements OAuthUserCreatorInterface
             }
 
             foreach ($this->getAccessLevels($email) as $accessLevel) {
-                $user->addRole($accessLevel);
+                /** @var GroupInterface $group */
+                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(['name' => $accessLevel]);
+                if (null !== $group) {
+                    $user->addGroup($group);
+                }
             }
             $user->setGoogleId($googleId);
 
