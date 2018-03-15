@@ -21,13 +21,14 @@ class FilterTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $filterDef = array('type' => new StringFilterType('string', 'b'), 'options' => array(), 'filtername' => 'filterName');
+        $type = new StringFilterType('string', 'b');
+        $filterDef = ['type' => $type, 'options' => ['x' => 'y'], 'filtername' => 'filterName'];
         $this->object = new Filter('columnName', $filterDef, 'string');
     }
 
     public function test__construct()
     {
-        $filterDef = array('type' => new StringFilterType('string', 'b'), 'options' => array(), 'filtername' => 'filterName');
+        $filterDef = ['type' => new StringFilterType('string', 'b'), 'options' => [], 'filtername' => 'filterName'];
         $object = new Filter('columnName', $filterDef, 'string');
 
         $this->assertEquals('columnName', $object->getColumnName());
@@ -37,9 +38,26 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     public function testBindRequest()
     {
-        $request = new Request(array('filter_comparator_string' => 'equals', 'filter_value_string' => 'TheStringValue'));
+        $request = new Request(['filter_comparator_string' => 'equals', 'filter_value_string' => 'TheStringValue']);
         $this->object->bindRequest($request);
 
-        $this->assertEquals(array('comparator' => 'equals', 'value' => 'TheStringValue'), $this->object->getData());
+        $this->assertEquals(['comparator' => 'equals', 'value' => 'TheStringValue'], $this->object->getData());
     }
+
+    public function testGetOptions()
+    {
+        $options = $this->object->getOptions();
+        $this->assertTrue(is_array($options));
+        $this->assertArrayHasKey('x', $options);
+    }
+
+    public function testApply()
+    {
+        $type = $this->createMock(StringFilterType::class);
+        $type->expects($this->once())->method('apply');
+        $filterDef = ['type' => $type, 'options' => ['x' => 'y'], 'filtername' => 'filterName'];
+        $this->object = new Filter('columnName', $filterDef, 'string');
+        $this->object->apply();
+    }
+
 }
