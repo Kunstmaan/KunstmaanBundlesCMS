@@ -14,11 +14,6 @@ export const mediaBundle = {
     tasks: {}
 };
 
-mediaBundle.tasks.eslint = createEslintTask({
-    src: mediaBundle.config.srcPath + 'js/**/*.js',
-    failAfterError: !consoleArguments.continueAfterTestError
-});
-
 mediaBundle.tasks.scripts = createScriptsTask({
     src: [
         mediaBundle.config.srcPath + 'vendor_bower/plupload/js/plupload.full.min.js',
