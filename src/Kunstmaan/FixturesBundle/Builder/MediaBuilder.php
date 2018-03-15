@@ -3,7 +3,7 @@
 namespace Kunstmaan\FixturesBundle\Builder;
 
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
@@ -14,7 +14,10 @@ use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
 
 class MediaBuilder implements BuilderInterface
 {
+    /** @var EntityManagerInterface */
     private $em;
+
+    /** @var FileHandler */
     private $fileHandler;
 
     /**
@@ -24,7 +27,14 @@ class MediaBuilder implements BuilderInterface
 
     private $folder;
 
-    public function __construct(EntityManager $em, FileHandler $fileHandler, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
+    /**
+     * MediaBuilder constructor.
+     *
+     * @param EntityManagerInterface          $em
+     * @param FileHandler                     $fileHandler
+     * @param MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory
+     */
+    public function __construct(EntityManagerInterface $em, FileHandler $fileHandler, MimeTypeGuesserFactoryInterface $mimeTypeGuesserFactory)
     {
         $this->em = $em;
         $this->fileHandler = $fileHandler;
@@ -44,17 +54,17 @@ class MediaBuilder implements BuilderInterface
     {
         $properties = $fixture->getProperties();
         if (!isset($properties['folder'])) {
-            throw new \Exception('There is no folder specified for media fixture ' . $fixture->getName());
+            throw new \Exception('There is no folder specified for media fixture '.$fixture->getName());
         }
 
-        $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('rel' => $properties['folder']));
+        $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(['rel' => $properties['folder']]);
 
         if (!$this->folder instanceof Folder) {
-            $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(array('internalName' => $properties['folder']));
+            $this->folder = $this->em->getRepository('KunstmaanMediaBundle:Folder')->findOneBy(['internalName' => $properties['folder']]);
         }
 
         if (!$this->folder instanceof Folder) {
-            throw new \Exception('Could not find the specified folder for media fixture ' . $fixture->getName());
+            throw new \Exception('Could not find the specified folder for media fixture '.$fixture->getName());
         }
 
 

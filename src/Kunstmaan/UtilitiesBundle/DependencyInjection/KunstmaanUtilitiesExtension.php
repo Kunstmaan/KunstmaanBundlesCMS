@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\UtilitiesBundle\DependencyInjection;
 
+use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
+use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -25,5 +28,7 @@ class KunstmaanUtilitiesExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('commands.yml');
         $loader->load('services.yml');
+
+        $container->setAlias(SlugifierInterface::class, new Alias(Slugifier::class));
     }
 }

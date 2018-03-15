@@ -2,7 +2,9 @@
     "name": "kunstmaan/bundles-cms",
     "type": "library",
     "description": "The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much more.",
-    "keywords": ["cms"],
+    "keywords": [
+        "cms"
+    ],
     "homepage": "http://bundles.kunstmaan.be",
     "license": "MIT",
     "authors": [
@@ -30,7 +32,6 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
-
         "friendsofsymfony/user-bundle": "~2.0",
         "knplabs/knp-menu-bundle": "~2.0",
         "guzzlehttp/guzzle": "~6.1",
@@ -95,7 +96,9 @@
         "friendsofsymfony/user-bundle": "<2.0.0"
     },
     "autoload": {
-        "psr-4": {"Kunstmaan\\": "src/Kunstmaan/"}
+        "psr-4": {
+            "Kunstmaan\\": "src/Kunstmaan/"
+        }
     },
     "extra": {
         "branch-alias": {

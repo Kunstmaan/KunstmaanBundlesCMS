@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ToolbarListener implements EventSubscriberInterface
 {
@@ -36,7 +36,7 @@ class ToolbarListener implements EventSubscriberInterface
     protected $dataCollector;
 
     /**
-     * @var AuthorizationChecker
+     * @var AuthorizationCheckerInterface
      */
     protected $authorizationChecker;
 
@@ -68,21 +68,21 @@ class ToolbarListener implements EventSubscriberInterface
     /**
      * ToolbarListener constructor.
      *
-     * @param \Twig_Environment     $twig
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param DataCollector         $dataCollector
-     * @param AuthorizationChecker  $authorizationChecker
-     * @param TokenStorageInterface $tokenStorage
-     * @param bool                  $enabled
-     * @param ContainerInterface    $container
-     * @param AdminRouteHelper      $adminRouteHelper
-     * @param array                 $providerKeys
+     * @param \Twig_Environment             $twig
+     * @param UrlGeneratorInterface         $urlGenerator
+     * @param DataCollector                 $dataCollector
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TokenStorageInterface         $tokenStorage
+     * @param bool                          $enabled
+     * @param ContainerInterface            $container
+     * @param AdminRouteHelper              $adminRouteHelper
+     * @param array                         $providerKeys
      */
     public function __construct(
         \Twig_Environment $twig,
         UrlGeneratorInterface $urlGenerator,
         DataCollector $dataCollector,
-        AuthorizationChecker $authorizationChecker,
+        AuthorizationCheckerInterface $authorizationChecker,
         TokenStorageInterface $tokenStorage,
         $enabled,
         ContainerInterface $container,

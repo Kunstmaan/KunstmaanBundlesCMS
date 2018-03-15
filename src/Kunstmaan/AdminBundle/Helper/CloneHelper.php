@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Helper;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\AdminBundle\Event\Events;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -12,9 +12,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class CloneHelper
 {
-
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -24,10 +23,10 @@ class CloneHelper
     private $eventDispatcher;
 
     /**
-     * @param EntityManager            $em              The EntityManager
+     * @param EntityManagerInterface   $em              The EntityManager
      * @param EventDispatcherInterface $eventDispatcher The EventDispatchInterface
      */
-    public function __construct(EntityManager $em, EventDispatcherInterface $eventDispatcher)
+    public function __construct(EntityManagerInterface $em, EventDispatcherInterface $eventDispatcher)
     {
         $this->em = $em;
         $this->eventDispatcher = $eventDispatcher;
@@ -41,14 +40,13 @@ class CloneHelper
     public function deepCloneAndSave($entity)
     {
         $clonedEntity = clone $entity;
-        $this->eventDispatcher->dispatch(Events::DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
+        $this->eventDispatcher->dispatch(Events::DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity));
 
         $this->em->persist($clonedEntity);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(Events::POST_DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity, $this->em));
+        $this->eventDispatcher->dispatch(Events::POST_DEEP_CLONE_AND_SAVE, new DeepCloneAndSaveEvent($entity, $clonedEntity));
 
         return $clonedEntity;
     }
-
 }

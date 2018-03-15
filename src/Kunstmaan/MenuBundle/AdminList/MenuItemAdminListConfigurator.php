@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MenuBundle\AdminList;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
@@ -17,11 +17,11 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     private $menu;
 
     /**
-     * @param EntityManager $em        The entity manager
-     * @param AclHelper     $aclHelper The acl helper
-     * @param Menu          $menu
+     * @param EntityManagerInterface $em        The entity manager
+     * @param AclHelper              $aclHelper The acl helper
+     * @param Menu                   $menu
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper = null, Menu $menu)
+    public function __construct(EntityManagerInterface $em, AclHelper $aclHelper = null, Menu $menu)
     {
         parent::__construct($em, $aclHelper);
 
@@ -82,7 +82,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function getValue($item, $columnName)
     {
         if ($columnName == 'title') {
-           return $item->getDisplayTitle();
+            return $item->getDisplayTitle();
         } elseif ($columnName == 'online') {
             return $item;
         } elseif ($columnName == 'type') {
@@ -105,7 +105,7 @@ class MenuItemAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getExtraParameters()
     {
-        return array('menuid' => $this->menu->getId());
+        return ['menuid' => $this->menu->getId()];
     }
 
     /**
