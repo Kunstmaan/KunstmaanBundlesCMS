@@ -32,7 +32,6 @@
 
 <!-- Body block -->
 {% block body %}
-
     <!-- Header -->
     {% block appHeader %}
         {% include "KunstmaanAdminBundle:Default:app_header.html.twig" %}
@@ -140,11 +139,15 @@
             </a>
         </footer>
     {% endblock %}
+
 {% endblock %}
 
     {% block js_footer %}
         <!-- JS -->
         {% include "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
     {% endblock %}
+
+    <!-- JS - Extra -->
+    {% block extrajavascript %}{% endblock %}
 </body>
 </html>

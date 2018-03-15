@@ -34,12 +34,4 @@ class KunstmaanAdminBundle extends Bundle
 
         $container->registerExtension(new KunstmaanAdminExtension());
     }
-
-    /**
-     * @return string The Bundle parent name it overrides or null if no parent
-     */
-    public function getParent()
-    {
-        return 'FOSUserBundle';
-    }
 }

@@ -127,9 +127,12 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Using the service action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Use the SlugActionInterface instead
      */
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
+        @trigger_error('Using the service action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Use the SlugActionInterface instead', E_USER_DEPRECATED);
     }
 
     /**

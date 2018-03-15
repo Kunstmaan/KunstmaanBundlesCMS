@@ -63,10 +63,10 @@ class MediaTokenTransformer implements DataTransformerInterface
                 if (isset($query['token'])) {
                     $image->setAttribute('src', $query['token']);
                 }
-                $image->setAttribute('data-src', $src);
+                $image->setAttribute('data-src', urldecode($src));
             }
         );
 
-        return urldecode($crawler->filter('body')->html());
+        return $crawler->filter('body')->html();
     }
 }

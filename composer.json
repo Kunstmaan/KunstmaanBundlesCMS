@@ -93,7 +93,7 @@
         "kunstmaan/tagging-bundle": "self.version"
     },
     "conflict": {
-        "friendsofsymfony/user-bundle": "<2.0.2"
+        "friendsofsymfony/user-bundle": "<2.0.0"
     },
     "autoload": {
         "psr-4": {

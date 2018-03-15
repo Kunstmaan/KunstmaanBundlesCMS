@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.0.4 / 2018-02-20
+
+* [AdminListBundle]: ->loadTemplate() is only for internal use.. [#1846](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1846) ([@sandergo90](https://github.com/sandergo90)) 
+* [MediaBundle] Bulk file upload fix [#1834](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1834) ([@cv65kr](https://github.com/cv65kr)) 
+* [AdminBundle]: re-add the extrajavascript block [#1829](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1829) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle] refactor media token transformer [#1827](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1827) ([@delboy1978uk](https://github.com/delboy1978uk)) 
+* [AdminListBundle] Fix Export Exception namespace [#1825](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1825) ([@delboy1978uk](https://github.com/delboy1978uk)) 
+* [Leadgenerationbundle]: abstract functions should be public [#1817](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1817) ([@sandergo90](https://github.com/sandergo90)) 
+* [KunstmaanNodeBundle] admin styles no longer have .min extension [#1813](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1813) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 5.0.3 / 2018-02-06
 
 * [KunstmaanAdminBundle] change php7 to php5 code [#1807](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1807) ([@sandergo90](https://github.com/sandergo90)) 

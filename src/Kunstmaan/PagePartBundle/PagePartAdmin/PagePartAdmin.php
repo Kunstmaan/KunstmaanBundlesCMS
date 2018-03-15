@@ -254,7 +254,7 @@ class PagePartAdmin
         $ppRefRepo = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
 
         // Add new pageparts on the correct position + Re-order and save pageparts if needed
-        $sequences = $request->get($this->context.'_sequence');
+        $sequences = $request->get($this->context.'_sequence', []);
         $sequencescount = count($sequences);
         for ($i = 0; $i < $sequencescount; $i++) {
             $pagePartRefId = $sequences[$i];
