@@ -5,7 +5,6 @@ namespace Kunstmaan\DashboardBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
-use Kunstmaan\DashboardBundle\Entity\AnalyticsSegment;
 
 class AnalyticsOverviewRepository extends EntityRepository
 {
@@ -28,12 +27,12 @@ class AnalyticsOverviewRepository extends EntityRepository
     }
 
     /**
-     * Add overviews for a config and optionally a segment
-     *
      * @param AnalyticsConfig $config
-     * @param AnalyticsSegment $segment
+     * @param null            $segment
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function addOverviews(&$config, &$segment = null)
+    public function addOverviews(AnalyticsConfig $config, &$segment = null)
     {
         $em = $this->getEntityManager();
 

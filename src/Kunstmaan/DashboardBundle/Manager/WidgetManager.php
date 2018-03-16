@@ -2,16 +2,17 @@
 
 namespace Kunstmaan\DashboardBundle\Manager;
 
-
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 
+/**
+ * Class WidgetManager
+ */
 class WidgetManager
 {
-
     /**
      * @var DashboardWidget[]
      */
-    private $widgets = array();
+    private $widgets = [];
 
     /**
      * @param DashboardWidget $widget

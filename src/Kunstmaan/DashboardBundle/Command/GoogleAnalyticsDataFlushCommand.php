@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -6,6 +7,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class GoogleAnalyticsDataFlushCommand
+ */
 class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
 {
 
@@ -21,6 +25,12 @@ class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();

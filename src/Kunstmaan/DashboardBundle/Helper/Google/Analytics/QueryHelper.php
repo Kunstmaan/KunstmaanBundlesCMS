@@ -1,11 +1,12 @@
 <?php
 
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
-use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 
+/**
+ * Class QueryHelper
+ */
 class QueryHelper
 {
-
     /** @var ServiceHelper */
     private $serviceHelper;
 
@@ -13,11 +14,13 @@ class QueryHelper
     private $configHelper;
 
     /**
-     * constructor
+     * QueryHelper constructor.
      *
-     * @var ServiceHelper $serviceHelper
+     * @param ServiceHelper $serviceHelper
+     * @param ConfigHelper  $configHelper
      */
-    public function __construct(ServiceHelper $serviceHelper, ConfigHelper $configHelper) {
+    public function __construct(ServiceHelper $serviceHelper, ConfigHelper $configHelper)
+    {
         $this->serviceHelper = $serviceHelper;
         $this->configHelper = $configHelper;
     }
@@ -25,21 +28,21 @@ class QueryHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param int $timespan Timespan for the data to query in days
-     * @param int $startOffset An offset in days
-     * @param string $metrics The needed metrics
-     * @param array $extra Extra options suchs as dimentions, sort data, filter data,..
+     * @param int    $timespan    Timespan for the data to query in days
+     * @param int    $startOffset An offset in days
+     * @param string $metrics     The needed metrics
+     * @param array  $extra       Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return \Google_GaData result    A data object containing the queried data
+     * @return \Google_Service_Analytics_GaData result    A data object containing the queried data
      */
-    public function getResults($timespan, $startOffset, $metrics, $extra = array())
+    public function getResults($timespan, $startOffset, $metrics, $extra = [])
     {
         $profileId = $this->configHelper->getProfileId();
 
         return $this->serviceHelper->getService()->data_ga->get(
-            'ga:' . $profileId,
-            $timespan . 'daysAgo',
-            $startOffset . 'daysAgo',
+            'ga:'.$profileId,
+            $timespan.'daysAgo',
+            $startOffset.'daysAgo',
             $metrics,
             $extra
         );
@@ -48,19 +51,19 @@ class QueryHelper
     /**
      * Constructs a Google API query and returns the result
      *
-     * @param string $from Start date for the data to query
-     * @param string $to End date in the past
+     * @param string $from    Start date for the data to query
+     * @param string $to      End date in the past
      * @param string $metrics The needed metrics
-     * @param array $extra Extra options suchs as dimentions, sort data, filter data,..
+     * @param array  $extra   Extra options suchs as dimentions, sort data, filter data,..
      *
-     * @return \Google_GaData result    A data object containing the queried data
+     * @return \Google_Service_Analytics_GaData result    A data object containing the queried data
      */
-    public function getResultsByDate($from, $to, $metrics, $extra = array())
+    public function getResultsByDate($from, $to, $metrics, $extra = [])
     {
         $profileId = $this->configHelper->getProfileId();
 
         return $this->serviceHelper->getService()->data_ga->get(
-            'ga:' . $profileId,
+            'ga:'.$profileId,
             $from,
             $to,
             $metrics,
@@ -71,9 +74,10 @@ class QueryHelper
     /**
      * get the service helper
      *
-     *  @return ServiceHelper $serviceHelper
+     * @return ServiceHelper $serviceHelper
      */
-    public function getServiceHelper() {
+    public function getServiceHelper()
+    {
         return $this->serviceHelper;
     }
 

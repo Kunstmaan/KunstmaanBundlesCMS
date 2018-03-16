@@ -11,7 +11,6 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
  */
 class AnalyticsConfig extends AbstractEntity
 {
-
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsOverview", mappedBy="config", cascade={"persist", "remove"})
      */
@@ -27,42 +26,42 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @ORM\Column(name="name", type="text", nullable=true)
      */
-    private $name = null;
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="token", type="text", nullable=true)
      */
-    private $token = null;
+    private $token;
 
     /**
      * @var string
      *
      * @ORM\Column(name="account_id", type="string", nullable=true)
      */
-    private $accountId = null;
+    private $accountId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="property_id", type="string", nullable=true)
      */
-    private $propertyId = null;
+    private $propertyId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="profile_id", type="string", nullable=true)
      */
-    private $profileId = null;
+    private $profileId;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="last_update", type="datetime", nullable=true)
      */
-    private $lastUpdate = null;
+    private $lastUpdate;
 
     /**
      * @var boolean
@@ -75,7 +74,8 @@ class AnalyticsConfig extends AbstractEntity
      * Set overviews
      *
      * @param array $overviews
-     * @return AnalyticsDailyOverviews
+     *
+     * @return self
      */
     public function setOverviews($overviews)
     {
@@ -98,7 +98,8 @@ class AnalyticsConfig extends AbstractEntity
      * Set segments
      *
      * @param array $segments
-     * @return AnalyticsDailysegments
+     *
+     * @return self
      */
     public function setSegments($segments)
     {
@@ -132,7 +133,7 @@ class AnalyticsConfig extends AbstractEntity
      *
      * @param string $name
      *
-     * @return Analyticsname
+     * @return self
      */
     public function setName($name)
     {

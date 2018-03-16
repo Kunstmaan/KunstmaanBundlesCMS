@@ -1,13 +1,18 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class GoogleAnalyticsConfigsListCommand
+ */
 class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager $em */
+    /** @var EntityManagerInterface $em */
     private $em;
 
     protected function configure()
@@ -29,14 +34,14 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
     {
         $this->init();
 
-        $configs = $this->getconfigs();
+        $configs = $this->getConfigs();
 
-        if (count($configs)) {
-            $result = "\t".'<fg=green>' . count($configs) . '</fg=green> configs found:';
+        if (\count($configs)) {
+            $result = "\t".'<fg=green>'.\count($configs).'</fg=green> configs found:';
             $output->writeln($result);
-            foreach($configs as $config) {
-                $result = "\t".'(id: <fg=cyan>' .$config->getId() . '</fg=cyan>)';
-                $result .= "\t" . $config->getName();
+            foreach ($configs as $config) {
+                $result = "\t".'(id: <fg=cyan>'.$config->getId().'</fg=cyan>)';
+                $result .= "\t".$config->getName();
 
                 $output->writeln($result);
             }
@@ -51,10 +56,11 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
      *
      * @return array
      */
-    private function getconfigs()
+    private function getConfigs()
     {
         // get all segments
         $configRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
+
         return $configRepository->findAll();
     }
 }

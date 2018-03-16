@@ -14,6 +14,8 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 class AnalyticsGoal extends AbstractEntity
 {
     /**
+     * @var AnalyticsOverview
+     *
      * @ORM\ManyToOne(targetEntity="AnalyticsOverview", inversedBy="goals")
      * @ORM\JoinColumn(name="overview_id", referencedColumnName="id")
      */
@@ -41,7 +43,7 @@ class AnalyticsGoal extends AbstractEntity
     private $visits;
 
     /**
-     * @var array
+     * @var string
      *
      * @ORM\Column(name="chart_data", type="text")
      */
@@ -50,7 +52,7 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Get overview
      *
-     * @return integer
+     * @return AnalyticsOverview
      */
     public function getOverview()
     {
@@ -60,7 +62,7 @@ class AnalyticsGoal extends AbstractEntity
     /**
      * Set overview
      *
-     * @param integer $overview
+     * @param AnalyticsOverview $overview
      *
      * @return $this
      */
@@ -75,6 +77,7 @@ class AnalyticsGoal extends AbstractEntity
      * Set position
      *
      * @param integer $position
+     *
      * @return AnalyticsGoal
      */
     public function setPosition($position)
@@ -98,6 +101,7 @@ class AnalyticsGoal extends AbstractEntity
      * Set name
      *
      * @param string $name
+     *
      * @return AnalyticsGoal
      */
     public function setName($name)
@@ -121,6 +125,7 @@ class AnalyticsGoal extends AbstractEntity
      * Set visits
      *
      * @param integer $visits
+     *
      * @return AnalyticsGoal
      */
     public function setVisits($visits)
@@ -144,6 +149,7 @@ class AnalyticsGoal extends AbstractEntity
      * Set chartData
      *
      * @param string $chartData
+     *
      * @return AnalyticsGoal
      */
     public function setChartData($chartData)

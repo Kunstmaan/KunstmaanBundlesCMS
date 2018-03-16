@@ -29,10 +29,12 @@ class ConfigHelper
     private $em;
 
     /**
-     * constructor
+     * ConfigHelper constructor.
      *
      * @param ServiceHelper $serviceHelper
      * @param EntityManager $em
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function __construct(ServiceHelper $serviceHelper, EntityManager $em)
     {
@@ -42,19 +44,25 @@ class ConfigHelper
     }
 
     /**
-     * Tries to initialise the Client object
+     * @param bool $configId
      *
-     * @param int $configId
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function init($configId = false)
     {
         // if token is already saved in the database
         if ($this->getToken($configId) && '' !== $this->getToken($configId)) {
-            $this
+            $client = $this
                 ->serviceHelper
                 ->getClientHelper()
-                ->getClient()
-                ->setAccessToken($this->getToken($configId));
+                ->getClient();
+
+            $client->setAccessToken($this->getToken($configId));
+
+            if ($client->isAccessTokenExpired()) {
+                $client->fetchAccessTokenWithRefreshToken();
+                $this->saveToken(json_encode($client->getAccessToken()));
+            }
         }
 
         if ($configId) {
@@ -67,9 +75,10 @@ class ConfigHelper
     /* =============================== TOKEN =============================== */
 
     /**
-     * Get the token from the database
+     * @param bool $configId
      *
-     * @return string $token
+     * @return string
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function getToken($configId = false)
     {
@@ -87,7 +96,10 @@ class ConfigHelper
     }
 
     /**
-     * Save the token to the database
+     * @param string $token
+     * @param bool   $configId
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function saveToken($token, $configId = false)
     {
@@ -96,9 +108,9 @@ class ConfigHelper
     }
 
     /**
-     * Check if token is set
+     * @return bool
      *
-     * @return boolean $result
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function tokenIsSet()
     {
@@ -129,9 +141,10 @@ class ConfigHelper
     }
 
     /**
-     * Get the accountId from the database
+     * @param bool $configId
      *
-     * @return string $accountId
+     * @return string
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getAccountId($configId = false)
     {
@@ -149,7 +162,10 @@ class ConfigHelper
     }
 
     /**
-     * Save the accountId to the database
+     * @param string $accountId
+     * @param bool   $configId
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function saveAccountId($accountId, $configId = false)
     {
@@ -158,9 +174,8 @@ class ConfigHelper
     }
 
     /**
-     * Check if token is set
-     *
-     * @return boolean $result
+     * @return bool
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function accountIsSet()
     {
@@ -170,13 +185,14 @@ class ConfigHelper
     /* =============================== PROPERTY =============================== */
 
     /**
-     * Get a list of all available properties
+     * @param bool $accountId
      *
-     * @return array $data A list of all properties
+     * @return array|bool
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getProperties($accountId = false)
     {
-        if (!$this->getAccountId() && !$accountId) {
+        if (!$accountId && !$this->getAccountId()) {
             return false;
         }
 
@@ -189,7 +205,7 @@ class ConfigHelper
 
         foreach ($webproperties->getItems() as $property) {
             $profiles = $this->getProfiles($accountId, $property->getId());
-            if (count($profiles) > 0) {
+            if (\count($profiles) > 0) {
                 $data[$property->getName()] = [
                     'propertyId' => $property->getId(),
                     'propertyName' => $property->getName().' ('.$property->getWebsiteUrl().')',
@@ -202,9 +218,10 @@ class ConfigHelper
     }
 
     /**
-     * Get the propertyId from the database
+     * @param bool $configId
      *
-     * @return string $propertyId
+     * @return string
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getPropertyId($configId = false)
     {
@@ -222,7 +239,10 @@ class ConfigHelper
     }
 
     /**
-     * Save the propertyId to the database
+     * @param      $propertyId
+     * @param bool $configId
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function savePropertyId($propertyId, $configId = false)
     {
@@ -231,9 +251,8 @@ class ConfigHelper
     }
 
     /**
-     * Check if propertyId is set
-     *
-     * @return boolean $result
+     * @return bool
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function propertyIsSet()
     {
@@ -243,13 +262,15 @@ class ConfigHelper
     /* =============================== PROFILE =============================== */
 
     /**
-     * Get a list of all available profiles
+     * @param bool $accountId
+     * @param bool $propertyId
      *
-     * @return array $data A list of all properties
+     * @return array|bool
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getProfiles($accountId = false, $propertyId = false)
     {
-        if (!$this->getAccountId() && !$accountId || !$this->getPropertyId() && !$propertyId) {
+        if ((!$this->getAccountId() && !$accountId) || (!$this->getPropertyId() && !$propertyId)) {
             return false;
         }
 
@@ -267,7 +288,7 @@ class ConfigHelper
         }
 
         $data = [];
-        if (is_array($profiles->getItems())) {
+        if (\is_array($profiles->getItems())) {
             foreach ($profiles->getItems() as $profile) {
                 $data[$profile->name] = [
                     'profileId' => $profile->id,
@@ -282,9 +303,10 @@ class ConfigHelper
     }
 
     /**
-     * Get the propertyId from the database
+     * @param bool $configId
      *
-     * @return string $propertyId
+     * @return string
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function getProfileId($configId = false)
     {
@@ -302,7 +324,10 @@ class ConfigHelper
     }
 
     /**
-     * Save the profileId to the database
+     * @param      $profileId
+     * @param bool $configId
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function saveProfileId($profileId, $configId = false)
     {
@@ -311,9 +336,8 @@ class ConfigHelper
     }
 
     /**
-     * Check if token is set
-     *
-     * @return boolean $result
+     * @return bool
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function profileIsSet()
     {
@@ -323,19 +347,21 @@ class ConfigHelper
     /**
      * Get the active profile
      *
-     * @return the profile
+     * @return mixed
+     *
+     * @throws \Exception
      */
     public function getActiveProfile()
     {
         $profiles = $this->getProfiles();
         $profileId = $this->getProfileId();
 
-        if (!is_array($profiles)) {
+        if (!\is_array($profiles)) {
             throw new \Exception('<fg=red>The config is invalid</fg=red>');
         }
 
         foreach ($profiles as $profile) {
-            if ($profile['profileId'] == $profileId) {
+            if ($profile['profileId'] === $profileId) {
                 return $profile;
             }
         }
@@ -354,12 +380,12 @@ class ConfigHelper
             ->getService()
             ->management_segments
             ->listManagementSegments()
-            ->items;
+            ->getItems();
 
         $builtin = [];
         $own = [];
         foreach ($profileSegments as $segment) {
-            if ($segment->type == 'BUILT_IN') {
+            if ($segment->type === 'BUILT_IN') {
                 $builtin[] = [
                     'name' => $segment->name,
                     'query' => $segment->segmentId,
@@ -378,7 +404,10 @@ class ConfigHelper
     /* =============================== CONFIG =============================== */
 
     /**
-     * Save the config to the database
+     * @param string $configName
+     * @param bool   $configId
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function saveConfigName($configName, $configId = false)
     {

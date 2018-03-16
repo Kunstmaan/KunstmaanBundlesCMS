@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManager;
@@ -6,12 +7,16 @@ use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\UsersCommandHelper;
+use Kunstmaan\DashboardBundle\Entity\AnalyticsConfig;
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class GoogleAnalyticsDataCollectCommand
+ */
 class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 {
     /** @var EntityManager $em */
@@ -62,10 +67,16 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     private function init($output)
     {
         $this->output = $output;
-        $this->serviceHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.service');
         $this->em = $this->getContainer()->get('doctrine')->getManager();
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // init
@@ -75,6 +86,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
         if (!$configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
+
             return;
         }
 
@@ -83,29 +95,34 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $segmentId = false;
         $overviewId = false;
         try {
-            $configId  = $input->getOption('config');
+            $configId = $input->getOption('config');
             $segmentId = $input->getOption('segment');
             $overviewId = $input->getOption('overview');
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         // get the overviews
         try {
-            $overviews = array();
+            $overviews = [];
 
             if ($overviewId) {
                 $overviews[] = $this->getSingleOverview($overviewId);
-            } else if ($segmentId) {
-                $overviews = $this->getOverviewsOfSegment($segmentId);
-            } else if ($configId) {
-                $overviews = $this->getOverviewsOfConfig($configId);
             } else {
-                $overviews = $this->getAllOverviews();
+                if ($segmentId) {
+                    $overviews = $this->getOverviewsOfSegment($segmentId);
+                } else {
+                    if ($configId) {
+                        $overviews = $this->getOverviewsOfConfig($configId);
+                    } else {
+                        $overviews = $this->getAllOverviews();
+                    }
+                }
             }
 
             // update the overviews
             $this->updateData($overviews);
             $result = '<fg=green>Google Analytics data updated with <fg=red>'.$this->errors.'</fg=red> error';
-            $result .= $this->errors != 1 ? 's</fg=green>' : '</fg=green>';
+            $result .= $this->errors !== 1 ? 's</fg=green>' : '</fg=green>';
             $this->output->writeln($result); // done
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
@@ -114,9 +131,12 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     }
 
     /**
-     * get a single overview
-     * @param int $overviewId
-     * @return AnalyticsOverview
+     * Get a single overview
+     *
+     * @param $overviewId
+     *
+     * @return AnalyticsOverview|null
+     * @throws \Exception
      */
     private function getSingleOverview($overviewId)
     {
@@ -132,9 +152,12 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     }
 
     /**
-     * get all overviews of a segment
-     * @param int $segmentId
-     * @return array
+     * Get all overviews of a segment
+     *
+     * @param $segmentId
+     *
+     * @return mixed
+     * @throws \Exception
      */
     private function getOverviewsOfSegment($segmentId)
     {
@@ -154,9 +177,12 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     }
 
     /**
-     * get all overviews of a config
-     * @param int $configId
-     * @return array
+     * Get all overviews of a config
+     *
+     * @param $configId
+     *
+     * @return mixed
+     * @throws \Exception
      */
     private function getOverviewsOfConfig($configId)
     {
@@ -171,7 +197,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         }
 
         // create default overviews for this config if none exist yet
-        if (!count($config->getOverviews())) {
+        if (!\count($config->getOverviews())) {
             $overviewRepository->addOverviews($config);
         }
 
@@ -186,9 +212,8 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     }
 
     /**
-     * get all overviews
-     *
-     * @return array
+     * @return array|AnalyticsConfig[]|AnalyticsOverview[]
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     private function getAllOverviews()
     {
@@ -199,7 +224,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
         foreach ($configs as $config) {
             // add overviews if none exist yet
-            if (count($config->getOverviews()) == 0) {
+            if (\count($config->getOverviews()) === 0) {
                 $overviewRepository->addOverviews($config);
             }
 
@@ -215,9 +240,12 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     }
 
     /**
-     * update the overviews
+     * Update the overviews
      *
-     * @param array $overviews collection of all overviews which need to be updated
+     * @param $overviews
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function updateData($overviews)
     {
@@ -233,7 +261,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         foreach ($overviews as $overview) {
             $configHelper->init($overview->getConfig()->getId());
             /** @var AnalyticsOverview $overview */
-            $this->output->writeln('Fetching data for overview "<fg=green>' . $overview->getTitle() . '</fg=green>"');
+            $this->output->writeln('Fetching data for overview "<fg=green>'.$overview->getTitle().'</fg=green>"');
 
             try {
                 // metric data
@@ -250,19 +278,19 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                 } else {
                     // reset overview
                     $this->reset($overview);
-                    $this->output->writeln("\t" . 'No visitors');
+                    $this->output->writeln("\t".'No visitors');
                 }
-            // persist entity back to DB
-                $this->output->writeln("\t" . 'Persisting..');
+                // persist entity back to DB
+                $this->output->writeln("\t".'Persisting..');
                 $this->em->persist($overview);
                 $this->em->flush($overview);
 
                 $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig')->setUpdated($overview->getConfig()->getId());
-            } catch (\Google_ServiceException $e) {
+            } catch (\Google_Service_Exception $e) {
                 $error = explode(')', $e->getMessage());
                 $error = $error[1];
-                $this->output->writeln("\t" . '<fg=red>Invalid segment: </fg=red>' .$error);
-                $this->errors += 1;
+                $this->output->writeln("\t".'<fg=red>Invalid segment: </fg=red>'.$error);
+                ++$this->errors;
             }
         }
     }

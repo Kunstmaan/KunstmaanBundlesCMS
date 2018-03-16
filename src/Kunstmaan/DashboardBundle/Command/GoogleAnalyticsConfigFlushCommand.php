@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -6,9 +7,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class GoogleAnalyticsConfigFlushCommand
+ */
 class GoogleAnalyticsConfigFlushCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -23,12 +26,18 @@ class GoogleAnalyticsConfigFlushCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $configRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
-        $configId  = $input->getOption('config');
-        $configs = array();
+        $configId = $input->getOption('config');
+        $configs = [];
 
         try {
             if ($configId) {

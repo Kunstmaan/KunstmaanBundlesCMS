@@ -3,6 +3,7 @@
 namespace Kunstmaan\DashboardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 /**
  * AnalyticsSegment
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="kuma_analytics_segment")
  * @ORM\Entity(repositoryClass="Kunstmaan\DashboardBundle\Repository\AnalyticsSegmentRepository")
  */
-class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
+class AnalyticsSegment extends AbstractEntity
 {
     /**
      * @var string
@@ -37,11 +38,11 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     private $overviews;
 
-
     /**
      * Set name
      *
      * @param string $name
+     *
      * @return AnalyticsSegment
      */
     public function setName($name)
@@ -65,6 +66,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set query
      *
      * @param string $query
+     *
      * @return AnalyticsSegment
      */
     public function setQuery($query)
@@ -95,26 +97,21 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     }
 
     /**
-     * Set config
-     *
-     * @param integer $config
-     *
-     * @return AnalyticsTopReferrals
+     * @param mixed $config
      */
     public function setConfig($config)
     {
         $this->config = $config;
-
-        return $this;
     }
 
     /**
      * Set overviews
      *
      * @param array $overviews
+     *
      * @return $this
      */
-    public function setoverviews($overviews)
+    public function setOverviews($overviews)
     {
         $this->overviews = $overviews;
 
@@ -126,7 +123,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      *
      * @return AnalyticsGoal[]
      */
-    public function getoverviews()
+    public function getOverviews()
     {
         return $this->overviews;
     }

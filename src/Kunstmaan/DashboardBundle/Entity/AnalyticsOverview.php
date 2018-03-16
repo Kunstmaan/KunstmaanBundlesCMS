@@ -14,16 +14,20 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 class AnalyticsOverview extends AbstractEntity
 {
     /**
+     * @var AnalyticsConfig
+     *
      * @ORM\ManyToOne(targetEntity="AnalyticsConfig", inversedBy="overviews")
      * @ORM\JoinColumn(name="config_id", referencedColumnName="id")
      */
     private $config;
 
     /**
+     * @var AnalyticsSegment
+     *
      * @ORM\ManyToOne(targetEntity="AnalyticsSegment", inversedBy="overviews")
      * @ORM\JoinColumn(name="segment_id", referencedColumnName="id", nullable=true)
      */
-    private $segment = null;
+    private $segment;
 
     /**
      * @ORM\OneToMany(targetEntity="AnalyticsGoal", mappedBy="overview", cascade={"persist", "remove"})
@@ -92,7 +96,7 @@ class AnalyticsOverview extends AbstractEntity
      *
      * @ORM\Column(name="pageviews", type="integer")
      */
-    private $pageviews = 0;
+    private $pageViews = 0;
 
     /**
      * @var float
@@ -116,7 +120,7 @@ class AnalyticsOverview extends AbstractEntity
     private $avgSessionDuration = 0;
 
     /**
-     * @var array
+     * @var string
      *
      * @ORM\Column(name="chart_data", type="text")
      */
@@ -143,9 +147,7 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Get config
-     *
-     * @return integer
+     * @return AnalyticsConfig
      */
     public function getConfig()
     {
@@ -153,23 +155,15 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set config
-     *
-     * @param integer $config
-     *
-     * @return AnalyticsTopReferrals
+     * @param AnalyticsConfig $config
      */
     public function setConfig($config)
     {
         $this->config = $config;
-
-        return $this;
     }
 
     /**
-     * Get segment
-     *
-     * @return integer
+     * @return AnalyticsSegment
      */
     public function getSegment()
     {
@@ -177,24 +171,18 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set segment
-     *
-     * @param integer $segment
-     *
-     * @return AnalyticsTopReferrals
+     * @param AnalyticsSegment $segment
      */
     public function setSegment($segment)
     {
         $this->segment = $segment;
-
-        return $this;
     }
-
 
     /**
      * Set goals
      *
      * @param array $goals
+     *
      * @return $this
      */
     public function setGoals($goals)
@@ -219,70 +207,110 @@ class AnalyticsOverview extends AbstractEntity
      */
     public function getActiveGoals()
     {
-        $goals = array();
+        $goals = [];
         foreach ($this->getGoals() as $goal) {
-            if ($goal->getVisits()) $goals[] = $goal;
+            if ($goal->getVisits()) {
+                $goals[] = $goal;
+            }
         }
+
         return $goals;
     }
 
-
     /**
-     * Set chartData
-     *
-     * @param array $chartData
-     * @return $this
+     * @return string
      */
-    public function setChartData($chartData)
+    public function getTitle()
     {
-        $this->chartData = $chartData;
-
-        return $this;
+        return $this->title;
     }
 
     /**
-     * Get chartData
-     *
-     * @return array
+     * @param string $title
      */
-    public function getChartData()
+    public function setTitle($title)
     {
-        return $this->chartData;
+        $this->title = $title;
     }
 
     /**
-     * Set newUsers
-     *
-     * @param float $newUsers
-     * @return AnalyticsOverview
+     * @return int
      */
-    public function setNewUsers($newUsers)
+    public function getTimespan()
     {
-        $this->newUsers = $newUsers;
-
-        return $this;
+        return $this->timespan;
     }
 
     /**
-     * Get newUsers
-     *
-     * @return float
+     * @param int $timespan
      */
-    public function getNewUsers()
+    public function setTimespan($timespan)
     {
-        return $this->newUsers;
+        $this->timespan = $timespan;
     }
 
+    /**
+     * @return int
+     */
+    public function getStartOffset()
+    {
+        return $this->startOffset;
+    }
 
     /**
-     * @param int $returningUsers
-     * @return $this
+     * @param int $startOffset
      */
-    public function setReturningUsers($returningUsers)
+    public function setStartOffset($startOffset)
     {
-        $this->returningUsers = $returningUsers;
+        $this->startOffset = $startOffset;
+    }
 
-        return $this;
+    /**
+     * @return bool
+     */
+    public function getUseYear()
+    {
+        return $this->useYear;
+    }
+
+    /**
+     * @param bool $useYear
+     */
+    public function setUseYear($useYear)
+    {
+        $this->useYear = $useYear;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSessions()
+    {
+        return $this->sessions;
+    }
+
+    /**
+     * @param int $sessions
+     */
+    public function setSessions($sessions)
+    {
+        $this->sessions = $sessions;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param int $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
     }
 
     /**
@@ -293,161 +321,47 @@ class AnalyticsOverview extends AbstractEntity
         return $this->returningUsers;
     }
 
-
     /**
-     * Set title
-     *
-     * @param string $title
-     * @return AnalyticsOverview
+     * @param int $returningUsers
      */
-    public function setTitle($title)
+    public function setReturningUsers($returningUsers)
     {
-        $this->title = $title;
-
-        return $this;
+        $this->returningUsers = $returningUsers;
     }
 
     /**
-     * Get title
-     *
-     * @return string
+     * @return float
      */
-    public function getTitle()
+    public function getNewUsers()
     {
-        return $this->title;
+        return $this->newUsers;
     }
 
     /**
-     * Set startOffset
-     *
-     * @param integer $startOffset
-     * @return AnalyticsOverview
+     * @param float $newUsers
      */
-    public function setStartOffset($startOffset)
+    public function setNewUsers($newUsers)
     {
-        $this->startOffset = $startOffset;
-
-        return $this;
+        $this->newUsers = $newUsers;
     }
 
     /**
-     * Get startOffset
-     *
-     * @return integer
+     * @return int
      */
-    public function getStartOffset()
+    public function getPageViews()
     {
-        return $this->startOffset;
+        return $this->pageViews;
     }
 
     /**
-     * Set timespan
-     *
-     * @param integer $timespan
-     * @return AnalyticsOverview
+     * @param int $pageViews
      */
-    public function setTimespan($timespan)
+    public function setPageViews($pageViews)
     {
-        $this->timespan = $timespan;
-
-        return $this;
+        $this->pageViews = $pageViews;
     }
 
     /**
-     * Get timespan
-     *
-     * @return integer
-     */
-    public function getTimespan()
-    {
-        return $this->timespan;
-    }
-
-    /**
-     * Set sessions
-     *
-     * @param integer $sessions
-     * @return AnalyticsOverview
-     */
-    public function setSessions($sessions)
-    {
-        $this->sessions = $sessions;
-
-        return $this;
-    }
-
-    /**
-     * Get sessions
-     *
-     * @return integer
-     */
-    public function getSessions()
-    {
-        return $this->sessions;
-    }
-
-    /**
-     * Get Users
-     *
-     * @return integer
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * Set users
-     *
-     * @param integer $users
-     * @return AnalyticsOverview
-     */
-    public function setUsers($users)
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
-    /**
-     * Set pageviews
-     *
-     * @param integer $pageviews
-     * @return AnalyticsOverview
-     */
-    public function setPageviews($pageviews)
-    {
-        $this->pageviews = $pageviews;
-
-        return $this;
-    }
-
-    /**
-     * Get pageviews
-     *
-     * @return integer
-     */
-    public function getPageviews()
-    {
-        return $this->pageviews;
-    }
-
-    /**
-     * Set pagesPerSession
-     *
-     * @param float $pagesPerSession
-     * @return AnalyticsOverview
-     */
-    public function setPagesPerSession($pagesPerSession)
-    {
-        $this->pagesPerSession = $pagesPerSession;
-
-        return $this;
-    }
-
-    /**
-     * Get pagesPerSession
-     *
      * @return float
      */
     public function getPagesPerSession()
@@ -456,21 +370,30 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set avgSessionDuration
-     *
-     * @param integer $avgSessionDuration
-     * @return AnalyticsOverview
+     * @param float $pagesPerSession
      */
-    public function setAvgSessionDuration($avgSessionDuration)
+    public function setPagesPerSession($pagesPerSession)
     {
-        $this->avgSessionDuration = $avgSessionDuration;
-
-        return $this;
+        $this->pagesPerSession = $pagesPerSession;
     }
 
     /**
-     * Get avgSessionDuration
-     *
+     * @return int
+     */
+    public function getChartDataMaxValue()
+    {
+        return $this->chartDataMaxValue;
+    }
+
+    /**
+     * @param int $chartDataMaxValue
+     */
+    public function setChartDataMaxValue($chartDataMaxValue)
+    {
+        $this->chartDataMaxValue = $chartDataMaxValue;
+    }
+
+    /**
      * @return string
      */
     public function getAvgSessionDuration()
@@ -479,48 +402,26 @@ class AnalyticsOverview extends AbstractEntity
     }
 
     /**
-     * Set useYear
-     *
-     * @param integer $useYear
-     * @return AnalyticsOverview
+     * @param string $avgSessionDuration
      */
-    public function setUseYear($useYear)
+    public function setAvgSessionDuration($avgSessionDuration)
     {
-        $this->useYear = $useYear;
-
-        return $this;
+        $this->avgSessionDuration = $avgSessionDuration;
     }
 
     /**
-     * Get useYear
-     *
-     * @return integer
+     * @return string
      */
-    public function getUseYear()
+    public function getChartData()
     {
-        return $this->useYear;
+        return $this->chartData;
     }
 
     /**
-     * Set chartDataMaxValue
-     *
-     * @param integer $chartDataMaxValue
-     * @return AnalyticsOverview
+     * @param string $chartData
      */
-    public function setChartDataMaxValue($chartDataMaxValue)
+    public function setChartData($chartData)
     {
-        $this->chartDataMaxValue = $chartDataMaxValue;
-
-        return $this;
-    }
-
-    /**
-     * Get chartDataMaxValue
-     *
-     * @return integer
-     */
-    public function getChartDataMaxValue()
-    {
-        return $this->chartDataMaxValue;
+        $this->chartData = $chartData;
     }
 }

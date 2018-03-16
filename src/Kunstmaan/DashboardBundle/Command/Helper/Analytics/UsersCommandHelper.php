@@ -1,28 +1,33 @@
 <?php
-namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
+namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
+/**
+ * Class UsersCommandHelper
+ */
 class UsersCommandHelper extends AbstractAnalyticsCommandHelper
 {
 
     /**
-     * get data and save it for the overview
+     * Get data and save it for the overview
      *
-     * @param AnalyticsOverview $overview The overview
+     * @param AnalyticsOverview $overview
+     *
+     * @throws \Exception
      */
-    public function getData(&$overview)
+    public function getData(AnalyticsOverview $overview)
     {
         // visitor types
-        $this->output->writeln("\t" . 'Fetching visitor types..');
+        $this->output->writeln("\t".'Fetching visitor types..');
 
         // execute the query
         $metrics = 'ga:percentNewSessions';
         $rows = $this->executeQuery($overview, $metrics);
 
         // new sessions
-        $newUsers = is_array($rows) && isset($rows[0][0]) ? $rows[0][0] : 0;
+        $newUsers = \is_array($rows) && isset($rows[0][0]) ? $rows[0][0] : 0;
         $overview->setNewUsers($newUsers);
     }
 

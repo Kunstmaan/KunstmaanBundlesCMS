@@ -1,14 +1,21 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class GoogleAnalyticsOverviewsListCommand
+ */
 class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
 {
-    /** @var EntityManager $em */
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
 
     protected function configure()
@@ -45,32 +52,32 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
         $this->init();
 
         // get params
-        $configId  = $input->getOption('config');
+        $configId = $input->getOption('config');
         $segmentId = $input->getOption('segment');
 
         try {
-            $overviews = array();
-
             if ($segmentId) {
                 $overviews = $this->getOverviewsOfSegment($segmentId);
-            } else if ($configId) {
-                $overviews = $this->getOverviewsOfConfig($configId);
             } else {
-                $overviews = $this->getAllOverviews();
+                if ($configId) {
+                    $overviews = $this->getOverviewsOfConfig($configId);
+                } else {
+                    $overviews = $this->getAllOverviews();
+                }
             }
 
-            if (count($overviews)) {
-                $result = "\t".'<fg=green>' . count($overviews) . '</fg=green> overviews found:';
+            if (\count($overviews)) {
+                $result = "\t".'<fg=green>'.\count($overviews).'</fg=green> overviews found:';
                 $output->writeln($result);
-                foreach($overviews as $overview) {
-                    $result = "\t".'(id: <fg=cyan>' .$overview->getId() . '</fg=cyan>)';
-                    $result .= "\t".'(config: <fg=cyan>' .$overview->getconfig()->getId() . '</fg=cyan>)';
+                foreach ($overviews as $overview) {
+                    $result = "\t".'(id: <fg=cyan>'.$overview->getId().'</fg=cyan>)';
+                    $result .= "\t".'(config: <fg=cyan>'.$overview->getconfig()->getId().'</fg=cyan>)';
                     if ($overview->getSegment()) {
-                        $result .= "\t".'(segment: <fg=cyan>' .$overview->getSegment()->getId() . '</fg=cyan>)';
+                        $result .= "\t".'(segment: <fg=cyan>'.$overview->getSegment()->getId().'</fg=cyan>)';
                     } else {
                         $result .= "\t\t";
                     }
-                    $result .= "\t" . $overview->getTitle();
+                    $result .= "\t".$overview->getTitle();
 
                     $output->writeln($result);
                 }
@@ -80,14 +87,15 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $output->writeln('<fg=red>'.$e->getMessage().'</fg=red>');
         }
-
     }
 
-
     /**
-     * get all overviews of a segment
-     * @param int $segmentId
-     * @return array
+     * Get all overviews of a segment
+     *
+     * @param $segmentId
+     *
+     * @return mixed
+     * @throws \Exception
      */
     private function getOverviewsOfSegment($segmentId)
     {
@@ -104,9 +112,12 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
     }
 
     /**
-     * get all overviews of a config
-     * @param int $configId
-     * @return array
+     * Get all overviews of a config
+     *
+     * @param $configId
+     *
+     * @return mixed
+     * @throws \Exception
      */
     private function getOverviewsOfConfig($configId)
     {
@@ -123,7 +134,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
     }
 
     /**
-     * get all overviews
+     * Get all overviews
      *
      * @return array
      */
@@ -131,6 +142,7 @@ class GoogleAnalyticsOverviewsListCommand extends ContainerAwareCommand
     {
         // get all overviews
         $overviewRepository = $this->em->getRepository('KunstmaanDashboardBundle:AnalyticsOverview');
+
         return $overviewRepository->findAll();
     }
 }
