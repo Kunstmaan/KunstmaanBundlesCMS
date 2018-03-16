@@ -290,5 +290,6 @@ class AdminListTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('id', $adminList->getOrderBy());
         $this->assertEquals('ASC', $adminList->getOrderDirection());
+        $this->assertEquals(1, $adminList->getConfigurator()->getPage());
     }
 }
