@@ -2,7 +2,9 @@
 
 namespace Tests\Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -69,5 +71,23 @@ class DateFilterTypeTest extends DBALFilterTypeTestCase
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:dateFilter.html.twig', $this->object->getTemplate());
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testApplyReturnsNull()
+    {
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder->expects($this->never())->method('setParameter');
+        $mirror = new ReflectionClass(DateFilterType::class);
+        $property = $mirror->getProperty('queryBuilder');
+        $property->setAccessible(true);
+        $property->setValue($this->object, $queryBuilder);
+        $badData = [
+            'value' => 'oopsNotADate',
+            'comparator' => 'true',
+        ];
+        $this->object->apply($badData, uniqid());
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Tests\Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateTimeFilterType;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
@@ -75,5 +77,27 @@ class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
     protected function setUp()
     {
         $this->object = new DateTimeFilterType('datetime', 'b');
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testApplyReturnsNull()
+    {
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder->expects($this->never())->method('setParameter');
+        $mirror = new ReflectionClass(DateTimeFilterType::class);
+        $property = $mirror->getProperty('queryBuilder');
+        $property->setAccessible(true);
+        $property->setValue($this->object, $queryBuilder);
+
+        $badData = [
+            'value' => [
+               'date' => 'oopsNotADate',
+               'time' => 'oopsNotATime',
+            ],
+            'comparator' => 'true',
+        ];
+        $this->object->apply($badData, uniqid());
     }
 }

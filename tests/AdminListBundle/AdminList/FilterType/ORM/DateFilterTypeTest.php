@@ -2,7 +2,9 @@
 
 namespace Tests\Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -69,5 +71,42 @@ class DateFilterTypeTest extends ORMFilterTypeTestCase
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:dateFilter.html.twig', $this->object->getTemplate());
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testGetAlias()
+    {
+        $this->object = new DateFilterType('date', null);
+        $mirror = new ReflectionClass(DateFilterType::class);
+        $method = $mirror->getMethod('getAlias');
+        $method->setAccessible(true);
+        $alias = $method->invoke($this->object);
+        $this->assertEquals('', $alias);
+        $this->object = new DateFilterType('date', 'hello.');
+        $mirror = new ReflectionClass(DateFilterType::class);
+        $method = $mirror->getMethod('getAlias');
+        $method->setAccessible(true);
+        $alias = $method->invoke($this->object);
+        $this->assertEquals('hello.', $alias);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testApplyReturnsNull()
+    {
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder->expects($this->never())->method('setParameter');
+        $mirror = new ReflectionClass(DateFilterType::class);
+        $property = $mirror->getProperty('queryBuilder');
+        $property->setAccessible(true);
+        $property->setValue($this->object, $queryBuilder);
+        $badData = [
+            'value' => 'oopsNotADate',
+            'comparator' => 'true',
+        ];
+        $this->object->apply($badData, uniqid());
     }
 }
