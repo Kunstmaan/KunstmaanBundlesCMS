@@ -2,21 +2,28 @@
 
 namespace Tests\Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use ArrayIterator;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\MySQL57Platform;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Cache\CacheConfiguration;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Filter;
+use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Pagerfanta\Pagerfanta;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Tests\Kunstmaan\LeadGenerationBundle\Entity\Popup\Popup;
 
-class ORM extends AbstractDoctrineORMAdminListConfigurator
+class ORM extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
 {
     /**
      * @return mixed
@@ -42,6 +49,15 @@ class ORM extends AbstractDoctrineORMAdminListConfigurator
         return true;
     }
 
+    /**
+     * @return string
+     */
+    public function getSortableField()
+    {
+        return 'sortfield';
+    }
+
+
 }
 
 class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
@@ -52,12 +68,19 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
     /** @var \PHPUnit_Framework_MockObject_MockObject $em */
     private $em;
 
-
+    /**
+     * @throws \ReflectionException
+     */
     public function setUp()
     {
         $em = $this->createMock(EntityManager::class);
         $this->em = $em;
         $this->config = new ORM($em);
+
+        $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
+        $property = $mirror->getProperty('orderBy');
+        $property->setAccessible(true);
+        $property->setValue($this->config, 'somefield');
     }
 
     public function testGetSetEntityManager()
@@ -80,6 +103,9 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
     {
         $config = $this->config;
         $em = $this->em;
+        $filterBuilder = $this->createMock(FilterBuilder::class);
+        $filterBuilder->expects($this->once())->method('getCurrentFilters')->willReturn([new Filter('whatever', ['type' => new StringFilterType('whatever')], uniqid())]);
+        $config->setFilterBuilder($filterBuilder);
         $cacheConfig = $this->createMock(CacheConfiguration::class);
         $cacheConfig->expects($this->any())->method('getCacheLogger')->willReturn('whatever');
         $fakeConfig = $this->createMock(Configuration::class);
@@ -93,7 +119,8 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
         $em->expects($this->any())->method('getRepository')->willReturn($em);
         $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
         $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
-        $qb->expects($this->any())->method('getQuery')->willReturn(new Query($em));
+        $query = new Query($em);
+        $qb->expects($this->any())->method('getQuery')->willReturn($query);
         $query = $config->getQuery();
         $this->assertInstanceOf(Query::class, $query);
     }
@@ -177,5 +204,62 @@ class AbstractDoctrineORMAdminListConfiguratorTest extends PHPUnit_Framework_Tes
 
         $items = $config->getItems();
         $this->assertCount(5, $items);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testGetIterator()
+    {
+        $config = $this->config;
+        $query = $this->createMock(AbstractQuery::class);
+        $query->expects($this->once())->method('iterate')->willReturn(new ArrayIterator());
+
+        $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
+        $property = $mirror->getProperty('query');
+        $property->setAccessible(true);
+        $property->setValue($config, $query);
+
+        $it = $config->getIterator();
+        $this->assertInstanceOf(ArrayIterator::class, $it);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testGetQueryWithAclEnabled()
+    {
+        $config = $this->config;
+        $em = $this->em;
+
+        $cacheConfig = $this->createMock(CacheConfiguration::class);
+        $cacheConfig->expects($this->any())->method('getCacheLogger')->willReturn('whatever');
+        $fakeConfig = $this->createMock(Configuration::class);
+        $fakeConfig->expects($this->any())->method('getDefaultQueryHints')->willReturn($fakeConfig);
+        $fakeConfig->expects($this->any())->method('isSecondLevelCacheEnabled')->willReturn($fakeConfig);
+        $fakeConfig->expects($this->any())->method('getSecondLevelCacheConfiguration')->willReturn($cacheConfig);
+        $qb = $this->createMock(QueryBuilder::class);
+        $qb->expects($this->any())->method('setParameters')->willReturn($qb);
+        $qb->expects($this->any())->method('setMaxResults')->willReturn($qb);
+        $em->expects($this->any())->method('createQuery')->willReturn($qb);
+        $em->expects($this->any())->method('getRepository')->willReturn($em);
+        $em->expects($this->any())->method('createQueryBuilder')->willReturn($qb);
+        $em->expects($this->any())->method('getConfiguration')->willReturn($fakeConfig);
+
+        $query = new Query($em);
+        $aclHelper = $this->createMock(AclHelper::class);
+        $aclHelper->expects($this->once())->method('apply')->willReturn($query);
+        $mirror = new ReflectionClass(AbstractDoctrineORMAdminListConfigurator::class);
+        $property = $mirror->getProperty('aclHelper');
+        $property->setAccessible(true);
+        $property->setValue($config, $aclHelper);
+        $property = $mirror->getProperty('permissionDef');
+        $property->setAccessible(true);
+        $property->setValue($config, new PermissionDefinition(['admin']));
+
+
+        $qb->expects($this->any())->method('getQuery')->willReturn($query);
+        $query = $config->getQuery();
+        $this->assertInstanceOf(Query::class, $query);
     }
 }
