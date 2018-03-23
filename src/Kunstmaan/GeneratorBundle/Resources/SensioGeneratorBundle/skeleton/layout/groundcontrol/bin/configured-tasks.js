@@ -5,6 +5,7 @@ import webpack from 'webpack';
 
 import consoleArguments from './console-arguments';
 
+import createImagesTask from './tasks/images';
 import createEslintTask from './tasks/eslint';
 import createStylelintTask from './tasks/stylelint';
 import createCleanTask from './tasks/clean';
@@ -17,6 +18,11 @@ import webpackConfigApp from './config/webpack.config.app';
 import webpackConfigAdminExtra from './config/webpack.config.admin-extra';
 import webpackConfigStyleguide from './config/webpack.config.styleguide';
 
+export const images = createImagesTask({
+    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/img/**',
+    dest: './web/frontend/img'
+});
+
 export const eslint = createEslintTask({
     src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/*.js',
     failAfterError: !consoleArguments.continueAfterTestError
@@ -27,7 +33,6 @@ export const stylelint = createStylelintTask({src: './src/{{ bundle.namespace|re
 export const clean = createCleanTask({target: ['./web/frontend']});
 
 export const copy = gulp.parallel(
-    createCopyTask({src: ['./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/img/**'], dest: './web/frontend/img'}),
 {% if demosite %}
     createCopyTask({src: ['./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/files/**'], dest: './web/frontend/files'}),
 {% endif %}
@@ -107,6 +112,7 @@ export function buildOnChange(done) {
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/!(*.spec).js', bundleLocal);
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/admin/js/**/!(*.spec).js', bundleAdminExtraLocal);
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', cssLocal);
+    gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/img/**', images);
     done();
 }
 
