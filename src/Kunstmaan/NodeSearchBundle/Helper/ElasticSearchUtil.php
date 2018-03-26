@@ -12,6 +12,6 @@ final class ElasticSearchUtil
      */
     public static function useVersion6()
     {
-        return (PHP_VERSION[0] == 7 && !class_exists('\Elastica\Tool\CrossIndex'));
+        return (PHP_MAJOR_VERSION == 7 && !class_exists('\Elastica\Tool\CrossIndex'));
     }
 }

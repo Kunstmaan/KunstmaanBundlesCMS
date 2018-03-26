@@ -1,14 +1,10 @@
 # Elastic search support
 
 We have added support for Elastic search up to version 6.x.
-When you have a project that is using PHP 7 then you can use version 6.x when the project is using ruflin/elastica >= 6.0.
 
 ## Dynamic configuration
-We have added dynamic support to detect which version your project is using.
-Dependancies for using the configuration of version 6 is that your project uses PHP 7, 
-that ruflin/elastica >= 6.0 is used and that it uses the package ocramius/package-versions. 
-This last package will generate a list of package versions when composer is used.
-
+For the mapping and configuration we detect which version of the library your project is using.
+Dependencies for using the configuration of version 6 is that your project uses PHP 7 and ruflin/elastica >= 6.0. 
 
 ## Difference between versions
 
@@ -48,3 +44,7 @@ in
     'type' => 'keyword',
 ],
 ```
+
+### Link to elastic search documentation
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
