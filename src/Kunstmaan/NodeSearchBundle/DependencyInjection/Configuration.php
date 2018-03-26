@@ -44,6 +44,7 @@ class Configuration implements ConfigurationInterface
 
         if (ElasticSearchUtil::useVersion6()) {
             $properties->children()->booleanNode('fielddata');
+            $properties->children()->booleanNode('doc_values');
             $properties->children()
                 ->scalarNode('index')
                 ->beforeNormalization()
