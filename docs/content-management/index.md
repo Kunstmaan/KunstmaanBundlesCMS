@@ -4,6 +4,7 @@ Ok, so you've successfully installed the Kunstmaan Bundles CMS, and (hopefully) 
 
 We'll gradually introduce all concepts, starting off with the basics. Throughout the manual we'll set up a small site for a virtual company. So if you follow all chapters, you should have a full featured site by the end of the manual.
 
-* [Creating a page part](./04-02-creating-a-page-part.md)
-* [Creating an adminlist](./06-02_02-creating-an-adminlist.md)
-* [Creating a pagetype](./04-04-creating-a-pagetype.md)
+* [Creating a page part](./creating-a-page-part.md)
+* [Creating a pagetype](./creating-a-pagetype.md)
+* [Adding a newssection or blog](./adding-a-newssection-or-blog.md)
+* [Adding admin menu items](./adding-admin-menu-items.md)
