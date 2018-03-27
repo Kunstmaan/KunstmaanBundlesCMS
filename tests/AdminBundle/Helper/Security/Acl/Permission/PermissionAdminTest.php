@@ -9,11 +9,18 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
+use ReflectionClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
+use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
+use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PermissionAdminTest extends \PHPUnit_Framework_TestCase
@@ -26,14 +33,12 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     public function testInitialize()
     {
         $object = $this->getInitializedPermissionAdmin();
-
         $this->assertEquals(array('ROLE_TEST' => new MaskBuilder(1)), $object->getPermissions());
     }
 
     public function testGetPermissionWithString()
     {
         $object = $this->getInitializedPermissionAdmin();
-
         $this->assertEquals(new MaskBuilder(1), $object->getPermission('ROLE_TEST'));
     }
 
@@ -51,7 +56,6 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     public function testGetPermissionWithUnknownRole()
     {
         $object = $this->getInitializedPermissionAdmin();
-
         $this->assertNull($object->getPermission('ROLE_UNKNOWN'));
     }
 
@@ -151,7 +155,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function getAclProvider()
     {
-        return $this->createMock('Symfony\Component\Security\Acl\Model\AclProviderInterface');
+        return $this->createMock('Symfony\Component\Security\Acl\Model\MutableAclProviderInterface');
     }
 
     /**
@@ -227,13 +231,13 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $acl = $this->getMockBuilder('Symfony\Component\Security\Acl\Domain\Acl')
             ->disableOriginalConstructor()
             ->getMock();
-        $acl->expects($this->once())
+        $acl->expects($this->atLeastOnce())
             ->method('getObjectAces')
             ->will($this->returnValue(array($entity)));
 
         $aclProvider = $this->getAclProvider();
         $aclProvider
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('findAcl')
             ->with($this->anything())
             ->will($this->returnValue($acl));
@@ -241,7 +245,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $retrievalStrategy = $this->getOidRetrievalStrategy();
         $objectIdentity = $this->createMock('Symfony\Component\Security\Acl\Model\ObjectIdentityInterface');
         $retrievalStrategy
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('getObjectIdentity')
             ->will($this->returnValue($objectIdentity));
         $dispatcher = $this->getEventDispatcher();
@@ -276,5 +280,64 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $object->initialize($entity, $permissionMap);
 
         return $object;
+    }
+
+    public function testBindRequestReturnsTrueWhenNoChanges()
+    {
+        $object = $this->getInitializedPermissionAdmin();
+        $request = $this->createMock(Request::class);
+        $request->request = $this->createMock(Request::class);
+        $request->request->expects($this->once())->method('get')->willReturn('');
+        $object->bindRequest($request);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testBindRequest()
+    {
+        $object = $this->getInitializedPermissionAdmin();
+        $token = $this->createMock(PreAuthenticatedToken::class);
+        $token->expects($this->once())->method('getUser')->willReturn(new User());
+        $request = $this->createMock(Request::class);
+        $request->request = $this->createMock(Request::class);
+        $request->request->expects($this->any())->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' =>  ['VIEW']]], true));
+
+        $mirror = new ReflectionClass(PermissionAdmin::class);
+        $property = $mirror->getProperty('tokenStorage');
+        $property->setAccessible(true);
+        $val = $property->getValue($object);
+        $val->expects($this->once())->method('getToken')->willReturn($token);
+
+        $object->bindRequest($request);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testMaskAtIndex()
+    {
+        $object = $this->getInitializedPermissionAdmin();
+
+        $id = $this->createMock(SecurityIdentityInterface::class);
+        $ace = $this->createMock(AuditableEntryInterface::class);
+        $ace->expects($this->once())->method('getSecurityIdentity')->willReturn($id);
+        $acl = $this->createMock(AclInterface::class);
+        $acl->expects($this->once())->method('getObjectAces')->willReturn([1 => $ace]);
+
+        $mirror = new ReflectionClass(PermissionAdmin::class);
+        $method = $mirror->getMethod('getMaskAtIndex');
+        $method->setAccessible(true);
+
+        $this->assertFalse($method->invoke($object, $acl, 1));
+
+        $id = new RoleSecurityIdentity('ADMIN');
+        $ace = $this->createMock(AuditableEntryInterface::class);
+        $ace->expects($this->once())->method('getSecurityIdentity')->willReturn($id);
+        $ace->expects($this->once())->method('getMask')->willReturn(true);
+        $acl = $this->createMock(AclInterface::class);
+        $acl->expects($this->once())->method('getObjectAces')->willReturn([1 => $ace]);
+
+        $this->assertTrue($method->invoke($object, $acl, 1));
     }
 }

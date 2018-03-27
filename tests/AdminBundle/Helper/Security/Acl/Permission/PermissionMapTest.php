@@ -38,4 +38,10 @@ class PermissionMapTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array('VIEW', 'EDIT', 'DELETE', 'PUBLISH', 'UNPUBLISH'), $map->getPossiblePermissions());
     }
+
+    public function testGetMaskBuilder()
+    {
+        $map = new PermissionMap();
+        $this->assertInstanceOf(MaskBuilder::class, $map->getMaskBuilder());
+    }
 }

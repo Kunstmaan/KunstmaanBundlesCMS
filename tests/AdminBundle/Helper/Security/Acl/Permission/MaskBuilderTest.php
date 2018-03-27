@@ -2,12 +2,14 @@
 
 namespace Tests\Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
+use Exception;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use PHPUnit_Framework_TestCase;
 
 /**
  * MaskBuilderTest
  */
-class MaskBuilderTest extends \PHPUnit_Framework_TestCase
+class MaskBuilderTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @param mixed $invalidMask
@@ -18,6 +20,20 @@ class MaskBuilderTest extends \PHPUnit_Framework_TestCase
     public function testSlugify($invalidMask)
     {
         new MaskBuilder($invalidMask);
+    }
+
+    public function testGetCodeThrowsException()
+    {
+        $this->expectException(Exception::class);
+        $builder = new MaskBuilder();
+        $builder->getCode(MaskBuilder::MASK_IDDQD);
+    }
+
+    public function testResolveMaskThrowsException()
+    {
+        $this->expectException(Exception::class);
+        $builder = new MaskBuilder();
+        $builder->resolveMask('fail!');
     }
 
     /**
