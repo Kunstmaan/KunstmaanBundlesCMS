@@ -59,7 +59,6 @@ class ConfigController
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param EntityManagerInterface $em
      * @param array $configuration
-     * @param ContainerInterface $container
      * @param FormFactoryInterface $formFactory
      */
     public function __construct(
