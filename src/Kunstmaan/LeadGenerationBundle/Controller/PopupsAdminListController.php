@@ -19,9 +19,11 @@ class PopupsAdminListController extends AdminListController
     private $configurator;
 
     /**
+     * @param bool $listAction
+     * 
      * @return AdminListConfiguratorInterface
      */
-    public function getAdminListConfigurator($listAction = false)
+    protected function getAdminListConfigurator($listAction = false)
     {
         if (!isset($this->configurator)) {
             $this->configurator = new PopupAdminListConfigurator($this->getEntityManager());

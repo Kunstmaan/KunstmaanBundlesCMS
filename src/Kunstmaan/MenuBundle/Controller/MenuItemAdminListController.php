@@ -27,7 +27,7 @@ class MenuItemAdminListController extends AdminListController
      * @param int $entityId
      * @return AbstractAdminListConfigurator
      */
-    public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
+    protected function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
     {
         if (!isset($this->configurator)) {
             $menu = $this->getDoctrine()->getManager()->getRepository(

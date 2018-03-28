@@ -22,7 +22,7 @@ class MenuAdminListController extends AdminListController
      *
      * @return AbstractAdminListConfigurator
      */
-    public function getAdminListConfigurator(Request $request)
+    protected function getAdminListConfigurator(Request $request)
     {
         if (!isset($this->configurator)) {
             $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menu_configurator.class');

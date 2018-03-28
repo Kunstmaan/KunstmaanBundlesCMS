@@ -17,9 +17,11 @@ class RulesAdminListController extends AdminListController
     private $configurator;
 
     /**
+     * @param $id
+     *
      * @return AdminListConfiguratorInterface
      */
-    public function getAdminListConfigurator($id)
+    protected function getAdminListConfigurator($id)
     {
         if (!isset($this->configurator)) {
             $this->configurator = new RulesAdminListConfigurator($this->getEntityManager(), null, $id);

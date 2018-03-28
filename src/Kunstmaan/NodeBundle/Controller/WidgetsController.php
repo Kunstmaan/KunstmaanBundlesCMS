@@ -56,46 +56,12 @@ class WidgetsController extends Controller
     /**
      * Select a link
      *
-     * @Route("/select-nodes-lazy_search", name="KunstmaanNodeBundle_nodes_lazy_search")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return JsonResponse
-     */
-    public function selectNodesLazySearch(Request $request)
-    {
-        /* @var EntityManagerInterface $em */
-        $em = $this->getDoctrine()->getManager();
-        $locale = $request->getLocale();
-        $search = $request->query->get('str');
-
-        $results = [];
-        if ($search) {
-            $nts = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getNodeTranslationsLikeTitle($search, $locale);
-            /** @var NodeTranslation $nt */
-            foreach ($nts as $nt) {
-                $node = $nt->getNode();
-                $results[] = $node->getId();
-                while ($node->getParent()) {
-                    $node = $node->getParent();
-                    $results[] = $node->getId();
-                }
-            }
-            $results = array_unique($results);
-            sort($results);
-        }
-
-        return new JsonResponse($results);
-    }
-
-    /**
-     * Select a link
-     *
      * @Route("/select-nodes-lazy", name="KunstmaanNodeBundle_nodes_lazy")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return JsonResponse
      */
-    public function selectNodesLazy(Request $request)
+    public function selectNodesLazyAction(Request $request)
     {
         /* @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
