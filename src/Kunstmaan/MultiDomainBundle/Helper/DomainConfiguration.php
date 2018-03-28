@@ -240,7 +240,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @return string|null
+     * @return array
      */
     public function getHostSwitched()
     {
