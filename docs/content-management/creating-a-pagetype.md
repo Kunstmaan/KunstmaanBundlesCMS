@@ -4,7 +4,7 @@ There are times when a basic content page does not suffice, because you want to 
 
 ## Creating your first custom page type
 
-In the [previous chapter](04-02-creating-an-adminlist.md) we created an admin list of employees, but how about displaying these on the front-end?
+In the [previous chapter](../bundles/adminlist-bundle/creating-an-adminlist.md) we created an admin list of employees, but how about displaying these on the front-end?
 
 That's what this chapter is all about. Custom page types can define pages containing a specific set of page parts or pages that need their own specific rendering or handling.
 
