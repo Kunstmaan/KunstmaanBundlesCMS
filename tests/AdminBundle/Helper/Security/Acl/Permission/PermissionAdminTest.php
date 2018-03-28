@@ -2,26 +2,33 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use ReflectionClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\AclProviderInterface;
 use Symfony\Component\Security\Acl\Model\AuditableEntryInterface;
+use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Tests\Kunstmaan\AdminBundle\Entity\TestEntity;
 
 class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 {
@@ -339,5 +346,79 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $acl->expects($this->once())->method('getObjectAces')->willReturn([1 => $ace]);
 
         $this->assertTrue($method->invoke($object, $acl, 1));
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testGetManageableRolesForPages()
+    {
+        $object = $this->getInitializedPermissionAdmin();
+
+        $repo = $this->createMock(EntityRepository::class);
+        $repo->expects($this->once())->method('findAll')->willReturn(['ROLE_SUPER_ADMIN', 'USER']);
+
+        $em = $this->getEntityManager();
+        $em->expects($this->once())->method('getRepository')->willReturn($repo);
+
+        $token = $this->createMock(PreAuthenticatedToken::class);
+        $token->expects($this->once())->method('getUser')->willReturn(new User());
+
+        $storage = $this->createMock(TokenStorage::class);
+        $storage->expects($this->once())->method('getToken')->willReturn($token);
+
+        $mirror = new ReflectionClass(PermissionAdmin::class);
+        $property = $mirror->getProperty('tokenStorage');
+        $property->setAccessible(true);
+        $property->setValue($object, $storage);
+        $property = $mirror->getProperty('em');
+        $property->setAccessible(true);
+        $property->setValue($object, $em);
+
+        $roles = $object->getManageableRolesForPages();
+        $this->assertCount(1, $roles);
+        $this->assertTrue(in_array('USER', $roles));
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testApplyAclChangesetReturnsNull()
+    {
+        $object = $this->getInitializedPermissionAdmin();
+        $entity = new TestEntity(666);
+        $this->assertNull($object->applyAclChangeset($entity, [], true));
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testApplyAclAppliesChangesetRecursive()
+    {
+        $object = $this->getInitializedPermissionAdmin();
+        $acl = $this->createMock(MutableAclInterface::class);
+        $provider = $this->createMock(MutableAclProviderInterface::class);
+        $provider->expects($this->atLeastOnce())->method('findAcl')->willThrowException(new AclNotFoundException());
+        $provider->expects($this->atLeastOnce())->method('createAcl')->willReturn($acl);
+
+        $mirror = new ReflectionClass(PermissionAdmin::class);
+        $property = $mirror->getProperty('aclProvider');
+        $property->setAccessible(true);
+        $property->setValue($object, $provider);
+
+        $entity = new Node();
+        $entity->setChildren(new ArrayCollection([new Node()]));
+        $this->assertNull($object->applyAclChangeset($entity, [], true));
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testApplyAclAppliesChangeset()
+    {
+        $object = $this->getInitializedPermissionAdmin();
+
+        $entity = new Node();
+        $this->assertNull($object->applyAclChangeset($entity, ['ROLE_TEST' => ['DEL' => ['VIEW']]], false));
     }
 }

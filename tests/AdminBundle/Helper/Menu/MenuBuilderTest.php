@@ -1,8 +1,6 @@
 <?php
 namespace Tests\Kunstmaan\AdminBundle\Helper\Menu;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\ModulesMenuAdaptor;
 use Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor;
@@ -15,7 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
