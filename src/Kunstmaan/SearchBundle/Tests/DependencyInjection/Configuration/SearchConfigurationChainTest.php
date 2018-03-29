@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Tests\Kunstmaan\SearchBundle\DependencyInjection\Configuration;
+namespace Kunstmaan\SearchBundle\Tests\DependencyInjection\Configuration;
 
 
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;

@@ -1,32 +1,32 @@
 <?php
 
-namespace Test\Kunstmaan\SearchBundle\DependencyInjection\Compiler;
+namespace Kunstmaan\SearchBundle\Tests\DependencyInjection\Compiler;
 
-use Kunstmaan\SearchBundle\DependencyInjection\Compiler\SearchConfigurationCompilerPass;
+use Kunstmaan\SearchBundle\DependencyInjection\Compiler\SearchProviderCompilerPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class SearchConfigurationCompilerPassTest extends AbstractCompilerPassTestCase
+class SearchProviderCompilerPassTest extends AbstractCompilerPassTestCase
 {
     protected function registerCompilerPass(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new SearchConfigurationCompilerPass());
+        $container->addCompilerPass(new SearchProviderCompilerPass());
     }
 
     public function testContainerKeys()
     {
-        $svcId = 'kunstmaan_search.search_configuration_chain';
+        $svcId = 'kunstmaan_search.search_provider_chain';
         $svc = new Definition();
-        $svc->addTag('kunstmaan_search.search_configuration', ['alias' => 'someAlias']);
+        $svc->addTag('kunstmaan_search.search_provider', ['alias' => 'someAlias']);
         $this->setDefinition($svcId, $svc);
 
         $this->compile();
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
-            'addConfiguration',
+            'addProvider',
             [ new Reference($svcId), 'someAlias']
         );
     }

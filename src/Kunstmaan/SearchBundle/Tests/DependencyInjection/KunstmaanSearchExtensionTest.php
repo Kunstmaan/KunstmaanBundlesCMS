@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\SearchBundle\DependencyInjection;
+namespace Kunstmaan\SearchBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SearchBundle\DependencyInjection\KunstmaanSearchExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
