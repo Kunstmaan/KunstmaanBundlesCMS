@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MenuBundle\Entity;
+namespace Kunstmaan\MenuBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\MenuBundle\Entity\BaseMenuItem;
@@ -10,8 +10,6 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Validator\TraceableValidator;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilder;
 
 class MenuItemTest extends PHPUnit_Framework_TestCase

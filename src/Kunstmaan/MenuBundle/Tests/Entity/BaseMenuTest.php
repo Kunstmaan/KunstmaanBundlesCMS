@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MenuBundle\Entity;
+namespace Kunstmaan\MenuBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\MenuBundle\Entity\BaseMenu;
