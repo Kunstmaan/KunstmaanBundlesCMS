@@ -1,12 +1,8 @@
 <?php
 
-namespace Tests\Kunstmaan\SeoBundle\Entity;
+namespace Kunstmaan\SeoBundle\Tests\Entity;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
-use Kunstmaan\RedirectBundle\Entity\Redirect;
 use Kunstmaan\SeoBundle\Entity\Robots;
-use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Form\RobotsType;
 use PHPUnit_Framework_TestCase;
 

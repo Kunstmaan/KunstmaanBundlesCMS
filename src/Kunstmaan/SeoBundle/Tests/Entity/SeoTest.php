@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\SeoBundle\Entity;
+namespace Kunstmaan\SeoBundle\Tests\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;

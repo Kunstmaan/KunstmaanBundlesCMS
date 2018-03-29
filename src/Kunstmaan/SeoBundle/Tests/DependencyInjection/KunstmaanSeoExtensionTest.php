@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\RedirectBundle\DependencyInjection;
+namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SeoBundle\DependencyInjection\KunstmaanSeoExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
