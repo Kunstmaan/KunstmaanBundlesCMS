@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\PagePartBundle\Form;
+namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 

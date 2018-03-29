@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\PagePartBundle\PagePartConfigurationReader;
+namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
 
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser;
 use PHPUnit_Framework_TestCase;

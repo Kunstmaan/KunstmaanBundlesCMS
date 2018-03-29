@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\PagePartBundle\Entity;
+namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
 use PHPUnit_Framework_TestCase;

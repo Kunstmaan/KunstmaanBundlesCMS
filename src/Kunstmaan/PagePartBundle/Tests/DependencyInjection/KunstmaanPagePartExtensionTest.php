@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\PagePartBundle\DependencyInjection;
+namespace Kunstmaan\PagePartBundle\Tests\DependencyInjection;
 
 use Kunstmaan\PagePartBundle\DependencyInjection\KunstmaanPagePartExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;

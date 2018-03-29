@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\PagePartBundle\EventListener;
+namespace Kunstmaan\PagePartBundle\Tests\EventListener;
 
 use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;

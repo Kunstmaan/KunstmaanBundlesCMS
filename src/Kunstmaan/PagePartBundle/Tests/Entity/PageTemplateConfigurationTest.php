@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\PagePartBundle\Entity;
+namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\PagePartBundle\PagePartConfigurationReader;
+namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +13,7 @@ class LocatingKernelStub implements KernelInterface
     {
         list (, $path) = explode('/', $name, 2);
 
-        return __DIR__ . '/' . $path;
+        return __DIR__ . DIRECTORY_SEPARATOR . $path;
     }
 
     public function serialize(){}
