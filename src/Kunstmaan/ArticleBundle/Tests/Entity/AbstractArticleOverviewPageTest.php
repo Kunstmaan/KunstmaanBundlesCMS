@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\ArticleBundle\Entity;
+namespace Kunstmaan\ArticleBundle\Tests\Entity;
 
 use Kunstmaan\ArticleBundle\Entity\AbstractArticleOverviewPage;
 use PHPUnit_Framework_TestCase;

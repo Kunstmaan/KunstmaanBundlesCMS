@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\ArticleBundle\Form;
+namespace Kunstmaan\ArticleBundle\Tests\Form;
 
 use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 use PHPUnit_Framework_TestCase;

@@ -1,21 +1,19 @@
 <?php
 
-namespace Tests\Kunstmaan\ArticleBundle\Form;
+namespace Kunstmaan\ArticleBundle\Tests\Form;
 
-use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
-use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticlePagePagePartAdminConfigurator;
+use Kunstmaan\ArticleBundle\PagePartAdmin\AbstractArticleOverviewPagePagePartAdminConfigurator;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Form\FormBuilder;
 
 /**
- * Class AbstractArticlePagePagePartAdminConfiguratorTest
+ * Class AbstractArticleOverviewPagePagePartAdminConfiguratorTest
  * @package Tests\Kunstmaan\ArticleBundle\Form
  */
-class AbstractArticlePagePagePartAdminConfiguratorTest extends PHPUnit_Framework_TestCase
+class AbstractArticleOverviewPagePagePartAdminConfiguratorTest extends PHPUnit_Framework_TestCase
 {
     public function testGettersAndSetters()
     {
-        $entity = new AbstractArticlePagePagePartAdminConfigurator();
+        $entity = new AbstractArticleOverviewPagePagePartAdminConfigurator();
 
         $this->assertEquals('Page parts', $entity->getName());
         $this->assertEquals('main', $entity->getContext());

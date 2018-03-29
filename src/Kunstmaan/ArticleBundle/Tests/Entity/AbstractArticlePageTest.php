@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\ArticleBundle\Entity;
+namespace Kunstmaan\ArticleBundle\Tests\Entity;
 
 use DateTime;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;

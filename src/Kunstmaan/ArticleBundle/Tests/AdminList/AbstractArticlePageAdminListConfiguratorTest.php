@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\ArticleBundle\AdminList;
+namespace Kunstmaan\ArticleBundle\Tests\AdminList;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
