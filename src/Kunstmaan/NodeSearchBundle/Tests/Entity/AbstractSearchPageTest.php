@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeSearchBundle\Entity;
+namespace Kunstmaan\NodeSearchBundle\Tests\Entity;
 
 use Kunstmaan\NodeSearchBundle\Entity\AbstractSearchPage;
 use PHPUnit_Framework_TestCase;

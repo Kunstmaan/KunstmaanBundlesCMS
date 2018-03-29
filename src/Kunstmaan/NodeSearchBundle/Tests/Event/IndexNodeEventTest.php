@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
 use PHPUnit_Framework_TestCase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeSearchBundle\DependencyInjection;
+namespace Kunstmaan\NodeSearchBundle\Tests\DependencyInjection;
 
 use Kunstmaan\NodeSearchBundle\DependencyInjection\KunstmaanNodeSearchExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;

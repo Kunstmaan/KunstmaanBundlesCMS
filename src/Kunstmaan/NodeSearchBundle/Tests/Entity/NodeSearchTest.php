@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeSearchBundle\Entity;
+namespace Kunstmaan\NodeSearchBundle\Tests\Entity;
 
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeSearchBundle\Entity\NodeSearch;
