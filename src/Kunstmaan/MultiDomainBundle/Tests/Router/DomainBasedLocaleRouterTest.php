@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MultiDomainBundle\Router;
+namespace Kunstmaan\MultiDomainBundle\Tests\Router;
 
 use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;

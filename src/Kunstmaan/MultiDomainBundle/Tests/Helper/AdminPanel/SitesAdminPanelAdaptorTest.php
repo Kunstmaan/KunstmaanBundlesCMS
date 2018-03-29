@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MultiDomainBundle\Helper\AdminPanel;
+namespace Kunstmaan\MultiDomainBundle\Tests\Helper\AdminPanel;
 
 use Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor;
 use PHPUnit_Framework_TestCase;

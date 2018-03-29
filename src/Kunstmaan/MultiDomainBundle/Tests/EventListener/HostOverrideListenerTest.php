@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MultiDomainBundle\EventListener;
+namespace Kunstmaan\MultiDomainBundle\Tests\EventListener;
 
 use Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener;
 use PHPUnit_Framework_TestCase;

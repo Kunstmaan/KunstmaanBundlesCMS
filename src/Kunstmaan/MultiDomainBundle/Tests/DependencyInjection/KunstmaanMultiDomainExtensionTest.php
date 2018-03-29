@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MultiDomainBundle\DependencyInjection;
+namespace Kunstmaan\MultiDomainBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MultiDomainBundle\DependencyInjection\KunstmaanMultiDomainExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
