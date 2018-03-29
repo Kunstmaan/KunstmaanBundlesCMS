@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\FixturesBundle\DependencyInjection;
+namespace Kunstmaan\FixturesBundle\Tests\DependencyInjection;
 
 use Kunstmaan\FixturesBundle\DependencyInjection\KunstmaanFixturesExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;

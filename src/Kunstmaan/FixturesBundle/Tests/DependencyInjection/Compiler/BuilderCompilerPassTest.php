@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Kunstmaan\FixturesBundle\DependencyInjection\Compiler;
+namespace Kunstmaan\FixturesBundle\Tests\DependencyInjection\Compiler;
 
 use Kunstmaan\FixturesBundle\DependencyInjection\Compiler\BuilderCompilerPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
