@@ -9,7 +9,7 @@ use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
-use Tests\Kunstmaan\TaggingBundle\Entity\FakePage;
+use Kunstmaan\TaggingBundle\Tests\Entity\FakePage;
 
 /**
  * This test tests the FormPageAdminListConfigurator

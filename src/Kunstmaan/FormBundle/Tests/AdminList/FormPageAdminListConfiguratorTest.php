@@ -7,7 +7,7 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
-use Tests\Kunstmaan\TaggingBundle\Entity\FakePage;
+use Kunstmaan\TaggingBundle\Tests\Entity\FakePage;
 
 /**
  * This test tests the FormPageAdminListConfigurator
