@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\ConfigBundle\Entity;
+namespace Kunstmaan\ConfigBundle\Tests\Entity;
 
 use Kunstmaan\ConfigBundle\Entity\AbstractConfig;
 use PHPUnit_Framework_TestCase;
