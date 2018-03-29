@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaBundle\Helper\RemoteAudio;
+namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteAudio;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteAudio\RemoteAudioHandler;

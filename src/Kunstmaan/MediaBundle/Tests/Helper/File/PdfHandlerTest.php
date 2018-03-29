@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaBundle\Helper\File;
+namespace Kunstmaan\MediaBundle\Tests\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\File\PdfHandler;

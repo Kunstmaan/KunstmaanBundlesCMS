@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Kunstmaan\MediaBundle\Form;
+namespace Kunstmaan\MediaBundle\Tests\Form;
 
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser;

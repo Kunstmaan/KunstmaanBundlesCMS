@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaBundle\Helper\Transformer;
+namespace Kunstmaan\MediaBundle\Tests\Helper\Transformer;
 
 use Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer;
 use Symfony\Component\Filesystem\Filesystem;

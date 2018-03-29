@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaBundle\Helper;
+namespace Kunstmaan\MediaBundle\Tests\Helper;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Kunstmaan\MediaBundle\Entity\Folder;

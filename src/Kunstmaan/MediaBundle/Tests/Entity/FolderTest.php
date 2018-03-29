@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\MediaBundle\Entity\Folder;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Kunstmaan\MediaBundle\Tests\DependencyInjection\Compiler;
+
 use Kunstmaan\MediaBundle\DependencyInjection\Compiler\MediaHandlerCompilerPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

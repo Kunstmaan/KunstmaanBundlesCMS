@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaBundle\Helper\RemoteSlide;
+namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteSlide;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHandler;

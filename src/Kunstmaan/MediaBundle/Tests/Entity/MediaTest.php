@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaBundle\Entity;
+namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use DateTime;
 use Kunstmaan\MediaBundle\Entity\Folder;

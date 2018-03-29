@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Kunstmaan\MediaBundle\Helper\RemoteVideo;
+namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;

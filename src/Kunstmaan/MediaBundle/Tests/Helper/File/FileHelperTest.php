@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Kunstmaan\MediaBundle\Helper\File;
+namespace Kunstmaan\MediaBundle\Tests\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
