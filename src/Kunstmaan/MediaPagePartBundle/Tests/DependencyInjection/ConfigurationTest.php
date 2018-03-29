@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaPagePartBundle\DependencyInjection;
+namespace Kunstmaan\MediaPagePartBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MediaPagePartBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;

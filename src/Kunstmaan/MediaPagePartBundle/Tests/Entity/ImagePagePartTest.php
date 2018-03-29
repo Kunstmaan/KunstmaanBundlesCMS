@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\MediaPagePartBundle\Entity;
+namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
 use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
