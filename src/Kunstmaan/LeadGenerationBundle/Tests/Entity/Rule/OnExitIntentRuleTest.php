@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\LeadGenerationBundle\Entity\Rule;
+namespace Kunstmaan\LeadGenerationBundle\Tests\Entity\Rule;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\OnExitIntentRule;
 use Kunstmaan\LeadGenerationBundle\Form\Rule\OnExitIntentAdminType;

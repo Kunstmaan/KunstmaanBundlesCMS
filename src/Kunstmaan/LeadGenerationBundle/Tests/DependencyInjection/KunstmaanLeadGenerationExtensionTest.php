@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\LeadGenerationBundle\DependencyInjection;
+namespace Kunstmaan\LeadGenerationBundle\Tests\DependencyInjection;
 
 use Kunstmaan\LeadGenerationBundle\DependencyInjection\KunstmaanLeadGenerationExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;

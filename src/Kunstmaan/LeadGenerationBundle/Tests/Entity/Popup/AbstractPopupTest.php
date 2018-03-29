@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\LeadGenerationBundle\Entity\Popup;
+namespace Kunstmaan\LeadGenerationBundle\Tests\Entity\Popup;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\LocaleWhitelistRule;

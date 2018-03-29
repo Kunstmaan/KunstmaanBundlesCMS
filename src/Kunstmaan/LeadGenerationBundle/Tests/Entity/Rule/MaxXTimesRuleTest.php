@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\LeadGenerationBundle\Entity\Rule;
+namespace Kunstmaan\LeadGenerationBundle\Tests\Entity\Rule;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\MaxXTimesRule;
 use Kunstmaan\LeadGenerationBundle\Form\Rule\MaxXTimeAdminType;

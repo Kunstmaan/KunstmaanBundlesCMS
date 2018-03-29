@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Kunstmaan\LeadGenerationBundle\Entity\Rule;
+namespace Kunstmaan\LeadGenerationBundle\Tests\Entity\Rule;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule;
 use Kunstmaan\LeadGenerationBundle\Form\Rule\UrlBlackListAdminType;
-use Tests\Kunstmaan\LeadGenerationBundle\Entity\Popup\Popup;
+use Kunstmaan\LeadGenerationBundle\Tests\Entity\Popup\Popup;
 use PHPUnit_Framework_TestCase;
 
 /**
