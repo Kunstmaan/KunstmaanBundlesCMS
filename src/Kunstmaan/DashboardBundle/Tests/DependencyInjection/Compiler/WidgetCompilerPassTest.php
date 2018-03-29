@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Kunstmaan\DashboardBundle\DependencyInjection\Compiler;
+namespace Kunstmaan\DashboardBundle\Tests\DependencyInjection\Compiler;
 
 use Kunstmaan\DashboardBundle\DependencyInjection\Compiler\WidgetCompilerPass;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
