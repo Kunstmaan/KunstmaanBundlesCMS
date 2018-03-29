@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\StructureNode;

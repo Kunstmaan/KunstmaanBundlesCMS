@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Helper\Menu;
+namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
 use Knp\Menu\Integration\Symfony\RoutingExtension;
 use Knp\Menu\MenuFactory;
@@ -9,7 +9,7 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
-use Tests\Kunstmaan\NodeBundle\Stubs\TestRepository;
+use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Tests\Kunstmaan\NodeBundle\Entity\TestEntity;
+use Kunstmaan\NodeBundle\Tests\Entity\TestEntity;
 
 /**
  * Class SlugSecurityEventTest

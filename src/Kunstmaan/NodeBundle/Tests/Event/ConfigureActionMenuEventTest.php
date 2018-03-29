@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;

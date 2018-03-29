@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use PHPUnit_Framework_TestCase;
-use Tests\Kunstmaan\NodeBundle\Entity\TestEntity;
+use Kunstmaan\NodeBundle\Tests\Entity\TestEntity;
 
 /**
  * Class RecopyPageTranslationNodeEventTest

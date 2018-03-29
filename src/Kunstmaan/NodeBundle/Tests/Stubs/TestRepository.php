@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Stubs;
+namespace Kunstmaan\NodeBundle\Tests\Stubs;
 
 /**
  * TestRepository

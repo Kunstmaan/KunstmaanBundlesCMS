@@ -7,7 +7,7 @@ use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Tests\Kunstmaan\NodeBundle\Stubs\TestRepository;
+use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 use Tests\Kunstmaan\TaggingBundle\Entity\FakePage;
 

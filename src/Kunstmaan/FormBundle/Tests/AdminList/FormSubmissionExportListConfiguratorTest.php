@@ -9,7 +9,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionFi
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
-use Tests\Kunstmaan\NodeBundle\Stubs\TestRepository;
+use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 
 class FakeFormSubmission extends FormSubmission

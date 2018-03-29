@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -139,7 +139,7 @@ class NodeTest extends PHPUnit_Framework_TestCase
     {
         $entity = new TestEntity();
         $this->object->setRef($entity);
-        $this->assertEquals('Tests\Kunstmaan\NodeBundle\Entity\TestEntity', $this->object->getRefEntityName());
+        $this->assertEquals('Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->getRefEntityName());
     }
 
     public function testSetInternalName()
@@ -158,7 +158,7 @@ class NodeTest extends PHPUnit_Framework_TestCase
         $this->object->setId(1);
         $this->object->setRef(new TestEntity());
 
-        $this->assertEquals('node 1, refEntityName: Tests\Kunstmaan\NodeBundle\Entity\TestEntity', $this->object->__toString());
+        $this->assertEquals('node 1, refEntityName: Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->__toString());
     }
 
     public function testGetSetLeftRightLevel()

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
-use Tests\Kunstmaan\NodeBundle\Entity\TestNode;
+use Kunstmaan\NodeBundle\Tests\Entity\TestNode;
 use PHPUnit_Framework_TestCase;
 
 /**

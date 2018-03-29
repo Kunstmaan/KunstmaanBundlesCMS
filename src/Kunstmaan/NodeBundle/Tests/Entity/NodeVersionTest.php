@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Entity;
+namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use PHPUnit_Framework_TestCase;
@@ -84,7 +83,7 @@ class NodeVersionTest extends PHPUnit_Framework_TestCase
 
         $this->object->setRef($entity);
         $this->assertEquals(1, $this->object->getRefId());
-        $this->assertEquals('Tests\Kunstmaan\NodeBundle\Entity\TestEntity', $this->object->getRefEntityName());
+        $this->assertEquals('Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->getRefEntityName());
         $this->assertInstanceOf(TestEntity::class, $this->object->getRef($em));
     }
 

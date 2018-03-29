@@ -5,7 +5,7 @@ namespace Kunstmaan\FormBundle\Tests\AdminList;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
-use Tests\Kunstmaan\NodeBundle\Stubs\TestRepository;
+use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 use Tests\Kunstmaan\TaggingBundle\Entity\FakePage;
 
