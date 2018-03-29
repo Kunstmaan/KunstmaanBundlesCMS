@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\RedirectBundle\Entity;
+namespace Kunstmaan\RedirectBundle\Tests\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;

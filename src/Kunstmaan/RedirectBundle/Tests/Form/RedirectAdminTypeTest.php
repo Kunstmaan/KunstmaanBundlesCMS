@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\RedirectBundle\Form;
+namespace Kunstmaan\RedirectBundle\Tests\Form;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\RedirectBundle\Form\RedirectAdminType;

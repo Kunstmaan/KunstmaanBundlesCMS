@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\RedirectBundle\Entity;
+namespace Kunstmaan\RedirectBundle\Tests\Entity;
 
 use Kunstmaan\RedirectBundle\Entity\Redirect;
 use PHPUnit_Framework_TestCase;

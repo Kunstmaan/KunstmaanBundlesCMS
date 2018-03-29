@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\RedirectBundle\Router;
+namespace Kunstmaan\RedirectBundle\Tests\Router;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Kunstmaan\RedirectBundle\Entity\Redirect;
