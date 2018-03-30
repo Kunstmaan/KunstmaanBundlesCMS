@@ -4,7 +4,7 @@ namespace Kunstmaan\MediaBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MediaBundle\DependencyInjection\KunstmaanMediaExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanMediaExtensionTest

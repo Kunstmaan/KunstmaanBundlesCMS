@@ -4,7 +4,7 @@ namespace Kunstmaan\FixturesBundle\Tests\DependencyInjection;
 
 use Kunstmaan\FixturesBundle\DependencyInjection\KunstmaanFixturesExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanFixturesExtensionTest

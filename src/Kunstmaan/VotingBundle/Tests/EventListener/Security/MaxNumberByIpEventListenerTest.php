@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Kunstmaan\VotingBundle\EventListener\Security;
+namespace Kunstmaan\VotingBundle\Tests\EventListener\Security;
 
 use Kunstmaan\VotingBundle\Event\Facebook\FacebookLikeEvent;
 use Kunstmaan\VotingBundle\EventListener\Security\MaxNumberByIpEventListener;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

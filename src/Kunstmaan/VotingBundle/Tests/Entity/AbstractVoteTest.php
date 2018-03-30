@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\VotingBundle\Entity;
+namespace Kunstmaan\VotingBundle\Tests\Entity;
 
 use DateTime;
 use Kunstmaan\VotingBundle\Entity\Facebook\FacebookLike;

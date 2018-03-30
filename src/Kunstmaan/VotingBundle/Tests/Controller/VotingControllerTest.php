@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\VotingBundle\Controller;
+namespace Kunstmaan\VotingBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

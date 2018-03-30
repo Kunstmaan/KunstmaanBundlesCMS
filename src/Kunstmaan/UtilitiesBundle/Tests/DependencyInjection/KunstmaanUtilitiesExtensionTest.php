@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Kunstmaan\UtilitiesBundle\DependencyInjection;
+namespace Kunstmaan\UtilitiesBundle\Tests\DependencyInjection;
 
 use Kunstmaan\UtilitiesBundle\DependencyInjection\KunstmaanUtilitiesExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanUtilitiesExtensionTest

@@ -4,7 +4,7 @@ namespace Kunstmaan\LeadGenerationBundle\Tests\DependencyInjection;
 
 use Kunstmaan\LeadGenerationBundle\DependencyInjection\KunstmaanLeadGenerationExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanLeadGenerationExtensionTest

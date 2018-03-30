@@ -4,7 +4,7 @@ namespace Kunstmaan\FormBundle\Tests\DependencyInjection;
 
 use Kunstmaan\FormBundle\DependencyInjection\KunstmaanFormExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanFormExtensionTest

@@ -4,7 +4,7 @@ namespace Kunstmaan\RedirectBundle\Tests\DependencyInjection;
 
 use Kunstmaan\RedirectBundle\DependencyInjection\KunstmaanRedirectExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanRedirectExtensionTest

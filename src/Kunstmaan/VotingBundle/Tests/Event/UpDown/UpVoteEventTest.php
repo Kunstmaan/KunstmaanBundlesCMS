@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Tests\Event;
 
 use Kunstmaan\VotingBundle\Event\UpDown\UpVoteEvent;
 use PHPUnit_Framework_TestCase;

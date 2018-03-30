@@ -1,5 +1,7 @@
 <?php
 
+namespace Kunstmaan\VotingBundle\Tests\DependencyInjection;
+
 use Kunstmaan\VotingBundle\DependencyInjection\KunstmaanVotingExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

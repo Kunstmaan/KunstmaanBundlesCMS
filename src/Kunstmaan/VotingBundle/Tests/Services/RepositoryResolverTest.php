@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Kunstmaan\VotingBundle\Services;
+namespace Kunstmaan\VotingBundle\Tests\Services;
 
 use Kunstmaan\VotingBundle\Services\RepositoryResolver;
+use PHPUnit_Framework_TestCase;
 
 /**
 * Unit test for repository resolver
 */
-class RepositoryResolverTest extends \PHPUnit_Framework_TestCase
+class RepositoryResolverTest extends PHPUnit_Framework_TestCase
 {
 
     /**

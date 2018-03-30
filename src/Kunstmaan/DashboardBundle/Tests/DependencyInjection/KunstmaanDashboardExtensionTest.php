@@ -4,7 +4,7 @@ namespace Kunstmaan\DashboardBundle\Tests\DependencyInjection;
 
 use Kunstmaan\DashboardBundle\DependencyInjection\KunstmaanDashboardExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanDashboardExtensionTest

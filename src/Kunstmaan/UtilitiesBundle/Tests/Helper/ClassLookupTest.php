@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\UtilitiesBundle\Helper;
+namespace Kunstmaan\UtilitiesBundle\Tests\Helper;
 
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
@@ -12,7 +12,7 @@ class ClassLookupTest extends \PHPUnit_Framework_TestCase
     public function testGetClass()
     {
         $class = ClassLookup::getClass(new DummyClass());
-        $this->assertEquals('Tests\Kunstmaan\UtilitiesBundle\Helper\DummyClass', $class);
+        $this->assertEquals('Kunstmaan\UtilitiesBundle\Tests\Helper\DummyClass', $class);
     }
 
     public function testGetClassName()

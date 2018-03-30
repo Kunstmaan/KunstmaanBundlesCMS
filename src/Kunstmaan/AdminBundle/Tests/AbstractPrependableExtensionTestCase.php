@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan;
+namespace Kunstmaan\AdminBundle\Tests;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;

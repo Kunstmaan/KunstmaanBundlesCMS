@@ -4,7 +4,7 @@ namespace Kunstmaan\MediaPagePartBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MediaPagePartBundle\DependencyInjection\KunstmaanMediaPagePartExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Tests\Kunstmaan\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanMediaPagePartExtensionTest

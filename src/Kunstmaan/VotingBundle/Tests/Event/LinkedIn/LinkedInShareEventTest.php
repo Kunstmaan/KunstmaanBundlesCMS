@@ -1,24 +1,24 @@
 <?php
 
-namespace Tests\Kunstmaan\NodeBundle\Event;
+namespace Kunstmaan\NodeBundle\Tests\Event;
 
-use Kunstmaan\VotingBundle\Event\UpDown\DownVoteEvent;
+use Kunstmaan\VotingBundle\Event\LinkedIn\LinkedInShareEvent;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class DownVoteEventTest
+ * Class LinkedInShareEventTest
  * @package Tests\Kunstmaan\NodeBundle\Event
  */
-class DownVoteEventTest extends PHPUnit_Framework_TestCase
+class LinkedInShareEventTest extends PHPUnit_Framework_TestCase
 {
     public function testGetSet()
     {
         $request = new Request();
         $response = new Response();
 
-        $event = new DownVoteEvent($request, $response, 100);
+        $event = new LinkedInShareEvent($request, $response, 100);
 
         $this->assertInstanceOf(Request::class, $event->getRequest());
         $this->assertInstanceOf(Response::class, $event->getReference());
