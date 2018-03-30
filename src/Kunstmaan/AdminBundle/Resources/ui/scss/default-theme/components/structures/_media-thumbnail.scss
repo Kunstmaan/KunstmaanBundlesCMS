@@ -11,6 +11,8 @@
     overflow: hidden;
     min-height: 20rem;
 
+    transition: border-width 0.1s ease-in-out;
+
     &:hover {
         text-decoration: none;
     }
@@ -22,10 +24,14 @@
                 opacity: 1;
             }
 
-            & + .media-thumbnail-del-btn {
+            ~ .media-thumbnail-action {
                 opacity: 1;
             }
         }
+    }
+
+    &.bulk_selected {
+        border: 3px solid $blue;
     }
 }
 
@@ -107,12 +113,77 @@
 
 /* Delete
    ========================================================================== */
-.media-thumbnail-del-btn {
+.media-thumbnail-action {
     z-index: 2;
     position: absolute;
     top: 0;
     right: 1.5rem;
+    display: flex;
 
+    cursor: pointer;
+
+    @media (min-width: $screen-lg) {
+        opacity: 0;
+
+        transition: opacity .3s ease;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+input[type="checkbox"].media-thumbnail-bulk-move-btn {
+    display: none;
+
+    &:checked {
+        + label {
+            background-color: $blue;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+            color: $gray-ultralight;
+
+            &:active {
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            &:after {
+                content: "\2714";
+                font-size: 20px;
+                position: absolute;
+                top: 0;
+                left: 7px;
+                color: $gray-ultralight;
+                line-height: 25px;
+            }
+        }
+    }
+
+    + label {
+        background-color: $gray-ultralight;
+
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+        padding: 13px;
+        border-radius: 0 $default-border-radius 0 $default-border-radius;
+        display: inline-block;
+        position: relative;
+
+        &:active {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        &:after {
+            content: "\2714";
+            font-size: 20px;
+            position: absolute;
+            top: 0;
+            left: 7px;
+            color: $gray;
+            line-height: 25px;
+        }
+    }
+}
+
+.media-thumbnail-del-btn {
     padding: .2em .5em;
     border-radius: 0 $default-border-radius 0 $default-border-radius;
 
@@ -122,17 +193,33 @@
     }
 
     @media (min-width: $screen-lg) {
-        opacity: 0;
-
-        transition: opacity .3s ease;
-
-    &:hover {
-        opacity: 1;
-
-        + .media-thumbnail-del-helper {
-            opacity: 1;
+        &:hover {
+            + .media-thumbnail-delete-helper {
+                opacity: 1;
+            }
         }
     }
+}
+
+.media-thumbnail-action__move {
+    right: 4.5rem;
+
+    @media (min-width: $screen-lg) {
+        &:hover {
+            + .media-thumbnail-bulk-move-helper {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.media-thumbnail-action__delete {
+    @media (min-width: $screen-lg) {
+        &:hover {
+            + .media-thumbnail-del-helper {
+                opacity: 1;
+            }
+        }
     }
 }
 
@@ -153,4 +240,10 @@
 
         transition: opacity .3s ease;
     }
+}
+
+.media-thumbnail-bulk-move-helper {
+    @extend .media-thumbnail-del-helper;
+
+    color: $blue;
 }
