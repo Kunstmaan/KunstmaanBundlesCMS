@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\UserManagementBundle\DependencyInjection;
+namespace Kunstmaan\UserManagementBundle\Tests\DependencyInjection;
 
 use Kunstmaan\UserManagementBundle\DependencyInjection\KunstmaanUserManagementExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
