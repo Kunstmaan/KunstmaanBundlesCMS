@@ -16,11 +16,17 @@ ArticleBundle
 -------------
 
  * Passing the `request_stack` service as the third argument in `Kunstmaan\ArticleBundle\Twig\ArticleTwigExtension` is deprecated and will be removed in 6.0.
+ * The `getAdminListConfigurator` and `createAdminListConfigurator` method in the `AbstractArticleEntityAdminListController` class will change from `public` to `protected` visibility in 6.0.
 
 ConfigBundle
 ------------
 
  * Passing the `container` as the sixth argument in `Kunstmaan\ConfigBundle\Controller\ConfigController` is deprecated in and will be removed in 6.0.
+
+MediaBundle
+-----------
+
+ * The unused `MediaController::moveMedia` action is deprecated and will be removed in 6.0.
 
 NodeBundle
 ----------
@@ -28,7 +34,8 @@ NodeBundle
  * `CronUpdateNodeCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `InitAclCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `CronUpdateNodeCommand` and `InitAclCommand` have been marked as final.
- * `Possibility to change the icon of your page.`: The possibility already exists to change the icon in the sidebar tree of your page. This was already available by yml configuration. I've added a new interface, TreeIconInterface that can be implemented and that will return the icon that should be used. 
+ * `Possibility to change the icon of your page.`: The possibility already exists to change the icon in the sidebar tree of your page. This was already available by yml configuration. I've added a new interface, TreeIconInterface that can be implemented and that will return the icon that should be used.
+ * The unused `WidgetsController::selectNodesLazySearch` action is deprecated and will be removed in 6.0. 
 
 TranslatorBundle
 ----------------

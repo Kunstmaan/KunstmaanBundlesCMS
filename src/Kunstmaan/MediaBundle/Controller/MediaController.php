@@ -454,6 +454,8 @@ class MediaController extends Controller
      */
     public function moveMedia(Request $request)
     {
+        @trigger_error(sprintf('The "%s" controller action is deprecated in KunstmaanMediaBundle 5.1 and will be removed in KunstmaanMediaBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+
         $mediaId = $request->request->get('mediaId');
         $folderId = $request->request->get('folderId');
 

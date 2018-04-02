@@ -41,6 +41,8 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
     protected $aclHelper;
 
     /**
+     * NEXT_MAJOR: change method visibility from public to protected
+     *
      * @return AdminListConfiguratorInterface
      */
     public function getAdminListConfigurator(Request $request)
@@ -54,6 +56,8 @@ abstract class AbstractArticleEntityAdminListController extends AdminListControl
     }
 
     /**
+     * NEXT_MAJOR: change method visibility from public to protected
+     *
      * @return AbstractArticlePageAdminListConfigurator
      */
     abstract public function createAdminListConfigurator();
