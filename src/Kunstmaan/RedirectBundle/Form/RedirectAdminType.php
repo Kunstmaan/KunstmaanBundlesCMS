@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,13 +31,18 @@ class RedirectAdminType extends AbstractType
             $domains = array_combine($hosts, $hosts);
             $domains = array_merge(array('redirect.all' => ''), $domains);
 
-            $builder->add('domain', ChoiceType::class, array(
+            $builder->add('domain', ChoiceType::class, [
                 'label' => 'redirect.form.redirect.domain.label',
                 'choices' => $domains,
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false
-            ));
+            ]);
+        } else {
+            $host = $options['domainConfiguration']->getHost();
+            $builder->add('domain', HiddenType::class, [
+                'data' => $host,
+            ]);
         }
 
         $builder->add('origin', TextType::class, array(

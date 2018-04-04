@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : swedish (sv)
+//! locale : Swedish [sv]
 //! author : Jens Alm : https://github.com/ulmus
 
 import moment from '../moment';
@@ -12,18 +12,20 @@ export default moment.defineLocale('sv', {
     weekdaysMin : 'sö_må_ti_on_to_fr_lö'.split('_'),
     longDateFormat : {
         LT : 'HH:mm',
-        LTS : 'LT:ss',
+        LTS : 'HH:mm:ss',
         L : 'YYYY-MM-DD',
         LL : 'D MMMM YYYY',
-        LLL : 'D MMMM YYYY LT',
-        LLLL : 'dddd D MMMM YYYY LT'
+        LLL : 'D MMMM YYYY [kl.] HH:mm',
+        LLLL : 'dddd D MMMM YYYY [kl.] HH:mm',
+        lll : 'D MMM YYYY HH:mm',
+        llll : 'ddd D MMM YYYY HH:mm'
     },
     calendar : {
         sameDay: '[Idag] LT',
         nextDay: '[Imorgon] LT',
         lastDay: '[Igår] LT',
-        nextWeek: 'dddd LT',
-        lastWeek: '[Förra] dddd[en] LT',
+        nextWeek: '[På] dddd LT',
+        lastWeek: '[I] dddd[s] LT',
         sameElse: 'L'
     },
     relativeTime : {
@@ -41,7 +43,7 @@ export default moment.defineLocale('sv', {
         y : 'ett år',
         yy : '%d år'
     },
-    ordinalParse: /\d{1,2}(e|a)/,
+    dayOfMonthOrdinalParse: /\d{1,2}(e|a)/,
     ordinal : function (number) {
         var b = number % 10,
             output = (~~(number % 100 / 10) === 1) ? 'e' :
