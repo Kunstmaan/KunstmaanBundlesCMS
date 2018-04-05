@@ -57,6 +57,17 @@ media:
         save: Verwijder inhoud
       success:
         text: Map '%folder%' is leeggemaakt!
+    bulk_move:
+      action: Bulk move media
+      action_short: Bulk move
+      modal:
+        title: Bulk move media
+        text: Select to which folder you want to move the selected media.
+        save: "Move.."
+        form:
+          name: Parent folder
+      success:
+        text: Media has been moved successfully!
     sub:
       no: Nog geen submappen.
     delete:
