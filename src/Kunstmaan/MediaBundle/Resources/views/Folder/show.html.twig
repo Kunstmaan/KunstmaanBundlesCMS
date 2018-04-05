@@ -105,6 +105,10 @@
                     <span class="large-screen">{{ 'media.folder.empty.action' |trans }}</span>
                     <span class="small-screen">{{ 'media.folder.empty.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
+                <button class="btn btn-default btn--raise-on-hover" data-target="#bulk-move-modal" data-toggle="modal" type="button">
+                    <span class="large-screen">{{ 'media.folder.bulk_move.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.bulk_move.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                </button>
             {% endblock %}
         </div>
     </div>
@@ -247,9 +251,19 @@
                                         </span>
                                     </a>
 
-                                    <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn media-thumbnail-del-btn">
-                                        <i class="fa fa-trash-o"></i>
-                                    </button>
+                                    <div class="media-thumbnail-action media-thumbnail-action__move">
+                                        <input type="checkbox" data-media-id="{{ media.id }}" id="bulk-move-{{ media.id }}" name="bulk-move-{{ media.id }}" class="media-thumbnail-bulk-move-btn js-bulk-move-media">
+                                        <label class="btn" for="bulk-move-{{ media.id }}"></label>
+                                    </div>
+                                    <span class="media-thumbnail-bulk-move-helper">
+                                        Bulk move
+                                    </span>
+
+                                    <div class="media-thumbnail-action media-thumbnail-action__delete">
+                                        <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn media-thumbnail-del-btn">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </div>
                                     <span class="media-thumbnail-del-helper">
                                         Delete
                                     </span>
@@ -293,20 +307,20 @@
 
             {% form_theme editform '@KunstmaanAdmin/Form/fields.html.twig' %}
             {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) ~ '#properties'}) }}
-                <fieldset class="panel panel-default form-properties">
-                    <div class="panel-body">
-                        {{ form_widget(editform) }}
+            <fieldset class="panel panel-default form-properties">
+                <div class="panel-body">
+                    {{ form_widget(editform) }}
 
-                        <div class="form-actions form-actions--padded">
-                            <button class="btn btn-primary btn--raise-on-hover" type="submit">
-                                {{ 'media.folder.save' |trans }}
-                            </button>
-                            <button class="btn btn-default btn--raise-on-hover" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">
-                                {{ 'form.cancel' |trans }}
-                            </button>
-                        </div>
+                    <div class="form-actions form-actions--padded">
+                        <button class="btn btn-primary btn--raise-on-hover" type="submit">
+                            {{ 'media.folder.save' |trans }}
+                        </button>
+                        <button class="btn btn-default btn--raise-on-hover" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">
+                            {{ 'form.cancel' |trans }}
+                        </button>
                     </div>
-                </fieldset>
+                </div>
+            </fieldset>
             {{ form_end(editform) }}
         </div>
     </div>
@@ -316,6 +330,7 @@
     {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
     {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
     {% include '@KunstmaanMedia/Folder/empty-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/bulk-move-modal.html.twig' %}
 
 {% endblock %}
 
