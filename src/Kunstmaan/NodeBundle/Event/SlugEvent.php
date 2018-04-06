@@ -4,8 +4,8 @@ namespace Kunstmaan\NodeBundle\Event;
 
 
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SlugEvent
@@ -28,7 +28,7 @@ class SlugEvent extends Event
      * @param Response $response
      * @param RenderContext $renderContext
      */
-    function __construct(Response $response = null, RenderContext $renderContext)
+    public function __construct(Response $response = null, RenderContext $renderContext)
     {
         $this->response = $response;
         $this->renderContext = $renderContext;

@@ -32,14 +32,6 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::getName
-     */
-    public function testGetName()
-    {
-        $this->assertEquals(HeaderPagePartAdminType::class, $this->object->getName());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::buildForm
      */
     public function testBuildForm()

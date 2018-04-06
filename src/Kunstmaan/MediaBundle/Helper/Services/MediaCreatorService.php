@@ -4,8 +4,8 @@ namespace Kunstmaan\MediaBundle\Helper\Services;
 
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\Entity\Folder;
-use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 

@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\NodeSearchBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Node

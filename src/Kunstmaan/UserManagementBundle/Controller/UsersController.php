@@ -6,18 +6,20 @@ use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Event\UserEvent;
 use FOS\UserBundle\Model\UserInterface;
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
+use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Event\AdaptSimpleFormEvent;
 use Kunstmaan\AdminBundle\Event\Events;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminBundle\Form\RoleDependentUserFormInterface;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\UserManagementBundle\Event\UserEvents;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Settings controller handling everything related to creating, editing, deleting and listing users in an admin list
@@ -36,18 +38,14 @@ class UsersController extends BaseSettingsController
      */
     public function listAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         $em = $this->getDoctrine()->getManager();
-        $userObject = $this->getUserClassInstance();
         $configuratorClassName = '';
         if ($this->container->hasParameter('kunstmaan_user_management.user_admin_list_configurator.class')) {
-            $configuratorClassName = $this->container->getParameter(
+            $configuratorClassName = $this->getParameter(
                 'kunstmaan_user_management.user_admin_list_configurator.class'
             );
-        }
-        // Fallback for backwards compatibility - will be removed in the future!
-        if (empty($configuratorClassName)) {
-            $configuratorClassName = $userObject->getAdminListConfiguratorClass();
         }
 
         $configurator = new $configuratorClassName($em);
@@ -68,7 +66,7 @@ class UsersController extends BaseSettingsController
      */
     private function getUserClassInstance()
     {
-        $userClassName = $this->container->getParameter('fos_user.model.user.class');
+        $userClassName = $this->getParameter('fos_user.model.user.class');
 
         return new $userClassName();
     }
@@ -86,16 +84,17 @@ class UsersController extends BaseSettingsController
      */
     public function addAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
         $user = $this->getUserClassInstance();
 
-        $options = array('password_required' => true, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => get_class($user));
+        $options = array('password_required' => true, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'validation_groups' => array('Registration'), 'data_class' => get_class($user));
         $formTypeClassName = $user->getFormTypeClass();
         $formType = new $formTypeClassName();
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+            $options['can_edit_all_fields'] = $this->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $form = $this->createForm(
@@ -106,15 +105,17 @@ class UsersController extends BaseSettingsController
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $user->setPasswordChanged(true);
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
 
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    'User \''.$user->getUsername().'\' has been created!'
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.users.add.flash.success.%username%', [
+                        '%username%' => $user->getUsername()
+                    ])
                 );
 
                 return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));
@@ -146,13 +147,13 @@ class UsersController extends BaseSettingsController
         } else {
             $requiredRole = 'ROLE_SUPER_ADMIN';
         }
-        $this->checkPermission($requiredRole);
+        $this->denyAccessUnlessGranted($requiredRole);
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
 
         /** @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->getParameter('fos_user.model.user.class'))->find($id);
         if ($user === null) {
             throw new NotFoundHttpException(sprintf('User with ID %s not found', $id));
         }
@@ -160,13 +161,13 @@ class UsersController extends BaseSettingsController
         $userEvent = new UserEvent($user, $request);
         $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_EDIT_INITIALIZE, $userEvent);
 
-        $options = array('password_required' => false, 'langs' => $this->container->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user));
+        $options = array('password_required' => false, 'langs' => $this->getParameter('kunstmaan_admin.admin_locales'), 'data_class' => get_class($user));
         $formFqn = $user->getFormTypeClass();
         $formType = new $formFqn();
 
         if ($formType instanceof RoleDependentUserFormInterface) {
             // to edit groups and enabled the current user should have ROLE_SUPER_ADMIN
-            $options['can_edit_all_fields'] = $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN');
+            $options['can_edit_all_fields'] = $this->isGranted('ROLE_SUPER_ADMIN');
         }
 
         $event = new AdaptSimpleFormEvent($request, $formFqn, $user, $options);
@@ -184,14 +185,16 @@ class UsersController extends BaseSettingsController
                 $form->handleRequest($request);
             }
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 /* @var UserManager $userManager */
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->updateUser($user, true);
 
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    'User \''.$user->getUsername().'\' has been edited!'
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
+                        '%username%' => $user->getUsername()
+                    ])
                 );
 
                 return new RedirectResponse(
@@ -229,20 +232,25 @@ class UsersController extends BaseSettingsController
      */
     public function deleteAction(Request $request, $id)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var UserInterface $user */
-        $user = $em->getRepository($this->container->getParameter('fos_user.model.user.class'))->find($id);
+        $user = $em->getRepository($this->getParameter('fos_user.model.user.class'))->find($id);
         if (!is_null($user)) {
             $userEvent = new UserEvent($user, $request);
             $this->container->get('event_dispatcher')->dispatch(UserEvents::USER_DELETE_INITIALIZE, $userEvent);
 
-            $username = $user->getUsername();
             $em->remove($user);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'User \''.$username.'\' has been deleted!');
+
+            $this->addFlash(
+                FlashTypes::SUCCESS,
+                $this->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
+                    '%username%' => $user->getUsername()
+                ])
+            );
         }
 
         return new RedirectResponse($this->generateUrl('KunstmaanUserManagementBundle_settings_users'));

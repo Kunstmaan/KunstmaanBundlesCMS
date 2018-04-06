@@ -32,7 +32,7 @@ Feature: AdminPage
   @javascript @ensureCleanSession
   Scenario: Navigate to the page
     Given I go to page "/contentsubpage"
-    Then I should see "Not found"
+    Then I should see "The requested page is not online"
 
   @javascript
   Scenario: Navigate to the preview of the page

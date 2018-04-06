@@ -6,16 +6,16 @@
 
 /* Config (necessary only)
    ========================================================================== */
-@import "config/general/colors",
-        "config/general/typography/fonts",
-        "config/general/typography/bodycopy",
-        "config/general/sizes",
-        "config/general/paths";
+@import "config/general/colors";
+@import "config/general/typography/fonts";
+@import "config/general/typography/bodycopy";
+@import "config/general/sizes";
+@import "config/general/paths";
 
 /* Vendors - only vars!
    ========================================================================== */
-@import "config/vendors/bootstrap-vars",
-        "config/vendors/cargobay-vars";
+@import "config/vendors/bootstrap-vars"{% if demosite %};
+@import "config/vendors/cargobay-vars"{% endif %};
 
 /* General
    ========================================================================== */
@@ -37,34 +37,32 @@
 
     /* Blocks
        ========================================================================== */
-    @import "blocks/img",
-            "blocks/hr",
-            "blocks/lists",
-            "blocks/links",
-            "blocks/buttons",
-            "blocks/tables";
+    @import "components/blocks/img";
+    @import "components/blocks/hr";
+    @import "components/blocks/lists";
+    @import "components/blocks/links";
+    @import "components/blocks/buttons";
+    @import "components/blocks/tables";
 
     /* Structures
        ========================================================================== */
 {% if demosite %}
-    @import "structures/header-visual",
-            "structures/submenu";
-{% else %}
-    // @import "structures/..";
+    @import "components/structures/header-visual";
+    @import "components/structures/submenu";
 {% endif %}
 
     /* Pageparts
        ========================================================================== */
-    @import "pageparts/button-pp",
-            "pageparts/download-pp",
-            "pageparts/header-pp",
-            "pageparts/image-pp",
-            "pageparts/introtext-pp",
-            "pageparts/link-pp",
+    @import "components/pageparts/button-pp";
+    @import "components/pageparts/download-pp";
+    @import "components/pageparts/header-pp";
+    @import "components/pageparts/image-pp";
+    @import "components/pageparts/introtext-pp";
+    @import "components/pageparts/link-pp";
 {% if demosite %}
-            "pageparts/service-pp",
+    @import "components/pageparts/service-pp";
 {% endif %}
-            "pageparts/text-pp",
-            "pageparts/totop-pp",
-            "pageparts/video-pp";
+    @import "components/pageparts/text-pp";
+    @import "components/pageparts/totop-pp";
+    @import "components/pageparts/video-pp";
 }

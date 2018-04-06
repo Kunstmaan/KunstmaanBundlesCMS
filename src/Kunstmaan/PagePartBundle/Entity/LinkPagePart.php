@@ -105,10 +105,10 @@ class LinkPagePart extends AbstractPagePart
     }
 
     /**
-     * @return LinkPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new LinkPagePartAdminType();
+        return LinkPagePartAdminType::class;
     }
 }

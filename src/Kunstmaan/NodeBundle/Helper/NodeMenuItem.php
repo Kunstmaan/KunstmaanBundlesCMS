@@ -3,9 +3,9 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 /**
  * NodeMenuItem
@@ -80,14 +80,6 @@ class NodeMenuItem
     public function getNodeTranslation()
     {
         return $this->nodeTranslation;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLang()
-    {
-        return $this->menu->getLang();
     }
 
     /**

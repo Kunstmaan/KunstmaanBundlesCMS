@@ -12,10 +12,10 @@ Because of the changes with the multi-config setup, you'll need to flush your da
 
 Use either a migration or force a schema update to update the database
 
-    app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate
-    app/console doctrine:schema:update --force
+    bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate
+    bin/console doctrine:schema:update --force
 
 Flush the data and reload it
 
-    app/console kuma:dashboard:widget:googleanalytics:data:flush
-    app/console kuma:dashboard:collect
+    bin/console kuma:dashboard:widget:googleanalytics:data:flush
+    bin/console kuma:dashboard:collect

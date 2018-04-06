@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\FormBundle\Entity\FormAdaptorInterface;
 use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
-use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Abstract version of a form page part
@@ -17,7 +18,8 @@ abstract class AbstractFormPagePart extends AbstractPagePart implements FormAdap
     /**
      * The label
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     protected $label;
 

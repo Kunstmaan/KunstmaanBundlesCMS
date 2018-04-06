@@ -3,6 +3,7 @@
 namespace Kunstmaan\AdminBundle\Helper\Security\Acl\Permission;
 
 use InvalidArgumentException;
+use Symfony\Component\Security\Acl\Permission\AbstractMaskBuilder;
 
 /**
  * This class allows you to build cumulative permissions easily, or convert
@@ -10,7 +11,7 @@ use InvalidArgumentException;
  *
  * @see Symfony\Component\Security\Acl\Permission\MaskBuilder
  */
-class MaskBuilder
+class MaskBuilder extends AbstractMaskBuilder
 {
     const MASK_VIEW         = 1;          // 1 << 0
     const MASK_EDIT         = 4;          // 1 << 2
@@ -28,56 +29,6 @@ class MaskBuilder
     const ALL_OFF           = '................................';
     const OFF               = '.';
     const ON                = '*';
-
-    private $mask;
-
-    /**
-     * Constructor
-     *
-     * @param int $mask optional; defaults to 0
-     *
-     * @throws InvalidArgumentException
-     */
-    public function __construct($mask = 0)
-    {
-        if (!is_int($mask)) {
-            throw new InvalidArgumentException('$mask must be an integer.');
-        }
-
-        $this->mask = $mask;
-    }
-
-    /**
-     * Adds a mask to the permission
-     *
-     * @param mixed $mask
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return MaskBuilder
-     */
-    public function add($mask)
-    {
-        if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
-            $mask = constant($name);
-        } elseif (!is_int($mask)) {
-            throw new InvalidArgumentException('$mask must be an integer.');
-        }
-
-        $this->mask |= $mask;
-
-        return $this;
-    }
-
-    /**
-     * Returns the mask of this permission
-     *
-     * @return int
-     */
-    public function get()
-    {
-        return $this->mask;
-    }
 
     /**
      * Returns a human-readable representation of the permission
@@ -101,40 +52,6 @@ class MaskBuilder
         }
 
         return $pattern;
-    }
-
-    /**
-     * Removes a mask from the permission
-     *
-     * @param mixed $mask
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return MaskBuilder
-     */
-    public function remove($mask)
-    {
-        if (is_string($mask) && defined($name = 'static::MASK_'.strtoupper($mask))) {
-            $mask = constant($name);
-        } elseif (!is_int($mask)) {
-            throw new InvalidArgumentException('$mask must be an integer.');
-        }
-
-        $this->mask &= ~$mask;
-
-        return $this;
-    }
-
-    /**
-     * Resets the MaskBuilder
-     *
-     * @return MaskBuilder
-     */
-    public function reset()
-    {
-        $this->mask = 0;
-
-        return $this;
     }
 
     /**
@@ -189,5 +106,31 @@ class MaskBuilder
         }
 
         return ($this->mask & $mask) != 0;
+    }
+
+    /**
+     * Returns the mask for the passed code.
+     *
+     * @param mixed $code
+     *
+     * @return int
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function resolveMask($code)
+    {
+        if (is_string($code)) {
+            if (!defined($name = sprintf('static::MASK_%s', strtoupper($code)))) {
+                throw new \InvalidArgumentException(sprintf('The code "%s" is not supported', $code));
+            }
+
+            return constant($name);
+        }
+
+        if (!is_int($code)) {
+            throw new \InvalidArgumentException('$code must be an integer.');
+        }
+
+        return $code;
     }
 }

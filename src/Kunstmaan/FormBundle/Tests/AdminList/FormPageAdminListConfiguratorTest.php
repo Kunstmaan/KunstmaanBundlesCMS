@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
-use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
-use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
-use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
+use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
+use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 
 /**
  * This test tests the FormPageAdminListConfigurator

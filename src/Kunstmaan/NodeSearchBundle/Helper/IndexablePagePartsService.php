@@ -17,9 +17,19 @@ class IndexablePagePartsService
     /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /** @var [] */
+    private $contexts;
+
+    /**
+     * IndexablePagePartsService constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param []                     $contexts
+     */
+    public function __construct(EntityManagerInterface $em, $contexts = [])
     {
         $this->em = $em;
+        $this->contexts = $contexts;
     }
 
     /**
@@ -32,16 +42,20 @@ class IndexablePagePartsService
      */
     public function getIndexablePageParts(HasPagePartsInterface $page, $context = 'main')
     {
-        $pageparts = $this->em
-            ->getRepository('KunstmaanPagePartBundle:PagePartRef')
-            ->getPageParts($page, $context);
+        $contexts = array_unique(array_merge($this->contexts, [$context]));
 
-        $indexablePageParts = array();
-        foreach ($pageparts as $pagepart) {
-            if ($pagepart instanceof IndexableInterface && !$pagepart->isIndexable()) {
-                continue;
+        $indexablePageParts = [];
+        foreach ($contexts as $context) {
+            $pageParts = $this->em
+                ->getRepository('KunstmaanPagePartBundle:PagePartRef')
+                ->getPageParts($page, $context);
+
+            foreach ($pageParts as $pagePart) {
+                if ($pagePart instanceof IndexableInterface && !$pagePart->isIndexable()) {
+                    continue;
+                }
+                $indexablePageParts[] = $pagePart;
             }
-            $indexablePageParts[] = $pagepart;
         }
 
         return $indexablePageParts;

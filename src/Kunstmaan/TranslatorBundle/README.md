@@ -8,7 +8,7 @@
 A bundle which enables editing translations in the admin interface without need for editing the translations files.
 Translations will be stored in a (default) database and retrieved on the most efficient way possible.
 
-![Symfony2 Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_preview.png)
+![Symfony Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_preview.png)
 
 Installation requirements
 -------------------------
@@ -38,7 +38,7 @@ KunstmaanTranslatorBundle:
     resource: "@KunstmaanTranslatorBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/
     requirements:
-        _locale: %requiredlocales%
+        _locale: "%requiredlocales%"
 ```
 
 Configuration
@@ -96,7 +96,7 @@ Database schema
 Update your database schema with doctrine
 
 ```php
-app/console doctrine:schema:update --force
+bin/console doctrine:schema:update --force
 
 Database schema updated successfully! "1" queries were executed
 ```
@@ -106,12 +106,12 @@ Migrate dev translations to production
 
 Use the following command to generate a doctrine migration with all new and updated translations from your current environment.
 ```
-app/console kuma:translator:migrations:diff
+bin/console kuma:translator:migrations:diff
 ```
 
 When you want to include these migrated translations into your (other) environment use the normal doctrine migrate command.
 ```
-app/console doctrine:migrations:migrate
+bin/console doctrine:migrations:migrate
 ```
 
 Import existing translation files
@@ -122,35 +122,35 @@ Without parameters, all translations, locales from the current `main` project wi
 If you have already existing translations in the database with the same combination of 'domain', 'keyword', 'locale', non of them will be overwritten
 
 ```
-app/console kuma:translator:import
+bin/console kuma:translator:import
 ```
 
 To force overwrite the existing translations in the stasher:
 
 ```
-app/console kuma:translator:import --force
+bin/console kuma:translator:import --force
 ```
 
 To import translations from a specific bundle:
 
 ```
-app/console kuma:translator:import --bundle=superCoolNewApplicationBundle
+bin/console kuma:translator:import --bundle=superCoolNewApplicationBundle
 ```
 
 To import only specific locales:
 ```
-app/console kuma:translator:import --locales=nl,fr,de
+bin/console kuma:translator:import --locales=nl,fr,de
 ```
 
 To import translations from the global Resources (app/Resources/translations)
 ```
-app/console kuma:translator:import --globals
+bin/console kuma:translator:import --globals
 ```
 
 How does the cache work
 -------------------------------------
 
-Translations are stored in a database, but cached (as Symfony2 normally does) when not running in debug mode.
+Translations are stored in a database, but cached (as Symfony normally does) when not running in debug mode.
 
 ```php
 $kernel = new AppKernel('prod', false); // translations are cached an read from this cache
@@ -169,12 +169,12 @@ Clear cache and request status
 
 Clear translation cache files, this will trigger a rebuild of the translation cache when visiting a page
 ```
-app/console kuma:translator:cache --flush
+bin/console kuma:translator:cache --flush
 ```
 
 Request status of the current cache
 ```
-app/console kuma:translator:cache --status
+bin/console kuma:translator:cache --status
 ```
 
 Reset translation flags
@@ -183,7 +183,7 @@ When all translations are up to date, e.g when migrated all develop translations
 Otherwise already migrated translations will be added into later migrations again (which can cause errors with inserts and unique keys)
 
 ```
-app/console kuma:translator:flag --reset
+bin/console kuma:translator:flag --reset
 ```
 
 Lookup keyword/domain of your translations
@@ -198,13 +198,13 @@ You instead of "Hello world" you might see `header.hello_world (messages)`. This
 Symfony Profiler integration
 -----------------------------
 
-The Symfony2 Profiler show the number of translations used on the current request:
+The Symfony Profiler show the number of translations used on the current request:
 
-![Symfony2 Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_bar.png)
+![Symfony Profiler Example](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_bar.png)
 
 When you click on this item, you can see all translations used on the current request and a link to add or edit them in the Kunstmaan Admin backend.
 
-![Symfony2 Profiler Example Table](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_table.png)
+![Symfony Profiler Example Table](https://github.com/Kunstmaan/KunstmaanTranslatorBundle/raw/master/Resources/doc/sf2_profiler_table.png)
 
 
 Workflow example (new project)
@@ -213,18 +213,18 @@ Workflow example (new project)
 1. Add translations (with keywords) in your template files (dev)
 2. Add the translations of (1) into your backend via "Add Translation" (dev)
 3. Repeat 1 & 2
-4. Create migrations diff `app/console kuma:translator:migrations:diff` (dev)
-5. Reset translation flags `app/console kuma:translator:flag --reset` (dev)
+4. Create migrations diff `bin/console kuma:translator:migrations:diff` (dev)
+5. Reset translation flags `bin/console kuma:translator:flag --reset` (dev)
 5. Deploy your application
-6. Execute doctrine migrations `app/console doctrine:migrations:migrate` (prod)
+6. Execute doctrine migrations `bin/console doctrine:migrations:migrate` (prod)
 7. Edit/add translations (prod)
-8. When ready editing/adding, click `Refresh live` or `app/console kuma:translator:cache --flush` (prod)
+8. When ready editing/adding, click `Refresh live` or `bin/console kuma:translator:cache --flush` (prod)
 9. Repeat 7 & 8 when editing/adding translations in prod
 
 Workflow example (existing project)
 -------------------------------------
 
-1. Import current translations, click `Import -> Import` or `app/console kuma:translator:import` (prod/dev)
+1. Import current translations, click `Import -> Import` or `bin/console kuma:translator:import` (prod/dev)
 2. If you did 1 in dev, go to 4 of `"Workflow example (new project)"`, otherwise go to 7 `"Workflow example (new project)"`
 
 

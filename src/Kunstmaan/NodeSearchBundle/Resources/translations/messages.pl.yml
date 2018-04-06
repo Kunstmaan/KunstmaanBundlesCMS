@@ -1,0 +1,10 @@
+---
+search:
+  search: Szukaj
+  results: Wyniki
+  looking_for: Szukałeś "%zapytania%"
+node_search:
+  form:
+    search:
+      boost:
+        label: Zwiększ

@@ -1,6 +1,57 @@
 {% extends '@KunstmaanAdminList/Default/list.html.twig' %}
 
+{% macro modal(overviewPage, title, type) %}
+    <!-- Modal - Add Subpage -->
+    <div id="add-subpage-modal-{{ overviewPage.id }}" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3>
+                        {{ 'article.modal.add.label' | trans({ '%type%': title | lower, '%page%': overviewPage.pageTitle }) }}
+                    </h3>
+                </div>
+
+                <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(overviewPage).id , 'type' : type}) }}" method="post" novalidate="novalidate">
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="addpage_title">
+                                {{ 'kuma_node.form.page.page_title.label' | trans }}
+                            </label>
+                            <input type="text" name="title" id="addpage_title" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'form.add' | trans }}
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'form.cancel' | trans }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as modal %}
+
 {% block extra_actions_header %}
+
+    {% if adminmenu.current %}
+        {% set title = adminmenu.current.label | trans %}
+    {% else %}
+        {% set title = adminlist.configurator.getEntityName() %}
+    {% endif %}
+    
     {% if adminlistconfigurator.overviewPage %}
         {% if adminlist.canAdd() %}
             <div class="col-sm-6 col-md-4">
@@ -8,58 +59,43 @@
                 <div class="page-main-actions page-main-actions--no-tabs page-main-actions--inside-extra-actions-header">
                     <div class="btn-group">
                         {% block actions %}
-                            <button type="button" data-target="#add-subpage-modal" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
-                                {{ 'form.add'|trans }}
-                            </button>
+                            {% if adminlistconfigurator.overviewPages | length > 1 %}
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                    {{ 'form.add' | trans }}
+                                    <i class="fa fa-caret-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    {% for key, overviewPage in adminlistconfigurator.overviewPages %}
+                                        <li>
+                                            <a data-target="#add-subpage-modal-{{ overviewPage.id }}" data-toggle="modal" href="#">
+                                                {{ overviewPage.pageTitle }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <button type="button" data-target="#add-subpage-modal-{{ adminlistconfigurator.overviewPage.id }}" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
+                                    {{ 'form.add' | trans }}
+                                </button>
+                            {% endif %}
                         {% endblock %}
                     </div>
                 </div>
             </div>
 
-            <!-- Modal - Add Subpage -->
-            <div id="add-subpage-modal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
+            {% if adminlistconfigurator.overviewPages | length > 1 %}
+                {% for overviewPage in adminlistconfigurator.overviewPages %}
+                    {{ modal.modal(overviewPage, title, adminlist.configurator.getEntityClassName) }}
+                {% endfor %}
+            {% else %}
+                {{ modal.modal(adminlistconfigurator.overviewPage, title, adminlist.configurator.getEntityClassName) }}
+            {% endif %}
 
-                        <!-- Header -->
-                        <div class="modal-header">
-                            <button class="close" data-dismiss="modal">
-                                <i class="fa fa-times"></i>
-                            </button>
-                            <h3>
-                                Add Abstract Article
-                            </h3>
-                        </div>
-
-                        <form action="{{ path('KunstmaanNodeBundle_nodes_add', { 'id': get_node_for(adminlistconfigurator.overviewPage).id , 'type' : 'Kunstmaan\\ArticleBundle\\Entity\\AbstractArticlePage'}) }}" method="post" novalidate="novalidate">
-                            <!-- Body -->
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="addpage_title">
-                                        Title
-                                    </label>
-                                    <input type="text" name="title" id="addpage_title" class="form-control">
-                                </div>
-                            </div>
-
-                            <!-- Footer -->
-                            <div class="modal-footer">
-                                <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
-                                    Add
-                                </button>
-                                <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         {% endif %}
 
     {% else %}
         <div class="alert alert-warning">
-            <strong>Warning: </strong> You need to create at least one overview page before you can create a Abstract Article
+            <strong>{{ 'form.warning' | trans }}: </strong> {{ 'article.warning.create_overview_page' | trans({ '%type%': title | lower }) }}
             <button class="close" data-dismiss="alert">
                 <i class="fa fa-times"></i>
             </button>

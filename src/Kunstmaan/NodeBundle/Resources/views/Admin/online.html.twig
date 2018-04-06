@@ -2,12 +2,12 @@
 {% if online == false %}
     <i class="fa fa-square-o"></i>
     <span class="text--muted">
-        {{ ' (Offline)' | trans }}
+        {{ 'kuma_node.admin.list.offline'|trans }}
     </span>
 {% elseif online == true %}
     <i class="fa fa-check-square-o"></i>
     <span class="text--muted">
-        {{ ' (Online)' | trans }}
+        {{ 'kuma_node.admin.list.online'|trans }}
     </span>
 {% else %}
     {{ online }}

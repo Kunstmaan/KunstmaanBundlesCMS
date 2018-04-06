@@ -1,0 +1,75 @@
+<div id="pub" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'kuma_node.modal.publish.title'|trans() }}
+                </h3>
+            </div>
+
+            <form action="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <p>
+                        {{ 'kuma_node.modal.publish.body'|trans() }}
+                    </p>
+
+                    <div class="form-group">
+                        <label>
+                            <input id="publish-later__check" type="checkbox">
+                            {{ 'kuma_node.modal.publish.later.label'|trans() }}
+                        </label>
+                    </div>
+
+                    <div id="publish-later">
+                        <!-- Date -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-default-date="true">
+                                <input id="pub_date" type="text" name="pub_date" class="form-control">
+                                <span class="input-group-addon input-group-addon--has-action">
+                    <i class="fa fa-calendar-o"></i>
+                </span>
+                            </div>
+                        </div>
+
+                        <!-- Time -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-format="HH:mm" data-default-date="true" data-stepping="{{ publish_later_stepping }}">
+                                <input id="pub_tmpckr" type="text" name="pub_time" class="form-control">
+                                <span class="input-group-addon input-group-addon--has-action">
+                    <i class="fa fa-clock-o"></i>
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div id="publish-later-action">
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'kuma_node.modal.publish.later.button'|trans() }}
+                        </button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.publish.later.cancel'|trans() }}
+                        </button>
+                    </div>
+                    <div id="publish-action">
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
+                            {{ 'kuma_node.modal.publish.now.button'|trans() }}
+                        </a>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.publish.now.cancel'|trans() }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

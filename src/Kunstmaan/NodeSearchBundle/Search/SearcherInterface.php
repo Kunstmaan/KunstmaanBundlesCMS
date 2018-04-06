@@ -19,12 +19,11 @@ interface SearcherInterface
 
     /**
      * @param mixed  $query
-     * @param string $lang
      * @param string $type
      *
      * @return mixed
      */
-    public function defineSearch($query, $lang, $type);
+    public function defineSearch($query, $type);
 
     /**
      * @param int $offset

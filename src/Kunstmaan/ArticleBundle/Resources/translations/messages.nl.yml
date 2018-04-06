@@ -1,0 +1,46 @@
+---
+article:
+  warning:
+    create_overview_page: U moet ten minste één overzichtspagina maken voordat u een %type%-pagina kunt maken
+  form:
+    date:
+      label: Datum
+    summary:
+      label: Samenvatting
+  modal:
+    add:
+      label: '%type% item toevoegen aan %page%'
+  author:
+    list:
+      header:
+        name: Naam
+        link: Koppeling
+      filter:
+        name: Naam
+        link: Koppeling
+    form:
+      name:
+        label: Naam
+      link:
+        label: Koppeling
+  page:
+    list:
+      header:
+        title: Titel
+        created_at: Aangemaakt op
+        updated_at: Gewijzigd op
+        online: Online
+      filter:
+        title: Titel
+        created_at: Aangemaakt op
+        updated_at: Gewijzigd op
+        online: Online
+
+article_overview_page:
+    filter: Filter
+    category: Categories
+    tag: Tags
+    all: Alle
+    route:
+        category: categorie
+        tag: tag

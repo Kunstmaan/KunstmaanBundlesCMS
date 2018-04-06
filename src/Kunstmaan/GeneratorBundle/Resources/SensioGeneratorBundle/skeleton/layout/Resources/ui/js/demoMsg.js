@@ -1,6 +1,4 @@
-var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
-
-{{ bundle.getName() }}.demoMsg = (function($, window, undefined) {
+const demoMsg = (function() {
 
     var init, initDemoMsg, hideDemoMsg;
 
@@ -9,10 +7,10 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     };
 
     initDemoMsg = function() {
-    var $hook = $('.js-demo-msg'),
-        $btn = $hook.find('.js-toggle-btn'),
-        $target = $($btn.data('target')),
-        _hasCookie = document.cookie.match(/(?:(?:^|.*;\s*)demosite\-message\s*\=\s*([^;]*).*$)|^.*$/)[1];
+        var $hook = $('.js-demo-msg'),
+            $btn = $hook.find('.js-toggle-btn'),
+            $target = $($btn.data('target')),
+            _hasCookie = document.cookie.match(/(?:(?:^|.*;\s*)demosite\-message\s*\=\s*([^;]*).*$)|^.*$/)[1];
 
         if (typeof _hasCookie === 'undefined' || _hasCookie === 'false') {
             $target.addClass('toggle-item--active');
@@ -40,5 +38,6 @@ var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
     return {
         init: init
     };
+}());
 
-}(jQuery, window));
+module.exports = demoMsg;

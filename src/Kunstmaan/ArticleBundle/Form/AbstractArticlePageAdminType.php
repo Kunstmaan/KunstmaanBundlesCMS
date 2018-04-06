@@ -4,6 +4,7 @@ namespace Kunstmaan\ArticleBundle\Form;
 
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,13 +31,17 @@ class AbstractArticlePageAdminType extends PageAdminType
             'date',
             DateTimeType::class,
             array(
+                'label' => 'article.form.date.label',
                 'required' => true,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
                 'date_format' => 'dd/MM/yyyy'
             )
         );
-        $builder->add('summary');
+
+        $builder->add('summary', TextType::class, array(
+            'label' => 'article.form.summary.label'
+        ));
     }
 
     /**

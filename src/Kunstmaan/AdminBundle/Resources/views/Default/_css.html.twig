@@ -1,10 +1,4 @@
-{% stylesheets
-    "@KunstmaanAdminBundle/Resources/ui/scss/style.scss"
-    output="KunstmaanAdminBundleAssets/css/style.min.css" filter="scss"
-%}
-    <link rel="stylesheet" href="{{ asset_url }}">
-{% endstylesheets %}
-
+<link rel="stylesheet" href="{{ asset('bundles/kunstmaanadmin/css/style.css') }}">
 
 <!-- Customizable Brand Color -->
 {% if titlecolor is not defined or titlecolor is empty %}
@@ -30,4 +24,4 @@
     }
 </style>
 
-{% include "@KunstmaanAdminBundle/Resources/views/Default/_css_extra.html.twig" %}
+{% include "@KunstmaanAdmin/Default/_css_extra.html.twig" %}

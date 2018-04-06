@@ -3,13 +3,13 @@
 namespace Kunstmaan\SeoBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\SeoBundle\Form\SeoType;
 use Kunstmaan\SeoBundle\Form\SocialType;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\FormWidget;
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 
 /**
  * This will add a seo tab on each page
@@ -39,13 +39,13 @@ class NodeListener
             $seo = $this->em->getRepository('KunstmaanSeoBundle:Seo')->findOrCreateFor($event->getPage());
 
             $seoWidget = new FormWidget();
-            $seoWidget->addType('seo', new SeoType(), $seo);
-            $event->getTabPane()->addTab(new Tab('SEO', $seoWidget));
+            $seoWidget->addType('seo', SeoType::class, $seo);
+            $event->getTabPane()->addTab(new Tab('seo.tab.seo.title', $seoWidget));
 
             $socialWidget = new FormWidget();
-            $socialWidget->addType('social', new SocialType(), $seo);
+            $socialWidget->addType('social', SocialType::class, $seo);
             $socialWidget->setTemplate('KunstmaanSeoBundle:Admin\Social:social.html.twig');
-            $event->getTabPane()->addTab(new Tab('Social', $socialWidget));
+            $event->getTabPane()->addTab(new Tab('seo.tab.social.title', $socialWidget));
         }
     }
 }

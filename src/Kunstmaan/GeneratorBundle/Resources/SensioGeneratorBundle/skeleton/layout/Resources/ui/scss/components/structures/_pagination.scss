@@ -13,72 +13,49 @@
     li {
         display: inline-block;
 
-        list-style: none;
-
         color: $grey--dark;
-        font-size: .9rem;
+
+        list-style: none;
 
         a {
             color: $grey--dark;
-            font-size: .9rem;
 
             &:hover,
             &:active,
             &:focus {
-                color: $blue;
+                color: $brand-primary;
             }
         }
 
         & + li {
-            margin-left: 2rem;
+            margin-left: 35px;
         }
     }
 
     .active {
-        height: 2rem;
-        width: 2rem;
+        width: 40px;
+        height: 40px;
 
-        background: $blue;
+        background: $brand-primary;
 
         border-radius: 100%;
 
         span {
             color: $white;
-            line-height: 2rem;
+            line-height: 2.5;
         }
     }
 }
 
 .pagination__direction-icon {
-    font-size: .6rem;
+    @extend %icon;
+
+    font-size: .6875em;
 }
 
-/*doc
----
-title: Pagination
-name: 08_pagination
-category: Structures
----
 
-```html_example
-<div class="pagination">
-    <ul>
-    <li class="prev disabled">
-        <span><span class="icon--arrow-left pagination__direction-icon"></span></span>
-    </li>
-    <li class="active">
-        <span>1</span>
-    </li>
-    <li>
-        <a href="/app_dev.php/nl/blog?page=2">2</a>
-    </li>
-    <li class="next">
-        <a href="/app_dev.php/nl/blog?page=2">
-        <span class="icon--arrow-right pagination__direction-icon"></span>
-        </a>
-    </li>
-    </ul>
-</div>
-```
-
+/**
+* @doc docs/pagination.md
+* @section
+* @sectionof Structures
 */

@@ -5,12 +5,12 @@ namespace {{ namespace }}\AdminList;
 use Doctrine\ORM\EntityManager;
 
 {% if generate_admin_type %}
-use {{ namespace }}\Form\{{ entity_class }}AdminType;
-{% endif %}
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+{% endif %}
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
+use {{ namespace }}\Form\{{ entity_class }}AdminType;
 
 /**
  * The admin list configurator for {{ entity_class }}
@@ -25,7 +25,7 @@ class {{ entity_class }}AdminListConfigurator extends AbstractDoctrineORMAdminLi
     {
         parent::__construct($em, $aclHelper);
 {% if generate_admin_type %}
-        $this->setAdminType(new {{ entity_class }}AdminType());
+        $this->setAdminType({{ entity_class }}AdminType::class);
 {% endif %}
     }
 

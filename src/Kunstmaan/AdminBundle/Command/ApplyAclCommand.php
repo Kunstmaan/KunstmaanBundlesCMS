@@ -4,14 +4,14 @@ namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 
+use Kunstmaan\AdminBundle\Entity\AclChangeset;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
+
+use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use Kunstmaan\AdminBundle\Entity\AclChangeset;
-use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities

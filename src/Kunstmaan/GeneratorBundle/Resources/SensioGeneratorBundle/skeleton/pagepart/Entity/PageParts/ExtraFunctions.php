@@ -11,9 +11,9 @@
     /**
      * Get the admin form type.
      *
-     * @return {{ adminType }}
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new {{ adminType }}();
+        return {{ adminType }}::class;
     }

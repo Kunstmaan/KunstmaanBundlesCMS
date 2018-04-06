@@ -2,8 +2,16 @@
 
 namespace Kunstmaan\NodeSearchBundle\Search;
 
+use Doctrine\ORM\EntityManager;
+use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Match;
+use Elastica\Query\QueryString;
+use Elastica\Query\Term;
+use Elastica\Util;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
+use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -16,12 +24,22 @@ class NodeSearcher extends AbstractElasticaSearcher
     /**
      * @var TokenStorageInterface
      */
-    private $tokenStorage = null;
+    protected $tokenStorage = null;
 
     /**
      * @var DomainConfigurationInterface
      */
-    private $domainConfiguration;
+    protected $domainConfiguration;
+
+    /**
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var bool
+     */
+    protected $useMatchQueryForTitle = false;
 
     /**
      * @param TokenStorageInterface $tokenStorage
@@ -40,53 +58,77 @@ class NodeSearcher extends AbstractElasticaSearcher
     }
 
     /**
+     *
+     * @param EntityManager $em
+     */
+     public function setEntityManager(EntityManager $em)
+     {
+         $this->em = $em;
+     }
+
+    /**
+     * @param bool $useMatchQueryForTitle
+     */
+    public function setUseMatchQueryForTitle($useMatchQueryForTitle)
+    {
+        $this->useMatchQueryForTitle = $useMatchQueryForTitle;
+    }
+
+    /**
      * @param mixed  $query
-     * @param string $lang
      * @param string $type
      *
      * @return mixed|void
      */
-    public function defineSearch($query, $lang, $type)
+    public function defineSearch($query, $type)
     {
-        $query = \Elastica\Util::escapeTerm($query);
+        $query = Util::escapeTerm($query);
 
-        $elasticaQueryLang = new \Elastica\Query\Term();
-        $elasticaQueryLang->setTerm('lang', $lang);
-
-        $elasticaQueryString = new \Elastica\Query\Match();
+        $elasticaQueryString = new Match();
         $elasticaQueryString
-            ->setFieldQuery('content', $query)
-            ->setFieldMinimumShouldMatch('content', '80%');
+            ->setFieldMinimumShouldMatch('content', '80%')
+            ->setFieldQuery('content', $query);
 
-        $elasticaQueryTitle = new \Elastica\Query\QueryString();
-        $elasticaQueryTitle
-            ->setDefaultField('title')
-            ->setBoost(2.0)
-            ->setQuery($query);
+        if ($this->useMatchQueryForTitle) {
+            $elasticaQueryTitle = new Match();
+            $elasticaQueryTitle
+              ->setFieldQuery('title', $query)
+              ->setFieldMinimumShouldMatch('title', '80%')
+              ->setFieldBoost(2);
 
-        $elasticaQueryBool = new \Elastica\Query\BoolQuery();
+        } else {
+            $elasticaQueryTitle = new QueryString();
+            $elasticaQueryTitle
+              ->setDefaultField('title')
+              ->setQuery($query);
+        }
+
+        $elasticaQueryBool = new BoolQuery();
         $elasticaQueryBool
-            ->addMust($elasticaQueryLang)
             ->addShould($elasticaQueryTitle)
             ->addShould($elasticaQueryString)
-            ->setMinimumNumberShouldMatch(1);
+            ->setMinimumShouldMatch(1);
 
         $this->applySecurityFilter($elasticaQueryBool);
 
         if (!is_null($type)) {
-            $elasticaQueryType = new \Elastica\Query\Term();
+            $elasticaQueryType = new Term();
             $elasticaQueryType->setTerm('type', $type);
             $elasticaQueryBool->addMust($elasticaQueryType);
         }
 
         $rootNode = $this->domainConfiguration->getRootNode();
         if (!is_null($rootNode)) {
-            $elasticaQueryRoot = new \Elastica\Query\Term();
+            $elasticaQueryRoot = new Term();
             $elasticaQueryRoot->setTerm('root_id', $rootNode->getId());
             $elasticaQueryBool->addMust($elasticaQueryRoot);
         }
 
+        $rescore = new \Elastica\Rescore\Query();
+        $rescore->setRescoreQuery($this->getPageBoosts());
+
         $this->query->setQuery($elasticaQueryBool);
+        $this->query->setRescore($rescore);
         $this->query->setHighlight(
             array(
                 'pre_tags'  => array('<strong>'),
@@ -99,7 +141,6 @@ class NodeSearcher extends AbstractElasticaSearcher
                 )
             )
         );
-
     }
 
     /**
@@ -112,10 +153,9 @@ class NodeSearcher extends AbstractElasticaSearcher
     {
         $roles = $this->getCurrentUserRoles();
 
-        $elasticaQueryRoles = new \Elastica\Query\Terms();
+        $elasticaQueryRoles = new Query\Terms();
         $elasticaQueryRoles
-            ->setTerms('view_roles', $roles)
-            ->setMinimumMatch(1);
+            ->setTerms('view_roles', $roles);
         $elasticaQueryBool->addMust($elasticaQueryRoles);
     }
 
@@ -138,5 +178,45 @@ class NodeSearcher extends AbstractElasticaSearcher
         }
 
         return $roles;
+    }
+
+    /**
+     * Apply PageType specific and Page specific boosts
+     *
+     * @return \Elastica\Query\BoolQuery
+     */
+    protected function getPageBoosts()
+    {
+        $rescoreQueryBool = new BoolQuery();
+
+        //Apply page type boosts
+        $pageClasses = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAllDistinctPageClasses();
+        foreach($pageClasses as $pageClass) {
+            $page = new $pageClass['refEntityName']();
+
+            if($page instanceof SearchBoostInterface) {
+                $elasticaQueryTypeBoost = new QueryString();
+                $elasticaQueryTypeBoost
+                    ->setBoost($page->getSearchBoost())
+                    ->setDefaultField('page_class')
+                    ->setQuery(addslashes($pageClass['refEntityName']));
+
+                $rescoreQueryBool->addShould($elasticaQueryTypeBoost);
+            }
+        }
+
+        //Apply page specific boosts
+        $nodeSearches = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findAll();
+        foreach ($nodeSearches as $nodeSearch) {
+            $elasticaQueryNodeId = new QueryString();
+            $elasticaQueryNodeId
+                ->setBoost($nodeSearch->getBoost())
+                ->setDefaultField('node_id')
+                ->setQuery($nodeSearch->getNode()->getId());
+
+            $rescoreQueryBool->addShould($elasticaQueryNodeId);
+        }
+
+        return $rescoreQueryBool;
     }
 }

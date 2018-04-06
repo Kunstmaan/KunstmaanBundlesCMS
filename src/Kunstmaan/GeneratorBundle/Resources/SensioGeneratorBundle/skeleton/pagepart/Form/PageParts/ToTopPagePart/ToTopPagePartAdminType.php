@@ -2,9 +2,9 @@
 
 namespace {{ namespace }}\Form\PageParts;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * {{ pagepart }}AdminType
@@ -23,7 +23,7 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-	parent::buildForm($builder, $options);
+        parent::buildForm($builder, $options);
     }
 
     /**
@@ -33,7 +33,7 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-	return '{{ pagepart|lower }}type';
+        return '{{ pagepart|lower }}type';
     }
 
     /**
@@ -43,8 +43,8 @@ class {{ pagepart }}AdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-	$resolver->setDefaults(array(
-	    'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
-	));
+        $resolver->setDefaults(array(
+            'data_class' => '\{{ namespace }}\Entity\PageParts\{{ pagepart }}'
+        ));
     }
 }

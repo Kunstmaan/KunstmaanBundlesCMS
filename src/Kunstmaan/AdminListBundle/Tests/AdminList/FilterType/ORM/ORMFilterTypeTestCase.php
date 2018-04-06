@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\ORM;
 
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * ORMFilterTypeTestCase

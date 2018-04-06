@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
-use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
-
 use Doctrine\ORM\QueryBuilder;
+
+use Kunstmaan\AdminListBundle\AdminList\FilterType\AbstractFilterType;
 
 /**
  * The abstract filter used for ORM query builder

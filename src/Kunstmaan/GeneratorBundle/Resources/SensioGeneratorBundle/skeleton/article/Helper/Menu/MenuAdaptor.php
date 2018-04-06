@@ -34,31 +34,39 @@ class {{ entity_class }}MenuAdaptor implements MenuAdaptorInterface
         }
 
         if (!is_null($parent) && 'KunstmaanAdminBundle_modules' == $parent->getRoute()) {
+            // submenu
+            $menuItem = new TopMenuItem($menu);
+            $menuItem
+                ->setUniqueId('{{ entity_class|lower }}')
+                ->setLabel('{{ entity_class }}')
+                ->setParent($parent);
+            if (in_array($request->attributes->get('_route'), array(
+                '{{ bundle.getName()|lower }}_admin_blogitem',
+                '{{ bundle.getName()|lower }}_admin_blogsubscription'
+            ))) {
+                $menuItem->setActive(true);
+                $parent->setActive(true);
+            }
+            $children[] = $menuItem;
+
+        }
+
+        if (!is_null($parent) && '{{ entity_class|lower }}' == $parent->getUniqueId()) {
             // Page
             $menuItem = new TopMenuItem($menu);
             $menuItem
-		->setRoute('{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page')
-		->setLabel('{{ entity_class }} Pages')
+		        ->setRoute('{{ bundle.getName()|lower }}_admin_pages_{{ entity_class|lower }}page')
+		        ->setLabel('Pages')
                 ->setUniqueId('{{ entity_class }}')
-                ->setParent($parent);
+                ->setParent($parent)
+            ;
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);
                 $parent->setActive(true);
             }
             $children[] = $menuItem;
 
-            // Author
-            $menuItem = new TopMenuItem($menu);
-            $menuItem
-		->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}author')
-                ->setLabel('{{ entity_class }} Authors')
-                ->setUniqueId('{{ entity_class }} Authors')
-                ->setParent($parent);
-            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
-                $menuItem->setActive(true);
-                $parent->setActive(true);
-            }
-            $children[] = $menuItem;
+            //%menuAdaptorPartial.php.twig%
         }
 
         //don't load children

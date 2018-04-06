@@ -1,49 +1,89 @@
 {% block urlchooser_widget %}
-{% spaceless %}
-    <!-- URL Chooser Modal -->
-    <div class="js-ajax-modal modal fade" id="{{ id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ id }}">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+    {% spaceless %}
+        {% set linkUrl = form.link_url.vars %}
 
-                <!-- Header -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                    </button>
-                    <h3 class="modal-title">
-                        URL-Chooser
-                    </h3>
+        <div id="{{ id }}-urlchooser-widget" class="urlchooser-wrapper" data-chooser-name="{{ full_name }}">
+            <!-- URL Chooser Modal -->
+            <div class="js-ajax-modal modal fade" id="{{ linkUrl.id }}-urlChooserModal" role="dialog" aria-labelledby="urlChooserModal" aria-hidden="true" data-loaded="false" data-linked-input-id="{{ linkUrl.id }}">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <!-- Header -->
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <h3 class="modal-title">
+                                URL-Chooser
+                            </h3>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
+                    </div>
                 </div>
-
-                <!-- Body -->
-                <div class="js-ajax-modal-body modal-body ajax-modal__body"></div>
             </div>
-        </div>
-    </div>
 
-    <div id="{{ id }}-widget" class="input-group urlchooser">
-        <input type="text" name="{{ full_name }}" value="{{ value|default('') }}" id="{{ id }}" class="form-control">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
-                Choose
-            </button>
-        </span>
-    </div>
-{% endspaceless %}
+            <div class="urlchooser">
+                <div class="input-group">
+                    {% if form.link_type is defined %}
+                        {% set linkType = form.link_type %}
+                        {% set label = "pagepart.link.internal" | trans %}
+
+                        {% if linkType.vars.value %}
+                            {% for choice in linkType.vars.choices %}
+                                {% if choice.value == linkType.vars.value %}
+                                    {% set label = choice.label | trans %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default urlchooser__link-type" data-toggle="dropdown" title="Select link type" data-target-id="">
+                                {{ label }} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                {% for choice in linkType.vars.choices %}
+                                    <li data-name="{{ linkType.vars.full_name }}" data-id="{{ linkType.vars.id }}" class="{% if linkType.vars.attr is defined %}{{ linkType.vars.attr.class }}{% endif %}" data-value="{{ choice.value }}">
+                                        <a href="#">{{ choice.label | trans }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <div id="{{ linkUrl.id }}-widget" class="input-group urlchooser-widget {% if form.link_type is defined %}urlchooser__link-url{% endif %}">
+                        {% if linkUrl.attr.choose_url is defined %}
+                            <input type="hidden" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}">
+                            <input type="text" disabled="disabled" class="form-control js-urlchooser-value" value="{{ linkUrl.value ? linkUrl.value|replace_url : '' }}">
+                            <span class="input-group-btn">
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-toggle="modal" data-target="#{{ linkUrl.id }}-urlChooserModal" data-link="{{ path('KunstmaanNodeBundle_selecturl') }}">
+                            Choose
+                        </button>
+                    </span>
+                        {% else %}
+                            <input type="text" name="{{ linkUrl.full_name }}" value="{{ linkUrl.value ? linkUrl.value : '' }}" id="{{ linkUrl.id }}" class="form-control {% if linkUrl.attr is defined and linkUrl.attr.class is defined %}{{ linkUrl.attr.class }}{% endif %}">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    {% endspaceless %}
 {% endblock urlchooser_widget %}
 
 {% block slug_widget %}
-{% spaceless %}
-    <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')})}}" data-reset="{{ reset }}">
-        <div class="input-group">
-            <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
+    {% spaceless %}
+        <div id="{{ id }}-slug-chooser" class="js-slug-chooser" data-url-prefix="{{ path('_slug', {'url': prefix|default('')}) }}" data-reset="{{ reset }}">
+            <div class="input-group">
+                <input type="text" name="{{ full_name }}" id="{{ id }}" value="{{ value|default('') }}" class="js-slug-chooser__input form-control">
             <span class="input-group-btn">
                 <button type="button" class="js-slug-chooser__reset-btn btn btn-default btn--raise-on-hover" id="{{ id }}-slug-chooser__resetbtn">
                     Reset
                 </button>
             </span>
+            </div>
+            <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
         </div>
-        <small id="{{ id }}-slug-chooser__preview" class="js-slug-chooser__preview help-block"></small>
-    </div>
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock slug_widget %}

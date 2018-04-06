@@ -6,9 +6,9 @@ use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Sensio\Bundle\GeneratorBundle\Command\Validators;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Console\Question\Question;
 
 /**
  * @deprecated the functions in this class should be moved to the KunstmaanGenerateCommand class.
@@ -41,7 +41,7 @@ class InputAssistant
     {
         $this->input = $input;
         $this->output = $output;
-	$this->questionHelper = $questionHelper;
+	    $this->questionHelper = $questionHelper;
         $this->kernel = $kernel;
         $this->container = $container;
     }

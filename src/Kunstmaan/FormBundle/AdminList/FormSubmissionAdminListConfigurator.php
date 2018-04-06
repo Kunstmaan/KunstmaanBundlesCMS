@@ -3,12 +3,12 @@
 namespace Kunstmaan\FormBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\AdminBundle\Entity\EntityInterface;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * Adminlist configuration to list all the form submissions for a given NodeTranslation
@@ -47,9 +47,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function buildFields()
     {
-        $this->addField("created", "Date", true)
-             ->addField("lang", "Language", true)
-             ->addField("ipAddress", "ipAddress", true);
+        $this->addField("created", "kuma_form.submission.list.header.created", true)
+             ->addField("lang", "kuma_form.submission.list.header.language", true)
+             ->addField("ipAddress", "kuma_form.submission.list.header.ip_address", true);
     }
 
     /**

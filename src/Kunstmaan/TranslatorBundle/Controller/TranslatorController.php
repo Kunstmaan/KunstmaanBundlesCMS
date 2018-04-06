@@ -3,13 +3,16 @@
 namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
-use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
+use Kunstmaan\TranslatorBundle\AdminList\TranslationAdminListConfigurator;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Kunstmaan\TranslatorBundle\Form\TranslationAdminType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,9 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Translation\TranslatorInterface;
 
 
 class TranslatorController extends AdminListController
@@ -36,6 +37,7 @@ class TranslatorController extends AdminListController
      * @Template("KunstmaanTranslatorBundle:Translator:list.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return array
      */
     public function indexAction(Request $request)
     {
@@ -46,16 +48,18 @@ class TranslatorController extends AdminListController
         $adminList->bindRequest($request);
 
         $cacheFresh = $this->get('kunstmaan_translator.service.translator.cache_validator')->isCacheFresh();
-        $debugMode = $this->container->getParameter('kuma_translator.debug') === true;
+        $debugMode = $this->getParameter('kuma_translator.debug') === true;
 
         if (!$cacheFresh && !$debugMode) {
-            $noticeText = $this->get('translator')->trans('settings.translator.not_live_warning');
-            $this->get('session')->getFlashBag()->add('notice', $noticeText);
+            $this->addFlash(
+                FlashTypes::INFO,
+                $this->get('translator')->trans('settings.translator.not_live_warning')
+            );
         }
 
         return array(
-          'adminlist' => $adminList,
-          'adminlistconfigurator' => $configurator
+            'adminlist' => $adminList,
+            'adminlistconfigurator' => $configurator
         );
     }
 
@@ -80,7 +84,7 @@ class TranslatorController extends AdminListController
         $translator = $this->get('translator');
 
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $translation->addText($locale, '');
         }
@@ -97,14 +101,14 @@ class TranslatorController extends AdminListController
                 $form->get('keyword')->addError($error);
             }
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // Create translation
                 $em->getRepository('KunstmaanTranslatorBundle:Translation')->createTranslations($data);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
-                  'success',
-                  $this->get('translator')->trans('settings.translator.succesful_added')
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('settings.translator.succesful_added')
                 );
 
                 $indexUrl = $configurator->getIndexUrl();
@@ -148,7 +152,7 @@ class TranslatorController extends AdminListController
         $translation = new \Kunstmaan\TranslatorBundle\Model\Translation();
         $translation->setDomain($translations[0]->getDomain());
         $translation->setKeyword($translations[0]->getKeyword());
-        $locales = $this->container->getParameter('kuma_translator.managed_locales');
+        $locales = $this->getParameter('kuma_translator.managed_locales');
         foreach ($locales as $locale) {
             $found = false;
             foreach ($translations as $t) {
@@ -167,14 +171,14 @@ class TranslatorController extends AdminListController
         if ('POST' == $request->getMethod()) {
             $form->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // Update translations
                 $em->getRepository('KunstmaanTranslatorBundle:Translation')->updateTranslations($translation, $id);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add(
-                  'success',
-                  $this->get('translator')->trans('settings.translator.succesful_edited')
+                $this->addFlash(
+                    FlashTypes::SUCCESS,
+                    $this->get('translator')->trans('settings.translator.succesful_edited')
                 );
 
                 $indexUrl = $configurator->getIndexUrl();
@@ -248,7 +252,7 @@ class TranslatorController extends AdminListController
      */
     public function getAdminListConfigurator()
     {
-        $locales = explode('|', $this->container->getParameter('requiredlocales'));
+        $locales = $this->getParameter('kuma_translator.managed_locales');
 
         if (!isset($this->adminListConfigurator)) {
             $this->adminListConfigurator = new TranslationAdminListConfigurator($this->getDoctrine()->getManager()
@@ -268,13 +272,13 @@ class TranslatorController extends AdminListController
 
         $adminListConfigurator = $this->getAdminListConfigurator();
         if (!$adminListConfigurator->canEditInline($values)) {
-            throw new AccessDeniedHttpException("Not allowed to edit this translation");
+            throw $this->createAccessDeniedException('Not allowed to edit this translation');
         }
 
         $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
         /**
-         * @var Translator $translator
+         * @var TranslatorInterface $translator
          */
         $translator = $this->get('translator');
 

@@ -2,11 +2,11 @@
 
 namespace  Kunstmaan\MediaPagePartBundle\Entity;
 
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
+
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
  * DownloadPagePart
@@ -68,10 +68,10 @@ class DownloadPagePart extends AbstractPagePart
     }
 
     /**
-     * @return DownloadPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new DownloadPagePartAdminType();
+        return DownloadPagePartAdminType::class;
     }
 }

@@ -4,7 +4,7 @@
 
     window.kunstmaan = window.kunstmaan || {};
     window.kunstmaan.leadGeneration = window.kunstmaan.leadGeneration || {};
-    
+
     window.kunstmaan.leadGeneration.Popup = function(name, htmlId) {
         var instance = {
             'name': name
@@ -229,5 +229,5 @@
 
         return instance;
     };
-    
+
 })(window, document, $);

@@ -4,8 +4,8 @@ namespace Kunstmaan\SeoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\SeoBundle\Entity\Seo;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**

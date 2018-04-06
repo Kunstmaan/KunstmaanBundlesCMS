@@ -28,16 +28,23 @@ class Region
     protected $children;
 
     /**
+     * @var Row[]
+     */
+    protected $rows;
+
+    /**
      * @param string $name
      * @param number $span
      * @param string $template
+     * @param array  $children
      */
-    public function __construct($name, $span, $template = null, $children = array())
+    public function __construct($name, $span, $template = null, $children = [], $rows = [])
     {
         $this->setName($name);
         $this->setSpan($span);
         $this->setTemplate($template);
         $this->setChildren($children);
+        $this->setRows($rows);
     }
 
     /**
@@ -57,7 +64,7 @@ class Region
     {
         $this->name = $name;
 
-    return $this;
+        return $this;
     }
 
     /**
@@ -77,7 +84,7 @@ class Region
     {
         $this->span = $span;
 
-    return $this;
+        return $this;
     }
 
     /**
@@ -85,7 +92,7 @@ class Region
      */
     public function getTemplate()
     {
-    return $this->template;
+        return $this->template;
     }
 
     /**
@@ -95,9 +102,9 @@ class Region
      */
     public function setTemplate($template)
     {
-    $this->template = $template;
+        $this->template = $template;
 
-    return $this;
+        return $this;
     }
 
     /**
@@ -119,4 +126,27 @@ class Region
 
         return $this;
     }
+
+
+    /**
+     * @return Row[]
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    /**
+     * @param Row[] $rows
+     *
+     * @return Region
+     */
+    public function setRows($rows)
+    {
+        $this->rows = $rows;
+
+        return $this;
+    }
+
+
 }

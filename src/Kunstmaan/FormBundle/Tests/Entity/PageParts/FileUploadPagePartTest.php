@@ -7,8 +7,8 @@ use ArrayObject;
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Tests for FileUploadPagePart
@@ -55,10 +55,10 @@ class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
 
         $fields = new ArrayObject();
 
-        $this->assertTrue(sizeof($fields) == 0);
+        $this->assertTrue(count($fields) == 0);
         /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields, 0);
-        $this->assertTrue(sizeof($fields) > 0);
+        $this->assertTrue(count($fields) > 0);
     }
 
     /**
@@ -76,8 +76,6 @@ class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDefaultAdminType()
     {
-        $adminType = $this->object->getDefaultAdminType();
-        $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof FileUploadPagePartAdminType);
+        $this->assertEquals(FileUploadPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

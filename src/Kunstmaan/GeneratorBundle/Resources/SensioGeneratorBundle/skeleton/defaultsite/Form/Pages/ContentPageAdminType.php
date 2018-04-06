@@ -2,11 +2,11 @@
 
 namespace {{ namespace }}\Form\Pages;
 
+use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Kunstmaan\MediaBundle\Form\Type\MediaType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * The admin type for content pages

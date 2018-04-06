@@ -15,9 +15,9 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('username', new StringFilterType('username'), 'Username');
-        $this->addFilter('email', new StringFilterType('email'), 'E-Mail');
-        $this->addFilter('enabled', new BooleanFilterType('enabled'), 'Enabled');
+        $this->addFilter('username', new StringFilterType('username'), 'kuma_user.users.adminlist.filter.username');
+        $this->addFilter('email', new StringFilterType('email'), 'kuma_user.users.adminlist.filter.email');
+        $this->addFilter('enabled', new BooleanFilterType('enabled'), 'kuma_user.users.adminlist.filter.enabled');
     }
 
     /**
@@ -25,11 +25,11 @@ class UserAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('username', 'Username', true);
-        $this->addField('email', 'E-Mail', true);
-        $this->addField('enabled', 'Enabled', true);
-        $this->addField('lastLogin', 'Last Login', false);
-        $this->addField('groups', 'Groups', false);
+        $this->addField('username', 'kuma_user.users.adminlist.header.username', true);
+        $this->addField('email', 'kuma_user.users.adminlist.header.email', true);
+        $this->addField('enabled', 'kuma_user.users.adminlist.header.enabled', true);
+        $this->addField('lastLogin', 'kuma_user.users.adminlist.header.last_login', false);
+        $this->addField('groups', 'kuma_user.users.adminlist.header.groups', false);
     }
 
     /**

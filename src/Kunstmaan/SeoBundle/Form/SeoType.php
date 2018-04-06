@@ -2,13 +2,15 @@
 
 namespace Kunstmaan\SeoBundle\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class SeoType extends AbstractType
 {
@@ -26,20 +28,30 @@ class SeoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('id', HiddenType::class)
-            ->add('metaTitle', null, array(
-                'label' => 'Title',
+            ->add('metaTitle', TextType::class, array(
+                'label' => 'seo.form.seo.meta_title.label',
                 'attr' => array(
-                    'info_text' => 'The title tag is often used on search engine results pages. It should be less than 55 characters.',
-                    'maxlength' => 55
-                )
+                    'info_text' => 'seo.form.seo.meta_title.info_text',
+                    'maxlength' => 70
+                ),
+                'constraints' => [
+                    new Length([
+                        'max' => 70
+                    ])
+                ]
             ))
-            ->add('metaDescription', null, array(
-                'label' => 'Meta description',
+            ->add('metaDescription', TextareaType::class, array(
+                'label' => 'seo.form.seo.meta_description.label',
                 'attr' => array(
-                    'maxlength' => 155
-                )
+                    'maxlength' => 300
+                ),
+                'constraints' => [
+                    new Length([
+                       'max' => 300
+                    ])
+                ]
             ))
-            ->add('metaKeywords', null, array('label' => 'Meta keywords'));
+            ->add('metaKeywords', TextType::class, array('label' => 'Meta keywords'));
 
         $builder->add('metaRobots', ChoiceType::class, array(
             'choices' => array(
@@ -50,14 +62,13 @@ class SeoType extends AbstractType
                 'seo.form.robots.notranslate'  => self::ROBOTS_NOTRANSLATE,
                 'seo.form.robots.noimageindex' => self::ROBOTS_NOIMAGEINDEX,
             ),
-            'choices_as_values' => true,
             'required' => false,
             'multiple' => true,
             'expanded' => false,
-            'label' => 'Meta robots',
+            'label' => 'seo.form.seo.meta_robots.label',
             'attr' => array(
+                'placeholder' => 'seo.form.seo.meta_robots.placeholder',
                 'class' => 'js-advanced-select form-control',
-                'data-placeholder' => 'Choose robot tags',
                 'maxlength' => 255
             )
         ));
@@ -79,7 +90,10 @@ class SeoType extends AbstractType
                     return $string;
                 }
             ));
-        $builder->add('extraMetadata', TextareaType::class, array('label' => 'Extra metadata', 'required' => false));
+        $builder->add('extraMetadata', TextareaType::class, array(
+            'label' => 'seo.form.seo.extra_metadata.label',
+            'required' => false,
+        ));
     }
 
     /**

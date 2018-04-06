@@ -10,7 +10,7 @@
                     <button class="close" data-dismiss="modal">
                         <i class="fa fa-times"></i>
                     </button>
-                    <h3>Add homepage</h3>
+                    <h3>{{ 'kuma_node.modal.add_homepage.h'|trans() }}</h3>
                 </div>
 
                 <form action="{{ path('KunstmaanNodeBundle_nodes_add_homepage') }}" method="post" novalidate="novalidate">
@@ -19,13 +19,13 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="addpage_title">
-                                Title
+                                {{ 'kuma_node.modal.add_homepage.form.title.label'|trans() }}
                             </label>
                             <input name="title" type="text" id="addpage_title" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="addpage_type">
-                                Type
+                                {{ 'kuma_node.modal.add_homepage.form.type.label'|trans() }}
                             </label>
                             <select name="type" id="addpage_type" class="form-control">
                                 {% for pageTypeClass,pageTypeName in homePageTypes %}
@@ -37,8 +37,12 @@
 
                     <!-- Footer -->
                     <div class="modal-footer">
-                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">Add</button>
-                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'kuma_node.modal.add_homepage.form.add.label'|trans() }}
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.add_homepage.form.cancel.label'|trans() }}
+                        </button>
                     </div>
                 </form>
             </div>

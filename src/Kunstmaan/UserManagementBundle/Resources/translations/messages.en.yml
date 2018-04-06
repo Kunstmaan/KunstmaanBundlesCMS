@@ -1,24 +1,81 @@
 # Settings
 settings:
-  groups: Groups
-  group:
-      name: Name
-      edit: Edit group
-      add: Add group
-      roles: Roles
-  users: Users
-  user:
-      username: Username
-      password: Password
-      repeatedpassword: Repeat password
-      adminlang: Admin interface language
-      email: E-mail
-      enabled: Enabled
-      roles: Groups
-      add: Add User
-      edit: Edit User
-  roles: Roles
-  role:
-      role: Role
-      add: Add Role
-      edit: Edit Role
+    groups: Groups
+    group:
+        name: Name
+        edit: Edit group
+        add: Add group
+        roles: Roles
+        roles_placeholder: Choose the roles...
+    users: Users
+    user:
+        username: Username
+        password: Password
+        repeatedpassword: Repeat password
+        adminlang: Admin interface language
+        email: E-mail
+        enabled: Enabled
+        roles: Groups
+        roles_placeholder: Choose the permission groups...
+        add: Add User
+        edit: Edit User
+    roles: Roles
+    role:
+        role: Role
+        add: Add Role
+        edit: Edit Role
+
+kuma_user:
+    roles:
+        add:
+            flash:
+                'success.%role%': Role '%role%' has been created!
+        edit:
+            flash:
+                'success.%role%': Role '%role%' has been edited!
+        delete:
+            flash:
+                'success.%role%': Role '%role%' has been deleted!
+    users:
+        adminlist:
+            header:
+                username:   Username
+                email:      E-mail
+                enabled:    Enabled
+                last_login: Last login
+                groups:     Groups
+            filter:
+                username:   Username
+                email:      E-mail
+                enabled:    Enabled
+        add:
+            flash:
+                'success.%username%': User '%username%' has been created!
+        edit:
+            flash:
+                'success.%username%': User '%username%' has been edited!
+        delete:
+            flash:
+                'success.%username%': User '%username%' has been deleted!
+    group:
+        adminlist:
+            header:
+                name:   Name
+                roles:  Roles
+            filter:
+                name:   Name
+        add:
+            flash:
+                success: Group %groupname% has been created!
+        edit:
+            flash:
+                success: Group %groupname% has been edited!
+        delete:
+            flash:
+                success: Group %groupname% has been deleted!
+    role:
+        adminlist:
+            header:
+                role:   Role
+            filter:
+                role:   Role

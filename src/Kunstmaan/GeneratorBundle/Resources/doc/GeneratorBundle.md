@@ -12,7 +12,7 @@ The bundle generator is based on the bundle generator of the [SensioGeneratorBun
 You use the bundle generating with the following command. You will be prompted for the 'namespace', 'dir' and 'bundle-name' parameters.
 
 ```
-app/console kuma:generate:bundle
+bin/console kuma:generate:bundle
 ```
 
 ## Entity
@@ -26,7 +26,7 @@ This generator is based on the SensioBundleGenerator's GenerateDoctrineEntity, f
 ### Command
 
 ```
-app/console kuma:generate:entity
+bin/console kuma:generate:entity
 ```
 
 ## AdminList
@@ -46,7 +46,7 @@ All three classes will be generated from skeleton classes and using Twig generat
 The 'entity' parameter is required in order to generated the AdminList files based on that Entity.
 
 ```
-app/console kuma:generate:adminlist --entity=Bundle:Entity
+bin/console kuma:generate:adminlist --entity=Bundle:Entity
 ```
 
 ## Website
@@ -60,14 +60,14 @@ The 'namespace' parameter is required and will determine in which bundle the fil
 The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes. When generating more than one website, you can prevent the websites using the same tables in the database.
 
 ```
-app/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
+bin/console kuma:generate:default-site --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```
 
 ## Search Page
 
 Generate a search page for your website which will search the pages in the index created by the [KunstmaanNodeSearchBundle](https://github.com/Kunstmaan/KunstmaanNodeSearchBundle). Only published nodes will be indexed.
 
-The search page holds by default 10 results per page and each result shows the page title, a highlighted best fragment and will link to the page. If your page is Taggable ([fpn/doctrine-extensions-taggable](https://github.com/FabienPennequin/DoctrineExtensions-Taggable)), the tags will be available as facets to filter on.
+The search page holds by default 10 results per page and each result shows the page title, a highlighted best fragment and will link to the page. If your page is Taggable ([fpn/doctrine-extensions-taggable](https://github.com/FabienPennequin/DoctrineExtensions-Taggable)), the tags will be available as aggregations to filter on.
 
 ### Command
 
@@ -76,7 +76,7 @@ The 'namespace' parameter is required and will determine in which bundle the fil
 The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
 
 ```
-app/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
+bin/console kuma:generate:searchpage --namespace=Namespace\NamedBundle --prefix=tableprefix_
 ```
 
 ## Article : Overview and detail pages
@@ -92,7 +92,7 @@ The 'entity' parameter is required in order to generated the class names. Most u
 The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
 
 ```
-app/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
+bin/console kuma:generate:article --namespace=Namespace\NamedBundle --entity=Entity --prefix=tableprefix_
 ```
 
 ## Page
@@ -105,7 +105,7 @@ It will also configure the page template and page sections for the created page.
 The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
 
 ```
-app/console kuma:generate:page --prefix=tableprefix_
+bin/console kuma:generate:page --prefix=tableprefix_
 ```
 
 ## PagePart
@@ -119,5 +119,5 @@ configuration file(s), so that the page part can be used in the section(s).
 The 'prefix' parameter is optional and will allow you to add a prefix to all table names used by the generated classes.
 
 ```
-app/console kuma:generate:pagepart --prefix=tableprefix_
+bin/console kuma:generate:pagepart --prefix=tableprefix_
 ```

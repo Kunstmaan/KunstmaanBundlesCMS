@@ -23,7 +23,6 @@ class ChoiceFormSubmissionType extends AbstractType
         $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
         $fieldOptions['choices'] = array_flip($fieldOptions['choices']);
         $fieldOptions['empty_data'] = null;
-        $fieldOptions['choices_as_values'] = true;
 
         $builder->add('value', ChoiceType::class, $fieldOptions);
     }

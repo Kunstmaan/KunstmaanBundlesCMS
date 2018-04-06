@@ -80,7 +80,7 @@ class DoctrineMediaListener
                 if ($deleted || $reverted) {
                     $oldFileUrl = $entity->getUrl();
                     $newFileName = ($reverted ? $entity->getOriginalFilename() : uniqid());
-                    $newFileUrl = dirname($oldFileUrl) . '/' . $newFileName . '.' . pathinfo($oldFileUrl, PATHINFO_EXTENSION);
+                    $newFileUrl = dirname($oldFileUrl).'/'.$newFileName.'.'.pathinfo($oldFileUrl, PATHINFO_EXTENSION);
                     $entity->setUrl($newFileUrl);
                     $this->fileUrlMap[$newFileUrl] = $oldFileUrl;
                 }
@@ -98,7 +98,7 @@ class DoctrineMediaListener
 
     /**
      * @param object $entity The entity
-     * @param bool $new Is new
+     * @param bool   $new    Is new
      */
     private function saveMedia($entity, $new = false)
     {
@@ -110,10 +110,15 @@ class DoctrineMediaListener
         $url = $entity->getUrl();
         $handler = $this->mediaManager->getHandler($entity);
         if (isset($this->fileUrlMap[$url]) && $handler instanceof FileHandler) {
-            $handler->fileSystem->rename(
-                preg_replace('~^' . preg_quote(FileHandler::MEDIA_PATH, '~') . '~', '/', $this->fileUrlMap[$url]),
-                preg_replace('~^' . preg_quote(FileHandler::MEDIA_PATH, '~') . '~', '/', $url)
-            );
+            $regex = '~^'.preg_quote($handler->mediaPath, '~').'~';
+            $originalFileName = preg_replace($regex, '/', $this->fileUrlMap[$url]);
+            // Check if file exists on filesystem.
+            if ($handler->fileSystem->has($originalFileName)) {
+                $handler->fileSystem->rename(
+                    $originalFileName,
+                    preg_replace($regex, '/', $url)
+                );
+            }
             unset($this->fileUrlMap[$url]);
         }
     }
@@ -131,11 +136,5 @@ class DoctrineMediaListener
      */
     public function preRemove(LifecycleEventArgs $eventArgs)
     {
-        $entity = $eventArgs->getEntity();
-        if (!$entity instanceof Media) {
-            return;
-        }
-
-        $this->mediaManager->removeMedia($entity);
     }
 }

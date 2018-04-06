@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Kunstmaan\SearchBundle\DependencyInjection\KunstmaanSearchExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KunstmaanSearchExtensionTest extends \PHPUnit_Framework_TestCase
 {

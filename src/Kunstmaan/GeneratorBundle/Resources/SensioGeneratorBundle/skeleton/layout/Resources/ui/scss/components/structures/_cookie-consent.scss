@@ -1,73 +1,113 @@
 /* ==========================================================================
-   Structures - Cookieconsent
+   Cookie consent
    ========================================================================== */
 
 .cookie-bar {
-    z-index: 100;
     position: fixed;
+    top: auto;
+    right: auto;
     bottom: 0;
     left: 0;
+    z-index: 500;
 
-
+    display: none;
     width: 100%;
-    padding: 1rem;
+    padding: 20px;
 
-    background: rgba($black, .9);
-    {% if demosite %}
-    background: rgba($blue--dark, .9);
-    {% endif %}
+    background: rgba($brand-primary--dark, .95);
 
-    p {
-        padding: 0;
-        margin: 0;
-        max-width: 60%;
+    border: 1px solid rgba($brand-primary--dark, .95);
 
+    color: $white;
+    font: {
+        family: Helvetica, Arial, sans-serif;
+        size: 14px;
+    }
+    line-height: 1.7;
+    text-align: left;
+
+    animation-name: cookieSlide;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-duration: .8s;
+
+    .cookie-bar__policy {
         color: $white;
-        text-align: left;
-        font-size: .7rem;
+        text-decoration: underline;
     }
 
     .cookie-bar__btn {
         position: absolute;
-        top: 50%;
-        right: 1rem;
+        right: 0;
+        bottom: 0;
 
-        margin: 0;
+        padding: 10px 15px;
+        margin: 10px 0 0;
 
-        transform: translateY(-50%);
+        background: $white;
 
-        font-size: .7rem;
+        border-radius: 0;
+        border: none;
+
+        color: rgba($brand-primary--dark, .95);
+        font-size: 1em;
     }
 
-    @media(min-width: $screen-md-min) {
-        bottom: 1rem;
-        left: 1rem;
+    p {
+        max-width: 60%;
+        padding: 0;
+        margin: 0;
 
-        max-width: 22rem;
+        color: $white;
+        font-size: 1em;
+        text-align: left;
+
+        a {
+            color: $white;
+        }
+    }
+
+    @media (min-width: $screen-sm-min) {
+        bottom: 10px;
+        left: 10px;
+
+        max-width: 560px;
 
         p {
-            max-width: 12.9rem;
+            max-width: 370px;
+        }
+    }
+
+    @media (min-width: $screen-md-min) {
+        bottom: 10px;
+        left: 10px;
+
+        max-width: 350px;
+
+        p {
+            max-width: 210px;
         }
     }
 }
 
+.cookie-bar--visible {
+    display: block;
+}
 
-/*doc
----
-title: Cookie consent
-name: 09_cookieconsent
-category: Structures
----
+@keyframes cookieSlide {
+    0% {
+        transform: translate3d(0, 60px, 0);
+        opacity: 0;
+    }
 
-```html_example
-<div style="height: 400px; width: 100%; position: relative;">
-    <div id="cookie-bar" class="cookie-bar" style="position: absolute;">
-    <p>
-        Deze website gebruikt <br>cookies om uw surf- <br>ervaring makkelijker te maken.
-    </p>
-    <button type="button" id="cookie-bar__consent-btn" class="btn btn-warning cookie-bar__btn">Doorgaan</button>
-    </div>
-</div>
-```
+    100% {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
 
+/**
+* @doc docs/cookie-consent.md
+* @section
+* @sectionof Structures
 */

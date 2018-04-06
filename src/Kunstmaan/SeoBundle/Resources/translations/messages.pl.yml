@@ -1,0 +1,58 @@
+---
+seo:
+  robots:
+    title: Roboty
+    tip: 'Rada:'
+    warning: To są domyślne ustawienia dla pliku robots.txt, indywidualny plik dla projektu nie został utworzony
+    moreinfo: Więcej informacji pliku robots.txt możesz znaleźć w
+  action:
+    save: Zapisz
+    cancel: Anuluj
+    preview: Podgląd
+  form:
+    og:
+      title: OG Tytuł
+      description: OG Opis
+      url: OG Url
+      type: OG Typ
+      image: OG Zdjęcie
+      article:
+        author: OG Autor
+        publisher: OG Wydawca
+        section: OG Sekcja artykułu
+    twitter:
+      title: Tytuł
+      title_info_text: Tytuł wyświetlany na karcie twitter-a
+      description: Opis
+      description_info_text: Opis wyświetlany na karcie twitter-a
+      sitehandle: Witryna
+      sitehandle_info_text: Twoja strona Twitter. To pole jest wymagane aby uruchomić kartę Twitter.
+      creatorhandle: Twórca
+      creatorhandle_info_text: Zarządca twojej strony Twitter.
+      image: Zdjęcie
+    robots:
+      noindex: Blokuj indeksowanie
+      nofollow: Blokuj korzystanie z linków dla GoogleBota
+      noarchive: Blokuj archiwizację
+      nosnippet: Blokuj wyświetlanie krótkiego opisu
+      notranslate: Blokuj tłumaczenie
+      noimageindex: Blokuj indeksowanie zdjęć
+    seo:
+      meta_title:
+        label: Tytuł
+        info_text: Tytuł jest częśto wykorzystywany przez wyszukiwarki
+      meta_description:
+        label: Opis meta
+      meta_robots:
+        label: Meta roboty
+        placeholder: Wybierz tagi dla wyszukiwarek
+      extra_metadata:
+        label: Dodatkowe meta dane
+  pagetabs:
+    opengraph: Open Graph
+    twittercards: Twitter
+  tab:
+    seo:
+      title: SEO
+    social:
+      title: Społeczności

@@ -5,8 +5,8 @@
 /* General
    ========================================================================== */
 .breadcrumb {
-    @media(min-width: $screen-md-min) {
-        margin: 1.5rem 0 0;
+    @media (min-width: $screen-md-min) {
+        margin: 25px 0 0;
     }
 }
 
@@ -16,7 +16,7 @@
 .breadcrumb__item {
     display: inline-block;
 
-    font-size: .8rem;
+    font-size: 14px;
     font-weight: 400;
 
     & .search-results__breadcrumb__item--current {
@@ -28,35 +28,15 @@
 /* Icon
    ========================================================================== */
 .breadcrumb__icon {
-    margin: 0 .5rem;
+    margin: 0 10px;
 
-    font-size: .5rem;
+    font-size: 10px;
     vertical-align: middle;
 }
 
 
-
-/*doc
----
-title: Breadcrumb
-name: 02_breadcrumb
-category: Structures
----
-
-```html_example
-<nav role="navigation" class="breadcrumb">
-    <a href="#" class="breadcrumb__item breadcrumb__item--home">
-    Home
-    </a>
-    <i class="icon icon--arrow-right breadcrumb__icon"></i>
-    <a href="#" class="breadcrumb__item">
-    Blub
-    </a>
-    <i class="icon icon--arrow-right breadcrumb__icon"></i>
-    <span class="breadcrumb__item breadcrumb__item--current">
-    Contact
-    </span>
-</nav>
-```
-
+/**
+* @doc docs/breadcrumb.md
+* @section
+* @sectionof Structures
 */

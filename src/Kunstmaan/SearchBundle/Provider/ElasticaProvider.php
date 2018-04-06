@@ -132,11 +132,16 @@ class ElasticaProvider implements SearchProviderInterface
     /**
      * @param string $indexName
      *
-     * @return \Elastica\Response
+     * @return \Elastica\Response|null
      */
     public function deleteIndex($indexName)
     {
-        return $this->getIndex($indexName)->delete();
+        $index = $this->getIndex($indexName);
+        if ($index->exists()) {
+            return $index->delete();
+        }
+
+        return null;
     }
 
     /**

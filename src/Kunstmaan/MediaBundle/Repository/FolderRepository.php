@@ -63,6 +63,21 @@ class FolderRepository extends NestedTreeRepository
         $em->flush();
     }
 
+
+    /**
+     * @param Folder $folder
+     * @param bool $alsoDeleteFolders
+     */
+    public function emptyFolder(Folder $folder, $alsoDeleteFolders = false)
+    {
+        $em = $this->getEntityManager();
+        $this->deleteMedia($folder);
+        if ($alsoDeleteFolders) {
+            $this->deleteChildren($folder);
+        }
+        $em->flush();
+    }
+
     /**
      * @param Folder $folder
      */

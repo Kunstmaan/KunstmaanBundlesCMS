@@ -7,14 +7,12 @@ cache:
     - $HOME/.composer/cache/files
 
 php:
-  - 5.5
   - 5.6
   - 7.0
+  - 7.1
 
 matrix:
-  include:
-    - php: 5.6
-      env: SYMFONY_VERSION="2.8.*"
+  fast_finish: true
   allow_failures: ~
 
 before_install:
@@ -23,6 +21,8 @@ before_install:
   - composer selfupdate
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION} --no-update; fi
   - wget https://scrutinizer-ci.com/ocular.phar
+  - nvm install
+  - npm install
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 
@@ -33,7 +33,10 @@ before_script:
 
 script: ./vendor/bin/phpunit --coverage-clover=coverage.clover
 
-after_script: php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+after_script:
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    - npm run build -- --continueAfterTestError=true
+    - npm run buildGroundControlSkeleton
 
 notifications:
   email:

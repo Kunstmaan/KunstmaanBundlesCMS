@@ -1,0 +1,9 @@
+---
+kunstmaan_cache:
+  varnish:
+    ban:
+      path: Pad
+      submit: Verbannen!
+      all_domains: Ban op elk domein
+      success: Met succes verboden!
+      menu: Verwijderen uit cache

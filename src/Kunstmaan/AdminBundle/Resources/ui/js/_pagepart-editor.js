@@ -8,10 +8,20 @@ kunstmaanbundles.pagepartEditor = function (window) {
         delete: []
     };
 
-    var init, addPagePart, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent, reInit, updateDisplayOrder;
+    var init, addPagePart, addPagePartExtended, editPagePart, deletePagePart, movePagePartUp, movePagePartDown, subscribeToEvent, unSubscribeToEvent, executeEvent, reInit, reOrder, target;
 
     init = function () {
         var $body = $('body');
+
+        // Add
+        $body.on('click', '.js-pp-modal-button', function (e) {
+            target = $(e.target);
+        });
+
+        // Add
+        $body.on('click', '.js-add-pp-button', function () {
+            addPagePartExtended($(this));
+        });
 
         // Add
         $body.on('change', '.js-add-pp-select', function () {
@@ -48,7 +58,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
             e.preventDefault();
         });
     };
-
 
     // Add
     addPagePart = function ($select) {
@@ -93,19 +102,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 $temp.append(data);
 
                 // Check if some javascript needs to be reinitialised for this PP
-                $temp.find('*[data-reinit-js]').each(function () {
-                    // Get modules from data attribute
-                    var modules = $(this).data('reinit-js');
-
-                    if (modules) {
-                        for (var i = 0; i < modules.length; i++) {
-                            // Check if there really is a module with the given name and it if has a public reInit function
-                            if (typeof kunstmaanbundles[modules[i]] === 'object' && typeof kunstmaanbundles[modules[i]].reInit === 'function') {
-                                kunstmaanbundles[modules[i]].reInit();
-                            }
-                        }
-                    }
-                });
+                reInit($temp);
 
                 // Remove Loading
                 kunstmaanbundles.appLoading.removeLoading();
@@ -119,12 +116,72 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 // Reset ajax-modals
                 kunstmaanbundles.ajaxModal.resetAjaxModals();
 
-                executeEvent('add')
+                executeEvent('add');
             }
         });
 
         // Reset select
         $select.val('');
+    };
+
+    // Add
+    addPagePartExtended = function ($select) {
+        var $targetContainer = target.closest('.js-pp-container'),
+            requestUrl = target.data('url');
+
+        // Get necessary data
+        var pageClassName = $targetContainer.data('pageclassname'),
+            pageId = $targetContainer.data('pageid'),
+            context = $targetContainer.data('context'),
+            ppType = $select.data('pagepartclass');
+
+        // Set Loading
+        kunstmaanbundles.appLoading.addLoading();
+
+        // Ajax Request
+        $.ajax({
+            url: requestUrl,
+            data: {
+                'pageclassname': pageClassName,
+                'pageid': pageId,
+                'context': context,
+                'type': ppType
+            },
+            async: true,
+            success: function (data) {
+                // Add PP
+                var firstSelect = target.hasClass('js-add-pp-select--first');
+                var elem;
+                if (firstSelect) {
+                    elem = $('#parts-' + context).prepend(data);
+                } else {
+                    elem = target.closest('.js-sortable-item').after(data);
+                }
+
+                // Create a temporary node of the new PP
+                var $temp = $('<div>');
+                $temp.append(data);
+
+                // Check if some javascript needs to be reinitialised for this PP
+                reInit($temp);
+
+                // Remove Loading
+                kunstmaanbundles.appLoading.removeLoading();
+
+                // Enable leave-page modal
+                kunstmaanbundles.checkIfEdited.edited();
+
+                // Reinit custom selects
+                kunstmaanbundles.advancedSelect.init();
+
+                // Reset ajax-modals
+                kunstmaanbundles.ajaxModal.resetAjaxModals();
+
+                executeEvent('add');
+            }
+        });
+
+        $('#' + $select.data('pagepartmodalname')).modal('hide');
     };
 
 
@@ -166,8 +223,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
             duration: 300
         });
 
-        $container.empty();
-
         // Check is-deleted checkbox
         $('#' + $targetId + '-is-deleted').prop('checked', true);
 
@@ -175,6 +230,10 @@ kunstmaanbundles.pagepartEditor = function (window) {
         $('#delete-pagepart-modal-' + $targetId).modal('hide');
         $('body').removeClass('modal-open');
         executeEvent('delete', $container);
+
+        $('#delete-pagepart-modal-' + $targetId).on('hidden.bs.modal', function() {
+            $container.empty();
+        });
     };
 
 
@@ -190,6 +249,8 @@ kunstmaanbundles.pagepartEditor = function (window) {
         reInit($currentPp);
         if ($previousPp.length) {
             $($previousPp).before($currentPp);
+            // Update display order.
+            reOrder($currentPp.parent());
             // Enable "leave page" modal
             kunstmaanbundles.checkIfEdited.edited();
         }
@@ -199,9 +260,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
             offset: -200,
             easing: 'ease-in-out'
         });
-
-        // Update display order.
-        updateDisplayOrder($previousPp, $currentPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
@@ -219,6 +277,9 @@ kunstmaanbundles.pagepartEditor = function (window) {
         reInit($currentPp);
         if ($nextPp.length) {
             $($nextPp).after($currentPp);
+            // Update display order.
+            reOrder($currentPp.parent());
+            // Enable "leave page" modal
             kunstmaanbundles.checkIfEdited.edited();
         }
 
@@ -227,9 +288,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
             offset: -200,
             easing: 'ease-in-out'
         });
-
-        // Update display order.
-        updateDisplayOrder($currentPp, $nextPp);
 
         // Set Active Edit
         window.activeEdit = $targetId;
@@ -305,6 +363,7 @@ kunstmaanbundles.pagepartEditor = function (window) {
                         // prevent duplicate modules
                         if ($.inArray(modules[i], uniqueModules) === -1) {
                             uniqueModules.push(modules[i]);
+                            kunstmaanbundles[modules[i]].reInit();
                         }
                     }
                 }
@@ -315,17 +374,18 @@ kunstmaanbundles.pagepartEditor = function (window) {
             kunstmaanbundles[uniqueModules[i]].reInit();
         }
     };
-    updateDisplayOrder = function($firstEl, $secondEl) {
-        $secondSortEl = $($secondEl).find('#' + $($secondEl).data('sortkey'));
-        $firstSortEl = $($firstEl).find('#' + $($firstEl).data('sortkey'));
-
-        $secondSortEl.val(parseInt($secondSortEl.val()) -1);
-        $firstSortEl.val(parseInt($firstSortEl.val()) +1);
+    reOrder = function($container) {
+        var i = 0;
+        $container.children('.sortable-item:visible').each(function() {
+            var $sortEl = $(this).find('#' + $(this).data('sortkey'));
+            $sortEl.val(i++);
+        });
     };
     return {
         init: init,
         subscribeToEvent: subscribeToEvent,
-        unSubscribeToEvent: unSubscribeToEvent
+        unSubscribeToEvent: unSubscribeToEvent,
+        reInit: reInit
     };
 
 }(window);

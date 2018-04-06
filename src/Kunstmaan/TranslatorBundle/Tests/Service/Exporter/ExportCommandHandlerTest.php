@@ -1,8 +1,8 @@
 <?php
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Exporter;
 
-use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
+use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 
 class ExportCommandHandlerTest extends BaseTestCase
 {

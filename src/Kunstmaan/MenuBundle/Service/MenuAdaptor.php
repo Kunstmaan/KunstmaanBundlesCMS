@@ -37,7 +37,7 @@ class MenuAdaptor implements MenuAdaptorInterface
                 $menuItem
                     ->setRoute('kunstmaanmenubundle_admin_menu')
                     ->setUniqueId('menus')
-                    ->setLabel("Menus")
+                    ->setLabel('kuma_menu.menus.title')
                     ->setParent($parent);
                 if (in_array($request->attributes->get('_route'), array(
                     'kunstmaanmenubundle_admin_menu',

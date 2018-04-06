@@ -12,7 +12,7 @@ To upgrade, first pull in the new version of all bundles.
 Remove guest_user: true from app/config/security.yml.
 
 And finally execute the following command :
-```app/console kuma:fix:guest```
+```bin/console kuma:fix:guest```
 
 This should execute the necessary changes (you could delete/rename the guest user afterwards as well - we just leave
 it in case there are items linked to it).

@@ -13,10 +13,10 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class NodeAdminPublisher
 {
@@ -70,8 +70,9 @@ class NodeAdminPublisher
      * If there is a draft version it'll try to publish the draft first. Makse snese because if you want to publish the public version you don't publish but you save.
      *
      * @param NodeTranslation $nodeTranslation
+     * @param null|BaseUser   $user
      *
-     * @throws AccessDeniedException
+     *  @throws AccessDeniedException
      */
     public function publish(NodeTranslation $nodeTranslation, $user = null)
     {
@@ -86,7 +87,7 @@ class NodeAdminPublisher
         $node = $nodeTranslation->getNode();
 
         $nodeVersion = $nodeTranslation->getNodeVersion('draft');
-        if (!is_null($nodeVersion) && $nodeTranslation->isOnline()) {
+        if (!is_null($nodeVersion)) {
             $page = $nodeVersion->getRef($this->em);
             /** @var $nodeVersion NodeVersion */
             $nodeVersion     = $this->createPublicVersion($page, $nodeTranslation, $nodeVersion, $user);

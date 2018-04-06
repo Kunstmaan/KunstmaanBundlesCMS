@@ -25,5 +25,5 @@ TODO : Write down how slugs and the router works.
 
 Nodes can be published on a specified date, you have to configure a cronjob for this:
 ```cron
-* * * * * /....../app/console kuma:nodes:cron
+* * * * * /....../bin/console kuma:nodes:cron
 ```

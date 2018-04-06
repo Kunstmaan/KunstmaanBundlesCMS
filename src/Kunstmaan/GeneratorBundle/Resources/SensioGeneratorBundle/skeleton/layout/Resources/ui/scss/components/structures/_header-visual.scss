@@ -5,44 +5,43 @@
 .header-visual {
     position: relative;
 
-    margin-bottom: 4rem;
+    margin-bottom: 70px;
 
-    @media(min-width: $screen-md-min) {
-        overflow: hidden;
+    @media (min-width: $screen-md-min) {
         height: 70vh;
-        max-height: 40rem;
+        max-height: 720px;
+        overflow: hidden;
     }
 }
 
 .header-visual__img {
     width: 100%;
 
-    @media(min-width: $screen-md-min) {
-        transform: translateY(-50%);
-
-        z-index: 0;
+    @media (min-width: $screen-md-min) {
         position: absolute;
         top: 50%;
         left: 0;
+        z-index: 0;
 
         max-height: none;
+        transform: translate3d(0, -50%, 0);
     }
 }
 
 .header-visual__content {
-    margin-bottom: 2rem;
+    margin-bottom: 40px;
+
     text-align: center;
 
-    @media(min-width: $screen-md-min) {
-        transform: translateY(-50%);
-
-        z-index: 1;
+    @media (min-width: $screen-md-min) {
         position: absolute;
         top: 50%;
         left: 0;
+        z-index: 1;
 
         width: 100%;
         margin-bottom: 0;
+        transform: translate3d(0, -50%, 0);
 
         text-align: left;
     }
@@ -52,24 +51,24 @@
 }
 
 .header-visual__title {
+    font-weight: 300;
     line-height: 1;
     text-transform: uppercase;
-    font-weight: 300;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         margin-top: 0;
 
-        font-size: 5.625rem;
-        font-weight: 100;
         color: $white;
+        font-size: 100px;
+        font-weight: 100;
     }
 }
 
 .header-visual__text {
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         max-width: 50%;
-        margin-bottom: 2.5rem;
+        margin-bottom: 45px;
 
         color: $white;
     }
@@ -78,41 +77,19 @@
 .header-visual__btn {
     padding: .9em 1.5em;
 
-    color: $blue--dark;
-    text-transform: uppercase;
+    color: $brand-primary--dark;
+    font-size: 20px;
     font-weight: 300;
-    font-size: 1.1rem;
+    text-transform: uppercase;
 
-    @media(min-width: $screen-md-min) {
+    @media (min-width: $screen-md-min) {
         border: 0;
     }
 }
 
 
-/*doc
----
-title: Header Visual
-name: 01_headervisual
-category: Structures
----
-
-```html_example
-<figure class="header-visual">
-    <img src="http://placehold.it/1600x1000" class="header-visual__img">
-    <figcaption class="header-visual__content">
-    <div class="container header-visual__content__inner">
-        <h1 class="header-visual__title">
-        Title
-        </h1>
-        <p class="header-visual__text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id cum corporis adipisci maiores nobis.
-        </p>
-        <a href="/en/services" class="btn header-visual__btn">
-        CTA
-        </a>
-    </div>
-    </figcaption>
-</figure>
-```
-
+/**
+* @doc docs/header-visual.md
+* @section
+* @sectionof Structures
 */

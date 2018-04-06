@@ -2,16 +2,24 @@ parameters:
     kunstmaan_node.version_timeout: 3600
     kunstmaan_node.slugrouter.class: 'Kunstmaan\NodeBundle\Router\SlugRouter'
     kunstmaan_node.sluglistener.class: 'Kunstmaan\NodeBundle\EventListener\SlugListener'
+    kunstmaan_node.helper.url.class: Kunstmaan\NodeBundle\Helper\URLHelper
+    kunstmaan_node.url_replace.twig.class: Kunstmaan\NodeBundle\Twig\UrlReplaceTwigExtension
+    kunstmaan_node.url_chooser.lazy_increment: 2
+    kunstmaan_multi_domain.url_replace.controller.class: Kunstmaan\NodeBundle\Controller\UrlReplaceController
+    kunstmaan_node.toolbar.collector.node.class: Kunstmaan\NodeBundle\Toolbar\NodeDataCollector
 
 services:
     kunstmaan_node.nodetranslation.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeTranslationListener
-        arguments: ['@session', '@kunstmaan_admin.logger' , '@kunstmaan_utilities.slugifier', '@kunstmaan_admin.domain_configuration']
-        calls:
-            - [ 'setRequestStack', ['@request_stack'] ]
+        arguments:
+          - '@session.flash_bag'
+          - '@kunstmaan_admin.logger'
+          - '@kunstmaan_utilities.slugifier'
+          - '@request_stack'
+          - '@kunstmaan_admin.domain_configuration'
+          - '@kunstmaan_node.pages_configuration'
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush', method: 'onFlush' }
-            - { name: 'doctrine.event_listener', event: 'postFlush', method: 'postFlush' }
             - { name: 'doctrine.event_listener', event: 'prePersist', method: 'prePersist' }
             - { name: 'doctrine.event_listener', event: 'preUpdate', method: 'preUpdate' }
 
@@ -32,9 +40,20 @@ services:
         tags:
             - { name: 'form.type' }
 
+    kunstmaan_node.form.type.nodechoice:
+        class: Kunstmaan\NodeBundle\Form\NodeChoiceType
+        arguments:
+            - "@request_stack"
+        tags:
+            - { name: form.type }
+
     kunstmaan_node.admin_node.publisher:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.authorization_checker', '@event_dispatcher', '@kunstmaan_admin.clone.helper']
+
+    kunstmaan_node.admin_node.node_version_lock_helper:
+        class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
 
     kunstmaan_node.actions_menu_builder:
         class: Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder
@@ -65,7 +84,7 @@ services:
 
     kunstmaan_node.edit_node.listener:
         class: Kunstmaan\NodeBundle\EventListener\NodeListener
-        arguments: ['@security.authorization_checker', '@kunstmaan_admin.permissionadmin', '@security.acl.permission.map']
+        arguments: ['@security.authorization_checker', '@kunstmaan_admin.permissionadmin', '@kunstmaan_admin.security.acl.permission.map']
         tags:
             - { name: kernel.event_listener, event: kunstmaan_node.adaptForm, method: adaptForm }
 
@@ -88,6 +107,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    kunstmaan_node.url_replace.twig.extension:
+        class: "%kunstmaan_node.url_replace.twig.class%"
+        arguments:
+            - "@kunstmaan_node.helper.url"
+        tags:
+            - { name: twig.extension }
+
     kunstmaan_node.page_creator_service:
         class: Kunstmaan\NodeBundle\Helper\Services\PageCreatorService
         calls:
@@ -106,11 +132,6 @@ services:
         arguments: ['%fos_user.model.user.class%']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata }
-
-    kunstmaan_node.command.fixtimestamps:
-        class: Kunstmaan\NodeBundle\Command\FixTimestampsCommand
-        calls:
-            - [setContainer, ['@service_container'] ]
 
     kunstmaan_node.slug.listener:
         class: '%kunstmaan_node.sluglistener.class%'
@@ -139,3 +160,26 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@router', '@kunstmaan_node.node_menu', '@request_stack']
         tags:
             - { name: twig.extension }
+
+    kunstmaan_node.helper.url:
+        class: "%kunstmaan_node.helper.url.class%"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+            - "@logger"
+            - "@kunstmaan_admin.domain_configuration"
+
+    kunstmaan_node.url_replace.controller:
+        class: "%kunstmaan_multi_domain.url_replace.controller.class%"
+        arguments:
+            - "@kunstmaan_node.helper.url"
+
+    ### TOOLBAR DATA COLLECTOR ###
+    kunstmaan_node.datacollector.node:
+        class: '%kunstmaan_node.toolbar.collector.node.class%'
+        parent: Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector
+        arguments:
+            - '@kunstmaan_node.node_menu'
+            - '@router'
+        tags:
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanNodeBundle:Toolbar:node.html.twig', id: kuma_node}

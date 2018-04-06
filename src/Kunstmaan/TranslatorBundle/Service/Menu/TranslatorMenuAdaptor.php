@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Menu;
 
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
+use Symfony\Component\HttpFoundation\Request;
 
 class TranslatorMenuAdaptor implements MenuAdaptorInterface
 {
@@ -27,7 +27,7 @@ class TranslatorMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanTranslatorBundle_settings_translations')
-                ->setLabel('Translations')
+                ->setLabel('translator.translator.title')
                 ->setUniqueId('Translations')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {

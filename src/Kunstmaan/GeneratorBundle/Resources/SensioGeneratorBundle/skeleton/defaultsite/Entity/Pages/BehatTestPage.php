@@ -2,12 +2,12 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use {{ namespace }}\Form\Pages\BehatTestPageAdminType;
-
 use Doctrine\ORM\Mapping as ORM;
+
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
+use {{ namespace }}\Form\Pages\BehatTestPageAdminType;
 
 /**
  * BehatTestPage
@@ -15,17 +15,15 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}behat_test_pages")
  */
-class BehatTestPage extends AbstractPage  implements HasPageTemplateInterface
+class BehatTestPage extends AbstractPage implements HasPageTemplateInterface
 {
 
     /**
-     * Returns the default backend form type for this page
-     *
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new BehatTestPageAdminType();
+        return BehatTestPageAdminType::class;
     }
 
     /**

@@ -27,7 +27,7 @@ class ExportFile
      */
     private $array = array();
 
-    private $content ='';
+    private $content = '';
 
     public function __construct()
     {

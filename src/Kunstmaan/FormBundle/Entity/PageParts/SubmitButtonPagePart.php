@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\FormBundle\Entity\PageParts;
 
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
  * This page part adds a submit button to the forms
@@ -79,11 +79,11 @@ class SubmitButtonPagePart extends AbstractPagePart
     /**
      * Returns the default form type for this FormSubmissionField
      *
-     * @return SubmitButtonPagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new SubmitButtonPagePartAdminType();
+        return SubmitButtonPagePartAdminType::class;
     }
 
 }

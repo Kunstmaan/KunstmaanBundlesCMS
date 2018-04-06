@@ -158,7 +158,7 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
                 }
             },
             'search' : {
-                'show_only_matches': true
+                'show_only_matches' : true
             }
         });
     };
@@ -167,11 +167,15 @@ kunstmaanbundles.sidebartree = (function($, window, undefined) {
 
         if($searchField !== 'undefined' && $searchField !== null) {
 
-            $searchField.on('keyup', function() {
-                var searchValue = $searchField.val();
+            var options = {
+                callback: function (value) { $sidebarNavContainer.jstree(true).search(value); },
+                wait: 750,
+                highlight: false,
+                allowSubmit: false,
+                captureLength: 2
+            };
 
-                $sidebarNavContainer.jstree(true).search(searchValue);
-            });
+            $searchField.typeWatch( options );
         }
     };
 

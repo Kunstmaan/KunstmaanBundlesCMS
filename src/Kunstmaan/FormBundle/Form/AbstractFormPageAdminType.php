@@ -2,8 +2,11 @@
 
 namespace Kunstmaan\FormBundle\Form;
 
+use Kunstmaan\AdminBundle\Form\WysiwygType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,11 +21,22 @@ class AbstractFormPageAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
-	$builder->add('thanks', TextareaType::class, array('required' => false, 'attr' => array('class' => 'js-rich-editor rich-editor')));
-        $builder->add('subject');
-        $builder->add('from_email');
-        $builder->add('to_email');
+        $builder->add('title', TextType::class, array(
+            'label' => 'kuma_form.form.page_admin.title.label',
+        ));
+        $builder->add('thanks', WysiwygType::class, array(
+            'label' => 'kuma_form.form.page_admin.thanks.label',
+            'required' => false,
+        ));
+        $builder->add('subject', TextType::class, array(
+            'label' => 'kuma_form.form.page_admin.subject.label',
+        ));
+        $builder->add('from_email', EmailType::class, array(
+            'label' => 'kuma_form.form.page_admin.from_email.label',
+        ));
+        $builder->add('to_email', TextType::class, array(
+            'label' => 'kuma_form.form.page_admin.to_email.label',
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

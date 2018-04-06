@@ -51,12 +51,11 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
 
     /**
      * @param mixed  $query
-     * @param string $lang
      * @param string $contentType
      *
      * @return mixed
      */
-    abstract public function defineSearch($query, $lang, $contentType);
+    abstract public function defineSearch($query, $contentType);
 
     /**
      * @param int $offset
@@ -66,7 +65,7 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function search($offset = null, $size = null)
     {
-        $this->defineSearch($this->data, $this->language, $this->contentType);
+        $this->defineSearch($this->data, $this->contentType);
         $this->setPagination($offset, $size);
 
         return $this->getSearchResult();
@@ -79,8 +78,8 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
     {
         $suggestPhrase = new Suggest\Phrase('content-suggester', 'content');
         $suggestPhrase->setText($this->data);
-        $suggestPhrase->setAnalyzer('suggestion_analyzer_' . $this->language);
         $suggestPhrase->setHighlight("<strong>", "</strong>");
+        $suggestPhrase->setAnalyzer('suggestion_analyzer');
         $suggestPhrase->setConfidence(2);
         $suggestPhrase->setSize(1);
 
@@ -95,11 +94,11 @@ abstract class AbstractElasticaSearcher implements SearcherInterface
      */
     public function getSearchResult()
     {
-        $index = $this->search->getIndex($this->getIndexName());
+        $index = $this->search->getIndex($this->getIndexName() . '_' . $this->language);
 
         $search = new Search($this->search->getClient());
         $search->addIndex($index);
-        $search->addType($index->getType($this->indexType . '_' . $this->language));
+        $search->addType($index->getType($this->indexType));
         $result = $search->search($this->query);
 
         return $result;

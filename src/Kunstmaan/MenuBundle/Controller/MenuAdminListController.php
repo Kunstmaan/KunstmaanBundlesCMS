@@ -4,9 +4,9 @@ namespace Kunstmaan\MenuBundle\Controller;
 
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\AdminListBundle\Controller\AdminListController;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -37,7 +37,7 @@ class MenuAdminListController extends AdminListController
                 );
             };
             $this->configurator->addItemAction(
-                new SimpleItemAction($create_route, 'th-list', 'Manage')
+                new SimpleItemAction($create_route, 'th-list', 'kuma_menu.menu.adminlist.action.manage')
             );
             $this->configurator->setLocale($request->getLocale());
         }

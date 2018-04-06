@@ -10,7 +10,7 @@
 
     <li {% if activeTab == tabIdentifier %} class="active" {% endif %}>
         <a href="#{{ tabIdentifier }}" data-toggle="tab">
-            {{ tab.title }}
+            {{ tab.title|trans }}
             {% if formErrors|length > 0 %}
                 <span class="error-label">
                     {{formErrors|length}}
@@ -21,7 +21,7 @@
 {%  endfor %}
     <li class="tab__more dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            More <span class="caret"></span>
+            {{ 'form.button.dropdown.more' | trans }} <span class="caret"></span>
         </a>
         <ul class="dropdown-menu dropdown-menu-right" id="collapsed"></ul>
     </li>

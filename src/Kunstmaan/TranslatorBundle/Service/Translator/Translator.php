@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Translator

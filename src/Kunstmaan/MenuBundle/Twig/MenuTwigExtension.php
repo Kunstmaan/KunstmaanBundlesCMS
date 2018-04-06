@@ -20,7 +20,7 @@ class MenuTwigExtension extends \Twig_Extension
 
     /**
      * @param MenuItemRepositoryInterface $repository
-     * @param RenderService $renderService
+     * @param RenderService               $renderService
      */
     public function __construct(MenuItemRepositoryInterface $repository, RenderService $renderService)
     {
@@ -53,7 +53,7 @@ class MenuTwigExtension extends \Twig_Extension
      *
      * @param string $name
      * @param string $lang
-     * @param array $options
+     * @param array  $options
      * @return string
      */
     public function getMenu(\Twig_Environment $environment, $name, $lang, $options = array())
@@ -111,13 +111,5 @@ class MenuTwigExtension extends \Twig_Extension
             'childOpen' => '<li>',
             'childClose' => '</li>',
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kunstmaan_menu_twig_extension';
     }
 }

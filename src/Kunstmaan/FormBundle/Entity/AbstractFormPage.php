@@ -2,20 +2,20 @@
 
 namespace Kunstmaan\FormBundle\Entity;
 
-use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Kunstmaan\FormBundle\Helper\FormPageInterface;
 
-use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
+use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * This is an abstract ORM form page. With this page it's possible to create forms using a mix of form page parts and
@@ -172,13 +172,11 @@ abstract class AbstractFormPage extends AbstractPage implements FormPageInterfac
     }
 
     /**
-     * Returns the default backend form type for this form
-     *
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new AbstractFormPageAdminType();
+        return AbstractFormPageAdminType::class;
     }
 
     /**

@@ -30,8 +30,6 @@ class UserRepository extends EntityRepository
             ->innerJoin('u.groups', 'g')
             ->innerJoin('g.roles', 'r')
             ->where('u.enabled=1')
-            ->andWhere('u.locked=0')
-            ->andWhere('u.expired=0')
             ->andWhere('r.role IN (:roles)')
             ->setParameter('roles', $roles);
 

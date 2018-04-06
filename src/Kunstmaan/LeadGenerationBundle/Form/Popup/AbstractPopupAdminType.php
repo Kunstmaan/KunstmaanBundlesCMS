@@ -22,15 +22,11 @@ abstract class AbstractPopupAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-            'attr' => array('info_text' => 'Warning: if you change this value, the people who already saw this popup, or the people who were already converted will see the popup again.')
+            'label' => 'kuma_lead_generation.form.popup.name.label',
+            'attr' => array(
+                'info_text' => 'kuma_lead_generation.form.popup.name.info_text',
+            )
         ));
         $builder->add('htmlId', TextType::class);
     }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    abstract function getBlockPrefix();
 }

@@ -13,7 +13,7 @@ services:
         arguments: ['@mailer', '@templating', '@service_container']
 
     kunstmaan_form.form_handler:
-        class: %kunstmaan_form.form_handler.class%
+        class: "%kunstmaan_form.form_handler.class%"
         arguments: ['@service_container']
 
     kunstmaan_form.configure_sub_actions_menu_listener:

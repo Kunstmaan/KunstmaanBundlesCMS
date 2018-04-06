@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KunstmaanTranslatorExtensionTest extends \PHPUnit_Framework_TestCase
 {

@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -28,6 +29,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('admin_password')->end()
                 ->scalarNode('dashboard_route')->end()
+                ->scalarNode('admin_prefix')->defaultValue('admin')->end()
                 ->arrayNode('admin_locales')
                     ->defaultValue(array('en'))
                     ->prototype('scalar')->end()
@@ -39,8 +41,17 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('user_agent_check')->defaultFalse()->end()
                     ->end()
                 ->end()
+                ->arrayNode('admin_exception_excludes')
+                    ->requiresAtLeastOneElement()
+                    ->prototype('scalar')->end()
+                ->end()
                 ->scalarNode('default_admin_locale')->cannotBeEmpty()->defaultValue('en')->end()
                 ->booleanNode('enable_console_exception_listener')->defaultTrue()->end()
+                ->booleanNode('enable_toolbar_helper')->defaultFalse()->end()
+                ->arrayNode('provider_keys')
+                    ->defaultValue([])
+                    ->prototype('scalar')->end()
+                ->end()
                 ->arrayNode('menu_items')
                     ->defaultValue([])
                     ->useAttributeAsKey('route', false)
@@ -54,6 +65,48 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('google_signin')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->beforeNormalization()
+                        ->always()
+                        ->then(function ($v) {
+                            if ($v === true || (isset($v['enabled']) && $v['enabled'])) {
+                                if (empty($v['client_id']) || empty($v['client_secret'])) {
+                                    throw new InvalidConfigurationException('The "client_id" and "client_secret" settings are required under the "google_signin" group.');
+                                }
+                            } else {
+                                unset($v['client_id'], $v['client_secret'], $v['hosted_domains']);
+                            }
+
+                            return $v;
+                        })
+                    ->end()
+                    ->children()
+                        ->scalarNode('client_id')->defaultNull()->end()
+                        ->scalarNode('client_secret')->defaultNull()->end()
+                        ->arrayNode('hosted_domains')
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('domain_name')->isRequired()->end()
+                                    ->arrayNode('access_levels')
+                                        ->isRequired()
+                                        ->prototype('scalar')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('password_restrictions')
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('min_digits')->defaultNull()->end()
+                        ->integerNode('min_uppercase')->defaultNull()->end()
+                        ->integerNode('min_special_characters')->defaultNull()->end()
+                        ->integerNode('min_length')->defaultNull()->end()
+                        ->integerNode('max_length')->defaultNull()->end()
+                    ->end()
             ->end();
 
         return $treeBuilder;

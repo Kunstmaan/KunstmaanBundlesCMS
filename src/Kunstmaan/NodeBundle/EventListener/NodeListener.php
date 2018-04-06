@@ -3,12 +3,12 @@
 namespace Kunstmaan\NodeBundle\EventListener;
 
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
+use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class NodeListener
 {
@@ -47,7 +47,7 @@ class NodeListener
         if ($event->getPage() instanceof HasNodeInterface && !$event->getPage()->isStructureNode()) {
             if ($this->authorizationChecker->isGranted('ROLE_PERMISSIONMANAGER')) {
                 $tabPane = $event->getTabPane();
-                $tabPane->addTab(new Tab('Permissions', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
+                $tabPane->addTab(new Tab('kuma_node.tab.permissions.title', new PermissionsFormWidget($event->getPage(), $event->getNode(), $this->permissionAdmin, $this->permissionMap)));
             }
         }
     }

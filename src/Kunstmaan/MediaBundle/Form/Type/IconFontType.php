@@ -91,6 +91,6 @@ class IconFontType extends AbstractType
     {
         $view->vars['loader']        = $form->getConfig()->getAttribute('loader');
         $view->vars['loader_object'] = $form->getConfig()->getAttribute('loader_object');
-        $view->vars['loader_data']   = serialize($form->getConfig()->getAttribute('loader_data'));
+        $view->vars['loader_data']   = json_encode($form->getConfig()->getAttribute('loader_data'));
     }
 }

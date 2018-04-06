@@ -48,7 +48,7 @@
                </tr>
             </thead>
             <tbody>
-                {% for role in permissionadmin.getAllRoles() %}
+                {% for role in permissionadmin.getManageableRolesForPages() %}
                     <tr>
                         <td>
                             {{ role.getRole() }}

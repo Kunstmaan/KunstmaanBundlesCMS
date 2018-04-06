@@ -40,7 +40,8 @@
                 {% if q_query is defined and q_query != '' %}
                     <p class="search-results__text">
                         {% set nrResults = pagerfanta.getNbResults() %}
-                        <strong>{{ nrResults }} {% if nrResults == 1 %}{{ 'search.result'|trans }}{% else %}{{ 'search.results'|trans }}{% endif %}</strong> {{ 'search.for'|trans }} <strong>{{ q_query }}</strong>
+                        <strong>{{ '{0} search.no_results|{1} one.result|]1,Inf[ many.results.%count%.%search_for%'
+                            |transchoice(nrResults, {'%count%': nrResults, '%search_for%': q_query}) }}</strong>
                     </p>
                 {% endif %}
             </form>

@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\RedirectBundle\Helper\Menu;
 
-use Symfony\Component\HttpFoundation\Request;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
+use Symfony\Component\HttpFoundation\Request;
 
 class RedirectMenuAdaptor implements MenuAdaptorInterface
 {
@@ -23,7 +23,7 @@ class RedirectMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('kunstmaanredirectbundle_admin_redirect')
-                ->setLabel('Redirects')
+                ->setLabel('redirect.title')
                 ->setUniqueId('Redirects')
                 ->setParent($parent);
 

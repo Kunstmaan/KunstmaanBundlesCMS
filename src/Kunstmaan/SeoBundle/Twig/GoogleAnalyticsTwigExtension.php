@@ -6,8 +6,8 @@ use Kunstmaan\SeoBundle\Helper\Order,
     Kunstmaan\SeoBundle\Helper\OrderConverter,
     Kunstmaan\SeoBundle\Helper\OrderPreparer;
 
-use Twig_Extension,
-    Twig_Environment;
+use Twig_Environment,
+    Twig_Extension;
 
 /**
  * Twig extensions for Google Analytics
@@ -116,23 +116,14 @@ class GoogleAnalyticsTwigExtension extends Twig_Extension
      */
     public function renderECommerceTracking(\Twig_Environment $environment, Order $order)
     {
-        $order    = $this->orderPreparer->prepare($order);
-        $options  = $this->orderConverter->convert($order);
+        $order = $this->orderPreparer->prepare($order);
+        $options = $this->orderConverter->convert($order);
         $template = $environment->loadTemplate(
             'KunstmaanSeoBundle:GoogleAnalyticsTwigExtension:ecommerce_tracking.html.twig'
         );
 
         return $template->render($options);
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kuma_google_analytics_twig_extension';
-    }
-
 
     /**
      * Prefer the given option if already set. Otherwise set the value given.

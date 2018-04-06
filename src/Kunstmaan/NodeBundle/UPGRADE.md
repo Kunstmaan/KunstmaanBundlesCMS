@@ -4,7 +4,7 @@ Upgrade Instructions
 ## To v2.2 with nested set support
 
 To upgrade from a previous version, you have to copy the Doctrine migrations file from this bundle (Resources/DoctrineMigrations/Version20130611131506.php)
-to your app/DoctrineMigrations/ folder and run it: ```app/console doctrine:migrations:migrate```
+to your app/DoctrineMigrations/ folder and run it: ```bin/console doctrine:migrations:migrate```
 
 This migration will:
 * create some new columns in the kuma_node table
@@ -24,5 +24,5 @@ The NodeMenu constructor has been changed to :
 
 The AclHelper is a service, you can get it in a controller using : ```$aclHelper = $this->container->get('kunstmaan.acl.helper');```
 
-A command to create a basic set of permissions is also available, running ```app/console kuma:init:acl```
-(AFTER running ```app/console init:acl```) will create a basic set of permissions for the nodes.
+A command to create a basic set of permissions is also available, running ```bin/console kuma:init:acl```
+(AFTER running ```bin/console init:acl```) will create a basic set of permissions for the nodes.

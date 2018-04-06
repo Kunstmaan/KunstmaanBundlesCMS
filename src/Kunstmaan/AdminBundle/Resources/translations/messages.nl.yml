@@ -1,0 +1,120 @@
+---
+pages:
+  title: Pagina's
+  parts: PageParts
+  draft: Concept
+  pagenottranslated: Deze pagina is niet vertaald
+  copyfrom: Kopieer van taal
+  createemptypage: Als lege pagina aanmaken
+  movingconfirmation: U gaat "%title%" verplaatsen naar "%target%". Weet u dit zeker?
+modules:
+  title: Modules
+settings:
+  title: Instellingen
+  maintanance: Onderhoud
+  scheduled: Geplande taken
+  version:
+    bundle: Bundle versies
+    composer_lock_not_found: Geen composer.lock bestand gevonden in de project root
+    error_parsing_composer: Fout bij het parsen van het composer.lock bestand, geen geldige json
+    error: Er ging iets fout bij het ophalen van de versie informatie. Probeer het later nog eens.
+    moreinfo: Voer composer update uit om de bundles te updaten. Het is mogelijk dat andere bundles moeten worden geüpgraded in het geval van conflicten.
+    uptodate: is up-to-date
+    toupdate: kan worden geüpdated naar
+    unknown: versiegegevens onbekend
+toolbar:
+  bundle_version:
+    unknown: Onbekend
+    uptodate: Up-to-date
+    toupdate: Verouderd
+    version: Bundle versie
+    status: Bundle status
+tools:
+  title: Hulpmiddelen
+  clear_frontend_cache: Frontend cache legen
+  clear_backend_cache: Backend cache legen
+  clear_all_caches: Alle caches legen
+  shutdown: Uitschakelen
+search:
+  title: Zoeken
+form:
+  cancel: Annuleer
+  delete: Verwijder
+  deletesure: Weet u zeker dat u dit wilt verwijderen?
+  edit: Bewerken
+  add: Toevoegen
+  'add.%subject%': 'Toevoegen van nieuwe %subject%'
+  save: Opslaan
+  publish: Publiceren
+  unpublish: Publicatie ongedaan maken
+  saveasdraft: Als concept opslaan
+  name: Naam
+  type: Type
+  error: Fout
+  warning: Waarschuwing
+  headsup: Heads-up
+  forgot:
+    password: Ik ben mijn wachtwoord vergeten.
+  permissions: Permissies
+  properties: Eigenschappen
+  createdat: Aangemaakt op
+  updatedat: Gewijzigd op
+  actions: Acties
+  addfilter: Filter toevoegen
+  choosetypefilter: Filter op
+  versions: Versies
+  button:
+    dropdown:
+      more: Meer
+    filter:
+      clear: Wissen
+      filter: Filteren
+omnext:
+  home: Home
+  title: Welkom!
+  welcome: Welkom.
+  information: <strong>Informatie.</strong> Er zijn geen nieuwe notificaties.
+permissions:
+  you_made_changes: U heeft de permissies op deze pagina gewijzigd.
+  apply_recursively: Deze wijzigingen recursief toepassen op alle onderliggende pagina 's
+  review_changes: Controleer uw wijzigingen
+  changes: Permissie wijzigingen
+  permissions_added: 'De volgende permissies worden <strong>toegevoegd</strong>:'
+  permissions_removed: 'De volgende permissies worden <strong>verwijderd</strong>:'
+  role_name: Rol naam
+errors:
+  oauth:
+    invalid: Het was niet mogelijk om in te loggen via Google OAuth, waarschijnlijk is je domeinnaam niet toegelaten.
+kuma_admin:
+  flash_type:
+    success: Succes
+    warning: Waarschuwing
+    error: Fout
+    info: Info
+    danger: Gevaar
+  dashboard:
+    configuration:
+      title:
+        label: Titel
+      content:
+        label: Inhoud (raw html)
+  edit:
+    flash:
+      success: De welkomstpagina is bewerkt!
+  password_check:
+    flash:
+      error: U heeft uw wachtwoord nog niet gewijzigd
+  ga_ajax_controller:
+    flash:
+      success: Met succes opgeslagen!
+  media:
+    flash:
+      'deleted_success.%medianame%': Item '%medianame%' is verwijderd!
+      drop_success: Bestand is met succes geupload!
+      drop_unrecognized: Bestand wordt niet herkend!
+  login:
+    forgot_password: Ik ben mijn wachtwoord vergeten
+    invalid_credentials: Verkeerde gebruikersnaam en/of wachtwoord
+kuma_js:
+  auto_collapse:
+    more_button_label: Meer

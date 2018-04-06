@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\MediaBundle\Command;
 
+use \ImagickException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use \ImagickException;
 
 class CreatePdfPreviewCommand extends ContainerAwareCommand
 {

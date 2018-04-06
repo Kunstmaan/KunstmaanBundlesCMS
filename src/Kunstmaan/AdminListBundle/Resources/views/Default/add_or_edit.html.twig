@@ -1,7 +1,20 @@
 {% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
+{% block extrabodyclasses %}{{ parent() }}{% if entityVersionLockCheck %} js-entity-version-lock{% endif %}{% endblock %}
+
 {% block header %}
+    {% if entityVersionLockCheck %}
+        <div class="hidden" id="js-entity-version-lock-data" data-check-interval="{{ entityVersionLockInterval }}" data-url="{{ path('KunstmaanAdminListBundle_entity_lock_check', {'id': entity.id, 'repository': adminlistconfigurator.getRepositoryName()}) }}">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+                </button>
+                <span class="message"></span>
+            </div>
+        </div>
+    {% endif %}
+
     {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
     {{ parent() }}
 {% endblock %}
@@ -21,7 +34,9 @@
 
                     {% if adminlistconfigurator.hasItemActions() %}
                         {% for itemAction in adminlistconfigurator.getItemActions() %}
-                            {% if itemAction.getUrlFor(entity) is not empty %}
+                            {% if itemAction.template is not null %}
+                                {% include itemAction.template with {'itemAction': itemAction} %}
+                            {% else %}
                                 <a class="btn btn-default btn--raise-on-hover" href="{{ path(itemAction.getUrlFor(entity)["path"], itemAction.getUrlFor(entity)[("params")] ) }}">
                                     {% if itemAction.getIconFor(entity) is not null %}
                                         <i class="fa fa-{{ itemAction.getIconFor(entity) }}"></i>

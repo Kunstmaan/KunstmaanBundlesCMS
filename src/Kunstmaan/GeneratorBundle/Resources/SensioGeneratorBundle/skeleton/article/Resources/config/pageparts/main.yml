@@ -1,0 +1,16 @@
+name: "{{ entity_class }} Main"
+context: "{{ entity_class|lower }}main"
+types:
+    - { name: Audio, class: {{ bundle.getName() }}\Entity\PageParts\AudioPagePart }
+    - { name: Button, class: {{ bundle.getName() }}\Entity\PageParts\ButtonPagePart }
+    - { name: Download, class: {{ bundle.getName() }}\Entity\PageParts\DownloadPagePart }
+    - { name: Header, class: {{ bundle.getName() }}\Entity\PageParts\HeaderPagePart }
+    - { name: Image, class: {{ bundle.getName() }}\Entity\PageParts\ImagePagePart }
+    - { name: IntroText, class: {{ bundle.getName() }}\Entity\PageParts\IntroTextPagePart }
+    - { name: Line, class: {{ bundle.getName() }}\Entity\PageParts\LinePagePart }
+    - { name: Link, class: {{ bundle.getName() }}\Entity\PageParts\LinkPagePart }
+    - { name: RawHtml, class: {{ bundle.getName() }}\Entity\PageParts\RawHtmlPagePart }
+    - { name: Text, class: {{ bundle.getName() }}\Entity\PageParts\TextPagePart }
+    - { name: Toc, class: {{ bundle.getName() }}\Entity\PageParts\TocPagePart }
+    - { name: ToTop, class: {{ bundle.getName() }}\Entity\PageParts\ToTopPagePart }
+    - { name: Video, class: {{ bundle.getName() }}\Entity\PageParts\VideoPagePart }

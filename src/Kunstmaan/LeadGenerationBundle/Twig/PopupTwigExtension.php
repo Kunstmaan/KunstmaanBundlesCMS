@@ -31,10 +31,10 @@ class PopupTwigExtension extends \Twig_Extension
     private $debug;
 
     /**
-     * @param PopupManager $popupManager
+     * @param PopupManager       $popupManager
      * @param ContainerInterface $container
-     * @param array $popupTypes
-     * @param bool $debug
+     * @param array              $popupTypes
+     * @param bool               $debug
      */
     public function __construct(PopupManager $popupManager, ContainerInterface $container, array $popupTypes, $debug)
     {
@@ -116,7 +116,7 @@ class PopupTwigExtension extends \Twig_Extension
     public function getAvailablePopupTypes()
     {
         $popups = array();
-        foreach($this->popupTypes as $popupType) {
+        foreach ($this->popupTypes as $popupType) {
             $object = new $popupType();
             $popups[$object->getClassname()] = $object->getFullClassname();
         }
@@ -135,19 +135,11 @@ class PopupTwigExtension extends \Twig_Extension
         $rulesTypes = $this->popupManager->getAvailableRules($popup);
 
         $rules = array();
-        foreach($rulesTypes as $ruleType) {
+        foreach ($rulesTypes as $ruleType) {
             $object = new $ruleType();
             $rules[$object->getClassname()] = $object->getFullClassname();
         }
 
         return $rules;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kunstmaan_lead_generation_popup_twig_extension';
     }
 }

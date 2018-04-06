@@ -4,9 +4,9 @@ namespace Kunstmaan\MenuBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
 class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -37,7 +37,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
+        $this->addField('name', 'kuma_menu.menu.adminlist.field.name', true);
     }
 
     /**
@@ -45,7 +45,7 @@ class MenuAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_menu.menu.adminlist.filter.name');
     }
 
     /**

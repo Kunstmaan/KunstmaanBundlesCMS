@@ -2,11 +2,11 @@
 
 namespace Kunstmaan\TranslatorBundle\Command;
 
+use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
 class ExportTranslationsCommand extends ContainerAwareCommand
@@ -14,11 +14,11 @@ class ExportTranslationsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-        ->setName('kuma:translator:export')
-        ->setDescription('Export stashed translations into files (gzip compressed)')
-        ->addOption('domains',    'd',    InputOption::VALUE_REQUIRED, 'Specify which domains to export, default all domains in the stash')
-        ->addOption('format',     'f',    InputOption::VALUE_REQUIRED, 'Specify which format files should be, default is yaml')
-        ->addOption('locales',    'l',    InputOption::VALUE_REQUIRED, 'Specifiy which locales to export, default all in the stash');
+            ->setName('kuma:translator:export')
+            ->setDescription('Export stashed translations into files (gzip compressed)')
+            ->addOption('domains',    'd',    InputOption::VALUE_REQUIRED, 'Specify which domains to export, default all domains in the stash')
+            ->addOption('format',     'f',    InputOption::VALUE_REQUIRED, 'Specify which format files should be, default is yaml')
+            ->addOption('locales',    'l',    InputOption::VALUE_REQUIRED, 'Specifiy which locales to export, default all in the stash')
         ;
     }
 

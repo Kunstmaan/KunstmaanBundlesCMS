@@ -23,12 +23,13 @@ class Configuration implements ConfigurationInterface
         $rootNode    = $treeBuilder->root('kunstmaan_node_search');
 
         $rootNode->children()->booleanNode('enable_update_listener')->defaultTrue();
+        $rootNode->children()->booleanNode('use_match_query_for_title')->defaultFalse();
 
         /** @var ArrayNodeDefinition $properties */
         $properties = $rootNode->children()->arrayNode('mapping')->useAttributeAsKey('name')->prototype('array');
 
         $properties->children()->scalarNode('type')->beforeNormalization()->ifNotInArray($types = [
-            'string', 'token_count',
+            'string', 'token_count', 'text', 'keyword',
             'float', 'double', 'byte', 'short', 'integer', 'long',
             'date',
             'boolean',
@@ -41,9 +42,18 @@ class Configuration implements ConfigurationInterface
         $properties->children()->floatNode('boost');
         $properties->children()->scalarNode('null_value');
         $properties->children()->scalarNode('analyzer');
+        $properties->children()->scalarNode('search_analyzer');
         $properties->children()->scalarNode('index_analyzer');
-        $properties->children()->scalarNode('index_name');
+        $properties->children()->scalarNode('copy_to');
+        $properties->children()->scalarNode('term_vector')->beforeNormalization()->ifNotInArray(['yes', 'no', 'with_positions', 'with_offsets', 'with_positions_offsets'])
+            ->thenInvalid("term_vector must be one of: yes, no, with_positions, with_offsets, with_positions_offsets");
 
+        $rootNode
+            ->children()
+                ->arrayNode('contexts')
+                ->defaultValue([])
+                ->prototype('scalar')->end()
+            ->end();
 
         return $treeBuilder;
     }

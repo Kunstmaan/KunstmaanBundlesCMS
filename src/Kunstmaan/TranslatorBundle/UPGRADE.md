@@ -10,11 +10,11 @@ To upgrade, first backup your database (just in case) and pull in the new versio
 TranslatorBundle.
 
 Then apply the DB change by running :
-```app/console doctrine:migrations:diff && app/console doctrine:migrations:migrate```
+```bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate```
 or
-```app/console doctrine:schema:update --force```
+```bin/console doctrine:schema:update --force```
 
 Finally execute the following command :
-```app/console kuma:translator:migrate```
+```bin/console kuma:translator:migrate```
 
 This should perform the necessary changes.

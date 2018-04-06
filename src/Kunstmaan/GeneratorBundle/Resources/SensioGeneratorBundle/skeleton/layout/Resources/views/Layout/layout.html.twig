@@ -29,6 +29,7 @@
     {# CSS #}
     {% include '<%= shortBundleName %>/Layout/_css.html.twig' %}
 </head>
+{% endspaceless %}
 
 <body id="sidebar-toggle-container" class="sidebar-toggle-container{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
 <% if demosite %>
@@ -79,7 +80,9 @@
     {% endblock %}
 
     {# JS Footer #}
-    {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
+    {% block jsBundle %}
+        {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
+    {% endblock %}
 <% if demosite %>
     </div>
 
@@ -87,4 +90,3 @@
 <% endif %>
 </body>
 </html>
-{% endspaceless %}

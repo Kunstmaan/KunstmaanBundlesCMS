@@ -3,10 +3,11 @@
 namespace Kunstmaan\LeadGenerationBundle\Entity\Popup;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
+use Kunstmaan\LeadGenerationBundle\Entity\Rule\AbstractRule;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -15,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @UniqueEntity(fields={"name"})
  */
-abstract class AbstractPopup
+abstract class AbstractPopup implements EntityInterface
 {
     /**
      * @ORM\Id
@@ -48,6 +49,19 @@ abstract class AbstractPopup
     {
         $this->rules = new ArrayCollection();
     }
+
+    /**
+     * @param int $id
+     *
+     * @return AbstractPopup
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
 
     /**
      * @return int
@@ -181,10 +195,10 @@ abstract class AbstractPopup
      *
      * @return string
      */
-    abstract protected function getControllerAction();
+    abstract public function getControllerAction();
 
     /**
-     * @return AbstractPopupAdminType
+     * @return string
      */
-    abstract protected function getAdminType();
+    abstract public function getAdminType();
 }

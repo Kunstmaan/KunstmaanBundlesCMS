@@ -1,0 +1,37 @@
+<div id="empty-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'media.folder.empty.modal.title' | trans }}
+                </h3>
+            </div>
+
+            {% form_theme emptyform '@KunstmaanAdmin/Form/fields.html.twig' %}
+            {{ form_start(emptyform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_empty', { 'folderId' : folder.id  }), 'attr': {'id': 'empty-modal-form'}}) }}
+
+                <!-- Body -->
+                <div class="modal-body">
+                    {{ 'media.folder.empty.modal.text'| trans({'%folder%': folder.name }) | raw }}
+
+                    {{ form_widget(emptyform) }}
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="js-add-app-loading--forms btn btn-danger btn--raise-on-hover">
+                        {{ 'media.folder.empty.modal.save' | trans }}
+                    </button>
+                    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'form.cancel' | trans }}
+                    </button>
+                </div>
+            {{ form_end(emptyform) }}
+        </div>
+    </div>
+</div>

@@ -2,16 +2,16 @@
 
 namespace Kunstmaan\SeoBundle\Twig;
 
-use Twig_Extension;
-use Twig_Environment;
-
 use Doctrine\ORM\EntityManager;
-
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 use Kunstmaan\SeoBundle\Entity\Seo;
+
+use Twig_Environment;
+
+use Twig_Extension;
 
 /**
  * Twig extensions for Seo
@@ -125,7 +125,7 @@ class SeoTwigExtension extends Twig_Extension
 
     /**
      * @param AbstractPage $entity
-     * @param null|string $default If given we'll return this text if no SEO title was found.
+     * @param null|string  $default If given we'll return this text if no SEO title was found.
      *
      * @return string
      */
@@ -148,9 +148,9 @@ class SeoTwigExtension extends Twig_Extension
 
     /**
      * @param \Twig_Environment $environment
-     * @param AbstractEntity $entity The entity
-     * @param mixed $currentNode The current node
-     * @param string $template The template
+     * @param AbstractEntity    $entity      The entity
+     * @param mixed             $currentNode The current node
+     * @param string            $template    The template
      *
      * @return string
      */
@@ -167,15 +167,6 @@ class SeoTwigExtension extends Twig_Extension
             )
         );
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'kuma_seo_twig_extension';
-    }
-
 
     /**
      * @param array $values
@@ -244,11 +235,16 @@ class SeoTwigExtension extends Twig_Extension
     /**
      * @param $src
      *
-     * @return Seo
+     * @return array|null
      */
     public function getImageDimensions($src)
     {
-        list($width, $height) = getimagesize($src);
+        try {
+            list($width, $height) = getimagesize($src);
+        } catch (\Exception $e) {
+            return null;
+        }
+
         return array('width' => $width, 'height' => $height);
     }
 }

@@ -4,9 +4,9 @@ namespace Kunstmaan\AdminListBundle\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 
-use Symfony\Component\HttpFoundation\Request;
-
 use Pagerfanta\Pagerfanta;
+
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * AdminList

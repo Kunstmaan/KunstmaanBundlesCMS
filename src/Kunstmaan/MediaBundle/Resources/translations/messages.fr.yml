@@ -1,11 +1,16 @@
-# Media
+---
 media:
   aviary:
     title: Aviary
     nothing: Rien à voir ici.
-
   media:
-    no: Pas encore de fichier dans ce dossier.
+    "no": Pas encore de fichier dans ce dossier.
+    dnd:
+      tip: "Tip:"
+      tiptext: did you know you can just drop multiple files here?
+      alert:
+        title: Incoming!
+        text: Drop your files to instantly upload them to this folder.
     bulkupload:
       addto: Charger des fichiers dans "%folder%"
     contenttab:
@@ -13,6 +18,8 @@ media:
     propertiestab:
       title: Propriétés
     title: Média
+    add:
+      action: Add media
     edit:
       action: Modifier
     download:
@@ -26,7 +33,6 @@ media:
     addto: Ajouter le média dans "%folder%"
     deletesure: Etes-vous certain de vouloir supprimer cet élément ?
     new: Ajouter un média dans "%folder%"
-
   folder:
     addsub:
       action: Ajouter un sous-dossier
@@ -34,24 +40,52 @@ media:
       modal:
         title: Ajouter un sous-dossier
         save: Ajouter
+      form:
+        name: Name
+        rel: Rel
+        parent: Parent
+        internal_name: Internal name
+      success:
+        text: Folder '%folder%' has been created!
+    empty:
+      action: Empty folder
+      action_short: Empty
+      modal:
+        title: Empty folder
+        text: Are you sure you want to delete the content of folder "%folder%"?
+        checkbox: Also delete subfolders
+        save: Empty
+      success:
+        text: Folder '%folder%' has been emptied!
     sub:
-      no: Pas encore de sous-dossiers.
+      "no": Pas encore de sous-dossiers.
     delete:
       action: Supprimer ce dossier
       action_short: Supprimer
       modal:
         title: Supprimer le dossier
         text: Etes-vous certain de vouloir supprimer "%folder%"?
+      failure:
+        text: You can't delete the %folder% folder!
+      success:
+        text: Folder '%folder%' has been deleted!
     save: Sauver
     contenttab:
       title: Contenu
     propertiestab:
       title: Propriétés
-
+    sortby: Sort by
+    show:
+      success:
+        text: Folder %folder% has been updated!
   bulkupload:
     upload: Upload
     bulkupload: Bulk upload
-
+    select_files: Select files
+    upload_more: Upload more files
+    back_to_folder: Back to folder
+    upload_finished: The file upload has finished.
+    not_available: The bulk upload functionality will not work for you. Your browser doesn't have Flash, Silverlight or HTML5 support.
   slide:
     add: Ajouer un slide
     modal:
@@ -72,9 +106,57 @@ media:
     modal:
       title: Ajouter un fichier
       save: Ajouter
-
   widget:
     choose: Choisir
     delete: Supprimer
     media_chooser: sélecteur de médias
     icon_chooser: sélecteur des icônes
+  adminlist:
+    configurator:
+      name: Name
+      type: Type
+      date: Date
+      filesize: Filesize
+      filter:
+        name: Name
+        type: Type
+        updated_at: Date
+        filesize: Filesize (in bytes)
+  form:
+    remote:
+      name:
+        label: Name
+      code:
+        label: Code
+      type:
+        label: Type
+      copyright:
+        label: Copyright
+      description:
+        label: Description
+    bulk_upload:
+      files:
+        label: Files
+    file:
+      name:
+        label: Name
+      file:
+        label: File
+      copyright:
+        label: Copyright
+      description:
+        label: Description
+      originalFilename:
+        label: Original filename
+    remote_audio:
+      type:
+        label: Type
+    remote_slide:
+      type:
+        label: Type
+    remote_video:
+      type:
+        label: Type
+  flash:
+    created: Media %medianame% has been created!
+    not_created: Media not created! %mediaerrors%
