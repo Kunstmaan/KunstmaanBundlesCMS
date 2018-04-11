@@ -108,7 +108,7 @@
         ],
         "post-install-cmd": ["@symfony-scripts"],
         "post-update-cmd": ["@symfony-scripts"]
-    }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "5.1-dev"
