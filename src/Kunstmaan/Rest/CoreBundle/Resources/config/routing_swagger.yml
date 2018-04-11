@@ -1,0 +1,7 @@
+_swagger-ui:
+    resource: '@HBSwaggerUiBundle/Resources/config/routing.yml'
+    prefix: /docs
+
+_swagger:
+    resource: "@SwaggerBundle/Resources/config/routing.xml"
+    prefix:   /

@@ -1,0 +1,23 @@
+Kunstmaan\MediaBundle\Entity\Media:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        description:
+            expose: true
+        copyright:
+            expose: true
+        url:
+            expose: true
+        originalFilename:
+            expose: true
+        folder:
+            expose: true
+        contentType:
+            expose: true
+        metadata:
+            expose: true
+        filesize:
+            expose: true

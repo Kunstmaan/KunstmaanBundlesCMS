@@ -1,0 +1,13 @@
+Kunstmaan\NodeBundle\Entity\NodeTranslation:
+    exclusion_policy: ALL
+    properties:
+        lang:
+            expose: true
+        online:
+            expose: true
+        title:
+            expose: true
+        weight:
+            expose: true
+        publicNodeVersion:
+            expose: true

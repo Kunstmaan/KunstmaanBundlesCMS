@@ -1,0 +1,9 @@
+Kunstmaan\NodeBundle\Entity\NodeVersion:
+    exclusion_policy: ALL
+    properties:
+        owner:
+            expose: true
+        refId:
+            expose: true
+        refEntityName:
+            expose: true

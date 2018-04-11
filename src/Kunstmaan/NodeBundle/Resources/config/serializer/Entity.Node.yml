@@ -1,0 +1,11 @@
+Kunstmaan\NodeBundle\Entity\Node:
+    exclusion_policy: ALL
+    properties:
+        nodeTranslations:
+            expose: true
+        hiddenFromNav:
+            expose: true
+        internalName:
+            expose: true
+        refEntityName:
+            expose: true

@@ -24,6 +24,7 @@ settings:
     role: Rol
     add: Rol toevoegen
     edit: Rol bewerken
+
 kuma_user:
   roles:
     add:
@@ -56,6 +57,9 @@ kuma_user:
     delete:
       flash:
         'success.%username%': Gebruiker '%username%' werd aangemaakt!
+    key_generate:
+      flash:
+        'success.%username%': Gebruiker '%username%' heeft een nieuwe api key!
   group:
     adminlist:
       header:

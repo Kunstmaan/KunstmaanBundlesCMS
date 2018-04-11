@@ -52,6 +52,7 @@ search:
 
 # Forms
 form:
+    generate_api_key: Generate API key
     cancel: Cancel
     delete: Delete
     deletesure: Are you sure you want to delete this?
