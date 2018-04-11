@@ -104,7 +104,7 @@
     },
     "scripts": {
         "symfony-scripts": [
-            "HarmBandstra\\SwaggerUiBundle\\Composer\\ScriptHandler::linkAssets",
+            "HarmBandstra\\SwaggerUiBundle\\Composer\\ScriptHandler::linkAssets"
         ],
         "post-install-cmd": ["@symfony-scripts"],
         "post-update-cmd": ["@symfony-scripts"]
