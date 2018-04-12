@@ -1,0 +1,6 @@
+Kunstmaan\AdminBundle\Entity\AbstractEntity:
+  exclusion_policy: ALL
+  properties:
+    id:
+      expose: true
+      type: integer

@@ -12,17 +12,23 @@
 namespace Kunstmaan\Rest\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\RestBundle\Controller\ControllerTrait;
-use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
+use Kunstmaan\Rest\NodeBundle\Form\RestNodeType;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Class NodesController
@@ -64,7 +70,7 @@ class NodesController extends AbstractApiController
      *         name="limit",
      *         in="query",
      *         type="integer",
-     *         description="Amount of items (default 100, max 1000)",
+     *         description="Amount of results (default 100, max 1000)",
      *         required=false,
      *     ),
      *     @SWG\Parameter(
@@ -90,7 +96,8 @@ class NodesController extends AbstractApiController
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Returned when successful"
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/Node")
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -108,9 +115,10 @@ class NodesController extends AbstractApiController
      * @QueryParam(name="hiddenFromNav", nullable=true, default=false, description="If 1, only nodes hidden from nav will be returned")
      * @QueryParam(name="refEntityName", nullable=true, description="Which pages you want to have returned")
      * @QueryParam(name="page", nullable=false, default="1", requirements="\d+", description="The current page")
-     * @QueryParam(name="limit", nullable=false, default="100", requirements="[1-1000]", description="Amount of items")
+     * @QueryParam(name="limit", nullable=false, default="20", requirements="\d+", description="Amount of results")
      *
      * @param ParamFetcher $paramFetcher
+     *
      * @return Response
      */
     public function getNodesAction(ParamFetcher $paramFetcher)
@@ -119,11 +127,6 @@ class NodesController extends AbstractApiController
 
         $page = $paramFetcher->get('page');
         $limit = $paramFetcher->get('limit');
-        foreach ($paramFetcher->all() as $key => $param) {
-            if (null !== $param && ($key != 'page' || $key != 'limit')) {
-                $params[$key] = $param;
-            }
-        }
 
         $qb = $this->em->getRepository(Node::class)->createQueryBuilder('n');
 
@@ -155,7 +158,7 @@ class NodesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/Node")
+     *         @Model(type=Node::class)
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -172,20 +175,21 @@ class NodesController extends AbstractApiController
     public function getNodeAction($id)
     {
         $data = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
     /**
-     * Retrieve a single node
+     * Update a node
      *
      * @View(
      *     statusCode=204
      * )
      *
-     * @SWG\Post(
+     * @SWG\Put(
      *     path="/api/nodes/{id}",
-     *     description="Update a node by ID",
-     *     operationId="postNode",
+     *     description="Update a node",
+     *     operationId="putNode",
      *     produces={"application/json"},
      *     tags={"nodes"},
      *     @SWG\Parameter(
@@ -199,8 +203,7 @@ class NodesController extends AbstractApiController
      *         name="node",
      *         in="body",
      *         type="object",
-     *         required=true,
-     *         @SWG\Schema(ref="#/definitions/Node"),
+     *         @Model(type=Node::class)
      *     ),
      *     @SWG\Response(
      *         response=204,
@@ -219,38 +222,64 @@ class NodesController extends AbstractApiController
      *     )
      * )
      *
+     * @ParamConverter("node", converter="fos_rest.request_body")
+     *
      * @param Request $request
+     * @param integer $id
      */
-    public function postNodeAction(Request $request)
+    public function putNodesAction(Request $request, Node $node, ConstraintViolationListInterface $validationErrors)
     {
-        $json = $request->getContent();
-        $node = json_decode($json, true);
+        if (count($validationErrors) > 0) {
+            return new \FOS\RestBundle\View\View($validationErrors, Response::HTTP_BAD_REQUEST);
+        }
 
-        $this->em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($node);
+        $em->flush();
     }
-
 
     /**
      * Retrieve a single node's translations
      *
-     * ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a single node's translations",
-     *  resourceDescription="Retrieve a single node's translations",
-     *  output="Kunstmaan\NodeBundle\Entity\Node",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The node ID"
-     *      }
-     *  },
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      403="Returned when the user is not authorized to fetch nodes",
-     *      500="Something went wrong"
-     *  }
+     * @View(
+     *     statusCode=200
+     * )
+     *
+     * @SWG\Get(
+     *     path="/api/nodes/{id}/translations",
+     *     description="Retrieve a single node's translations",
+     *     operationId="getNodeTranslation",
+     *     produces={"application/json"},
+     *     tags={"nodes"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         type="integer",
+     *         description="The node ID",
+     *         required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="lang",
+     *         in="query",
+     *         type="string",
+     *         description="Set language if you want only to retrieve the node translation in this language",
+     *         required=false,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returned when successful",
+     *         @Model(type=NodeTranslation::class)
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
      * )
      *
      * @QueryParam(name="lang", nullable=true, description="Set language if you want only to retrieve the node translation in this language")
@@ -261,8 +290,7 @@ class NodesController extends AbstractApiController
 
         if ($lang = $paramFetcher->get('lang')) {
             $data = $node->getNodeTranslation($lang);
-        }
-        else {
+        } else {
             $data = $node->getNodeTranslations();
         }
 
@@ -272,24 +300,38 @@ class NodesController extends AbstractApiController
     /**
      * Retrieve a single node's children
      *
-     * ApiDoc(
-     *  resource=true,
-     *  description="Get a node's children",
-     *  resourceDescription="Get a node's children",
-     *  output="Kunstmaan\NodeBundle\Entity\Node",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The node ID"
-     *      }
-     *  },
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      403="Returned when the user is not authorized to fetch nodes",
-     *      500="Something went wrong"
-     *  }
+     * @View(
+     *     statusCode=200
+     * )
+     *
+     * @SWG\Get(
+     *     path="/api/nodes/{id}/children",
+     *     description="Retrieve a single node's children",
+     *     operationId="getNodeChildren",
+     *     produces={"application/json"},
+     *     tags={"nodes"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         type="integer",
+     *         description="The node ID",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/listNode")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
      * )
      */
     public function getNodeChildrenAction($id)
@@ -303,24 +345,34 @@ class NodesController extends AbstractApiController
     /**
      * Retrieve a single node's parent
      *
-     * ApiDoc(
-     *  resource=true,
-     *  description="Get a node's parent",
-     *  resourceDescription="Get a node's parent",
-     *  output="Kunstmaan\NodeBundle\Entity\Node",
-     *  requirements={
-     *      {
-     *          "name"="id",
-     *          "dataType"="integer",
-     *          "requirement"="\d+",
-     *          "description"="The node ID"
-     *      }
-     *  },
-     *  statusCodes={
-     *      200="Returned when successful",
-     *      403="Returned when the user is not authorized to fetch nodes",
-     *      500="Something went wrong"
-     *  }
+     * @SWG\Get(
+     *     path="/api/nodes/{id}/parent",
+     *     description="Retrieve a single node's parent",
+     *     operationId="getNodeParent",
+     *     produces={"application/json"},
+     *     tags={"nodes"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         type="integer",
+     *         description="The node ID",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/Node")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
      * )
      */
     public function getNodeParentAction($id)
@@ -329,5 +381,25 @@ class NodesController extends AbstractApiController
         $data = $node->getParent();
 
         return $this->handleView($this->view($data, Response::HTTP_OK));
+    }
+
+    /**
+     * Get entity instance
+     *
+     * @param integer $id
+     *
+     * @return Organisation
+     */
+    protected function getEntity($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('KunstmaanNodeBundle:Node')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find node entity');
+        }
+
+        return $entity;
     }
 }

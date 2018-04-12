@@ -11,3 +11,7 @@ Kunstmaan\NodeBundle\Entity\NodeTranslation:
             expose: true
         publicNodeVersion:
             expose: true
+        created:
+            expose: true
+        updated:
+            expose: true

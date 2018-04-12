@@ -12,6 +12,7 @@
 namespace Kunstmaan\Rest\CoreBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
+use FOS\RestBundle\Controller\FOSRestController;
 use Kunstmaan\Rest\CoreBundle\Model\PaginatedCollection;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -21,7 +22,7 @@ use Pagerfanta\Pagerfanta;
  *
  * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
  */
-abstract class AbstractApiController
+abstract class AbstractApiController extends FOSRestController
 {
     /**
      * Create an ORM Paginated collection containing items, count and total

@@ -17,10 +17,12 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 
 /**
  * Class ApiPage
+ *
  * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
  *
  * @SWG\Definition()
@@ -45,7 +47,7 @@ class ApiPage
      *     type="array",
      *     @SWG\Items(
      *      allOf={
-     *          @SWG\Schema(ref="#/definitions/ApiPagePart")
+     *         @Model(type=ApiPagePart::class)
      *      }
      *    )
      * )
@@ -80,6 +82,7 @@ class ApiPage
 
     /**
      * @param string $type
+     *
      * @return $this
      */
     public function setType($type)
@@ -99,6 +102,7 @@ class ApiPage
 
     /**
      * @param HasPagePartsInterface $page
+     *
      * @return $this
      */
     public function setPage(HasPagePartsInterface $page)
@@ -119,6 +123,7 @@ class ApiPage
 
     /**
      * @param array|ArrayCollection $pageParts
+     *
      * @return $this
      */
     public function setPageParts($pageParts)
@@ -138,6 +143,7 @@ class ApiPage
 
     /**
      * @param Node $node
+     *
      * @return $this
      */
     public function setNode(Node $node)
@@ -157,6 +163,7 @@ class ApiPage
 
     /**
      * @param NodeTranslation $nodeTranslation
+     *
      * @return $this
      */
     public function setNodeTranslation(NodeTranslation $nodeTranslation)
@@ -176,6 +183,7 @@ class ApiPage
 
     /**
      * @param NodeVersion $nodeVersion
+     *
      * @return $this
      */
     public function setNodeVersion(NodeVersion $nodeVersion)

@@ -1,7 +1,9 @@
-_swagger-ui:
-    resource: '@HBSwaggerUiBundle/Resources/config/routing.yml'
-    prefix: /docs
+app.swagger_ui:
+    path: /api/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
 
-_swagger:
-    resource: "@SwaggerBundle/Resources/config/routing.xml"
-    prefix:   /
+app.swagger:
+    path: /api/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }

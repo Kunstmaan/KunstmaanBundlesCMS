@@ -21,10 +21,12 @@ use Kunstmaan\Rest\CoreBundle\Helper\DataTransformerTrait;
 use Kunstmaan\Rest\CoreBundle\Service\DataTransformerService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Kunstmaan\Rest\NodeBundle\Model\ApiPage;
 
 /**
  * Class PagesController
@@ -76,22 +78,23 @@ class PagesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *         @Model(type=ApiPage::class)
      *     ),
      *     @SWG\Response(
      *         response=403,
      *         description="Returned when the user is not authorized to fetch nodes",
-     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *         @SWG\Schema(ref="#/definitions/Node")
      *     ),
      *     @SWG\Response(
      *         response="default",
      *         description="unexpected error",
-     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *         @SWG\Schema(ref="#/definitions/Node")
      *     )
      * )
      *
-     * @param Request $request
+     * @param Request      $request
      * @param ParamFetcher $paramFetcher
+     *
      * @return Response
      */
     public function getPagesAction(Request $request, ParamFetcher $paramFetcher)
@@ -138,7 +141,7 @@ class PagesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *         @Model(type=ApiPage::class)
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -163,8 +166,7 @@ class PagesController extends AbstractApiController
         $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineNodeTranslationsQueryBuilder($locale);
         $qb
             ->andWhere('n.id = :nodeId')
-            ->setParameter('nodeId', $id)
-        ;
+            ->setParameter('nodeId', $id);
 
         $nodeTranslation = $qb->getQuery()->getOneOrNullResult();
         if (!$nodeTranslation instanceof NodeTranslation) {

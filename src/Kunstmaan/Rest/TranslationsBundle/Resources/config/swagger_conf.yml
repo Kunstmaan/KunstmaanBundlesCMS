@@ -1,0 +1,72 @@
+nelmio_api_doc:
+  definitions:
+    singleTranslation:
+      title: "singleTranslation"
+      type: "object"
+      properties:
+        keyword:
+          type: "string"
+        text:
+          type: "string"
+
+    listTranslation:
+      title: "listTranslation"
+      type: "array"
+      items:
+        allOf:
+          - $ref: '#/definitions/singleTranslation'
+
+    deprecateKeyword:
+      title: "deprecateKeyword"
+      type: "object"
+      properties:
+        keyword:
+          type: "string"
+          required: "true"
+          example: "keyword"
+
+    keywordCollection:
+      title: "keywordCollection"
+      type: "array"
+      allOf:
+        - $ref: '#/definitions/deprecateKeyword'
+
+    disablingDate:
+      title: "disablingDate"
+      type: "object"
+      properties:
+        date:
+          type: "datetime"
+          required: "true"
+          example: "2048-05-12"
+
+    putTranslation:
+      title: "putTranslation"
+      type: "object"
+      properties:
+        keyword:
+          type: "string"
+          required: "true"
+        text:
+          type: "string"
+          required: "true"
+        locale:
+          type: "string"
+          required: "true"
+        domain:
+          type: "string"
+          required: "true"
+          example: "messages"
+
+    postTranslation:
+      title: "postTranslation"
+      type: "object"
+      allOf:
+        - $ref: '#/definitions/putTranslation'
+
+    postTranslations:
+      title: "postTranslations"
+      type: "array"
+      items:
+        allOf:
+          - $ref: '#/definitions/postTranslation'

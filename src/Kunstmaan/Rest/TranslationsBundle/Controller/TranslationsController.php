@@ -11,120 +11,12 @@ use Kunstmaan\Rest\TranslationsBundle\Model\Exception\TranslationException;
 use Kunstmaan\Rest\TranslationsBundle\Service\TranslationService;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
 use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class TranslationsController.
- *
- * @SWG\Definition(
- *   definition="singleTranslation",
- *   type="object",
- *   allOf={
- *       @SWG\Schema(
- *           @SWG\Property(property="keyword",type="string"),
- *           @SWG\Property(property="text",type="string"),
- *       )
- *   }
- * )
- * @SWG\Definition(
- *   definition="listTranslation",
- *   type="array",
- *   @SWG\Items(
- *     allOf={
- *          @SWG\Schema(ref="#/definitions/singleTranslation")
- *     }
- *   )
- * )
- *
- * @SWG\Definition(
- *   definition="putTranslation",
- *   type="object",
- *   allOf={
- *       @SWG\Schema(
- *           required={"keyword", "text", "locale", "domain"},
- *           @SWG\Property(property="keyword",type="string"),
- *           @SWG\Property(property="text",type="string"),
- *           @SWG\Property(property="locale",type="string"),
- *           @SWG\Property(property="domain",type="string", example="messages"),
- *       )
- *   }
- * )
- * @SWG\Definition(
- *   definition="postTranslation",
- *   type="object",
- *   allOf={
- *       @SWG\Schema(ref="#/definitions/putTranslation"),
- *   }
- * )
- * @SWG\Definition(
- *   definition="postTranslations",
- *   type="array",
- *   @SWG\Items(
- *      allOf={
- *          @SWG\Schema(ref="#/definitions/postTranslation")
- *      }
- *   )
- * )
- * @SWG\Definition(
- *   definition="keywordCollection",
- *   type="array",
- *   @SWG\Items(
- *     allOf={
- *       @SWG\Schema(ref="#/definitions/deprecateKeyword")
- *      }
- *   )
- * )
- *
- * @SWG\Definition(
- *   definition="deprecateKeyword",
- *   type="object",
- *   allOf={
- *       @SWG\Schema(
- *           required={"keyword"},
- *           @SWG\Property(property="keyword",type="string", example="keyword")
- *       )
- *   }
- * )
- *
- * @SWG\Definition(
- *   definition="disablingDate",
- *   type="object",
- *   allOf={
- *       @SWG\Schema(
- *           required={"date"},
- *           @SWG\Property(property="date",type="datetime", example="2048-05-12")
- *       )
- *   }
- * )
- *
- * @SWG\Definition(
- *     definition="ErrorModel",
- *     type="object",
- *     required={"code", "message"},
- *     @SWG\Property(
- *         property="code",
- *         type="integer",
- *         format="int32",
- *          example="404"
- *     ),
- *     @SWG\Property(
- *         property="message",
- *         type="string",
- *         example="Not found"
- *     ),
- *     @SWG\Property(
- *         property="mensuraCode",
- *         type="string",
- *     ),
- *     @SWG\Property(
- *         property="extraData",
- *         type="array",
- *          items={},
- *     )
- * )
- *
- *
  */
 class TranslationsController extends FOSRestController
 {
@@ -141,7 +33,7 @@ class TranslationsController extends FOSRestController
      * @return array
      *
      *
-     * * @SWG\Get(
+     * @SWG\Get(
      *     path="/api/public/translations",
      *     description="Get a list of all translations",
      *     operationId="getTranslations",
