@@ -9,8 +9,6 @@ Kunstmaan\NodeBundle\Entity\NodeTranslation:
             expose: true
         weight:
             expose: true
-        publicNodeVersion:
-            expose: true
         created:
             expose: true
         updated:

@@ -68,7 +68,6 @@ class ApiPage
 
     /**
      * @var NodeVersion
-     * @SWG\Property(ref="#/definitions/NodeVersion")
      */
     private $nodeVersion;
 

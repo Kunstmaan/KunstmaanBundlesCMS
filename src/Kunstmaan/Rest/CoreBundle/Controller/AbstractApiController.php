@@ -13,6 +13,8 @@ namespace Kunstmaan\Rest\CoreBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\Controller\FOSRestController;
+use Hateoas\Representation\CollectionRepresentation;
+use Hateoas\Representation\PaginatedRepresentation;
 use Kunstmaan\Rest\CoreBundle\Model\PaginatedCollection;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -27,10 +29,11 @@ abstract class AbstractApiController extends FOSRestController
     /**
      * Create an ORM Paginated collection containing items, count and total
      *
-     * @param QueryBuilder $qb
-     * @param $page
-     * @param $limit
+     * @param QueryBuilder  $qb
+     * @param               $page
+     * @param               $limit
      * @param \Closure|null $decorator
+     *
      * @return PaginatedCollection
      */
     protected function createORMPaginatedCollection(QueryBuilder $qb, $page, $limit, \Closure $decorator = null)
@@ -45,6 +48,17 @@ abstract class AbstractApiController extends FOSRestController
             $items[] = $decorator !== null ? $decorator($result) : $result;
         }
 
-        return new PaginatedCollection($items, $pagerfanta->getNbResults());
+        return new PaginatedRepresentation(
+            new CollectionRepresentation($items),
+            'get_nodes',
+            [],
+            $page,
+            $limit,
+            $pagerfanta->getNbPages(),
+            null,
+            null,
+            false,
+            $pagerfanta->getNbResults()
+        );
     }
 }

@@ -1,0 +1,19 @@
+Kunstmaan\NodeBundle\Entity\Node:
+  exclusion_policy: ALL
+
+  properties:
+    hiddenFromNav:
+      expose: true
+    internalName:
+      expose: true
+    refEntityName:
+      expose: true
+
+  relations:
+    -
+      rel: self
+      href: expr('/api/nodes/' ~ object.getId())
+    -
+      rel: nodeTranslations
+      embedded:
+        content: expr(object.getNodeTranslations())

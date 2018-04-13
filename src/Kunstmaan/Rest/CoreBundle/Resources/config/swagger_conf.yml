@@ -14,10 +14,3 @@ nelmio_api_doc:
         extraData:
           type: "array"
           items: []
-
-    listNode:
-      title: "listNode"
-      type: "array"
-      items:
-        allOf:
-          - $ref: '#/definitions/Node'

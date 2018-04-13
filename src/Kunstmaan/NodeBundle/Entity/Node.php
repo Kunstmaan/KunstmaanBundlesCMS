@@ -110,10 +110,10 @@ class Node extends AbstractEntity implements GedmoNode
      */
     public function __construct()
     {
-        $this->children         = new ArrayCollection();
+        $this->children = new ArrayCollection();
         $this->nodeTranslations = new ArrayCollection();
-        $this->deleted          = false;
-        $this->hiddenFromNav    = false;
+        $this->deleted = false;
+        $this->hiddenFromNav = false;
     }
 
     /**
@@ -195,13 +195,14 @@ class Node extends AbstractEntity implements GedmoNode
     public function getNodeTranslations($includeOffline = false)
     {
         return $this->nodeTranslations
-            ->filter(function (NodeTranslation $entry) use ($includeOffline) {
-                if ($includeOffline || $entry->isOnline()) {
-                    return true;
-                }
+            ->filter(
+                function (NodeTranslation $entry) use ($includeOffline) {
+                    if ($includeOffline || $entry->isOnline()) {
+                        return true;
+                    }
 
-                return false;
-            }
+                    return false;
+                }
             );
     }
 
@@ -280,11 +281,11 @@ class Node extends AbstractEntity implements GedmoNode
      */
     public function getParents()
     {
-        $parent  = $this->getParent();
-        $parents = array();
+        $parent = $this->getParent();
+        $parents = [];
         while ($parent !== null) {
             $parents[] = $parent;
-            $parent    = $parent->getParent();
+            $parent = $parent->getParent();
         }
 
         return array_reverse($parents);
@@ -415,6 +416,6 @@ class Node extends AbstractEntity implements GedmoNode
      */
     public function __toString()
     {
-        return "node " . $this->getId() . ", refEntityName: " . $this->getRefEntityName();
+        return "node ".$this->getId().", refEntityName: ".$this->getRefEntityName();
     }
 }
