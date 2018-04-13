@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
         "symfony/symfony": "~2.8",
         "doctrine/orm": "~2.5.0",
         "doctrine/dbal": "~2.5.0",
@@ -48,7 +48,9 @@
         "twig/extensions": "~1.0",
         "egulias/email-validator": "~1.2",
         "box/spout": "^2.5",
-        "ruflin/elastica": "^3.2"
+        "ruflin/elastica": "^5.1|^6.0",
+        "behat/transliterator": "~1.2",
+        "defuse/php-encryption": "v2.1.0"
     },
     "require-dev": {
         "behat/behat": "~2.5.0",
