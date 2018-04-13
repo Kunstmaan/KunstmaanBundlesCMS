@@ -19,8 +19,8 @@ user upon first login.
         ¦   client_id:  some_client_id.apps.googleusercontent
         ¦   client_secret: some_secret
         ¦   hosted_domains:
-        ¦   ¦   - { domain_name: kunstmaan.be, access_levels: ['ROLE_SUPER_ADMIN'] }
-                - { domain_name: mydomain.example, access_levels: ['ROLE_USER'] }
+        ¦   ¦   - { domain_name: kunstmaan.be, access_levels: ['Super administrators'] }
+                - { domain_name: mydomain.example, access_levels: ['Guests'] }
 ```
 
 ## 2) Configure the guard component in your app/config/security.yml
