@@ -37,7 +37,6 @@ class NelmioDefinitionsCompilerPass implements CompilerPassInterface
             $bundleConfig['nelmio_api_doc']['definitions']
         );
 
-
         $definition->replaceArgument(0, $config);
     }
 }

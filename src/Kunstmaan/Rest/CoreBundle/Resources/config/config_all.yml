@@ -1,8 +1,3 @@
-imports:
-    - { resource: "@KunstmaanRestCoreBundle/Resources/config/swagger_conf.yml" }
-    - { resource: "@KunstmaanRestNodeBundle/Resources/config/swagger_conf.yml" }
-    - { resource: "@KunstmaanRestTranslationsBundle/Resources/config/swagger_conf.yml" }
-
 fos_rest:
     param_fetcher_listener: true
     body_listener: true
