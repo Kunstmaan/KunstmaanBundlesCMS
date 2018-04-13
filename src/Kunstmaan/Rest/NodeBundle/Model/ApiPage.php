@@ -56,18 +56,19 @@ class ApiPage
 
     /**
      * @var Node
-     * @SWG\Property(ref="#/definitions/Node")
+     * @SWG\Property(ref="#/definitions/node")
      */
     private $node;
 
     /**
      * @var NodeTranslation
-     * @SWG\Property(ref="#/definitions/NodeTranslation")
+     * @SWG\Property(ref="#/definitions/nodeTranslation")
      */
     private $nodeTranslation;
 
     /**
      * @var NodeVersion
+     * @SWG\Property(ref="#/definitions/nodeVersion")
      */
     private $nodeVersion;
 

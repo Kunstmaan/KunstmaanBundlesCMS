@@ -1,8 +1,59 @@
 nelmio_api_doc:
-  definitions:
-    listNode:
-      title: "listNode"
-      type: "array"
-      items:
-        allOf:
-          - $ref: '#/definitions/Node'
+  documentation:
+    definitions:
+      node:
+        title: "node"
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+          hidden_from_nav:
+            type: "boolean"
+          ref_entity_name:
+            type: "string"
+          internal_name:
+            type: "string"
+          nodeTranslations:
+            type: "array"
+            items:
+              allOf:
+                - $ref: '#/definitions/nodeTranslation'
+
+      nodeTranslation:
+        title: "nodeTranslation"
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+          lang:
+            type: "string"
+          online:
+            type: "boolean"
+          weight:
+            type: "integer"
+          created:
+            type: "string"
+            format: "date-time"
+          updated:
+            type: "string"
+            format: "date-time"
+
+      nodeVersion:
+        title: "nodeVersion"
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+          owner:
+            type: "id"
+          ref_id:
+            type: "integer"
+          ref_entity_name:
+            type: "string"
+
+      listNode:
+        title: "listNode"
+        type: "array"
+        items:
+          allOf:
+            - $ref: '#/definitions/node'
