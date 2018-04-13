@@ -41,15 +41,23 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
     protected $translator;
 
     /**
-     * @param EntityManagerInterface $em              The entity manager
-     * @param NodeTranslation        $nodeTranslation The node translation
-     * @param TranslatorInterface    $translator      The translator service
+     * @var int
      */
-    public function __construct(EntityManagerInterface $em, $nodeTranslation, $translator)
+    protected $batchSize;
+
+    /**
+     * FormSubmissionExportListConfigurator constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param NodeTranslation        $nodeTranslation
+     * @param TranslatorInterface    $translator
+     * @param int                    $batchSize
+     */
+    public function __construct(EntityManagerInterface $em, NodeTranslation $nodeTranslation, TranslatorInterface $translator, $batchSize = 20)
     {
         $this->nodeTranslation = $nodeTranslation;
-        $this->em              = $em;
-        $this->translator      = $translator;
+        $this->em = $em;
+        $this->translator = $translator;
     }
 
     /**
@@ -115,20 +123,21 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
             ->setParameter('node', $this->nodeTranslation->getNode()->getId())
             ->setParameter('lang', $this->nodeTranslation->getLang())
             ->addOrderBy('fs.created', 'DESC');
-        $iterableResult  = $qb->getQuery()->iterate();
+        $iterableResult = $qb->getQuery()->iterate();
         $isHeaderWritten = false;
 
         $collection = new ArrayCollection();
+        $i = 0;
         foreach ($iterableResult as $row) {
             /* @var FormSubmission $submission */
             $submission = $row[0];
 
             // Write row data
-            $data = array(
-                'id'       => $submission->getId(),
-                'date'     => $submission->getCreated()->format('d/m/Y H:i:s'),
-                'language' => $submission->getLang()
-            );
+            $data = [
+                'id' => $submission->getId(),
+                'date' => $submission->getCreated()->format('d/m/Y H:i:s'),
+                'language' => $submission->getLang(),
+            ];
             foreach ($submission->getFields() as $field) {
                 if (!$isHeaderWritten) {
                     $this->addExportField($field->getFieldName(), $this->translator->trans($field->getLabel()));
@@ -136,7 +145,12 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
                 $data[$field->getFieldName()] = $field->__toString();
             }
             $isHeaderWritten = true;
-            $collection->add(array($data));
+            $collection->add([$data]);
+
+            if (($i % $this->batchSize) === 0) {
+                $this->em->clear();
+            }
+            ++$i;
         }
 
         $this->iterator = $collection->getIterator();
