@@ -2,6 +2,7 @@
 
 ## 5.0.6 / 2018-04-13
 
+* [GeneratorBundle] Fix article generator for no-interaction [#1912](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1912) ([@Devolicious](https://github.com/Devolicious)) 
 * [NodeBundle]: node data collector should go to node id [#1891](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1891) ([@sandergo90](https://github.com/sandergo90)) 
 * [AdminListBundle] Start and end form using tab pane form view, if it exists [#1890](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1890) ([@mtnorthrop](https://github.com/mtnorthrop)) 
 * [MultiDomainBundle]: host override should be set before getting default locale [#1889](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1889) ([@sandergo90](https://github.com/sandergo90)) 
