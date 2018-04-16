@@ -137,7 +137,7 @@ class FeatureContext extends AbstractContext
         $this->fillField('fos_user_change_password_form_plainPassword_first', $newPassword);
         $this->fillField('fos_user_change_password_form_plainPassword_second', $newPassword);
         $this->iScrollToBottom();
-        $this->pressButton('_submit');
+        $this->pressButton('Change password');
     }
 
     /**
