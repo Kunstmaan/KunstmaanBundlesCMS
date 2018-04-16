@@ -1,8 +1,8 @@
 nelmio_api_doc:
   documentation:
     definitions:
-      node:
-        title: "node"
+      Node:
+        title: "Node"
         type: "object"
         properties:
           id:
@@ -17,10 +17,10 @@ nelmio_api_doc:
             type: "array"
             items:
               allOf:
-                - $ref: '#/definitions/nodeTranslation'
+                - $ref: '#/definitions/NodeTranslation'
 
-      nodeTranslation:
-        title: "nodeTranslation"
+      NodeTranslation:
+        title: "NodeTranslation"
         type: "object"
         properties:
           id:
@@ -38,7 +38,7 @@ nelmio_api_doc:
             type: "string"
             format: "date-time"
 
-      nodeVersion:
+      NodeVersion:
         title: "nodeVersion"
         type: "object"
         properties:
@@ -56,4 +56,65 @@ nelmio_api_doc:
         type: "array"
         items:
           allOf:
-            - $ref: '#/definitions/node'
+            - $ref: '#/definitions/Node'
+
+      ApiPagePart:
+        title: "ApiPagePart"
+        type: "object"
+        properties:
+          type:
+            type: "string"
+          pagepart:
+            type: "object"
+          context:
+            type: "string"
+
+      ApiContext:
+        title: "ApiContext"
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          pageparts:
+            type: "array"
+            items:
+              allOf:
+                - $ref: '#/definitions/ApiPagePart'
+
+      ApiPageTemplate:
+        title: "ApiPageTemplate"
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          contexts:
+            type: "array"
+            items:
+              allOf:
+                - $ref: '#/definitions/ApiContext'
+
+      ApiPage:
+        title: "ApiPage"
+        type: "object"
+        properties:
+          type:
+            type: "string"
+            example: 'Kunstmaan\SomeBundle\Entity\Pages\HomePage'
+          page:
+            type: "object"
+          pageTemplate:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiPageTemplate'
+          node:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/Node'
+          nodeTranslation:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/NodeTranslation'
+          nodeVersion:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/NodeVersion'

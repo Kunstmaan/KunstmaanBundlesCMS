@@ -13,33 +13,24 @@ namespace Kunstmaan\Rest\NodeBundle\Model;
 
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Swagger\Annotations as SWG;
 
 /**
  * Class ApiPagePart
- * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
- *
- * @SWG\Definition()
  */
 class ApiPagePart
 {
     /**
      * @var string
-     * @SWG\Property()
      */
     private $type;
 
     /**
      * @var PagePartInterface
-     * @SWG\Property(
-     *     type="object"
-     * )
      */
     private $pagePart;
 
     /**
      * @var string
-     * @SWG\Property()
      */
     private $context;
 
@@ -53,6 +44,7 @@ class ApiPagePart
 
     /**
      * @param string $type
+     *
      * @return $this
      */
     public function setType($type)
@@ -72,6 +64,7 @@ class ApiPagePart
 
     /**
      * @param PagePartInterface $pagePart
+     *
      * @return $this
      */
     public function setPagePart(PagePartInterface $pagePart)
@@ -92,6 +85,7 @@ class ApiPagePart
 
     /**
      * @param string $context
+     *
      * @return $this
      */
     public function setContext($context)

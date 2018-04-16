@@ -18,8 +18,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Class KunstmaanRestCoreBundle
- *
- * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
  */
 class KunstmaanRestCoreBundle extends Bundle
 {

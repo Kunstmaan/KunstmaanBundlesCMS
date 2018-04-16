@@ -33,8 +33,6 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 /**
  * Class NodesController
  *
- * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
- *
  * @Route(service="kunstmaan_api.controller.nodes")
  *
  */
@@ -70,7 +68,7 @@ class NodesController extends AbstractApiController
      *         name="limit",
      *         in="query",
      *         type="integer",
-     *         description="Amount of results (default 100, max 1000)",
+     *         description="Amount of results (default 20)",
      *         required=false,
      *     ),
      *     @SWG\Parameter(
@@ -158,7 +156,7 @@ class NodesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @Model(type=Node::class)
+     *         @SWG\Schema(ref="#/definitions/Node")
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -179,64 +177,64 @@ class NodesController extends AbstractApiController
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
-    /**
-     * Update a node
-     *
-     * @View(
-     *     statusCode=204
-     * )
-     *
-     * @SWG\Put(
-     *     path="/api/nodes/{id}",
-     *     description="Update a node",
-     *     operationId="putNode",
-     *     produces={"application/json"},
-     *     tags={"nodes"},
-     *     @SWG\Parameter(
-     *         name="id",
-     *         in="path",
-     *         type="integer",
-     *         description="The node ID",
-     *         required=true,
-     *     ),
-     *     @SWG\Parameter(
-     *         name="node",
-     *         in="body",
-     *         type="object",
-     *         @Model(type=Node::class)
-     *     ),
-     *     @SWG\Response(
-     *         response=204,
-     *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/Node")
-     *     ),
-     *     @SWG\Response(
-     *         response=403,
-     *         description="Returned when the user is not authorized to fetch nodes",
-     *         @SWG\Schema(ref="#/definitions/ErrorModel")
-     *     ),
-     *     @SWG\Response(
-     *         response="default",
-     *         description="unexpected error",
-     *         @SWG\Schema(ref="#/definitions/ErrorModel")
-     *     )
-     * )
-     *
-     * @ParamConverter("node", converter="fos_rest.request_body")
-     *
-     * @param Request $request
-     * @param integer $id
-     */
-    public function putNodesAction(Request $request, Node $node, ConstraintViolationListInterface $validationErrors)
-    {
-        if (count($validationErrors) > 0) {
-            return new \FOS\RestBundle\View\View($validationErrors, Response::HTTP_BAD_REQUEST);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($node);
-        $em->flush();
-    }
+//    /**
+//     * Update a node
+//     *
+//     * @View(
+//     *     statusCode=204
+//     * )
+//     *
+//     * @SWG\Put(
+//     *     path="/api/nodes/{id}",
+//     *     description="Update a node",
+//     *     operationId="putNode",
+//     *     produces={"application/json"},
+//     *     tags={"nodes"},
+//     *     @SWG\Parameter(
+//     *         name="id",
+//     *         in="path",
+//     *         type="integer",
+//     *         description="The node ID",
+//     *         required=true,
+//     *     ),
+//     *     @SWG\Parameter(
+//     *         name="node",
+//     *         in="body",
+//     *         type="object",
+//     *         @SWG\Schema(ref="#/definitions/Node")
+//     *     ),
+//     *     @SWG\Response(
+//     *         response=204,
+//     *         description="Returned when successful",
+//     *         @SWG\Schema(ref="#/definitions/Node")
+//     *     ),
+//     *     @SWG\Response(
+//     *         response=403,
+//     *         description="Returned when the user is not authorized to fetch nodes",
+//     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+//     *     ),
+//     *     @SWG\Response(
+//     *         response="default",
+//     *         description="unexpected error",
+//     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+//     *     )
+//     * )
+//     *
+//     * @ParamConverter("node", converter="fos_rest.request_body")
+//     *
+//     * @param Request $request
+//     * @param integer $id
+//     */
+//    public function putNodesAction(Request $request, Node $node, ConstraintViolationListInterface $validationErrors)
+//    {
+//        if (count($validationErrors) > 0) {
+//            return new \FOS\RestBundle\View\View($validationErrors, Response::HTTP_BAD_REQUEST);
+//        }
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($node);
+//        $em->flush();
+//    }
 
     /**
      * Retrieve a single node's translations
@@ -268,7 +266,7 @@ class NodesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @Model(type=NodeTranslation::class)
+     *         @SWG\Schema(ref="#/definitions/NodeTranslation")
      *     ),
      *     @SWG\Response(
      *         response=403,

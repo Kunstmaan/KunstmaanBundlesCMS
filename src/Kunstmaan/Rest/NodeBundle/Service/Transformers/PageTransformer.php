@@ -11,24 +11,26 @@
 
 namespace Kunstmaan\Rest\NodeBundle\Service\Transformers;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\Rest\CoreBundle\Service\Transformers\TransformerInterface;
 use Kunstmaan\Rest\NodeBundle\Model\ApiPage;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 
 /**
  * Class PageTransformer
  */
 class PageTransformer implements TransformerInterface
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
     /**
      * PageTransformer constructor.
-     * @param EntityManager $em
+     *
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -37,6 +39,7 @@ class PageTransformer implements TransformerInterface
      * This function will determine if the DataTransformer is eligible for transformation
      *
      * @param $object
+     *
      * @return bool
      */
     public function canTransform($object)
@@ -46,6 +49,7 @@ class PageTransformer implements TransformerInterface
 
     /**
      * @param NodeTranslation $nodeTranslation
+     *
      * @return ApiPage
      */
     public function transform($nodeTranslation)
@@ -54,6 +58,7 @@ class PageTransformer implements TransformerInterface
         $apiPage->setNodeTranslation($nodeTranslation);
         $apiPage->setNode($nodeTranslation->getNode());
         $apiPage->setNodeVersion($nodeTranslation->getPublicNodeVersion());
+
         $page = $nodeTranslation->getRef($this->em);
         $apiPage->setPage($page);
 

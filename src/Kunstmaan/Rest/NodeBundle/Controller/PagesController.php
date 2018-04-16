@@ -12,26 +12,24 @@
 namespace Kunstmaan\Rest\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Request\ParamFetcher;
-use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
 use Kunstmaan\Rest\CoreBundle\Helper\DataTransformerTrait;
 use Kunstmaan\Rest\CoreBundle\Service\DataTransformerService;
+use Kunstmaan\Rest\NodeBundle\Model\ApiPage;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Kunstmaan\Rest\NodeBundle\Model\ApiPage;
 
 /**
  * Class PagesController
- *
- * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
  *
  * @Route(service="kunstmaan_api.controller.pages")
  */
@@ -46,6 +44,12 @@ class PagesController extends AbstractApiController
     /** @var DataTransformerService */
     private $dataTransformer;
 
+    /**
+     * PagesController constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param DataTransformerService $dataTransformer
+     */
     public function __construct(EntityManagerInterface $em, DataTransformerService $dataTransformer)
     {
         $this->em = $em;
@@ -61,6 +65,20 @@ class PagesController extends AbstractApiController
      *     operationId="getPages",
      *     produces={"application/json"},
      *     tags={"pages"},
+     *     @SWG\Parameter(
+     *         name="page",
+     *         in="query",
+     *         type="integer",
+     *         description="The current page",
+     *         required=false,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         type="integer",
+     *         description="Amount of results (default 20)",
+     *         required=false,
+     *     ),
      *     @SWG\Parameter(
      *         name="type",
      *         in="query",
@@ -78,7 +96,7 @@ class PagesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @Model(type=ApiPage::class)
+     *         @SWG\Schema(ref="#/definitions/ApiPage")
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -92,6 +110,9 @@ class PagesController extends AbstractApiController
      *     )
      * )
      *
+     * @QueryParam(name="page", nullable=false, default="1", requirements="\d+", description="The current page")
+     * @QueryParam(name="limit", nullable=false, default="20", requirements="\d+", description="Amount of results")
+     *
      * @param Request      $request
      * @param ParamFetcher $paramFetcher
      *
@@ -104,11 +125,14 @@ class PagesController extends AbstractApiController
         }
 
         // TODO: validate query params
+        $page = $request->query->getInt('page');
+        $limit = $request->query->getInt('limit');
+        $type = $request->query->get('type');
         $locale = $request->query->get('locale');
-        $page = $request->query->getInt('page', 1);
-        $limit = $request->query->getInt('limit', 2);
 
-        $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineNodeTranslationsQueryBuilder($locale);
+        $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineNodeTranslationsQueryBuilder($locale)
+            ->andWhere('v.refEntityName = :refEntityName')
+            ->setParameter('refEntityName', $type);
 
         $paginatedCollection = $this->createORMPaginatedCollection($qb, $page, $limit, $this->createTransformerDecorator());
 
@@ -141,7 +165,7 @@ class PagesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @Model(type=ApiPage::class)
+     *         @SWG\Schema(ref="#/definitions/ApiPage")
      *     ),
      *     @SWG\Response(
      *         response=403,

@@ -34,7 +34,7 @@ class NelmioDefinitionsCompilerPass implements CompilerPassInterface
 
         $config['definitions'] = \array_merge(
             isset($config['definitions']) ? $config['definitions'] : [],
-            $bundleConfig['nelmio_api_doc']['definitions']
+            $bundleConfig['nelmio_api_doc']['documentation']['definitions']
         );
 
         $definition->replaceArgument(0, $config);

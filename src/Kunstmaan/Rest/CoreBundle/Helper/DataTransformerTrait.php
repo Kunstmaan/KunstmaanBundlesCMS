@@ -15,8 +15,6 @@ use Kunstmaan\Rest\CoreBundle\Service\DataTransformerService;
 
 /**
  * Trait DataTransformerTrait
- *
- * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
  */
 trait DataTransformerTrait
 {

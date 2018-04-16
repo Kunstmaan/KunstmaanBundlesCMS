@@ -11,64 +11,44 @@
 
 namespace Kunstmaan\Rest\NodeBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
 
 /**
  * Class ApiPage
- *
- * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
- *
- * @SWG\Definition()
  */
 class ApiPage
 {
     /**
      * @var string
-     * @SWG\Property(type="string", example="Kunstmaan\SomeBundle\Entity\Pages\HomePage")
      */
     private $type;
 
     /**
-     * @var HasPagePartsInterface
-     * @SWG\Property(type="object")
+     * @var EntityInterface
      */
     private $page;
 
     /**
-     * @var ApiPagePart[]
-     * @SWG\Property(
-     *     type="array",
-     *     @SWG\Items(
-     *      allOf={
-     *         @Model(type=ApiPagePart::class)
-     *      }
-     *    )
-     * )
+     * @var ApiPageTemplate
      */
-    private $pageParts;
+    private $pageTemplate;
 
     /**
      * @var Node
-     * @SWG\Property(ref="#/definitions/node")
      */
     private $node;
 
     /**
      * @var NodeTranslation
-     * @SWG\Property(ref="#/definitions/nodeTranslation")
      */
     private $nodeTranslation;
 
     /**
      * @var NodeVersion
-     * @SWG\Property(ref="#/definitions/nodeVersion")
      */
     private $nodeVersion;
 
@@ -93,7 +73,7 @@ class ApiPage
     }
 
     /**
-     * @return HasPagePartsInterface
+     * @return EntityInterface
      */
     public function getPage()
     {
@@ -101,11 +81,11 @@ class ApiPage
     }
 
     /**
-     * @param HasPagePartsInterface $page
+     * @param EntityInterface $page
      *
      * @return $this
      */
-    public function setPage(HasPagePartsInterface $page)
+    public function setPage(EntityInterface $page)
     {
         $this->page = $page;
         $this->type = ClassLookup::getClass($page);
@@ -114,23 +94,19 @@ class ApiPage
     }
 
     /**
-     * @return array
+     * @return ApiPageTemplate
      */
-    public function getPageParts()
+    public function getPageTemplate()
     {
-        return $this->pageParts;
+        return $this->pageTemplate;
     }
 
     /**
-     * @param array|ArrayCollection $pageParts
-     *
-     * @return $this
+     * @param ApiPageTemplate $pageTemplate
      */
-    public function setPageParts($pageParts)
+    public function setPageTemplate(ApiPageTemplate $pageTemplate)
     {
-        $this->pageParts = $pageParts;
-
-        return $this;
+        $this->pageTemplate = $pageTemplate;
     }
 
     /**

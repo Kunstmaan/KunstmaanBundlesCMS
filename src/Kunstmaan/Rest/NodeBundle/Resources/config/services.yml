@@ -21,9 +21,11 @@ services:
         tags:
             - { name: kunstmaan_rest.transformer, priority: -250 }
 
-    kunstmaan_api.service.transformers.page_part:
-        class: Kunstmaan\Rest\NodeBundle\Service\Transformers\PagePartTransformer
+    kunstmaan_api.service.transformers.page_template:
+        class: Kunstmaan\Rest\NodeBundle\Service\Transformers\PageTemplateTransformer
         arguments:
             - '@doctrine.orm.default_entity_manager'
+            - '@kunstmaan_page_part.page_template.page_template_configuration_service'
+            - '@kunstmaan_page_part.page_part_configuration_reader'
         tags:
-            - { name: kunstmaan_rest.transformer }
+            - { name: kunstmaan_rest.transformer, priority: -250 }

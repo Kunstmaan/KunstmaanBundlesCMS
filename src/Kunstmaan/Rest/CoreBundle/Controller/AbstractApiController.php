@@ -21,8 +21,6 @@ use Pagerfanta\Pagerfanta;
 
 /**
  * Class AbstractApiController
- *
- * @author Ruud Denivel <ruud.denivel@kunstmaan.be>
  */
 abstract class AbstractApiController extends FOSRestController
 {
