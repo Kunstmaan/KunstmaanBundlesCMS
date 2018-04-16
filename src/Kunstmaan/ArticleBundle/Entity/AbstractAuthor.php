@@ -9,7 +9,7 @@ use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 /**
  * Class AbstractAuthor
  */
-class AbstractAuthor extends AbstractEntity
+abstract class AbstractAuthor extends AbstractEntity
 {
     /**
      * @var string

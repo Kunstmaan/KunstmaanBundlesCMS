@@ -8,7 +8,7 @@ use Gedmo\Translatable\Translatable;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class AbstractCategory extends AbstractEntity implements Translatable
+abstract class AbstractCategory extends AbstractEntity implements Translatable
 {
     /**
      * @var string
