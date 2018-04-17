@@ -12,13 +12,14 @@ class Shell implements ShellInterface
 
     /**
      * @param string $command The command
+     * @deprecated int $priority
      *
      * @return int The process id
      *
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      */
-    public function runInBackground($command)
+    public function runInBackground($command, $priority = 0)
     {
         $process = new Process($command);
         $process->disableOutput();
