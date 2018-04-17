@@ -54,6 +54,13 @@ class RandomEntity implements ConfigurationInterface
         return 'whatever';
     }
 
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return [];
+    }
 }
 
 class RandomNonConfigEntity

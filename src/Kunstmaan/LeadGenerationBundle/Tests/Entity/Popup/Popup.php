@@ -6,12 +6,12 @@ use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 
 class Popup extends AbstractPopup
 {
-    protected function getControllerAction()
+    public function getControllerAction()
     {
         return null;
     }
 
-    protected function getAdminType()
+    public function getAdminType()
     {
         return null;
     }
