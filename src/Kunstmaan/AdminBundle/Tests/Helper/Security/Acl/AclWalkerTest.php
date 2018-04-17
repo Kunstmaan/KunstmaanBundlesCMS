@@ -23,19 +23,30 @@ class AclWalkerTest extends PHPUnit_Framework_TestCase
 {
     public function testWalker()
     {
+        $range = new RangeVariableDeclaration('someschema', 's' );
+        $expr = new PathExpression('int', 'id');
+        $indexBy = new IndexBy($expr);
+        $from = new FromClause([new IdentificationVariableDeclaration($range, $indexBy, [])]);
+
         $meta = $this->createMock(ClassMetadata::class);
         $strategy = $this->createMock(QuoteStrategy::class);
         $config = $this->createMock(Configuration::class);
+
         $platform = $this->createMock(AbstractPlatform::class);
+        $platform->expects($this->once())->method('appendLockHint')->willReturn($from);
+
         $conn = $this->createMock(Connection::class);
+        $conn->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
+
         $em = $this->createMock(EntityManager::class);
         $query = $this->createMock(AbstractQuery::class);
         $mapping = $this->createMock(ResultSetMapping::class);
         $result = $this->createMock(ParserResult::class);
+
         $meta->expects($this->once())->method('getTableName')->willReturn('sometable');
         $strategy->expects($this->once())->method('getTableName')->willReturn('sometable');
         $config->expects($this->once())->method('getQuoteStrategy')->willReturn($strategy);
-        $conn->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
+
         $query->expects($this->once())->method('getEntityManager')->willReturn($em);
         $query->expects($this->exactly(4))->method('getHint')->will($this->onConsecutiveCalls('sometable', 'sometable', 's', null));
         $em->expects($this->once())->method('getConnection')->willReturn($conn);
@@ -44,11 +55,7 @@ class AclWalkerTest extends PHPUnit_Framework_TestCase
         $result->expects($this->once())->method('getResultSetMapping')->willReturn($mapping);
 
         $aclWalker = new AclWalker($query, $result, []);
-        $range = new RangeVariableDeclaration('someschema', 's' );
-        $expr = new PathExpression('int', 'id');
-        $indexBy = new IndexBy($expr);
-        $from = new FromClause([new IdentificationVariableDeclaration($range, $indexBy, [])]);
         $sql = $aclWalker->walkFromClause($from);
-        $this->assertEquals(' FROM  JOIN () ta_ ON s0_.id = ta_.id', $sql); // Yes, it looks wrong, but we mocked a ton of things! 😬
+        $this->assertRegExp('/(JOIN \(\) ta_ ON s0_\.id = ta_.id)$/', $sql);
     }
 }
