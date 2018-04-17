@@ -1,8 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
+use DateTime;
 use Kunstmaan\MediaBundle\Entity\Folder;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
@@ -15,28 +16,11 @@ class MediaTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Entity\Media::__construct
-     */
     protected function setUp()
     {
         $this->object = new Media();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getFileSize
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setFileSize
-     */
     public function testSetFileSize()
     {
         $this->object->setFileSize(45);
@@ -47,41 +31,24 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('64mb', $this->object->getFileSize());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getUuid
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setUuid
-     */
     public function testGetSetUuid()
     {
         $this->object->setUuid('abc');
         $this->assertEquals('abc', $this->object->getUuid());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getName
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setName
-     */
     public function testGetSetName()
     {
         $this->object->setName('name.jpg');
         $this->assertEquals('name.jpg', $this->object->getName());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getLocation
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setLocation
-     */
     public function testGetSetLocation()
     {
         $this->object->setLocation('local');
         $this->assertEquals('local', $this->object->getLocation());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getContentType
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getContentTypeShort
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setContentType
-     */
     public function testGetSetContentType()
     {
         $this->object->setContentType('image/jpeg');
@@ -89,10 +56,6 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('jpeg', $this->object->getContentTypeShort());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getCreatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setCreatedAt
-     */
     public function testGetSetCreatedAt()
     {
         $date = new \DateTime();
@@ -100,10 +63,6 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($date, $this->object->getCreatedAt());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getUpdatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setUpdatedAt
-     */
     public function testGetSetUpdatedAt()
     {
         $date = new \DateTime();
@@ -111,20 +70,12 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($date, $this->object->getUpdatedAt());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getContent
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setContent
-     */
     public function testGetContent()
     {
         $this->object->setContent('content');
         $this->assertEquals('content', $this->object->getContent());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getFolder
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setFolder
-     */
     public function testGetSetFolder()
     {
         $folder = new Folder();
@@ -133,10 +84,6 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(45, $this->object->getFolder()->getId());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setDeleted
-     * @covers Kunstmaan\MediaBundle\Entity\Media::isDeleted
-     */
     public function testGetSetDeleted()
     {
         $this->assertFalse($this->object->isDeleted());
@@ -145,14 +92,9 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->isDeleted());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getMetadata
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getMetadataValue
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setMetadata
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setMetadataValue
-     */
     public function testGetSetMetaDataAndValues()
     {
+        $this->object->setTranslatableLocale('en');
         $meta = array('original_width' => 320, 'original_height' => 200);
         $this->object->setMetadata($meta);
         $this->assertEquals($meta, $this->object->getMetadata());
@@ -162,43 +104,54 @@ class MediaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(640, $this->object->getMetadataValue('original_width'));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getUrl
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setUrl
-     */
     public function testGetSetUrl()
     {
         $this->object->setUrl('http://domain.tld/path/name.ext');
         $this->assertEquals('http://domain.tld/path/name.ext', $this->object->getUrl());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getOriginalFilename
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setOriginalFilename
-     */
     public function testGetSetOriginalFilename()
     {
         $this->object->setOriginalFilename('name.ext');
         $this->assertEquals('name.ext', $this->object->getOriginalFilename());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getCopyright
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setCopyright
-     */
     public function testGetSetCopyright()
     {
         $this->object->setCopyright('(c) 2014 Kunstmaan All rights reserved');
         $this->assertEquals('(c) 2014 Kunstmaan All rights reserved', $this->object->getCopyright());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getDescription
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setDescription
-     */
     public function testGetSetDescription()
     {
         $this->object->setDescription('Description of this picture');
         $this->assertEquals('Description of this picture', $this->object->getDescription());
+    }
+
+    public function testGetSetRemoved()
+    {
+        $this->object->setRemovedFromFileSystem(true);
+        $this->assertTrue($this->object->isRemovedFromFileSystem());
+    }
+
+    public function testGetSetFilesize()
+    {
+        $this->object->setFileSize(null);
+        $this->assertEmpty($this->object->getFileSize());
+        $this->object->setFileSize(123);
+        $this->assertEquals(123, $this->object->getFileSizeBytes());
+    }
+
+    public function testPreUpdate()
+    {
+        $this->object->preUpdate();
+        $this->assertInstanceOf(DateTime::class, $this->object->getUpdatedAt());
+    }
+
+    public function testPrePersist()
+    {
+        $this->object->setOriginalFilename('spongebob.jpg');
+        $this->object->prePersist();
+        $this->assertEquals('spongebob.jpg', $this->object->getName());
     }
 }

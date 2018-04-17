@@ -24,18 +24,6 @@ class EmailFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->object = new EmailFormSubmissionField;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField::getValue
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField::setValue
-     */
     public function testSetGetValue()
     {
         $object = $this->object;
@@ -44,17 +32,11 @@ class EmailFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $object->getValue());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(EmailFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField::__toString
-     */
     public function testToString()
     {
         $stringValue = $this->object->__toString();

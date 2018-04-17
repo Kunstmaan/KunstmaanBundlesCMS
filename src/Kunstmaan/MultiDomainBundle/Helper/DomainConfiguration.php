@@ -272,7 +272,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $host = $this->getRealHost($host);
 
-        if ($host) {
+        if ($host && isset($this->hosts[$host])) {
             return $this->hosts[$host];
         }
 

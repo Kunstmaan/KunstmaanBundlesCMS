@@ -1,8 +1,7 @@
 <?php
 
 
-namespace Kunstmaan\GeneratorBundle\Generator\Tests;
-
+namespace Kunstmaan\GeneratorBundle\Tests\Generator;
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
@@ -10,6 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testGenerator()
     {
         $filesystem = new Filesystem();
@@ -23,11 +23,15 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $kernel->getContainer());
         $generator->generate($bundle, '', __DIR__ . '/../data', false);
 
+        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error.html.twig');
+        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error404.html.twig');
+        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error500.html.twig');
+        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error503.html.twig');
     }
 
     protected function getBundle($path)
     {
-        $bundle = $this->getMock('Symfony\Component\HttpKernel\Bundle\BundleInterface');
+        $bundle = $this->createMock('Symfony\Component\HttpKernel\Bundle\BundleInterface');
         $bundle
             ->expects($this->any())
             ->method('getNamespace')
@@ -51,14 +55,14 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
 
     protected function getRegistry()
     {
-        $registry = $this->getMock('Symfony\Bridge\Doctrine\RegistryInterface');
+        $registry = $this->createMock('Symfony\Bridge\Doctrine\RegistryInterface');
 
         return $registry;
     }
 
     protected function getAssistant()
     {
-        $output = $this->getMock('Symfony\Component\Console\Output\OutputInterface');
+        $output = $this->createMock('Symfony\Component\Console\Output\OutputInterface');
 
         $commandAssistant = new CommandAssistant();
         $commandAssistant->setOutput($output);

@@ -20,6 +20,10 @@ class ExportList implements ExportableInterface
         $this->configurator->buildIterator();
     }
 
+    /**
+     * @param Request $request
+     * @deprecated ? This method is not configured in the configurator interface
+     */
     public function bindRequest(Request $request)
     {
         $this->configurator->bindRequest($request);

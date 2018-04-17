@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\LinePagePartAdminType;
 
 /**
@@ -22,25 +24,11 @@ class LinePagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $this->object = new LinePagePartAdminType();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\LinePagePartAdminType::buildForm
-     */
     public function testBuildForm()
     {
         $this->object->buildForm($this->builder, array());
     }
 
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\LinePagePartAdminType::configureOptions
-     */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);

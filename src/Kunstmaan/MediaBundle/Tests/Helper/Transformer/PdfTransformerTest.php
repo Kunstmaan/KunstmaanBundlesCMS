@@ -22,9 +22,6 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     /** @var string */
     protected $tempDir;
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::__construct
-     */
     protected function setUp()
     {
         if (!class_exists('Imagick')) {
@@ -48,9 +45,6 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
         $this->removeTempDir();
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::apply
-     */
     public function testApplyWritesJpg()
     {
         $pdfFilename = $this->tempDir . '/sample.pdf';
@@ -68,9 +62,6 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty(file_get_contents($jpgFilename));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::apply
-     */
     public function testApplyDoesNotOverwriteExisting()
     {
         $pdfFilename = $this->tempDir . '/sample.pdf';
@@ -89,9 +80,6 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty(file_get_contents($jpgFilename));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::getPreviewFilename
-     */
     public function testGetPreviewFilename()
     {
         $pdfFilename = $this->tempDir . '/sample.pdf';

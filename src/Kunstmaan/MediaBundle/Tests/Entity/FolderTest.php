@@ -18,18 +18,12 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::__construct
      */
     protected function setUp()
     {
         $this->object = new Folder();
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getName
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setName
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::__toString
-     */
     public function testGetSetName()
     {
         $this->object->setName('name');
@@ -37,20 +31,12 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('name', $this->object->__toString());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getRel
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setRel
-     */
     public function testGetSetRel()
     {
         $this->object->setRel('rel');
         $this->assertEquals('rel', $this->object->getRel());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getCreatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setCreatedAt
-     */
     public function testGetSetCreatedAt()
     {
         $date = new \DateTime();
@@ -58,21 +44,14 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($date, $this->object->getCreatedAt());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getUpdatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setUpdatedAt
-     */
     public function testGetSetUpdatedAt()
     {
+        $this->object->preUpdate();
         $date = new \DateTime();
         $this->object->setUpdatedAt($date);
         $this->assertEquals($date, $this->object->getUpdatedAt());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getParent
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setParent
-     */
     public function testGetParent()
     {
         $parent = new Folder();
@@ -81,10 +60,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(45, $this->object->getParent()->getId());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setDeleted
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::isDeleted
-     */
     public function testGetSetDeleted()
     {
         $this->assertFalse($this->object->isDeleted());
@@ -93,19 +68,12 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->isDeleted());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getTranslatableLocale
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setTranslatableLocale
-     */
     public function testGetSetTranslatableLocale()
     {
         $this->object->setTranslatableLocale('nl');
         $this->assertEquals('nl', $this->object->getTranslatableLocale());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getParents
-     */
     public function testGetParents()
     {
         $root = new Folder();
@@ -123,9 +91,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($parents, $subSubFolder->getParents());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::addChild
-     */
     public function testAddChild()
     {
         $this->assertCount(0, $this->object->getChildren());
@@ -138,9 +103,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->object, $subFolder->getParent());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::addMedia
-     */
     public function testAddMedia()
     {
         $this->assertCount(0, $this->object->getMedia());
@@ -151,9 +113,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $this->object->getMedia());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getMedia
-     */
     public function testGetMedia()
     {
         $media = new Media();
@@ -176,10 +135,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($deletedMedia, $folderMedia);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getChildren
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setChildren
-     */
     public function testGetSetChildren()
     {
         $child = new Folder();
@@ -206,9 +161,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($deletedChild, $children);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::hasActive
-     */
     public function testHasActive()
     {
         $root = new Folder();
@@ -232,20 +184,12 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($subFolder->hasActive(4));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getInternalName
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setInternalName
-     */
     public function testGetSetInternalName()
     {
         $this->object->setInternalName('internal_name');
         $this->assertEquals('internal_name', $this->object->getInternalName());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setLeft
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getLeft
-     */
     public function testGetSetLeft()
     {
         $this->assertEquals(0, $this->object->getLeft());
@@ -253,10 +197,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->object->getLeft());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setRight
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getRight
-     */
     public function testGetSetRight()
     {
         $this->assertEquals(0, $this->object->getRight());
@@ -264,10 +204,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $this->object->getRight());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setLevel
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getLevel
-     */
     public function testGetSetLevel()
     {
         $this->assertEquals(0, $this->object->getLevel());
@@ -275,9 +211,6 @@ class FolderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->object->getLevel());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getOptionLabel
-     */
     public function testGetOptionLabel()
     {
         $this->object

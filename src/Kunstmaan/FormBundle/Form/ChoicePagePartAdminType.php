@@ -22,34 +22,34 @@ class ChoicePagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', TextType::class, array(
+            ->add('label', TextType::class, [
                 'label' => 'kuma_form.form.choice_page_part.label.label',
                 'required' => false,
-            ))
-            ->add('required', CheckboxType::class, array(
+            ])
+            ->add('required', CheckboxType::class, [
                 'label' => 'kuma_form.form.choice_page_part.required.label',
                 'required' => false,
-            ))
-            ->add('errormessage_required', TextType::class, array(
+            ])
+            ->add('errormessage_required', TextType::class, [
                 'label' => 'kuma_form.form.choice_page_part.errormessage_required.label',
                 'required' => false,
-            ))
-            ->add('expanded', CheckboxType::class, array(
+            ])
+            ->add('expanded', CheckboxType::class, [
                 'label' => 'kuma_form.form.choice_page_part.expanded.label',
                 'required' => false,
-            ))
-            ->add('multiple', CheckboxType::class, array(
+            ])
+            ->add('multiple', CheckboxType::class, [
                 'label' => 'kuma_form.form.choice_page_part.multiple.label',
                 'required' => false,
-            ))
-            ->add('choices', TextareaType::class, array(
+            ])
+            ->add('choices', TextareaType::class, [
                 'label' => 'kuma_form.form.choice_page_part.choices.label',
                 'required' => false,
-            ))
-            ->add('empty_value', TextType::class, array(
+            ])
+            ->add('empty_value', TextType::class, [
                 'label' => 'kuma_form.form.choice_page_part.empty_value.label',
                 'required' => false,
-            ))
+            ])
         ;
     }
 
@@ -66,6 +66,6 @@ class ChoicePagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart'));
+        $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart']);
     }
 }
