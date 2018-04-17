@@ -79,11 +79,11 @@ class SubmitButtonPagePart extends AbstractPagePart
     /**
      * Returns the default form type for this FormSubmissionField
      *
-     * @return SubmitButtonPagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new SubmitButtonPagePartAdminType();
+        return SubmitButtonPagePartAdminType::class;
     }
 
 }

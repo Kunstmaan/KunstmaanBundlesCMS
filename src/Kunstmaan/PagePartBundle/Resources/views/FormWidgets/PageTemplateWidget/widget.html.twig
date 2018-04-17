@@ -90,12 +90,22 @@
                 {% endfor %}
             </div>
         </div>
+    {% elseif region.rows %}
+        <div class="col-md-{{ region.span }}">
+            {% for row in region.rows %}
+                <div class="row">
+                    {% for child in row.regions %}
+                        {{ _self.render_region(formView, resource, child) }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
         <div class="col-md-{{ region.span }}">
             <div class="page-template__region" id="{{ region.name|trans|title }}">
                 <header>
                     <h5 class="page-template__region__header">
-                    {{ region.name|trans|replace({'_':' '})|title }}
+                        {{ region.name|trans|replace({'_':' '})|title }}
                     </h5>
                 </header>
                 <div class="region__actions">

@@ -21,7 +21,7 @@ class FileUploadPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array(
+            ->add('label', TextType::class, array(
                 'required' => true,
                 'label' => 'kuma_form.form.file_upload_page_part.label.label',
             ))

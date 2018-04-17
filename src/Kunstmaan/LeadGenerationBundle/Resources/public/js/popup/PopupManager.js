@@ -1,13 +1,12 @@
 'use strict';
 
 (function(window, document, undefined) {
-
     window.kunstmaan = window.kunstmaan || {};
     window.kunstmaan.leadGeneration = window.kunstmaan.leadGeneration || {};
 
     window.kunstmaan.leadGeneration.PopupManager = function() {
         var instance = {};
-        
+
         var _popups = [],
             _queue = [],
             _onStage = false;

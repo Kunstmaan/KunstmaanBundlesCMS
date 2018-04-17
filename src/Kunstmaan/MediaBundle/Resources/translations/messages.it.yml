@@ -1,11 +1,16 @@
-# Media
+---
 media:
   aviary:
     title: Aviary
     nothing: Niente da vedere qui.
-
   media:
-    no: Non sono presenti file in questa cartella.
+    "no": Non sono presenti file in questa cartella.
+    dnd:
+      tip: "Tip:"
+      tiptext: did you know you can just drop multiple files here?
+      alert:
+        title: Incoming!
+        text: Drop your files to instantly upload them to this folder.
     bulkupload:
       addto: Carica i files in "%folder%"
     contenttab:
@@ -13,6 +18,8 @@ media:
     propertiestab:
       title: Proprietà
     title: Media
+    add:
+      action: Add media
     edit:
       action: Modifica
     download:
@@ -26,7 +33,6 @@ media:
     addto: Aggiungi il media a "%folder%"
     deletesure: Sei sicuro di voler cancellare l'elemento?
     new: Aggiungi il media a "%folder%"
-
   folder:
     addsub:
       action: Aggiungi sottocartella
@@ -34,20 +40,44 @@ media:
       modal:
         title: Aggiungi sottocartella
         save: Aggiungi
+      form:
+        name: Name
+        rel: Rel
+        parent: Parent
+        internal_name: Internal name
+      success:
+        text: Folder '%folder%' has been created!
+    empty:
+      action: Empty folder
+      action_short: Empty
+      modal:
+        title: Empty folder
+        text: Are you sure you want to delete the content of folder "%folder%"?
+        checkbox: Also delete subfolders
+        save: Empty
+      success:
+        text: Folder '%folder%' has been emptied!
     sub:
-      no: Sottocartelle non presenti.
+      "no": Sottocartelle non presenti.
     delete:
       action: Cancella questa cartella
       action_short: Cancella
       modal:
         title: Cancella cartella
         text: Sei sicuro di voler cancellare "%folder%"?
+      failure:
+        text: You can't delete the %folder% folder!
+      success:
+        text: Folder '%folder%' has been deleted!
     save: Salva
     contenttab:
       title: Contenuto
     propertiestab:
       title: Proprietà
-
+    sortby: Sort by
+    show:
+      success:
+        text: Folder %folder% has been updated!
   bulkupload:
     upload: Caricamento
     bulkupload: Caricamento multiplo
@@ -56,7 +86,6 @@ media:
     back_to_folder: Torna alla cartella
     upload_finished: Il caricamento del file è terminato.
     not_available: La funzionalità di caricamento multiplo non funzionerà per te. Il tuo browser non ha il supporto Flash, Silverlight o HTML5.
-
   slide:
     add: Aggiungi Slide
     modal:
@@ -70,15 +99,64 @@ media:
   audio:
     add: Aggiungi Audio
     modal:
-          title: Aggiungi Audio
-          save: Aggiungi
-
+      title: Aggiungi Audio
+      save: Aggiungi
   file:
     add: Aggiungi File
     modal:
       title: Aggiungi File
       save: Aggiungi
-
   widget:
     choose: Scegli
     delete: Cancella
+    media_chooser: Media-chooser
+    icon_chooser: Icon-chooser
+  adminlist:
+    configurator:
+      name: Name
+      type: Type
+      date: Date
+      filesize: Filesize
+      filter:
+        name: Name
+        type: Type
+        updated_at: Date
+        filesize: Filesize (in bytes)
+  form:
+    remote:
+      name:
+        label: Name
+      code:
+        label: Code
+      type:
+        label: Type
+      copyright:
+        label: Copyright
+      description:
+        label: Description
+    bulk_upload:
+      files:
+        label: Files
+    file:
+      name:
+        label: Name
+      file:
+        label: File
+      copyright:
+        label: Copyright
+      description:
+        label: Description
+      originalFilename:
+        label: Original filename
+    remote_audio:
+      type:
+        label: Type
+    remote_slide:
+      type:
+        label: Type
+    remote_video:
+      type:
+        label: Type
+  flash:
+    created: Media %medianame% has been created!
+    not_created: Media not created! %mediaerrors%

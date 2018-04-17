@@ -19,6 +19,26 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
      */
     protected $session;
 
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+    }
+
+    /**
+     * Tears down the fixture, for example, closes a network connection.
+     * This method is called after a test is executed.
+     */
+    protected function tearDown()
+    {
+    }
+
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     */
     public function testHostOverrideMessageIsSetForAdmin()
     {
         $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
@@ -33,6 +53,10 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
         $object->onKernelResponse($event);
     }
 
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     */
     public function testHostOverrideMessageIsNotSetForAdminRedirectResponse()
     {
         $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
@@ -46,6 +70,10 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
         $object->onKernelResponse($event);
     }
 
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     */
     public function testHostOverrideMessageIsNotSetForSubRequest()
     {
         $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
@@ -59,6 +87,10 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
         $object->onKernelResponse($event);
     }
 
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     */
     public function testHostOverrideMessageIsNotSetForXmlRequest()
     {
         $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
@@ -72,6 +104,10 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
         $object->onKernelResponse($event);
     }
 
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     */
     public function testHostOverrideMessageIsNotSetForPreview()
     {
         $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
@@ -85,6 +121,10 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
         $object->onKernelResponse($event);
     }
 
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::__construct
+     * @covers Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener::onKernelResponse
+     */
     public function testHostOverrideMessageIsNotSetForFrontend()
     {
         $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
@@ -113,7 +153,21 @@ class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
         $translator->method('trans')
             ->willReturnArgument(0);
 
-        $listener = new HostOverrideListener($session, $translator, $domainConfiguration);
+        $adminRouteReturnValueMap = array(
+            array('/nl/admin/preview/some-uri', false),
+            array('/nl/some-uri', false),
+            array('/nl/admin/some-admin-uri', true)
+        );
+
+        $adminRouteHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\AdminRouteHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $adminRouteHelper
+            ->expects($this->any())
+            ->method('isAdminRoute')
+            ->will($this->returnValueMap($adminRouteReturnValueMap));
+
+        $listener = new HostOverrideListener($session, $translator, $domainConfiguration, $adminRouteHelper);
 
         return $listener;
     }

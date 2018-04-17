@@ -1,0 +1,111 @@
+---
+kuma_lead_generation:
+  newsletter_popup:
+    button:
+      close: Zamknij
+      subscribe: Subskrybuj
+      no_thanks: Nie, dziękuję!
+    label:
+      email: E-mail
+    message:
+      thanks: Dziękuję!
+  on_exit_intent:
+    sensitivity:
+      label: Czułość
+    timer:
+      label: Czas (milisekundy)
+    delay:
+      label: Opóźnienie (milisekundy)
+    sensitivity_info: Wyskakujące okienko jest uruchamiane, gdy kursor myszy zbliża się (lub przesuwa) w górnej części widoku. Możesz określić, jak daleko musi być mysz przed uruchomieniem wyskakującego okienka. Im wyższa wartość, tym bardziej czuły i im szybciej wydarzenie się rozpocznie. Domyślna wartość to 20.
+    timer_info: Ustaw minimalny czas (milisekundy) przed uruchomieniem wyskakującego okienka. Domyślnie popup nie uruchamia się w pierwszej sekundzie, aby zapobiec fałszywym alarmom, ponieważ jest mało prawdopodobne, że użytkownik będzie mógł wyjść ze strony w czasie krótszym niż sekunda.
+    delay_info: Domyślnie popup pojawi się natychmiast. Zamiast tego możesz skonfigurować go tak, aby czekał x milisekund przed wyświetleniem wyskakującego okienka. Jeżeli użytkownik kliknie ponownie w "ciało" przed upływem czasu, popup nie pokaże się. Może to zostać wykorzystane do zapewnienia "okresu przejściowego" dla odwiedzających zamiast natychmiastowego wyświetlenia okienka.
+  form:
+    newsletter_subscription:
+      email:
+        label: E-mail
+    popup:
+      name:
+        label: Nazwa
+        info_text: 'Ostrzeżenie: Jeżeli zmienisz tą wartość, osoby które już widziały ten popup, lub osoby które zostały już przekształcone zobaczą ten popup ponownie.'
+    after_x_scroll_percent_rule:
+      percentage:
+        label: Procentowo
+    after_x_seconds:
+      seconds:
+        label: Sekundy
+    locale_black_list:
+      locale:
+        label: Język
+        info_text: Defniuje języki do czarnej listy
+    locale_white_list:
+      locale:
+        label: Język
+        info_text: Definiuje języki do białej listy
+    max_x_time:
+      times:
+        label: Czasy
+    recurring_every_x_time:
+      days:
+        label: Dni
+      hours:
+        label: Godziny
+      minutes:
+        label: Minuty
+      times:
+        label: Czasy
+    url_black_list:
+      urls:
+        label: Urls
+        info_text: |
+          Zdefiniuj listę adresów znajdujących się na czarnej liście (patterny).
+          Każdy z adresów url oddziel linią
+          Możesz używać wyrażeń regularnych.
+          Przykłady: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+    url_white_list:
+      urls:
+        label: Urls
+        info_text: |
+          Zdefiniuj listę przyjaznych adresów (patternów).
+          Każdy z adresów url oddziel linią
+          Możesz używać wyrażeń regularnych.
+          Przykłady: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
+  popup:
+    add:
+      modal:
+        title: Dodaj okienko
+        button:
+          open: Dodaj okienko
+          add: Dodaj
+          cancel: Anuluj
+    type:
+      label: Typ
+    list:
+      header:
+        id: Id
+        name: Nazwa
+        type: Typ
+        html_id: Html ID
+        rule_count: '# z Reguł'
+      filter:
+        name: Nazwa
+        html_id: Html ID
+  rules:
+    'page_title.%name%': Reguła dla %name%
+    add:
+      modal:
+        title: Dodaj regułe
+        button:
+          open: Dodaj regułe
+          add: Dodaj
+          cancel: Anuluj
+    list:
+      header:
+        id: Id
+        type: Typ
+        properties: Właściwości
+      filter:
+        id: Id
+  breadcrumbs:
+    modules: Moduły
+    popups: Okienka
+    rules: Reguły

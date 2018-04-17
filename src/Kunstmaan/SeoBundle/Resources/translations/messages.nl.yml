@@ -1,58 +1,58 @@
-# Media
+---
 seo:
+  robots:
+    title: Robots
+    tip: 'Tip:'
+    warning: Dit is een standaard waarde en voorbeeld. Er is geen eigen robots.txt ingesteld.
+    moreinfo: U kunt meer informatie vinden over de Kunstmaan robots.txt op onze
+  action:
+    save: Opslaan
+    cancel: Annuleren
+    preview: Preview
+  form:
+    og:
+      title: OG titel
+      description: OG beschrijving
+      url: OG Url
+      type: OG Type
+      image: OG Foto
+      article:
+        author: OG Article Author
+        publisher: OG Article Publisher
+        section: OG Article Section
+    twitter:
+      title: Title
+      title_info_text: De titel van uw twitter card. Falls back to SEO Meta title
+      description: Omschrijving
+      description_info_text: De omschrijving van uw twitter card. Falls back to SEO Meta description
+      sitehandle: Site Handle
+      sitehandle_info_text: Twitter handle van de website of uw organisatie. Deze waarde is verplicht om twitter cards te laten werken.
+      creatorhandle: Creator Handle
+      creatorhandle_info_text: Twitter handle van de publisher van uw pagina.
+      image: Foto
     robots:
-        title: Robots
-        tip: 'Tip:'
-        warning: Dit is een standaard waarde en voorbeeld. Er is geen eigen robots.txt ingesteld.
-        moreinfo: Meer informatie over de Kunstmaan robots.txt staat op onze
-
-    action:
-        save: Opslaan
-        cancel: Annuleren
-        preview: Preview
-
-    form:
-        og:
-            title: OG Titel
-            description: OG Omschrijving
-            url: OG Url
-            type: OG Type
-            image: OG Foto
-        twitter:
-            title: Title
-            title_info_text: De titel van uw twitter card. Falls back to SEO Meta title
-            description: Omschrijving
-            description_info_text: De omschrijving van uw twitter card. Falls back to SEO Meta description
-            sitehandle: Site Handle
-            sitehandle_info_text: Twitter handle van de website of uw organisatie. Deze waarde is verplicht om twitter cards te laten werken.
-            creatorhandle: Creator Handle
-            creatorhandle_info_text: Twitter handle van de publisher van uw pagina.
-            image: Foto
-        robots:
-            noindex: Geen index
-            nofollow: Geen follow
-            noarchive: Geen archive
-            nosnippet: Geen snippet
-            notranslate: Geen vertaling
-            noimageindex: Geen image index
-        seo:
-            meta_title:
-                label:  Titel
-                info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s.
-            meta_description:
-                label: Meta omschrijving
-            meta_robots:
-                label: Meta robots
-                placeholder: Kies robot tags
-            extra_metadata:
-                label: Extra metadata
-
-    pagetabs:
-        opengraph: Open Graph
-        twittercards: Twitter Cards
-
-    tab:
-        seo:
-            title: SEO
-        social:
-            title: Social
+      noindex: Geen index
+      nofollow: Geen follow
+      noarchive: Geen archive
+      nosnippet: Geen snippet
+      notranslate: Geen vertaling
+      noimageindex: Geen image index
+    seo:
+      meta_title:
+        label: Titel
+        info_text: De titel tag wordt vaak gebruikt op search engine resultaten pagina’s.
+      meta_description:
+        label: Meta omschrijving
+      meta_robots:
+        label: Meta robots
+        placeholder: Kies robot tags
+      extra_metadata:
+        label: Extra metadata
+  pagetabs:
+    opengraph: Open Graph
+    twittercards: Twitter Cards
+  tab:
+    seo:
+      title: SEO
+    social:
+      title: Social

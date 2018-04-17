@@ -49,11 +49,6 @@ class ConfigController
     private $configuration;
 
     /**
-     * @var ContainerInterface $container
-     */
-    private $container;
-
-    /**
      * @var FormFactoryInterface $formFactory
      */
     private $formFactory;
@@ -73,15 +68,23 @@ class ConfigController
         AuthorizationCheckerInterface $authorizationChecker,
         EntityManagerInterface $em,
         array $configuration,
-        ContainerInterface $container,
-        FormFactoryInterface $formFactory
+        /* ContainerInterface $container, */
+        /* FormFactoryInterface */ $formFactory
     ) {
         $this->router = $router;
         $this->templating = $templating;
         $this->authorizationChecker = $authorizationChecker;
         $this->em = $em;
         $this->configuration = $configuration;
-        $this->container = $container;
+
+        if (func_num_args() > 6) {
+            @trigger_error(sprintf('Passing the "container" as the sixth argument in "%s" is deprecated in KunstmaanConfigBundle 5.1 and will be removed in KunstmaanConfigBundle 6.0. Remove the "container" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->formFactory = func_get_arg(6);
+
+            return;
+        }
+
         $this->formFactory = $formFactory;
     }
 
@@ -100,7 +103,6 @@ class ConfigController
          */
         $entity = $this->getConfigEntityByInternalName($internalName);
         $entityClass = get_class($entity);
-        $formType = $entity->getDefaultAdminType();
 
         // Check if current user has permission for the site config.
         foreach ($entity->getRoles() as $role) {
@@ -114,15 +116,8 @@ class ConfigController
             $config = new $entityClass();
         }
 
-        // If the formType is a service, get it from the container.
-        if (!is_object($formType) && is_string($formType)) {
-            $formType = $this->container->get($formType);
-        }
-
-        $formFqn = get_class($formType);
-
         $form = $this->formFactory->create(
-            $formFqn,
+            $entity->getDefaultAdminType(),
             $config
         );
 

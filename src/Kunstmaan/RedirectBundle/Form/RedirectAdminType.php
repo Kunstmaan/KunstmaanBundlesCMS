@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\RedirectBundle\Form;
 
-use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,7 +28,7 @@ class RedirectAdminType extends AbstractType
         if ($options['domainConfiguration']->isMultiDomainHost()) {
             $hosts = $options['domainConfiguration']->getHosts();
             $domains = array_combine($hosts, $hosts);
-            $domains = array_merge(array('redirect.all' => ''), $domains);
+            $domains = array_merge(['redirect.all' => ''], $domains);
 
             $builder->add('domain', ChoiceType::class, [
                 'label' => 'redirect.form.redirect.domain.label',
@@ -45,24 +44,28 @@ class RedirectAdminType extends AbstractType
             ]);
         }
 
-        $builder->add('origin', TextType::class, array(
+        $builder->add('origin', TextType::class, [
             'label' => 'redirect.form.redirect.origin.label',
             'required' => true,
-            'attr' => array(
+            'attr' => [
                 'info_text' => 'redirect.origin_info',
-            ),
-        ));
-        $builder->add('target', TextType::class, array(
+            ],
+        ]);
+        $builder->add('target', TextType::class, [
             'label' => 'redirect.form.redirect.target.label',
             'required' => true,
-            'attr' => array(
+            'attr' => [
                 'info_text' => 'redirect.target_info',
-            ),
-        ));
-        $builder->add('permanent', CheckboxType::class, array(
+            ],
+        ]);
+        $builder->add('permanent', CheckboxType::class, [
             'label' => 'redirect.form.redirect.permanent.label',
             'required' => false,
-        ));
+        ]);
+        $builder->add('note', TextType::class, [
+            'label' => 'redirect.form.redirect.note.label',
+            'required' => false,
+        ]);
     }
 
     /**
@@ -72,9 +75,9 @@ class RedirectAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'domainConfiguration' => null,
-        ));
+        ]);
     }
 
     /**

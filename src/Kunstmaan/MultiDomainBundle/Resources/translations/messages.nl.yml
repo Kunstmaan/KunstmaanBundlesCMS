@@ -1,2 +1,3 @@
+---
 multi_domain:
-    host_override_active: Host override is actief!
+  host_override_active: Host override is actief!

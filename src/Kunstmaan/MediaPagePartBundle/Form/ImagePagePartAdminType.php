@@ -6,9 +6,8 @@ use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -32,7 +31,7 @@ class ImagePagePartAdminType extends AbstractType
         $builder->add('media', MediaType::class, array(
             'label' => 'mediapagepart.image.choosefile',
         ));
-        $builder->add('alttext', null, array(
+        $builder->add('alttext', TextType::class, array(
             'required' => false,
             'label' => 'mediapagepart.image.alttext',
         ));

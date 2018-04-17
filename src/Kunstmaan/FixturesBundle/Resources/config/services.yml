@@ -90,3 +90,8 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: kunstmaan_fixtures.provider, alias: NodeTranslation }
+
+    kunstmaan_fixtures.provider.node:
+        class: Kunstmaan\FixturesBundle\Provider\Node
+        tags:
+            - { name: kunstmaan_fixtures.provider, alias: Node }

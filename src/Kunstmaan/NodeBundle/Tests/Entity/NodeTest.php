@@ -150,7 +150,7 @@ class NodeTest extends PHPUnit_Framework_TestCase
 
     public function testGetDefaultAdminType()
     {
-        $this->assertInstanceOf('Kunstmaan\NodeBundle\Form\NodeAdminType', $this->object->getDefaultAdminType());
+        $this->assertEquals('Kunstmaan\NodeBundle\Form\NodeAdminType', $this->object->getDefaultAdminType());
     }
 
     public function testToString()

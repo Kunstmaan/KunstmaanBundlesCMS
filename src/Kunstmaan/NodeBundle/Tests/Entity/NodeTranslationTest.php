@@ -125,7 +125,7 @@ class NodeTranslationTest extends PHPUnit_Framework_TestCase
 
     public function testGetDefaultAdminType()
     {
-        $this->assertInstanceOf('Kunstmaan\NodeBundle\Form\NodeTranslationAdminType', $this->object->getDefaultAdminType());
+        $this->assertEquals('Kunstmaan\NodeBundle\Form\NodeTranslationAdminType', $this->object->getDefaultAdminType());
     }
 
     public function testSetGetUrl()

@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Translation\TranslatorInterface;
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 
 /**
  * AdminLocaleListener to override default locale if user-specific locale is set in database
@@ -37,17 +38,24 @@ class AdminLocaleListener implements EventSubscriberInterface
     private $providerKey;
 
     /**
+     * @var AdminRouteHelper
+     */
+    private $adminRouteHelper;
+
+    /**
      * @param TokenStorageInterface $tokenStorage
      * @param TranslatorInterface   $translator
      * @param string                $defaultAdminLocale
+     * @param AdminRouteHelper      $adminRouteHelper
      * @param string                $providerKey          Firewall name to check against
      */
-    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, $defaultAdminLocale, $providerKey = 'main')
+    public function __construct(TokenStorageInterface $tokenStorage, TranslatorInterface $translator, AdminRouteHelper $adminRouteHelper, $defaultAdminLocale, $providerKey = 'main')
     {
         $this->translator         = $translator;
         $this->tokenStorage       = $tokenStorage;
         $this->defaultAdminLocale = $defaultAdminLocale;
         $this->providerKey        = $providerKey;
+        $this->adminRouteHelper   = $adminRouteHelper;
     }
 
     /**
@@ -60,7 +68,7 @@ class AdminLocaleListener implements EventSubscriberInterface
         $url = $event->getRequest()->getRequestUri();
         $token = $this->tokenStorage->getToken();
 
-        if ($token && $this->isAdminToken($this->providerKey, $token) && $this->isAdminRoute($url)) {
+        if ($token && $this->isAdminToken($this->providerKey, $token) && $this->adminRouteHelper->isAdminRoute($url)) {
             $locale = $token->getUser()->getAdminLocale();
 
             if (!$locale) {
@@ -80,30 +88,6 @@ class AdminLocaleListener implements EventSubscriberInterface
     private function isAdminToken($providerKey, TokenInterface $token = null)
     {
         return is_callable([$token, 'getProviderKey']) && $token->getProviderKey() === $providerKey;
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    private function isAdminRoute($url)
-    {
-        //If the url contains an admin part and a preview part then it is not an admin route
-        preg_match('/^(\/app_[a-zA-Z]+\.php)?\/([a-zA-Z_-]{2,5}\/)?admin(\/.*)?\/preview/', $url, $matches);
-
-        if (count($matches) > 0) {
-            return false;
-        }
-
-        preg_match('/^\/(app_[a-zA-Z]+\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/', $url, $matches);
-
-        // Check if path is part of admin area
-        if (count($matches) === 0) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

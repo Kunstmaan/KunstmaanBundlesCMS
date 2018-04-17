@@ -228,7 +228,7 @@ EOT
     /**
      * Get the generator.
      *
-     * @return PagePartGenerator
+     * @return PageGenerator
      */
     protected function createGenerator()
     {

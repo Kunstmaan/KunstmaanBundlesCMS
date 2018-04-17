@@ -1,20 +1,20 @@
 KunstmaanUserManagementBundle_user_settings:
     resource: '@KunstmaanUserManagementBundle/Controller/UsersController.php'
     type:     annotation
-    prefix:   /admin/settings/users
+    prefix:   /%kunstmaan_admin.admin_prefix%/settings/users
 
 KunstmaanUserManagementBundle_group_settings:
     resource: '@KunstmaanUserManagementBundle/Controller/GroupsController.php'
     type:     annotation
-    prefix:   /admin/settings/groups
+    prefix:   /%kunstmaan_admin.admin_prefix%/settings/groups
 
 KunstmaanUserManagementBundle_role_settings:
     resource: '@KunstmaanUserManagementBundle/Controller/RolesController.php'
     type:     annotation
-    prefix:   /admin/settings/roles
+    prefix:   /%kunstmaan_admin.admin_prefix%/settings/roles
 
 # Override default user change password route...
 KunstmaanAdminBundle_user_change_password:
-    path: /admin/settings/users/{id}/edit
+    path: /%kunstmaan_admin.admin_prefix%/settings/users/{id}/edit
     defaults: { _controller: KunstmaanUserManagementBundle:Users:edit, id: '' }
     methods: [GET]

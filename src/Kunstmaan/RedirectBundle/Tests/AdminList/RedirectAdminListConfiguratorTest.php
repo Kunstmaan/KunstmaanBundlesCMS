@@ -46,14 +46,14 @@ class RedirectAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
     {
         $this->object->buildFields();
         $fields = $this->object->getFields();
-        $this->assertEquals(3, count($fields));
+        $this->assertEquals(4, count($fields));
         $fieldNames = array_map(
             function (Field $field) {
                 return $field->getName();
             },
             $fields
         );
-        $this->assertEquals(array('origin', 'target', 'permanent'), $fieldNames);
+        $this->assertEquals(array('origin', 'target', 'permanent', 'note'), $fieldNames);
     }
 
     public function testBuildFilters()
@@ -71,6 +71,10 @@ class RedirectAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
             ->expects($this->at(2))
             ->method('add')
             ->with('permanent');
+        $filterBuilder
+            ->expects($this->at(3))
+            ->method('add')
+            ->with('note');
         $this->object->setFilterBuilder($filterBuilder);
         $this->object->buildFilters();
     }

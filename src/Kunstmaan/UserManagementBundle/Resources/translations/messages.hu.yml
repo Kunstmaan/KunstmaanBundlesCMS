@@ -1,72 +1,80 @@
-# Settings
+---
 settings:
-    groups: Csoportok
-    group:
-        name: Csoport neve
-        edit: Csoport szerkesztése
-        add: Csoport hozzáadása
-        roles: Csoport szerepkörök
-        roles_placeholder: Válassz egy jogosultságot...
-    users: Felhasználók
-    user:
-        username: Felhasználónév
-        password: Jelszó
-        repeatedpassword: Megismételt jelszó
-        adminlang: Felhasználó nyelve az admin felületen
-        email: E-mail cím
-        enabled: Engedélyezett
-        roles: Felhasználó szerepkörei
-        roles_placeholder: Válassz ki a jogosultság csoportokat...
-        add: Felhasználó hozzáadása
-        edit: Felhasználó szerkesztése
-    roles: Szerepkörök
-    role:
-        role: Szerepkör engedélyek
-        add: Szerepkör hozzáadása
-        edit: Szerepkör szerkesztése
-
+  groups: Csoportok
+  group:
+    name: Csoport neve
+    edit: Csoport szerkesztése
+    add: Csoport hozzáadása
+    roles: Csoport szerepkörök
+    roles_placeholder: Válassz egy jogosultságot...
+  users: Felhasználók
+  user:
+    username: Felhasználónév
+    password: Jelszó
+    repeatedpassword: Megismételt jelszó
+    adminlang: Felhasználó nyelve az admin felületen
+    email: E-mail cím
+    enabled: Engedélyezett
+    roles: Felhasználó szerepkörei
+    roles_placeholder: Válassz ki a jogosultság csoportokat...
+    add: Felhasználó hozzáadása
+    edit: Felhasználó szerkesztése
+  roles: Szerepkörök
+  role:
+    role: Szerepkör engedélyek
+    add: Szerepkör hozzáadása
+    edit: Szerepkör szerkesztése
 kuma_user:
-    roles:
-        add:
-            flash:
-                'success.%role%': "A(z) '%role%' jogosultság létrehozva!"
-        edit:
-            flash:
-                'success.%role%': "A(z) '%role%' jogosultság módosítva!"
-        delete:
-            flash:
-                'success.%role%': "A(z) '%role%' jogosultság törölve!"
-    users:
-        adminlist:
-            header:
-                username:   Felhasználónév
-                email:      E-mail
-                enabled:    Elfogadva
-                last_login: Utolsó belépés
-                groups:     Csoportok
-            filter:
-                username:   Felhasználónév
-                email:      E-mail
-                enabled:    Elfogadva
-        add:
-            flash:
-                'success.%username%': "A(z) '%username%' felhasználó létrehozva!"
-        edit:
-            flash:
-                'success.%username%': "A(z) '%username%' felhasználó módosítva!"
-        delete:
-            flash:
-                'success.%username%': "A(z) '%username%' felhasználó törölve!"
-    group:
-        adminlist:
-            header:
-                name:   Név
-                roles:  Jogok
-            filter:
-                name:   Név
-    role:
-        adminlist:
-            header:
-                role:   Jog
-            filter:
-                role:   Jog
+  roles:
+    add:
+      flash:
+        'success.%role%': A(z) '%role%' jogosultság létrehozva!
+    edit:
+      flash:
+        'success.%role%': A(z) '%role%' jogosultság módosítva!
+    delete:
+      flash:
+        'success.%role%': A(z) '%role%' jogosultság törölve!
+  users:
+    adminlist:
+      header:
+        username: Felhasználónév
+        email: E-mail
+        enabled: Elfogadva
+        last_login: Utolsó belépés
+        groups: Csoportok
+      filter:
+        username: Felhasználónév
+        email: E-mail
+        enabled: Elfogadva
+    add:
+      flash:
+        'success.%username%': A(z) '%username%' felhasználó létrehozva!
+    edit:
+      flash:
+        'success.%username%': A(z) '%username%' felhasználó módosítva!
+    delete:
+      flash:
+        'success.%username%': A(z) '%username%' felhasználó törölve!
+  group:
+    adminlist:
+      header:
+        name: Név
+        roles: Jogok
+      filter:
+        name: Név
+    add:
+      flash:
+        success: Group %groupname% has been created!
+    edit:
+      flash:
+        success: Group %groupname% has been edited!
+    delete:
+      flash:
+        success: Group %groupname% has been deleted!
+  role:
+    adminlist:
+      header:
+        role: Jog
+      filter:
+        role: Jog

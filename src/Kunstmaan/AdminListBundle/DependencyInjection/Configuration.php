@@ -18,7 +18,21 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('kunstmaan_k_admin_list');
+        $root = $treeBuilder->root('kunstmaan_k_admin_list');
+
+        /** @var ArrayNodeDefinition $pages */
+        $root
+            ->children()
+                ->arrayNode('lock')
+                    ->addDefaultsIfNotSet()
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('check_interval')->defaultValue(15)->end()
+                        ->scalarNode('threshold')->defaultValue(35)->end()
+                        ->booleanNode('enabled')->defaultFalse()->end()
+                    ->end()
+                ->end()
+            ->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

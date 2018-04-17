@@ -27,6 +27,11 @@ class DomainConfiguration extends BaseDomainConfiguration
     protected $aliases = array();
 
     /**
+     * @var AdminRouteHelper
+     */
+    protected $adminRouteHelper;
+
+    /**
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -41,6 +46,8 @@ class DomainConfiguration extends BaseDomainConfiguration
                 }
             }
         }
+
+        $this->adminRouteHelper = $container->get('kunstmaan_admin.adminroute.helper');
     }
 
     /**
@@ -202,7 +209,7 @@ class DomainConfiguration extends BaseDomainConfiguration
         $request = $this->getMasterRequest();
 
         return !is_null($request) &&
-        $this->isAdminRoute($request->getRequestUri()) &&
+        $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
         $request->hasPreviousSession() &&
         $request->getSession()->has(self::OVERRIDE_HOST);
     }
@@ -214,11 +221,10 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $request = $this->getMasterRequest();
 
-        $adminRoute = $this->isAdminRoute($request->getRequestUri());
-        $prev = $request->hasPreviousSession();
-        $hasHost = $request->getSession()->has(self::SWITCH_HOST);
-
-        return !is_null($request) && $adminRoute && $prev && $hasHost;
+        return !is_null($request) &&
+        $this->adminRouteHelper->isAdminRoute($request->getRequestUri()) &&
+        $request->hasPreviousSession() &&
+        $request->getSession()->has(self::SWITCH_HOST);
     }
 
     /**
@@ -234,7 +240,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @return array|string|null
+     * @return array
      */
     public function getHostSwitched()
     {
@@ -247,27 +253,6 @@ class DomainConfiguration extends BaseDomainConfiguration
         }
 
         return $this->hosts[$host];
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    protected function isAdminRoute($url)
-    {
-        preg_match(
-            '/^\/(app_(.*)\.php\/)?([a-zA-Z_-]{2,5}\/)?admin\/(.*)/',
-            $url,
-            $matches
-        );
-
-        // Check if path is part of admin area
-        if (count($matches) === 0) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

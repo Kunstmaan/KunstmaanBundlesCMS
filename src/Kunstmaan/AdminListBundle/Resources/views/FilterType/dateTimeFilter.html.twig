@@ -1,14 +1,28 @@
 <div class="form-group">
-    <select name="{{nameprefix}}comparator{{namesuffix}}" class="form-control">
-        <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>before</option>
-        <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>after</option>
+    <select name="{{ nameprefix }}comparator{{ namesuffix }}" class="form-control">
+        <option value="before" {% if data.comparator is defined and data.comparator == "before" %} selected="selected" {% endif %}>
+            {{ 'filter.before' | trans }}
+        </option>
+        <option value="after" {% if data.comparator is defined and data.comparator == "after" %} selected="selected" {% endif %}>
+            {{ 'filter.after' | trans }}
+        </option>
     </select>
 </div>
 
 <div class="form-group">
-    <input type="text" class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[date]" {% if data.value['date'] is defined %}value="{{data.value['date']}}"{% endif %}>
+    <input
+        type="text"
+        class="form-control form_datepicker{{ nameprefix }}{{ namesuffix }}"
+        name="{{ nameprefix }}value{{ namesuffix }}[date]"
+        {% if data.value['date'] is defined %}value="{{ data.value['date'] }}"{% endif %}
+    >
 </div>
 
 <div class="form-group">
-    <input type="text" class="form-control form_timepicker{{ nameprefix }}{{ namesuffix }}" name="{{nameprefix}}value{{namesuffix}}[time]" {% if data.value['time'] is defined %}value="{{data.value['time']}}"{% endif %}>
+    <input
+        type="text"
+        class="form-control form_timepicker{{ nameprefix }}{{ namesuffix }}"
+        name="{{ nameprefix }}value{{ namesuffix }}[time]"
+        {% if data.value['time'] is defined %}value="{{ data.value['time'] }}"{% endif %}
+    >
 </div>

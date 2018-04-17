@@ -23,7 +23,7 @@ class RedirectAdminListController extends AdminListController
     public function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->get('kunstmaan_admin.domain_configuration'));
+            $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->container->get('kunstmaan_admin.domain_configuration'));
         }
 
         return $this->configurator;
@@ -86,7 +86,7 @@ class RedirectAdminListController extends AdminListController
      *
      * @param string $_format
      *
-     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx"}, name="kunstmaanredirectbundle_admin_redirect_export")
+     * @Route("/export.{_format}", requirements={"_format" = "csv|xlsx|ods"}, name="kunstmaanredirectbundle_admin_redirect_export")
      * @Method({"GET", "POST"})
      * @return Response
      */

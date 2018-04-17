@@ -55,7 +55,6 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
         return $result;
     }
 
-
     /**
      * This builds a Region out of the rawRegion from the Yaml
      *
@@ -65,11 +64,15 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
     private function buildRegion($rawRegion)
     {
         $children = [];
+        $rows = [];
+        $rawRegion = array_replace(['regions' => [], 'rows' => []], $rawRegion);
 
-        if (isset($rawRegion['regions']) && count($rawRegion['regions'])) {
-            foreach ($rawRegion['regions'] as $child) {
-                $children[] = $this->buildRegion($child);
-            }
+        foreach ($rawRegion['regions'] as $child) {
+            $children[] = $this->buildRegion($child);
+        }
+
+        foreach ($rawRegion['rows'] as $row) {
+            $rows[] = $this->buildRow($row);
         }
 
         $rawRegion = array_replace([
@@ -78,7 +81,25 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
             'template' => null,
         ], $rawRegion);
 
-        return new Region($rawRegion['name'], $rawRegion['span'], $rawRegion['template'], $children);
+        return new Region($rawRegion['name'], $rawRegion['span'], $rawRegion['template'], $children, $rows);
+    }
+
+
+    /**
+     * This builds a Row out of the rawRow from the Yaml
+     *
+     * @param array $rawRow
+     * @return Row
+     */
+    private function buildRow($rawRow)
+    {
+        $regions = [];
+
+        foreach ($rawRow as $region) {
+            $regions[] = $this->buildRegion($region);
+        }
+
+        return new Row($regions);
     }
 
     /**
@@ -98,7 +119,7 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
         }
 
         list ($namespace, $name) = explode(':', $name, 2);
-        $path = $this->kernel->locateResource('@' . $namespace . '/Resources/config/pagetemplates/' . $name . '.yml');
+        $path = $this->kernel->locateResource('@'.$namespace.'/Resources/config/pagetemplates/'.$name.'.yml');
         $rawData = Yaml::parse(file_get_contents($path));
 
         return $rawData;

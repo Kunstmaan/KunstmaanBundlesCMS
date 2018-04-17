@@ -2,9 +2,12 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\Service;
 
+
 use Exception;
+use Box\Spout\Common\Type;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FieldAlias;
+use Kunstmaan\AdminListBundle\AdminList\ExportableInterface;
 use Kunstmaan\AdminListBundle\Service\ExportService;
 use Kunstmaan\MenuBundle\Entity\MenuItem;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -48,14 +51,15 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetSupportedExtensions()
     {
         $extensions = ExportService::getSupportedExtensions();
-        $this->assertEquals(array('Csv' => 'csv', 'Excel' => 'xlsx'), $extensions);
+        $this->assertEquals(['Csv' => 'csv', 'Ods' => 'ods', 'Excel' => 'xlsx'], $extensions);
     }
 
     /**
      * @dataProvider createFromTemplateProvider
      */
-    public function testCreateFromTemplate($template = null)
+    public function testGetDownloadableResponseReturnsStreamedResponseWithExcel()
     {
+        /** @var ExportableInterface $adminList */
         $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
         $iterator = $this->createMock('\Iterator');
         $adminList->expects($this->once())->method('getIterator')->willReturn($iterator);
@@ -72,16 +76,9 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
-        $this->object->setRenderer($renderer);
-        $this->object->createFromTemplate($adminList, ExportService::EXT_CSV, $template);
-    }
+        $response = $this->object->getDownloadableResponse($adminList, Type::XLSX);
 
-    public function createFromTemplateProvider()
-    {
-        return array(
-            array(null),
-            array('MyBundle:Default:export.csv.twig'),
-        );
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
 
     /**
@@ -91,12 +88,13 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
      *
      * @throws \Exception
      */
-    public function testStreamExcelSheet()
+    public function testGetDownloadableResponseReturnsStreamedResponseWithOds()
     {
         $view = $this->createMock(EngineInterface::class);
         $view->expects($this->any())->method('exists')->willReturn(true);
         $this->object->setRenderer($view);
 
+        /** @var ExportableInterface $adminList */
         $adminList = $this->createMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
         $adminList->expects($this->any())->method('getIterator')->willReturn([
             new MenuItem(),
@@ -153,8 +151,12 @@ class ExportServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateResponse()
     {
-        $response = $this->object->createResponse('content', ExportService::EXT_CSV);
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        /** @var ExportableInterface $adminList */
+        $adminList = $this->getMock('Kunstmaan\AdminListBundle\AdminList\ExportableInterface');
+
+        $response = $this->object->getDownloadableResponse($adminList, Type::CSV);
+
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse', $response);
     }
 
     /**

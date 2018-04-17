@@ -39,6 +39,13 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('singlelangdomain.tld', $object->getHost());
     }
 
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::__construct
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
+     */
     public function testGetHostWithOverrideOnFrontend()
     {
         $request = $this->getRequestWithOverride('/frontend-uri');
@@ -46,6 +53,13 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('multilangdomain.tld', $object->getHost());
     }
 
+    /**
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::__construct
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
+     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
+     */
     public function testGetHostWithOverrideOnBackend()
     {
         $request = $this->getRequestWithOverride('/nl/admin/backend-uri');
@@ -272,6 +286,7 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('doctrine.orm.entity_manager', 1, $this->getEntityManager()),
+            array('kunstmaan_admin.adminroute.helper', 1, $this->getAdminRouteHelper())
         );
 
         $container
@@ -290,6 +305,24 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
             ->willReturn($this->getNodeRepository());
 
         return $em;
+    }
+
+    private function getAdminRouteHelper()
+    {
+        $adminRouteReturnValueMap = array(
+            array('/frontend-uri', false),
+            array('/nl/admin/backend-uri', true)
+        );
+
+        $adminRouteHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\AdminRouteHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $adminRouteHelper
+            ->expects($this->any())
+            ->method('isAdminRoute')
+            ->will($this->returnValueMap($adminRouteReturnValueMap));
+
+        return $adminRouteHelper;
     }
 
     private function getNodeRepository()

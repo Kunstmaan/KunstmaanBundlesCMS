@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as AbstractUser;
+use Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictions;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -173,7 +174,13 @@ abstract class BaseUser extends AbstractUser
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('username', new NotBlank());
-        $metadata->addPropertyConstraint('plainPassword', new NotBlank(array("groups" => array("Registration"))));
+        $metadata->addPropertyConstraints(
+            'plainPassword',
+            array(
+                new NotBlank(array("groups" => array("Registration"))),
+                new PasswordRestrictions(array("groups" => array("Registration","Default"))),
+            )
+        );
         $metadata->addPropertyConstraint('email', new NotBlank());
         $metadata->addPropertyConstraint('email', new Email());
         $metadata->addConstraint(new UniqueEntity(array(

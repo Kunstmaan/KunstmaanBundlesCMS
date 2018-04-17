@@ -1,0 +1,37 @@
+<div id="duplicate-page-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>{{ 'kuma_node.modal.duplicate_page.title.%page%'|trans({'%page%': page.title}) }}</h3>
+            </div>
+
+            <form action="{{ path('KunstmaanNodeBundle_nodes_duplicate', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="duplicatepage_title">
+                            {{ 'kuma_node.modal.duplicate_page.label.new_title'|trans() }}
+                        </label>
+                        <input name="title" type="text" id="title" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
+                        {{ 'kuma_node.modal.duplicate_page.button.duplicate'|trans() }}
+                    </button>
+                    <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                        {{ 'kuma_node.modal.duplicate_page.button.cancel'|trans() }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

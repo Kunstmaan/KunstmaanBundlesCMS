@@ -1,31 +1,32 @@
-var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
+const COOKIEBAR_ID = 'cookie-bar';
+const COOKIEBAR_BUTTON_ID = 'cookie-bar__consent-btn';
+const COOKIEBAR_VISIBLE_CLASS = 'cookie-bar--visible';
 
-{{ bundle.getName() }}.cookieConsent = (function($, window, undefined) {
+let cookieBar;
 
-    var init;
+function cookieConsent() {
+    cookieBar = document.getElementById(COOKIEBAR_ID);
 
-    init = function() {
+    if (cookieBar) {
+        init();
+    }
+}
 
-        var cookieBar = document.getElementById('cookie-bar'),
-            cookieBarConsentBtn = document.getElementById('cookie-bar__consent-btn'),
-            _hasCookie = document.cookie.match(/(?:(?:^|.*;\s*)bundles\-cookie\-consent\s*\=\s*([^;]*).*$)|^.*$/)[1];
+function init() {
+    const cookieBarConsentBtn = document.getElementById(COOKIEBAR_BUTTON_ID);
+    const hasCookie = document.cookie.match(/(?:(?:^|.*;\s*)bundles-cookie-consent\s*=\s*([^;]*).*$)|^.*$/)[1];
 
-        if (typeof _hasCookie === 'undefined' || _hasCookie === 'false') {
-            cookieBar.classList.add('cookie-bar--visible');
-        }
+    if ((typeof hasCookie === 'undefined' || hasCookie === 'false') && cookieBar) {
+        cookieBar.classList.add(COOKIEBAR_VISIBLE_CLASS);
+    }
 
-        cookieBarConsentBtn.addEventListener('click', function(e) {
-            e.preventDefault();
+    if (cookieBarConsentBtn) {
+        cookieBarConsentBtn.addEventListener('click', (event) => {
+            event.preventDefault();
             document.cookie = 'bundles-cookie-consent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/';
-            cookieBar.classList.remove('cookie-bar--visible');
+            cookieBar.classList.remove(COOKIEBAR_VISIBLE_CLASS);
         });
+    }
+}
 
-    };
-
-
-
-    return {
-        init: init
-    };
-
-}(jQuery, window));
+export default cookieConsent;

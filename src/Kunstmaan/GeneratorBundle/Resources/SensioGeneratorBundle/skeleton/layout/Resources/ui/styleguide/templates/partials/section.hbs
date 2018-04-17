@@ -1,0 +1,67 @@
+{{#xif depth '==' '1'}}
+    {{#xif example '||' description}}
+        <div id="{{clean id}}" class="sg-card__anchor"></div>
+        <div class="sg-card">
+    {{/xif}}
+{{/xif}}
+
+    <div class="sg-card__body {{#if colors}}sg-card__body--full-width{{/if}}">
+        {{#if example}}
+            <div class="sg-card__example">
+                {{#if example}}
+                    {{{ example.description }}}
+                {{/if}}
+            </div>
+        {{/if}}
+
+        {{#if colors}}
+            <div class="sg-card__example">
+                <div class="sg-color__wrapper">
+                    {{#each colors}}
+                        {{~> color}}
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if description}}
+            <div class="sg-card__description">
+                <div class="sg-card__description__inner">
+                    {{{description}}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
+
+{{#if code}}
+        <div class="sg-card__footer">
+            <div class="sg-card__footer__toggle">
+                <button class="js-sg-toggle-trigger sg-card__footer__toggle__button" data-target="#markup-{{clean id}}">
+                    <span class="show-code">Show code sample</span>
+                    <span class="hide-code">Hide code s</span>
+                </button>
+            </div>
+            <div class="sg-card__footer__toggle__content" id="markup-{{clean id}}">
+                <div class="js-sg-toggle-content">
+                    <div class="code-snippet-container">
+                        <div class="sg-card__footer__toggle__content__code-snippet code-snippet">
+                            <div class="code-snippet__copy">
+                                <button class="js-clipboard-code" data-clipboard-action="copy" data-clipboard-target="#copy-{{clean id}}">
+                                    <span class="btn-copy">Copy</span>
+                                    <span class="tooltip tooltip--info">Copy to clipboard</span>
+                                    <span class="tooltip tooltip--success">Copied!</span>
+                                </button>
+                            </div>
+                            <pre class="collapse sg-card__footer__markup code-snippet__code-block"><code id="copy-{{clean id}}" class="sg-code language-{{code.type}}">{{code.description}}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{{/if}}
+
+{{#xif depth '==' '1'}}
+    {{#xif example '||' description}}
+        </div>
+    {{/xif}}
+{{/xif}}

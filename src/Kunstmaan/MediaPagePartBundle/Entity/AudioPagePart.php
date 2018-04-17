@@ -67,10 +67,10 @@ class AudioPagePart extends AbstractPagePart
     }
 
     /**
-     * @return AudioPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new AudioPagePartAdminType();
+        return AudioPagePartAdminType::class;
     }
 }

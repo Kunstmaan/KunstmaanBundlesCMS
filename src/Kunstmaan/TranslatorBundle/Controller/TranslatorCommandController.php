@@ -3,6 +3,7 @@
 namespace Kunstmaan\TranslatorBundle\Controller;
 
 use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
+use Kunstmaan\TranslatorBundle\Model\Export\ExportCommand;
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -67,5 +68,22 @@ class TranslatorCommandController extends Controller
         );
 
         return new RedirectResponse($this->generateUrl('KunstmaanTranslatorBundle_settings_translations'));
+    }
+
+    /**
+     * @Route("/export", name="KunstmaanTranslatorBundle_command_export")
+     */
+    public function exportAction()
+    {
+        $locales = explode('|', $this->getParameter('requiredlocales'));
+        $exportCommand = new ExportCommand();
+        $exportCommand
+            ->setLocales($locales)
+            ->setFormat('csv')
+            ->setDomains('messages');
+
+        $response = $this->get('kunstmaan_translator.service.exporter.command_handler')->executeExportCSVCommand($exportCommand);
+
+        return $response;
     }
 }

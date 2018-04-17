@@ -8,30 +8,22 @@ a {
     color: $link-color;
 {% if demosite %}
     text-decoration: none;
-    transition: color .3s ease;
 {% else %}
     text-decoration: underline;
 {% endif %}
 
-    &:hover, &:focus {
-        text-decoration: none;
+    transition: color .3s ease;
+
+    &:hover,
+    &:focus {
         color: $link-color--hover;
+        text-decoration: none;
     }
 }
 
 
-/*doc
----
-title: Links
-name: 02_links
-category: Blocks
----
-
-```html_example
-
-<p>
-    <a href="#">Link</a>
-</p>
-
-```
-*/
+/**
+ * @doc docs/links.md
+ * @section
+ * @sectionof Blocks
+ */

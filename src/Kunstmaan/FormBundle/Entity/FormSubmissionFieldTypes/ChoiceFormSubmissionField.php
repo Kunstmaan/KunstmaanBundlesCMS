@@ -56,11 +56,11 @@ class ChoiceFormSubmissionField extends FormSubmissionField
     /**
      * Returns the default form type for this FormSubmissionField
      *
-     * @return ChoiceFormSubmissionType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new ChoiceFormSubmissionType();
+        return ChoiceFormSubmissionType::class;
     }
 
     /**

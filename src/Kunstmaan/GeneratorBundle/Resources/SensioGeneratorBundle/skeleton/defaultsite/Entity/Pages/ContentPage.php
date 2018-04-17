@@ -38,11 +38,11 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
     /**
      * Returns the default backend form type for this page
      *
-     * @return AbstractType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new ContentPageAdminType();
+        return ContentPageAdminType::class;
     }
 
     /**
@@ -55,7 +55,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
                 'name'  => 'ContentPage',
                 'class' => '{{ namespace }}\Entity\Pages\ContentPage'
             ),
-	);
+        );
     }
 
 {% if demosite %}
@@ -64,7 +64,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function setMenuImage($image)
     {
-	    $this->menuImage = $image;
+        $this->menuImage = $image;
     }
 
     /**
@@ -72,7 +72,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getMenuImage()
     {
-	    return $this->menuImage;
+        return $this->menuImage;
     }
 
     /**
@@ -80,7 +80,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getMenuDescription()
     {
-	    return $this->menuDescription;
+        return $this->menuDescription;
     }
 
     /**
@@ -101,7 +101,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getSearchType()
     {
-    	return 'Page';
+        return 'Page';
     }
 
     /**
@@ -117,7 +117,7 @@ class ContentPage extends AbstractPage implements HasPageTemplateInterface, Sear
      */
     public function getPageTemplates()
     {
-	    return array('{{ bundle.getName() }}:contentpage'{% if demosite %}, '{{ bundle.getName() }}:contentpage-with-submenu'{% endif %});
+        return array('{{ bundle.getName() }}:contentpage'{% if demosite %}, '{{ bundle.getName() }}:contentpage-with-submenu'{% endif %});
     }
 
     /**

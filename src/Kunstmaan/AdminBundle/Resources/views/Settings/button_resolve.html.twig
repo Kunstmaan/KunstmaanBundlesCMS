@@ -1,0 +1,8 @@
+{% set action = itemAction.getUrlFor(item) %}
+<a href="{{ path(action['path'], action['params']) }}">
+    {% if item.isResolved() %}
+        <i class="fa fa-toggle-on" aria-hidden="true"></i> {{ "settings.exceptions.unresolved" | trans }}
+    {% else %}
+        <i class="fa fa-toggle-off" aria-hidden="true"></i> {{ "settings.exceptions.resolved" | trans }}
+    {% endif %}
+</a>

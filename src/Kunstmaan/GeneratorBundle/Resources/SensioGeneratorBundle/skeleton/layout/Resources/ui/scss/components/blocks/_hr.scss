@@ -3,7 +3,7 @@
    ========================================================================== */
 
 hr {
-    margin: 2rem 0;
+    margin: 32px 0;
 
     border: 0;
     border-top: 1px solid $grey;
@@ -11,18 +11,13 @@ hr {
 
 aside {
     hr {
-        margin: 1rem 0;
+        margin: 16px 0;
     }
 }
 
 
-/*doc
----
-title: Hr
-name: 03_hr
-category: Blocks
----
-```html_example
-    <hr>
-```
-*/
+/**
+ * @doc docs/hr.md
+ * @section
+ * @sectionof Blocks
+ */

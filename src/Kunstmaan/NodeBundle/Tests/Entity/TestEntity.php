@@ -67,7 +67,7 @@ class TestEntity extends AbstractEntity implements HasNodeInterface
     }
 
     /**
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {

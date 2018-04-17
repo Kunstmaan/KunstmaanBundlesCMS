@@ -1,0 +1,4 @@
+kunstmaan_entity_lock_check:
+    resource: '@KunstmaanAdminListBundle/Controller/EntityLockCheckController.php'
+    type:     annotation
+    prefix:   /admin/entity/lock

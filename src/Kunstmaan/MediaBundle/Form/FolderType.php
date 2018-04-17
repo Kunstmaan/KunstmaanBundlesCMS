@@ -31,7 +31,7 @@ class FolderType extends AbstractType
         $builder
             ->add(
                 'name',
-                null,
+                TextType::class,
                 array(
                     'label' => 'media.folder.addsub.form.name'
                 )

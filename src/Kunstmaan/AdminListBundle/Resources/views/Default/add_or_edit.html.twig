@@ -1,7 +1,20 @@
 {% extends '@KunstmaanAdmin/Default/layout.html.twig' %}
 {% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
 
+{% block extrabodyclasses %}{{ parent() }}{% if entityVersionLockCheck %} js-entity-version-lock{% endif %}{% endblock %}
+
 {% block header %}
+    {% if entityVersionLockCheck %}
+        <div class="hidden" id="js-entity-version-lock-data" data-check-interval="{{ entityVersionLockInterval }}" data-url="{{ path('KunstmaanAdminListBundle_entity_lock_check', {'id': entity.id, 'repository': adminlistconfigurator.getRepositoryName()}) }}">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">
+                <i class="fa fa-times"></i>
+                </button>
+                <span class="message"></span>
+            </div>
+        </div>
+    {% endif %}
+
     {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
     {{ parent() }}
 {% endblock %}

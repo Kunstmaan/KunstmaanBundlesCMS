@@ -13,14 +13,17 @@ $root:                  "/frontend";
 
 /* Image folders
    ========================================================================== */
+{% if demosite %}
 $backgrounds:           "#{$root}/img/backgrounds";
 $buttons:               "#{$root}/img/buttons";
 $dummy:                 "#{$root}/img/dummy";
-$general:               "#{$root}/img/general";
 $icons:                 "#{$root}/img/icons";
+{% endif %}
+$general:               "#{$root}/img/general";
 
-
+{% if demosite %}
 /* Font folders
    ========================================================================== */
 $iconfont-path:         "#{$root}/fonts/iconfont/fonts";
 $webfont-path:          "#{$root}/fonts/webfont/fonts";
+{% endif %}

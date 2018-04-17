@@ -36,8 +36,6 @@
     }
 }
 
-
-
 /* Header
    ========================================================================== */
 // General
@@ -63,7 +61,6 @@
     }
 }
 
-
 // Move icon
 .pp__header__move-icon {
     position: absolute;
@@ -74,7 +71,6 @@
 
     transition: color .3s ease;
 }
-
 
 // Head
 .pp__header__head {
@@ -87,8 +83,6 @@
     font-size: 1.3rem;
     line-height: 3rem;
 }
-
-
 
 /* Header
    ========================================================================== */
@@ -164,7 +158,6 @@
     }
 }
 
-
 /* View
 ========================================================================== */
 .pp__view {
@@ -190,10 +183,84 @@
     }
 
     .container {
-        max-width: 100%!important;
+        max-width: 100% !important;
     }
 }
 
 .pp__view__block--hidden {
     display: none;
+}
+
+/* PP chooser modal
+   ========================================================================== */
+
+$pp-modal-preview-border-radius: 4px;
+
+.pp_modal__preview {
+    display: block;
+    margin: 2rem 0;
+    min-width: 100%;
+
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+}
+
+.pp_modal__preview__card {
+    position: relative;
+    transition: transform 300ms ease-in-out;
+
+    &:hover {
+        transform: translateY(-2px);
+
+        &:before {
+            opacity: 0;
+        }
+
+        &:after {
+            opacity: 1;
+        }
+    }
+
+    &:before,
+    &:after {
+        content: '';
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        border-radius: $pp-modal-preview-border-radius;
+
+        transition: opacity 300ms ease-in-out;
+    }
+
+    &:before {
+        box-shadow: 0px 2px 10px 0px rgba($black,0.3);
+    }
+
+    &:after {
+        opacity: 0;
+        box-shadow: 0px 7px 25px 0px rgba($black,0.3);
+    }
+}
+
+.pp_modal__preview__card__image {
+    width: 100%;
+
+    border-radius: $pp-modal-preview-border-radius $pp-modal-preview-border-radius 0 0;
+}
+
+.pp_modal__preview__card__name {
+    padding: 10px 20px;
+
+    color: $black;
+
+    border-top: 1px solid #f5f5f5;
 }

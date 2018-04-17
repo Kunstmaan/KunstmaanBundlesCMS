@@ -1,0 +1,6 @@
+# HR
+
+```html
+@example
+<hr>
+```

@@ -6,12 +6,13 @@
    ========================================================================== */
 .link-pp {
     margin: $default-margin 0;
-
 {% if demosite %}
-    font-size: .85rem;
+
+    font-size: 15px;
 
     a {
         display: inline-block;
+
         color: $black;
         font-weight: 600;
     }
@@ -23,6 +24,7 @@
    ========================================================================== */
 .link-pp__link {
     display: inline-block;
+
     color: $black;
     font-weight: 600;
 }
@@ -33,9 +35,10 @@
 .link-pp__icon {
     @extend .icon--arrow-right;
 
-    font-size: .5rem;
     display: inline-block;
-    margin-left: .5rem;
+    margin-left: 9px;
+
+    font-size: 9px;
 
     &:before {
         @include iconfont-reset;
@@ -43,20 +46,8 @@
 }
 {% endif %}
 
-/*doc
----
-title: link-pp
-name: 06_link-pp
-category: Pageparts
----
-
-```html_example
-<p class="link-pp">
-    <a href="/">
-        Link text
-        <i class="icon icon--arrow-right icon--small"></i>
-    </a>
-</p>
-```
-
+/**
+* @doc docs/link-pp.md
+* @section
+* @sectionof Pageparts
 */

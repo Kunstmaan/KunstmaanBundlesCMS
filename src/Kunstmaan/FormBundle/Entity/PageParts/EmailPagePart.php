@@ -167,12 +167,10 @@ class EmailPagePart extends AbstractFormPagePart
     }
 
     /**
-     * Returns the default backend form type for this page part
-     *
-     * @return EmailPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new EmailPagePartAdminType();
+        return EmailPagePartAdminType::class;
     }
 }

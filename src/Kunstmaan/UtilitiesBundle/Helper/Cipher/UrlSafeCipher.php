@@ -13,11 +13,13 @@ class UrlSafeCipher extends Cipher
      *
      * @param string $value
      *
+     * @param bool $raw_binary
      * @return string
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function encrypt($value)
+    public function encrypt($value, $raw_binary=false)
     {
-        return bin2hex(parent::encrypt($value));
+        return bin2hex(parent::encrypt($value, $raw_binary));
     }
 
     /**
@@ -25,11 +27,14 @@ class UrlSafeCipher extends Cipher
      *
      * @param string $value
      *
+     * @param bool $raw_binary
      * @return string
+     * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
+     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
      */
-    public function decrypt($value)
+    public function decrypt($value, $raw_binary=false)
     {
-        return parent::decrypt(hex2bin($value));
+        return parent::decrypt($this->hex2bin($value), $raw_binary);
     }
 
     /**
@@ -42,7 +47,19 @@ class UrlSafeCipher extends Cipher
      */
     public function hex2bin($hexString)
     {
-        return hex2bin($hexString);
+        $pos = 0;
+        $result = '';
+        while ($pos < strlen($hexString)) {
+            if (strpos(" \t\n\r", $hexString{$pos}) !== false) {
+                $pos++;
+            } else {
+                $code = hexdec(substr($hexString, $pos, 2));
+                $pos += 2;
+                $result .= chr($code);
+            }
+        }
+
+        return $result;
     }
 
 }
