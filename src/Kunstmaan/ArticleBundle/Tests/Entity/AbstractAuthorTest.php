@@ -22,6 +22,5 @@ class AbstractAuthorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('https://nasa.gov', $entity->getLink());
         $this->assertEquals('NASA', $entity->getName());
         $this->assertEquals('NASA', $entity->__toString());
-        $this->assertInstanceOf(AbstractAuthorAdminType::class, $entity->getAdminType());
     }
 }

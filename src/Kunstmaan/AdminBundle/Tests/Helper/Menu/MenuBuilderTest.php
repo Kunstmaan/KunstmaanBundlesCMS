@@ -31,7 +31,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
     protected $container;
 
     /**
-     * @var ContainerInterface $container (mock)
+     * @var AuthorizationCheckerInterface $authCheck (mock)
      */
     protected $authCheck;
 
@@ -68,7 +68,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getCurrentRequest')
             ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_settings']));
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new SettingsMenuAdaptor($this->container);
+        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $this->object->addAdaptMenu($adapter);
         $current = $this->object->getCurrent();
         $this->assertInstanceOf(TopMenuItem::class, $current);
@@ -88,7 +88,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
         ->method('getCurrentRequest')
         ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_settings']));
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new SettingsMenuAdaptor($this->container);
+        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $this->object->addAdaptMenu($adapter);
         $crumb = $this->object->getBreadCrumb();
         $this->assertTrue(is_array($crumb));
@@ -103,7 +103,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
             ->method('getCurrentRequest')
             ->willReturn(new Request([],[],['_route' => 'KunstmaanAdminBundle_settings']));
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
-        $adapter = new SettingsMenuAdaptor($this->container);
+        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $this->object->addAdaptMenu($adapter);
         $lowest = $this->object->getLowestTopChild();
         $this->assertInstanceOf(TopMenuItem::class, $lowest);
@@ -144,7 +144,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->container = $container;
         $this->object = new MenuBuilder($container);
 
-        $adapter = new SettingsMenuAdaptor($this->container);
+        $adapter = new SettingsMenuAdaptor($this->authCheck, true);
         $array = [];
         $adapter->adaptChildren($this->object, $array, $parent, new Request([],[],['_route' => 'KunstmaanAdminBundle_settings_bundle_version']));
     }

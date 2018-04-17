@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Tests\EventListener;
 
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\EventListener\PasswordCheckListener;
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
@@ -28,6 +29,7 @@ class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
         $session = $this->createMock(Session::class);
         $flash = $this->createMock(FlashBag::class);
         $trans = $this->createMock(Translator::class);
+        $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $event = $this->createMock(GetResponseEvent::class);
 
         $event->expects($this->exactly(2))->method('getRequest')->willReturn($request);
@@ -40,7 +42,7 @@ class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
         $flash->expects($this->exactly(1))->method('add')->willReturn(true);
         $trans->expects($this->exactly(1))->method('trans')->willReturn(true);
 
-        $listener = new PasswordCheckListener($auth, $storage, $router, $session, $trans);
+        $listener = new PasswordCheckListener($auth, $storage, $router, $session, $trans, $adminRouteHelper);
         $listener->onKernelRequest($event);
 
         $request = $request->duplicate([], [], [], [], [], ['REQUEST_URI' => '/en/random']);

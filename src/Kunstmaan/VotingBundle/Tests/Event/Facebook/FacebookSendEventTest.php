@@ -21,7 +21,6 @@ class FacebookSendEventTest extends PHPUnit_Framework_TestCase
         $event = new FacebookSendEvent($request, $response, 100);
 
         $this->assertInstanceOf(Request::class, $event->getRequest());
-        $this->assertInstanceOf(Response::class, $event->getResponse());
         $this->assertInstanceOf(Response::class, $event->getReference());
         $this->assertEquals(100, $event->getValue());
     }

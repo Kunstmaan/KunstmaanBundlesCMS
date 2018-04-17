@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle\Tests\EventListener;
 
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\EventListener\AdminLocaleListener;
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -19,6 +20,7 @@ class AdminLocaleListenerTest extends PHPUnit_Framework_TestCase
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/en/admin/']);
         $storage = $this->createMock(TokenStorageInterface::class);
         $trans = $this->createMock(TranslatorInterface::class);
+        $adminRouteHelper = $this->createMock(AdminRouteHelper::class);
         $event = $this->createMock(GetResponseEvent::class);
         $token = $this->createMock(UsernamePasswordToken::class);
         $user = $this->createMock(User::class);
@@ -30,7 +32,7 @@ class AdminLocaleListenerTest extends PHPUnit_Framework_TestCase
         $user->expects($this->once())->method('getAdminLocale')->willReturn(null);
         $trans->expects($this->once())->method('setLocale')->willReturn(null);
 
-        $listener = new AdminLocaleListener($storage, $trans, 'en');
+        $listener = new AdminLocaleListener($storage, $trans, $adminRouteHelper, 'en');
 
         $events = AdminLocaleListener::getSubscribedEvents();
         $this->assertArrayHasKey(KernelEvents::REQUEST, $events);
