@@ -25,7 +25,7 @@ class RecurringEveryXTimeRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(13, $rule->getTimes());
         $this->assertEquals('RecurringEveryXTimeRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/RecurringEveryXTimeRule.js', $rule->getJsFilePath());
-        $this->assertInstanceOf(RecurringEveryXTimeAdminType::class, $rule->getAdminType());
+        $this->assertEquals(RecurringEveryXTimeAdminType::class, $rule->getAdminType());
         $this->assertTrue(is_array($rule->getJsProperties()));
     }
 }

@@ -16,7 +16,7 @@ class BooleanFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $object->setValue(true);
         $this->assertTrue($object->getValue());
         $this->assertEquals('true', $object->__toString());
-        $this->assertInstanceOf(BooleanFormSubmissionType::class, $object->getDefaultAdminType());
+        $this->assertEquals(BooleanFormSubmissionType::class, $object->getDefaultAdminType());
         $object->setValue(false);
         $this->assertFalse($object->getValue());
         $this->assertEquals('false', $object->__toString());

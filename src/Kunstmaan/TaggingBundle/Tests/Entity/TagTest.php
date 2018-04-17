@@ -29,7 +29,7 @@ class TagTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('en', $object->getTranslatableLocale());
         $this->assertInstanceOf(DateTime::class, $object->getCreatedAt());
         $this->assertInstanceOf(DateTime::class, $object->getUpdatedAt());
-        $this->assertInstanceOf(TagAdminType::class, $object->getDefaultAdminType());
+        $this->assertEquals(TagAdminType::class, $object->getDefaultAdminType());
         $this->assertEquals('Nigel Farage', $object->__toString());
 
     }

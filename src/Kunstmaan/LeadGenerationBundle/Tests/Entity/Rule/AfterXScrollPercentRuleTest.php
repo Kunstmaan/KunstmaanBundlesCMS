@@ -19,7 +19,7 @@ class AfterXScrollPercentRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(10, $rule->getPercentage());
         $this->assertEquals('AfterXScrollPercentRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/AfterXScrollPercentRule.js', $rule->getJsFilePath());
-        $this->assertInstanceOf(AfterXScrollPercentRuleAdminType::class, $rule->getAdminType());
+        $this->assertEquals(AfterXScrollPercentRuleAdminType::class, $rule->getAdminType());
         $this->assertTrue(is_array($rule->getJsProperties()));
     }
 }

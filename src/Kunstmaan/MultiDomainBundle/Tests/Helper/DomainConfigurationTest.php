@@ -309,10 +309,11 @@ class DomainConfigurationTest extends PHPUnit_Framework_TestCase
 
     private function getAdminRouteHelper()
     {
-        $adminRouteReturnValueMap = array(
-            array('/frontend-uri', false),
-            array('/nl/admin/backend-uri', true)
-        );
+        $adminRouteReturnValueMap = [
+            ['/frontend-uri', false],
+            ['/nl/admin/backend-uri', true],
+            ['/admin/somewhere', true],
+        ];
 
         $adminRouteHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\AdminRouteHelper')
             ->disableOriginalConstructor()

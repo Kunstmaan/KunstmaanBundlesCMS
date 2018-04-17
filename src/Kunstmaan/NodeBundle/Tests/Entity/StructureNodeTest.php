@@ -66,7 +66,7 @@ class StructureNodeTest extends PHPUnit_Framework_TestCase
     public function testGetDefaultAdminType()
     {
         $node = new TestStructureNode();
-        $this->assertInstanceOf(PageAdminType::class, $node->getDefaultAdminType());
+        $this->assertEquals(PageAdminType::class, $node->getDefaultAdminType());
     }
 
     public function testService()

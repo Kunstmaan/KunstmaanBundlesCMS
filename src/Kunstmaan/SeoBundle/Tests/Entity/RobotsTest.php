@@ -33,7 +33,7 @@ class RobotsTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(11, $this->object->getId());
         $this->assertEquals('*', $this->object->getRobotsTxt());
-        $this->assertInstanceOf(RobotsType::class, $this->object->getDefaultAdminType());
+        $this->assertEquals(RobotsType::class, $this->object->getDefaultAdminType());
         $this->assertEquals('Robots', $this->object->__toString());
     }
 }

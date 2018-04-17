@@ -69,7 +69,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($fileName, $object->getFileName());
         $this->assertEquals('https://nasa.gov', $object->getUrl());
         $this->assertEquals('123', $object->getUuid());
-        $this->assertInstanceOf(FileFormSubmissionType::class, $object->getDefaultAdminType());
+        $this->assertEquals(FileFormSubmissionType::class, $object->getDefaultAdminType());
     }
 
     public function testGetSubmissionTemplate()

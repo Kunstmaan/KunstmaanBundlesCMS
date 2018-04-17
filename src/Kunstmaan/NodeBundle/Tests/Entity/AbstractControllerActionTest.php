@@ -32,6 +32,6 @@ class AbstractControllerActionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(5, $action->getId());
         $this->assertEquals('Global Economic Meltdown - The Movie', $action->getTitle());
         $this->assertInstanceOf(TestEntity::class, $action->getParent());
-        $this->assertInstanceOf(ControllerActionAdminType::class, $action->getDefaultAdminType());
+        $this->assertEquals(ControllerActionAdminType::class, $action->getDefaultAdminType());
     }
 }

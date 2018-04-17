@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\DependencyInjection;
 
-use Kunstmaan\NodeSearchBundle\DependencyInjection\Configuration;
+use Kunstmaan\PagePartBundle\DependencyInjection\Configuration;
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use PHPUnit_Framework_TestCase;
 
@@ -24,9 +24,9 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testConfigGeneratesAsExpected()
     {
         $array = [
-            'enable_update_listener' => true,
-            'use_match_query_for_title' => false,
-            'mapping' => [],
+            'extended_pagepart_chooser' => true,
+            'pageparts' => [],
+            'pagetemplates' => [],
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);

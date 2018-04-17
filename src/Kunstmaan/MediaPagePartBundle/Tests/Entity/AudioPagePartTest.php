@@ -47,6 +47,6 @@ class AudioPagePartTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultAdminType()
     {
         $defaultAdminType = $this->object->getDefaultAdminType();
-        $this->assertTrue($defaultAdminType instanceof AudioPagePartAdminType);
+        $this->assertEquals(AudioPagePartAdminType::class, $defaultAdminType);
     }
 }

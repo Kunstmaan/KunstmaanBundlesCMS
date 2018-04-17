@@ -19,7 +19,7 @@ class AfterXSecondsRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(10, $rule->getSeconds());
         $this->assertEquals('AfterXSecondsRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/AfterXSecondsRule.js', $rule->getJsFilePath());
-        $this->assertInstanceOf(AfterXSecondsAdminType::class, $rule->getAdminType());
+        $this->assertEquals(AfterXSecondsAdminType::class, $rule->getAdminType());
         $this->assertTrue(is_array($rule->getJsProperties()));
     }
 }

@@ -23,7 +23,13 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testProcessedValueContainsRequiredValue()
     {
-        $array = [];
+        $array = [
+            'lock' => [
+                'enabled' => true,
+                'check_interval' => 15,
+                'threshold' => 35,
+            ],
+        ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
     }

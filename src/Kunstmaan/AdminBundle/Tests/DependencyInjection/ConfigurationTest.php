@@ -39,6 +39,17 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
                 'enabled' => true,
                 'hosted_domains' => [],
             ],
+            'admin_prefix' => 'admin',
+            'admin_exception_excludes' => ['404'],
+            'enable_toolbar_helper' => false,
+            'provider_keys' => [],
+            'password_restrictions' => [
+                'min_digits' => 2,
+                'min_uppercase' => 2,
+                'min_special_characters' => 2,
+                'min_length' => 16,
+                'max_length' => 26,
+            ]
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);

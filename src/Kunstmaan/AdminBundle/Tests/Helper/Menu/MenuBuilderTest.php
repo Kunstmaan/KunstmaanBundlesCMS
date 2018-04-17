@@ -135,7 +135,7 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->authCheck->expects($this->any())->method('isGranted')->willReturn(true);
 
         $parent = $this->createMock(MenuItemHelper::class);
-        $parent->expects($this->once())->method('getRoute')->willReturn('KunstmaanAdminBundle_settings');
+        $parent->expects($this->exactly(2))->method('getRoute')->willReturn('KunstmaanAdminBundle_settings');
 
         $container = $this->createMock(ContainerInterface::class);
         $container->expects($this->any())->method('getParameter')->willReturn(true);

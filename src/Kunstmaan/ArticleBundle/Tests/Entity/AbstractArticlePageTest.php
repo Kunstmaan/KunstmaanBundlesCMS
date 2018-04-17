@@ -28,7 +28,7 @@ class AbstractArticlePageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('To infinty and beyond', $entity->getPageTitle());
         $this->assertEquals('NASA', $entity->getTitle());
         $this->assertInstanceOf(DateTime::class, $entity->getDate());
-        $this->assertInstanceOf(AbstractArticlePageAdminType::class, $entity->getAdminType());
+        $this->assertEquals(AbstractArticlePageAdminType::class, $entity->getAdminType());
         $this->assertTrue(is_array($entity->getPossibleChildTypes()));
         $this->assertTrue(is_array($entity->getPagePartAdminConfigurations()));
     }

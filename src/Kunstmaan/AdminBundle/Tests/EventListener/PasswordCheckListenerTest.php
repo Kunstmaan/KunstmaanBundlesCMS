@@ -41,6 +41,11 @@ class PasswordCheckListenerTest extends PHPUnit_Framework_TestCase
         $session->expects($this->exactly(1))->method('getFlashBag')->willReturn($flash);
         $flash->expects($this->exactly(1))->method('add')->willReturn(true);
         $trans->expects($this->exactly(1))->method('trans')->willReturn(true);
+        $adminRouteHelper->method('isAdminRoute')->will($this->returnValueMap([
+            ['/en/admin/', true],
+            ['/en/random', false],
+            ['/en/admin/preview/', false]
+        ]));
 
         $listener = new PasswordCheckListener($auth, $storage, $router, $session, $trans, $adminRouteHelper);
         $listener->onKernelRequest($event);

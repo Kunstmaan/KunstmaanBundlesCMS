@@ -19,7 +19,7 @@ class MaxXTimesRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(13, $rule->getTimes());
         $this->assertEquals('MaxXTimesRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/MaxXTimesRule.js', $rule->getJsFilePath());
-        $this->assertInstanceOf(MaxXTimeAdminType::class, $rule->getAdminType());
+        $this->assertEquals(MaxXTimeAdminType::class, $rule->getAdminType());
         $this->assertTrue(is_array($rule->getJsProperties()));
     }
 }

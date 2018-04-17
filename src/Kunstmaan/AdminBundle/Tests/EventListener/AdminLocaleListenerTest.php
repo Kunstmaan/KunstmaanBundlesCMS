@@ -31,6 +31,7 @@ class AdminLocaleListenerTest extends PHPUnit_Framework_TestCase
         $event->expects($this->any())->method('getRequest')->willReturn($request);
         $user->expects($this->once())->method('getAdminLocale')->willReturn(null);
         $trans->expects($this->once())->method('setLocale')->willReturn(null);
+        $adminRouteHelper->method('isAdminRoute')->will($this->returnValueMap([['/en/admin/', true], ['/en/whatever/', false], ['/en/admin/preview/', false]]));
 
         $listener = new AdminLocaleListener($storage, $trans, $adminRouteHelper, 'en');
 

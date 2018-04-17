@@ -62,7 +62,7 @@ class CheckboxPagePartTest extends \PHPUnit_Framework_TestCase
     {
         $adminType = $this->object->getDefaultAdminType();
         $this->assertNotNull($adminType);
-        $this->assertTrue($adminType instanceof CheckboxPagePartAdminType);
+        $this->assertEquals(CheckboxPagePartAdminType::class, $adminType);
     }
 
 

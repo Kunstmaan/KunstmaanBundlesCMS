@@ -21,7 +21,7 @@ class UrlWhitelistRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('https://nasa.gov', $rule->getUrls());
         $this->assertEquals('UrlWhitelistRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/UrlWhitelistRule.js', $rule->getJsFilePath());
-        $this->assertInstanceOf(UrlWhiteListAdminType::class, $rule->getAdminType());
+        $this->assertEquals(UrlWhiteListAdminType::class, $rule->getAdminType());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
         $this->assertTrue(is_array($rule->getJsProperties()));
     }

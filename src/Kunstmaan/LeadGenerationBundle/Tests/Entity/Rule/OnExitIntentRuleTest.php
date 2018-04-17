@@ -25,7 +25,7 @@ class OnExitIntentRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/OnExitIntentRule.js', $rule->getJsFilePath());
         $this->assertEquals(OnExitIntentRule::class, $rule->getFullClassname());
         $this->assertEquals('OnExitIntentRule', $rule->getClassname());
-        $this->assertInstanceOf(OnExitIntentAdminType::class, $rule->getAdminType());
+        $this->assertEquals(OnExitIntentAdminType::class, $rule->getAdminType());
         $this->assertTrue(is_array($rule->getJsProperties()));
         $this->assertNull($rule->getService());
         $this->assertNull($rule->getId());

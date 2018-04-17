@@ -21,7 +21,7 @@ class UrlBlacklistRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('https://nasa.gov', $rule->getUrls());
         $this->assertEquals('UrlBlacklistRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/UrlBlacklistRule.js', $rule->getJsFilePath());
-        $this->assertInstanceOf(UrlBlackListAdminType::class, $rule->getAdminType());
+        $this->assertEquals(UrlBlackListAdminType::class, $rule->getAdminType());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
         $this->assertTrue(is_array($rule->getJsProperties()));
     }

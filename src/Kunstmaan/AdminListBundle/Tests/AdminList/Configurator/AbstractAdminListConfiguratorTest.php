@@ -8,6 +8,7 @@ use Kunstmaan\AdminBundle\Form\ColorType;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\SimpleBulkAction;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\LocaleBlacklistRule;
+use Kunstmaan\LeadGenerationBundle\Form\Rule\LocaleBlackListAdminType;
 use PHPUnit_Framework_TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,7 +88,7 @@ class AbstractAdminListConfiguratorTest extends PHPUnit_Framework_TestCase
         $config = $this->object;
         $blackList = new LocaleBlacklistRule();
 
-        $this->assertEquals('kunstmaan_lead_generation.rule.form.localeblacklistrule', $config->getAdminType($blackList));
+        $this->assertEquals(LocaleBlackListAdminType::class, $config->getAdminType($blackList));
 
         $this->setUp();
         $config = $this->object;

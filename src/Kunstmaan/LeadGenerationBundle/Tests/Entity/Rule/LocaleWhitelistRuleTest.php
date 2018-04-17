@@ -3,6 +3,7 @@
 namespace Kunstmaan\LeadGenerationBundle\Tests\Entity\Rule;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\LocaleWhitelistRule;
+use Kunstmaan\LeadGenerationBundle\Form\Rule\LocaleWhiteListAdminType;
 use Kunstmaan\LeadGenerationBundle\Tests\Entity\Popup\Popup;
 use PHPUnit_Framework_TestCase;
 
@@ -20,7 +21,7 @@ class LocaleWhitelistRuleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('en', $rule->getLocale());
         $this->assertEquals('LocaleWhitelistRule', $rule->getJsObjectClass());
         $this->assertEquals('/bundles/kunstmaanleadgeneration/js/rule/LocaleWhitelistRule.js', $rule->getJsFilePath());
-        $this->assertEquals('kunstmaan_lead_generation.rule.form.localewhitelistrule', $rule->getAdminType());
+        $this->assertEquals(LocaleWhiteListAdminType::class, $rule->getAdminType());
         $this->assertEquals('kunstmaan_lead_generation.rule.service.localeruleservice', $rule->getService());
         $this->assertInstanceOf(Popup::class, $rule->getPopup());
         $this->assertTrue(is_array($rule->getJsProperties()));

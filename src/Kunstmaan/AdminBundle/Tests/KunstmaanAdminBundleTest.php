@@ -14,12 +14,11 @@ class KunstmaanAdminBundleTest extends PHPUnit_Framework_TestCase
     {
         $containerBuilder = new ContainerBuilder();
         $bundle = new KunstmaanAdminBundle();
-        $this->assertEquals('FOSUserBundle', $bundle->getParent());
         $bundle->build($containerBuilder);
         $resources = $containerBuilder->getResources();
         $extensions = $containerBuilder->getExtensions();
 
-        $this->assertCount(4, $resources);
+        $this->assertCount(5, $resources);
         $this->assertCount(1, $extensions);
         $this->assertArrayHasKey('kunstmaan_admin', $extensions);
         $this->assertInstanceOf(KunstmaanAdminExtension::class, $extensions['kunstmaan_admin']);

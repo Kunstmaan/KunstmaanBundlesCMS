@@ -27,6 +27,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             'enable_update_listener' => true,
             'use_match_query_for_title' => false,
             'mapping' => [],
+            'contexts' => [],
         ];
 
         $this->assertProcessedConfigurationEquals([$array], $array);
