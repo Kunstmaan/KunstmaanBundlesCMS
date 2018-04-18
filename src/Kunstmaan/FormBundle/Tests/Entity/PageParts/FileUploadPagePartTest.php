@@ -6,8 +6,6 @@ use ArrayObject;
 
 use Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart;
 use Kunstmaan\FormBundle\Form\FileUploadPagePartAdminType;
-
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -29,17 +27,6 @@ class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new FileUploadPagePart;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart::adaptForm
-     */
     public function testAdaptForm()
     {
         $object = $this->object;
@@ -55,15 +42,14 @@ class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
 
         $fields = new ArrayObject();
 
+        $object->setErrorMessageRequired('this is required');
         $this->assertTrue(count($fields) == 0);
         /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
+        $this->assertEquals('this is required', $object->getErrorMessageRequired());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart::getDefaultView
-     */
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
@@ -71,11 +57,15 @@ class FileUploadPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\FileUploadPagePart::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(FileUploadPagePartAdminType::class, $this->object->getDefaultAdminType());
+    }
+
+    public function testGetSetRequired()
+    {
+        $obj = $this->object;
+        $obj->setRequired(true);
+        $this->assertTrue($obj->getRequired());
     }
 }

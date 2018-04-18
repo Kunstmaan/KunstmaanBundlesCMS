@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\Forms;
-
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -44,9 +43,9 @@ class PagePartAdminTypeTestCase extends WebTestCase
     {
         $formFactoryBuilderInterface = Forms::createFormFactoryBuilder();
         $formFactoryBuilderInterface->addType(new URLChooserType());
-        $formFactoryBuilderInterface->addTypeGuesser(new DoctrineOrmTypeGuesser($this->getMock('Doctrine\Common\Persistence\ManagerRegistry')));
+        $formFactoryBuilderInterface->addTypeGuesser(new DoctrineOrmTypeGuesser($this->createMock('Doctrine\Common\Persistence\ManagerRegistry')));
         $this->factory = $formFactoryBuilderInterface->getFormFactory();
-        $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $this->dispatcher = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->builder = new FormBuilder(null, null, $this->dispatcher, $this->factory);
         $this->resolver = new OptionsResolver();
     }

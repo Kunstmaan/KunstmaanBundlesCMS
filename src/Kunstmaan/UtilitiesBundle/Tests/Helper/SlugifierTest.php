@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\NodeBundle\Tests;
+namespace Tests\Kunstmaan\NodeBundle\Helper;
 
 use Kunstmaan\UtilitiesBundle\Helper\Slugifier;
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
@@ -13,7 +13,7 @@ class SlugifierTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var SlugifierInterface
+     * @var Slugifier
      */
     private $slugifier;
 

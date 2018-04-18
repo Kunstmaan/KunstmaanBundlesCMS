@@ -29,18 +29,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->object = new MenuItem($menuBuilder);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getMenu
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::__construct
-     */
     public function testGetMenu()
     {
         /* @var $menuBuilder MenuBuilder */
@@ -52,40 +40,51 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($menuBuilder, $object->getMenu());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getLabel
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setLabel
-     */
     public function testGetSetLabel()
     {
         $this->object->setLabel('label');
         $this->assertEquals('label', $this->object->getLabel());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getUniqueId
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setUniqueId
-     */
     public function testGetSetUniqueId()
     {
         $this->object->setUniqueId('uniqueId');
         $this->assertEquals('uniqueId', $this->object->getUniqueId());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRole
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRole
-     */
     public function testGetSetRole()
     {
         $this->object->setRole('ROLE_CUSTOM');
         $this->assertEquals('ROLE_CUSTOM', $this->object->getRole());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getParent
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setParent
-     */
+    public function testGetSetChildren()
+    {
+        $this->object->setChildren(['test' => 'ok']);
+        $this->assertNotEmpty($this->object->getChildren());
+        $this->assertNotNull($this->object->getChildren()['test']);
+    }
+
+    public function testGetSetOffline()
+    {
+        $this->object->setOffline(true);
+        $this->assertTrue($this->object->getOffline());
+        $this->object->setOffline(false);
+        $this->assertFalse($this->object->getOffline());
+        $this->object->setOffline(true);
+        $this->assertTrue($this->object->getOffline());
+    }
+
+    public function testGetSetFolder()
+    {
+        $this->object->setFolder(true);
+        $this->assertTrue($this->object->getFolder());
+        $this->object->setFolder(false);
+        $this->assertFalse($this->object->getFolder());
+        $this->object->setFolder(true);
+        $this->assertTrue($this->object->getFolder());
+    }
+
     public function testGetSetParent()
     {
         /* @var $menuBuilder MenuBuilder */
@@ -97,11 +96,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($parent, $this->object->getParent());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRoute
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRoute
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRouteParams
-     */
     public function testGetSetRoute()
     {
         $params = array('id' => 5);
@@ -111,10 +105,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($params, $this->object->getRouteParams());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRouteParams
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRouteParams
-     */
     public function testGetSetRouteParams()
     {
         $params = array('id' => 1);
@@ -122,9 +112,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($params, $this->object->getRouteParams());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getChildren
-     */
     public function testGetChildren()
     {
         $child1 = new MenuItem($this->object->getMenu());
@@ -148,9 +135,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($children, $result);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getNavigationChildren
-     */
     public function testGetNavigationChildren()
     {
         $child1 = new MenuItem($this->object->getMenu());
@@ -173,9 +157,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($child1), $result);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getTopChildren
-     */
     public function testGetTopChildren()
     {
         $child1 = new MenuItem($this->object->getMenu());
@@ -196,10 +177,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array($child2), $result);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::addAttributes
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getAttributes
-     */
     public function testAddGetAttributes()
     {
         $attributes = array('attribute1' => 1, 'attribute2' => 2);
@@ -207,30 +184,18 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($attributes, $this->object->getAttributes());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getActive
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setActive
-     */
     public function testGetSetActive()
     {
         $this->object->setActive(true);
         $this->assertTrue($this->object->getActive());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getAppearInNavigation
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setAppearInNavigation
-     */
     public function testGetSetAppearInNavigation()
     {
         $this->object->setAppearInNavigation(true);
         $this->assertTrue($this->object->getAppearInNavigation());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getWeight
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setWeight
-     */
     public function testGetSetWeight()
     {
         $this->object->setWeight(10);
