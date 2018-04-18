@@ -13,6 +13,7 @@ namespace Kunstmaan\Rest\NodeBundle\Service\Transformers;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReader;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
@@ -72,23 +73,25 @@ class PageTemplateTransformer implements TransformerInterface
      */
     public function transform($apiPage)
     {
-        if (!$apiPage->getPage() instanceof HasPagePartsInterface) {
+        $page = $apiPage->getPage()->getData();
+
+        if (!$page instanceof HasPagePartsInterface) {
             return $apiPage;
         }
 
-        $pageTemplate = $this->pageTemplateConfigurationService->findOrCreateFor($apiPage->getPage());
+        $pageTemplate = $this->pageTemplateConfigurationService->findOrCreateFor($page);
 
         $apiPageTemplate = new ApiPageTemplate();
         $apiPageTemplate->setName($pageTemplate->getPageTemplate());
 
-        $contexts = $this->pagePartConfigurationReader->getPagePartContexts($apiPage->getPage());
+        $contexts = $this->pagePartConfigurationReader->getPagePartContexts($page);
 
         $apiContexts = new ArrayCollection();
         foreach ($contexts as $context) {
             $apiContext = new ApiContext();
             $apiContext->setName($context);
 
-            $apiContext->setPageParts($this->getPagePartsForContext($apiPage, $context));
+            $apiContext->setPageParts($this->getPagePartsForContext($page, $context));
 
             $apiContexts->add($apiContext);
         }
@@ -101,21 +104,20 @@ class PageTemplateTransformer implements TransformerInterface
     }
 
     /**
-     * @param ApiPage $apiPage
-     * @param string  $context
+     * @param EntityInterface $page
+     * @param string          $context
      *
      * @return ArrayCollection
      */
-    protected function getPagePartsForContext(ApiPage $apiPage, $context)
+    protected function getPagePartsForContext(EntityInterface $page, $context)
     {
         $entityRepository = $this->em->getRepository('KunstmaanPagePartBundle:PagePartRef');
-        $pageparts = $entityRepository->getPageParts($apiPage->getPage(), $context);
+        $pageparts = $entityRepository->getPageParts($page, $context);
 
         $apiPageParts = new ArrayCollection();
         foreach ($pageparts as $pagepart) {
             $apiPagePart = new ApiPagePart();
-            $apiPagePart->setContext($context);
-            $apiPagePart->setPagePart($pagepart);
+            $apiPagePart->setData($pagepart);
             $apiPageParts->add($apiPagePart);
         }
 

@@ -1,7 +1,8 @@
-Kunstmaan\AdminBundle\Entity\AbstractEntity:
+Kunstmaan\NodeBundle\Entity\AbstractPage:
   exclusion_policy: ALL
+
   properties:
-    id:
+    title:
       expose: true
-      type: integer
+      type: string
       groups: [edit]

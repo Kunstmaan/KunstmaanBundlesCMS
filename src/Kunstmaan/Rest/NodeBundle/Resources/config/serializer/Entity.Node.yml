@@ -4,16 +4,15 @@ Kunstmaan\NodeBundle\Entity\Node:
   properties:
     hiddenFromNav:
       expose: true
+      groups: [edit]
     internalName:
       expose: true
+      groups: [edit]
     refEntityName:
       expose: true
+      groups: [edit]
 
   relations:
     -
       rel: self
       href: expr('/api/nodes/' ~ object.getId())
-    -
-      rel: nodeTranslations
-      embedded:
-        content: expr(object.getNodeTranslations())

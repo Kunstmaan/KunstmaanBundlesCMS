@@ -12,26 +12,28 @@
 namespace Kunstmaan\Rest\NodeBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Request\ParamFetcher;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
 use Kunstmaan\Rest\CoreBundle\Helper\DataTransformerTrait;
 use Kunstmaan\Rest\CoreBundle\Service\DataTransformerService;
 use Kunstmaan\Rest\NodeBundle\Model\ApiPage;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Kunstmaan\Rest\NodeBundle\Service\Helper\PagePartHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Class PagesController
- *
- * @Route(service="kunstmaan_api.controller.pages")
  */
 class PagesController extends AbstractApiController
 {
@@ -44,16 +46,30 @@ class PagesController extends AbstractApiController
     /** @var DataTransformerService */
     private $dataTransformer;
 
+    /** @var NodeHelper */
+    private $nodeHelper;
+
+    /** @var PagePartHelper */
+    private $pagePartHelper;
+
     /**
      * PagesController constructor.
      *
      * @param EntityManagerInterface $em
      * @param DataTransformerService $dataTransformer
+     * @param NodeHelper             $nodeHelper
+     * @param PagePartHelper         $pagePartHelper
      */
-    public function __construct(EntityManagerInterface $em, DataTransformerService $dataTransformer)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        DataTransformerService $dataTransformer,
+        NodeHelper $nodeHelper,
+        PagePartHelper $pagePartHelper
+    ) {
         $this->em = $em;
         $this->dataTransformer = $dataTransformer;
+        $this->nodeHelper = $nodeHelper;
+        $this->pagePartHelper = $pagePartHelper;
     }
 
     /**
@@ -140,26 +156,26 @@ class PagesController extends AbstractApiController
     }
 
     /**
-     * Retrieve nodes paginated
+     * Get a page by node translation ID
      *
      * @SWG\Get(
      *     path="/api/pages/{id}",
-     *     description="Get a page of a certain type by Node ID",
+     *     description="Get a page by node translation ID",
      *     operationId="getPage",
      *     produces={"application/json"},
      *     tags={"pages"},
-     *     @SWG\Parameter(
-     *         name="type",
-     *         in="query",
-     *         type="string",
-     *         description="The FQCN of the page",
-     *         required=true,
-     *     ),
      *     @SWG\Parameter(
      *         name="locale",
      *         in="query",
      *         type="string",
      *         description="The language of your content",
+     *         required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         type="integer",
+     *         description="The node translation ID",
      *         required=true,
      *     ),
      *     @SWG\Response(
@@ -187,12 +203,12 @@ class PagesController extends AbstractApiController
 
         $locale = $request->getLocale();
 
-        $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineNodeTranslationsQueryBuilder($locale);
-        $qb
-            ->andWhere('n.id = :nodeId')
-            ->setParameter('nodeId', $id);
+        $qb = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->getOnlineNodeTranslationsQueryBuilder($locale)
+            ->andWhere('nt.id = :id')
+            ->setParameter('id', $id);
 
         $nodeTranslation = $qb->getQuery()->getOneOrNullResult();
+
         if (!$nodeTranslation instanceof NodeTranslation) {
             throw new NotFoundHttpException();
         }
@@ -200,5 +216,96 @@ class PagesController extends AbstractApiController
         $data = $this->dataTransformer->transform($nodeTranslation);
 
         return $this->handleView($this->view($data, Response::HTTP_OK));
+    }
+
+    /**
+     * Update a ApiPage
+     *
+     * @View(
+     *     statusCode=204
+     * )
+     *
+     * @Rest\Route(path="/pages/{id}")
+     *
+     * @SWG\Put(
+     *     path="/api/pages/{id}",
+     *     description="Update a ApiPage",
+     *     operationId="putApiPage",
+     *     produces={"application/json"},
+     *     tags={"pages"},
+     *     @SWG\Parameter(
+     *         name="id",
+     *         in="path",
+     *         type="integer",
+     *         description="The node translation ID",
+     *         required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="apiPage",
+     *         in="body",
+     *         type="object",
+     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
+     * )
+     *
+     * @ParamConverter(
+     *     name="apiPage",
+     *     converter="fos_rest.request_body",
+     *     class="Kunstmaan\Rest\NodeBundle\Model\ApiPage",
+     *     options={
+     *          "deserializationContext"={
+     *              "groups"={
+     *                  "edit"
+     *              }
+     *          },
+     *          "validator"={
+     *              "groups"={
+     *                  "edit",
+     *                  "Default"
+     *              }
+     *          }
+     *     }
+     * )
+     *
+     * @param Request                          $request
+     * @param ApiPage                          $apiPage
+     * @param integer                          $id
+     * @param ConstraintViolationListInterface $validationErrors
+     */
+    public function putPagesAction(Request $request, ApiPage $apiPage, $id, ConstraintViolationListInterface $validationErrors)
+    {
+        if (count($validationErrors) > 0) {
+            return new \FOS\RestBundle\View\View($validationErrors, Response::HTTP_BAD_REQUEST);
+        }
+
+        if (null === ($nodeTranslation = $apiPage->getNodeTranslation())) {
+            $nodeTranslation = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($id);
+        }
+
+        $node = $apiPage->getNode();
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+
+        list($nodeVersionIsLocked, $nodeVersion) = $this->nodeHelper->createNodeVersion($nodeTranslation, $nodeVersion);
+
+        $page = $nodeVersion->getRef($this->em);
+        $isStructureNode = $page->isStructureNode();
+
+        $this->pagePartHelper->updatePageParts($apiPage, $page);
+        $this->nodeHelper->persistEditNode($node, $nodeTranslation, $nodeVersion, $page, $isStructureNode);
     }
 }

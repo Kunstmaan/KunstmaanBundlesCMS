@@ -1,0 +1,28 @@
+Kunstmaan\Rest\NodeBundle\Model\ApiPage:
+  exclusion_policy: ALL
+
+  properties:
+    page:
+      expose: true
+      type: 'Kunstmaan\Rest\NodeBundle\Model\ApiEntity'
+      groups: [edit]
+
+    node:
+      expose: true
+      type: 'Kunstmaan\NodeBundle\Entity\Node'
+      groups: [edit]
+
+    nodeTranslation:
+      expose: true
+      type: 'Kunstmaan\NodeBundle\Entity\NodeTranslation'
+      groups: [edit]
+
+    nodeVersion:
+      expose: true
+      type: 'Kunstmaan\NodeBundle\Entity\NodeVersion'
+      groups: [edit]
+
+    pageTemplate:
+      expose: true
+      type: 'Kunstmaan\Rest\NodeBundle\Model\ApiPageTemplate'
+      groups: [edit]

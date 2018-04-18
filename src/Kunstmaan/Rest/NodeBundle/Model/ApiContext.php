@@ -11,6 +11,8 @@
 
 namespace Kunstmaan\Rest\NodeBundle\Model;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Class ApiContext
  */
@@ -23,6 +25,7 @@ class ApiContext
 
     /**
      * @var array
+     * @Assert\Valid()
      */
     private $pageParts;
 

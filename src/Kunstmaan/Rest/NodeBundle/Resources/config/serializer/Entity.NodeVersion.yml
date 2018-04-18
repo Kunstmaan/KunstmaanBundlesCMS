@@ -7,3 +7,5 @@ Kunstmaan\NodeBundle\Entity\NodeVersion:
             expose: true
         refEntityName:
             expose: true
+        type:
+            expose: true

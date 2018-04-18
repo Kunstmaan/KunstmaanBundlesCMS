@@ -11,7 +11,7 @@
 
 namespace Kunstmaan\Rest\NodeBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ApiPageTemplate
@@ -24,7 +24,8 @@ class ApiPageTemplate
     private $name;
 
     /**
-     * @var ArrayCollection
+     * @var array
+     * @Assert\Valid()
      */
     private $contexts;
 
@@ -45,7 +46,7 @@ class ApiPageTemplate
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getContexts()
     {
@@ -53,7 +54,7 @@ class ApiPageTemplate
     }
 
     /**
-     * @param ArrayCollection $contexts
+     * @param array $contexts
      */
     public function setContexts($contexts)
     {

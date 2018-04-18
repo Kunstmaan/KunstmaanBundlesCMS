@@ -11,11 +11,10 @@
 
 namespace Kunstmaan\Rest\NodeBundle\Model;
 
-use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ApiPage
@@ -23,57 +22,37 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class ApiPage
 {
     /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var EntityInterface
+     * @var ApiEntity
+     * @Assert\Valid()
      */
     private $page;
 
     /**
-     * @var ApiPageTemplate
-     */
-    private $pageTemplate;
-
-    /**
      * @var Node
+     * @Assert\Valid()
      */
     private $node;
 
     /**
      * @var NodeTranslation
+     * @Assert\Valid()
      */
     private $nodeTranslation;
 
     /**
      * @var NodeVersion
+     * @Assert\Valid()
      */
     private $nodeVersion;
 
     /**
-     * @return string
+     * @var ApiPageTemplate
+     * @Assert\Valid()
      */
-    public function getType()
-    {
-        return $this->type;
-    }
+    private $pageTemplate;
 
     /**
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return EntityInterface
+     * @return ApiEntity
      */
     public function getPage()
     {
@@ -81,16 +60,11 @@ class ApiPage
     }
 
     /**
-     * @param EntityInterface $page
-     *
-     * @return $this
+     * @param ApiEntity $page
      */
-    public function setPage(EntityInterface $page)
+    public function setPage(ApiEntity $page)
     {
         $this->page = $page;
-        $this->type = ClassLookup::getClass($page);
-
-        return $this;
     }
 
     /**

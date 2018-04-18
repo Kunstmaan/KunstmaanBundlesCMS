@@ -13,8 +13,8 @@ namespace Kunstmaan\Rest\NodeBundle\Service\Transformers;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\Rest\CoreBundle\Service\Transformers\TransformerInterface;
+use Kunstmaan\Rest\NodeBundle\Model\ApiEntity;
 use Kunstmaan\Rest\NodeBundle\Model\ApiPage;
 
 /**
@@ -60,7 +60,10 @@ class PageTransformer implements TransformerInterface
         $apiPage->setNodeVersion($nodeTranslation->getPublicNodeVersion());
 
         $page = $nodeTranslation->getRef($this->em);
-        $apiPage->setPage($page);
+        $apiEntity = new ApiEntity();
+        $apiEntity->setData($page);
+
+        $apiPage->setPage($apiEntity);
 
         return $apiPage;
     }

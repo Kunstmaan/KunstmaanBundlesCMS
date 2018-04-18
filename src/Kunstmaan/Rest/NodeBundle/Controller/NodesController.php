@@ -17,24 +17,14 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use Hateoas\HateoasBuilder;
 use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
 use Kunstmaan\Rest\NodeBundle\Form\RestNodeType;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Swagger\Annotations as SWG;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Class NodesController
- *
- * @Route(service="kunstmaan_api.controller.nodes")
- *
  */
 class NodesController extends AbstractApiController
 {
@@ -177,64 +167,64 @@ class NodesController extends AbstractApiController
         return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
-//    /**
-//     * Update a node
-//     *
-//     * @View(
-//     *     statusCode=204
-//     * )
-//     *
-//     * @SWG\Put(
-//     *     path="/api/nodes/{id}",
-//     *     description="Update a node",
-//     *     operationId="putNode",
-//     *     produces={"application/json"},
-//     *     tags={"nodes"},
-//     *     @SWG\Parameter(
-//     *         name="id",
-//     *         in="path",
-//     *         type="integer",
-//     *         description="The node ID",
-//     *         required=true,
-//     *     ),
-//     *     @SWG\Parameter(
-//     *         name="node",
-//     *         in="body",
-//     *         type="object",
-//     *         @SWG\Schema(ref="#/definitions/Node")
-//     *     ),
-//     *     @SWG\Response(
-//     *         response=204,
-//     *         description="Returned when successful",
-//     *         @SWG\Schema(ref="#/definitions/Node")
-//     *     ),
-//     *     @SWG\Response(
-//     *         response=403,
-//     *         description="Returned when the user is not authorized to fetch nodes",
-//     *         @SWG\Schema(ref="#/definitions/ErrorModel")
-//     *     ),
-//     *     @SWG\Response(
-//     *         response="default",
-//     *         description="unexpected error",
-//     *         @SWG\Schema(ref="#/definitions/ErrorModel")
-//     *     )
-//     * )
-//     *
-//     * @ParamConverter("node", converter="fos_rest.request_body")
-//     *
-//     * @param Request $request
-//     * @param integer $id
-//     */
-//    public function putNodesAction(Request $request, Node $node, ConstraintViolationListInterface $validationErrors)
-//    {
-//        if (count($validationErrors) > 0) {
-//            return new \FOS\RestBundle\View\View($validationErrors, Response::HTTP_BAD_REQUEST);
-//        }
-//
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($node);
-//        $em->flush();
-//    }
+    //    /**
+    //     * Update a node
+    //     *
+    //     * @View(
+    //     *     statusCode=204
+    //     * )
+    //     *
+    //     * @SWG\Put(
+    //     *     path="/api/nodes/{id}",
+    //     *     description="Update a node",
+    //     *     operationId="putNode",
+    //     *     produces={"application/json"},
+    //     *     tags={"nodes"},
+    //     *     @SWG\Parameter(
+    //     *         name="id",
+    //     *         in="path",
+    //     *         type="integer",
+    //     *         description="The node ID",
+    //     *         required=true,
+    //     *     ),
+    //     *     @SWG\Parameter(
+    //     *         name="node",
+    //     *         in="body",
+    //     *         type="object",
+    //     *         @SWG\Schema(ref="#/definitions/Node")
+    //     *     ),
+    //     *     @SWG\Response(
+    //     *         response=204,
+    //     *         description="Returned when successful",
+    //     *         @SWG\Schema(ref="#/definitions/Node")
+    //     *     ),
+    //     *     @SWG\Response(
+    //     *         response=403,
+    //     *         description="Returned when the user is not authorized to fetch nodes",
+    //     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+    //     *     ),
+    //     *     @SWG\Response(
+    //     *         response="default",
+    //     *         description="unexpected error",
+    //     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+    //     *     )
+    //     * )
+    //     *
+    //     * @ParamConverter("node", converter="fos_rest.request_body")
+    //     *
+    //     * @param Request $request
+    //     * @param integer $id
+    //     */
+    //    public function putNodesAction(Request $request, Node $node, ConstraintViolationListInterface $validationErrors)
+    //    {
+    //        if (count($validationErrors) > 0) {
+    //            return new \FOS\RestBundle\View\View($validationErrors, Response::HTTP_BAD_REQUEST);
+    //        }
+    //
+    //        $em = $this->getDoctrine()->getManager();
+    //        $em->persist($node);
+    //        $em->flush();
+    //    }
 
     /**
      * Retrieve a single node's translations

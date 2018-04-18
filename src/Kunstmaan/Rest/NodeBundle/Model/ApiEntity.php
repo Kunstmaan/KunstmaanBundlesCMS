@@ -11,14 +11,13 @@
 
 namespace Kunstmaan\Rest\NodeBundle\Model;
 
-use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
+use Kunstmaan\AdminBundle\Entity\EntityInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class ApiPagePart
+ * Class ApiEntity
  */
-class ApiPagePart
+class ApiEntity
 {
     /**
      * @var string
@@ -26,8 +25,7 @@ class ApiPagePart
     private $type;
 
     /**
-     * @var PagePartInterface
-     * @Assert\Valid()
+     * @var EntityInterface
      */
     private $data;
 
@@ -52,7 +50,7 @@ class ApiPagePart
     }
 
     /**
-     * @return PagePartInterface
+     * @return EntityInterface
      */
     public function getData()
     {
@@ -60,11 +58,11 @@ class ApiPagePart
     }
 
     /**
-     * @param PagePartInterface $data
+     * @param EntityInterface $data
      *
      * @return $this
      */
-    public function setData(PagePartInterface $data)
+    public function setData(EntityInterface $data)
     {
         $this->data = $data;
         $this->type = ClassLookup::getClass($data);

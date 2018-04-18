@@ -1,0 +1,13 @@
+Kunstmaan\Rest\NodeBundle\Model\ApiEntity:
+  exclusion_policy: ALL
+
+  properties:
+    type:
+      expose: true
+      type: string
+      groups: [edit]
+
+    data:
+      expose: true
+      type: 'Kunstmaan\AdminBundle\Entity\EntityInterface'
+      groups: [edit]

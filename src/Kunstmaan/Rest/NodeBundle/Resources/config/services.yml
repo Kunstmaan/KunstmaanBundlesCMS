@@ -1,31 +1,38 @@
 services:
-    kunstmaan_api.controller.nodes:
-        class: Kunstmaan\Rest\NodeBundle\Controller\NodesController
+    Kunstmaan\Rest\NodeBundle\Controller\NodesController:
         arguments:
             - '@doctrine.orm.default_entity_manager'
         calls:
             - [setViewHandler, ['@fos_rest.view_handler.default']]
 
-    kunstmaan_api.controller.pages:
-        class: Kunstmaan\Rest\NodeBundle\Controller\PagesController
+    Kunstmaan\Rest\NodeBundle\Controller\PagesController:
         arguments:
             - '@doctrine.orm.default_entity_manager'
             - '@kunstmaan_rest_core.service.data_transformer'
+            - '@Kunstmaan\NodeBundle\Helper\NodeHelper'
+            - '@Kunstmaan\Rest\NodeBundle\Service\Helper\PagePartHelper'
         calls:
             - [setViewHandler, ['@fos_rest.view_handler.default']]
 
-    kunstmaan_api.service.transformers.page:
-        class: Kunstmaan\Rest\NodeBundle\Service\Transformers\PageTransformer
+    Kunstmaan\Rest\NodeBundle\Service\Transformers\PageTransformer:
         arguments:
             - '@doctrine.orm.default_entity_manager'
         tags:
             - { name: kunstmaan_rest.transformer, priority: -250 }
 
-    kunstmaan_api.service.transformers.page_template:
-        class: Kunstmaan\Rest\NodeBundle\Service\Transformers\PageTemplateTransformer
+    Kunstmaan\Rest\NodeBundle\Service\Transformers\PageTemplateTransformer:
         arguments:
             - '@doctrine.orm.default_entity_manager'
             - '@kunstmaan_page_part.page_template.page_template_configuration_service'
             - '@kunstmaan_page_part.page_part_configuration_reader'
         tags:
             - { name: kunstmaan_rest.transformer, priority: -250 }
+
+    Kunstmaan\Rest\NodeBundle\EventSubscriber\SerializerSubscriber:
+        public: true
+        tags:
+            - { name: jms_serializer.event_subscriber }
+
+    Kunstmaan\Rest\NodeBundle\Service\Helper\PagePartHelper:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
