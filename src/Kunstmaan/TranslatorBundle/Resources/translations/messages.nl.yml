@@ -41,18 +41,18 @@ kuma_translator:
       force_import:
         title: Bent u zeker dat u de import wilt forceren?
         body: Alle bestaande vertalingen worden overschreven.
-        confirm_button: Import
+        confirm_button: Importeer
         cancel_button: Annuleer
   adminlist:
     header:
       domain: Domein
-      keyword: Keyword
+      keyword: Trefwoord
     filter:
       domain: Domein
-      keyword: Keyword
+      keyword: Trefwoord
       text: Tekst
       locale: Lokaal
 toolbar:
   translations:
-    title: Translations
-    count: Count
+    title: Vertalingen
+    count: Teller
