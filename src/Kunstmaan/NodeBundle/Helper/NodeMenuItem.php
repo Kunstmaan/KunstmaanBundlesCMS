@@ -82,6 +82,11 @@ class NodeMenuItem
         return $this->nodeTranslation;
     }
 
+    public function getLang()
+    {
+        return $this->menu->getLocale();
+    }
+
     /**
      * @return string
      */
