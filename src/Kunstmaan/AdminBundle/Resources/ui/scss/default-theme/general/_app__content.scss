@@ -20,13 +20,6 @@
         margin-top: 2rem;
     }
 
-    @media (max-width: $screen-md) {
-        @include transform-style(preserve-3d);
-        @include transition-property (transform);
-        @include transition-duration(.3s);
-        @include transition-timing-function(ease);
-    }
-
     @media (min-width: $screen-md) {
         border-left-color: $gray-lighter;
     }

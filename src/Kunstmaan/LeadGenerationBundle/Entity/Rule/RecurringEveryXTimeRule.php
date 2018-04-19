@@ -37,6 +37,7 @@ class RecurringEveryXTimeRule extends AbstractRule
      * @var int
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
+     * @Assert\NotBlank()
      */
     private $times;
 
