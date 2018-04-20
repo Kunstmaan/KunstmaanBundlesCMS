@@ -58,7 +58,7 @@ kuma_form:
       errormessage_required:
         label: Foutmelding verplicht
       regex:
-        label: regex
+        label: Regex
       errormessage_regex:
         label: Foutmelding regex
     single_line_text_page_part:
@@ -69,7 +69,7 @@ kuma_form:
       errormessage_required:
         label: Foutmelding verplicht
       regex:
-        label: regex
+        label: Regex
       errormessage_regex:
         label: Foutmelding regex
     submit_button_page_part:

@@ -58,7 +58,7 @@ kuma_form:
       errormessage_required:
         label: Komunikat błędu w przypadku nieuzupełnienia
       regex:
-        label: wyrażenie regularne
+        label: Wyrażenie regularne
       errormessage_regex:
         label: Komunikat błędu w przypadku nieuzupełnienia
     single_line_text_page_part:
