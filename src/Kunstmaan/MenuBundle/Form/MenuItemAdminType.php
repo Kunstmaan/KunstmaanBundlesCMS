@@ -135,8 +135,8 @@ class MenuItemAdminType extends AbstractType
             'newWindow',
             CheckboxType::class,
             array(
-                'label' => 'kuma_menu.form.new_window',
                 'required' => false,
+                'label' => 'kuma_menu.form.new_window'
             )
         );
     }
