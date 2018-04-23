@@ -73,18 +73,21 @@ class URLHelper
         }
 
         if ($this->isInternalLink($text)) {
-            preg_match_all("/\[(([a-z_A-Z]+):)?NT([0-9]+)\]/", $text, $matches, PREG_SET_ORDER);
+            preg_match_all("/\[(([a-z_A-Z]+):)?NT([0-9]+)\]|(link:\/\/([a-z_A-Z]*):?([0-9]+)([\w-._~!?$&%'()*+,;=:@\/]+))/", $text, $matches, PREG_SET_ORDER);
 
             if (count($matches) > 0) {
                 $map = $this->getNodeTranslationMap();
                 foreach ($matches as $match) {
                     $nodeTranslationFound = false;
                     $fullTag = $match[0];
-                    $hostId = $match[2];
+
+                    $isSchemaLink = empty($match[3]);
+                    $hostId = $isSchemaLink ? $match[5] : $match[2];
+                    $nodeTranslationId = $isSchemaLink ? $match[6] : $match[3];
+
                     $hostConfig = $this->domainConfiguration->getFullHostById($hostId);
                     $hostBaseUrl = $this->domainConfiguration->getHostBaseUrl($hostConfig['host']);
 
-                    $nodeTranslationId = $match[3];
 
                     foreach ($map as $nodeTranslation) {
                         if ($nodeTranslation['id'] == $nodeTranslationId) {

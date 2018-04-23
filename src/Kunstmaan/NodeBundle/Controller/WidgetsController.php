@@ -185,9 +185,9 @@ class WidgetsController extends Controller
         foreach ($rootNodes as $rootNode) {
             if ($nodeTranslation = $rootNode->getNodeTranslation($locale, true)) {
                 if ($isMultiDomain && !$switched) {
-                    $slug = sprintf("[%s:%s]", $switchedHost, "NT" . $nodeTranslation->getId());
+                    $slug = sprintf("link://%s:%s/%s", $switchedHost, $nodeTranslation->getId(), $nodeTranslation->getSlug());
                 } else {
-                    $slug = sprintf("[%s]", "NT" . $nodeTranslation->getId());
+                    $slug = sprintf("link://%s/%s", $nodeTranslation->getId(), $nodeTranslation->getSlug());
                 }
 
                 $root = [
