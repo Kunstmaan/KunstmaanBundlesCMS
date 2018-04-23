@@ -5,6 +5,7 @@ namespace Kunstmaan\NodeSearchBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Kunstmaan\NodeSearchBundle\Helper\ElasticSearchUtil;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -28,16 +29,36 @@ class Configuration implements ConfigurationInterface
         /** @var ArrayNodeDefinition $properties */
         $properties = $rootNode->children()->arrayNode('mapping')->useAttributeAsKey('name')->prototype('array');
 
-        $properties->children()->scalarNode('type')->beforeNormalization()->ifNotInArray($types = [
-            'string', 'token_count',
+        $types = [
+            'token_count', 'text', 'keyword',
             'float', 'double', 'byte', 'short', 'integer', 'long',
             'date',
             'boolean',
             'binary',
-        ])->thenInvalid('type must be one of: ' . implode(', ', $types));
-        $properties->children()->scalarNode('index')->beforeNormalization()->ifNotInArray(['analyzed', 'not_analyzed', 'no'])
-            ->thenInvalid("index must be one of: analyzed, not_analyzed, no");
-        $properties->children()->booleanNode('include_in_all');
+        ];
+        if (!ElasticSearchUtil::useVersion6()) {
+            $types[] = 'string';
+        }
+
+        $properties->children()->scalarNode('type')->beforeNormalization()->ifNotInArray($types)->thenInvalid('type must be one of: ' . implode(', ', $types));
+
+        if (ElasticSearchUtil::useVersion6()) {
+            $properties->children()->booleanNode('fielddata');
+            $properties->children()->booleanNode('doc_values');
+            $properties->children()
+                ->scalarNode('index')
+                ->beforeNormalization()
+                ->ifNotInArray(['true', 'false', true, false])
+                ->thenInvalid("index must be one of: true, false");
+        } else {
+            $properties->children()
+                ->scalarNode('index')
+                ->beforeNormalization()
+                ->ifNotInArray(['analyzed', 'not_analyzed', 'no'])
+                ->thenInvalid("index must be one of: analyzed, not_analyzed, no");
+            $properties->children()->booleanNode('include_in_all');
+        }
+
         $properties->children()->booleanNode('store');
         $properties->children()->floatNode('boost');
         $properties->children()->scalarNode('null_value');
