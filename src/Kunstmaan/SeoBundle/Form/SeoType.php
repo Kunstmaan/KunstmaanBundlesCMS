@@ -53,7 +53,7 @@ class SeoType extends AbstractType
                     ])
                 ]
             ))
-            ->add('metaKeywords', TextType::class, array('label' => 'Meta keywords'));
+            ->add('metaKeywords', TextType::class, array('label' => 'Meta keywords', 'required' => false));
 
         $builder->add('metaRobots', ChoiceType::class, array(
             'choices' => array(
