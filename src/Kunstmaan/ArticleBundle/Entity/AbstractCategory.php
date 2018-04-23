@@ -16,7 +16,7 @@ class AbstractCategory extends AbstractEntity implements Translatable
     public function __construct()
     {
         if (get_class($this) === AbstractCategory::class) {
-            trigger_error('Please extend this class, it will be made abstract in 5.1.', E_USER_DEPRECATED);
+            trigger_error('Please extend this class, it will be made abstract in 6.0.', E_USER_DEPRECATED);
         }
     }
 
