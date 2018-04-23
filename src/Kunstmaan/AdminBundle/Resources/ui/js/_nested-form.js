@@ -102,7 +102,7 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
     // Add "New" button
     addNewBtn = function($form) {
-        var newBtnLabel =  $form.data('add-button-label');   
+        var newBtnLabel =  $form.data('add-button-label');
         var html = newButtonHtml.replace('%label%', newBtnLabel === undefined ? 'Add' : newBtnLabel);
         var $newBtn = $(html);
 
@@ -170,8 +170,20 @@ kunstmaanbundles.nestedForm = (function(window, undefined) {
 
         showOrHideActions($form);
 
-        // Reinit all modules
-        kunstmaanbundles.pagepartEditor.reInit($newItem);
+        // Init new rich editors
+        kunstmaanbundles.richEditor.init();
+
+        kunstmaanbundles.nestedForm.init();
+        kunstmaanbundles.advancedSelect.init();
+
+        // Init new tooltips
+        kunstmaanbundles.tooltip.init();
+
+        // Init new colorpicker
+        kunstmaanbundles.colorpicker.init();
+
+        // Init new datepickers
+        kunstmaanbundles.datepicker.reInit();
 
         // Init Ajax Modals
         kunstmaanbundles.ajaxModal.resetAjaxModals();
