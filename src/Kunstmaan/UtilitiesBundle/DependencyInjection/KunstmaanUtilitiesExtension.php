@@ -20,7 +20,13 @@ class KunstmaanUtilitiesExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
+
+        if (isset($config['cipher'], $config['cipher']['secret'])) {
+            $container->setParameter('kunstmaan_utilities.cipher.secret', $config['cipher']['secret']);
+        } else if (!$container->hasParameter('kunstmaan_utilities.cipher.secret')) {
+            $container->setParameter('kunstmaan_utilities.cipher.secret', $container->getParameter('secret'));
+        }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
