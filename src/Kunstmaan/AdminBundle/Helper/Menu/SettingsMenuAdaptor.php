@@ -74,7 +74,7 @@ class SettingsMenuAdaptor implements MenuAdaptorInterface
             }
         }
 
-        if (!is_null($parent) &&'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        if (!is_null($parent) &&'KunstmaanAdminBundle_settings' == $parent->getRoute() && $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('kunstmaanadminbundle_admin_exception')
