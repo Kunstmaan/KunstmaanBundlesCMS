@@ -252,24 +252,8 @@ kunstmaanbundles.richEditor = (function (window, undefined) {
 
                 url.onKeyUp = function () {
                     this.allowOnChange = !1;
-                    var a = this.getDialog().getContentElement("info", "protocol"), b = this.getValue(), k = /^((javascript:)|[#\/\.\?])/i, c = /^(http|https|ftp|news):\/\/(?=.)/i.exec(b);
-                    c ? (this.setValue(b.substr(c[0].length)), a.setValue(c[0].toLowerCase())) : k.test(b) && a.setValue("");
-
-                    var nodeTranslationPtrn = new RegExp(/\[(([a-z_A-Z]+):)?NT([0-9]+)\]/g);
-                    while (match = nodeTranslationPtrn.exec(b)) {
-                        // Node translation found, so set protocol to other.
-                        if (match[3]) {
-                            a.setValue("");
-                        }
-                    }
-
-                    var mediaPtrn = new RegExp(/\[(([a-z_A-Z]+):)?M([0-9]+)\]/g);
-                    while (match = mediaPtrn.exec(b)) {
-                        // Media found, so set protocol to other.
-                        if (match[3]) {
-                            a.setValue("");
-                        }
-                    }
+                    var a = this.getDialog().getContentElement("info", "protocol"), b = this.getValue(), c = /^(http|https|ftp|news):\/\/(?=.)/i.exec(b);
+                    c ? (this.setValue(b.substr(c[0].length)), a.setValue(c[0].toLowerCase())) : a.setValue("");
 
                     this.allowOnChange = !0
                 };
