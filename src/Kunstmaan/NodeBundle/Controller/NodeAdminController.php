@@ -32,6 +32,7 @@ use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
+use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -78,6 +79,10 @@ class NodeAdminController extends Controller
      */
     protected $aclHelper;
 
+    /**
+     * @var NodeHelper
+     */
+    protected $nodeHelper;
 
     /**
      * init
@@ -91,6 +96,7 @@ class NodeAdminController extends Controller
         $this->authorizationChecker = $this->get('security.authorization_checker');
         $this->user = $this->getUser();
         $this->aclHelper = $this->get('kunstmaan_admin.acl.helper');
+        $this->nodeHelper = $this->get(NodeHelper::class);
     }
 
     /**
@@ -857,12 +863,13 @@ class NodeAdminController extends Controller
         $page = null;
         $draft = ($subaction == 'draft');
         $saveAsDraft = $request->get('saveasdraft');
+
         if ((!$draft && !empty($saveAsDraft)) || ($draft && is_null($draftNodeVersion))) {
             // Create a new draft version
             $draft = true;
             $subaction = "draft";
             $page = $nodeVersion->getRef($this->em);
-            $nodeVersion = $this->createDraftVersion(
+            $nodeVersion = $this->nodeHelper->createDraftVersion(
                 $page,
                 $nodeTranslation,
                 $nodeVersion
@@ -873,37 +880,7 @@ class NodeAdminController extends Controller
             $page = $nodeVersion->getRef($this->em);
         } else {
             if ($request->getMethod() == 'POST') {
-                $nodeVersionIsLocked = $this->isNodeVersionLocked($nodeTranslation, true);
-
-                //Check the version timeout and make a new nodeversion if the timeout is passed
-                $thresholdDate = date(
-                    "Y-m-d H:i:s",
-                    time() - $this->getParameter(
-                        "kunstmaan_node.version_timeout"
-                    )
-                );
-                $updatedDate = date(
-                    "Y-m-d H:i:s",
-                    strtotime($nodeVersion->getUpdated()->format("Y-m-d H:i:s"))
-                );
-                if ($thresholdDate >= $updatedDate || $nodeVersionIsLocked) {
-                    $page = $nodeVersion->getRef($this->em);
-                    if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
-                        $this->get('kunstmaan_node.admin_node.publisher')
-                            ->createPublicVersion(
-                                $page,
-                                $nodeTranslation,
-                                $nodeVersion,
-                                $this->user
-                            );
-                    } else {
-                        $this->createDraftVersion(
-                            $page,
-                            $nodeTranslation,
-                            $nodeVersion
-                        );
-                    }
-                }
+                list($nodeVersionIsLocked, $nodeVersion) = $this->nodeHelper->createNodeVersion($nodeTranslation, $nodeVersion);
             }
             $page = $nodeVersion->getRef($this->em);
         }
@@ -949,28 +926,8 @@ class NodeAdminController extends Controller
 
             // Don't redirect to listing when coming from ajax request, needed for url chooser.
             if ($tabPane->isValid() && !$request->isXmlHttpRequest()) {
-                $this->get('event_dispatcher')->dispatch(
-                    Events::PRE_PERSIST,
-                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
-                );
 
-                $nodeTranslation->setTitle($page->getTitle());
-                if ($isStructureNode) {
-                    $nodeTranslation->setSlug('');
-                }
-                $nodeVersion->setUpdated(new DateTime());
-                if ($nodeVersion->getType() == 'public') {
-                    $nodeTranslation->setUpdated($nodeVersion->getUpdated());
-                }
-                $this->em->persist($nodeTranslation);
-                $this->em->persist($nodeVersion);
-                $tabPane->persist($this->em);
-                $this->em->flush();
-
-                $this->get('event_dispatcher')->dispatch(
-                    Events::POST_PERSIST,
-                    new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
-                );
+                $this->nodeHelper->persistEditNode($node, $nodeTranslation, $nodeVersion, $page, $isStructureNode, $tabPane);
 
                 if ($nodeVersionIsLocked) {
                     $this->addFlash(
@@ -1069,72 +1026,6 @@ class NodeAdminController extends Controller
         } catch (AccessDeniedException $ade) {}
 
         return new JsonResponse(['lock' => $nodeVersionIsLocked, 'message' => $message]);
-    }
-
-    /**
-     * @param NodeTranslation $nodeTranslation
-     * @param bool $isPublic
-     * @return bool
-     */
-    private function isNodeVersionLocked(NodeTranslation $nodeTranslation, $isPublic)
-    {
-        if ($this->container->getParameter('kunstmaan_node.lock_enabled')) {
-            /** @var NodeVersionLockHelper $nodeVersionLockHelper */
-            $nodeVersionLockHelper = $this->get('kunstmaan_node.admin_node.node_version_lock_helper');
-            $nodeVersionIsLocked = $nodeVersionLockHelper->isNodeVersionLocked($this->getUser(), $nodeTranslation, $isPublic);
-            return $nodeVersionIsLocked;
-        }
-        return false;
-    }
-
-    /**
-     * @param HasNodeInterface $page The page
-     * @param NodeTranslation $nodeTranslation The node translation
-     * @param NodeVersion $nodeVersion The node version
-     *
-     * @return NodeVersion
-     */
-    private function createDraftVersion(
-        HasNodeInterface $page,
-        NodeTranslation $nodeTranslation,
-        NodeVersion $nodeVersion
-    )
-    {
-        $publicPage = $this->get('kunstmaan_admin.clone.helper')
-            ->deepCloneAndSave($page);
-        /* @var NodeVersion $publicNodeVersion */
-
-        $publicNodeVersion = $this->em->getRepository(
-            'KunstmaanNodeBundle:NodeVersion'
-        )->createNodeVersionFor(
-            $publicPage,
-            $nodeTranslation,
-            $this->user,
-            $nodeVersion->getOrigin(),
-            'public',
-            $nodeVersion->getCreated()
-        );
-
-        $nodeTranslation->setPublicNodeVersion($publicNodeVersion);
-        $nodeVersion->setType('draft');
-        $nodeVersion->setOrigin($publicNodeVersion);
-        $nodeVersion->setCreated(new DateTime());
-
-        $this->em->persist($nodeTranslation);
-        $this->em->persist($nodeVersion);
-        $this->em->flush();
-
-        $this->get('event_dispatcher')->dispatch(
-            Events::CREATE_DRAFT_VERSION,
-            new NodeEvent(
-                $nodeTranslation->getNode(),
-                $nodeTranslation,
-                $nodeVersion,
-                $page
-            )
-        );
-
-        return $nodeVersion;
     }
 
     /**

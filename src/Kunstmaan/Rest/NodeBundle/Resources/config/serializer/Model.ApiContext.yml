@@ -1,0 +1,13 @@
+Kunstmaan\Rest\NodeBundle\Model\ApiContext:
+  exclusion_policy: ALL
+
+  properties:
+    name:
+      expose: true
+      type: string
+      groups: [edit, create]
+
+    pageParts:
+      expose: true
+      type: 'array<Kunstmaan\Rest\NodeBundle\Model\ApiPagePart>'
+      groups: [edit, create]

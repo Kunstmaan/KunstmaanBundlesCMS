@@ -1,0 +1,5 @@
+services:
+    kunstmaan_api.controller.media:
+        class: Kunstmaan\Rest\MediaBundle\Controller\MediaController
+        calls:
+            - [setViewHandler, ['@fos_rest.view_handler.default']]

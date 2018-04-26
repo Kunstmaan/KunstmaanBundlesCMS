@@ -19,7 +19,7 @@ class NodeVersionLockHelper implements ContainerAwareInterface
      * @var ObjectManager
      */
     private $objectManager;
-    
+
     public function __construct(ContainerInterface $container, ObjectManager $em)
     {
         $this->setContainer($container);

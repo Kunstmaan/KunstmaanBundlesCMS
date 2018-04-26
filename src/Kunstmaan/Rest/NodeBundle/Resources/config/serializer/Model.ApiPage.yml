@@ -1,0 +1,31 @@
+Kunstmaan\Rest\NodeBundle\Model\ApiPage:
+  exclusion_policy: ALL
+
+  properties:
+    page:
+      expose: true
+      type: 'Kunstmaan\Rest\NodeBundle\Model\ApiEntity'
+      groups: [edit, create]
+
+    node:
+      expose: true
+      type: 'Kunstmaan\NodeBundle\Entity\Node'
+      groups: [edit, create]
+
+    nodeTranslation:
+      expose: true
+      type: 'Kunstmaan\NodeBundle\Entity\NodeTranslation'
+      groups: [edit, create]
+      serialized_name: nodeTranslation
+
+    nodeVersion:
+      expose: true
+      type: 'Kunstmaan\NodeBundle\Entity\NodeVersion'
+      groups: [edit]
+      serialized_name: nodeVersion
+
+    pageTemplate:
+      expose: true
+      type: 'Kunstmaan\Rest\NodeBundle\Model\ApiPageTemplate'
+      groups: [edit, create]
+      serialized_name: pageTemplate

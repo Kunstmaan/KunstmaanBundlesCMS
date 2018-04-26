@@ -1,0 +1,11 @@
+kunstmaan_api_nodes:
+    type: rest
+    resource: 'KunstmaanRestNodeBundle:Nodes'
+    defaults:
+        _format: json
+
+kunstmaan_api_pages:
+    type: rest
+    resource: 'KunstmaanRestNodeBundle:Pages'
+    defaults:
+        _format: json

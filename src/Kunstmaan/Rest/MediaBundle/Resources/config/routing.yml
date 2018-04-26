@@ -1,0 +1,5 @@
+kunstmaan_api_medias:
+    type: rest
+    resource: 'kunstmaan_api.controller.media'
+    defaults:
+        _format: json

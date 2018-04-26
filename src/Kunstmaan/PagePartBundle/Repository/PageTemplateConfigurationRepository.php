@@ -12,7 +12,6 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class PageTemplateConfigurationRepository extends EntityRepository
 {
-
     /**
      * @param HasPageTemplateInterface $page
      *

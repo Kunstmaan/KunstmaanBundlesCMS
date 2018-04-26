@@ -18,7 +18,6 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
  */
 class NodeVersion extends AbstractEntity
 {
-
     const DRAFT_VERSION     = 'draft';
     const PUBLIC_VERSION    = 'public';
 

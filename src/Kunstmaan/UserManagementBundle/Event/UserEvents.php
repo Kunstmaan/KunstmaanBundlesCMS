@@ -17,4 +17,11 @@ class UserEvents
      * @var string
      */
     const USER_DELETE_INITIALIZE = 'kunstmaan_usermanagement.delete.initialize';
+
+    /**
+     * This event will be triggered on api key generation, after finding user
+     *
+     * @var string
+     */
+    const USER_KEY_GENERATE_INITIALIZE = 'kunstmaan_usermanagement.delete.initialize';
 }

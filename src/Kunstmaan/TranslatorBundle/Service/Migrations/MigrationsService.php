@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\TranslatorBundle\Service\Migrations;
 
+use DateTime;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\TranslatorBundle\Entity\Translation;
 
 class MigrationsService
 {
@@ -40,14 +42,14 @@ class MigrationsService
         $ignoreFields = array('id');
         $uniqueKeys = array('domain', 'locale', 'keyword');
 
-        $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_UPDATED));
+        $translations = $this->translationRepository->findBy(array('flag' => Translation::FLAG_UPDATED));
 
         if (count($translations) <= 0) {
             return array();
         }
 
-        $fieldNames =  $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getFieldNames();
-        $tableName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getTableName();
+        $fieldNames =  $this->entityManager->getClassMetadata(Translation::class)->getFieldNames();
+        $tableName = $this->entityManager->getClassMetadata(Translation::class)->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
 
         $fieldNames = array_diff($fieldNames, $ignoreFields, $uniqueKeys);
@@ -61,8 +63,8 @@ class MigrationsService
 
             foreach ($fieldNames as $fieldName) {
                 $value = $translation->{'get'.$fieldName}();
-                $columnName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getColumnName($fieldName);
-                if ($value instanceof \DateTime) {
+                $columnName = $this->entityManager->getClassMetadata(Translation::class)->getColumnName($fieldName);
+                if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
 
@@ -72,7 +74,7 @@ class MigrationsService
             foreach ($uniqueKeys as $uniqueKey) {
                 $value = $translation->{'get'.$uniqueKey}();
 
-                if ($value instanceof \DateTime) {
+                if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
 
@@ -143,9 +145,9 @@ class MigrationsService
      */
     public function getNewTranslationSql()
     {
-        $translations = $this->translationRepository->findBy(array('flag' => \Kunstmaan\TranslatorBundle\Entity\Translation::FLAG_NEW));
+        $translations = $this->translationRepository->findBy(array('flag' => Translation::FLAG_NEW));
 
-        return $this->buildInsertSql($translations, '\Kunstmaan\TranslatorBundle\Entity\Translation', array('flag', 'id'));
+        return $this->buildInsertSql($translations, Translation::class, array('flag', 'id'));
     }
 
     public function setTranslationRepository($translationRepository)

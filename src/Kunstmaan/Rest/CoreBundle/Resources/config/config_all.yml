@@ -1,0 +1,46 @@
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    routing_loader:
+        default_format: json
+        include_format: false
+    view:
+        mime_types:
+            json: ['application/hal+json', 'application/json']
+        formats:
+            xml: false
+            json: true
+        view_response_listener: 'force'
+    body_converter:
+        enabled: true
+        validate: true
+        validation_errors_argument: validationErrors
+    exception:
+        enabled: true
+        messages:
+            Symfony\Component\HttpKernel\Exception\BadRequestHttpException: true
+
+jms_serializer:
+    metadata:
+      directories:
+          KunstmaanRestNodeBundle:
+              namespace_prefix: "Kunstmaan\\NodeBundle"
+              path: "@KunstmaanRestNodeBundle/Resources/config/serializer"
+          KunstmaanRestCoreBundle:
+              namespace_prefix: "Kunstmaan\\AdminBundle"
+              path: "@KunstmaanRestCoreBundle/Resources/config/serializer"
+          KunstmaanRestMediaBundle:
+              namespace_prefix: "Kunstmaan\\MediaBundle"
+              path: "@KunstmaanRestMediaBundle/Resources/config/serializer"
+
+bazinga_hateoas:
+    metadata:
+        cache: file
+        file_cache:
+            dir:  "%kernel.cache_dir%/hateoas"
+    serializer:
+        json: hateoas.serializer.json_hal
+        xml: hateoas.serializer.xml
+    twig_extension:
+        enabled: true

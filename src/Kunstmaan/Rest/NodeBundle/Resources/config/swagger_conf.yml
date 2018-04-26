@@ -1,0 +1,171 @@
+nelmio_api_doc:
+  documentation:
+    definitions:
+      Node:
+        title: "Node"
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+          hidden_from_nav:
+            type: "boolean"
+          ref_entity_name:
+            type: "string"
+          internal_name:
+            type: "string"
+
+      PostNode:
+        title: "Node"
+        type: "object"
+        properties:
+          hidden_from_nav:
+            type: "boolean"
+          ref_entity_name:
+            type: "string"
+          internal_name:
+            type: "string"
+          parent:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/Node'
+
+      NodeTranslation:
+        title: "NodeTranslation"
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+          title:
+            type: "string"
+          lang:
+            type: "string"
+          online:
+            type: "boolean"
+          weight:
+            type: "integer"
+          created:
+            type: "string"
+            format: "date-time"
+          updated:
+            type: "string"
+            format: "date-time"
+
+      PostNodeTranslation:
+        title: "NodeTranslation"
+        type: "object"
+        properties:
+          title:
+            type: "string"
+          lang:
+            type: "string"
+          online:
+            type: "boolean"
+
+      NodeVersion:
+        title: "nodeVersion"
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+          owner:
+            type: "id"
+          ref_id:
+            type: "integer"
+          ref_entity_name:
+            type: "string"
+
+      listNode:
+        title: "listNode"
+        type: "array"
+        items:
+          allOf:
+            - $ref: '#/definitions/Node'
+
+      ApiEntity:
+        title: "ApiEntity"
+        type: "object"
+        properties:
+          type:
+            type: "string"
+            example: 'Kunstmaan\SomeBundle\Entity\Pages\HomePage'
+          data:
+            type: "object"
+
+      ApiPagePart:
+        title: "ApiPagePart"
+        type: "object"
+        properties:
+          type:
+            type: "string"
+          data:
+            type: "object"
+
+      ApiContext:
+        title: "ApiContext"
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          pageparts:
+            type: "array"
+            items:
+              allOf:
+                - $ref: '#/definitions/ApiPagePart'
+
+      ApiPageTemplate:
+        title: "ApiPageTemplate"
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          contexts:
+            type: "array"
+            items:
+              allOf:
+                - $ref: '#/definitions/ApiContext'
+
+      ApiPage:
+        title: "ApiPage"
+        type: "object"
+        properties:
+          page:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiEntity'
+          pageTemplate:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiPageTemplate'
+          node:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/Node'
+          nodeTranslation:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/NodeTranslation'
+          nodeVersion:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/NodeVersion'
+
+      PostApiPage:
+        title: "PostApiPage"
+        type: "object"
+        properties:
+          page:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiEntity'
+          pageTemplate:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiPageTemplate'
+          node:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/PostNode'
+          nodeTranslation:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/PostNodeTranslation'

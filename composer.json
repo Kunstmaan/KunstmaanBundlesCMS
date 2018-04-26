@@ -51,7 +51,13 @@
         "box/spout": "^2.5",
         "ruflin/elastica": "^5.1|^6.0",
         "behat/transliterator": "~1.2",
-        "defuse/php-encryption": "v2.1.0"
+        "defuse/php-encryption": "v2.1.0",
+        "zircote/swagger-php": "^2.0.10",
+        "friendsofsymfony/rest-bundle": "^2.2",
+        "jms/serializer-bundle": "^2.2",
+        "nelmio/api-doc-bundle": "~3.2.0",
+        "willdurand/hateoas": "^2.12",
+        "willdurand/hateoas-bundle": "^1.4"
     },
     "require-dev": {
         "behat/behat": "3.1.0rc1",
@@ -102,6 +108,13 @@
             "Kunstmaan\\": "src/Kunstmaan/",
             "Tests\\Kunstmaan\\": "tests/"
         }
+    },
+    "scripts": {
+        "symfony-scripts": [
+            "HarmBandstra\\SwaggerUiBundle\\Composer\\ScriptHandler::linkAssets"
+        ],
+        "post-install-cmd": ["@symfony-scripts"],
+        "post-update-cmd": ["@symfony-scripts"]
     },
     "extra": {
         "branch-alias": {

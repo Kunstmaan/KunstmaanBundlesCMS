@@ -148,7 +148,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
      */
     public function postPersist(NodeEvent $event)
     {
-        $this->logger->addInfo(sprintf('%s just updated page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
+//        $this->logger->addInfo(sprintf('%s just updated page with id %d for node %d in language %s', $this->getUser()->getUsername(), $event->getPage()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
     /**
@@ -156,7 +156,7 @@ class LogPageEventsSubscriber implements EventSubscriberInterface
      */
     public function onCreatePublicVersion(NodeEvent $event)
     {
-        $this->logger->addInfo(sprintf('%s just created a new public version %d for node %d in language %s', $this->getUser()->getUsername(), $event->getNodeVersion()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
+//        $this->logger->addInfo(sprintf('%s just created a new public version %d for node %d in language %s', $this->getUser()->getUsername(), $event->getNodeVersion()->getId(), $event->getNode()->getId(), $event->getNodeTranslation()->getLang()));
     }
 
     /**
