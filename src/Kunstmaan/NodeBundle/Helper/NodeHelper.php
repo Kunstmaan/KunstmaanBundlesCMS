@@ -165,7 +165,7 @@ class NodeHelper
      * @param boolean          $isStructureNode
      * @param TabPane          $tabPane
      */
-    public function persistEditNode(
+    public function updateNode(
         Node $node,
         NodeTranslation $nodeTranslation,
         NodeVersion $nodeVersion,
@@ -199,5 +199,50 @@ class NodeHelper
             Events::POST_PERSIST,
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
         );
+    }
+
+    public function createNodeTranslation()
+    {
+        // Check with Acl
+        //        $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_EDIT, $parentNode);
+
+        $parentNodeTranslation = $parentNode->getNodeTranslation($locale, true);
+        $parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
+        $parentPage = $parentNodeVersion->getRef($this->em);
+
+        /** @var HasNodeInterface $newPage */
+        $newPage = $apiPage->getPage()->getData();
+        $newPage->setParent($parentPage);
+
+        /* @var Node $nodeNewPage */
+        $nodeNewPage = $this->em->getRepository('KunstmaanNodeBundle:Node')
+            ->createNodeFor($newPage, $locale, $this->user);
+        $nodeTranslation = $nodeNewPage->getNodeTranslation(
+            $locale,
+            true
+        );
+        $weight = $this->em->getRepository('KunstmaanNodeBundle:NodeTranslation')
+                ->getMaxChildrenWeight($parentNode, $locale) + 1;
+        $nodeTranslation->setWeight($weight);
+
+        if ($newPage->isStructureNode()) {
+            $nodeTranslation->setSlug('');
+        }
+
+        $this->em->persist($nodeTranslation);
+        $this->em->flush();
+
+        // @TODO update ACL
+        //        $this->updateAcl($parentNode, $nodeNewPage);
+
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+
+        // @TODO
+        //        $this->get('event_dispatcher')->dispatch(
+        //            Events::ADD_NODE,
+        //            new NodeEvent(
+        //                $nodeNewPage, $nodeTranslation, $nodeVersion, $newPage
+        //            )
+        //        );
     }
 }

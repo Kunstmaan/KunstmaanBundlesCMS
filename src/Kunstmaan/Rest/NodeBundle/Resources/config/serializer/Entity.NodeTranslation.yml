@@ -1,15 +1,20 @@
 Kunstmaan\NodeBundle\Entity\NodeTranslation:
-    exclusion_policy: ALL
-    properties:
-        lang:
-            expose: true
-        online:
-            expose: true
-        title:
-            expose: true
-        weight:
-            expose: true
-        created:
-            expose: true
-        updated:
-            expose: true
+  exclusion_policy: ALL
+
+  properties:
+    lang:
+      expose: true
+      groups: [edit, create]
+    online:
+      expose: true
+      groups: [edit, create]
+    title:
+      expose: true
+      groups: [edit, create]
+    weight:
+      expose: true
+      groups: [edit, create]
+    created:
+      expose: true
+    updated:
+      expose: true

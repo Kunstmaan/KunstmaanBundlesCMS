@@ -4,13 +4,17 @@ Kunstmaan\NodeBundle\Entity\Node:
   properties:
     hiddenFromNav:
       expose: true
-      groups: [edit]
+      groups: [edit, create]
     internalName:
       expose: true
-      groups: [edit]
+      groups: [edit, create]
     refEntityName:
       expose: true
-      groups: [edit]
+      groups: [edit, create]
+    parent:
+      expose: true
+      type: 'Kunstmaan\NodeBundle\Entity\Node'
+      groups: [create]
 
   relations:
     -

@@ -17,6 +17,9 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\ControllerTrait;
 use FOS\RestBundle\Request\ParamFetcher;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\Rest\CoreBundle\Controller\AbstractApiController;
@@ -306,6 +309,80 @@ class PagesController extends AbstractApiController
         $isStructureNode = $page->isStructureNode();
 
         $this->pagePartHelper->updatePageParts($apiPage, $page);
-        $this->nodeHelper->persistEditNode($node, $nodeTranslation, $nodeVersion, $page, $isStructureNode);
+        $this->nodeHelper->updateNode($node, $nodeTranslation, $nodeVersion, $page, $isStructureNode);
+    }
+
+    /**
+     * Creates a ApiPage
+     *
+     * @View(
+     *     statusCode=204
+     * )
+     *
+     * @Rest\Route(path="/pages")
+     *
+     * @SWG\Post(
+     *     path="/api/pages",
+     *     description="Creates a ApiPage",
+     *     operationId="postApiPage",
+     *     produces={"application/json"},
+     *     tags={"pages"},
+     *     @SWG\Parameter(
+     *         name="apiPage",
+     *         in="body",
+     *         type="object",
+     *         @SWG\Schema(ref="#/definitions/PostApiPage"),
+     *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="Returned when successful",
+     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Returned when the user is not authorized to fetch nodes",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     ),
+     *     @SWG\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @SWG\Schema(ref="#/definitions/ErrorModel")
+     *     )
+     * )
+     *
+     * @ParamConverter(
+     *     name="apiPage",
+     *     converter="fos_rest.request_body",
+     *     class="Kunstmaan\Rest\NodeBundle\Model\ApiPage",
+     *     options={
+     *          "deserializationContext"={
+     *              "groups"={
+     *                  "create"
+     *              }
+     *          },
+     *          "validator"={
+     *              "groups"={
+     *                  "create",
+     *                  "Default"
+     *              }
+     *          }
+     *     }
+     * )
+     *
+     * @param Request                          $request
+     * @param ApiPage                          $apiPage
+     * @param ConstraintViolationListInterface $validationErrors
+     */
+    public function postPagesAction(Request $request, ApiPage $apiPage, ConstraintViolationListInterface $validationErrors)
+    {
+        if (count($validationErrors) > 0) {
+            return new \FOS\RestBundle\View\View($validationErrors, Response::HTTP_BAD_REQUEST);
+        }
+
+        /* @var Node $parentNode */
+        $parentNode = $apiPage->getNode()->getParent();
+        $locale = $apiPage->getNodeTranslation()->getLang();
+
+        $this->nodeHelper->createNodeTranslation($parentNode);
     }
 }

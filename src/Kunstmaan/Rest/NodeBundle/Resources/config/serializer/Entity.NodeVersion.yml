@@ -3,9 +3,13 @@ Kunstmaan\NodeBundle\Entity\NodeVersion:
     properties:
         owner:
             expose: true
+            groups: [edit]
         refId:
             expose: true
+            groups: [edit]
         refEntityName:
             expose: true
+            groups: [edit]
         type:
             expose: true
+            groups: [edit]

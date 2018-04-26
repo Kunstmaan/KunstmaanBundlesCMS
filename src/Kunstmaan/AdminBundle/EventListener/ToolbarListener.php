@@ -9,10 +9,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 
 class ToolbarListener implements EventSubscriberInterface
 {
@@ -123,27 +125,28 @@ class ToolbarListener implements EventSubscriberInterface
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        if (!$this->isEnabled()) {
+        if (!$this->isEnabled() || HttpKernel::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
 
         $response = $event->getResponse();
         $request = $event->getRequest();
+        $session = $request->getSession();
         $url = $event->getRequest()->getRequestUri();
-        $token = $this->tokenStorage->getToken();
 
-        // Only enable toolbar when the firewall name equals the provided config value kunstmaan_admin.provider_key.
-        if (null !== $token && method_exists($token, 'getProviderKey')) {
-            $key = $token->getProviderKey();
-        } else {
-            $key = 'main';
+        // Only enable toolbar when we can find an authenticated user in the session from one
+        // of the firewalls given in the kunstmaan_admin.provider_key config value.
+        $loggedIn = false;
+        foreach ($this->providerKeys as $providerKey) {
+            /** @var PostAuthenticationGuardToken $token */
+            if ($session->has(sprintf('_security_%s', $providerKey))) {
+                $token = unserialize($session->get(sprintf('_security_%s', $providerKey)));
+                $loggedIn = $token->isAuthenticated();
+            }
         }
 
         // Do not capture redirects or modify XML HTTP Requests
-        if (!$token || !\in_array($key, $this->providerKeys, false) || !$event->isMasterRequest() || $request->isXmlHttpRequest(
-            ) || $this->adminRouteHelper->isAdminRoute(
-                $url
-            ) || !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$loggedIn || !$event->isMasterRequest() || $request->isXmlHttpRequest() || $this->adminRouteHelper->isAdminRoute($url)) {
             return;
         }
 

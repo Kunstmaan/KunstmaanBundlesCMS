@@ -5,4 +5,4 @@ Kunstmaan\NodeBundle\Entity\AbstractPage:
     title:
       expose: true
       type: string
-      groups: [edit]
+      groups: [edit, create]

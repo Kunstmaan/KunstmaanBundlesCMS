@@ -13,11 +13,21 @@ nelmio_api_doc:
             type: "string"
           internal_name:
             type: "string"
-          nodeTranslations:
-            type: "array"
-            items:
-              allOf:
-                - $ref: '#/definitions/NodeTranslation'
+
+      PostNode:
+        title: "Node"
+        type: "object"
+        properties:
+          hidden_from_nav:
+            type: "boolean"
+          ref_entity_name:
+            type: "string"
+          internal_name:
+            type: "string"
+          parent:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/Node'
 
       NodeTranslation:
         title: "NodeTranslation"
@@ -25,6 +35,8 @@ nelmio_api_doc:
         properties:
           id:
             type: "integer"
+          title:
+            type: "string"
           lang:
             type: "string"
           online:
@@ -37,6 +49,17 @@ nelmio_api_doc:
           updated:
             type: "string"
             format: "date-time"
+
+      PostNodeTranslation:
+        title: "NodeTranslation"
+        type: "object"
+        properties:
+          title:
+            type: "string"
+          lang:
+            type: "string"
+          online:
+            type: "boolean"
 
       NodeVersion:
         title: "nodeVersion"
@@ -58,16 +81,24 @@ nelmio_api_doc:
           allOf:
             - $ref: '#/definitions/Node'
 
+      ApiEntity:
+        title: "ApiEntity"
+        type: "object"
+        properties:
+          type:
+            type: "string"
+            example: 'Kunstmaan\SomeBundle\Entity\Pages\HomePage'
+          data:
+            type: "object"
+
       ApiPagePart:
         title: "ApiPagePart"
         type: "object"
         properties:
           type:
             type: "string"
-          pagepart:
+          data:
             type: "object"
-          context:
-            type: "string"
 
       ApiContext:
         title: "ApiContext"
@@ -97,11 +128,10 @@ nelmio_api_doc:
         title: "ApiPage"
         type: "object"
         properties:
-          type:
-            type: "string"
-            example: 'Kunstmaan\SomeBundle\Entity\Pages\HomePage'
           page:
             type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiEntity'
           pageTemplate:
             type: "object"
             allOf:
@@ -118,3 +148,24 @@ nelmio_api_doc:
             type: "object"
             allOf:
               - $ref: '#/definitions/NodeVersion'
+
+      PostApiPage:
+        title: "PostApiPage"
+        type: "object"
+        properties:
+          page:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiEntity'
+          pageTemplate:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiPageTemplate'
+          node:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/PostNode'
+          nodeTranslation:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/PostNodeTranslation'

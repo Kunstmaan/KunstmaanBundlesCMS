@@ -5,9 +5,9 @@ Kunstmaan\Rest\NodeBundle\Model\ApiContext:
     name:
       expose: true
       type: string
-      groups: [edit]
+      groups: [edit, create]
 
     pageParts:
       expose: true
       type: 'array<Kunstmaan\Rest\NodeBundle\Model\ApiPagePart>'
-      groups: [edit]
+      groups: [edit, create]
