@@ -231,6 +231,17 @@
 * [AllBundles] URLChooser major changes [#1225](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1225) ([@sandergo90](https://github.com/sandergo90))
 
 
+## 3.6.3 / 2018-04-13
+
+* [NodeSearchBundle] [SearchBundle] ElasticSearch Backport so we can support bundles 3.6 websites on servers with ES6 [#1877](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1877) ([@Numkil](https://github.com/Numkil)) 
+
+
+## 3.6.2 / 2018-04-13
+
+* [SeoBundle] Refactor seo description to be longer according to google… [#1797](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1797) ([@sandergo90](https://github.com/sandergo90)) 
+* [SeoBundle]: change meta length [#1520](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1520) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 4.0.0-RC1 / 2016-06-21
 
 * [Travis] Better travic config [#1211](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1211) ([@jockri](https://github.com/jockri))
@@ -249,6 +260,7 @@
 * [AdminBundle]: Change fosuser extends to syntax without namespaces [#1022](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1022) ([@sandergo90](https://github.com/sandergo90))
 * [GeneratorBundle]: add file_get_contents to Yaml::parse function [#1021](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1021) ([@sandergo90](https://github.com/sandergo90))
 * [AdminBundle] change console path in version check [#1017](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1017) ([@jockri](https://github.com/jockri))
+
 
 ## 3.6.1 / 2016-12-13
 
