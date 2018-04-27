@@ -28,6 +28,9 @@ class KunstmaanTranslatorExtension extends Extension
             return;
         }
 
+        if(!$container->hasParameter('requiredlocales')) {
+            $container->setParameter('requiredlocales', ['nl', 'fr', 'en']);
+        }
         $container->setParameter('kuma_translator.enabled', $config['enabled']);
         $container->setParameter('kuma_translator.default_bundle', $config['default_bundle']);
         $container->setParameter('kuma_translator.bundles', $config['bundles']);
