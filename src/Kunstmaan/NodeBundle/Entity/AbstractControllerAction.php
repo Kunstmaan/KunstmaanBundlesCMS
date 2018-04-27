@@ -6,8 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Form\ControllerActionAdminType;
-
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -41,7 +39,7 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
      *
      * @param string $title
      *
-     * @return AbstractPage
+     * @return AbstractControllerAction
      */
     public function setTitle($title)
     {
@@ -71,7 +69,7 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     /**
      * @param HasNodeInterface $parent
      *
-     * @return AbstractPage
+     * @return AbstractControllerAction
      */
     public function setParent(HasNodeInterface $parent)
     {
@@ -81,11 +79,11 @@ abstract class AbstractControllerAction extends AbstractEntity implements HasNod
     }
 
     /**
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new ControllerActionAdminType();
+        return ControllerActionAdminType::class;
     }
 
 }

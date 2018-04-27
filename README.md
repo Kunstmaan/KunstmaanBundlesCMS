@@ -14,9 +14,15 @@ We love contributions! We've provide you with a [Contribution Guide](docs/99-00-
 If you're submitting a pull request, please follow the guidelines in the [Submitting pull requests](docs/99-02-pull-requests.md)
 documentation and be sure to read our [Coding Standards](docs/99-03-coding-standards.md) as well.
 
+### Community
+Want to talk to fellow contributors? There's always people eager to chat in our slack channel!
+
+[![Join our slack channel](https://bundles.kunstmaan.be/uploads/media/5ae3807f4f548/slacklogo-small.png?production-87162ce) Join our Slack Channel!](https://join.slack.com/t/kunstmaancms/shared_invite/enQtMzU0Mjg4MjUzODczLTg5NTExMzIxZmI2OTgyNzI4YjdmNjdiZWM1NDI3ZDM3NmRiMjVkMmQ0MjhkYWU3YTMwNTU0ZjM3YmIyNTc5MjI)
+
+
 ### Browser support
 
-We support at least the 2 last versions of Chrome / Firefox / Safari and IE9 or up. We also support the most current mobile browsers.
+We support at least the 2 last versions of Chrome / Firefox / Safari / Edge and IE11. We also support the most current mobile browsers.
 
 Enjoy!
 
@@ -28,5 +34,6 @@ Enjoy!
 [![Monthly Downloads](https://poser.pugx.org/kunstmaan/bundles-cms/d/monthly)](https://packagist.org/packages/kunstmaan/bundles-cms)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Kunstmaan/KunstmaanBundlesCMS/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/313ff798-9e67-4c0c-9a04-ee4d5cdde1e6/mini.png)](https://insight.sensiolabs.com/projects/313ff798-9e67-4c0c-9a04-ee4d5cdde1e6)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/34aece18-3640-47ea-8e9f-96b79919905b/mini.png)](https://insight.sensiolabs.com/projects/34aece18-3640-47ea-8e9f-96b79919905b)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/kunstmaanbundlescms/localized.svg)](http://translatebundles.kunstmaan.be/project/kunstmaanbundlescms)
 [![License](https://poser.pugx.org/kunstmaan/bundles-cms/license)](https://packagist.org/packages/kunstmaan/bundles-cms)

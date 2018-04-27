@@ -5,7 +5,7 @@
    Never add styles directly to this file
    ========================================================================== */
 
-@import "node_modules/cargobay/src/cookie-consent/styles/scss/cookie-consent",
-    "node_modules/cargobay/src/toggle/styles/scss/toggle",
-    "node_modules/cargobay/src/sidebar-toggle/styles/scss/sidebar-toggle",
-    "node_modules/cargobay/src/videolink/styles/scss/videolink";
+@import "node_modules/cargobay/src/cookie-consent/styles/scss/cookie-consent";
+@import "node_modules/cargobay/src/toggle/styles/scss/toggle";
+@import "node_modules/cargobay/src/sidebar-toggle/styles/scss/sidebar-toggle";
+@import "node_modules/cargobay/src/videolink/styles/scss/videolink";

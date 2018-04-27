@@ -10,8 +10,8 @@
 {% endblock %}
 
 
-
 {% block sidebar %}
+
     <!-- Search -->
     <button type="button" class="js-toggle-btn toggle-button btn app__sidebar__search-toggle-btn" data-target="#sidebar-search-toggle">
         <i class="fa fa-search"></i>
@@ -105,6 +105,10 @@
                     <span class="large-screen">{{ 'media.folder.empty.action' |trans }}</span>
                     <span class="small-screen">{{ 'media.folder.empty.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
+                <button class="btn btn-default btn--raise-on-hover" data-target="#bulk-move-modal" data-toggle="modal" type="button">
+                    <span class="large-screen">{{ 'media.folder.bulk_move.action' |trans }}</span>
+                    <span class="small-screen">{{ 'media.folder.bulk_move.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                </button>
             {% endblock %}
         </div>
     </div>
@@ -185,6 +189,7 @@
                     {% if adminlist.count > 0 %}
                         {{ parent() }}
                     {% else %}
+                        {{ parent() }}
                         <p class="text--muted">
                             {{ 'media.media.no' |trans }}
                         </p>
@@ -193,6 +198,7 @@
                         </p>
                     {% endif %}
                 {% else %}
+                    {{ adminthumb_widget(adminlist, adminlist.getIndexUrl()["path"], adminlist.getIndexUrl()['params']) }}
                     <div class="row list-group">
                         <div class="col-xs-12">
                             <div class="btn-group pull-right btn-group-md" role="group">
@@ -245,9 +251,19 @@
                                         </span>
                                     </a>
 
-                                    <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn media-thumbnail-del-btn">
-                                        <i class="fa fa-trash-o"></i>
-                                    </button>
+                                    <div class="media-thumbnail-action media-thumbnail-action__move">
+                                        <input type="checkbox" data-media-id="{{ media.id }}" id="bulk-move-{{ media.id }}" name="bulk-move-{{ media.id }}" class="media-thumbnail-bulk-move-btn js-bulk-move-media">
+                                        <label class="btn" for="bulk-move-{{ media.id }}"></label>
+                                    </div>
+                                    <span class="media-thumbnail-bulk-move-helper">
+                                        Bulk move
+                                    </span>
+
+                                    <div class="media-thumbnail-action media-thumbnail-action__delete">
+                                        <button data-target="#sure-modal-{{ media.id }}" data-toggle="modal" class="btn media-thumbnail-del-btn">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </div>
                                     <span class="media-thumbnail-del-helper">
                                         Delete
                                     </span>
@@ -291,20 +307,20 @@
 
             {% form_theme editform '@KunstmaanAdmin/Form/fields.html.twig' %}
             {{ form_start(editform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id }) ~ '#properties'}) }}
-                <fieldset class="panel panel-default form-properties">
-                    <div class="panel-body">
-                        {{ form_widget(editform) }}
+            <fieldset class="panel panel-default form-properties">
+                <div class="panel-body">
+                    {{ form_widget(editform) }}
 
-                        <div class="form-actions form-actions--padded">
-                            <button class="btn btn-primary btn--raise-on-hover" type="submit">
-                                {{ 'media.folder.save' |trans }}
-                            </button>
-                            <button class="btn btn-default btn--raise-on-hover" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">
-                                {{ 'form.cancel' |trans }}
-                            </button>
-                        </div>
+                    <div class="form-actions form-actions--padded">
+                        <button class="btn btn-primary btn--raise-on-hover" type="submit">
+                            {{ 'media.folder.save' |trans }}
+                        </button>
+                        <button class="btn btn-default btn--raise-on-hover" onclick="window.location = '{{ path('KunstmaanMediaBundle_folder_show', { 'folderId' : folder.id } ) }}'" type="reset">
+                            {{ 'form.cancel' |trans }}
+                        </button>
                     </div>
-                </fieldset>
+                </div>
+            </fieldset>
             {{ form_end(editform) }}
         </div>
     </div>
@@ -314,21 +330,16 @@
     {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
     {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
     {% include '@KunstmaanMedia/Folder/empty-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/bulk-move-modal.html.twig' %}
 
 {% endblock %}
 
-
-{% block extrajavascript %}
-    {{ parent() }}
-
-    {% javascripts
-    "@KunstmaanMediaBundle/Resources/ui/vendor_bower/plupload/js/plupload.full.min.js"
-    "@KunstmaanMediaBundle/Resources/ui/vendor_bower/picturefill/dist/picturefill.min.js"
-    "@KunstmaanMediaBundle/Resources/ui/js/_bulk-upload.js"
-    "@KunstmaanMediaBundle/Resources/ui/js/_dnd-upload.js"
-    "@KunstmaanMediaBundle/Resources/ui/js/app.js"
-    output="KunstmaanMediaBundleAssets/js/mediaFooter.min.js" filter="uglifyjs2"
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% block js_footer %}
+    <!-- JS -->
+    {% embed "KunstmaanAdminBundle:Default:_js_footer.html.twig" %}
+        {% block extra_async_javascripts %}
+            {{ parent() }}
+            '{{ asset('bundles/kunstmaanmedia/js/media-bundle.min.js') }}',
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

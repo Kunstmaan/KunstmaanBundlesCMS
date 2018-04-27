@@ -74,7 +74,7 @@ interface AdminListConfiguratorInterface
     /**
      * Get the url to export the listed items
      *
-     * @return string
+     * @return array
      */
     public function getExportUrl();
 
@@ -83,7 +83,7 @@ interface AdminListConfiguratorInterface
      *
      * @throws InvalidArgumentException
      *
-     * @return AbstractType
+     * @return string FQCN of form type
      */
     public function getAdminType($entity);
 

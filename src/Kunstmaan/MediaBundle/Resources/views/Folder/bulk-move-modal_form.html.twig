@@ -1,0 +1,20 @@
+{% form_theme form '@KunstmaanAdmin/Form/fields.html.twig' %}
+
+{{ form_start(form, {'method': 'POST', 'action': path('KunstmaanMediaBundle_media_bulk_move'), 'attr': {'id': 'bulk-move-modal-form'}}) }}
+
+<!-- Body -->
+<div class="modal-body">
+    {{ 'media.folder.bulk_move.modal.text' | trans }}
+    {{ form_widget(form) }}
+</div>
+
+<!-- Footer -->
+<div class="modal-footer">
+    <button type="submit" class="js-add-app-loading--forms btn btn-danger btn--raise-on-hover">
+        {{ 'media.folder.bulk_move.modal.save' | trans }}
+    </button>
+    <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+        {{ 'form.cancel' | trans }}
+    </button>
+</div>
+{{ form_end(form) }}

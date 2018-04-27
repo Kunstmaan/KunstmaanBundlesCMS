@@ -40,7 +40,7 @@ class AbstractArticlePageAdminType extends PageAdminType
         );
 
         $builder->add('summary', TextType::class, array(
-            'label' => 'article.form.summery.label'
+            'label' => 'article.form.summary.label'
         ));
     }
 

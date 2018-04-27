@@ -1,0 +1,3 @@
+parameters:
+    debug_toolbar: false
+    secret: secret

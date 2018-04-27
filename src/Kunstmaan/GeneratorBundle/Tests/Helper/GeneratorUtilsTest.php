@@ -22,80 +22,48 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
         $this->object = new GeneratorUtils;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testCleanPrefixWhenPrefixEmpty()
     {
         $response = GeneratorUtils::cleanPrefix('');
         $this->assertEquals(null, $response);
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testCleanPrefixShouldConvertToLowercase()
     {
         $response = GeneratorUtils::cleanPrefix('TEST');
         $this->assertEquals('test_', $response);
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testCleanPrefixShouldAppendUnderscore()
     {
         $response = GeneratorUtils::cleanPrefix('test');
         $this->assertEquals('test_', $response);
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testCleanPrefixShouldAppendUnderscoreOnlyWhenNeeded()
     {
         $response = GeneratorUtils::cleanPrefix('test_');
         $this->assertEquals('test_', $response);
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testCleanPrefixShouldLeaveUnderscoresInPlace()
     {
         $response = GeneratorUtils::cleanPrefix('test_bundle');
         $this->assertEquals('test_bundle_', $response);
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testCleanPrefixShouldLeaveSingleUnderscore()
     {
         $response = GeneratorUtils::cleanPrefix('test____');
         $this->assertEquals('test_', $response);
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testShouldConvertOnlyUnderscoresToNull()
     {
         $response = GeneratorUtils::cleanPrefix('____');
         $this->assertEquals(null, $response);
     }
 
-    /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
-     */
     public function testSpacesShouldCreateEmptyPrefix()
     {
         $response = GeneratorUtils::cleanPrefix('  ');

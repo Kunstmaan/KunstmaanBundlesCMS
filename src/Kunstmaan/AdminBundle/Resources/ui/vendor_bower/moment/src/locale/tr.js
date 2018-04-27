@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : turkish (tr)
+//! locale : Turkish [tr]
 //! authors : Erhan Gundogan : https://github.com/erhangundogan,
 //!           Burak Yiğit Kaya: https://github.com/BYK
 
@@ -34,18 +34,18 @@ export default moment.defineLocale('tr', {
     weekdaysMin : 'Pz_Pt_Sa_Ça_Pe_Cu_Ct'.split('_'),
     longDateFormat : {
         LT : 'HH:mm',
-        LTS : 'LT:ss',
+        LTS : 'HH:mm:ss',
         L : 'DD.MM.YYYY',
         LL : 'D MMMM YYYY',
-        LLL : 'D MMMM YYYY LT',
-        LLLL : 'dddd, D MMMM YYYY LT'
+        LLL : 'D MMMM YYYY HH:mm',
+        LLLL : 'dddd, D MMMM YYYY HH:mm'
     },
     calendar : {
         sameDay : '[bugün saat] LT',
         nextDay : '[yarın saat] LT',
-        nextWeek : '[haftaya] dddd [saat] LT',
+        nextWeek : '[gelecek] dddd [saat] LT',
         lastDay : '[dün] LT',
-        lastWeek : '[geçen hafta] dddd [saat] LT',
+        lastWeek : '[geçen] dddd [saat] LT',
         sameElse : 'L'
     },
     relativeTime : {
@@ -63,7 +63,7 @@ export default moment.defineLocale('tr', {
         y : 'bir yıl',
         yy : '%d yıl'
     },
-    ordinalParse: /\d{1,2}'(inci|nci|üncü|ncı|uncu|ıncı)/,
+    dayOfMonthOrdinalParse: /\d{1,2}'(inci|nci|üncü|ncı|uncu|ıncı)/,
     ordinal : function (number) {
         if (number === 0) {  // special case for zero
             return number + '\'ıncı';

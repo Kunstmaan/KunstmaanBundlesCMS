@@ -73,6 +73,12 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /** @var array */
     protected $properties = [];
+    
+    /** @var integer */
+    protected $numberOfShards;
+
+    /** @var integer */
+    protected $numberOfReplicas;
 
     /** @var Node */
     protected $currentTopNode = null;
@@ -86,7 +92,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param string                  $name
      * @param string                  $type
      */
-    public function __construct($container, $searchProvider, $name, $type)
+    public function __construct($container, $searchProvider, $name, $type, $numberOfShards = 1, $numberOfReplicas = 0)
     {
         $this->container           = $container;
         $this->indexName           = $name;
@@ -96,6 +102,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $this->locales             = $this->domainConfiguration->getBackendLocales();
         $this->analyzerLanguages   = $this->container->getParameter('analyzer_languages');
         $this->em                  = $this->container->get('doctrine')->getManager();
+        $this->numberOfShards      = $numberOfShards;
+        $this->numberOfReplicas    = $numberOfReplicas;
     }
 
     /**
@@ -131,6 +139,25 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     }
 
     /**
+     * @return array
+     */
+    public function getLanguagesNotAnalyzed()
+    {
+        $notAnalyzed = [];
+        foreach ($this->locales as $locale) {
+            if (preg_match('/[a-z]{2}_?+[a-zA-Z]{2}/', $locale)) {
+                $locale = strtolower($locale);
+            }
+
+            if ( false === array_key_exists($locale, $this->analyzerLanguages) ) {
+                $notAnalyzed[] = $locale;
+            }
+        }
+
+        return $notAnalyzed;
+    }
+
+    /**
      * Create node index
      */
     public function createIndex()
@@ -141,14 +168,23 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         );
 
         foreach ($this->locales as $locale) {
-            $localeAnalysis = clone($analysis);
-            $language = $this->analyzerLanguages[$locale]['analyzer'];
+            // Multilanguage check
+            if (preg_match('/[a-z]{2}_?+[a-zA-Z]{2}/', $locale)) {
+                $locale = strtolower($locale);
+            }
 
-            //build new index
+            // Build new index
             $index = $this->searchProvider->createIndex($this->indexName . '_' . $locale);
 
-            //create index with analysis
-            $this->setAnalysis($index, $localeAnalysis->setupLanguage($language));
+            if (array_key_exists($locale, $this->analyzerLanguages)) {
+                $localeAnalysis = clone $analysis;
+                $language = $this->analyzerLanguages[$locale]['analyzer'];
+
+                // Create index with analysis
+                $this->setAnalysis($index, $localeAnalysis->setupLanguage($language));
+            } else {
+                $index->create();
+            }
 
             $this->setMapping($index, $locale);
         }
@@ -308,8 +344,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     {
         $index->create(
             array(
-                'number_of_shards'   => 4,
-                'number_of_replicas' => 1,
+                'number_of_shards'   => $this->numberOfShards,
+                'number_of_replicas' => $this->numberOfReplicas,
                 'analysis'           => $analysis->build()
             )
         );
@@ -339,7 +375,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param Index  $index
      * @param string $lang
      */
-    protected function setMapping(Index $index, $lang = 'en')
+    protected function setMapping(Index $index, $lang='en')
     {
         $mapping = $this->createDefaultSearchFieldsMapping($index, $lang);
         $mapping->send();
@@ -645,6 +681,10 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      */
     protected function removeHtml($text)
     {
+        if (!trim($text)) {
+            return '';
+        }
+        
         // Remove Styles and Scripts
         $crawler = new Crawler($text);
         $crawler->filter('style, script')->each(function (Crawler $crawler) {

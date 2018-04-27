@@ -23,27 +23,12 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = $this->getMockForAbstractClass("Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart");
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getUniqueId
-     */
     public function testGetUniqueId()
     {
         $object = $this->object;
         $object->getUniqueId();
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::setLabel
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getLabel
-     */
     public function testSetGetLabel()
     {
         $object = $this->object;
@@ -52,9 +37,6 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $object->getLabel());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getAdminView
-     */
     public function testGetAdminView()
     {
         $stringValue = $this->object->getAdminView();

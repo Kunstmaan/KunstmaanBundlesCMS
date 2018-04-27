@@ -130,18 +130,18 @@ class GoalCommandHelper extends AbstractAnalyticsCommandHelper
 
         $rows = $this->requestGoalResults($overview, $metrics[0], $extra);
         // Execute an extra query if there are more than 10 goals to query
-        if (sizeof($metrics) > 1) {
+        if (count($metrics) > 1) {
             $rows2     = $this->requestGoalResults($overview, $metrics[1], $extra);
-            $rows2size = sizeof($rows2);
+            $rows2size = count($rows2);
             for ($i = 0; $i < $rows2size; $i++) {
                 // Merge the results of the extra query data with the previous query data.
-                $rows[$i] = array_merge($rows[$i], array_slice($rows2[$i], $start, sizeof($rows2) - $start));
+                $rows[$i] = array_merge($rows[$i], array_slice($rows2[$i], $start, count($rows2) - $start));
             }
         }
 
         // Create a result array to be parsed and create Goal objects from
         $goalCollection = array();
-        $goaldatasize   = sizeof($goaldata);
+        $goaldatasize   = count($goaldata);
         for ($i = 0; $i < $goaldatasize; $i++) {
             $goalEntry = array();
             foreach ($rows as $row) {

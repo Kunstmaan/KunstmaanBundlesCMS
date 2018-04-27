@@ -35,6 +35,13 @@ class SiteSwitchController extends Controller
 
         $currentHost = $domainConfiguration->getHost();
 
+        $session = $request->getSession();
+        if ($request->get('from_url_chooser')) {
+            $session->set(DomainConfiguration::SWITCH_HOST, $host);
+        } else {
+            $session->set(DomainConfiguration::OVERRIDE_HOST, $host);
+        }
+
         /**
          * If current host type is different then the host going to, redirect to it's homepage.
          * If coming from url chooser, don't redirect to homepage if other host.
@@ -49,14 +56,6 @@ class SiteSwitchController extends Controller
         }
 
         $routeParams['_locale'] = $defaultLocale;
-
-        $session = $request->getSession();
-        if ($request->get('from_url_chooser')) {
-            $session->set(DomainConfiguration::SWITCH_HOST, $host);
-        } else {
-            $session->set(DomainConfiguration::OVERRIDE_HOST, $host);
-        }
-
 
         $response = new RedirectResponse(
             $this->get('router')->generate($route, $routeParams)

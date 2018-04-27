@@ -26,6 +26,17 @@ settings:
         uptodate: is up-to-date
         toupdate: can be updated to
         unknown: version information unknown
+    exceptions:
+        title: Exceptions
+        code: Code
+        url: URL
+        urlReferer: URL Referer
+        createdAt: Created at
+        isResolved: Is resolved
+        events: Events
+        resolved: Resolved
+        unresolved: Unresolved
+        resolve_all: Resolve all
 
 # Tools
 tools:
@@ -45,8 +56,8 @@ form:
     delete: Delete
     deletesure: Are you sure you want to delete this?
     edit: Edit
-    add: Add New
-    'add.%subject%': 'Add New %subject%'
+    add: Add new
+    'add.%subject%': 'Add new %subject%'
     save: Save
     publish: Publish
     unpublish: Unpublish
@@ -126,3 +137,8 @@ kuma_admin:
 kuma_js:
     auto_collapse:
         more_button_label: More
+
+toolbar:
+    exception:
+        title: Exceptions
+        message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

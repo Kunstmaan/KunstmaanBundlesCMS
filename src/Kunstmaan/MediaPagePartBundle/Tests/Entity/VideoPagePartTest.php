@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart;
-
 use Kunstmaan\MediaPagePartBundle\Form\VideoPagePartAdminType;
 
 /**
@@ -26,33 +25,26 @@ class VideoPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new VideoPagePart;
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::setMedia
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getMedia
-     */
     public function testSetGetMedia()
     {
         $media = new Media();
+        $media->setUrl('https://nasa.gov/spongebob.jpg');
         $media->setId(5);
         $this->object->setMedia($media);
         $this->assertEquals(5, $this->object->getMedia()->getId());
+        $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
+        $pp = new VideoPagePart();
+        $this->assertEquals('', $pp->__toString());
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getDefaultView
-     */
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
         $this->assertEquals("KunstmaanMediaPagePartBundle:VideoPagePart:view.html.twig", $defaultView);
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
-        $defaultAdminType = $this->object->getDefaultAdminType();
-        $this->assertTrue($defaultAdminType instanceof VideoPagePartAdminType);
+        $this->assertEquals(VideoPagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 }

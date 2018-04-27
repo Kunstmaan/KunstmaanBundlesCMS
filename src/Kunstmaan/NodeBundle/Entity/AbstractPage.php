@@ -118,26 +118,22 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Returns the default backend form type for this page
-     *
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new PageAdminType();
+        return PageAdminType::class;
     }
 
     /**
-     * @param ContainerInterface $container The Container
-     * @param Request            $request   The Request
-     * @param RenderContext      $context   The Render context
+     * {@inheritdoc}
      *
-     * @return void|RedirectResponse
+     * @deprecated Using the service action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Use the SlugActionInterface instead
      */
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
+        @trigger_error('Using the service action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Use the SlugActionInterface instead', E_USER_DEPRECATED);
     }
-
 
     /**
      * By default this will return false. Pages will always be pages until some class says otherwise.

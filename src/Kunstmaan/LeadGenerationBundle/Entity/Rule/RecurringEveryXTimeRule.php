@@ -37,6 +37,7 @@ class RecurringEveryXTimeRule extends AbstractRule
      * @var int
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(0)
+     * @Assert\NotBlank()
      */
     private $times;
 
@@ -150,10 +151,10 @@ class RecurringEveryXTimeRule extends AbstractRule
     }
 
     /**
-     * @return RecurringEveryXTimeAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return new RecurringEveryXTimeAdminType();
+        return RecurringEveryXTimeAdminType::class;
     }
 }

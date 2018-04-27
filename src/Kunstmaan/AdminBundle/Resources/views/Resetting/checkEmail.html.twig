@@ -1,10 +1,2 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
-
-{% block fos_user_content %}
-    <div class="alert alert-success">
-        {{ 'We have sent you an email with a link to reset your password.' | trans }}
-        <a class="btn alert__action" href="{{ path('fos_user_security_login') }}">
-            <i class="fa fa-times"></i>
-        </a>
-    </div>
-{% endblock %}
+{# Deprecated: This template is deprecated since kunstmaanAdminBundle 5.1 and will be removed in kunstmaanAdminBundle 6.0. Use check_email.html.twig instead #}
+{% extends 'check_email.html.twig' %}

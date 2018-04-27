@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
@@ -23,17 +24,6 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $this->object = new HeaderPagePartAdminType();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::buildForm
-     */
     public function testBuildForm()
     {
         $this->object->buildForm($this->builder, array());
@@ -41,9 +31,6 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $this->builder->get('title');
     }
 
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::configureOptions
-     */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);

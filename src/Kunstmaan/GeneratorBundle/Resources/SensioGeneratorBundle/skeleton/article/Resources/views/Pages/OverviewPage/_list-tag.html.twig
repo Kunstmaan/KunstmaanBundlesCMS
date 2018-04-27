@@ -1,0 +1,14 @@
+{% if tagContext.tags|length > 0 %}
+    <div id="blog-tags" class="toggle-item {% if tagContext.activeTags is defined %}toggle-item--active{% endif %} blog-filter__filters__list">
+        <ul class="toggle-item__content">
+            <li class="blog__tagcat {% if tagContext.activeTags is not defined %}blog__tagcat--active{% endif %}">
+                <a href="{{ basePath }}">{{ 'article_overview_page.all'|trans }}</a>
+            </li>
+            {% for tag in tagContext.tags %}
+                <li class="blog__tagcat {% if tagContext.activeTags is defined and tag.name in tagContext.activeTags  %}blog__tagcat--active{% endif %}">
+                    <a href="{{ get_article_tag_path(currentUrl, tag.name|trans, app.request.locale) }}">{{ tag.name|trans }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

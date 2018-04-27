@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\ORM;
 
+use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateTimeFilterType;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
@@ -23,9 +25,6 @@ class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateTimeFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array(
@@ -49,7 +48,6 @@ class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers       Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateTimeFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -64,9 +62,6 @@ class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
         $this->assertEquals($testValue, $qb->getParameter('var_datetime')->getValue());
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateTimeFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals(
@@ -85,10 +80,24 @@ class DateTimeFilterTypeTest extends ORMFilterTypeTestCase
     }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
+     * @throws \ReflectionException
      */
-    protected function tearDown()
+    public function testApplyReturnsNull()
     {
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder->expects($this->never())->method('setParameter');
+        $mirror = new ReflectionClass(DateTimeFilterType::class);
+        $property = $mirror->getProperty('queryBuilder');
+        $property->setAccessible(true);
+        $property->setValue($this->object, $queryBuilder);
+
+        $badData = [
+            'value' => [
+               'date' => 'oopsNotADate',
+               'time' => 'oopsNotATime',
+            ],
+            'comparator' => 'true',
+        ];
+        $this->object->apply($badData, uniqid());
     }
 }

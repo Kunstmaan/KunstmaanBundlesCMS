@@ -1,5 +1,5 @@
 <p class="link-pp">
-    <a href="{{ resource.url | replace_url }}" {% if resource.openInNewWindow %}target="_blank"{% endif %}>
+    <a href="{{ resource.url | replace_url }}" {% if resource.openInNewWindow %}target="_blank" rel="noopener"{% endif %}>
         {{ resource.text|default(resource.url | replace_url) }}
         <i class="icon icon--arrow-right icon--small"></i>
     </a>

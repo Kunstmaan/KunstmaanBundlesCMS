@@ -21,6 +21,8 @@ before_install:
   - composer selfupdate
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require symfony/symfony:${SYMFONY_VERSION} --no-update; fi
   - wget https://scrutinizer-ci.com/ocular.phar
+  - nvm install
+  - npm install
 
 install: composer update --prefer-dist $COMPOSER_FLAGS
 
@@ -28,10 +30,15 @@ before_script:
   - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MINOR_VERSION;") -le 4 ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;
   - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;
   - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ $(php -r "echo PHP_MAJOR_VERSION;") -le 5 ]; then echo "extension = memcache.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;
+  - phpenv config-add xdebug.ini || true
 
 script: ./vendor/bin/phpunit --coverage-clover=coverage.clover
 
-after_script: php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+after_script:
+    - phpenv config-rm xdebug.ini || true
+    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    - npm run build -- --continueAfterTestError=true
+    - npm run buildGroundControlSkeleton
 
 notifications:
   email:

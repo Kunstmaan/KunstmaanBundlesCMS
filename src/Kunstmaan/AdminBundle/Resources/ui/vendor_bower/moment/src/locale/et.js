@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : estonian (et)
+//! locale : Estonian [et]
 //! author : Henry Kehlmann : https://github.com/madhenry
 //! improvements : Illimar Tambek : https://github.com/ragulka
 
@@ -32,11 +32,11 @@ export default moment.defineLocale('et', {
     weekdaysMin   : 'P_E_T_K_N_R_L'.split('_'),
     longDateFormat : {
         LT   : 'H:mm',
-        LTS : 'LT:ss',
+        LTS : 'H:mm:ss',
         L    : 'DD.MM.YYYY',
         LL   : 'D. MMMM YYYY',
-        LLL  : 'D. MMMM YYYY LT',
-        LLLL : 'dddd, D. MMMM YYYY LT'
+        LLL  : 'D. MMMM YYYY H:mm',
+        LLLL : 'dddd, D. MMMM YYYY H:mm'
     },
     calendar : {
         sameDay  : '[Täna,] LT',
@@ -61,7 +61,7 @@ export default moment.defineLocale('et', {
         y      : processRelativeTime,
         yy     : processRelativeTime
     },
-    ordinalParse: /\d{1,2}\./,
+    dayOfMonthOrdinalParse: /\d{1,2}\./,
     ordinal : '%d.',
     week : {
         dow : 1, // Monday is the first day of the week.

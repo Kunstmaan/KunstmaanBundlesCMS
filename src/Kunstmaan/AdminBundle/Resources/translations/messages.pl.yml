@@ -23,15 +23,15 @@ settings:
     toupdate: może być aktualizowany do
     unknown: wersji nieznanych informacji
   exceptions:
-    title: Exceptions
-    code: Code
+    title: Wyjątki
+    code: Kod
     url: URL
     urlReferer: URL Referer
-    createdAt: Created at
-    isResolved: Is resolved
-    events: Events
-    resolved: Resolved
-    unresolved: Unresolved
+    createdAt: Data utworzenia
+    isResolved: Rozwiązany?
+    events: Liczba zdarzeń
+    resolved: Rozwiązany
+    unresolved: Nierozwiązany
     resolve_all: Resolve all
 tools:
   title: Narzędzia
@@ -124,5 +124,5 @@ kuma_js:
     more_button_label: Więcej
 toolbar:
   exception:
-    title: Exceptions
-    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"
+    title: Wyjątki
+    message: "<strong>%X%</strong> wyjątków wywołanych <strong>%Y%</strong> razy"

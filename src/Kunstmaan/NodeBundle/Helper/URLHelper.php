@@ -42,11 +42,6 @@ class URLHelper
     private $mediaMap = null;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var DomainConfigurationInterface
      */
     private $domainConfiguration;
@@ -56,14 +51,12 @@ class URLHelper
      * @param RouterInterface $router
      * @param LoggerInterface $logger
      * @param DomainConfigurationInterface $domainConfiguration
-     * @param RequestStack $requestStack
      */
-    public function __construct(EntityManager $em, RouterInterface $router, LoggerInterface $logger, RequestStack $requestStack, DomainConfigurationInterface $domainConfiguration)
+    public function __construct(EntityManager $em, RouterInterface $router, LoggerInterface $logger, DomainConfigurationInterface $domainConfiguration)
     {
         $this->em = $em;
         $this->router = $router;
         $this->logger = $logger;
-        $this->requestStack = $requestStack;
         $this->domainConfiguration = $domainConfiguration;
     }
 

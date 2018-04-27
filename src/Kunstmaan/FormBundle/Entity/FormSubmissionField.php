@@ -17,14 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @ORM\Table(name="kuma_form_submission_fields")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({
- *     "string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
- *     "text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
- *     "boolean" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField",
- *     "choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
- *     "file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField",
- *     "email" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField"
- * })
  */
 abstract class FormSubmissionField
 {

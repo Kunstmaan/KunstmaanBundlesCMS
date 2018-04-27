@@ -14,6 +14,9 @@ class TagManager extends BaseTagManager
 
     const TAGGING_HYDRATOR = 'taggingHydrator';
 
+    /**
+     * @param BaseTaggable $resource
+     */
     public function loadTagging(BaseTaggable $resource)
     {
         if ($resource instanceof LazyLoadingTaggableInterface) {
@@ -27,11 +30,14 @@ class TagManager extends BaseTagManager
         parent::loadTagging($resource);
     }
 
+    /**
+     * @param BaseTaggable $resource
+     */
     public function saveTagging(BaseTaggable $resource)
     {
         $tags = clone $resource->getTags();
         parent::saveTagging($resource);
-        if (sizeof($tags) !== sizeof($resource->getTags())) {
+        if (count($tags) !== count($resource->getTags())) {
             // parent::saveTagging uses getTags by reference and removes elements, so it ends up empty :-/
             // this causes all tags to be deleted when an entity is persisted more than once in a request
             // Restore:
@@ -70,6 +76,11 @@ class TagManager extends BaseTagManager
             ->getResult(self::TAGGING_HYDRATOR);
     }
 
+    /**
+     * @param $id
+     * @return mixed|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findById($id)
     {
 
@@ -90,6 +101,9 @@ class TagManager extends BaseTagManager
         return $tag;
     }
 
+    /**
+     * @return array
+     */
     public function findAll()
     {
         $tagsRepo = $this->em->getRepository('KunstmaanTaggingBundle:Tag');
@@ -97,6 +111,13 @@ class TagManager extends BaseTagManager
         return $tagsRepo->findAll();
     }
 
+    /**
+     * @param Taggable $item
+     * @param $class
+     * @param $locale
+     * @param int $nbOfItems
+     * @return array|null
+     */
     public function findRelatedItems(Taggable $item, $class, $locale, $nbOfItems=1)
     {
         $instance = new $class();
@@ -159,5 +180,4 @@ EOD;
 
         return $items;
     }
-
 }

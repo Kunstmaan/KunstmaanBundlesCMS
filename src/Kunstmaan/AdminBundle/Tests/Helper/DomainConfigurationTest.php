@@ -3,10 +3,11 @@
 namespace Kunstmaan\AdminBundle\Tests\Helper;
 
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
+class DomainConfigurationTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var DomainConfiguration
@@ -18,126 +19,72 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     protected $container;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::__construct
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getMasterRequest
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getHost
-     */
     public function testGetHost()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertEquals('domain.tld', $object->getHost());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getHosts
-     */
     public function testGetHosts()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertEquals(array('domain.tld'), $object->getHosts());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getDefaultLocale
-     */
     public function testGetDefaultLocale()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertEquals('en', $object->getDefaultLocale());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getExtraData
-     */
     public function testGetExtraData()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertEquals(array(), $object->getExtraData());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getRootNode
-     */
     public function testGetRootNode()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertNull($object->getRootNode());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiDomainHost
-     */
     public function testIsMultiDomainHost()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertFalse($object->isMultiDomainHost());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiLanguage
-     */
     public function testIsMultiLanguageWithSingleLanguage()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertFalse($object->isMultiLanguage());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiLanguage
-     */
     public function testIsMultiLanguageWithMultiLanguage()
     {
         $object = $this->getMultiLanguageDomainConfiguration();
         $this->assertTrue($object->isMultiLanguage());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getFrontendLocales
-     */
     public function testGetFrontendLocalesWithSingleLanguage()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertEquals(array('en'), $object->getFrontendLocales());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getFrontendLocales
-     */
     public function testGetFrontendLocalesWithMultiLanguage()
     {
         $object = $this->getMultiLanguageDomainConfiguration();
         $this->assertEquals(array('nl', 'fr', 'en'), $object->getFrontendLocales());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getBackendLocales
-     */
     public function testGetBackendLocalesWithSingleLanguage()
     {
         $object = $this->getSingleLanguageDomainConfiguration();
         $this->assertEquals(array('en'), $object->getBackendLocales());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getBackendLocales
-     */
     public function testGetBackendLocalesWithMultiLanguage()
     {
         $object = $this->getMultiLanguageDomainConfiguration();
@@ -146,7 +93,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
 
     private function getContainer($map)
     {
-        $this->container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
 
         $this->container
             ->method('getParameter')
@@ -162,7 +109,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
 
     private function getRequestStack()
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($this->getRequest());
 
         return $requestStack;

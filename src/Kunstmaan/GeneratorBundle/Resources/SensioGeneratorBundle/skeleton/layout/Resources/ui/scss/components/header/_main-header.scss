@@ -6,7 +6,7 @@
 /* General
    ========================================================================== */
 .main-header {
-    padding: 1.4rem 0;
+    padding: 14px 0;
 }
 
 
@@ -49,7 +49,7 @@
 .main-header--mobile__toggle-btn {
     position: absolute;
     top: 0;
-    left: 1.5rem;
+    left: 15px;
     z-index: 2;
 
     padding: 1.2em 1.2em 1.2em 0;
@@ -74,7 +74,7 @@
 
     @media (min-width: $screen-md-min) {
         display: block;
-        height: 5.8rem;
+        height: 58px;
 
         border-bottom: 2px solid $hr-color;
     }

@@ -26,7 +26,7 @@ class DashboardWidget
      * @param string $controller
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    function __construct($command, $controller, ContainerInterface $container)
+    public function __construct($command, $controller, ContainerInterface $container)
     {
         $this->command = new $command();
         $this->command->setContainer($container);
