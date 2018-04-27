@@ -301,7 +301,8 @@ services:
             - '%kunstmaan_admin.enable_toolbar_helper%'
             - '@service_container'
             - '@kunstmaan_admin.adminroute.helper'
-            - '%kunstmaan_admin.provider_keys%'
+            - '%kunstmaan_admin.toolbar_firewall_names%'
+            - '%kunstmaan_admin.admin_firewall_name%'
 
     kunstmaan_admin.datacollector.bundleversion:
         class: '%kunstmaan_admin.toolbar.collector.bundle.class%'
