@@ -58,6 +58,7 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
         $this->nodeTranslation = $nodeTranslation;
         $this->em = $em;
         $this->translator = $translator;
+        $this->batchSize = $batchSize;
     }
 
     /**
