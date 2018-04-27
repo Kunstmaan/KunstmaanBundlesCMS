@@ -57,9 +57,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
         $this->folder = $folder;
         $this->request = $request;
 
-        // Thumbnail view should display 24 images, list view 250
-        $viewMode = $request->get('viewMode', 'thumb-view');
-        $this->limit = ($viewMode == 'thumb-view') ? 24 : 250;
+        $this->limit = 24;
     }
 
     /**
