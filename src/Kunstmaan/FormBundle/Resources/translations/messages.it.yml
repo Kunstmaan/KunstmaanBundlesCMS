@@ -58,7 +58,7 @@ kuma_form:
       errormessage_required:
         label: Error message required
       regex:
-        label: regex
+        label: Regex
       errormessage_regex:
         label: Error message regex
     single_line_text_page_part:
@@ -69,7 +69,7 @@ kuma_form:
       errormessage_required:
         label: Error message required
       regex:
-        label: regex
+        label: Regex
       errormessage_regex:
         label: Error message regex
     submit_button_page_part:

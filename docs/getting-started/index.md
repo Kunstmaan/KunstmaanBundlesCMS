@@ -30,7 +30,6 @@ Documentation specific to the KunstmaanBundlesCMS can be found on:
 	* [Going single language](../cookbook/going-single-language.md)
 	* [Managing translations](../cookbook/manage-translations.md)
 	* [Google Analytics dashboard](../cookbook/google-analytics-dashboard.md)
-
 > Writing documentation is hard. Especially if the writer is fully into the topic at hand. This results in the glossing over of obvious information for the writer, that might not be obvious for everyone else. We wholeheartedly appreciate pull requests or suggestions for this documentation.
 
 ## Contribute
@@ -41,7 +40,6 @@ We follow most of the procedures for contributions from the [Symfony](http://sym
 * [Submitting pull requests](../contributing/pull-requests.md)
 * [Coding standards](../contributing/coding-standards.md)
 * [Preparing a new release](../contributing/preparing-a-new-release.md)
-
 ## Support
 
 For questions you can always ask your question via a Github Issue ([following the same guidelines as bug reporting](../contributing/reporting-issues.md)) or shoot us an email at bundles AT kunstmaan.be.

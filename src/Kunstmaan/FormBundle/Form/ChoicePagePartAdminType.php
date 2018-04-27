@@ -24,7 +24,7 @@ class ChoicePagePartAdminType extends AbstractType
         $builder
             ->add('label', TextType::class, [
                 'label' => 'kuma_form.form.choice_page_part.label.label',
-                'required' => false,
+                'required' => true,
             ])
             ->add('required', CheckboxType::class, [
                 'label' => 'kuma_form.form.choice_page_part.required.label',
