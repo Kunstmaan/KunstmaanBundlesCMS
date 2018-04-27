@@ -27,8 +27,8 @@ commit_failure_conditions:
     # - "project.violations > 150"
 
     # By severities count, limited to the violations concerning files edited by the current PR
-     - "pr.severity.critical > 0"
-     - "pr.severity.major > 0"
+    - "pr.severity.critical > 0"
+    - "pr.severity.major > 0"
     # - "pr.severity.minor > 0"
     # - "pr.severity.info >= 15"
 
