@@ -35,12 +35,3 @@ article:
         created_at: Aangemaakt op
         updated_at: Gewijzigd op
         online: Online
-
-article_overview_page:
-    filter: Filter
-    category: Categories
-    tag: Tags
-    all: Alle
-    route:
-        category: categorie
-        tag: tag
