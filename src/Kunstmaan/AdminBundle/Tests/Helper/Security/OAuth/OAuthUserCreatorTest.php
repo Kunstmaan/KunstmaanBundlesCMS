@@ -4,6 +4,8 @@ namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
+use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserCreator;
 use Kunstmaan\AdminBundle\Helper\Security\OAuth\OAuthUserFinderInterface;
@@ -73,6 +75,10 @@ class OAuthUserCreatorTest extends PHPUnit_Framework_TestCase
     {
         $object = $this->object;
         $this->getFinder()->expects($this->once())->method('findUserByGoogleSignInData')->willReturn(new User());
+        $mockGroup = $this->createMock(Group::class);
+        $mockRepo = $this->createMock(EntityRepository::class);
+        $mockRepo->expects($this->once())->method('findOneBy')->willReturn($mockGroup);
+        $this->getEm()->expects($this->once())->method('getRepository')->willReturn($mockRepo);
         $this->getEm()->expects($this->once())->method('persist')->willReturn(true);
         $this->getEm()->expects($this->once())->method('flush')->willReturn(true);
         $user = $object->getOrCreateUser('madman@gmail.com', 12345679);
@@ -83,6 +89,10 @@ class OAuthUserCreatorTest extends PHPUnit_Framework_TestCase
     {
         $object = $this->object;
         $this->getFinder()->expects($this->once())->method('findUserByGoogleSignInData')->willReturn(new DateTime());
+        $mockGroup = $this->createMock(Group::class);
+        $mockRepo = $this->createMock(EntityRepository::class);
+        $mockRepo->expects($this->once())->method('findOneBy')->willReturn($mockGroup);
+        $this->getEm()->expects($this->once())->method('getRepository')->willReturn($mockRepo);
         $this->getEm()->expects($this->once())->method('persist')->willReturn(true);
         $this->getEm()->expects($this->once())->method('flush')->willReturn(true);
         $user = $object->getOrCreateUser('madman@gmail.com', 12345679);
