@@ -56,6 +56,6 @@ kuma_translator:
       text: Tekst
       locale: Lokaal
 toolbar:
-    translations:
-        title: Vertalingen
-        count: Aantal
+  translations:
+    title: Vertalingen
+    count: Teller
