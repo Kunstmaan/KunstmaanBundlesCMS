@@ -47,7 +47,7 @@ interface SearchProviderInterface
      *
      * @return mixed
      */
-    public function createDocument($document, $uid, $indexName = '', $indexType = '');
+    public function createDocument($uid, $document, $indexName = '', $indexType = '');
 
     /**
      * Add a document to the index

@@ -3,7 +3,7 @@
 namespace Kunstmaan\AdminBundle\EventListener;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Model\UserManager;
+use FOS\UserBundle\Model\UserManagerInterface;
 
 /**
  * Set password_changed property to 1 after changing the password
@@ -11,14 +11,14 @@ use FOS\UserBundle\Model\UserManager;
 class PasswordResettingListener
 {
     /**
-     * @var UserManager
+     * @var UserManagerInterface
      */
     private $userManager;
 
     /**
-     * @param UserManager $userManager
+     * @param UserManagerInterface $userManager
      */
-    public function __construct(UserManager $userManager)
+    public function __construct(UserManagerInterface $userManager)
     {
         $this->userManager = $userManager;
     }

@@ -4,25 +4,25 @@ parameters:
     kunstmaan_config.controller.config.class: 'Kunstmaan\ConfigBundle\Controller\ConfigController'
 
 services:
-  kunstmaan_config.menu.adaptor:
-    class: "%kunstmaan_config.menu.adaptor.class%"
-    arguments: ["%kunstmaan_config%", "@security.authorization_checker"]
+  Kunstmaan\ConfigBundle\Helper\Menu\ConfigMenuAdaptor:
+    arguments:
+      - '%kunstmaan_config%'
+      - '@Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface'
     tags:
-      -  { name: "kunstmaan_admin.menu.adaptor" }
+      -  { name: 'kunstmaan_admin.menu.adaptor' }
 
-
-  kunstmaan_config.config.twig.extension:
-    class: "%kunstmaan_config.twig.extension.class%"
-    arguments: ["@doctrine.orm.entity_manager", "%kunstmaan_config%"]
+  Kunstmaan\ConfigBundle\Twig\ConfigTwigExtension:
+    arguments:
+      - '@Doctrine\ORM\EntityManagerInterface'
+      - '%kunstmaan_config%'
     tags:
       - { name: twig.extension }
 
-  kunstmaan_config.controller.config:
-    class: "%kunstmaan_config.controller.config.class%"
+  Kunstmaan\ConfigBundle\Controller\ConfigController:
     arguments:
-      - "@router"
-      - "@templating"
-      - "@security.authorization_checker"
-      - "@doctrine.orm.entity_manager"
-      - "%kunstmaan_config%"
-      - "@form.factory"
+      - '@Symfony\Component\Routing\RouterInterface'
+      - '@Symfony\Bundle\FrameworkBundle\Templating\EngineInterface'
+      - '@Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface'
+      - '@Doctrine\ORM\EntityManagerInterface'
+      - '%kunstmaan_config%'
+      - '@Symfony\Component\Form\FormFactoryInterface'

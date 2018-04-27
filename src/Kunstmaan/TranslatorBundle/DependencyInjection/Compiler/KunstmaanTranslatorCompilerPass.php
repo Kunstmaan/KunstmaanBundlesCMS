@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\TranslatorBundle\DependencyInjection\Compiler;
 
+use Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter;
+use Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer;
+use Kunstmaan\TranslatorBundle\Service\Translator\Translator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,12 +28,12 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
             }
         }
 
-        if ($container->hasDefinition('kunstmaan_translator.service.importer.importer')) {
-            $container->getDefinition('kunstmaan_translator.service.importer.importer')->addMethodCall('setLoaders', array($loaderRefs));
+        if ($container->hasDefinition(Importer::class)) {
+            $container->getDefinition(Importer::class)->addMethodCall('setLoaders', array($loaderRefs));
         }
 
-        if ($container->hasDefinition('kunstmaan_translator.service.translator.translator')) {
-            $container->getDefinition('kunstmaan_translator.service.translator.translator')->replaceArgument(2, $loaderAliases);
+        if ($container->hasDefinition(Translator::class)) {
+            $container->getDefinition(Translator::class)->replaceArgument(2, $loaderAliases);
         }
 
         // add all exporter into the translation exporter
@@ -38,8 +41,8 @@ class KunstmaanTranslatorCompilerPass implements CompilerPassInterface
             $exporterRefs[$attributes[0]['alias']] = new Reference($id);
         }
 
-        if ($container->hasDefinition('kunstmaan_translator.service.exporter.exporter')) {
-            $container->getDefinition('kunstmaan_translator.service.exporter.exporter')->addMethodCall('setExporters', array($exporterRefs));
+        if ($container->hasDefinition(Exporter::class)) {
+            $container->getDefinition(Exporter::class)->addMethodCall('setExporters', array($exporterRefs));
         }
     }
 }
