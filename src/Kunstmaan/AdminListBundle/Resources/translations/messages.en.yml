@@ -14,8 +14,8 @@ kuma_admin_list:
 
 # Filters
 filter:
-    true: true
-    false: false
+  "true": "true"
+  "false": "false"
     before: before
     after: after
     in: contains
