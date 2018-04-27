@@ -4,10 +4,10 @@ subaction:
 action:
   saveasdraft: "Als concept opslaan"
   recopyfromlanguage: "Kopieer de inhoud van een andere taal"
-  exportpagetemplate: "Export pagetemplate"
+  exportpagetemplate: "Exporteer pagina template"
   publish: "Publiceer"
   unpublish: "Publiceren ongedaan maken"
-  preview: "Preview"
+  preview: "Voorbeeld"
   save: "Opslaan"
   delete: "Verwijder"
   addsubpage: "Subpagina toevoegen"
@@ -42,7 +42,7 @@ kuma_node:
     "will_be_publish_at.%date%.raw": Deze pagina zal worden gepubliceerd op %date%
     "will_be_unpublish_at.%date%.raw": Deze pagina wordt offline gezet op %date%
     button:
-      schedulle_cancel: Cancel
+      schedulle_cancel: Annuleer
     "offline_draft.%public_url%.raw": Offline / Draft versie (Ga naar <a href="%public_url%">publieke versie</a>)
     online_public.raw: Online / Publieke versie
     offline.raw: Offline
@@ -67,12 +67,12 @@ kuma_node:
         success: De pagina is gedupliceerd!
     revert:
       flash:
-        success: The page contents has been reverted
+        success: De content van de pagina is teruggeplaatst
     edit:
       flash:
         success: De pagina is bewerkt
-        locked: The page is currently being edited by %users%
-        locked_success: An automatic backup has been created because the page is being edited by another user
+        locked: De pagina wordt momenteel bewerkt door %users%
+        locked_success: Een automatische back-up is aangemaakt, omdat de pagina is bewerkt door een andere gebruiker
     new_page:
       title:
         default: Nieuwe pagina
@@ -92,7 +92,7 @@ kuma_node:
       additional_title: Deze lijst bevat alle pagina's chronologisch gesorteerd op laatste wijziging.
   tab:
     properties:
-      title: Properties
+      title: Eigenschappen
     menu:
       title: Menu
     permissions:
@@ -115,11 +115,11 @@ kuma_node:
       title: Publiceren ongedaan maken
       body: Weet u zeker dat u wilt de publicatie van deze pagina ongedaan maken? Als u dit doet, zal de pagina offline worden gehaald!
       later:
-        label: Unpublish later
-        button: Unpublish later
+        label: Later depubliceren
+        button: Later depubliceren
         cancel: Annuleer
       now:
-        button: Unpublish
+        button: Depubliceren
         cancel: Annuleer
     publish:
       title: Publiceer
@@ -129,17 +129,17 @@ kuma_node:
         button: Publiceer later
         cancel: Annuleer
       now:
-        button: Publish
+        button: Publiceer
         cancel: Annuleer
     versions:
       title: Versies
       table:
         type: Type
         last_modified: Laatst gewijzigd
-        user: User
+        user: Gebruiker
         actions: Acties
       actions:
-        preview: Preview
+        preview: Voorbeeld
         revert: Terug draaien
     add_subpage:
       title: Subpagina toevoegen
@@ -168,7 +168,7 @@ kuma_node:
         cancel: Annuleer
     export_pagetemplate:
       button:
-        title: Export pagetemplate
+        title: Exporteer pagina template
 
 
 # Toolbar

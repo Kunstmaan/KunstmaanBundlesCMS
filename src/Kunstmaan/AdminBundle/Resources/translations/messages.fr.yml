@@ -22,6 +22,17 @@ settings:
     uptodate: à jour
     toupdate: peut être mis à jour vers
     unknown: version information unknown
+  exceptions:
+    title: Exceptions
+    code: Code
+    url: URL
+    urlReferer: URL Referer
+    createdAt: Created at
+    isResolved: Is resolved
+    events: Events
+    resolved: Resolved
+    unresolved: Unresolved
+    resolve_all: Resolve all
 tools:
   title: Outils
   clear_frontend_cache: Vider le cache frontend
@@ -35,8 +46,8 @@ form:
   delete: Supprimer
   deletesure: Êtes-vous sûr de vouloir supprimer ce ?
   edit: Modifier
-  add: Ajouter nouveau
-  'add.%subject%': 'Ajouter nouveau %subject%'
+  add: Add new
+  'add.%subject%': 'Add new %subject%'
   save: Sauver
   publish: Publier
   unpublish: Dé-publier
@@ -111,3 +122,7 @@ kuma_admin:
 kuma_js:
   auto_collapse:
     more_button_label: More
+toolbar:
+  exception:
+    title: Exceptions
+    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

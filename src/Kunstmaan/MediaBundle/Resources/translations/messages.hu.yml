@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Nincs megjeleníthető elem
   media:
-    "no": Még nincs fájl ebben a könyvtárban.
+    no: Még nincs fájl ebben a könyvtárban.
     dnd:
       tip: "Tip:"
       tiptext: Tudtad, hogy a fájlokat egyből ebbe a mappába is feltöltheted?
@@ -57,8 +57,19 @@ media:
         save: Ürítés
       success:
         text: A `%folder%` mappa üres!
+    bulk_move:
+      action: Bulk move media
+      action_short: Bulk move
+      modal:
+        title: Bulk move media
+        text: Select to which folder you want to move the selected media.
+        save: "Move.."
+        form:
+          name: Parent folder
+      success:
+        text: Media has been moved successfully!
     sub:
-      "no": Még nincsenek almappák
+      no: Még nincsenek almappák
     delete:
       action: Törlés
       action_short: Törlés

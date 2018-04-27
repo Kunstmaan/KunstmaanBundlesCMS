@@ -15,6 +15,7 @@ settings:
     refresh_live: Live herladen
     import_translations_forced: Importeer geforceerd
     import_translations: Importeer
+    import_file: Import from spreadsheet
     actions: Acties
     export_translations: Exporteer naar CSV
     not_live_warning: "De live vertalingen zijn niet up-to-date. Klik op 'Live herladen' om deze te updaten."
@@ -23,6 +24,8 @@ settings:
     succesful_edited: "Vertaling met succes bewerkt"
 kuma_translator:
   form:
+    upload_file_choose: Please choose a file to upload
+    force_checkbox: Force overwriting translations
     text_with_locale:
       locale:
         label: Lokaal
@@ -41,19 +44,17 @@ kuma_translator:
       force_import:
         title: Bent u zeker dat u de import wilt forceren?
         body: Alle bestaande vertalingen worden overschreven.
-        confirm_button: Import
+        confirm_button: Importeer
         cancel_button: Annuleer
   adminlist:
     header:
       domain: Domein
-      keyword: Keyword
+      keyword: Trefwoord
     filter:
       domain: Domein
-      keyword: Keyword
+      keyword: Trefwoord
       text: Tekst
       locale: Lokaal
-
-# Toolbar
 toolbar:
     translations:
         title: Vertalingen

@@ -4,12 +4,12 @@ media:
     title: Aviary
     nothing: Niets te zien hier.
   media:
-    "no": Er staan nog geen bestanden in deze map.
+    no: Er staan nog geen bestanden in deze map.
     dnd:
       tip: "Tip:"
       tiptext: wist u dat u meerdere bestanden hier naartoe kunt slepen?
       alert:
-        title: Incoming!
+        title: Inkomend!
         text: Sleep uw bestanden hier naartoe om ze direct in deze map te uploaden.
     bulkupload:
       addto: Uploaden van bestanden naar "%folder%"
@@ -58,16 +58,18 @@ media:
       success:
         text: Map '%folder%' is leeggemaakt!
     bulk_move:
-      action: Verplaats media
-      action_short: Verplaats
+      action: Bulk media verplaatsen
+      action_short: Bulk verplaatsen
       modal:
-        title: Verplaats media
-        text: Selecteer naar welke folder je de media wenst te verplaatsen.
-        save: "Verplaats.."
+        title: Bulk media verplaatsen
+        text: Selecteer naar welke map je het media-item wilt verplaatsen.
+        save: "Verplaatsen.."
+        form:
+          name: Bovenliggende map
       success:
-        text: Media is met succes verplaatst!
+        text: Het media-item is succesvol verplaatst!
     sub:
-      "no": Nog geen submappen.
+      no: Nog geen submappen.
     delete:
       action: Verwijder deze map
       action_short: Verwijder
@@ -129,8 +131,8 @@ media:
       filter:
         name: Naam
         type: Type
-        updated_at: Date
-        filesize: Filesize (in bytes)
+        updated_at: Datum
+        filesize: Bestandsformaat (in bytes)
   form:
     remote:
       name:
@@ -140,7 +142,7 @@ media:
       type:
         label: Type
       copyright:
-        label: Copyright
+        label: Auteursrecht
       description:
         label: Omschrijving
     bulk_upload:
@@ -152,7 +154,7 @@ media:
       file:
         label: Bestand
       copyright:
-        label: Copyright
+        label: Auteursrecht
       description:
         label: Omschrijving
       originalFilename:
@@ -167,5 +169,5 @@ media:
       type:
         label: Type
   flash:
-    created: Media %medianame% has been created!
-    not_created: Media not created! %mediaerrors%
+    created: Media-item %medianame% is aangemaakt!
+    not_created: Media-item is niet aangemaakt! %mediaerrors%
