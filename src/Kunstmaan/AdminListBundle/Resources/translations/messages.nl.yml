@@ -13,8 +13,8 @@ kuma_admin_list:
     move_up: Verplaats omhoog
     move_down: Verplaats omlaag
 filter:
-  "true": true
-  "false": false
+  "true": "true"
+  "false": "false"
   before: voor
   after: na
   in: bevat
