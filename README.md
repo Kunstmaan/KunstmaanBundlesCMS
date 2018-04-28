@@ -1,4 +1,4 @@
-Kunstmaan Bundles CMS
+Kunstmaan Bundles CMS (monitored by ProfessorKuma)
 =====================
 
 The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with
