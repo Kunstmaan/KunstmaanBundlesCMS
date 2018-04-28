@@ -41,6 +41,7 @@ pages:
         - Using the cache bundle: cookbook/using-the-cache-bundle.md
         - Using anacrontab: cookbook/using-anacrontab.md
     - "Bundles":
+        - Config reference: bundles/config-reference.md
         - Admin bundle:
             - Customizing the top menu: bundles/admin-bundle/customizing-the-top-menu.md
             - Form collection additions: bundles/admin-bundle/form-collection-additions.md
