@@ -17,10 +17,21 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         $filesystem->remove($path);
 
         $bundle = $this->getBundle($path);
-        $kernel = new \AppKernel('phpunit', true);
-        $kernel->boot();
+        $container = $this->createMock('Symfony\Component\DependencyInjection\Container');
+        $container
+            ->expects($this->any())
+            ->method('getParameter')
+            ->with('multilanguage')
+            ->will($this->returnValue(true))
+        ;
+        $container
+            ->expects($this->any())
+            ->method('hasParameter')
+            ->with('multilanguage')
+            ->will($this->returnValue(true))
+        ;
 
-        $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $kernel->getContainer());
+        $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container);
         $generator->generate($bundle, '', __DIR__ . '/../data', false);
 
         unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error.html.twig');
