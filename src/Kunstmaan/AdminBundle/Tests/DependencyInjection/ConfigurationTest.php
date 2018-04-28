@@ -43,6 +43,8 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             'admin_exception_excludes' => ['404'],
             'enable_toolbar_helper' => false,
             'provider_keys' => [],
+            'toolbar_firewall_names' => [],
+            'admin_firewall_name' => 'main',
             'password_restrictions' => [
                 'min_digits' => 2,
                 'min_uppercase' => 2,
