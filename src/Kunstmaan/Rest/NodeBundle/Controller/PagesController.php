@@ -184,7 +184,7 @@ class PagesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *         @SWG\Schema(ref="#/definitions/GetApiPage")
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -252,7 +252,7 @@ class PagesController extends AbstractApiController
      *     @SWG\Response(
      *         response=204,
      *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/ApiPage")
+     *         @SWG\Schema(ref="#/definitions/PutApiPage")
      *     ),
      *     @SWG\Response(
      *         response=403,

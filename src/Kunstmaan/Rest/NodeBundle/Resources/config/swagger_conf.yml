@@ -1,6 +1,7 @@
 nelmio_api_doc:
   documentation:
     definitions:
+
       Node:
         title: "Node"
         type: "object"
@@ -14,52 +15,71 @@ nelmio_api_doc:
           internal_name:
             type: "string"
 
-      PostNode:
-        title: "Node"
+      NodeTranslation:
+        properties:
+          title:
+            type: "string"
+          lang:
+            type: "string"
+          online:
+            type: "boolean"
+
+      ApiPage:
+        title: "Page"
         type: "object"
         properties:
-          hidden_from_nav:
-            type: "boolean"
-          ref_entity_name:
-            type: "string"
-          internal_name:
-            type: "string"
-          parent:
+          page:
             type: "object"
             allOf:
-              - $ref: '#/definitions/Node'
+              - $ref: '#/definitions/ApiEntity'
+          pageTemplate:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/ApiPageTemplate'
+          node:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/PostNode'
+          nodeTranslation:
+            type: "object"
+            allOf:
+              - $ref: '#/definitions/PostNodeTranslation'
+
+      GetNode:
+        allOf:
+          - $ref: '#/definitions/Node'
+          - properties:
+              parent:
+                type: "object"
+                allOf:
+                  - $ref: '#/definitions/Node'
+      PostNode:
+        allOf:
+          - $ref: '#/definitions/Node'
+          - properties:
+              parent:
+                type: "object"
+                allOf:
+                  - $ref: '#/definitions/Node'
 
       NodeTranslation:
-        title: "NodeTranslation"
-        type: "object"
-        properties:
-          id:
-            type: "integer"
-          title:
-            type: "string"
-          lang:
-            type: "string"
-          online:
-            type: "boolean"
-          weight:
-            type: "integer"
-          created:
-            type: "string"
-            format: "date-time"
-          updated:
-            type: "string"
-            format: "date-time"
+        allOf:
+          - $ref: '#/definitions/NodeTranslation'
+          - properties:
+              id:
+                type: "integer"
+              weight:
+                type: "integer"
+              created:
+                type: "string"
+                format: "date-time"
+              updated:
+                type: "string"
+                format: "date-time"
 
       PostNodeTranslation:
-        title: "NodeTranslation"
-        type: "object"
-        properties:
-          title:
-            type: "string"
-          lang:
-            type: "string"
-          online:
-            type: "boolean"
+         allOf:
+          - $ref: '#/definitions/NodeTranslation'
 
       NodeVersion:
         title: "nodeVersion"
@@ -74,12 +94,12 @@ nelmio_api_doc:
           ref_entity_name:
             type: "string"
 
-      listNode:
-        title: "listNode"
+      NodeList:
+        title: "NodeList"
         type: "array"
         items:
           allOf:
-            - $ref: '#/definitions/Node'
+            - $ref: '#/definitions/GetNode'
 
       ApiEntity:
         title: "ApiEntity"
@@ -124,48 +144,19 @@ nelmio_api_doc:
               allOf:
                 - $ref: '#/definitions/ApiContext'
 
-      ApiPage:
-        title: "ApiPage"
-        type: "object"
-        properties:
-          page:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/ApiEntity'
-          pageTemplate:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/ApiPageTemplate'
-          node:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/Node'
-          nodeTranslation:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/NodeTranslation'
-          nodeVersion:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/NodeVersion'
+      GetApiPage:
+        allOf:
+          - $ref: '#/definitions/ApiPage'
+          - properties:
+            nodeVersion:
+              type: "object"
+              allOf:
+                - $ref: '#/definitions/NodeVersion'
 
       PostApiPage:
-        title: "PostApiPage"
-        type: "object"
-        properties:
-          page:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/ApiEntity'
-          pageTemplate:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/ApiPageTemplate'
-          node:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/PostNode'
-          nodeTranslation:
-            type: "object"
-            allOf:
-              - $ref: '#/definitions/PostNodeTranslation'
+        allOf:
+          - $ref: '#/definitions/ApiPage'
+
+      PutApiPage:
+        allOf:
+          - $ref: '#/definitions/ApiPage'
