@@ -12,13 +12,13 @@
                     <div class="blog-filter__top__section blog-filter__top__section--filters">
                         <strong>{{ 'article_overview_page.filter'|trans }}</strong>
                     </div>
-     <% if uses_tag %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_filter-tag.html.twig' with {'tags': tagContext.tags} %}<% endif %>
-<% if uses_category %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_filter-category.html.twig' with {'categories': categoryContext.categories} %}<% endif %>
+                    <% if uses_tag %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_filter-tag.html.twig' with {'tags': tagContext.tags} %}<% endif %>
+                    <% if uses_category %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_filter-category.html.twig' with {'categories': categoryContext.categories} %}<% endif %>
                 </div>
 
                 <% if uses_tag or uses_category %><div class="blog-filter__filters"><% endif %>
-                    <% if uses_tag %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_list-tag.html.twig' with {'tagContext': tagContext} %}<% endif %>
-                    <% if uses_category %>{% include '<%= bundle.name %>:Pages:BlogOverviewPage/_list-category.html.twig' with {'categoryContext': categoryContext} %}<% endif %>
+                    <% if uses_tag %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_list-tag.html.twig' with {'tagContext': tagContext} %}<% endif %>
+                    <% if uses_category %>{% include '<%= bundle.name %>:Pages:<%= entity_class %>OverviewPage/_list-category.html.twig' with {'categoryContext': categoryContext} %}<% endif %>
                 <% if uses_tag or uses_category %></div><% endif %>
             </div>
         </div>
@@ -43,7 +43,7 @@
                                 <% endif %>
                             </time>
                             <h3 class="blog-item__head__title">
-                                <a href="{{ articlenode.url }}">
+                                <a href="{{ path('_slug', {'url': articlenode.url}) }}">
                                     {{ article.title }}
                                 </a>
                             </h3>
@@ -52,7 +52,7 @@
                         {{ article.summary }}
 
                         <p class="text--right blog-item__read-more">
-                            <a href="{{ articlenode.url }}" class="blog-item__read-more__link">
+                            <a href="{{ path('_slug', {'url': articlenode.url}) }}" class="blog-item__read-more__link">
                                 {{ 'article.readmore'|trans }}
                             </a>
                         </p>

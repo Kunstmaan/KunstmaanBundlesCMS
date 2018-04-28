@@ -68,6 +68,7 @@ class GenerateArticleCommand extends KunstmaanGenerateCommand
                     new InputOption('entity', '', InputOption::VALUE_REQUIRED, 'The article class name ("News", "Press", ..."'),
                     new InputOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities'),
                     new InputOption('namespacehomepage', '', InputOption::VALUE_OPTIONAL, 'The namespace of the home page entity'),
+                    new InputOption('articleoverviewpageparent', '', InputOption::VALUE_OPTIONAL, 'Shortnames of the pages that can have the article overview page as a child (comma separated)'),
                     new InputOption('with-author', null, InputOption::VALUE_NONE, 'If set, you can use authors'),
                     new InputOption('with-category', null, InputOption::VALUE_NONE, 'If set, you can use categories'),
                     new InputOption('with-tag', null, InputOption::VALUE_NONE, 'If set, the you can use tags'),
@@ -168,9 +169,22 @@ EOT
         $pagesSelect = array_map(function ($item) { return $item['name']; }, $parentPages);
         if (count($pagesSelect) > 0) {
             $this->assistant->writeLine('');
-            $parentPageIds = $this->assistant->askSelect('Which existing page(s) can have the new overview page as sub-page (multiple possible, separated by comma)', $pagesSelect, null, true);
-            foreach ($parentPageIds as $id) {
-                $this->parentPages[] = $parentPages[$id]['path'];
+            $parentPageNames = $this->assistant->getOptionOrDefault('articleoverviewpageparent', null);
+            if (null !== $parentPageNames) {
+                $parentPageNames = explode(',', $parentPageNames);
+                foreach ($parentPageNames as $parentPageName) {
+                    $id = array_search($parentPageName, $pagesSelect);
+                    if (false !== $id) {
+                        $this->parentPages[] = $parentPages[$id]['path'];
+                    }
+                }
+            }
+
+            if (empty($this->parentPages)) {
+                $parentPageIds = $this->assistant->askSelect('Which existing page(s) can have the new overview page as sub-page (multiple possible, separated by comma)', $pagesSelect, null, true);
+                foreach ($parentPageIds as $id) {
+                    $this->parentPages[] = $parentPages[$id]['path'];
+                }
             }
         }
 

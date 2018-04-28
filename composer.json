@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "symfony/symfony": "~3.0",
+        "symfony/symfony": "~3.4",
         "doctrine/orm": "^2.5",
         "doctrine/dbal": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
@@ -30,7 +30,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
-        "friendsofsymfony/user-bundle": "~2.0",
+        "friendsofsymfony/user-bundle": "2.0.*",
         "knplabs/knp-menu-bundle": "~2.0",
         "guzzlehttp/guzzle": "~6.1",
         "white-october/pagerfanta-bundle": "~1.0",
@@ -49,7 +49,8 @@
         "egulias/email-validator": "~1.2",
         "box/spout": "^2.5",
         "ruflin/elastica": "^5.1",
-        "behat/transliterator": "~1.2"
+        "behat/transliterator": "~1.2",
+        "defuse/php-encryption": "v2.1.0"
     },
     "require-dev": {
         "behat/behat": "3.1.0rc1",
@@ -88,6 +89,9 @@
         "kunstmaan/voting-bundle": "self.version",
         "kunstmaan/languagechooser-bundle": "self.version",
         "kunstmaan/tagging-bundle": "self.version"
+    },
+    "conflict": {
+        "friendsofsymfony/user-bundle": "<2.0.0, >=2.1.0"
     },
     "autoload": {
         "psr-4": {"Kunstmaan\\": "src/Kunstmaan/"}

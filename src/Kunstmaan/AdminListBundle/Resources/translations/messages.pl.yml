@@ -13,8 +13,8 @@ kuma_admin_list:
     move_up: Przesuń w górę
     move_down: Przesuń w dół
 filter:
-  "true": true
-  "false": false
+  "true": "true"
+  "false": "false"
   before: przed
   after: za
   in: zawiera

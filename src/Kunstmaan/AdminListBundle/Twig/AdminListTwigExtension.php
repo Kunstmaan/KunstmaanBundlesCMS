@@ -4,14 +4,14 @@ namespace Kunstmaan\AdminListBundle\Twig;
 
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\AdminListBundle\Service\ExportService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\CompiledRoute;
-use Symfony\Component\Routing\Router;
+use Twig_Environment;
+use Twig_Extension;
+use Twig_SimpleFunction;
 
 /**
  * AdminListTwigExtension
  */
-class AdminListTwigExtension extends \Twig_Extension
+class AdminListTwigExtension extends Twig_Extension
 {
     /**
      * Returns a list of functions to add to the existing list.
@@ -20,9 +20,52 @@ class AdminListTwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('adminlist_widget', array($this, 'renderWidget'), array('needs_environment' => true, 'is_safe' => array('html'))),
-            new \Twig_SimpleFunction('supported_export_extensions', array($this, 'getSupportedExtensions')),
+        return [
+            new Twig_SimpleFunction('adminlist_widget', [$this, 'renderWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new Twig_SimpleFunction('adminthumb_widget', [$this, 'renderThumbWidget'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new Twig_SimpleFunction('supported_export_extensions', [$this, 'getSupportedExtensions']),
+        ];
+    }
+
+    /**
+     * Renders the HTML for a given view
+     *
+     * Example usage in Twig:
+     *
+     *     {{ form_widget(view) }}
+     *
+     * You can pass options during the call:
+     *
+     *     {{ form_widget(view, {'attr': {'class': 'foo'}}) }}
+     *
+     *     {{ form_widget(view, {'separator': '+++++'}) }}
+     *
+     * @param Twig_Environment $env
+     * @param AdminList        $view      The view to render
+     * @param string           $basepath  The base path
+     * @param array            $urlparams Additional url params
+     * @param array            $addparams Add params
+     *
+     * @return string The html markup
+     *
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function renderWidget(Twig_Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
+    {
+        $filterBuilder = $view->getFilterBuilder();
+
+        return $env->render(
+            'KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig',
+            [
+                'filter' => $filterBuilder,
+                'basepath' => $basepath,
+                'addparams' => $addparams,
+                'extraparams' => $urlparams,
+                'adminlist' => $view,
+            ]
         );
     }
 
@@ -39,29 +82,38 @@ class AdminListTwigExtension extends \Twig_Extension
      *
      *     {{ form_widget(view, {'separator': '+++++'}) }}
      *
-     * @param \Twig_Environment $env
-     * @param AdminList         $view      The view to render
-     * @param string            $basepath  The base path
-     * @param array             $urlparams Additional url params
-     * @param array             $addparams Add params
+     * @param Twig_Environment $env
+     * @param AdminList        $view      The view to render
+     * @param string           $basepath  The base path
+     * @param array            $urlparams Additional url params
+     * @param array            $addparams Add params
      *
      * @return string The html markup
+     *
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function renderWidget(\Twig_Environment $env, AdminList $view, $basepath, array $urlparams = array(), array $addparams = array())
+    public function renderThumbWidget(Twig_Environment $env, AdminList $view, $basepath, array $urlparams = [], array $addparams = [])
     {
-        $template = $env->loadTemplate("KunstmaanAdminListBundle:AdminListTwigExtension:widget.html.twig");
-
         $filterBuilder = $view->getFilterBuilder();
 
-        return $template->render(array(
-            'filter' => $filterBuilder,
-            'basepath' => $basepath,
-            'addparams' => $addparams,
-            'extraparams' => $urlparams,
-            'adminlist' => $view
-        ));
+        return $env->render(
+            'KunstmaanAdminListBundle:AdminListTwigExtension:thumbwidget.html.twig',
+            [
+                'filter' => $filterBuilder,
+                'basepath' => $basepath,
+                'addparams' => $addparams,
+                'extraparams' => $urlparams,
+                'adminlist' => $view,
+            ]
+        );
     }
 
+    /**
+     * @return array
+     */
     public function getSupportedExtensions()
     {
         return ExportService::getSupportedExtensions();

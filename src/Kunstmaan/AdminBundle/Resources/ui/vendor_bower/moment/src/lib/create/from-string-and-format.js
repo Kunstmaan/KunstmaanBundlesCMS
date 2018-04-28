@@ -1,4 +1,4 @@
-import { configFromISO } from './from-string';
+import { configFromISO, configFromRFC2822 } from './from-string';
 import { configFromArray } from './from-array';
 import { getParseRegexForToken }   from '../parse/regex';
 import { addTimeToArrayFromToken } from '../parse/token';
@@ -6,9 +6,13 @@ import { expandFormat, formatTokenFunctions, formattingTokens } from '../format/
 import checkOverflow from './check-overflow';
 import { HOUR } from '../units/constants';
 import { hooks } from '../utils/hooks';
+import getParsingFlags from './parsing-flags';
 
 // constant that refers to the ISO standard
 hooks.ISO_8601 = function () {};
+
+// constant that refers to the RFC 2822 form
+hooks.RFC_2822 = function () {};
 
 // date from string and format string
 export function configFromStringAndFormat(config) {
@@ -17,9 +21,12 @@ export function configFromStringAndFormat(config) {
         configFromISO(config);
         return;
     }
-
+    if (config._f === hooks.RFC_2822) {
+        configFromRFC2822(config);
+        return;
+    }
     config._a = [];
-    config._pf.empty = true;
+    getParsingFlags(config).empty = true;
 
     // This array is used to make a Date, either with `new Date` or `Date.UTC`
     var string = '' + config._i,
@@ -32,10 +39,12 @@ export function configFromStringAndFormat(config) {
     for (i = 0; i < tokens.length; i++) {
         token = tokens[i];
         parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
+        // console.log('token', token, 'parsedInput', parsedInput,
+        //         'regex', getParseRegexForToken(token, config));
         if (parsedInput) {
             skipped = string.substr(0, string.indexOf(parsedInput));
             if (skipped.length > 0) {
-                config._pf.unusedInput.push(skipped);
+                getParsingFlags(config).unusedInput.push(skipped);
             }
             string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
             totalParsedInputLength += parsedInput.length;
@@ -43,28 +52,33 @@ export function configFromStringAndFormat(config) {
         // don't parse if it's not a known token
         if (formatTokenFunctions[token]) {
             if (parsedInput) {
-                config._pf.empty = false;
+                getParsingFlags(config).empty = false;
             }
             else {
-                config._pf.unusedTokens.push(token);
+                getParsingFlags(config).unusedTokens.push(token);
             }
             addTimeToArrayFromToken(token, parsedInput, config);
         }
         else if (config._strict && !parsedInput) {
-            config._pf.unusedTokens.push(token);
+            getParsingFlags(config).unusedTokens.push(token);
         }
     }
 
     // add remaining unparsed input length to the string
-    config._pf.charsLeftOver = stringLength - totalParsedInputLength;
+    getParsingFlags(config).charsLeftOver = stringLength - totalParsedInputLength;
     if (string.length > 0) {
-        config._pf.unusedInput.push(string);
+        getParsingFlags(config).unusedInput.push(string);
     }
 
     // clear _12h flag if hour is <= 12
-    if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
-        config._pf.bigHour = undefined;
+    if (config._a[HOUR] <= 12 &&
+        getParsingFlags(config).bigHour === true &&
+        config._a[HOUR] > 0) {
+        getParsingFlags(config).bigHour = undefined;
     }
+
+    getParsingFlags(config).parsedDateParts = config._a.slice(0);
+    getParsingFlags(config).meridiem = config._meridiem;
     // handle meridiem
     config._a[HOUR] = meridiemFixWrap(config._locale, config._a[HOUR], config._meridiem);
 

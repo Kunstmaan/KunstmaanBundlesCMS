@@ -1,0 +1,79 @@
+site_name: KunstmaanBundlesCMS
+site_description: The Kunstmaan Bundles CMS is an advanced yet user-friendly content management system, based on the full stack Symfony framework combined with a whole host of community bundles. It provides a full featured, multi-language CMS system with an innovative page and form assembling process, versioning, workflow, translation and media managers and much much more.
+site_author: Kunstmaan
+site_url: https://bundles.kunstmaan.be/
+copyright: MIT
+repo_url: https://github.com/Kunstmaan/KunstmaanBundlesCMS
+docs_dir: 'docs'
+theme: readthedocs
+pages:
+    - index.md
+    - "Introduction":
+        - Intro: introduction/index.md
+    - "Getting started":
+        - Intro: getting-started/index.md
+    - "Installation":
+        - Intro: installation/index.md
+        - System requirements: installation/system-requirements.md
+        - Development environment: installation/development-environment.md
+    - "Content management":
+        - Intro: content-management/index.md
+        - Creating a pagePart: content-management/creating-a-page-part.md
+        - Creating a page type: content-management/creating-a-pagetype.md
+        - Adding a newssection or blog: content-management/adding-a-newssection-or-blog.md
+        - Adding a search engine: content-management/adding-a-search-engine.md
+        - Adding admin menu items: content-management/adding-admin-menu-items.md
+    - "Cookbook":
+        - Intro: cookbook/index.md
+        - Going single language: cookbook/going-single-language.md
+        - Manage translations: cookbook/manage-translations.md
+        - Google analytics dashboard: cookbook/google-analytics-dashboard.md
+        - Administer robots txt: cookbook/administer-robots-txt.md
+        - Building custom filter on multiple columns: cookbook/building-custom-filter-on-multiple-columns.md
+        - Using the leadgeneration bundle: cookbook/using-the-leadgenerationbundle.md
+        - Using the menu bundle: cookbook/using-the-menubundle.md
+        - Using the multidomain bundle: cookbook/using-the-multi-domain-bundle.md
+        - Defining custom ckeditor configuration: cookbook/defining-custom-ckeditor-configuration.md
+        - Structure pages: cookbook/structure-pages.md
+        - Adding a custom controller: cookbook/adding-a-custom-controller.md
+        - Using a custom filesystem for the media bundle: cookbook/using-a-custom-filesystem-for-the-media-bundle.md
+        - Enabling a custom filesystem for the media bundle: cookbook/enabling-google-auth-login.md
+        - Using the cache bundle: cookbook/using-the-cache-bundle.md
+        - Using anacrontab: cookbook/using-anacrontab.md
+    - "Bundles":
+        - Admin bundle:
+            - Customizing the top menu: bundles/admin-bundle/customizing-the-top-menu.md
+            - Form collection additions: bundles/admin-bundle/form-collection-additions.md
+            - Permissions: bundles/admin-bundle/permissions.md
+            - Adding admin menu items: bundles/admin-bundle/adding-admin-menu-items.md
+        - Adminlist bundle:
+            - Intro: bundles/adminlist-bundle/intro.md
+            - Creating an adminlist: bundles/adminlist-bundle/creating-an-adminlist.md
+            - Configuring adminlists: bundles/adminlist-bundle/configuring-adminlists.md
+        - Article bundle: bundles/article-bundle.md
+        - Config bundle: bundles/config-bundle.md
+        - Form bundle: bundles/form-bundle.md
+        - Generator bundle: bundles/generator-bundle.md
+        - Node bundle:
+            - Intro: bundles/node-bundle/intro.md
+            - Chain router: bundles/node-bundle/chainrouter.md
+            - Configurable action menu: bundles/node-bundle/configurable-action-menu.md
+            - Locking: bundles/node-bundle/locking.md
+            - Pages configuration: bundles/node-bundle/pages-configuration.md
+            - Programmatically create nodes: bundles/node-bundle/programmatically-create-nodes.md
+        - Search bundle: bundles/search-bundle.md
+        - Sitemap bundle: bundles/sitemap-bundle.md
+        - Tagging bundle: bundles/tagging-bundle.md
+        - Utilities bundle: bundles/utilities-bundle.md
+        - Voting bundle: bundles/voting-bundle.md
+      - Contributing:
+          - Intro: contributing/index.md
+          - Reporting issues: contributing/reporting-issues.md
+          - Pull requests: contributing/pull-requests.md
+          - Coding standards: contributing/coding-standards.md
+          - Preparing a new release: contributing/preparing-a-new-release.md
+          - Roadmap: contributing/roadmap.md
+          - Community bundles: contributing/community-bundles.md
+          - Release process: contributing/release-process.md
+          - Contributing translations: contributing/contributing-translations.md
+          - Groundcontrol: contributing/groundcontrol.md
