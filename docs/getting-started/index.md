@@ -20,7 +20,7 @@ Documentation specific to the KunstmaanBundlesCMS can be found on:
 
 * [Installation Guide](../installation/index.md)
     * [System requirements](../installation/system-requirements.md)
-    * [Development environment](../installation/development-environment.md)
+    * [Demo environment](../installation/demo-environment.md)
 * [Content Management Guide](../content-management/index.md)
     * [Creating a pagepart](../content-management/creating-a-page-part.md)
 	* [Creating a pagetype](../content-management/creating-a-pagetype.md)

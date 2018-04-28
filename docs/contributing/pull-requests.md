@@ -4,9 +4,22 @@ Pull request are the best way to provide a bug fix or to propose enhancements to
 
 ## Step 1: Setup your environment
 
-Before working on the KunstmaanBundlesCMS, setup a Symfony friendly environment like described in the [system requirements documentation](../installation/system-requirements.md) or [work with the PuPHPet Vagrant box](../installation/development-environment.md).
+Before working on the KunstmaanBundlesCMS, setup a Symfony friendly environment like described in the [system requirements documentation](../installation/system-requirements.md).
 
 Make sure your git setup is complete. If you are new to git, we highly recommended you read the excellent and free [ProGit book](http://git-scm.com/book).
+
+The easiest way to start from scratch is by using our demo docker-compose file.
+You can find it in our [standardedition](https://github.com/Kunstmaan/KunstmaanBundlesStandardEdition). Assuming you have already set up docker on your computer, booting up the demo is a matter of 2 simple commands.
+
+```bash
+#In the KunstmaanBundlesStandardEdition
+cd docker_demo
+docker-compose up
+```
+
+A demo website will be running at localhost:2468 now. Also there will be a maildev available at localhost:1080.
+
+If you decide to use this approach you should do all the following steps from inside your container.
 
 ## Step 2: Get the source
 
