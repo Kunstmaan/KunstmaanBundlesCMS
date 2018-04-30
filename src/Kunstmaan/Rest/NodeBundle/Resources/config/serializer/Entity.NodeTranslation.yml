@@ -18,3 +18,7 @@ Kunstmaan\NodeBundle\Entity\NodeTranslation:
       expose: true
     updated:
       expose: true
+    url:
+      expose: true
+    slug:
+      expose: true

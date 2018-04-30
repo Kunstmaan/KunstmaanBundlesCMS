@@ -85,7 +85,7 @@ class NodesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/listNode")
+     *         @SWG\Schema(ref="#/definitions/NodeList")
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -249,7 +249,7 @@ class NodesController extends AbstractApiController
      *     @SWG\Response(
      *         response=200,
      *         description="Returned when successful",
-     *         @SWG\Schema(ref="#/definitions/listNode")
+     *         @SWG\Schema(ref="#/definitions/NodeList")
      *     ),
      *     @SWG\Response(
      *         response=403,
