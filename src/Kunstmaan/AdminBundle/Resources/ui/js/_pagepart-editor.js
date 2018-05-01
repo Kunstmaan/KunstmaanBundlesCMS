@@ -369,10 +369,6 @@ kunstmaanbundles.pagepartEditor = function (window) {
                 }
             }
         });
-
-        for (var i = 0; i < uniqueModules.length; i++) {
-            kunstmaanbundles[uniqueModules[i]].reInit();
-        }
     };
     reOrder = function($container) {
         var i = 0;
