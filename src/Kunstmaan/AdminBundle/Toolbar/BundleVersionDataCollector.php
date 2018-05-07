@@ -76,4 +76,9 @@ class BundleVersionDataCollector extends AbstractDataCollector
     {
         return $this->versionChecker->isEnabled();
     }
+
+    public function reset()
+    {
+        $this->data = [];
+    }
 }
