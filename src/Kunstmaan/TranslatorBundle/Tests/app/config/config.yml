@@ -15,6 +15,7 @@ framework:
     default_locale:  nl
     session:         ~
     fragments:       ~
+    translator: { fallback: "en" }
 
 services:
     translation.loader.yml:
