@@ -36,6 +36,7 @@ NodeBundle
  * `CronUpdateNodeCommand` and `InitAclCommand` have been marked as final.
  * `Possibility to change the icon of your page.`: The possibility already exists to change the icon in the sidebar tree of your page. This was already available by yml configuration. I've added a new interface, TreeIconInterface that can be implemented and that will return the icon that should be used.
  * The unused `WidgetsController::selectNodesLazySearch` action is deprecated and will be removed in 6.0. 
+ * Injecting the container in the `SlugRouter` is deprecated and will be removed in 6.0. Inject the required services instead.
 
 TranslatorBundle
 ----------------

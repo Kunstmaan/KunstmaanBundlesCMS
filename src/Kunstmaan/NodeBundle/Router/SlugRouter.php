@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Router;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
@@ -27,6 +28,18 @@ class SlugRouter implements RouterInterface
     public static $SLUG = "_slug";
     public static $SLUG_PREVIEW = "_slug_preview";
 
+    /** @var DomainConfigurationInterface */
+    protected $domainConfiguration;
+
+    /** @var RequestStack */
+    private $requestStack;
+
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var string */
+    protected $adminKey;
+
     /** @var RequestContext */
     protected $context;
 
@@ -36,29 +49,45 @@ class SlugRouter implements RouterInterface
     /** @var UrlGenerator */
     protected $urlGenerator;
 
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     * @deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.
+     */
     protected $container;
 
     /** @var string */
     protected $slugPattern;
-
-    /** @var DomainConfigurationInterface */
-    protected $domainConfiguration;
-
-    /** @var string */
-    protected $adminKey;
 
     /**
      * The constructor for this service
      *
      * @param ContainerInterface $container
      */
-    public function __construct($container)
+    public function __construct(
+        /* DomainConfigurationInterface */ $domainConfiguration,
+        RequestStack $requestStack = null,
+        EntityManagerInterface $em = null,
+        $adminKey = null
+    )
     {
-        $this->container = $container;
         $this->slugPattern = "[a-zA-Z0-9\-_\/]*";
-        $this->domainConfiguration = $container->get('kunstmaan_admin.domain_configuration');
-        $this->adminKey            = $container->getParameter('kunstmaan_admin.admin_prefix');
+
+        if ($domainConfiguration instanceof ContainerInterface) {
+            @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
+
+            $this->container = $domainConfiguration;
+            $this->domainConfiguration = $this->container->get('kunstmaan_admin.domain_configuration');
+            $this->adminKey = $this->container->getParameter('kunstmaan_admin.admin_prefix');
+            $this->requestStack = $this->container->get('request_stack');
+            $this->em = $this->container->get('doctrine.orm.entity_manager');
+
+            return;
+        }
+
+        $this->domainConfiguration = $domainConfiguration;
+        $this->adminKey = $adminKey;
+        $this->requestStack = $requestStack;
+        $this->em = $em;
     }
 
     /**
@@ -166,13 +195,11 @@ class SlugRouter implements RouterInterface
      */
     protected function getMasterRequest()
     {
-        /** @var RequestStack $requestStack */
-        $requestStack = $this->container->get('request_stack');
-        if (is_null($requestStack)) {
+        if (is_null($this->requestStack)) {
             return null;
         }
 
-        return $requestStack->getMasterRequest();
+        return $this->requestStack->getMasterRequest();
     }
 
     /**
@@ -343,10 +370,8 @@ class SlugRouter implements RouterInterface
      */
     protected function getNodeTranslationRepository()
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
         /* @var NodeTranslationRepository $nodeTranslationRepo */
-        $nodeTranslationRepo = $em->getRepository(
+        $nodeTranslationRepo = $this->em->getRepository(
             'KunstmaanNodeBundle:NodeTranslation'
         );
 

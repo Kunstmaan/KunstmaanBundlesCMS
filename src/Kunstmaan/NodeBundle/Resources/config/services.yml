@@ -96,7 +96,11 @@ services:
 
     kunstmaan_node.slugrouter:
         class: '%kunstmaan_node.slugrouter.class%'
-        arguments: ['@service_container']
+        arguments:
+            - '@kunstmaan_admin.domain_configuration'
+            - '@request_stack'
+            - '@doctrine.orm.entity_manager'
+            - '%kunstmaan_admin.admin_prefix%'
         tags:
             - { name: router, priority: 0 }
 
