@@ -24,47 +24,36 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->object = new ChoiceFormSubmissionField;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(ChoiceFormSubmissionType::class, $this->object->getDefaultAdminType());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::__toString
-     */
     public function testToString()
     {
         $stringValue = $this->object->__toString();
         $this->assertNotNull($stringValue);
         $this->assertTrue(is_string($stringValue));
+        $object = $this->object;
+        $object->setChoices(['delboy1978uk' => 123456789]);
+        $object->setValue('delboy1978uk');
+        $string = $object->__toString();
+        $this->assertEquals('123456789', $string);
+        $object->setValue(['delboy1978uk', 'numkil', 'sandergo90', 'dezinc']);
+        $string = $object->__toString();
+        $this->assertEquals('123456789, numkil, sandergo90, dezinc', $string);
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::isNull
-     */
     public function testIsNull()
     {
         $object = $this->object;
         $this->assertTrue($object->isNull());
         $object->setValue(array('test' => 'test'));
         $this->assertFalse($object->isNull());
+        $object->setValue('blah');
+        $this->assertFalse($object->isNull());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getValue
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setValue
-     */
     public function testSetGetValue()
     {
         $object = $this->object;
@@ -73,10 +62,6 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($value, $object->getValue());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setExpanded
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getExpanded
-     */
     public function testSetGetExpanded()
     {
         $object = $this->object;
@@ -85,10 +70,6 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($object->getExpanded());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setMultiple
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getMultiple
-     */
     public function testSetGetMultiple()
     {
         $object = $this->object;
@@ -97,10 +78,6 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($object->getMultiple());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setChoices
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getChoices
-     */
     public function testSetGetChoices()
     {
         $object = $this->object;
@@ -109,4 +86,12 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($choices, $object->getChoices());
     }
 
+    public function testSetGetRequired()
+    {
+        $object = $this->object;
+        $object->setRequired(true);
+        $this->assertTrue($object->getRequired());
+        $object->setRequired(false);
+        $this->assertFalse($object->getRequired());
+    }
 }

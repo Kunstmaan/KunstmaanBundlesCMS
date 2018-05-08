@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Niczego tutaj nie ma.
   media:
-    "no": W tym folderze nie ma na razie żadnych plików.
+    no: W tym folderze nie ma na razie żadnych plików.
     dnd:
       tip: "Rada:"
       tiptext: Czy wiesz, że tutaj możesz wgrać wiele plików jednocześnie?
@@ -57,8 +57,19 @@ media:
         save: Czyść
       success:
         text: Folder '%folder%' został wyczyszczony!
+    bulk_move:
+      action: Bulk move media
+      action_short: Bulk move
+      modal:
+        title: Bulk move media
+        text: Select to which folder you want to move the selected media.
+        save: "Move.."
+        form:
+          name: Parent folder
+      success:
+        text: Media has been moved successfully!
     sub:
-      "no": Brak podfolderów.
+      no: Brak podfolderów.
     delete:
       action: Usuń ten folder
       action_short: Usuń

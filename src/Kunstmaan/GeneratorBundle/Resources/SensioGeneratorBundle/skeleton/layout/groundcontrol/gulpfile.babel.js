@@ -4,6 +4,7 @@ import gulp from 'gulp';
 import chug from 'gulp-chug';
 
 import {
+    images,
     eslint,
     stylelint,
     clean,
@@ -39,6 +40,7 @@ const buildStyleguide = gulp.series(
 
 const buildLocal = gulp.series(
     clean,
+    images,
     copy,
     cssLocal,
     bundleLocal,
@@ -48,6 +50,7 @@ const buildLocal = gulp.series(
 
 const buildOptimized = gulp.series(
     clean,
+    images,
     copy,
     cssOptimized,
     bundleOptimized,

@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -28,17 +26,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new ChoicePagePart;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getDefaultView
-     */
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
@@ -46,9 +34,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::adaptForm
-     */
+
     public function testAdaptForm()
     {
         $object = $this->object;
@@ -65,23 +51,19 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $fields = new ArrayObject();
 
         $this->assertTrue(count($fields) == 0);
+        $object->setErrorMessageRequired('invalid!');
         /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getDefaultAdminType
-     */
+
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(ChoicePagePartAdminType::class, $this->object->getDefaultAdminType());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setExpanded
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getExpanded
-     */
+
     public function testSetGetExpanded()
     {
         $object = $this->object;
@@ -91,10 +73,6 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setMultiple
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getMultiple
-     */
     public function testSetGetMultiple()
     {
         $object = $this->object;
@@ -103,10 +81,6 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($object->getMultiple());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setChoices
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getChoices
-     */
     public function testSetGetChoices()
     {
         $object = $this->object;
@@ -115,16 +89,17 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($choices, $object->getChoices());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setEmptyValue
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getEmptyValue
-     */
-    public function testSetGetEmptyValue()
+    public function testGettersAndSetters()
     {
         $object = $this->object;
         $value = 'test';
         $object->setEmptyValue($value);
+        $object->setRequired(true);
+        $object->setErrorMessageRequired('fix your code!');
+
         $this->assertEquals($value, $object->getEmptyValue());
+        $this->assertTrue($object->getRequired());
+        $this->assertEquals('fix your code!', $object->getErrorMessageRequired());
     }
 
 }

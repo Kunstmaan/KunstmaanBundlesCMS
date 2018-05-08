@@ -32,6 +32,7 @@ settings:
     events: Liczba zdarzeń
     resolved: Rozwiązany
     unresolved: Nierozwiązany
+    resolve_all: Resolve all
 tools:
   title: Narzędzia
   clear_frontend_cache: Wyczyść frontend cache
@@ -45,8 +46,8 @@ form:
   delete: Usuń
   deletesure: Jesteś pewien, że chcesz usunąć ten element?
   edit: Edytuj
-  add: Dodaj
-  'add.%subject%': 'Utwórz nowy %subject%'
+  add: Add new
+  'add.%subject%': 'Add new %subject%'
   save: Zapisz
   publish: Opublikuj
   unpublish: Cofnij publikację
@@ -121,7 +122,6 @@ kuma_admin:
 kuma_js:
   auto_collapse:
     more_button_label: Więcej
-
 toolbar:
   exception:
     title: Wyjątki

@@ -1,7 +1,7 @@
 ---
 kuma_menu:
   menus:
-    title: Menus
+    title: Menu's
   menu:
     adminlist:
       field:
@@ -16,7 +16,7 @@ kuma_menu:
         modules: Modules
         menu: Menu's
         menu_items: Menu items
-      title: Menu items for %name% and language %locale%
+      title: Menu items voor %name% en taal %locale%
       online: (Online)
       offline: (Offline)
       field:
@@ -26,11 +26,11 @@ kuma_menu:
         url: Url
         new_window: Nieuw scherm
   form:
-    parent: Parent menu item
-    parent_placeholder: Select the parent menu item...
+    parent: Bovenliggend menu-item
+    parent_placeholder: Selecteer het bovenliggende menu-item...
     type: Type
-    node_translation: Link page
-    node_translation_placeholder: Select the page to link to...
-    title: Title
+    node_translation: Pagina koppelen
+    node_translation_placeholder: Selecteer een pagina om naar de verwijzen...
+    title: Titel
     url: Url
-    new_window: New window
+    new_window: Nieuw venster

@@ -60,10 +60,11 @@ class TranslatorDataCollector extends AbstractDataCollector
         $translations = [];
 
         foreach ($this->translator->getCollectedMessages() as $message) {
-            if ($message['state'] !== DataCollectorTranslator::MESSAGE_EQUALS_FALLBACK) {
+            if ($message['state'] !== DataCollectorTranslator::MESSAGE_EQUALS_FALLBACK && !empty($message['id'])) {
                 $options['filter_value_1'] = $message['id'];
-                $translations[] = [
+                $translations[$message['id']] = [
                     'id' => $message['id'],
+                    'message' => $message['translation'],
                     'route' => $this->urlGenerator->generate('KunstmaanTranslatorBundle_settings_translations', $options)
                 ];
             }
