@@ -3,6 +3,6 @@ parameters:
 services:
     kunstmaan_articlebundle.twig.extension:
         class: 'Kunstmaan\ArticleBundle\Twig\ArticleTwigExtension'
-        arguments: ['@doctrine.orm.entity_manager', '@router', '@request_stack']
+        arguments: ['@doctrine.orm.entity_manager', '@router']
         tags:
             -  { name: twig.extension }

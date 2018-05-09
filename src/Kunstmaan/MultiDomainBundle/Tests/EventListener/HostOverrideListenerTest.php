@@ -3,10 +3,11 @@
 namespace Kunstmaan\MultiDomainBundle\Tests\EventListener;
 
 use Kunstmaan\MultiDomainBundle\EventListener\HostOverrideListener;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
+class HostOverrideListenerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var HostOverrideListener
@@ -40,7 +41,7 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHostOverrideMessageIsSetForAdmin()
     {
-        $flashBag = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
+        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
         $flashBag
             ->expects($this->once())
             ->method('add')
@@ -58,7 +59,7 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHostOverrideMessageIsNotSetForAdminRedirectResponse()
     {
-        $flashBag = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
+        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
         $flashBag
             ->expects($this->never())
             ->method('add');
@@ -75,7 +76,7 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHostOverrideMessageIsNotSetForSubRequest()
     {
-        $flashBag = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
+        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
         $flashBag
             ->expects($this->never())
             ->method('add');
@@ -92,7 +93,7 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHostOverrideMessageIsNotSetForXmlRequest()
     {
-        $flashBag = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
+        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
         $flashBag
             ->expects($this->never())
             ->method('add');
@@ -109,7 +110,7 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHostOverrideMessageIsNotSetForPreview()
     {
-        $flashBag = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
+        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
         $flashBag
             ->expects($this->never())
             ->method('add');
@@ -126,7 +127,7 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHostOverrideMessageIsNotSetForFrontend()
     {
-        $flashBag = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
+        $flashBag = $this->createMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
         $flashBag
             ->expects($this->never())
             ->method('add');
@@ -145,10 +146,10 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
         $session->method('getFlashBag')
             ->willReturn($flashBag);
 
-        $domainConfiguration = $this->getMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
-        $translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
         $translator->method('trans')
             ->willReturnArgument(0);
 
@@ -190,7 +191,7 @@ class HostOverrideListenerTest extends \PHPUnit_Framework_TestCase
 
     private function getResponse()
     {
-        $response = $this->getMock('Symfony\Component\HttpFoundation\Response');
+        $response = $this->createMock('Symfony\Component\HttpFoundation\Response');
 
         return $response;
     }

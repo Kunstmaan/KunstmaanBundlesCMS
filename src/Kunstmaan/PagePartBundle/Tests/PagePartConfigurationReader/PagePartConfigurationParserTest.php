@@ -3,8 +3,9 @@
 namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
 
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser;
+use PHPUnit_Framework_TestCase;
 
-class PagePartConfigurationParserTest extends \PHPUnit_Framework_TestCase
+class PagePartConfigurationParserTest extends PHPUnit_Framework_TestCase
 {
     public function testParserKnowsAboutPresets()
     {
@@ -68,5 +69,4 @@ class PagePartConfigurationParserTest extends \PHPUnit_Framework_TestCase
 
         $parser->parse('foo');
     }
-
 }

@@ -59,14 +59,12 @@ class AdminRouteHelper
     /**
      * Checks the current request if it's route is equal to SlugRouter::$SLUG_PREVIEW
      *
-     * @param string $url
-     *
      * @return boolean
      */
-    protected function matchesPreviewRoute($url)
+    protected function matchesPreviewRoute()
     {
         $routeName = $this->requestStack->getCurrentRequest()->get('_route');
 
-        return $routeName == SlugRouter::$SLUG_PREVIEW;
+        return $routeName === SlugRouter::$SLUG_PREVIEW;
     }
 }

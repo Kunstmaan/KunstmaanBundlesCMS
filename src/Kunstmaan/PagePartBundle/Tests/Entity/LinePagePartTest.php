@@ -3,11 +3,13 @@
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\LinePagePart;
+use PHPUnit_Framework_TestCase;
 
 /**
- * LinePagePartTest
+ * Class LinePagePartTest
+ * @package Tests\Kunstmaan\PagePartBundle\Entity
  */
-class LinePagePartTest extends \PHPUnit_Framework_TestCase
+class LinePagePartTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var LinePagePart
@@ -23,36 +25,18 @@ class LinePagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new LinePagePart();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinePagePart::__toString
-     */
     public function testToString()
     {
         $this->assertEquals('LinePagePart', $this->object->__toString());
     }
 
-    /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinePagePart::getDefaultView
-     */
     public function testGetDefaultView()
     {
         $this->assertEquals('KunstmaanPagePartBundle:LinePagePart:view.html.twig', $this->object->getDefaultView());
     }
 
-    /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinePagePart::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals('Kunstmaan\PagePartBundle\Form\LinePagePartAdminType', $this->object->getDefaultAdminType());
     }
-
 }

@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Rien à voir ici.
   media:
-    "no": Pas encore de fichier dans ce dossier.
+    no: Pas encore de fichier dans ce dossier.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -57,8 +57,19 @@ media:
         save: Empty
       success:
         text: Folder '%folder%' has been emptied!
+    bulk_move:
+      action: Bulk move media
+      action_short: Bulk move
+      modal:
+        title: Bulk move media
+        text: Select to which folder you want to move the selected media.
+        save: "Move.."
+        form:
+          name: Parent folder
+      success:
+        text: Media has been moved successfully!
     sub:
-      "no": Pas encore de sous-dossiers.
+      no: Pas encore de sous-dossiers.
     delete:
       action: Supprimer ce dossier
       action_short: Supprimer

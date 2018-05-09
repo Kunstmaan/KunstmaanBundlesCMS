@@ -15,6 +15,7 @@ settings:
         refresh_live: Refresh live
         import_translations_forced: Import forced
         import_translations: Import
+        import_file: Import from spreadsheet
         actions: Actions
         export_translations: Export to CSV
         not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
@@ -24,6 +25,8 @@ settings:
 
 kuma_translator:
     form:
+        upload_file_choose: Please choose a file to upload
+        force_checkbox: Force overwriting translations
         text_with_locale:
             locale:
                 label:  Locale

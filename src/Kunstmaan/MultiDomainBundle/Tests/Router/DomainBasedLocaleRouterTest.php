@@ -4,33 +4,15 @@ namespace Kunstmaan\MultiDomainBundle\Tests\Router;
 
 use Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
+class DomainBasedLocaleRouterTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::generate
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getRequestLocale
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::isMultiDomainHost
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getReverseLocaleMap
-     */
     public function testGenerate()
     {
         $request   = $this->getRequest();
@@ -43,12 +25,19 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/en/some-uri', $url);
     }
 
-    /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::generate
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getRequestLocale
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::isMultiDomainHost
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getReverseLocaleMap
-     */
+    public function testGenerateWithOtherSite()
+    {
+        $request   = $this->getRequest();
+        $request->setLocale('nl_BE');
+        $container = $this->getContainer($request);
+        $object    = new DomainBasedLocaleRouter($container);
+        $url       = $object->generate('_slug', array('url' => 'some-uri', 'otherSite' => 'https://cia.gov'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
+
+        $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_PATH);
+        $this->assertEquals('/nl/some-uri', $url);
+    }
+
     public function testGenerateWithLocaleBasedOnCurrentRequest()
     {
         $request   = $this->getRequest();
@@ -62,11 +51,6 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/nl/some-uri', $url);
     }
 
-    /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::match
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getNodeTranslation
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getLocaleMap
-     */
     public function testMatchWithNodeTranslation()
     {
         $request   = $this->getRequest();
@@ -79,45 +63,21 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($nodeTranslation, $result['_nodeTranslation']);
     }
 
-    /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::match
-     * @expectedException Symfony\Component\Routing\Exception\ResourceNotFoundException
-     */
     public function testMatchWithoutNodeTranslation()
     {
+        $this->expectException(ResourceNotFoundException::class);
         $request   = $this->getRequest();
         $container = $this->getContainer($request);
         $object    = new DomainBasedLocaleRouter($container);
         $object->match('/en/some-uri');
     }
 
-    private function getContainer($request, $nodeTranslation = null)
+    /**
+     * @throws \ReflectionException
+     */
+    public function testAddMultiLangSlugRoute()
     {
-        $container    = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $serviceMap = array(
-            array('request_stack', 1, $this->getRequestStack($request)),
-            array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration()),
-            array('doctrine.orm.entity_manager', 1, $this->getEntityManager($nodeTranslation)),
-        );
-
-        $container
-            ->method('get')
-            ->will($this->returnValueMap($serviceMap));
-
-        return $container;
-    }
-
-    private function getRequestStack($request)
-    {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
-        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
-
-        return $requestStack;
-    }
-
-    private function getDomainConfiguration()
-    {
-        $domainConfiguration = $this->getMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
         $domainConfiguration->method('getHost')
             ->willReturn('override-domain.tld');
 
@@ -133,7 +93,139 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
         $domainConfiguration->method('getFrontendLocales')
             ->willReturn(array('nl', 'en'));
 
-        $node = $this->getMock('Kunstmaan\NodeBundle\Entity\Node');
+        $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
+        $domainConfiguration->method('getRootNode')
+            ->willReturn($node);
+
+        $domainConfiguration->method('getBackendLocales')
+            ->willReturn(array('nl_BE', 'en_GB'));
+
+        $request   = $this->getRequest('http://singlelangdomain.tld/');
+
+        $container    = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $serviceMap = array(
+            array('request_stack', 1, $this->getRequestStack($request)),
+            array('kunstmaan_admin.domain_configuration', 1, $domainConfiguration),
+            array('doctrine.orm.entity_manager', 1, $this->getEntityManager(new NodeTranslation())),
+        );
+
+        $container
+            ->method('get')
+            ->will($this->returnValueMap($serviceMap));
+        /** @var Container $container */
+        $object    = new DomainBasedLocaleRouter($container);
+
+        $mirror = new ReflectionClass(DomainBasedLocaleRouter::class);
+        $property = $mirror->getProperty('otherSite');
+        $property->setAccessible(true);
+        $property->setValue($object, ['host' =>  'https://cia.gov']);
+        $collection = $object->getRouteCollection();
+        $array = $collection->getIterator()->getArrayCopy();
+        $this->assertArrayHasKey('_slug', $array);
+        $this->assertArrayHasKey('_slug_preview', $array);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testGetRouteCollection()
+    {
+        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration->method('getHost')
+            ->willReturn('override-domain.tld');
+
+        $domainConfiguration->method('isMultiDomainHost')
+            ->willReturn(false);
+
+        $domainConfiguration->method('isMultiLanguage')
+            ->willReturn(false);
+
+        $domainConfiguration->method('getDefaultLocale')
+            ->willReturn('nl_BE');
+
+        $domainConfiguration->method('getFrontendLocales')
+            ->willReturn(array('nl', 'en'));
+
+        $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
+        $domainConfiguration->method('getRootNode')
+            ->willReturn($node);
+
+        $domainConfiguration->method('getBackendLocales')
+            ->willReturn(array('nl_BE', 'en_GB'));
+
+        $request   = $this->getRequest('http://singlelangdomain.tld/');
+
+        $container    = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $serviceMap = array(
+            array('request_stack', 1, $this->getRequestStack($request)),
+            array('kunstmaan_admin.domain_configuration', 1, $domainConfiguration),
+            array('doctrine.orm.entity_manager', 1, $this->getEntityManager(new NodeTranslation())),
+        );
+
+        $container
+            ->method('get')
+            ->will($this->returnValueMap($serviceMap));
+        /** @var Container $container */
+        $object    = new DomainBasedLocaleRouter($container);
+        $mirror = new ReflectionClass(DomainBasedLocaleRouter::class);
+        $property = $mirror->getProperty('otherSite');
+        $property->setAccessible(true);
+        $property->setValue($object, ['host' =>  'https://cia.gov']);
+        $collection = $object->getRouteCollection();
+        $array = $collection->getIterator()->getArrayCopy();
+        $this->assertArrayHasKey('_slug', $array);
+        $this->assertArrayHasKey('_slug_preview', $array);
+    }
+
+    /**
+     * @param $request
+     * @param null $nodeTranslation
+     * @return Container
+     */
+    private function getContainer($request, $nodeTranslation = null)
+    {
+        $container    = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $serviceMap = array(
+            array('request_stack', 1, $this->getRequestStack($request)),
+            array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration()),
+            array('doctrine.orm.entity_manager', 1, $this->getEntityManager($nodeTranslation)),
+        );
+
+        $container
+            ->method('get')
+            ->will($this->returnValueMap($serviceMap));
+
+        /** @var Container $container */
+        return $container;
+    }
+
+    private function getRequestStack($request)
+    {
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
+
+        return $requestStack;
+    }
+
+    private function getDomainConfiguration()
+    {
+        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration->method('getHost')
+            ->willReturn('override-domain.tld');
+
+        $domainConfiguration->method('isMultiDomainHost')
+            ->willReturn(true);
+
+        $domainConfiguration->method('isMultiLanguage')
+            ->willReturn(true);
+
+        $domainConfiguration->method('getDefaultLocale')
+            ->willReturn('nl_BE');
+
+        $domainConfiguration->method('getFrontendLocales')
+            ->willReturn(array('nl', 'en'));
+
+        $node = $this->createMock('Kunstmaan\NodeBundle\Entity\Node');
         $domainConfiguration->method('getRootNode')
             ->willReturn($node);
 
@@ -152,7 +244,7 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
 
     private function getEntityManager($nodeTranslation = null)
     {
-        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
         $em
             ->method('getRepository')
             ->with($this->equalTo('KunstmaanNodeBundle:NodeTranslation'))

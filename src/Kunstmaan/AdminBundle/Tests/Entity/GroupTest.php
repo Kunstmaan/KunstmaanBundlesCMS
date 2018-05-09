@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
 use Kunstmaan\AdminBundle\Entity\Group;
-
 use Kunstmaan\AdminBundle\Entity\Role;
 use Symfony\Component\Validator\Validation;
 
@@ -26,33 +25,16 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->object = new Group('group');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getId
-     */
     public function testGetId()
     {
         $this->assertEquals(null, $this->object->getId());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::__toString
-     */
     public function test__toString()
     {
         $this->assertEquals('group', $this->object->__toString());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getRoles
-     */
     public function testGetRoles()
     {
         /* @var $role Role */
@@ -62,9 +44,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('role1'), $this->object->getRoles());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getRolesCollection
-     */
     public function testGetRolesCollection()
     {
         /* @var $role Role */
@@ -77,9 +56,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($collection, $this->object->getRolesCollection());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getRole
-     */
     public function testGetRole()
     {
         /* @var $role Role */
@@ -93,9 +69,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $result);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::hasRole
-     */
     public function testHasRole()
     {
         /* @var $role Role */
@@ -106,10 +79,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->hasRole('role2'));
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::addRole
-     * @covers Kunstmaan\AdminBundle\Entity\Group::removeRole
-     */
     public function testRemoveRole()
     {
         /* @var $role Role */
@@ -123,7 +92,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @covers Kunstmaan\AdminBundle\Entity\Group::addRole
      */
     public function testAddRoleWithInvalidParameter()
     {
@@ -132,9 +100,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->object->addRole($role);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::setRoles
-     */
     public function testSetRoles()
     {
         $role1 = $this->getRole('role1');
@@ -146,9 +111,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($this->object->getRoles()));
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::setRolesCollection
-     */
     public function testSetRolesCollection()
     {
         $role1 = $this->getRole('role1');
@@ -164,11 +126,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $this->object->getRolesCollection()->count());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::__construct
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getName
-     * @covers Kunstmaan\AdminBundle\Entity\Group::setName
-     */
     public function testConstructorAndGetSetName()
     {
         $object = new Group('testgroup');

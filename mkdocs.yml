@@ -41,6 +41,7 @@ pages:
         - Using the cache bundle: cookbook/using-the-cache-bundle.md
         - Using anacrontab: cookbook/using-anacrontab.md
     - "Bundles":
+        - Config reference: bundles/config-reference.md
         - Admin bundle:
             - Customizing the top menu: bundles/admin-bundle/customizing-the-top-menu.md
             - Form collection additions: bundles/admin-bundle/form-collection-additions.md
@@ -54,6 +55,7 @@ pages:
         - Config bundle: bundles/config-bundle.md
         - Form bundle: bundles/form-bundle.md
         - Generator bundle: bundles/generator-bundle.md
+        - Media bundle: bundles/media-bundle.md
         - Node bundle:
             - Intro: bundles/node-bundle/intro.md
             - Chain router: bundles/node-bundle/chainrouter.md
@@ -66,14 +68,14 @@ pages:
         - Tagging bundle: bundles/tagging-bundle.md
         - Utilities bundle: bundles/utilities-bundle.md
         - Voting bundle: bundles/voting-bundle.md
-      - Contributing:
-          - Intro: contributing/index.md
-          - Reporting issues: contributing/reporting-issues.md
-          - Pull requests: contributing/pull-requests.md
-          - Coding standards: contributing/coding-standards.md
-          - Preparing a new release: contributing/preparing-a-new-release.md
-          - Roadmap: contributing/roadmap.md
-          - Community bundles: contributing/community-bundles.md
-          - Release process: contributing/release-process.md
-          - Contributing translations: contributing/contributing-translations.md
-          - Groundcontrol: contributing/groundcontrol.md
+    - Contributing:
+        - Intro: contributing/index.md
+        - Reporting issues: contributing/reporting-issues.md
+        - Pull requests: contributing/pull-requests.md
+        - Coding standards: contributing/coding-standards.md
+        - Preparing a new release: contributing/preparing-a-new-release.md
+        - Roadmap: contributing/roadmap.md
+        - Community bundles: contributing/community-bundles.md
+        - Release process: contributing/release-process.md
+        - Contributing translations: contributing/contributing-translations.md
+        - Groundcontrol: contributing/groundcontrol.md

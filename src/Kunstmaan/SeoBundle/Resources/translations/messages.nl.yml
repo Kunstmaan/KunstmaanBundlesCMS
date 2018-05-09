@@ -8,7 +8,7 @@ seo:
   action:
     save: Opslaan
     cancel: Annuleren
-    preview: Preview
+    preview: Voorbeeld
   form:
     og:
       title: OG titel
@@ -17,17 +17,17 @@ seo:
       type: OG Type
       image: OG Foto
       article:
-        author: OG Article Author
-        publisher: OG Article Publisher
-        section: OG Article Section
+        author: OG auteur
+        publisher: OG uitgever
+        section: OG hoofdstuk
     twitter:
-      title: Title
+      title: Titel
       title_info_text: De titel van uw twitter card. Falls back to SEO Meta title
       description: Omschrijving
       description_info_text: De omschrijving van uw twitter card. Falls back to SEO Meta description
-      sitehandle: Site Handle
+      sitehandle: Twitter site
       sitehandle_info_text: Twitter handle van de website of uw organisatie. Deze waarde is verplicht om twitter cards te laten werken.
-      creatorhandle: Creator Handle
+      creatorhandle: Twitter auteur
       creatorhandle_info_text: Twitter handle van de publisher van uw pagina.
       image: Foto
     robots:
@@ -55,4 +55,4 @@ seo:
     seo:
       title: SEO
     social:
-      title: Social
+      title: Sociale media

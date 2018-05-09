@@ -1,5 +1,7 @@
 <?php
 
+namespace Kunstmaan\SearchBundle\Tests\DependencyInjection;
+
 use Kunstmaan\SearchBundle\DependencyInjection\KunstmaanSearchExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -30,9 +32,7 @@ class KunstmaanSearchExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the Configuration to test
-     *
-     * @return Configuration
+     * @return KunstmaanSearchExtension
      */
     protected function getExtension()
     {

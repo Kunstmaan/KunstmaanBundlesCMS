@@ -5,6 +5,7 @@ namespace Kunstmaan\TranslatorBundle\Service\Command\Importer;
 use Kunstmaan\TranslatorBundle\Model\Import\ImportCommand;
 use Kunstmaan\TranslatorBundle\Service\Command\AbstractCommandHandler;
 use Kunstmaan\TranslatorBundle\Service\Exception\TranslationsNotFoundException;
+use Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -14,13 +15,13 @@ class ImportCommandHandler extends AbstractCommandHandler
 {
     /**
      * TranslationFileExplorer
-     * @var Kunstmaan\TranslatorBundle\Service\TranslationFileExplorer
+     * @var TranslationFileExplorer
      */
     private $translationFileExplorer;
 
     /**
      * Importer
-     * @var Kunstmaan\TranslatorBundle\Service\Importer\Importer
+     * @var Importer
      */
     private $importer;
 

@@ -1,0 +1,16 @@
+services:
+    Kunstmaan\NodeBundle\Command\InitAclCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.acl.provider'
+            - '@security.acl.object_identity_retrieval_strategy'
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\NodeBundle\Command\CronUpdateNodeCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.token_storage'
+            - '@kunstmaan_node.admin_node.publisher'
+        tags:
+            - { name: console.command }
