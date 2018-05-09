@@ -119,4 +119,8 @@ class TranslatorDataCollector extends AbstractDataCollector
         return true;
     }
 
+    public function reset()
+    {
+        $this->data = [];
+    }
 }
