@@ -22,7 +22,7 @@ class MultiLineTextPagePartAdminType extends AbstractType
     {
         $builder
             ->add('label', TextType::class, array(
-                'required' => false,
+                'required' => true,
                 'label' => 'kuma_form.form.multi_line_text_page_part.label.label',
             ))
             ->add('required', CheckboxType::class, array(

@@ -21,7 +21,7 @@ class SingleLineTextPagePartAdminType extends AbstractType
     {
         $builder
             ->add('label', TextType::class, array(
-                'required' => false,
+                'required' => true,
                 'label' => 'kuma_form.form.single_line_text_page_part.label.label',
             ))
             ->add('required', CheckboxType::class, array(
