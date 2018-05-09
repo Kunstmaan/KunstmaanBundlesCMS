@@ -1,5 +1,7 @@
 # Changelog
 
+* [RedirectBundle] Allow UTF8 in redirects [#1961](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1961)
+
 ## 5.0.6 / 2018-04-13
 
 * [GeneratorBundle] Fix article generator for no-interaction [#1912](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1912) ([@Devolicious](https://github.com/Devolicious)) 
