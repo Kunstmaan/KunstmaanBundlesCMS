@@ -73,7 +73,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /** @var array */
     protected $properties = [];
-    
+
     /** @var integer */
     protected $numberOfShards;
 
@@ -684,7 +684,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         if (!trim($text)) {
             return '';
         }
-        
+
         // Remove Styles and Scripts
         $crawler = new Crawler($text);
         $crawler->filter('style, script')->each(function (Crawler $crawler) {
