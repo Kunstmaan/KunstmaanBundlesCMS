@@ -5,10 +5,9 @@ function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChromes = 
         return {
             babelrc: false,
             presets: [
-                ['es2015', {
-                    // TODO
+                require.resolve('babel-preset-env', {
                     modules: false
-                }]
+                })
             ]
         };
     }
@@ -16,11 +15,12 @@ function getBabelLoaderOptions({optimize = false, transpileOnlyForLastChromes = 
     return {
         babelrc: false,
         presets: [
-            ['env', {
+            require.resolve('babel-preset-env', {
                 targets: {
                     browsers: ['last 2 Chrome versions']
-                }
-            }]
+                },
+                debug: true
+            })
         ],
         cacheDirectory: true
     };

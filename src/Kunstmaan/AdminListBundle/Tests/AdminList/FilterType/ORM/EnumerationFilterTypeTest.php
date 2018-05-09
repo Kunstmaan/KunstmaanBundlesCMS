@@ -24,17 +24,6 @@ class EnumerationFilterTypeTest extends ORMFilterTypeTestCase
         $this->object = new EnumerationFilterType('enumeration', 'b');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
@@ -52,7 +41,6 @@ class EnumerationFilterTypeTest extends ORMFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -80,9 +68,6 @@ class EnumerationFilterTypeTest extends ORMFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:enumerationFilter.html.twig', $this->object->getTemplate());

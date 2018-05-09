@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Tests\Helper;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Helper\FolderManager;
 
@@ -30,11 +31,6 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      */
     private $parents;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::__construct
-     */
     protected function setUp()
     {
         $this->repository = $this->getMockBuilder('Kunstmaan\MediaBundle\Repository\FolderRepository')
@@ -74,17 +70,6 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         $this->object = new FolderManager($this->repository);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getFolderHierarchy
-     */
     public function testGetFolderHierarchy()
     {
         $this->repository
@@ -96,9 +81,6 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->getFolderHierarchy($this->folder);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getRootFolderFor
-     */
     public function testGetRootFolderFor()
     {
         $this->repository
@@ -110,9 +92,6 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $rootFolder->getId());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getParentIds
-     */
     public function testGetParentIds()
     {
         $this->repository
@@ -123,9 +102,6 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(1, 2), $this->object->getParentIds($this->folder));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getParents
-     */
     public function testGetParents()
     {
         $this->repository

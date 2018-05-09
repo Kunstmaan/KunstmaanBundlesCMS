@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -26,6 +27,16 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     private $locale;
 
     /**
+     * @var array
+     */
+    private $nodeIds = [];
+
+    /**
+     * @var array
+     */
+    private $nodeTranslationIds = [];
+
+    /**
      * AbstractPageAdminListConfigurator constructor.
      *
      * @param EntityManagerInterface $em
@@ -34,9 +45,9 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     public function __construct(EntityManagerInterface $em, $locale)
     {
         parent::__construct($em->getConnection());
-
         $this->em = $em;
         $this->locale = $locale;
+        $this->setListTemplate('KunstmaanAdminListBundle:Page:list.html.twig');
     }
 
     /**
@@ -105,33 +116,71 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
         $qbQuery = clone $queryBuilder;
 
         $qbQuery
-            ->select('nt.id, nt.title, n.id as node_id, nt.lang,
-                        IF(nt.lang = \''.$this->locale.'\', nt.online, 0) as online,
-                        IF(nt.lang = \''.$this->locale.'\', nt.updated, NULL) as updated,
-                        IF(nt.lang = \''.$this->locale.'\', nt.created, NULL) as created')
-            ->from('kuma_node_translations', 'nt')
-            ->innerJoin('nt', 'kuma_nodes', 'n', 'nt.node_id = n.id')
-            ->where('n.ref_entity_name = :pageClass')
-            ->andWhere('n.deleted = 0')
-            ->orderBy('nt.updated', 'DESC');
+            ->select('b.id, b.node_id')
+            ->from('kuma_node_translations', 'b')
+            ->innerJoin('b', 'kuma_nodes', 'n', 'b.node_id = n.id')
+            ->where('n.deleted = 0')
+            ->andWhere('n.ref_entity_name = :class')
+            ->setParameter('class', $this->getPageClass())
+            ->addOrderBy('b.updated', 'DESC');
 
-        /**
-         * This is necessary for the results query happening in the pagerfanta adapter,
-         * otherwise it will result in a groupBy with count query that results with count = 1
-         * and no pagination will be available
-         */
-        $qbHelper = clone $queryBuilder;
-        $qbHelper
-            ->select('a.*')
-            ->from('('.$qbQuery->getSQL().')', 'a')
-            ->groupBy('a.node_id');
+        // Clone query for next step with same start query.
+        $qbHelper = clone $qbQuery;
+        // Get the node translations having current locale.
+        $this->getCurrentLocaleResults($qbQuery);
+        // Get the node translations for the other locales, excluding current locale
+        $this->getOtherLocalesResults($qbHelper);
 
+        // Make the final query.
         $queryBuilder
             ->select('b.*')
-            ->from('('.$qbHelper->getSQL().')', 'b')
-            ->orderBy('FIELD(b.lang, :lang)', 'DESC')
-            ->setParameter('pageClass', $this->getPageClass())
+            ->from('kuma_node_translations', 'b')
+            ->innerJoin('b', 'kuma_nodes', 'n', 'b.node_id = n.id')
+            ->andWhere('b.id IN (:ids)')
+            ->setParameter('ids', $this->nodeTranslationIds, Connection::PARAM_STR_ARRAY)
+            ->orderBy('b.updated', 'DESC');
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     */
+    private function getCurrentLocaleResults(QueryBuilder $qb)
+    {
+        $results = $qb
+            ->andWhere('b.lang = :lang')
+            ->setParameter('lang', $this->locale)
+            ->execute()
+            ->fetchAll();
+
+        foreach ($results as $result) {
+            $this->nodeIds[] = $result['node_id'];
+            $this->nodeTranslationIds[] = $result['id'];
+        }
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     */
+    private function getOtherLocalesResults(QueryBuilder $qb)
+    {
+        $qb
+            ->andWhere('b.lang != :lang')
             ->setParameter('lang', $this->locale);
+
+        if (!empty($this->nodeIds)) {
+            $qb
+                ->andWhere('b.node_id NOT IN (:ids)')
+                ->setParameter('ids', $this->nodeIds, Connection::PARAM_STR_ARRAY);
+        }
+
+        $results = $qb
+            ->groupBy('b.node_id')
+            ->execute()
+            ->fetchAll();
+
+        foreach ($results as $result) {
+            $this->nodeTranslationIds[] = $result['id'];
+        }
     }
 
     /**
@@ -148,14 +197,6 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
      * @return EntityInterface
      */
     abstract public function getOverviewPageClass();
-
-    /**
-     * @return string
-     */
-    public function getListTemplate()
-    {
-        return 'KunstmaanAdminListBundle:Page:list.html.twig';
-    }
 
     /**
      * Returns the overviewpage.
@@ -175,9 +216,7 @@ abstract class AbstractPageAdminListConfigurator extends AbstractDoctrineDBALAdm
     }
 
     /**
-     * @return
+     * @return string
      */
     abstract public function getReadableName();
-
-
 }

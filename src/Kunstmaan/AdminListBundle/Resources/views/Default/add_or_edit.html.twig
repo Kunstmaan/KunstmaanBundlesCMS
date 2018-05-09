@@ -15,7 +15,12 @@
         </div>
     {% endif %}
 
-    {{ form_start(form, {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}}) }}
+    {% set formParams = {'method': 'POST', 'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'attr': {'novalidate': 'novalidate'}} %}
+    {% if tabPane is defined %}
+        {{ form_start(tabPane.formView, formParams) }}
+    {% else %}
+        {{ form_start(form, formParams) }}
+    {% endif %}
     {{ parent() }}
 {% endblock %}
 
@@ -73,5 +78,9 @@
                 {% endif %}
             {% endblock %}
         </fieldset>
-    </form>
+    {% if tabPane is defined %}
+        {{ form_end(tabPane.formView) }}
+    {% else %}
+        {{ form_end(form) }}
+    {% endif %}
 {% endblock %}

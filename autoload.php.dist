@@ -3,6 +3,10 @@
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Composer\Autoload\ClassLoader;
 
+if (!defined('PHPUNIT_COMPOSER_INSTALL')) {
+  define('PHPUNIT_COMPOSER_INSTALL', __DIR__ . '/vendor/autoload.php');
+}
+
 /**
  * @var ClassLoader $loader
  */

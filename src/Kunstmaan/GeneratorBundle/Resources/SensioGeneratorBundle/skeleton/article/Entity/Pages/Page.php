@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\ArticleBundle\Entity\AbstractArticlePage;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
+use Kunstmaan\NodeBundle\Entity\HideSidebarInNodeEditInterface;
 use {{ namespace }}\Form\Pages\{{ entity_class }}PageAdminType;
 use Symfony\Component\Form\AbstractType;
 
@@ -15,7 +16,7 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Table(name="{{ prefix }}{{ entity_class|lower }}_pages")
  * @ORM\HasLifecycleCallbacks
  */
-class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTemplateInterface, SearchTypeInterface
+class {{ entity_class }}Page extends AbstractArticlePage implements HasPageTemplateInterface, SearchTypeInterface, HideSidebarInNodeEditInterface
 {
     //%PagePartial.php.twig%
 

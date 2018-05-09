@@ -21,7 +21,7 @@ class CSVFileExporter implements FileExporterInterface
         $handle = fopen('php://temp', 'r+');
 
         // Add the header of the CSV file
-        $headers = ['Keyword'];
+        $headers = ['Keyword', 'Domain'];
 
         // Get all possible locales and add them as header.
         $headers = array_merge($headers, $this->locales);
@@ -30,7 +30,9 @@ class CSVFileExporter implements FileExporterInterface
 
         // Add all translation to the CSV.
         foreach ($translations as $key => $translation) {
-            $row = [$key];
+            $values = \array_values($translation);
+            $firstTranslation = \array_shift($values);
+            $row = [$key, $firstTranslation->getDomain()];
 
             /** @var Translation $item */
             foreach ($this->locales as $locale) {

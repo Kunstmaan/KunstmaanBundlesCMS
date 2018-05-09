@@ -47,6 +47,8 @@ EOT
             ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace to generate the default website in')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->addOption('demosite', '', InputOption::VALUE_NONE, 'Whether to generate a website with demo contents or a basic website')
+            ->addOption('browsersync', '', InputOption::VALUE_OPTIONAL, 'The URI that will be used for browsersync to connect')
+            ->addOption('articleoverviewpageparent', '', InputOption::VALUE_OPTIONAL, 'Shortnames of the pages that can have the article overview page as a child (comma separated)')
             ->setName('kuma:generate:default-site');
     }
 
@@ -82,12 +84,15 @@ EOT
          */
         $this->demosite = $this->assistant->getOption('demosite');
 
+        $browserSyncUrl = $this->assistant->getOptionOrDefault('browsersync', null);
+
         // First we generate the layout if it is not yet generated
         $command = $this->getApplication()->find('kuma:generate:layout');
         $arguments = array(
             'command'      => 'kuma:generate:layout',
             '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
             '--demosite'   => $this->demosite,
+            '--browsersync' => $browserSyncUrl,
             '--subcommand' => true
         );
         $input = new ArrayInput($arguments);
@@ -113,6 +118,7 @@ EOT
         if ($this->demosite) {
             // Generate a blog
             $command = $this->getApplication()->find('kuma:generate:article');
+            $pages = $this->assistant->getOptionOrDefault('articleoverviewpageparent', null);
             $arguments = array(
                 'command'           => 'kuma:generate:article',
                 '--namespace'       => str_replace('\\', '/', $this->bundle->getNamespace()),
@@ -122,6 +128,7 @@ EOT
                 '--with-category'   => true,
                 '--with-tag'        => true,
                 '--dummydata'       => true,
+                '--articleoverviewpageparent' => $pages,
             );
             $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_NORMAL);
             $input = new ArrayInput($arguments);

@@ -14,16 +14,21 @@ class BundleVersionDataCollector extends AbstractDataCollector
     /** @var VersionChecker */
     private $versionChecker;
 
-    /** @var Logger */
-    private $logger;
-
     /** @var Cache */
     private $cache;
 
-    public function __construct(VersionChecker $versionChecker, Logger $logger, Cache $cache)
+    public function __construct(VersionChecker $versionChecker, /*Logger $logger,*/ /* Cache */ $cache)
     {
         $this->versionChecker = $versionChecker;
-        $this->logger = $logger;
+
+        if (func_num_args() > 2) {
+            @trigger_error(sprintf('Passing the "logger" service as the second argument in "%s" is deprecated in KunstmaanAdminBundle 5.1 and will be removed in KunstmaanAdminBundle 6.0. Remove the "logger" argument from your service definition.', __METHOD__), E_USER_DEPRECATED);
+
+            $this->cache = func_get_arg(2);
+
+            return;
+        }
+
         $this->cache = $cache;
     }
 

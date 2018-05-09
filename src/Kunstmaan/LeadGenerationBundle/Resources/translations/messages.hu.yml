@@ -26,7 +26,7 @@ kuma_lead_generation:
     popup:
       name:
         label: Név
-        info_text: 'Figyelmeztetés: ha megváltoztatja ezt az értéket, a popup ismét meg fog jelenni azoknak, akiknek egyszer már megjelent vagy konvertálódtak!'
+        info_text: "Figyelmeztetés: ha megváltoztatja ezt az értéket, a popup ismét meg fog jelenni azoknak, akiknek egyszer már megjelent vagy konvertálódtak!"
     after_x_scroll_percent_rule:
       percentage:
         label: Százalék

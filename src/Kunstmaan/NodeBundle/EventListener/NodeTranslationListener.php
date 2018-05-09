@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
+use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
@@ -136,30 +137,34 @@ class NodeTranslationListener
      */
     public function onFlush(OnFlushEventArgs $args)
     {
-        $em = $args->getEntityManager();
+        try {
+            $em = $args->getEntityManager();
 
-        $class = $em->getClassMetadata(NodeTranslation::class);
+            $class = $em->getClassMetadata(NodeTranslation::class);
 
-        // Collect all nodetranslations that are updated
-        foreach ($em->getUnitOfWork()->getScheduledEntityUpdates() as $entity) {
-            if ($entity instanceof NodeTranslation) {
-                /** @var Node $publicNode */
-                $publicNode = $entity->getPublicNodeVersion()->getRef($em);
+            // Collect all nodetranslations that are updated
+            foreach ($em->getUnitOfWork()->getScheduledEntityUpdates() as $entity) {
+                if ($entity instanceof NodeTranslation) {
+                    /** @var Node $publicNode */
+                    $publicNode = $entity->getPublicNodeVersion()->getRef($em);
 
-                // Do nothing for StructureNode objects, skip.
-                if ($publicNode instanceof HasNodeInterface && $publicNode->isStructureNode()) {
-                    continue;
-                }
+                    // Do nothing for StructureNode objects, skip.
+                    if ($publicNode instanceof HasNodeInterface && $publicNode->isStructureNode()) {
+                        continue;
+                    }
 
-                $entity = $this->updateUrl($entity, $em);
+                    $entity = $this->updateUrl($entity, $em);
 
-                if ($entity !== false) {
-                    $em->persist($entity);
-                    $em->getUnitOfWork()->recomputeSingleEntityChangeSet($class, $entity);
-
-                    $this->updateNodeChildren($entity, $em, $class);
+                    if ($entity !== false) {
+                        $em->persist($entity);
+                        $em->getUnitOfWork()->recomputeSingleEntityChangeSet($class, $entity);
+    
+                        $this->updateNodeChildren($entity, $em, $class);
+                    }
                 }
             }
+        } catch (MappingException $e) {
+            // Different entity manager without this entity configured in namespace chain. Ignore
         }
     }
 

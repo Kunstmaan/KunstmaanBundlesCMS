@@ -26,7 +26,7 @@ kuma_lead_generation:
     popup:
       name:
         label: Nazwa
-        info_text: 'Ostrzeżenie: Jeżeli zmienisz tą wartość, osoby które już widziały ten popup, lub osoby które zostały już przekształcone zobaczą ten popup ponownie.'
+        info_text: "Ostrzeżenie: Jeżeli zmienisz tą wartość, osoby które już widziały ten popup, lub osoby które zostały już przekształcone zobaczą ten popup ponownie."
     after_x_scroll_percent_rule:
       percentage:
         label: Procentowo

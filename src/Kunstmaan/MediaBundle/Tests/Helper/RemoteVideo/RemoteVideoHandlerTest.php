@@ -9,8 +9,9 @@ use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 class RemoteVideoHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param $data
-     * @param $expected
+     * @param $url
+     * @param $type
+     * @param $code
      *
      * @dataProvider provider
      */

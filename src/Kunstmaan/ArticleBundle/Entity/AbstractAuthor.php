@@ -12,6 +12,16 @@ use Kunstmaan\ArticleBundle\Form\AbstractAuthorAdminType;
 class AbstractAuthor extends AbstractEntity
 {
     /**
+     * AbstractAuthor constructor.
+     */
+    public function __construct()
+    {
+        if (get_class($this) === AbstractAuthor::class) {
+            trigger_error('Please extend this class, it will be made abstract in 6.0.', E_USER_DEPRECATED);
+        }
+    }
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=false, name="name")

@@ -24,7 +24,7 @@ class PopulatorCompilerPass implements CompilerPassInterface
             foreach ($tagAttributes as $attributes) {
                 $definition->addMethodCall(
                     'addPopulator',
-                    array(new Reference($id), $attributes['alias'])
+                    [new Reference($id), $attributes['alias']]
                 );
             }
         }

@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -28,18 +26,6 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new SingleLineTextPagePart;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::setRegex
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getRegex
-     */
     public function testSetGetRegex()
     {
         $object = $this->object;
@@ -48,10 +34,6 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($regex, $object->getRegex());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::setErrorMessageRegex
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getErrorMessageRegex
-     */
     public function testSetErrorMessageRegex()
     {
         $object = $this->object;
@@ -60,10 +42,6 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message, $object->getErrorMessageRegex());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getDefaultView
-     */
-
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
@@ -71,9 +49,6 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::adaptForm
-     */
     public function testAdaptForm()
     {
         $object = $this->object;
@@ -90,15 +65,17 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
 
         $fields = new ArrayObject();
 
+        $object->setErrorMessageRequired('required');
+        $object->setErrorMessageRegex('regex');
         $this->assertTrue(count($fields) == 0);
         /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
+        $this->assertTrue($object->getRequired());
+
+        $this->assertEquals('required', $object->getErrorMessageRequired());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(SingleLineTextPagePartAdminType::class, $this->object->getDefaultAdminType());

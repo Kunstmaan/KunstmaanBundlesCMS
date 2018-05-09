@@ -106,25 +106,11 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
         $this->object = new AclNativeHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::__construct
-     */
     public function testConstructor()
     {
         new AclNativeHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::apply
-     */
     public function testApply()
     {
         $queryBuilder = new QueryBuilder($this->conn);
@@ -173,9 +159,6 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('MyUser', $query);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::apply
-     */
     public function testApplyAnonymous()
     {
         $queryBuilder = new QueryBuilder($this->conn);
@@ -213,9 +196,6 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $query);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::getTokenStorage
-     */
     public function testGetTokenStorage()
     {
         $this->assertSame($this->tokenStorage, $this->object->getTokenStorage());

@@ -31,15 +31,15 @@ class MenuItemAdminListController extends AdminListController
     {
         if (!isset($this->configurator)) {
             $menu = $this->getDoctrine()->getManager()->getRepository(
-                $this->getParameter('kunstmaan_menu.entity.menu.class')
+                $this->container->getParameter('kunstmaan_menu.entity.menu.class')
             )->find($menuid);
-            $rootNode = $this->get('kunstmaan_admin.domain_configuration')->getRootNode();
+            $rootNode = $this->container->get('kunstmaan_admin.domain_configuration')->getRootNode();
 
-            $configuratorClass = $this->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
+            $configuratorClass = $this->container->getParameter('kunstmaan_menu.adminlist.menuitem_configurator.class');
             $this->configurator = new $configuratorClass($this->getEntityManager(), null, $menu);
 
-            $adminType = $this->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
-            $menuItemClass = $this->getParameter('kunstmaan_menu.entity.menuitem.class');
+            $adminType = $this->container->getParameter('kunstmaan_menu.form.menuitem_admintype.class');
+            $menuItemClass = $this->container->getParameter('kunstmaan_menu.entity.menuitem.class');
             $this->configurator->setAdminType($adminType);
             $this->configurator->setAdminTypeOptions(array('menu' => $menu, 'rootNode' => $rootNode, 'menuItemClass' => $menuItemClass, 'entityId' => $entityId, 'locale' => $request->getLocale()));
         }
@@ -58,7 +58,7 @@ class MenuItemAdminListController extends AdminListController
     public function indexAction(Request $request, $menuid)
     {
         $menuRepo = $this->getDoctrine()->getManager()->getRepository(
-            $this->getParameter('kunstmaan_menu.entity.menu.class')
+            $this->container->getParameter('kunstmaan_menu.entity.menu.class')
         );
 
         /** @var BaseMenu $menu */
@@ -147,7 +147,7 @@ class MenuItemAdminListController extends AdminListController
     public function moveUpAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-        $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
+        $repo = $em->getRepository($this->container->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {
@@ -169,7 +169,7 @@ class MenuItemAdminListController extends AdminListController
     public function moveDownAction(Request $request, $menuid, $item)
     {
         $em = $this->getEntityManager();
-        $repo = $em->getRepository($this->getParameter('kunstmaan_menu.entity.menuitem.class'));
+        $repo = $em->getRepository($this->container->getParameter('kunstmaan_menu.entity.menuitem.class'));
         $item = $repo->find($item);
 
         if ($item) {

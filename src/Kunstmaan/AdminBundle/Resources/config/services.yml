@@ -301,12 +301,13 @@ services:
             - '%kunstmaan_admin.enable_toolbar_helper%'
             - '@service_container'
             - '@kunstmaan_admin.adminroute.helper'
+            - '%kunstmaan_admin.toolbar_firewall_names%'
+            - '%kunstmaan_admin.admin_firewall_name%'
 
     kunstmaan_admin.datacollector.bundleversion:
         class: '%kunstmaan_admin.toolbar.collector.bundle.class%'
         arguments:
             - '@kunstmaan_admin.versionchecker'
-            - '@logger'
             - '@kunstmaan_admin.cache'
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:bundles_version.html.twig', id: kuma_bundle_versions }

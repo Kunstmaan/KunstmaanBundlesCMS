@@ -29,9 +29,8 @@ class TagCategoryRouter extends SlugRouter
 
         if ($this->isMultiLanguage()) {
             foreach ($this->getFrontendLocales() as $locale) {
-                $translator->setLocale($locale);
-                $categoryTrans = $translator->trans('article_overview_page.route.category');
-                $tagTrans = $translator->trans('article_overview_page.route.tag');
+                $categoryTrans = $translator->trans('article_overview_page.route.category', [], null, $locale);
+                $tagTrans = $translator->trans('article_overview_page.route.tag', [], null, $locale);
 
                 $routePathParts = array(
                     '_slug_category_tag' => sprintf('/%s/{category}/%s/{tag}', $categoryTrans, $tagTrans),

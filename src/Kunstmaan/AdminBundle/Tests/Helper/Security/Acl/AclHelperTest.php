@@ -145,26 +145,11 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $this->object = new AclHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::__construct
-     */
     public function testConstructor()
     {
         new AclHelper($this->em, $this->tokenStorage, $this->rh);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::apply
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::cloneQuery
-     */
     public function testApply()
     {
         /* @var $queryBuilder QueryBuilder */
@@ -226,10 +211,6 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('MyUser', $aclQuery);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::apply
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::cloneQuery
-     */
     public function testApplyAnonymous()
     {
         /* @var $queryBuilder QueryBuilder */
@@ -280,10 +261,6 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('"IS_AUTHENTICATED_ANONYMOUSLY"', $aclQuery);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getAllowedEntityIds
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getPermittedAclIdsSQLForUser
-     */
     public function testGetAllowedEntityIds()
     {
         $roles = array(new Role('ROLE_KING'));
@@ -341,9 +318,6 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(1, 9), $result);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getAllowedEntityIds
-     */
     public function testGetAllowedEntityIdsNoEntity()
     {
         $this->setExpectedException('InvalidArgumentException');
@@ -351,9 +325,6 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
         $this->object->getAllowedEntityIds(new PermissionDefinition(array('view')));
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getTokenStorage
-     */
     public function testGetTokenStorage()
     {
         $this->assertSame($this->tokenStorage, $this->object->getTokenStorage());
