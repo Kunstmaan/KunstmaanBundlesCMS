@@ -52,8 +52,8 @@ class KunstmaanTranslatorExtension extends Extension
 
     public function setTranslationConfiguration($config, $container)
     {
-        $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator');
-        $container->setAlias('translator.default', 'kunstmaan_translator.service.translator.translator');
+        $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator')->setPublic(true);
+        $container->setAlias('translator.default', 'kunstmaan_translator.service.translator.translator')->setPublic(true);
         $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
         $this->registerTranslatorConfiguration($config, $container);
 
