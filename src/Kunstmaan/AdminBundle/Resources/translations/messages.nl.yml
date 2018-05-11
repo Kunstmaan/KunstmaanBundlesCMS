@@ -40,6 +40,9 @@ toolbar:
     toupdate: Verouderd
     version: Bundle versie
     status: Bundle status
+  exception:
+    title: Exceptions
+    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"
 
 tools:
   title: Hulpmiddelen
@@ -130,7 +133,3 @@ kuma_admin:
 kuma_js:
   auto_collapse:
     more_button_label: Meer
-toolbar:
-  exception:
-    title: Exceptions
-    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"
