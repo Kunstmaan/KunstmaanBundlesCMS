@@ -82,13 +82,30 @@ services:
 
     kunstmaan_media.command.rebuildfoldertree:
         class: Kunstmaan\MediaBundle\Command\RebuildFolderTreeCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
 
     kunstmaan_media.command.cleandeletedmedia:
         class: Kunstmaan\MediaBundle\Command\CleanDeletedMediaCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_media.media_manager'
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
+
+    kunstmaan_media.command.renamesoftdeleted:
+        class: Kunstmaan\MediaBundle\Command\RenameSoftDeletedCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_media.media_manager'
+        tags:
+            - { name: console.command }
 
     kunstmaan_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local

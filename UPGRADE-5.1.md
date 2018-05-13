@@ -27,6 +27,11 @@ MediaBundle
 -----------
 
  * The unused `MediaController::moveMedia` action is deprecated and will be removed in 6.0.
+ * `CleanDeletedMediaCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+ * `CreatePdfPreviewCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+ * `RebuildFolderTreeCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+ * `RenameSoftDeletedCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+ * `CleanDeletedMediaCommand`, `CreatePdfPreviewCommand`, `RebuildFolderTreeCommand` and `RenameSoftDeletedCommand` have been marked as final.
 
 NodeBundle
 ----------
