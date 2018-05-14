@@ -22,7 +22,7 @@ class SettingsController extends BaseSettingsController
      */
     public function indexAction()
     {
-        $this->checkPermission('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return array();
     }
@@ -38,7 +38,7 @@ class SettingsController extends BaseSettingsController
      */
     public function bundleVersionAction()
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $versionChecker = $this->container->get('kunstmaan_admin.versionchecker');
         if (!$versionChecker->isEnabled()) {

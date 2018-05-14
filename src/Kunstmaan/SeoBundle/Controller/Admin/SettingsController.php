@@ -3,6 +3,7 @@
 namespace Kunstmaan\SeoBundle\Controller\Admin;
 
 use Kunstmaan\AdminBundle\Controller\BaseSettingsController;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 use Kunstmaan\SeoBundle\Entity\Robots;
 use Kunstmaan\SeoBundle\Form\RobotsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,12 +25,12 @@ class SettingsController extends BaseSettingsController
      */
     public function robotsSettingsAction(Request $request)
     {
-        $this->checkPermission();
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
         $repo = $this->getDoctrine()->getRepository("KunstmaanSeoBundle:Robots");
         $robot = $repo->findOneBy(array());
-        $default = $this->container->getParameter('robots_default');
+        $default = $this->getParameter('robots_default');
         $isSaved = true;
 
         if (!$robot) {
@@ -46,7 +47,7 @@ class SettingsController extends BaseSettingsController
         ));
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
                 $em->persist($robot);
                 $em->flush();
@@ -56,8 +57,10 @@ class SettingsController extends BaseSettingsController
         }
 
         if (!$isSaved) {
-            $warning = $this->get('translator')->trans('seo.robots.warning');
-            $this->get('session')->getFlashBag()->add('warning', $warning);
+            $this->addFlash(
+                FlashTypes::WARNING,
+                $this->get('translator')->trans('seo.robots.warning')
+            );
         }
 
         return array(

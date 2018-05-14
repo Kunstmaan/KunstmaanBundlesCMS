@@ -20,8 +20,8 @@ class RobotsController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $entity = $this->get('doctrine')->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
-        $robots = $this->container->getParameter('robots_default');
+        $entity = $this->getDoctrine()->getRepository('KunstmaanSeoBundle:Robots')->findOneBy(array());
+        $robots = $this->getParameter('robots_default');
 
         if ($entity && $entity->getRobotsTxt()) {
             $robots = $entity->getRobotsTxt();

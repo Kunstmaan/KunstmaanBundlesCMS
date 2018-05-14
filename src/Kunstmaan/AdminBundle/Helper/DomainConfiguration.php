@@ -26,13 +26,16 @@ class DomainConfiguration implements DomainConfigurationInterface
     /** @var string */
     protected $defaultLocale;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
-        $this->container       = $container;
-        $this->multiLanguage   = $this->container->getParameter(
+        $this->container = $container;
+        $this->multiLanguage = $this->container->getParameter(
             'multilanguage'
         );
-        $this->defaultLocale   = $this->container->getParameter(
+        $this->defaultLocale = $this->container->getParameter(
             'defaultlocale'
         );
         $this->requiredLocales = explode(
@@ -47,7 +50,7 @@ class DomainConfiguration implements DomainConfigurationInterface
     public function getHost()
     {
         $request = $this->getMasterRequest();
-        $host    = is_null($request) ? '' : $request->getHost();
+        $host = is_null($request) ? '' : $request->getHost();
 
         return $host;
     }
@@ -69,25 +72,31 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
+     * @param string|null $host
+     *
      * @return bool
      */
-    public function isMultiLanguage()
+    public function isMultiLanguage($host = null)
     {
         return $this->multiLanguage;
     }
 
     /**
+     * @param string|null $host
+     *
      * @return array
      */
-    public function getFrontendLocales()
+    public function getFrontendLocales($host = null)
     {
         return $this->requiredLocales;
     }
 
     /**
+     * @param string|null $host
+     *
      * @return array
      */
-    public function getBackendLocales()
+    public function getBackendLocales($host = null)
     {
         return $this->requiredLocales;
     }
@@ -101,9 +110,11 @@ class DomainConfiguration implements DomainConfigurationInterface
     }
 
     /**
+     * @param string|null $host
+     *
      * @return null
      */
-    public function getRootNode()
+    public function getRootNode($host = null)
     {
         return null;
     }
@@ -134,4 +145,51 @@ class DomainConfiguration implements DomainConfigurationInterface
 
         return $requestStack->getMasterRequest();
     }
+
+    /**
+     * @return array
+     */
+    public function getFullHostConfig()
+    {
+        return array();
+    }
+
+    /**
+     * @param string|null $host
+     *
+     * @return null
+     */
+    public function getFullHost($host = null)
+    {
+        return null;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return null
+     */
+    public function getFullHostById($id)
+    {
+        return null;
+    }
+
+    /**
+     * @return null
+     */
+    public function getHostSwitched()
+    {
+        return null;
+    }
+
+    /**
+     * @param string|null $host
+     *
+     * @return null
+     */
+    public function getHostBaseUrl($host = null)
+    {
+        return null;
+    }
+
 }

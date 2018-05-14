@@ -88,7 +88,7 @@ Feature: AdminSettingsUser
   Scenario: Use filter module
     Given I am on the users page
     And I filter on "Username" that "equals" "test"
-    And I additionally filter on "E-Mail" that "not equals" "guest@domain"
+    And I additionally filter on "E-mail" that "not equals" "guest@domain"
     And I press "Filter"
     Then I should see "test"
 

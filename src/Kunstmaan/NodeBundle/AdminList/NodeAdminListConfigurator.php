@@ -6,12 +6,12 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\DateFilterType;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType;
 use Kunstmaan\AdminListBundle\AdminList\ListAction\SimpleListAction;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -107,7 +107,7 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
         $this->addListAction(
             new SimpleListAction(
                 $addHomepageRoute,
-                'Add homepage',
+                'kuma_node.modal.add_homepage.h',
                 null,
                 'KunstmaanNodeBundle:Admin:list_action_button.html.twig'
             )
@@ -120,10 +120,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFilters()
     {
         $this
-            ->addFilter('title', new StringFilterType('title'), 'Title')
-            ->addFilter('created', new DateFilterType('created'), 'Created At')
-            ->addFilter('updated', new DateFilterType('updated'), 'Updated At')
-            ->addFilter('online', new BooleanFilterType('online'), 'Online');
+            ->addFilter('title', new StringFilterType('title'), 'kuma_node.admin.list.filter.title')
+            ->addFilter('created', new DateFilterType('created'), 'kuma_node.admin.list.filter.created_at')
+            ->addFilter('updated', new DateFilterType('updated'), 'kuma_node.admin.list.filter.updated_at')
+            ->addFilter('online', new BooleanFilterType('online'), 'kuma_node.admin.list.filter.online');
     }
 
     /**
@@ -132,10 +132,10 @@ class NodeAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function buildFields()
     {
         $this
-            ->addField('title', 'Title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
-            ->addField('created', 'Created At', true)
-            ->addField('updated', 'Updated At', true)
-            ->addField('online', 'Online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
+            ->addField('title', 'kuma_node.admin.list.header.title', true, 'KunstmaanNodeBundle:Admin:title.html.twig')
+            ->addField('created', 'kuma_node.admin.list.header.created_at', true)
+            ->addField('updated', 'kuma_node.admin.list.header.updated_at', true)
+            ->addField('online', 'kuma_node.admin.list.header.online', true, 'KunstmaanNodeBundle:Admin:online.html.twig');
     }
 
     /**

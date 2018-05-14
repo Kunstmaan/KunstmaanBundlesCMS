@@ -2,13 +2,13 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use {{ namespace }}\Form\Pages\HomePageAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HomePageInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
+use {{ namespace }}\Form\Pages\HomePageAdminType;
 
 /**
  * HomePage
@@ -19,13 +19,11 @@ use Symfony\Component\Form\AbstractType;
 class HomePage extends AbstractPage implements HasPageTemplateInterface, SearchTypeInterface, HomePageInterface
 {
     /**
-     * Returns the default backend form type for this page
-     *
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new HomePageAdminType();
+        return HomePageAdminType::class;
     }
 
     /**

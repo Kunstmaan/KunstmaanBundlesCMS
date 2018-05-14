@@ -19,9 +19,6 @@
 
     {# CSS #}
     {% include '<%= bundle.getName() %>:Layout:_css.html.twig' %}
-
-    {# JS #}
-    {% include '<%= bundle.getName() %>:Layout:_js_header.html.twig' %}
 </head>
 
 <body class="{% block extra_body_classes %}<% if demosite %>emulate-pulldown<% endif %>{% endblock %}" {% block extra_body_attributes %}{% endblock %}>

@@ -1,0 +1,36 @@
+---
+kuma_menu:
+  menus:
+    title: Moduł menu
+  menu:
+    adminlist:
+      field:
+        name: Nazwa
+      filter:
+        name: Nazwa
+      action:
+        manage: Zarządzaj
+  menu_item:
+    adminlist:
+      breadcrumb:
+        modules: Moduły
+        menu: Moduł menu
+        menu_items: Menu
+      title: Menu %name% dla języka %locale%
+      online: (Online)
+      offline: (Offline)
+      field:
+        title: Tytuł
+        online: Online
+        type: Typ
+        url: Adres url
+        new_window: Nowe okno
+  form:
+    parent: Menu rodzic
+    parent_placeholder: Wbierz menu rodzica...
+    type: Typ
+    node_translation: Link do strony
+    node_translation_placeholder: Wybierz strone do której linkować...
+    title: Tytuł
+    url: Adres url
+    new_window: Nowe okno

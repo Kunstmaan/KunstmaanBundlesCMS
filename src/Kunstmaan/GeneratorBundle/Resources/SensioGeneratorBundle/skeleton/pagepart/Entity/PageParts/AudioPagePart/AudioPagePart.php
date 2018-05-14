@@ -26,7 +26,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getMedia()
     {
-	return $this->media;
+        return $this->media;
     }
 
     /**
@@ -38,9 +38,9 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setMedia($media)
     {
-	$this->media = $media;
+        $this->media = $media;
 
-	return $this;
+        return $this;
     }
 
     /**
@@ -48,14 +48,14 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return "{{ bundle }}:PageParts/{{ pagepart }}:view.html.twig";
+        return "{{ bundle }}:PageParts/{{ pagepart }}:view.html.twig";
     }
 
     /**
-     * @return {{ pagepart }}AdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return {{ adminType }}::class;
     }
 }

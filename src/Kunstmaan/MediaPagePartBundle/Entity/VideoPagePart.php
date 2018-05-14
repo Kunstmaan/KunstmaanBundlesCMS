@@ -1,11 +1,11 @@
 <?php
 
 namespace Kunstmaan\MediaPagePartBundle\Entity;
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaPagePartBundle\Form\VideoPagePartAdminType;
+
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaPagePartBundle\Form\VideoPagePartAdminType;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
  * VideoPagePart
@@ -67,10 +67,10 @@ class VideoPagePart extends AbstractPagePart
     }
 
     /**
-     * @return VideoPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new VideoPagePartAdminType();
+        return VideoPagePartAdminType::class;
     }
 }

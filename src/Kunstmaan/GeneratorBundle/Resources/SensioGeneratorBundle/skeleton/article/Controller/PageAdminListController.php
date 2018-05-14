@@ -2,14 +2,14 @@
 
 namespace {{ namespace }}\Controller;
 
-use {{ namespace }}\AdminList\{{ entity_class }}PageAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
 use Kunstmaan\ArticleBundle\Controller\AbstractArticlePageAdminListController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use {{ namespace }}\AdminList\{{ entity_class }}PageAdminListConfigurator;
 
 /**
  * The AdminList controller for the {{ entity_class }}Page

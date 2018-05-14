@@ -81,24 +81,6 @@ class SearchService
     }
 
     /**
-     * @return RenderContext
-     * @deprecated Use getRenderContext
-     */
-    public function getRenderContect()
-    {
-        return $this->renderContext;
-    }
-
-    /**
-     * @param RenderContext $renderContext
-     * @deprecated Use setRenderContext
-     */
-    public function setRenderContect($renderContext)
-    {
-        $this->renderContext = $renderContext;
-    }
-
-    /**
      * @return int
      */
     public function getDefaultPerPage()
@@ -177,11 +159,7 @@ class SearchService
             ->setContentType($queryType)
             ->setLanguage($lang);
 
-        // Facets
-        $facetTerms = new \Elastica\Facet\Terms('type');
-        $facetTerms->setField('type');
-        $query      = $searcher->getQuery();
-        $query->addFacet($facetTerms);
+        $query = $searcher->getQuery();
 
         // Aggregations
         $termsAggregation = new Terms('type');

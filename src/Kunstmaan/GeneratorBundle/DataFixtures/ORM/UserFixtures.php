@@ -4,17 +4,19 @@ namespace Kunstmaan\GeneratorBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Kunstmaan\AdminBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
+use Kunstmaan\AdminBundle\Entity\User;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Fixture for creating the admin and guest user
  */
 class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    const REFERENCE_ADMIN_USER = 'adminuser';
+
     /** @var ContainerInterface */
     private $container;
 
@@ -47,7 +49,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
             'admin@domain.com',
             $this->container->getParameter('kunstmaan_admin.default_admin_locale'),
             array('ROLE_SUPER_ADMIN'),
-            array($manager->merge($this->getReference('superadmins-group'))),
+            array($manager->merge($this->getReference(GroupFixtures::REFERENCE_SUPERADMINS_GROUP))),
             true,
             false
         );
@@ -63,7 +65,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $contents = str_replace('-adminpwd-', $password, $contents);
         file_put_contents($file, $contents);
 
-        $this->setReference('adminuser', $user1);
+        $this->setReference(self::REFERENCE_ADMIN_USER, $user1);
     }
 
     /**
@@ -92,7 +94,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         $enabled = false,
         $changed = false
     ) {
-        $user = new User();
+        $user = $this->container->get('fos_user.user_manager')->createUser();
         $user->setUsername($username);
         $user->setPlainPassword($password);
         $user->setRoles($roles);

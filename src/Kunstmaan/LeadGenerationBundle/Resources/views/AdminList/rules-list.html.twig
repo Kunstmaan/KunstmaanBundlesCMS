@@ -3,7 +3,7 @@
 {% block admin_page_title %}
     <div class="col-sm-6 col-md-8">
         <h1 class="app__content__header__title">
-           Rules for {{ adminlistconfigurator.popup.name }}
+            {{ 'kuma_lead_generation.rules.page_title.%name%'|trans({'%name%': adminlistconfigurator.popup.name }) }}
         </h1>
     </div>
 {% endblock %}
@@ -16,7 +16,7 @@
                 <div class="btn-group">
                     {% block actions %}
                         <a type="button" data-target="#add-rule-modal" data-toggle="modal" class="btn btn-primary btn--raise-on-hover">
-                            Add Rule
+                            {{ 'kuma_lead_generation.rules.add.modal.button.open'|trans() }}
                         </a>
                     {% endblock %}
                 </div>
@@ -34,7 +34,7 @@
                             <i class="fa fa-times"></i>
                         </button>
                         <h3>
-                            Add Rule
+                            {{ 'kuma_lead_generation.rules.add.modal.title'|trans() }}
                         </h3>
                     </div>
 
@@ -55,10 +55,10 @@
                         <!-- Footer -->
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
-                                Add
+                                {{ 'kuma_lead_generation.rules.add.modal.button.add'|trans() }}
                             </button>
                             <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                                Cancel
+                                {{ 'kuma_lead_generation.rules.add.modal.button.cancel'|trans() }}
                             </button>
                         </div>
                     </form>
@@ -72,16 +72,16 @@
     <ul class="breadcrumb app__content__breadcrumb">
         <li>
             <a href="{{ path('KunstmaanAdminBundle_modules') }}">
-                Modules
+                {{ 'kuma_lead_generation.breadcrumbs.modules'|trans() }}
             </a>
         </li>
         <li>
             <a href="{{ path('kunstmaanleadgenerationbundle_admin_popup_abstractpopup') }}">
-                Popups
+                {{ 'kuma_lead_generation.breadcrumbs.popups'|trans() }}
             </a>
         </li>
         <li class="active">
-            Rules
+            {{ 'kuma_lead_generation.breadcrumbs.rules'|trans() }}
         </li>
     </ul>
 {% endblock %}

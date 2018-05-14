@@ -11,9 +11,9 @@
                 <li>
                     {{ 'pages.copyfrom' | trans }}
                     <a href="{{ path('KunstmaanNodeBundle_nodes_copyfromotherlanguage', { 'id': node.id, 'originallanguage': nodeTranslation.lang}) }}" class="js-prevent-double-click">
-                        {{ nodeTranslation.lang }}
-                    </a>
-                    : {{ nodeTranslation.title }}
+                        {{ nodeTranslation.lang -}}
+                    </a>:
+                    {{ nodeTranslation.title }}
                 </li>
             {% endfor %}
             <li>

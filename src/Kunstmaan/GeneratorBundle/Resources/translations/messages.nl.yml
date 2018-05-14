@@ -1,0 +1,8 @@
+---
+'{0} search.no_results|{1} one.result|]1,Inf[ many.results.%count%.%search_for%': '{0} Geen resultaten voor `%search_for%`|{1} %count% resultaat|]1, Inf[ %count% resultaten'
+search:
+  filter: Filteren
+  no_results: Geen resultaten
+pagerfanta:
+  prev: Vorige
+  next: Volgende

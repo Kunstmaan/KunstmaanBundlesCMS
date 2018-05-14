@@ -4,7 +4,7 @@ Upgrade Instructions
 ## To v3.2 with form submission field order support
 
 To upgrade from a previous version, you have to copy the Doctrine migrations file from this bundle (Resources/DoctrineMigrations/Version20150527162434.php)
-to your app/DoctrineMigrations/ folder and run it: ```app/console doctrine:migrations:migrate```
+to your app/DoctrineMigrations/ folder and run it: ```bin/console doctrine:migrations:migrate```
 
 This migration will create a new column in the `kuma_form_submission_fields` table.
 

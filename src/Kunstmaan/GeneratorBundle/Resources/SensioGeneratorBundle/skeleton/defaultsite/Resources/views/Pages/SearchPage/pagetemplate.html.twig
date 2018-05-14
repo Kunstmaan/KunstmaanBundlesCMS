@@ -3,19 +3,19 @@
         <div class="col-md-3">
         {% if pagerfanta is defined %}
             {% set searchResults = pagerfanta.currentPageResults() %}
-            {% set facets = pagerfanta.getAdapter().getFacets() %}
-            {% if facets is not empty %}
-                {% if facets['type']['terms'] is defined and facets['type']['terms']|length > 0 %}
+            {% set aggregations = pagerfanta.getAdapter().getAggregations() %}
+            {% if aggregations is not empty %}
+                {% if aggregations['type']['buckets'] is defined and aggregations['type']['buckets']|length > 0 %}
                     <p>{{ 'search.filter'|trans }}</p>
                     <ul class="list-reset">
-                    {% for type in facets['type']['terms'] %}
+                    {% for bucket in aggregations['type']['buckets'] %}
                         <li>
-                            {% if type['term'] != q_type %}
-                                <a href="?query={{ q_query }}&amp;type={{ type['term'] }}">
+                            {% if bucket['key'] != q_type %}
+                                <a href="?query={{ q_query }}&amp;type={{ bucket['key'] }}">
                             {% endif %}
-                            {{ type['term'] }}
-                            {% if type['term'] != q_type %}
-                                ({{ type['count'] }})</a>
+                            {{ bucket['key'] }}
+                            {% if bucket['key'] != q_type %}
+                                ({{ bucket['doc_count'] }})</a>
                             {% else %}
                                 <a href="?query={{ q_query }}">(-)</a>
                             {% endif %}

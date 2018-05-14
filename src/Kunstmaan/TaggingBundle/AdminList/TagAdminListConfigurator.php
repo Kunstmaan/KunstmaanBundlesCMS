@@ -4,10 +4,10 @@ namespace Kunstmaan\TaggingBundle\AdminList;
 
 use Doctrine\ORM\EntityManager;
 
-use Kunstmaan\TaggingBundle\Form\TagAdminType;
-use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
-use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\TaggingBundle\Form\TagAdminType;
 
 class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
@@ -19,7 +19,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
-        $this->setAdminType(new TagAdminType());
+        $this->setAdminType(TagAdminType::class);
     }
 
     /**
@@ -27,9 +27,9 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
-        $this->addField('createdAt', 'Created at', true);
-        $this->addField('updatedAt', 'Updated at', true);
+        $this->addField('name', 'kuma_tagging.adminlist.header.name', true);
+        $this->addField('createdAt', 'kuma_tagging.adminlist.header.created_at', true);
+        $this->addField('updatedAt', 'kuma_tagging.adminlist.header.updated_at', true);
     }
 
     /**
@@ -37,7 +37,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'kuma_tagging.adminlist.filter.name');
     }
 
     /**

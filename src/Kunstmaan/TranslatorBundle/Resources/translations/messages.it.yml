@@ -1,21 +1,54 @@
+---
 translator:
-    translator:
-        title: Traduzioni
-        inline_edit_title: Aggiungi traduzione
-        emptytext: Non tradotto
-        invalid_translation: Traduzione invalida!
-        fatal_error_occurred: Un grave errore si è verificato durante il salvataggio della traduzione. Riprova più tardi.
-    translations: Traduzioni
-    translation_not_unique: La traduzione dovrebbe essere unica
-    
+  translator:
+    title: Traduzioni
+    inline_edit_title: Aggiungi traduzione
+    emptytext: Non tradotto
+    invalid_translation: Traduzione invalida!
+    fatal_error_occurred: Un grave errore si è verificato durante il salvataggio della traduzione. Riprova più tardi.
+  translations: Traduzioni
+  translation_not_unique: La traduzione dovrebbe essere unica
 settings:
-    translator:
-        add: Aggiungi taduzione
-        edit: Modifica taduzione
-        refresh_live: Aggiorna
-        import_translations: Importa
-        import_translations_forced: Forza importazione
-        not_live_warning: "Le traduzioni sul sito non sono aggiornate, clicca 'Aggiorna' per avere l'ultima traduzione."
-        choose_language: "Seleziona una lingua"
-        succesful_added: "Traduzione creata con successo"
-        succesful_edited: "Traduzione modificata con successo"
+  translator:
+    add: Aggiungi taduzione
+    edit: Modifica taduzione
+    refresh_live: Aggiorna
+    import_translations_forced: Forza importazione
+    import_translations: Importa
+    actions: Actions
+    export_translations: Export to CSV
+    not_live_warning: "Le traduzioni sul sito non sono aggiornate, clicca 'Aggiorna' per avere l'ultima traduzione."
+    choose_language: "Seleziona una lingua"
+    succesful_added: "Traduzione creata con successo"
+    succesful_edited: "Traduzione modificata con successo"
+kuma_translator:
+  form:
+    text_with_locale:
+      locale:
+        label: Locale
+      text:
+        label: Text
+  command:
+    clear:
+      flash:
+        success: All live translations are up to date.
+    import:
+      flash:
+        success: Translations successfully imported, none existing translations were overwritten.
+        force_success: Translations successfully imported, all existing translations were overwritten.
+  modal:
+    confirmation:
+      force_import:
+        title: Are you sure you want to force an import?
+        body: All existing translations will be overwritten.
+        confirm_button: Import
+        cancel_button: Cancel
+  adminlist:
+    header:
+      domain: Domain
+      keyword: Keyword
+    filter:
+      domain: Domain
+      keyword: Keyword
+      text: Text
+      locale: Locale

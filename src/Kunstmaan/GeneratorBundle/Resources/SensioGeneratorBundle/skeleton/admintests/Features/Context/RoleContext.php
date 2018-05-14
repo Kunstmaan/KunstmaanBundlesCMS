@@ -2,16 +2,26 @@
 
 namespace {{ namespace }}\Features\Context;
 
-use Behat\Behat\Context\BehatContext;
-use Behat\Behat\Context\Step;
+use Behat\Behat\Context\Context;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 /**
  * RoleContext
  *
  * Provides the context for the AdminSettingsRole.feature
  */
-class RoleContext extends BehatContext
+class RoleContext implements Context
 {
+    /** @var FeatureContext $mainContext */
+    private $mainContext;
+
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope)
+    {
+        $environment = $scope->getEnvironment();
+
+        $this->mainContext = $environment->getContext(FeatureContext::class);
+    }
 
     /**
      * @param string $roleName
@@ -25,10 +35,10 @@ class RoleContext extends BehatContext
         $steps = array();
 
         $records = array(
-            "role[role]" => $this->getMainContext()->fixStepArgument($roleName)
+            "role[role]" => $this->mainContext->fixStepArgument($roleName)
         );
         foreach ($records as $field => $value) {
-            $steps[] = new Step\When("I fill in \"$field\" with \"$value\"");
+            $this->mainContext->fillField($field, $value);
         }
 
         return $steps;
@@ -41,7 +51,7 @@ class RoleContext extends BehatContext
      */
     public function iEditRole($roleName)
     {
-        $this->getMainContext()->clickAction($roleName, 'Edit', 'roles');
+        $this->mainContext->clickAction($roleName, 'Edit', 'roles');
     }
 
     /**
@@ -51,20 +61,20 @@ class RoleContext extends BehatContext
      */
     public function iDeleteRole($roleName)
     {
-        $this->getMainContext()->clickAction($roleName, 'Delete', 'roles');
+        $this->mainContext->clickAction($roleName, 'Delete', 'roles');
 
-        $page = $this->getMainContext()->getSession()->getPage();
+        $page = $this->mainContext->getSession()->getPage();
         $modals = $page->findAll('xpath', "//div[contains(@class, 'modal')]");
 
         //Wait 1 second for the modal to be visible
         //Else we can get a error when running the tests.
-        $this->getMainContext()->iWaitSeconds(1);
+        $this->mainContext->iWaitSeconds(1);
 
         // Find the visible modal.
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $this->getMainContext()->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
+                $this->mainContext->findAndClickButton($modal, 'xpath', "//form//button[@type='submit']");
 
                 return;
             }

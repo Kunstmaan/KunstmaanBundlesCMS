@@ -3,9 +3,9 @@
 namespace Kunstmaan\NodeSearchBundle\Twig;
 
 use Doctrine\ORM\EntityManager;
-use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
+use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 
 class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
@@ -26,7 +26,7 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
      */
     public function __construct(EntityManager $em, IndexablePagePartsService $indexablePagePartsService)
     {
-        $this->em                        = $em;
+        $this->em = $em;
         $this->indexablePagePartsService = $indexablePagePartsService;
     }
 
@@ -52,10 +52,10 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
     public function getParentPage(HasNodeInterface $page, $locale)
     {
         /** @var Node $node */
-        $node            = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
-        $parentNode      = $node->getParent();
+        $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->getNodeFor($page);
+        $parentNode = $node->getParent();
         $nodeTranslation = $parentNode->getNodeTranslation($locale);
-        $parentPage      = $nodeTranslation->getRef($this->em);
+        $parentPage = $nodeTranslation->getRef($this->em);
 
         return $parentPage;
     }
@@ -75,9 +75,10 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
         HasPagePartsInterface $page,
         $contextName = 'main',
         array $parameters = array()
-    ) {
-        $template       = $env->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
-        $pageparts      = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
+    )
+    {
+        $template = $env->loadTemplate('KunstmaanNodeSearchBundle:PagePart:view.html.twig');
+        $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page, $contextName);
         $newTwigContext = array_merge(
             $parameters,
             array(
@@ -87,15 +88,5 @@ class KunstmaanNodeSearchTwigExtension extends \Twig_Extension
         $newTwigContext = array_merge($newTwigContext, $twigContext);
 
         return $template->render($newTwigContext);
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'kunstmaan_node_search_twig_extension';
     }
 }

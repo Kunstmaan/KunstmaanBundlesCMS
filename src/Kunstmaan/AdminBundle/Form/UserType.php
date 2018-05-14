@@ -11,8 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * UserType defines the form used for {@link User}
@@ -51,22 +51,20 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                 ->add('plainPassword', RepeatedType::class, array(
                     'type' => PasswordType::class,
                     'required' => $options['password_required'],
-                    'invalid_message' => "errors.password.dontmatch",
+                    'invalid_message' => 'errors.password.dontmatch',
                     'first_options' => array(
                         'label' => 'settings.user.password'
                     ),
                     'second_options' => array(
                         'label' => 'settings.user.repeatedpassword'
                     )
-                    )
-                )
+                ))
                 ->add('email', EmailType::class, array ('required' => true, 'label' => 'settings.user.email'))
                 ->add('adminLocale', ChoiceType::class, array(
                     'choices'     => $languages,
                     'label'       => 'settings.user.adminlang',
                     'required'    => true,
                     'placeholder' => false,
-                    'choices_as_values' => true,
                 ));
 
         if ($this->canEditAllFields) {
@@ -81,8 +79,9 @@ class UserType extends AbstractType implements RoleDependentUserFormInterface
                             'multiple' => true,
                             'expanded' => false,
                             'required' => false,
-                            'attr' => array('class' => 'js-advanced-select form-control advanced-select',
-                                'data-placeholder' => 'Choose the permission groups...'
+                            'attr' => array(
+                                'placeholder' => 'settings.user.roles_placeholder',
+                                'class' => 'js-advanced-select form-control advanced-select',
                             )
                         )
                     );

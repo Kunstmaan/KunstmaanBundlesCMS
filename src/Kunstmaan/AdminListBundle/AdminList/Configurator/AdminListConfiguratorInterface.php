@@ -4,13 +4,13 @@ namespace Kunstmaan\AdminListBundle\AdminList\Configurator;
 
 use InvalidArgumentException;
 use Kunstmaan\AdminListBundle\AdminList\BulkAction\BulkActionInterface;
-use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
-use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
 use Kunstmaan\AdminListBundle\AdminList\Field;
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\AbstractType;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\ItemActionInterface;
+use Kunstmaan\AdminListBundle\AdminList\ListAction\ListActionInterface;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Implement this interface to create your own admin list
@@ -83,7 +83,7 @@ interface AdminListConfiguratorInterface
      *
      * @throws InvalidArgumentException
      *
-     * @return AbstractType
+     * @return string FQCN of form type
      */
     public function getAdminType($entity);
 

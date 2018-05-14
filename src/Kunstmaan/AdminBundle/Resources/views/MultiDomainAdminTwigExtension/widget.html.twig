@@ -1,0 +1,17 @@
+{% set switchedHost = get_switched_host() %}
+{% set route_params = app.request.attributes.get('_route_params') %}
+{% set route_params = route_params|merge(app.request.query.all) %}
+
+<li class="dropdown">
+    <a href="#site" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        {{ switchedHost.host }}
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+        {% for host in hosts %}
+            <li class="{% if switchedHost == host %} active{% endif %}{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}">
+                <a href="{{ path('KunstmaanMultiDomainBundle_switch_site', { 'host': host, 'route': route, 'route_params': route_params, 'from_url_chooser': true }) }}">{{ host }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</li>

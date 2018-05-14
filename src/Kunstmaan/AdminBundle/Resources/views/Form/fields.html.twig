@@ -26,7 +26,8 @@
 {% block choice_widget_collapsed %}
 {% spaceless %}
     {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
-    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}
+        {%- if attr.placeholder is defined %} data-placeholder="{{ attr.placeholder|trans({}, translation_domain) }}"{% endif %}>
         {% if placeholder is not none %}
             <option value="" {% if required and value is empty %}selected="selected"{% endif %}>{{ placeholder|trans({}, translation_domain) }}</option>
         {% endif %}
@@ -164,7 +165,21 @@
                 {% set sortableField = attr['nested_sortable_field']|default('weight') %}
             {% endif %}
 
-            <div id="{{ form.vars.id }}__nested-form" class="js-nested-form nested-form {% if sortable %} js-sortable-container sortable-container nested-form--sortable{% endif %}" data-sortable="{% if sortable %}true{% else %}false{% endif %}" data-allow-new="{{ form.vars.allow_add|default('0') }}" data-allow-delete="{{ form.vars.allow_delete|default('0') }}" data-min-items="{{ attr['nested_form_min']|default('0') }}" data-max-items="{{ attr['nested_form_max']|default('false') }}" data-sortable="{{ attr['nested_sortable']|default('false') }}" {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}{% if form.vars.allow_add %} data-prototype="{{ form_widget(form.vars.prototype)|e }}"{% endif %} data-initialized="false" data-initializing="false" data-reinit-js='["nestedForm"]'>
+            <div
+                id="{{ form.vars.id }}__nested-form"
+                class="js-nested-form nested-form {% if sortable %} js-sortable-container sortable-container nested-form--sortable{% endif %}"
+                data-sortable="{% if sortable %}true{% else %}false{% endif %}"
+                data-allow-new="{{ form.vars.allow_add|default('0') }}"
+                data-allow-delete="{{ form.vars.allow_delete|default('0') }}"
+                data-min-items="{{ attr['nested_form_min']|default('0') }}"
+                data-max-items="{{ attr['nested_form_max']|default('false') }}"
+                {% if sortable %} data-sortkey="{{ form.vars.id }}___name___{{ sortableField }}"{% endif %}
+                {% if form.vars.allow_add %}
+                    data-prototype="{{ form_widget(form.vars.prototype)|e }}"
+                    data-prototype-name="{{ form.vars.name }}"
+                    data-add-button-label="{{ attr['nested_add_button_label']|default('form.add')|trans }}"
+                {% endif %}
+                data-initialized="false" data-initializing="false" data-reinit-js='["nestedForm"]'>
 
                 {# Items #}
                 {% for obj in form %}
@@ -180,12 +195,14 @@
                             {% endif %}
 
                             <div class="js-nested-form__item__header__actions nested-form__item__header__actions"></div>
+                            {% if sortable %}
                             <button type="button" class="js-move-up-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--up" title="{{ 'pagepart.buttons.move_up'|trans }}" data-target-id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}">
                                 <i class="fa fa-chevron-up"></i>
                             </button>
                             <button type="button" class="js-move-down-pp-btn btn--raise-on-hover pp__actions__action pp__actions__action--down" title="{{ 'pagepart.buttons.move_down'|trans }}" data-target-id="{% if obj.vars.value.id is defined %}{{ obj.vars.value.id }}{% else %}{{ obj.vars.value }}{% endif %}">
                                 <i class="fa fa-chevron-down"></i>
                             </button>
+                            {% endif %}
                         </header>
 
                         {# View #}

@@ -1,10 +1,10 @@
 <?php
 namespace Kunstmaan\PagePartBundle\Entity;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Class that defines a header page part object to add to a page
@@ -95,10 +95,10 @@ class HeaderPagePart extends AbstractPagePart
     }
 
     /**
-     * @return HeaderPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new HeaderPagePartAdminType();
+        return HeaderPagePartAdminType::class;
     }
 }

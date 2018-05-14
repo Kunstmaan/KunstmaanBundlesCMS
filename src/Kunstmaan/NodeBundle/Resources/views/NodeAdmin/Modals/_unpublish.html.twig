@@ -1,0 +1,76 @@
+<div id="unpub" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'kuma_node.modal.unpublish.title'|trans() }}
+                </h3>
+            </div>
+
+            <form action="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <p>
+                        {{ 'kuma_node.modal.unpublish.body'|trans() }}
+                    </p>
+
+                    <div class="form-group">
+                        <label>
+                            <input id="unpublish-later__check" type="checkbox">
+                            {{ 'kuma_node.modal.unpublish.later.label'|trans() }}
+                        </label>
+                    </div>
+
+                    <div id="unpublish-later">
+
+                        <!-- Date -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-min-date="today" data-default-date="true">
+                                <input id="unpub_date" type="text" name="unpub_date" class="form-control">
+                                <span class="input-group-addon input-group-addon--has-action">
+                                    <i class="fa fa-calendar-o"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Time -->
+                        <div class="form-group">
+                            <div class="js-datepicker input-group" data-format="HH:mm" data-min-date="today" data-default-date="true" data-stepping="{{ unpublish_later_stepping }}">
+                                <input id="unpub_tmpckr" type="text" name="unpub_time" class="form-control">
+                                <span class="input-group-addon input-group-addon--has-action">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div id="unpublish-later-action" class="btn_group">
+                        <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary btn--raise-on-hover">
+                            {{ 'kuma_node.modal.unpublish.later.button'|trans() }}
+                        </button>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.unpublish.later.cancel'|trans() }}
+                        </button>
+                    </div>
+                    <div id="unpublish-action" class="btn_group">
+                        <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
+                            {{ 'kuma_node.modal.unpublish.now.button'|trans() }}
+                        </a>
+                        <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.unpublish.now.cancel'|trans() }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

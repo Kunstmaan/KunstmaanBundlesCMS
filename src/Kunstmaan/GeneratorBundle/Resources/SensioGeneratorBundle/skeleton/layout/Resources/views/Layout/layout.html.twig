@@ -13,7 +13,17 @@
         {% set node = nodetranslation.node %}
     {% endif %}
     {% set nodemenu = get_node_menu(app.request.locale, node) %}
-    {{ websitetitle | trans }}{% block title %}{% if page is defined and nodemenu.getActiveForDepth(2) is not null %} - {{ get_title_for(page) }}{% endif %}{% endblock %}
+    {% block title %}
+        {% if page is defined and nodemenu.getActiveForDepth(2) is not null %}
+            {{ get_title_for(page) ~ ' - ' ~ websitetitle|trans }}
+        {% else %}
+            {{ websitetitle | trans }}
+            {% if page is defined %}
+                {% set seo = get_seo_for(page) %}
+                {% if seo is defined and seo.metaTitle is not empty %} - {{ seo.metaTitle }}{% endif %}
+            {% endif %}
+        {% endif %}
+    {% endblock %}
     </title>
 
     {% if page is defined %}
@@ -29,6 +39,7 @@
     {# CSS #}
     {% include '<%= shortBundleName %>/Layout/_css.html.twig' %}
 </head>
+{% endspaceless %}
 
 <body id="sidebar-toggle-container" class="sidebar-toggle-container{% block extra_body_classes %}{% endblock %}" {% block extra_body_attributes %}{% endblock %}>
 <% if demosite %>
@@ -79,7 +90,9 @@
     {% endblock %}
 
     {# JS Footer #}
-    {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
+    {% block jsBundle %}
+        {% include '<%= shortBundleName %>/Layout/_js_footer.html.twig' %}
+    {% endblock %}
 <% if demosite %>
     </div>
 
@@ -87,4 +100,3 @@
 <% endif %>
 </body>
 </html>
-{% endspaceless %}

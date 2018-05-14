@@ -72,7 +72,6 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::isAdminRoute
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
      */
     public function testGetHostWithOverrideOnFrontend()
@@ -87,7 +86,6 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getMasterRequest
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHost
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::hasHostOverride
-     * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::isAdminRoute
      * @covers Kunstmaan\MultiDomainBundle\Helper\DomainConfiguration::getHostOverride
      */
     public function testGetHostWithOverrideOnBackend()
@@ -298,6 +296,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('doctrine.orm.entity_manager', 1, $this->getEntityManager()),
+            array('kunstmaan_admin.adminroute.helper', 1, $this->getAdminRouteHelper())
         );
 
         $container
@@ -316,6 +315,24 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
             ->willReturn($this->getNodeRepository());
 
         return $em;
+    }
+
+    private function getAdminRouteHelper()
+    {
+        $adminRouteReturnValueMap = array(
+            array('/frontend-uri', false),
+            array('/nl/admin/backend-uri', true)
+        );
+
+        $adminRouteHelper = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\AdminRouteHelper')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $adminRouteHelper
+            ->expects($this->any())
+            ->method('isAdminRoute')
+            ->will($this->returnValueMap($adminRouteReturnValueMap));
+
+        return $adminRouteHelper;
     }
 
     private function getNodeRepository()

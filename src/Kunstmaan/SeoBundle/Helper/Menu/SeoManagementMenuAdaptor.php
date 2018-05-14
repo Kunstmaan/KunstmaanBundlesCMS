@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\SeoBundle\Helper\Menu;
 
-use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -37,7 +37,7 @@ class SeoManagementMenuAdaptor implements MenuAdaptorInterface
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('KunstmaanSeoBundle_settings_robots')
-                ->setLabel('Robots')
+                ->setLabel('seo.robots.title')
                 ->setUniqueId('robots_settings')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {

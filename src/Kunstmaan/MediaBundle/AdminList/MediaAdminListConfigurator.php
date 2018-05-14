@@ -33,6 +33,11 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     private $request;
 
     /**
+     * @var int $limit
+     */
+    private $limit;
+
+    /**
      * @param EntityManager $em The entity manager
      * @param MediaManager $mediaManager The media manager
      * @param Folder $folder The current folder
@@ -47,9 +52,14 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     {
         parent::__construct($em);
 
-        $this->setAdminType(new MediaType($mediaManager, $em));
+        $this->setAdminType(MediaType::class);
+
         $this->folder = $folder;
         $this->request = $request;
+
+        // Thumbnail view should display 24 images, list view 250
+        $viewMode = $request->get('viewMode', 'thumb-view');
+        $this->limit = ($viewMode == 'thumb-view') ? 24 : 250;
     }
 
     /**
@@ -57,10 +67,10 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
-        $this->addField('contentType', 'Type', true);
-        $this->addField('updatedAt', 'Date', true);
-        $this->addField('filesize', 'Filesize', true);
+        $this->addField('name', 'media.adminlist.configurator.name', true);
+        $this->addField('contentType', 'media.adminlist.configurator.type', true);
+        $this->addField('updatedAt', 'media.adminlist.configurator.date', true);
+        $this->addField('filesize', 'media.adminlist.configurator.filesize', true);
     }
 
     /**
@@ -68,10 +78,10 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new ORM\StringFilterType('name'), 'Name');
-        $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'Type');
-        $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'Date');
-        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'Filesize (in bytes)');
+        $this->addFilter('name', new ORM\StringFilterType('name'), 'media.adminlist.configurator.filter.name');
+        $this->addFilter('contentType', new ORM\StringFilterType('contentType'), 'media.adminlist.configurator.filter.type');
+        $this->addFilter('updatedAt', new ORM\NumberFilterType('updatedAt'), 'media.adminlist.configurator.filter.updated_at');
+        $this->addFilter('filesize', new ORM\NumberFilterType('filesize'), 'media.adminlist.configurator.filter.filesize');
     }
 
     /**
@@ -114,8 +124,20 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      */
     public function getLimit()
     {
-        return 250;
+        return $this->limit;
     }
+
+    /**
+     * @param int $limit
+     * @return MediaAdminListConfigurator
+     */
+    protected function setLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+
 
     /**
      * Add item actions buttons

@@ -1,0 +1,50 @@
+---
+pagepart:
+  header:
+    type: 'Rodzaj nagłówka'
+    title: 'Tytuł'
+  link:
+    internal: Wewnętrzny
+    external: Zawenętrzny
+    email: Adres email
+    choose: 'Wybierz link'
+    openinnewwindow: 'Otwórz w nowym oknie'
+    text: 'Tekst'
+  html:
+    content: 'Treści'
+  text:
+    content: 'Treści'
+  buttons:
+    move_up: Przesuń w górę
+    move_down: Przesuń w dół
+    edit: Edytuj
+    delete: Usuń
+    resize: Minimalizuj-Maksymalizuj
+region:
+  button:
+    min: Minimalizuj
+    max: Maksymalizuj
+kuma_pagepart:
+  tab:
+    content:
+      title: Treść
+  modal:
+    delete:
+      'title.%type%': "Usuń element strony '%type%'"
+      'text.%type%': To spowoduje usunięcie elementu strony kompletnie. Zapisz stronę aby potwierdzić akcje.
+      button:
+        delete: Usuń
+        cancel: Anuluj
+  select:
+    add: Dodaj element strony
+  template:
+    modal:
+      change:
+        current: Aktualny
+        title: Zmień szablon
+        button:
+          open: Zmień szablon
+          change: Zmień
+          cancel: Anuluj
+        message:
+          'no_admin_found.%name%': Nie znaleziono administratora dla nazwy %name%

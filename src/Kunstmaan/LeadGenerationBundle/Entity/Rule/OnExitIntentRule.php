@@ -122,10 +122,10 @@ class OnExitIntentRule extends AbstractRule
     }
 
     /**
-     * @return OnExitIntentAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return new OnExitIntentAdminType();
+        return OnExitIntentAdminType::class;
     }
 }

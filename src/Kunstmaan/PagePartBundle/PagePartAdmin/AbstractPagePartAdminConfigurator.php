@@ -2,24 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\PagePartAdmin;
 
-/**
- * AbstractPagePartAdminConfigurator
- */
-abstract class AbstractPagePartAdminConfigurator
+abstract class AbstractPagePartAdminConfigurator implements PagePartAdminConfiguratorInterface
 {
 
-    /**
-     * @return array
-     */
-    abstract public function getPossiblePagePartTypes();
-
-    /**
-     * @return string
-     */
-    abstract public function getName();
-
-    /**
-     * @return string
-     */
-    abstract public function getContext();
 }

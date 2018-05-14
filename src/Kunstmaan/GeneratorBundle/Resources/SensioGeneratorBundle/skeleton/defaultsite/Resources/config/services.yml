@@ -1,9 +1,4 @@
 services:
-    {{ bundle.name|lower }}.node_translation.twig.extension:
-        class: {{ bundle.namespace }}\Twig\NodeTranslationTwigExtension
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: twig.extension }
 
 {% if demosite %}
     {{ bundle.name|lower }}.bikes.twig.extension:

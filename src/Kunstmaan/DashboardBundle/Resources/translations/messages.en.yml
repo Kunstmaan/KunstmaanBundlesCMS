@@ -12,7 +12,7 @@ dashboard:
             year_to_date: Year to date
         chart:
             users: Users
-            pct_new_sessions: % New Sessions
+            pct_new_sessions: "% New Sessions"
             sessions: Sessions
             pageviews: Pageviews
             avg_pages_p_session: Pages / Session

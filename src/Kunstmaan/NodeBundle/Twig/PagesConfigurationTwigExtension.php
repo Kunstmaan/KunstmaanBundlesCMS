@@ -30,7 +30,7 @@ class PagesConfigurationTwigExtension extends \Twig_Extension
             'get_possible_child_types' => new \Twig_SimpleFunction(
                 'get_possible_child_types', [$this, 'getPossibleChildTypes']
             ),
-            'get_homepage_types'       => new \Twig_SimpleFunction(
+            'get_homepage_types' => new \Twig_SimpleFunction(
                 'get_homepage_types', [$this, 'getHomepageTypes']
             ),
         ];
@@ -52,15 +52,5 @@ class PagesConfigurationTwigExtension extends \Twig_Extension
     public function getHomepageTypes()
     {
         return $this->pagesConfiguration->getHomepageTypes();
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'pages_configuration_twig_extension';
     }
 }

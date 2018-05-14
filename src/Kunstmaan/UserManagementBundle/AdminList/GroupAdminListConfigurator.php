@@ -15,7 +15,7 @@ class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new StringFilterType('name'), 'Name');
+        $this->addFilter('name', new StringFilterType('name'), 'kuma_user.group.adminlist.filter.name');
     }
 
     /**
@@ -23,8 +23,8 @@ class GroupAdminListConfigurator extends AbstractSettingsAdminListConfigurator
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
-        $this->addField('roles', 'Roles', false);
+        $this->addField('name', 'kuma_user.group.adminlist.header.name', true);
+        $this->addField('roles', 'kuma_user.group.adminlist.header.roles', false);
     }
 
     /**

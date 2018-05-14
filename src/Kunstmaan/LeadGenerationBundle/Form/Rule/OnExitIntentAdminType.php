@@ -21,20 +21,21 @@ class OnExitIntentAdminType extends AbstractRuleAdminType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('sensitivity', IntegerType::class, array(
+            'label' => 'kuma_lead_generation.on_exit_intent.sensitivity.label',
             'required' => false,
             'attr' => array(
                 'info_text' => 'kuma_lead_generation.on_exit_intent.sensitivity_info'
             )
         ));
         $builder->add('timer', IntegerType::class, array(
-            'label' => 'Timer (milliseconds)',
+            'label' => 'kuma_lead_generation.on_exit_intent.timer.label',
             'required' => false,
             'attr' => array(
                 'info_text' => 'kuma_lead_generation.on_exit_intent.timer_info'
             )
         ));
         $builder->add('delay', IntegerType::class, array(
-            'label' => 'Delay (milliseconds)',
+            'label' => 'kuma_lead_generation.on_exit_intent.delay.label',
             'required' => false,
             'attr' => array(
                 'info_text' => 'kuma_lead_generation.on_exit_intent.delay_info'

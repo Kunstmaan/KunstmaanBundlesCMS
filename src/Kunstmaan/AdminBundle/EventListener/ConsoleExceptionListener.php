@@ -1,8 +1,8 @@
 <?php
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 
 class ConsoleExceptionListener
 {

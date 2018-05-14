@@ -22,16 +22,6 @@ class DateByLocaleExtension extends \Twig_Extension
     }
 
     /**
-     * Get the Twig extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'TwigLocaleExtension';
-    }
-
-    /**
      * A date formatting filter for Twig, renders the date using the specified parameters.
      *
      * @param mixed  $date     Unix timestamp to format

@@ -98,32 +98,6 @@ class MenuItem
     }
 
     /**
-     * @deprecated You should use getLabel or getUniqueId (depending on what you wish to retrieve)
-     *
-     * @return string
-     */
-    public function getInternalName()
-    {
-        return $this->uniqueId;
-    }
-
-    /**
-     * @deprecated Modified for backwards compatibility. You should use setUniqueId and setLabel instead for proper
-     * highlighting in trees!
-     *
-     * @param string $internalName
-     *
-     * @return MenuItem
-     */
-    public function setInternalName($internalName)
-    {
-        $this->label    = $internalName;
-        $this->uniqueId = $internalName;
-
-        return $this;
-    }
-
-    /**
      * Get unique Id
      *
      * @return string

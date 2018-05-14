@@ -10,12 +10,12 @@ use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
 /**
@@ -105,7 +105,7 @@ class FormSubmissionsController extends Controller
      * @param int $nodeTranslationId
      *
      * @Route("/export/{nodeTranslationId}.{_format}", requirements={"nodeTranslationId" = "\d+","_format" =
-     *                                                 "csv|xlsx"}, name="KunstmaanFormBundle_formsubmissions_export")
+     *                                                 "csv|xlsx|ods"}, name="KunstmaanFormBundle_formsubmissions_export")
      * @Method({"GET"})
      *
      * @return Response

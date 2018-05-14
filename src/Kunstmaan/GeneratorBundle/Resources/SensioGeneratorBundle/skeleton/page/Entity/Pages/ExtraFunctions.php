@@ -1,11 +1,11 @@
     /**
-     * Returns the default backend form type for this page
+     * Returns the default backend form type for this page.
      *
-     * @return {{ adminType }}
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new {{ adminType }}();
+        return {{ adminType }}::class;
     }
 
     /**
@@ -13,7 +13,7 @@
      */
     public function getPossibleChildTypes()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -21,11 +21,11 @@
      */
     public function getPagePartAdminConfigurations()
     {
-        return array(
+        return [
 {% for section in sections %}
             '{{ bundle }}:{{ section }}',
 {% endfor %}
-        );
+        ];
     }
 
     /**
@@ -33,7 +33,9 @@
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle }}:{{ template }}');
+        return [
+            '{{ bundle }}:{{ template }}',
+        ];
     }
 
     /**

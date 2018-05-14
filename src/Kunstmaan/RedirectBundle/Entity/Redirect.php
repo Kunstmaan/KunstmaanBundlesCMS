@@ -3,12 +3,20 @@
 namespace Kunstmaan\RedirectBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @ORM\Table(name="kuma_redirects")
+ * @ORM\Table(
+ *     name="kuma_redirects",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="kuma_redirects_idx_domain_origin", columns={"domain", "origin"})
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="Kunstmaan\RedirectBundle\Repository\RedirectRepository")
+ * @UniqueEntity(fields={"origin", "domain"})
  */
 class Redirect extends AbstractEntity
 {
@@ -26,6 +34,13 @@ class Redirect extends AbstractEntity
      * @Assert\NotBlank()
      */
     private $origin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="string", length=255, nullable=true)
+     */
+    private $note;
 
     /**
      * @var string
@@ -56,6 +71,7 @@ class Redirect extends AbstractEntity
      * Set domain
      *
      * @param string $domain
+     * 
      * @return Redirect
      */
     public function setDomain($domain)
@@ -69,6 +85,7 @@ class Redirect extends AbstractEntity
      * Set origin
      *
      * @param string $origin
+     *
      * @return Redirect
      */
     public function setOrigin($origin)
@@ -81,7 +98,7 @@ class Redirect extends AbstractEntity
     /**
      * Get origin
      *
-     * @return string 
+     * @return string
      */
     public function getOrigin()
     {
@@ -92,6 +109,7 @@ class Redirect extends AbstractEntity
      * Set target
      *
      * @param string $target
+     *
      * @return Redirect
      */
     public function setTarget($target)
@@ -104,7 +122,7 @@ class Redirect extends AbstractEntity
     /**
      * Get target
      *
-     * @return string 
+     * @return string
      */
     public function getTarget()
     {
@@ -115,6 +133,7 @@ class Redirect extends AbstractEntity
      * Set permanent
      *
      * @param boolean $permanent
+     *
      * @return Redirect
      */
     public function setPermanent($permanent)
@@ -132,5 +151,38 @@ class Redirect extends AbstractEntity
     public function isPermanent()
     {
         return $this->permanent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param string $note
+     *
+     * @return Redirect
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
+
+    /**
+     * @Assert\Callback
+     *
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->getOrigin() === $this->getTarget()) {
+            $context->buildViolation('errors.redirect.origin_same_as_target')
+                ->atPath('target')
+                ->addViolation();
+        }
     }
 }

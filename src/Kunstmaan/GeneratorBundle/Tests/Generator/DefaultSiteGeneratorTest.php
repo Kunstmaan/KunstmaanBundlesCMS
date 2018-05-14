@@ -17,11 +17,12 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         $filesystem->remove($path);
 
         $bundle = $this->getBundle($path);
+        $kernel = new \AppKernel('phpunit', true);
+        $kernel->boot();
 
-        $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant());
+        $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $kernel->getContainer());
         $generator->generate($bundle, '', __DIR__ . '/../data', false);
 
-        $this->assertFileExists($path . '/Twig/NodeTranslationTwigExtension.php');
     }
 
     protected function getBundle($path)

@@ -1,0 +1,34 @@
+{% import _self as macros %}
+
+{% for row in pageTemplate.rows %}
+<div class="row">
+{% for region in row.regions %}
+    {{ macros.render_region(region) }}
+{% endfor %}
+</div>
+{% endfor %}
+
+{% macro render_region(region) %}
+{% if region.children %}
+<div class="col-md-{{ region.span }}">
+    <div class="row">
+{% for child in region.children %}
+        {{ _self.render_region(child) }}
+{% endfor %}
+    </div>
+</div>
+{% elseif region.rows %}
+<div class="col-md-{{ region.span }}">
+    {% for row in region.rows %}
+    <div class="row">
+    {% for child in row.regions %}
+        {{ _self.render_region(child) }}
+    {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="col-md-{{ region.span }}"></div>
+{% endif %}
+
+{% endmacro %}

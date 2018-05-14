@@ -1,0 +1,3 @@
+headerpagepart:
+  niv.not_blank: Niveau verplicht.
+  title.not_blank: Titel is verplicht.

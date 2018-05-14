@@ -3,11 +3,11 @@
 {% if key == 'single_line' or key == 'multi_line' %}
     <p>{{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ " }}" }}</p>
 {% elseif key == 'rich_text' %}
-    {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|raw }}" }}
+    {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|replace_url|raw }}" }}
 {% elseif key == 'wysiwyg' %}
-    {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|raw }}" }}
+    {{ "{{ resource." ~ fieldArray[0]['fieldName'] ~ "|replace_url|raw }}" }}
 {% elseif key == 'link' %}
-    <a href="{{ "{{ resource." ~ fieldArray['url']['fieldName'] ~ " }}" }}" {{ "{% if resource." ~ fieldArray['new_window']['fieldName'] ~ " %}target=\"_blank\"{% endif %}" }}>{{ "{{ resource." ~ fieldArray['text']['fieldName'] ~ " }}" }}</a>
+    <a href="{{ "{{ resource." ~ fieldArray['url']['fieldName'] ~ "|replace_url }}" }}" {{ "{% if resource." ~ fieldArray['new_window']['fieldName'] ~ " %}target=\"_blank\"{% endif %}" }}>{{ "{{ resource." ~ fieldArray['text']['fieldName'] ~ " }}" }}</a>
 {% elseif key == 'image' %}
     {{ "{% if resource." ~ fieldArray['image']['fieldName'] ~ " is not empty %}" }}<img src="{{ "{{ asset(resource." ~ fieldArray['image']['fieldName'] ~ ".url) }}" }}" {{ "{% if resource." ~ fieldArray['alt_text']['fieldName'] ~ " is not empty %}" }}alt="{{ "{{ resource." ~ fieldArray['alt_text']['fieldName'] ~ " }}" }}"{{ "{% endif %}" }} />{{ "{% endif %}" }}
 {% elseif key == 'media' %}

@@ -3,8 +3,10 @@
 namespace Kunstmaan\MediaBundle\Form\File;
 
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
+use Kunstmaan\MediaBundle\Validator\Constraints\HasGuessableExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,7 +15,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\FileType as BaseFileType;
 
 /**
  * FileType
@@ -38,6 +39,7 @@ class FileType extends AbstractType
             'name',
             TextType::class,
             array(
+                'label' => 'media.form.file.name.label',
                 'required' => false
             )
         );
@@ -45,7 +47,8 @@ class FileType extends AbstractType
             'file',
             BaseFileType::class,
             array(
-                'constraints' => array(new File()),
+                'label' => 'media.form.file.file.label',
+                'constraints' => array(new File(), new HasGuessableExtension()),
                 'required' => false
             )
         );
@@ -53,6 +56,7 @@ class FileType extends AbstractType
             'copyright',
             TextType::class,
             array(
+                'label' => 'media.form.file.copyright.label',
                 'required' => false
             )
         );
@@ -60,6 +64,7 @@ class FileType extends AbstractType
             'description',
             TextareaType::class,
             array(
+                'label' => 'media.form.file.description.label',
                 'required' => false
             )
         );
@@ -76,7 +81,8 @@ class FileType extends AbstractType
                         'file',
                         BaseFileType::class,
                         array(
-                            'constraints' => array(new NotBlank(), new File()),
+                            'label' => 'media.form.file.file.label',
+                            'constraints' => array(new NotBlank(), new File(), new HasGuessableExtension()),
                             'required' => true
                         )
                     );
@@ -86,6 +92,7 @@ class FileType extends AbstractType
                         'originalFilename',
                         TextType::class,
                         array(
+                            'label' => 'media.form.file.originalFilename.label',
                             'required' => false,
                             'attr' => array(
                                 'readonly' => 'readonly'

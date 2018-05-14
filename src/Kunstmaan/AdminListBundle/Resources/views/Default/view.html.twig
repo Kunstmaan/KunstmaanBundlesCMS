@@ -10,13 +10,7 @@
                 {{ key }}
             </td>
             <td>
-                {% if value.timezone is defined %}
-                    {{ value|date() }}
-                {% elseif value.id is defined %}
-                    OBJECT
-                {% else %}
-                    {{ value }}
-                {% endif %}
+                {{ adminlistconfigurator.getStringValue(entity, key) }}
             </td>
         </tr>
     {% endfor %}

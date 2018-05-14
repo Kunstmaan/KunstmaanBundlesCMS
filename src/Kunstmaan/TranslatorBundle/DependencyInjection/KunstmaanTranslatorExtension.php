@@ -2,12 +2,12 @@
 
 namespace Kunstmaan\TranslatorBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Config\Resource\DirectoryResource;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -43,6 +43,7 @@ class KunstmaanTranslatorExtension extends Extension
         $loader->load('repositories.yml');
 
         $this->setTranslationConfiguration($config, $container);
+        $container->getDefinition('kunstmaan_translator.datacollector')->setDecoratedService('translator');
     }
 
     public function setTranslationConfiguration($config, $container)

@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\AdminList;
 
-use Symfony\Component\HttpFoundation\Request;
-
 use Kunstmaan\AdminListBundle\AdminList\FilterType\FilterTypeInterface;
+
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Filter

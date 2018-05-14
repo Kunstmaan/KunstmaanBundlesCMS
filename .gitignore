@@ -3,7 +3,9 @@ composer.lock
 composer.phar
 autoload.php
 /vendor/
-.idea
-.DS_Store
+node_modules/
 npm-debug.log
 *~
+*test.db
+.vscode
+src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/dist

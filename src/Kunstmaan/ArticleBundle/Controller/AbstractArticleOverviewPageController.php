@@ -20,7 +20,7 @@ class AbstractArticleOverviewPageController extends Controller{
     public function serviceAction(Request $request)
     {
 
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->getDoctrine()->getManager();
         $entity = $request->attributes->get('_entity');
         $repository = $entity->getArticleRepository($em);
         $pages = $repository->getArticles($request->getLocale());

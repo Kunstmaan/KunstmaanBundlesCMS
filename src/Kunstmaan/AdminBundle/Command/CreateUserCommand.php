@@ -14,7 +14,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
 /**
- * Symfony CLI command to create a user using app/console kuma:user:create <username_of_the_user>
+ * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
@@ -36,21 +36,21 @@ class CreateUserCommand extends ContainerAwareCommand
             ->setHelp(<<<EOT
 The <info>kuma:user:create</info> command creates a user:
 
-  <info>php app/console kuma:user:create matthieu --group=Users</info>
+  <info>php bin/console kuma:user:create matthieu --group=Users</info>
 
 This interactive shell will ask you for an email and then a password.
 
 You can alternatively specify the email, password and locale and group as extra arguments:
 
-  <info>php app/console kuma:user:create matthieu matthieu@example.com mypassword en --group=Users</info>
+  <info>php bin/console kuma:user:create matthieu matthieu@example.com mypassword en --group=Users</info>
 
 You can create a super admin via the super-admin flag:
 
-  <info>php app/console kuma:user:create admin --super-admin --group=Administrators</info>
+  <info>php bin/console kuma:user:create admin --super-admin --group=Administrators</info>
 
 You can create an inactive user (will not be able to log in):
 
-  <info>php app/console kuma:user:create thibault --inactive --group=Users</info>
+  <info>php bin/console kuma:user:create thibault --inactive --group=Users</info>
 
 <comment>Note:</comment> You have to specify at least one group.
 

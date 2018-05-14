@@ -1,0 +1,53 @@
+<!-- Check if there are any node translations other then the current language -->
+{% set translationOptions = {} %}
+{% if node.nodeTranslations(true) is not empty %}
+    {% for translation in node.nodeTranslations(true) %}
+        {% if translation.lang != nodeVersion.nodeTranslation.lang %}
+            {% set translationOptions = translationOptions|merge({(translation.lang): translation.id}) %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if translationOptions is not empty %}
+    <div id="recopy" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Head -->
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h3>{{ 'action.recopyfromlanguage' | trans }}</h3>
+                </div>
+
+                <form action="{{ path('KunstmaanNodeBundle_nodes_recopyfromotherlanguage', { 'id': node.id }) }}" method="post" novalidate="novalidate">
+
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="recopy_source">
+                                {{ 'modal.sourcelanguage' | trans }}
+                            </label>
+                            <select name="source" id="recopy_source" class="form-control">
+                                {% for value, option in translationOptions %}
+                                    <option value="{{ option }}">{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">
+                            {{ 'kuma_node.modal.recopyfromlanguage.button.copy'|trans() }}
+                        </button>
+                        <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
+                            {{ 'kuma_node.modal.recopyfromlanguage.button.cancel'|trans() }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}

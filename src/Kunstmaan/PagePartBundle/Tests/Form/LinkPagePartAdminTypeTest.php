@@ -31,14 +31,6 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType::getName
-     */
-    public function testGetName()
-    {
-        $this->assertEquals(LinkPagePartAdminType::class, $this->object->getName());
-    }
-
-    /**
      * @covers Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType::buildForm
      */
     public function testBuildForm()

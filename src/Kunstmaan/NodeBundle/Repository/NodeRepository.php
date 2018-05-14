@@ -11,8 +11,8 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Kunstmaan\NodeBundle\Helper\HiddenFromNavInterface;
+use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 
 /**
  * NodeRepository
@@ -311,7 +311,7 @@ SQL;
             )
             ->leftJoin(
                 'n',
-                '(SELECT lang, title, weight, node_id, url FROM kuma_node_translations GROUP BY node_id ORDER BY id ASC)',
+                'kuma_node_translations',
                 'v',
                 '(v.node_id = n.id AND v.lang <> :lang)'
             )
@@ -521,5 +521,19 @@ SQL;
             ->setParameter('internalName', $internalName);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Finds all different page classes currently registered as nodes
+     *
+     * @return string[]
+     */
+    public function findAllDistinctPageClasses()
+    {
+        $qb = $this->createQueryBuilder('n')
+            ->select('n.refEntityName')
+            ->distinct(true);
+
+        return $qb->getQuery()->getArrayResult();
     }
 }

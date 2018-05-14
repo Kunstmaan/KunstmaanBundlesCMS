@@ -32,11 +32,11 @@ You can override the default values for each type of vote in your config.yml
 kunstmaan_voting:
     actions:
         facebook_like:
-            default_value: %kuma_voting_default_value%
+            default_value: '%kuma_voting_default_value%'
         facebook_send:
-            default_value: %kuma_voting_default_value%
+            default_value: '%kuma_voting_default_value%'
         linkedin_share:
-            default_value: %kuma_voting_default_value%
+            default_value: '%kuma_voting_default_value%'
 ```
 
 ## Custom action and parameters
@@ -49,7 +49,7 @@ kunstmaan_voting:
         facebook_like:
             default_value: 2
         facebook_send:
-            default_value: %kuma_voting_default_value%
+            default_value: '%kuma_voting_default_value%'
         linkedin_share:
             default_value: 5
         yourownvote:

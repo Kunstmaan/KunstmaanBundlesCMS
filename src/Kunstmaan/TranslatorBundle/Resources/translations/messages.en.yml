@@ -13,9 +13,50 @@ settings:
         add: Add translation
         edit: Edit translation
         refresh_live: Refresh live
-        import_translations: Import
         import_translations_forced: Import forced
+        import_translations: Import
+        actions: Actions
+        export_translations: Export to CSV
         not_live_warning: "Translations on the live website are not up-to-date, hit 'Refresh live' to update to the latest translations."
         choose_language: "Choose a language"
         succesful_added: "Translation succesfully created"
         succesful_edited: "Translation succesfully edited"
+
+kuma_translator:
+    form:
+        text_with_locale:
+            locale:
+                label:  Locale
+            text:
+                label:  Text
+    command:
+        clear:
+            flash:
+                success:    All live translations are up to date.
+        import:
+            flash:
+                success:        Translations successfully imported, none existing translations were overwritten.
+                force_success:  Translations successfully imported, all existing translations were overwritten.
+    modal:
+        confirmation:
+            force_import:
+                title:  Are you sure you want to force an import?
+                body:   All existing translations will be overwritten.
+                confirm_button: Import
+                cancel_button:  Cancel
+
+    adminlist:
+        header:
+            domain:     Domain
+            keyword:    Keyword
+        filter:
+            domain:     Domain
+            keyword:    Keyword
+            text:       Text
+            locale:     Locale
+
+# Toolbar
+toolbar:
+    translations:
+        title: Translations
+        count: Count

@@ -1,27 +1,31 @@
-var {{ bundle.getName() }} = {{ bundle.getName() }} || {};
-
-{{ bundle.getName() }} = (function($, window, undefined) {
-
-    var init;
-
-    init = function() {
 {% if demosite %}
-        cargobay.scrollToTop.init();
-        cargobay.toggle.init();
-        cargobay.sidebarToggle.init();
-        cargobay.videolink.init();
-        cargobay.cookieConsent.init();
-        {{ bundle.getName() }}.search.init();
-        {{ bundle.getName() }}.demoMsg.init();
+import velocity from 'velocity-animate'; // eslint-disable-line
+
+import cbScrollToTop from 'cargobay/src/scroll-to-top/js/jquery.scroll-to-top';
+import cbSidebarToggle from 'cargobay/src/sidebar-toggle/js/jquery.sidebar-toggle';
+import cbToggle from 'cargobay/src/toggle/js/jquery.toggle';
+
+import search from './search';
+import demoMsg from './demoMsg';
 {% endif %}
-    };
+import cookieConsent from './cookieConsent';
+import videolink from './videolink';
 
-    return {
-        init: init
-    };
-
-}(jQuery, window));
-
+{% if demosite %}
 $(function() {
-    {{ bundle.getName() }}.init();
+    cbToggle.init();
+    cbScrollToTop.init();
+    cbSidebarToggle.init();
+
+    search.init();
+    demoMsg.init();
+    cookieConsent();
+    videolink();
 });
+
+{% else %}
+document.addEventListener('DOMContentLoaded', () => {
+    cookieConsent();
+    videolink();
+});
+{% endif %}

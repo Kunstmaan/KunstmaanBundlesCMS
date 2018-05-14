@@ -1,0 +1,14 @@
+            // {{ type }}
+            $menuItem = new TopMenuItem($menu);
+            $menuItem
+                ->setRoute('{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}{{ type|lower }}')
+                ->setLabel('{{ type }}')
+                ->setUniqueId('{{ entity_class }} {{ type }}')
+                ->setParent($parent)
+            ;
+            if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+                $menuItem->setActive(true);
+                $parent->setActive(true);
+            }
+            $children[] = $menuItem;
+

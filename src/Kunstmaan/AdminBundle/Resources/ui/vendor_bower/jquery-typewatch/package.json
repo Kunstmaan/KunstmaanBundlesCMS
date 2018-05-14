@@ -1,0 +1,33 @@
+{
+  "name": "jquery.typewatch",
+  "version": "3.0.0",
+  "description": "TypeWatch watches input and delays execution until typing has stopped.",
+  "main": "jquery.typewatch.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennyferra/TypeWatch.git"
+  },
+  "keywords": [
+    "typewatch",
+    "input",
+    "form",
+    "text",
+    "autocomplete",
+    "jquery"
+  ],
+  "author": "Denny Ferrassoli",
+  "licenses": [
+    "MIT",
+    "GPL-3.0"
+  ],
+  "bugs": {
+    "url": "https://github.com/dennyferra/TypeWatch/issues"
+  },
+  "homepage": "https://github.com/dennyferra/TypeWatch#readme"
+}

@@ -1,0 +1,15 @@
+---
+mediapagepart:
+  download:
+    choosefile: 'Selecteer bestand'
+  image:
+    choosefile: 'Selecteer bestand'
+    alttext: 'Alternatieve tekst'
+    link: 'Selecteer link'
+    openinnewwindow: 'Openen in nieuw venster?'
+  slide:
+    choose: 'Selecteer presentatie'
+  video:
+    choose: 'Selecteer video'
+  audio:
+    choose: 'Selecteer audio'

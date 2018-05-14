@@ -10,19 +10,21 @@
         <button class="close" data-dismiss="modal">
             <i class="fa fa-times"></i>
         </button>
-        <h3>Are you sure you want to force an import?</h3>
+        <h3>{{ 'kuma_translator.modal.confirmation.force_import.title'|trans() }}</h3>
         </div>
 
         <!-- Body -->
         <div class="modal-body">
-            <p>All existing translations will be overwritten.</p>
+            <p>{{ 'kuma_translator.modal.confirmation.force_import.body'|trans() }}</p>
         </div>
         <!-- Footer -->
         <div class="modal-footer">
 
         <form action="{{ path('KunstmaanTranslatorBundle_command_import_forced') }}" method="post" novalidate="novalidate">
-            <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover">Import</button>
-            <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">Cancel</button>
+            <button type="submit" name="submit" class="btn btn-danger btn--raise-on-hover"
+                >{{ 'kuma_translator.modal.confirmation.force_import.confirm_button'|trans() }}</button>
+            <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal"
+                >{{ 'kuma_translator.modal.confirmation.force_import.cancel_button'|trans() }}</button>
         </form>
         </div>
         </div>

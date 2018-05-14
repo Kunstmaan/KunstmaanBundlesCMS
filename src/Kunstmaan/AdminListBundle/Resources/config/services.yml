@@ -9,15 +9,23 @@ services:
         class:  '%kunstmaan_adminlist.service.export.class%'
         calls:
             -  [ setRenderer, [ '@templating' ] ]
-
-    pagerfanta.view.adminlist:
-        class: Kunstmaan\AdminListBundle\Service\Pager\TwitterBootstrapAdminListView
-        tags:
-            - { name: pagerfanta.view, alias: twitter_bootstrap_admin_list }
+            -  [ setTranslator, [ '@translator' ] ]
 
     kunstmaan_adminlist.twig.extension:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
         tags:
             -  { name: twig.extension }
+
+    kunstmaan_entity.admin_entity.entity_version_lock_service:
+        class: Kunstmaan\AdminListBundle\Service\EntityVersionLockService
         arguments:
-            -  '@service_container'
+            -  '@doctrine.orm.entity_manager'
+            -  '%kunstmaan_entity.lock_threshold%'
+            -  '%kunstmaan_entity.lock_enabled%'
+
+    kunstmaan_adminlist.subscriber.adminlist:
+        class: Kunstmaan\AdminListBundle\EventSubscriber\AdminListSubscriber
+        arguments:
+            - "@router"
+        tags:
+            - { name: kernel.event_subscriber }

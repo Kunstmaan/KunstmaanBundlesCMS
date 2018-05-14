@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : finnish (fi)
+//! locale : Finnish [fi]
 //! author : Tarmo Aidantausta : https://github.com/bleadof
 
 import moment from '../moment';
@@ -12,33 +12,33 @@ var numbersPast = 'nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksa
 function translate(number, withoutSuffix, key, isFuture) {
     var result = '';
     switch (key) {
-    case 's':
-        return isFuture ? 'muutaman sekunnin' : 'muutama sekunti';
-    case 'm':
-        return isFuture ? 'minuutin' : 'minuutti';
-    case 'mm':
-        result = isFuture ? 'minuutin' : 'minuuttia';
-        break;
-    case 'h':
-        return isFuture ? 'tunnin' : 'tunti';
-    case 'hh':
-        result = isFuture ? 'tunnin' : 'tuntia';
-        break;
-    case 'd':
-        return isFuture ? 'päivän' : 'päivä';
-    case 'dd':
-        result = isFuture ? 'päivän' : 'päivää';
-        break;
-    case 'M':
-        return isFuture ? 'kuukauden' : 'kuukausi';
-    case 'MM':
-        result = isFuture ? 'kuukauden' : 'kuukautta';
-        break;
-    case 'y':
-        return isFuture ? 'vuoden' : 'vuosi';
-    case 'yy':
-        result = isFuture ? 'vuoden' : 'vuotta';
-        break;
+        case 's':
+            return isFuture ? 'muutaman sekunnin' : 'muutama sekunti';
+        case 'm':
+            return isFuture ? 'minuutin' : 'minuutti';
+        case 'mm':
+            result = isFuture ? 'minuutin' : 'minuuttia';
+            break;
+        case 'h':
+            return isFuture ? 'tunnin' : 'tunti';
+        case 'hh':
+            result = isFuture ? 'tunnin' : 'tuntia';
+            break;
+        case 'd':
+            return isFuture ? 'päivän' : 'päivä';
+        case 'dd':
+            result = isFuture ? 'päivän' : 'päivää';
+            break;
+        case 'M':
+            return isFuture ? 'kuukauden' : 'kuukausi';
+        case 'MM':
+            result = isFuture ? 'kuukauden' : 'kuukautta';
+            break;
+        case 'y':
+            return isFuture ? 'vuoden' : 'vuosi';
+        case 'yy':
+            result = isFuture ? 'vuoden' : 'vuotta';
+            break;
     }
     result = verbalNumber(number, isFuture) + ' ' + result;
     return result;
@@ -58,12 +58,12 @@ export default moment.defineLocale('fi', {
         LTS : 'HH.mm.ss',
         L : 'DD.MM.YYYY',
         LL : 'Do MMMM[ta] YYYY',
-        LLL : 'Do MMMM[ta] YYYY, [klo] LT',
-        LLLL : 'dddd, Do MMMM[ta] YYYY, [klo] LT',
+        LLL : 'Do MMMM[ta] YYYY, [klo] HH.mm',
+        LLLL : 'dddd, Do MMMM[ta] YYYY, [klo] HH.mm',
         l : 'D.M.YYYY',
         ll : 'Do MMM YYYY',
-        lll : 'Do MMM YYYY, [klo] LT',
-        llll : 'ddd, Do MMM YYYY, [klo] LT'
+        lll : 'Do MMM YYYY, [klo] HH.mm',
+        llll : 'ddd, Do MMM YYYY, [klo] HH.mm'
     },
     calendar : {
         sameDay : '[tänään] [klo] LT',
@@ -88,7 +88,7 @@ export default moment.defineLocale('fi', {
         y : translate,
         yy : translate
     },
-    ordinalParse: /\d{1,2}\./,
+    dayOfMonthOrdinalParse: /\d{1,2}\./,
     ordinal : '%d.',
     week : {
         dow : 1, // Monday is the first day of the week.

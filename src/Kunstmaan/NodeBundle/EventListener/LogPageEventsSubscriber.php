@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
-use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
+use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Symfony\Bridge\Monolog\Logger;

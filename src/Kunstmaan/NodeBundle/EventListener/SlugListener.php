@@ -2,14 +2,15 @@
 
 namespace Kunstmaan\NodeBundle\EventListener;
 
+use Doctrine\ORM\EntityManager;
 use Kunstmaan\NodeBundle\Controller\SlugActionInterface;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\SlugSecurityEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class SlugListener
 {
@@ -19,23 +20,25 @@ class SlugListener
     protected $em;
 
     /**
-     * @var ControllerResolver
+     * @var ControllerResolverInterface
      */
     protected $resolver;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
 
     /**
-     * @param EntityManager $entityManager
-     * @param ControllerResolver $resolver
-     * @param EventDispatcherInterface $eventDispatcher
+     * SlugListener constructor.
+     *
+     * @param EntityManager               $em
+     * @param ControllerResolverInterface $resolver
+     * @param EventDispatcherInterface    $eventDispatcher
      */
-    public function __construct(EntityManager $entityManager, ControllerResolver $resolver, EventDispatcherInterface $eventDispatcher)
+    public function __construct(EntityManager $em, ControllerResolverInterface $resolver, EventDispatcherInterface $eventDispatcher)
     {
-        $this->em = $entityManager;
+        $this->em = $em;
         $this->resolver = $resolver;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -54,7 +57,7 @@ class SlugListener
         }
 
         $nodeTranslation = $request->attributes->get('_nodeTranslation');
-        if (! ($nodeTranslation instanceof NodeTranslation)) {
+        if (!($nodeTranslation instanceof NodeTranslation)) {
             throw new \Exception('Invalid _nodeTranslation value found in request attributes');
         }
         $entity = $nodeTranslation->getRef($this->em);

@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\SeoBundle\Tests\Entity;
 
-use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
 use Kunstmaan\SeoBundle\Entity\Seo;
+use Kunstmaan\SeoBundle\Twig\SeoTwigExtension;
 
 
 /**

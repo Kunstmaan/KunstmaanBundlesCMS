@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Structures - Color cards
+   ========================================================================== */
+
+/* General
+   ========================================================================== */
+.sg-color {
+    display: inline-block;
+    width: calc((100% - 60px) / 3);
+    max-width: 140px;
+    margin: 10px;
+
+    border-radius: 4px;
+
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .35), 0 3px 2px 0 rgba(0, 0, 0, .18);
+}
+
+
+/* Wrapper
+   ========================================================================== */
+.sg-color__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+/* Color
+   ========================================================================== */
+.sg-color__color {
+    display: block;
+    height: 100px;
+
+    border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid $grey;
+
+    color: $white;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.sg-color__color__text {
+    position: relative;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+/* Description
+   ========================================================================== */
+.sg-color__description {
+    padding: 0 8px 8px;
+}
+
+.sg-color__description__title {
+    margin-top: 10px;
+
+    color: $black;
+    font-size: 14px;
+    font-family: $primary-font;
+    font-weight: bold;
+}
+
+.sg-color__description__value {
+    margin-bottom: 5px;
+
+    color: $grey--dark;
+    font-size: 15px;
+}

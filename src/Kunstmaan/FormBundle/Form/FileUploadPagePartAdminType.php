@@ -5,8 +5,8 @@ namespace Kunstmaan\FormBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * This class represents the type for the file FileUploadPagePart
@@ -21,9 +21,19 @@ class FileUploadPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', null, array('required' => true))
-            ->add('required', CheckboxType::class, array('required' => false))
-            ->add('errormessage_required', TextType::class, array('required' => false));
+            ->add('label', TextType::class, array(
+                'required' => true,
+                'label' => 'kuma_form.form.file_upload_page_part.label.label',
+            ))
+            ->add('required', CheckboxType::class, array(
+                'required' => false,
+                'label' => 'kuma_form.form.file_upload_page_part.required.label',
+            ))
+            ->add('errormessage_required', TextType::class, array(
+                'required' => false,
+                'label' => 'kuma_form.form.file_upload_page_part.errormessage_required.label',
+            ))
+        ;
     }
 
     /**

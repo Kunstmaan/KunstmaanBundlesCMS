@@ -67,10 +67,10 @@ class MaxXTimesRule extends AbstractRule
     }
 
     /**
-     * @return MaxXTimeAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return new MaxXTimeAdminType();
+        return MaxXTimeAdminType::class;
     }
 }

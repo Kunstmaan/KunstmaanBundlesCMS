@@ -1,0 +1,10 @@
+errors:
+  password:
+    dontmatch: De ingevoerde wachtwoorden komen niet overeen.
+
+  user:
+    loginexists: Deze gebruikersnaam is al bezet.
+    emailexists: Dit e-mail adres is al bezet.
+
+  group:
+    selectone: Er moet tenminste één optie zijn geselecteerd.

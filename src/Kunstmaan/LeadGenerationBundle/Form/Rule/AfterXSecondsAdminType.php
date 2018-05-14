@@ -20,7 +20,9 @@ class AfterXSecondsAdminType extends AbstractRuleAdminType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('seconds', IntegerType::class);
+        $builder->add('seconds', IntegerType::class, array(
+            'label' => 'kuma_lead_generation.form.after_x_seconds.seconds.label',
+        ));
     }
 
     /**

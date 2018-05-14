@@ -10,7 +10,7 @@ namespace Kunstmaan\PagePartBundle\PageTemplate;
                 new Row(array(new Region("bottom",12)))
                 ));
  */
-class PageTemplate
+class PageTemplate implements PageTemplateInterface
 {
 
     /**

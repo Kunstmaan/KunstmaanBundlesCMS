@@ -2,10 +2,10 @@
 
 namespace Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionField;
-use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
-
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\FormBundle\Entity\FormSubmissionField;
+
+use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 
 /**
  * The TextFormSubmissionField can be used to store multi-line string values to a FormSubmission
@@ -48,11 +48,11 @@ class TextFormSubmissionField extends FormSubmissionField
     /**
      * Returns the default form type for this FormSubmissionField
      *
-     * @return TextFormSubmissionType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new TextFormSubmissionType($this->getLabel());
+        return TextFormSubmissionType::class;
     }
 
     /**

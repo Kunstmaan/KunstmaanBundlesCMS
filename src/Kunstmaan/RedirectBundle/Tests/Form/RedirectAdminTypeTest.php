@@ -67,16 +67,21 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
     public function testBuildForm()
     {
         $builder = $this->getMock('Symfony\Component\Form\Test\FormBuilderInterface');
+
         $builder
             ->expects($this->at(0))
             ->method('add')
-            ->with('origin');
+            ->with('domain');
         $builder
             ->expects($this->at(1))
             ->method('add')
-            ->with('target');
+            ->with('origin');
         $builder
             ->expects($this->at(2))
+            ->method('add')
+            ->with('target');
+        $builder
+            ->expects($this->at(3))
             ->method('add')
             ->with('permanent');
 
@@ -101,13 +106,5 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
             ->with('permanent');
 
         $this->objectMultiDomain->buildForm($builder, array('domainConfiguration' => $this->multiDomainConfiguration));
-    }
-
-    /**
-     * @covers Kunstmaan\RedirectBundle\Form\RedirectAdminType::getName
-     */
-    public function testGetName()
-    {
-        $this->assertEquals(RedirectAdminType::class, $this->objectMultiDomain->getName());
     }
 }

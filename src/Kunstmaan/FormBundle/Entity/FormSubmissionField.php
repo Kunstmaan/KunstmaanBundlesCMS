@@ -5,26 +5,18 @@ namespace Kunstmaan\FormBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The FormSubmissionField will hold the submitted values from the form page parts. The FormSubmissionFields
  * will be attached to a FormSubmission.
  *
- * @ORM\Entity(repositoryClass="Kunstmaan\FormBundle\Repository\FormSubmissionFieldRepository")
+ * @ORM\Entity
  * @ORM\Table(name="kuma_form_submission_fields")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({
- *     "string" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField" ,
- *     "text" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField",
- *     "boolean" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField",
- *     "choice" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField",
- *     "file" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField",
- *     "email" = "Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\EmailFormSubmissionField"
- * })
  */
 abstract class FormSubmissionField
 {

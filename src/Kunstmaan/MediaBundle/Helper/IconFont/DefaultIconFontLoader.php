@@ -27,6 +27,11 @@ class DefaultIconFontLoader extends AbstractIconFontLoader
         }
 
         $this->cssPath = trim($data['css'], '/');
+        $pathInfo = pathinfo($this->cssPath);
+
+        if ($pathInfo['extension'] !== 'css') {
+            throw new InvalidOptionsException(sprintf('The loader data requires a valid css file. "%s" given', $pathInfo['extension']));
+        }
 
         $cssPath = $this->rootPath . '/web/' . $this->cssPath;
         if (!file_exists($cssPath)) {

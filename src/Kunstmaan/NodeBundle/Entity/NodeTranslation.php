@@ -293,6 +293,14 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
+     * @return NodeVersion
+     */
+    public function getDraftNodeVersion()
+    {
+        return $this->getNodeVersion('draft');
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getNodeVersions()
@@ -358,11 +366,11 @@ class NodeTranslation extends AbstractEntity
     }
 
     /**
-     * @return NodeTranslationAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new NodeTranslationAdminType();
+        return NodeTranslationAdminType::class;
     }
 
     /**

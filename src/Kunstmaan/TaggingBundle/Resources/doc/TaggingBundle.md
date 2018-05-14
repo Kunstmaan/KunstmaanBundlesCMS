@@ -40,5 +40,5 @@ In order to add the tags' AdminList to the Admin menu, add the following to the 
      resource: "@KunstmaanTaggingBundle/Resources/config/routing.yml"
      prefix:   /{_locale}/
      requirements:
-         _locale: %requiredlocales%
+         _locale: "%requiredlocales%"
 </pre>

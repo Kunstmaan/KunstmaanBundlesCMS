@@ -1,8 +1,8 @@
 <?php
 
 namespace Kunstmaan\DashboardBundle\Helper\Google\Analytics;
-use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\DashboardBundle\Helper\Google\Analytics\ServiceHelper;
 
 class ConfigHelper
 {
@@ -184,7 +184,7 @@ class ConfigHelper
 
             foreach ($webproperties->getItems() as $property) {
                 $profiles = $this->getProfiles($accountId, $property->getId());
-                if (sizeof($profiles) > 0) {
+                if (count($profiles) > 0) {
                     $data[$property->getName()] = array(
                         'propertyId' => $property->getId(),
                         'propertyName' => $property->getName() . ' (' . $property->getWebsiteUrl() . ')',

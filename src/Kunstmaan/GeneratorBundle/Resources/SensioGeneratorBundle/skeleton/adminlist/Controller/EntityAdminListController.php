@@ -2,13 +2,13 @@
 
 namespace {{ namespace }}\Controller;
 
-use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
-use Kunstmaan\AdminListBundle\Controller\AdminListController;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AdminListConfiguratorInterface;
+use Kunstmaan\AdminListBundle\Controller\AdminListController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use {{ namespace }}\AdminList\{{ entity_class }}AdminListConfigurator;
 
 /**
  * The admin list controller for {{ entity_class }}
@@ -70,11 +70,11 @@ class {{ entity_class }}AdminListController extends AdminListController
     }
 
     /**
-     * The edit action
+     * The view action
      *
      * @param int $id
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view")
+     * @Route("/{id}/view", requirements={"id" = "\d+"}, name="{{ bundle.getName()|lower }}_admin_{{ entity_class|lower }}_view")
      * @Method({"GET"})
      *
      * @return array

@@ -4,12 +4,12 @@ namespace Kunstmaan\SeoBundle\Form;
 
 use Kunstmaan\MediaBundle\Form\Type\MediaType;
 use Kunstmaan\NodeBundle\Form\Type\URLChooserType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -40,6 +40,10 @@ class SocialType extends AbstractType
             ->add('ogUrl', URLChooserType::class, array(
                 'label' => 'seo.form.og.url',
                 'required'  => false,
+                'link_types' => [
+                    URLChooserType::INTERNAL,
+                    URLChooserType::EXTERNAL,
+                ]
             ))
             ->add('ogType', ChoiceType::class, array(
                 'label'     => 'seo.form.og.type',
@@ -51,8 +55,7 @@ class SocialType extends AbstractType
                     "Book"     => "book",
                     "Video"    => "video.other",
                     "Music"    => "music.song"
-                ),
-                'choices_as_values' => true,
+                )
             ))
             ->add('ogImage', MediaType::class, array(
                 'label' => 'seo.form.og.image',
@@ -61,17 +64,17 @@ class SocialType extends AbstractType
         $builder
             ->add('ogArticleAuthor', TextType::class,
                 array(
-                    'label' => 'OG Article Author',
+                    'label' => 'seo.form.og.article.author',
                     'required' => false
                 ))
             ->add('ogArticlePublisher', TextType::class,
                 array(
-                    'label' => 'OG Article Publisher',
+                    'label' => 'seo.form.og.article.publisher',
                     'required' => false
                 ))
             ->add('ogArticleSection', TextType::class,
                 array(
-                    'label' => 'OG Article Section',
+                    'label' => 'seo.form.og.article.section',
                     'required' => false
                 ));
 
@@ -82,29 +85,29 @@ class SocialType extends AbstractType
             'label' => 'seo.form.twitter.title',
             'required'  => false,
             'attr'      => array(
-                'info_text'     => "The title of your twitter card. Falls back to SEO Meta title"
-            )
+                'info_text'     => 'seo.form.twitter.title_info_text',
+            ),
         ))
-            ->add('twitterDescription', TextAreaType::class, array(
+            ->add('twitterDescription', TextareaType::class, array(
                 'label' => 'seo.form.twitter.description',
                 'required'  => false,
                 'attr'      => array(
-                    'info_text'     => "The description of your twitter card. Falls back to SEO Meta description"
-                )
+                    'info_text'     => 'seo.form.twitter.description_info_text',
+                ),
             ))
             ->add('twitterSite', TextType::class, array(
                 'label' => 'seo.form.twitter.sitehandle',
                 'required'  => false,
                 'attr'      => array(
-                    'info_text'     => "Twitter handle of your website organisation. This value is required for twitter cards to work."
-                )
+                    'info_text'     => 'seo.form.twitter.sitehandle_info_text',
+                ),
             ))
             ->add('twitterCreator', TextType::class, array(
                 'label' => 'seo.form.twitter.creatorhandle',
                 'required'  => false,
                 'attr'      => array(
-                    'info_text'     => "Twitter handle of your page publisher."
-                )
+                    'info_text'     => 'Twitter handle of your page publisher.',
+                ),
             ))
             ->add('twitterImage', MediaType::class, array(
                 'label' => 'seo.form.twitter.image',

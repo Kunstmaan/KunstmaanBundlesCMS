@@ -28,42 +28,42 @@
                 {% endif %}
             </div>
 
-            {% set facets = pagerfanta.getAdapter().getFacets() %}
-            {% if facets is not empty %}
+            {% set aggregations = pagerfanta.getAdapter().getAggregations() %}
+            {% if aggregations is not empty %}
                 <div class="span3 well-small" style="margin: 0; border-left:1px solid #E3E3E3;">
-                    {% if facets['tag']['terms']|length > 0 %}
+                    {% if aggregations['tag']['buckets']|length > 0 %}
                         <p><strong>Tags</strong></p>
                         <ul>
-                            {% for tag in facets['tag']['terms'] %}
+                            {% for tag in aggregations['tag']['buckets'] %}
                                 <li>
-                                    {% if tag['term'] not in s_tags %}
-                                    {% set tags = tag['term'] %}
+                                    {% if tag['key'] not in s_tags %}
+                                    {% set tags = tag['key'] %}
                                     {% if q_tags %}
                                         {% set tags = tags ~ ',' ~ q_tags %}
                                     {% endif %}
                                     <a href="?query={{ q_query }}&tag={{ tags }}">
                                         {% endif %}
-                                        {{ tag['term'] }}
-                                        {% if tag['term'] not in s_tags %}
-                                        ({{ tag['count'] }})</a>
+                                        {{ tag['key'] }}
+                                        {% if tag['key'] not in s_tags %}
+                                        ({{ tag['doc_count'] }})</a>
                                 {% else %}
-                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&rtag={{ tag['term'] }}">(-)</a>
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&rtag={{ tag['key'] }}">(-)</a>
                                     {% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
                     {% endif %}
-                    {% if facets['type']['terms']|length > 0 %}
+                    {% if facets['type']['buckets']|length > 0 %}
                         <p><strong>Types</strong></p>
                         <ul>
-                            {% for type in facets['type']['terms'] %}
+                            {% for type in facets['type']['buckets'] %}
                                 <li>
-                                    {% if type['term'] != q_type %}
-                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&type={{ type['term'] }}">
+                                    {% if type['key'] != q_type %}
+                                    <a href="?query={{ q_query }}&tag={{ q_tags }}&type={{ type['key'] }}">
                                         {% endif %}
-                                        {{ type['term'] }}
-                                        {% if type['term'] != q_type %}
-                                        ({{ type['count'] }})</a>
+                                        {{ type['key'] }}
+                                        {% if type['key'] != q_type %}
+                                        ({{ type['doc_count'] }})</a>
                                 {% else %}
                                     <a href="?query={{ q_query }}&tag={{ q_tags }}">(-)</a>
                                     {% endif %}

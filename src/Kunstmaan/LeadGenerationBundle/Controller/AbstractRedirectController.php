@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\LeadGenerationBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractRedirectController extends Controller
 {

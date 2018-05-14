@@ -9,6 +9,11 @@ kunstmaanTranslatorBundle.inlineEdit = (function(window, undefined) {
 
         $('.js-editable').each(function() {
             var $field = $(this);
+            var width = $field.width();
+
+            $field.on('shown', function(e, editable) {
+                editable.input.$input.css('width', width + 50);
+            });
 
             $field.editable({
                 showbuttons: 'bottom',
@@ -21,12 +26,11 @@ kunstmaanTranslatorBundle.inlineEdit = (function(window, undefined) {
                     params.domain = $field.data('domain');
                     params.keyword = $field.data('keyword');
                     params.translationId = $field.data('tid');
-
                     return params;
                 },
                 success: function(response, newValue) {
                     if (response.success) {
-                    $field.data('uid', response.uid);
+                        $field.data('uid', response.uid);
                     }
                 }
             });

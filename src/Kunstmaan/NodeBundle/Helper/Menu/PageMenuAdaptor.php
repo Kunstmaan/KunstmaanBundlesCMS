@@ -4,12 +4,12 @@ namespace Kunstmaan\NodeBundle\Helper\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
 use Kunstmaan\AdminBundle\Helper\Menu\MenuItem;
-use Kunstmaan\AdminBundle\Helper\Menu\MenuAdaptorInterface;
 use Kunstmaan\AdminBundle\Helper\Menu\TopMenuItem;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Helper\NodeMenuItem;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
@@ -88,7 +88,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes')
                 ->setUniqueId('pages')
-                ->setLabel('Pages')
+                ->setLabel('pages.title')
                 ->setParent($parent);
             if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
                 $menuItem->setActive(true);

@@ -55,8 +55,8 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         foreach ($fileRenameQueue as $row) {
             list ($oldFileUrl, $newFileUrl, $handler) = $row;
             $handler->fileSystem->rename(
-                preg_replace('~^' . preg_quote(FileHandler::MEDIA_PATH, '~') . '~', '/', $oldFileUrl),
-                preg_replace('~^' . preg_quote(FileHandler::MEDIA_PATH, '~') . '~', '/', $newFileUrl)
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $oldFileUrl),
+                preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $newFileUrl)
             );
             $output->writeln('Renamed <info>' . $oldFileUrl . '</info> to <info>' . basename($newFileUrl) . '</info>');
         }

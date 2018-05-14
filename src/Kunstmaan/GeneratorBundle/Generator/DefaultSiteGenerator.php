@@ -373,7 +373,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
         }
 
         // Error templates
-
         $relPath = '/Resources/views/Error/';
         $this->renderFiles($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, $parameters, true);
 
@@ -405,7 +404,6 @@ class DefaultSiteGenerator extends KunstmaanGenerator
     public function generateTwigExtensions($parameters)
     {
         $relPath = '/Twig/';
-        $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'NodeTranslationTwigExtension.php', $parameters, true);
         if ($this->demosite) {
             $this->renderSingleFile($this->skeletonDir.$relPath, $this->bundle->getPath().$relPath, 'BikesTwigExtension.php', $parameters, true);
         }
@@ -422,6 +420,11 @@ class DefaultSiteGenerator extends KunstmaanGenerator
      * @return bool
      */
     private function isMultiLangEnvironment() {
+        // use the multilanguage parameter, if it exists
+        if ($this->container->hasParameter('multilanguage')) {
+            return $this->container->getParameter('multilanguage');
+        }
+
         // This is a pretty silly implementation.
         // It just checks if it can find _locale in the routing.yml
         $routingFile = file_get_contents($this->rootDir.'/app/config/routing.yml');

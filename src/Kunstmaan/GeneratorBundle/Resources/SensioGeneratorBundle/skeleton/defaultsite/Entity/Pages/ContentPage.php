@@ -2,12 +2,12 @@
 
 namespace {{ namespace }}\Entity\Pages;
 
-use {{ namespace }}\Form\Pages\ContentPageAdminType;
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 use Symfony\Component\Form\AbstractType;
+use {{ namespace }}\Form\Pages\ContentPageAdminType;
 
 /**
  * ContentPage
@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
  * @ORM\Entity()
  * @ORM\Table(name="{{ prefix }}content_pages")
  */
-class ContentPage extends AbstractPage  implements HasPageTemplateInterface, SearchTypeInterface
+class ContentPage extends AbstractPage implements HasPageTemplateInterface, SearchTypeInterface
 {
 {% if demosite %}
     /**
@@ -38,11 +38,11 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
     /**
      * Returns the default backend form type for this page
      *
-     * @return AbstractType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-        return new ContentPageAdminType();
+        return ContentPageAdminType::class;
     }
 
     /**
@@ -55,7 +55,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
                 'name'  => 'ContentPage',
                 'class' => '{{ namespace }}\Entity\Pages\ContentPage'
             ),
-	);
+        );
     }
 
 {% if demosite %}
@@ -64,7 +64,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
      */
     public function setMenuImage($image)
     {
-	    $this->menuImage = $image;
+        $this->menuImage = $image;
     }
 
     /**
@@ -72,7 +72,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
      */
     public function getMenuImage()
     {
-	    return $this->menuImage;
+        return $this->menuImage;
     }
 
     /**
@@ -80,7 +80,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
      */
     public function getMenuDescription()
     {
-	    return $this->menuDescription;
+        return $this->menuDescription;
     }
 
     /**
@@ -101,7 +101,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
      */
     public function getSearchType()
     {
-    	return 'Page';
+        return 'Page';
     }
 
     /**
@@ -117,7 +117,7 @@ class ContentPage extends AbstractPage  implements HasPageTemplateInterface, Sea
      */
     public function getPageTemplates()
     {
-	    return array('{{ bundle.getName() }}:contentpage'{% if demosite %}, '{{ bundle.getName() }}:contentpage-with-submenu'{% endif %});
+        return array('{{ bundle.getName() }}:contentpage'{% if demosite %}, '{{ bundle.getName() }}:contentpage-with-submenu'{% endif %});
     }
 
     /**

@@ -1,4 +1,10 @@
+---
 search:
-    search: Suche
-    results: Ergebnisse
-    looking_for: Suche nach "%query%"
+  search: Suche
+  results: Ergebnisse
+  looking_for: Suche nach "%query%"
+node_search:
+  form:
+    search:
+      boost:
+        label: Boost

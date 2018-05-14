@@ -1,11 +1,11 @@
 <?php
 
 namespace Kunstmaan\MediaPagePartBundle\Entity;
-use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
-
 use Doctrine\ORM\Mapping as ORM;
-use Kunstmaan\MediaPagePartBundle\Form\AudioPagePartAdminType;
+
 use Kunstmaan\MediaBundle\Entity\Media;
+use Kunstmaan\MediaPagePartBundle\Form\AudioPagePartAdminType;
+use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
 
 /**
  * AudioPagePart
@@ -67,10 +67,10 @@ class AudioPagePart extends AbstractPagePart
     }
 
     /**
-     * @return AudioPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new AudioPagePartAdminType();
+        return AudioPagePartAdminType::class;
     }
 }

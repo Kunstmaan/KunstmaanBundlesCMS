@@ -26,9 +26,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      * @param EntityManager $em         The entity manager
      * @param AclHelper     $aclHelper  The ACL helper
      * @param string        $locale     The current locale
-     * @param string        $permission The permission
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale, $permission)
+    public function __construct(EntityManager $em, AclHelper $aclHelper, $locale)
     {
         parent::__construct($em, $aclHelper);
         $this->locale = $locale;
@@ -59,8 +58,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFilters()
     {
-        $this->addFilter('name', new StringFilterType('name'), 'Name');
-        $this->addFilter('link', new StringFilterType('link'), 'Link');
+        $this->addFilter('name', new StringFilterType('name'), 'article.author.list.filter.name');
+        $this->addFilter('link', new StringFilterType('link'), 'article.author.list.filter.link');
     }
 
     /**
@@ -68,8 +67,8 @@ class AbstractArticleAuthorAdminListConfigurator extends AbstractDoctrineORMAdmi
      */
     public function buildFields()
     {
-        $this->addField('name', 'Name', true);
-        $this->addField('link', 'Link', true);
+        $this->addField('name', 'article.author.list.header.name', true);
+        $this->addField('link', 'article.author.list.header.link', true);
     }
 
 }

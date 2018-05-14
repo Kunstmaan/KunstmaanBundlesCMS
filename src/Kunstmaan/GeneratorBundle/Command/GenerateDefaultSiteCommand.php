@@ -36,17 +36,19 @@ class GenerateDefaultSiteCommand extends KunstmaanGenerateCommand
             ->setHelp(<<<EOT
 The <info>kuma:generate:site</info> command generates an website using the Kunstmaan bundles
 
-<info>php app/console kuma:generate:default-site --namespace=Namespace/NamedBundle</info>
+<info>php bin/console kuma:generate:default-site --namespace=Namespace/NamedBundle</info>
 
 Use the <info>--prefix</info> option to add a prefix to the table names of the generated entities
 
-<info>php app/console kuma:generate:default-site --namespace=Namespace/NamedBundle --prefix=demo_</info>
+<info>php bin/console kuma:generate:default-site --namespace=Namespace/NamedBundle --prefix=demo_</info>
 EOT
             )
             ->setDescription('Generates a basic website based on Kunstmaan bundles with default templates')
             ->addOption('namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace to generate the default website in')
             ->addOption('prefix', '', InputOption::VALUE_OPTIONAL, 'The prefix to be used in the table names of the generated entities')
             ->addOption('demosite', '', InputOption::VALUE_NONE, 'Whether to generate a website with demo contents or a basic website')
+            ->addOption('browsersync', '', InputOption::VALUE_OPTIONAL, 'The URI that will be used for browsersync to connect')
+            ->addOption('articleoverviewpageparent', '', InputOption::VALUE_OPTIONAL, 'Shortnames of the pages that can have the article overview page as a child (comma separated)')
             ->setName('kuma:generate:default-site');
     }
 
@@ -82,12 +84,15 @@ EOT
          */
         $this->demosite = $this->assistant->getOption('demosite');
 
+        $browserSyncUrl = $this->assistant->getOptionOrDefault('browsersync', null);
+
         // First we generate the layout if it is not yet generated
         $command = $this->getApplication()->find('kuma:generate:layout');
         $arguments = array(
             'command'      => 'kuma:generate:layout',
             '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
             '--demosite'   => $this->demosite,
+            '--browsersync' => $browserSyncUrl,
             '--subcommand' => true
         );
         $input = new ArrayInput($arguments);
@@ -95,7 +100,6 @@ EOT
 
         $rootDir = $this->getApplication()->getKernel()->getRootDir().'/../';
         $this->createGenerator()->generate($this->bundle, $this->prefix, $rootDir, $this->demosite);
-
 
         // Generate the default pageparts
         $command = $this->getApplication()->find('kuma:generate:default-pageparts');
@@ -114,17 +118,22 @@ EOT
         if ($this->demosite) {
             // Generate a blog
             $command = $this->getApplication()->find('kuma:generate:article');
+            $pages = $this->assistant->getOptionOrDefault('articleoverviewpageparent', null);
             $arguments = array(
-                'command'      => 'kuma:generate:article',
-                '--namespace'  => str_replace('\\', '/', $this->bundle->getNamespace()),
-                '--prefix'     => $this->prefix,
-                '--entity'     => 'Blog',
-                '--dummydata'  => true,
-                '--quiet'      => true
+                'command'           => 'kuma:generate:article',
+                '--namespace'       => str_replace('\\', '/', $this->bundle->getNamespace()),
+                '--prefix'          => $this->prefix,
+                '--entity'          => 'Blog',
+                '--with-author'     => true,
+                '--with-category'   => true,
+                '--with-tag'        => true,
+                '--dummydata'       => true,
+                '--articleoverviewpageparent' => $pages,
             );
-            $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET);
+            $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_NORMAL);
             $input = new ArrayInput($arguments);
             $command->run($input, $output);
+
             $this->assistant->writeLine('Generating blog : <info>OK</info>');
         }
 
@@ -148,6 +157,6 @@ EOT
         $filesystem = $this->getContainer()->get('filesystem');
         $registry = $this->getContainer()->get('doctrine');
 
-        return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant);
+        return new DefaultSiteGenerator($filesystem, $registry, '/defaultsite', $this->assistant, $this->getContainer());
     }
 }

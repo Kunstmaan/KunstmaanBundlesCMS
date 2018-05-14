@@ -1,5 +1,308 @@
 # PagePartBundle Documentation
 
+## Pageparts
+
+The KunstmaanPagePartBundle forms the basis of our content management framework. A page built using a composition of blocks names pageparts. These pageparts allow you to fully separate the data from the presentation so non-technical webmasters can manage the website. Every page can have it's own list of possible pageparts, and pageparts are easy to create for your specific project to allow for rapid development.
+
+### Configuration
+
+For each page you can configure multiple contexts which pageparts in it. (For example "main", "banners", "right column", "footer").
+
+#### Configuration in PHP
+
+```PHP
+
+class HomePage extends AbstractPage implements HasPagePartsInterface
+{
+
+...
+
+public function getPagePartAdminConfigurations()
+{
+    return array(new HomepageMainPagePartAdminConfigurator());
+}
+
+
+```
+
+```PHP
+use Kunstmaan\PagePartBundle\PagePartAdmin\AbstractPagePartAdminConfigurator;
+
+/**
+ * HomepageMainPagePartAdminConfigurator
+ */
+class HomepageMainPagePartAdminConfigurator extends AbstractPagePartAdminConfigurator
+{
+
+    /**
+     * @var array
+     */
+    private $pagePartTypes;
+
+    /**
+     * @param array $pagePartTypes
+     */
+    public function __construct(array $pagePartTypes = [])
+    {
+        $this->pagePartTypes = array_merge(
+            [
+                [
+                    'name' => 'Header',
+                    'class'=> 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart'
+                ],
+                [
+                    'name' => 'Text',
+                    'class'=> 'Kunstmaan\PagePartBundle\Entity\TextPagePart'
+                ],
+                [
+                    'name' => 'Line',
+                    'class'=> 'Kunstmaan\PagePartBundle\Entity\LinePagePart'
+                ],
+                [
+                    'name' => 'Image',
+                    'class'=> 'Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart'
+                ]
+            ], $pagePartTypes
+        );
+
+    }
+
+    /**
+     * @return array
+     */
+    public function getPossiblePagePartTypes()
+    {
+        return $this->pagePartTypes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "Page parts";
+    }
+
+    /**
+     * @return string
+     */
+    public function getContext()
+    {
+        return "main";
+    }
+}
+```
+
+#### Configuration in YAML
+
+You can also specify the pagepart configuration in yml:
+
+```PHP
+public function getPagePartAdminConfigurations()
+{
+    return array("AcmeBundle:homepage_main", 'homepage_main');
+}
+```
+
+Those keys in the format `AcmeBundle:name` will be expected in your bundles’ Resources directory:
+
+```YAML
+# AcmeBundle/Resources/config/pageparts/homepage_main.yml
+
+name: "Page parts"
+context: "main"
+types:
+    - { name: "Header", class: "Kunstmaan\\PagePartBundle\\Entity\\HeaderPagePart" }
+    - { name: "Text", class: "Kunstmaan\\PagePartBundle\\Entity\\TextPagePart" }
+    - { name: "Line", class: "Kunstmaan\\PagePartBundle\\Entity\\LinePagePart" }
+    - { name: "Image", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\ImagePagePart" }
+```
+
+Other keys are taken from the configuration:
+
+```YAML
+# app/config/config.yml
+
+kunstmaan_page_part:
+  pageparts:
+    homepage_main:
+      name: "Page parts"
+      context: "main"
+      types:
+          - { name: "Header", class: "Kunstmaan\\PagePartBundle\\Entity\\HeaderPagePart" }
+          - { name: "Text", class: "Kunstmaan\\PagePartBundle\\Entity\\TextPagePart" }
+          - { name: "Line", class: "Kunstmaan\\PagePartBundle\\Entity\\LinePagePart" }
+          - { name: "Image", class: "Kunstmaan\\MediaPagePartBundle\\Entity\\ImagePagePart" }
+```
+
+### Rendering
+
+Then you can render these pageparts in your template:
+
+```TWIG
+{{ render_pageparts(page, 'main') }}
+```
+
+Or if you need to manipulate the list with extra html:
+
+```TWIG
+{% for pagepart in getpageparts(page, 'main') %}
+  <div class="clazz">
+	{% include pagepart.defaultview with {'resource': pagepart} %}
+  </div>
+{% endfor %}
+```
+
+## PageTemplates
+
+Until now we had specified some pagepart contexts (= pagepart list) and we can include them in our templates at fixed positions. But it's also possible to define multiple templates for these contexts. For example you can have multiple columns, or a singe column and switch between them in the backend. Then there is a 'switch template' button which shows a popup like this:
+![Screenshot template chooser](screenshot_template_chooser.png "Screenshot template chooser")
+
+### Configuration
+
+#### Configuration in PHP
+
+```PHP
+
+class HomePage extends AbstractPage implements HasPagePartsInterface
+{
+
+...
+
+public function getPageTemplates()
+{
+    return array(new HomepagePageTemplate(), new HomepageExtendedPageTemplate());
+}
+
+
+```
+
+```PHP
+class HomepagePageTemplate extends PageTemplate
+{
+    /**
+     * constructor
+     */
+    public function __construct()
+    {
+        $this->setName("Homepage")
+             ->setRows(array(
+                new Row(array(new Region("main", 12))),
+             ))
+             ->setTemplate("KunstmaanWebsiteBundle::PageTemplate\ContentPageTemplate");
+    }
+}
+class HomepageExtendedPageTemplate extends PageTemplate
+{
+    /**
+     * constructor
+     */
+    public function __construct()
+    {
+        $this->setName("Homepage extended")
+             ->setRows(array(
+                new Row(array(new Region("main", 9), new Region("banners", 3))),
+                new Row(array(new Region("bottom", 12)))))
+             ->setTemplate("KunstmaanWebsiteBundle::PageTemplate\ContentPageTemplate");
+    }
+}
+```
+
+#### Configuration in YAML
+
+You can also specify the template configuration in yml:
+
+```PHP
+
+class HomePage extends AbstractPage implements HasPagePartsInterface
+{
+
+...
+
+public function getPageTemplates()
+{
+    return array("AcmeBundle:homepage", "two_column_homepage");
+}
+
+```
+
+Those keys in the format `AcmeBundle:name` will be expected in your bundles’ Resources directory:
+
+
+```YAML
+# AcmeBundle/Resources/config/pagetemplates/homepage.yml
+
+name: "Homepage"
+rows:
+    - regions:
+        - { name: "main", span: 12 }
+template: "AcmeBundle::Pages\ContentPage\pagetemplate.html.twig"
+
+```
+
+Other keys are taken from the configuration:
+
+```YAML
+# app/config/config.yml
+
+kunstmaan_page_part:
+  pagetemplates:
+    two_column_homepage:
+      name: "Homepage extended"
+      rows:
+          - regions:
+              - { name: "main", span: 9 }
+              - { name: "banners", span: 3 }
+          - regions:
+              - { name: "bottom", span: 12 }
+      template: "AcmeBundle::Pages\ContentPage\extended-pagetemplate.html.twig"
+
+```
+
+**PRO-TIP: The name of the region is linked to the context in the pagepart configuration, not the name of the pagepart configuration file.**
+
+### Rendering
+
+This is an example of the extended-pagetemplate.html.twig file:
+
+```TWIG
+
+<!-- CONTENT -->
+<div> <!-- div to wrap anchors and content -->
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        {{ render_pageparts(page, 'main') }}
+
+    </div><!-- end main-content -->
+
+    <!-- BANNERS -->
+    <div class="banners-content">
+
+        {{ render_pageparts(page, 'banners') }}
+
+    </div><!-- end banners-content -->
+</div>
+
+<!-- FOOTER -->
+<div class="footer-content">
+
+    {{ render_pageparts(page, 'bottom') }}
+
+</div><!-- end footer-content -->
+
+```
+
+Use this in your page template to render the configured "template"
+
+```TWIG
+<div class="content-container">
+    {{ render_pagetemplate(page) }}
+</div><!-- end content-container -->
+```
+
+
 ## Using sub entities in pageparts
 
 In some cases, pageparts need to contain a set of repetive fields. The best way to achieve this, is by using
@@ -300,9 +603,6 @@ There are a few options you can use when you add a collection field in a FormTyp
     * how many objects the collection can maximally contain
     * optional, default no maximum limit
 
-
-# PagePartBundle Documentation
-
 ## Creating PageParts in Your Code
 
 We've provided a ```PagePartCreatorService``` that simplifies the creation of pageparts for your pages.
@@ -390,4 +690,33 @@ Below is an example of what you can do with this with all the styles interchange
         );
 
         $ppCreatorService->addPagePartsToPage('homepage', $pageparts, 'en');
+```
+
+## PagePart chooser
+
+You can configure the PagePartBundle to use either one of two different ways of adding
+pageparts to a page via the admin interface. The first way is simply a select
+dropdown with a list of all the available PageParts for that region. A
+different more elaborate option can be chosen, it shows a modal with small
+screenshots for each possible PagePart. This takes more time to setup for
+the developer but will make the ui more user friendly for end users.
+
+### Configuration in yaml
+You can add these lines to your app/config/config.yml to enable the elaborate
+modal view.
+```YAML
+kunstmaan_page_part:
+    extended_pagepart_chooser: true
+```
+In your PageParts yaml files you can add an extra parameter to each of your
+types in the following manner to decide which picture you want to show as a
+preview for that PagePart. Any valid input for symfonies asset() function will
+do.
+```YAML
+name: Example
+context: Example
+types:
+    - { name: BikesList, class: Kunstmaan\AppBundle\Entity\PageParts\BikesListPagePart } //Will display only pagepart name
+    - { name: Audio, class: Kunstmaan\AppBundle\Entity\PageParts\AudioPagePart, preview: 'bundles/kunstmaanapp/images/example-image.svg' }
+    - { name: Button, class: Kunstmaan\AppBundle\Entity\PageParts\ButtonPagePart, preview: 'www.internet.be/imageurl' }
 ```

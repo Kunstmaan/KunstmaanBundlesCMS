@@ -1,0 +1,6 @@
+{% set curLang = (row.lang == app.request.locale) %}
+{% if adminlist.canEdit(row) %}
+    <span class="actions"><a {% if not curLang %}style="color: #888"{% endif %} href="{{ path(adminlist.getEditUrlFor(row)["path"], adminlist.getEditUrlFor(row)[("params")] ) }}">{{ adminlist.getStringValue(row, columnName) }}{% if not curLang %} (untranslated){% endif %}</a></span>
+{% else %}
+    {{ adminlist.getStringValue(row, columnName) }}{% if not curLang %} (untranslated){% endif %}
+{% endif %}

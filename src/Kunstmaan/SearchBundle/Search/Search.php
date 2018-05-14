@@ -77,6 +77,8 @@ class Search implements SearchProviderInterface
      */
     public function createDocument($uid, $document, $indexName = '', $indexType = '')
     {
+        $indexName = strtolower($indexName);
+
         return $this->getActiveProvider()->createDocument(
             $uid,
             $document,
@@ -90,6 +92,8 @@ class Search implements SearchProviderInterface
      */
     public function addDocument($uid, $document, $indexType, $indexName)
     {
+        $indexName = strtolower($indexName);
+
         return $this->getActiveProvider()->addDocument(
             $this->indexNamePrefix . $indexName,
             $indexType,
@@ -103,6 +107,8 @@ class Search implements SearchProviderInterface
      */
     public function addDocuments($documents, $indexName = '', $indexType = '')
     {
+        $indexName = strtolower($indexName);
+
         return $this->getActiveProvider()->addDocuments($documents, $indexName, $indexType);
     }
 
@@ -111,6 +117,8 @@ class Search implements SearchProviderInterface
      */
     public function deleteDocument($indexName, $indexType, $uid)
     {
+        $indexName = strtolower($indexName);
+
         return $this->getActiveProvider()->deleteDocument($this->indexNamePrefix . $indexName, $indexType, $uid);
     }
 
@@ -119,6 +127,8 @@ class Search implements SearchProviderInterface
      */
     public function deleteDocuments($indexName, $indexType, array $ids)
     {
+        $indexName = strtolower($indexName);
+
         return $this->getActiveProvider()->deleteDocuments($this->indexNamePrefix . $indexName, $indexType, $ids);
     }
 
@@ -127,6 +137,8 @@ class Search implements SearchProviderInterface
      */
     public function deleteIndex($indexName)
     {
+        $indexName = strtolower($indexName);
+
         return $this->getActiveProvider()->deleteIndex($this->indexNamePrefix . $indexName);
     }
 

@@ -2,8 +2,8 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Helper\Security\Acl\Permission;
 
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\MaskBuilder;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 
 /**
  * PermissionMapTest
