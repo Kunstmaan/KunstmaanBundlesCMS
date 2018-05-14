@@ -61,7 +61,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
                       ->setUniqueId($entity->getInternalName())
                       ->setParent($parent);
 
-                    if (stripos($request->attributes->get('_route'), $menuItem->getRoute()) === 0) {
+					if ($request->attributes->get('_route') === $menuItem->getRoute() && $request->attributes->get('internalName') === $entity->getInternalName()) {
                         $menuItem->setActive(true);
                         $parent->setActive(true);
                     }
