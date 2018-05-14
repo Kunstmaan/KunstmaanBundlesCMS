@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\UtilitiesBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -19,22 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('kunstmaan_utilities');
-
-        /** @var ArrayNodeDefinition $pages */
-        $root
-            ->children()
-                ->arrayNode('cipher')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('secret')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                            ->defaultValue('%secret%')
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
+        $treeBuilder->root('kunstmaan_utilities');
 
         return $treeBuilder;
     }
