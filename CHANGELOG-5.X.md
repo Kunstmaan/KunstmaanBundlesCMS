@@ -1,5 +1,43 @@
 # Changelog
 
+## 5.0.6 / 2018-04-13
+
+* [GeneratorBundle] Fix article generator for no-interaction [#1912](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1912) ([@Devolicious](https://github.com/Devolicious)) 
+* [NodeBundle]: node data collector should go to node id [#1891](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1891) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminListBundle] Start and end form using tab pane form view, if it exists [#1890](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1890) ([@mtnorthrop](https://github.com/mtnorthrop)) 
+* [MultiDomainBundle]: host override should be set before getting default locale [#1889](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1889) ([@sandergo90](https://github.com/sandergo90)) 
+* [FormBundle]: add batchsize to export list [#1887](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1887) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle] Fix Bootstrap modals on smaller screens [#1885](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1885) ([@dbeerten](https://github.com/dbeerten)) 
+* [Docs - 5.0]: move to readthedocs documentation [#1880](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1880) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] Change logic of page title [#1874](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1874) ([@treeleaf](https://github.com/treeleaf)) 
+* [GeneratorBundle] Fixed limit in generated article repository [#1871](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1871) ([@jordanmoon](https://github.com/jordanmoon)) 
+* [KunstmaanAdminBundle]: fix permissions [#1869](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1869) ([@sandergo90](https://github.com/sandergo90)) 
+* [KunstmaanAdminBundle]: access level for google should add groups [#1868](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1868) ([@sandergo90](https://github.com/sandergo90)) 
+* [LeadGenerationBundle]: times should not be blank [#1865](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1865) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] Fixed bundle namespace in article generator pagepart config [#1864](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1864) ([@jordanmoon](https://github.com/jordanmoon)) 
+* [AdminBundle]: redirect to previous page when logging in with Google [#1862](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1862) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle]: fixes for article generator [#1860](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1860) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle] Make it possible to search in all PagePartChoosers [#1854](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1854) ([@NindroidX](https://github.com/NindroidX)) 
+* [SeoBundle]: fields are not required [#1851](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1851) ([@sandergo90](https://github.com/sandergo90)) 
+* [NodeBundle] Check for mapping exception when multiple entity manager… [#1819](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1819) ([@delboy1978uk](https://github.com/delboy1978uk)) 
+
+
+## 5.0.5 / 2018-03-05
+
+* [AdminBundle] Fix escaping of img src attributes in WYSIWYG fields [#1858](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1858) ([@mtnorthrop](https://github.com/mtnorthrop)) 
+
+
+## 5.0.4 / 2018-02-20
+
+* [AdminListBundle]: ->loadTemplate() is only for internal use.. [#1846](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1846) ([@sandergo90](https://github.com/sandergo90)) 
+* [MediaBundle] Bulk file upload fix [#1834](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1834) ([@cv65kr](https://github.com/cv65kr)) 
+* [AdminBundle]: re-add the extrajavascript block [#1829](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1829) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle] refactor media token transformer [#1827](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1827) ([@delboy1978uk](https://github.com/delboy1978uk)) 
+* [AdminListBundle] Fix Export Exception namespace [#1825](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1825) ([@delboy1978uk](https://github.com/delboy1978uk)) 
+* [Leadgenerationbundle]: abstract functions should be public [#1817](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1817) ([@sandergo90](https://github.com/sandergo90)) 
+* [KunstmaanNodeBundle] admin styles no longer have .min extension [#1813](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1813) ([@sandergo90](https://github.com/sandergo90)) 
+
+
 ## 5.0.3 / 2018-02-06
 
 * [KunstmaanAdminBundle] change php7 to php5 code [#1807](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1807) ([@sandergo90](https://github.com/sandergo90)) 

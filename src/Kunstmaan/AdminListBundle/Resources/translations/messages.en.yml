@@ -1,4 +1,5 @@
 kuma_admin_list:
+    limit: Limit %limit%
     form:
         export_to: Export to
     edit:
@@ -14,8 +15,8 @@ kuma_admin_list:
 
 # Filters
 filter:
-    true: true
-    false: false
+    "true": "true"
+    "false": "false"
     before: before
     after: after
     in: contains

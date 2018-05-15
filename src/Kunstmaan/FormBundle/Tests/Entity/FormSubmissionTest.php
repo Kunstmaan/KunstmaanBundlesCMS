@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Tests\Entity;
+
 use DateTime;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -20,21 +22,9 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FormSubmission;
+        $this->object = new FormSubmission();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getId
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setId
-     */
     public function testSetGetId()
     {
         $object = $this->object;
@@ -43,11 +33,6 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($id, $object->getId());
     }
 
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setIpAddress
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getIpAddress
-     */
     public function testSetGetIpAddress()
     {
         $object = $this->object;
@@ -56,10 +41,6 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($ip, $object->getIpAddress());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getNode
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setNode
-     */
     public function testSetGetNode()
     {
         $object = $this->object;
@@ -71,10 +52,6 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($node->getId(), $retrievedNode->getId());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setLang
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getLang
-     */
     public function testSetGetLang()
     {
         $object = $this->object;
@@ -83,10 +60,6 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($lang, $object->getLang());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setCreated
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getCreated
-     */
     public function testSetGetCreated()
     {
         $object = $this->object;
@@ -95,18 +68,12 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($now, $object->getCreated());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getFields
-     */
     public function testGetFields()
     {
         $object = $this->object;
         $object->getFields();
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::__toString
-     */
     public function testToString()
     {
         $stringValue = $this->object->__toString();

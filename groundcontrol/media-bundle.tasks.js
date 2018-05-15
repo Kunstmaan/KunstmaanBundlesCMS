@@ -14,16 +14,12 @@ export const mediaBundle = {
     tasks: {}
 };
 
-mediaBundle.tasks.eslint = createEslintTask({
-    src: mediaBundle.config.srcPath + 'js/**/*.js',
-    failAfterError: !consoleArguments.continueAfterTestError
-});
-
 mediaBundle.tasks.scripts = createScriptsTask({
     src: [
         mediaBundle.config.srcPath + 'vendor_bower/plupload/js/plupload.full.min.js',
         mediaBundle.config.srcPath + 'vendor_bower/picturefill/dist/picturefill.min.js',
         mediaBundle.config.srcPath + 'js/_bulk-upload.js',
+        mediaBundle.config.srcPath + 'js/_bulk-move.js',
         mediaBundle.config.srcPath + 'js/_dnd-upload.js',
         mediaBundle.config.srcPath + 'js/app.js'
     ],

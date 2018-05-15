@@ -23,40 +23,23 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     *
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::__construct
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::setPdfTransformer
      */
     protected function setUp()
     {
-        $this->pdfTransformer = $this->getMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
-        $mockMimeTypeGuesserfactory = $this->getMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
-        $mockExtensionGuesserfactory = $this->getMock('Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface');
+        $this->pdfTransformer = $this->createMock('Kunstmaan\MediaBundle\Helper\Transformer\PreviewTransformerInterface');
+        $mockMimeTypeGuesserfactory = $this->createMock('Kunstmaan\MediaBundle\Helper\MimeTypeGuesserFactoryInterface');
+        $mockExtensionGuesserfactory = $this->createMock('Kunstmaan\MediaBundle\Helper\ExtensionGuesserFactoryInterface');
         $this->filesDir = realpath(__DIR__ . '/../../Files');
 
         $this->object = new PdfHandler(1, $mockMimeTypeGuesserfactory, $mockExtensionGuesserfactory);
         $this->object->setPdfTransformer($this->pdfTransformer);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::getType
-     */
     public function testGetType()
     {
         $this->assertEquals(PdfHandler::TYPE, $this->object->getType());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::canHandle
-     */
     public function testCanHandlePdfFiles()
     {
         $media = new Media();
@@ -66,9 +49,6 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->canHandle($media));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::canHandle
-     */
     public function testCannotHandleNonPdfFiles()
     {
         $media = new Media();
@@ -78,19 +58,12 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->canHandle(new \stdClass()));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::saveMedia
-     */
     public function testSaveMedia()
     {
         $media = new Media();
         $this->object->saveMedia($media);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::getImageUrl
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::setWebPath
-     */
     public function testGetImageUrl()
     {
         $this->pdfTransformer

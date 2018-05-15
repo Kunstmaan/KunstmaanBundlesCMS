@@ -13,13 +13,15 @@
         {% set text %}
             {% for translation in data.translations %}
                 <div class="sf-toolbar-info-piece">
-                    <a href="{{ translation.route }}" style="text-decoration: none !important;">
-                        <b> {{ translation.id }}</b>
-                    </a>
+                    <b>
+                        <a href="{{ translation.route }}" style="text-decoration: none !important;">
+                            {{ translation.message }}
+                        </a>
+                    </b>
                 </div>
             {% endfor %}
         {% endset %}
 
-        {% include '@KunstmaanAdmin/Toolbar/toolbar_item.html.twig' with {'link': data.route} %}
+        {% include '@KunstmaanAdmin/Toolbar/toolbar_item.html.twig' with {'link': data.route, 'overflow': true} %}
     {% endif %}
 {% endblock %}

@@ -4,4 +4,4 @@
     type:     annotation
     prefix:   /{_locale}/admin/{{ entity_class|lower }}{{ type|lower }}/
     requirements:
-         _locale: %requiredlocales%
+         _locale: "%requiredlocales%"

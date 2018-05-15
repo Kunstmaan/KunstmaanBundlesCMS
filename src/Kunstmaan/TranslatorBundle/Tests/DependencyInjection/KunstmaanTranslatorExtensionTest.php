@@ -1,9 +1,12 @@
 <?php
 
+namespace Kunstmaan\TaggingBundle\Tests\DependencyInjection;
+
 use Kunstmaan\TranslatorBundle\DependencyInjection\KunstmaanTranslatorExtension;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class KunstmaanTranslatorExtensionTest extends \PHPUnit_Framework_TestCase
+class KunstmaanTranslatorExtensionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var KunstmaanTranslatorExtension
@@ -32,9 +35,7 @@ class KunstmaanTranslatorExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the Configuration to test
-     *
-     * @return Configuration
+     * @return KunstmaanTranslatorExtension
      */
     protected function getExtension()
     {
@@ -47,8 +48,8 @@ class KunstmaanTranslatorExtensionTest extends \PHPUnit_Framework_TestCase
     private function getContainer()
     {
         $container = new ContainerBuilder;
-        $container->setParameter('kernel.root_dir', '');
-        $container->setParameter('kernel.bundles', array());
+        $container->setParameter('kernel.root_dir', 'src/Kunstmaan/ArticleBundle');
+        $container->setParameter('kernel.bundles', array(new \Kunstmaan\ArticleBundle\KunstmaanArticleBundle()));
         $container->setParameter('kernel.debug', true);
         $container->setParameter('defaultlocale', 'en');
 

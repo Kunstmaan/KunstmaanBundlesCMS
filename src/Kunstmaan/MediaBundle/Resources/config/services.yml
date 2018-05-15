@@ -17,6 +17,7 @@ services:
         class: '%kunstmaan_media.media_manager.class%'
         calls:
             - [ setDefaultHandler, [ '@kunstmaan_media.media_handlers.file' ] ]
+        public: true
 
     kunstmaan_media.listener.doctrine:
         class: '%kunstmaan_media.listener.doctrine.class%'
@@ -71,6 +72,7 @@ services:
     kunstmaan_media.folder_manager:
         class: '%kunstmaan_media.folder_manager.class%'
         arguments: ['@kunstmaan_media.repository.folder']
+        public: true
 
     kunstmaan_media.mimetype_guesser.factory:
         class: '%kunstmaan_media.mimetype_guesser.factory.class%'

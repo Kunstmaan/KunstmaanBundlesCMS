@@ -65,7 +65,8 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $container->setParameter('kunstmaan_admin.password_restrictions.min_length' , $config['password_restrictions']['min_length']);
         $container->setParameter('kunstmaan_admin.password_restrictions.max_length' , $config['password_restrictions']['max_length']);
         $container->setParameter('kunstmaan_admin.enable_toolbar_helper', $config['enable_toolbar_helper']);
-        $container->setParameter('kunstmaan_admin.provider_keys', $config['provider_keys']);
+        $container->setParameter('kunstmaan_admin.toolbar_firewall_names', !empty($config['provider_keys']) ? $config['provider_keys'] : $config['toolbar_firewall_names']);
+        $container->setParameter('kunstmaan_admin.admin_firewall_name', $config['admin_firewall_name']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
@@ -104,6 +105,9 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
         $monologConfig['handlers']['main']['path']  = sprintf('%s/%s', $container->getParameter('kernel.logs_dir'), $container->getParameter('kernel.environment'));
         $monologConfig['handlers']['main']['level'] = 'debug';
         $container->prependExtensionConfig('monolog', $monologConfig);
+
+        $twigConfig['paths'][] = ['value' => dirname(__DIR__).'/Resources/views', 'namespace' => 'FOSUser'];
+        $container->prependExtensionConfig('twig', $twigConfig);
 
         $configs = $container->getExtensionConfig($this->getAlias());
         $this->processConfiguration(new Configuration(), $configs);

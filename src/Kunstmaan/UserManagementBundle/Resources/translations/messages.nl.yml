@@ -16,7 +16,7 @@ settings:
     email: E-mail
     enabled: Ingeschakeld
     roles: Groepen
-    roles_placeholder: Choose the permission groups...
+    roles_placeholder: Kies de permissiegroepen...
     add: Gebruiker toevoegen
     edit: Gebruiker bewerken
   roles: Rollen
@@ -65,13 +65,13 @@ kuma_user:
         name: Naam
     add:
       flash:
-        success: Group %groupname% has been created!
+        success: Groep %groupname% is aangemaakt!
     edit:
       flash:
-        success: Group %groupname% has been edited!
+        success: Groep %groupname% is gewijzigd!
     delete:
       flash:
-        success: Group %groupname% has been deleted!
+        success: Groep %groupname% is verwijderd!
   role:
     adminlist:
       header:

@@ -39,6 +39,11 @@ class VersionChecker
     private $enabled;
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * Constructor
      *
      * @param ContainerInterface $container
@@ -65,9 +70,7 @@ class VersionChecker
     }
 
     /**
-     * Check if we recently did a version check, if not do one now.
-     *
-     * @return void
+     * @throws ParseException
      */
     public function periodicallyCheck()
     {
@@ -82,9 +85,8 @@ class VersionChecker
     }
 
     /**
-     * Get the version details via webservice.
-     *
-     * @return mixed A list of bundles if available.
+     * @return bool|mixed|void
+     * @throws ParseException
      */
     public function check()
     {
@@ -92,17 +94,24 @@ class VersionChecker
             return;
         }
 
+        $host = $this->container->get('request_stack')->getCurrentRequest()->getHttpHost();
+        $console = realpath($this->container->get('kernel')->getRootDir().'/../bin/console');
+        $installed = filectime($console);
+        $bundles = $this->parseComposer();
+        $title = $this->container->getParameter('websitetitle');
+
         $jsonData = json_encode(array(
-            'host' => $this->container->get('request_stack')->getCurrentRequest()->getHttpHost(),
-            'installed' => filectime($this->container->get('kernel')->getRootDir().'/../bin/console'),
-            'bundles' => $this->parseComposer(),
-            'project' => $this->container->getParameter('websitetitle')
+            'host' => $host,
+            'installed' => $installed,
+            'bundles' => $bundles,
+            'project' => $title
         ));
 
         try {
-            $client = new Client(array('connect_timeout' => 3, 'timeout' => 1));
+            $client = $this->getClient();
             $response = $client->post($this->webserviceUrl, ['body' => $jsonData]);
-            $data = json_decode($response->getBody()->getContents());
+            $contents = $response->getBody()->getContents();
+            $data = json_decode($contents);
 
             if (null === $data) {
                 return false;
@@ -119,13 +128,35 @@ class VersionChecker
     }
 
     /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        if (!$this->client) {
+            $this->client = new Client(array('connect_timeout' => 3, 'timeout' => 1));
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
+
+    /**
      * Returns the absolute path to the composer.lock file.
      *
      * @return string
      */
     protected function getLockPath()
     {
-        $rootPath = dirname($this->container->get('kernel')->getRootDir());
+        $kernel = $this->container->get('kernel');
+        $dir = $kernel->getRootDir();
+        $rootPath = dirname($dir);
 
         return $rootPath.'/composer.lock';
     }
@@ -134,7 +165,7 @@ class VersionChecker
      * Returns a list of composer packages.
      *
      * @return array
-     * @throws Exception\ParseException
+     * @throws ParseException
      */
     protected function getPackages()
     {
@@ -167,7 +198,7 @@ class VersionChecker
      * Parse the composer.lock file to get the currently used versions of the kunstmaan bundles.
      *
      * @return array
-     * @throws Exception\ParseException
+     * @throws ParseException
      */
     protected function parseComposer()
     {

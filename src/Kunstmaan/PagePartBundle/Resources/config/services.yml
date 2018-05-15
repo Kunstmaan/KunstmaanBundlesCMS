@@ -14,6 +14,7 @@ services:
     kunstmaan_page_part.page_part_configuration_reader:
         class: '%kunstmaan_pagepart.page_part_configuration_reader.class%'
         arguments: [ '@kunstmaan_page_part.page_part_configuration_parser' ]
+        public: true
 
     kunstmaan_page_part.page_part_configuration_parser:
         class: '%kunstmaan_pagepart.page_part_configuration_parser.class%'

@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 
 /**
@@ -12,36 +14,18 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         parent::setUp();
         $this->object = new RawHTMLPagePartAdminType();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::buildForm
-     */
     public function testBuildForm()
     {
         $this->object->buildForm($this->builder, array());
         $this->builder->get('content');
     }
 
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::configureOptions
-     */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);

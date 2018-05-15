@@ -24,17 +24,6 @@ class NumberFilterTypeTest extends ORMFilterTypeTestCase
         $this->object = new NumberFilterType('number', 'b');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\NumberFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array('filter_comparator_number' => 'eq', 'filter_value_number' => 10));
@@ -52,7 +41,6 @@ class NumberFilterTypeTest extends ORMFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\NumberFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -86,9 +74,6 @@ class NumberFilterTypeTest extends ORMFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\NumberFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:numberFilter.html.twig', $this->object->getTemplate());

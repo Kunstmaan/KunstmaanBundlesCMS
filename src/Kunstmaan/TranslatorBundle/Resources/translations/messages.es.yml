@@ -15,6 +15,7 @@ settings:
     refresh_live: Actualizar en vivo
     import_translations_forced: Forzar importación
     import_translations: Importar
+    import_file: Import from spreadsheet
     actions: Actions
     export_translations: Export to CSV
     not_live_warning: "Las traducciones en el sitio en vivo no están actualizadas, haga click en 'Actualizar en vivo' para actulizar a las últimas traducciones."
@@ -23,6 +24,8 @@ settings:
     succesful_edited: "Traducción editada correctamente"
 kuma_translator:
   form:
+    upload_file_choose: Please choose a file to upload
+    force_checkbox: Force overwriting translations
     text_with_locale:
       locale:
         label: Locale
@@ -52,3 +55,7 @@ kuma_translator:
       keyword: Keyword
       text: Text
       locale: Locale
+toolbar:
+  translations:
+    title: Translations
+    count: Count

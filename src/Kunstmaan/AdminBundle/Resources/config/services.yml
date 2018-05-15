@@ -88,6 +88,7 @@ services:
     kunstmaan_admin.acl.helper:
         class: '%kunstmaan_admin.acl.helper.class%'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
+        public: true
 
     kunstmaan_admin.acl.native.helper:
         class: '%kunstmaan_admin.acl.native.helper.class%'
@@ -160,6 +161,7 @@ services:
     kunstmaan_admin.versionchecker:
         class: Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker
         arguments: ['@service_container', '@kunstmaan_admin.cache']
+        public: true
 
     kunstmaan_admin.cache:
         class: Doctrine\Common\Cache\FilesystemCache
@@ -214,6 +216,7 @@ services:
     kunstmaan_admin.domain_configuration:
         class: '%kunstmaan_admin.domain_configuration.class%'
         arguments: ['@service_container']
+        public: true
 
     kunstmaan_admin.oauth_authenticator:
         class: Kunstmaan\AdminBundle\Security\OAuthAuthenticator
@@ -301,7 +304,8 @@ services:
             - '%kunstmaan_admin.enable_toolbar_helper%'
             - '@service_container'
             - '@kunstmaan_admin.adminroute.helper'
-            - '%kunstmaan_admin.provider_keys%'
+            - '%kunstmaan_admin.toolbar_firewall_names%'
+            - '%kunstmaan_admin.admin_firewall_name%'
 
     kunstmaan_admin.datacollector.bundleversion:
         class: '%kunstmaan_admin.toolbar.collector.bundle.class%'
