@@ -4,25 +4,24 @@ namespace Kunstmaan\TranslatorBundle\Service\Translator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\TranslatorBundle\Entity\Translation;
+use Kunstmaan\TranslatorBundle\Repository\TranslationRepository;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator as SymfonyTranslator;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Translator
+ * Class Translator
+ *
+ * @package Kunstmaan\TranslatorBundle\Service\Translator
  */
 class Translator extends SymfonyTranslator
 {
-
+    /** @var TranslationRepository */
     private $translationRepository;
 
-    /**
-     * Resource Cacher
-     * @var Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher
-     */
+    /** @var ResourceCacher */
     private $resourceCacher;
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
+    /** @var Request */
     protected $request;
 
     /**
@@ -36,13 +35,13 @@ class Translator extends SymfonyTranslator
             $this->addResourcesFromDatabaseAndCacheThem();
         }
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function warmUp($cacheDir)
     {
-        return;
+        return null;
     }
 
     /**
@@ -50,7 +49,7 @@ class Translator extends SymfonyTranslator
      */
     public function addResourcesFromCacher()
     {
-        $resources = $this->resourceCacher->getCachedResources(false);
+        $resources = $this->resourceCacher->getCachedResources();
 
         if ($resources !== false) {
             $this->addResources($resources);
@@ -75,7 +74,7 @@ class Translator extends SymfonyTranslator
             if ($cacheResources === true) {
                 $this->resourceCacher->cacheResources($resources);
             }
-        } catch (\Exception $ex){
+        } catch (\Exception $ex) {
             // don't load if the database doesn't work
         }
     }
@@ -107,7 +106,15 @@ class Translator extends SymfonyTranslator
         return parent::loadCatalogue($locale);
     }
 
-    public function trans($id, array $parameters = array(), $domain = 'messages', $locale = null)
+    /**
+     * @param string      $id
+     * @param array       $parameters
+     * @param string      $domain
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function trans($id, array $parameters = [], $domain = 'messages', $locale = null)
     {
         if (!$this->request = $this->container->get('request_stack')->getCurrentRequest()) {
             return parent::trans($id, $parameters, $domain, $locale);
@@ -125,6 +132,13 @@ class Translator extends SymfonyTranslator
         return $trans;
     }
 
+    /**
+     * @param string $id
+     * @param array  $parameters
+     * @param string $domain
+     * @param string $locale
+     * @param string $trans
+     */
     public function profileTranslation($id, $parameters, $domain, $locale, $trans)
     {
 
@@ -144,30 +158,37 @@ class Translator extends SymfonyTranslator
 
         $translationCollection = $this->request->request->get('usedTranslations');
 
-        if (!$translationCollection instanceof \Doctrine\Common\Collections\ArrayCollection) {
+        if (!$translationCollection instanceof ArrayCollection) {
             $translationCollection = new ArrayCollection;
         }
 
-        $translationCollection->set($domain . $id . $locale, $translation);
+        $translationCollection->set($domain.$id.$locale, $translation);
 
         $this->request->request->set('usedTranslations', $translationCollection);
 
     }
 
+    /**
+     * @return TranslationRepository
+     */
     public function getTranslationRepository()
     {
         return $this->translationRepository;
     }
 
+    /**
+     * @param $translationRepository
+     */
     public function setTranslationRepository($translationRepository)
     {
         $this->translationRepository = $translationRepository;
     }
 
+    /**
+     * @param $resourceCacher
+     */
     public function setResourceCacher($resourceCacher)
     {
         $this->resourceCacher = $resourceCacher;
     }
-
-
 }
