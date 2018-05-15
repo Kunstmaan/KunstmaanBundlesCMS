@@ -22,6 +22,7 @@ services:
         calls:
             - [setTranslationFileExplorer, ['@kunstmaan_translator.service.file_explorer']]
             - [setImporter, ['@kunstmaan_translator.service.importer.importer']]
+        public: true
 
     kunstmaan_translator.service.exporter.command_handler:
         parent: kunstmaan_translator.service.abstract_command_handler
@@ -29,6 +30,7 @@ services:
         calls:
             - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
             - [setExporter, ['@kunstmaan_translator.service.exporter.exporter']]
+        public: true
 
     kunstmaan_translator.service.exporter.exporter:
         class: 'Kunstmaan\TranslatorBundle\Service\Command\Exporter\Exporter'
@@ -71,6 +73,7 @@ services:
             - [setDebug, ['%kuma_translator.debug%']]
             - [setCacheDir, ['%kuma_translator.cache_dir%']]
             - [setLogger, ['@logger']]
+        public: true
 
     kunstmaan_translator.service.translator.cache_validator:
         class: Kunstmaan\TranslatorBundle\Service\Translator\CacheValidator
