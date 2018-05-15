@@ -2,7 +2,6 @@ parameters:
     kunstmaan_utilities.slugifier.class: 'Kunstmaan\UtilitiesBundle\Helper\Slugifier'
     kunstmaan_utilities.shell.class: 'Kunstmaan\UtilitiesBundle\Helper\Shell\Shell'
     kunstmaan_utilities.cipher.class: 'Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher'
-    kunstmaan_utilities.cipher.secret: ''
 
 services:
     kunstmaan_utilities.shell:
