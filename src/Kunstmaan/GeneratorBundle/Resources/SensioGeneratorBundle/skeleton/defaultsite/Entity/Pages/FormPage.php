@@ -29,16 +29,16 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
      */
     public function getPossibleChildTypes()
     {
-        return array(
-            array(
+        return [
+            [
                 'name'  => 'ContentPage',
                 'class' => '{{ namespace }}\Entity\Pages\ContentPage'
-            ),
-            array (
+            ],
+            [
                 'name'  => 'FormPage',
                 'class' => '{{ namespace }}\Entity\Pages\FormPage'
-            )
-        );
+            ]
+        ];
     }
 
     /**
@@ -46,7 +46,7 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
      */
     public function getPagePartAdminConfigurations()
     {
-        return array('{{ bundle.getName() }}:form');
+        return ['{{ bundle.getName() }}:form'];
     }
 
     /**
@@ -54,7 +54,7 @@ class FormPage extends AbstractFormPage implements HasPageTemplateInterface
      */
     public function getPageTemplates()
     {
-        return array('{{ bundle.getName() }}:formpage');
+        return ['{{ bundle.getName() }}:formpage'];
     }
 
     /**

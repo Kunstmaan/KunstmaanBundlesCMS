@@ -4,8 +4,8 @@ php_version: 5.6
 # If at least one of these conditions is verified, the commit status is displayed as failed.
 commit_failure_conditions:
     # By severities count (default configuration, any change will override it)
-    - "project.severity.critical > 0"
-    - "project.severity.major > 0"
+    # - "project.severity.critical > 0"
+    # - "project.severity.major > 0"
 
     # # By other severities count
     # - "project.severity.minor > 0"
@@ -27,8 +27,8 @@ commit_failure_conditions:
     # - "project.violations > 150"
 
     # By severities count, limited to the violations concerning files edited by the current PR
-    # - "pr.severity.critical > 0"
-    # - "pr.severity.major > 0"
+    - "pr.severity.critical > 0"
+    - "pr.severity.major > 0"
     # - "pr.severity.minor > 0"
     # - "pr.severity.info >= 15"
 

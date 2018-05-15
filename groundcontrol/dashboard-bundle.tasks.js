@@ -16,13 +16,6 @@ export const dashboardBundle = {
     tasks: {}
 };
 
-dashboardBundle.tasks.eslint = createEslintTask({
-    src: dashboardBundle.config.srcPath + 'js/**/*.js',
-    failAfterError: !consoleArguments.continueAfterTestError
-});
-
-dashboardBundle.tasks.stylelint = createStylelintTask({src: dashboardBundle.config.srcPath + 'scss/**/*.scss'});
-
 dashboardBundle.tasks.cssLocal = createCssLocalTask({src: dashboardBundle.config.srcPath + 'scss/*.scss', dest: dashboardBundle.config.distPath + 'css'});
 
 dashboardBundle.tasks.cssOptimized = createCssOptimizedTask({src: dashboardBundle.config.srcPath + 'scss/*.scss', dest: dashboardBundle.config.distPath + 'css'});

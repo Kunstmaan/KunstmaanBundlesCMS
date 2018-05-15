@@ -4,44 +4,13 @@ namespace Kunstmaan\NodeBundle\Tests\Router;
 
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Router\SlugRouter;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class SlugRouterTest extends \PHPUnit_Framework_TestCase
+class SlugRouterTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::__construct
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::generate
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getRouteCollection
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::addPreviewRoute
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getPreviewRouteParameters
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getEscapedLocales
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::addSlugRoute
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getSlugRouteParameters
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getContext
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getDefaultLocale
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::isMultiLanguage
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getBackendLocales
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getFrontendLocales
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::addRoute
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getSlugPattern
-     */
     public function testGenerateMultiLanguage()
     {
         $request   = $this->getRequest();
@@ -54,11 +23,6 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/en/some-uri', $url);
     }
 
-    /**
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::generate
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getRouteCollection
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getContext
-     */
     public function testGenerateSingleLanguage()
     {
         $request   = $this->getRequest();
@@ -71,27 +35,15 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/some-uri', $url);
     }
 
-    /**
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::setContext
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getContext
-     */
     public function testSetContext()
     {
-        $context = $this->getMock('Symfony\Component\Routing\RequestContext');
+        $context = $this->createMock('Symfony\Component\Routing\RequestContext');
         $container = $this->getContainer(null);
         $object    = new SlugRouter($container);
         $object->setContext($context);
         $this->assertEquals($context, $object->getContext());
     }
 
-    /**
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::match
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getRouteCollection
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getContext
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getNodeTranslation
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getMasterRequest
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::getNodeTranslationRepository
-     */
     public function testMatchWithNodeTranslation()
     {
         $request   = $this->getRequest();
@@ -104,12 +56,9 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($nodeTranslation, $result['_nodeTranslation']);
     }
 
-    /**
-     * @covers Kunstmaan\NodeBundle\Router\SlugRouter::match
-     * @expectedException Symfony\Component\Routing\Exception\ResourceNotFoundException
-     */
     public function testMatchWithoutNodeTranslation()
     {
+        $this->setExpectedException(ResourceNotFoundException::class);
         $request   = $this->getRequest();
         $container = $this->getContainer($request);
         $object    = new SlugRouter($container);
@@ -118,7 +67,7 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
 
     private function getContainer($request, $multiLanguage = false, $nodeTranslation = null)
     {
-        $container    = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container    = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration($multiLanguage)),
@@ -134,7 +83,7 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
 
     private function getRequestStack($request)
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->expects($this->any())->method('getMasterRequest')->willReturn($request);
 
         return $requestStack;
@@ -142,7 +91,7 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
 
     private function getDomainConfiguration($multiLanguage = false)
     {
-        $domainConfiguration = $this->getMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
+        $domainConfiguration = $this->createMock('Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface');
         $domainConfiguration->method('getHost')
             ->willReturn('domain.tld');
 
@@ -177,7 +126,7 @@ class SlugRouterTest extends \PHPUnit_Framework_TestCase
 
     private function getEntityManager($nodeTranslation = null)
     {
-        $em = $this->getMock('Doctrine\ORM\EntityManagerInterface');
+        $em = $this->createMock('Doctrine\ORM\EntityManagerInterface');
         $em
             ->method('getRepository')
             ->with($this->equalTo('KunstmaanNodeBundle:NodeTranslation'))

@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
-
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
 
 /**
@@ -26,10 +25,6 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new ImagePagePart;
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getOpenInNewWindow
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setOpenInNewWindow
-     */
     public function testGetSetOpenInNewWindow()
     {
         $this->object->setOpenInNewWindow(true);
@@ -38,50 +33,37 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $this->object->getOpenInNewWindow());
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setLink
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getLink
-     */
     public function testSetGetLink()
     {
         $this->object->setLink('abc');
         $this->assertEquals('abc', $this->object->getLink());
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setMedia
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getMedia
-     */
     public function testSetGetMedia()
     {
         $media = new Media();
+        $media->setUrl('https://nasa.gov/spongebob.jpg');
         $media->setId(5);
         $this->object->setMedia($media);
         $this->assertEquals(5, $this->object->getMedia()->getId());
+        $this->assertEquals(5, $this->object->getMedia()->__toString());
+        $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
+        $pp = new ImagePagePart();
+        $this->assertEquals('', $pp->__toString());
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setAlttext
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getAlttext
-     */
     public function testSetGetAlttext()
     {
         $this->object->setAltText('bcd');
         $this->assertEquals('bcd', $this->object->getAltText());
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultView
-     */
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
         $this->assertEquals("KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig", $defaultView);
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(ImagePagePartAdminType::class, $this->object->getDefaultAdminType());

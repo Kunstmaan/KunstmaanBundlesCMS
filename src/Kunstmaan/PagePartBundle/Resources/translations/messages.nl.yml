@@ -6,7 +6,7 @@ pagepart:
   link:
     internal: Intern
     external: Extern
-    email: Email
+    email: E-mail
     choose: 'Kies link'
     openinnewwindow: 'Open in nieuw venster'
     text: 'Tekst'

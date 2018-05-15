@@ -19,7 +19,7 @@ class ChoiceFormSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $keys = array_fill_keys(array('label', 'required', 'expanded', 'multiple', 'choices', 'placeholder', 'constraints'), null);
+        $keys = array_fill_keys(['label', 'required', 'expanded', 'multiple', 'choices', 'placeholder', 'constraints'], null);
         $fieldOptions = array_filter(array_replace($keys, array_intersect_key($options, $keys)), function($v) { return isset($v); });
         $fieldOptions['choices'] = array_flip($fieldOptions['choices']);
         $fieldOptions['empty_data'] = null;
@@ -37,12 +37,12 @@ class ChoiceFormSubmissionType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
                 'data_class' => 'Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField',
-                'choices' => array(),
+                'choices' => [],
                 'placeholder' => null,
                 'expanded' => null,
                 'multiple' => null,
-        ));
+        ]);
     }
 }

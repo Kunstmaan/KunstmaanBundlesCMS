@@ -48,7 +48,7 @@ class NodeDataCollector extends AbstractDataCollector
         $current = $this->nodeMenu->getCurrent();
 
         if ($current) {
-            $id = $current->getNodeTranslation()->getId();
+            $id = $current->getNode()->getId();
 
             $route = $this->urlGenerator->generate('KunstmaanNodeBundle_nodes_edit', ['id' => $id]);
 
@@ -102,5 +102,10 @@ class NodeDataCollector extends AbstractDataCollector
     public function isEnabled()
     {
         return true;
+    }
+
+    public function reset()
+    {
+        $this->data = [];
     }
 }

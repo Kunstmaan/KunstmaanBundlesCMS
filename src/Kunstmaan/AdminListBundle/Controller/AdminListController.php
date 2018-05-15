@@ -29,6 +29,31 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 abstract class AdminListController extends Controller
 {
     /**
+     * {@inheritdoc}
+     *
+     * @deprecated
+     */
+    protected function get($id)
+    {
+        @trigger_error('Getting services directly from the container is deprecated in KunstmaanAdminListBundle 5.1 and will be removed in KunstmaanAdminListBundle 6.0. Register your controllers as services and inject the necessary dependencies.', E_USER_DEPRECATED);
+
+        return parent::get($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @deprecated
+     */
+    protected function getParameter($name)
+    {
+        @trigger_error('Getting parameters directly from the container is deprecated in KunstmaanAdminListBundle 5.1 and will be removed in KunstmaanAdminListBundle 6.0. Register your controllers as services and inject the necessary parameters.', E_USER_DEPRECATED);
+
+        return parent::getParameter($name);
+    }
+
+
+    /**
      * You can override this method to return the correct entity manager when using multiple databases ...
      *
      * @return \Doctrine\Common\Persistence\ObjectManager|object
@@ -50,7 +75,7 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
+        $adminList = $this->container->get("kunstmaan_adminlist.factory")->createList($configurator, $em);
         $adminList->bindRequest($request);
 
         $this->buildSortableFieldActions($configurator);
@@ -83,10 +108,10 @@ abstract class AdminListController extends Controller
         $em = $this->getEntityManager();
 
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createExportList($configurator, $em);
+        $adminList = $this->container->get("kunstmaan_adminlist.factory")->createExportList($configurator, $em);
         $adminList->bindRequest($request);
 
-        return $this->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $_format);
+        return $this->container->get("kunstmaan_adminlist.service.export")->getDownloadableResponse($adminList, $_format);
     }
 
     /**
@@ -217,10 +242,10 @@ abstract class AdminListController extends Controller
                 // Don't redirect to listing when coming from ajax request, needed for url chooser.
                 if (!$request->isXmlHttpRequest()) {
                     /** @var EntityVersionLockService $entityVersionLockService*/
-                    $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+                    $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
                     $user = $entityVersionLockService->getUsersWithEntityVersionLock($helper, $this->getUser());
-                    $message = $this->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
+                    $message = $this->container->get('translator')->trans('kuma_admin_list.edit.flash.locked', array('%user%' => implode(', ', $user)));
                     $this->addFlash(
                         FlashTypes::WARNING,
                         $message
@@ -484,7 +509,7 @@ abstract class AdminListController extends Controller
     protected function isLockableEntityLocked(LockableEntityInterface $entity)
     {
         /** @var EntityVersionLockService $entityVersionLockService */
-        $entityVersionLockService = $this->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
+        $entityVersionLockService = $this->container->get('kunstmaan_entity.admin_entity.entity_version_lock_service');
 
         return $entityVersionLockService->isEntityBelowThreshold($entity) && $entityVersionLockService->isEntityLocked(
                 $this->getUser(),

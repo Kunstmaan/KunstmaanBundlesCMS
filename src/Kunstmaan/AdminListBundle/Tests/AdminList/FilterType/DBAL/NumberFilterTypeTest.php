@@ -24,17 +24,6 @@ class NumberFilterTypeTest extends DBALFilterTypeTestCase
         $this->object = new NumberFilterType('number', 'e');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\NumberFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array('filter_comparator_number' => 'eq', 'filter_value_number' => 1));
@@ -52,7 +41,6 @@ class NumberFilterTypeTest extends DBALFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\NumberFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -86,9 +74,6 @@ class NumberFilterTypeTest extends DBALFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\NumberFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:numberFilter.html.twig', $this->object->getTemplate());

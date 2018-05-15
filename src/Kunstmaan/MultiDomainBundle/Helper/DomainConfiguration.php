@@ -240,7 +240,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     }
 
     /**
-     * @return string|null
+     * @return array
      */
     public function getHostSwitched()
     {
@@ -272,7 +272,7 @@ class DomainConfiguration extends BaseDomainConfiguration
     {
         $host = $this->getRealHost($host);
 
-        if ($host) {
+        if ($host && isset($this->hosts[$host])) {
             return $this->hosts[$host];
         }
 

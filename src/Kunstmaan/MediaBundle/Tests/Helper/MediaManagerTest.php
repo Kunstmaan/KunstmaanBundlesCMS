@@ -19,7 +19,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::setDefaultHandler
      */
     protected function setUp()
     {
@@ -40,18 +39,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->setDefaultHandler($this->defaultHandler);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::addHandler
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandler
-     */
     public function testAddHandler()
     {
         $media = new Media();
@@ -60,9 +47,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($handler, $this->object->getHandler($media));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandlerForType
-     */
     public function testGetHandlerForType()
     {
         $handler = $this->getCustomHandler();
@@ -71,9 +55,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->defaultHandler, $this->object->getHandlerForType('unknown/type'));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandlers
-     */
     public function testGetHandlers()
     {
         $handler = $this->getCustomHandler();
@@ -83,9 +64,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($handler, current($handlers));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::prepareMedia
-     */
     public function testPrepareMediaWithDefaultHandler()
     {
         $media = new Media();
@@ -96,9 +74,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->prepareMedia($media);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::prepareMedia
-     */
     public function testPrepareMediaWithCustomHandler()
     {
         $media = new Media();
@@ -111,9 +86,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->prepareMedia($media);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::saveMedia
-     */
     public function testSaveMediaWithDefaultHandler()
     {
         $media = new Media();
@@ -130,9 +102,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->saveMedia($media);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::saveMedia
-     */
     public function testCreateMediaWithCustomHandler()
     {
         $media = new Media();
@@ -145,9 +114,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->saveMedia($media, true);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::saveMedia
-     */
     public function testUpdateMediaWithCustomHandler()
     {
         $media = new Media();
@@ -160,9 +126,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->saveMedia($media);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::removeMedia
-     */
     public function testRemoveMediaWithDefaultHandler()
     {
         $media = new Media();
@@ -173,9 +136,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->removeMedia($media);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::removeMedia
-     */
     public function testRemoveMediaWithCustomHandler()
     {
         $media = new Media();
@@ -188,18 +148,12 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->removeMedia($media);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandler
-     */
     public function testGetHandlerWithDefaultHandler()
     {
         $media = new Media();
         $this->assertEquals($this->defaultHandler, $this->object->getHandler($media));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getHandler
-     */
     public function testGetHandlerWithCustomHandler()
     {
         $media = new Media();
@@ -208,9 +162,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($handler, $this->object->getHandler($media));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::createNew
-     */
     public function testCreateNew()
     {
         $media = new Media();
@@ -236,9 +187,6 @@ class MediaManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($media, $this->object->createNew($data));
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\MediaManager::getFolderAddActions
-     */
     public function testGetFolderAddActions()
     {
         $actions = array();

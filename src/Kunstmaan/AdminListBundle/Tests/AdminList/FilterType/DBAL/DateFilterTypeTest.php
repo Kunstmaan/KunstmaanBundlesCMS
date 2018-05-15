@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\DBAL;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,17 +26,6 @@ class DateFilterTypeTest extends DBALFilterTypeTestCase
         $this->object = new DateFilterType('date', 'e');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array('filter_comparator_date' => 'before', 'filter_value_date' => '01/01/2012'));
@@ -52,7 +43,6 @@ class DateFilterTypeTest extends DBALFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -78,11 +68,26 @@ class DateFilterTypeTest extends DBALFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:dateFilter.html.twig', $this->object->getTemplate());
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testApplyReturnsNull()
+    {
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder->expects($this->never())->method('setParameter');
+        $mirror = new ReflectionClass(DateFilterType::class);
+        $property = $mirror->getProperty('queryBuilder');
+        $property->setAccessible(true);
+        $property->setValue($this->object, $queryBuilder);
+        $badData = [
+            'value' => 'oopsNotADate',
+            'comparator' => 'true',
+        ];
+        $this->object->apply($badData, uniqid());
     }
 }

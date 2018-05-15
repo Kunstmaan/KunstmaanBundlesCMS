@@ -6,6 +6,6 @@
 
 <script>
     // Register the conversion (no need to wait for the READY event, because this gets loaded via an ajax call)
-    $event = new CustomEvent(window.kunstmaan.leadGeneration.events.DO_CONVERSION, { detail: {popup: '{{ popup.name }}'} });
-    document.dispatchEvent($event);
+    var event = new CustomEvent(window.kunstmaan.leadGeneration.events.DO_CONVERSION, { detail: {popup: '{{ popup.name }}'} });
+    document.dispatchEvent(event);
 </script>

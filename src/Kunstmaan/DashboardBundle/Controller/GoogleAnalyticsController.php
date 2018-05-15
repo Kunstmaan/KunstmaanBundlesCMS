@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -19,7 +20,7 @@ class GoogleAnalyticsController extends Controller
      * @Template()
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return array
+     * @return Response|array
      */
     public function widgetAction(Request $request)
     {
@@ -29,7 +30,7 @@ class GoogleAnalyticsController extends Controller
         // if token not set
         if (!$configHelper->tokenIsSet()) {
             if ($this->getParameter('google.api.client_id') != '' && $this->getParameter('google.api.client_secret') != '' && $this->getParameter('google.api.dev_key') != '' ) {
-                $params['authUrl'] = $configHelper->getAuthUrl($params['redirect_uri']);
+                $params['authUrl'] = $configHelper->getAuthUrl();
             }
 
             return $this->render('KunstmaanDashboardBundle:GoogleAnalytics:connect.html.twig', $params);

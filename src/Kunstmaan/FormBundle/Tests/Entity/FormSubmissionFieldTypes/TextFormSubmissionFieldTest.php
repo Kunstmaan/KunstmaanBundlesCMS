@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
+
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
 use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 
@@ -23,16 +25,8 @@ class TextFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::getValue
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::setValue
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::getValue
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::setValue
      */
     public function testGetSetValue()
     {
@@ -43,7 +37,7 @@ class TextFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::getDefaultAdminType
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
@@ -51,7 +45,7 @@ class TextFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::__toString
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField::__toString
      */
     public function testToString()
     {

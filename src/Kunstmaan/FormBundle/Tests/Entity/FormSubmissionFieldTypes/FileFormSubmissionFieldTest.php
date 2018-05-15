@@ -3,7 +3,12 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\FormSubmissionFieldTypes;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField;
+use Kunstmaan\FormBundle\Form\FileFormSubmissionType;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Tests for FileFormSubmissionField
@@ -21,20 +26,9 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FileFormSubmissionField;
+        $this->object = new FileFormSubmissionField();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::__toString
-     */
     public function testToString()
     {
         $stringValue = $this->object->__toString();
@@ -42,9 +36,6 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::isNull
-     */
     public function testIsNull()
     {
         $file = new UploadedFile(__DIR__ . '/../../Resources/assets/example.jpg', 'example.jpg');
@@ -55,38 +46,72 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($object->isNull());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getSafeFileName
-     */
     public function testGetSafeFileName()
     {
         $file = new UploadedFile(__DIR__ . '/../../Resources/assets/example.jpg', 'the file name $@&.jpg');
 
         $object = $this->object;
         $object->file = $file;
-        $safeName = $object->getSafeFileName($file);
+        $safeName = $object->getSafeFileName();
 
         $this->assertEquals('the-file-name.jpeg', $safeName);
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::setFileName
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getFileName
-     */
-    public function testSetGetFileName()
+
+    public function testGettersAndSetters()
     {
         $object = $this->object;
         $fileName = 'test.jpg';
         $object->setFileName($fileName);
+        $object->setUrl('https://nasa.gov');
+        $object->setuuid('123');
+
         $this->assertEquals($fileName, $object->getFileName());
+        $this->assertEquals('https://nasa.gov', $object->getUrl());
+        $this->assertEquals('123', $object->getUuid());
+        $this->assertEquals(FileFormSubmissionType::class, $object->getDefaultAdminType());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getSubmissionTemplate
-     */
     public function testGetSubmissionTemplate()
     {
         $template = $this->object->getSubmissionTemplate();
         $this->assertNotNull($template);
+    }
+
+    public function testUpload()
+    {
+        $object = $this->object;
+        $this->assertNull($object->upload('..', '..'));
+
+        $file = $this->getMockBuilder(UploadedFile::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $file->expects($this->any())
+            ->method('move')
+            ->will($this->returnValue(true));
+
+        $object->file = $file;
+        $object->upload(__DIR__ . '/../../Resources/assets/', __DIR__ . '/../../Resources/assets/');
+
+        $form = $this->getMockBuilder(Form::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $builder = $this->getMockBuilder(FormBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request = new Request();
+
+        $container = $this->getMockBuilder(Container::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $container->expects($this->any())
+            ->method('getParameter')
+            ->will($this->returnValue('whatever'));
+
+        $object->onValidPost($form, $builder, $request, $container);
     }
 }
