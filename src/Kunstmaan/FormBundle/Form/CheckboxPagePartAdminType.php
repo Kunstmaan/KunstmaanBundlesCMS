@@ -22,7 +22,7 @@ class CheckboxPagePartAdminType extends AbstractType
         $builder
             ->add('label', TextType::class, array(
                 'label' => 'kuma_form.form.checkbox_page_part.label.label',
-                'required' => false,
+                'required' => true,
             ))
             ->add('required', CheckboxType::class, array(
                 'label' => 'kuma_form.form.checkbox_page_part.required.label',

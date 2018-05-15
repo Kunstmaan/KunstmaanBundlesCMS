@@ -21,7 +21,7 @@ class EmailPagePartAdminType extends AbstractType
     {
         $builder
             ->add('label', TextType::class, array(
-                'required' => false,
+                'required' => true,
                 'label' => 'kuma_form.form.email_page_part.label.label',
             ))
             ->add('required', CheckboxType::class, array(
