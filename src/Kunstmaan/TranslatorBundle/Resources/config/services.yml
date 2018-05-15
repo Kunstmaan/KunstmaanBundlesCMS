@@ -85,10 +85,10 @@ services:
         class: Kunstmaan\TranslatorBundle\Service\Translator\Translator
         arguments:
             - '@service_container'
-            - '@translator.selector'
+            - '@translator.formatter'
+            - '%kernel.default_locale%'
             - {}
             - { cache_dir: '%kuma_translator.cache_dir%', debug: '%kuma_translator.debug%' }
-            - ['@session']
         calls:
             - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
             - [setResourceCacher, ['@kunstmaan_translator.service.translator.resource_cacher']]
