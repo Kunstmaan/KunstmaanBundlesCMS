@@ -14,6 +14,8 @@ use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
 use Kunstmaan\AdminListBundle\Event\AdminListEvent;
 use Kunstmaan\AdminListBundle\Event\AdminListEvents;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
+use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Kunstmaan\AdminListBundle\Service\EntityVersionLockService;
@@ -405,7 +407,9 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
-        $repo = $em->getRepository($configurator->getRepositoryName());
+		$repositoryName = $this->getAdminListRepositoryName($configurator);
+
+		$repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
         $setter = "set".ucfirst($sortableField);
@@ -438,7 +442,9 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
-        $repo = $em->getRepository($configurator->getRepositoryName());
+		$repositoryName = $this->getAdminListRepositoryName($configurator);
+
+		$repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
         $setter = "set".ucfirst($sortableField);
@@ -537,4 +543,22 @@ abstract class AdminListController extends Controller
             $configurator->addItemAction($action);
         }
     }
+
+	/**
+	 * @param AbstractAdminListConfigurator $configurator
+	 * @return string
+	 */
+	protected function getAdminListRepositoryName(AbstractAdminListConfigurator $configurator) {
+		$em = $this->getEntityManager();
+
+		$entityName = $configurator->getRepositoryName();
+		$classMetaData = $em->getClassMetadata($entityName);
+		$reflectionClass = $classMetaData->getReflectionClass();
+
+		if($reflectionClass->implementsInterface(HasNodeInterface::class)) {
+			return NodeTranslation::class;
+		}
+
+		return $configurator->getRepositoryName();
+	}
 }
