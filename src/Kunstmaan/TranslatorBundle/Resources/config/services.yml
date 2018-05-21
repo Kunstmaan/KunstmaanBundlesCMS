@@ -80,6 +80,7 @@ services:
         calls:
             - [setCacheDir, ['%kuma_translator.cache_dir%']]
             - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
+        public: true
 
     kunstmaan_translator.service.translator.translator:
         class: Kunstmaan\TranslatorBundle\Service\Translator\Translator
