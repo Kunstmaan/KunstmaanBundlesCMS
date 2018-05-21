@@ -38,6 +38,13 @@ NodeBundle
  * The unused `WidgetsController::selectNodesLazySearch` action is deprecated and will be removed in 6.0. 
  * Injecting the container in the `SlugRouter` is deprecated and will be removed in 6.0. Inject the required services instead.
 
+SearchBundle
+------------
+
+ * `SetupIndexCommand::__construct()`, `PopulateIndexCommand::__construct()` and `DeleteIndexCommand::__construct()` now takes an instance of `Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+ * `SetupIndexCommand`, `PopulateIndexCommand` and `DeleteIndexCommand` have been marked as final.
+ 
+
 TranslatorBundle
 ----------------
 
