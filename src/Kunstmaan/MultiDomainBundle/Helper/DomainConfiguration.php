@@ -2,6 +2,8 @@
 
 namespace Kunstmaan\MultiDomainBundle\Helper;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
 use Kunstmaan\AdminBundle\Helper\DomainConfiguration as BaseDomainConfiguration;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -32,13 +34,26 @@ class DomainConfiguration extends BaseDomainConfiguration
     protected $adminRouteHelper;
 
     /**
-     * @param ContainerInterface $container
+     * @param ContainerInterface|string $multilanguage
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(/*ContainerInterface|string*/ $multilanguage, $defaultLocale = null, $requiredLocales = null, AdminRouteHelper $adminRouteHelper = null, EntityManagerInterface $em = null, array $hosts = null)
     {
-        parent::__construct($container);
+        parent::__construct($multilanguage, $defaultLocale, $requiredLocales);
 
-        $this->hosts = $container->getParameter('kunstmaan_multi_domain.hosts');
+        if ($multilanguage instanceof ContainerInterface) {
+            @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
+
+            $this->container = $multilanguage;
+            $this->adminRouteHelper = $this->container->get('kunstmaan_admin.adminroute.helper');
+            $this->hosts = $this->container->getParameter('kunstmaan_multi_domain.hosts');
+            $this->em = $this->container->get('doctrine.orm.entity_manager');
+
+        } else {
+            $this->adminRouteHelper = $adminRouteHelper;
+            $this->hosts = $hosts;
+            $this->em = $em;
+        }
+
         foreach ($this->hosts as $host => $hostInfo) {
             if (isset($hostInfo['aliases'])) {
                 foreach ($hostInfo['aliases'] as $alias) {
@@ -46,8 +61,6 @@ class DomainConfiguration extends BaseDomainConfiguration
                 }
             }
         }
-
-        $this->adminRouteHelper = $container->get('kunstmaan_admin.adminroute.helper');
     }
 
     /**
@@ -165,8 +178,7 @@ class DomainConfiguration extends BaseDomainConfiguration
             $host = $this->getRealHost($host);
 
             $internalName = $this->hosts[$host]['root'];
-            $em = $this->container->get('doctrine.orm.entity_manager');
-            $nodeRepo = $em->getRepository('KunstmaanNodeBundle:Node');
+            $nodeRepo = $this->em->getRepository('KunstmaanNodeBundle:Node');
             $this->rootNode = $nodeRepo->getNodeByInternalName($internalName);
         }
 

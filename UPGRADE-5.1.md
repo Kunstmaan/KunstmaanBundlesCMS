@@ -5,6 +5,7 @@ AdminBundle
 -----------
 
  * Passing the `logger` service as the second argument in `Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector` is deprecated and will be removed in 6.0.
+ * Injecting the container in the `DomainConfiguration` is deprecated and will be removed in 6.0. Inject the required parameters instead.
 
 AdminListBundle
 ---------------
@@ -32,6 +33,11 @@ MediaBundle
  * `RebuildFolderTreeCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `RenameSoftDeletedCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `CleanDeletedMediaCommand`, `CreatePdfPreviewCommand`, `RebuildFolderTreeCommand` and `RenameSoftDeletedCommand` have been marked as final.
+
+MultiDomainBundle
+-----------------
+
+* Injecting the container in the `DomainConfiguration` is deprecated and will be removed in 6.0. Inject the required parameters instead.
 
 NodeBundle
 ----------
