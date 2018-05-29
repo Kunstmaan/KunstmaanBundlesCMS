@@ -24,3 +24,13 @@ services:
             - [ setPdfTransformer, [ '@kunstmaan_media.pdf_transformer' ]]
         tags:
             -  { name: 'kunstmaan_media.media_handler' }
+
+    kunstmaan_media.command.createpdfpreview:
+        class: Kunstmaan\MediaBundle\Command\CreatePdfPreviewCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_media.pdf_transformer'
+            - '%kernel.root_dir%'
+            - '%kunstmaan_media.enable_pdf_preview%'
+        tags:
+            - { name: console.command }
