@@ -47,7 +47,7 @@ class TestListener implements \PHPUnit_Framework_TestListener
         $tool->createSchema($meta);
 
         // insert fixtures
-        $fixtures = array(__DIR__.'/files/fixtures.yml');
+        $fixtures = array(__DIR__ . '/files/fixtures.yml');
         $em = $kernel->getContainer()->get('doctrine.orm.default_entity_manager');
         $objects = \Nelmio\Alice\Fixtures::load($fixtures, $em);
         $persister = new \Nelmio\Alice\Persister\Doctrine($em);

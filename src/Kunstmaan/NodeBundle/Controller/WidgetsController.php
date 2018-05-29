@@ -63,6 +63,8 @@ class WidgetsController extends Controller
      */
     public function selectNodesLazySearch(Request $request)
     {
+        @trigger_error(sprintf('The "%s" controller action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+
         /* @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();

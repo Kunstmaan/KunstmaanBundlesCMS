@@ -25,5 +25,4 @@ services:
       - "@security.authorization_checker"
       - "@doctrine.orm.entity_manager"
       - "%kunstmaan_config%"
-      - "@service_container"
       - "@form.factory"

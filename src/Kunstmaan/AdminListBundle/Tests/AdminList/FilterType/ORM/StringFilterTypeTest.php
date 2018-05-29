@@ -24,17 +24,6 @@ class StringFilterTypeTest extends ORMFilterTypeTestCase
         $this->object = new StringFilterType('string', 'b');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array('filter_comparator_string' => 'equals', 'filter_value_string' => 'TheStringValue'));
@@ -52,7 +41,6 @@ class StringFilterTypeTest extends ORMFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -82,9 +70,6 @@ class StringFilterTypeTest extends ORMFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:stringFilter.html.twig', $this->object->getTemplate());

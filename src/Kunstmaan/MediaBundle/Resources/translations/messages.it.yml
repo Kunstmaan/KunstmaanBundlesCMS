@@ -4,7 +4,7 @@ media:
     title: Aviary
     nothing: Niente da vedere qui.
   media:
-    "no": Non sono presenti file in questa cartella.
+    no: Non sono presenti file in questa cartella.
     dnd:
       tip: "Tip:"
       tiptext: did you know you can just drop multiple files here?
@@ -57,8 +57,19 @@ media:
         save: Empty
       success:
         text: Folder '%folder%' has been emptied!
+    bulk_move:
+      action: Bulk move media
+      action_short: Bulk move
+      modal:
+        title: Bulk move media
+        text: Select to which folder you want to move the selected media.
+        save: "Move.."
+        form:
+          name: Parent folder
+      success:
+        text: Media has been moved successfully!
     sub:
-      "no": Sottocartelle non presenti.
+      no: Sottocartelle non presenti.
     delete:
       action: Cancella questa cartella
       action_short: Cancella

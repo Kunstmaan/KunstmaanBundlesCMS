@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
 
 /**
@@ -23,25 +25,11 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
         $this->object = new TocPagePartAdminType();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::buildForm
-     */
     public function testBuildForm()
     {
         $this->object->buildForm($this->builder, array());
     }
 
-    /**
-     * @covers Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::configureOptions
-     */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);

@@ -24,17 +24,6 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
         $this->object = new EnumerationFilterType('enumeration', 'e');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
@@ -52,7 +41,6 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -80,9 +68,6 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getComparator
-     */
     public function testGetComparator()
     {
         $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
@@ -92,9 +77,6 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
         $this->assertEquals($this->object->getComparator(), 'in');
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getValue
-     */
     public function testGetValue()
     {
         $request = new Request(array('filter_comparator_enumeration' => 'in', 'filter_value_enumeration' => array(1, 2)));
@@ -104,9 +86,6 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
         $this->assertEquals($this->object->getValue(), array(1, 2));
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:enumerationFilter.html.twig', $this->object->getTemplate());

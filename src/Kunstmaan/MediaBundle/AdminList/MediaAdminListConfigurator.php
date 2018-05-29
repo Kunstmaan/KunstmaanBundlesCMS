@@ -5,7 +5,9 @@ namespace Kunstmaan\MediaBundle\AdminList;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\Configurator\AbstractDoctrineORMAdminListConfigurator;
+use Kunstmaan\AdminListBundle\AdminList\Configurator\ChangeableLimitInterface;
 use Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
+use Kunstmaan\AdminListBundle\Traits\ChangeableLimitTrait;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaDeleteItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaEditItemAction;
 use Kunstmaan\MediaBundle\AdminList\ItemAction\MediaSelectItemAction;
@@ -20,8 +22,10 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * The admin list configurator for the Media entity
  */
-class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
+class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator implements ChangeableLimitInterface
 {
+    use ChangeableLimitTrait;
+
     /**
      * @var Folder
      */
@@ -31,11 +35,6 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
      * @var Request
      */
     private $request;
-
-    /**
-     * @var int $limit
-     */
-    private $limit;
 
     /**
      * @param EntityManager $em The entity manager
@@ -56,8 +55,6 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
 
         $this->folder = $folder;
         $this->request = $request;
-
-        $this->limit = 24;
     }
 
     /**

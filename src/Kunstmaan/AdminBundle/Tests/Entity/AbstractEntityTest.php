@@ -23,27 +23,12 @@ class AbstractEntityTest extends \PHPUnit_Framework_TestCase
         $this->object = $this->getMockForAbstractClass('Kunstmaan\AdminBundle\Entity\AbstractEntity');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\AbstractEntity::getId
-     * @covers Kunstmaan\AdminBundle\Entity\AbstractEntity::setId
-     */
     public function testGetSetId()
     {
         $this->object->setId(5);
         $this->assertEquals(5, $this->object->getId());
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Entity\AbstractEntity::__toString
-     */
     public function test__toString()
     {
         $this->object->setId(8);

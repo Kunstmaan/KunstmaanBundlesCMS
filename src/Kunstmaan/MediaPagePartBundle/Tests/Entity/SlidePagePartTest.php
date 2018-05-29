@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart;
-
 use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
 
 /**
@@ -26,10 +25,6 @@ class SlidePagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new SlidePagePart;
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::setMedia
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getMedia
-     */
     public function testSetGetMedia()
     {
         $media = new Media();
@@ -38,20 +33,23 @@ class SlidePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(5, $this->object->getMedia()->getId());
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getDefaultView
-     */
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
         $this->assertEquals("KunstmaanMediaPagePartBundle:SlidePagePart:view.html.twig", $defaultView);
     }
 
-    /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(SlidePagePartAdminType::class, $this->object->getDefaultAdminType());
+    }
+
+    public function testToString()
+    {
+        $this->assertEmpty($this->object->__toString());
+        $media = new Media();
+        $media->setUrl('https://nasa.gov/spongebob.jpg');
+        $this->object->setMedia($media);
+        $this->assertEquals('https://nasa.gov/spongebob.jpg', $this->object->__toString());
     }
 }

@@ -21,7 +21,7 @@ KunstmaanAdminBundle_settings_exception:
 # Change user password route
 KunstmaanAdminBundle_user_change_password:
     path: /%kunstmaan_admin.admin_prefix%/settings/users/{id}/edit
-    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    defaults: { _controller: fos_user.change_password.controller:changePasswordAction }
     methods: [GET, POST]
 
 ###########################
@@ -50,7 +50,7 @@ fos_user_resetting:
 
 fos_user_change_password:
     path: /%kunstmaan_admin.admin_prefix%/profile/change-password
-    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    defaults: { _controller: fos_user.change_password.controller:changePasswordAction }
     methods: [GET, POST]
 
 ##########################
