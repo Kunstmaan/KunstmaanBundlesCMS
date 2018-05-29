@@ -118,6 +118,7 @@ services:
     kunstmaan_admin.adminroute.helper:
         class: '%kunstmaan_admin.adminroute.helper.class%'
         arguments: ['%kunstmaan_admin.admin_prefix%', '@request_stack']
+        public: true
 
     kunstmaan_admin.adminroute.twig.extension:
         class: '%kunstmaan_admin.adminroute.twig.class%'
