@@ -113,6 +113,7 @@ services:
     kunstmaan_admin.clone.helper:
         class: Kunstmaan\AdminBundle\Helper\CloneHelper
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
+        public: true
 
     kunstmaan_admin.adminroute.helper:
         class: '%kunstmaan_admin.adminroute.helper.class%'
