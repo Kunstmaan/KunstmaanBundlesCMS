@@ -27,21 +27,32 @@ class DomainConfiguration implements DomainConfigurationInterface
     protected $defaultLocale;
 
     /**
-     * @param ContainerInterface $container
+     * @param ContainerInterface|string $multilanguage
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(/*ContainerInterface|string*/ $multilanguage, $defaultLocale = null, $requiredLocales = null)
     {
-        $this->container = $container;
-        $this->multiLanguage = $this->container->getParameter(
-            'multilanguage'
-        );
-        $this->defaultLocale = $this->container->getParameter(
-            'defaultlocale'
-        );
-        $this->requiredLocales = explode(
-            '|',
-            $this->container->getParameter('requiredlocales')
-        );
+        if ($multilanguage instanceof ContainerInterface) {
+            @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
+
+            $this->container = $multilanguage;
+            $this->multiLanguage = $this->container->getParameter(
+                'multilanguage'
+            );
+            $this->defaultLocale = $this->container->getParameter(
+                'defaultlocale'
+            );
+            $this->requiredLocales = explode(
+                '|',
+                $this->container->getParameter('requiredlocales')
+            );
+
+            return;
+        }
+
+        $this->multiLanguage = $multilanguage;
+        $this->defaultLocale = $defaultLocale;
+
+        $this->requiredLocales = explode('|', $requiredLocales);
     }
 
     /**
