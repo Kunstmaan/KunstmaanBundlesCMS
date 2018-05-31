@@ -55,6 +55,11 @@ SearchBundle
  * `SetupIndexCommand::__construct()`, `PopulateIndexCommand::__construct()` and `DeleteIndexCommand::__construct()` now takes an instance of `Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `SetupIndexCommand`, `PopulateIndexCommand` and `DeleteIndexCommand` have been marked as final.
  
+SeoBundle
+---------
+
+ * Getting services directly from the container in list controllers is deprecated and will be removed in 6.0. Register your controllers as services and inject the necessary dependencies.
+ * Getting parameters directly from the container in list controllers is deprecated and will be removed in 6.0. Register your controllers as services and inject the necessary parameters.
 
 TranslatorBundle
 ----------------
@@ -64,6 +69,12 @@ TranslatorBundle
  * `TranslationCacheCommand::__construct()` now takes an instance of `Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `TranslationFlagCommand::__construct()` now takes an instance of `Kunstmaan\TranslatorBundle\Repository\TranslationRepository` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `ExportTranslationsCommand`, `ImportTranslationsCommand`, `MigrationsDiffCommand`, `TranslationCacheCommand` and `TranslationFlagCommand` have been marked as final.
+
+UserManagementBundle
+--------------------
+
+ * Getting services directly from the container in list controllers is deprecated and will be removed in 6.0. Register your controllers as services and inject the necessary dependencies.
+ * Getting parameters directly from the container in list controllers is deprecated and will be removed in 6.0. Register your controllers as services and inject the necessary parameters.
 
 UtilitiesBundle
 ---------------
