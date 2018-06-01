@@ -6,6 +6,8 @@ AdminBundle
 
  * Passing the `logger` service as the second argument in `Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector` is deprecated and will be removed in 6.0.
  * Injecting the container in the `DomainConfiguration` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `ApplyAclCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `UpdateAclCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
 
 AdminListBundle
 ---------------

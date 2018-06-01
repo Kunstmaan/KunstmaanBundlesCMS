@@ -92,7 +92,11 @@ services:
 
     kunstmaan_admin.acl.manager:
         class: Kunstmaan\AdminBundle\Service\AclManager
-        arguments: ['@security.acl.provider', '@security.acl.object_identity_retrieval_strategy']
+        arguments:
+            - '@security.acl.provider'
+            - '@security.acl.object_identity_retrieval_strategy'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_admin.permissionadmin'
         public: true
 
     kunstmaan_admin.acl.native.helper:
@@ -333,5 +337,13 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@kunstmaan_admin.security.acl.permission.map'
             - '%security.role_hierarchy.roles%'
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\ApplyAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_utilities.shell'
         tags:
             - { name: console.command }
