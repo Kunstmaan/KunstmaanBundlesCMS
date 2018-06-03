@@ -48,6 +48,9 @@ NodeBundle
  * `Possibility to change the icon of your page.`: The possibility already exists to change the icon in the sidebar tree of your page. This was already available by yml configuration. I've added a new interface, TreeIconInterface that can be implemented and that will return the icon that should be used.
  * The unused `WidgetsController::selectNodesLazySearch` action is deprecated and will be removed in 6.0. 
  * Injecting the container in the `SlugRouter` is deprecated and will be removed in 6.0. Inject the required services instead.
+ * The `service` method of `Kunstmaan\NodeBundle\Entity\PageInterface` is deprecated and will be removed in 6.0. Implement the `Kunstmaan\NodeBundle\Controller\SlugActionInterface`
+   and use the `getControllerAction` method to specify a controller action with your custom page logic instead. 
+
 
 SearchBundle
 ------------
