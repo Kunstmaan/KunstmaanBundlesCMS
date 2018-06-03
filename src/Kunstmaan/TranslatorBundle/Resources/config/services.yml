@@ -90,6 +90,7 @@ services:
             - '%kernel.default_locale%'
             - {}
             - { cache_dir: '%kuma_translator.cache_dir%', debug: '%kuma_translator.debug%' }
+            - '%kuma_translator.profiler%'
         calls:
             - [setTranslationRepository, ['@kunstmaan_translator.repository.translation']]
             - [setResourceCacher, ['@kunstmaan_translator.service.translator.resource_cacher']]
