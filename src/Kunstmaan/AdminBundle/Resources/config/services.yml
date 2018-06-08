@@ -90,6 +90,11 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
         public: true
 
+    kunstmaan_admin.acl.manager:
+        class: Kunstmaan\AdminBundle\Service\AclManager
+        arguments: ['@security.acl.provider', '@security.acl.object_identity_retrieval_strategy']
+        public: true
+
     kunstmaan_admin.acl.native.helper:
         class: '%kunstmaan_admin.acl.native.helper.class%'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
