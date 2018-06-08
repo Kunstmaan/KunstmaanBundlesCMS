@@ -50,6 +50,7 @@ services:
     kunstmaan_node.admin_node.publisher:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.authorization_checker', '@event_dispatcher', '@kunstmaan_admin.clone.helper']
+        public: true
 
     kunstmaan_node.admin_node.node_version_lock_helper:
         class: Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper

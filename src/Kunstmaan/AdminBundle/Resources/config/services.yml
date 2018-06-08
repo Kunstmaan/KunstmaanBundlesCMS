@@ -90,6 +90,11 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
         public: true
 
+    kunstmaan_admin.acl.manager:
+        class: Kunstmaan\AdminBundle\Service\AclManager
+        arguments: ['@security.acl.provider', '@security.acl.object_identity_retrieval_strategy']
+        public: true
+
     kunstmaan_admin.acl.native.helper:
         class: '%kunstmaan_admin.acl.native.helper.class%'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
@@ -113,10 +118,12 @@ services:
     kunstmaan_admin.clone.helper:
         class: Kunstmaan\AdminBundle\Helper\CloneHelper
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
+        public: true
 
     kunstmaan_admin.adminroute.helper:
         class: '%kunstmaan_admin.adminroute.helper.class%'
         arguments: ['%kunstmaan_admin.admin_prefix%', '@request_stack']
+        public: true
 
     kunstmaan_admin.adminroute.twig.extension:
         class: '%kunstmaan_admin.adminroute.twig.class%'
@@ -215,7 +222,7 @@ services:
 
     kunstmaan_admin.domain_configuration:
         class: '%kunstmaan_admin.domain_configuration.class%'
-        arguments: ['@service_container']
+        arguments: ['@request_stack', '%multilanguage%', '%defaultlocale%', '%requiredlocales%']
         public: true
 
     kunstmaan_admin.oauth_authenticator:
@@ -319,3 +326,12 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:exception.html.twig', id: kuma_exception }
+
+    Kunstmaan\AdminBundle\Command\UpdateAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_admin.security.acl.permission.map'
+            - '%security.role_hierarchy.roles%'
+        tags:
+            - { name: console.command }

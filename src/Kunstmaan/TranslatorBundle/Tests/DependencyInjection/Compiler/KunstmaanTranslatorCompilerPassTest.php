@@ -33,8 +33,14 @@ class KunstmaanTranslatorCompilerPassTest extends AbstractCompilerPassTestCase
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
-            'setLoaders',
-            [['someAlias' => new Reference($svcId), 'someLegacyAlias' => new Reference($svcId)]]
+            'addLoader',
+            ['someAlias', new Reference($svcId)]
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            $svcId,
+            'addLoader',
+            ['someLegacyAlias', new Reference($svcId)]
         );
 
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
