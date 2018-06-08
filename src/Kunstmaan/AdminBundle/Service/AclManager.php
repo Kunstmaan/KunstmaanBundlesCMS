@@ -3,6 +3,8 @@
 namespace Kunstmaan\AdminBundle\Service;
 
 use Kunstmaan\NodeBundle\Entity\Node;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
