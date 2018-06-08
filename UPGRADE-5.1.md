@@ -64,6 +64,7 @@ TranslatorBundle
  * `TranslationCacheCommand::__construct()` now takes an instance of `Kunstmaan\TranslatorBundle\Service\Translator\ResourceCacher` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `TranslationFlagCommand::__construct()` now takes an instance of `Kunstmaan\TranslatorBundle\Repository\TranslationRepository` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `ExportTranslationsCommand`, `ImportTranslationsCommand`, `MigrationsDiffCommand`, `TranslationCacheCommand` and `TranslationFlagCommand` have been marked as final.
+ * The `usedTranslations` request parameter added by `Kunstmaan\TranslatorBundle\Service\Translator\Translator` is deprecated and will be removed in 6.0. Get the collected messages from the `Kunstmaan\TranslatorBundle\Toolbar\DataCollectorTranslator` service.
 
 UtilitiesBundle
 ---------------
