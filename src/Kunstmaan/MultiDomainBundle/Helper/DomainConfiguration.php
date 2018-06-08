@@ -36,14 +36,14 @@ class DomainConfiguration extends BaseDomainConfiguration
     /**
      * @param ContainerInterface|string $multilanguage
      */
-    public function __construct(/*ContainerInterface|string*/ $multilanguage, $defaultLocale = null, $requiredLocales = null, AdminRouteHelper $adminRouteHelper = null, EntityManagerInterface $em = null, array $hosts = null)
+    public function __construct(/*ContainerInterface|RequestStack*/ $requestStack, $multilanguage = null, $defaultLocale = null, $requiredLocales = null, AdminRouteHelper $adminRouteHelper = null, EntityManagerInterface $em = null, array $hosts = null)
     {
-        parent::__construct($multilanguage, $defaultLocale, $requiredLocales);
+        parent::__construct($requestStack, $multilanguage, $defaultLocale, $requiredLocales);
 
-        if ($multilanguage instanceof ContainerInterface) {
+        if ($requestStack instanceof ContainerInterface) {
             @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
 
-            $this->container = $multilanguage;
+            $this->container = $requestStack;
             $this->adminRouteHelper = $this->container->get('kunstmaan_admin.adminroute.helper');
             $this->hosts = $this->container->getParameter('kunstmaan_multi_domain.hosts');
             $this->em = $this->container->get('doctrine.orm.entity_manager');
