@@ -6,6 +6,8 @@ AdminBundle
 
  * Passing the `logger` service as the second argument in `Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector` is deprecated and will be removed in 6.0.
  * Injecting the container in the `DomainConfiguration` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * `CreateUserCommand::__construct()`, `CreateRoleCommand::__construct()`, `CreateGroupCommand::__construct()` and `ExceptionCommand::__construct()` now take an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+ * `CreateUserCommand::__construct()`, `CreateRoleCommand::__construct()`, `CreateGroupCommand::__construct()` and `ExceptionCommand::__construct()` have been marked as final.
 
 AdminListBundle
 ---------------
