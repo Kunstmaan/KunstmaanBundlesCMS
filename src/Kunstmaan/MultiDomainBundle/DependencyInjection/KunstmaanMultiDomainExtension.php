@@ -46,15 +46,6 @@ class KunstmaanMultiDomainExtension extends Extension
             $container->getParameter('kunstmaan_multi_domain.router.class')
         );
 
-        if ($container->hasParameter('kunstmaan_multi_domain.domain_configuration.class') && $container->getParameter('kunstmaan_multi_domain.domain_configuration.class') !== DomainConfiguration::class) {
-            @trigger_error(
-                'Overriding the domain configuration class by setting the "kunstmaan_multi_domain.domain_configuration.class" parameter is deprecated since KunstmaanMultiDomainBundle 5.1 and will be removed in KunstmaanMultiDomainBundle 6.0. Register your custom configuration class as a service and override the "kunstmaan_admin.domain_configuration" service alias.'
-            );
-
-            // Inject the container back, to keep BC, if the user override the domain configuration with the "kunstmaan_multi_domain.domain_configuration.class" parameter.
-            $container->getDefinition('kunstmaan_multi_domain.domain_configuration.class')->setArguments([new Reference('service_container')]);
-        }
-
         /**
          * We override the default domain configuration service here. You can use a custom one by
          * setting registering the class as a service and override the "kunstmaan_admin.domain_configuration" service alias.
