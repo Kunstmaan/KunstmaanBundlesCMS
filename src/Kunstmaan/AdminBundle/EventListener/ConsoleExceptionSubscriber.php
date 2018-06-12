@@ -2,16 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\EventListener;
 
-use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Console\Event\ConsoleErrorEvent;
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+use Psr\Log\LoggerInterface;
 
 /**
- * Class ConsoleExceptionListener.
- *
- * @deprecated in KunstmaanAdminBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.
+ * Class ConsoleExceptionSubscriber.
  */
-class ConsoleExceptionListener
+final class ConsoleExceptionSubscriber implements EventSubscriberInterface
 {
     /** @var LoggerInterface */
     private $logger;
@@ -26,19 +25,24 @@ class ConsoleExceptionListener
     }
 
     /**
-     * @param ConsoleExceptionEvent $event
+     * @return array
      */
-    public function onConsoleException(ConsoleExceptionEvent $event)
+    public static function getSubscribedEvents()
     {
-        // if the newer error event exists, don't bother with the old exception, our subscriber will handle this
-        if (class_exists(ConsoleErrorEvent::class)){
-            return;
-        }
+        return [
+            ConsoleEvents::ERROR => 'onConsoleError'
+        ];
+    }
 
+    /**
+     * @param ConsoleErrorEvent $event
+     */
+    public function onConsoleError(ConsoleErrorEvent $event)
+    {
         $command = $event->getCommand();
-        $exception = $event->getException();
+        $error = $event->getError();
 
-        $this->logCommandError($command, $exception);
+        $this->logCommandError($command, $error);
     }
 
     /**

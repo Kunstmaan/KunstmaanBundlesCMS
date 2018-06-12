@@ -4,6 +4,7 @@ namespace Kunstmaan\AdminBundle;
 
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AdminPanelCompilerPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\ConsoleCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorAfterPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DomainConfigurationPass;
@@ -31,6 +32,7 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new AddLogProcessorsCompilerPass());
         $container->addCompilerPass(new DataCollectorPass());
         $container->addCompilerPass(new DomainConfigurationPass());
+        $container->addCompilerPass(new ConsoleCompilerPass());
 
         $container->registerExtension(new KunstmaanAdminExtension());
     }
