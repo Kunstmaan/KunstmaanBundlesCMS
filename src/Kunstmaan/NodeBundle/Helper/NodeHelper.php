@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
+use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
@@ -15,12 +16,16 @@ use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
+use Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class NodeHelper
+ *
+ * @experimental in 5.1
  */
 class NodeHelper
 {
@@ -39,6 +44,12 @@ class NodeHelper
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    /** @var AclManager */
+    private $aclManager;
+
+    /** @var ACLPermissionCreatorService */
+    private $aclPermissionCreatorService;
+
     /**
      * NodeHelper constructor.
      *
@@ -47,19 +58,25 @@ class NodeHelper
      * @param TokenStorageInterface $tokenStorage
      * @param CloneHelper $cloneHelper
      * @param EventDispatcherInterface $eventDispatcher
+     * @param AclManager $aclManager
+     * @param ACLPermissionCreatorService $aclPermissionCreatorService
      */
     public function __construct(
         EntityManagerInterface $em,
         NodeAdminPublisher $nodeAdminPublisher,
         TokenStorageInterface $tokenStorage,
         CloneHelper $cloneHelper,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        AclManager $aclManager,
+        ACLPermissionCreatorService $aclPermissionCreatorService
     ) {
         $this->em = $em;
         $this->nodeAdminPublisher = $nodeAdminPublisher;
         $this->tokenStorage = $tokenStorage;
         $this->cloneHelper = $cloneHelper;
         $this->eventDispatcher = $eventDispatcher;
+        $this->aclManager = $aclManager;
+        $this->aclPermissionCreatorService = $aclPermissionCreatorService;
     }
 
     /**
@@ -230,6 +247,13 @@ class NodeHelper
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
+        // for a parentNode, we create an acl service; for a child page we update the acl of the parent
+        if (null === $parentNode) {
+            $this->aclPermissionCreatorService->createPermission($nodeNewPage);
+        } else {
+            $this->aclManager->updateNodeAcl($parentNode, $nodeNewPage);
+        }
+
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
         $this->eventDispatcher->dispatch(
@@ -245,7 +269,7 @@ class NodeHelper
     /**
      * @param Node $node
      * @param string $locale
-     * @return NodeTranslation
+     * @return Response|null
      */
     public function deletePage(Node $node, $locale)
     {
@@ -264,12 +288,12 @@ class NodeHelper
         $this->deleteNodeChildren($node, $locale);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(
+        $event = $this->eventDispatcher->dispatch(
             Events::POST_DELETE,
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
         );
 
-        return $nodeTranslation;
+        return $event->getResponse();
     }
 
     /**
@@ -277,11 +301,11 @@ class NodeHelper
      * @param string $locale
      * @return HasNodeInterface
      */
-    public function getPageWithNodeInterface(Node $node, $locale) 
+    public function getPageWithNodeInterface(Node $node, $locale)
     {
         $nodeTranslation = $node->getNodeTranslation($locale, true);
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
-        
+
         return $nodeVersion->getRef($this->em);
     }
 
@@ -353,6 +377,8 @@ class NodeHelper
             $this->em->persist($nodeTranslation);
         }
         $this->em->flush();
+        
+        $this->aclManager->updateNodeAcl($node, $nodeNewPage);
 
         return $nodeTranslation;
     }
@@ -475,7 +501,7 @@ class NodeHelper
             );
         }
     }
-    
+
     /**
      * @return mixed|null
      */

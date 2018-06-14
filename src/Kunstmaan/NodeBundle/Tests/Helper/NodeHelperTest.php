@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -20,10 +21,13 @@ use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
+use Kunstmaan\NodeBundle\Helper\Services\ACLPermissionCreatorService;
 use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -64,6 +68,12 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
 
     /** @var \PHPUnit_Framework_MockObject_MockObject|CloneHelper */
     private $cloneHelper;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|AclManager */
+    private $aclManager;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|ACLPermissionCreatorService */
+    private $aclPermissionCreatorService;
 
     /** @var string */
     private $locale = 'en';
@@ -163,6 +173,11 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
                 $nodeTranslationRepository
             );
 
+        $this->aclManager
+            ->expects($this->once())
+            ->method('updateNodeAcl')
+            ->with($this->equalTo($nodeHomePage), $this->equalTo($nodeChildPage));
+
         $expectedEvent = new NodeEvent(
             $nodeChildPage, $nodeTranslationChildPage, $nodeTranslationChildPage->getPublicNodeVersion(), $expectedTestPageCreateNodeFor
         );
@@ -196,20 +211,35 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $nodeVersionChildPage = $nodeTranslationChildPage->getPublicNodeVersion();
         $nodeHomePage->addNode($nodeChildPage);
 
+        $nodeEventPreHomepage = new NodeEvent($nodeHomePage, $nodeTranslationHomePage, $nodeVersionHomePage, $homePage);
+        $nodeEventPreChild = new NodeEvent($nodeChildPage, $nodeTranslationChildPage, $nodeVersionChildPage, $page);
+        $nodeEventPostChild = new NodeEvent($nodeChildPage, $nodeTranslationChildPage, $nodeVersionChildPage, $page);
+        $nodeEventPostHomePage = new NodeEvent($nodeHomePage, $nodeTranslationHomePage, $nodeVersionHomePage, $homePage);
+
         $this->eventDispatcher
             ->expects($this->exactly(4))
             ->method('dispatch')
             ->withConsecutive(
-                [$this->equalTo(Events::PRE_DELETE), $this->equalTo(new NodeEvent($nodeHomePage, $nodeTranslationHomePage, $nodeVersionHomePage, $homePage))],
-                [$this->equalTo(Events::PRE_DELETE), $this->equalTo(new NodeEvent($nodeChildPage, $nodeTranslationChildPage, $nodeVersionChildPage, $page))],
-                [$this->equalTo(Events::POST_DELETE), $this->equalTo(new NodeEvent($nodeChildPage, $nodeTranslationChildPage, $nodeVersionChildPage, $page))],
-                [$this->equalTo(Events::POST_DELETE), $this->equalTo(new NodeEvent($nodeHomePage, $nodeTranslationHomePage, $nodeVersionHomePage, $homePage))]
-            );
+                [$this->equalTo(Events::PRE_DELETE), $this->equalTo($nodeEventPreHomepage)],
+                [$this->equalTo(Events::PRE_DELETE), $this->equalTo($nodeEventPreChild)],
+                [$this->equalTo(Events::POST_DELETE), $this->equalTo($nodeEventPostChild)],
+                [$this->equalTo(Events::POST_DELETE), $this->equalTo($nodeEventPostHomePage)]
+            )
+            ->willReturnCallback(function($eventName, $event) use ($nodeHomePage) {
+                $eventClone = clone $event;
+
+                /** @var NodeEvent $event */
+                if ($nodeHomePage === $event->getNode() && Events::POST_DELETE === $eventName) {
+                    $eventClone->setResponse(new RedirectResponse('http://foo.bar'));
+                }
+
+                return $eventClone;
+            });
         ;
 
         $result = $this->nodeHelper->deletePage($nodeHomePage, $this->locale);
 
-        $this->assertTrue($result->getNode()->isDeleted());
+        $this->assertInstanceOf(RedirectResponse::class, $result);
         $this->assertTrue($nodeHomePage->isDeleted());
         $this->assertTrue($nodeChildPage->isDeleted());
     }
@@ -288,7 +318,9 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
                 $this->nodeAdminPublisher,
                 $this->tokenStorage,
                 $this->cloneHelper,
-                $this->eventDispatcher
+                $this->eventDispatcher,
+                $this->aclManager,
+                $this->aclPermissionCreatorService
             ])
             ->setMethods(['createDraftVersion'])
             ->getMock();
@@ -628,13 +660,22 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $this->eventDispatcher = $this->getMockBuilder(EventDispatcher::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->aclManager = $this->getMockBuilder(AclManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->aclPermissionCreatorService = $this->getMockBuilder(ACLPermissionCreatorService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
 
         return new NodeHelper(
             $this->em,
             $this->nodeAdminPublisher,
             $this->tokenStorage,
             $this->cloneHelper,
-            $this->eventDispatcher
+            $this->eventDispatcher,
+            $this->aclManager,
+            $this->aclPermissionCreatorService
         );
     }
 
