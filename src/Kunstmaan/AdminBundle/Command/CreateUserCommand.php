@@ -3,6 +3,8 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Model\GroupManagerInterface;
 use Kunstmaan\AdminBundle\Entity\Group;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -15,9 +17,42 @@ use Symfony\Component\Console\Question\Question;
 
 /**
  * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>
+ *
+ * @final since 5.1
+ * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var GroupManagerInterface */
+    private $groupManager;
+
+    /** @var string */
+    private $userClassname;
+
+    /** @var string */
+    private $defaultLocale;
+
+    public function __construct(/* EntityManagerInterface */ $em = null, GroupManagerInterface $groupManager = null, $userClassname = null, $defaultLocale = null)
+    {
+        parent::__construct();
+
+        if (!$em instanceof EntityManagerInterface) {
+            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
+
+            $this->setName(null === $em ? 'kuma:user:create' : $em);
+
+            return;
+        }
+
+        $this->em = $em;
+        $this->groupManager = $groupManager;
+        $this->userClassname = $userClassname;
+        $this->defaultLocale = $defaultLocale;
+    }
+
     protected function configure()
     {
         parent::configure();
@@ -68,8 +103,12 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /* @var EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        if (null === $this->em) {
+            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
+            $this->groupManager = $this->getContainer()->get('fos_user.group_manager');
+            $this->userClassname = $this->getContainer()->getParameter('fos_user.model.user.class');
+            $this->defaultLocale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
+        }
 
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
@@ -80,7 +119,7 @@ EOT
         $groupOption = $input->getOption('group');
 
         if (null !== $locale) {
-            $locale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
+            $locale = $this->defaultLocale;
         }
         $command = $this->getApplication()->find('fos:user:create');
         $arguments = array(
@@ -96,22 +135,21 @@ EOT
         $command->run($input, $output);
 
         // Fetch user that was just created
-        $userClassName = $this->getContainer()->getParameter('fos_user.model.user.class');
-        $user = $em->getRepository($userClassName)->findOneBy(array('username' => $username));
+        $user = $this->em->getRepository($this->userClassname)->findOneBy(array('username' => $username));
 
         // Attach groups
         $groupNames = explode(',', $groupOption);
         /** @var Group[] $groups */
-        $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
+        $groups = $this->groupManager->findGroups();
         $groupOutput = '';
 
         foreach ($groupNames as $groupName) {
 
             if ((int)$groupName !== 0) {
-                $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
+                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
                 $groupOutput .= $groups[$groupName]->getName() . ', ';
             } else {
-                $group = $em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
+                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
                 $groupOutput .= $groupName . ', ';
             }
 
@@ -125,8 +163,8 @@ EOT
         $user->setPasswordChanged(true);
 
         // Persist
-        $em->persist($user);
-        $em->flush();
+        $this->em->persist($user);
+        $this->em->flush();
 
         // Remove trailing comma
         $groupOutput = substr($groupOutput, 0, -2);
@@ -210,7 +248,7 @@ EOT
             $input->setArgument('locale', $locale);
         }
 
-        $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
+        $groups = $this->groupManager->findGroups();
 
         if (!$input->getOption('group')) {
             $question = new ChoiceQuestion(
