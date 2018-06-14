@@ -24,6 +24,14 @@ ConfigBundle
 
  * Passing the `container` as the sixth argument in `Kunstmaan\ConfigBundle\Controller\ConfigController` is deprecated in and will be removed in 6.0.
 
+FormBundle
+-----------
+ * Added the optional `deletable_formsubmissions` config parameter, when set to true, form submissions can be deleted from the adminlist.
+     ```yaml
+     kunstmaan_form:
+         deletable_formsubmissions: true
+     ```
+
 MediaBundle
 -----------
 
