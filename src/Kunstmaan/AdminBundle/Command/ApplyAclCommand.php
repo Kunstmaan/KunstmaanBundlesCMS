@@ -2,16 +2,15 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManager;
-
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\AclChangeset;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
 use Kunstmaan\AdminBundle\Repository\AclChangesetRepository;
-
 use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Kunstmaan\AdminBundle\Service\AclManager;
 
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
@@ -28,6 +27,26 @@ class ApplyAclCommand extends ContainerAwareCommand
      * @var Shell
      */
     private $shellHelper = null;
+
+    /** @var AclManager */
+    private $aclManager = null;
+
+    public function __construct(/*AclManager*/ $aclManager = null, EntityManagerInterface $em = null, Shell $shellHelper = null)
+    {
+        parent::__construct();
+
+        if (!$aclManager instanceof AclManager) {
+            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
+
+            $this->setName(null === $aclManager ? 'kuma:acl:apply' : $aclManager);
+
+            return;
+        }
+
+        $this->aclManager = $aclManager;
+        $this->em = $em;
+        $this->shellHelper = $shellHelper;
+    }
 
     /**
      * Configures the command.
@@ -51,37 +70,22 @@ class ApplyAclCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $this->shellHelper = $this->getContainer()->get('kunstmaan_utilities.shell');
-        /* @var PermissionAdmin $permissionAdmin */
-        $permissionAdmin = $this->getContainer()->get('kunstmaan_admin.permissionadmin');
+        if (null === $this->aclManager) {
+            $this->aclManager = $this->getContainer()->get('kunstmaan_admin.acl.manager');
+        }
+        if (null === $this->em) {
+            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        }
+        if (null === $this->shellHelper) {
+            $this->shellHelper = $this->getContainer()->get('kunstmaan_utilities.shell');
+        }
 
         // Check if another ACL apply process is currently running & do nothing if it is
         if ($this->isRunning()) {
             return;
         }
-        /* @var AclChangesetRepository $aclRepo */
-        $aclRepo = $this->em->getRepository('KunstmaanAdminBundle:AclChangeset');
-        do {
-            /* @var AclChangeset $changeset */
-            $changeset = $aclRepo->findNewChangeset();
-            if (is_null($changeset)) {
-                break;
-            }
-            $changeset->setPid(getmypid());
-            $changeset->setStatus(AclChangeset::STATUS_RUNNING);
-            $this->em->persist($changeset);
-            $this->em->flush($changeset);
 
-            $entity = $this->em->getRepository($changeset->getRefEntityName())->find($changeset->getRefId());
-            $permissionAdmin->applyAclChangeset($entity, $changeset->getChangeset());
-
-            $changeset->setStatus(AclChangeset::STATUS_FINISHED);
-            $this->em->persist($changeset);
-            $this->em->flush($changeset);
-
-            $hasPending = $aclRepo->hasPendingChangesets();
-        } while ($hasPending);
+       $this->aclManager->applyAclChangesets();
     }
 
     /**

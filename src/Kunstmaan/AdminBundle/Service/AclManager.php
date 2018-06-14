@@ -2,10 +2,13 @@
 
 namespace Kunstmaan\AdminBundle\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
+use Kunstmaan\AdminBundle\Entity\AclChangeset;
 
 /**
  * Class AclManager
@@ -19,10 +22,18 @@ class AclManager
     /** @var ObjectIdentityRetrievalStrategyInterface */
     private $objectIdentityRetrievalStrategy;
 
-    public function __construct(MutableAclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy)
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var PermissionAdmin */
+    private $permissionAdmin;
+
+    public function __construct(MutableAclProviderInterface $aclProvider, ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy, EntityManagerInterface $em, PermissionAdmin $permissionAdmin)
     {
         $this->aclProvider = $aclProvider;
         $this->objectIdentityRetrievalStrategy = $objectIdentityRetrievalStrategy;
+        $this->em = $em;
+        $this->permissionAdmin = $permissionAdmin;
     }
 
     /**
@@ -73,5 +84,43 @@ class AclManager
             }
             $this->aclProvider->updateAcl($acl);
         }
+    }
+
+    /**
+     *
+     */
+    public function applyAclChangesets()
+    {
+        /* @var AclChangesetRepository $aclRepo */
+        $aclRepo = $this->em->getRepository('KunstmaanAdminBundle:AclChangeset');
+        do {
+            /* @var AclChangeset $changeset */
+            $changeset = $aclRepo->findNewChangeset();
+            if (is_null($changeset)) {
+                break;
+            }
+
+            $this->applyAclChangeSet($changeset);
+
+            $hasPending = $aclRepo->hasPendingChangesets();
+        } while ($hasPending);
+    }
+
+    /**
+     * @param AclChangeset $aclChangeset
+     */
+    public function applyAclChangeSet(AclChangeset $aclChangeset)
+    {
+        $aclChangeset->setPid(getmypid());
+        $aclChangeset->setStatus(AclChangeset::STATUS_RUNNING);
+        $this->em->persist($aclChangeset);
+        $this->em->flush($aclChangeset);
+
+        $entity = $this->em->getRepository($aclChangeset->getRefEntityName())->find($aclChangeset->getRefId());
+        $this->permissionAdmin->applyAclChangeset($entity, $aclChangeset->getChangeset());
+
+        $aclChangeset->setStatus(AclChangeset::STATUS_FINISHED);
+        $this->em->persist($aclChangeset);
+        $this->em->flush($aclChangeset);
     }
 }
