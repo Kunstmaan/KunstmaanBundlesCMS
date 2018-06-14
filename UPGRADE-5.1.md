@@ -1,6 +1,11 @@
 UPGRADE FROM 5.0 to 5.1
 =======================
 
+General
+-------
+
+ * The `symfony/assetic-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on assetic, add the dependency to your project `composer.json`.
+
 AdminBundle
 -----------
 
