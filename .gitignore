@@ -9,3 +9,4 @@ npm-debug.log
 *test.db
 .vscode
 src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/dist
+.idea/*
