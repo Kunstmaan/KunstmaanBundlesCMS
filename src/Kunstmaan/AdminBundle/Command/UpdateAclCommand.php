@@ -18,6 +18,9 @@ use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 
 /**
  * Permissions update of ACL entries for all nodes for given role.
+ *
+ * @final since 5.1
+ * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
 class UpdateAclCommand extends ContainerAwareCommand
 {
