@@ -33,6 +33,18 @@ ConfigBundle
 
  * Passing the `container` as the sixth argument in `Kunstmaan\ConfigBundle\Controller\ConfigController` is deprecated in and will be removed in 6.0.
 
+DashboardBundle
+---------------
+
+ * Injecting the container in the `DashboardCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `GoogleAnalyticsConfigFlushCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `GoogleAnalyticsConfigsListCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `GoogleAnalyticsDataCollectCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `GoogleAnalyticsDataFlushCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `GoogleAnalyticsOverviewsGenerateCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `GoogleAnalyticsOverviewsListCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `GoogleAnalyticsSegmentsListCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+
 FormBundle
 -----------
  * Added the optional `deletable_formsubmissions` config parameter, when set to true, form submissions can be deleted from the adminlist.
