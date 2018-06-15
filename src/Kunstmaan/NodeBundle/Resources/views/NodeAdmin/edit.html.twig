@@ -96,6 +96,12 @@
         {{ knp_menu_render('top_actions', { 'template': 'KunstmaanNodeBundle:Menu:knp_menu_top_actions.html.twig'}) }}
 
         {{ tabs_widget(tabPane) }}
+
+        <!-- Modal - Publish -->
+        {% include '@KunstmaanNode/NodeAdmin/Modals/_publish.html.twig' %}
+        <!-- Modal - Unpublish -->
+        {% include '@KunstmaanNode/NodeAdmin/Modals/_unpublish.html.twig' %}
+
     {{ form_end(form) }}
 
     {% include '@KunstmaanNode/NodeAdmin/_modals.html.twig' %}
