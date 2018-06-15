@@ -40,6 +40,7 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $metadata->method('mergeConstraints');
         $metadata
             ->expects($this->at(0))
             ->method('addPropertyConstraint')
