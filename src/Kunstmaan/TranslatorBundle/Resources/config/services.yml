@@ -54,6 +54,7 @@ services:
         class: 'Kunstmaan\TranslatorBundle\Service\Command\Importer\Importer'
         calls:
             - [setTranslationGroupManager, ['@kunstmaan_translator.service.group_manager']] # default, maken via config var
+        public: true
 
     kunstmaan_translator.service.group_manager:
         class: 'Kunstmaan\TranslatorBundle\Service\TranslationGroupManager'
