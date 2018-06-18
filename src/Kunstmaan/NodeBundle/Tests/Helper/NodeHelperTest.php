@@ -281,11 +281,9 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
             ->setConstructorArgs([
                 $this->em,
                 $this->nodeAdminPublisher,
-                $this->nodeVersionLockHelper,
                 $this->tokenStorage,
                 $this->cloneHelper,
-                $this->eventDispatcher,
-                ['timeout' => 10]
+                $this->eventDispatcher
             ])
             ->setMethods(['createDraftVersion'])
             ->getMock();
@@ -399,9 +397,6 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $this->nodeAdminPublisher = $this->getMockBuilder(NodeAdminPublisher::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->nodeVersionLockHelper = $this->getMockBuilder(NodeVersionLockHelper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $this->cloneHelper = $this->getMockBuilder(CloneHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -412,11 +407,9 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         return new NodeHelper(
             $this->em,
             $this->nodeAdminPublisher,
-            $this->nodeVersionLockHelper,
             $this->tokenStorage,
             $this->cloneHelper,
-            $this->eventDispatcher,
-            ['timeout' => 10]
+            $this->eventDispatcher
         );
     }
 

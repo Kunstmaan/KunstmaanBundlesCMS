@@ -13,7 +13,6 @@ use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
-use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -29,9 +28,6 @@ class NodeHelper
     /** @var NodeAdminPublisher */
     private $nodeAdminPublisher;
 
-    /** @var NodeVersionLockHelper */
-    private $nodeVersionLockHelper;
-
     /** @var TokenStorageInterface */
     private $tokenStorage;
 
@@ -41,36 +37,27 @@ class NodeHelper
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-    /** @var [] */
-    private $parameters;
-
     /**
      * NodeHelper constructor.
      *
      * @param EntityManagerInterface $em
      * @param NodeAdminPublisher $nodeAdminPublisher
-     * @param NodeVersionLockHelper $nodeVersionLockHelper
      * @param TokenStorageInterface $tokenStorage
      * @param CloneHelper $cloneHelper
      * @param EventDispatcherInterface $eventDispatcher
-     * @param array $parameters
      */
     public function __construct(
         EntityManagerInterface $em,
         NodeAdminPublisher $nodeAdminPublisher,
-        NodeVersionLockHelper $nodeVersionLockHelper,
         TokenStorageInterface $tokenStorage,
         CloneHelper $cloneHelper,
-        EventDispatcherInterface $eventDispatcher,
-        $parameters
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->em = $em;
         $this->nodeAdminPublisher = $nodeAdminPublisher;
-        $this->nodeVersionLockHelper = $nodeVersionLockHelper;
         $this->tokenStorage = $tokenStorage;
         $this->cloneHelper = $cloneHelper;
         $this->eventDispatcher = $eventDispatcher;
-        $this->parameters = $parameters;
     }
 
     /**
