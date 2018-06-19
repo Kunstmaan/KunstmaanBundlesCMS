@@ -437,6 +437,51 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedNodeTranslation, $result);
     }
 
+    public function testDuplicatePage()
+    {
+        $targetPage = new TestPage();
+
+        list(, $nodeTranslationHomePage, $nodeHomePage) = $this->createNodeEntities('Homepage');
+
+        /**
+         * @var TestPage $sourcePage
+         * @var NodeTranslation $sourceNodeTranslation
+         * @var Node $node
+         */
+        list($sourcePage, $sourceNodeTranslation, $node) = $this->createNodeEntities();
+        $node->setParent($nodeHomePage);
+
+        $this->cloneHelper
+            ->expects($this->once())
+            ->method('deepCloneAndSave')
+            ->with($sourcePage)
+            ->willReturn($targetPage);
+
+        $expectedNodeTranslation = new NodeTranslation();
+        $expectedNodeTranslation->setLang($this->locale);
+
+        $expectedNode = new Node();
+        $expectedNode->addNodeTranslation($expectedNodeTranslation);
+
+        $repository = $this->getMockBuilder(NodeRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repository
+            ->expects($this->once())
+            ->method('createNodeFor')
+            ->willReturn($expectedNode);
+
+        $this->em
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with(Node::class)
+            ->willReturn($repository);
+
+        $result = $this->nodeHelper->duplicatePage($node, $this->locale);
+
+        $this->assertInstanceOf(NodeTranslation::class, $result);
+    }
+
     public function testCreatePageDraftFromOtherLanguage()
     {
         $targetLocale = 'nl';

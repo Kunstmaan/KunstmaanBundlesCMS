@@ -308,8 +308,8 @@ class NodeHelper
         }
 
         $sourceNodeTranslation = $node->getNodeTranslation($sourceLocale, true);
-        $sourceNodeNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
-        $sourcePage = $sourceNodeNodeVersion->getRef($this->em);
+        $sourceNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
+        $sourcePage = $sourceNodeVersion->getRef($this->em);
         $targetPage = $this->cloneHelper->deepCloneAndSave($sourcePage);
 
         /* @var NodeTranslation $nodeTranslation */
@@ -324,11 +324,50 @@ class NodeHelper
                 $nodeVersion,
                 $targetPage,
                 $sourceNodeTranslation,
-                $sourceNodeNodeVersion,
+                $sourceNodeVersion,
                 $sourcePage,
                 $sourceLocale
             )
         );
+
+        return $nodeTranslation;
+    }
+
+    /**
+     * @param Node $node
+     * @param string $locale
+     * @param string $title
+     * @return NodeTranslation|null
+     */
+    public function duplicatePage(Node $node, $locale, $title = 'New page')
+    {
+        $user = $this->getAdminUser();
+        if (!$user) {
+            throw new AccessDeniedException('Access denied: User should be an admin user');
+        }
+
+        $sourceNodeTranslations = $node->getNodeTranslation($locale, true);
+        $sourcePage = $sourceNodeTranslations->getPublicNodeVersion()->getRef($this->em);
+        $targetPage = $this->cloneHelper->deepCloneAndSave($sourcePage);
+        $targetPage->setTitle($title);
+
+        if ($node->getParent()) {
+            $parentNodeTranslation = $node->getParent()->getNodeTranslation($locale, true);
+            $parent = $parentNodeTranslation->getPublicNodeVersion()->getRef($this->em);
+            $targetPage->setParent($parent);
+        }
+        $this->em->persist($targetPage);
+        $this->em->flush();
+
+        /* @var Node $nodeNewPage */
+        $nodeNewPage = $this->em->getRepository(Node::class)->createNodeFor($targetPage, $locale, $user);
+
+        $nodeTranslation = $nodeNewPage->getNodeTranslation($locale, true);
+        if ($targetPage->isStructureNode()) {
+            $nodeTranslation->setSlug('');
+            $this->em->persist($nodeTranslation);
+        }
+        $this->em->flush();
 
         return $nodeTranslation;
     }
@@ -347,8 +386,8 @@ class NodeHelper
         }
 
         $sourceNodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($sourceNodeTranslationId);
-        $sourceNodeNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
-        $sourcePage = $sourceNodeNodeVersion->getRef($this->em);
+        $sourceNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
+        $sourcePage = $sourceNodeVersion->getRef($this->em);
         $targetPage = $this->cloneHelper->deepCloneAndSave($sourcePage);
 
         /* @var NodeTranslation $nodeTranslation */
@@ -363,7 +402,7 @@ class NodeHelper
                 $nodeVersion,
                 $targetPage,
                 $sourceNodeTranslation,
-                $sourceNodeNodeVersion,
+                $sourceNodeVersion,
                 $sourcePage,
                 $sourceNodeTranslation->getLang()
             )
