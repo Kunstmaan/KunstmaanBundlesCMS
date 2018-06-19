@@ -188,11 +188,9 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@kunstmaan_node.admin_node.publisher"
-            - "@kunstmaan_node.admin_node.node_version_lock_helper"
             - "@security.token_storage"
             - "@kunstmaan_admin.clone.helper"
             - "@event_dispatcher"
-            - { timeout: "%kunstmaan_node.version_timeout%"}
 
     ### TOOLBAR DATA COLLECTOR ###
     kunstmaan_node.datacollector.node:

@@ -75,9 +75,6 @@ class NodeHelper
         NodeVersion $nodeVersion
     ) {
         $user = $this->getAdminUser();
-        if (!$user) {
-            throw new AccessDeniedException('Access denied: User should be an admin user');
-        }
         $publicPage = $this->cloneHelper->deepCloneAndSave($page);
 
         /* @var NodeVersion $publicNodeVersion */
@@ -87,12 +84,12 @@ class NodeHelper
                 $nodeTranslation,
                 $user,
                 $nodeVersion->getOrigin(),
-                'public',
+                NodeVersion::PUBLIC_VERSION,
                 $nodeVersion->getCreated()
             );
 
         $nodeTranslation->setPublicNodeVersion($publicNodeVersion);
-        $nodeVersion->setType('draft');
+        $nodeVersion->setType(NodeVersion::DRAFT_VERSION);
         $nodeVersion->setOrigin($publicNodeVersion);
         $nodeVersion->setCreated(new \DateTime());
 
@@ -122,9 +119,6 @@ class NodeHelper
     public function prepareNodeVersion(NodeVersion $nodeVersion, NodeTranslation $nodeTranslation, $nodeVersionTimeout, $nodeVersionIsLocked)
     {
         $user = $this->getAdminUser();
-        if (!$user) {
-            throw new AccessDeniedException('Access denied: User should be an admin user');
-        }
         $thresholdDate = date('Y-m-d H:i:s', time() - $nodeVersionTimeout);
         $updatedDate = date('Y-m-d H:i:s', strtotime($nodeVersion->getUpdated()->format('Y-m-d H:i:s')));
 
@@ -176,7 +170,7 @@ class NodeHelper
         }
 
         $nodeVersion->setUpdated(new \DateTime());
-        if ($nodeVersion->getType() == 'public') {
+        if ($nodeVersion->getType() == NodeVersion::PUBLIC_VERSION) {
             $nodeTranslation->setUpdated($nodeVersion->getUpdated());
         }
         $this->em->persist($nodeTranslation);
@@ -209,9 +203,6 @@ class NodeHelper
         Node $parentNode = null)
     {
         $user = $this->getAdminUser();
-        if (!$user) {
-            throw new AccessDeniedException('Access denied: User should be an admin user');
-        }
 
         $newPage = $this->createNewPage($refEntityType, $pageTitle);
         if (null !== $parentNode) {
@@ -303,9 +294,6 @@ class NodeHelper
     public function copyPageFromOtherLanguage(Node $node, $sourceLocale, $locale)
     {
         $user = $this->getAdminUser();
-        if (!$user) {
-            throw new AccessDeniedException('Access denied: User should be an admin user');
-        }
 
         $sourceNodeTranslation = $node->getNodeTranslation($sourceLocale, true);
         $sourceNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
@@ -342,9 +330,6 @@ class NodeHelper
     public function duplicatePage(Node $node, $locale, $title = 'New page')
     {
         $user = $this->getAdminUser();
-        if (!$user) {
-            throw new AccessDeniedException('Access denied: User should be an admin user');
-        }
 
         $sourceNodeTranslations = $node->getNodeTranslation($locale, true);
         $sourcePage = $sourceNodeTranslations->getPublicNodeVersion()->getRef($this->em);
@@ -381,9 +366,6 @@ class NodeHelper
     public function createPageDraftFromOtherLanguage(Node $node, $sourceNodeTranslationId, $locale)
     {
         $user = $this->getAdminUser();
-        if (!$user) {
-            throw new AccessDeniedException('Access denied: User should be an admin user');
-        }
 
         $sourceNodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($sourceNodeTranslationId);
         $sourceNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
@@ -419,9 +401,6 @@ class NodeHelper
     public function createEmptyPage(Node $node, $locale)
     {
         $user = $this->getAdminUser();
-        if (!$user) {
-            throw new AccessDeniedException('Access denied: User should be an admin user');
-        }
 
         $refEntityName = $node->getRefEntityName();
         $targetPage = $this->createNewPage($refEntityName);
@@ -500,7 +479,7 @@ class NodeHelper
     /**
      * @return mixed|null
      */
-    protected function getAdminUser()
+    protected function getUser()
     {
         $token = $this->tokenStorage->getToken();
         if ($token) {
@@ -511,5 +490,18 @@ class NodeHelper
         }
 
         return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getAdminUser()
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            throw new AccessDeniedException('Access denied: User should be an admin user');
+        }
+
+        return $user;
     }
 }
