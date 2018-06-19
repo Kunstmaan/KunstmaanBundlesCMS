@@ -10,8 +10,10 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -211,7 +213,7 @@ class NodeHelper
             throw new AccessDeniedException('Access denied: User should be an admin user');
         }
 
-        $newPage = $this->createNewPage($pageTitle, $refEntityType);
+        $newPage = $this->createNewPage($refEntityType, $pageTitle);
         if (null !== $parentNode) {
             $parentNodeTranslation = $parentNode->getNodeTranslation($locale, true);
             $parentNodeVersion = $parentNodeTranslation->getPublicNodeVersion();
@@ -293,21 +295,122 @@ class NodeHelper
     }
 
     /**
+     * @param Node $node
+     * @param string $sourceLocale
+     * @param string $locale
+     * @return NodeTranslation
+     */
+    public function copyPageFromOtherLanguage(Node $node, $sourceLocale, $locale)
+    {
+        $user = $this->getAdminUser();
+        if (!$user) {
+            throw new AccessDeniedException('Access denied: User should be an admin user');
+        }
+
+        $sourceNodeTranslation = $node->getNodeTranslation($sourceLocale, true);
+        $sourceNodeNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
+        $sourcePage = $sourceNodeNodeVersion->getRef($this->em);
+        $targetPage = $this->cloneHelper->deepCloneAndSave($sourcePage);
+
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+
+        $this->eventDispatcher->dispatch(
+            Events::COPY_PAGE_TRANSLATION,
+            new CopyPageTranslationNodeEvent(
+                $node,
+                $nodeTranslation,
+                $nodeVersion,
+                $targetPage,
+                $sourceNodeTranslation,
+                $sourceNodeNodeVersion,
+                $sourcePage,
+                $sourceLocale
+            )
+        );
+
+        return $nodeTranslation;
+    }
+
+    /**
+     * @param Node $node
+     * @param int $sourceNodeTranslationId
+     * @param string $locale
+     * @return NodeTranslation
+     */
+    public function createPageDraftFromOtherLanguage(Node $node, $sourceNodeTranslationId, $locale)
+    {
+        $user = $this->getAdminUser();
+        if (!$user) {
+            throw new AccessDeniedException('Access denied: User should be an admin user');
+        }
+
+        $sourceNodeTranslation = $this->em->getRepository(NodeTranslation::class)->find($sourceNodeTranslationId);
+        $sourceNodeNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
+        $sourcePage = $sourceNodeNodeVersion->getRef($this->em);
+        $targetPage = $this->cloneHelper->deepCloneAndSave($sourcePage);
+
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->addDraftNodeVersionFor($targetPage, $locale, $node, $user);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+
+        $this->eventDispatcher->dispatch(
+            Events::RECOPY_PAGE_TRANSLATION,
+            new RecopyPageTranslationNodeEvent(
+                $node,
+                $nodeTranslation,
+                $nodeVersion,
+                $targetPage,
+                $sourceNodeTranslation,
+                $sourceNodeNodeVersion,
+                $sourcePage,
+                $sourceNodeTranslation->getLang()
+            )
+        );
+
+        return $nodeTranslation;
+    }
+
+    /**
+     * @param Node $node
+     * @param string $locale
+     * @return NodeTranslation
+     */
+    public function createEmptyPage(Node $node, $locale)
+    {
+        $user = $this->getAdminUser();
+        if (!$user) {
+            throw new AccessDeniedException('Access denied: User should be an admin user');
+        }
+
+        $refEntityName = $node->getRefEntityName();
+        $targetPage = $this->createNewPage($refEntityName);
+
+        /* @var NodeTranslation $nodeTranslation */
+        $nodeTranslation = $this->em->getRepository(NodeTranslation::class)->createNodeTranslationFor($targetPage, $locale, $node, $user);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+
+        $this->eventDispatcher->dispatch(
+            Events::ADD_EMPTY_PAGE_TRANSLATION,
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $targetPage)
+        );
+
+        return $nodeTranslation;
+    }
+
+    /**
+     * @param string $entityType
      * @param string $title
-     * @param string $type
      *
      * @return HasNodeInterface
      */
-    protected function createNewPage($title, $type)
+    protected function createNewPage($entityType, $title = 'No title')
     {
         /* @var HasNodeInterface $newPage */
-        $newPage = new $type();
+        $newPage = new $entityType();
+        $newPage->setTitle($title);
 
-        if (is_string($title) && !empty($title)) {
-            $newPage->setTitle($title);
-        } else {
-            $newPage->setTitle('No title');
-        }
         $this->em->persist($newPage);
         $this->em->flush();
 

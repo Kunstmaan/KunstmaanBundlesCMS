@@ -13,8 +13,10 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
+use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
@@ -65,6 +67,9 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
 
     /** @var string */
     private $locale = 'en';
+
+    /** @var User */
+    private $user;
 
     public function setUp()
     {
@@ -371,6 +376,179 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $this->nodeHelper->getPageWithNodeInterface($node, $this->locale);
     }
 
+    public function testCopyPageFromOtherLanguage()
+    {
+        $targetLocale = 'nl';
+        $targetPage = new TestPage();
+
+        /**
+         * @var TestPage $sourcePage
+         * @var NodeTranslation $sourceNodeTranslation
+         */
+        list($sourcePage, $sourceNodeTranslation, $node) = $this->createNodeEntities();
+        $sourceNodeNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
+
+        $this->cloneHelper
+            ->expects($this->once())
+            ->method('deepCloneAndSave')
+            ->with($sourcePage)
+            ->willReturn($targetPage);
+
+        $expectedNodeVersion = new NodeVersion();
+        $expectedNodeVersion->setType(NodeVersion::PUBLIC_VERSION);
+        $expectedNodeVersion->setRef($targetPage);
+
+        $expectedNodeTranslation = new NodeTranslation();
+        $expectedNodeTranslation->setNode($node);
+        $expectedNodeTranslation->setLang($targetLocale);
+        $expectedNodeTranslation->setPublicNodeVersion($expectedNodeVersion);
+
+        $repository = $this->getMockBuilder(NodeTranslationRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repository
+            ->expects($this->once())
+            ->method('createNodeTranslationFor')
+            ->with($this->equalTo($targetPage), $this->equalTo($targetLocale), $this->equalTo($node), $this->equalTo($this->user))
+            ->willReturn($expectedNodeTranslation);
+
+        $this->em
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with(NodeTranslation::class)
+            ->willReturn($repository);
+
+        $this->eventDispatcher
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with($this->equalTo(Events::COPY_PAGE_TRANSLATION), $this->equalTo(new CopyPageTranslationNodeEvent(
+                $node,
+                $expectedNodeTranslation,
+                $expectedNodeVersion,
+                $targetPage,
+                $sourceNodeTranslation,
+                $sourceNodeNodeVersion,
+                $sourcePage,
+                $this->locale)));
+
+        $result = $this->nodeHelper->copyPageFromOtherLanguage($node, $this->locale, $targetLocale);
+
+        $this->assertInstanceOf(NodeTranslation::class, $result);
+        $this->assertEquals($expectedNodeTranslation, $result);
+    }
+
+    public function testCreatePageDraftFromOtherLanguage()
+    {
+        $targetLocale = 'nl';
+        $targetPage = new TestPage();
+
+        /**
+         * @var TestPage $sourcePage
+         * @var NodeTranslation $sourceNodeTranslation
+         */
+        list($sourcePage, $sourceNodeTranslation, $node) = $this->createNodeEntities();
+        $sourceNodeNodeVersion = $sourceNodeTranslation->getPublicNodeVersion();
+
+        $this->cloneHelper
+            ->expects($this->once())
+            ->method('deepCloneAndSave')
+            ->with($sourcePage)
+            ->willReturn($targetPage);
+
+        $expectedNodeVersion = new NodeVersion();
+        $expectedNodeVersion->setType(NodeVersion::PUBLIC_VERSION);
+        $expectedNodeVersion->setRef($targetPage);
+
+        $expectedNodeTranslation = new NodeTranslation();
+        $expectedNodeTranslation->setNode($node);
+        $expectedNodeTranslation->setLang($targetLocale);
+        $expectedNodeTranslation->setPublicNodeVersion($expectedNodeVersion);
+
+        $repository = $this->getMockBuilder(NodeTranslationRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repository
+            ->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(1))
+            ->willReturn($sourceNodeTranslation);
+        $repository
+            ->expects($this->once())
+            ->method('addDraftNodeVersionFor')
+            ->with($this->equalTo($targetPage), $this->equalTo($targetLocale), $this->equalTo($node), $this->equalTo($this->user))
+            ->willReturn($expectedNodeTranslation);
+
+        $this->em
+            ->expects($this->exactly(2))
+            ->method('getRepository')
+            ->with(NodeTranslation::class)
+            ->willReturn($repository);
+
+        $this->eventDispatcher
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with($this->equalTo(Events::RECOPY_PAGE_TRANSLATION), $this->equalTo(new RecopyPageTranslationNodeEvent(
+                $node,
+                $expectedNodeTranslation,
+                $expectedNodeVersion,
+                $targetPage,
+                $sourceNodeTranslation,
+                $sourceNodeNodeVersion,
+                $sourcePage,
+                $this->locale)));
+
+        $result = $this->nodeHelper->createPageDraftFromOtherLanguage($node, 1, $targetLocale);
+
+        $this->assertInstanceOf(NodeTranslation::class, $result);
+        $this->assertEquals($expectedNodeTranslation, $result);
+    }
+
+    public function testCreateEmptyPage()
+    {
+        $targetPage = new TestPage();
+        $targetPage->setTitle('No title');
+        $node = new Node();
+        $node->setRef($targetPage);
+
+        $expectedNodeVersion = new NodeVersion();
+        $expectedNodeVersion->setType(NodeVersion::PUBLIC_VERSION);
+        $expectedNodeVersion->setRef($targetPage);
+
+        $expectedNodeTranslation = new NodeTranslation();
+        $expectedNodeTranslation->setNode($node);
+        $expectedNodeTranslation->setLang($this->locale);
+        $expectedNodeTranslation->setPublicNodeVersion($expectedNodeVersion);
+
+        $repository = $this->getMockBuilder(NodeTranslationRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repository
+            ->expects($this->once())
+            ->method('createNodeTranslationFor')
+            ->with($this->equalTo($targetPage), $this->equalTo($this->locale), $this->equalTo($node), $this->equalTo($this->user))
+            ->willReturn($expectedNodeTranslation);
+
+        $this->em
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with(NodeTranslation::class)
+            ->willReturn($repository);
+
+        $this->eventDispatcher
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with($this->equalTo(Events::ADD_EMPTY_PAGE_TRANSLATION), $this->equalTo(new NodeEvent(
+                $node,
+                $expectedNodeTranslation,
+                $expectedNodeVersion,
+                $targetPage)));
+
+        $result = $this->nodeHelper->createEmptyPage($node, $this->locale);
+
+        $this->assertInstanceOf(NodeTranslation::class, $result);
+        $this->assertEquals($expectedNodeTranslation, $result);
+    }
+
     private function createORM()
     {
         $this->repository = $this->getMockBuilder(ObjectRepository::class)
@@ -387,8 +565,10 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
      */
     private function createNodeHelper()
     {
+        $this->user = new User();
+
         $token = $this->getMockBuilder(TokenInterface::class)->getMock();
-        $token->method('getUser')->willReturn(new User());
+        $token->method('getUser')->willReturn($this->user);
 
         $this->tokenStorage = $this->getMockBuilder(TokenStorage::class)
             ->disableOriginalConstructor()
