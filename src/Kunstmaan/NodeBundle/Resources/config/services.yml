@@ -183,6 +183,15 @@ services:
             - "@kunstmaan_node.helper.url"
         public: true
 
+    kunstmaan_node.helper.node:
+        class: Kunstmaan\NodeBundle\Helper\NodeHelper
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@kunstmaan_node.admin_node.publisher"
+            - "@security.token_storage"
+            - "@kunstmaan_admin.clone.helper"
+            - "@event_dispatcher"
+
     ### TOOLBAR DATA COLLECTOR ###
     kunstmaan_node.datacollector.node:
         class: '%kunstmaan_node.toolbar.collector.node.class%'
