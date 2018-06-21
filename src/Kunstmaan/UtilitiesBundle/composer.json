@@ -1,7 +1,7 @@
 {
     "name": "kunstmaan/utilities-bundle",
     "type": "symfony-bundle",
-    "description": "The KunstmaanUtilitiesBundle makes your life easier by providing a couple of small but usefull helper services you can use and re-use in your applications. We already implemented an easy to use cipher service and a shell helper service for you but feel free to send in a pull request with your additions. The shell helper allows you to run apps in the background, see if a process is running and has a method to kill a running process. The cipher service allow you to encode and decode strings using the Rijndael 256 cipher",
+    "description": "The KunstmaanUtilitiesBundle makes your life easier by providing a couple of small but useful helper services you can use and re-use in your applications. We already implemented an easy to use cipher service and a shell helper service for you but feel free to send in a pull request with your additions. The shell helper allows you to run apps in the background, see if a process is running and has a method to kill a running process. The cipher service allow you to encode and decode strings using the Rijndael 256 cipher",
     "keywords": [ "kunstmaan", "cms", "utilities", "cipher"],
     "homepage": "https://github.com/Kunstmaan/KunstmaanUtilitiesBundle",
     "license": "MIT",
@@ -14,20 +14,34 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "behat/transliterator": "~1.2"
+        "php": "^5.6|^7.0",
+        "behat/transliterator": "^1.2",
+        "defuse/php-encryption": "^2.2",
+        "doctrine/orm": "^2.5",
+        "symfony/config": "^3.4",
+        "symfony/console": "^3.4",
+        "symfony/dependency-injection": "^3.4",
+        "symfony/filesystem": "^3.4",
+        "symfony/http-foundation": "^3.4",
+        "symfony/http-kernel": "^3.4",
+        "twig/twig": "^1.35|^2.4.4"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "2.2.0"
     },
     "suggest": {
-        "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy"
+        "ekino/newrelic-bundle": "To use the UrlTransactionNamingStrategy",
+        "kunstmaan/admin-bundle": "^5.0 - to be put into require-dev when ready"
     },
     "autoload": {
         "psr-4": { "Kunstmaan\\UtilitiesBundle\\": "" }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }
