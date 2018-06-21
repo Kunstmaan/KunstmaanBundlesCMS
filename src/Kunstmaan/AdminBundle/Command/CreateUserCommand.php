@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
  * Symfony CLI command to create a user using bin/console kuma:user:create <username_of_the_user>
@@ -34,6 +35,9 @@ class CreateUserCommand extends ContainerAwareCommand
 
     /** @var string */
     private $defaultLocale;
+
+    /** @var array */
+    protected $groups = [];
 
     public function __construct(/* EntityManagerInterface */ $em = null, GroupManagerInterface $groupManager = null, $userClassname = null, $defaultLocale = null)
     {
@@ -138,20 +142,11 @@ EOT
         $user = $this->em->getRepository($this->userClassname)->findOneBy(array('username' => $username));
 
         // Attach groups
-        $groupNames = explode(',', $groupOption);
-        /** @var Group[] $groups */
-        $groups = $this->groupManager->findGroups();
-        $groupOutput = '';
+        $groupOutput = [];
 
-        foreach ($groupNames as $groupName) {
-
-            if ((int)$groupName !== 0) {
-                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groups[$groupName]->getName()));
-                $groupOutput .= $groups[$groupName]->getName() . ', ';
-            } else {
-                $group = $this->em->getRepository('KunstmaanAdminBundle:Group')->findOneBy(array('name' => $groupName));
-                $groupOutput .= $groupName . ', ';
-            }
+        foreach (explode(',', $groupOption) as $groupId) {
+            $group = $this->groups[$groupId];
+            $groupOutput[] = $group->getName();
 
             if ($group instanceof Group) {
                 $user->getGroups()->add($group);
@@ -166,10 +161,7 @@ EOT
         $this->em->persist($user);
         $this->em->flush();
 
-        // Remove trailing comma
-        $groupOutput = substr($groupOutput, 0, -2);
-
-        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), $groupOutput));
+        $output->writeln(sprintf('Added user <comment>%s</comment> to groups <comment>%s</comment>', $input->getArgument('username'), implode(',', $groupOutput)));
     }
 
     /**
@@ -248,22 +240,41 @@ EOT
             $input->setArgument('locale', $locale);
         }
 
-        $groups = $this->groupManager->findGroups();
+        $this->groups = $this->groupManager->findGroups();
+
+        // reindexing the array, using the db id as the key
+        $newGroups = [];
+        foreach($this->groups as $group) {
+            $newGroups[$group->getId()] = $group;
+        }
+
+        $this->groups = $newGroups;
 
         if (!$input->getOption('group')) {
             $question = new ChoiceQuestion(
                 'Please enter the group(s) the user should be a member of (multiple possible, separated by comma):',
-                $groups,
+                $this->groups,
                 ''
             );
             $question->setMultiselect(true);
-            $question->setValidator(function ($groups) {
-                if ($groups === '') {
+            $question->setValidator(function ($groupsInput) {
+
+                if (!$this->groups) {
+                    throw new \RuntimeException('No user group(s) could be found');
+                }
+
+                // Validate that the chosen group options exist in the available groups
+                $groupNames = array_unique(explode(',', $groupsInput));
+                if (count(array_intersect_key(array_flip($groupNames),$this->groups)) !== count($groupNames)) {
+                    throw new InvalidArgumentException('You have chosen non existing group(s)');
+                }
+
+                if ($groupsInput === '') {
                     throw new \RuntimeException(
                         'Group(s) must be of type integer and can not be empty'
                     );
                 }
-                return $groups;
+                return $groupsInput;
             });
 
             // Group has to be imploded because $input->setOption expects a string

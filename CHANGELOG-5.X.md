@@ -1,5 +1,36 @@
 # Changelog
 
+## 5.0.7 / 2018-06-21
+
+* [PagePartBundle] Refactor HeaderPagePart entity test [#2024](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2024) ([@Devolicious](https://github.com/Devolicious)) 
+* [KunstmaanNodeSearchBundle] remove check for class [#2009](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2009) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle] fixed create user command #1995 [#1996](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1996) ([@deZinc](https://github.com/deZinc)) 
+* [Docs] set correct paths [#1990](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1990) ([@sandergo90](https://github.com/sandergo90)) 
+* [KunstmaanAdminBundle] fix js for collections [#1989](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1989) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] Replace deprecated twig raw tag in scss file [#1987](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1987) ([@acrobat](https://github.com/acrobat)) 
+* [NodeBundle] Select correct root node for the urlchooser in a multidomain setup [#1986](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1986) ([@acrobat](https://github.com/acrobat)) 
+* [KunstmaanFormBundle] batchsize is not initialized [#1976](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1976) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] Fix unquoted parameter in routing generator [#1973](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1973) ([@acrobat](https://github.com/acrobat)) 
+* [ConfigBundle] Set the correct configuration entity as active [#1964](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1964) ([@JZuidema](https://github.com/JZuidema)) 
+* [FormBundle] Change form labels to required [#1962](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1962) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminBundle] Messages are already translated by symfony [#1954](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1954) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Update frontend packages [#1946](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1946) ([@diskwriter](https://github.com/diskwriter)) 
+* [SensioInsights] adjust sensiolabs config [#1945](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1945) ([@Devolicious](https://github.com/Devolicious)) 
+* [KunstmaanUtilitiesBundle]: assert bundle is only installed in dev [#1942](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1942) ([@sandergo90](https://github.com/sandergo90)) 
+* [AdminBundle]: toolbar should check if logged in in main firewall [#1941](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1941) ([@sandergo90](https://github.com/sandergo90)) 
+* [UtilitiesBundle] Make parameter kunstmaan_utilities.cipher.secret op… [#1939](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1939) ([@treeleaf](https://github.com/treeleaf)) 
+* [FormBundle] Change label required for choice pagepart [#1934](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1934) ([@dannyvw](https://github.com/dannyvw)) 
+* [FormBundle] Update regex translation [#1933](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1933) ([@dannyvw](https://github.com/dannyvw)) 
+* [MenuBundle] Change new window required [#1932](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1932) ([@dannyvw](https://github.com/dannyvw)) 
+* [AdminListBundle][MediaBundle] remove duplicate pagination and broken switch pagination limit [#1927](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1927) ([@Numkil](https://github.com/Numkil)) 
+* [Composer][GeneratorBundle] Fixes for testing StandardEdition [#1922](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1922) ([@Devolicious](https://github.com/Devolicious)) 
+* [AdminBundle] Update add new translation [#1914](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1914) ([@dannyvw](https://github.com/dannyvw)) 
+* [Documentation] remove addition to upgrade guide that was merged in incorrectly [#1911](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1911) ([@Numkil](https://github.com/Numkil)) 
+* [AdminListBundle] avoid translations freakout when the key is true or false without escaping [#1909](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1909) ([@Numkil](https://github.com/Numkil)) 
+* [NodeBundle] save on (un)publish [#1803](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1803) ([@deZinc](https://github.com/deZinc)) 
+* [MediaBundle] Create runtime config hash using the original image path [#1500](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1500) ([@b-franco](https://github.com/b-franco)) 
+
+
 ## 5.0.6 / 2018-04-13
 
 * [GeneratorBundle] Fix article generator for no-interaction [#1912](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/1912) ([@Devolicious](https://github.com/Devolicious)) 
