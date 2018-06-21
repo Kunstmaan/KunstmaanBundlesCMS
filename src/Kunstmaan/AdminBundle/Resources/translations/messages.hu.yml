@@ -46,8 +46,8 @@ form:
   delete: Törlés
   deletesure: Biztos benne?
   edit: Szerkesztés
-  add: Add new
-  'add.%subject%': 'Add new %subject%'
+  add: Hozzáad
+  'add.%subject%': '%subject% hozzadása'
   save: Mentés
   publish: Publikál
   unpublish: Publikálás visszavonása
