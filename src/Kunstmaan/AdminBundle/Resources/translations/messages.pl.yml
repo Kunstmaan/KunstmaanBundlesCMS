@@ -27,11 +27,11 @@ settings:
     code: Kod
     url: URL
     urlReferer: URL Referer
-    createdAt: Created at
-    isResolved: Is resolved
-    events: Events
-    resolved: Resolved
-    unresolved: Unresolved
+    createdAt: Data utworzenia
+    isResolved: Rozwiązany?
+    events: Liczba zdarzeń
+    resolved: Rozwiązany
+    unresolved: Nierozwiązany
     resolve_all: Resolve all
 tools:
   title: Narzędzia
