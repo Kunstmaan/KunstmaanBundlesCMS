@@ -46,8 +46,8 @@ form:
   delete: Verwijder
   deletesure: Weet u zeker dat u dit wilt verwijderen?
   edit: Bewerken
-  add: Add new
-  'add.%subject%': 'Add new %subject%'
+  add: Toevoegen
+  'add.%subject%': 'Voeg nieuwe %subject% toe'
   save: Opslaan
   publish: Publiceren
   unpublish: Publicatie ongedaan maken
