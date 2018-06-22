@@ -38,7 +38,7 @@ class UsersController extends BaseSettingsController
      */
     public function listAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
         $configuratorClassName = '';
@@ -84,7 +84,7 @@ class UsersController extends BaseSettingsController
      */
     public function addAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $user = $this->getUserClassInstance();
 
@@ -141,13 +141,7 @@ class UsersController extends BaseSettingsController
      */
     public function editAction(Request $request, $id)
     {
-        // The logged in user should be able to change his own password/username/email and not for other users
-        if ($id == $this->get('security.token_storage')->getToken()->getUser()->getId()) {
-            $requiredRole = 'ROLE_ADMIN';
-        } else {
-            $requiredRole = 'ROLE_SUPER_ADMIN';
-        }
-        $this->denyAccessUnlessGranted($requiredRole);
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
@@ -232,7 +226,7 @@ class UsersController extends BaseSettingsController
      */
     public function deleteAction(Request $request, $id)
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();

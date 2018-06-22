@@ -37,7 +37,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
             return;
         }
         else if ('KunstmaanAdminBundle_settings' == $parent->getRoute()) {
-            if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
                 $menuItem = new MenuItem($menu);
                 $menuItem
                     ->setRoute('KunstmaanUserManagementBundle_settings_users')
@@ -49,6 +49,8 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
                     $parent->setActive(true);
                 }
                 $children[] = $menuItem;
+            }
+            if($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
 
                 $menuItem = new MenuItem($menu);
                 $menuItem
@@ -77,7 +79,7 @@ class UserManagementMenuAdaptor implements MenuAdaptorInterface
             }
         } else {
             if ('KunstmaanUserManagementBundle_settings_users' == $parent->getRoute()) {
-                if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+                if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
                     $menuItem = new MenuItem($menu);
                     $menuItem
                         ->setRoute('KunstmaanUserManagementBundle_settings_users_add')
