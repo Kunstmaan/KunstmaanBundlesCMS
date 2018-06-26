@@ -22,6 +22,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $treeBuilder->root('kunstmaan_form');
 
+        $rootNode = $treeBuilder->root('kunstmaan_form');
+        $rootNode
+            ->children()
+                ->booleanNode('deletable_formsubmissions')->defaultFalse()->end()
+            ->end()
+        ;
+
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.

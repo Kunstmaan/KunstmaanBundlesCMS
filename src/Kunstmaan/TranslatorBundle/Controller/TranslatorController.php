@@ -214,11 +214,11 @@ class TranslatorController extends AdminListController
         if (Request::METHOD_POST === $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $locales = explode('|', $this->getParameter('requiredlocales'));
+                $locales = explode('|', $this->container->getParameter('requiredlocales'));
                 $data = $form->getData();
                 $file = $data['file'];
                 $force = $data['force'];
-                $imported = $this->get('kunstmaan_translator.service.importer.importer')->importFromSpreadsheet($file, $locales, $force);
+                $imported = $this->container->get('kunstmaan_translator.service.importer.importer')->importFromSpreadsheet($file, $locales, $force);
                 $this->addFlash(FlashTypes::SUCCESS, sprintf("Translation imported: %d", $imported));
             }
         }

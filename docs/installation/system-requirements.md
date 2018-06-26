@@ -28,5 +28,5 @@
 * MySQL 5.x (some work on sqlite has been done but is not supported)
 * A webserver like Apache or Nginx (preferably with a Varnish server in front)
 * Imagemagick
-* Elasticsearch (1.7.3)
+* Elasticsearch
 * Memcached (optionally)

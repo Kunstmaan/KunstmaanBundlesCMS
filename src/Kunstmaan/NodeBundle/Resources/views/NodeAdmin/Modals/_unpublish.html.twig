@@ -12,8 +12,6 @@
                 </h3>
             </div>
 
-            <form action="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-
                 <!-- Body -->
                 <div class="modal-body">
                     <p>
@@ -54,7 +52,7 @@
                 <!-- Footer -->
                 <div class="modal-footer">
                     <div id="unpublish-later-action" class="btn_group">
-                        <button type="submit" id="unpub_publishlater_action" name="submit" class="btn btn-primary btn--raise-on-hover">
+                        <button name="publish_later" type="submit" id="unpub_publishlater_action" class="btn btn-primary btn--raise-on-hover">
                             {{ 'kuma_node.modal.unpublish.later.button'|trans() }}
                         </button>
                         <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
@@ -62,15 +60,12 @@
                         </button>
                     </div>
                     <div id="unpublish-action" class="btn_group">
-                        <a href="{{ path('KunstmaanNodeBundle_nodes_unpublish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
-                            {{ 'kuma_node.modal.unpublish.now.button'|trans() }}
-                        </a>
+                        <button name="unpublishing" type="submit" class="btn btn-danger btn--raise-on-hover">{{ 'kuma_node.modal.unpublish.now.button'|trans() }}</button>
                         <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
                             {{ 'kuma_node.modal.unpublish.now.cancel'|trans() }}
                         </button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 </div>

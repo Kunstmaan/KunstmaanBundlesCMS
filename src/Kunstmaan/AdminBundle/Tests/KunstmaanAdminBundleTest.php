@@ -18,7 +18,7 @@ class KunstmaanAdminBundleTest extends PHPUnit_Framework_TestCase
         $resources = $containerBuilder->getResources();
         $extensions = $containerBuilder->getExtensions();
 
-        $this->assertCount(5, $resources);
+        $this->assertCount(6, $resources);
         $this->assertCount(1, $extensions);
         $this->assertArrayHasKey('kunstmaan_admin', $extensions);
         $this->assertInstanceOf(KunstmaanAdminExtension::class, $extensions['kunstmaan_admin']);

@@ -71,6 +71,7 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+        $loader->load('commands.yml');
 
         if (!empty($config['enable_console_exception_listener']) && $config['enable_console_exception_listener']) {
             $loader->load('console_listener.yml');
@@ -78,15 +79,6 @@ class KunstmaanAdminExtension extends Extension implements PrependExtensionInter
 
         if (0 !== count($config['menu_items'])) {
             $this->addSimpleMenuAdaptor($container, $config['menu_items']);
-        }
-
-        if ($container->hasParameter('kunstmaan_admin.domain_configuration.class') && $container->getParameter('kunstmaan_admin.domain_configuration.class') !== DomainConfiguration::class) {
-            @trigger_error(
-                'Overriding the domain configuration class by setting the "kunstmaan_admin.domain_configuration.class" parameter is deprecated since KunstmaanAdminDomainBundle 5.1 and will be removed in KunstmaanAdminDomainBundle 6.0. Register your custom configuration class as a service and override the "kunstmaan_admin.domain_configuration" service alias.'
-            );
-
-            // Inject the container back, to keep BC, if the user override the domain configuration with the "kunstmaan_admin.domain_configuration.class" parameter.
-            $container->getDefinition('kunstmaan_admin.domain_configuration')->setArguments([new Reference('service_container')]);
         }
     }
 

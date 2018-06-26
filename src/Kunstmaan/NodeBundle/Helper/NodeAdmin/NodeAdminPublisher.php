@@ -14,9 +14,13 @@ use Kunstmaan\NodeBundle\Entity\QueuedNodeTranslationAction;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\TranslatorInterface;
+use Kunstmaan\AdminBundle\FlashMessages\FlashTypes;
 
 class NodeAdminPublisher
 {
@@ -262,5 +266,57 @@ class NodeAdminPublisher
         );
 
         return $newNodeVersion;
+    }
+
+    /**
+     * @param Request         $request
+     * @param NodeTranslation $nodeTranslation
+     */
+    public function chooseHowToPublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    {
+        /** @var Session $session */
+        $session = $request->getSession();
+
+        if ($request->request->has('publish_later') && $request->get('pub_date')) {
+            $date = new \DateTime(
+                $request->get('pub_date') . ' ' . $request->get('pub_time')
+            );
+            $this->publishLater($nodeTranslation, $date);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.publish.flash.success_scheduled')
+            );
+        } else {
+            $this->publish($nodeTranslation);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.publish.flash.success_published')
+            );
+        }
+    }
+
+    /**
+     * @param Request         $request
+     * @param NodeTranslation $nodeTranslation
+     */
+    public function chooseHowToUnpublish(Request $request, NodeTranslation $nodeTranslation, TranslatorInterface $translator)
+    {
+        /** @var Session $session */
+        $session = $request->getSession();
+
+        if ($request->request->has('unpublish_later') && $request->get('unpub_date')) {
+            $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
+            $this->unPublishLater($nodeTranslation, $date);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.unpublish.flash.success_scheduled')
+            );
+        } else {
+            $this->unPublish($nodeTranslation);
+            $session->getFlashBag()->add(
+                FlashTypes::SUCCESS,
+                $translator->trans('kuma_node.admin.unpublish.flash.success_unpublished')
+            );
+        }
     }
 }

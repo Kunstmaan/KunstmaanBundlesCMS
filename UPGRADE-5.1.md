@@ -1,11 +1,20 @@
 UPGRADE FROM 5.0 to 5.1
 =======================
 
+General
+-------
+
+ * The `symfony/assetic-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on assetic, add the dependency to your project `composer.json`.
+
 AdminBundle
 -----------
 
  * Passing the `logger` service as the second argument in `Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector` is deprecated and will be removed in 6.0.
  * Injecting the container in the `DomainConfiguration` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * `CreateUserCommand::__construct()`, `CreateRoleCommand::__construct()`, `CreateGroupCommand::__construct()` and `ExceptionCommand::__construct()` now take an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+ * `CreateUserCommand::__construct()`, `CreateRoleCommand::__construct()`, `CreateGroupCommand::__construct()` and `ExceptionCommand::__construct()` have been marked as final.
+ * Injecting the container in the `ApplyAclCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * Injecting the container in the `UpdateAclCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
 
 AdminListBundle
 ---------------
@@ -23,6 +32,14 @@ ConfigBundle
 ------------
 
  * Passing the `container` as the sixth argument in `Kunstmaan\ConfigBundle\Controller\ConfigController` is deprecated in and will be removed in 6.0.
+
+FormBundle
+-----------
+ * Added the optional `deletable_formsubmissions` config parameter, when set to true, form submissions can be deleted from the adminlist.
+     ```yaml
+     kunstmaan_form:
+         deletable_formsubmissions: true
+     ```
 
 MediaBundle
 -----------
