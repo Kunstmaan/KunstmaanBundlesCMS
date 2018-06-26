@@ -27,7 +27,7 @@
         "symfony/monolog-bundle": "~2.8|~3.0",
         "symfony/security-acl": "~2.8|~3.0",
         "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
         "friendsofsymfony/user-bundle": "2.0.*",
