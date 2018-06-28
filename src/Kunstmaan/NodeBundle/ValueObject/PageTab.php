@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\TabBundle\ValueObject;
+namespace Kunstmaan\NodeBundle\ValueObject;
 
 class PageTab {
 	/**

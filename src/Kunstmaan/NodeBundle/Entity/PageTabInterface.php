@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunstmaan\TabBundle\Entity;
+namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\TabBundle\ValueObject\PageTab;
+use Kunstmaan\NodeBundle\ValueObject\PageTab;
 
 interface PageTabInterface {
 	/**

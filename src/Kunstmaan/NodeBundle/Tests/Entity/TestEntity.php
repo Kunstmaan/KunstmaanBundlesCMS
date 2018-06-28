@@ -5,13 +5,14 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-
+use Kunstmaan\NodeBundle\Entity\PageTabInterface;
+use Kunstmaan\NodeBundle\ValueObject\PageTab;
 use Symfony\Component\Form\AbstractType;
 
 /**
  * TestEntity
  */
-class TestEntity extends AbstractEntity implements HasNodeInterface
+class TestEntity extends AbstractEntity implements HasNodeInterface, PageTabInterface
 {
     /**
      * @param int $id
@@ -88,4 +89,17 @@ class TestEntity extends AbstractEntity implements HasNodeInterface
     {
         return false;
     }
+
+	/**
+	 * @return PageTab[]
+	 */
+    public function getTabs()
+	{
+		return [
+			(new PageTab())
+				->setTabTitle('tab1_title')
+				->setInternalName('tab1_name')
+				->setPosition(1)
+		];
+	}
 }

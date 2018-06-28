@@ -9,7 +9,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
-use Kunstmaan\TabBundle\Entity\PageTabInterface;
+use Kunstmaan\NodeBundle\Entity\PageTabInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class NodeListener
