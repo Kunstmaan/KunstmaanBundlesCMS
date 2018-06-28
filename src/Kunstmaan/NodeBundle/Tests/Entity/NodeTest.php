@@ -247,24 +247,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
 		$request = new Request();
 		$request->request = new ParameterBag();
 
-		$entityManager = $this->getMock(EntityManager::class, [], [], '', false);
-		$tokenStorage = $this->getMock(TokenStorage::class, [], [], 'TokenStorage', false);
-		$aclProvider = $this->getMock(AclProvider::class, [], [], '', false);
-		$objectIdentityRetrievalStrategy = $this->getMock(ObjectIdentityRetrievalStrategy::class);
-		$eventDispatcher = $this->getMock(EventDispatcher::class);
-		$shell = $this->getMock(Shell::class, [], [], 'Shell');
-		$kernel = $this->getMock(KernelInterface::class);
 		$formFactory = $this->getMock(FormFactory::class, [], [], '', false);
 		$authorizationChecker = $this->getMock(AuthorizationCheckerInterface::class);
-		$permissionAdmin = $this->getMock(PermissionAdmin::class, [], [
-			$entityManager,
-			$tokenStorage,
-			$aclProvider,
-			$objectIdentityRetrievalStrategy,
-			$eventDispatcher,
-			$shell,
-			$kernel
-		]);
+		$permissionAdmin = $this->getMock(PermissionAdmin::class, [], [], '', false);
 		$permissionMap = $this->getMock(PermissionMapInterface::class);
 
 		$entity = new TestEntity();
