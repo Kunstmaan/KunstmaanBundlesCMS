@@ -243,7 +243,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('node 1, refEntityName: Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->__toString());
     }
 
-	public function testPageShouldShowTwoTabs() {
+	public function testPageShouldHaveTab() {
 		$request = new Request();
 		$request->request = new ParameterBag();
 
