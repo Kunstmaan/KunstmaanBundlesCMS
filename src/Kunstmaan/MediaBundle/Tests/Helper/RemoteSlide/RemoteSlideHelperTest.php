@@ -22,28 +22,12 @@ class RemoteSlideHelperTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::__construct
-     */
     protected function setUp()
     {
         $this->media = new Media();
         $this->object = new RemoteSlideHelper($this->media);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteSlide\RemoteSlideHelper::getMedia
-     */
     public function testGetMedia()
     {
         $this->assertEquals(RemoteSlideHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());

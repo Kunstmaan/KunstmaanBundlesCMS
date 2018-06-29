@@ -8,6 +8,7 @@ parameters:
 services:
     kunstmaan_dashboard.manager.widgets:
         class: Kunstmaan\DashboardBundle\Manager\WidgetManager
+        public: true
 
     kunstmaan_dashboard.widget.googleanalytics:
         class: Kunstmaan\DashboardBundle\Widget\DashboardWidget
@@ -40,6 +41,7 @@ services:
     kunstmaan_dashboard.helper.google.analytics.config:
         class: 'Kunstmaan\DashboardBundle\Helper\Google\Analytics\ConfigHelper'
         arguments: ['@kunstmaan_dashboard.helper.google.analytics.service', '@doctrine.orm.entity_manager']
+        public: true
 
     # query helper
     kunstmaan_dashboard.helper.google.analytics.query:

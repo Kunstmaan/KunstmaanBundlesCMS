@@ -24,17 +24,6 @@ class BooleanFilterTypeTest extends ORMFilterTypeTestCase
         $this->object = new BooleanFilterType('boolean', 'b');
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::bindRequest
-     */
     public function testBindRequest()
     {
         $request = new Request(array('filter_value_boolean' => 'true'));
@@ -49,7 +38,6 @@ class BooleanFilterTypeTest extends ORMFilterTypeTestCase
     /**
      * @param mixed $value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($value)
@@ -74,9 +62,6 @@ class BooleanFilterTypeTest extends ORMFilterTypeTestCase
         );
     }
 
-    /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::getTemplate
-     */
     public function testGetTemplate()
     {
         $this->assertEquals('KunstmaanAdminListBundle:FilterType:booleanFilter.html.twig', $this->object->getTemplate());

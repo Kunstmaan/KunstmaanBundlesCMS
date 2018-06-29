@@ -24,18 +24,6 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new SubmitButtonPagePart;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::setLabel
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getLabel
-     */
     public function testSetGetLabel()
     {
         $object = $this->object;
@@ -44,9 +32,6 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($label, $object->getLabel());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::__toString
-     */
     public function testToString()
     {
         $stringValue = $this->object->__toString();
@@ -54,9 +39,6 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getDefaultView
-     */
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
@@ -64,9 +46,6 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getAdminView
-     */
     public function testGetAdminView()
     {
         $stringValue = $this->object->getAdminView();
@@ -74,9 +53,6 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getDefaultAdminType
-     */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(SubmitButtonPagePartAdminType::class, $this->object->getDefaultAdminType());

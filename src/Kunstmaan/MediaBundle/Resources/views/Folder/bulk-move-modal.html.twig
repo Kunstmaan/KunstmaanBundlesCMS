@@ -1,0 +1,18 @@
+<div id="bulk-move-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Head -->
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
+                <h3>
+                    {{ 'media.folder.bulk_move.modal.title' | trans }}
+                </h3>
+            </div>
+
+            {{ render(controller('KunstmaanMediaBundle:Media:bulkMove')) }}
+        </div>
+    </div>
+</div>

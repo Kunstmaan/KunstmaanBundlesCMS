@@ -2,9 +2,7 @@
 
 {% include '@KunstmaanAdminList/AdminListTwigExtension/filters.html.twig' %}
 
-{% if adminlist.pagerfanta.haveToPaginate() %}
-    {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}
-{% endif %}
+{% include '@KunstmaanAdminList/AdminListTwigExtension/limit.html.twig' %}
 
 {% if adminlist.hasBulkActions %}
     <form action="#" method="POST" name="bulkform" id="bulk-form">

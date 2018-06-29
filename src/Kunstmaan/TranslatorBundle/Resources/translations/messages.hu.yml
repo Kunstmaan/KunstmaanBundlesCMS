@@ -15,6 +15,7 @@ settings:
     refresh_live: Azonnali frissítés
     import_translations_forced: Kényszerített import
     import_translations: Import
+    import_file: Import from spreadsheet
     actions: Actions
     export_translations: Export to CSV
     not_live_warning: "A fordítás nem azonnali idejű!"
@@ -23,6 +24,8 @@ settings:
     succesful_edited: "Sikeres szerkesztés"
 kuma_translator:
   form:
+    upload_file_choose: Please choose a file to upload
+    force_checkbox: Force overwriting translations
     text_with_locale:
       locale:
         label: Nyelv
@@ -52,3 +55,7 @@ kuma_translator:
       keyword: Kulcsszó
       text: Szöveg
       locale: Nyelv
+toolbar:
+  translations:
+    title: Translations
+    count: Count

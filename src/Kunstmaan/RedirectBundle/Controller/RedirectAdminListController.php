@@ -23,7 +23,7 @@ class RedirectAdminListController extends AdminListController
     public function getAdminListConfigurator()
     {
         if (!isset($this->configurator)) {
-            $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->get('kunstmaan_admin.domain_configuration'));
+            $this->configurator = new RedirectAdminListConfigurator($this->getEntityManager(), null, $this->container->get('kunstmaan_admin.domain_configuration'));
         }
 
         return $this->configurator;

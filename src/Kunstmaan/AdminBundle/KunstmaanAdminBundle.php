@@ -6,6 +6,7 @@ use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AddLogProcessorsCompilerP
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\AdminPanelCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorAfterPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DataCollectorPass;
+use Kunstmaan\AdminBundle\DependencyInjection\Compiler\DomainConfigurationPass;
 use Kunstmaan\AdminBundle\DependencyInjection\Compiler\MenuCompilerPass;
 use Kunstmaan\AdminBundle\DependencyInjection\KunstmaanAdminExtension;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -29,15 +30,8 @@ class KunstmaanAdminBundle extends Bundle
         $container->addCompilerPass(new AdminPanelCompilerPass());
         $container->addCompilerPass(new AddLogProcessorsCompilerPass());
         $container->addCompilerPass(new DataCollectorPass());
+        $container->addCompilerPass(new DomainConfigurationPass());
 
         $container->registerExtension(new KunstmaanAdminExtension());
-    }
-
-    /**
-     * @return string The Bundle parent name it overrides or null if no parent
-     */
-    public function getParent()
-    {
-        return 'FOSUserBundle';
     }
 }

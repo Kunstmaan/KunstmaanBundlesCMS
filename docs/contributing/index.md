@@ -10,3 +10,4 @@ We follow most of the procedures for contributions from the [Symfony](http://sym
 * [Community bundles](community-bundles.md)
 * [Release process](release-process.md)
 * [Translations](contributing-translations.md)
+* [Ground Control](groundcontrol.md)

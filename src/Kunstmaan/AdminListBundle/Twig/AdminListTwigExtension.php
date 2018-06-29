@@ -28,6 +28,27 @@ class AdminListTwigExtension extends Twig_Extension
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getTests()
+    {
+        return [
+            new \Twig_SimpleTest('instanceof', [$this, 'isInstanceOf']),
+        ];
+    }
+
+    /**
+     * @param object $object
+     * @param string $class
+     *
+     * @return bool
+     */
+    public function isInstanceOf($object, $class)
+    {
+        return $object instanceof $class;
+    }
+
+    /**
      * Renders the HTML for a given view
      *
      * Example usage in Twig:

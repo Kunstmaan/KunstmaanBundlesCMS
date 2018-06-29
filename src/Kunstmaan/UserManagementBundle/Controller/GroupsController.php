@@ -40,7 +40,7 @@ class GroupsController extends BaseSettingsController
         /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator($em));
+        $adminlist = $this->container->get("kunstmaan_adminlist.factory")->createList(new GroupAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -75,7 +75,7 @@ class GroupsController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.group.add.flash.success', array(
+                    $this->container->get('translator')->trans('kuma_user.group.add.flash.success', array(
                         '%groupname%' => $group->getName()
                     ))
                 );
@@ -119,7 +119,7 @@ class GroupsController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.group.edit.flash.success', array(
+                    $this->container->get('translator')->trans('kuma_user.group.edit.flash.success', array(
                         '%groupname%' => $group->getName()
                     ))
                 );
@@ -159,7 +159,7 @@ class GroupsController extends BaseSettingsController
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.group.delete.flash.success', array(
+                $this->container->get('translator')->trans('kuma_user.group.delete.flash.success', array(
                     '%groupname%' => $group->getName()
                 ))
             );

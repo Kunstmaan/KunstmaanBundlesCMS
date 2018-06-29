@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\UtilitiesBundle\Tests\Helper\Cipher;
+namespace Tests\Kunstmaan\UtilitiesBundle\Helper\Cipher;
 
 use Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher;
 
@@ -47,6 +47,12 @@ class CipherTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals(self::CONTENT, $encryptedValue);
         $decryptedValue = $this->cipher->decrypt($encryptedValue);
         $this->assertEquals($decryptedValue, self::CONTENT);
+    }
+
+    public function testException()
+    {
+        $this->expectException(\Exception::class);
+        new Cipher('');
     }
 
 }

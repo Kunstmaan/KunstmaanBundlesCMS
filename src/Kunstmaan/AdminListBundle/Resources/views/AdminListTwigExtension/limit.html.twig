@@ -1,0 +1,12 @@
+{% if adminlist.configurator is instanceof('Kunstmaan\\AdminListBundle\\AdminList\\Configurator\\ChangeableLimitInterface') %}
+    <div class="container-fluid">
+        <div class="dropdown pull-right">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ 'kuma_admin_list.limit'|trans({'%limit%': adminlist.configurator.limit}) }}</button>
+            <ul class="dropdown-menu">
+                {% for option in adminlist.configurator.getLimitOptions() %}
+                    <li><a href="?limit={{ option }}">{{ option }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

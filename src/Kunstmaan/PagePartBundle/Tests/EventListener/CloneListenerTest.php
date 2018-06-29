@@ -12,11 +12,13 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationReaderInterface;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplateConfigurationService;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
+use PHPUnit_Framework_TestCase;
 
 /**
- * CloneListenerTest
+ * Class CloneListenerTest
+ * @package Tests\Kunstmaan\PagePartBundle\EventListener
  */
-class CloneListenerTest extends \PHPUnit_Framework_TestCase
+class CloneListenerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var \Doctrine\ORM\EntityManager|\PHPUnit_Framework_MockObject_MockObject
@@ -48,11 +50,6 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
      */
     private $templateService;
 
-    /**
-     * Sets up the fixture.
-     *
-     * @covers Kunstmaan\PagePartBundle\EventListener\CloneListener::__construct
-     */
     protected function setUp()
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
@@ -71,7 +68,7 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
         $this->configurator = new PagePartAdminConfigurator();
         $this->configurator->setContext('main');
 
-        $this->reader = $this->getMock(PagePartConfigurationReaderInterface::class);
+        $this->reader = $this->createMock(PagePartConfigurationReaderInterface::class);
         $this->reader
             ->expects($this->any())
             ->method('getPagePartAdminConfigurators')
@@ -87,19 +84,9 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
         $this->object = new CloneListener($this->em, $this->reader, $this->templateService);
     }
 
-    /**
-     * Tears down the fixture.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\PagePartBundle\EventListener\CloneListener::postDeepCloneAndSave
-     */
     public function testClonePagePart()
     {
-        $entity = $this->getMock(HasPagePartsInterface::class);
+        $entity = $this->createMock(HasPagePartsInterface::class);
 
         $clone = clone $entity;
 
@@ -111,12 +98,9 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
         $this->object->postDeepCloneAndSave($event);
     }
 
-    /**
-     * @covers Kunstmaan\PagePartBundle\EventListener\CloneListener::postDeepCloneAndSave
-     */
     public function testClonePageTemplate()
     {
-        $entity = $this->getMock(HasPageTemplateInterface::class);
+        $entity = $this->createMock(HasPageTemplateInterface::class);
 
         /** @var HasPageTemplateInterface|\PHPUnit_Framework_MockObject_MockObject $clone */
         $clone = clone $entity;

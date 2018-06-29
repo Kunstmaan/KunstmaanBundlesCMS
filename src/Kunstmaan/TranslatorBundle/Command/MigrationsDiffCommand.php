@@ -10,6 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Command for generate migration classes by checking the translation flag value
+ *
+ * @final since 5.1
  */
 class MigrationsDiffCommand extends DiffCommand
 {

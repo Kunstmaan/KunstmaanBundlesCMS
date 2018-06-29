@@ -129,10 +129,9 @@ EOT
             ));
 
             $generator = $this->getGenerator();
-            $bundlePath = $this->bundle->getPath();
             $this->entity = $this->assistant->askAndValidate(
                 'Article class name',
-                function ($name) use ($generator, $bundlePath) {
+                function ($name) use ($generator) {
                     // Check reserved words
                     if ($generator->isReservedKeyword($name)){
                         throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));

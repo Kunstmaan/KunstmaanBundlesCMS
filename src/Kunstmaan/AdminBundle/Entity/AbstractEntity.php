@@ -47,7 +47,7 @@ abstract class AbstractEntity implements EntityInterface
      */
     public function __toString()
     {
-        return "" . $this->getId();
+        return (string) $this->getId();
     }
 
 }

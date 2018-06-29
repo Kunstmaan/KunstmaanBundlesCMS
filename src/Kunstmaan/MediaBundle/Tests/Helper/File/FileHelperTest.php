@@ -3,7 +3,6 @@ namespace Kunstmaan\MediaBundle\Tests\Helper\File;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaBundle\Helper\File\FileHelper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -26,7 +25,6 @@ class FileHelperTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::__construct
      */
     protected function setUp()
     {
@@ -34,28 +32,12 @@ class FileHelperTest extends \PHPUnit_Framework_TestCase
         $this->object = new FileHelper($this->media);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getName
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::setName
-     */
     public function testGetSetName()
     {
         $this->object->setName('name');
         $this->assertEquals('name', $this->object->getName());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::setFile
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getFile
-     */
     public function testGetSetFile()
     {
         $path = tempnam('/tmp', 'kunstmaan-media');
@@ -65,10 +47,6 @@ class FileHelperTest extends \PHPUnit_Framework_TestCase
         unlink($path);
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::setFolder
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getFolder
-     */
     public function testGetSetFolder()
     {
         $folder = new Folder();
@@ -76,39 +54,24 @@ class FileHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($folder, $this->object->getFolder());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::setCopyright
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getCopyright
-     */
     public function testGetSetCopyright()
     {
         $this->object->setCopyright('copyright');
         $this->assertEquals('copyright', $this->object->getCopyright());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::setDescription
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getDescription
-     */
     public function testGetSetDescription()
     {
         $this->object->setDescription('description');
         $this->assertEquals('description', $this->object->getDescription());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::setOriginalFilename
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getOriginalFilename
-     */
     public function testGetSetOriginalFilename()
     {
         $this->object->setOriginalFilename('image.jpg');
         $this->assertEquals('image.jpg', $this->object->getOriginalFilename());
     }
 
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\FileHelper::getMedia
-     */
     public function testGetMedia()
     {
         $this->media->setId(1);

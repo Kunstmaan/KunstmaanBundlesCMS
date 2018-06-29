@@ -10,18 +10,12 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
  */
 class PermissionMapTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getMasks
-     */
     public function testGetMasksReturnsNullWhenNotSupportedMask()
     {
         $map = new PermissionMap();
         $this->assertNull($map->getMasks('IS_AUTHENTICATED_REMEMBERED', null));
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getMasks
-     */
     public function testGetMasks()
     {
         $map = new PermissionMap();
@@ -30,9 +24,6 @@ class PermissionMapTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(MaskBuilder::MASK_DELETE), $mask);
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::contains
-     */
     public function testContains()
     {
         $map = new PermissionMap();
@@ -41,13 +32,16 @@ class PermissionMapTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $map->contains('DUMMY'));
     }
 
-    /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getPossiblePermissions
-     */
     public function testGetPossiblePermissions()
     {
         $map = new PermissionMap();
 
         $this->assertEquals(array('VIEW', 'EDIT', 'DELETE', 'PUBLISH', 'UNPUBLISH'), $map->getPossiblePermissions());
+    }
+
+    public function testGetMaskBuilder()
+    {
+        $map = new PermissionMap();
+        $this->assertInstanceOf(MaskBuilder::class, $map->getMaskBuilder());
     }
 }
