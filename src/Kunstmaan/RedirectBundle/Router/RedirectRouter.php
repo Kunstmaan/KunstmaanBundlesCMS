@@ -122,13 +122,15 @@ class RedirectRouter implements RouterInterface
 
             // Only add the route when the domain matches or the domain is empty
             if ($redirect->getDomain() == $domain || !$redirect->getDomain()) {
+                $needsUtf8 = (preg_match('/[\x80-\xFF]/', $redirect->getTarget()));
+
                 $this->routeCollection->add(
                     '_redirect_route_' . $redirect->getId(),
-                    new Route($redirect->getOrigin(), array(
+                    new Route($redirect->getOrigin(), [
                         '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                         'path' => $redirect->getTarget(),
                         'permanent' => $redirect->isPermanent(),
-                    ))
+                    ], [], ['utf8' => $needsUtf8])
                 );
             }
         }
