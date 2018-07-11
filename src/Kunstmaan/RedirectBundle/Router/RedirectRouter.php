@@ -126,11 +126,11 @@ class RedirectRouter implements RouterInterface
 
                 $this->routeCollection->add(
                     '_redirect_route_' . $redirect->getId(),
-                    new Route($redirect->getOrigin(), array(
+                    new Route($redirect->getOrigin(), [
                         '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
                         'path' => $redirect->getTarget(),
                         'permanent' => $redirect->isPermanent(),
-                    ), array(), array('utf8' => $needsUtf8))
+                    ], [], ['utf8' => $needsUtf8])
                 );
             }
         }
