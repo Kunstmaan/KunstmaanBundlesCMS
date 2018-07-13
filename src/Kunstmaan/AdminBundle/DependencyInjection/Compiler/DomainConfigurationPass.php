@@ -18,7 +18,9 @@ class DomainConfigurationPass implements CompilerPassInterface
             );
 
             // Inject the container back, to keep BC, if the user override the domain configuration with the "kunstmaan_admin.domain_configuration.class" parameter.
-            $container->getDefinition('kunstmaan_admin.domain_configuration')->setArguments([new Reference('service_container')]);
+            if ($container->hasDefinition('kunstmaan_admin.domain_configuration')) {
+                $container->getDefinition('kunstmaan_admin.domain_configuration')->setArguments([new Reference('service_container')]);
+            }
         }
     }
 }
