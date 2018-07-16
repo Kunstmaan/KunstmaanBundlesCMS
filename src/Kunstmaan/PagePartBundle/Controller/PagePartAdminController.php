@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\PagePartBundle\Controller;
 
-use Doctrine\Common\Util\ClassUtils;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdmin;
@@ -73,18 +72,12 @@ class PagePartAdminController extends Controller
 
         $data                         = $formBuilder->getData();
         $data['pagepartadmin_' . $id] = $pagePart;
-        $adminType                    = $pagePart->getDefaultAdminType();
 
-        if (is_string($adminType)) {
-            $adminType = $this->container->get($adminType);
-        }
-
-        $adminTypeFqn = ClassUtils::getClass($adminType);
-
-        $formBuilder->add('pagepartadmin_' . $id, $adminTypeFqn);
+        $formBuilder->add('pagepartadmin_' . $id, $pagePart->getDefaultAdminType());
         $formBuilder->setData($data);
         $form     = $formBuilder->getForm();
         $formview = $form->createView();
+        $extended = $this->getParameter('kunstmaan_page_part.extended');
 
         return [
             'id'            => $id,
@@ -92,7 +85,8 @@ class PagePartAdminController extends Controller
             'pagepart'      => $pagePart,
             'pagepartadmin' => $pagePartAdmin,
             'page'          => $pagePartAdmin->getPage(),
-            'editmode'      => true
+            'editmode'      => true,
+            'extended'      => $extended,
         ];
     }
 }

@@ -205,7 +205,12 @@ class OAuthAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return new RedirectResponse($this->router->generate('KunstmaanAdminBundle_homepage'));
+        $targetPath = $request->getSession()->get(
+            sprintf('_security.%s.target_path', $providerKey),
+            $this->router->generate('KunstmaanAdminBundle_homepage')
+        );
+
+        return new RedirectResponse($targetPath);
     }
 
     /**

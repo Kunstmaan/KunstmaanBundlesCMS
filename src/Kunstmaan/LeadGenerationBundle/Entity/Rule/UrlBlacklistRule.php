@@ -66,10 +66,10 @@ class UrlBlacklistRule extends AbstractRule
     }
 
     /**
-     * @return UrlBlackListAdminType
+     * @return string
      */
     public function getAdminType()
     {
-        return new UrlBlackListAdminType();
+        return UrlBlackListAdminType::class;
     }
 }

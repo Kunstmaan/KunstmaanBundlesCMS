@@ -3,8 +3,9 @@
 namespace Kunstmaan\MultiDomainBundle\Tests\Helper\AdminPanel;
 
 use Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor;
+use PHPUnit_Framework_TestCase;
 
-class SitesAdminPanelAdaptorTest extends \PHPUnit_Framework_TestCase
+class SitesAdminPanelAdaptorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var SitesAdminPanelAdaptor
@@ -20,18 +21,6 @@ class SitesAdminPanelAdaptorTest extends \PHPUnit_Framework_TestCase
         $this->object = new SitesAdminPanelAdaptor();
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor::getAdminPanelActions
-     * @covers Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor::getSiteSwitcherAction
-     */
     public function testGetAdminPanelActions()
     {
         $actions = $this->object->getAdminPanelActions();

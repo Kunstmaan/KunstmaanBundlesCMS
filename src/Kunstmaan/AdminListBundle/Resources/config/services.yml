@@ -4,6 +4,7 @@ parameters:
 services:
     kunstmaan_adminlist.factory:
         class: Kunstmaan\AdminListBundle\AdminList\AdminListFactory
+        public: true
 
     kunstmaan_adminlist.service.export:
         class:  '%kunstmaan_adminlist.service.export.class%'
@@ -15,8 +16,6 @@ services:
         class: Kunstmaan\AdminListBundle\Twig\AdminListTwigExtension
         tags:
             -  { name: twig.extension }
-        arguments:
-            -  '@service_container'
 
     kunstmaan_entity.admin_entity.entity_version_lock_service:
         class: Kunstmaan\AdminListBundle\Service\EntityVersionLockService

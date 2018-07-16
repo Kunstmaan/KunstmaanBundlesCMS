@@ -12,6 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * An abstract Form Page Admin Type
+ *
+ * This should be an abstract class!
  */
 class AbstractFormPageAdminType extends AbstractType
 {
@@ -39,6 +41,11 @@ class AbstractFormPageAdminType extends AbstractType
         ));
     }
 
+    /**
+     *  This should also be abstract, it's impossible to instantiate this data_class!
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

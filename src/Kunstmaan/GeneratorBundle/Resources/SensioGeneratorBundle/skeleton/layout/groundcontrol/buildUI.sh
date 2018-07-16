@@ -11,6 +11,5 @@ rm -rf node_modules
 # Set correct node version
 nvm install
 
-bundle install
 npm install
 npm run build

@@ -3,6 +3,12 @@
 namespace Kunstmaan\NodeSearchBundle\Search;
 
 use Doctrine\ORM\EntityManager;
+use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Match;
+use Elastica\Query\QueryString;
+use Elastica\Query\Term;
+use Elastica\Util;
 use Kunstmaan\AdminBundle\Entity\BaseUser;
 use Kunstmaan\AdminBundle\Helper\DomainConfigurationInterface;
 use Kunstmaan\NodeSearchBundle\Helper\SearchBoostInterface;
@@ -18,22 +24,22 @@ class NodeSearcher extends AbstractElasticaSearcher
     /**
      * @var TokenStorageInterface
      */
-    private $tokenStorage = null;
+    protected $tokenStorage = null;
 
     /**
      * @var DomainConfigurationInterface
      */
-    private $domainConfiguration;
+    protected $domainConfiguration;
 
     /**
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var bool
      */
-    private $useMatchQueryForTitle = false;
+    protected $useMatchQueryForTitle = false;
 
     /**
      * @param TokenStorageInterface $tokenStorage
@@ -76,42 +82,44 @@ class NodeSearcher extends AbstractElasticaSearcher
      */
     public function defineSearch($query, $type)
     {
-        $query = \Elastica\Util::escapeTerm($query);
+        $query = Util::escapeTerm($query);
 
-        $elasticaQueryString = new \Elastica\Query\Match();
+        $elasticaQueryString = new Match();
         $elasticaQueryString
             ->setFieldMinimumShouldMatch('content', '80%')
             ->setFieldQuery('content', $query);
 
         if ($this->useMatchQueryForTitle) {
-            $elasticaQueryTitle = new \Elastica\Query\Match();
+            $elasticaQueryTitle = new Match();
             $elasticaQueryTitle
               ->setFieldQuery('title', $query)
-              ->setFieldMinimumShouldMatch('title', '80%');
+              ->setFieldMinimumShouldMatch('title', '80%')
+              ->setFieldBoost(2);
+
         } else {
-            $elasticaQueryTitle = new \Elastica\Query\QueryString();
+            $elasticaQueryTitle = new QueryString();
             $elasticaQueryTitle
               ->setDefaultField('title')
               ->setQuery($query);
         }
 
-        $elasticaQueryBool = new \Elastica\Query\BoolQuery();
+        $elasticaQueryBool = new BoolQuery();
         $elasticaQueryBool
             ->addShould($elasticaQueryTitle)
             ->addShould($elasticaQueryString)
-            ->setMinimumNumberShouldMatch(1);
+            ->setMinimumShouldMatch(1);
 
         $this->applySecurityFilter($elasticaQueryBool);
 
         if (!is_null($type)) {
-            $elasticaQueryType = new \Elastica\Query\Term();
+            $elasticaQueryType = new Term();
             $elasticaQueryType->setTerm('type', $type);
             $elasticaQueryBool->addMust($elasticaQueryType);
         }
 
         $rootNode = $this->domainConfiguration->getRootNode();
         if (!is_null($rootNode)) {
-            $elasticaQueryRoot = new \Elastica\Query\Term();
+            $elasticaQueryRoot = new Term();
             $elasticaQueryRoot->setTerm('root_id', $rootNode->getId());
             $elasticaQueryBool->addMust($elasticaQueryRoot);
         }
@@ -145,7 +153,7 @@ class NodeSearcher extends AbstractElasticaSearcher
     {
         $roles = $this->getCurrentUserRoles();
 
-        $elasticaQueryRoles = new \Elastica\Query\Terms();
+        $elasticaQueryRoles = new Query\Terms();
         $elasticaQueryRoles
             ->setTerms('view_roles', $roles);
         $elasticaQueryBool->addMust($elasticaQueryRoles);
@@ -179,7 +187,7 @@ class NodeSearcher extends AbstractElasticaSearcher
      */
     protected function getPageBoosts()
     {
-        $rescoreQueryBool = new \Elastica\Query\BoolQuery();
+        $rescoreQueryBool = new BoolQuery();
 
         //Apply page type boosts
         $pageClasses = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAllDistinctPageClasses();
@@ -187,7 +195,7 @@ class NodeSearcher extends AbstractElasticaSearcher
             $page = new $pageClass['refEntityName']();
 
             if($page instanceof SearchBoostInterface) {
-                $elasticaQueryTypeBoost = new \Elastica\Query\QueryString();
+                $elasticaQueryTypeBoost = new QueryString();
                 $elasticaQueryTypeBoost
                     ->setBoost($page->getSearchBoost())
                     ->setDefaultField('page_class')
@@ -200,7 +208,7 @@ class NodeSearcher extends AbstractElasticaSearcher
         //Apply page specific boosts
         $nodeSearches = $this->em->getRepository('KunstmaanNodeSearchBundle:NodeSearch')->findAll();
         foreach ($nodeSearches as $nodeSearch) {
-            $elasticaQueryNodeId = new \Elastica\Query\QueryString();
+            $elasticaQueryNodeId = new QueryString();
             $elasticaQueryNodeId
                 ->setBoost($nodeSearch->getBoost())
                 ->setDefaultField('node_id')

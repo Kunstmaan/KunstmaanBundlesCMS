@@ -1,5 +1,7 @@
 <?php
 
+namespace Kunstmaan\VotingBundle\Tests\DependencyInjection;
+
 use Kunstmaan\VotingBundle\DependencyInjection\KunstmaanVotingExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -29,7 +31,7 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainer();
         $container->setParameter('voting_default_value', 2);
-        $this->extension->load(array(array()), $container);
+        $this->extension->load([['actions' => [['name' => 'foo', 'max_number_by_ip' => 2]]]], $container);
         $this->assertTrue($container->hasParameter($this->root . ".actions"));
         $this->assertTrue(is_array($container->getParameter($this->root . ".actions")));
 
@@ -95,9 +97,7 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the Configuration to test
-     *
-     * @return Configuration
+     * @return KunstmaanVotingExtension
      */
     protected function getExtension()
     {

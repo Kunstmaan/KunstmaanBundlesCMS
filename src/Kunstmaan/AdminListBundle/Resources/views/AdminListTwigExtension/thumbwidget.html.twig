@@ -1,0 +1,15 @@
+{% set extraparams = extraparams|merge(filter.currentparameters) %}
+
+{% include '@KunstmaanAdminList/AdminListTwigExtension/filters.html.twig' %}
+
+{% if adminlist.hasBulkActions %}
+    <form action="#" method="POST" name="bulkform" id="bulk-form">
+{% endif %}
+
+<!-- Check for actions -->
+{% set itemActionsPossible = false %}
+{% for item in adminlist.items(extraparams) %}
+    {% if (adminlist.canEdit(item) or adminlist.canView(item) or adminlist.canDelete(item) or adminlist.hasItemActions() ) %}
+        {% set itemActionsPossible = true %}
+    {% endif %}
+{% endfor %}

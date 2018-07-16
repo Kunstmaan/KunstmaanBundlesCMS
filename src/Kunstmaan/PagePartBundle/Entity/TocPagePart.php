@@ -1,6 +1,7 @@
 <?php
 
 namespace Kunstmaan\PagePartBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
 
@@ -30,10 +31,10 @@ class TocPagePart extends AbstractPagePart
     }
 
     /**
-     * @return TocPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new TocPagePartAdminType();
+        return TocPagePartAdminType::class;
     }
 }

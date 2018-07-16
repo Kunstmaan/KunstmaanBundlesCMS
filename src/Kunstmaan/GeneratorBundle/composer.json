@@ -19,7 +19,8 @@
         "doctrine/orm": "^2.2.3",
         "sensio/generator-bundle": "~2.5|~3.0",
         "fzaninotto/faker": "~1.4.0",
-        "kunstmaan/utilities-bundle": "~3.2"
+        "kunstmaan/utilities-bundle": "~3.2",
+        "twig/twig": "^1.12|^2.0",
     },
     "suggest": {
         "kunstmaan/admin-bundle": "~3.2",

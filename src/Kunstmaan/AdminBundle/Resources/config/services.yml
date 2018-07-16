@@ -15,6 +15,10 @@ parameters:
     kunstmaan_admin.validator.password_restrictions.class: 'Kunstmaan\AdminBundle\Validator\Constraints\PasswordRestrictionsValidator'
     kunstmaan_admin.adminroute.helper.class: 'Kunstmaan\AdminBundle\Helper\AdminRouteHelper'
     kunstmaan_admin.adminroute.twig.class: 'Kunstmaan\AdminBundle\Twig\AdminRouteHelperTwigExtension'
+    kunstmaan_admin.exception.listener.class: 'Kunstmaan\AdminBundle\EventListener\ExceptionSubscriber'
+    kunstmaan_admin.toolbar.listener.class: 'Kunstmaan\AdminBundle\EventListener\ToolbarListener'
+    kunstmaan_admin.toolbar.collector.bundle.class: 'Kunstmaan\AdminBundle\Toolbar\BundleVersionDataCollector'
+    kunstmaan_admin.toolbar.collector.exception.class: 'Kunstmaan\AdminBundle\Toolbar\ExceptionDataCollector'
 
 services:
     kunstmaan_admin.menubuilder:
@@ -31,7 +35,7 @@ services:
 
     kunstmaan_admin.menu.adaptor.settings:
         class: Kunstmaan\AdminBundle\Helper\Menu\SettingsMenuAdaptor
-        arguments: ['@service_container']
+        arguments: ['@security.authorization_checker', "%version_checker.enabled%"]
         tags:
             -  { name: 'kunstmaan_admin.menu.adaptor' }
 
@@ -84,6 +88,16 @@ services:
     kunstmaan_admin.acl.helper:
         class: '%kunstmaan_admin.acl.helper.class%'
         arguments: ['@doctrine.orm.entity_manager', '@security.token_storage', '@security.role_hierarchy']
+        public: true
+
+    kunstmaan_admin.acl.manager:
+        class: Kunstmaan\AdminBundle\Service\AclManager
+        arguments:
+            - '@security.acl.provider'
+            - '@security.acl.object_identity_retrieval_strategy'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_admin.permissionadmin'
+        public: true
 
     kunstmaan_admin.acl.native.helper:
         class: '%kunstmaan_admin.acl.native.helper.class%'
@@ -108,10 +122,12 @@ services:
     kunstmaan_admin.clone.helper:
         class: Kunstmaan\AdminBundle\Helper\CloneHelper
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
+        public: true
 
     kunstmaan_admin.adminroute.helper:
         class: '%kunstmaan_admin.adminroute.helper.class%'
         arguments: ['%kunstmaan_admin.admin_prefix%', '@request_stack']
+        public: true
 
     kunstmaan_admin.adminroute.twig.extension:
         class: '%kunstmaan_admin.adminroute.twig.class%'
@@ -156,6 +172,7 @@ services:
     kunstmaan_admin.versionchecker:
         class: Kunstmaan\AdminBundle\Helper\VersionCheck\VersionChecker
         arguments: ['@service_container', '@kunstmaan_admin.cache']
+        public: true
 
     kunstmaan_admin.cache:
         class: Doctrine\Common\Cache\FilesystemCache
@@ -209,7 +226,8 @@ services:
 
     kunstmaan_admin.domain_configuration:
         class: '%kunstmaan_admin.domain_configuration.class%'
-        arguments: ['@service_container']
+        arguments: ['@request_stack', '%multilanguage%', '%defaultlocale%', '%requiredlocales%']
+        public: true
 
     kunstmaan_admin.oauth_authenticator:
         class: Kunstmaan\AdminBundle\Security\OAuthAuthenticator
@@ -258,3 +276,74 @@ services:
             - '%kunstmaan_admin.password_restrictions.max_length%'
         tags:
             - { name: validator.constraint_validator, alias: password_restrictions }
+
+    kunstmaan_admin.exception.listener:
+        class: "%kunstmaan_admin.exception.listener.class%"
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%kunstmaan_admin.admin_exception_excludes%"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ### TOOLBAR DATA COLLECTOR ###
+
+    kunstmaan_admin.toolbar.twig.extension:
+        class: Kunstmaan\AdminBundle\Twig\ToolbarTwigExtension
+        tags:
+            - { name: twig.extension }
+
+    kunstmaan_admin.toolbar.datacollector:
+        class: Kunstmaan\AdminBundle\Helper\Toolbar\DataCollector
+        arguments:
+             - '@router'
+
+    Kunstmaan\AdminBundle\Helper\Toolbar\AbstractDataCollector:
+        abstract: true
+        calls:
+            - [setAdminRouteHelper, ['@kunstmaan_admin.adminroute.helper']]
+
+    kunstmaan_admin.toolbar.listener:
+        class: '%kunstmaan_admin.toolbar.listener.class%'
+        tags:
+            - { name: kernel.event_subscriber }
+        arguments:
+            - '@twig'
+            - '@router'
+            - '@kunstmaan_admin.toolbar.datacollector'
+            - '@security.authorization_checker'
+            - '@security.token_storage'
+            - '%kunstmaan_admin.enable_toolbar_helper%'
+            - '@service_container'
+            - '@kunstmaan_admin.adminroute.helper'
+            - '%kunstmaan_admin.toolbar_firewall_names%'
+            - '%kunstmaan_admin.admin_firewall_name%'
+
+    kunstmaan_admin.datacollector.bundleversion:
+        class: '%kunstmaan_admin.toolbar.collector.bundle.class%'
+        arguments:
+            - '@kunstmaan_admin.versionchecker'
+            - '@kunstmaan_admin.cache'
+        tags:
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:bundles_version.html.twig', id: kuma_bundle_versions }
+    kunstmaan_admin.datacollector.exception:
+        class: '%kunstmaan_admin.toolbar.collector.exception.class%'
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kunstmaan_admin.toolbar_collector, template: 'KunstmaanAdminBundle:Toolbar:exception.html.twig', id: kuma_exception }
+
+    Kunstmaan\AdminBundle\Command\UpdateAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_admin.security.acl.permission.map'
+            - '%security.role_hierarchy.roles%'
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\ApplyAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_utilities.shell'
+        tags:
+            - { name: console.command }

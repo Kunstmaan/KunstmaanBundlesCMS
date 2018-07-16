@@ -43,7 +43,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setCaption($caption)
     {
-	$this->caption = $caption;
+        $this->caption = $caption;
     }
 
     /**
@@ -51,7 +51,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getCaption()
     {
-	return $this->caption;
+        return $this->caption;
     }
 
     /**
@@ -59,7 +59,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setThumbnail($thumbnail)
     {
-	$this->thumbnail = $thumbnail;
+        $this->thumbnail = $thumbnail;
     }
 
     /**
@@ -67,7 +67,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getThumbnail()
     {
-	return $this->thumbnail;
+        return $this->thumbnail;
     }
 
     /**
@@ -75,7 +75,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function setVideo($video)
     {
-	$this->video = $video;
+        $this->video = $video;
     }
 
     /**
@@ -83,7 +83,7 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getVideo()
     {
-	return $this->video;
+        return $this->video;
     }
 
     /**
@@ -91,14 +91,14 @@ class {{ pagepart }} extends AbstractPagePart
      */
     public function getDefaultView()
     {
-	return "{{ bundle }}:PageParts/{{ pagepart }}:view.html.twig";
+        return "{{ bundle }}:PageParts/{{ pagepart }}:view.html.twig";
     }
 
     /**
-     * @return VideoPagePartAdminType
+     * @return string
      */
     public function getDefaultAdminType()
     {
-	return new {{ adminType }}();
+        return {{ adminType }}::class;
     }
 }

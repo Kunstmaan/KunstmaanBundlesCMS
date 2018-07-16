@@ -13,6 +13,11 @@ KunstmaanAdminBundle_settings:
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%/settings
 
+KunstmaanAdminBundle_settings_exception:
+    resource: '@KunstmaanAdminBundle/Controller/ExceptionController.php'
+    type:     annotation
+    prefix:   /%kunstmaan_admin.admin_prefix%/settings/exception
+
 # Change user password route
 KunstmaanAdminBundle_user_change_password:
     path: /%kunstmaan_admin.admin_prefix%/settings/users/{id}/edit

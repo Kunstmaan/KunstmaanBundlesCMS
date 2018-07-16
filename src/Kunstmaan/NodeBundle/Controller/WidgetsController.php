@@ -63,6 +63,8 @@ class WidgetsController extends Controller
      */
     public function selectNodesLazySearch(Request $request)
     {
+        @trigger_error(sprintf('The "%s" controller action is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', __METHOD__), E_USER_DEPRECATED);
+
         /* @var EntityManagerInterface $em */
         $em = $this->getDoctrine()->getManager();
         $locale = $request->getLocale();
@@ -104,7 +106,14 @@ class WidgetsController extends Controller
         $depth = $this->getParameter('kunstmaan_node.url_chooser.lazy_increment');
 
         if (!$id || $id == '#') {
-            $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->getAllTopNodes();
+            $domainConfig = $this->get('kunstmaan_admin.domain_configuration');
+
+            if ($domainConfig->isMultiDomainHost()) {
+                $switchedHost = $domainConfig->getHostSwitched();
+                $rootItems = [$domainConfig->getRootNode($switchedHost['host'])];
+            } else {
+                $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->getAllTopNodes();
+            }
         } else {
             $rootItems = $em->getRepository('KunstmaanNodeBundle:Node')->find($id)->getChildren();
         }
@@ -176,8 +185,8 @@ class WidgetsController extends Controller
         /** @var DomainConfiguration $domainconfig */
         $domainconfig = $this->get('kunstmaan_admin.domain_configuration');
         $isMultiDomain = $domainconfig->isMultiDomainHost();
-        $switchedHost = $domainconfig->getHostSwitched()['host'];
-        $switched = $domainconfig->getHost() == $switchedHost;
+        $switchedHost = $domainconfig->getHostSwitched();
+        $switched = $domainconfig->getHost() == $switchedHost['host'];
 
         $results = [];
 
@@ -185,7 +194,7 @@ class WidgetsController extends Controller
         foreach ($rootNodes as $rootNode) {
             if ($nodeTranslation = $rootNode->getNodeTranslation($locale, true)) {
                 if ($isMultiDomain && !$switched) {
-                    $slug = sprintf("[%s:%s]", $switchedHost, "NT" . $nodeTranslation->getId());
+                    $slug = sprintf("[%s:%s]", $switchedHost['id'], "NT" . $nodeTranslation->getId());
                 } else {
                     $slug = sprintf("[%s]", "NT" . $nodeTranslation->getId());
                 }

@@ -39,15 +39,27 @@ services:
 
     kunstmaan_search.command.setup:
         class: Kunstmaan\SearchBundle\Command\SetupIndexCommand
+        arguments:
+            - '@kunstmaan_search.search_configuration_chain'
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
 
     kunstmaan_search.command.delete:
         class: Kunstmaan\SearchBundle\Command\DeleteIndexCommand
+        arguments:
+            - '@kunstmaan_search.search_configuration_chain'
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }
 
     kunstmaan_search.command.populate:
         class: Kunstmaan\SearchBundle\Command\PopulateIndexCommand
+        arguments:
+            - '@kunstmaan_search.search_configuration_chain'
         calls:
             - [setContainer, ['@service_container'] ]
+        tags:
+            - { name: console.command }

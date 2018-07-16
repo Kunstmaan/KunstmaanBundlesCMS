@@ -10,7 +10,7 @@
         {% include '@KunstmaanMedia/Media/Image/aviary.html.twig' %}
     {% endif %}
 
-    <a href="{{ asset(media.url) }}" class="btn btn-default btn--raise-on-hover">
+    <a href="{{ asset(media.url) }}" target="_blank" class="btn btn-default btn--raise-on-hover">
         {{ 'media.media.download.action'|trans }}
     </a>
 {% endblock %}

@@ -17,6 +17,7 @@ use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 
 use Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper;
 use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
+use Kunstmaan\AdminBundle\Service\AclManager;
 use Kunstmaan\AdminListBundle\AdminList\AdminList;
 use Kunstmaan\NodeBundle\AdminList\NodeAdminListConfigurator;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
@@ -31,6 +32,7 @@ use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\RevertNodeAction;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabAdminType;
 use Kunstmaan\NodeBundle\Form\NodeMenuTabTranslationAdminType;
+use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -41,12 +43,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * NodeAdminController
@@ -78,6 +78,20 @@ class NodeAdminController extends Controller
      */
     protected $aclHelper;
 
+    /**
+     * @var AclManager
+     */
+    protected $aclManager;
+
+    /**
+     * @var NodeAdminPublisher
+     */
+    protected $nodePublisher;
+
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
 
     /**
      * init
@@ -88,9 +102,12 @@ class NodeAdminController extends Controller
     {
         $this->em = $this->getDoctrine()->getManager();
         $this->locale = $request->getLocale();
-        $this->authorizationChecker = $this->get('security.authorization_checker');
+        $this->authorizationChecker = $this->container->get('security.authorization_checker');
         $this->user = $this->getUser();
-        $this->aclHelper = $this->get('kunstmaan_admin.acl.helper');
+        $this->aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
+        $this->aclManager = $this->container->get('kunstmaan_admin.acl.manager');
+        $this->nodePublisher = $this->container->get('kunstmaan_node.admin_node.publisher');
+        $this->translator = $this->container->get('translator');
     }
 
     /**
@@ -302,28 +319,7 @@ class NodeAdminController extends Controller
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request = $this->get('request_stack')->getCurrentRequest();
-
-        if ($request->get('pub_date')) {
-            $date = new \DateTime(
-                $request->get('pub_date') . ' ' . $request->get('pub_time')
-            );
-            $this->get('kunstmaan_node.admin_node.publisher')->publishLater(
-                $nodeTranslation,
-                $date
-            );
-            $this->addFlash(
-                FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_node.admin.publish.flash.success_scheduled')
-            );
-        } else {
-            $this->get('kunstmaan_node.admin_node.publisher')->publish(
-                $nodeTranslation
-            );
-            $this->addFlash(
-                FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_node.admin.publish.flash.success_published')
-            );
-        }
+        $this->nodePublisher->chooseHowToPublish($request, $nodeTranslation, $this->translator);
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
@@ -350,21 +346,7 @@ class NodeAdminController extends Controller
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
         $request = $this->get('request_stack')->getCurrentRequest();
-
-        if ($request->get('unpub_date')) {
-            $date = new \DateTime($request->get('unpub_date') . ' ' . $request->get('unpub_time'));
-            $this->get('kunstmaan_node.admin_node.publisher')->unPublishLater($nodeTranslation, $date);
-            $this->addFlash(
-                FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_node.admin.unpublish.flash.success_scheduled')
-            );
-        } else {
-            $this->get('kunstmaan_node.admin_node.publisher')->unPublish($nodeTranslation);
-            $this->addFlash(
-                FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_node.admin.unpublish.flash.success_unpublished')
-            );
-        }
+        $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
 
         return $this->redirect($this->generateUrl('KunstmaanNodeBundle_nodes_edit', array('id' => $node->getId())));
     }
@@ -391,7 +373,7 @@ class NodeAdminController extends Controller
         $node = $this->em->getRepository('KunstmaanNodeBundle:Node')->find($id);
 
         $nodeTranslation = $node->getNodeTranslation($this->locale, true);
-        $this->get('kunstmaan_node.admin_node.publisher')->unSchedulePublish($nodeTranslation);
+        $this->nodePublisher->unSchedulePublish($nodeTranslation);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
@@ -527,7 +509,7 @@ class NodeAdminController extends Controller
         }
         $this->em->flush();
 
-        $this->updateAcl($originalNode, $nodeNewPage);
+        $this->aclManager->updateNodeAcl($originalNode, $nodeNewPage);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
@@ -676,7 +658,7 @@ class NodeAdminController extends Controller
         $this->em->persist($nodeTranslation);
         $this->em->flush();
 
-        $this->updateAcl($parentNode, $nodeNewPage);
+        $this->aclManager->updateNodeAcl($parentNode, $nodeNewPage);
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
 
@@ -725,7 +707,7 @@ class NodeAdminController extends Controller
         $this->em->flush();
 
         // Set default permissions
-        $this->get('kunstmaan_node.acl_permission_creator_service')
+        $this->container->get('kunstmaan_node.acl_permission_creator_service')
             ->createPermission($nodeNewPage);
 
         $nodeVersion = $nodeTranslation->getPublicNodeVersion();
@@ -889,7 +871,7 @@ class NodeAdminController extends Controller
                 if ($thresholdDate >= $updatedDate || $nodeVersionIsLocked) {
                     $page = $nodeVersion->getRef($this->em);
                     if ($nodeVersion == $nodeTranslation->getPublicNodeVersion()) {
-                        $this->get('kunstmaan_node.admin_node.publisher')
+                        $this->nodePublisher
                             ->createPublicVersion(
                                 $page,
                                 $nodeTranslation,
@@ -915,27 +897,19 @@ class NodeAdminController extends Controller
 
         // Building the form
         $propertiesWidget = new FormWidget();
-        $pageAdminType = $page->getDefaultAdminType();
-        if (!is_object($pageAdminType) && is_string($pageAdminType)) {
-            $pageAdminType = $this->container->get($pageAdminType);
-        }
-        $propertiesWidget->addType('main', $pageAdminType, $page);
-
-        $nodeAdminType = $node->getDefaultAdminType();
-        if (!is_object($nodeAdminType) && is_string($nodeAdminType)) {
-            $nodeAdminType = $this->container->get($nodeAdminType);
-        }
-        $propertiesWidget->addType('node', $nodeAdminType, $node);
+        $propertiesWidget->addType('main', $page->getDefaultAdminType(), $page);
+        $propertiesWidget->addType('node', $node->getDefaultAdminType(), $node);
         $tabPane->addTab(new Tab('kuma_node.tab.properties.title', $propertiesWidget));
 
         // Menu tab
         $menuWidget = new FormWidget();
         $menuWidget->addType(
             'menunodetranslation',
-            new NodeMenuTabTranslationAdminType($isStructureNode),
-            $nodeTranslation
+            NodeMenuTabTranslationAdminType::class,
+            $nodeTranslation,
+            ['slugable' => !$isStructureNode]
         );
-        $menuWidget->addType('menunode', new NodeMenuTabAdminType($isStructureNode), $node);
+        $menuWidget->addType('menunode', NodeMenuTabAdminType::class, $node, ['available_in_nav' => !$isStructureNode]);
         $tabPane->addTab(new Tab('kuma_node.tab.menu.title', $menuWidget));
 
         $this->get('event_dispatcher')->dispatch(
@@ -986,17 +960,23 @@ class NodeAdminController extends Controller
                         $this->get('translator')->trans('kuma_node.admin.edit.flash.locked_success')
                     );
                 } else {
-                    $this->addFlash(
-                        FlashTypes::SUCCESS,
-                        $this->get('translator')->trans('kuma_node.admin.edit.flash.success')
-                    );
+                    if ($request->request->has('publishing') || $request->request->has('publish_later')) {
+                        $this->nodePublisher->chooseHowToPublish($request, $nodeTranslation, $this->translator);
+                    } elseif ($request->request->has('unpublishing') || $request->request->has('unpublish_later')) {
+                        $this->nodePublisher->chooseHowToUnpublish($request, $nodeTranslation, $this->translator);
+                    } else {
+                        $this->addFlash(
+                            FlashTypes::SUCCESS,
+                            $this->get('translator')->trans('kuma_node.admin.edit.flash.success')
+                        );
+                    }
                 }
 
-                $params = array(
+                $params = [
                     'id' => $node->getId(),
                     'subaction' => $subaction,
-                    'currenttab' => $tabPane->getActiveTab()
-                );
+                    'currenttab' => $tabPane->getActiveTab(),
+                ];
                 $params = array_merge(
                     $params,
                     $tabPane->getExtraParams($request)
@@ -1014,14 +994,14 @@ class NodeAdminController extends Controller
         $nodeVersions = $this->em->getRepository(
             'KunstmaanNodeBundle:NodeVersion'
         )->findBy(
-            array('nodeTranslation' => $nodeTranslation),
-            array('updated' => 'ASC')
+            ['nodeTranslation' => $nodeTranslation],
+            ['updated' => 'ASC']
         );
         $queuedNodeTranslationAction = $this->em->getRepository(
             'KunstmaanNodeBundle:QueuedNodeTranslationAction'
-        )->findOneBy(array('nodeTranslation' => $nodeTranslation));
+        )->findOneBy(['nodeTranslation' => $nodeTranslation]);
 
-        return array(
+        return [
             'page' => $page,
             'entityname' => ClassLookup::getClass($page),
             'nodeVersions' => $nodeVersions,
@@ -1035,8 +1015,8 @@ class NodeAdminController extends Controller
             'editmode' => true,
             'queuedNodeTranslationAction' => $queuedNodeTranslationAction,
             'nodeVersionLockCheck' => $this->container->getParameter('kunstmaan_node.lock_enabled'),
-            'nodeVersionLockInterval' => $this->container->getParameter('kunstmaan_node.lock_check_interval')
-        );
+            'nodeVersionLockInterval' => $this->container->getParameter('kunstmaan_node.lock_check_interval'),
+        ];
     }
 
     /**
@@ -1207,35 +1187,6 @@ class NodeAdminController extends Controller
                 )
             );
         }
-    }
-
-    /**
-     * @param $originalNode
-     * @param $nodeNewPage
-     */
-    private function updateAcl($originalNode, $nodeNewPage)
-    {
-        /* @var MutableAclProviderInterface $aclProvider */
-        $aclProvider = $this->container->get('security.acl.provider');
-        /* @var ObjectIdentityRetrievalStrategyInterface $strategy */
-        $strategy = $this->container->get(
-            'security.acl.object_identity_retrieval_strategy'
-        );
-        $originalIdentity = $strategy->getObjectIdentity($originalNode);
-        $originalAcl = $aclProvider->findAcl($originalIdentity);
-
-        $newIdentity = $strategy->getObjectIdentity($nodeNewPage);
-        $newAcl = $aclProvider->createAcl($newIdentity);
-
-        $aces = $originalAcl->getObjectAces();
-        /* @var EntryInterface $ace */
-        foreach ($aces as $ace) {
-            $securityIdentity = $ace->getSecurityIdentity();
-            if ($securityIdentity instanceof RoleSecurityIdentity) {
-                $newAcl->insertObjectAce($securityIdentity, $ace->getMask());
-            }
-        }
-        $aclProvider->updateAcl($newAcl);
     }
 
     /**

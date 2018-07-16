@@ -68,10 +68,10 @@ class DownloadPagePart extends AbstractPagePart
     }
 
     /**
-     * @return DownloadPagePartAdminType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new DownloadPagePartAdminType();
+        return DownloadPagePartAdminType::class;
     }
 }

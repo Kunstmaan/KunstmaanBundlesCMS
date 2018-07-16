@@ -118,26 +118,21 @@ abstract class AbstractPage extends AbstractEntity implements PageInterface
     }
 
     /**
-     * Returns the default backend form type for this page
-     *
-     * @return AbstractType
+     * {@inheritdoc}
      */
     public function getDefaultAdminType()
     {
-        return new PageAdminType();
+        return PageAdminType::class;
     }
 
     /**
-     * @param ContainerInterface $container The Container
-     * @param Request            $request   The Request
-     * @param RenderContext      $context   The Render context
+     * {@inheritdoc}
      *
-     * @return void|RedirectResponse
+     * @deprecated Using the service method is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0. Implement SlugActionInterface and use the getControllerAction method to provide custom logic instead.
      */
     public function service(ContainerInterface $container, Request $request, RenderContext $context)
     {
     }
-
 
     /**
      * By default this will return false. Pages will always be pages until some class says otherwise.

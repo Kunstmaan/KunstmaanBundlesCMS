@@ -19,7 +19,7 @@ class TagAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
     public function __construct(EntityManager $em, AclHelper $aclHelper = null)
     {
         parent::__construct($em, $aclHelper);
-        $this->setAdminType(new TagAdminType());
+        $this->setAdminType(TagAdminType::class);
     }
 
     /**

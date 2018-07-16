@@ -17,6 +17,9 @@ class DomainConfiguration implements DomainConfigurationInterface
     /** @var ContainerInterface */
     protected $container;
 
+    /** @var RequestStack */
+    private $requestStack;
+
     /** @var bool */
     protected $multiLanguage;
 
@@ -27,21 +30,34 @@ class DomainConfiguration implements DomainConfigurationInterface
     protected $defaultLocale;
 
     /**
-     * @param ContainerInterface $container
+     * @param ContainerInterface|string $multilanguage
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(/*ContainerInterface|RequestStack*/ $requestStack, $multilanguage = null, $defaultLocale = null, $requiredLocales = null)
     {
-        $this->container = $container;
-        $this->multiLanguage = $this->container->getParameter(
-            'multilanguage'
-        );
-        $this->defaultLocale = $this->container->getParameter(
-            'defaultlocale'
-        );
-        $this->requiredLocales = explode(
-            '|',
-            $this->container->getParameter('requiredlocales')
-        );
+        if ($requestStack instanceof ContainerInterface) {
+            @trigger_error('Container injection and the usage of the container is deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.', E_USER_DEPRECATED);
+
+            $this->container = $requestStack;
+            $this->multiLanguage = $this->container->getParameter(
+                'multilanguage'
+            );
+            $this->defaultLocale = $this->container->getParameter(
+                'defaultlocale'
+            );
+            $this->requiredLocales = explode(
+                '|',
+                $this->container->getParameter('requiredlocales')
+            );
+            $this->requestStack = $this->container->get('request_stack');
+
+            return;
+        }
+
+        $this->requestStack = $requestStack;
+        $this->multiLanguage = $multilanguage;
+        $this->defaultLocale = $defaultLocale;
+
+        $this->requiredLocales = explode('|', $requiredLocales);
     }
 
     /**
@@ -140,10 +156,7 @@ class DomainConfiguration implements DomainConfigurationInterface
      */
     protected function getMasterRequest()
     {
-        /** @var RequestStack $requestStack */
-        $requestStack = $this->container->get('request_stack');
-
-        return $requestStack->getMasterRequest();
+        return $this->requestStack->getMasterRequest();
     }
 
     /**

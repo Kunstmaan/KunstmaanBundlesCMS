@@ -3,6 +3,8 @@
 namespace Kunstmaan\AdminBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Kunstmaan\AdminBundle\Service\AclManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,12 +14,43 @@ use Symfony\Component\Security\Acl\Domain\Entry;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
+use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 
 /**
  * Permissions update of ACL entries for all nodes for given role.
  */
 class UpdateAclCommand extends ContainerAwareCommand
 {
+    /** @var AclManager */
+    private $aclManager;
+
+    /** @var PermissionMapInterface */
+    private $permissionMap;
+
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var  */
+    private $roles;
+
+    public function __construct(/*AclManager*/ $aclManager = null, EntityManagerInterface $em = null, PermissionMapInterface $permissionMap = null, array $roles = null)
+    {
+        parent::__construct();
+
+        if (!$aclManager instanceof AclManager) {
+            @trigger_error(sprintf('Passing a command name as the first argument of "%s" is deprecated since version symfony 3.4 and will be removed in symfony 4.0. If the command was registered by convention, make it a service instead. ', __METHOD__), E_USER_DEPRECATED);
+
+            $this->setName(null === $aclManager ? 'kuma:acl:update' : $aclManager);
+
+            return;
+        }
+
+        $this->aclManager = $aclManager;
+        $this->em = $em;
+        $this->permissionMap = $permissionMap;
+        $this->roles = $roles;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -27,7 +60,7 @@ class UpdateAclCommand extends ContainerAwareCommand
 
         $this->setName('kuma:acl:update')
             ->setDescription('Permissions update of ACL entries for all nodes for given role')
-            ->setHelp("The <info>kuma:update:acl</info> will update ACL entries for the nodes of the current project" .
+            ->setHelp("The <info>kuma:acl:update</info> will update ACL entries for the nodes of the current project" .
                 "with given role and permissions");
     }
 
@@ -37,15 +70,26 @@ class UpdateAclCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $helper = $this->getHelper('question');
+        if (null === $this->aclManager) {
+            $this->aclManager = $this->getContainer()->get('kunstmaan_admin.acl.manager');
+        }
+        if (null === $this->em ) {
+            $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        }
+        if (null === $this->permissionMap) {
+            $this->permissionMap = $this->getContainer()->get('security.acl.permission.map');
+        }
+        if (null === $this->roles) {
+            $this->roles = $this->getContainer()->getParameter('security.role_hierarchy.roles');
+        }
 
         // Select Role
-        $roles = $this->getContainer()->getParameter('security.role_hierarchy.roles');
-        $question = new ChoiceQuestion('Select role', array_keys($roles));
+        $question = new ChoiceQuestion('Select role', array_keys($this->roles));
         $question->setErrorMessage('Role %s is invalid.');
         $role = $helper->ask($input, $output, $question);
 
         // Select Permission(s)
-        $permissionMap = $this->getContainer()->get('security.acl.permission.map');
+        $permissionMap = $this->permissionMap;
         $question = new ChoiceQuestion('Select permissions(s) (separate by ",")',
             $permissionMap->getPossiblePermissions());
         $question->setMultiselect(true);
@@ -53,33 +97,11 @@ class UpdateAclCommand extends ContainerAwareCommand
             return $a | $permissionMap->getMasks($b, null)[0];
         }, 0);
 
-        /* @var EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        /* @var MutableAclProviderInterface $aclProvider */
-        $aclProvider = $this->getContainer()->get('security.acl.provider');
-        /* @var ObjectIdentityRetrievalStrategyInterface $oidStrategy */
-        $oidStrategy = $this->getContainer()->get('security.acl.object_identity_retrieval_strategy');
-
         // Fetch all nodes & grant access
-        $nodes = $em->getRepository('KunstmaanNodeBundle:Node')->findAll();
+        $nodes = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAll();
 
-        foreach ($nodes as $node) {
-            $objectIdentity = $oidStrategy->getObjectIdentity($node);
+        $this->aclManager->updateNodesAclToRole($nodes, $role, $mask);
 
-            /** @var Acl $acl */
-            $acl = $aclProvider->findAcl($objectIdentity);
-            $securityIdentity = new RoleSecurityIdentity($role);
-
-            /** @var Entry $ace */
-            foreach ($acl->getObjectAces() as $index => $ace) {
-                if (!$ace->getSecurityIdentity()->equals($securityIdentity)) {
-                    continue;
-                }
-                $acl->updateObjectAce($index, $mask);
-                break;
-            }
-            $aclProvider->updateAcl($acl);
-        }
         $output->writeln(count($nodes) . ' nodes processed.');
     }
 

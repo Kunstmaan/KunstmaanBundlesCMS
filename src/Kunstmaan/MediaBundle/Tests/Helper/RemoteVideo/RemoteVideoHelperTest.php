@@ -2,7 +2,6 @@
 namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
 
@@ -22,28 +21,12 @@ class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::__construct
-     */
     protected function setUp()
     {
         $this->media  = new Media();
         $this->object = new RemoteVideoHelper($this->media);
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
-
-    /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getMedia
-     */
     public function testGetMedia()
     {
         $this->assertEquals(RemoteVideoHandler::CONTENT_TYPE, $this->object->getMedia()->getContentType());

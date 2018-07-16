@@ -3,7 +3,6 @@
 namespace  Kunstmaan\PagePartBundle\Helper;
 
 use Kunstmaan\AdminBundle\Entity\EntityInterface;
-use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * PagePartInterface
@@ -34,7 +33,9 @@ interface PagePartInterface extends EntityInterface
     public function getView(HasPagePartsInterface $page = null);
 
     /**
-     * @return FormTypeInterface
+     * Returns the default backend form type for the page part.
+     *
+     * @return string Fully qualified class name of a form.
      */
     public function getDefaultAdminType();
 }

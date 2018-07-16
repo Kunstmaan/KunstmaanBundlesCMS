@@ -6,9 +6,9 @@ kunstmaanMediaBundle.app = (function($, window, undefined) {
 
     init = function() {
         kunstmaanMediaBundle.bulkUpload.init();
+        kunstmaanMediaBundle.bulkMove.init();
         kunstmaanMediaBundle.dndUpload.init();
     };
-
 
     return {
         init: init
