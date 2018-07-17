@@ -1,3 +1,4 @@
 parameters:
     debug_toolbar: false
     secret: secret
+    requiredlocales: nl|fr|en
