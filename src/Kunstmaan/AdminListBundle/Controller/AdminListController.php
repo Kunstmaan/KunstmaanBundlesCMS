@@ -123,7 +123,7 @@ abstract class AdminListController extends Controller
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formType, $helper, $event->getOptions());
 
         if ($request->isMethod('POST')) {
             if ($tabPane) {
@@ -241,7 +241,7 @@ abstract class AdminListController extends Controller
         $event = $this->container->get('event_dispatcher')->dispatch(Events::ADAPT_SIMPLE_FORM, $event);
         $tabPane = $event->getTabPane();
 
-        $form = $this->createForm($formType, $helper, $configurator->getAdminTypeOptions());
+        $form = $this->createForm($formType, $helper, $event->getOptions());
 
         if ($request->isMethod('POST')) {
 
