@@ -110,7 +110,7 @@ services:
     kunstmaan_media.filesystem_adapter:
         class: Gaufrette\Adapter\Local
         arguments:
-            - '%kernel.root_dir%/../web%kunstmaan_media.media_path%'
+            - '%kunstmaan_media.full_media_path%'
             - true
 
     kunstmaan_media.filesystem:
