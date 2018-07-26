@@ -55,7 +55,7 @@ kuma_lead_generation:
         label: Alkalmak
     url_black_list:
       urls:
-        label: Urls
+        label: Url-ek
         info_text: |
           Megadhat fekete listás URL-eket (vagy mintákat).
           Minden URL külön sorba kerüljön.
@@ -63,7 +63,7 @@ kuma_lead_generation:
           Például: /blog/articles; /blog/page[0-9]+; /blog/.*/comments; ^/$
     url_white_list:
       urls:
-        label: Urls
+        label: Url-ek
         info_text: |
           Megadhat fehér listás URL-eket (vagy mintákat).
           Minden URL külön sorba kerüljön.
@@ -78,17 +78,17 @@ kuma_lead_generation:
           add: Hozzáadás
           cancel: Mégse
     type:
-      label: Type
+      label: Típus
     list:
       header:
-        id: Id
+        id: ID
         name: Név
         type: Típus
-        html_id: Html ID
+        html_id: HTML-azonosító
         rule_count: '# szabály'
       filter:
         name: Név
-        html_id: Html ID
+        html_id: HTML-azonosító
   rules:
     'page_title.%name%': 'Jogosultsági beállítások: %name%'
     add:
@@ -100,11 +100,11 @@ kuma_lead_generation:
           cancel: Mégse
     list:
       header:
-        id: Id
+        id: ID
         type: Típus
         properties: Tulajdonságok
       filter:
-        id: Id
+        id: ID
   breadcrumbs:
     modules: Modulok
     popups: Felugró ablakok
