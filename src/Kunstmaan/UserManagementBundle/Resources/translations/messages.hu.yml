@@ -65,13 +65,13 @@ kuma_user:
         name: Név
     add:
       flash:
-        success: Group %groupname% has been created!
+        success: A %groupname% nevű csoport sikeresen létrehozva!
     edit:
       flash:
-        success: Group %groupname% has been edited!
+        success: A %groupname% nevű csoport sikeresen szerkesztve!
     delete:
       flash:
-        success: Group %groupname% has been deleted!
+        success: A %groupname% nevű csoport sikeresen törölve!
   role:
     adminlist:
       header:
