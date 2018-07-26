@@ -14,15 +14,15 @@ article:
     list:
       header:
         name: Név
-        link: Link
+        link: Hivatkozás
       filter:
         name: Név
-        link: Link
+        link: Hivatkozás
     form:
       name:
         label: Név
       link:
-        label: Link
+        label: Hivatkozás
   page:
     list:
       header:
