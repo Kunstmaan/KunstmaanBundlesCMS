@@ -6,11 +6,11 @@ media:
   media:
     no: Noch keine Dateien in diesem Verzeichnis.
     dnd:
-      tip: "Tip:"
-      tiptext: did you know you can just drop multiple files here?
+      tip: "Tipp:"
+      tiptext: wussten Sie, dass sie mehrere Dateien hier ablegen können?
       alert:
-        title: Incoming!
-        text: Drop your files to instantly upload them to this folder.
+        title: Eingehend!
+        text: Dateien hier ablegen, um sie direkt in diesen Ordner hochzuladen.
     bulkupload:
       addto: Upload in das Verzeichnis "%folder%"
     contenttab:
@@ -19,11 +19,11 @@ media:
       title: Eigenschaften
     title: Medien
     add:
-      action: Add media
+      action: Medien hinzufügen
     edit:
       action: Bearbeiten
     download:
-      action: Download
+      action: Herunterladen
     mediainfo:
       name: Name
       contenttype: Medien-Typ
@@ -42,32 +42,32 @@ media:
         save: Erstellen
       form:
         name: Name
-        rel: Rel
-        parent: Parent
-        internal_name: Internal name
+        rel: Beziehung
+        parent: Übergeordnet
+        internal_name: Interner Name
       success:
-        text: Folder '%folder%' has been created!
+        text: Der Ordner "%folder%" wurde erstellt!
     empty:
-      action: Empty folder
-      action_short: Empty
+      action: Leerer Order
+      action_short: Leer
       modal:
-        title: Empty folder
-        text: Are you sure you want to delete the content of folder "%folder%"?
-        checkbox: Also delete subfolders
-        save: Empty
+        title: Leerer Order
+        text: Sind Sie sicher, dass Sie den Inhalt des Ordners "%folder%" löschen wollen?
+        checkbox: Unterordner auch löschen
+        save: Leer
       success:
-        text: Folder '%folder%' has been emptied!
+        text: Der Ordner "%folder%" wurde gelöscht!
     bulk_move:
-      action: Bulk move media
-      action_short: Bulk move
+      action: Alle Medien verschieben
+      action_short: Alle verschieben
       modal:
-        title: Bulk move media
-        text: Select to which folder you want to move the selected media.
-        save: "Move.."
+        title: Alle Medien verschieben
+        text: Order auswählen, in denen die ausgewählten Medien verschoben werden sollen.
+        save: "Verschieben..."
         form:
-          name: Parent folder
+          name: Übergeordneter Order
       success:
-        text: Media has been moved successfully!
+        text: Medien erfolgreich verschoben!
     sub:
       no: Noch keine Unterverzeichnisse vorhanden.
     delete:
@@ -77,20 +77,20 @@ media:
         title: Verzeichnis Löschen
         text: Soll das Verzeichnis "%folder%" wirklich gelöscht werden?
       failure:
-        text: You can't delete the %folder% folder!
+        text: Ordner %folder% kann nicht gelöscht werden!
       success:
-        text: Folder '%folder%' has been deleted!
+        text: Ordner "%folder%" wurde gelöscht!
     save: Speichern
     contenttab:
       title: Inhalt
     propertiestab:
       title: Eigenschaften
-    sortby: Sort by
+    sortby: Sortieren nach
     show:
       success:
-        text: Folder %folder% has been updated!
+        text: Der Ordner %folder% wurde aktualisiert!
   bulkupload:
-    upload: Upload
+    upload: Hochladen
     bulkupload: Massen-Upload
     select_files: Dateien Auswählen
     upload_more: Upload weiterer Dateien
@@ -120,19 +120,19 @@ media:
   widget:
     choose: Auswählen
     delete: Löschen
-    media_chooser: Media-chooser
-    icon_chooser: Icon-chooser
+    media_chooser: Medien-Auswahl
+    icon_chooser: Icon-Auswahl
   adminlist:
     configurator:
       name: Name
-      type: Type
-      date: Date
-      filesize: Filesize
+      type: Typ
+      date: Datum
+      filesize: Dateigröße
       filter:
         name: Name
-        type: Type
-        updated_at: Date
-        filesize: Filesize (in bytes)
+        type: Typ
+        updated_at: Datum
+        filesize: Dateigröße (in Byte)
   form:
     remote:
       name:
@@ -140,34 +140,34 @@ media:
       code:
         label: Code
       type:
-        label: Type
+        label: Typ
       copyright:
         label: Copyright
       description:
-        label: Description
+        label: Beschreibung
     bulk_upload:
       files:
-        label: Files
+        label: Dateien
     file:
       name:
         label: Name
       file:
-        label: File
+        label: Datei
       copyright:
         label: Copyright
       description:
-        label: Description
+        label: Beschreibung
       originalFilename:
-        label: Original filename
+        label: Original-Dateiname
     remote_audio:
       type:
-        label: Type
+        label: Typ
     remote_slide:
       type:
-        label: Type
+        label: Typ
     remote_video:
       type:
-        label: Type
+        label: Typ
   flash:
-    created: Media %medianame% has been created!
-    not_created: Media not created! %mediaerrors%
+    created: Datei %medianame% wurde erstellt!
+    not_created: Datei nicht erstellt! %mediaerrors%
