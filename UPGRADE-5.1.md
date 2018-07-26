@@ -6,6 +6,7 @@ General
 
  * The `symfony/assetic-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on assetic, add the dependency to your project `composer.json`.
  * The `symfony/swiftmailer-bundle` package was removed from our dependencies as it was unused. If your code depends on `symfony/swiftmailer-bundle`, add the dependency to your project `composer.json`.
+ * The `sensio/distribution-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on `sensio/distribution-bundle` for executing composer after update/install scripts, add the dependency to your project `composer.json`.
 
 AdminBundle
 -----------
