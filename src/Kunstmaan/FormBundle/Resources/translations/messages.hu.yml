@@ -83,7 +83,7 @@ kuma_form:
       language: Nyelv
       path: Űrlap útvonala
     filter:
-      title: Title
+      title: Cím
       online: Online
   submission:
     list:
