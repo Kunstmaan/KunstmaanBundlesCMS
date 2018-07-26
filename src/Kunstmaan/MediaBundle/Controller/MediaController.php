@@ -122,7 +122,7 @@ class MediaController extends Controller
      * @param int $folderId
      *
      * @Route("bulkupload/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload")
-     * @Template()
+     * @Template("@KunstmaanMedia/Media/bulkUpload.html.twig")
      *
      * @return array|RedirectResponse
      */
@@ -141,7 +141,6 @@ class MediaController extends Controller
      * @param int     $folderId
      *
      * @Route("bulkuploadsubmit/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_media_bulk_upload_submit")
-     * @Template()
      *
      * @return JsonResponse
      */
@@ -352,7 +351,7 @@ class MediaController extends Controller
      *
      * @Route("create/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_create")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanMedia/Media/create.html.twig")
      *
      * @return array|RedirectResponse
      */
@@ -437,8 +436,7 @@ class MediaController extends Controller
      * @param string  $type     The type
      *
      * @Route("create/modal/{folderId}/{type}", requirements={"folderId" = "\d+", "type" = ".+"}, name="KunstmaanMediaBundle_media_modal_create")
-     * @Method({"GET", "POST"})
-     * @Template()
+     * @Method({"POST"})
      *
      * @return array|RedirectResponse
      */
