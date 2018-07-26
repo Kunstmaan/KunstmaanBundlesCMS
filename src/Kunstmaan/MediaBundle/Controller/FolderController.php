@@ -155,7 +155,6 @@ class FolderController extends Controller
      *
      * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_sub_create")
      * @Method({"GET", "POST"})
-     * @Template()
      *
      * @return Response
      */
@@ -215,7 +214,6 @@ class FolderController extends Controller
      *
      * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_empty")
      * @Method({"GET", "POST"})
-     * @Template()
      *
      * @return Response
      */

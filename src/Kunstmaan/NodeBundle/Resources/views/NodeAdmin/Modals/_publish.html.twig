@@ -12,8 +12,6 @@
                 </h3>
             </div>
 
-            <form action="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id }) }}" method="post" novalidate="novalidate">
-
                 <!-- Body -->
                 <div class="modal-body">
                     <p>
@@ -53,7 +51,7 @@
                 <!-- Footer -->
                 <div class="modal-footer">
                     <div id="publish-later-action">
-                        <button type="submit" name="submit" class="btn btn-primary btn--raise-on-hover">
+                        <button name="publish_later" type="submit" class="btn btn-primary btn--raise-on-hover">
                             {{ 'kuma_node.modal.publish.later.button'|trans() }}
                         </button>
                         <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
@@ -61,15 +59,12 @@
                         </button>
                     </div>
                     <div id="publish-action">
-                        <a href="{{ path('KunstmaanNodeBundle_nodes_publish', { 'id': node.id}) }}" class="btn btn-danger btn--raise-on-hover">
-                            {{ 'kuma_node.modal.publish.now.button'|trans() }}
-                        </a>
+                        <button name="publishing" type="submit" class="btn btn-danger btn--raise-on-hover">{{ 'kuma_node.modal.publish.now.button'|trans() }}</button>
                         <button class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
                             {{ 'kuma_node.modal.publish.now.cancel'|trans() }}
                         </button>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 </div>

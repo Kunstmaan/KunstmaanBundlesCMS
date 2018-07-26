@@ -7,11 +7,13 @@ Cipher is a helpful service to encrypt and decrypt string values. At the moment 
 * `Kunstmaan\UtilitiesBundle\Helper\Cipher\Cipher`: which will encrypt and decrypt using mcrypt.
 * `Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher`: which is an extension of the default one, which encrypts the string to a url safe string value by converting it to a hexadecimal encoded binary string.
 
-To start using cypher you must first configure the cipher secret in your `parameters.yaml`:
+To start using cypher you can configure the cipher secret in your `parameters.yaml` or in your `config.yml`:
 
 ```yaml
 kunstmaan_utilities.cipher.secret: '<YOUR_SECRET_HERE>'
 ```
+If you don't configure it, then it will use the value `secret` from `parameters.yml`. 
+
 
 The default implementation that is used is the `Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher`, to use another cipher implementation you can define the class you want to use in your `parameters.yaml` as follows:
 

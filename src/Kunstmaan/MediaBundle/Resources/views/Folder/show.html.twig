@@ -69,7 +69,6 @@
         </div>
     </div>
 
-
     <!-- Main-actions -->
     <div class="page-main-actions {#js-auto-collapse-buttons#}">
         <div class="btn-group">
@@ -217,6 +216,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row list-group">
+                        {% include '@KunstmaanAdminList/AdminListTwigExtension/limit.html.twig' %}
+                    </div>
+
                     {% if adminlist.count > 0 %}
                         {% if adminlist.pagerfanta.haveToPaginate() %}
                             {{ pagerfanta(adminlist.pagerfanta, 'twitter_bootstrap_translated') }}

@@ -4,7 +4,7 @@ namespace Kunstmaan\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\Role\RoleInterface;
+use Symfony\Component\Security\Core\Role\Role as BaseRole;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table( name="kuma_roles" )
  * @UniqueEntity("role")
  */
-class Role implements RoleInterface
+class Role extends BaseRole
 {
 
     /**

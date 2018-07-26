@@ -16,7 +16,6 @@ class AppKernel extends Kernel
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Kunstmaan\UtilitiesBundle\KunstmaanUtilitiesBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new \Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
             new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),

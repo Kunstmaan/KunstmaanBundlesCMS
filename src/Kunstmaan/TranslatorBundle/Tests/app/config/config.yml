@@ -15,6 +15,7 @@ framework:
     default_locale:  nl
     session:         ~
     fragments:       ~
+    translator: { fallback: "en" }
 
 services:
     translation.loader.yml:
@@ -53,3 +54,5 @@ fos_user:
     from_email:
         address:        admin@kunstmaan.be
         sender_name:    Admin
+    service:
+        mailer: fos_user.mailer.noop

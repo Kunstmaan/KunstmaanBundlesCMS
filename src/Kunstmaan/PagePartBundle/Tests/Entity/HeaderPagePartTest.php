@@ -4,6 +4,8 @@ namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
 use Kunstmaan\PagePartBundle\Entity\HeaderPagePart;
 use PHPUnit_Framework_TestCase;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Class HeaderPagePartTest
@@ -27,21 +29,13 @@ class HeaderPagePartTest extends PHPUnit_Framework_TestCase
 
     public function testLoadValidatorMetadata()
     {
-        $metadata = $this->getMockBuilder('Symfony\Component\Validator\Mapping\ClassMetadata')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $metadata
-            ->expects($this->at(0))
-            ->method('addPropertyConstraint')
-            ->with('niv', $this->anyThing());
-
-        $metadata
-            ->expects($this->at(1))
-            ->method('addPropertyConstraint')
-            ->with('title', $this->anyThing());
+        $metadata = new ClassMetadata(HeaderPagePart::class);
 
         HeaderPagePart::loadValidatorMetadata($metadata);
+        $this->assertArrayHasKey('niv', $metadata->properties);
+        $this->assertInstanceOf(NotBlank::class, $metadata->properties['niv']->getConstraints()[0]);
+        $this->assertArrayHasKey('title', $metadata->properties);
+        $this->assertInstanceOf(NotBlank::class, $metadata->properties['title']->getConstraints()[0]);
     }
 
     public function testSetGetNiv()

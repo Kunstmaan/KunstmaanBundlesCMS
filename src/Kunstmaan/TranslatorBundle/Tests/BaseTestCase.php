@@ -32,6 +32,19 @@ abstract class BaseTestCase extends \PHPUnit_Framework_TestCase
         $this->kernel = new AppKernel('phpunit', true);
         $this->kernel->boot();
         $this->container = $this->kernel->getContainer();
+
+        $em = $this->kernel->getContainer()->get('doctrine.orm.default_entity_manager');
+        $meta = $em->getMetadataFactory()->getAllMetadata();
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $tool->dropSchema($meta);
+        $tool->createSchema($meta);
+
+        // insert fixtures
+        $fixtures = array(__DIR__ . '/files/fixtures.yml');
+        $em = $this->kernel->getContainer()->get('doctrine.orm.default_entity_manager');
+        $objects = \Nelmio\Alice\Fixtures::load($fixtures, $em);
+        $persister = new \Nelmio\Alice\Persister\Doctrine($em);
+        $persister->persist($objects);
     }
 
     public function getContainer()

@@ -10,6 +10,7 @@ use Kunstmaan\TranslatorBundle\Service\TranslationGroupManager;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class Importer
 {
@@ -167,6 +168,17 @@ class Importer
     public function setLoaders(array $loaders)
     {
         $this->loaders = $loaders;
+    }
+
+    /**
+     * Adds a loader to the translation importer.
+     *
+     * @param string          $format The format of the loader
+     * @param LoaderInterface $loader
+     */
+    public function addLoader($format, LoaderInterface $loader)
+    {
+        $this->loaders[$format] = $loader;
     }
 
     public function setTranslationGroupManager(TranslationGroupManager $translationGroupManager)

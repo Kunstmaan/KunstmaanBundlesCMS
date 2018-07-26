@@ -23,12 +23,9 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.3",
-        "symfony/assetic-bundle": "~2.7",
-        "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "~2.8|~3.0",
         "symfony/security-acl": "~2.8|~3.0",
-        "sensio/distribution-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "^3.0.2",
+        "sensio/framework-extra-bundle": "^5.0",
         "incenteev/composer-parameter-handler": "^2.0",
 
         "friendsofsymfony/user-bundle": "2.0.*",
@@ -46,8 +43,9 @@
         "symfony-cmf/routing-bundle": "~2.0",
         "fpn/doctrine-extensions-taggable": "~0.9",
         "sensio/generator-bundle": "~3.0",
+        "twig/twig": "^1.12|^2.0",
         "twig/extensions": "~1.0",
-        "egulias/email-validator": "~1.2",
+        "egulias/email-validator": "^1.2.8|^2.0",
         "box/spout": "^2.5",
         "ruflin/elastica": "^5.1|^6.0",
         "behat/transliterator": "~1.2",
@@ -67,7 +65,8 @@
         "nelmio/alice": "^2.1.4",
         "matthiasnoback/symfony-config-test": "2.2.0",
         "matthiasnoback/symfony-dependency-injection-test": "1.2.0",
-        "ekino/newrelic-bundle": "^1.4"
+        "ekino/newrelic-bundle": "^1.4",
+        "codeception/codeception": "^2.4"
     },
     "replace": {
         "kunstmaan/admin-bundle": "self.version",

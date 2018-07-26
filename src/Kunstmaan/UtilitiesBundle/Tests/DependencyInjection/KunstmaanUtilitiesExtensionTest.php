@@ -23,6 +23,7 @@ class KunstmaanUtilitiesExtensionTest extends AbstractPrependableExtensionTestCa
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('empty_extension', true);
+        $this->container->setParameter('secret', 'super_secret_value');
         $this->load();
 
         $this->assertContainerBuilderHasParameter('empty_extension', true );
