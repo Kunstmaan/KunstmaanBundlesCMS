@@ -1,8 +1,8 @@
 ---
 seo:
   robots:
-    title: Robots
-    tip: 'Tip:'
+    title: Robotok
+    tip: 'Típus:'
     warning: Ez csak egy alapértelmezett érték és példa, nincsen robots.txt feltöltve
     moreinfo: További információk
   action:
@@ -28,7 +28,7 @@ seo:
       sitehandle: Oldal kezelője
       sitehandle_info_text: A weblap tulajdonos Twitter kezelője. Ez az érték szükséges ahhoz, hogy működjenek a twitter kártyák.
       creatorhandle: Oldal létrehozója
-      creatorhandle_info_text: Twitter handle of your page publisher.
+      creatorhandle_info_text: A page publisher Twitter handle-je.
       image: Kép
     robots:
       noindex: No index
