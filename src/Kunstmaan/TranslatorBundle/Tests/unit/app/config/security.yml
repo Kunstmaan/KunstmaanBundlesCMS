@@ -1,7 +1,7 @@
-security:
-    acl:
-        connection: default
+acl:
+    connection: default
 
+security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 

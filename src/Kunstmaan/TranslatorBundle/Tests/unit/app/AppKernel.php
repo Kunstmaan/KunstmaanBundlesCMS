@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new \Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
             new \Kunstmaan\TranslatorBundle\KunstmaanTranslatorBundle(),
             new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new \Symfony\Bundle\AclBundle\AclBundle(),
         );
 
         return $bundles;
