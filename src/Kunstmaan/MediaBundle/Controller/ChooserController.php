@@ -68,10 +68,10 @@ class ChooserController extends Controller
 
     /**
      * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_chooser_show_folder")
-     * @Template()
      * @param Request $request
      * @param $folderId
      * @throws EntityNotFoundException
+     * @Template("@KunstmaanMedia/Chooser/chooserShowFolder.html.twig")
      *
      * @return array
      */

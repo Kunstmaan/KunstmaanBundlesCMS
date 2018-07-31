@@ -159,7 +159,7 @@ class PermissionAdmin
      */
     public function getPermission($role)
     {
-        if ($role instanceof RoleInterface) {
+        if ($role instanceof RoleInterface || $role instanceof \Symfony\Component\Security\Core\Role\Role) {
             $role = $role->getRole();
         }
         if (isset($this->permissions[$role])) {

@@ -16,7 +16,6 @@ class DashboardController extends Controller
      * The index action will render the main screen the users see when they log in in to the admin
      *
      * @Route("/", name="kunstmaan_dashboard")
-     * @Template()
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array

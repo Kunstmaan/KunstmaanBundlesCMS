@@ -12,9 +12,3 @@ KunstmaanUserManagementBundle_role_settings:
     resource: '@KunstmaanUserManagementBundle/Controller/RolesController.php'
     type:     annotation
     prefix:   /%kunstmaan_admin.admin_prefix%/settings/roles
-
-# Override default user change password route...
-KunstmaanAdminBundle_user_change_password:
-    path: /%kunstmaan_admin.admin_prefix%/settings/users/{id}/edit
-    defaults: { _controller: KunstmaanUserManagementBundle:Users:edit, id: '' }
-    methods: [GET]

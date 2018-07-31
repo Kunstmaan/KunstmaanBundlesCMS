@@ -18,7 +18,9 @@ class MultidomainConfigurationPass implements CompilerPassInterface
             );
 
             // Inject the container back, to keep BC, if the user override the domain configuration with the "kunstmaan_multi_domain.domain_configuration.class" parameter.
-            $container->getDefinition('kunstmaan_multi_domain.domain_configuration')->setArguments([new Reference('service_container')]);
+            if ($container->hasDefinition('kunstmaan_multi_domain.domain_configuration')) {
+                $container->getDefinition('kunstmaan_multi_domain.domain_configuration')->setArguments([new Reference('service_container')]);
+            }
         }
     }
 }
