@@ -7,6 +7,7 @@ General
  * The `symfony/assetic-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on assetic, add the dependency to your project `composer.json`.
  * The `symfony/swiftmailer-bundle` package was removed from our dependencies as it was unused. If your code depends on `symfony/swiftmailer-bundle`, add the dependency to your project `composer.json`.
  * The `sensio/distribution-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on `sensio/distribution-bundle` for executing composer after update/install scripts, add the dependency to your project `composer.json`.
+ * The version constraint for `fos/user-bundle` is updated to `^2.0` to allow new minor releases. If your code isn't compatible with the new changes of the user-bundle, update/add a custom version constraint for the `fos/user-bundle` in your `composer.json`. Eg `"friendsofsymfony/user-bundle": "2.0.*"`
 
 AdminBundle
 -----------
