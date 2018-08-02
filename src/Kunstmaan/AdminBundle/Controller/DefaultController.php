@@ -44,7 +44,7 @@ class DefaultController extends Controller
      * The admin of the index page
      *
      * @Route("/adminindex", name="KunstmaanAdminBundle_homepage_admin")
-     * @Template()
+     * @Template("@KunstmaanAdmin/Default/editIndex.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

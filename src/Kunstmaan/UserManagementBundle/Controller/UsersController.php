@@ -76,7 +76,7 @@ class UsersController extends BaseSettingsController
      *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_users_add")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Users/add.html.twig")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -134,7 +134,7 @@ class UsersController extends BaseSettingsController
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_edit")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Users/edit.html.twig")
      *
      * @throws AccessDeniedException
      * @return array
