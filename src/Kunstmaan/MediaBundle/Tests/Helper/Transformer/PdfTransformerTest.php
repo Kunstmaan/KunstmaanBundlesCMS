@@ -47,6 +47,11 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
 
     public function testApplyWritesJpg()
     {
+        system('which gs > /dev/null', $returnCode);
+        if ($returnCode !== 0) {
+            $this->markTestSkipped('Ghostscript is not installed.');
+        }
+
         $pdfFilename = $this->tempDir . '/sample.pdf';
         $jpgFilename = $pdfFilename.'.jpg';
 

@@ -1,5 +1,21 @@
 # Changelog
 
+## 5.0.8 / 2018-08-07
+
+* [AdminList] Fix admin list empty url [#2071](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2071) ([@dannyvw](https://github.com/dannyvw)) 
+* [NodeBundle] Remove unused vardumper use [#2067](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2067) ([@acrobat](https://github.com/acrobat)) 
+* [MediaBundle] Skip test if ghostscript is not installed [#2066](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2066) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] #2050 Fixed issue in refreshing ck editor (don't do a destroy if the … [#2064](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2064) ([@janb87](https://github.com/janb87)) 
+* [AdminListBundle] fixed form options source in admin list controller [#2056](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2056) ([@mdxpl](https://github.com/mdxpl)) 
+* [KunstmaanTranslatorBundle] export all translations, use correct locales [#2055](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2055) ([@sandergo90](https://github.com/sandergo90)) 
+* [GeneratorBundle] Fix xpath for publish modal in behat tests [#2052](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2052) ([@acrobat](https://github.com/acrobat)) 
+* [AdminBundle] Remove id of nested form item containers [#2049](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2049) ([@SpadXIII](https://github.com/SpadXIII)) 
+* [AdminBundle] fixed BC break in CreateUserCommand [#2043](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2043) ([@deZinc](https://github.com/deZinc)) 
+* [AdminBundle] remove hardcopy of ckeditor [#2041](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2041) ([@FVKVN](https://github.com/FVKVN)) 
+* [AdminBundle] added missing translations to main language [#2038](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2038) ([@Devolicious](https://github.com/Devolicious)) 
+* [MediaBundle] Fixed BackgroundFilterLoader issue [#2028](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2028) ([@deZinc](https://github.com/deZinc)) 
+
+
 ## 5.0.7 / 2018-06-21
 
 * [PagePartBundle] Refactor HeaderPagePart entity test [#2024](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2024) ([@Devolicious](https://github.com/Devolicious)) 
