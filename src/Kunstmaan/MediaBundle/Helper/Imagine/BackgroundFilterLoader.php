@@ -17,22 +17,6 @@ class BackgroundFilterLoader extends \Liip\ImagineBundle\Imagine\Filter\Loader\B
      */
     public function load(ImageInterface $image, array $options = array())
     {
-        $background = new Color(
-            isset($options['color']) ? $options['color'] : '#fff',
-            isset($options['transparency']) ? $options['transparency'] : 0
-        );
-        $topLeft = new Point(0, 0);
-        $size = $image->getSize();
-
-        if (isset($options['size'])) {
-            list($width, $height) = $options['size'];
-
-            $size = new Box($width, $height);
-            $topLeft = new Point(($width - $image->getSize()->getWidth()) / 2, ($height - $image->getSize()->getHeight()) / 2);
-        }
-
-        $canvas = $this->imagine->create($size, $background);
-
-        return $canvas->paste($image, $topLeft);
+        parent::load($image, $options);
     }
 }
