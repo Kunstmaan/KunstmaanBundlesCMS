@@ -50,7 +50,7 @@ class RolesController extends BaseSettingsController
      *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_roles_add")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Roles/add.html.twig")
      *
      * @throws AccessDeniedException
      * @return array|RedirectResponse
@@ -93,7 +93,7 @@ class RolesController extends BaseSettingsController
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_edit")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Roles/edit.html.twig")
      *
      * @throws AccessDeniedException
      * @return array|RedirectResponse

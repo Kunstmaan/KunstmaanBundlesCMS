@@ -29,7 +29,7 @@ class FolderController extends Controller
      * @param int     $folderId The folder id
      *
      * @Route("/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_show")
-     * @Template()
+     * @Template("@KunstmaanMedia/Folder/show.html.twig")
      *
      * @return array
      */
