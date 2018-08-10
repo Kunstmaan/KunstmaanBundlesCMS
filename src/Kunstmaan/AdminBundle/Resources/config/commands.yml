@@ -18,3 +18,20 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\UpdateAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_admin.security.acl.permission.map'
+            - '%security.role_hierarchy.roles%'
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\AdminBundle\Command\ApplyAclCommand:
+        arguments:
+            - '@kunstmaan_admin.acl.manager'
+            - '@doctrine.orm.entity_manager'
+            - '@kunstmaan_utilities.shell'
+        tags:
+            - { name: console.command }
