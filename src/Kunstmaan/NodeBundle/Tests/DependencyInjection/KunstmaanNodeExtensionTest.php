@@ -27,6 +27,7 @@ class KunstmaanNodeExtensionTest extends AbstractPrependableExtensionTestCase
 
         $this->assertContainerBuilderHasParameter('twig.form.resources');
         $this->assertContainerBuilderHasParameter('kunstmaan_node.show_add_homepage', true);
+        $this->assertContainerBuilderHasParameter('kunstmaan_node.enable_export_page_template', false);
         $this->assertContainerBuilderHasParameter('kunstmaan_node.lock_check_interval', 15);
         $this->assertContainerBuilderHasParameter('kunstmaan_node.lock_threshold', 35);
         $this->assertContainerBuilderHasParameter('kunstmaan_node.lock_enabled', false);

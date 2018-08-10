@@ -70,7 +70,7 @@ NodeBundle
  * Injecting the container in the `SlugRouter` is deprecated and will be removed in 6.0. Inject the required services instead.
  * The `service` method of `Kunstmaan\NodeBundle\Entity\PageInterface` is deprecated and will be removed in 6.0. Implement the `Kunstmaan\NodeBundle\Controller\SlugActionInterface`
    and use the `getControllerAction` method to specify a controller action with your custom page logic instead.
-
+ * Button to export page template is now disabled by default. You can enable it by setting the `enable_export_page_template` value to true inside the `kunstmaan_node` configuration.
 
 SearchBundle
 ------------
