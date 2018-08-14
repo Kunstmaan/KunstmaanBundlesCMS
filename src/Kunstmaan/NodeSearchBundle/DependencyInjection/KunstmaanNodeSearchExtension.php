@@ -17,11 +17,16 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class KunstmaanNodeSearchExtension extends Extension implements PrependExtensionInterface
 {
     /**
+     * @var bool
+     */
+    private $useElasticSearchVersion6;
+
+    /**
      * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
+        $configuration = new Configuration($this->useElasticSearchVersion6);
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -49,7 +54,9 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
      */
     public function prepend(ContainerBuilder $container)
     {
-        if (ElasticSearchUtil::useVersion6()) {
+        $this->useElasticSearchVersion6 = ElasticSearchUtil::useVersion6(array($container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('searchport')));
+
+        if ($this->useElasticSearchVersion6) {
             $mapping = [
                 'mapping' => [
                     'root_id' => [
