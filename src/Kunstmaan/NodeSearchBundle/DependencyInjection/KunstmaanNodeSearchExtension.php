@@ -54,7 +54,12 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
      */
     public function prepend(ContainerBuilder $container)
     {
-        $this->useElasticSearchVersion6 = ElasticSearchUtil::useVersion6(array($container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('searchport')));
+        $hosts = [];
+        if ($container->hasParameter('kunstmaan_search.hostname') && $container->hasParameter('kunstmaan_search.port')) {
+            $hosts[] = $container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('kunstmaan_search.port');
+        }
+
+        $this->useElasticSearchVersion6 = ElasticSearchUtil::useVersion6($hosts);
 
         if ($this->useElasticSearchVersion6) {
             $mapping = [
