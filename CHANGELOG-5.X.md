@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.10 / 2018-08-21
+
+* [NodeSearchBundle] check if params exist while building container [#2078](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2078) ([@Devolicious](https://github.com/Devolicious)) 
+
+
 ## 5.0.9 / 2018-08-21
 
 * [MediaBundle] add return to load function [#2076](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2076) ([@bakie](https://github.com/bakie)) 
