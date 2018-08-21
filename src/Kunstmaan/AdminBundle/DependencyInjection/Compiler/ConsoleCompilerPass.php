@@ -36,7 +36,7 @@ final class ConsoleCompilerPass implements CompilerPassInterface
         // if the listener has been overwritten in any way, a deprecation warning is needed
         @trigger_error(
             sprintf(
-                'The %s is deprecated and replaced by %s since KunstmaanAdminBundle 5.1 and will be removed in KunstmaanAdminBundle 6.0.',
+                'The "%s" is deprecated and replaced by "%s" since KunstmaanAdminBundle 5.1 and will be removed in KunstmaanAdminBundle 6.0.',
                 ConsoleExceptionListener::class,
                 ConsoleExceptionSubscriber::class
             ),
