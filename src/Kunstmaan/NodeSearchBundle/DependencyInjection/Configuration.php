@@ -16,6 +16,21 @@ use Kunstmaan\NodeSearchBundle\Helper\ElasticSearchUtil;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * @var bool
+     */
+    private $useElasticSearchVersion6;
+
+
+    /**
+     * Configuration constructor.
+     * @param bool $useElasticSearchVersion6
+     */
+    public function __construct($useElasticSearchVersion6)
+    {
+        $this->useElasticSearchVersion6 = $useElasticSearchVersion6;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getConfigTreeBuilder()
@@ -36,13 +51,13 @@ class Configuration implements ConfigurationInterface
             'boolean',
             'binary',
         ];
-        if (!ElasticSearchUtil::useVersion6()) {
+        if (!$this->useElasticSearchVersion6) {
             $types[] = 'string';
         }
 
         $properties->children()->scalarNode('type')->beforeNormalization()->ifNotInArray($types)->thenInvalid('type must be one of: ' . implode(', ', $types));
 
-        if (ElasticSearchUtil::useVersion6()) {
+        if ($this->useElasticSearchVersion6) {
             $properties->children()->booleanNode('fielddata');
             $properties->children()->booleanNode('doc_values');
             $properties->children()
