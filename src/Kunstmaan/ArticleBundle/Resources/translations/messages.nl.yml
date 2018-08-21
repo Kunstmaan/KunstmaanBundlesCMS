@@ -63,9 +63,9 @@ article:
         online: Online
 article_overview_page:
   filter: Filter
-  category: Categories
+  category: Categorieën
   tag: Tags
-  all: All
+  all: Alle
   route:
-    category: category
+    category: categorie
     tag: tag
