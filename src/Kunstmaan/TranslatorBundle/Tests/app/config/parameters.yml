@@ -3,3 +3,4 @@ parameters:
     secret: secret
     multilanguage: false
     defaultlocale: 'nl'
+    requiredlocales: nl|fr|en

@@ -51,6 +51,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('publish_later_stepping')->defaultValue('15')->end()
                 ->scalarNode('unpublish_later_stepping')->defaultValue('15')->end()
                 ->booleanNode('show_add_homepage')->defaultTrue()->end()
+                ->booleanNode('enable_export_page_template')->defaultFalse()->end()
                 ->arrayNode('lock')
                     ->addDefaultsIfNotSet()
                     ->canBeEnabled()

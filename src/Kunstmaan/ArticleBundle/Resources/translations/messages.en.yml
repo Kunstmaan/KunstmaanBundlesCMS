@@ -62,9 +62,6 @@ article:
                 updated_at: Updated at
                 online:     Online
 
-
-
-
 article_overview_page:
     filter: Filter
     category: Categories

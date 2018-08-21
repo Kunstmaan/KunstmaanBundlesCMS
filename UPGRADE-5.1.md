@@ -5,8 +5,8 @@ General
 -------
 
  * The `symfony/assetic-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on assetic, add the dependency to your project `composer.json`.
- * The `symfony/swiftmailer-bundle` package was removed from our dependencies as it was unused. If your code depends on `symfony/swiftmailer-bundle`, add the dependency to your project `composer.json`.
  * The `sensio/distribution-bundle` package was removed from our dependencies as it was unused since version 5.0. If your code depends on `sensio/distribution-bundle` for executing composer after update/install scripts, add the dependency to your project `composer.json`.
+ * The version constraint for `fos/user-bundle` is updated to `^2.0` to allow new minor releases. If your code isn't compatible with the new changes of the user-bundle, update/add a custom version constraint for the `fos/user-bundle` in your `composer.json`. Eg `"friendsofsymfony/user-bundle": "2.0.*"`
 
 AdminBundle
 -----------
@@ -66,18 +66,18 @@ NodeBundle
  * `InitAclCommand::__construct()` now takes an instance of `Doctrine\ORM\EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `CronUpdateNodeCommand` and `InitAclCommand` have been marked as final.
  * `Possibility to change the icon of your page.`: The possibility already exists to change the icon in the sidebar tree of your page. This was already available by yml configuration. I've added a new interface, TreeIconInterface that can be implemented and that will return the icon that should be used.
- * The unused `WidgetsController::selectNodesLazySearch` action is deprecated and will be removed in 6.0. 
+ * The unused `WidgetsController::selectNodesLazySearch` action is deprecated and will be removed in 6.0.
  * Injecting the container in the `SlugRouter` is deprecated and will be removed in 6.0. Inject the required services instead.
  * The `service` method of `Kunstmaan\NodeBundle\Entity\PageInterface` is deprecated and will be removed in 6.0. Implement the `Kunstmaan\NodeBundle\Controller\SlugActionInterface`
-   and use the `getControllerAction` method to specify a controller action with your custom page logic instead. 
-
+   and use the `getControllerAction` method to specify a controller action with your custom page logic instead.
+ * Button to export page template is now disabled by default. You can enable it by setting the `enable_export_page_template` value to true inside the `kunstmaan_node` configuration.
 
 SearchBundle
 ------------
 
  * `SetupIndexCommand::__construct()`, `PopulateIndexCommand::__construct()` and `DeleteIndexCommand::__construct()` now takes an instance of `Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
  * `SetupIndexCommand`, `PopulateIndexCommand` and `DeleteIndexCommand` have been marked as final.
- 
+
 SeoBundle
 ---------
 

@@ -75,12 +75,11 @@ class TranslatorCommandController extends Controller
      */
     public function exportAction()
     {
-        $locales = explode('|', $this->getParameter('requiredlocales'));
+        $locales = $this->getParameter('kuma_translator.managed_locales');
         $exportCommand = new ExportCommand();
         $exportCommand
             ->setLocales($locales)
-            ->setFormat('csv')
-            ->setDomains('messages');
+            ->setFormat('csv');
 
         $response = $this->get('kunstmaan_translator.service.exporter.command_handler')->executeExportCSVCommand($exportCommand);
 

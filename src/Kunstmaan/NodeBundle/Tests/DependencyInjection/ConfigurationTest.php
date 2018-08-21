@@ -28,6 +28,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
             'publish_later_stepping' => '15',
             'unpublish_later_stepping' => '15',
             'show_add_homepage' => true,
+            'enable_export_page_template' => false,
             'lock' => [
                 'enabled' => true,
                 'check_interval' => 15,

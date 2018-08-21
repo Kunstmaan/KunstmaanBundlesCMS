@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Twig\Extension;
 
 use Doctrine\ORM\EntityManager;
+use Kunstmaan\PagePartBundle\Entity\PagePartRef;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
 use Kunstmaan\PagePartBundle\Helper\PagePartInterface;
 use Kunstmaan\PagePartBundle\Repository\PagePartRefRepository;
@@ -33,6 +34,7 @@ class PagePartTwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('render_pageparts', array($this, 'renderPageParts'), array('needs_environment' => true, 'needs_context' => true, 'is_safe' => array('html'))),
             new \Twig_SimpleFunction('getpageparts', array('needs_environment' => true, $this, 'getPageParts')),
+            new \Twig_SimpleFunction('has_page_parts', [$this, 'hasPageParts']),
         );
     }
 
@@ -72,5 +74,16 @@ class PagePartTwigExtension extends \Twig_Extension
         $pageparts = $entityRepository->getPageParts($page, $context);
 
         return $pageparts;
+    }
+
+    /**
+     * @param HasPagePartsInterface $page
+     * @param string $context
+     *
+     * @return bool
+     */
+    public function hasPageParts(HasPagePartsInterface $page, $context = 'main')
+    {
+        return $this->em->getRepository(PagePartRef::class)->hasPageParts($page, $context);
     }
 }

@@ -14,6 +14,9 @@ use Kunstmaan\AdminBundle\Service\AclManager;
 
 /**
  * Symfony CLI command to apply the {@link AclChangeSet} with status {@link AclChangeSet::STATUS_NEW} to their entities
+ *
+ * @final since 5.1
+ * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  */
 class ApplyAclCommand extends ContainerAwareCommand
 {
