@@ -15,7 +15,7 @@ settings:
     refresh_live: Liveseite Aktualisieren
     import_translations_forced: Importieren und Überschreiben
     import_translations: Importieren
-    import_file: Import from spreadsheet
+    import_file: Aus Tabelle importieren
     actions: Aktionen
     export_translations: Export nach csv
     not_live_warning: "Die Übersetzungen der Liveseite sind nicht aktuell. Bitte 'Liveseite Aktualisieren' klicken."
@@ -24,38 +24,38 @@ settings:
     succesful_edited: "Übersetzung wurde erfolgreich bearbeitet"
 kuma_translator:
   form:
-    upload_file_choose: Please choose a file to upload
-    force_checkbox: Force overwriting translations
+    upload_file_choose: Datei zum Hochladen auswählen
+    force_checkbox: Übersetzungen überschreiben
     text_with_locale:
       locale:
-        label: Locale
+        label: Sprache
       text:
         label: Text
   command:
     clear:
       flash:
-        success: All live translations are up to date.
+        success: Alle Übersetzungen sind aktuell.
     import:
       flash:
-        success: Translations successfully imported, none existing translations were overwritten.
-        force_success: Translations successfully imported, all existing translations were overwritten.
+        success: Übersetzungen erfolgreich importiert. Es wurde keine Übersetzung überschrieben.
+        force_success: Übersetzungen erfolgreich importiert. Es wurden alle Übersetzung überschrieben.
   modal:
     confirmation:
       force_import:
-        title: Are you sure you want to force an import?
-        body: All existing translations will be overwritten.
-        confirm_button: Import
-        cancel_button: Cancel
+        title: Sind Sie sicher, dass Sie einen Import erzwingen möchten?
+        body: Alle existierenden Übersetzungen werden überschrieben.
+        confirm_button: Importieren
+        cancel_button: Abrechen
   adminlist:
     header:
       domain: Domain
-      keyword: Keyword
+      keyword: Schlagwort
     filter:
       domain: Domain
-      keyword: Keyword
+      keyword: Schlagwort
       text: Text
-      locale: Locale
+      locale: Sprache
 toolbar:
   translations:
-    title: Translations
-    count: Count
+    title: Übersetzungen
+    count: Anzahl

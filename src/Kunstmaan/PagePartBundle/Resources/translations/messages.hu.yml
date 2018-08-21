@@ -4,9 +4,9 @@ pagepart:
     type: 'Fejléc típusa'
     title: 'Cím'
   link:
-    internal: Internal
-    external: External
-    email: Email
+    internal: Belső
+    external: Külső
+    email: E-mail
     choose: 'Link oldalelem'
     openinnewwindow: 'Új ablakban nyissa meg'
     text: 'Link szövege'

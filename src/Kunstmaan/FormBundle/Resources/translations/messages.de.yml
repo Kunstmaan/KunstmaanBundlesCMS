@@ -3,102 +3,106 @@ kuma_form:
   form:
     page_admin:
       title:
-        label: Title
+        label: Titel
       thanks:
-        label: Thanks
+        label: Danke
       subject:
-        label: Subject
+        label: Betreff
       from_email:
-        label: From e-mail
+        label: E-Mail Absender
       to_email:
-        label: To e-mail
+        label: E-Mail Empfänger
     checkbox_page_part:
       label:
-        label: Label
+        label: Beschriftung
       required:
-        label: Required
+        label: Erforderlich
       errormessage_required:
-        label: Error message required
+        label: Fehlermeldung erforderlich
     choice_page_part:
       label:
-        label: Label
+        label: Beschriftung
       required:
-        label: Required
+        label: Erforderlich
       errormessage_required:
-        label: Error message required
+        label: Fehlermeldung erforderlich
       expanded:
-        label: Expanded
+        label: Erweitert
       multiple:
-        label: Multiple
+        label: Mehrfachauswahl
       choices:
-        label: Choices
+        label: Optionen
       empty_value:
-        label: Empty value
+        label: Leerer Wert
     email_page_part:
       label:
-        label: Label
+        label: Beschriftung
       required:
-        label: Required
+        label: Benötigt
       errorMessageRequired:
-        label: Error message required
+        label: Fehlermeldung erforderlich
       errorMessageInvalid:
-        label: Error message invalid
+        label: Fehlermeldung ungültig
     file_upload_page_part:
       label:
-        label: Label
+        label: Beschriftung
       required:
-        label: Required
+        label: Benötigt
       errormessage_required:
-        label: Error message required
+        label: Fehlermeldung benötigt
     multi_line_text_page_part:
       label:
-        label: Label
+        label: Beschriftung
       required:
-        label: Required
+        label: Erforderlich
       errormessage_required:
-        label: Error message required
+        label: Fehlermeldung erforderlich
       regex:
-        label: Regex
+        label: Regulärer Ausdruck
       errormessage_regex:
-        label: Error message regex
+        label: Fehlermeldung Regulärer Ausdruck
     single_line_text_page_part:
       label:
-        label: Label
+        label: Beschriftung
       required:
-        label: Required
+        label: Erforderlich
       errormessage_required:
-        label: Error message required
+        label: Fehlermeldung erforderlich
       regex:
-        label: Regex
+        label: Regulärer Ausdruck
       errormessage_regex:
-        label: Error message regex
+        label: Fehlermeldung Regulärer Ausdruck
     submit_button_page_part:
       label:
-        label: Label
+        label: Beschriftung
   button:
-    export_to: Export to
+    export_to: Exportieren nach
   list:
     header:
-      title: Title
-      language: Language
-      path: Form path
+      title: Titel
+      language: Sprache
+      path: Formular-Pfad
     filter:
-      title: Title
+      title: Titel
       online: Online
   submission:
     list:
       header:
-        created: Date
-        language: Language
-        ip_address: IP address
+        created: Datum
+        language: Sprache
+        ip_address: IP-Adresse
 formsubmissions:
   index:
-    title: Form pages with submissions
+    title: Formularseiten mit Einträgen
   menu:
-    title: Form submissions
+    title: Formular-Einträge
   list:
-    title: Form submissions for page
+    title: Formular-Einträge für Seite
   edit:
-    title: Form submission for page
+    title: Formular-Eintrag für Seite
+  delete:
+    flash:
+      success: Der Formular-Eintrag wurde gelöscht!
+      error: Fehler beim Löschen des Formular-Eintrages!
 subaction:
-  formsubmissions: "Submissions"
+  formsubmissions: "Einträge"

@@ -46,8 +46,8 @@ form:
   delete: Elimina
   deletesure: Sei sicuro di voler eliminare questo ?
   edit: Modifica
-  add: Add new
-  'add.%subject%': 'Add new %subject%'
+  add: Aggiungi nuovo
+  'add.%subject%': 'Aggiungi nuovo %subject%'
   save: Salva
   publish: Pubblica
   unpublish: Sospendi
@@ -123,6 +123,12 @@ kuma_js:
   auto_collapse:
     more_button_label: More
 toolbar:
+  bundle_version:
+    unknown: Unknown
+    uptodate: Up-to-date
+    toupdate: Outdated
+    version: Bundle version
+    status: Bundle status
   exception:
     title: Exceptions
     message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

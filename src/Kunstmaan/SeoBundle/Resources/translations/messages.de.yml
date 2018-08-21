@@ -1,35 +1,35 @@
 ---
 seo:
   robots:
-    title: Robots
-    tip: 'Tip:'
-    warning: This is a default value and example, no custom robots.txt has been defined.
-    moreinfo: You can find more information about the Kunstmaan robots.txt at our
+    title: Robots-Datei
+    tip: 'Tipp:'
+    warning: Dies ist ein Standardwert und ein Beispiel. Es wurde keine benutzerdefinierte robits.txt definiert.
+    moreinfo: Sie erhalten mehr Informationen über die Kunstmaan robots.txt auf unserer
   action:
-    save: Save
-    cancel: Cancel
-    preview: Preview
+    save: Speichern
+    cancel: Abrechen
+    preview: Vorschau
   form:
     og:
-      title: OG Title
-      description: OG Description
-      url: OG Url
-      type: OG Type
-      image: OG Image
+      title: OG Titel
+      description: OG Beschreibung
+      url: OG URL
+      type: OG Typ
+      image: OG Bild
       article:
-        author: OG Article Author
-        publisher: OG Article Publisher
-        section: OG Article Section
+        author: OG Author
+        publisher: OG Veröffentlicher
+        section: OG Artikelbereich
     twitter:
-      title: Title
-      title_info_text: The title of your twitter card. Falls back to SEO Meta title
-      description: Description
-      description_info_text: The description of your twitter card. Falls back to SEO Meta description
-      sitehandle: Site Handle
-      sitehandle_info_text: Twitter handle of your website organisation. This value is required for twitter cards to work.
-      creatorhandle: Creator Handle
-      creatorhandle_info_text: Twitter handle of your page publisher.
-      image: Image
+      title: Titel
+      title_info_text: Der Titel der Twitter-Karte. Falls nicht angeben, wird der SEO Titel verwendet.
+      description: Beschreibung
+      description_info_text: Die Beschreibung der Twitter-Karte. Falls nicht angeben, wird die SEO Beschreibung verwendet
+      sitehandle: Seiten-@-Benutzername
+      sitehandle_info_text: Twitter-@-Nutzername der Website-Organisation. Dieser Wert ist erforderlich, damit Twitter-Karten funktionieren.
+      creatorhandle: Ersteller-@-Benutzername
+      creatorhandle_info_text: '@-Benutzername des Veröffentlichers'
+      image: Bild
     robots:
       noindex: No index
       nofollow: No follow
@@ -39,20 +39,20 @@ seo:
       noimageindex: No image index
     seo:
       meta_title:
-        label: Title
-        info_text: The title tag is often used on search engine results pages.
+        label: Titel
+        info_text: Der Titel-Tag wird oft von Suchmaschinen genutzt, um Ergebnisse anzuzeigen.
       meta_description:
-        label: Meta description
+        label: Meta-Beschreibung
       meta_robots:
-        label: Meta robots
-        placeholder: Choose robot tags
+        label: Meta-Robots
+        placeholder: Robot.txt Tags auswählen
       extra_metadata:
-        label: Extra metadata
+        label: Extra Metadaten
   pagetabs:
     opengraph: Open Graph
-    twittercards: Twitter Cards
+    twittercards: Twitter-Karten
   tab:
     seo:
       title: SEO
     social:
-      title: Social
+      title: Soziale Netzwerke

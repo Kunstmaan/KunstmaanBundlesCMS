@@ -100,5 +100,9 @@ formsubmissions:
     title: Formulier inzendingen voor pagina
   edit:
     title: Formulier inzendingen voor pagina
+  delete:
+    flash:
+      success: The form submission is deleted!
+      error: Deleting the form submission failed!
 subaction:
   formsubmissions: "Inzendingen"

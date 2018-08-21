@@ -7,7 +7,7 @@ kuma_tagging:
   adminlist:
     header:
       name: Name
-      created_at: Created at
-      updated_at: Updated at
+      created_at: Erstellt am
+      updated_at: Aktualisiert am
     filter:
       name: Name
