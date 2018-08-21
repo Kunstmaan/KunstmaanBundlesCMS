@@ -38,7 +38,7 @@ article:
 
 article_overview_page:
     filter: Filter
-    category: Categories
+    category: Categorieën
     tag: Tags
     all: Alle
     route:
