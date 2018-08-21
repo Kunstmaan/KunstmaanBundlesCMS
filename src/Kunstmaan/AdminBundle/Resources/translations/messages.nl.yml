@@ -131,4 +131,4 @@ toolbar:
     status: Bundle status
   exception:
     title: Exceptions
-    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"
+    message: "<strong>%X%</strong> exception(s) veroorzaakt door <strong>%Y%</strong> events"
