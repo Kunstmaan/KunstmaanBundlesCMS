@@ -124,10 +124,10 @@ kuma_js:
     more_button_label: Meer
 toolbar:
   bundle_version:
-    unknown: Unknown
+    unknown: Onbekend
     uptodate: Up-to-date
-    toupdate: Outdated
-    version: Bundle version
+    toupdate: Verouderd
+    version: Bundle versie
     status: Bundle status
   exception:
     title: Exceptions
