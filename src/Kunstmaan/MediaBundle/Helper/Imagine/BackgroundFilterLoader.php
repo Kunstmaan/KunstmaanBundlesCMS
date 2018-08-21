@@ -19,6 +19,6 @@ class BackgroundFilterLoader extends \Liip\ImagineBundle\Imagine\Filter\Loader\B
      */
     public function load(ImageInterface $image, array $options = array())
     {
-        parent::load($image, $options);
+        return parent::load($image, $options);
     }
 }

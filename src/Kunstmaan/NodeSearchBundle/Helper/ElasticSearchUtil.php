@@ -14,15 +14,17 @@ final class ElasticSearchUtil
     private static $esClientInfo;
 
     /**
+     * @var array $hosts
+     *
      * @return bool
      */
-    public static function useVersion6()
+    public static function useVersion6($hosts = array())
     {
         if (PHP_MAJOR_VERSION < 7) {
             return false;
         }
 
-        $info = self::getESVersionInfo();
+        $info = self::getESVersionInfo($hosts);
 
         if (null !== $info) {
             $versionParts = explode('.', $info['version']['number']);
@@ -35,13 +37,15 @@ final class ElasticSearchUtil
     }
 
     /**
+     * @var array $hosts
+     *
      * @return array
      */
-    private static function getESVersionInfo()
+    private static function getESVersionInfo($hosts)
     {
         try {
             if (null === self::$esClientInfo) {
-                $client = ClientBuilder::create()->build();
+                $client = ClientBuilder::create()->setHosts($hosts)->build();
                 self::$esClientInfo = $client->info();
             }
         } catch (NoNodesAvailableException $e) {

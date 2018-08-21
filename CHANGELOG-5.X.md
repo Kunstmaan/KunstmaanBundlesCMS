@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.0.9 / 2018-08-21
+
+* [MediaBundle] add return to load function [#2076](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2076) ([@bakie](https://github.com/bakie)) 
+* [KunstmaanNodeSearchBundle] use hosts in useVersion6 check [#2075](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2075) ([@bakie](https://github.com/bakie)) 
+* [MenuBundle] Fix menu item sorting issue with multiple menus [#2072](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2072) ([@acrobat](https://github.com/acrobat)) 
+
+
 ## 5.0.8 / 2018-08-07
 
 * [AdminList] Fix admin list empty url [#2071](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2071) ([@dannyvw](https://github.com/dannyvw)) 
