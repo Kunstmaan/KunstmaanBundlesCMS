@@ -7,6 +7,7 @@ use Kunstmaan\AdminBundle\Command\ApplyAclCommand;
 use Kunstmaan\AdminBundle\EventListener\ConsoleExceptionListener;
 use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 
 class ConsoleExceptionListenerTest extends PHPUnit_Framework_TestCase
@@ -14,16 +15,21 @@ class ConsoleExceptionListenerTest extends PHPUnit_Framework_TestCase
     public function testListener()
     {
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects($this->once())->method('error')->willReturn(true);
         $listener = new ConsoleExceptionListener($logger);
 
-        $command = new ApplyAclCommand();
-        $exception = new Exception();
-
         $event = $this->createMock(ConsoleExceptionEvent::class);
-        $event->expects($this->once())->method('getCommand')->willReturn($command);
-        $event->expects($this->once())->method('getException')->willReturn($exception);
+        if (class_exists(ConsoleErrorEvent::class)){
+            $this->assertNull($listener->onConsoleException($event));
+        } else {
+            $command = new ApplyAclCommand();
+            $exception = new Exception();
 
-        $listener->onConsoleException($event);
+            $logger->expects($this->once())->method('error')->willReturn(true);
+
+            $event->expects($this->once())->method('getCommand')->willReturn($command);
+            $event->expects($this->once())->method('getException')->willReturn($exception);
+
+            $listener->onConsoleException($event);
+        }
     }
 }
