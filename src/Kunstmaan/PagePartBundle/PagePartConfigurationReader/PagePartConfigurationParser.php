@@ -4,6 +4,7 @@ namespace Kunstmaan\PagePartBundle\PagePartConfigurationReader;
 
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfigurator;
 use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -108,8 +109,14 @@ class PagePartConfigurationParser implements PagePartConfigurationParserInterfac
 
         $nameParts = explode(':', $name);
         if (2 !== count($nameParts)) {
-            throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").',
-                $name));
+            $filePaths = [
+                $this->kernel->getProjectDir().'/config/kunstmaancms/pageparts',
+                $this->kernel->getProjectDir().'/src/Resources/config/pageparts',
+            ];
+            $fileLocator = new FileLocator($filePaths);
+            $filePath = $fileLocator->locate(sprintf('%s.yml', $name));
+
+            return Yaml::parse(file_get_contents($filePath));
         }
 
         list ($namespace, $name) = $nameParts;

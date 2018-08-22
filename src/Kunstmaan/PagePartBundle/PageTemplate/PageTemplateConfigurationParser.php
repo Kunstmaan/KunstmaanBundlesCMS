@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\PagePartBundle\PageTemplate;
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -115,7 +116,14 @@ class PageTemplateConfigurationParser implements PageTemplateConfigurationParser
         }
 
         if (false === strpos($name, ':')) {
-            throw new \Exception(sprintf('Malformed namespaced configuration name "%s" (expecting "namespace:pagename").', $name));
+            $filePaths = [
+                $this->kernel->getProjectDir().'/config/kunstmaancms/pagetemplates',
+                $this->kernel->getProjectDir().'/src/Resources/config/pagetemplates',
+            ];
+            $fileLocator = new FileLocator($filePaths);
+            $path = $fileLocator->locate(sprintf('%s.yml', $name));
+
+            return Yaml::parse(file_get_contents($path));
         }
 
         list ($namespace, $name) = explode(':', $name, 2);
