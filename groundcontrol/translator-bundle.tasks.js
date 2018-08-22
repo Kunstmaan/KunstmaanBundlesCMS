@@ -16,16 +16,16 @@ export const translatorBundle = {
     tasks: {}
 };
 
-translatorBundle.tasks.cssLocal = createCssLocalTask({src: translatorBundle.config.srcPath + 'scss/*.scss', dest: translatorBundle.config.distPath + 'css'});
+translatorBundle.tasks.cssLocal = createCssLocalTask({src: `${translatorBundle.config.srcPath}scss/*.scss`, dest: `${translatorBundle.config.distPath}css`});
 
-translatorBundle.tasks.cssOptimized = createCssOptimizedTask({src: translatorBundle.config.srcPath + 'scss/*.scss', dest: translatorBundle.config.distPath + 'css'});
+translatorBundle.tasks.cssOptimized = createCssOptimizedTask({src: `${translatorBundle.config.srcPath}scss/*.scss`, dest: `${translatorBundle.config.distPath}css`});
 
 translatorBundle.tasks.scripts = createScriptsTask({
     src: [
-        translatorBundle.config.srcPath + 'vendor_bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
-        translatorBundle.config.srcPath + 'js/_inline-edit.js',
-        translatorBundle.config.srcPath + 'js/app.js'
+        `${translatorBundle.config.srcPath}vendor_bower/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js`,
+        `${translatorBundle.config.srcPath}js/_inline-edit.js`,
+        `${translatorBundle.config.srcPath}js/app.js`
     ],
-    dest: translatorBundle.config.distPath + 'js',
+    dest: `${translatorBundle.config.distPath}js`,
     filename: 'translator-bundle.min.js'
 });
