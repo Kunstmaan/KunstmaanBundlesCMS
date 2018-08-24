@@ -2,7 +2,11 @@
     "name": "kunstmaan/translator-bundle",
     "type": "symfony-bundle",
     "description": "A bundle which enables editing translations in the admin interface without need for editing the translations files. Translations will be stored in a (default) database and retrieved on the most efficient way possible.",
-    "keywords": [ "kunstmaan", "translator", "translations"],
+    "keywords": [
+        "kunstmaan",
+        "translator",
+        "translations"
+    ],
     "homepage": "https://github.com/Kunstmaan/KunstmaanTranslatorBundle",
     "license": "MIT",
     "authors": [
@@ -14,34 +18,41 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.1",
-        "symfony/symfony": "~2.8",
-        "doctrine/orm": "^2.2.3",
-        "doctrine/doctrine-bundle": "~1.2",
-        "doctrine/doctrine-migrations-bundle": "^1.3",
-        "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.3",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~3.0",
-        "sensio/framework-extra-bundle": "~3.0",
-        "incenteev/composer-parameter-handler": "~2.0",
-
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/adminlist-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "php": "^5.6|^7.0",
+        "symfony/config": "^3.4",
+        "symfony/dependency-injection": "^3.4",
+        "symfony/form": "^3.4",
+        "symfony/http-foundation": "^3.4",
+        "symfony/http-kernel": "^3.4",
+        "symfony/security": "^3.4",
+        "symfony/finder": "^3.4",
+        "symfony/translation": "^3.4",
+        "symfony/validator": "^3.4",
+        "symfony/options-resolver": "^3.4",
+        "symfony/framework-bundle": "^3.4",
+        "symfony/security-bundle": "^3.4",
+        "symfony/twig-bundle": "^3.4",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "~1.9"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7",
         "nelmio/alice": "~1.6",
-        "doctrine/doctrine-fixtures-bundle": "~2.2.0"
+        "doctrine/doctrine-fixtures-bundle": "~2.2.0",
+        "matthiasnoback/symfony-config-test": "^2.2"
+    },
+    "suggest": {
+        "kunstmaan/admin-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/adminlist-bundle": "^5.0 - to be put into require-dev when ready"
     },
     "autoload": {
-        "psr-4": { "Kunstmaan\\TranslatorBundle\\": "" }
+        "psr-4": {
+            "Kunstmaan\\TranslatorBundle\\": ""
+        }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }
