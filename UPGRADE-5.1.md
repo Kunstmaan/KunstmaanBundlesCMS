@@ -67,6 +67,9 @@ NodeBundle
  * Injecting the container in the `SlugRouter` is deprecated and will be removed in 6.0. Inject the required services instead.
  * The `service` method of `Kunstmaan\NodeBundle\Entity\PageInterface` is deprecated and will be removed in 6.0. Implement the `Kunstmaan\NodeBundle\Controller\SlugActionInterface`
    and use the `getControllerAction` method to specify a controller action with your custom page logic instead. 
+ * Added the option to divide fields from an entity into different tabs. Tabs will be added in the already existing tab menu (containing 'Content', 'Menu', 'Permissions')
+   Start by implementing PageTabInterface in your entity. This will force you to implement the getTabs() function, which expects an error of PageTab value object.
+   In every PageTab you can define the tabs internal name, title, form type and position.
 
 
 SearchBundle
