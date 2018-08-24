@@ -57,7 +57,7 @@ class FormSubmissionsController extends Controller
      * @Route("/list/{nodeTranslationId}", requirements={"nodeTranslationId" = "\d+"},
      *                                     name="KunstmaanFormBundle_formsubmissions_list")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanForm/FormSubmissions/list.html.twig")
      *
      * @return array
      */
@@ -85,7 +85,7 @@ class FormSubmissionsController extends Controller
      * @Route("/list/{nodeTranslationId}/{submissionId}", requirements={"nodeTranslationId" = "\d+", "submissionId" =
      *                                                    "\d+"}, name="KunstmaanFormBundle_formsubmissions_list_edit")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanForm/FormSubmissions/edit.html.twig")
      *
      * @return array
      */
@@ -142,7 +142,6 @@ class FormSubmissionsController extends Controller
      *      requirements={"id" = "\d+"},
      *      name="KunstmaanFormBundle_formsubmissions_delete"
      * )
-     * @Template()
      * @Method("POST")
      *
      * @param Request $request

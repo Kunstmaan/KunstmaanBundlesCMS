@@ -69,7 +69,7 @@ kuma_form:
       errormessage_required:
         label: Komunikat błędu w przypadku nieuzupełnienia
       regex:
-        label: Regex
+        label: Wyrażenia regularne
       errormessage_regex:
         label: Komunikat błędu
     submit_button_page_part:
@@ -100,5 +100,9 @@ formsubmissions:
     title: Wysłane formularze dla strony
   edit:
     title: Wysłane formularze dla strony
+  delete:
+    flash:
+      success: The form submission is deleted!
+      error: Deleting the form submission failed!
 subaction:
   formsubmissions: "Przesłane formularze"

@@ -5,7 +5,6 @@ namespace Kunstmaan\FormBundle\Helper;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Swift_Mailer;
 use Swift_Message;
-use Swift_Mime_Message;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -46,18 +45,21 @@ class FormMailer implements FormMailerInterface
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
         $toArr = explode("\r\n", $to);
-        /* @var $message Swift_Mime_Message */
-        $message = Swift_Message::newInstance()->setSubject($subject)->setFrom($from)->setTo($toArr);
-        $message->setBody(
-            $this->templating->render(
-                'KunstmaanFormBundle:Mailer:mail.html.twig',
-                array(
-                    'submission' => $submission,
-                    'host'       => $request->getScheme() . '://' . $request->getHttpHost()
-                )
-            ),
-            'text/html'
-        );
+
+        $message = (new Swift_Message($subject))
+            ->setFrom($from)
+            ->setTo($toArr)
+            ->setBody(
+                $this->templating->render(
+                    'KunstmaanFormBundle:Mailer:mail.html.twig',
+                    array(
+                        'submission' => $submission,
+                        'host'       => $request->getScheme() . '://' . $request->getHttpHost()
+                    )
+                ),
+                'text/html'
+            );
+
         $this->mailer->send($message);
     }
 }

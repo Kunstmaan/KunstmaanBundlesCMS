@@ -144,12 +144,27 @@ EOT
         // Attach groups
         $groupOutput = [];
 
-        foreach (explode(',', $groupOption) as $groupId) {
-            $group = $this->groups[$groupId];
-            $groupOutput[] = $group->getName();
 
-            if ($group instanceof Group) {
+        foreach (explode(',', $groupOption) as $groupId) {
+
+            if ((int)$groupId === 0) {
+                foreach ($this->groups as $value) {
+                    if ($groupId === $value->getName()) {
+                        $group = $value;
+                        break;
+                    }
+                }
+            } else {
+                $group = $this->groups[$groupId];
+            }
+
+            if (isset($group) && $group instanceof Group) {
+                $groupOutput[] = $group->getName();
                 $user->getGroups()->add($group);
+            } else {
+                throw new \RuntimeException(
+                    'The selected group(s) can\'t be found.'
+                );
             }
         }
 

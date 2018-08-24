@@ -18,7 +18,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     protected function getConfiguration()
     {
-        return new Configuration();
+        return new Configuration(true);
     }
 
     public function testConfigGeneratesAsExpected()

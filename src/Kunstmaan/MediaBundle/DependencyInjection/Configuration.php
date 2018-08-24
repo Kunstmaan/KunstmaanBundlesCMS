@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\DependencyInjection;
 
+use Kunstmaan\MediaBundle\Utils\SymfonyVersion;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -37,6 +38,10 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('blacklisted_extensions')
                     ->defaultValue(array('php', 'htaccess'))
                     ->prototype('scalar')->end()
+                ->end()
+                ->scalarNode('web_root')
+                    ->defaultValue(SymfonyVersion::getRootWebPath())
+                    ->cannotBeEmpty()
                 ->end()
             ->end();
 

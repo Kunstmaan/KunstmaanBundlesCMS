@@ -1,15 +1,15 @@
 ---
 article:
   warning:
-    create_overview_page: You need to create at least one overview page before you can create a %type% page
+    create_overview_page: Sie müssen zunächst eine Übersichtsseite erstellen bevor Sie eine Seite vom Typ %type% erstellen können
   form:
     date:
-      label: Date
+      label: Datum
     summary:
-      label: Summary
+      label: Zusammenfassung
   modal:
     add:
-      label: Add %type% item to %page%
+      label: Füge %type% zu %page% hinzu
   author:
     list:
       header:
@@ -23,15 +23,49 @@ article:
         label: Name
       link:
         label: Link
+  category:
+    list:
+      header:
+        name: Name
+        link: Link
+      filter:
+        name: Name
+        link: Link
+    form:
+      name:
+        label: Name
+      link:
+        label: Link
+    page:
+      url: category
+  tag:
+    list:
+      header:
+        name: Name
+      filter:
+        name: Name
+    form:
+      name:
+        label: Name
+    page:
+      url: tag
   page:
     list:
       header:
-        title: Title
-        created_at: Created at
-        updated_at: Updated at
+        title: Titel
+        created_at: Erstellt am
+        updated_at: Aktualisiert am
         online: Online
       filter:
-        title: Title
-        created_at: Created at
-        updated_at: Updated at
+        title: Titel
+        created_at: Erstellt am
+        updated_at: Aktualisiert am
         online: Online
+article_overview_page:
+  filter: Filter
+  category: Categories
+  tag: Tags
+  all: All
+  route:
+    category: category
+    tag: tag

@@ -53,7 +53,7 @@ class GroupsController extends BaseSettingsController
      *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_groups_add")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Groups/add.html.twig")
      *
      * @throws AccessDeniedException
      * @return array
@@ -96,7 +96,7 @@ class GroupsController extends BaseSettingsController
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_edit")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Groups/edit.html.twig")
      *
      * @throws AccessDeniedException
      * @return array
@@ -141,7 +141,6 @@ class GroupsController extends BaseSettingsController
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_groups_delete")
      * @Method({"GET", "POST"})
-     * @Template()
      *
      * @throws AccessDeniedException
      * @return RedirectResponse

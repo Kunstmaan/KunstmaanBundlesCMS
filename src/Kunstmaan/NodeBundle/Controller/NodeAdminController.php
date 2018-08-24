@@ -160,7 +160,6 @@ class NodeAdminController extends Controller
      *      name="KunstmaanNodeBundle_nodes_copyfromotherlanguage"
      * )
      * @Method("GET")
-     * @Template()
      *
      * @param Request $request
      * @param int $id The node id
@@ -212,7 +211,6 @@ class NodeAdminController extends Controller
      *      name="KunstmaanNodeBundle_nodes_recopyfromotherlanguage"
      * )
      * @Method("POST")
-     * @Template()
      *
      * @param Request $request
      * @param int $id The node id
@@ -263,7 +261,6 @@ class NodeAdminController extends Controller
      *      name="KunstmaanNodeBundle_nodes_createemptypage"
      * )
      * @Method("GET")
-     * @Template()
      *
      * @param Request $request
      * @param int $id
@@ -389,7 +386,6 @@ class NodeAdminController extends Controller
      *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_delete"
      * )
-     * @Template()
      * @Method("POST")
      *
      * @param Request $request
@@ -454,7 +450,6 @@ class NodeAdminController extends Controller
      *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_duplicate"
      * )
-     * @Template()
      * @Method("POST")
      *
      * @param Request $request
@@ -528,7 +523,6 @@ class NodeAdminController extends Controller
      *      defaults={"subaction" = "public"},
      *      name="KunstmaanNodeBundle_nodes_revert"
      * )
-     * @Template()
      * @Method("GET")
      *
      * @param Request $request
@@ -613,7 +607,6 @@ class NodeAdminController extends Controller
      *      requirements={"id" = "\d+"},
      *      name="KunstmaanNodeBundle_nodes_add"
      * )
-     * @Template()
      * @Method("POST")
      *
      * @param Request $request
@@ -679,7 +672,6 @@ class NodeAdminController extends Controller
 
     /**
      * @Route("/add-homepage", name="KunstmaanNodeBundle_nodes_add_homepage")
-     * @Template()
      * @Method("POST")
      *
      * @return RedirectResponse
@@ -802,7 +794,7 @@ class NodeAdminController extends Controller
      *      defaults={"subaction" = "public"},
      *      name="KunstmaanNodeBundle_nodes_edit"
      * )
-     * @Template()
+     * @Template("@KunstmaanNode/NodeAdmin/edit.html.twig")
      * @Method({"GET", "POST"})
      *
      * @param Request $request

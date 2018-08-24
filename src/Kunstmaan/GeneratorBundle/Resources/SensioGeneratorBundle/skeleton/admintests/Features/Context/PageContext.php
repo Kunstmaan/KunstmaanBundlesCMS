@@ -220,7 +220,7 @@ class PageContext implements Context
         // Couldn't do this via xpath using : [contains(@class, 'modal') and contains(@class, 'in')]
         foreach ($modals as $modal) {
             if ($modal->hasClass('in')) {
-                $this->mainContext->findAndClickButton($modal, 'xpath', "//a[contains(@class, 'btn btn-danger btn--raise-on-hover')]");
+                $this->mainContext->findAndClickButton($modal, 'xpath', "//button[contains(@class, 'btn btn-danger btn--raise-on-hover')]");
 
                 return;
             }

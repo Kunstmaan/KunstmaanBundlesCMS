@@ -1,7 +1,7 @@
 ---
 kuma_menu:
   menus:
-    title: Menus
+    title: Menük
   menu:
     adminlist:
       field:
@@ -9,28 +9,28 @@ kuma_menu:
       filter:
         name: Név
       action:
-        manage: Manage
+        manage: Kezelés
   menu_item:
     adminlist:
       breadcrumb:
-        modules: Modules
-        menu: Menu's
-        menu_items: Menu items
-      title: Menu items for %name% and language %locale%
+        modules: Modulok
+        menu: Menük
+        menu_items: Menü elemek
+      title: A %name% és a %locale% nyelvhez tartozó menüpontok
       online: (Online)
       offline: (Offline)
       field:
         title: Cím
         online: Online
         type: Típus
-        url: Url
+        url: URL
         new_window: Új ablakban
   form:
-    parent: Parent menu item
-    parent_placeholder: Select the parent menu item...
-    type: Type
-    node_translation: Link page
-    node_translation_placeholder: Select the page to link to...
-    title: Title
-    url: Url
-    new_window: New window
+    parent: Szülő menüpont
+    parent_placeholder: Szülő menpont kiválasztása...
+    type: Típus
+    node_translation: Oldal linkelése
+    node_translation_placeholder: A linkelt oldal kiválasztása...
+    title: Cím
+    url: URL
+    new_window: Új ablak

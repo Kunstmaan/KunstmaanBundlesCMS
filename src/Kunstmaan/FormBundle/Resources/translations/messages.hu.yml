@@ -83,7 +83,7 @@ kuma_form:
       language: Nyelv
       path: Űrlap útvonala
     filter:
-      title: Title
+      title: Cím
       online: Online
   submission:
     list:
@@ -100,5 +100,9 @@ formsubmissions:
     title: Kitöltött űrlapok
   edit:
     title: Űrlap kitöltés
+  delete:
+    flash:
+      success: The form submission is deleted!
+      error: Deleting the form submission failed!
 subaction:
   formsubmissions: "Űrlap kitöltések"

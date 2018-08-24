@@ -1,5 +1,6 @@
 ---
 kuma_admin_list:
+  limit: Limiet %limit%
   form:
     export_to: Exporteer naar
   edit:
