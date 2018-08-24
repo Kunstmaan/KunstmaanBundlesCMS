@@ -2,7 +2,12 @@
     "name": "kunstmaan/tagging-bundle",
     "type": "symfony-bundle",
     "description": "Uses FabienPennequin/DoctrineExtensions-Taggable to add tagging to the Kunstmaan bundles",
-    "keywords": [ "kunstmaan", "cms", "tag", "tagging"],
+    "keywords": [
+        "kunstmaan",
+        "cms",
+        "tag",
+        "tagging"
+    ],
     "homepage": "https://github.com/Kunstmaan/KunstmaanTaggingBundle",
     "license": "MIT",
     "authors": [
@@ -13,21 +18,35 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
+        "php": "^5.6|^7.0",
+        "symfony/config": "^3.4",
+        "symfony/dependency-injection": "^3.4",
+        "symfony/form": "^3.4",
+        "symfony/http-foundation": "^3.4",
+        "symfony/http-kernel": "^3.4",
+        "symfony/security": "^3.4",
+        "symfony/doctrine-bridge": "^3.4",
+        "symfony/options-resolver": "^3.4",
         "fpn/doctrine-extensions-taggable": "0.9.0",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/adminlist-bundle": "~3.2",
-        "kunstmaan/media-bundle": "~3.2",
-        "kunstmaan/node-bundle": "~3.2"
+    },
+    "require-dev": {
+        "matthiasnoback/symfony-config-test": "^2.2"
+    },
+    "suggest": {
+        "kunstmaan/admin-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/adminlist-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/media-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/node-bundle": "^5.0 - to be put into require-dev when ready"
     },
     "autoload": {
-        "psr-4": { "Kunstmaan\\TaggingBundle\\": "" }
+        "psr-4": {
+            "Kunstmaan\\TaggingBundle\\": ""
+        }
     },
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }
