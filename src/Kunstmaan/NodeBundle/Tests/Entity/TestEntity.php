@@ -6,8 +6,8 @@ use Kunstmaan\AdminBundle\Entity\AbstractEntity;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\PageTabInterface;
+use Kunstmaan\NodeBundle\Test\Form\TestType;
 use Kunstmaan\NodeBundle\ValueObject\PageTab;
-use Symfony\Component\Form\AbstractType;
 
 /**
  * TestEntity
@@ -96,10 +96,7 @@ class TestEntity extends AbstractEntity implements HasNodeInterface, PageTabInte
     public function getTabs()
 	{
 		return [
-			(new PageTab())
-				->setTabTitle('tab1_title')
-				->setInternalName('tab1_name')
-				->setPosition(1)
+			(new PageTab('tab1_name', 'tab1_title', TestType::class))
 		];
 	}
 }

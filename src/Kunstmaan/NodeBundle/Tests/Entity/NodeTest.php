@@ -4,16 +4,13 @@ namespace Kunstmaan\NodeBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
-use Kunstmaan\NodeBundle\EventListener\NodeListener;
+use Kunstmaan\NodeBundle\EventListener\NodeTabListener;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
@@ -175,22 +172,20 @@ class NodeTest extends PHPUnit_Framework_TestCase
 		$request = new Request();
 		$request->request = new ParameterBag();
 
-		$formFactory = $this->getMock(FormFactory::class, [], [], '', false);
-		$authorizationChecker = $this->getMock(AuthorizationCheckerInterface::class);
-		$permissionAdmin = $this->getMock(PermissionAdmin::class, [], [], '', false);
-		$permissionMap = $this->getMock(PermissionMapInterface::class);
+		$formFactory = $this->getMockBuilder(FormFactory::class)
+			->disableOriginalConstructor()
+			->getMock();
 
 		$entity = new TestEntity();
 		$this->object->setRef($entity);
 
 		$tabPane = new TabPane('id', $request, $formFactory);
-
 		$adaptFormEvent = new AdaptFormEvent($request, $tabPane, $entity);
 
-		$nodeListener = new NodeListener($authorizationChecker, $permissionAdmin, $permissionMap);
-		$nodeListener->adaptForm($adaptFormEvent);
+		$nodeTabListener = new NodeTabListener();
+		$nodeTabListener->adaptForm($adaptFormEvent);
 
-		$tabs = $tabPane->getTabs();
+		$tabs = $adaptFormEvent->getTabPane()->getTabs();
 		$title = null;
 
 		if(isset($tabs[0])) {

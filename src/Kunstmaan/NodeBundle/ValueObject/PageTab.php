@@ -16,17 +16,28 @@ class PageTab {
 	/**
 	 * @var string
 	 */
-	private $template;
-
-	/**
-	 * @var string
-	 */
 	private $formTypeClass;
 
 	/**
-	 * @var integer
+	 * @var int|null
 	 */
-	private $position = 1;
+	private $position;
+
+	/**
+	 * PageTab constructor.
+	 *
+	 * @param string $internalName
+	 * @param string $tabTitle
+	 * @param string $formTypeClass
+	 * @param int|null $position
+	 */
+	public function __construct($internalName, $tabTitle, $formTypeClass, $position = null)
+	{
+		$this->internalName = $internalName;
+		$this->tabTitle = $tabTitle;
+		$this->formTypeClass = $formTypeClass;
+		$this->position = $position;
+	}
 
 	/**
 	 * @return string
@@ -34,17 +45,6 @@ class PageTab {
 	public function getInternalName()
 	{
 		return $this->internalName;
-	}
-
-	/**
-	 * @param string $internalName
-	 * @return PageTab
-	 */
-	public function setInternalName($internalName)
-	{
-		$this->internalName = $internalName;
-
-		return $this;
 	}
 
 	/**
@@ -56,36 +56,6 @@ class PageTab {
 	}
 
 	/**
-	 * @param string $tabTitle
-	 * @return PageTab
-	 */
-	public function setTabTitle($tabTitle)
-	{
-		$this->tabTitle = $tabTitle;
-
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getTemplate()
-	{
-		return $this->template;
-	}
-
-	/**
-	 * @param string $template
-	 * @return PageTab
-	 */
-	public function setTemplate($template)
-	{
-		$this->template = $template;
-
-		return $this;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getFormTypeClass()
@@ -94,32 +64,10 @@ class PageTab {
 	}
 
 	/**
-	 * @param string $formTypeClass
-	 * @return PageTab
-	 */
-	public function setFormTypeClass($formTypeClass)
-	{
-		$this->formTypeClass = $formTypeClass;
-
-		return $this;
-	}
-
-	/**
-	 * @return int
+	 * @return int|null
 	 */
 	public function getPosition()
 	{
 		return $this->position;
-	}
-
-	/**
-	 * @param int $position
-	 * @return PageTab
-	 */
-	public function setPosition($position)
-	{
-		$this->position = $position;
-
-		return $this;
 	}
 }
