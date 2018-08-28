@@ -38,7 +38,8 @@ class TranslationRepository extends AbstractTranslatorRepository
     {
 
         $qb = $this->createQueryBuilder('t');
-        $result = $qb->select('t')
+        $qb
+            ->select('t')
             ->where('t.locale = :locale')
             ->andWhere('t.status != :statusstring')
             ->setParameter('statusstring', Translation::STATUS_DISABLED)
