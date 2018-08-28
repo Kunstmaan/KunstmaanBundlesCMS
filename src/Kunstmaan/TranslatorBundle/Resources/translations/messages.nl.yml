@@ -50,11 +50,13 @@ kuma_translator:
     header:
       domain: Domein
       keyword: Trefwoord
+      status: Status
     filter:
       domain: Domein
       keyword: Trefwoord
       text: Tekst
       locale: Lokaal
+      status: Status
 toolbar:
   translations:
     title: Vertalingen
