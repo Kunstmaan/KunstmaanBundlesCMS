@@ -50,11 +50,13 @@ kuma_translator:
     header:
       domain: Domena
       keyword: Słowo kluczowe
+      status: Status
     filter:
       domain: Domena
       keyword: Słowo kluczowe
       text: Treść
       locale: Język
+      status: Status
 toolbar:
   translations:
     title: Translations
