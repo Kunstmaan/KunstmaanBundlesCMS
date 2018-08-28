@@ -36,14 +36,14 @@ ConfigBundle
 DashboardBundle
 ---------------
 
- * Injecting the container in the `DashboardCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
- * Injecting the container in the `GoogleAnalyticsConfigFlushCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
- * Injecting the container in the `GoogleAnalyticsConfigsListCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
- * Injecting the container in the `GoogleAnalyticsDataCollectCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
- * Injecting the container in the `GoogleAnalyticsDataFlushCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
- * Injecting the container in the `GoogleAnalyticsOverviewsGenerateCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
- * Injecting the container in the `GoogleAnalyticsOverviewsListCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
- * Injecting the container in the `GoogleAnalyticsSegmentsListCommand` is deprecated and will be removed in 6.0. Inject the required parameters instead.
+ * `DashboardCommand::__construct()` now takes an instance of `WidgetManager` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsConfigFlushCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsConfigsListCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsDataCollectCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsDataFlushCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsOverviewsGenerateCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsOverviewsListCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsSegmentsListCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
 
 FormBundle
 -----------
