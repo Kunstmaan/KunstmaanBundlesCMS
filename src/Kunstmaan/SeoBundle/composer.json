@@ -2,7 +2,13 @@
     "name": "kunstmaan/seo-bundle",
     "type": "symfony-bundle",
     "description": "Annotating content with metadata for social sharing and seo purposes cannot be overlooked nowadays. The KunstmaanSeoBundle contains default editing functionality for OpenGraph data, meta descriptions, keywords and titles and Metriweb tags. Because the metatagging and tracking options are always changing, a free field to add custom header information is provided as well.",
-    "keywords": [ "kunstmaan", "seo", "cms", "opengraph", "meta"],
+    "keywords": [
+        "kunstmaan",
+        "seo",
+        "cms",
+        "opengraph",
+        "meta"
+    ],
     "homepage": "https://github.com/Kunstmaan/KunstmaanSeoBundle",
     "license": "MIT",
     "authors": [
@@ -14,20 +20,37 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "gedmo/doctrine-extensions": "2.3.*",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/media-bundle": "~3.2",
-        "kunstmaan/utilities-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "php": "^5.6|^7.0",
+        "symfony/config": "^3.4",
+        "symfony/dependency-injection": "^3.4",
+        "symfony/form": "^3.4",
+        "symfony/http-foundation": "^3.4",
+        "symfony/http-kernel": "^3.4",
+        "symfony/validator": "^3.4",
+        "symfony/options-resolver": "^3.4",
+        "symfony/framework-bundle": "^3.4",
+        "symfony/security-bundle": "^3.4",
+        "symfony/yaml": "^3.4",
+        "gedmo/doctrine-extensions": "^2.3",
+        "friendsofsymfony/user-bundle": "^2.0",
+        "symfony/twig-bundle": "^3.4",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "~1.9"
+    },
+    "suggest": {
+        "kunstmaan/admin-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/node-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/media-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/utilities-bundle": "^5.0 - to be put into require-dev when ready"
     },
     "autoload": {
-        "psr-4": { "Kunstmaan\\SeoBundle\\": "" }
+        "psr-4": {
+            "Kunstmaan\\SeoBundle\\": ""
+        }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }
