@@ -2,7 +2,11 @@
     "name": "kunstmaan/sitemap-bundle",
     "type": "symfony-bundle",
     "description": "A sitemap bundle to generate a sitemap for your Kunstmaan bundles website based on its Nodes",
-    "keywords": [ "kunstmaan", "cms", "sitemap"],
+    "keywords": [
+        "kunstmaan",
+        "cms",
+        "sitemap"
+    ],
     "homepage": "https://github.com/Kunstmaan/KunstmaanSitemapBundle",
     "license": "MIT",
     "authors": [
@@ -13,19 +17,36 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "symfony/symfony": "~2.8",
-        "kunstmaan/admin-bundle": "~3.2",
-        "kunstmaan/node-bundle": "~3.2",
-        "friendsofsymfony/user-bundle": "2.0.*@dev"
+        "php": "^5.6|^7.0",
+        "symfony/config": "^3.4",
+        "symfony/dependency-injection": "^3.4",
+        "symfony/http-foundation": "^3.4",
+        "symfony/http-kernel": "^3.4",
+        "symfony/framework-bundle": "^3.4",
+        "symfony/twig-bundle": "^3.4",
+        "friendsofsymfony/user-bundle": "^2.0",
+        "sensio/framework-extra-bundle": "^5.1",
+        "doctrine/orm": "^2.5"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.4",
+        "matthiasnoback/symfony-config-test": "^4.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^3.0"
+    },
+    "suggest": {
+        "kunstmaan/admin-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/node-bundle": "^5.0 - to be put into require-dev when ready",
+        "kunstmaan/pagepart-bundle": "^5.0 - to be put into require-dev when ready"
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-4": { "Kunstmaan\\SitemapBundle\\": "" }
+        "psr-4": {
+            "Kunstmaan\\SitemapBundle\\": ""
+        }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }
