@@ -11,9 +11,8 @@ use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
-use Kunstmaan\NodeBundle\Entity\PageInterface;
-use Kunstmaan\NodeBundle\Helper\RenderContext;
 use Kunstmaan\NodeSearchBundle\Event\IndexNodeEvent;
+use Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper;
 use Kunstmaan\NodeSearchBundle\Helper\IndexablePagePartsService;
 use Kunstmaan\NodeSearchBundle\Helper\SearchViewTemplateInterface;
 use Kunstmaan\PagePartBundle\Helper\HasPagePartsInterface;
@@ -23,7 +22,6 @@ use Kunstmaan\SearchBundle\Search\AnalysisFactoryInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
@@ -65,7 +63,11 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /** @var LoggerInterface */
     protected $logger = null;
 
-    /** @var IndexablePagePartsService */
+    /**
+     * @var IndexablePagePartsService
+     *
+     * @deprecated since 5.1. Moved to "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper".
+     */
     protected $indexablePagePartsService;
 
     /** @var DomainConfigurationInterface */
@@ -86,6 +88,9 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /** @var array */
     protected $nodeRefs = [];
 
+    /** @var SearchRenderHelper */
+    private $searchRenderHelper;
+
     /**
      * @param ContainerInterface      $container
      * @param SearchProviderInterface $searchProvider
@@ -99,6 +104,7 @@ class NodePagesConfiguration implements SearchConfigurationInterface
         $this->indexType           = $type;
         $this->searchProvider      = $searchProvider;
         $this->domainConfiguration = $this->container->get('kunstmaan_admin.domain_configuration');
+        $this->searchRenderHelper   = $this->container->get(SearchRenderHelper::class);
         $this->locales             = $this->domainConfiguration->getBackendLocales();
         $this->analyzerLanguages   = $this->container->getParameter('analyzer_languages');
         $this->em                  = $this->container->get('doctrine')->getManager();
@@ -116,6 +122,8 @@ class NodePagesConfiguration implements SearchConfigurationInterface
 
     /**
      * @param IndexablePagePartsService $indexablePagePartsService
+     *
+     * @deprecated since 5.1. Moved to "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper".
      */
     public function setIndexablePagePartsService(IndexablePagePartsService $indexablePagePartsService)
     {
@@ -577,33 +585,17 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param EngineInterface             $renderer
      *
      * @return string
+     *
+     * @deprecated since 5.1. Use "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper::renderCustomSearchView" instead.
      */
     protected function renderCustomSearchView(
         NodeTranslation $nodeTranslation,
         SearchViewTemplateInterface $page,
         EngineInterface $renderer
     ) {
-        $view = $page->getSearchView();
-        $renderContext = new RenderContext([
-            'locale'          => $nodeTranslation->getLang(),
-            'page'            => $page,
-            'indexMode'       => true,
-            'nodetranslation' => $nodeTranslation,
-        ]);
+        @trigger_error(sprintf('The "%s" method is deprecated in NodeSearchBundle 5.1 and will be removed in NodeSearchBundle 6.0. Use "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper::renderCustomSearchView" instead.', __METHOD__), E_USER_DEPRECATED);
 
-        if ($page instanceof PageInterface) {
-            $request = $this->container->get('request_stack')->getCurrentRequest();
-            $page->service($this->container, $request, $renderContext);
-        }
-
-        $content = $this->removeHtml(
-            $renderer->render(
-                $view,
-                $renderContext->getArrayCopy()
-            )
-        );
-
-        return $content;
+        return $this->searchRenderHelper->renderCustomSearchView($nodeTranslation, $page, $renderer);
     }
 
     /**
@@ -615,27 +607,17 @@ class NodePagesConfiguration implements SearchConfigurationInterface
      * @param EngineInterface       $renderer
      *
      * @return string
+     *
+     * @deprecated since 5.1. Use "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper::renderDefaultSearchView" instead.
      */
     protected function renderDefaultSearchView(
         NodeTranslation $nodeTranslation,
         HasPagePartsInterface $page,
         EngineInterface $renderer
     ) {
-        $pageparts = $this->indexablePagePartsService->getIndexablePageParts($page);
-        $view      = 'KunstmaanNodeSearchBundle:PagePart:view.html.twig';
-        $content   = $this->removeHtml(
-            $renderer->render(
-                $view,
-                array(
-                    'locale'    => $nodeTranslation->getLang(),
-                    'page'      => $page,
-                    'pageparts' => $pageparts,
-                    'indexMode' => true
-                )
-            )
-        );
+        @trigger_error(sprintf('The "%s" method is deprecated in NodeSearchBundle 5.1 and will be removed in NodeSearchBundle 6.0. since 5.1. Use "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper::renderDefaultSearchView" instead.', __METHOD__), E_USER_DEPRECATED);
 
-        return $content;
+        return $this->searchRenderHelper->renderDefaultSearchView($nodeTranslation, $page, $renderer);
     }
 
     /**
@@ -675,32 +657,17 @@ class NodePagesConfiguration implements SearchConfigurationInterface
     /**
      * Removes all HTML markup & decode HTML entities
      *
+     * @deprecated since 5.1. Use "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper::removeHtml" instead.
+     *
      * @param $text
      *
      * @return string
      */
     protected function removeHtml($text)
     {
-        if (!trim($text)) {
-            return '';
-        }
+        @trigger_error(sprintf('The "%s" method is deprecated in NodeSearchBundle 5.1 and will be removed in NodeSearchBundle 6.0. Use "Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper::removeHtml" instead.', __METHOD__), E_USER_DEPRECATED);
 
-        // Remove Styles and Scripts
-        $crawler = new Crawler($text);
-        $crawler->filter('style, script')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });
-        $text = $crawler->html();
-
-        // Remove HTML markup
-        $result = strip_tags($text);
-
-        // Decode HTML entities
-        $result = trim(html_entity_decode($result, ENT_QUOTES));
-
-        return $result;
+        return $this->searchRenderHelper->removeHtml($text);
     }
 
     /**

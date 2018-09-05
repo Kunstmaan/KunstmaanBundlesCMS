@@ -49,3 +49,6 @@ services:
     kunstmaan_node_search.search.service:
         class: "%kunstmaan_node_search.search_service.class%"
         arguments: ['@service_container', '@request_stack']
+
+    Kunstmaan\NodeSearchBundle\Helper\SearchRenderHelper:
+        arguments: ['@service_container', '@request_stack','@kunstmaan_node_search.service.indexable_pageparts']

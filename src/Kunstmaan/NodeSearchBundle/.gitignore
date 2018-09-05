@@ -3,5 +3,6 @@
 composer.lock
 composer.phar
 vendor/*
+Tests/_support/_generated/*
 
 *.orig

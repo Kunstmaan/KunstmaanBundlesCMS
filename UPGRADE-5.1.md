@@ -85,6 +85,10 @@ NodeBundle
  * Button to export page template is now disabled by default. You can enable it by setting the `enable_export_page_template` value to true inside the `kunstmaan_node` configuration.
  * Injecting the `TemplateEngine` as the first argument in the `RenderContextListener` is deprecated and will be removed in 6.0. Remove the `TemplateEngine` as the first service argument.
 
+NodeSearchBundle
+----------------
+ * The unused methods `removeHtml`, `renderDefaultSearchView` and `renderCustomSearchView` of `NodePagesConfiguration` are deprecated and will be removed in 6.0. Use the replacing/corresponding methods from `SearchRenderHelper` instead.
+ 
 SearchBundle
 ------------
 
