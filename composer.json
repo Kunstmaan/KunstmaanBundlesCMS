@@ -38,7 +38,7 @@
         "gedmo/doctrine-extensions": "^2.4.34",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "liip/imagine-bundle": "~1.7",
+        "liip/imagine-bundle": "^2.0",
         "imagine/imagine": "~0.6",
         "knplabs/knp-gaufrette-bundle": "~0.1",
         "symfony-cmf/routing-bundle": "~2.0",

@@ -125,3 +125,37 @@ services:
         calls:
             - [setMimeTypeGuesser, ['@kunstmaan_media.mimetype_guesser.factory']]
             - [setExtensionGuesser, ['@kunstmaan_media.extension_guesser.factory']]
+
+    kunstmaan_media.imagine.filter.loader.background:
+        class: '%liip_imagine.filter.loader.background.class%'
+        arguments:
+            - '@liip_imagine'
+        tags:
+            - { name: 'liip_imagine.filter.loader', loader: 'background' }
+
+    Kunstmaan\MediaBundle\Helper\Imagine\ImagineController:
+        arguments:
+            - '@liip_imagine.service.filter'
+            - '@liip_imagine.data.manager'
+            - '@liip_imagine.cache.signer'
+        tags:
+            - { name: 'controller.service_arguments' }
+        public: true
+
+    Kunstmaan\MediaBundle\Helper\Imagine\WebPathResolver:
+        arguments:
+            - '@filesystem'
+            - '@router.request_context'
+            - ~ # will be injected by WebPathResolverFactory
+            - ~ # will be injected by WebPathResolverFactory
+            - '@liip_imagine.filter.configuration'
+        public: true
+        abstract: true
+
+    Kunstmaan\MediaBundle\Helper\Imagine\CacheManager:
+        arguments:
+            - '@liip_imagine.filter.configuration'
+            - '@router'
+            - '@liip_imagine.cache.signer'
+            - '@event_dispatcher'
+            - '%liip_imagine.cache.resolver.default%'
