@@ -122,7 +122,7 @@ EOT
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
 
-        if (null !== $locale) {
+        if (null === $locale) {
             $locale = $this->defaultLocale;
         }
         $command = $this->getApplication()->find('fos:user:create');
