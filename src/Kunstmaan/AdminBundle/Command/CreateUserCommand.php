@@ -62,6 +62,12 @@ EOT
             );
     }
 
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->groups = $this->getGroups();
+    }
+
+
     /**
      * Executes the current command.
      *
@@ -217,16 +223,6 @@ EOT
             $input->setArgument('locale', $locale);
         }
 
-        $this->groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
-
-        // reindexing the array, using the db id as the key
-        $newGroups = [];
-        foreach($this->groups as $group) {
-            $newGroups[$group->getId()] = $group;
-        }
-
-        $this->groups = $newGroups;
-
         if (!$input->getOption('group')) {
             $question = new ChoiceQuestion(
                 'Please enter the group(s) the user should be a member of (multiple possible, separated by comma):',
@@ -259,5 +255,18 @@ EOT
 
             $input->setOption('group', $groups);
         }
+    }
+
+    private function getGroups()
+    {
+        $groups = $this->getContainer()->get('fos_user.group_manager')->findGroups();
+
+        // reindexing the array, using the db id as the key
+        $newGroups = [];
+        foreach($groups as $group) {
+            $newGroups[$group->getId()] = $group;
+        }
+
+        return $newGroups;
     }
 }
