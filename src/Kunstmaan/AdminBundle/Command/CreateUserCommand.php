@@ -83,7 +83,7 @@ EOT
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
 
-        if (null !== $locale) {
+        if (null === $locale) {
             $locale = $this->getContainer()->getParameter('kunstmaan_admin.default_admin_locale');
         }
         $command = $this->getApplication()->find('fos:user:create');
