@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\FormBundle\Form;
+namespace {{ namespace }}\Form\PageParts;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -9,9 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * This class represents the type for the SubleLineTextPagePart
+ * {{ pagepart }}AdminType
  */
-class SingleLineTextPagePartAdminType extends AbstractType
+class {{ pagepart }}AdminType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder The form builder
@@ -24,40 +24,32 @@ class SingleLineTextPagePartAdminType extends AbstractType
                 'label',
                 TextType::class,
                 [
+                    'label' => 'kuma_form.form.checkbox_page_part.label.label',
                     'required' => true,
-                    'label' => 'kuma_form.form.single_line_text_page_part.label.label',
                 ]
             )
             ->add(
                 'required',
                 CheckboxType::class,
                 [
+                    'label' => 'kuma_form.form.checkbox_page_part.required.label',
                     'required' => false,
-                    'label' => 'kuma_form.form.single_line_text_page_part.required.label',
                 ]
             )
             ->add(
                 'errormessage_required',
                 TextType::class,
                 [
+                    'label' => 'kuma_form.form.checkbox_page_part.errormessage_required.label',
                     'required' => false,
-                    'label' => 'kuma_form.form.single_line_text_page_part.errormessage_required.label',
                 ]
             )
             ->add(
-                'regex',
+                'internalName',
                 TextType::class,
                 [
                     'required' => false,
-                    'label' => 'kuma_form.form.single_line_text_page_part.regex.label',
-                ]
-            )
-            ->add(
-                'errormessage_regex',
-                TextType::class,
-                [
-                    'required' => false,
-                    'label' => 'kuma_form.form.single_line_text_page_part.errormessage_regex.label',
+                    'label' => 'kuma_form.form.form_page_part.internal_name',
                 ]
             );
     }
@@ -67,7 +59,7 @@ class SingleLineTextPagePartAdminType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'kunstmaan_formbundle_singlelinetextpageparttype';
+        return '{{ pagepart|lower }}type';
     }
 
     /**
@@ -75,6 +67,10 @@ class SingleLineTextPagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart']);
+        $resolver->setDefaults(
+            [
+                'data_class' => '{{ namespace }}\Entity\PageParts\{{ pagepart }}',
+            ]
+        );
     }
 }

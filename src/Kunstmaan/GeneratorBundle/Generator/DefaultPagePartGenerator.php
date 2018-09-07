@@ -129,6 +129,14 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
             true
         );
 
+        $this->renderSingleFile(
+            $this->skeletonDir . '/Resources/views/PageParts/' . $this->entity . '/',
+            $this->bundle->getPath() . '/Resources/views/PageParts/' . $this->entity . '/',
+            'admin-view.html.twig',
+            $params,
+            true
+        );
+
         $this->assistant->writeLine('Generating ' . $this->entity . ' template:     <info>OK</info>');
     }
 
