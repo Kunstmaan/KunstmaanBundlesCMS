@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\FormBundle\Tests\DependencyInjection;
 
+use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 use Kunstmaan\FormBundle\DependencyInjection\KunstmaanFormExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanFormExtensionTest

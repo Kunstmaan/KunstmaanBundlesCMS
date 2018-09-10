@@ -4,7 +4,7 @@ namespace Kunstmaan\NodeSearchBundle\Tests\DependencyInjection;
 
 use Kunstmaan\NodeSearchBundle\DependencyInjection\KunstmaanNodeSearchExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanNodeSearchExtensionTest

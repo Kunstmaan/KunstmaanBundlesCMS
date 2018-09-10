@@ -1,5 +1,5 @@
 <?php
-namespace AdminBundle;
+namespace Kunstmaan\AdminBundle\Tests;
 
 /**
  * Inherited Methods

@@ -4,7 +4,7 @@ namespace Kunstmaan\SitemapBundle\Tests\DependencyInjection;
 
 use Kunstmaan\SitemapBundle\DependencyInjection\KunstmaanSitemapExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanSiteMapExtensionTest

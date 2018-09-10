@@ -4,7 +4,7 @@ namespace Kunstmaan\MultiDomainBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MultiDomainBundle\DependencyInjection\KunstmaanMultiDomainExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
+use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanMultiDomainExtensionTest

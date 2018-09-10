@@ -2,9 +2,9 @@
 
 namespace Kunstmaan\ArticleBundle\Tests\DependencyInjection;
 
+use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 use Kunstmaan\ArticleBundle\DependencyInjection\KunstmaanArticleExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
 
 /**
  * Class KunstmaanArticleExtensionTest
