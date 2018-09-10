@@ -1,5 +1,5 @@
 <?php
-namespace GeneratorBundle;
+namespace Kunstmaan\GeneratorBundle\Tests;
 
 /**
  * Inherited Methods

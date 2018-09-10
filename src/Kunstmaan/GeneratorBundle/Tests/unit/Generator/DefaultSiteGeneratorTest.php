@@ -32,12 +32,12 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
         ;
 
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $container);
-        $generator->generate($bundle, '', __DIR__ . '/../data', false);
+        $generator->generate($bundle, '', __DIR__ . '/../../_data', false);
 
-        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error.html.twig');
-        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error404.html.twig');
-        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error500.html.twig');
-        unlink(__DIR__ . '/../data/app/Resources/TwigBundle/views/Exception/error503.html.twig');
+        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error.html.twig');
+        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error404.html.twig');
+        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error500.html.twig');
+        unlink(__DIR__ . '/../../_data/app/Resources/TwigBundle/views/Exception/error503.html.twig');
     }
 
     protected function getBundle($path)
