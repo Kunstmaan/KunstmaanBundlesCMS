@@ -1,26 +1,26 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Form;
+namespace Kunstmaan\FormBundle\Tests\Form;
 
-use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
-use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
+use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
+use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
- * Class ChoicePagePartAdminTypeTest
+ * Class SubmitButtonPagePartAdminTypeTest
  */
-class ChoicePagePartAdminTypeTest extends TypeTestCase
+class SubmitButtonPagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()
     {
         $formData = [
-            'choices' => 'hello',
+            'label' => 'Launch!',
         ];
 
-        $form = $this->factory->create(ChoicePagePartAdminType::class);
+        $form = $this->factory->create(SubmitButtonPagePartAdminType::class);
 
-        $object = new ChoicePagePart();
-        $object->setChoices('hello');
+        $object = new SubmitButtonPagePart();
+        $object->setLabel('Launch!');
 
         $form->submit($formData);
 

@@ -1,34 +1,30 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Form;
+namespace Kunstmaan\FormBundle\Tests\Form;
 
-use Kunstmaan\FormBundle\Entity\PageParts\MultiLineTextPagePart;
-use Kunstmaan\FormBundle\Form\MultiLineTextPagePartAdminType;
+use Kunstmaan\FormBundle\Entity\PageParts\CheckboxPagePart;
+use Kunstmaan\FormBundle\Form\CheckboxPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
- * Class MultiLineTextPagePartAdminTypeTest
+ * Class CheckboxPagePartAdminTypeTest
  */
-class MultiLineTextPagePartAdminTypeTest extends TypeTestCase
+class CheckboxPagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()
     {
         $formData = [
             'required' => false,
-            'label' => 'type in this box!',
+            'label' => 'check this box!',
             'errormessage_required' => 'fill in the form',
-            'regex' => '#\w+#',
-            'errormessage_regex' => 'oops',
         ];
 
-        $form = $this->factory->create(MultiLineTextPagePartAdminType::class);
+        $form = $this->factory->create(CheckboxPagePartAdminType::class);
 
-        $object = new MultiLineTextPagePart();
+        $object = new CheckboxPagePart();
         $object->setRequired(false);
         $object->setErrorMessageRequired('fill in the form');
-        $object->setLabel('type in this box!');
-        $object->setRegex('#\w+#');
-        $object->setErrorMessageRegex('oops');
+        $object->setLabel('check this box!');
 
         $form->submit($formData);
 

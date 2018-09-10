@@ -1,12 +1,11 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Form;
+namespace Kunstmaan\FormBundle\Tests\Form;
 
+use Kunstmaan\FormBundle\Entity\AbstractFormPage;
 use Kunstmaan\FormBundle\Form\AbstractFormPageAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Kunstmaan\FormBundle\Tests\Entity\FormPage;
-
 
 class NonAbstractFormPageAdminType extends AbstractFormPageAdminType
 {
@@ -14,8 +13,33 @@ class NonAbstractFormPageAdminType extends AbstractFormPageAdminType
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults(array(
-            'data_class' => 'Kunstmaan\FormBundle\Tests\Entity\FormPage',
+            'data_class' => 'Kunstmaan\FormBundle\Tests\Form\FormPage',
         ));
+    }
+}
+
+class FormPage extends AbstractFormPage
+{
+    public function getPossibleChildTypes()
+    {
+        return null;
+    }
+    public function getPagePartAdminConfigurations()
+    {
+        return [
+            [
+                'name'  => 'ContentPage',
+                'class' => '{{ namespace }}\Entity\Pages\ContentPage'
+            ],
+            [
+                'name'  => 'FormPage',
+                'class' => '{{ namespace }}\Entity\Pages\FormPage'
+            ]
+        ];
+    }
+    public function getDefaultView()
+    {
+        return 'some.twig';
     }
 }
 
@@ -47,8 +71,6 @@ class AbstractFormPageAdminTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertTrue($form->isValid());
         $this->assertEquals($formPage, $form->getData());
-
-
 
         $view = $form->createView();
         $children = $view->children;

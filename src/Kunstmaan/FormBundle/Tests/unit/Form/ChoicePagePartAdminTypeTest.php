@@ -1,26 +1,26 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Form;
+namespace Kunstmaan\FormBundle\Tests\Form;
 
-use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
-use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
+use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
+use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
- * Class TextFormSubmissionTypeTest
+ * Class ChoicePagePartAdminTypeTest
  */
-class TextFormSubmissionTypeTest extends TypeTestCase
+class ChoicePagePartAdminTypeTest extends TypeTestCase
 {
     public function testFormType()
     {
         $formData = [
-            'value' => 'ball of string',
+            'choices' => 'hello',
         ];
 
-        $form = $this->factory->create(TextFormSubmissionType::class);
+        $form = $this->factory->create(ChoicePagePartAdminType::class);
 
-        $object = new TextFormSubmissionField();
-        $object->setValue('ball of string');
+        $object = new ChoicePagePart();
+        $object->setChoices('hello');
 
         $form->submit($formData);
 

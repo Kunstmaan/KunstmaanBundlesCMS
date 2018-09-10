@@ -2,22 +2,23 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
+use Codeception\Stub;
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-use Kunstmaan\FormBundle\AdminList\FormSubmissionAdminListConfigurator;
-use Kunstmaan\NodeBundle\Entity\Node;
-use Kunstmaan\NodeBundle\Entity\NodeTranslation;
-use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
-use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
-use Kunstmaan\FormBundle\Tests\Entity\FakePage;
+use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 
 /**
  * This test tests the FormPageAdminListConfigurator
  */
-class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
+class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
 {
+    const PERMISSION_VIEW = 'view';
+
     /**
-     * @var FormSubmissionAdminListConfigurator
+     * @var FormPageAdminListConfigurator
      */
     protected $object;
 
@@ -28,11 +29,12 @@ class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCas
     protected function setUp()
     {
         $em = $this->getMockedEntityManager();
-        $node = new Node();
-        $node->setId(666);
-        $nt = new NodeTranslation();
-        $nt->setNode($node);
-        $this->object = new FormSubmissionAdminListConfigurator($em, $nt);
+        $tokenStorage = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        $roleHierarchy = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
+          ->getMock();
+        $aclHelper = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper', array(), array($em, $tokenStorage, $roleHierarchy));
+
+        $this->object = new FormPageAdminListConfigurator($em, $aclHelper, self::PERMISSION_VIEW);
     }
 
     /**
@@ -42,13 +44,19 @@ class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCas
      */
     protected function getMockedEntityManager()
     {
+        $repository = Stub::make(EntityRepository::class, [
+          'find' => null
+        ]);
+        $configuration = Stub::make(Configuration::class, [
+           'getQuoteStrategy' => null
+        ]);
         $emMock  = $this->createMock('\Doctrine\ORM\EntityManager', array('getRepository', 'getConfiguration', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
         $emMock->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue(new TestRepository()));
+            ->will($this->returnValue($repository));
         $emMock->expects($this->any())
             ->method('getConfiguration')
-            ->will($this->returnValue(new TestConfiguration()));
+            ->will($this->returnValue($configuration));
         $emMock->expects($this->any())
             ->method('getClassMetadata')
             ->will($this->returnValue((object) array('name' => 'aClass')));
@@ -76,40 +84,30 @@ class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCas
             ->method('andWhere')
             ->will($this->returnSelf());
 
-        $queryBuilder->expects($this->any())
-            ->method('setParameter')
-            ->will($this->returnSelf());
-
         /* @var $queryBuilder QueryBuilder */
         $this->object->adaptQueryBuilder($queryBuilder);
     }
 
-
-
     public function testFixedGetters()
     {
-        $item = new FakePage();
-        $item->setId(123);
+        $item = Stub::makeEmpty(AbstractPage::class, ['getId' => 123]);
         $this->assertEquals('', $this->object->getAddUrlFor([]));
-        $this->assertEquals('KunstmaanFormBundle', $this->object->getBundleName());
-        $this->assertEquals('FormSubmission', $this->object->getEntityName());
+        $this->assertEquals('KunstmaanNodeBundle', $this->object->getBundleName());
+        $this->assertEquals('NodeTranslation', $this->object->getEntityName());
+        $this->assertEquals('KunstmaanFormBundle:FormSubmissions', $this->object->getControllerPath());
         $this->assertCount(0, $this->object->getDeleteUrlFor($item));
-        $this->assertCount(2, $this->object->getIndexUrl());
+        $this->assertCount(1, $this->object->getIndexUrl());
         $this->assertCount(2, $this->object->getEditUrlFor($item));
-        $this->assertCount(2, $this->object->getExportUrl());
         $this->assertFalse($this->object->canAdd());
         $this->assertFalse($this->object->canEdit($item));
         $this->assertFalse($this->object->canDelete($item));
-        $this->assertTrue($this->object->canExport());
     }
-
-
 
     public function testBuildFilters()
     {
         $this->object->buildFilters();
         $filters = $this->object->getFilterBuilder()->getFilterDefinitions();
-        $this->assertCount(3, $filters);
+        $this->assertCount(2, $filters);
     }
 
     public function testBuildFields()
@@ -121,8 +119,7 @@ class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCas
 
     public function testBuildItemActions()
     {
-        $item = new FakePage();
-        $item->setId(1);
+        $item = Stub::makeEmpty(AbstractPage::class, ['getId' => 123]);
         $this->object->buildItemActions();
         $actions = $this->object->getItemActions();
         $this->assertCount(1, $actions);
