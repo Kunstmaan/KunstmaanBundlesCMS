@@ -42,18 +42,20 @@ class NodeChoiceType extends AbstractType
                 $queryBuilder = call_user_func($queryBuilder, $options['em']->getRepository($options['class']));
             }
 
+            $queryBuilder
+                ->select('n, nt')
+                ->innerJoin('n.nodeTranslations', 'nt')
+                ->innerJoin('nt.publicNodeVersion', 'nv')
+                ->andWhere('nt.online = :online')
+                ->andWhere('nt.lang = :lang')
+                ->andWhere('n.deleted != 1')
+                ->setParameter('lang', $options['locale'] ? $options['locale'] : $this->getCurrentLocale())
+                ->setParameter('online', $options['online']);
+
             if (!empty($options['page_class'])) {
                 $queryBuilder
-                    ->select('n, nt')
-                    ->innerJoin('n.nodeTranslations', 'nt')
-                    ->innerJoin('nt.publicNodeVersion', 'nv')
-                    ->andWhere('nt.online = :online')
-                    ->andWhere('nt.lang = :lang')
-                    ->andWhere('n.deleted != 1')
                     ->andWhere('n.refEntityName IN(:refEntityName)')
-                    ->setParameter('lang', $options['locale'] ? $options['locale'] : $this->getCurrentLocale())
-                    ->setParameter('refEntityName', $options['page_class'])
-                    ->setParameter('online', $options['online']);
+                    ->setParameter('refEntityName', $options['page_class']);
             }
 
             return $queryBuilder;
