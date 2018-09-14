@@ -407,9 +407,10 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
-		$repositoryName = $this->getAdminListRepositoryName($configurator);
 
-		$repo = $em->getRepository($repositoryName);
+        $repositoryName = $this->getAdminListRepositoryName($configurator);
+
+        $repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
         $setter = "set".ucfirst($sortableField);
@@ -442,9 +443,10 @@ abstract class AdminListController extends Controller
     {
         $em = $this->getEntityManager();
         $sortableField = $configurator->getSortableField();
-		$repositoryName = $this->getAdminListRepositoryName($configurator);
 
-		$repo = $em->getRepository($repositoryName);
+        $repositoryName = $this->getAdminListRepositoryName($configurator);
+
+        $repo = $em->getRepository($repositoryName);
         $item = $repo->find($entityId);
 
         $setter = "set".ucfirst($sortableField);
@@ -544,15 +546,18 @@ abstract class AdminListController extends Controller
         }
     }
 
-	/**
-	 * @param AbstractAdminListConfigurator $configurator
-	 * @return string
-	 */
-	protected function getAdminListRepositoryName(AbstractAdminListConfigurator $configurator) {
-		if(class_implements($configurator->getRepositoryName(),HasNodeInterface::class)) {
-			return NodeTranslation::class;
-		}
+    /**
+     * @param AbstractAdminListConfigurator $configurator
+     * @return string
+     */
+    protected function getAdminListRepositoryName(AbstractAdminListConfigurator $configurator) {
+        $em = $this->getEntityManager();
+        $className = $em->getClassMetadata($configurator->getRepositoryName())->getName();
 
-		return $configurator->getRepositoryName();
-	}
+        if(class_implements($className,HasNodeInterface::class)) {
+            return NodeTranslation::class;
+        }
+
+        return $configurator->getRepositoryName();
+    }
 }
