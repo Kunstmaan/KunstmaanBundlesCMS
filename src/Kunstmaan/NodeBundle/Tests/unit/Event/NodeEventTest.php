@@ -2,13 +2,14 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
+use Codeception\Stub;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Kunstmaan\NodeBundle\Tests\Entity\TestEntity;
 
 /**
  * Class NodeEventTest
@@ -24,13 +25,14 @@ class NodeEventTest extends PHPUnit_Framework_TestCase
         $nodeTranslation = $this->createMock(NodeTranslation::class);
         /** @var NodeVersion $nodeVersion */
         $nodeVersion = $this->createMock(NodeVersion::class);
-        $page = new TestEntity();
+        /** @var HasNodeInterface $page */
+        $page = Stub::makeEmpty(HasNodeInterface::class);
 
         $event = new NodeEvent($node, $nodeTranslation, $nodeVersion, $page);
 
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
-        $this->assertInstanceOf(TestEntity::class, $event->getPage());
+        $this->assertInstanceOf(get_class($page), $event->getPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());
 
         $event->setNode($node);
@@ -41,7 +43,7 @@ class NodeEventTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Node::class, $event->getNode());
         $this->assertInstanceOf(NodeTranslation::class, $event->getNodeTranslation());
-        $this->assertInstanceOf(TestEntity::class, $event->getPage());
+        $this->assertInstanceOf(get_class($page), $event->getPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getNodeVersion());
         $this->assertInstanceOf(Response::class, $event->getResponse());
     }

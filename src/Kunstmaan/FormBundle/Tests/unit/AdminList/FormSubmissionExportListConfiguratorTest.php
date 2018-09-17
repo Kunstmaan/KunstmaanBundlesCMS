@@ -5,6 +5,7 @@ namespace Kunstmaan\FormBundle\Tests\AdminList;
 use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
@@ -12,6 +13,7 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionFi
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
+use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 
 class FakeFormSubmission extends FormSubmission
 {
@@ -47,8 +49,6 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
     }
 
     /**
-     * https://gist.github.com/1331789
-     *
      * @return \Doctrine\ORM\EntityManager
      */
     protected function getMockedEntityManager()
@@ -93,33 +93,25 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->method('getQuery')
             ->willReturn($query);
 
-        $repository = Stub::make(EntityRepository::class, [
-            'find' => null
-        ]);
         $configuration = Stub::make(Configuration::class, [
             'getQuoteStrategy' => null
         ]);
-        $emMock  = $this->createMock('\Doctrine\ORM\EntityManager', [], [], '', false);
-        $emMock->expects($this->any())
-            ->method('getRepository')
-            ->will($this->returnValue($repository));
-        $emMock->expects($this->any())
-            ->method('getConfiguration')
-            ->will($this->returnValue($configuration));
-        $emMock->expects($this->any())
-            ->method('getClassMetadata')
-            ->will($this->returnValue((object) array('name' => 'aClass')));
-        $emMock->expects($this->any())
-            ->method('persist')
-            ->will($this->returnValue(null));
-        $emMock->expects($this->any())
-            ->method('flush')
-            ->will($this->returnValue(null));
-        $emMock->expects($this->any())
-            ->method('createQueryBuilder')
-            ->will($this->returnValue($queryBuilder));
+        $repository = Stub::make(EntityRepository::class, [
+            'find' => null,
+            'findBy' => null,
+            'findOneBy' => null,
+        ]);
+        /** @var \Doctrine\ORM\EntityManager $emMock */
+        $emMock = Stub::make(EntityManager::class, [
+            'getRepository' => $repository,
+            'getClassMetaData' => (object)['name' => 'aClass'],
+            'getConfiguration' => $configuration,
+            'clear' => null,
+            'createQueryBuilder' => $queryBuilder,
+            'persist' => null,
+            'flush' => null
+        ]);
 
-        /** @var  \Doctrine\ORM\EntityManager $emMock */
         return $emMock;
     }
 

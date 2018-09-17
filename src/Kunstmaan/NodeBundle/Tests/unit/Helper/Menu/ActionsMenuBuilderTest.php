@@ -2,6 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper\Menu;
 
+use Codeception\Stub;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Knp\Menu\Integration\Symfony\RoutingExtension;
 use Knp\Menu\MenuFactory;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -9,7 +12,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder;
 use Kunstmaan\NodeBundle\Helper\PagesConfiguration;
-use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -47,29 +49,26 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * https://gist.github.com/1331789
+     * @throws \Exception
      *
      * @return \Doctrine\ORM\EntityManager
      */
     protected function getMockedEntityManager()
     {
-        $emMock = $this->createMock('\Doctrine\ORM\EntityManager',
-            array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
-        $emMock->expects($this->any())
-            ->method('getRepository')
-            ->will($this->returnValue(new TestRepository()));
-        $emMock->expects($this->any())
-            ->method('getClassMetadata')
-            ->will($this->returnValue((object)array('name' => 'aClass')));
-        $emMock->expects($this->any())
-            ->method('persist')
-            ->will($this->returnValue(null));
-        $emMock->expects($this->any())
-            ->method('flush')
-            ->will($this->returnValue(null));
-
+        $repository = Stub::make(EntityRepository::class, [
+            'find' => null,
+            'findBy' => null,
+            'findOneBy' => null,
+        ]);
         /** @var \Doctrine\ORM\EntityManager $emMock */
-        return $emMock;  // it tooks 13 lines to achieve mock!
+        $emMock = Stub::make(EntityManager::class, [
+            'getRepository' => $repository,
+            'getClassMetaData' => (object)['name' => 'aClass'],
+            'persist' => null,
+            'flush' => null
+        ]);
+
+        return $emMock;
     }
 
     public function testCreateSubActionsMenu()

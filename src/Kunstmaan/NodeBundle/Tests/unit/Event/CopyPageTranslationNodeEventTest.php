@@ -2,12 +2,13 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Event;
 
+use Codeception\Stub;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use PHPUnit_Framework_TestCase;
-use Kunstmaan\NodeBundle\Tests\Entity\TestEntity;
 
 /**
  * Class ConfigureActionMenuEventTest
@@ -25,13 +26,14 @@ class CopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
         $nodeTranslation = $this->createMock(NodeTranslation::class);
         /** @var NodeVersion $nodeVersion */
         $nodeVersion = $this->createMock(NodeVersion::class);
-        $page = new TestEntity();
+        /** @var HasNodeInterface $page */
+        $page = Stub::makeEmpty(HasNodeInterface::class);
 
         $event = new CopyPageTranslationNodeEvent($node, $nodeTranslation, $nodeVersion, $page, $nodeTranslation, $nodeVersion, $page, 'nl');
 
         $this->assertEquals('nl', $event->getOriginalLanguage());
         $this->assertInstanceOf(NodeTranslation::class, $event->getOriginalNodeTranslation());
-        $this->assertInstanceOf(TestEntity::class, $event->getOriginalPage());
+        $this->assertInstanceOf(get_class($page), $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
 
         $event->setOriginalLanguage('nl');
@@ -41,7 +43,7 @@ class CopyPageTranslationNodeEventTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('nl', $event->getOriginalLanguage());
         $this->assertInstanceOf(NodeTranslation::class, $event->getOriginalNodeTranslation());
-        $this->assertInstanceOf(TestEntity::class, $event->getOriginalPage());
+        $this->assertInstanceOf(get_class($page), $event->getOriginalPage());
         $this->assertInstanceOf(NodeVersion::class, $event->getOriginalNodeVersion());
     }
 

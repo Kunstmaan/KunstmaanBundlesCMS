@@ -1,5 +1,5 @@
 <?php
-namespace NodeBundle;
+namespace Kunstmaan\NodeBundle\Tests;
 
 /**
  * Inherited Methods
