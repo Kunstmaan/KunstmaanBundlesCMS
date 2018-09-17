@@ -4,7 +4,7 @@ namespace Kunstmaan\LeadGenerationBundle\Tests\Entity\Rule;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Rule\UrlBlacklistRule;
 use Kunstmaan\LeadGenerationBundle\Form\Rule\UrlBlackListAdminType;
-use Kunstmaan\LeadGenerationBundle\Tests\Entity\Popup\Popup;
+use Kunstmaan\LeadGenerationBundle\Tests\unit\Entity\Popup\Popup;
 use PHPUnit_Framework_TestCase;
 
 /**
