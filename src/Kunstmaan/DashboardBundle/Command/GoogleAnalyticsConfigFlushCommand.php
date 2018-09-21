@@ -13,14 +13,13 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class GoogleAnalyticsConfigFlushCommand extends ContainerAwareCommand
 {
-
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
     /**
-     * @param EntityManagerInterface|null                   $em
+     * @param EntityManagerInterface|null $em
      */
     public function __construct(/* EntityManagerInterface */ $em = null)
     {
