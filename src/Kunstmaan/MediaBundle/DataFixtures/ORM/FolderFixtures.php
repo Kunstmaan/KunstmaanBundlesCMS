@@ -22,7 +22,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $gal = new Folder();
-        $gal->setRel(Folderypes::MEDIA);
+        $gal->setRel(Folder::MEDIA);
         $gal->setName('Media');
         $gal->setTranslatableLocale('en');
         $manager->persist($gal);
@@ -43,7 +43,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel(Folderypes::IMAGE);
+        $subgal->setRel(Folder::IMAGE);
         $subgal->setName('Images');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
