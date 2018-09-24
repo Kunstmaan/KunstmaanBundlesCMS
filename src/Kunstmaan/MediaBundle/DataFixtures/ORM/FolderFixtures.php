@@ -6,7 +6,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Kunstmaan\MediaBundle\Entity\Folder;
-use Kunstmaan\MediaBundle\Folders\FolderTypes;
 
 /**
  * Fixtures that make a general media-folder for a project
@@ -23,7 +22,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $gal = new Folder();
-        $gal->setRel(FolderTypes::MEDIA);
+        $gal->setRel(Folderypes::MEDIA);
         $gal->setName('Media');
         $gal->setTranslatableLocale('en');
         $manager->persist($gal);
@@ -44,7 +43,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel(FolderTypes::IMAGE);
+        $subgal->setRel(Folderypes::IMAGE);
         $subgal->setName('Images');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -65,7 +64,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel(FolderTypes::FILES);
+        $subgal->setRel(Folder::FILES);
         $subgal->setName('Files');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -86,7 +85,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel(FolderTypes::SLIDESHOW);
+        $subgal->setRel(Folder::SLIDESHOW);
         $subgal->setName('Slides');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -107,7 +106,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel(FolderTypes::VIDEO);
+        $subgal->setRel(Folder::VIDEO);
         $subgal->setName('Videos');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);

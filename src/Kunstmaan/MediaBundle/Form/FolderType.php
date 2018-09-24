@@ -2,7 +2,7 @@
 
 namespace Kunstmaan\MediaBundle\Form;
 
-use Kunstmaan\MediaBundle\Folders\FolderTypes;
+use Kunstmaan\MediaBundle\Entity\Folder;
 use Kunstmaan\MediaBundle\Repository\FolderRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -41,7 +41,7 @@ class FolderType extends AbstractType
                 'rel',
                 ChoiceType::class,
                 array(
-                    'choices' => FolderTypes::allTypes(),
+                    'choices' => Folder::allTypes(),
                     'label' => 'media.folder.addsub.form.rel'
                 )
             )
