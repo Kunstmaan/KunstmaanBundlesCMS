@@ -23,6 +23,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Folder extends AbstractEntity implements GedmoNode
 {
+    const FILES = 'files';
+    const IMAGE = 'image';
+    const MEDIA = 'media';
+    const SLIDESHOW = 'slideshow';
+    const VIDEO = 'video';
+
     /**
      * @var string
      *
@@ -135,6 +141,20 @@ class Folder extends AbstractEntity implements GedmoNode
         $this->setCreatedAt(new \DateTime());
         $this->setUpdatedAt(new \DateTime());
         $this->deleted = false;
+    }
+
+    /**
+     * @return array
+     */
+    public static function allTypes()
+    {
+        return [
+            self::MEDIA => self::MEDIA,
+            self::IMAGE => self::IMAGE,
+            self::FILES => self::FILES,
+            self::SLIDESHOW => self::SLIDESHOW,
+            self::VIDEO => self::VIDEO,
+        ];
     }
 
     /**

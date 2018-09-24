@@ -22,7 +22,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $gal = new Folder();
-        $gal->setRel('media');
+        $gal->setRel(Folderypes::MEDIA);
         $gal->setName('Media');
         $gal->setTranslatableLocale('en');
         $manager->persist($gal);
@@ -43,7 +43,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('image');
+        $subgal->setRel(Folderypes::IMAGE);
         $subgal->setName('Images');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -64,7 +64,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('files');
+        $subgal->setRel(Folder::FILES);
         $subgal->setName('Files');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -85,7 +85,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('slideshow');
+        $subgal->setRel(Folder::SLIDESHOW);
         $subgal->setName('Slides');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
@@ -106,7 +106,7 @@ class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $subgal = new Folder();
         $subgal->setParent($gal);
-        $subgal->setRel('video');
+        $subgal->setRel(Folder::VIDEO);
         $subgal->setName('Videos');
         $subgal->setTranslatableLocale('en');
         $manager->persist($subgal);
