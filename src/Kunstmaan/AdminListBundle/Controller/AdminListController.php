@@ -554,7 +554,8 @@ abstract class AdminListController extends Controller
         $em = $this->getEntityManager();
         $className = $em->getClassMetadata($configurator->getRepositoryName())->getName();
 
-        if(class_implements($className,HasNodeInterface::class)) {
+        $implements = class_implements($className);
+        if (isset($implements[HasNodeInterface::class])) {
             return NodeTranslation::class;
         }
 
