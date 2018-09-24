@@ -3,6 +3,7 @@
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\TextPagePartAdminType;
+use Kunstmaan\PagePartBundle\Tests\unit\Form\PagePartAdminTypeTestCase;
 
 /**
  * Class TextPagePartAdminTypeTest

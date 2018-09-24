@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
+namespace Kunstmaan\PagePartBundle\Tests\unit\PagePartConfigurationReader;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
