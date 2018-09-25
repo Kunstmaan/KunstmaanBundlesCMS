@@ -60,7 +60,7 @@ class TranslationRepositoryTest extends BaseTestCase
      */
     public function testFindAllDeprecated()
     {
-        $result = $this->translationRepository->findDeprecatedTranslationsBeforeDate(new \DateTime(), 'messages');
+        $result = $this->translationRepository->findDeprecatedTranslationsBeforeDate(new \DateTime('+5 minutes'), 'messages');
         $this->assertInstanceOf('Kunstmaan\TranslatorBundle\Entity\Translation', $result[0]);
         $this->assertGreaterThan(0, count($result));
     }
