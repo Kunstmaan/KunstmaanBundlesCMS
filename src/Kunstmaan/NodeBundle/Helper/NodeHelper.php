@@ -269,7 +269,7 @@ class NodeHelper
     /**
      * @param Node $node
      * @param string $locale
-     * @return Response|null
+     * @return bool
      */
     public function deletePage(Node $node, $locale)
     {
@@ -288,12 +288,12 @@ class NodeHelper
         $this->deleteNodeChildren($node, $locale);
         $this->em->flush();
 
-        $event = $this->eventDispatcher->dispatch(
+        $this->eventDispatcher->dispatch(
             Events::POST_DELETE,
             new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
         );
 
-        return $event->getResponse();
+        return true;
     }
 
     /**
@@ -377,7 +377,7 @@ class NodeHelper
             $this->em->persist($nodeTranslation);
         }
         $this->em->flush();
-        
+
         $this->aclManager->updateNodeAcl($node, $nodeNewPage);
 
         return $nodeTranslation;

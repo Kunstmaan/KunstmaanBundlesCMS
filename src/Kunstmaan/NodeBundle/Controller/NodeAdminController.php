@@ -346,9 +346,25 @@ class NodeAdminController extends Controller
 
         $this->denyAccessUnlessGranted(PermissionMap::PERMISSION_DELETE, $node);
 
-        $response = $this->nodeHelper->deletePage($node, $this->locale);
+        $nodeTranslation = $node->getNodeTranslation($this->locale, true);
+        $nodeVersion = $nodeTranslation->getPublicNodeVersion();
+        $page = $nodeVersion->getRef($this->em);
 
-        if (null === $response) {
+        $this->get('event_dispatcher')->dispatch(
+            Events::PRE_DELETE,
+            new NodeEvent($node, $nodeTranslation, $nodeVersion, $page)
+        );
+
+        $node->setDeleted(true);
+        $this->em->persist($node);
+
+        $children = $node->getChildren();
+        $this->deleteNodeChildren($this->em, $this->user, $this->locale, $children);
+        $this->em->flush();
+
+        $event = new NodeEvent($node, $nodeTranslation, $nodeVersion, $page);
+        $this->get('event_dispatcher')->dispatch(Events::POST_DELETE, $event);
+        if (null === $response = $event->getResponse()) {
             $nodeParent = $node->getParent();
             // Check if we have a parent. Otherwise redirect to pages overview.
             if ($nodeParent) {
@@ -357,9 +373,10 @@ class NodeAdminController extends Controller
                     array('id' => $nodeParent->getId())
                 );
             } else {
-                $url = $this->get('router')->generate('KunstmaanNodeBundle_nodes');
+                $url = $this->get('router')->generate(
+                    'KunstmaanNodeBundle_nodes'
+                );
             }
-
             $response = new RedirectResponse($url);
         }
 

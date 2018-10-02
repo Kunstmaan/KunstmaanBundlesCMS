@@ -239,7 +239,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->nodeHelper->deletePage($nodeHomePage, $this->locale);
 
-        $this->assertInstanceOf(RedirectResponse::class, $result);
+        $this->assertTrue($result);
         $this->assertTrue($nodeHomePage->isDeleted());
         $this->assertTrue($nodeChildPage->isDeleted());
     }
