@@ -166,6 +166,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
             if (!empty($locales)) {
                 $this->locales = $locales;
             }
+            $this->locales = array_unique($this->locales);
 
             // Field building hack...
             foreach ($this->locales as $locale) {
