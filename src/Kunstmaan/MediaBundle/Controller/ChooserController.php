@@ -70,7 +70,7 @@ class ChooserController extends Controller
      * @param int     $folderId The folder id
      *
      * @Route("/chooser/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_chooser_show_folder")
-     * @Template()
+     * @Template("@KunstmaanMedia/Chooser/chooserShowFolder.html.twig")
      *
      * @return array
      */

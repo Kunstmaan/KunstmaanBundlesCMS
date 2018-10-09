@@ -17,11 +17,16 @@ use Kunstmaan\NodeSearchBundle\Helper\ElasticSearchUtil;
 class KunstmaanNodeSearchExtension extends Extension implements PrependExtensionInterface
 {
     /**
+     * @var bool
+     */
+    private $useElasticSearchVersion6;
+
+    /**
      * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
+        $configuration = new Configuration($this->useElasticSearchVersion6);
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -49,7 +54,26 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
      */
     public function prepend(ContainerBuilder $container)
     {
-        if (ElasticSearchUtil::useVersion6()) {
+        $hosts = [];
+        if ($container->hasParameter('kunstmaan_search.hostname') && $container->hasParameter('kunstmaan_search.port')) {
+            $host = $container->getParameter('kunstmaan_search.hostname').':'.$container->getParameter('kunstmaan_search.port');
+
+            if ($container->hasParameter('kunstmaan_search.username') && $container->hasParameter('kunstmaan_search.password') &&
+                null !== $container->getParameter('kunstmaan_search.username') && null !== $container->getParameter('kunstmaan_search.password')) {
+                $host = sprintf(
+                    '%s:%s@%s',
+                    $container->getParameter('kunstmaan_search.username'),
+                    $container->getParameter('kunstmaan_search.password'),
+                    $host
+                );
+            }
+
+            $hosts[] = $host;
+        }
+
+        $this->useElasticSearchVersion6 = ElasticSearchUtil::useVersion6($hosts);
+
+        if ($this->useElasticSearchVersion6) {
             $mapping = [
                 'mapping' => [
                     'root_id' => [

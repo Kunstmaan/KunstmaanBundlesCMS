@@ -4,9 +4,9 @@ pagepart:
     type: 'Überschriftstil'
     title: 'Titel'
   link:
-    internal: Internal
-    external: External
-    email: Email
+    internal: Intern
+    external: Extern
+    email: E-Mail
     choose: 'Link Auswählen'
     openinnewwindow: 'In neuem Fenster öffnen'
     text: 'Text'
@@ -15,36 +15,36 @@ pagepart:
   text:
     content: 'Inhalt'
   buttons:
-    move_up: Move up
-    move_down: Move down
-    edit: Edit
-    delete: Delete
-    resize: Minimize-Maximize
+    move_up: Nach oben
+    move_down: Nach unten
+    edit: Bearbeiten
+    delete: Löschen
+    resize: Maximieren/minimieren
 region:
   button:
-    min: Minimize
-    max: Maximize
+    min: Minimieren
+    max: Maximieren
 kuma_pagepart:
   tab:
     content:
-      title: Content
+      title: Inhalt
   modal:
     delete:
-      'title.%type%': "Delete pagepart '%type%'"
-      'text.%type%': This will not remove the pagepart completely, save the page to remove this pagepart permanently.
+      'title.%type%': "Seitenteil \"%type%\" löschen"
+      'text.%type%': Dies entfernt den Seitenteil nicht vollständig. Speichern Sie die Seite um den Seitenteil dauerhaft zu entfernen.
       button:
-        delete: Delete
-        cancel: Cancel
+        delete: Löschen
+        cancel: Abrechen
   select:
-    add: Add a pagepart
+    add: Seitenteil hinzufügen
   template:
     modal:
       change:
-        current: Current
-        title: Change template
+        current: Aktuell
+        title: Vorlage ändern
         button:
-          open: Change template
-          change: Change
-          cancel: Cancel
+          open: Vorlage ändern
+          change: Ändern
+          cancel: Abbrechen
         message:
-          'no_admin_found.%name%': NO ADMIN FOUND for %name%
+          'no_admin_found.%name%': KEIN ADMIN GEFUNDEN für %name%

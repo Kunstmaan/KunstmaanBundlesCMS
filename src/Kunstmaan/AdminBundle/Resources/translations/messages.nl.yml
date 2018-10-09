@@ -33,17 +33,6 @@ settings:
     resolved: Resolved
     unresolved: Unresolved
     resolve_all: Resolve all
-toolbar:
-  bundle_version:
-    unknown: Onbekend
-    uptodate: Up-to-date
-    toupdate: Verouderd
-    version: Bundle versie
-    status: Bundle status
-  exception:
-    title: Exceptions
-    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"
-
 tools:
   title: Hulpmiddelen
   clear_frontend_cache: Frontend cache legen
@@ -57,8 +46,8 @@ form:
   delete: Verwijder
   deletesure: Weet u zeker dat u dit wilt verwijderen?
   edit: Bewerken
-  add: Add new
-  'add.%subject%': 'Add new %subject%'
+  add: Toevoegen
+  'add.%subject%': 'Voeg nieuwe %subject% toe'
   save: Opslaan
   publish: Publiceren
   unpublish: Publicatie ongedaan maken
@@ -133,3 +122,13 @@ kuma_admin:
 kuma_js:
   auto_collapse:
     more_button_label: Meer
+toolbar:
+  bundle_version:
+    unknown: Onbekend
+    uptodate: Up-to-date
+    toupdate: Verouderd
+    version: Bundle versie
+    status: Bundle status
+  exception:
+    title: Exceptions
+    message: "<strong>%X%</strong> exception(s) veroorzaakt door <strong>%Y%</strong> events"

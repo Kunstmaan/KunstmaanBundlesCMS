@@ -54,3 +54,5 @@ fos_user:
     from_email:
         address:        admin@kunstmaan.be
         sender_name:    Admin
+    service:
+        mailer: fos_user.mailer.noop

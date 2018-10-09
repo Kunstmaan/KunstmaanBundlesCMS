@@ -97,6 +97,12 @@ EOT
             );
     }
 
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->groups = $this->getGroups();
+    }
+
+
     /**
      * Executes the current command.
      *
@@ -122,7 +128,7 @@ EOT
         $inactive = $input->getOption('inactive');
         $groupOption = $input->getOption('group');
 
-        if (null !== $locale) {
+        if (null === $locale) {
             $locale = $this->defaultLocale;
         }
         $command = $this->getApplication()->find('fos:user:create');
@@ -144,12 +150,27 @@ EOT
         // Attach groups
         $groupOutput = [];
 
-        foreach (explode(',', $groupOption) as $groupId) {
-            $group = $this->groups[$groupId];
-            $groupOutput[] = $group->getName();
 
-            if ($group instanceof Group) {
+        foreach (explode(',', $groupOption) as $groupId) {
+
+            if ((int)$groupId === 0) {
+                foreach ($this->groups as $value) {
+                    if ($groupId === $value->getName()) {
+                        $group = $value;
+                        break;
+                    }
+                }
+            } else {
+                $group = $this->groups[$groupId];
+            }
+
+            if (isset($group) && $group instanceof Group) {
+                $groupOutput[] = $group->getName();
                 $user->getGroups()->add($group);
+            } else {
+                throw new \RuntimeException(
+                    'The selected group(s) can\'t be found.'
+                );
             }
         }
 
@@ -240,16 +261,6 @@ EOT
             $input->setArgument('locale', $locale);
         }
 
-        $this->groups = $this->groupManager->findGroups();
-
-        // reindexing the array, using the db id as the key
-        $newGroups = [];
-        foreach($this->groups as $group) {
-            $newGroups[$group->getId()] = $group;
-        }
-
-        $this->groups = $newGroups;
-
         if (!$input->getOption('group')) {
             $question = new ChoiceQuestion(
                 'Please enter the group(s) the user should be a member of (multiple possible, separated by comma):',
@@ -282,5 +293,18 @@ EOT
 
             $input->setOption('group', $groups);
         }
+    }
+
+    private function getGroups()
+    {
+        $groups = $this->groupManager->findGroups();
+
+        // reindexing the array, using the db id as the key
+        $newGroups = [];
+        foreach($groups as $group) {
+            $newGroups[$group->getId()] = $group;
+        }
+
+        return $newGroups;
     }
 }

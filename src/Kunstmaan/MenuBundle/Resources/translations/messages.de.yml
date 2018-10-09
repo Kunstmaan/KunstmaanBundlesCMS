@@ -1,7 +1,7 @@
 ---
 kuma_menu:
   menus:
-    title: Menus
+    title: Menüs
   menu:
     adminlist:
       field:
@@ -9,28 +9,28 @@ kuma_menu:
       filter:
         name: Name
       action:
-        manage: Manage
+        manage: Verwalten
   menu_item:
     adminlist:
       breadcrumb:
-        modules: Modules
-        menu: Menu's
-        menu_items: Menu items
-      title: Menu items for %name% and language %locale%
-      online: (Online)
-      offline: (Offline)
+        modules: Module
+        menu: Menüs
+        menu_items: Menü-Einträge
+      title: Menü-Eintrag für %name% und Sprache %locale%
+      online: (online)
+      offline: (offline)
       field:
-        title: Title
+        title: Titel
         online: Online
-        type: Type
-        url: Url
-        new_window: New window
+        type: Typ
+        url: URL
+        new_window: Neues Fenster
   form:
-    parent: Parent menu item
-    parent_placeholder: Select the parent menu item...
-    type: Type
-    node_translation: Link page
-    node_translation_placeholder: Select the page to link to...
-    title: Title
-    url: Url
-    new_window: New window
+    parent: Übergeordneter Menü-Eintrag
+    parent_placeholder: Übergeordneten Menü-Eintrag auswählen...
+    type: Typ
+    node_translation: Link zur Seite
+    node_translation_placeholder: Verlinkte Seite auswählen...
+    title: Titel
+    url: URL
+    new_window: Neues Fenster

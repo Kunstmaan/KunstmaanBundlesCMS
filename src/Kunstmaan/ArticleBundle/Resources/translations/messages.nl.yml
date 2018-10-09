@@ -23,6 +23,32 @@ article:
         label: Naam
       link:
         label: Koppeling
+  category:
+    list:
+      header:
+        name: Name
+        link: Link
+      filter:
+        name: Name
+        link: Link
+    form:
+      name:
+        label: Name
+      link:
+        label: Link
+    page:
+      url: category
+  tag:
+    list:
+      header:
+        name: Name
+      filter:
+        name: Name
+    form:
+      name:
+        label: Name
+    page:
+      url: tag
   page:
     list:
       header:
@@ -35,12 +61,11 @@ article:
         created_at: Aangemaakt op
         updated_at: Gewijzigd op
         online: Online
-
 article_overview_page:
-    filter: Filter
-    category: Categories
-    tag: Tags
-    all: Alle
-    route:
-        category: categorie
-        tag: tag
+  filter: Filter
+  category: Categorieën
+  tag: Tags
+  all: Alle
+  route:
+    category: categorie
+    tag: tag

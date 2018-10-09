@@ -6,7 +6,7 @@ settings:
     edit: Gruppe Bearbeiten
     add: Gruppe Erstellen
     roles: Rollen
-    roles_placeholder: Choose the roles...
+    roles_placeholder: Rollen auswählen...
   users: Benutzer
   user:
     username: Benutzername
@@ -16,7 +16,7 @@ settings:
     email: E-Mail
     enabled: Aktiv
     roles: Gruppen
-    roles_placeholder: Choose the permission groups...
+    roles_placeholder: Berechtigungsgruppen auswählen...
     add: Benutzer Erstellen
     edit: Benutzer Bearbeiten
   roles: Rollen
@@ -28,53 +28,53 @@ kuma_user:
   roles:
     add:
       flash:
-        'success.%role%': Role '%role%' has been created!
+        'success.%role%': Die Rolle "%role%" wurde erstellt!
     edit:
       flash:
-        'success.%role%': Role '%role%' has been edited!
+        'success.%role%': Die Rolle "%role%" wurde aktualisiert!
     delete:
       flash:
-        'success.%role%': Role '%role%' has been deleted!
+        'success.%role%': Die Rolle "%role%" wurde gelöscht!
   users:
     adminlist:
       header:
-        username: Username
-        email: E-mail
-        enabled: Enabled
-        last_login: Last login
-        groups: Groups
+        username: Benutzername
+        email: E-Mail
+        enabled: Aktiv
+        last_login: Letzte Anmeldung
+        groups: Gruppen
       filter:
-        username: Username
-        email: E-mail
-        enabled: Enabled
+        username: Benutzername
+        email: E-Mail
+        enabled: Aktiv
     add:
       flash:
-        'success.%username%': User '%username%' has been created!
+        'success.%username%': Der Benutzer "%username%" wurde erstellt!
     edit:
       flash:
-        'success.%username%': User '%username%' has been edited!
+        'success.%username%': Der Benutzer "%username%" wurde aktualisiert!
     delete:
       flash:
-        'success.%username%': User '%username%' has been deleted!
+        'success.%username%': Der Benutzer "%username%" wurde gelöscht!
   group:
     adminlist:
       header:
         name: Name
-        roles: Roles
+        roles: Rollen
       filter:
         name: Name
     add:
       flash:
-        success: Group %groupname% has been created!
+        success: Die Gruppe "%groupname%" wurde erstellt!
     edit:
       flash:
-        success: Group %groupname% has been edited!
+        success: Die Gruppe "%groupname%" wurde aktualisiert!
     delete:
       flash:
-        success: Group %groupname% has been deleted!
+        success: Die Gruppe "%groupname%" wurde gelöscht!
   role:
     adminlist:
       header:
-        role: Role
+        role: Rolle
       filter:
-        role: Role
+        role: Rolle

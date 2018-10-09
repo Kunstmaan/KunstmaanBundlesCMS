@@ -34,6 +34,7 @@ abstract class BaseMenuItem extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="Kunstmaan\MenuBundle\Entity\Menu", inversedBy="items")
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
      * @Assert\NotNull()
+     * @Gedmo\TreeRoot(identifierMethod="getMenu")
      */
     protected $menu;
 

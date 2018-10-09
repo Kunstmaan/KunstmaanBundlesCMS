@@ -3,6 +3,7 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         keyword: errors.<word()>.<word()>_<current()>
         locale: nl
         domain: messages
+        status: 'enabled'
         text: <text()>
         createdAt: <dateTime()>
         updatedAt: <dateTime()>
@@ -13,6 +14,7 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         createdAt: <dateTime()>
         updatedAt: <dateTime()>
         domain: validation
+        status: 'enabled'
     headers_updated:
         keyword: headers.frontpage
         text: 'a not yet updated frontpage header'
@@ -20,6 +22,7 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         updatedAt: <dateTime()>
         locale: en
         domain: messages
+        status: 'enabled'
     validation_messages:
         keyword: validation.ok
         text: 'Everything ok'
@@ -27,6 +30,7 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         updatedAt: <dateTime()>
         locale: en
         domain: validation
+        status: 'enabled'
     future_messages:
         keyword: validation.in_the_future
         text: 'This should be the last updated translation'
@@ -35,3 +39,12 @@ Kunstmaan\TranslatorBundle\Entity\Translation:
         updatedAt: <dateTimeBetween('+ 1 days', '+ 200 days')>
         locale: en
         domain: validation
+        status: 'enabled'
+    deprecated_messages:
+        keyword: these_are_deprecated
+        text: 'these are deprecated'
+        createdAt: <dateTime()>
+        updatedAt: <dateTimeBetween('- 200 days', '- 1 days')>
+        locale: en
+        domain: messages
+        status: 'deprecated'
