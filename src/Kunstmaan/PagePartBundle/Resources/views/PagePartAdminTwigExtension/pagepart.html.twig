@@ -92,14 +92,14 @@
                         <i class="fa fa-times"></i>
                     </button>
                     <h3>
-                        {{ 'kuma_pagepart.modal.delete.title.%type%'|trans({'%type%': pagepartadmin.getType(pagepart)}) }}
+                        {{ 'kuma_pagepart.modal.delete.title.%type%'|trans({'%type%': (pagepartadmin.getType(pagepart)) | trans }) }}
                     </h3>
                 </div>
 
                 <!-- Body -->
                 <div class="modal-body">
                     <p>
-                        {{ 'kuma_pagepart.modal.delete.text.%type%'|trans({'%type%': pagepartadmin.getType(pagepart)}) }}
+                        {{ 'kuma_pagepart.modal.delete.text.%type%'|trans({'%type%': (pagepartadmin.getType(pagepart)) | trans }) }}
                     </p>
                 </div>
 
