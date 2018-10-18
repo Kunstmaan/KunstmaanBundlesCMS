@@ -105,7 +105,7 @@ class SlugController extends Controller
 
         $view = $renderContext->getView();
         if (empty($view)) {
-            throw $this->createNotFoundException('No page found for slug ' . $url);
+            throw $this->createNotFoundException(sprintf('Missing view path for page "%s"', get_class($entity)));
         }
 
         $template = new Template(array());
