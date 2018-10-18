@@ -12,7 +12,6 @@ import createBuildGroundControlSkeletonTask from './groundcontrol/tasks/build-gc
 // AdminBundle Tasks
 const analyzeAdminBundle = gulp.series(
     adminBundle.tasks.eslint,
-    adminBundle.tasks.stylelint
 );
 
 const buildLocalAdminBundle = gulp.series(
@@ -31,11 +30,6 @@ const buildOptimizedAdminBundle = gulp.series(
 );
 
 // DashboardBundle Tasks
-const analyzeDashboardBundle = gulp.series(
-    dashboardBundle.tasks.eslint,
-    dashboardBundle.tasks.stylelint
-);
-
 const buildLocalDashboardBundle = gulp.series(
     dashboardBundle.tasks.cssLocal,
     dashboardBundle.tasks.scripts,
@@ -49,10 +43,6 @@ const buildOptimizedDashboardBundle = gulp.series(
 );
 
 // MediaBundle Tasks
-const analyzeMediaBundle = gulp.series(
-    mediaBundle.tasks.eslint,
-);
-
 const buildLocalMediaBundle = gulp.series(
     mediaBundle.tasks.scripts
 );
@@ -62,11 +52,6 @@ const buildOptimizedMediaBundle = gulp.series(
 );
 
 // TranslatorBundle Tasks
-const analyzeTranslatorBundle = gulp.series(
-    translatorBundle.tasks.eslint,
-    translatorBundle.tasks.stylelint
-);
-
 const buildLocalTranslatorBundle = gulp.series(
     translatorBundle.tasks.cssLocal,
     translatorBundle.tasks.scripts
@@ -80,10 +65,7 @@ const buildOptimizedTranslatorBundle = gulp.series(
 
 // Combine bundles
 const analyze = gulp.series(
-    analyzeAdminBundle,
-    analyzeDashboardBundle,
-    analyzeMediaBundle,
-    analyzeTranslatorBundle
+    analyzeAdminBundle
 );
 
 const test = gulp.series(

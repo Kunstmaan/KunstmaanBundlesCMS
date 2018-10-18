@@ -28,6 +28,9 @@ class KunstmaanTranslatorExtension extends Extension
             return;
         }
 
+        if(!$container->hasParameter('requiredlocales')) {
+            $container->setParameter('requiredlocales', ['nl', 'fr', 'en']);
+        }
         $container->setParameter('kuma_translator.enabled', $config['enabled']);
         $container->setParameter('kuma_translator.default_bundle', $config['default_bundle']);
         $container->setParameter('kuma_translator.bundles', $config['bundles']);
@@ -44,6 +47,7 @@ class KunstmaanTranslatorExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('repositories.yml');
+        $loader->load('commands.yml');
 
         $this->setTranslationConfiguration($config, $container);
         $container->getDefinition('kunstmaan_translator.datacollector')->setDecoratedService('translator');
@@ -51,8 +55,8 @@ class KunstmaanTranslatorExtension extends Extension
 
     public function setTranslationConfiguration($config, $container)
     {
-        $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator');
-        $container->setAlias('translator.default', 'kunstmaan_translator.service.translator.translator');
+        $container->setAlias('translator', 'kunstmaan_translator.service.translator.translator')->setPublic(true);
+        $container->setAlias('translator.default', 'kunstmaan_translator.service.translator.translator')->setPublic(true);
         $translator = $container->getDefinition('kunstmaan_translator.service.translator.translator');
         $this->registerTranslatorConfiguration($config, $container);
 

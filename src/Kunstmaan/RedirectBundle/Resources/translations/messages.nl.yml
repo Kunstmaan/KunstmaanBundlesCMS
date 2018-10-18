@@ -9,9 +9,9 @@ redirect:
       domain:
         label: Domein
       origin:
-        label: Origin
+        label: Herkomst
       target:
-        label: Target
+        label: Bestemming
       permanent:
         label: Permanent
       note:
@@ -19,13 +19,13 @@ redirect:
   adminlist:
     header:
       domain: Domein
-      origin: Origin
-      target: Target
+      origin: Herkomst
+      target: Bestemming
       permanent: Permanent?
       note: Notitie
     filter:
       domain: Domein
-      origin: Origin
-      target: Target
+      origin: Herkomst
+      target: Bestemming
       permanent: Permanent
       note: Notitie

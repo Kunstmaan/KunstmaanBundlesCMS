@@ -200,7 +200,7 @@ class AdminList
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getExportUrl()
     {

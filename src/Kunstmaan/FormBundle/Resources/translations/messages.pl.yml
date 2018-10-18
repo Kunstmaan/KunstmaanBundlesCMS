@@ -100,5 +100,9 @@ formsubmissions:
     title: Wysłane formularze dla strony
   edit:
     title: Wysłane formularze dla strony
+  delete:
+    flash:
+      success: The form submission is deleted!
+      error: Deleting the form submission failed!
 subaction:
   formsubmissions: "Przesłane formularze"

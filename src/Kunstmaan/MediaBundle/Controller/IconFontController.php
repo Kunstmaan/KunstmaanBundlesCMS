@@ -16,7 +16,7 @@ class IconFontController extends Controller
      * @param Request $request
      *
      * @Route("/chooser", name="KunstmaanMediaBundle_icon_font_chooser")
-     * @Template()
+     * @Template("@KunstmaanMedia/IconFont/iconFontChooser.html.twig")
      *
      * @return array
      */

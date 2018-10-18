@@ -1,35 +1,36 @@
 ---
 kuma_admin_list:
+  limit: Limit %limit%
   form:
     export_to: Exportálás
   edit:
     flash:
-      success: The entity has been edited
-      locked: The entity is currently being edited by %user%
+      success: Az entitás szerkesztették
+      locked: Az entity-t jelenleg %user% szerkeszti
   action:
-    view: View
-    edit: Edit
-    delete: Delete
-    move_up: Move up
-    move_down: Move down
+    view: Nézet
+    edit: Szerkesztés
+    delete: Törlés
+    move_up: Felfelé mozgatás
+    move_down: Lefelé mozgatás
 filter:
-  "true": "true"
-  "false": "false"
-  before: before
-  after: after
-  in: contains
-  notin: doesn't contain
-  eq: equals
-  neq: not equals
-  lt: lower than
-  lte: lower than or equal
-  gt: greater than
-  gte: greater than or equal
-  isnull: empty
-  isnotnull: not empty
-  contains: contains
-  doesnotcontain: doesn't contain
-  equals: equals
-  notequals: not equals
-  startswith: starts with
-  endswith: ends with
+  "true": "igaz"
+  "false": "hamis"
+  before: előtt
+  after: után
+  in: tartalmaz
+  notin: nem tartalmaz
+  eq: egyenlő
+  neq: nem egyenlő
+  lt: alacsonyabb, mint
+  lte: kisebb vagy egyenlő
+  gt: nagyobb, mint
+  gte: nagyobb vagy egyenlő
+  isnull: üres
+  isnotnull: nem üres
+  contains: tartalmaz
+  doesnotcontain: nem tartalmaz
+  equals: egyenlő
+  notequals: nem egyenlő
+  startswith: ezzel kezdődik
+  endswith: ezzel végződik

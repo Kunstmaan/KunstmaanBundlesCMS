@@ -100,5 +100,9 @@ formsubmissions:
     title: Moduli d'invio per pagina
   edit:
     title: Modulo d'invio per pagina
+  delete:
+    flash:
+      success: The form submission is deleted!
+      error: Deleting the form submission failed!
 subaction:
   formsubmissions: "Invii"

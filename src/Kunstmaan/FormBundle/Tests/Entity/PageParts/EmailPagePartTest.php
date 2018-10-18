@@ -1,12 +1,10 @@
 <?php
 
-namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
+namespace Kunstmaan\FormBundle\Tests\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -28,18 +26,7 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $this->object = new EmailPagePart;
     }
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart::setErrorMessageRequired
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart::getErrorMessageRequired
-     */
     public function testSetErrorMessageRequired()
     {
         $object = $this->object;
@@ -51,10 +38,7 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message, $object->getErrorMessageRequired());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart::setErrorMessageInvalid
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart::getErrorMessageInvalid
-     */
+
     public function testSetErrorMessageInvalid()
     {
         $object = $this->object;
@@ -66,9 +50,6 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($message, $object->getErrorMessageInvalid());
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart::getDefaultView
-     */
 
     public function testGetDefaultView()
     {
@@ -77,9 +58,7 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($stringValue));
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart::adaptForm
-     */
+
     public function testAdaptForm()
     {
         $object = $this->object;
@@ -95,17 +74,25 @@ class EmailPagePartTest extends \PHPUnit_Framework_TestCase
 
         $fields = new ArrayObject();
 
+        $object->setErrorMessageRequired('form error!');
+        $object->setErrorMessageInvalid('not valid');
         $this->assertTrue(count($fields) == 0);
         /* @var $formBuilder FormBuilderInterface */
         $object->adaptForm($formBuilder, $fields, 0);
         $this->assertTrue(count($fields) > 0);
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart::getDefaultAdminType
-     */
+
     public function testGetDefaultAdminType()
     {
         $this->assertEquals(EmailPagePartAdminType::class, $this->object->getDefaultAdminType());
+    }
+
+    public function testRequired()
+    {
+        $object = $this->object;
+
+        $object->setRequired(true);
+        $this->assertTrue($object->getRequired());
     }
 }

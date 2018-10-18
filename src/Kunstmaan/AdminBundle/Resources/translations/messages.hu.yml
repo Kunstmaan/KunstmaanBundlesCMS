@@ -22,6 +22,17 @@ settings:
     uptodate: naprakész
     toupdate: frissíthető erre
     unknown: Nincsenek verzió információk
+  exceptions:
+    title: Kivételek
+    code: Kód
+    url: Webcím
+    urlReferer: Hivatkozó URL-címe
+    createdAt: Létrehozva
+    isResolved: Megoldva
+    events: Események
+    resolved: Megoldva
+    unresolved: Megoldatlan
+    resolve_all: Mindegyik megoldása
 tools:
   title: Eszközök
   clear_frontend_cache: Frontend cache törlése
@@ -29,7 +40,7 @@ tools:
   clear_all_caches: Az összes cache törlése
   shutdown: Leállítás
 search:
-  title: Search
+  title: Keresés
 form:
   cancel: Mégse
   delete: Törlés
@@ -106,8 +117,18 @@ kuma_admin:
       drop_success: A fájlfeltöltés sikeresen befejezve.
       drop_unrecognized: Nem sikerült értelmezni a fájlhúzás műveletet.
   login:
-    forgot_password: Forgot my password
-    invalid_credentials: Wrong password or email
+    forgot_password: Elfelejtett jelszó
+    invalid_credentials: Hibás jelszó vagy e-mail cím
 kuma_js:
   auto_collapse:
     more_button_label: Továbbiak
+toolbar:
+  bundle_version:
+    unknown: Unknown
+    uptodate: Up-to-date
+    toupdate: Outdated
+    version: Bundle version
+    status: Bundle status
+  exception:
+    title: Kivételek
+    message: "<strong>%X%</strong> exception triggered by <strong>%Y%</strong> events"

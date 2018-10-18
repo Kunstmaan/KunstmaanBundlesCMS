@@ -66,6 +66,7 @@ class FormSubmissionExportListConfigurator implements ExportListConfiguratorInte
      */
     public function buildFilters()
     {
+        return null;
     }
 
     /**

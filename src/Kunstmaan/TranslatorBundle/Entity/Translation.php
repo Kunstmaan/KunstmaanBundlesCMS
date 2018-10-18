@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\TranslatorBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Kunstmaan\TranslatorBundle\Model\Translation as TranslationModel;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,6 +23,9 @@ class Translation
 {
     const FLAG_NEW = 'new';
     const FLAG_UPDATED = 'updated';
+    const STATUS_DEPRECATED = 'deprecated';
+    const STATUS_DISABLED = 'disabled';
+    const STATUS_ENABLED =  'enabled';
 
     /**
      * @ORM\Id
@@ -50,6 +55,14 @@ class Translation
      * @Assert\NotBlank()
      */
     protected $locale;
+
+    /**
+     * @var string $status
+     * The translations deprecation date
+     *
+     * @ORM\column(type="string", length=10, options={"default" : "enabled"})
+     */
+    protected $status = self::STATUS_ENABLED;
 
     /**
      * Location where the translation comes from
@@ -101,8 +114,8 @@ class Translation
      */
     public function prePersist()
     {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
         $this->flag = self::FLAG_NEW;
 
         return $this->id;
@@ -113,11 +126,12 @@ class Translation
      */
     public function preUpdate()
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new DateTime();
 
         if ($this->flag === null) {
             $this->flag = self::FLAG_UPDATED;
         }
+
     }
 
     /**
@@ -246,7 +260,7 @@ class Translation
      * @param \DateTime $createdAt
      * @return Translation
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -262,10 +276,10 @@ class Translation
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      * @return Translation
      */
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
 
@@ -308,5 +322,53 @@ class Translation
     public function getTranslationId()
     {
         return $this->translationId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     * @return Translation
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDisabled()
+    {
+        return $this->getStatus() === self::STATUS_DISABLED;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDeprecated()
+    {
+        return $this->getStatus() === self::STATUS_DEPRECATED;
+    }
+
+    /**
+     * @param integer $id
+     *
+     * @return TranslationModel
+     */
+    public function getTranslationModel($id = null)
+    {
+        $translationModel = new TranslationModel();
+        $translationModel->setKeyword($this->getKeyword());
+        $translationModel->setDomain($this->getDomain());
+        $translationModel->addText($this->getLocale(), $this->getText(), $id);
+        return $translationModel;
     }
 }

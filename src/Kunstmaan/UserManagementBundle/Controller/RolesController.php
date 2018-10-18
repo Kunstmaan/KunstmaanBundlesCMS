@@ -37,7 +37,7 @@ class RolesController extends BaseSettingsController
 
         $em        = $this->getDoctrine()->getManager();
         /* @var AdminList $adminlist */
-        $adminlist = $this->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator($em));
+        $adminlist = $this->container->get("kunstmaan_adminlist.factory")->createList(new RoleAdminListConfigurator($em));
         $adminlist->bindRequest($request);
 
         return array(
@@ -50,7 +50,7 @@ class RolesController extends BaseSettingsController
      *
      * @Route("/add", name="KunstmaanUserManagementBundle_settings_roles_add")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Roles/add.html.twig")
      *
      * @throws AccessDeniedException
      * @return array|RedirectResponse
@@ -72,7 +72,7 @@ class RolesController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
+                    $this->container->get('translator')->trans('kuma_user.roles.add.flash.success.%role%', [
                         '%role%' => $role->getRole()
                     ])
                 );
@@ -93,7 +93,7 @@ class RolesController extends BaseSettingsController
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_roles_edit")
      * @Method({"GET", "POST"})
-     * @Template()
+     * @Template("@KunstmaanUserManagement/Roles/edit.html.twig")
      *
      * @throws AccessDeniedException
      * @return array|RedirectResponse
@@ -116,7 +116,7 @@ class RolesController extends BaseSettingsController
 
                 $this->addFlash(
                     FlashTypes::SUCCESS,
-                    $this->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
+                    $this->container->get('translator')->trans('kuma_user.roles.edit.flash.success.%role%', [
                         '%role%' => $role->getRole()
                     ])
                 );
@@ -156,7 +156,7 @@ class RolesController extends BaseSettingsController
 
             $this->addFlash(
                 FlashTypes::SUCCESS,
-                $this->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
+                $this->container->get('translator')->trans('kuma_user.roles.delete.flash.success.%role%', [
                     '%role%' => $role->getRole()
                 ])
             );

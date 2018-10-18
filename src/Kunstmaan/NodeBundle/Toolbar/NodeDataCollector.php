@@ -103,4 +103,9 @@ class NodeDataCollector extends AbstractDataCollector
     {
         return true;
     }
+
+    public function reset()
+    {
+        $this->data = [];
+    }
 }

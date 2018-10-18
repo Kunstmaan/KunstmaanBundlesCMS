@@ -6,8 +6,8 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
-use Kunstmaan\NodeSearchBundle\Helper\ElasticSearchUtil;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Kunstmaan\NodeSearchBundle\Helper\ElasticSearchUtil;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -133,7 +133,6 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     ],
                     'title' => [
                         'type' => 'string',
-                        'boost' => 2,
                         'include_in_all' => true
                     ],
                     'slug' => [

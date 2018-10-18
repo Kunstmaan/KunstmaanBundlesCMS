@@ -74,6 +74,6 @@ class MediaRepository extends EntityRepository
      */
     public function findAllDeleted()
     {
-        return $this->findBy(array('deleted' => true, 'removedFromFileSystem' => false));
+        return $this->findBy(['deleted' => true, 'removedFromFileSystem' => false]);
     }
 }

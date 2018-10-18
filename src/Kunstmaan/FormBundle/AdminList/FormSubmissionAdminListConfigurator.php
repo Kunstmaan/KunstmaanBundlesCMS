@@ -22,13 +22,20 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     protected $nodeTranslation;
 
     /**
-     * @param EntityManager   $em              The entity manager
-     * @param NodeTranslation $nodeTranslation The node translation
+     * @var bool
      */
-    public function __construct(EntityManager $em, $nodeTranslation)
+    protected $deletableFormsubmissions;
+
+    /**
+     * @param EntityManager   $em                       The entity manager
+     * @param NodeTranslation $nodeTranslation          The node translation
+     * @param bool            $deletableFormsubmissions Can formsubmissions be deleted or not
+     */
+    public function __construct(EntityManager $em, $nodeTranslation, $deletableFormsubmissions = false)
     {
         parent::__construct($em);
         $this->nodeTranslation = $nodeTranslation;
+        $this->deletableFormsubmissions = $deletableFormsubmissions;
     }
 
     /**
@@ -130,7 +137,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function canDelete($item)
     {
-        return false;
+        return $this->deletableFormsubmissions;
     }
 
 
@@ -153,7 +160,14 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function getDeleteUrlFor($item)
     {
-        return array();
+        if (!$this->deletableFormsubmissions) {
+            return [];
+        }
+        
+        return [
+            'path' => 'KunstmaanFormBundle_formsubmissions_delete',
+            'params' => ['id' => $item->getId()],
+        ];
     }
 
     /**

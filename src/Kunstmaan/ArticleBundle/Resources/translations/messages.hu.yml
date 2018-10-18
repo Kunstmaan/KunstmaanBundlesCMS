@@ -14,15 +14,41 @@ article:
     list:
       header:
         name: Név
-        link: Link
+        link: Hivatkozás
       filter:
         name: Név
-        link: Link
+        link: Hivatkozás
     form:
       name:
         label: Név
       link:
+        label: Hivatkozás
+  category:
+    list:
+      header:
+        name: Name
+        link: Link
+      filter:
+        name: Name
+        link: Link
+    form:
+      name:
+        label: Name
+      link:
         label: Link
+    page:
+      url: category
+  tag:
+    list:
+      header:
+        name: Name
+      filter:
+        name: Name
+    form:
+      name:
+        label: Name
+    page:
+      url: tag
   page:
     list:
       header:
@@ -35,3 +61,11 @@ article:
         created_at: Létrehozva
         updated_at: Frissítve
         online: Online
+article_overview_page:
+  filter: Filter
+  category: Categories
+  tag: Tags
+  all: All
+  route:
+    category: category
+    tag: tag

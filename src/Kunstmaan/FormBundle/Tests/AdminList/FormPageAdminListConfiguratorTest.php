@@ -3,9 +3,11 @@
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
 use Doctrine\ORM\QueryBuilder;
+use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
 use Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator;
-use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
+use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
+use Kunstmaan\FormBundle\Tests\Entity\FakePage;
 
 /**
  * This test tests the FormPageAdminListConfigurator
@@ -26,20 +28,12 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $em = $this->getMockedEntityManager();
-        $tokenStorage = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        $tokenStorage = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         $roleHierarchy = $this->getMockBuilder('Symfony\Component\Security\Core\Role\RoleHierarchyInterface')
           ->getMock();
-        $aclHelper = $this->getMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper', array(), array($em, $tokenStorage, $roleHierarchy));
+        $aclHelper = $this->createMock('Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper', array(), array($em, $tokenStorage, $roleHierarchy));
 
         $this->object = new FormPageAdminListConfigurator($em, $aclHelper, self::PERMISSION_VIEW);
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 
     /**
@@ -49,7 +43,7 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMockedEntityManager()
     {
-        $emMock  = $this->getMock('\Doctrine\ORM\EntityManager', array('getRepository', 'getConfiguration', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
+        $emMock  = $this->createMock('\Doctrine\ORM\EntityManager', array('getRepository', 'getConfiguration', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
         $emMock->expects($this->any())
             ->method('getRepository')
             ->will($this->returnValue(new TestRepository()));
@@ -69,9 +63,6 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
         return $emMock;  // it tooks 13 lines to achieve mock!
     }
 
-    /**
-     * @covers Kunstmaan\FormBundle\AdminList\FormPageAdminListConfigurator::adaptQueryBuilder
-     */
     public function testAdaptQueryBuilder()
     {
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
@@ -88,5 +79,52 @@ class FormPageAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
 
         /* @var $queryBuilder QueryBuilder */
         $this->object->adaptQueryBuilder($queryBuilder);
+    }
+
+
+
+    public function testFixedGetters()
+    {
+        $item = new FakePage();
+        $item->setId(123);
+        $this->assertEquals('', $this->object->getAddUrlFor([]));
+        $this->assertEquals('KunstmaanNodeBundle', $this->object->getBundleName());
+        $this->assertEquals('NodeTranslation', $this->object->getEntityName());
+        $this->assertEquals('KunstmaanFormBundle:FormSubmissions', $this->object->getControllerPath());
+        $this->assertCount(0, $this->object->getDeleteUrlFor($item));
+        $this->assertCount(1, $this->object->getIndexUrl());
+        $this->assertCount(2, $this->object->getEditUrlFor($item));
+        $this->assertFalse($this->object->canAdd());
+        $this->assertFalse($this->object->canEdit($item));
+        $this->assertFalse($this->object->canDelete($item));
+    }
+
+
+
+    public function testBuildFilters()
+    {
+        $this->object->buildFilters();
+        $filters = $this->object->getFilterBuilder()->getFilterDefinitions();
+        $this->assertCount(2, $filters);
+    }
+
+    public function testBuildFields()
+    {
+        $this->object->buildFields();
+        $fields = $this->object->getFields();
+        $this->assertCount(3, $fields);
+    }
+
+    public function testBuildItemActions()
+    {
+        $item = new FakePage();
+        $item->setId(1);
+        $this->object->buildItemActions();
+        $actions = $this->object->getItemActions();
+        $this->assertCount(1, $actions);
+        $this->assertInstanceOf(SimpleItemAction::class, $actions[0]);
+        /** @var SimpleItemAction $action */
+        $action = $actions[0];
+        $this->assertCount(2, $action->getUrlFor($item));
     }
 }
