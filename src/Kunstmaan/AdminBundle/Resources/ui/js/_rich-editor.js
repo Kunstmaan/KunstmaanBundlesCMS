@@ -252,8 +252,9 @@ kunstmaanbundles.richEditor = (function (window, undefined) {
 
                 url.onKeyUp = function () {
                     this.allowOnChange = !1;
-                    var a = this.getDialog().getContentElement("info", "protocol"), b = this.getValue(), c = /^(http|https|ftp|news):\/\/(?=.)/i.exec(b);
-                    c ? (this.setValue(b.substr(c[0].length)), a.setValue(c[0].toLowerCase())) : a.setValue("");
+                    var a = this.getDialog().getContentElement("info", "protocol"), b = this.getValue(),
+                        k = /^((javascript|link):|[#\/\.\?])/i, c = /^(http|https|ftp|news):\/\/(?=.)/i.exec(b);
+                    c ? (this.setValue(b.substr(c[0].length)), a.setValue(c[0].toLowerCase())) : k.test(b) && a.setValue("");
 
                     this.allowOnChange = !0
                 };
