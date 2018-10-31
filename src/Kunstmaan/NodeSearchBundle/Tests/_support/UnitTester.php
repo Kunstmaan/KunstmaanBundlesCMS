@@ -1,5 +1,5 @@
 <?php
-namespace NodeSearchBundle;
+namespace Kunstmaan\NodeSearchBundle\Tests;
 
 /**
  * Inherited Methods
