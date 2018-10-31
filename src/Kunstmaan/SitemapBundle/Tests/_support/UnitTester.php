@@ -1,5 +1,5 @@
 <?php
-namespace SitemapBundle;
+namespace Kunstmaan\SitemapBundle\Tests;
 
 /**
  * Inherited Methods
