@@ -2,11 +2,12 @@
 
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
 
+use Codeception\Stub;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\PagePartBundle\Entity\PageTemplateConfiguration;
 use Kunstmaan\PagePartBundle\PageTemplate\PageTemplate;
-use Kunstmaan\NodeBundle\Tests\Entity\TestNode;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -34,14 +35,16 @@ class PageTemplateConfigurationTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $testNode = Stub::makeEmpty(AbstractPage::class);
+
         $repo->expects($this->any())
             ->method('find')
-            ->will($this->returnValue(new TestNode()));
+            ->will($this->returnValue($testNode));
 
         $em->expects($this->any())
             ->method('getRepository')
             ->will($this->returnValue($repo));
 
-        $this->assertInstanceOf(TestNode::class, $config->getPage($em));
+        $this->assertInstanceOf(get_class($testNode), $config->getPage($em));
     }
 }

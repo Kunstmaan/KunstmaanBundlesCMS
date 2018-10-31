@@ -3,13 +3,14 @@
 namespace Kunstmaan\PagePartBundle\Tests\PagePartConfigurationReader;
 
 use Kunstmaan\PagePartBundle\PagePartConfigurationReader\PagePartConfigurationParser;
+use Kunstmaan\PagePartBundle\Tests\unit\PagePartConfigurationReader\LocatingKernelStub;
 use PHPUnit_Framework_TestCase;
 
 class PagePartConfigurationParserTest extends PHPUnit_Framework_TestCase
 {
     public function testParserKnowsAboutPresets()
     {
-        $parser = new PagePartConfigurationParser(new LocatingKernelStub, [
+        $parser = new PagePartConfigurationParser(new LocatingKernelStub(), [
             'foo' => [
                 'name' => 'Foo preset',
                 'context' => 'main',
