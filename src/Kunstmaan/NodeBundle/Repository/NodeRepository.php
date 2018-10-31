@@ -532,6 +532,7 @@ SQL;
     {
         $qb = $this->createQueryBuilder('n')
             ->select('n.refEntityName')
+            ->where('n.deleted = 0')
             ->distinct(true);
 
         return $qb->getQuery()->getArrayResult();
