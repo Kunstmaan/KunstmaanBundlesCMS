@@ -2,7 +2,7 @@
 
 {# Mobile header #}
 {% if nodemenu is defined %}
-    <header role="header" class="main-header main-header--mobile">
+    <header class="main-header main-header--mobile">
         <div class="container-fluid">
 
             {# Main navigation trigger #}
@@ -48,7 +48,7 @@
 
 {% if nodemenu is defined %}
     <div class="container-fluid">
-        <header role="header" class="main-header main-header--desktop {% block extra_main_header_class %}{% endblock %}">
+        <header class="main-header main-header--desktop {% block extra_main_header_class %}{% endblock %}">
             {# Logo #}
             {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="main-header__logo">
@@ -60,7 +60,7 @@
             <div class="main-header__nav">
 
                 {# Main nav #}
-                <nav role="navigation" class="site-nav site-nav--desktop">
+                <nav class="site-nav site-nav--desktop">
                     {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
                     {% for node in activeSubnode.children %}
                         {% if not node.node.isHiddenFromNav() %}
@@ -96,7 +96,7 @@
                             {{ app.request.locale }}
                             <i class="icon icon--triangle-down language-nav__icon"></i>
                         </span>
-                        <nav role="navigation" class="language-nav__nav">
+                        <nav class="language-nav__nav">
                         {% for lang in langs %}
                         {% if lang != app.request.locale %}
                             <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__item">
@@ -115,7 +115,7 @@
 
 {# Default header #}
 {% if nodemenu is defined %}
-    <header role="header" class="main-header">
+    <header class="main-header">
         <div class="container-fluid">
 
             {# Logo #}
@@ -126,7 +126,7 @@
 
 
             {# Main navigation #}
-            <nav role="navigation" class="main-header__nav main-nav">
+            <nav class="main-header__nav main-nav">
             {% set activeSubnode = nodemenu.getActiveForDepth(1) %}
             {% for node in activeSubnode.children %}
                 {% if not node.node.isHiddenFromNav() %}
@@ -161,7 +161,7 @@
                     <span class="language-nav__active-lang">
                         {{ app.request.locale }}
                     </span>
-                    <nav role="navigation">
+                    <nav>
                         {% for lang in langs %}
                         {% if lang != app.request.locale %}
                             <a href="{{ path('_slug', { '_locale': lang }) }}" class="language-nav__link">

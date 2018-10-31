@@ -1,6 +1,6 @@
 {% if nodemenu is defined and nodemenu.breadCrumb|length > 1 %}
     <section class="container">
-        <nav role="navigation" class="breadcrumb">
+        <nav class="breadcrumb">
             {% set homepagePageNode = nodemenu.getNodeByInternalName('homepage') %}
             <a href="{{ path('_slug', { 'url': homepagePageNode.slug }) }}" class="breadcrumb__item breadcrumb__item--home">
                 Home
