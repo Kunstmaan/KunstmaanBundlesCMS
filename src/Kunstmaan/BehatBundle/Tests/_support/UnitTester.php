@@ -1,5 +1,5 @@
 <?php
-namespace BehatBundle;
+namespace Kunstmaan\BehatBundle\Tests;
 
 /**
  * Inherited Methods
