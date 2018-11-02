@@ -21,7 +21,7 @@ use Kunstmaan\AdminListBundle\AdminList\SortableInterface;
 use Pagerfanta\Pagerfanta;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use Kunstmaan\LeadGenerationBundle\Tests\Entity\Popup\Popup;
+use Kunstmaan\LeadGenerationBundle\Tests\unit\Entity\Popup\Popup;
 
 class ORM extends AbstractDoctrineORMAdminListConfigurator implements SortableInterface
 {

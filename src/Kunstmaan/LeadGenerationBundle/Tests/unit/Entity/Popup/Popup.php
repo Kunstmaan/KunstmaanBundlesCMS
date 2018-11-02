@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunstmaan\LeadGenerationBundle\Tests\Entity\Popup;
+namespace Kunstmaan\LeadGenerationBundle\Tests\unit\Entity\Popup;
 
 use Kunstmaan\LeadGenerationBundle\Entity\Popup\AbstractPopup;
 
