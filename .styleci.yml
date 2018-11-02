@@ -1,0 +1,8 @@
+preset: none
+
+finder:
+    exclude:
+        - 'src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle'
+    not-path:
+        - "TranslatorBundle/Tests/app2"	
+        - "TranslatorBundle/Tests/app"
