@@ -1,0 +1,11 @@
+{% if resource is defined and resource is not null %}
+    {% if not resource.isNull() %}
+        {% if resource.url is defined and resource.url is not null %}
+            {% set href = host ~ resource.url %}
+        {% else %}
+            {% set href = host ~ form_submission_webdir ~ resource.fileName %}
+        {% endif %}
+        <a target="_blank"
+           href="{{ href }}">{{ resource.fileName }}</a>
+    {% endif %}
+{% endif %}
