@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Form;
+namespace Kunstmaan\FormBundle\Tests\Form;
 
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;

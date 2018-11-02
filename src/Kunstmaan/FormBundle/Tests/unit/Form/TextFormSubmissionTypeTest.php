@@ -1,26 +1,26 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Form;
+namespace Kunstmaan\FormBundle\Tests\Form;
 
-use Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart;
-use Kunstmaan\FormBundle\Form\SubmitButtonPagePartAdminType;
+use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\TextFormSubmissionField;
+use Kunstmaan\FormBundle\Form\TextFormSubmissionType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
- * Class SubmitButtonPagePartAdminTypeTest
+ * Class TextFormSubmissionTypeTest
  */
-class SubmitButtonPagePartAdminTypeTest extends TypeTestCase
+class TextFormSubmissionTypeTest extends TypeTestCase
 {
     public function testFormType()
     {
         $formData = [
-            'label' => 'Launch!',
+            'value' => 'ball of string',
         ];
 
-        $form = $this->factory->create(SubmitButtonPagePartAdminType::class);
+        $form = $this->factory->create(TextFormSubmissionType::class);
 
-        $object = new SubmitButtonPagePart();
-        $object->setLabel('Launch!');
+        $object = new TextFormSubmissionField();
+        $object->setValue('ball of string');
 
         $form->submit($formData);
 

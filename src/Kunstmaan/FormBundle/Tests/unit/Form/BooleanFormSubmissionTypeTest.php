@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Kunstmaan\FormBundle\Form;
+namespace Kunstmaan\FormBundle\Tests\Form;
 
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 use Kunstmaan\FormBundle\Form\BooleanFormSubmissionType;

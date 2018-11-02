@@ -1,5 +1,5 @@
 <?php
-namespace FormBundle;
+namespace Kunstmaan\FormBundle\Tests;
 
 /**
  * Inherited Methods

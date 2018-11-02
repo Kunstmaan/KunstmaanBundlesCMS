@@ -2,15 +2,16 @@
 
 namespace Kunstmaan\FormBundle\Tests\AdminList;
 
+use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityRepository;
 use Kunstmaan\FormBundle\AdminList\FormSubmissionExportListConfigurator;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionField;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
-use Kunstmaan\NodeBundle\Tests\Stubs\TestRepository;
-use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 
 class FakeFormSubmission extends FormSubmission
 {
@@ -52,8 +53,6 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
      */
     protected function getMockedEntityManager()
     {
-
-
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
             ->getMock();
@@ -94,14 +93,19 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->method('getQuery')
             ->willReturn($query);
 
-
+        $repository = Stub::make(EntityRepository::class, [
+            'find' => null
+        ]);
+        $configuration = Stub::make(Configuration::class, [
+            'getQuoteStrategy' => null
+        ]);
         $emMock  = $this->createMock('\Doctrine\ORM\EntityManager', [], [], '', false);
         $emMock->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue(new TestRepository()));
+            ->will($this->returnValue($repository));
         $emMock->expects($this->any())
             ->method('getConfiguration')
-            ->will($this->returnValue(new TestConfiguration()));
+            ->will($this->returnValue($configuration));
         $emMock->expects($this->any())
             ->method('getClassMetadata')
             ->will($this->returnValue((object) array('name' => 'aClass')));
@@ -119,15 +123,12 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
         return $emMock;
     }
 
-
-
     public function testGetStringValue()
     {
         $this->assertNull($this->object->buildFilters());
         $this->assertEquals('', $this->object->getStringValue([], 'fail'));
         $this->assertEquals('pass', $this->object->getStringValue(['test' => 'pass'], 'test'));
     }
-
 
     public function testBuildExportFields()
     {
@@ -136,8 +137,6 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
         $this->object->addExportField('abc', 'def');
         $this->assertCount(4, $this->object->getExportFields());
     }
-
-
 
     public function testBuildIterator()
     {
