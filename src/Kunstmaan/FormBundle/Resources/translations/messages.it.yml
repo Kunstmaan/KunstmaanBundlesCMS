@@ -72,6 +72,8 @@ kuma_form:
         label: Regex
       errormessage_regex:
         label: Error message regex
+    form_page_part:
+      internal_name: Internal name
     submit_button_page_part:
       label:
         label: Label
