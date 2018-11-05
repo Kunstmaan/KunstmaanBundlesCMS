@@ -4,6 +4,7 @@ namespace Kunstmaan\FormBundle\Tests\AdminList;
 
 use Codeception\Stub;
 use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
@@ -37,36 +38,31 @@ class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCas
     }
 
     /**
-     * https://gist.github.com/1331789
      *
      * @return \Doctrine\ORM\EntityManager
      */
     protected function getMockedEntityManager()
     {
-        $repository = Stub::make(EntityRepository::class, [
-            'find' => null
-        ]);
         $configuration = Stub::make(Configuration::class, [
             'getQuoteStrategy' => null
         ]);
-        $emMock  = $this->createMock('\Doctrine\ORM\EntityManager', array('getRepository', 'getConfiguration', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
-        $emMock->expects($this->any())
-            ->method('getRepository')
-            ->will($this->returnValue($repository));
-        $emMock->expects($this->any())
-            ->method('getConfiguration')
-            ->will($this->returnValue($configuration));
-        $emMock->expects($this->any())
-            ->method('getClassMetadata')
-            ->will($this->returnValue((object) array('name' => 'aClass')));
-        $emMock->expects($this->any())
-            ->method('persist')
-            ->will($this->returnValue(null));
-        $emMock->expects($this->any())
-            ->method('flush')
-            ->will($this->returnValue(null));
 
-        return $emMock;  // it tooks 13 lines to achieve mock!
+        $repository = Stub::make(EntityRepository::class, [
+            'find' => null,
+            'findBy' => null,
+            'findOneBy' => null,
+        ]);
+
+        /** @var \Doctrine\ORM\EntityManager $emMock */
+        $emMock = Stub::make(EntityManager::class, [
+            'getRepository' => $repository,
+            'getConfiguration' => $configuration,
+            'getClassMetaData' => (object)['name' => 'aClass'],
+            'persist' => null,
+            'flush' => null
+        ]);
+
+        return $emMock;
     }
 
     public function testAdaptQueryBuilder()

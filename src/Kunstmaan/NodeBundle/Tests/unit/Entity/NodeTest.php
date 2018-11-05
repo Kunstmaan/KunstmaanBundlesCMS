@@ -2,7 +2,10 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
+use Codeception\Stub;
 use Doctrine\Common\Collections\ArrayCollection;
+use Kunstmaan\AdminBundle\Entity\AbstractEntity;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use PHPUnit_Framework_TestCase;
@@ -137,9 +140,10 @@ class NodeTest extends PHPUnit_Framework_TestCase
 
     public function testSetRefAndGetRefEntityName()
     {
-        $entity = new TestEntity();
+        /** @var HasNodeInterface $entity */
+        $entity = Stub::makeEmpty(HasNodeInterface::class);
         $this->object->setRef($entity);
-        $this->assertEquals('Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->getRefEntityName());
+        $this->assertEquals(get_class($entity), $this->object->getRefEntityName());
     }
 
     public function testSetInternalName()
@@ -155,10 +159,12 @@ class NodeTest extends PHPUnit_Framework_TestCase
 
     public function testToString()
     {
+        /** @var HasNodeInterface $entity */
+        $entity = Stub::makeEmpty(HasNodeInterface::class);
         $this->object->setId(1);
-        $this->object->setRef(new TestEntity());
+        $this->object->setRef($entity);
 
-        $this->assertEquals('node 1, refEntityName: Kunstmaan\NodeBundle\Tests\Entity\TestEntity', $this->object->__toString());
+        $this->assertEquals('node 1, refEntityName: '.get_class($entity), $this->object->__toString());
     }
 
     public function testGetSetLeftRightLevel()

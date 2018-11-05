@@ -2,7 +2,9 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Entity;
 
+use Codeception\Stub;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
+use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\StructureNode;
 use Kunstmaan\NodeBundle\Form\PageAdminType;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
@@ -58,9 +60,11 @@ class StructureNodeTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetParent()
     {
+        /** @var HasNodeInterface $entity */
+        $entity = Stub::makeEmpty(HasNodeInterface::class);
         $node = new TestStructureNode();
-        $node->setParent(new TestEntity());
-        $this->assertInstanceOf(TestEntity::class, $node->getParent());
+        $node->setParent($entity);
+        $this->assertInstanceOf(get_class($entity), $node->getParent());
     }
 
     public function testGetDefaultAdminType()
