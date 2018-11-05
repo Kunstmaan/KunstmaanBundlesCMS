@@ -4,8 +4,7 @@ namespace Kunstmaan\TaggingBundle\Tests\DependencyInjection;
 
 use Kunstmaan\TaggingBundle\DependencyInjection\KunstmaanTaggingExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
-
+use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 /**
  * Class KunstmaanTaggingExtensionTest
  */

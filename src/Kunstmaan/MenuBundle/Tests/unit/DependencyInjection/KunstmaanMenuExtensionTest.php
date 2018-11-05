@@ -4,8 +4,7 @@ namespace Kunstmaan\MenuBundle\Tests\DependencyInjection;
 
 use Kunstmaan\MenuBundle\DependencyInjection\KunstmaanMenuExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Kunstmaan\AdminBundle\Tests\AbstractPrependableExtensionTestCase;
-
+use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
 /**
  * Class KunstmaanMenuExtensionTest
  */
