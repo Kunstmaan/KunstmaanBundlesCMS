@@ -1,5 +1,5 @@
 <?php
-namespace SeoBundle;
+namespace Kunstmaan\SeoBundle\Tests;
 
 /**
  * Inherited Methods

@@ -1,5 +1,5 @@
 <?php
-namespace DashboardBundle;
+namespace Kunstmaan\DashboardBundle\Tests;
 
 /**
  * Inherited Methods

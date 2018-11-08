@@ -35,6 +35,18 @@ ConfigBundle
 
  * Passing the `container` as the sixth argument in `Kunstmaan\ConfigBundle\Controller\ConfigController` is deprecated in and will be removed in 6.0.
 
+DashboardBundle
+---------------
+
+ * `DashboardCommand::__construct()` now takes an instance of `WidgetManager` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsConfigFlushCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsConfigsListCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsDataCollectCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsDataFlushCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsOverviewsGenerateCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsOverviewsListCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+* `GoogleAnalyticsSegmentsListCommand::__construct()` now takes an instance of `EntityManagerInterface` as the first argument. Not passing it is deprecated and will throw a `TypeError` in 6.0.
+
 FormBundle
 -----------
  * Added the optional `deletable_formsubmissions` config parameter, when set to true, form submissions can be deleted from the adminlist.
@@ -72,6 +84,7 @@ NodeBundle
    and use the `getControllerAction` method to specify a controller action with your custom page logic instead. 
  * Added the ability to split up an entity into multiple tabs. See ```Kunstmaan\NodeBundle\entity-tabs.md```
  * Button to export page template is now disabled by default. You can enable it by setting the `enable_export_page_template` value to true inside the `kunstmaan_node` configuration.
+ * Injecting the `TemplateEngine` as the first argument in the `RenderContextListener` is deprecated and will be removed in 6.0. Remove the `TemplateEngine` as the first service argument.
 
 SearchBundle
 ------------

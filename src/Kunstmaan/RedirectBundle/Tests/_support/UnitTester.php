@@ -1,5 +1,5 @@
 <?php
-namespace RedirectBundle;
+namespace Kunstmaan\RedirectBundle\Tests;
 
 /**
  * Inherited Methods

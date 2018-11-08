@@ -20,26 +20,46 @@ class SingleLineTextPagePartAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label', TextType::class, array(
-                'required' => true,
-                'label' => 'kuma_form.form.single_line_text_page_part.label.label',
-            ))
-            ->add('required', CheckboxType::class, array(
-                'required' => false,
-                'label' => 'kuma_form.form.single_line_text_page_part.required.label',
-            ))
-            ->add('errormessage_required', TextType::class, array(
-                'required' => false,
-                'label' => 'kuma_form.form.single_line_text_page_part.errormessage_required.label',
-            ))
-            ->add('regex', TextType::class, array(
-                'required' => false,
-                'label' => 'kuma_form.form.single_line_text_page_part.regex.label',
-            ))
-            ->add('errormessage_regex', TextType::class, array(
-                'required' => false,
-                'label' => 'kuma_form.form.single_line_text_page_part.errormessage_regex.label',
-            ));
+            ->add(
+                'label',
+                TextType::class,
+                [
+                    'required' => true,
+                    'label' => 'kuma_form.form.single_line_text_page_part.label.label',
+                ]
+            )
+            ->add(
+                'required',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'label' => 'kuma_form.form.single_line_text_page_part.required.label',
+                ]
+            )
+            ->add(
+                'errormessage_required',
+                TextType::class,
+                [
+                    'required' => false,
+                    'label' => 'kuma_form.form.single_line_text_page_part.errormessage_required.label',
+                ]
+            )
+            ->add(
+                'regex',
+                TextType::class,
+                [
+                    'required' => false,
+                    'label' => 'kuma_form.form.single_line_text_page_part.regex.label',
+                ]
+            )
+            ->add(
+                'errormessage_regex',
+                TextType::class,
+                [
+                    'required' => false,
+                    'label' => 'kuma_form.form.single_line_text_page_part.errormessage_regex.label',
+                ]
+            );
     }
 
     /**
@@ -55,6 +75,6 @@ class SingleLineTextPagePartAdminType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart'));
+        $resolver->setDefaults(['data_class' => 'Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart']);
     }
 }

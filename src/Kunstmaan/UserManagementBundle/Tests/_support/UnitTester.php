@@ -1,5 +1,5 @@
 <?php
-namespace UserManagementBundle;
+namespace Kunstmaan\UserManagementBundle\Tests;
 
 /**
  * Inherited Methods

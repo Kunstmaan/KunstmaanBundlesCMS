@@ -1,5 +1,5 @@
 <?php
-namespace MultiDomainBundle;
+namespace Kunstmaan\MultiDomainBundle\Tests;
 
 /**
  * Inherited Methods

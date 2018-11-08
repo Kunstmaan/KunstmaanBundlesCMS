@@ -1,5 +1,17 @@
 # Changelog
 
+## 5.0.11 / 2018-09-12
+
+* [NodeSearchBunde] [SearchBundle]  Add parameters for ES authentication and use them in version check [#2120](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2120) ([@wesleylancel](https://github.com/wesleylancel)) 
+* [AdminBundle] use full version of CKeditor [#2119](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2119) ([@dbeerten](https://github.com/dbeerten)) 
+* [FormBundle] Show full path to file in form export [#2118](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2118) ([@waaghals](https://github.com/waaghals)) 
+* [NodeBundle] Node choice type fix [#2115](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2115) ([@wesleylancel](https://github.com/wesleylancel)) 
+* [AdminBundle] Fixed issue with locale in kuma:user:create command [#2104](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2104) ([@veloxy](https://github.com/veloxy)) 
+* [AdminBundle] Fixed issue when running kuma:user:create with --no-interaction flag [#2103](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2103) ([@veloxy](https://github.com/veloxy)) 
+* [AdminBundle] Fix icons CKeditor [#2099](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2099) ([@dbeerten](https://github.com/dbeerten)) 
+* [NodeSearchBundle] Fix search index of childpages of a structured node [#2091](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2091) ([@acrobat](https://github.com/acrobat)) 
+
+
 ## 5.0.10 / 2018-08-21
 
 * [NodeSearchBundle] check if params exist while building container [#2078](https://github.com/Kunstmaan/KunstmaanBundlesCMS/pull/2078) ([@Devolicious](https://github.com/Devolicious)) 
