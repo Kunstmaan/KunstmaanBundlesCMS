@@ -125,27 +125,27 @@ use AppBundle\Entity\Product;
  */
 class ProductType extends PageAdminType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		parent::buildForm($builder, $options);
-		
-		$builder
-		    ->add('productImage', MediaType::class, [
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+        
+        $builder
+            ->add('productImage', MediaType::class, [
                 'mediatype' => 'image',
                 'required' => true,
-		    ])
-		    ->add('productDescription', WysiwygType::class, [
+            ])
+            ->add('productDescription', WysiwygType::class, [
                 'required' => true,
             ])
-		;
-	}
+        ;
+    }
 
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults([
-			'data_class' => Product::class,
-		]);
-	}
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Product::class,
+        ]);
+    }
 }
 ``` 
 
@@ -166,25 +166,25 @@ use AppBundle\Entity\Category;
  */
 class ProductCategoriesType extends PageAdminType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		parent::buildForm($builder, $options);
-		
-		$builder
-		    ->add('categories', EntityType::class, [
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+        
+        $builder
+            ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'multiple' => true,
                 'required' => true,
-		    ])
-		;
-	}
+            ])
+        ;
+    }
 
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults([
-			'data_class' => Product::class,
-		]);
-	}
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Product::class,
+        ]);
+    }
 }
 ``` 
 
@@ -204,26 +204,26 @@ use AppBundle\Entity\Product;
  */
 class ProductCategoriesType extends PageAdminType
 {
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		parent::buildForm($builder, $options);
-		
-		$builder
-		    ->add('priceExcl', NumberType::class, [
-                'required' => true
-		    ])
-		    ->add('vat', NumberType::class, [
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        parent::buildForm($builder, $options);
+        
+        $builder
+            ->add('priceExcl', NumberType::class, [
                 'required' => true
             ])
-		;
-	}
+            ->add('vat', NumberType::class, [
+                'required' => true
+            ])
+        ;
+    }
 
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults([
-			'data_class' => Product::class,
-		]);
-	}
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Product::class,
+        ]);
+    }
 }
 ``` 
 
