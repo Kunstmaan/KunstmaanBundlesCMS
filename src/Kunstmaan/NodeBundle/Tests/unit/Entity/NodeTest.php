@@ -173,34 +173,6 @@ class NodeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('node 1, refEntityName: '.get_class($entity), $this->object->__toString());
     }
 
-
-	public function testPageShouldHaveTab() {
-		$request = new Request();
-		$request->request = new ParameterBag();
-
-		$formFactory = $this->getMockBuilder(FormFactory::class)
-			->disableOriginalConstructor()
-			->getMock();
-
-		$entity = new TestEntity();
-		$this->object->setRef($entity);
-
-		$tabPane = new TabPane('id', $request, $formFactory);
-		$adaptFormEvent = new AdaptFormEvent($request, $tabPane, $entity);
-
-		$nodeTabListener = new NodeTabListener();
-		$nodeTabListener->adaptForm($adaptFormEvent);
-
-		$tabs = $adaptFormEvent->getTabPane()->getTabs();
-		$title = null;
-
-		if(isset($tabs[0])) {
-			$title = $tabs[0]->getTitle();
-		}
-
-		$this->assertEquals('tab1_title', $title);
-	}
-
     public function testGetSetLeftRightLevel()
     {
         $mirror = new ReflectionClass(Node::class);
