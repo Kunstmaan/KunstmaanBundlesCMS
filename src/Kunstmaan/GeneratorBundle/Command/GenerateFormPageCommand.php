@@ -3,7 +3,9 @@
 namespace Kunstmaan\GeneratorBundle\Command;
 
 use Kunstmaan\GeneratorBundle\Generator\FormPageGenerator;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 
 /**
@@ -47,6 +49,11 @@ class GenerateFormPageCommand extends KunstmaanGenerateCommand
     private $parentPages;
 
     /**
+     * @var boolean
+     */
+    private $generateFormPageParts;
+
+    /**
      * @see Command
      */
     protected function configure()
@@ -78,7 +85,24 @@ EOT
         $this->assistant->writeSection('FormPage generation');
         $this->template = strtolower($this->pageName);
         $this->sections = array(strtolower($this->pageName));
-        $this->createGenerator()->generate($this->bundle, $this->pageName, $this->prefix, $this->fields, $this->template, $this->sections, $this->parentPages);
+
+        // Generate the default form pageparts if requested.
+        if ($this->generateFormPageParts) {
+            $command = $this->getApplication()->find('kuma:generate:form-pageparts');
+            $arguments = [
+                'command' => 'kuma:generate:form-pageparts',
+                '--namespace' => str_replace('\\', '/', $this->bundle->getNamespace()),
+                '--prefix' => $this->prefix,
+                '--quiet' => false
+            ];
+
+            $output = new ConsoleOutput(ConsoleOutput::VERBOSITY_DEBUG);
+            $input = new ArrayInput($arguments);
+            $command->run($input, $output);
+            $this->assistant->writeLine('Generating default form pageparts : <info>OK</info>');
+        }
+
+        $this->createGenerator()->generate($this->bundle, $this->pageName, $this->prefix, $this->fields, $this->template, $this->sections, $this->parentPages, $this->generateFormPageParts);
 
         $this->assistant->writeSection('FormPage successfully created', 'bg=green;fg=black');
 
@@ -183,6 +207,9 @@ EOT
                 $this->parentPages[] = $parentPages[$id]['path'];
             }
         }
+
+        // Ask if you want to generate form pageparts.
+        $this->generateFormPageParts = $this->assistant->askConfirmation('Do you want to generate default form pageparts in your bundle? (y/n)', 'y');
     }
 
     /**

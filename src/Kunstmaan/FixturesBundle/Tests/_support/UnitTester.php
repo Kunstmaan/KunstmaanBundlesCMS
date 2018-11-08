@@ -1,5 +1,5 @@
 <?php
-namespace FixturesBundle;
+namespace Kunstmaan\FixturesBundle\Tests;
 
 /**
  * Inherited Methods

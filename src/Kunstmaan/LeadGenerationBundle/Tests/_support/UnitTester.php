@@ -1,5 +1,5 @@
 <?php
-namespace LeadGenerationBundle;
+namespace Kunstmaan\LeadGenerationBundle\Tests;
 
 /**
  * Inherited Methods
