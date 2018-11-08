@@ -2,33 +2,44 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Entity\User;
 use Kunstmaan\AdminBundle\Helper\CloneHelper;
+use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\TabPane;
 use Kunstmaan\NodeBundle\Entity\AbstractPage;
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Kunstmaan\NodeBundle\Entity\NodeVersion;
+use Kunstmaan\NodeBundle\Entity\PageTabInterface;
+use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\CopyPageTranslationNodeEvent;
 use Kunstmaan\NodeBundle\Event\Events;
 use Kunstmaan\NodeBundle\Event\NodeEvent;
 use Kunstmaan\NodeBundle\Event\RecopyPageTranslationNodeEvent;
+use Kunstmaan\NodeBundle\EventListener\NodeTabListener;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeAdminPublisher;
 use Kunstmaan\NodeBundle\Helper\NodeAdmin\NodeVersionLockHelper;
 use Kunstmaan\NodeBundle\Helper\NodeHelper;
 use Kunstmaan\NodeBundle\Repository\NodeRepository;
 use Kunstmaan\NodeBundle\Repository\NodeTranslationRepository;
 use Kunstmaan\NodeBundle\Repository\NodeVersionRepository;
+use Kunstmaan\NodeBundle\ValueObject\PageTab;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class TestPage extends AbstractPage implements HasNodeInterface
+class TestPage extends AbstractPage implements HasNodeInterface, PageTabInterface
 {
     /**
      * @return array
@@ -36,6 +47,43 @@ class TestPage extends AbstractPage implements HasNodeInterface
     public function getPossibleChildTypes()
     {
         return [];
+    }
+
+    /**
+     * @return PageTab[]
+     */
+    public function getTabs()
+    {
+        return [
+            (new PageTab('tab1_name', 'tab1_title', TestType::class))
+        ];
+    }
+}
+
+class TestType extends AbstractType
+{
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('id', HiddenType::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'test';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => TestPage::class,
+        ));
     }
 }
 
@@ -667,5 +715,31 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $nodeNewPage->addNodeTranslation($nodeTranslationNewPage);
 
         return [$testPage, $nodeTranslationNewPage, $nodeNewPage];
+    }
+
+    public function testPageShouldHaveTab() {
+        $request = new Request();
+        $request->request = new ParameterBag();
+
+        $formFactory = $this->getMockBuilder(FormFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $entity = new TestPage();
+
+        $tabPane = new TabPane('id', $request, $formFactory);
+        $adaptFormEvent = new AdaptFormEvent($request, $tabPane, $entity);
+
+        $nodeTabListener = new NodeTabListener();
+        $nodeTabListener->adaptForm($adaptFormEvent);
+
+        $tabs = $adaptFormEvent->getTabPane()->getTabs();
+        $title = null;
+
+        if(isset($tabs[0])) {
+            $title = $tabs[0]->getTitle();
+        }
+
+        $this->assertEquals('tab1_title', $title);
     }
 }
