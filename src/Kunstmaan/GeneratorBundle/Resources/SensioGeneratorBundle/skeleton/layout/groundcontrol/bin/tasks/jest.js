@@ -1,6 +1,10 @@
 import jestCli from 'jest-cli';
 
-export default function createJestTask({config = undefined, root = '.', failAfterError = true}) {
+export default function createJestTask({
+    config = undefined,
+    root = '.',
+    failAfterError = true,
+}) {
     return function jest(done) {
         const onComplete = (runResults) => {
             if (runResults.success === false && failAfterError === true) {
@@ -10,6 +14,6 @@ export default function createJestTask({config = undefined, root = '.', failAfte
             }
         };
 
-        jestCli.runCLI({config}, root, onComplete);
+        jestCli.runCLI({ config }, root, onComplete);
     };
 }
