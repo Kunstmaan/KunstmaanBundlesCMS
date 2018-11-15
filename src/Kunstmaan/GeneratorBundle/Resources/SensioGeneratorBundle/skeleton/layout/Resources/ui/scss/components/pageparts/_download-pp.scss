@@ -6,7 +6,7 @@
    ========================================================================== */
 .download-pp {
 {% if demosite %}
-    @extend .icon--arrow-tail-down;
+    @extend %icon--arrow-tail-down;
 
 {% endif %}
     margin: $default-margin 0;
@@ -15,7 +15,7 @@
     font-size: 15px;
 
     &:before {
-        @include iconfont-reset;
+        @include iconfont-reset();
 
         margin-right: 10px;
 

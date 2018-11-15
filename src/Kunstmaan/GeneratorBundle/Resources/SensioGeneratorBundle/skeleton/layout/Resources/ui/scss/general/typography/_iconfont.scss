@@ -43,6 +43,7 @@
 
 /* Modifiers
    ========================================================================== */
+%icon--small,
 .icon--small {
     font-size: .55em;
 }
@@ -50,86 +51,107 @@
 
 /* Icons
    ========================================================================== */
+%icon--menu:before,
 .icon--menu:before {
     content: "\e60d";
 }
 
+%icon--nav-location:before,
 .icon--nav-location:before {
     content: "\e612";
 }
 
+%icon--nav-mail:before,
 .icon--nav-mail:before {
     content: "\e613";
 }
 
+%icon--nav-phone:before,
 .icon--nav-phone:before {
     content: "\e614";
 }
 
+%icon--search:before,
 .icon--search:before {
     content: "\e60c";
 }
 
+%icon--social-facebook:before,
 .icon--social-facebook:before {
     content: "\e608";
 }
 
+%icon--social-github:before,
 .icon--social-github:before {
     content: "\e609";
 }
 
+%icon--social-linkedin:before,
 .icon--social-linkedin:before {
     content: "\e60a";
 }
 
+%icon--social-twitter:before,
 .icon--social-twitter:before {
     content: "\e60b";
 }
 
+%icon--arrow-up:before,
 .icon--arrow-up:before {
     content: "\e600";
 }
 
+%icon--arrow-down:before,
 .icon--arrow-down:before {
     content: "\e601";
 }
 
+%icon--arrow-left:before,
 .icon--arrow-left:before {
     content: "\e602";
 }
 
+%icon--arrow-right:before,
 .icon--arrow-right:before {
     content: "\e603";
 }
 
+%icon--arrow-tail-down:before,
 .icon--arrow-tail-down:before {
     content: "\e604";
 }
 
+%icon--arrow-tail-left:before,
 .icon--arrow-tail-left:before {
     content: "\e605";
 }
 
+%icon--arrow-tail-right:before,
 .icon--arrow-tail-right:before {
     content: "\e606";
 }
 
+%icon--arrow-tail-up:before,
 .icon--arrow-tail-up:before {
     content: "\e607";
 }
 
+%icon--triangle-down:before,
 .icon--triangle-down:before {
     content: "\e60e";
 }
 
+%icon--triangle-left:before,
 .icon--triangle-left:before {
     content: "\e60f";
 }
 
+%icon--triangle-right:before,
 .icon--triangle-right:before {
     content: "\e610";
 }
 
+%icon--triangle-up:before,
 .icon--triangle-up:before {
     content: "\e611";
 }

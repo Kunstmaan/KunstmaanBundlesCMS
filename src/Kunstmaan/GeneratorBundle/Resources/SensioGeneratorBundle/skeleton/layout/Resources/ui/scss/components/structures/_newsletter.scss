@@ -14,7 +14,7 @@
    ========================================================================== */
 .newsletter__content,
 .newsletter__text {
-    @extend .container;
+    @extend .container; /* stylelint-disable-line */
 
     @media (min-width: $screen-sm-min) {
         width: auto;
@@ -52,7 +52,7 @@
 /* Form
    ========================================================================== */
 .newsletter__form {
-    @extend .container;
+    @extend .container; /* stylelint-disable-line */
 
     @media (min-width: $screen-sm-min) {
         width: auto;
@@ -61,7 +61,7 @@
 }
 
 .newsletter__form__input {
-    @include box-shadow;
+    @include box-shadow();
 
     display: block;
     width: 100%;

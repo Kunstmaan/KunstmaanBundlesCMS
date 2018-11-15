@@ -55,9 +55,8 @@
 
 .form-widget--choices--filled {
 {% if demosite %}
-
     ~ .form__label {
-        @include control-label-active;
+        @include control-label-active();
     }
 {% endif %}
 }
@@ -99,4 +98,3 @@
  * @section
  * @sectionof Forms
  */
-
