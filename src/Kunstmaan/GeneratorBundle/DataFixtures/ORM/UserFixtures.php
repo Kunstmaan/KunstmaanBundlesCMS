@@ -71,15 +71,15 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
     /**
      * Create a user
      *
-     * @param ObjectManager $manager The object manager
+     * @param ObjectManager $manager  The object manager
      * @param string        $username The username
      * @param string        $password The plain password
-     * @param string        $email The email of the user
-     * @param string        $locale The locale (language) of the user
-     * @param array         $roles The roles the user has
-     * @param array         $groups The groups the user belongs to
-     * @param bool          $enabled Enable login for the user
-     * @param bool          $changed Disable password changed for the user
+     * @param string        $email    The email of the user
+     * @param string        $locale   The locale (language) of the user
+     * @param array         $roles    The roles the user has
+     * @param array         $groups   The groups the user belongs to
+     * @param bool          $enabled  Enable login for the user
+     * @param bool          $changed  Disable password changed for the user
      *
      * @return User
      */
@@ -111,7 +111,6 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
         return $user;
     }
 
-
     /**
      * Get the order of this fixture
      *
@@ -121,5 +120,4 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface, C
     {
         return 3;
     }
-
 }

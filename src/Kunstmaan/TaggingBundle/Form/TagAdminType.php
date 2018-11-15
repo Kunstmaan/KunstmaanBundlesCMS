@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class TagAdminType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
@@ -20,5 +19,4 @@ class TagAdminType extends AbstractType
     {
         return 'tag_admin_form';
     }
-
 }

@@ -9,8 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class BulkUploadType.
- *
- * @package Kunstmaan\MediaBundle\Form
  */
 class BulkUploadType extends AbstractType
 {
@@ -29,7 +27,7 @@ class BulkUploadType extends AbstractType
                     'accept' => $options['accept'],
                     'multiple' => 'multiple',
                 ),
-                'data_class' => null
+                'data_class' => null,
             )
         );
     }

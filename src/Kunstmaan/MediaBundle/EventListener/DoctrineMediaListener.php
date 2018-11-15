@@ -15,7 +15,7 @@ use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
 class DoctrineMediaListener
 {
     /**
-     * @var MediaManager $mediaManager
+     * @var MediaManager
      */
     private $mediaManager;
 

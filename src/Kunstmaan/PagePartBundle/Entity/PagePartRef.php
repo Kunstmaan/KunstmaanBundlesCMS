@@ -73,7 +73,7 @@ class PagePartRef
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -81,7 +81,7 @@ class PagePartRef
     }
 
     /**
-     * @param integer $num
+     * @param int $num
      */
     public function setId($num)
     {
@@ -91,7 +91,7 @@ class PagePartRef
     /**
      * Get pageId
      *
-     * @return integer
+     * @return int
      */
     public function getPageId()
     {
@@ -99,7 +99,7 @@ class PagePartRef
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      */
     public function setPageId($id)
     {
@@ -149,7 +149,7 @@ class PagePartRef
     /**
      * Get sequencenumber
      *
-     * @return integer
+     * @return int
      */
     public function getSequencenumber()
     {
@@ -159,7 +159,7 @@ class PagePartRef
     /**
      * Set sequencenumber
      *
-     * @param integer $sequencenumber
+     * @param int $sequencenumber
      */
     public function setSequencenumber($sequencenumber)
     {
@@ -169,7 +169,7 @@ class PagePartRef
     /**
      * Get pagePartId
      *
-     * @return integer
+     * @return int
      */
     public function getPagePartId()
     {
@@ -259,7 +259,7 @@ class PagePartRef
      */
     public function __toString()
     {
-        return "pagepartref in context " . $this->getContext();
+        return 'pagepartref in context ' . $this->getContext();
     }
 
     /**

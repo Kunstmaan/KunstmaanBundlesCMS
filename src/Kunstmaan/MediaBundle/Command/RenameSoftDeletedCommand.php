@@ -23,11 +23,12 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
          */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $original = $input-> getOption('original');
+        $original = $input->getOption('original');
         $medias = $em->getRepository('KunstmaanMediaBundle:Media')->findAll();
         $manager = $this->getContainer()->get('kunstmaan_media.media_manager');
         $updates = 0;
         $fileRenameQueue = array();
+
         try {
             $em->beginTransaction();
             /** @var Media $media */
@@ -40,7 +41,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
                     $fileRenameQueue[] = array($oldFileUrl, $newFileUrl, $handler);
                     $media->setUrl($newFileUrl);
                     $em->persist($media);
-                    $updates++;
+                    ++$updates;
                 }
             }
             $em->flush();
@@ -53,7 +54,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
         }
 
         foreach ($fileRenameQueue as $row) {
-            list ($oldFileUrl, $newFileUrl, $handler) = $row;
+            list($oldFileUrl, $newFileUrl, $handler) = $row;
             $handler->fileSystem->rename(
                 preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $oldFileUrl),
                 preg_replace('~^' . preg_quote($handler->mediaPath, '~') . '~', '/', $newFileUrl)
@@ -72,7 +73,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
             ->setName('kuma:media:rename-soft-deleted')
             ->setDescription('Rename physical files for soft-deleted media.')
             ->setHelp(
-                "The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename."
+                'The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
             )
             ->addOption(
                 'original',

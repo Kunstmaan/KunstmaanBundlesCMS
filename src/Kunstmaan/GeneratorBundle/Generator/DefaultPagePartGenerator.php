@@ -43,9 +43,9 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
      */
     public function generate(BundleInterface $bundle, $entity, $prefix, array $sections, $behatTest)
     {
-        $this->bundle   = $bundle;
-        $this->entity   = $entity;
-        $this->prefix   = $prefix;
+        $this->bundle = $bundle;
+        $this->entity = $entity;
+        $this->prefix = $prefix;
         $this->sections = $sections;
 
         $this->generatePagePartEntity();
@@ -65,14 +65,14 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generatePagePartEntity()
     {
         $params = array(
-            'bundle'         => $this->bundle->getName(),
-            'namespace'      => $this->bundle->getNamespace(),
-            'pagepart'       => $this->entity,
-            'pagepartname'   => str_replace('PagePart', '', $this->entity),
-            'adminType'      => '\\' . $this->bundle->getNamespace(
+            'bundle' => $this->bundle->getName(),
+            'namespace' => $this->bundle->getNamespace(),
+            'pagepart' => $this->entity,
+            'pagepartname' => str_replace('PagePart', '', $this->entity),
+            'adminType' => '\\' . $this->bundle->getNamespace(
                 ) . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
             'underscoreName' => strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $this->entity)),
-            'prefix'         => $this->prefix
+            'prefix' => $this->prefix,
         );
 
         $this->renderSingleFile(
@@ -92,11 +92,11 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
     private function generateFormType()
     {
         $params = array(
-            'bundle'       => $this->bundle->getName(),
-            'namespace'    => $this->bundle->getNamespace(),
-            'pagepart'     => $this->entity,
+            'bundle' => $this->bundle->getName(),
+            'namespace' => $this->bundle->getNamespace(),
+            'pagepart' => $this->entity,
             'pagepartname' => str_replace('PagePart', '', $this->entity),
-            'adminType'    => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType'
+            'adminType' => '\\' . $this->bundle->getNamespace() . '\\Form\\PageParts\\' . $this->entity . 'AdminType',
         );
 
         $this->renderSingleFile(
@@ -154,8 +154,8 @@ class DefaultPagePartGenerator extends KunstmaanGenerator
 
                 if (!$found) {
                     $data['types'][] = array(
-                        'name'  => str_replace('PagePart', '', $this->entity),
-                        'class' => $class
+                        'name' => str_replace('PagePart', '', $this->entity),
+                        'class' => $class,
                     );
                 }
 

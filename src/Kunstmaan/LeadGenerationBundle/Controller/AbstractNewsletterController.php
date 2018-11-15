@@ -24,7 +24,7 @@ abstract class AbstractNewsletterController extends Controller
 
         return $this->render($this->getIndexTemplate(), array(
             'popup' => $thePopup,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
@@ -50,12 +50,13 @@ abstract class AbstractNewsletterController extends Controller
 
         return $this->render($this->getFormTemplate(), array(
             'popup' => $thePopup,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
     /**
      * @param AbstractPopup $popup
+     *
      * @return \Symfony\Component\Form\Form
      */
     protected function createSubscriptionForm(AbstractPopup $popup)
@@ -65,7 +66,7 @@ abstract class AbstractNewsletterController extends Controller
             'action' => $this->generateUrl('popup_newsletter_subscribe', array('popup' => $popup->getId())),
         ));
         $form->add('submit', SubmitType::class, array(
-            'attr' => array('class' => $popup->getHtmlId() . '--submit')
+            'attr' => array('class' => $popup->getHtmlId() . '--submit'),
         ));
 
         return $form;
@@ -92,8 +93,8 @@ abstract class AbstractNewsletterController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param array $data
+     * @param Request       $request
+     * @param array         $data
      * @param AbstractPopup $popup
      */
     protected function handleSubscription(Request $request, $data, AbstractPopup $popup)

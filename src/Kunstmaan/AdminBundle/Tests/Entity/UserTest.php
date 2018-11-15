@@ -3,9 +3,7 @@
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use FOS\UserBundle\Model\GroupInterface;
-
 use Kunstmaan\AdminBundle\Entity\User;
 
 /**
@@ -36,7 +34,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\User::__construct
+     * @covers \Kunstmaan\AdminBundle\Entity\User::__construct
      */
     public function test__construct()
     {
@@ -46,8 +44,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\User::getId
-     * @covers Kunstmaan\AdminBundle\Entity\User::setId
+     * @covers \Kunstmaan\AdminBundle\Entity\User::getId
+     * @covers \Kunstmaan\AdminBundle\Entity\User::setId
      */
     public function testGetSetId()
     {
@@ -56,7 +54,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\User::getGroupIds
+     * @covers \Kunstmaan\AdminBundle\Entity\User::getGroupIds
      */
     public function testGetGroupIds()
     {
@@ -81,7 +79,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\User::getGroups
+     * @covers \Kunstmaan\AdminBundle\Entity\User::getGroups
      */
     public function testGetGroups()
     {
@@ -100,7 +98,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\User::hasRole
+     * @covers \Kunstmaan\AdminBundle\Entity\User::hasRole
      */
     public function testHasRole()
     {

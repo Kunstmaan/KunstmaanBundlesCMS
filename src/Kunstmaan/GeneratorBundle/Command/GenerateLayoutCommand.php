@@ -23,7 +23,7 @@ class GenerateLayoutCommand extends KunstmaanGenerateCommand
     protected function configure()
     {
         $this->setDescription('Generates a basic layout')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:layout</info> command generates a basic website layout.
 
 <info>php bin/console kuma:generate:layout</info>

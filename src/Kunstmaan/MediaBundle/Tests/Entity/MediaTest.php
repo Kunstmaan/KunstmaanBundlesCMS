@@ -1,8 +1,8 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Folder;
-
 use Kunstmaan\MediaBundle\Entity\Media;
 
 /**
@@ -18,7 +18,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Entity\Media::__construct
+     *
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::__construct
      */
     protected function setUp()
     {
@@ -34,8 +35,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getFileSize
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setFileSize
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getFileSize
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setFileSize
      */
     public function testSetFileSize()
     {
@@ -48,8 +49,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getUuid
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setUuid
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getUuid
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setUuid
      */
     public function testGetSetUuid()
     {
@@ -58,8 +59,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getName
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setName
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getName
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setName
      */
     public function testGetSetName()
     {
@@ -68,8 +69,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getLocation
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setLocation
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getLocation
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setLocation
      */
     public function testGetSetLocation()
     {
@@ -78,9 +79,9 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getContentType
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getContentTypeShort
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setContentType
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getContentType
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getContentTypeShort
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setContentType
      */
     public function testGetSetContentType()
     {
@@ -90,8 +91,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getCreatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setCreatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getCreatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setCreatedAt
      */
     public function testGetSetCreatedAt()
     {
@@ -101,8 +102,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getUpdatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setUpdatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getUpdatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setUpdatedAt
      */
     public function testGetSetUpdatedAt()
     {
@@ -112,8 +113,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getContent
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setContent
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getContent
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setContent
      */
     public function testGetContent()
     {
@@ -122,8 +123,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getFolder
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setFolder
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getFolder
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setFolder
      */
     public function testGetSetFolder()
     {
@@ -134,8 +135,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setDeleted
-     * @covers Kunstmaan\MediaBundle\Entity\Media::isDeleted
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setDeleted
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::isDeleted
      */
     public function testGetSetDeleted()
     {
@@ -146,10 +147,10 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getMetadata
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getMetadataValue
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setMetadata
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setMetadataValue
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getMetadata
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getMetadataValue
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setMetadata
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setMetadataValue
      */
     public function testGetSetMetaDataAndValues()
     {
@@ -163,8 +164,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getUrl
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setUrl
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getUrl
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setUrl
      */
     public function testGetSetUrl()
     {
@@ -173,8 +174,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getOriginalFilename
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setOriginalFilename
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getOriginalFilename
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setOriginalFilename
      */
     public function testGetSetOriginalFilename()
     {
@@ -183,8 +184,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getCopyright
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setCopyright
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getCopyright
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setCopyright
      */
     public function testGetSetCopyright()
     {
@@ -193,8 +194,8 @@ class MediaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Media::getDescription
-     * @covers Kunstmaan\MediaBundle\Entity\Media::setDescription
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::getDescription
+     * @covers \Kunstmaan\MediaBundle\Entity\Media::setDescription
      */
     public function testGetSetDescription()
     {

@@ -32,7 +32,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Role::__construct
+     * @covers \Kunstmaan\AdminBundle\Entity\Role::__construct
      */
     public function test__construct()
     {
@@ -40,8 +40,8 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Role::getRole
-     * @covers Kunstmaan\AdminBundle\Entity\Role::setRole
+     * @covers \Kunstmaan\AdminBundle\Entity\Role::getRole
+     * @covers \Kunstmaan\AdminBundle\Entity\Role::setRole
      */
     public function testGetSetRole()
     {
@@ -50,7 +50,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Role::__toString
+     * @covers \Kunstmaan\AdminBundle\Entity\Role::__toString
      */
     public function test__toString()
     {
@@ -58,11 +58,10 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Role::getId
+     * @covers \Kunstmaan\AdminBundle\Entity\Role::getId
      */
     public function testGetId()
     {
         $this->assertEquals(null, $this->object->getId());
     }
-
 }

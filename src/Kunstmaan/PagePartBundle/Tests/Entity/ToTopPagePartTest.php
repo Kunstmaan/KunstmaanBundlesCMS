@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
+
 use Kunstmaan\PagePartBundle\Entity\ToTopPagePart;
 
 /**
@@ -32,7 +34,7 @@ class ToTopPagePartTest extends \PHPUnit_Framework_TestCase
     /**
      * Generated from @assert () == 'ToTopPagePart'.
      *
-     * @covers                Kunstmaan\PagePartBundle\Entity\ToTopPagePart::__toString
+     * @covers                \Kunstmaan\PagePartBundle\Entity\ToTopPagePart::__toString
      */
     public function testToString()
     {
@@ -42,7 +44,7 @@ class ToTopPagePartTest extends \PHPUnit_Framework_TestCase
     /**
      * Generated from @assert () == 'KunstmaanPagePartBundle:ToTopPagePart:view.html.twig'.
      *
-     * @covers                Kunstmaan\PagePartBundle\Entity\ToTopPagePart::getDefaultView
+     * @covers                \Kunstmaan\PagePartBundle\Entity\ToTopPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -50,7 +52,7 @@ class ToTopPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\ToTopPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\PagePartBundle\Entity\ToTopPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

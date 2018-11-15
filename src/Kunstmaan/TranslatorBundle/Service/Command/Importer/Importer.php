@@ -25,7 +25,7 @@ class Importer
         $filename = $file->getFilename();
         list($domain, $locale, $extension) = explode('.', $filename);
 
-        if (! isset($this->loaders[$extension]) || !$this->loaders[$extension] instanceof \Symfony\Component\Translation\Loader\LoaderInterface) {
+        if (!isset($this->loaders[$extension]) || !$this->loaders[$extension] instanceof \Symfony\Component\Translation\Loader\LoaderInterface) {
             throw new \Exception(sprintf('Requested loader for extension .%s isnt set', $extension));
         }
 
@@ -35,7 +35,7 @@ class Importer
 
         foreach ($messageCatalogue->all($domain) as $keyword => $text) {
             if ($this->importSingleTranslation($keyword, $text, $locale, $filename, $domain, $force)) {
-                $importedTranslations++;
+                ++$importedTranslations;
             }
         }
 
@@ -71,8 +71,9 @@ class Importer
 
     /**
      * Validate the loaders
-     * @param  array      $loaders
-     * @return void
+     *
+     * @param array $loaders
+     *
      * @throws \Exception If no loaders are defined
      */
     public function validateLoaders($loaders = array())

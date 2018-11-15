@@ -11,24 +11,27 @@ use Symfony\Component\Finder\Finder;
 class ResourceCacher
 {
     /**
-     * @var boolean
+     * @var bool
      */
     private $debug;
 
     /**
      * Where to store cache files
+     *
      * @var string
      */
     private $cacheDir;
 
     /**
      * Logger
+     *
      * @var \Symfony\Component\HttpKernel\Log\LoggerInterface
      */
     private $logger;
 
     /**
      * Retrieve resources from cache file (if any)
+     *
      * @return resources false if empty
      */
     public function getCachedResources()
@@ -48,8 +51,8 @@ class ResourceCacher
 
     /**
      * Cache an array of resources into the given cache
-     * @param  array $resources
-     * @return void
+     *
+     * @param array $resources
      */
     public function cacheResources(array $resources)
     {
@@ -61,6 +64,7 @@ class ResourceCacher
 
     /**
      * Get cache file location
+     *
      * @return string
      */
     public function getCacheFileLocation()
@@ -70,7 +74,6 @@ class ResourceCacher
 
     /**
      * Remove all cached files (translations/resources)
-     * @return void
      */
     public function flushCache()
     {

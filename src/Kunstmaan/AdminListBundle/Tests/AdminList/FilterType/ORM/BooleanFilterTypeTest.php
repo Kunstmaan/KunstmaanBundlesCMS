@@ -33,7 +33,7 @@ class BooleanFilterTypeTest extends ORMFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::bindRequest
      */
     public function testBindRequest()
     {
@@ -49,7 +49,7 @@ class BooleanFilterTypeTest extends ORMFilterTypeTestCase
     /**
      * @param mixed $value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::apply
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($value)
@@ -75,7 +75,7 @@ class BooleanFilterTypeTest extends ORMFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::getTemplate
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\BooleanFilterType::getTemplate
      */
     public function testGetTemplate()
     {

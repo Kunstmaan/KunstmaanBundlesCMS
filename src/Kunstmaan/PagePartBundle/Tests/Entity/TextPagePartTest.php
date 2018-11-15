@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
+
 use Kunstmaan\PagePartBundle\Entity\TextPagePart;
 
 /**
@@ -30,29 +32,29 @@ class TextPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\TextPagePart::setContent
-     * @covers Kunstmaan\PagePartBundle\Entity\TextPagePart::getContent
+     * @covers \Kunstmaan\PagePartBundle\Entity\TextPagePart::setContent
+     * @covers \Kunstmaan\PagePartBundle\Entity\TextPagePart::getContent
      */
     public function testSetGetContent()
     {
-        $this->object->setContent("tèst content with s3ç!àL");
-        $this->assertEquals($this->object->getContent(), "tèst content with s3ç!àL");
+        $this->object->setContent('tèst content with s3ç!àL');
+        $this->assertEquals($this->object->getContent(), 'tèst content with s3ç!àL');
     }
 
     /**
      * Generated from @assert () == "TextPagePart " . $this->object->getContent().
      *
-     * @covers                Kunstmaan\PagePartBundle\Entity\TextPagePart::__toString
+     * @covers                \Kunstmaan\PagePartBundle\Entity\TextPagePart::__toString
      */
     public function testToString()
     {
-        $this->assertEquals("TextPagePart " . $this->object->getContent(), $this->object->__toString());
+        $this->assertEquals('TextPagePart ' . $this->object->getContent(), $this->object->__toString());
     }
 
     /**
      * Generated from @assert () == 'KunstmaanPagePartBundle:TextPagePart:view.html.twig'.
      *
-     * @covers                Kunstmaan\PagePartBundle\Entity\TextPagePart::getDefaultView
+     * @covers                \Kunstmaan\PagePartBundle\Entity\TextPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -60,7 +62,7 @@ class TextPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\TextPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\PagePartBundle\Entity\TextPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

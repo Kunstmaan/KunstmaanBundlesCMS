@@ -7,7 +7,6 @@ namespace Kunstmaan\MediaBundle\Form\Type;
  */
 class CurrentValueContainer
 {
-
     /**
      * @var object
      */

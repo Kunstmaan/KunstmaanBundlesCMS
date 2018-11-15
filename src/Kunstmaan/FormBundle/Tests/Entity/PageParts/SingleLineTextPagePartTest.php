@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart;
 use Kunstmaan\FormBundle\Form\SingleLineTextPagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -25,7 +23,7 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new SingleLineTextPagePart;
+        $this->object = new SingleLineTextPagePart();
     }
 
     /**
@@ -37,33 +35,32 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::setRegex
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getRegex
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::setRegex
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getRegex
      */
     public function testSetGetRegex()
     {
         $object = $this->object;
-        $regex = ".*example.*";
+        $regex = '.*example.*';
         $object->setRegex($regex);
         $this->assertEquals($regex, $object->getRegex());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::setErrorMessageRegex
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getErrorMessageRegex
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::setErrorMessageRegex
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getErrorMessageRegex
      */
     public function testSetErrorMessageRegex()
     {
         $object = $this->object;
-        $message = "Some example error message";
+        $message = 'Some example error message';
         $object->setErrorMessageRegex($message);
         $this->assertEquals($message, $object->getErrorMessageRegex());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getDefaultView
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getDefaultView
      */
-
     public function testGetDefaultView()
     {
         $stringValue = $this->object->getDefaultView();
@@ -72,13 +69,13 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::adaptForm
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::adaptForm
      */
     public function testAdaptForm()
     {
         $object = $this->object;
         $object->setRequired(true);
-        $object->setRegex(".*example.*");
+        $object->setRegex('.*example.*');
 
         $formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()
@@ -97,7 +94,7 @@ class SingleLineTextPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SingleLineTextPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

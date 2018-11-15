@@ -33,7 +33,8 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::__construct
+     *
+     * @covers \Kunstmaan\MediaBundle\Helper\FolderManager::__construct
      */
     protected function setUp()
     {
@@ -83,7 +84,7 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getFolderHierarchy
+     * @covers \Kunstmaan\MediaBundle\Helper\FolderManager::getFolderHierarchy
      */
     public function testGetFolderHierarchy()
     {
@@ -97,7 +98,7 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getRootFolderFor
+     * @covers \Kunstmaan\MediaBundle\Helper\FolderManager::getRootFolderFor
      */
     public function testGetRootFolderFor()
     {
@@ -111,7 +112,7 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getParentIds
+     * @covers \Kunstmaan\MediaBundle\Helper\FolderManager::getParentIds
      */
     public function testGetParentIds()
     {
@@ -124,7 +125,7 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\FolderManager::getParents
+     * @covers \Kunstmaan\MediaBundle\Helper\FolderManager::getParents
      */
     public function testGetParents()
     {

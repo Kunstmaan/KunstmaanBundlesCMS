@@ -11,7 +11,6 @@ use Kunstmaan\AdminBundle\Event\DeepCloneAndSaveEvent;
  */
 class CloneListener
 {
-
     /**
      * @param DeepCloneAndSaveEvent $event
      */
@@ -26,5 +25,4 @@ class CloneListener
             $clonedEntity->deepClone();
         }
     }
-
 }

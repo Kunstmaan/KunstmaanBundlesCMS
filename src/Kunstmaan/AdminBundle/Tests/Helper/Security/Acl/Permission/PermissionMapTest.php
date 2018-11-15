@@ -11,7 +11,7 @@ use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap;
 class PermissionMapTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getMasks
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getMasks
      */
     public function testGetMasksReturnsNullWhenNotSupportedMask()
     {
@@ -20,7 +20,7 @@ class PermissionMapTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getMasks
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getMasks
      */
     public function testGetMasks()
     {
@@ -31,7 +31,7 @@ class PermissionMapTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::contains
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::contains
      */
     public function testContains()
     {
@@ -42,7 +42,7 @@ class PermissionMapTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getPossiblePermissions
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMap::getPossiblePermissions
      */
     public function testGetPossiblePermissions()
     {

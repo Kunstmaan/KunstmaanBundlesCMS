@@ -115,7 +115,7 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::__construct
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::__construct
      */
     public function testConstructor()
     {
@@ -123,7 +123,7 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::apply
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::apply
      */
     public function testApply()
     {
@@ -133,8 +133,8 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'table' => 'myTable',
-                    'alias' => 'n'
-                )
+                    'alias' => 'n',
+                ),
             )
         );
 
@@ -174,7 +174,7 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::apply
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::apply
      */
     public function testApplyAnonymous()
     {
@@ -184,8 +184,8 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     'table' => 'myTable',
-                    'alias' => 'n'
-                )
+                    'alias' => 'n',
+                ),
             )
         );
 
@@ -214,7 +214,7 @@ class AclNativeHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::getTokenStorage
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclNativeHelper::getTokenStorage
      */
     public function testGetTokenStorage()
     {

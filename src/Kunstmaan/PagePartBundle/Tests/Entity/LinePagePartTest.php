@@ -32,7 +32,7 @@ class LinePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinePagePart::__toString
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinePagePart::__toString
      */
     public function testToString()
     {
@@ -40,7 +40,7 @@ class LinePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinePagePart::getDefaultView
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinePagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -48,11 +48,10 @@ class LinePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinePagePart::getDefaultAdminType
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinePagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
         $this->assertEquals('Kunstmaan\PagePartBundle\Form\LinePagePartAdminType', $this->object->getDefaultAdminType());
     }
-
 }

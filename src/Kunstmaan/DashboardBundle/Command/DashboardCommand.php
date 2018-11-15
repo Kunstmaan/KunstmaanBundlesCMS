@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Kunstmaan\DashboardBundle\Manager\WidgetManager;
@@ -9,7 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DashboardCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -25,9 +25,8 @@ class DashboardCommand extends ContainerAwareCommand
         /** @var DashboardWidget[] $widgets */
         $widgets = $widgetManager->getWidgets();
         foreach ($widgets as $widget) {
-            /** @var DashboardWidget $widget */
+            /* @var DashboardWidget $widget */
             $widget->getCommand()->execute($input, $output);
         }
     }
-
 }

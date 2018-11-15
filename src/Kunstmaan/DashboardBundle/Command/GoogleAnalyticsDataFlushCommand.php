@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -8,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -27,6 +27,7 @@ class GoogleAnalyticsDataFlushCommand extends ContainerAwareCommand
         $configRepository = $em->getRepository('KunstmaanDashboardBundle:AnalyticsConfig');
 
         $configId = $input->getArgument('config') ? $input->getArgument('config') : false;
+
         try {
             $configRepository->flushConfig($configId);
             $output->writeln('<fg=green>Data flushed</fg=green>');

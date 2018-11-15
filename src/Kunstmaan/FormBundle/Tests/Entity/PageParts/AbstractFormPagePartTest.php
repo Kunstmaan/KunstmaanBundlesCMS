@@ -32,7 +32,7 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getUniqueId
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getUniqueId
      */
     public function testGetUniqueId()
     {
@@ -41,19 +41,19 @@ class AbstractFormPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::setLabel
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getLabel
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::setLabel
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getLabel
      */
     public function testSetGetLabel()
     {
         $object = $this->object;
-        $value = "Some label";
+        $value = 'Some label';
         $object->setLabel($value);
         $this->assertEquals($value, $object->getLabel());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getAdminView
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\AbstractFormPagePart::getAdminView
      */
     public function testGetAdminView()
     {

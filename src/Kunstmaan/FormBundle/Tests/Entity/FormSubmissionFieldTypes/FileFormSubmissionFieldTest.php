@@ -21,7 +21,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FileFormSubmissionField;
+        $this->object = new FileFormSubmissionField();
     }
 
     /**
@@ -33,7 +33,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::__toString
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::__toString
      */
     public function testToString()
     {
@@ -43,7 +43,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::isNull
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::isNull
      */
     public function testIsNull()
     {
@@ -56,7 +56,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getSafeFileName
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getSafeFileName
      */
     public function testGetSafeFileName()
     {
@@ -70,8 +70,8 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::setFileName
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getFileName
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::setFileName
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getFileName
      */
     public function testSetGetFileName()
     {
@@ -82,7 +82,7 @@ class FileFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getSubmissionTemplate
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\FileFormSubmissionField::getSubmissionTemplate
      */
     public function testGetSubmissionTemplate()
     {

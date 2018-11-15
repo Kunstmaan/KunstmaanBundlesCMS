@@ -2,12 +2,10 @@
 
 namespace Kunstmaan\DashboardBundle\Manager;
 
-
 use Kunstmaan\DashboardBundle\Widget\DashboardWidget;
 
 class WidgetManager
 {
-
     /**
      * @var DashboardWidget[]
      */
@@ -28,5 +26,4 @@ class WidgetManager
     {
         return $this->widgets;
     }
-
 }

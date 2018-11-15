@@ -36,7 +36,7 @@ class AbstractSearchPage extends AbstractPage implements IndexableInterface, Slu
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isIndexable()
     {

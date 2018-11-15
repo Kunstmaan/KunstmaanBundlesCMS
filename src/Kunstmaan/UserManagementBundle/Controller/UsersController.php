@@ -51,7 +51,7 @@ class UsersController extends BaseSettingsController
         $configurator = new $configuratorClassName($em);
 
         /* @var AdminList $adminList */
-        $adminList = $this->get("kunstmaan_adminlist.factory")->createList($configurator);
+        $adminList = $this->get('kunstmaan_adminlist.factory')->createList($configurator);
         $adminList->bindRequest($request);
 
         return array(
@@ -114,7 +114,7 @@ class UsersController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('kuma_user.users.add.flash.success.%username%', [
-                        '%username%' => $user->getUsername()
+                        '%username%' => $user->getUsername(),
                     ])
                 );
 
@@ -137,6 +137,7 @@ class UsersController extends BaseSettingsController
      * @Template()
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function editAction(Request $request, $id)
@@ -177,7 +178,6 @@ class UsersController extends BaseSettingsController
         $form = $this->createForm($formFqn, $user, $options);
 
         if ($request->isMethod('POST')) {
-
             if ($tabPane) {
                 $tabPane->bindRequest($request);
                 $form = $tabPane->getForm();
@@ -193,7 +193,7 @@ class UsersController extends BaseSettingsController
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('kuma_user.users.edit.flash.success.%username%', [
-                        '%username%' => $user->getUsername()
+                        '%username%' => $user->getUsername(),
                     ])
                 );
 
@@ -222,12 +222,13 @@ class UsersController extends BaseSettingsController
      * Delete a user
      *
      * @param Request $request
-     * @param int $id
+     * @param int     $id
      *
      * @Route("/{id}/delete", requirements={"id" = "\d+"}, name="KunstmaanUserManagementBundle_settings_users_delete")
      * @Method({"GET", "POST"})
      *
      * @throws AccessDeniedException
+     *
      * @return array
      */
     public function deleteAction(Request $request, $id)
@@ -248,7 +249,7 @@ class UsersController extends BaseSettingsController
             $this->addFlash(
                 FlashTypes::SUCCESS,
                 $this->get('translator')->trans('kuma_user.users.delete.flash.success.%username%', [
-                    '%username%' => $user->getUsername()
+                    '%username%' => $user->getUsername(),
                 ])
             );
         }

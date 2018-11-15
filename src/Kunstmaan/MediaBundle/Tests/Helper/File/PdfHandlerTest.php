@@ -24,8 +24,8 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      *
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::__construct
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::setPdfTransformer
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::__construct
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::setPdfTransformer
      */
     protected function setUp()
     {
@@ -47,7 +47,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::getType
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::getType
      */
     public function testGetType()
     {
@@ -55,7 +55,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::canHandle
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::canHandle
      */
     public function testCanHandlePdfFiles()
     {
@@ -67,7 +67,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::canHandle
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::canHandle
      */
     public function testCannotHandleNonPdfFiles()
     {
@@ -79,7 +79,7 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::saveMedia
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::saveMedia
      */
     public function testSaveMedia()
     {
@@ -88,8 +88,8 @@ class PdfHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::getImageUrl
-     * @covers Kunstmaan\MediaBundle\Helper\File\PdfHandler::setWebPath
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::getImageUrl
+     * @covers \Kunstmaan\MediaBundle\Helper\File\PdfHandler::setWebPath
      */
     public function testGetImageUrl()
     {

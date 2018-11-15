@@ -2,14 +2,13 @@
 
 namespace Kunstmaan\MediaBundle\Command;
 
-use \ImagickException;
+use ImagickException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CreatePdfPreviewCommand extends ContainerAwareCommand
 {
-
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Creating PDF preview images...');
@@ -26,16 +25,13 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
         );
         /** @var Media $media */
         foreach ($medias as $media) {
-            try
-            {
+            try {
                 $pdfTransformer->apply($webPath . $media->getUrl());
-            }
-            catch(ImagickException $e)
-            {
+            } catch (ImagickException $e) {
                 $output->writeln('<comment>'.$e->getMessage().'</comment>');
             }
         }
-        
+
         $output->writeln('<info>PDF preview images have been created.</info>');
     }
 
@@ -60,7 +56,7 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
             ->setName('kuma:media:create-pdf-previews')
             ->setDescription('Create preview images for PDFs that have already been uploaded')
             ->setHelp(
-                "The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded."
+                'The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded.'
             );
     }
 }

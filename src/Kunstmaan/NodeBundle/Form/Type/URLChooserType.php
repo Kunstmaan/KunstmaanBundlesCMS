@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class URLChooserType extends AbstractType
 {
-
     const INTERNAL = 'internal';
     const EXTERNAL = 'external';
     const EMAIL = 'email';
@@ -25,8 +24,9 @@ class URLChooserType extends AbstractType
      *
      * This method is called for each type in the hierarchy starting form the
      * top most type. Type extensions can further modify the form.
+     *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
      */
@@ -64,7 +64,7 @@ class URLChooserType extends AbstractType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {

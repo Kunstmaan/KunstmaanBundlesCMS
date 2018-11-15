@@ -138,7 +138,7 @@ class RecurringEveryXTimeRule extends AbstractRule
             'minutes' => $this->getMinutes(),
             'hours' => $this->getHours(),
             'days' => $this->getDays(),
-            'times' => $this->getTimes()
+            'times' => $this->getTimes(),
         );
     }
 

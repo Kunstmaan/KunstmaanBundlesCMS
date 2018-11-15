@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\Filter;
@@ -34,10 +35,10 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Filter::__construct
-     * @covers Kunstmaan\AdminListBundle\AdminList\Filter::getColumnName
-     * @covers Kunstmaan\AdminListBundle\AdminList\Filter::getType
-     * @covers Kunstmaan\AdminListBundle\AdminList\Filter::getUniqueId
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Filter::__construct
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Filter::getColumnName
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Filter::getType
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Filter::getUniqueId
      */
     public function test__construct()
     {
@@ -50,8 +51,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Filter::bindRequest
-     * @covers Kunstmaan\AdminListBundle\AdminList\Filter::getData
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Filter::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Filter::getData
      */
     public function testBindRequest()
     {

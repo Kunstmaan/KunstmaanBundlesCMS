@@ -33,23 +33,22 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     private $request;
 
     /**
-     * @var int $limit
+     * @var int
      */
     private $limit;
 
     /**
-     * @param EntityManager $em The entity manager
-     * @param MediaManager $mediaManager The media manager
-     * @param Folder $folder The current folder
-     * @param Request $request The request object
+     * @param EntityManager $em           The entity manager
+     * @param MediaManager  $mediaManager The media manager
+     * @param Folder        $folder       The current folder
+     * @param Request       $request      The request object
      */
     public function __construct(
         EntityManager $em,
         MediaManager $mediaManager,
         Folder $folder,
         Request $request
-    )
-    {
+    ) {
         parent::__construct($em);
 
         $this->setAdminType(MediaType::class);
@@ -91,7 +90,7 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
     {
         return array(
             'path' => $this->request->get('_route'),
-            'params' => array('folderId' => $this->folder->getId())
+            'params' => array('folderId' => $this->folder->getId()),
         );
     }
 
@@ -127,15 +126,15 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
 
     /**
      * @param int $limit
+     *
      * @return MediaAdminListConfigurator
      */
     protected function setLimit($limit)
     {
         $this->limit = $limit;
+
         return $this;
     }
-
-
 
     /**
      * Add item actions buttons
@@ -187,22 +186,27 @@ class MediaAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurato
                     case 'file':
                         $queryBuilder->andWhere('b.location = :location')
                             ->setParameter('location', 'local');
+
                         break;
                     case 'image':
                         $queryBuilder->andWhere('b.contentType LIKE :ctype')
                             ->setParameter('ctype', '%image%');
+
                         break;
                     case RemoteAudioHandler::TYPE:
                         $queryBuilder->andWhere('b.contentType = :ctype')
                             ->setParameter('ctype', RemoteAudioHandler::CONTENT_TYPE);
+
                         break;
                     case RemoteSlideHandler::TYPE:
                         $queryBuilder->andWhere('b.contentType = :ctype')
                             ->setParameter('ctype', RemoteSlideHandler::CONTENT_TYPE);
+
                         break;
                     case RemoteVideoHandler::TYPE:
                         $queryBuilder->andWhere('b.contentType = :ctype')
                             ->setParameter('ctype', RemoteVideoHandler::CONTENT_TYPE);
+
                         break;
                 }
             }

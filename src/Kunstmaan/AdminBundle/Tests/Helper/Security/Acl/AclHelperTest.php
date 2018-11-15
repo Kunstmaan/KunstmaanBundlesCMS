@@ -154,7 +154,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::__construct
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::__construct
      */
     public function testConstructor()
     {
@@ -162,8 +162,8 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::apply
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::cloneQuery
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::apply
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::cloneQuery
      */
     public function testApply()
     {
@@ -227,8 +227,8 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::apply
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::cloneQuery
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::apply
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::cloneQuery
      */
     public function testApplyAnonymous()
     {
@@ -281,8 +281,8 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getAllowedEntityIds
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getPermittedAclIdsSQLForUser
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getAllowedEntityIds
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getPermittedAclIdsSQLForUser
      */
     public function testGetAllowedEntityIds()
     {
@@ -315,7 +315,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
 
         $rows = array(
             array('id' => 1),
-            array('id' => 9)
+            array('id' => 9),
         );
 
         $hydrator->expects($this->once())
@@ -342,7 +342,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getAllowedEntityIds
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getAllowedEntityIds
      */
     public function testGetAllowedEntityIdsNoEntity()
     {
@@ -352,7 +352,7 @@ class AclHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getTokenStorage
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\AclHelper::getTokenStorage
      */
     public function testGetTokenStorage()
     {

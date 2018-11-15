@@ -39,7 +39,7 @@ class BundleVersionDataCollector extends AbstractDataCollector
         $data = $this->cache->fetch('version_check');
 
         return [
-            'data' => $data
+            'data' => $data,
         ];
     }
 

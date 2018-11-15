@@ -32,8 +32,8 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::setUrl
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::getUrl
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::setUrl
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::getUrl
      */
     public function testSetGetUrl()
     {
@@ -42,8 +42,8 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::getOpenInNewWindow
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::setOpenInNewWindow
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::getOpenInNewWindow
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::setOpenInNewWindow
      */
     public function testGetSetOpenInNewWindow()
     {
@@ -55,8 +55,8 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::setText
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::getText
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::setText
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::getText
      */
     public function testSetGetText()
     {
@@ -65,7 +65,7 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::__toString
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::__toString
      */
     public function testToString()
     {
@@ -73,7 +73,7 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::getDefaultView
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -81,7 +81,7 @@ class LinkPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\LinkPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\PagePartBundle\Entity\LinkPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

@@ -36,6 +36,7 @@ class MediaRepository extends EntityRepository
      * @param int $mediaId
      *
      * @return object
+     *
      * @throws EntityNotFoundException
      */
     public function getMedia($mediaId)
@@ -49,9 +50,10 @@ class MediaRepository extends EntityRepository
     }
 
     /**
-     * @param integer $pictureId
+     * @param int $pictureId
      *
      * @return object
+     *
      * @throws EntityNotFoundException
      */
     public function getPicture($pictureId)

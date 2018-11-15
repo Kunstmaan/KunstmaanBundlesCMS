@@ -9,12 +9,10 @@ use Kunstmaan\PagePartBundle\PagePartAdmin\PagePartAdminConfiguratorInterface;
  */
 interface HasPagePartsInterface
 {
-
     public function getId();
 
     /**
      * @return PagePartAdminConfiguratorInterface[]
      */
     public function getPagePartAdminConfigurations();
-
 }

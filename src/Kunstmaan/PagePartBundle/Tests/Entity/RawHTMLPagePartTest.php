@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Entity;
+
 use Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart;
 
 /**
@@ -32,17 +34,17 @@ class RawHTMLPagePartTest extends \PHPUnit_Framework_TestCase
     /**
      * Generated from @assert () == "RawHTMLPagePart " . htmlentities($this->object->getContent()).
      *
-     * @covers                Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::__toString
+     * @covers                \Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::__toString
      */
     public function testToString()
     {
-        $this->assertEquals("RawHTMLPagePart " . htmlentities($this->object->getContent()), $this->object->__toString());
+        $this->assertEquals('RawHTMLPagePart ' . htmlentities($this->object->getContent()), $this->object->__toString());
     }
 
     /**
      * Generated from @assert () == 'KunstmaanPagePartBundle:RawHTMLPagePart:view.html.twig'.
      *
-     * @covers                Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getDefaultView
+     * @covers                \Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -50,17 +52,17 @@ class RawHTMLPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::setContent
-     * @covers Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getContent
+     * @covers \Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::setContent
+     * @covers \Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getContent
      */
     public function testSetGetContent()
     {
-        $this->object->setContent("tèst content with s3ç!àL");
-        $this->assertEquals($this->object->getContent(), "tèst content with s3ç!àL");
+        $this->object->setContent('tèst content with s3ç!àL');
+        $this->assertEquals($this->object->getContent(), 'tèst content with s3ç!àL');
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

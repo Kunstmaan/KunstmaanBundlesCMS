@@ -20,7 +20,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Redirect;
+        $this->object = new Redirect();
     }
 
     /**
@@ -32,8 +32,8 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::getDomain
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::setDomain
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::getDomain
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::setDomain
      */
     public function testGetSetDomain()
     {
@@ -42,8 +42,8 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::getOrigin
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::setOrigin
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::getOrigin
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::setOrigin
      */
     public function testGetSetOrigin()
     {
@@ -52,8 +52,8 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::getTarget
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::setTarget
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::getTarget
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::setTarget
      */
     public function testGetSetTarget()
     {
@@ -62,13 +62,12 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::setPermanent
-     * @covers Kunstmaan\RedirectBundle\Entity\Redirect::isPermanent
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::setPermanent
+     * @covers \Kunstmaan\RedirectBundle\Entity\Redirect::isPermanent
      */
     public function testGetSetPermanent()
     {
         $this->object->setPermanent(true);
         $this->assertTrue($this->object->isPermanent());
     }
-
 }

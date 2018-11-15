@@ -32,9 +32,10 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     // META DATA TESTS
+
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaAuthor
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaAuthor
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getMetaAuthor
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setMetaAuthor
      */
     public function testGetSetMetaAuthor()
     {
@@ -43,8 +44,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaDescription
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaDescription
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getMetaDescription
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setMetaDescription
      */
     public function testGetSetMetaDescription()
     {
@@ -53,8 +54,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getMetaRobots
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setMetaRobots
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getMetaRobots
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setMetaRobots
      */
     public function testGetSetMetaRobots()
     {
@@ -63,8 +64,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getExtraMetadata
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setExtraMetadata
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getExtraMetadata
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setExtraMetadata
      */
     public function testGetSetExtraMetadata()
     {
@@ -73,9 +74,10 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     // OPEN GRAPH TESTS
+
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgDescription
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgDescription
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setOgDescription
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getOgDescription
      */
     public function testGetSetOgDescription()
     {
@@ -84,8 +86,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgImage
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setOgImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getOgImage
      */
     public function testGetSetOgImageWithImage()
     {
@@ -95,8 +97,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgImage
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setOgImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getOgImage
      */
     public function testGetSetOgImageWithNullValue()
     {
@@ -105,8 +107,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgTitle
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgTitle
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setOgTitle
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getOgTitle
      */
     public function testGetSetOgTitle()
     {
@@ -115,8 +117,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setOgType
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getOgType
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setOgType
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getOgType
      */
     public function testGetSetOgType()
     {
@@ -125,9 +127,10 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     // TWITTER CARD TESTS
+
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterTitle
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterTitle
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setTwitterTitle
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getTwitterTitle
      */
     public function testGetSetTwitterTitle()
     {
@@ -136,8 +139,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterDescription
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterDescription
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setTwitterDescription
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getTwitterDescription
      */
     public function testGetSetTwitterDescription()
     {
@@ -146,8 +149,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterSite
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterSite
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setTwitterSite
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getTwitterSite
      */
     public function testGetSetTwitterSite()
     {
@@ -156,8 +159,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterCreator
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterCreator
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setTwitterCreator
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getTwitterCreator
      */
     public function testGetSetTwitterCreator()
     {
@@ -166,8 +169,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterImage
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setTwitterImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getTwitterImage
      */
     public function testGetSetTwitterImageWithImage()
     {
@@ -177,8 +180,8 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::setTwitterImage
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getTwitterImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::setTwitterImage
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getTwitterImage
      */
     public function testGetSetTwitterImageWithNullValue()
     {
@@ -187,8 +190,9 @@ class SeoTest extends \PHPUnit_Framework_TestCase
     }
 
     // HELPERS
+
     /**
-     * @covers Kunstmaan\SeoBundle\Entity\Seo::getDefaultAdminType
+     * @covers \Kunstmaan\SeoBundle\Entity\Seo::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

@@ -21,7 +21,7 @@ class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new StringFormSubmissionField;
+        $this->object = new StringFormSubmissionField();
     }
 
     /**
@@ -33,8 +33,8 @@ class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::getValue
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::setValue
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::getValue
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::setValue
      */
     public function testSetGetValue()
     {
@@ -45,7 +45,7 @@ class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::getDefaultAdminType
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
@@ -53,7 +53,7 @@ class StringFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::__toString
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField::__toString
      */
     public function testToString()
     {

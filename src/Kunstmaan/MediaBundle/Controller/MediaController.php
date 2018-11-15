@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MediaController extends Controller
 {
-
     /**
      * @param Request $request
      * @param int     $mediaId
@@ -36,13 +35,13 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Media $media */
-        $media  = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $folder = $media->getFolder();
 
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
-        $handler      = $mediaManager->getHandler($media);
-        $helper       = $handler->getFormHelper($media);
+        $handler = $mediaManager->getHandler($media);
+        $helper = $handler->getFormHelper($media);
 
         $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
 
@@ -62,13 +61,13 @@ class MediaController extends Controller
 
         return $this->render(
             $showTemplate, [
-                'handler'      => $handler,
+                'handler' => $handler,
                 'foldermanager' => $this->get('kunstmaan_media.folder_manager'),
                 'mediamanager' => $this->get('kunstmaan_media.media_manager'),
-                'editform'     => $form->createView(),
-                'media'        => $media,
-                'helper'       => $helper,
-                'folder'       => $folder
+                'editform' => $form->createView(),
+                'media' => $media,
+                'helper' => $helper,
+                'folder' => $folder,
             ]
         );
     }
@@ -86,16 +85,16 @@ class MediaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var Media $media */
-        $media     = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
+        $media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($mediaId);
         $medianame = $media->getName();
-        $folder    = $media->getFolder();
+        $folder = $media->getFolder();
 
         $em->getRepository('KunstmaanMediaBundle:Media')->delete($media);
 
         $this->addFlash(
             FlashTypes::SUCCESS,
             $this->get('translator')->trans('kuma_admin.media.flash.deleted_success.%medianame%', [
-                '%medianame%' => $medianame
+                '%medianame%' => $medianame,
             ])
         );
 
@@ -146,9 +145,9 @@ class MediaController extends Controller
         } else {
             $tempDir = \sys_get_temp_dir();
         }
-        $targetDir        = \rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . 'plupload';
+        $targetDir = \rtrim($tempDir, '/') . DIRECTORY_SEPARATOR . 'plupload';
         $cleanupTargetDir = true; // Remove old files
-        $maxFileAge       = 5 * 60 * 60; // Temp file age in seconds
+        $maxFileAge = 5 * 60 * 60; // Temp file age in seconds
 
         // Create target dir
         if (!\file_exists($targetDir)) {
@@ -178,7 +177,6 @@ class MediaController extends Controller
         // Remove old temp files
         if ($cleanupTargetDir) {
             if (!\is_dir($targetDir) || !$dir = \opendir($targetDir)) {
-
                 return $this->returnJsonError('100', 'Failed to open temp directory.');
             }
 
@@ -187,7 +185,6 @@ class MediaController extends Controller
 
                 // If temp file is current file proceed to the next
                 if ($tmpFilePath === "{$filePath}.part") {
-
                     continue;
                 }
 
@@ -195,7 +192,6 @@ class MediaController extends Controller
                 if (\preg_match('/\.part$/', $file) && (\filemtime($tmpFilePath) < \time() - $maxFileAge)) {
                     $success = @\unlink($tmpFilePath);
                     if ($success !== true) {
-
                         return $this->returnJsonError('106', 'Could not remove temp file: '.$filePath);
                     }
                 }
@@ -205,12 +201,10 @@ class MediaController extends Controller
 
         // Open temp file
         if (!$out = @\fopen("{$filePath}.part", $chunks ? 'ab' : 'wb')) {
-
             return $this->returnJsonError('102', 'Failed to open output stream.');
         }
 
         if (0 !== $request->files->count()) {
-
             $_file = $request->files->get('file');
             if ($_file->getError() > 0 || !\is_uploaded_file($_file->getRealPath())) {
                 return $this->returnJsonError('103', 'Failed to move uploaded file.');
@@ -218,12 +212,10 @@ class MediaController extends Controller
 
             // Read binary input stream and append it to temp file
             if (!$input = @\fopen($_file->getRealPath(), 'rb')) {
-
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         } else {
             if (!$input = @\fopen('php://input', 'rb')) {
-
                 return $this->returnJsonError('101', 'Failed to open input stream.');
             }
         }
@@ -241,11 +233,10 @@ class MediaController extends Controller
             \rename("{$filePath}.part", $filePath);
         }
 
-
         $em = $this->getDoctrine()->getManager();
         /* @var Folder $folder */
         $folder = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
-        $file   = new File($filePath);
+        $file = new File($filePath);
 
         try {
             /* @var Media $media */
@@ -258,16 +249,14 @@ class MediaController extends Controller
 
         $success = \unlink($filePath);
         if ($success !== true) {
-
             return $this->returnJsonError('105', 'Could not remove temp file: '.$filePath);
         }
-
 
         // Send headers making sure that the file is not cached (as it happens for example on iOS devices)
         $response = new JsonResponse([
             'jsonrpc' => '2.0',
-            'result'  => '',
-            'id'      => 'id'
+            'result' => '',
+            'id' => 'id',
         ], JsonResponse::HTTP_OK, [
             'Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT',
             'Last-Modified' => \gmdate('D, d M Y H:i:s') . ' GMT',
@@ -278,15 +267,15 @@ class MediaController extends Controller
         return $response;
     }
 
-    private function returnJsonError($code, $message){
-
+    private function returnJsonError($code, $message)
+    {
         return new JsonResponse([
             'jsonrpc' => '2.0',
             'error ' => [
                 'code' => $code,
                 'message' => $message,
             ],
-            'id' => 'id'
+            'id' => 'id',
         ]);
     }
 
@@ -310,7 +299,7 @@ class MediaController extends Controller
 
         if ($request->files->has('files') && $request->files->get('files')['error'] === 0) {
             $drop = $request->files->get('files');
-        } else if ($request->files->get('file')) {
+        } elseif ($request->files->get('file')) {
             $drop = $request->files->get('file');
         } else {
             $drop = $request->get('text');
@@ -356,7 +345,7 @@ class MediaController extends Controller
      *
      * @return array|RedirectResponse
      */
-    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal=false)
+    private function createAndRedirect(Request $request, $folderId, $type, $redirectUrl, $extraParams = [], $isInModal = false)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -365,9 +354,9 @@ class MediaController extends Controller
 
         /* @var MediaManager $mediaManager */
         $mediaManager = $this->get('kunstmaan_media.media_manager');
-        $handler      = $mediaManager->getHandlerForType($type);
-        $media        = new Media();
-        $helper       = $handler->getFormHelper($media);
+        $handler = $mediaManager->getHandlerForType($type);
+        $media = new Media();
+        $helper = $handler->getFormHelper($media);
 
         $form = $this->createForm($handler->getFormType(), $helper, $handler->getFormTypeOptions());
 
@@ -385,7 +374,7 @@ class MediaController extends Controller
                 $this->addFlash(
                     FlashTypes::SUCCESS,
                     $this->get('translator')->trans('media.flash.created', [
-                        '%medianame%' => $media->getName()
+                        '%medianame%' => $media->getName(),
                     ])
                 );
 
@@ -396,17 +385,18 @@ class MediaController extends Controller
                 $this->addFlash(
                     FlashTypes::ERROR,
                     $this->get('translator')->trans('media.flash.not_created', array(
-                        '%mediaerrors%' => $form->getErrors(true, true)
+                        '%mediaerrors%' => $form->getErrors(true, true),
                     ))
                 );
+
                 return new RedirectResponse($this->generateUrl($redirectUrl, $params));
             }
         }
 
         return [
-            'type'   => $type,
-            'form'   => $form->createView(),
-            'folder' => $folder
+            'type' => $type,
+            'form' => $form->createView(),
+            'folder' => $folder,
         ];
     }
 
@@ -424,7 +414,7 @@ class MediaController extends Controller
     public function createModalAction(Request $request, $folderId, $type)
     {
         $cKEditorFuncNum = $request->get('CKEditorFuncNum');
-        $linkChooser     = $request->get('linkChooser');
+        $linkChooser = $request->get('linkChooser');
 
         $extraParams = [];
         if (!empty($cKEditorFuncNum)) {

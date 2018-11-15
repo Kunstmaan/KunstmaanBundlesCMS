@@ -32,7 +32,7 @@ class CSVFileExporter implements FileExporterInterface
         foreach ($translations as $key => $translation) {
             $row = [$key];
 
-            /** @var Translation $item */
+            /* @var Translation $item */
             foreach ($this->locales as $locale) {
                 $locale = preg_replace_callback('/\_([a-z]+)/', function ($match) {
                     return '_' . strtoupper($match[1]);

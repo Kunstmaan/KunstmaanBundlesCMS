@@ -6,7 +6,7 @@ use Kunstmaan\FixturesBundle\Loader\Fixture;
 
 class Listed implements SpecParserInterface
 {
-    CONST REGEX = '/{([^,]+,?)+}$/';
+    const REGEX = '/{([^,]+,?)+}$/';
 
     /**
      * Check if this parser is applicable
@@ -24,7 +24,9 @@ class Listed implements SpecParserInterface
      * @param $spec
      * @param $fixture
      * @param $fixtures
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function parse(Fixture $fixture, array $fixtures, $spec)

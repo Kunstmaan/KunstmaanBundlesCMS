@@ -13,5 +13,4 @@ use Kunstmaan\VotingBundle\Entity\AbstractVote;
  */
 class LinkedInShare extends AbstractVote
 {
-
 }

@@ -34,7 +34,7 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::loadValidatorMetadata
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::loadValidatorMetadata
      */
     public function testLoadValidatorMetadata()
     {
@@ -48,8 +48,8 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::setNiv
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getNiv
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::setNiv
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getNiv
      */
     public function testSetGetNiv()
     {
@@ -58,8 +58,8 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::setTitle
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getTitle
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::setTitle
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getTitle
      */
     public function testSetGetTitle()
     {
@@ -68,7 +68,7 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::__toString
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::__toString
      */
     public function testToString()
     {
@@ -77,7 +77,7 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getDefaultView
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -85,7 +85,7 @@ class HeaderPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\PagePartBundle\Entity\HeaderPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

@@ -32,8 +32,8 @@ class AbstractEntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AbstractEntity::getId
-     * @covers Kunstmaan\AdminBundle\Entity\AbstractEntity::setId
+     * @covers \Kunstmaan\AdminBundle\Entity\AbstractEntity::getId
+     * @covers \Kunstmaan\AdminBundle\Entity\AbstractEntity::setId
      */
     public function testGetSetId()
     {
@@ -42,11 +42,11 @@ class AbstractEntityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AbstractEntity::__toString
+     * @covers \Kunstmaan\AdminBundle\Entity\AbstractEntity::__toString
      */
     public function test__toString()
     {
         $this->object->setId(8);
-        $this->assertEquals("8", $this->object->__toString());
+        $this->assertEquals('8', $this->object->__toString());
     }
 }

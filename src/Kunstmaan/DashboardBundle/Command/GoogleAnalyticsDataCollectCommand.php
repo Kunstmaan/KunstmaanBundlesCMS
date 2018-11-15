@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\DashboardBundle\Command;
 
 use Doctrine\ORM\EntityManager;
@@ -75,6 +76,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $configHelper = $this->getContainer()->get('kunstmaan_dashboard.helper.google.analytics.config');
         if (!$configHelper->tokenIsSet()) {
             $this->output->writeln('You haven\'t configured a Google account yet');
+
             return;
         }
 
@@ -82,11 +84,13 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         $configId = false;
         $segmentId = false;
         $overviewId = false;
+
         try {
-            $configId  = $input->getOption('config');
+            $configId = $input->getOption('config');
             $segmentId = $input->getOption('segment');
             $overviewId = $input->getOption('overview');
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         // get the overviews
         try {
@@ -94,9 +98,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
             if ($overviewId) {
                 $overviews[] = $this->getSingleOverview($overviewId);
-            } else if ($segmentId) {
+            } elseif ($segmentId) {
                 $overviews = $this->getOverviewsOfSegment($segmentId);
-            } else if ($configId) {
+            } elseif ($configId) {
                 $overviews = $this->getOverviewsOfConfig($configId);
             } else {
                 $overviews = $this->getAllOverviews();
@@ -110,12 +114,13 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $this->output->writeln($e->getMessage());
         }
-
     }
 
     /**
      * get a single overview
+     *
      * @param int $overviewId
+     *
      * @return AnalyticsOverview
      */
     private function getSingleOverview($overviewId)
@@ -133,7 +138,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
     /**
      * get all overviews of a segment
+     *
      * @param int $segmentId
+     *
      * @return array
      */
     private function getOverviewsOfSegment($segmentId)
@@ -155,7 +162,9 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
 
     /**
      * get all overviews of a config
+     *
      * @param int $configId
+     *
      * @return array
      */
     private function getOverviewsOfConfig($configId)
@@ -232,7 +241,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
         // get data per overview
         foreach ($overviews as $overview) {
             $configHelper->init($overview->getConfig()->getId());
-            /** @var AnalyticsOverview $overview */
+            /* @var AnalyticsOverview $overview */
             $this->output->writeln('Fetching data for overview "<fg=green>' . $overview->getTitle() . '</fg=green>"');
 
             try {
@@ -252,7 +261,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
                     $this->reset($overview);
                     $this->output->writeln("\t" . 'No visitors');
                 }
-            // persist entity back to DB
+                // persist entity back to DB
                 $this->output->writeln("\t" . 'Persisting..');
                 $this->em->persist($overview);
                 $this->em->flush($overview);
@@ -266,7 +275,6 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
             }
         }
     }
-
 
     /**
      * Reset the data for the overview

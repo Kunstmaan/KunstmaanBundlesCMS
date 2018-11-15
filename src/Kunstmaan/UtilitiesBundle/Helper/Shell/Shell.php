@@ -9,7 +9,6 @@ use Symfony\Component\Process\Process;
  */
 class Shell implements ShellInterface
 {
-
     /**
      * @param string $command The command
      *
@@ -30,7 +29,8 @@ class Shell implements ShellInterface
     /**
      * @param int $pid
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws \Symfony\Component\Process\Exception\LogicException
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      */
@@ -44,7 +44,7 @@ class Shell implements ShellInterface
         $output = trim($process->getOutput());
         $processState = explode("\n", $output);
 
-        return (2 >= count($processState));
+        return 2 >= count($processState);
     }
 
     /**
@@ -52,7 +52,8 @@ class Shell implements ShellInterface
      *
      * @param int $pid
      *
-     * @return boolean true when the process was successfully killed, false when the process wasn't running.
+     * @return bool true when the process was successfully killed, false when the process wasn't running
+     *
      * @throws \Symfony\Component\Process\Exception\RuntimeException
      * @throws \Symfony\Component\Process\Exception\LogicException
      */
@@ -63,10 +64,10 @@ class Shell implements ShellInterface
                 sprintf('kill -KILL %d', $pid)
             );
             $process->run();
+
             return true;
         }
 
         return false;
     }
-
 }

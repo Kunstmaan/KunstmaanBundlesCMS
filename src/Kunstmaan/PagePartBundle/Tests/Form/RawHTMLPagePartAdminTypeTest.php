@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType;
 
 /**
@@ -31,7 +33,7 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::buildForm
+     * @covers \Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::buildForm
      */
     public function testBuildForm()
     {
@@ -40,12 +42,12 @@ class RawHTMLPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::configureOptions
+     * @covers \Kunstmaan\PagePartBundle\Form\RawHTMLPagePartAdminType::configureOptions
      */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\RawHTMLPagePart');
     }
 }

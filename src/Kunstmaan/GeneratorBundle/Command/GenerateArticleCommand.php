@@ -72,11 +72,11 @@ class GenerateArticleCommand extends KunstmaanGenerateCommand
                     new InputOption('with-author', null, InputOption::VALUE_NONE, 'If set, you can use authors'),
                     new InputOption('with-category', null, InputOption::VALUE_NONE, 'If set, you can use categories'),
                     new InputOption('with-tag', null, InputOption::VALUE_NONE, 'If set, the you can use tags'),
-                    new InputOption('dummydata', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database')
+                    new InputOption('dummydata', null, InputOption::VALUE_NONE, 'If set, the task will generate data fixtures to populate your database'),
                 )
             )
             ->setDescription('Generates Article classes based on KunstmaanArticleBundle')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:generate:article</info> command generates classes for Articles using the KunstmaanArticleBundle
 
 <info>php bin/console kuma:generate:article --namespace=Namespace/NamedBundle --entity=Article</info>
@@ -115,7 +115,7 @@ EOT
         $bundleNamespace = $this->assistant->getOptionOrDefault('namespace', null);
         $this->bundle = $this->askForBundleName('article classes', $bundleNamespace);
 
-        /**
+        /*
          * Entity
          */
         $this->entity = $this->assistant->getOptionOrDefault('entity', null);
@@ -125,7 +125,7 @@ EOT
                 'You must specify a name for the collection of Article entities.',
                 'This name will be prefixed before every new entity.',
                 'For example entering <comment>News</comment> will result in:',
-                '<comment>News</comment>OverviewPage, <comment>News</comment>Page and <comment>News</comment>Author'
+                '<comment>News</comment>OverviewPage, <comment>News</comment>Page and <comment>News</comment>Author',
             ));
 
             $generator = $this->getGenerator();
@@ -134,28 +134,29 @@ EOT
                 'Article class name',
                 function ($name) use ($generator, $bundlePath) {
                     // Check reserved words
-                    if ($generator->isReservedKeyword($name)){
+                    if ($generator->isReservedKeyword($name)) {
                         throw new \InvalidArgumentException(sprintf('"%s" is a reserved word', $name));
                     }
                     if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $name)) {
                         throw new \InvalidArgumentException(sprintf('Invalid entity name: %s', $name));
                     }
+
                     return $name;
                 }
             );
         }
 
-        /**
+        /*
          * Ask if author will be used
          */
         $this->usesAuthor = $this->askForAuthor();
 
-        /**
+        /*
          * Ask if category will be used
          */
         $this->usesCategories = $this->askForCategories();
 
-        /**
+        /*
          * Ask if tag will be used
          */
         $this->usesTags = $this->askForTags();
@@ -166,7 +167,9 @@ EOT
         $bundleWithHomePageNamespace = $this->assistant->getOptionOrDefault('namespacehomepage', null);
         $this->bundleWithHomePage = $this->askForBundleName('', $bundleWithHomePageNamespace, 'In which bundle is the page that you will use as parent for the overview page ?', "%sThe bundle %s will be used for the parent of the overview page.\n");
         $parentPages = $this->getAvailablePages($this->bundleWithHomePage);
-        $pagesSelect = array_map(function ($item) { return $item['name']; }, $parentPages);
+        $pagesSelect = array_map(function ($item) {
+            return $item['name'];
+        }, $parentPages);
         if (count($pagesSelect) > 0) {
             $this->assistant->writeLine('');
             $parentPageNames = $this->assistant->getOptionOrDefault('articleoverviewpageparent', null);
@@ -188,7 +191,7 @@ EOT
             }
         }
 
-        /**
+        /*
          * Ask the database table prefix
          */
         $this->prefix = $this->assistant->getOptionOrDefault('prefix', null);
@@ -196,7 +199,7 @@ EOT
             $this->prefix = $this->askForPrefix(null, $this->bundle->getNamespace());
         }
 
-        /**
+        /*
          * Ask for data fixtures
          */
         $this->dummydata = $this->askForDummydata();
@@ -216,7 +219,7 @@ EOT
         $this->assistant->writeLine(array(
             'Make sure you update your database first before you test the pagepart:',
             '    Directly update your database:          <comment>bin/console doctrine:schema:update --force</comment>',
-            '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>'
+            '    Create a Doctrine migration and run it: <comment>bin/console doctrine:migrations:diff && bin/console doctrine:migrations:migrate</comment>',
         ));
     }
 
@@ -237,9 +240,10 @@ EOT
     {
         $dummydataOption = $this->assistant->getOption('dummydata');
         if ($dummydataOption != 'y' && $dummydataOption != 'n') {
-            /** @var  $question */
+            /** @var $question */
             $dummydataOption = $this->assistant->askConfirmation("\nDo you want to generate data fixtures to populate your database ? (y/n)\n", 'n', '?', false);
         }
+
         return $dummydataOption == 'y';
     }
 
@@ -250,9 +254,10 @@ EOT
     {
         $categoryOption = $this->assistant->getOption('with-category');
         if ($categoryOption != 'y' && $categoryOption != 'n') {
-            /** @var  $question */
+            /** @var $question */
             $categoryOption = $this->assistant->askConfirmation("\nDo you want to use categories ? (y/n)\n", 'y', '?', true);
         }
+
         return $categoryOption == 'y';
     }
 
@@ -263,9 +268,10 @@ EOT
     {
         $tagOption = $this->assistant->getOption('with-tag');
         if ($tagOption != 'y' && $tagOption != 'n') {
-            /** @var  $question */
+            /** @var $question */
             $tagOption = $this->assistant->askConfirmation("\nDo you want to use tags ? (y/n)\n", 'y', '?', true);
         }
+
         return $tagOption == 'y';
     }
 
@@ -276,10 +282,10 @@ EOT
     {
         $authorOption = $this->assistant->getOption('with-author');
         if ($authorOption != 'y' && $authorOption != 'n') {
-            /** @var  $question */
+            /** @var $question */
             $authorOption = $this->assistant->askConfirmation("\nDo you want to authors ? (y/n)\n", 'y', '?', true);
         }
+
         return $authorOption == 'y';
     }
-
 }

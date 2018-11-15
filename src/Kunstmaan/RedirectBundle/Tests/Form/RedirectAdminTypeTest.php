@@ -62,7 +62,7 @@ class RedirectAdminTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\Form\RedirectAdminType::buildForm
+     * @covers \Kunstmaan\RedirectBundle\Form\RedirectAdminType::buildForm
      */
     public function testBuildForm()
     {

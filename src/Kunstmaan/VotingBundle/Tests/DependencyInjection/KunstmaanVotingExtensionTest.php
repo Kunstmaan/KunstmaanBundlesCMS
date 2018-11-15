@@ -22,7 +22,7 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->extension = $this->getExtension();
-        $this->root      = "kuma_voting";
+        $this->root = 'kuma_voting';
     }
 
     public function testGetConfigWithOverrideDefaultValue()
@@ -30,10 +30,10 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
         $container = $this->getContainer();
         $container->setParameter('voting_default_value', 2);
         $this->extension->load(array(array()), $container);
-        $this->assertTrue($container->hasParameter($this->root . ".actions"));
-        $this->assertTrue(is_array($container->getParameter($this->root . ".actions")));
+        $this->assertTrue($container->hasParameter($this->root . '.actions'));
+        $this->assertTrue(is_array($container->getParameter($this->root . '.actions')));
 
-        $actions = $container->getParameter($this->root . ".actions");
+        $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
             $this->assertEquals(2, $actions['up_vote']['default_value']);
         }
@@ -49,10 +49,10 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainer();
         $this->extension->load(array(array()), $container);
-        $this->assertTrue($container->hasParameter($this->root . ".actions"));
-        $this->assertTrue(is_array($container->getParameter($this->root . ".actions")));
+        $this->assertTrue($container->hasParameter($this->root . '.actions'));
+        $this->assertTrue(is_array($container->getParameter($this->root . '.actions')));
 
-        $actions = $container->getParameter($this->root . ".actions");
+        $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
             $this->assertEquals(1, $actions['up_vote']['default_value']);
         }
@@ -73,16 +73,16 @@ class KunstmaanVotingExtensionTest extends \PHPUnit_Framework_TestCase
                 ),
                 'down_vote' => array(
                     'default_value' => '-5',
-                )
+                ),
             ),
         );
 
         $container = $this->getContainer();
         $this->extension->load(array($configs), $container);
-        $this->assertTrue($container->hasParameter($this->root . ".actions"));
-        $this->assertTrue(is_array($container->getParameter($this->root . ".actions")));
+        $this->assertTrue($container->hasParameter($this->root . '.actions'));
+        $this->assertTrue(is_array($container->getParameter($this->root . '.actions')));
 
-        $actions = $container->getParameter($this->root . ".actions");
+        $actions = $container->getParameter($this->root . '.actions');
         if (isset($actions['up_vote'])) {
             $this->assertEquals(2, $actions['up_vote']['default_value']);
         }

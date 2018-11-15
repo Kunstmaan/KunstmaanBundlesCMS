@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminBundle\Tests\Entity;
 
 use Kunstmaan\AdminBundle\Entity\Group;
-
 use Kunstmaan\AdminBundle\Entity\Role;
 use Symfony\Component\Validator\Validation;
 
@@ -35,7 +34,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getId
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::getId
      */
     public function testGetId()
     {
@@ -43,7 +42,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::__toString
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::__toString
      */
     public function test__toString()
     {
@@ -51,7 +50,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getRoles
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::getRoles
      */
     public function testGetRoles()
     {
@@ -63,7 +62,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getRolesCollection
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::getRolesCollection
      */
     public function testGetRolesCollection()
     {
@@ -78,7 +77,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getRole
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::getRole
      */
     public function testGetRole()
     {
@@ -94,7 +93,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::hasRole
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::hasRole
      */
     public function testHasRole()
     {
@@ -107,8 +106,8 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::addRole
-     * @covers Kunstmaan\AdminBundle\Entity\Group::removeRole
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::addRole
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::removeRole
      */
     public function testRemoveRole()
     {
@@ -123,7 +122,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @covers Kunstmaan\AdminBundle\Entity\Group::addRole
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::addRole
      */
     public function testAddRoleWithInvalidParameter()
     {
@@ -133,7 +132,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::setRoles
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::setRoles
      */
     public function testSetRoles()
     {
@@ -147,7 +146,7 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::setRolesCollection
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::setRolesCollection
      */
     public function testSetRolesCollection()
     {
@@ -165,9 +164,9 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\Group::__construct
-     * @covers Kunstmaan\AdminBundle\Entity\Group::getName
-     * @covers Kunstmaan\AdminBundle\Entity\Group::setName
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::__construct
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::getName
+     * @covers \Kunstmaan\AdminBundle\Entity\Group::setName
      */
     public function testConstructorAndGetSetName()
     {

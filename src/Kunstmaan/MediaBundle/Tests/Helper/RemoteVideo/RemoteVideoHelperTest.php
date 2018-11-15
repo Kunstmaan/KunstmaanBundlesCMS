@@ -1,8 +1,8 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Helper\RemoteVideo;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHandler;
 use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
 
@@ -11,7 +11,6 @@ use Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper;
  */
 class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Media
      */
@@ -25,11 +24,12 @@ class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::__construct
+     *
+     * @covers \Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::__construct
      */
     protected function setUp()
     {
-        $this->media  = new Media();
+        $this->media = new Media();
         $this->object = new RemoteVideoHelper($this->media);
     }
 
@@ -42,7 +42,7 @@ class RemoteVideoHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getMedia
+     * @covers \Kunstmaan\MediaBundle\Helper\RemoteVideo\RemoteVideoHelper::getMedia
      */
     public function testGetMedia()
     {

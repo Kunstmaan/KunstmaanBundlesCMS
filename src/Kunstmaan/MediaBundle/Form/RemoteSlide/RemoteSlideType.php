@@ -32,10 +32,10 @@ class RemoteSlideType extends AbstractRemoteType
                 'type',
                 ChoiceType::class,
                 array(
-                    'label'       => 'media.form.remote_slide.type.label',
-                    'choices'     => array('slideshare' => 'slideshare'),
+                    'label' => 'media.form.remote_slide.type.label',
+                    'choices' => array('slideshare' => 'slideshare'),
                     'constraints' => array(new NotBlank()),
-                    'required'    => true
+                    'required' => true,
                 )
             );
     }
@@ -53,7 +53,7 @@ class RemoteSlideType extends AbstractRemoteType
     /**
      * Sets the default options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var PermissionAdmin $object
+     * @var PermissionAdmin
      */
     protected $object;
 
@@ -40,8 +40,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermissions
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermissions
      */
     public function testInitialize()
     {
@@ -51,8 +51,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermission
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermission
      */
     public function testGetPermissionWithString()
     {
@@ -62,8 +62,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermission
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermission
      */
     public function testGetPermissionWithRoleObject()
     {
@@ -77,8 +77,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermission
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPermission
      */
     public function testGetPermissionWithUnknownRole()
     {
@@ -88,8 +88,8 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::__construct
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getAllRoles
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::__construct
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getAllRoles
      */
     public function testGetAllRoles()
     {
@@ -117,9 +117,9 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::__construct
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPossiblePermissions
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::__construct
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::getPossiblePermissions
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::initialize
      */
     public function testGetPossiblePermissions()
     {
@@ -149,7 +149,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::createAclChangeset
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin::createAclChangeset
      */
     public function testCreateAclChangeset()
     {

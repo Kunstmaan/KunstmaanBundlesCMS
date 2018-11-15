@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kunstmaan\SearchBundle\Tests\Configuration;
-
 
 use Kunstmaan\SearchBundle\Configuration\SearchConfigurationChain;
 

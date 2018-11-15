@@ -19,7 +19,7 @@ class RedirectMenuAdaptor implements MenuAdaptorInterface
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
-        if (!is_null($parent) &&'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
+        if (!is_null($parent) && 'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             $menuItem = new MenuItem($menu);
             $menuItem
                 ->setRoute('kunstmaanredirectbundle_admin_redirect')

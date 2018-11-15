@@ -37,7 +37,7 @@ class NodeIndexUpdateEventListener implements NodeIndexUpdateEventListenerInterf
             // unfortunately we have to keep a state to see what has changed
             $this->entityChangeSet = [
                 'nodeTranslationId' => $args->getObject()->getId(),
-                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject())
+                'changeSet' => $args->getEntityManager()->getUnitOfWork()->getEntityChangeSet($args->getObject()),
             ];
         }
     }

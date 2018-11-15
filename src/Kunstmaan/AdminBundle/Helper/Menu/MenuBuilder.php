@@ -11,22 +11,22 @@ use Symfony\Component\HttpFoundation\Request;
 class MenuBuilder
 {
     /**
-     * @var MenuAdaptorInterface[] $adaptors
+     * @var MenuAdaptorInterface[]
      */
     private $adaptors = array();
 
     /**
-     * @var MenuAdaptorInterface[] $adaptors
+     * @var MenuAdaptorInterface[]
      */
     private $sorted = array();
 
     /**
-     * @var TopMenuItem[] $topMenuItems
+     * @var TopMenuItem[]
      */
     private $topMenuItems = null;
 
     /**
-     * @var ContainerInterface $container
+     * @var ContainerInterface
      */
     private $container;
 
@@ -34,7 +34,6 @@ class MenuBuilder
      * @var MenuItem|null
      */
     private $currentCache = null;
-
 
     /**
      * Constructor
@@ -71,12 +70,13 @@ class MenuBuilder
         $active = null;
         do {
             /* @var MenuItem[] $children */
-            $children         = $this->getChildren($active);
+            $children = $this->getChildren($active);
             $foundActiveChild = false;
             foreach ($children as $child) {
                 if ($child->getActive()) {
                     $foundActiveChild = true;
-                    $active           = $child;
+                    $active = $child;
+
                     break;
                 }
             }
@@ -93,7 +93,7 @@ class MenuBuilder
      */
     public function getBreadCrumb()
     {
-        $result  = array();
+        $result = array();
         $current = $this->getCurrent();
         while (!is_null($current)) {
             array_unshift($result, $current);
@@ -112,7 +112,6 @@ class MenuBuilder
     {
         $current = $this->getCurrent();
         while (!is_null($current)) {
-
             if ($current instanceof TopMenuItem) {
                 return $current;
             }
@@ -131,7 +130,7 @@ class MenuBuilder
     {
         if (is_null($this->topMenuItems)) {
             /* @var $request Request */
-            $request            = $this->container->get('request_stack')->getCurrentRequest();
+            $request = $this->container->get('request_stack')->getCurrentRequest();
             $this->topMenuItems = array();
             foreach ($this->getAdaptors() as $menuAdaptor) {
                 $menuAdaptor->adaptChildren($this, $this->topMenuItems, null, $request);
@@ -155,7 +154,7 @@ class MenuBuilder
         }
         /* @var $request Request */
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        $result  = array();
+        $result = array();
         foreach ($this->getAdaptors() as $menuAdaptor) {
             $menuAdaptor->adaptChildren($this, $result, $parent, $request);
         }

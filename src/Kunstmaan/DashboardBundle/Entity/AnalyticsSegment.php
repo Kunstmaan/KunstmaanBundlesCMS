@@ -37,11 +37,11 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      */
     private $overviews;
 
-
     /**
      * Set name
      *
      * @param string $name
+     *
      * @return AnalyticsSegment
      */
     public function setName($name)
@@ -65,6 +65,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set query
      *
      * @param string $query
+     *
      * @return AnalyticsSegment
      */
     public function setQuery($query)
@@ -87,7 +88,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Get config
      *
-     * @return integer
+     * @return int
      */
     public function getConfig()
     {
@@ -97,7 +98,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     /**
      * Set config
      *
-     * @param integer $config
+     * @param int $config
      *
      * @return AnalyticsTopReferrals
      */
@@ -112,6 +113,7 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
      * Set overviews
      *
      * @param array $overviews
+     *
      * @return $this
      */
     public function setoverviews($overviews)
@@ -130,5 +132,4 @@ class AnalyticsSegment extends \Kunstmaan\AdminBundle\Entity\AbstractEntity
     {
         return $this->overviews;
     }
-
 }

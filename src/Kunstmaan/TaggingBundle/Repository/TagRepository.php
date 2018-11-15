@@ -4,12 +4,10 @@ namespace Kunstmaan\TaggingBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
-
 use Kunstmaan\TaggingBundle\Entity\TagManager;
 
 class TagRepository extends EntityRepository
 {
-
     protected $tagManager;
 
     public function __construct($em, ClassMetadata $class)
@@ -25,5 +23,4 @@ class TagRepository extends EntityRepository
         $tagManager->replaceTags($tags, $destination);
         $tagManager->saveTagging($destination);
     }
-
 }

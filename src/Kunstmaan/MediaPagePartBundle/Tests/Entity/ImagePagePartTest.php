@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart;
-
 use Kunstmaan\MediaPagePartBundle\Form\ImagePagePartAdminType;
 
 /**
@@ -23,12 +22,12 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ImagePagePart;
+        $this->object = new ImagePagePart();
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getOpenInNewWindow
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setOpenInNewWindow
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getOpenInNewWindow
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setOpenInNewWindow
      */
     public function testGetSetOpenInNewWindow()
     {
@@ -39,8 +38,8 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setLink
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getLink
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setLink
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getLink
      */
     public function testSetGetLink()
     {
@@ -49,8 +48,8 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setMedia
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getMedia
      */
     public function testSetGetMedia()
     {
@@ -61,8 +60,8 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setAlttext
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getAlttext
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::setAlttext
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getAlttext
      */
     public function testSetGetAlttext()
     {
@@ -71,16 +70,16 @@ class ImagePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultView
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:ImagePagePart:view.html.twig', $defaultView);
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultAdminType
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\ImagePagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

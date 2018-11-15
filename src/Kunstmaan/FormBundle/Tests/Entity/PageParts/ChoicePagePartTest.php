@@ -3,10 +3,8 @@
 namespace Kunstmaan\FormBundle\Tests\Entity\PageParts;
 
 use ArrayObject;
-
 use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -25,7 +23,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ChoicePagePart;
+        $this->object = new ChoicePagePart();
     }
 
     /**
@@ -37,7 +35,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getDefaultView
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -47,7 +45,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::adaptForm
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::adaptForm
      */
     public function testAdaptForm()
     {
@@ -71,7 +69,7 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getDefaultAdminType
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
@@ -79,8 +77,8 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setExpanded
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getExpanded
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setExpanded
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getExpanded
      */
     public function testSetGetExpanded()
     {
@@ -90,10 +88,9 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($object->getExpanded());
     }
 
-
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setMultiple
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getMultiple
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setMultiple
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getMultiple
      */
     public function testSetGetMultiple()
     {
@@ -104,8 +101,8 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setChoices
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getChoices
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setChoices
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getChoices
      */
     public function testSetGetChoices()
     {
@@ -116,8 +113,8 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setEmptyValue
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getEmptyValue
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::setEmptyValue
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart::getEmptyValue
      */
     public function testSetGetEmptyValue()
     {
@@ -126,5 +123,4 @@ class ChoicePagePartTest extends \PHPUnit_Framework_TestCase
         $object->setEmptyValue($value);
         $this->assertEquals($value, $object->getEmptyValue());
     }
-
 }

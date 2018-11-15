@@ -9,7 +9,6 @@ use Doctrine\ORM\Configuration;
  */
 class TestConfiguration extends Configuration
 {
-
     /**
      * @return \Doctrine\ORM\Doctrine\ORM\Mapping\QuoteStrategy|null
      */
@@ -17,5 +16,4 @@ class TestConfiguration extends Configuration
     {
         return null;
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType;
 
 /**
@@ -31,7 +33,7 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType::buildForm
+     * @covers \Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType::buildForm
      */
     public function testBuildForm()
     {
@@ -40,12 +42,12 @@ class LinkPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType::configureOptions
+     * @covers \Kunstmaan\PagePartBundle\Form\LinkPagePartAdminType::configureOptions
      */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\LinkPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\LinkPagePart');
     }
 }

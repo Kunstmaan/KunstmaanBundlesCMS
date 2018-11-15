@@ -2,9 +2,7 @@
 
 namespace Kunstmaan\NodeBundle\Entity;
 
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
 use Kunstmaan\NodeBundle\Helper\RenderContext;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface PageInterface extends HasNodeInterface
 {
-
     /**
      * @param ContainerInterface $container The Container
      * @param Request            $request   The Request

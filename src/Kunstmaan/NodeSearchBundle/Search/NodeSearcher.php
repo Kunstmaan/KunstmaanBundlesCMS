@@ -16,8 +16,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 /**
  * Default node searcher implementation
- *
- * @package Kunstmaan\NodeSearchBundle\Search
  */
 class NodeSearcher extends AbstractElasticaSearcher
 {
@@ -58,13 +56,12 @@ class NodeSearcher extends AbstractElasticaSearcher
     }
 
     /**
-     *
      * @param EntityManager $em
      */
-     public function setEntityManager(EntityManager $em)
-     {
-         $this->em = $em;
-     }
+    public function setEntityManager(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * @param bool $useMatchQueryForTitle
@@ -95,7 +92,6 @@ class NodeSearcher extends AbstractElasticaSearcher
               ->setFieldQuery('title', $query)
               ->setFieldMinimumShouldMatch('title', '80%')
               ->setFieldBoost(2);
-
         } else {
             $elasticaQueryTitle = new QueryString();
             $elasticaQueryTitle
@@ -131,14 +127,14 @@ class NodeSearcher extends AbstractElasticaSearcher
         $this->query->setRescore($rescore);
         $this->query->setHighlight(
             array(
-                'pre_tags'  => array('<strong>'),
+                'pre_tags' => array('<strong>'),
                 'post_tags' => array('</strong>'),
-                'fields'    => array(
+                'fields' => array(
                     'content' => array(
-                        'fragment_size'       => 150,
-                        'number_of_fragments' => 3
-                    )
-                )
+                        'fragment_size' => 150,
+                        'number_of_fragments' => 3,
+                    ),
+                ),
             )
         );
     }
@@ -191,10 +187,10 @@ class NodeSearcher extends AbstractElasticaSearcher
 
         //Apply page type boosts
         $pageClasses = $this->em->getRepository('KunstmaanNodeBundle:Node')->findAllDistinctPageClasses();
-        foreach($pageClasses as $pageClass) {
+        foreach ($pageClasses as $pageClass) {
             $page = new $pageClass['refEntityName']();
 
-            if($page instanceof SearchBoostInterface) {
+            if ($page instanceof SearchBoostInterface) {
                 $elasticaQueryTypeBoost = new QueryString();
                 $elasticaQueryTypeBoost
                     ->setBoost($page->getSearchBoost())

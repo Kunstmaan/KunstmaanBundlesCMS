@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart;
-
 use Kunstmaan\MediaPagePartBundle\Form\DownloadPagePartAdminType;
 
 /**
@@ -23,7 +22,7 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new DownloadPagePart;
+        $this->object = new DownloadPagePart();
     }
 
     /**
@@ -35,8 +34,8 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getMedia
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::setMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::setMedia
      */
     public function testGetSetMedia()
     {
@@ -47,16 +46,16 @@ class DownloadPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getDefaultView
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:DownloadPagePart:view.html.twig', $defaultView);
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\DownloadPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

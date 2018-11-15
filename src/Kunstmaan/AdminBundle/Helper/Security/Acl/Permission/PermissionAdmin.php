@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class PermissionAdmin
 {
-    const ADD    = 'ADD';
+    const ADD = 'ADD';
     const DELETE = 'DEL';
 
     /**
@@ -99,15 +99,14 @@ class PermissionAdmin
         EventDispatcherInterface $eventDispatcher,
         Shell $shellHelper,
         KernelInterface $kernel
-    )
-    {
-        $this->em                   = $em;
-        $this->tokenStorage         = $tokenStorage;
-        $this->aclProvider          = $aclProvider;
+    ) {
+        $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
+        $this->aclProvider = $aclProvider;
         $this->oidRetrievalStrategy = $oidRetrievalStrategy;
-        $this->eventDispatcher      = $eventDispatcher;
-        $this->shellHelper          = $shellHelper;
-        $this->kernel               = $kernel;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->shellHelper = $shellHelper;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -118,16 +117,16 @@ class PermissionAdmin
      */
     public function initialize(AbstractEntity $resource, PermissionMapInterface $permissionMap)
     {
-        $this->resource      = $resource;
+        $this->resource = $resource;
         $this->permissionMap = $permissionMap;
-        $this->permissions   = array();
+        $this->permissions = array();
 
         // Init permissions
         try {
             $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($this->resource);
             /* @var $acl AclInterface */
-            $acl            = $this->aclProvider->findAcl($objectIdentity);
-            $objectAces     = $acl->getObjectAces();
+            $acl = $this->aclProvider->findAcl($objectIdentity);
+            $objectAces = $acl->getObjectAces();
             /* @var $ace AuditableEntryInterface */
             foreach ($objectAces as $ace) {
                 $securityIdentity = $ace->getSecurityIdentity();
@@ -279,7 +278,7 @@ class PermissionAdmin
             }
 
             // Iterate over children and apply recursively
-            /** @noinspection PhpUndefinedMethodInspection */
+            /* @noinspection PhpUndefinedMethodInspection */
             foreach ($entity->getChildren() as $child) {
                 $this->applyAclChangeset($child, $changeset);
             }
@@ -287,6 +286,7 @@ class PermissionAdmin
 
         // Apply ACL modifications to node
         $objectIdentity = $this->oidRetrievalStrategy->getObjectIdentity($entity);
+
         try {
             /* @var $acl MutableAclInterface */
             $acl = $this->aclProvider->findAcl($objectIdentity);
@@ -298,7 +298,7 @@ class PermissionAdmin
         // Process permissions in changeset
         foreach ($changeset as $role => $roleChanges) {
             $index = $this->getObjectAceIndex($acl, $role);
-            $mask  = 0;
+            $mask = 0;
             if (false !== $index) {
                 $mask = $this->getMaskAtIndex($acl, $index);
             }
@@ -310,9 +310,11 @@ class PermissionAdmin
                 switch ($type) {
                     case self::ADD:
                         $mask = $mask | $maskChange->get();
+
                         break;
                     case self::DELETE:
                         $mask = $mask & ~$maskChange->get();
+
                         break;
                 }
             }
@@ -360,9 +362,9 @@ class PermissionAdmin
      */
     private function getMaskAtIndex(AclInterface $acl, $index)
     {
-        $objectAces       = $acl->getObjectAces();
+        $objectAces = $acl->getObjectAces();
         /* @var $ace AuditableEntryInterface */
-        $ace              = $objectAces[$index];
+        $ace = $objectAces[$index];
         $securityIdentity = $ace->getSecurityIdentity();
         if ($securityIdentity instanceof RoleSecurityIdentity) {
             return $ace->getMask();

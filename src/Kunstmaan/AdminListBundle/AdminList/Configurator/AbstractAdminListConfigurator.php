@@ -158,7 +158,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
      */
     public function buildExportFields()
     {
-        /**
+        /*
          * This is only here to prevent a BC break!!!
          *
          * Just override this function if you want to set your own fields...
@@ -198,7 +198,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     {
         $params = array_merge($params, $this->getExtraParameters());
 
-        $friendlyName = explode("\\", $this->getEntityName());
+        $friendlyName = explode('\\', $this->getEntityName());
         $friendlyName = array_pop($friendlyName);
         $re = '/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/';
         $a = preg_split($re, $friendlyName);
@@ -229,7 +229,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
 
     public function getViewUrlFor($item)
     {
-        if (is_object($item)){
+        if (is_object($item)) {
             $id = $item->getid();
         } else {
             $id = $item['id'];
@@ -238,8 +238,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
         $params = array_merge($params, $this->getExtraParameters());
 
         return array(
-            'path'   => $this->getPathByConvention($this::SUFFIX_VIEW),
-            'params' => $params
+            'path' => $this->getPathByConvention($this::SUFFIX_VIEW),
+            'params' => $params,
         );
     }
 
@@ -363,11 +363,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $name The field name
-     * @param string $header The header title
-     * @param string $sort Sortable column or not
-     * @param string $template The template
-     * @param FieldAlias $alias The alias
+     * @param string     $name     The field name
+     * @param string     $header   The header title
+     * @param string     $sort     Sortable column or not
+     * @param string     $template The template
+     * @param FieldAlias $alias    The alias
      *
      * @return AbstractAdminListConfigurator
      */
@@ -379,10 +379,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $name The field name
-     * @param string $header The header title
-     * @param string $template The template
-     * @param FieldAlias $alias The alias
+     * @param string     $name     The field name
+     * @param string     $header   The header title
+     * @param string     $template The template
+     * @param FieldAlias $alias    The alias
      *
      * @return AbstractAdminListConfigurator
      */
@@ -394,10 +394,10 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $columnName The column name
-     * @param FilterTypeInterface $type The filter type
-     * @param string $filterName The name of the filter
-     * @param array $options Options
+     * @param string              $columnName The column name
+     * @param FilterTypeInterface $type       The filter type
+     * @param string              $filterName The name of the filter
+     * @param array               $options    Options
      *
      * @return AbstractAdminListConfigurator
      */
@@ -456,11 +456,11 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param string $label The label, only used when the template equals null
+     * @param string   $label          The label, only used when the template equals null
      * @param callable $routeGenerator The generator used to generate the url of an item, when generating the item will
      *                                 be provided
-     * @param string $icon The icon, only used when the template equals null
-     * @param string $template The template, when not specified the label is shown
+     * @param string   $icon           The icon, only used when the template equals null
+     * @param string   $template       The template, when not specified the label is shown
      *
      * @return AbstractAdminListConfigurator
      */
@@ -574,8 +574,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param array|object $item The item
-     * @param string $columnName The column name
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
      *
      * @return mixed
      */
@@ -601,8 +601,8 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
     }
 
     /**
-     * @param array|object $item The item
-     * @param string $columnName The column name
+     * @param array|object $item       The item
+     * @param string       $columnName The column name
      *
      * @return string
      */
@@ -622,7 +622,7 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
                     $results[] = $entry->getName();
                 }
                 if (empty($results)) {
-                    return "";
+                    return '';
                 }
 
                 return implode(', ', $results);
@@ -794,7 +794,6 @@ abstract class AbstractAdminListConfigurator implements AdminListConfiguratorInt
                 'orderDirection' => $this->orderDirection,
             )
         );
-
 
         $this->getFilterBuilder()->bindRequest($request);
     }

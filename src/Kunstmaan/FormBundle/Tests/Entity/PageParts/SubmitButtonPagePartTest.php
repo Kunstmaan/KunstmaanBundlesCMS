@@ -21,7 +21,7 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new SubmitButtonPagePart;
+        $this->object = new SubmitButtonPagePart();
     }
 
     /**
@@ -33,19 +33,19 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::setLabel
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getLabel
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::setLabel
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getLabel
      */
     public function testSetGetLabel()
     {
         $object = $this->object;
-        $label = "Test label";
+        $label = 'Test label';
         $object->setLabel($label);
         $this->assertEquals($label, $object->getLabel());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::__toString
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::__toString
      */
     public function testToString()
     {
@@ -55,7 +55,7 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getDefaultView
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
@@ -65,7 +65,7 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getAdminView
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getAdminView
      */
     public function testGetAdminView()
     {
@@ -75,7 +75,7 @@ class SubmitButtonPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\FormBundle\Entity\PageParts\SubmitButtonPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

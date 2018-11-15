@@ -20,7 +20,7 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new AclChangeset;
+        $this->object = new AclChangeset();
     }
 
     /**
@@ -32,7 +32,7 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::__construct
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::__construct
      */
     public function test__construct()
     {
@@ -41,8 +41,8 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setChangeset
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getChangeset
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setChangeset
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getChangeset
      */
     public function testSetAndGetChangeset()
     {
@@ -53,8 +53,8 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setCreated
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getCreated
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setCreated
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getCreated
      */
     public function testSetAndGetCreated()
     {
@@ -65,8 +65,8 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setLastModified
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getLastModified
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setLastModified
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getLastModified
      */
     public function testSetAndGetLastModified()
     {
@@ -77,11 +77,11 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setRef
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setRefId
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setRefEntityName
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getRefId
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getRefEntityName
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setRef
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setRefId
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setRefEntityName
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getRefId
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getRefEntityName
      */
     public function testSetAndGetRef()
     {
@@ -92,8 +92,8 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setStatus
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getStatus
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setStatus
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getStatus
      */
     public function testSetAndGetStatus()
     {
@@ -109,8 +109,8 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setPid
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getPid
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setPid
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getPid
      */
     public function testSetAndGetPid()
     {
@@ -119,8 +119,8 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::setUser
-     * @covers Kunstmaan\AdminBundle\Entity\AclChangeset::getUser
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::setUser
+     * @covers \Kunstmaan\AdminBundle\Entity\AclChangeset::getUser
      */
     public function testSetAndGetUser()
     {
@@ -129,7 +129,4 @@ class AclChangesetTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($user, $this->object->getUser());
     }
-
 }
-
-

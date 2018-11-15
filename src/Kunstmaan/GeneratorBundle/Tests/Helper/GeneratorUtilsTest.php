@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\GeneratorBundle\Tests\Helper;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
@@ -19,7 +20,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new GeneratorUtils;
+        $this->object = new GeneratorUtils();
     }
 
     /**
@@ -31,7 +32,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testCleanPrefixWhenPrefixEmpty()
     {
@@ -40,7 +41,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testCleanPrefixShouldConvertToLowercase()
     {
@@ -49,7 +50,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testCleanPrefixShouldAppendUnderscore()
     {
@@ -58,7 +59,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testCleanPrefixShouldAppendUnderscoreOnlyWhenNeeded()
     {
@@ -67,7 +68,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testCleanPrefixShouldLeaveUnderscoresInPlace()
     {
@@ -76,7 +77,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testCleanPrefixShouldLeaveSingleUnderscore()
     {
@@ -85,7 +86,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testShouldConvertOnlyUnderscoresToNull()
     {
@@ -94,7 +95,7 @@ class GeneratorUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
+     * @covers \Kunstmaan\GeneratorBundle\Helper\GeneratorUtils::cleanPrefix
      */
     public function testSpacesShouldCreateEmptyPrefix()
     {

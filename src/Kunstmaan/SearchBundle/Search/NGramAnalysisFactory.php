@@ -14,14 +14,14 @@ class NGramAnalysisFactory extends AbstractAnalysisFactory
         $this->analyzers['default'] = array(
             'type' => 'custom',
             'tokenizer' => 'kuma_ngram',
-            'filter'    => array(
+            'filter' => array(
                 'trim',
                 'lowercase',
                 $language . '_stop',
                 $language . '_stemmer',
                 'asciifolding',
-                'strip_special_chars'
-            )
+                'strip_special_chars',
+            ),
         );
 
         return $this;
@@ -37,14 +37,14 @@ class NGramAnalysisFactory extends AbstractAnalysisFactory
         $this->analyzers['default_search'] = array(
             'type' => 'custom',
             'tokenizer' => 'kuma_ngram',
-            'filter'    => array(
+            'filter' => array(
                 'trim',
                 'lowercase',
                 $language . '_stop',
                 $language . '_stemmer',
                 'asciifolding',
-                'strip_special_chars'
-            )
+                'strip_special_chars',
+            ),
         );
 
         return $this;

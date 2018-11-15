@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Tests\Entity;
+
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\StringFormSubmissionField;
 
@@ -31,8 +33,8 @@ class FormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::getId
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::setId
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::getId
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::setId
      */
     public function testSetGetId()
     {
@@ -43,32 +45,32 @@ class FormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::getFieldName
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::setFieldName
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::getFieldName
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::setFieldName
      */
     public function testSetGetFieldName()
     {
         $object = $this->object;
-        $fieldName = "someFieldName";
+        $fieldName = 'someFieldName';
         $object->setFieldName($fieldName);
         $this->assertEquals($fieldName, $object->getFieldName());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::getLabel
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::setLabel
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::getLabel
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::setLabel
      */
     public function testSetGetLabel()
     {
         $object = $this->object;
-        $label = "Some label";
+        $label = 'Some label';
         $object->setLabel($label);
         $this->assertEquals($label, $object->getLabel());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::getSubmission
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::setSubmission
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::getSubmission
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::setSubmission
      */
     public function testSetGetSubmission()
     {
@@ -82,7 +84,7 @@ class FormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionField::__toString
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionField::__toString
      */
     public function testToString()
     {

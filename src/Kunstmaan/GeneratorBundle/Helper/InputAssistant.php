@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * @deprecated the functions in this class should be moved to the KunstmaanGenerateCommand class.
+ * @deprecated the functions in this class should be moved to the KunstmaanGenerateCommand class
  */
 class InputAssistant
 {
@@ -31,17 +31,17 @@ class InputAssistant
     private $container;
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param QuestionHelper $questionHelper
-     * @param Kernel $kernel
+     * @param InputInterface     $input
+     * @param OutputInterface    $output
+     * @param QuestionHelper     $questionHelper
+     * @param Kernel             $kernel
      * @param ContainerInterface $container
      */
     public function __construct(InputInterface &$input, OutputInterface $output, QuestionHelper $questionHelper, Kernel $kernel, ContainerInterface $container)
     {
         $this->input = $input;
         $this->output = $output;
-	    $this->questionHelper = $questionHelper;
+        $this->questionHelper = $questionHelper;
         $this->kernel = $kernel;
         $this->container = $container;
     }
@@ -49,7 +49,7 @@ class InputAssistant
     /**
      * Asks for the namespace and sets it on the InputInterface as the 'namespace' option, if this option is not set yet.
      *
-     * @param array $text What you want printed before the namespace is asked.
+     * @param array $text what you want printed before the namespace is asked
      *
      * @return string The namespace. But it's also been set on the InputInterface.
      */
@@ -61,6 +61,7 @@ class InputAssistant
         try {
             if (!is_null($namespace) && !empty($namespace)) {
                 Validators::validateBundleNamespace($namespace);
+
                 return $namespace;
             }
         } catch (\Exception $error) {
@@ -80,17 +81,16 @@ class InputAssistant
             $namespace = $ownBundles[1]['namespace'] . '/' . $ownBundles[1]['name'];
         }
 
-
         $namespaces = $this->getNamespaceAutoComplete($this->kernel);
 
         if (!is_null($text) && (count($text) > 0)) {
             $this->output->writeln($text);
         }
 
-	$question = new Question($this->questionHelper->getQuestion('Bundle Namespace', $namespace), $namespace);
-	$question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'));
-	$question->setAutocompleterValues($namespaces);
-	$namespace = $this->questionHelper->ask($this->input, $this->output, $question);
+        $question = new Question($this->questionHelper->getQuestion('Bundle Namespace', $namespace), $namespace);
+        $question->setValidator(array('Sensio\Bundle\GeneratorBundle\Command\Validators', 'validateBundleNamespace'));
+        $question->setAutocompleterValues($namespaces);
+        $namespace = $this->questionHelper->ask($this->input, $this->output, $question);
 
         if ($this->input->hasOption('namespace')) {
             $this->input->setOption('namespace', $namespace);
@@ -107,7 +107,7 @@ class InputAssistant
      */
     private function writeError($message, $exit = false)
     {
-    $this->output->writeln($this->questionHelper->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
+        $this->output->writeln($this->questionHelper->getHelperSet()->get('formatter')->formatBlock($message, 'error'));
         if ($exit) {
             exit;
         }
@@ -133,7 +133,7 @@ class InputAssistant
                         $bundles[$counter++] = array(
                             'name' => $bundleFile,
                             'namespace' => $file,
-                            'dir' => $dir . $file . '/' . $bundleFile
+                            'dir' => $dir . $file . '/' . $bundleFile,
                         );
                     }
                 }
@@ -147,6 +147,7 @@ class InputAssistant
      * Returns a list of namespaces as array with a forward slash to split the namespace & bundle.
      *
      * @param Kernel $kernel
+     *
      * @return array
      */
     private function getNamespaceAutoComplete(Kernel $kernel)
@@ -163,11 +164,11 @@ class InputAssistant
      * Replaces '\' with '/'.
      *
      * @param $namespace
+     *
      * @return mixed
      */
     private function fixNamespace($namespace)
     {
-
         return strtr($namespace, array('\\Bundle\\' => '/', '\\' => '/'));
     }
 
@@ -175,9 +176,9 @@ class InputAssistant
      * Asks for the prefix and sets it on the InputInterface as the 'prefix' option, if this option is not set yet.
      * Will set the default to a snake_cased namespace when the namespace has been set on the InputInterface.
      *
-     * @param array $text What you want printed before the prefix is asked. If null is provided it'll write a default text.
+     * @param array  $text      What you want printed before the prefix is asked. If null is provided it'll write a default text.
      * @param string $namespace An optional namespace. If this is set it'll create the default based on this prefix.
-     *  If it's not provided it'll check if the InputInterface already has the namespace option.
+     *                          If it's not provided it'll check if the InputInterface already has the namespace option.
      *
      * @return string The prefix. But it's also been set on the InputInterface.
      */
@@ -190,7 +191,7 @@ class InputAssistant
                 '',
                 'You can add a prefix to the table names of the generated entities for example: <comment>projectname_bundlename_</comment>',
                 'Enter an underscore \'_\' if you don\'t want a prefix.',
-                ''
+                '',
             );
         }
 
@@ -205,20 +206,21 @@ class InputAssistant
                 $namespace = $this->fixNamespace($namespace);
             }
             $defaultPrefix = GeneratorUtils::cleanPrefix($this->convertNamespaceToSnakeCase($namespace));
-	    $question = new Question($this->questionHelper->getQuestion('Tablename prefix', $defaultPrefix), $defaultPrefix);
-	    $prefix = $this->questionHelper->ask($this->input, $this->output, $question);
+            $question = new Question($this->questionHelper->getQuestion('Tablename prefix', $defaultPrefix), $defaultPrefix);
+            $prefix = $this->questionHelper->ask($this->input, $this->output, $question);
             $prefix = GeneratorUtils::cleanPrefix($prefix);
             if ($this->input->hasOption('prefix')) {
                 $this->input->setOption('prefix', $prefix);
             }
 
-            if($prefix == '') {
+            if ($prefix == '') {
                 break;
             }
 
-            if(!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $prefix)) {
+            if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $prefix)) {
                 $this->output->writeln(sprintf('<bg=red> "%s" contains invalid characters</>', $prefix));
                 $prefix = $text = null;
+
                 continue;
             }
         }
@@ -230,6 +232,7 @@ class InputAssistant
      * Converts something like Namespace\BundleNameBundle to namspace_bundlenamebundle.
      *
      * @param string $namespace
+     *
      * @return string
      */
     private function convertNamespaceToSnakeCase($namespace)

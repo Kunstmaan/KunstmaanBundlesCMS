@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\AdminList\FilterType\ORM;
 
 use DateTime;
-
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,7 +18,7 @@ class DateTimeFilterType extends AbstractORMFilterType
     public function bindRequest(Request $request, array &$data, $uniqueId)
     {
         $data['comparator'] = $request->query->get('filter_comparator_' . $uniqueId);
-        $data['value']      = $request->query->get('filter_value_' . $uniqueId);
+        $data['value'] = $request->query->get('filter_value_' . $uniqueId);
     }
 
     /**
@@ -31,7 +30,7 @@ class DateTimeFilterType extends AbstractORMFilterType
         if (isset($data['value']) && isset($data['comparator'])) {
             /** @var DateTime $datetime */
             $date = empty($data['value']['date']) ? date('d/m/Y') : $data['value']['date'];
-            $time = empty($data['value']['time']) ? date('H:i')   : $data['value']['time'];
+            $time = empty($data['value']['time']) ? date('H:i') : $data['value']['time'];
             $dateTime = DateTime::createFromFormat('d/m/Y H:i', $date . ' ' . $time);
 
             if (false === $dateTime) {
@@ -41,9 +40,11 @@ class DateTimeFilterType extends AbstractORMFilterType
             switch ($data['comparator']) {
                 case 'before':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->lte($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
+
                     break;
                 case 'after':
                     $this->queryBuilder->andWhere($this->queryBuilder->expr()->gt($this->getAlias() . $this->columnName, ':var_' . $uniqueId));
+
                     break;
             }
             $this->queryBuilder->setParameter('var_' . $uniqueId, $dateTime->format('Y-m-d H:i'));

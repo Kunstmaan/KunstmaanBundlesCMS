@@ -13,5 +13,4 @@ interface HiddenFromNavInterface
      * @return bool
      */
     public function isHiddenFromNav();
-
 }

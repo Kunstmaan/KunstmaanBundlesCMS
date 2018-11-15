@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FixturesBundle\Parser\Property;
 
-
 interface PropertyParserInterface
 {
     /**
@@ -18,6 +17,7 @@ interface PropertyParserInterface
      * @param $value
      * @param $providers
      * @param $references
+     *
      * @return mixed
      */
     public function parse($value, $providers, $references);

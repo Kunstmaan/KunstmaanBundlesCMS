@@ -13,7 +13,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     /** @var PdfTransformer */
     protected $object;
 
-    /** @var Filesystem  */
+    /** @var Filesystem */
     protected $filesystem;
 
     /** @var string */
@@ -23,7 +23,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     protected $tempDir;
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::__construct
+     * @covers \Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::__construct
      */
     protected function setUp()
     {
@@ -49,7 +49,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::apply
+     * @covers \Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::apply
      */
     public function testApplyWritesJpg()
     {
@@ -74,7 +74,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::apply
+     * @covers \Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::apply
      */
     public function testApplyDoesNotOverwriteExisting()
     {
@@ -95,7 +95,7 @@ class PdfTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::getPreviewFilename
+     * @covers \Kunstmaan\MediaBundle\Helper\Transformer\PdfTransformer::getPreviewFilename
      */
     public function testGetPreviewFilename()
     {
