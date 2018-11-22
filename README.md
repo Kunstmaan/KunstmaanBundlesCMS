@@ -14,6 +14,11 @@ We love contributions! We've provide you with a [Contribution Guide](http://kuns
 If you're submitting a pull request, please follow the guidelines in the [Submitting pull requests](http://kunstmaanbundlescms.readthedocs.io/en/latest/contributing/pull-requests/)
 documentation and be sure to read our [Coding Standards](http://kunstmaanbundlescms.readthedocs.io/en/latest/contributing/coding-standards/) as well.
 
+### Community
+Want to talk to fellow contributors? There's always people eager to chat in our slack channel!
+
+[![Join our slack channel](https://bundles.kunstmaan.be/uploads/media/5ae3807f4f548/slacklogo-small.png?production-87162ce) Join our Slack Channel!](https://join.slack.com/t/kunstmaancms/shared_invite/enQtNDg0MzE0NDQ3MjU0LTIxMmY4YTRkMDBmYzE5MjFiMzBjOGI5NjczMjEyNDdlNDlmYjBiZDA3OWRjM2NhZjRjZjBlYmM0OWJhNWU2ZGM)
+
 ### Browser support
 
 We support at least the 2 last versions of Chrome / Firefox / Safari and IE9 or up. We also support the most current mobile browsers.
