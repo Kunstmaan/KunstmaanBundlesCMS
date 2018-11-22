@@ -1,7 +1,4 @@
-/* eslint-env node */
-
 import gulp from 'gulp';
-import webpack from 'webpack';
 
 import consoleArguments from './console-arguments';
 
@@ -10,7 +7,7 @@ import createEslintTask from './tasks/eslint';
 import createStylelintTask from './tasks/stylelint';
 import createCleanTask from './tasks/clean';
 import createCopyTask from './tasks/copy';
-import {createCssLocalTask, createCssOptimizedTask} from './tasks/css';
+import { createCssLocalTask, createCssOptimizedTask } from './tasks/css';
 import createBundleTask from './tasks/bundle';
 import createServerTask from './tasks/server';
 import createStyleguideTask from './tasks/livingcss';
@@ -25,12 +22,16 @@ export const images = createImagesTask({
 
 export const eslint = createEslintTask({
     src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/js/**/*.js',
-    failAfterError: !consoleArguments.continueAfterTestError
+    failAfterError: !consoleArguments.continueAfterTestError,
 });
 
-export const stylelint = createStylelintTask({src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss'});
+export const stylelint = createStylelintTask({
+    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss',
+});
 
-export const clean = createCleanTask({target: ['./web/frontend']});
+export const clean = createCleanTask({
+    target: ['./web/frontend'],
+});
 
 export const copy = gulp.parallel(
 {% if demosite %}
@@ -39,25 +40,31 @@ export const copy = gulp.parallel(
     createCopyTask({src: ['./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/fonts/**'], dest: './web/frontend/fonts'})
 );
 
-export const cssLocal = createCssLocalTask({src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/style.scss', dest: './web/frontend/css'});
+export const cssLocal = createCssLocalTask({
+    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/style.scss',
+    dest: './web/frontend/css',
+});
 
-export const cssOptimized = createCssOptimizedTask({src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/*.scss', dest: './web/frontend/css'});
+export const cssOptimized = createCssOptimizedTask({
+    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/*.scss',
+    dest: './web/frontend/css',
+});
 
 export const bundleLocal = createBundleTask({
-    config: webpackConfigApp(consoleArguments.speedupLocalDevelopment)
+    config: webpackConfigApp(consoleArguments.speedupLocalDevelopment),
 });
 
 export const bundleOptimized = createBundleTask({
     config: webpackConfigApp(consoleArguments.speedupLocalDevelopment, true),
-    logStats: true
+    logStats: true,
 });
 
 export const bundleAdminExtraLocal = createBundleTask({
-    config: webpackConfigAdminExtra(consoleArguments.speedupLocalDevelopment)
+    config: webpackConfigAdminExtra(consoleArguments.speedupLocalDevelopment),
 });
 
 export const bundleAdminExtraOptimized = createBundleTask({
-    config: webpackConfigAdminExtra(consoleArguments.speedupLocalDevelopment, true)
+    config: webpackConfigAdminExtra(consoleArguments.speedupLocalDevelopment, true),
 });
 
 export const server = createServerTask({
@@ -68,21 +75,21 @@ export const server = createServerTask({
             'web/frontend/css/*.css',
             'web/frontend/js/*.js',
             'web/frontend/img/**/*',
-            'web/frontend/styleguide/*.html'
+            'web/frontend/styleguide/*.html',
         ],
         open: false,
         reloadOnRestart: true,
 {% if browserSyncUrl %}
         proxy: {
-            target: '{{ browserSyncUrl }}'
+            target: '{{ browserSyncUrl }}',
         },
 {% else %}
         server: {
-            baseDir: '.'
+            baseDir: '.',
         },
 {% endif %}
-        notify: true
-    }
+        notify: true,
+    },
 });
 
 export const generateStyleguide = createStyleguideTask({
@@ -92,20 +99,28 @@ export const generateStyleguide = createStyleguideTask({
     partials: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/templates/partials/*.hbs',
     sortOrder: [
         {
-            'Index': [
+            Index: [
                 'Colors',
                 'Typography',
                 'Blocks',
-                'Pageparts'
-            ]
-        }
-    ]
+                'Pageparts',
+            ],
+        },
+    ],
 });
 
-export const cssStyleguideOptimized = createCssOptimizedTask({src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/scss/*.scss', dest: './web/frontend/styleguide/css'});
+export const copyStyleguide = createCopyTask({
+    src: ['./node_modules/prismjs/themes/prism-okaidia.css'],
+    dest: './web/frontend/styleguide/css',
+});
+
+export const cssStyleguideOptimized = createCssOptimizedTask({
+    src: './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/scss/*.scss',
+    dest: './web/frontend/styleguide/css',
+});
 
 export const bundleStyleguideOptimized = createBundleTask({
-    config: webpackConfigStyleguide(consoleArguments.speedupLocalDevelopment, true)
+    config: webpackConfigStyleguide(consoleArguments.speedupLocalDevelopment, true),
 });
 
 export function buildOnChange(done) {
@@ -122,7 +137,7 @@ export function testOnChange(done) {
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.scss', cssLocal);
     gulp.watch([
         './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/scss/**/*.md',
-        './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/**/*.hbs'
+        './src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/**/*.hbs',
     ], generateStyleguide);
     gulp.watch('./src/{{ bundle.namespace|replace({'\\':'/'}) }}/Resources/ui/styleguide/scss/**/*.scss', cssStyleguideOptimized);
     done();

@@ -1,7 +1,11 @@
 import gulp from 'gulp';
 import injectPlugin from 'gulp-inject';
 
-export default function createInjectTask({src = undefined, dest = undefined, injectables = undefined}) {
+export default function createInjectTask({
+    src = undefined,
+    dest = undefined,
+    injectables = undefined,
+}) {
     return function inject() {
         let stream = gulp.src(src);
         injectables.forEach((injectable) => {
