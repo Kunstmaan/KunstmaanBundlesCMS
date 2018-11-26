@@ -1,0 +1,40 @@
+services:
+    Kunstmaan\DashboardBundle\Command\DashboardCommand:
+        arguments: ['@kunstmaan_dashboard.manager.widgets']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsConfigFlushCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsConfigsListCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataCollectCommand:
+        arguments: ['@doctrine.orm.entity_manager', '@kunstmaan_dashboard.helper.google.analytics.service']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsDataFlushCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsOverviewsGenerateCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsOverviewsListCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }
+
+    Kunstmaan\DashboardBundle\Command\GoogleAnalyticsSegmentsListCommand:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: console.command }

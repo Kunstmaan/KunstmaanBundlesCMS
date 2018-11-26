@@ -63,6 +63,10 @@ class FileFormSubmissionField extends FormSubmissionField
      */
     public function __toString()
     {
+        if (!empty($this->url)) {
+            return $this->url;
+        }
+
         return !empty($this->fileName) ? $this->fileName : "";
     }
 

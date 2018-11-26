@@ -8,6 +8,10 @@ npm-debug.log
 *~
 *test.db
 **/Tests/_output
+**/Tests/unit/app/cache
+**/Tests/unit/app/logs
+**/Tests/unit/app2/cache
+**/Tests/unit/app2/logs
 .vscode
 src/Kunstmaan/GeneratorBundle/Resources/SensioGeneratorBundle/skeleton/layout/groundcontrol/dist
 .idea

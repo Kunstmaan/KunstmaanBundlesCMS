@@ -1,12 +1,4 @@
-namespace: UserManagementBundle
-suites:
-    unit:
-        path: .
-        actor: UnitTester
-        modules:
-            enabled:
-                # add more modules here
-                - Asserts
+namespace: Kunstmaan\UserManagementBundle\Tests
 settings:
     shuffle: true
     lint: true
@@ -14,6 +6,4 @@ paths:
     tests: Tests
     output: Tests/_output
     support: Tests/_support
-    data: Tests
-coverage:
-    enabled: true
+    data: Tests/_data

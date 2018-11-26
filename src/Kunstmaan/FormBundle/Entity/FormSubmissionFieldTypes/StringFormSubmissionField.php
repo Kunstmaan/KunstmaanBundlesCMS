@@ -14,7 +14,6 @@ use Kunstmaan\FormBundle\Form\StringFormSubmissionType;
  */
 class StringFormSubmissionField extends FormSubmissionField
 {
-
     /**
      * @ORM\Column(name="sfsf_value", type="string")
      */

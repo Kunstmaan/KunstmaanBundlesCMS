@@ -1,5 +1,5 @@
 <?php
-namespace PagePartBundle;
+namespace Kunstmaan\PagePartBundle\Tests;
 
 /**
  * Inherited Methods

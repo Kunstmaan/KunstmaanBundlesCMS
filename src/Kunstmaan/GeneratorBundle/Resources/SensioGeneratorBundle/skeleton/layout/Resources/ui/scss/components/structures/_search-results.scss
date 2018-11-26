@@ -10,7 +10,7 @@
     background: $grey--lighter;
 
     .search-results__input {
-        @include box-shadow;
+        @include box-shadow();
 
         width: calc(100% - 90px);
         max-width: 100%;
@@ -21,7 +21,7 @@
 /* Input field and button
    ========================================================================== */
 .search-results__form-group {
-    @include clearfix;
+    @include clearfix();
 }
 
 .search-results__input,
