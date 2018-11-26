@@ -72,6 +72,8 @@ kuma_form:
         label: Wyrażenia regularne
       errormessage_regex:
         label: Komunikat błędu
+    form_page_part:
+      internal_name: Internal name
     submit_button_page_part:
       label:
         label: Etykieta
