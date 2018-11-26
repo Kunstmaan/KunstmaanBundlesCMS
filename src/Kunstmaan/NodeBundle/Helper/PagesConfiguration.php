@@ -3,10 +3,10 @@
 namespace Kunstmaan\NodeBundle\Helper;
 
 use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use /** @noinspection PhpDeprecationInspection */
+use /* @noinspection PhpDeprecationInspection */
     Kunstmaan\NodeBundle\Entity\HideFromNodeTreeInterface;
 use Kunstmaan\NodeBundle\Entity\HomePageInterface;
-use /** @noinspection PhpDeprecationInspection */
+use /* @noinspection PhpDeprecationInspection */
     Kunstmaan\NodeSearchBundle\Helper\SearchTypeInterface;
 use Kunstmaan\SearchBundle\Helper\IndexableInterface;
 use Kunstmaan\UtilitiesBundle\Helper\ClassLookup;
@@ -33,7 +33,7 @@ class PagesConfiguration
     public function isHiddenFromTree($refName)
     {
         return $this->getValue($refName, 'hidden_from_tree', function ($page) {
-            /** @noinspection PhpDeprecationInspection */
+            /* @noinspection PhpDeprecationInspection */
             return $page instanceof HideFromNodeTreeInterface;
         });
     }
@@ -41,7 +41,7 @@ class PagesConfiguration
     public function isIndexable($refName)
     {
         return $this->getValue($refName, 'indexable', function ($page) {
-            /** @var IndexableInterface $page */
+            /* @var IndexableInterface $page */
             return false === $page instanceof IndexableInterface || $page->isIndexable();
         });
     }
@@ -49,7 +49,7 @@ class PagesConfiguration
     public function getSearchType($refName)
     {
         return $this->getValue($refName, 'search_type', function ($page) {
-            /** @noinspection PhpDeprecationInspection */
+            /* @noinspection PhpDeprecationInspection */
             return $page instanceof SearchTypeInterface ? $page->getSearchType() : ClassLookup::getClass($page);
         });
     }
@@ -57,7 +57,7 @@ class PagesConfiguration
     public function isStructureNode($refName)
     {
         return $this->getValue($refName, 'structure_node', function ($page) {
-            /** @noinspection PhpDeprecationInspection */
+            /* @noinspection PhpDeprecationInspection */
             return $page instanceof HasNodeInterface && $page->isStructureNode();
         });
     }
@@ -65,7 +65,7 @@ class PagesConfiguration
     public function getPossibleChildTypes($refName)
     {
         $types = $this->getValue($refName, 'allowed_children', function ($page) {
-            /** @noinspection PhpDeprecationInspection */
+            /* @noinspection PhpDeprecationInspection */
             return ($page instanceof HasNodeInterface) ? $page->getPossibleChildTypes() : [];
         });
 
@@ -77,7 +77,7 @@ class PagesConfiguration
     public function isHomePage($refName)
     {
         return $this->getValue($refName, 'is_homepage', function ($page) {
-            /** @noinspection PhpDeprecationInspection */
+            /* @noinspection PhpDeprecationInspection */
             return $page instanceof HomePageInterface;
         });
     }
@@ -96,9 +96,9 @@ class PagesConfiguration
     }
 
     /**
-     * @param string $ref
-     * @param string $name
-     * @param Callable|mixed $default
+     * @param string         $ref
+     * @param string         $name
+     * @param callable|mixed $default
      *
      * @return mixed
      */
@@ -114,7 +114,7 @@ class PagesConfiguration
             return $default;
         }
 
-        $page = is_string($ref) ? new $refName : $ref;
+        $page = is_string($ref) ? new $refName() : $ref;
         $result = $default($page);
         unset($page);
 

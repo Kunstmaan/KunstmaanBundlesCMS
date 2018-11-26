@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Model\Export;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,12 +18,14 @@ class ExportFile
 
     /**
      * ArrayCollection with keyword as key, text as value
+     *
      * @var ArrayCollection
      */
     private $translations;
 
     /**
      * Translations converted into an array
+     *
      * @var array
      */
     private $array = array();
@@ -31,7 +34,7 @@ class ExportFile
 
     public function __construct()
     {
-        $this->translations = new ArrayCollection;
+        $this->translations = new ArrayCollection();
     }
 
     public function fillArray()

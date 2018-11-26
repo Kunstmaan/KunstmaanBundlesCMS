@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
-use Kunstmaan\AdminListBundle\AdminList\Configurator\ExportListConfiguratorInterface;
 use Kunstmaan\AdminListBundle\AdminList\ExportList;
 
 /**
@@ -46,8 +45,8 @@ class ExportListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\ExportList::__construct
-     * @covers Kunstmaan\AdminListBundle\AdminList\ExportList::getExportColumns
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ExportList::__construct
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ExportList::getExportColumns
      */
     public function testGetExportColumns()
     {
@@ -61,7 +60,7 @@ class ExportListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\ExportList::getIterator
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ExportList::getIterator
      */
     public function testGetIterator()
     {
@@ -76,7 +75,7 @@ class ExportListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\ExportList::getStringValue
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ExportList::getStringValue
      */
     public function testGetStringValue()
     {

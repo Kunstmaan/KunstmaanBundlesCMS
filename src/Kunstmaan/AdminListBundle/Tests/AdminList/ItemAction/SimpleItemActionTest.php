@@ -1,8 +1,8 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\ItemAction;
 
 use Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction;
-
 use stdClass;
 
 /**
@@ -27,18 +27,16 @@ class SimpleItemActionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::__construct
-     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getUrlFor
-     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getIconFor
-     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getLabelFor
-     * @covers Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getTemplate
-     *
-     * @return null
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::__construct
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getUrlFor
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getIconFor
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getLabelFor
+     * @covers \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction::getTemplate
      */
     public function test__construct()
     {
         /** @noinspection PhpUnusedParameterInspection */
-        $object = new SimpleItemAction(function($item) {
+        $object = new SimpleItemAction(function ($item) {
             return 'http://www.domain.com/action';
         }, 'icon.png', 'Label', 'template.html.twig');
 

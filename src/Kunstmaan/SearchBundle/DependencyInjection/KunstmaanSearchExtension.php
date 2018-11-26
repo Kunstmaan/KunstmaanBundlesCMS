@@ -16,12 +16,12 @@ use Symfony\Component\Yaml\Yaml;
 class KunstmaanSearchExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
-        $config        = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         if (count($config['analyzer_languages']) <= 0) {
             $config['analyzer_languages'] = $this->getDefaultAnalyzerLanguages();

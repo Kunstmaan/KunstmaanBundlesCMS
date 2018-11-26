@@ -31,7 +31,6 @@ class AbstractCategory extends AbstractEntity implements Translatable
      */
     protected $deletedAt;
 
-
     /**
      * Set name
      *
@@ -92,4 +91,3 @@ class AbstractCategory extends AbstractEntity implements Translatable
         return $this->getName();
     }
 }
-

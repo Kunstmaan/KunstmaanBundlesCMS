@@ -50,4 +50,3 @@ class PdfTransformer implements PreviewTransformerInterface
         return $absolutePath . '.jpg';
     }
 }
-

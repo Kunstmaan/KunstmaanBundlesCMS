@@ -35,9 +35,9 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::__construct
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getMasterRequest
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getHost
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::__construct
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getMasterRequest
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getHost
      */
     public function testGetHost()
     {
@@ -46,7 +46,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getHosts
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getHosts
      */
     public function testGetHosts()
     {
@@ -55,7 +55,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getDefaultLocale
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getDefaultLocale
      */
     public function testGetDefaultLocale()
     {
@@ -64,7 +64,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getExtraData
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getExtraData
      */
     public function testGetExtraData()
     {
@@ -73,7 +73,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getRootNode
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getRootNode
      */
     public function testGetRootNode()
     {
@@ -82,7 +82,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiDomainHost
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiDomainHost
      */
     public function testIsMultiDomainHost()
     {
@@ -91,7 +91,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiLanguage
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiLanguage
      */
     public function testIsMultiLanguageWithSingleLanguage()
     {
@@ -100,7 +100,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiLanguage
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::isMultiLanguage
      */
     public function testIsMultiLanguageWithMultiLanguage()
     {
@@ -109,7 +109,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getFrontendLocales
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getFrontendLocales
      */
     public function testGetFrontendLocalesWithSingleLanguage()
     {
@@ -118,7 +118,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getFrontendLocales
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getFrontendLocales
      */
     public function testGetFrontendLocalesWithMultiLanguage()
     {
@@ -127,7 +127,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getBackendLocales
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getBackendLocales
      */
     public function testGetBackendLocalesWithSingleLanguage()
     {
@@ -136,7 +136,7 @@ class DomainConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\DomainConfiguration::getBackendLocales
+     * @covers \Kunstmaan\AdminBundle\Helper\DomainConfiguration::getBackendLocales
      */
     public function testGetBackendLocalesWithMultiLanguage()
     {

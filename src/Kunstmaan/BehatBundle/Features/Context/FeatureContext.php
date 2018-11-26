@@ -12,7 +12,6 @@ use Behat\Testwork\Hook\Scope\AfterTestScope;
 
 class FeatureContext extends MinkContext implements Context
 {
-
     protected $browserName;
 
     public function __construct(array $parameters)
@@ -40,7 +39,7 @@ class FeatureContext extends MinkContext implements Context
     {
         $node = $this->findHiddenField($field);
         $actual = $node->getValue();
-        $regex  = '/^' . preg_quote($value, '/') . '/ui';
+        $regex = '/^' . preg_quote($value, '/') . '/ui';
 
         if (!preg_match($regex, $actual)) {
             $message = sprintf('The hidden field "%s" value is "%s", but "%s" expected.', $field, $actual, $value);
@@ -58,7 +57,7 @@ class FeatureContext extends MinkContext implements Context
     {
         $node = $this->findHiddenField($field);
         $actual = $node->getValue();
-        $regex  = '/^' . preg_quote($value, '/') . '/ui';
+        $regex = '/^' . preg_quote($value, '/') . '/ui';
 
         if (preg_match($regex, $actual)) {
             $message = sprintf('The hidden field "%s" value is "%s", but it should not be.', $field, $actual);
@@ -71,6 +70,7 @@ class FeatureContext extends MinkContext implements Context
      * @param string $field
      *
      * @return \Behat\Mink\Element\NodeElement|null
+     *
      * @throws \Behat\Mink\Exception\ElementNotFoundException
      */
     private function findHiddenField($field)

@@ -63,10 +63,9 @@ EOQ;
     {
         return $this->createQueryBuilder('t')
             ->update('KunstmaanTranslatorBundle:Translation', 't')
-            ->set('t.flag', "NULL")
+            ->set('t.flag', 'NULL')
             ->getQuery()
             ->execute();
-
     }
 
     public function getTranslationsByLocalesAndDomains($locales, $domains)
@@ -125,11 +124,12 @@ EOQ;
     public function createTranslations(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel)
     {
         $this->getEntityManager()->beginTransaction();
+
         try {
             // Fetch new translation ID
             $translationId = $this->getUniqueTranslationId();
             /**
-             * @var TextWithLocale $textWithLocale
+             * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
                 $text = $textWithLocale->getText();
@@ -155,9 +155,10 @@ EOQ;
     public function updateTranslations(\Kunstmaan\TranslatorBundle\Model\Translation $translationModel, $translationId)
     {
         $this->getEntityManager()->beginTransaction();
+
         try {
             /**
-             * @var TextWithLocale $textWithLocale
+             * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
                 if ($textWithLocale->getId()) {

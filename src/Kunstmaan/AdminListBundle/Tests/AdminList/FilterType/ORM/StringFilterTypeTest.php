@@ -33,7 +33,7 @@ class StringFilterTypeTest extends ORMFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::bindRequest
      */
     public function testBindRequest()
     {
@@ -52,7 +52,7 @@ class StringFilterTypeTest extends ORMFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::apply
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -83,7 +83,7 @@ class StringFilterTypeTest extends ORMFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::getTemplate
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\StringFilterType::getTemplate
      */
     public function testGetTemplate()
     {

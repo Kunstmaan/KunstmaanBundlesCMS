@@ -32,7 +32,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Field::__construct
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Field::__construct
      */
     public function test__construct()
     {
@@ -44,7 +44,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Field::getName
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Field::getName
      */
     public function testGetName()
     {
@@ -52,7 +52,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Field::getHeader
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Field::getHeader
      */
     public function testGetHeader()
     {
@@ -60,7 +60,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Field::isSortable
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Field::isSortable
      */
     public function testIsSortable()
     {
@@ -68,7 +68,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\Field::getTemplate
+     * @covers \Kunstmaan\AdminListBundle\AdminList\Field::getTemplate
      */
     public function testGetTemplate()
     {

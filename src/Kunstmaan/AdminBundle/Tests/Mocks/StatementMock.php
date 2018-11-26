@@ -9,6 +9,4 @@ use Doctrine\DBAL\Driver\Statement;
  */
 abstract class StatementMock implements \Iterator, Statement
 {
-
 }
-

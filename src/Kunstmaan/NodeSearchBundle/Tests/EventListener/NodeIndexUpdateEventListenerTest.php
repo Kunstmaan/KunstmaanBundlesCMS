@@ -21,7 +21,7 @@ class NodeIndexUpdateEventListenerTest extends \PHPUnit_Framework_TestCase
 
         $node = $this->createMock(Node::class);
         $node->method('getParents')->willReturn([
-            $parentNode
+            $parentNode,
         ]);
 
         $nodeTranslation = $this->createMock(NodeTranslation::class);
@@ -92,7 +92,6 @@ class NodeIndexUpdateEventListenerTest extends \PHPUnit_Framework_TestCase
         $listener = new NodeIndexUpdateEventListener($this->getContainer($this->getSearchConfiguration(false)));
         $listener->onPostPersist($nodeEvent);
     }
-
 
     public function testUpdateOfChildPageWithOnlineParent()
     {

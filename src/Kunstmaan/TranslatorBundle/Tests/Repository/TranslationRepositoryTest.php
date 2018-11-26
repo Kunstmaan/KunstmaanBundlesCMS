@@ -1,11 +1,11 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 
 class TranslationRepositoryTest extends BaseTestCase
 {
-
     private $translationRepository;
 
     public function setUp()

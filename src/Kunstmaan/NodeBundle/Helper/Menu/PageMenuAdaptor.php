@@ -51,8 +51,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     private $domainConfiguration;
 
     /**
-     * @param EntityManagerInterface       $em              The entity manager
-     * @param AclNativeHelper              $aclNativeHelper The acl helper
+     * @param EntityManagerInterface       $em                  The entity manager
+     * @param AclNativeHelper              $aclNativeHelper     The acl helper
      * @param PagesConfiguration           $pagesConfiguration
      * @param DomainConfigurationInterface $domainConfiguration
      */
@@ -62,9 +62,9 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         PagesConfiguration $pagesConfiguration,
         DomainConfigurationInterface $domainConfiguration
     ) {
-        $this->em                  = $em;
-        $this->aclNativeHelper     = $aclNativeHelper;
-        $this->pagesConfiguration  = $pagesConfiguration;
+        $this->em = $em;
+        $this->aclNativeHelper = $aclNativeHelper;
+        $this->pagesConfiguration = $pagesConfiguration;
         $this->domainConfiguration = $domainConfiguration;
     }
 
@@ -95,7 +95,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             }
             $children[] = $menuItem;
         } elseif (stripos($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes') === 0) {
-            $treeNodes     = $this->getTreeNodes(
+            $treeNodes = $this->getTreeNodes(
                 $request->getLocale(),
                 PermissionMap::PERMISSION_VIEW,
                 $this->aclNativeHelper,
@@ -113,7 +113,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 );
             } elseif ('KunstmaanNodeBundle_nodes_edit' == $parent->getRoute()) {
                 $parentRouteParams = $parent->getRouteparams();
-                $parent_id         = $parentRouteParams['id'];
+                $parent_id = $parentRouteParams['id'];
                 if (array_key_exists($parent_id, $treeNodes)) {
                     $this->processNodes(
                         $menu,
@@ -144,7 +144,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
         $includeHiddenFromNav
     ) {
         if (is_null($this->treeNodes)) {
-            $repo            = $this->em->getRepository('KunstmaanNodeBundle:Node');
+            $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
             $this->treeNodes = array();
 
             $rootNode = $this->domainConfiguration->getRootNode();
@@ -187,8 +187,8 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             if (stripos($request->attributes->get('_route'), 'KunstmaanNodeBundle_nodes_edit') === 0) {
                 $repo = $this->em->getRepository('KunstmaanNodeBundle:Node');
 
-                $currentNode         = $repo->findOneById($request->attributes->get('id'));
-                $parentNodes         = $repo->getAllParents($currentNode);
+                $currentNode = $repo->findOneById($request->attributes->get('id'));
+                $parentNodes = $repo->getAllParents($currentNode);
                 $this->activeNodeIds = array();
                 foreach ($parentNodes as $parentNode) {
                     $this->activeNodeIds[] = $parentNode->getId();
@@ -196,7 +196,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
             }
         }
 
-        return (is_null($this->activeNodeIds) ? array() : $this->activeNodeIds);
+        return is_null($this->activeNodeIds) ? array() : $this->activeNodeIds;
     }
 
     /**
@@ -217,7 +217,7 @@ class PageMenuAdaptor implements MenuAdaptorInterface
     ) {
         foreach ($nodes as $child) {
             $menuItem = new MenuItem($menu);
-            $refName  = $child['ref_entity_name'];
+            $refName = $child['ref_entity_name'];
 
             $menuItem
                 ->setRoute('KunstmaanNodeBundle_nodes_edit')
@@ -232,10 +232,10 @@ class PageMenuAdaptor implements MenuAdaptorInterface
                 ->addAttributes(
                     [
                         'page' => [
-                            'class'    => $refName,
+                            'class' => $refName,
                             'children' => $this->pagesConfiguration->getPossibleChildTypes($refName),
-                            'icon'     => $this->pagesConfiguration->getIcon($refName)
-                        ]
+                            'icon' => $this->pagesConfiguration->getIcon($refName),
+                        ],
                     ]
                 );
 

@@ -24,16 +24,16 @@ class DateTimeFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType::bindRequest
      */
     public function testBindRequest()
     {
         $request = new Request(array(
             'filter_comparator_datetime' => 'before',
-            'filter_value_datetime'      => array('date' => '14/04/2014', 'time' => '09:00')
+            'filter_value_datetime' => array('date' => '14/04/2014', 'time' => '09:00'),
         ));
 
-        $data     = array();
+        $data = array();
         $uniqueId = 'datetime';
         $this->object->bindRequest($request, $data, $uniqueId);
 
@@ -49,7 +49,7 @@ class DateTimeFilterTypeTest extends DBALFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers       Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType::apply
+     * @covers       \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -65,7 +65,7 @@ class DateTimeFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType::getTemplate
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateTimeFilterType::getTemplate
      */
     public function testGetTemplate()
     {

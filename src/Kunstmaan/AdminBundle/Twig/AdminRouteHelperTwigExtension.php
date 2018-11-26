@@ -2,10 +2,7 @@
 
 namespace Kunstmaan\AdminBundle\Twig;
 
-use Twig_Environment;
-
 use Kunstmaan\AdminBundle\Helper\AdminRouteHelper;
-use Symfony\Component\Form\FormView;
 
 class AdminRouteHelperTwigExtension extends \Twig_Extension
 {
@@ -35,7 +32,7 @@ class AdminRouteHelperTwigExtension extends \Twig_Extension
     /**
      * Lets the adminroutehelper determine wether the URI is an admin route
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdminRoute($URI)
     {

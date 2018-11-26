@@ -1,14 +1,14 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Service\Command;
 
-use Doctrine\DBAL\Migrations\Configuration\Configuration,
-    Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand,
-    Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Output\OutputInterface;
+use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class DiffCommand extends GenerateCommand
 {
-
     protected function configure()
     {
         parent::configure();
@@ -22,7 +22,7 @@ class DiffCommand extends GenerateCommand
         $up = $this->buildCodeFromSql($configuration, $sql);
         $down = '';
 
-        if (! $up && ! $down) {
+        if (!$up && !$down) {
             $output->writeln('No changes detected in your mapping information.', 'ERROR');
 
             return;
@@ -38,7 +38,7 @@ class DiffCommand extends GenerateCommand
     {
         $currentPlatform = $configuration->getConnection()->getDatabasePlatform()->getName();
         $code = array(
-            "\$this->abortIf(\$this->connection->getDatabasePlatform()->getName() != \"$currentPlatform\", \"Migration can only be executed safely on '$currentPlatform'.\");", "",
+            "\$this->abortIf(\$this->connection->getDatabasePlatform()->getName() != \"$currentPlatform\", \"Migration can only be executed safely on '$currentPlatform'.\");", '',
         );
         foreach ($sql as $query) {
             if (strpos($query, $configuration->getMigrationsTableName()) !== false) {

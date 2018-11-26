@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
 
 /**
@@ -7,7 +9,6 @@ use Kunstmaan\PagePartBundle\Form\TocPagePartAdminType;
  */
 class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
 {
-
     /**
      * @var TocPagePartAdminType
      */
@@ -32,7 +33,7 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::buildForm
+     * @covers \Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::buildForm
      */
     public function testBuildForm()
     {
@@ -40,12 +41,12 @@ class TocPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::configureOptions
+     * @covers \Kunstmaan\PagePartBundle\Form\TocPagePartAdminType::configureOptions
      */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\TocPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\TocPagePart');
     }
 }

@@ -7,7 +7,6 @@ namespace Kunstmaan\UtilitiesBundle\Helper\Shell;
  */
 interface ShellInterface
 {
-
     /**
      * @param string $command The command
      *
@@ -18,7 +17,7 @@ interface ShellInterface
     /**
      * @param int $pid
      *
-     * @return boolean
+     * @return bool
      */
     public function isRunning($pid);
 
@@ -27,8 +26,7 @@ interface ShellInterface
      *
      * @param int $pid
      *
-     * @return boolean
+     * @return bool
      */
     public function kill($pid);
-
 }

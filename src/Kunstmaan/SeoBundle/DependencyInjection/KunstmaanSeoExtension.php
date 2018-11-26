@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 
-
 /**
  * This is the class that loads and manages your bundle configuration
  *
@@ -18,7 +17,7 @@ use Symfony\Component\Yaml\Yaml;
 class KunstmaanSeoExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

@@ -33,7 +33,7 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::bindRequest
      */
     public function testBindRequest()
     {
@@ -52,7 +52,7 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::apply
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -81,7 +81,7 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getComparator
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getComparator
      */
     public function testGetComparator()
     {
@@ -93,7 +93,7 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getValue
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getValue
      */
     public function testGetValue()
     {
@@ -105,7 +105,7 @@ class EnumerationFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getTemplate
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\EnumerationFilterType::getTemplate
      */
     public function testGetTemplate()
     {

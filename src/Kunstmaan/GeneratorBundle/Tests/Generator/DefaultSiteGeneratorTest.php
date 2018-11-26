@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kunstmaan\GeneratorBundle\Generator\Tests;
-
 
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
@@ -22,7 +20,6 @@ class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $generator = new DefaultSiteGenerator($filesystem, $this->getRegistry(), '/defaultsite', $this->getAssistant(), $kernel->getContainer());
         $generator->generate($bundle, '', __DIR__ . '/../data', false);
-
     }
 
     protected function getBundle($path)

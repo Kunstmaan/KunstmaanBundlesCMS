@@ -33,7 +33,7 @@ class EnumerationFilterTypeTest extends ORMFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::bindRequest
      */
     public function testBindRequest()
     {
@@ -52,7 +52,7 @@ class EnumerationFilterTypeTest extends ORMFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::apply
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -81,7 +81,7 @@ class EnumerationFilterTypeTest extends ORMFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::getTemplate
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\ORM\EnumerationFilterType::getTemplate
      */
     public function testGetTemplate()
     {

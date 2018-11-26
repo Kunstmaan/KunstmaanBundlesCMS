@@ -29,8 +29,8 @@ class SitesAdminPanelAdaptorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor::getAdminPanelActions
-     * @covers Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor::getSiteSwitcherAction
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor::getAdminPanelActions
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\AdminPanel\SitesAdminPanelAdaptor::getSiteSwitcherAction
      */
     public function testGetAdminPanelActions()
     {

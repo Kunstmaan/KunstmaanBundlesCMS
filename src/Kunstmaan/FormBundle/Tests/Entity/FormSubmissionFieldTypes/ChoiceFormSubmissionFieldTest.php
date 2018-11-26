@@ -21,7 +21,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ChoiceFormSubmissionField;
+        $this->object = new ChoiceFormSubmissionField();
     }
 
     /**
@@ -33,7 +33,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getDefaultAdminType
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
@@ -41,7 +41,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::__toString
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::__toString
      */
     public function testToString()
     {
@@ -51,7 +51,7 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::isNull
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::isNull
      */
     public function testIsNull()
     {
@@ -62,8 +62,8 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getValue
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setValue
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getValue
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setValue
      */
     public function testSetGetValue()
     {
@@ -74,8 +74,8 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setExpanded
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getExpanded
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setExpanded
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getExpanded
      */
     public function testSetGetExpanded()
     {
@@ -86,8 +86,8 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setMultiple
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getMultiple
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setMultiple
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getMultiple
      */
     public function testSetGetMultiple()
     {
@@ -98,8 +98,8 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setChoices
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getChoices
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::setChoices
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\ChoiceFormSubmissionField::getChoices
      */
     public function testSetGetChoices()
     {
@@ -108,5 +108,4 @@ class ChoiceFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $object->setChoices($choices);
         $this->assertEquals($choices, $object->getChoices());
     }
-
 }

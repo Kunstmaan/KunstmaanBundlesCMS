@@ -2,13 +2,7 @@
 
 namespace Kunstmaan\CacheBundle\EventListener;
 
-use Kunstmaan\AdminBundle\Helper\FormWidgets\Tabs\Tab;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionAdmin;
-use Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionMapInterface;
-use Kunstmaan\NodeBundle\Entity\HasNodeInterface;
-use Kunstmaan\NodeBundle\Event\AdaptFormEvent;
 use Kunstmaan\NodeBundle\Event\ConfigureActionMenuEvent;
-use Kunstmaan\NodeBundle\Helper\FormWidgets\PermissionsFormWidget;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -53,12 +47,12 @@ class VarnishListener
                     'uri' => $this->router->generate(
                         'kunstmaancachebundle_varnish_ban',
                         [
-                            'node' => $activeNode->getId()
+                            'node' => $activeNode->getId(),
                         ]
                     ),
                     'linkAttributes' => [
-                        'class' => 'btn btn-default btn--raise-on-hover'
-                    ]
+                        'class' => 'btn btn-default btn--raise-on-hover',
+                    ],
                 ]
             );
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\AdminList;
 
 use Kunstmaan\AdminListBundle\AdminList\FilterBuilder;
@@ -32,7 +33,7 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::add
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterBuilder::add
      */
     public function testAdd()
     {
@@ -42,7 +43,7 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::get
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterBuilder::get
      */
     public function testGet()
     {
@@ -58,8 +59,8 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::remove
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::get
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterBuilder::remove
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterBuilder::get
      */
     public function testRemove()
     {
@@ -73,7 +74,7 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::has
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterBuilder::has
      */
     public function testHas()
     {
@@ -83,7 +84,7 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::getFilterDefinitions
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterBuilder::getFilterDefinitions
      */
     public function testGetFilterDefinitions()
     {
@@ -95,7 +96,7 @@ class FilterBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterBuilder::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterBuilder::bindRequest
      */
     public function testBindRequest()
     {

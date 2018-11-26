@@ -9,7 +9,6 @@ use Kunstmaan\UtilitiesBundle\Helper\Cipher\UrlSafeCipher;
  */
 class UrlSafeCipherTest extends \PHPUnit_Framework_TestCase
 {
-
     const SECRET = 'secret';
     const CONTENT = 'This is a random sentence which will be encrypted and then decrypted!';
 
@@ -59,5 +58,4 @@ class UrlSafeCipherTest extends \PHPUnit_Framework_TestCase
         $binValue = $this->cipher->hex2bin($hexValue);
         $this->assertEquals($binValue, self::CONTENT);
     }
-
 }

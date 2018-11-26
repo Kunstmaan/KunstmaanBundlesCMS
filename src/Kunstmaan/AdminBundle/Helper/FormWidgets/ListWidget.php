@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Helper\FormWidgets;
 
 use Doctrine\ORM\EntityManager;
@@ -11,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListWidget extends FormWidget
 {
-
     /**
      * @var FormWidget[]
      */
@@ -102,5 +102,4 @@ class ListWidget extends FormWidget
 
         return $params;
     }
-
 }

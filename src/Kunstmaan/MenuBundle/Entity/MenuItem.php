@@ -53,6 +53,7 @@ class MenuItem extends BaseMenuItem
     {
         $this->children = $children;
     }
+
     /**
      * @return MenuItem
      */

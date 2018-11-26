@@ -33,55 +33,55 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::setThanks
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::getThanks
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::setThanks
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::getThanks
      */
     public function testSetGetThanks()
     {
         $object = $this->object;
-        $value = "thanks";
+        $value = 'thanks';
         $object->setThanks($value);
         $this->assertEquals($value, $object->getThanks());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::setSubject
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::getSubject
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::setSubject
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::getSubject
      */
     public function testSetGetSubject()
     {
         $object = $this->object;
-        $value = "some subject";
+        $value = 'some subject';
         $object->setSubject($value);
         $this->assertEquals($value, $object->getSubject());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::setToEmail
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::getToEmail
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::setToEmail
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::getToEmail
      */
     public function testSetGetToEmail()
     {
         $object = $this->object;
-        $value = "example@example.com";
+        $value = 'example@example.com';
         $object->setToEmail($value);
         $this->assertEquals($value, $object->getToEmail());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::setFromEmail
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::getFromEmail
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::setFromEmail
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::getFromEmail
      */
     public function testSetGetFromEmail()
     {
         $object = $this->object;
-        $value = "example@example.com";
+        $value = 'example@example.com';
         $object->setFromEmail($value);
         $this->assertEquals($value, $object->getFromEmail());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::getDefaultAdminType
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
@@ -89,7 +89,7 @@ class AbstractFormPageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\AbstractFormPage::getFormElementsContext
+     * @covers \Kunstmaan\FormBundle\Entity\AbstractFormPage::getFormElementsContext
      */
     public function testGetFormElementsContext()
     {

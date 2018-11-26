@@ -35,8 +35,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setNode
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNode
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setNode
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getNode
      */
     public function testSetGetNode()
     {
@@ -46,8 +46,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setLang
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getLang
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setLang
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getLang
      */
     public function testSetGetLang()
     {
@@ -56,8 +56,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setOnline
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::isOnline
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setOnline
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::isOnline
      */
     public function testSetIsOnline()
     {
@@ -66,8 +66,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setTitle
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getTitle
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setTitle
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getTitle
      */
     public function testSetGetTitle()
     {
@@ -76,8 +76,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setSlug
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getSlug
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setSlug
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getSlug
      */
     public function testSetGetSlug()
     {
@@ -86,9 +86,9 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::__construct
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getFullSlug
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getSlugPart
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::__construct
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getFullSlug
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getSlugPart
      */
     public function testGetFullSlug()
     {
@@ -105,8 +105,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::__construct
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getFullSlug
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::__construct
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getFullSlug
      */
     public function testGetFullSlugWithEmptySlug()
     {
@@ -120,8 +120,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setPublicNodeVersion
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getPublicNodeVersion
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setPublicNodeVersion
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getPublicNodeVersion
      */
     public function testSetGetPublicNodeVersion()
     {
@@ -131,8 +131,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setNodeVersions
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersions
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setNodeVersions
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersions
      */
     public function testSetGetNodeVersions()
     {
@@ -148,8 +148,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::addNodeVersion
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersion
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::addNodeVersion
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersion
      */
     public function testAddGetNodeVersion()
     {
@@ -164,7 +164,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersion
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getNodeVersion
      */
     public function testGetNonExistentNodeVersion()
     {
@@ -172,7 +172,7 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getDefaultAdminType
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
@@ -180,8 +180,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setUrl
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getUrl
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setUrl
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getUrl
      */
     public function testSetGetUrl()
     {
@@ -190,8 +190,8 @@ class NodeTranslationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::setWeight
-     * @covers Kunstmaan\NodeBundle\Entity\NodeTranslation::getWeight
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::setWeight
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeTranslation::getWeight
      */
     public function testSetGetWeight()
     {

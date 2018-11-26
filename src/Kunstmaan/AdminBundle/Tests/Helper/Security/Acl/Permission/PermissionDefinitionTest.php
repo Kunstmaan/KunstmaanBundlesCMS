@@ -32,7 +32,7 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::__construct
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::__construct
      * @expectedException \InvalidArgumentException
      */
     public function test__constructThrowsExceptionWithInvalidParameters()
@@ -41,8 +41,8 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setAlias
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getAlias
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setAlias
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getAlias
      */
     public function testSetGetAlias()
     {
@@ -51,8 +51,8 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setEntity
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getEntity
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setEntity
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getEntity
      */
     public function testSetGetEntity()
     {
@@ -61,8 +61,8 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setPermissions
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getPermissions
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setPermissions
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::getPermissions
      */
     public function testSetGetPermissions()
     {
@@ -71,12 +71,11 @@ class PermissionDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setPermissions
+     * @covers \Kunstmaan\AdminBundle\Helper\Security\Acl\Permission\PermissionDefinition::setPermissions
      * @expectedException \InvalidArgumentException
      */
     public function testSetPermissionsWithInvalidData()
     {
         $this->object->setPermissions(array());
     }
-
 }

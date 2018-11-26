@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FileUploadPagePartAdminType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options

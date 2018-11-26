@@ -51,7 +51,7 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture.
      *
-     * @covers Kunstmaan\PagePartBundle\EventListener\CloneListener::__construct
+     * @covers \Kunstmaan\PagePartBundle\EventListener\CloneListener::__construct
      */
     protected function setUp()
     {
@@ -95,7 +95,7 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\EventListener\CloneListener::postDeepCloneAndSave
+     * @covers \Kunstmaan\PagePartBundle\EventListener\CloneListener::postDeepCloneAndSave
      */
     public function testClonePagePart()
     {
@@ -112,7 +112,7 @@ class CloneListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\EventListener\CloneListener::postDeepCloneAndSave
+     * @covers \Kunstmaan\PagePartBundle\EventListener\CloneListener::postDeepCloneAndSave
      */
     public function testClonePageTemplate()
     {

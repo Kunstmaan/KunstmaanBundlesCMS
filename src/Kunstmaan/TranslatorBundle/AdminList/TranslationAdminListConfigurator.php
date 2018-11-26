@@ -13,9 +13,8 @@ use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\StringFilterType;
  */
 class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConfigurator
 {
-
     /**
-     * @var array $locales
+     * @var array
      */
     protected $locales;
 
@@ -26,7 +25,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
 
     /**
      * @param Connection $connection
-     * @param array $locales
+     * @param array      $locales
      */
     public function __construct(Connection $connection, array $locales)
     {
@@ -152,7 +151,7 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                     }
                 } elseif ($filter->getType() instanceof StringFilterType && $filter->getColumnName() == 'text') {
                     // Override default text filter handling ...
-                    $data =  $filter->getData();
+                    $data = $filter->getData();
                     $textValue = $data['value'];
                     $textComparator = $data['comparator'];
                 } else {
@@ -197,26 +196,32 @@ class TranslationAdminListConfigurator extends AbstractDoctrineDBALAdminListConf
                         case 'equals':
                             $expr = $this->queryBuilder->expr()->eq('t_' . $locale . '.`text`', ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue);
+
                             break;
                         case 'notequals':
                             $expr = $this->queryBuilder->expr()->neq('t_' . $locale . '.`text`', ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue);
+
                             break;
                         case 'contains':
                             $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.`text`', ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue . '%');
+
                             break;
                         case 'doesnotcontain':
                             $expr = 't_' . $locale . '.`text`' . ' NOT LIKE :var_' . $uniqueId;
                             $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue . '%');
+
                             break;
                         case 'startswith':
                             $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.`text`', ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, $textValue . '%');
+
                             break;
                         case 'endswith':
                             $expr = $this->queryBuilder->expr()->like('t_' . $locale . '.`text`', ':var_' . $uniqueId);
                             $this->queryBuilder->setParameter('var_' . $uniqueId, '%' . $textValue);
+
                             break;
                     }
                     $orX->add($expr);

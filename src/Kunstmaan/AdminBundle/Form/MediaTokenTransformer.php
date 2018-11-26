@@ -72,7 +72,7 @@ class MediaTokenTransformer implements DataTransformerInterface
         // URL-decode square brackets in img and a tags
         $html = preg_replace_callback(
             '/<(img|a)\s+[^>]*>/',
-            function($matches) {
+            function ($matches) {
                 return str_replace(['%5B', '%5D'], ['[', ']'], $matches[0]);
             },
             $html

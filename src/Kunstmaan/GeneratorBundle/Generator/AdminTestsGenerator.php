@@ -36,8 +36,8 @@ class AdminTestsGenerator extends Generator
      */
     public function __construct(ContainerInterface $container, Filesystem $filesystem, $skeletonDir)
     {
-        $this->container       = $container;
-        $this->filesystem      = $filesystem;
+        $this->container = $container;
+        $this->filesystem = $filesystem;
         $this->fullSkeletonDir = GeneratorUtils::getFullSkeletonPath($skeletonDir);
     }
 
@@ -53,7 +53,7 @@ class AdminTestsGenerator extends Generator
 
         $parameters = array(
             'namespace' => $bundle->getNamespace(),
-            'bundle'    => $bundle
+            'bundle' => $bundle,
         );
 
         $this->generateBehatTests($bundle, $output, $parameters);
@@ -66,27 +66,26 @@ class AdminTestsGenerator extends Generator
      */
     public function generateBehatTests(Bundle $bundle, OutputInterface $output, array $parameters)
     {
-        $dirPath     = sprintf("%s/Features", $bundle->getPath());
-        $skeletonDir = sprintf("%s/Features", $this->fullSkeletonDir);
+        $dirPath = sprintf('%s/Features', $bundle->getPath());
+        $skeletonDir = sprintf('%s/Features', $this->fullSkeletonDir);
 
         // First copy all the content
         $this->filesystem->mirror($this->fullSkeletonDir, $bundle->getPath());
 
         // Now render the Context files to replace the namespace etc.
-        if ($handle = opendir($skeletonDir . "/Context")) {
-
+        if ($handle = opendir($skeletonDir . '/Context')) {
             while (false !== ($entry = readdir($handle))) {
                 // Check to make sure we skip hidden folders
                 // And we render the files ending in .php
-                if (substr($entry, 0, 1) != '.' && substr($entry, -strlen(".php")) === ".php") {
-                    $this->renderFile("/Features/Context/" . $entry, $dirPath . "/Context/" . $entry, $parameters);
+                if (substr($entry, 0, 1) != '.' && substr($entry, -strlen('.php')) === '.php') {
+                    $this->renderFile('/Features/Context/' . $entry, $dirPath . '/Context/' . $entry, $parameters);
                 }
             }
 
             closedir($handle);
         }
 
-        $featureContext = $dirPath . "/Context/FeatureContext.php";
+        $featureContext = $dirPath . '/Context/FeatureContext.php';
         if ($this->filesystem->exists($featureContext)) {
             $contents = file_get_contents($featureContext);
             $contents = str_replace(

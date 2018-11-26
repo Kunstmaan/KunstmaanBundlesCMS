@@ -28,9 +28,9 @@ class PagePartAdminController extends Controller
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
-        $pageId        = $request->get('pageid');
+        $pageId = $request->get('pageid');
         $pageClassName = $request->get('pageclassname');
-        $context       = $request->get('context');
+        $context = $request->get('context');
         $pagePartClass = $request->get('type');
 
         /** @var HasPagePartsInterface $page */
@@ -41,7 +41,7 @@ class PagePartAdminController extends Controller
         }
 
         $pagePartConfigurationReader = $this->container->get('kunstmaan_page_part.page_part_configuration_reader');
-        $pagePartAdminConfigurators  = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
+        $pagePartAdminConfigurators = $pagePartConfigurationReader->getPagePartAdminConfigurators($page);
 
         $pagePartAdminConfigurator = null;
         foreach ($pagePartAdminConfigurators as $ppac) {
@@ -56,7 +56,7 @@ class PagePartAdminController extends Controller
 
         $pagePartAdmin = new PagePartAdmin($pagePartAdminConfigurator, $em, $page, $context, $this->container);
         /** @var PagePartInterface $pagePart */
-        $pagePart      = new $pagePartClass();
+        $pagePart = new $pagePartClass();
 
         if (false === $pagePart instanceof PagePartInterface) {
             throw new \RuntimeException(sprintf(
@@ -70,23 +70,23 @@ class PagePartAdminController extends Controller
         $pagePartAdmin->adaptForm($formBuilder);
         $id = 'newpp_' . time();
 
-        $data                         = $formBuilder->getData();
+        $data = $formBuilder->getData();
         $data['pagepartadmin_' . $id] = $pagePart;
 
         $formBuilder->add('pagepartadmin_' . $id, $pagePart->getDefaultAdminType());
         $formBuilder->setData($data);
-        $form     = $formBuilder->getForm();
+        $form = $formBuilder->getForm();
         $formview = $form->createView();
         $extended = $this->getParameter('kunstmaan_page_part.extended');
 
         return [
-            'id'            => $id,
-            'form'          => $formview,
-            'pagepart'      => $pagePart,
+            'id' => $id,
+            'form' => $formview,
+            'pagepart' => $pagePart,
             'pagepartadmin' => $pagePartAdmin,
-            'page'          => $pagePartAdmin->getPage(),
-            'editmode'      => true,
-            'extended'      => $extended,
+            'page' => $pagePartAdmin->getPage(),
+            'editmode' => true,
+            'extended' => $extended,
         ];
     }
 }

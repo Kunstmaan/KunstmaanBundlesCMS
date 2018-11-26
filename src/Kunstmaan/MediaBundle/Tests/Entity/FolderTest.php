@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\MediaBundle\Tests\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +19,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::__construct
+     *
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::__construct
      */
     protected function setUp()
     {
@@ -26,9 +28,9 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getName
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setName
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::__toString
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getName
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setName
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::__toString
      */
     public function testGetSetName()
     {
@@ -38,8 +40,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getRel
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setRel
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getRel
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setRel
      */
     public function testGetSetRel()
     {
@@ -48,8 +50,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getCreatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setCreatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getCreatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setCreatedAt
      */
     public function testGetSetCreatedAt()
     {
@@ -59,8 +61,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getUpdatedAt
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setUpdatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getUpdatedAt
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setUpdatedAt
      */
     public function testGetSetUpdatedAt()
     {
@@ -70,8 +72,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getParent
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setParent
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getParent
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setParent
      */
     public function testGetParent()
     {
@@ -82,8 +84,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setDeleted
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::isDeleted
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setDeleted
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::isDeleted
      */
     public function testGetSetDeleted()
     {
@@ -94,8 +96,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getTranslatableLocale
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setTranslatableLocale
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getTranslatableLocale
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setTranslatableLocale
      */
     public function testGetSetTranslatableLocale()
     {
@@ -104,7 +106,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getParents
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getParents
      */
     public function testGetParents()
     {
@@ -124,7 +126,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::addChild
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::addChild
      */
     public function testAddChild()
     {
@@ -139,7 +141,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::addMedia
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::addMedia
      */
     public function testAddMedia()
     {
@@ -152,7 +154,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getMedia
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getMedia
      */
     public function testGetMedia()
     {
@@ -177,8 +179,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getChildren
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setChildren
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getChildren
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setChildren
      */
     public function testGetSetChildren()
     {
@@ -207,7 +209,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::hasActive
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::hasActive
      */
     public function testHasActive()
     {
@@ -233,8 +235,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getInternalName
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setInternalName
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getInternalName
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setInternalName
      */
     public function testGetSetInternalName()
     {
@@ -243,8 +245,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setLeft
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getLeft
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setLeft
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getLeft
      */
     public function testGetSetLeft()
     {
@@ -254,8 +256,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setRight
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getRight
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setRight
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getRight
      */
     public function testGetSetRight()
     {
@@ -265,8 +267,8 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::setLevel
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getLevel
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::setLevel
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getLevel
      */
     public function testGetSetLevel()
     {
@@ -276,7 +278,7 @@ class FolderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaBundle\Entity\Folder::getOptionLabel
+     * @covers \Kunstmaan\MediaBundle\Entity\Folder::getOptionLabel
      */
     public function testGetOptionLabel()
     {

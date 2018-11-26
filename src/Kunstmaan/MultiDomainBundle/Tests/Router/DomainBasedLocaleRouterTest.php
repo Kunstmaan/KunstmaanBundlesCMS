@@ -26,17 +26,17 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::generate
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getRequestLocale
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::isMultiDomainHost
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getReverseLocaleMap
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::generate
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getRequestLocale
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::isMultiDomainHost
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getReverseLocaleMap
      */
     public function testGenerate()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $container = $this->getContainer($request);
-        $object    = new DomainBasedLocaleRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $object = new DomainBasedLocaleRouter($container);
+        $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/en/some-uri', $url);
 
         $url = $object->generate('_slug', array('url' => 'some-uri', '_locale' => 'en_GB'), UrlGeneratorInterface::ABSOLUTE_PATH);
@@ -44,18 +44,18 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::generate
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getRequestLocale
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::isMultiDomainHost
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getReverseLocaleMap
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::generate
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getRequestLocale
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::isMultiDomainHost
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getReverseLocaleMap
      */
     public function testGenerateWithLocaleBasedOnCurrentRequest()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $request->setLocale('nl_BE');
         $container = $this->getContainer($request);
-        $object    = new DomainBasedLocaleRouter($container);
-        $url       = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_URL);
+        $object = new DomainBasedLocaleRouter($container);
+        $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_URL);
         $this->assertEquals('http://multilangdomain.tld/nl/some-uri', $url);
 
         $url = $object->generate('_slug', array('url' => 'some-uri'), UrlGeneratorInterface::ABSOLUTE_PATH);
@@ -63,37 +63,37 @@ class DomainBasedLocaleRouterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::match
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getNodeTranslation
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getLocaleMap
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::match
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getNodeTranslation
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::getLocaleMap
      */
     public function testMatchWithNodeTranslation()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $nodeTranslation = new NodeTranslation();
         $container = $this->getContainer($request, $nodeTranslation);
-        $object    = new DomainBasedLocaleRouter($container);
-        $result    = $object->match('/en/some-uri');
+        $object = new DomainBasedLocaleRouter($container);
+        $result = $object->match('/en/some-uri');
         $this->assertEquals('some-uri', $result['url']);
         $this->assertEquals('en_GB', $result['_locale']);
         $this->assertEquals($nodeTranslation, $result['_nodeTranslation']);
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::match
-     * @expectedException Symfony\Component\Routing\Exception\ResourceNotFoundException
+     * @covers \Kunstmaan\MultiDomainBundle\Router\DomainBasedLocaleRouter::match
+     * @expectedException \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
     public function testMatchWithoutNodeTranslation()
     {
-        $request   = $this->getRequest();
+        $request = $this->getRequest();
         $container = $this->getContainer($request);
-        $object    = new DomainBasedLocaleRouter($container);
+        $object = new DomainBasedLocaleRouter($container);
         $object->match('/en/some-uri');
     }
 
     private function getContainer($request, $nodeTranslation = null)
     {
-        $container    = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $serviceMap = array(
             array('request_stack', 1, $this->getRequestStack($request)),
             array('kunstmaan_admin.domain_configuration', 1, $this->getDomainConfiguration()),

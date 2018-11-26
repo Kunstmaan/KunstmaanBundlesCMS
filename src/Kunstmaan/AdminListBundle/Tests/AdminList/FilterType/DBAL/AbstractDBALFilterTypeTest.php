@@ -3,7 +3,6 @@
 namespace Kunstmaan\AdminListBundle\Tests\AdminList\FilterType\DBAL;
 
 use Doctrine\DBAL\Query\QueryBuilder;
-
 use Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType;
 
 /**
@@ -28,7 +27,7 @@ class AbstractDBALFilterTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType<extended>
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\AbstractDBALFilterType<extended>
      */
     public function testSetQueryBuilder()
     {

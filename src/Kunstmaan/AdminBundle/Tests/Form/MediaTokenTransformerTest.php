@@ -6,12 +6,9 @@ use Kunstmaan\AdminBundle\Form\MediaTokenTransformer;
 
 /**
  * Class MediaTokenTransformerTest
- *
- * @package Kunstmaan\AdminBundle\Tests\Form
  */
 class MediaTokenTransformerTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testTransformCopiesDataSrcToSrc()
     {
         $transformer = new MediaTokenTransformer();
@@ -44,5 +41,4 @@ class MediaTokenTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $transformer->reverseTransform($content));
     }
-
 }

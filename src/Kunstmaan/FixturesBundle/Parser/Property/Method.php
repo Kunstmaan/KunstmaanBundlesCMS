@@ -27,7 +27,9 @@ class Method implements PropertyParserInterface
      * @param $providers
      * @param array $references
      * @param array $additional
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function parse($value, $providers, $references = [], $additional = [])
@@ -43,7 +45,7 @@ class Method implements PropertyParserInterface
             }, $arguments);
 
             foreach ($providers as $provider) {
-                /**
+                /*
                  * Call method from provider with/without arguments
                  * 1: Arguments are passed through from fixture
                  * 2: Search if method needs arguments en find them through typehint and additional params
@@ -63,9 +65,11 @@ class Method implements PropertyParserInterface
                     }
 
                     $value = $this->processValue($pattern, $refl->invokeArgs($provider, $arguments), $value, $matches[0]);
+
                     break;
                 } elseif (is_callable([$provider, $method])) {
                     $value = $this->processValue($pattern, call_user_func_array(array($provider, $method), $arguments), $value, $matches[0]);
+
                     break;
                 }
             }
@@ -85,12 +89,12 @@ class Method implements PropertyParserInterface
         }
 
         return str_replace($pattern, $result, $value);
-
     }
 
     /**
      * @param $parameters
      * @param $additional
+     *
      * @return array
      */
     private function findArguments($parameters, $additional)
@@ -104,6 +108,7 @@ class Method implements PropertyParserInterface
             $argument = $this->typeHintChecker($parameter, $additional);
             if ($argument !== null) {
                 $arguments[] = $argument;
+
                 continue;
             }
 
@@ -119,6 +124,7 @@ class Method implements PropertyParserInterface
     /**
      * @param \ReflectionParameter $parameter
      * @param $parameters
+     *
      * @return null|object
      */
     private function typeHintChecker(\ReflectionParameter $parameter, $parameters)
@@ -142,6 +148,7 @@ class Method implements PropertyParserInterface
     /**
      * @param \ReflectionParameter $parameter
      * @param $parameters
+     *
      * @return null|mixed
      */
     private function getArgumentByName(\ReflectionParameter $parameter, $parameters)

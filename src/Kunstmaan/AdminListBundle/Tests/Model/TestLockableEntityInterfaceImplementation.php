@@ -9,17 +9,17 @@ use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;
  */
 class TestLockableEntityInterfaceImplementation implements LockableEntityInterface
 {
-   protected $id;
+    protected $id;
 
-   public function __construct($id)
-   {
-       $this->setId($id);
-   }
+    public function __construct($id)
+    {
+        $this->setId($id);
+    }
 
     public function setId($id)
-   {
-       $this->id = $id;
-   }
+    {
+        $this->id = $id;
+    }
 
     public function getId()
     {

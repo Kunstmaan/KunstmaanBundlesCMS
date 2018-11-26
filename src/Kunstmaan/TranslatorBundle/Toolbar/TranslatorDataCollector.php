@@ -48,10 +48,10 @@ class TranslatorDataCollector extends AbstractDataCollector
 
         $options = [
             'filter_columnname' => [
-                'keyword'
+                'keyword',
             ],
             'filter_uniquefilterid' => [
-                1
+                1,
             ],
             'filter_comparator_1' => 'equals',
             'filter' => 'filter',
@@ -64,14 +64,14 @@ class TranslatorDataCollector extends AbstractDataCollector
                 $options['filter_value_1'] = $message['id'];
                 $translations[] = [
                     'id' => $message['id'],
-                    'route' => $this->urlGenerator->generate('KunstmaanTranslatorBundle_settings_translations', $options)
+                    'route' => $this->urlGenerator->generate('KunstmaanTranslatorBundle_settings_translations', $options),
                 ];
             }
         }
 
         $data = [
             'route' => $route,
-            'translations' => $translations
+            'translations' => $translations,
         ];
 
         return ['data' => $data];
@@ -86,8 +86,7 @@ class TranslatorDataCollector extends AbstractDataCollector
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {
             $this->data = false;
-        }
-        else {
+        } else {
             $this->data = $this->collectData();
         }
     }
@@ -117,5 +116,4 @@ class TranslatorDataCollector extends AbstractDataCollector
     {
         return true;
     }
-
 }

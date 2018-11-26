@@ -73,7 +73,7 @@ class ChoicePagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:ChoicePagePart:view.html.twig";
+        return 'KunstmaanFormBundle:ChoicePagePart:view.html.twig';
     }
 
     /**
@@ -89,7 +89,7 @@ class ChoicePagePart extends AbstractFormPagePart
         $choices = array_map('trim', $choices);
 
         $cfsf = new ChoiceFormSubmissionField();
-        $cfsf->setFieldName("field_" . $this->getUniqueId());
+        $cfsf->setFieldName('field_' . $this->getUniqueId());
         $cfsf->setLabel($this->getLabel());
         $cfsf->setChoices($choices);
         $cfsf->setRequired($this->required);
@@ -110,11 +110,11 @@ class ChoicePagePart extends AbstractFormPagePart
             'formwidget_' . $this->getUniqueId(),
             ChoiceFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
-                'required'    => $this->getRequired(),
-                'expanded'    => $this->getExpanded(),
-                'multiple'    => $this->getMultiple(),
-                'choices'     => $choices,
+                'label' => $this->getLabel(),
+                'required' => $this->getRequired(),
+                'expanded' => $this->getExpanded(),
+                'multiple' => $this->getMultiple(),
+                'choices' => $choices,
                 'placeholder' => $this->getEmptyValue(),
                 'constraints' => $constraints,
             )
@@ -175,7 +175,7 @@ class ChoicePagePart extends AbstractFormPagePart
     /**
      * Get the current multiple value
      *
-     * @return boolean
+     * @return bool
      */
     public function getMultiple()
     {

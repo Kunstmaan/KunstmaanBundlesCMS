@@ -33,8 +33,8 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setNodeTranslation
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getNodeTranslation
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setNodeTranslation
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getNodeTranslation
      */
     public function testSetGetNodeTranslation()
     {
@@ -44,8 +44,8 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getType
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setType
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getType
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setType
      */
     public function testSetGetType()
     {
@@ -54,8 +54,8 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setOwner
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getOwner
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setOwner
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getOwner
      */
     public function testSetGetOwner()
     {
@@ -64,8 +64,8 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setCreated
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getCreated
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setCreated
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getCreated
      */
     public function testSetGetCreated()
     {
@@ -75,8 +75,8 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setUpdated
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getUpdated
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setUpdated
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getUpdated
      */
     public function testSetGetUpdated()
     {
@@ -85,13 +85,12 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($updated, $this->object->getUpdated());
     }
 
-
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setRef
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getRefId
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getRefEntityName
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setRefId
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::setRefEntityName
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setRef
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getRefId
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getRefEntityName
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setRefId
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::setRefEntityName
      */
     public function testGetSetRef()
     {
@@ -102,11 +101,10 @@ class NodeVersionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\NodeVersion::getDefaultAdminType
+     * @covers \Kunstmaan\NodeBundle\Entity\NodeVersion::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
         $this->assertNull($this->object->getDefaultAdminType());
     }
-
 }

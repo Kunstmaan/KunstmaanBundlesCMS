@@ -1,6 +1,6 @@
 <?php
-namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
+namespace Kunstmaan\DashboardBundle\Command\Helper\Analytics;
 
 use Kunstmaan\DashboardBundle\Entity\AnalyticsOverview;
 
@@ -37,7 +37,6 @@ class MetricsCommandHelper extends AbstractAnalyticsCommandHelper
 
         // avg visit duration metric
         $avgVisitDuration = is_numeric($rows[0][4]) ? $rows[0][4] : 0;
-        $overview->setAvgSessionDuration(gmdate("H:i:s", $avgVisitDuration));
+        $overview->setAvgSessionDuration(gmdate('H:i:s', $avgVisitDuration));
     }
-
 }

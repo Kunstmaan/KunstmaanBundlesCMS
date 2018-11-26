@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class ConfigMenuAdaptor implements MenuAdaptorInterface
 {
     /**
-     * @var array $configuration
+     * @var array
      */
     private $configuration;
 
@@ -21,7 +21,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
     private $authorizationChecker;
 
     /**
-     * @param array $configuration
+     * @param array                         $configuration
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct($configuration, AuthorizationCheckerInterface $authorizationChecker)
@@ -33,17 +33,17 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
     /**
      * In this method you can add children for a specific parent, but also remove and change the already created children
      *
-     * @param MenuBuilder $menu The MenuBuilder
-     * @param MenuItem[] &$children The current children
-     * @param MenuItem $parent The parent Menu item
-     * @param Request $request The Request
+     * @param MenuBuilder $menu      The MenuBuilder
+     * @param MenuItem[]  &$children The current children
+     * @param MenuItem    $parent    The parent Menu item
+     * @param Request     $request   The Request
      */
     public function adaptChildren(MenuBuilder $menu, array &$children, MenuItem $parent = null, Request $request = null)
     {
         if (!is_null($parent) && 'KunstmaanAdminBundle_settings' == $parent->getRoute()) {
             // Load all the kunstmaan_config entities and create a menu item for them.
             foreach ($this->configuration['entities'] as $class) {
-                $entity = new $class;
+                $entity = new $class();
 
                 $hasAccess = false;
                 foreach ($entity->getRoles() as $role) {
@@ -61,7 +61,7 @@ class ConfigMenuAdaptor implements MenuAdaptorInterface
                       ->setUniqueId($entity->getInternalName())
                       ->setParent($parent);
 
-					if ($request->attributes->get('_route') === $menuItem->getRoute() && $request->attributes->get('internalName') === $entity->getInternalName()) {
+                    if ($request->attributes->get('_route') === $menuItem->getRoute() && $request->attributes->get('internalName') === $entity->getInternalName()) {
                         $menuItem->setActive(true);
                         $parent->setActive(true);
                     }

@@ -72,8 +72,7 @@ class NodeDataCollector extends AbstractDataCollector
     {
         if (!$this->showDataCollection($request, $response) || !$this->isEnabled()) {
             $this->data = false;
-        }
-        else {
+        } else {
             $this->data = $this->collectData();
         }
     }

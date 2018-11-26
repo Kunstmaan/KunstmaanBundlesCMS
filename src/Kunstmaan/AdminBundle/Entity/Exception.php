@@ -165,7 +165,7 @@ class Exception extends AbstractEntity
 
     public function increaseEvents()
     {
-        $this->events++;
+        ++$this->events;
     }
 
     /**

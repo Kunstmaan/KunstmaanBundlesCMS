@@ -57,5 +57,4 @@ class TestListener implements \PHPUnit_Framework_TestListener
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
     }
-
 }

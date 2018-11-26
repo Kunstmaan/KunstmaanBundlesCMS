@@ -63,9 +63,9 @@ class FileUploadPagePart extends AbstractFormPagePart
             'formwidget_' . $this->getUniqueId(),
             FileFormSubmissionType::class,
             array(
-                'label'       => $this->getLabel(),
+                'label' => $this->getLabel(),
                 'constraints' => $constraints,
-                'required'    => $this->getRequired()
+                'required' => $this->getRequired(),
             )
         );
         $formBuilder->setData($data);
@@ -128,7 +128,7 @@ class FileUploadPagePart extends AbstractFormPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:FileUploadPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:FileUploadPagePart:view.html.twig';
     }
 
     /**

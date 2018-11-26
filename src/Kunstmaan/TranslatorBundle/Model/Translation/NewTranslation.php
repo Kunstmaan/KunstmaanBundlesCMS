@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Model\Translation;
 
 /**
@@ -8,18 +9,21 @@ class NewTranslation
 {
     /**
      * An array with all translations, key = locale, value = translation
+     *
      * @var array
      */
     protected $locales = array();
 
     /**
      * Keyword of the new translations
+     *
      * @var string
      */
     protected $keyword;
 
     /**
      * Domain name of the new translations
+     *
      * @var string
      */
     protected $domain;
@@ -53,5 +57,4 @@ class NewTranslation
     {
         $this->domain = $domain;
     }
-
 }

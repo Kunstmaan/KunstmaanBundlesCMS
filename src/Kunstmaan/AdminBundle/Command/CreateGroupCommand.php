@@ -7,9 +7,7 @@ use Kunstmaan\AdminBundle\Entity\Group;
 use Kunstmaan\AdminBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
-
 use Symfony\Component\Console\Input\InputInterface;
-
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -31,7 +29,7 @@ class CreateGroupCommand extends ContainerAwareCommand
                 new InputArgument('group', InputArgument::REQUIRED, 'The group'),
                 new InputOption('role', null, InputOption::VALUE_OPTIONAL, 'Role(s) (comma separated list if you want to specifiy multiple roles)'),
             ))
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>kuma:group:create</info> command creates a group:
 
   <info>php bin/console kuma:group:create Administrators</info>

@@ -21,7 +21,7 @@ class SubmitButtonPagePartAdminType extends AbstractType
         $builder
             ->add('label', TextType::class, array(
                 'required' => true,
-                'label' => 'kuma_form.form.submit_button_page_part.label.label'
+                'label' => 'kuma_form.form.submit_button_page_part.label.label',
             ));
     }
 

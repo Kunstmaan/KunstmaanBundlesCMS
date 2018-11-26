@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * The controller which will handle everything related with form pages and form submissions
  */
@@ -34,7 +33,7 @@ class FormSubmissionsController extends Controller
     public function indexAction(Request $request)
     {
         /* @var EntityManager $em */
-        $em        = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $aclHelper = $this->container->get('kunstmaan_admin.acl.helper');
 
         /* @var AdminList $adminList */
@@ -61,7 +60,7 @@ class FormSubmissionsController extends Controller
      */
     public function listAction(Request $request, $nodeTranslationId)
     {
-        $em              = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
 
         /** @var AdminList $adminList */
@@ -89,13 +88,13 @@ class FormSubmissionsController extends Controller
      */
     public function editAction($nodeTranslationId, $submissionId)
     {
-        $em                   = $this->getDoctrine()->getManager();
-        $nodeTranslation      = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $formSubmission       = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
+        $em = $this->getDoctrine()->getManager();
+        $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
+        $formSubmission = $em->getRepository('KunstmaanFormBundle:FormSubmission')->find($submissionId);
 
         return array(
             'nodetranslation' => $nodeTranslation,
-            'formsubmission' => $formSubmission
+            'formsubmission' => $formSubmission,
         );
     }
 
@@ -115,11 +114,11 @@ class FormSubmissionsController extends Controller
         $em = $this->getDoctrine()->getManager();
         /** @var NodeTranslation $nodeTranslation */
         $nodeTranslation = $em->getRepository('KunstmaanNodeBundle:NodeTranslation')->find($nodeTranslationId);
-        $translator      = $this->get('translator');
+        $translator = $this->get('translator');
 
         /** @var ExportList $exportList */
         $configurator = new FormSubmissionExportListConfigurator($em, $nodeTranslation, $translator);
-        $exportList   = $this->get('kunstmaan_adminlist.factory')->createExportList($configurator);
+        $exportList = $this->get('kunstmaan_adminlist.factory')->createExportList($configurator);
 
         return $this->get('kunstmaan_adminlist.service.export')->getDownloadableResponse($exportList, $_format);
     }

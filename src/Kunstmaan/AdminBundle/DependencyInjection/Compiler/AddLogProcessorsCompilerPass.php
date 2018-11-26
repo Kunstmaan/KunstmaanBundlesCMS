@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class AddLogProcessorsCompilerPass implements CompilerPassInterface
 {
-
     /**
      * @param ContainerBuilder $container
      */
@@ -35,5 +34,4 @@ class AddLogProcessorsCompilerPass implements CompilerPassInterface
             }
         }
     }
-
 }

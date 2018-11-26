@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart;
-
 use Kunstmaan\MediaPagePartBundle\Form\SlidePagePartAdminType;
 
 /**
@@ -23,12 +22,12 @@ class SlidePagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new SlidePagePart;
+        $this->object = new SlidePagePart();
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::setMedia
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::setMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getMedia
      */
     public function testSetGetMedia()
     {
@@ -39,16 +38,16 @@ class SlidePagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getDefaultView
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:SlidePagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:SlidePagePart:view.html.twig', $defaultView);
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getDefaultAdminType
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\SlidePagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

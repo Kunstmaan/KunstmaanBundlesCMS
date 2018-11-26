@@ -4,7 +4,6 @@ namespace Kunstmaan\UtilitiesBundle\Twig;
 
 use Kunstmaan\UtilitiesBundle\Helper\SlugifierInterface;
 
-
 class UtilitiesTwigExtension extends \Twig_Extension
 {
     /**

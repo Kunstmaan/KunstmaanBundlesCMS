@@ -19,7 +19,7 @@ use Twig_Extension;
 class NodeTwigExtension extends Twig_Extension
 {
     /**
-     * @var EntityManagerInterface $em
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -49,8 +49,7 @@ class NodeTwigExtension extends Twig_Extension
         UrlGeneratorInterface $generator,
         NodeMenu $nodeMenu,
         RequestStack $requestStack
-    )
-    {
+    ) {
         $this->em = $em;
         $this->generator = $generator;
         $this->nodeMenu = $nodeMenu;
@@ -116,6 +115,7 @@ class NodeTwigExtension extends Twig_Extension
      *
      * @param int    $nodeId
      * @param string $lang
+     *
      * @return NodeTranslation
      */
     public function getNodeTranslationByNodeId($nodeId, $lang)
@@ -173,10 +173,10 @@ class NodeTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param string  $internalName Internal name of the node
-     * @param string  $locale       Locale
-     * @param array   $parameters   (optional) extra parameters
-     * @param boolean $relative     (optional) return relative path?
+     * @param string $internalName Internal name of the node
+     * @param string $locale       Locale
+     * @param array  $parameters   (optional) extra parameters
+     * @param bool   $relative     (optional) return relative path?
      *
      * @return string
      */
@@ -192,10 +192,10 @@ class NodeTwigExtension extends Twig_Extension
     }
 
     /**
-     * @param string  $internalName   Internal name of the node
-     * @param string  $locale         Locale
-     * @param array   $parameters     (optional) extra parameters
-     * @param boolean $schemeRelative (optional) return relative scheme?
+     * @param string $internalName   Internal name of the node
+     * @param string $locale         Locale
+     * @param array  $parameters     (optional) extra parameters
+     * @param bool   $schemeRelative (optional) return relative scheme?
      *
      * @return string
      */
@@ -259,19 +259,18 @@ class NodeTwigExtension extends Twig_Extension
         return array_merge(
             array(
                 'url' => $url,
-                '_locale' => $locale
+                '_locale' => $locale,
             ),
             $parameters
         );
     }
 
-    public function getOverviewRoute($node){
-        if($node instanceof OverviewNavigationInterface){
+    public function getOverviewRoute($node)
+    {
+        if ($node instanceof OverviewNavigationInterface) {
             return $node->getOverViewRoute();
         }
 
         return null;
     }
-
-
 }

@@ -7,5 +7,4 @@ namespace Kunstmaan\UtilitiesBundle\Tests\Helper;
  */
 class DummyClass
 {
-
 }

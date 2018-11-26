@@ -6,7 +6,6 @@ use Kunstmaan\PagePartBundle\Helper\HasPageTemplateInterface;
 
 class PageTemplateConfigurationReader implements PageTemplateConfigurationReaderInterface
 {
-
     /**
      * @var PageTemplateConfigurationParserInterface
      */
@@ -20,11 +19,11 @@ class PageTemplateConfigurationReader implements PageTemplateConfigurationReader
         $this->parser = $parser;
     }
 
-
     /**
      * @param HasPageTemplateInterface $page
      *
      * @throws \Exception
+     *
      * @return PageTemplateInterface[]
      */
     public function getPageTemplates(HasPageTemplateInterface $page)

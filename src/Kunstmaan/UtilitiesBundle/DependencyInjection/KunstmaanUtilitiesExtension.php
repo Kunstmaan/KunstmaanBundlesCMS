@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class KunstmaanUtilitiesExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -24,7 +24,7 @@ class KunstmaanUtilitiesExtension extends Extension
 
         if (isset($config['cipher'], $config['cipher']['secret'])) {
             $container->setParameter('kunstmaan_utilities.cipher.secret', $config['cipher']['secret']);
-        } else if (!$container->hasParameter('kunstmaan_utilities.cipher.secret')) {
+        } elseif (!$container->hasParameter('kunstmaan_utilities.cipher.secret')) {
             $container->setParameter('kunstmaan_utilities.cipher.secret', $container->getParameter('secret'));
         }
 

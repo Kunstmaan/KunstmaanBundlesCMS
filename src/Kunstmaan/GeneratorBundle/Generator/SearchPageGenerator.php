@@ -3,7 +3,6 @@
 namespace Kunstmaan\GeneratorBundle\Generator;
 
 use Kunstmaan\GeneratorBundle\Helper\GeneratorUtils;
-
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Generator
 {
-
     /**
      * @var Filesystem
      */
@@ -31,7 +29,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
      */
     public function __construct(Filesystem $filesystem, $skeletonDir)
     {
-        $this->filesystem  = $filesystem;
+        $this->filesystem = $filesystem;
         $this->skeletonDir = $skeletonDir;
     }
 
@@ -51,8 +49,8 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
     ) {
         $parameters = array(
             'namespace' => $bundle->getNamespace(),
-            'bundle'    => $bundle,
-            'prefix'    => GeneratorUtils::cleanPrefix($prefix)
+            'bundle' => $bundle,
+            'prefix' => GeneratorUtils::cleanPrefix($prefix),
         );
 
         $this->generateEntities($bundle, $parameters, $output);
@@ -74,7 +72,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         $rootDir,
         OutputInterface $output
     ) {
-        $dirPath         = $bundle->getPath();
+        $dirPath = $bundle->getPath();
         $fullSkeletonDir = $this->skeletonDir . '/Resources/views';
 
         $this->filesystem->copy(
@@ -103,7 +101,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         array $parameters,
         OutputInterface $output
     ) {
-        $dirPath         = sprintf(
+        $dirPath = sprintf(
             '%s/Entity/Pages/',
             $bundle->getPath()
         );
@@ -138,7 +136,7 @@ class SearchPageGenerator extends \Sensio\Bundle\GeneratorBundle\Generator\Gener
         array $parameters,
         OutputInterface $output
     ) {
-        $dirPath     = $bundle->getPath() . '/DataFixtures/ORM/SearchPageGenerator/';
+        $dirPath = $bundle->getPath() . '/DataFixtures/ORM/SearchPageGenerator/';
         $skeletonDir = $this->skeletonDir . '/DataFixtures/ORM/SearchPageGenerator/';
 
         try {

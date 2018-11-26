@@ -42,8 +42,8 @@ class LayoutGenerator extends KunstmaanGenerator
      */
     public function generate(BundleInterface $bundle, $rootDir, $demosite, $browserSyncUrl)
     {
-        $this->bundle   = $bundle;
-        $this->rootDir  = $rootDir;
+        $this->bundle = $bundle;
+        $this->rootDir = $rootDir;
         $this->demosite = $demosite;
         $this->browserSyncUrl = $browserSyncUrl;
 
@@ -141,26 +141,21 @@ class LayoutGenerator extends KunstmaanGenerator
         );
 
         if (!$this->demosite) {
-
             // Files
             $this->removeDirectory($targetDir . $relPath . '/files/');
-
 
             // Images
             $this->removeDirectory($targetDir . $relPath . '/fonts/');
 
-
             // JS
             $this->removeFile($targetDir . $relPath . '/js/search.js');
             $this->removeFile($targetDir . $relPath . '/js/demoMsg.js');
-
 
             // Images
             $this->removeDirectory($targetDir . $relPath . '/img/demosite/');
             $this->removeDirectory($targetDir . $relPath . '/img/buttons/');
             $this->removeDirectory($targetDir . $relPath . '/img/dummy/');
             $this->removeDirectory($targetDir . $relPath . '/img/backgrounds/');
-
 
             // SCSS
             // SCSS - Blocks

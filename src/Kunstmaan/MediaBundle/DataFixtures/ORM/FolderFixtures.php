@@ -13,7 +13,6 @@ use Kunstmaan\MediaBundle\Entity\Folder;
  */
 class FolderFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
-
     /**
      * Load data fixtures with the passed EntityManager
      *

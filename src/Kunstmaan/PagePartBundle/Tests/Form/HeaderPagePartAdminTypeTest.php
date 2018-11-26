@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
 
 use Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType;
@@ -32,7 +33,7 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::buildForm
+     * @covers \Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::buildForm
      */
     public function testBuildForm()
     {
@@ -42,12 +43,12 @@ class HeaderPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::configureOptions
+     * @covers \Kunstmaan\PagePartBundle\Form\HeaderPagePartAdminType::configureOptions
      */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\HeaderPagePart');
     }
 }

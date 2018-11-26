@@ -6,9 +6,9 @@ use Doctrine\ORM\EntityManager;
 
 class MigrationsService
 {
-
     /**
      * Repository for Translations
+     *
      * @var \Kunstmaan\TranslatorBundle\Repository\TranslationRepository
      */
     private $translationRepository;
@@ -24,11 +24,11 @@ class MigrationsService
         $inserts = $this->getNewTranslationSql();
         $updates = $this->getUpdatedTranslationSqlArray();
 
-        if($inserts != '' && !is_null($inserts)) {
+        if ($inserts != '' && !is_null($inserts)) {
             $sql[] = $inserts;
         }
 
-        if(count($updates) > 0 && is_array($updates)) {
+        if (count($updates) > 0 && is_array($updates)) {
             $sql = array_merge($sql, $updates);
         }
 
@@ -46,7 +46,7 @@ class MigrationsService
             return array();
         }
 
-        $fieldNames =  $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getFieldNames();
+        $fieldNames = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getFieldNames();
         $tableName = $this->entityManager->getClassMetadata('\Kunstmaan\TranslatorBundle\Entity\Translation')->getTableName();
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
 
@@ -55,7 +55,6 @@ class MigrationsService
         $sql = array();
 
         foreach ($translations as $translation) {
-
             $updateValues = array();
             $whereValues = array();
 
@@ -79,20 +78,20 @@ class MigrationsService
                 $whereValues[] = $this->entityManager->getConnection()->quoteIdentifier($uniqueKey) . ' = ' . $this->entityManager->getConnection()->quote($value);
             }
 
-            $sql[] = sprintf('UPDATE %s SET %s WHERE %s', $tableName, implode(",", $updateValues), implode(' AND ', $whereValues));
-
+            $sql[] = sprintf('UPDATE %s SET %s WHERE %s', $tableName, implode(',', $updateValues), implode(' AND ', $whereValues));
         }
 
         return $sql;
-
     }
 
     /**
      * Build an sql insert into query by the paramters provided
-     * @param  ORM\Entity $entities        Result array with all entities to create an insert for
-     * @param  string     $entityClassName Class of the specified entity (same as entities)
-     * @param  array      $ignoreFields    fields not to use in the insert query
-     * @return string     an insert sql query, of no result nul
+     *
+     * @param ORM\Entity $entities        Result array with all entities to create an insert for
+     * @param string     $entityClassName Class of the specified entity (same as entities)
+     * @param array      $ignoreFields    fields not to use in the insert query
+     *
+     * @return string an insert sql query, of no result nul
      */
     public function buildInsertSql($entities, $entityClassName, $ignoreFields = array())
     {
@@ -106,12 +105,9 @@ class MigrationsService
         $tableName = $this->entityManager->getConnection()->quoteIdentifier($tableName);
         $fieldNames = array_diff($fieldNames, $ignoreFields);
 
-
         $values = array();
 
-
         foreach ($entities as $entity) {
-
             $insertValues = array();
 
             foreach ($fieldNames as $fieldName) {
@@ -132,13 +128,14 @@ class MigrationsService
             $fieldNames[$key] = $this->entityManager->getConnection()->quoteIdentifier($columnName);
         }
 
-        $sql = sprintf('INSERT INTO %s (%s) VALUES %s', $tableName, implode(",", $fieldNames), implode(', ', $values));
+        $sql = sprintf('INSERT INTO %s (%s) VALUES %s', $tableName, implode(',', $fieldNames), implode(', ', $values));
 
         return $sql;
     }
 
     /**
      * Get the sql query for all new translations added
+     *
      * @return string sql query
      */
     public function getNewTranslationSql()

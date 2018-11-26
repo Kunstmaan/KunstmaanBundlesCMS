@@ -14,7 +14,6 @@ use Kunstmaan\PagePartBundle\Entity\AbstractPagePart;
  */
 class SubmitButtonPagePart extends AbstractPagePart
 {
-
     /**
      * The label on the submit button
      *
@@ -53,7 +52,7 @@ class SubmitButtonPagePart extends AbstractPagePart
      */
     public function __toString()
     {
-        return "SubmitButtonPagePart";
+        return 'SubmitButtonPagePart';
     }
 
     /**
@@ -63,7 +62,7 @@ class SubmitButtonPagePart extends AbstractPagePart
      */
     public function getDefaultView()
     {
-        return "KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig";
+        return 'KunstmaanFormBundle:SubmitButtonPagePart:view.html.twig';
     }
 
     /**
@@ -73,7 +72,7 @@ class SubmitButtonPagePart extends AbstractPagePart
      */
     public function getAdminView()
     {
-        return "KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig";
+        return 'KunstmaanFormBundle:SubmitButtonPagePart:view-admin.html.twig';
     }
 
     /**
@@ -85,5 +84,4 @@ class SubmitButtonPagePart extends AbstractPagePart
     {
         return SubmitButtonPagePartAdminType::class;
     }
-
 }

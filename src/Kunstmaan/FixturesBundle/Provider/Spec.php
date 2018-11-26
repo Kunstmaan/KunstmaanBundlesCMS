@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\FixturesBundle\Provider;
 
-
 use Kunstmaan\FixturesBundle\Loader\Fixture;
 
 class Spec

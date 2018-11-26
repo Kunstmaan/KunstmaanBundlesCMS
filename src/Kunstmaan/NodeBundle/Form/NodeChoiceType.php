@@ -61,7 +61,6 @@ class NodeChoiceType extends AbstractType
 
         $resolver->setNormalizer('query_builder', $queryBuilderNormalizer);
         $resolver->setAllowedTypes('query_builder', array('null', 'callable', 'Doctrine\ORM\QueryBuilder'));
-
     }
 
     public function getParent()

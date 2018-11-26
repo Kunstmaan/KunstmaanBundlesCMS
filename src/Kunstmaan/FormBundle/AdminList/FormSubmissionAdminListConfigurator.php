@@ -15,7 +15,6 @@ use Kunstmaan\NodeBundle\Entity\NodeTranslation;
  */
 class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListConfigurator
 {
-
     /**
      * @var NodeTranslation
      */
@@ -37,9 +36,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     public function buildFilters()
     {
         $builder = $this->getFilterBuilder();
-        $builder->add('created', new DateFilterType("created"), "Date")
-                ->add('lang', new StringFilterType("lang"), "Language")
-                ->add('ipAddress', new StringFilterType("ipAddress"), "IP Address");
+        $builder->add('created', new DateFilterType('created'), 'Date')
+                ->add('lang', new StringFilterType('lang'), 'Language')
+                ->add('ipAddress', new StringFilterType('ipAddress'), 'IP Address');
     }
 
     /**
@@ -47,9 +46,9 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function buildFields()
     {
-        $this->addField("created", "kuma_form.submission.list.header.created", true)
-             ->addField("lang", "kuma_form.submission.list.header.language", true)
-             ->addField("ipAddress", "kuma_form.submission.list.header.ip_address", true);
+        $this->addField('created', 'kuma_form.submission.list.header.created', true)
+             ->addField('lang', 'kuma_form.submission.list.header.language', true)
+             ->addField('ipAddress', 'kuma_form.submission.list.header.ip_address', true);
     }
 
     /**
@@ -58,11 +57,12 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     public function buildItemActions()
     {
         $nodeTranslation = $this->nodeTranslation;
-        $create_route = function (EntityInterface $item) use ($nodeTranslation)  {
-            $arr = array("path" => "KunstmaanFormBundle_formsubmissions_list_edit", "params" => array("nodeTranslationId" => $nodeTranslation->getId(), "submissionId" => $item->getId()));
+        $create_route = function (EntityInterface $item) use ($nodeTranslation) {
+            $arr = array('path' => 'KunstmaanFormBundle_formsubmissions_list_edit', 'params' => array('nodeTranslationId' => $nodeTranslation->getId(), 'submissionId' => $item->getId()));
+
             return $arr;
         };
-        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, "eye", "View");
+        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction($create_route, 'eye', 'View');
         $this->addItemAction($ia);
     }
 
@@ -82,7 +82,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     {
         return array(
             'path' => 'KunstmaanFormBundle_formsubmissions_list_edit',
-            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId())
+            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId(), 'submissionId' => $item->getId()),
         );
     }
 
@@ -95,7 +95,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     {
         return array(
             'path' => 'KunstmaanFormBundle_formsubmissions_list',
-            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId())
+            'params' => array('nodeTranslationId' => $this->nodeTranslation->getId()),
         );
     }
 
@@ -118,7 +118,7 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
      */
     public function getAddUrlFor(array $params = array())
     {
-        return "";
+        return '';
     }
 
     /**
@@ -132,7 +132,6 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
     {
         return false;
     }
-
 
     /**
      * Configure if it's possible to export the listed items
@@ -199,5 +198,4 @@ class FormSubmissionAdminListConfigurator extends AbstractDoctrineORMAdminListCo
                 ->setParameter('lang', $this->nodeTranslation->getLang())
                 ->addOrderBy('b.created', 'DESC');
     }
-
 }

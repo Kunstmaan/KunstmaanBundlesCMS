@@ -26,7 +26,7 @@ class ClassLookupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\UtilitiesBundle\Helper\ClassLookup::getClass
+     * @covers \Kunstmaan\UtilitiesBundle\Helper\ClassLookup::getClass
      */
     public function testGetClass()
     {
@@ -35,12 +35,11 @@ class ClassLookupTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\UtilitiesBundle\Helper\ClassLookup::getClassName
+     * @covers \Kunstmaan\UtilitiesBundle\Helper\ClassLookup::getClassName
      */
     public function testGetClassName()
     {
         $class = ClassLookup::getClassName(new DummyClass());
         $this->assertEquals('DummyClass', $class);
     }
-
 }

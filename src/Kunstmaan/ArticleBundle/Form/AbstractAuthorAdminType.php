@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AbstractAuthorAdminType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
@@ -21,7 +20,6 @@ class AbstractAuthorAdminType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return "abstactauthor_form";
+        return 'abstactauthor_form';
     }
-
 }

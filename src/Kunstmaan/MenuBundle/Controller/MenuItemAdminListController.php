@@ -23,8 +23,9 @@ class MenuItemAdminListController extends AdminListController
 
     /**
      * @param Request $request
-     * @param int $menuid
-     * @param int $entityId
+     * @param int     $menuid
+     * @param int     $entityId
+     *
      * @return AbstractAdminListConfigurator
      */
     public function getAdminListConfigurator(Request $request, $menuid, $entityId = null)
@@ -49,8 +50,10 @@ class MenuItemAdminListController extends AdminListController
 
     /**
      * The index action
+     *
      * @param Request $request
-     * @param int $menuid
+     * @param int     $menuid
+     *
      * @return Response
      *
      * @Route("/{menuid}/items", name="kunstmaanmenubundle_admin_menuitem")
@@ -100,6 +103,7 @@ class MenuItemAdminListController extends AdminListController
      *
      * @Route("/{menuid}/items/add", name="kunstmaanmenubundle_admin_menuitem_add")
      * @Method({"GET", "POST"})
+     *
      * @return array
      */
     public function addAction(Request $request, $menuid)
@@ -142,6 +146,7 @@ class MenuItemAdminListController extends AdminListController
      *
      * @Route("{menuid}/items/{item}/move-up", name="kunstmaanmenubundle_admin_menuitem_move_up")
      * @Method({"GET"})
+     *
      * @return RedirectResponse
      */
     public function moveUpAction(Request $request, $menuid, $item)
@@ -164,6 +169,7 @@ class MenuItemAdminListController extends AdminListController
      *
      * @Route("{menuid}/items/{item}/move-down", name="kunstmaanmenubundle_admin_menuitem_move_down")
      * @Method({"GET"})
+     *
      * @return RedirectResponse
      */
     public function moveDownAction(Request $request, $menuid, $item)

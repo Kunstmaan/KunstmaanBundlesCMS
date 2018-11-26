@@ -16,5 +16,4 @@ class TestEntity extends AbstractEntity
     {
         $this->setId($id);
     }
-
 }

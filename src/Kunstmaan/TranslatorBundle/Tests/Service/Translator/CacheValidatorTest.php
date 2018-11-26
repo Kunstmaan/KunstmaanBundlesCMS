@@ -1,13 +1,15 @@
 <?php
+
 namespace Kunstmaan\TranslatorBundle\Tests\Service\Importer;
 
 use Kunstmaan\TranslatorBundle\Tests\BaseTestCase;
 
 class CacheValidatorTest extends BaseTestCase
 {
-
     private $cacheValidator;
+
     private $languages;
+
     private $cacheDir;
 
     public function setUp()
@@ -67,5 +69,4 @@ class CacheValidatorTest extends BaseTestCase
             unlink($file);
         }
     }
-
 }

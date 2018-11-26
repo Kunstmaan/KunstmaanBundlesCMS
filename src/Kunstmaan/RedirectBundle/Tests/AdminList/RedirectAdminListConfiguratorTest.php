@@ -53,7 +53,7 @@ class RedirectAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::buildFields
+     * @covers \Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::buildFields
      */
     public function testBuildFields()
     {
@@ -70,7 +70,7 @@ class RedirectAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::buildFilters
+     * @covers \Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::buildFilters
      */
     public function testBuildFilters()
     {
@@ -96,7 +96,7 @@ class RedirectAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::getBundleName
+     * @covers \Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::getBundleName
      */
     public function testGetBundleName()
     {
@@ -104,7 +104,7 @@ class RedirectAdminListConfiguratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::getEntityName
+     * @covers \Kunstmaan\RedirectBundle\AdminList\RedirectAdminListConfigurator::getEntityName
      */
     public function testGetEntityName()
     {

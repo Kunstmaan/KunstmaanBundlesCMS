@@ -9,7 +9,7 @@ use Kunstmaan\MenuBundle\Service\RenderService;
 class MenuTwigExtension extends \Twig_Extension
 {
     /**
-     * @var RenderService $renderService
+     * @var RenderService
      */
     private $renderService;
 
@@ -54,6 +54,7 @@ class MenuTwigExtension extends \Twig_Extension
      * @param string $name
      * @param string $lang
      * @param array  $options
+     *
      * @return string
      */
     public function getMenu(\Twig_Environment $environment, $name, $lang, $options = array())
@@ -76,6 +77,7 @@ class MenuTwigExtension extends \Twig_Extension
      *
      * @param string $name
      * @param string $lang
+     *
      * @return array
      */
     public function getMenuItems($name, $lang)

@@ -7,7 +7,6 @@ namespace Kunstmaan\AdminBundle\Helper\Security\OAuth;
  */
 interface OAuthUserFinderInterface
 {
-
     /**
      * Tries to find a user in database based on email and googleId fields.
      * Returns null when nothing has been found.
@@ -16,7 +15,6 @@ interface OAuthUserFinderInterface
      * @param string googleId
      *
      * @return mixed AbstractUser Implementation
-    */
+     */
     public function findUserByGoogleSignInData($email, $googleId);
 }
-

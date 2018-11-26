@@ -1,10 +1,9 @@
 <?php
+
 namespace Kunstmaan\MediaPagePartBundle\Tests\Entity;
 
 use Kunstmaan\MediaBundle\Entity\Media;
-
 use Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart;
-
 use Kunstmaan\MediaPagePartBundle\Form\VideoPagePartAdminType;
 
 /**
@@ -23,12 +22,12 @@ class VideoPagePartTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new VideoPagePart;
+        $this->object = new VideoPagePart();
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::setMedia
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::setMedia
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getMedia
      */
     public function testSetGetMedia()
     {
@@ -39,16 +38,16 @@ class VideoPagePartTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getDefaultView
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getDefaultView
      */
     public function testGetDefaultView()
     {
         $defaultView = $this->object->getDefaultView();
-        $this->assertEquals("KunstmaanMediaPagePartBundle:VideoPagePart:view.html.twig", $defaultView);
+        $this->assertEquals('KunstmaanMediaPagePartBundle:VideoPagePart:view.html.twig', $defaultView);
     }
 
     /**
-     * @covers Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getDefaultAdminType
+     * @covers \Kunstmaan\MediaPagePartBundle\Entity\VideoPagePart::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {

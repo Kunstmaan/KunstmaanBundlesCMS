@@ -34,9 +34,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::isHiddenFromNav
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getHiddenFromNav
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setHiddenFromNav
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::isHiddenFromNav
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getHiddenFromNav
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setHiddenFromNav
      */
     public function testIsGetSetHiddenFromNav()
     {
@@ -47,9 +47,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::__construct
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getChildren
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setChildren
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::__construct
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getChildren
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setChildren
      */
     public function testGetSetChildren()
     {
@@ -64,8 +64,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getChildren
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setChildren
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getChildren
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setChildren
      */
     public function testGetSetChildrenWithDeletedChildren()
     {
@@ -83,9 +83,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::addNode
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setParent
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getParent
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::addNode
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setParent
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getParent
      */
     public function testAddNode()
     {
@@ -96,8 +96,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getNodeTranslations
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setNodeTranslations
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getNodeTranslations
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setNodeTranslations
      */
     public function testGetSetNodeTranslations()
     {
@@ -112,8 +112,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::addNodeTranslation
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getNodeTranslations
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::addNodeTranslation
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getNodeTranslations
      */
     public function testGetNodeTranslationsWithOfflineNodes()
     {
@@ -130,8 +130,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::addNodeTranslation
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getNodeTranslation
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::addNodeTranslation
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getNodeTranslation
      */
     public function testGetNodeTranslation()
     {
@@ -153,7 +153,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getParents
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getParents
      */
     public function testGetParents()
     {
@@ -169,8 +169,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::isDeleted
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setDeleted
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::isDeleted
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setDeleted
      */
     public function testIsSetDeleted()
     {
@@ -180,9 +180,9 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setRef
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setRefEntityName
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getRefEntityName
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setRef
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setRefEntityName
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getRefEntityName
      */
     public function testSetRefAndGetRefEntityName()
     {
@@ -192,8 +192,8 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::setInternalName
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getInternalName
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::setInternalName
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getInternalName
      */
     public function testSetInternalName()
     {
@@ -202,7 +202,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::getDefaultAdminType
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::getDefaultAdminType
      */
     public function testGetDefaultAdminType()
     {
@@ -210,7 +210,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Entity\Node::__toString
+     * @covers \Kunstmaan\NodeBundle\Entity\Node::__toString
      */
     public function testToString()
     {

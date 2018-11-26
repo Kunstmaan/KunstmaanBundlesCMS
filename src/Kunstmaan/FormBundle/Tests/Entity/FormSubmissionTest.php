@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\FormBundle\Tests\Entity;
+
 use DateTime;
 use Kunstmaan\FormBundle\Entity\FormSubmission;
 use Kunstmaan\NodeBundle\Entity\Node;
@@ -20,7 +22,7 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new FormSubmission;
+        $this->object = new FormSubmission();
     }
 
     /**
@@ -32,8 +34,8 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getId
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setId
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::getId
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::setId
      */
     public function testSetGetId()
     {
@@ -43,22 +45,21 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($id, $object->getId());
     }
 
-
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setIpAddress
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getIpAddress
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::setIpAddress
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::getIpAddress
      */
     public function testSetGetIpAddress()
     {
         $object = $this->object;
-        $ip = "127.0.0.1";
+        $ip = '127.0.0.1';
         $object->setIpAddress($ip);
         $this->assertEquals($ip, $object->getIpAddress());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getNode
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setNode
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::getNode
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::setNode
      */
     public function testSetGetNode()
     {
@@ -72,8 +73,8 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setLang
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getLang
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::setLang
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::getLang
      */
     public function testSetGetLang()
     {
@@ -84,19 +85,19 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::setCreated
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getCreated
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::setCreated
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::getCreated
      */
     public function testSetGetCreated()
     {
         $object = $this->object;
-        $now = new DateTime;
+        $now = new DateTime();
         $object->setCreated($now);
         $this->assertEquals($now, $object->getCreated());
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::getFields
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::getFields
      */
     public function testGetFields()
     {
@@ -105,7 +106,7 @@ class FormSubmissionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\FormBundle\Entity\FormSubmission::__toString
+     * @covers \Kunstmaan\FormBundle\Entity\FormSubmission::__toString
      */
     public function testToString()
     {

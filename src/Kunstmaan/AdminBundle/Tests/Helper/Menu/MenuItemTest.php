@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminBundle\Tests\Helper\Menu;
 
 use Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder;
@@ -38,8 +39,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getMenu
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::__construct
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getMenu
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::__construct
      */
     public function testGetMenu()
     {
@@ -53,8 +54,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getLabel
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setLabel
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getLabel
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setLabel
      */
     public function testGetSetLabel()
     {
@@ -63,8 +64,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getUniqueId
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setUniqueId
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getUniqueId
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setUniqueId
      */
     public function testGetSetUniqueId()
     {
@@ -73,8 +74,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRole
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRole
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRole
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRole
      */
     public function testGetSetRole()
     {
@@ -83,8 +84,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getParent
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setParent
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getParent
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setParent
      */
     public function testGetSetParent()
     {
@@ -98,9 +99,9 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRoute
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRoute
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRouteParams
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRoute
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRoute
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRouteParams
      */
     public function testGetSetRoute()
     {
@@ -112,8 +113,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRouteParams
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRouteParams
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getRouteParams
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setRouteParams
      */
     public function testGetSetRouteParams()
     {
@@ -123,7 +124,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getChildren
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getChildren
      */
     public function testGetChildren()
     {
@@ -132,7 +133,6 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
         $child2 = new MenuItem($this->object->getMenu());
         $child2->setAppearInNavigation(true);
         $children = array($child1, $child2);
-
 
         $menuBuilder = $this->getMockBuilder('Kunstmaan\AdminBundle\Helper\Menu\MenuBuilder')
             ->disableOriginalConstructor()
@@ -149,7 +149,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getNavigationChildren
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getNavigationChildren
      */
     public function testGetNavigationChildren()
     {
@@ -174,7 +174,7 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getTopChildren
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getTopChildren
      */
     public function testGetTopChildren()
     {
@@ -197,8 +197,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::addAttributes
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getAttributes
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::addAttributes
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getAttributes
      */
     public function testAddGetAttributes()
     {
@@ -208,8 +208,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getActive
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setActive
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getActive
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setActive
      */
     public function testGetSetActive()
     {
@@ -218,8 +218,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getAppearInNavigation
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setAppearInNavigation
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getAppearInNavigation
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setAppearInNavigation
      */
     public function testGetSetAppearInNavigation()
     {
@@ -228,8 +228,8 @@ class MenuItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getWeight
-     * @covers Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setWeight
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::getWeight
+     * @covers \Kunstmaan\AdminBundle\Helper\Menu\MenuItem::setWeight
      */
     public function testGetSetWeight()
     {

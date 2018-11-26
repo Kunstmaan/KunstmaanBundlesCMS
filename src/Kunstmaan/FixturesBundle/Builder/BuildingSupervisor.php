@@ -63,7 +63,6 @@ class BuildingSupervisor
                     $builder->postBuild($fixture);
                 }
             }
-
         }
         $manager->flush();
 
@@ -86,11 +85,13 @@ class BuildingSupervisor
 
     /**
      * @param mixed $fixtures
+     *
      * @return BuildingSupervisor
      */
     public function setFixtures(array $fixtures)
     {
         $this->fixtures = $fixtures;
+
         return $this;
     }
 

@@ -22,7 +22,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
     private $useElasticSearchVersion6;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -106,7 +106,7 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'view_roles' => [
                         'type' => 'keyword',
                     ],
-                ]
+                ],
             ];
         } else {
             $mapping = [
@@ -114,63 +114,63 @@ class KunstmaanNodeSearchExtension extends Extension implements PrependExtension
                     'root_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'node_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'nodetranslation_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'nodeversion_id' => [
                         'type' => 'integer',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'title' => [
                         'type' => 'string',
                         'boost' => 2,
-                        'include_in_all' => true
+                        'include_in_all' => true,
                     ],
                     'slug' => [
                         'type' => 'string',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'type' => [
                         'type' => 'string',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'page_class' => [
                         'type' => 'string',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'content' => [
                         'type' => 'string',
-                        'include_in_all' => true
+                        'include_in_all' => true,
                     ],
                     'created' => [
                         'type' => 'date',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'updated' => [
                         'type' => 'date',
                         'include_in_all' => false,
-                        'index' => 'not_analyzed'
+                        'index' => 'not_analyzed',
                     ],
                     'view_roles' => [
                         'type' => 'string',
                         'include_in_all' => true,
                         'index' => 'not_analyzed',
                     ],
-                ]
+                ],
             ];
         }
 

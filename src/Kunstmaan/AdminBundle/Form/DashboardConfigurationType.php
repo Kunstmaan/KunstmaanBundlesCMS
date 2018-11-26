@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class DashboardConfigurationType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -27,7 +26,7 @@ class DashboardConfigurationType extends AbstractType
             'attr' => array(
                 'style' => 'width: 1000px',
                 'rows' => 20,
-            )
+            ),
         ));
     }
 
@@ -38,5 +37,4 @@ class DashboardConfigurationType extends AbstractType
     {
         return 'dashboardconfiguration';
     }
-
 }

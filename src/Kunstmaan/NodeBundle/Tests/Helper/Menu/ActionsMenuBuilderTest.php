@@ -25,7 +25,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      *
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::__construct
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::__construct
      */
     protected function setUp()
     {
@@ -61,7 +61,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(new TestRepository()));
         $emMock->expects($this->any())
             ->method('getClassMetadata')
-            ->will($this->returnValue((object)array('name' => 'aClass')));
+            ->will($this->returnValue((object) array('name' => 'aClass')));
         $emMock->expects($this->any())
             ->method('persist')
             ->will($this->returnValue(null));
@@ -81,7 +81,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createSubActionsMenu
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createSubActionsMenu
      */
     public function testCreateSubActionsMenu()
     {
@@ -93,7 +93,6 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->builder->setActiveNodeVersion($nodeVersion);
 
-
         $menu = $this->builder->createSubActionsMenu();
         $this->assertNotNull($menu->getChild('subaction.versions'));
 
@@ -101,7 +100,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
      */
     public function testCreateActionsMenuDraft()
     {
@@ -123,8 +122,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
             $this->assertNotNull($menu->getChild('action.delete'));
-        }
-        else {
+        } else {
             $this->assertNull($menu->getChild('action.delete'));
         }
 
@@ -140,11 +138,10 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $nodeTranslation->setNode(new Node());
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
-
 
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save'));
@@ -155,8 +152,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($menu->getChild('action.unpublish'));
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
             $this->assertNotNull($menu->getChild('action.delete'));
-        }
-        else {
+        } else {
             $this->assertNull($menu->getChild('action.delete'));
         }
 
@@ -170,8 +166,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($menu->getChild('action.unpublish'));
         if ((null !== $nodeTranslation->getNode()->getParent() || $nodeTranslation->getNode()->getChildren()->isEmpty())) {
             $this->assertNotNull($menu->getChild('action.delete'));
-        }
-        else {
+        } else {
             $this->assertNull($menu->getChild('action.delete'));
         }
 
@@ -187,13 +182,12 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $nodeTranslation->setNode(new Node());
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
         $this->builder->setEditableNode(false);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
         $nodeTranslation->setOnline(false);
-
 
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.save')); // We want to save.
@@ -207,7 +201,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createTopActionsMenu
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createTopActionsMenu
      */
     public function testCreateTopActionsMenu()
     {
@@ -219,15 +213,14 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->builder->setActiveNodeVersion($nodeVersion);
 
-
         $menu = $this->builder->createTopActionsMenu();
         $this->assertEquals('page-main-actions page-main-actions--top', $menu->getChildrenAttribute('class'));
         $this->assertEquals('page-main-actions-top', $menu->getChildrenAttribute('id'));
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::setActiveNodeVersion
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::getActiveNodeVersion
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::setActiveNodeVersion
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::getActiveNodeVersion
      */
     public function testSetGetActiveNodeVersion()
     {
@@ -237,13 +230,13 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
      */
     public function testShouldShowDeleteButtonWhenTheNodeHasAParent()
     {
         $nodeTranslation = new NodeTranslation();
         $node = new Node();
-        $node->setParent(new Node);
+        $node->setParent(new Node());
         $nodeTranslation->setNode($node);
 
         $nodeVersion = new NodeVersion();
@@ -252,7 +245,6 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->builder->setActiveNodeVersion($nodeVersion);
 
-
         $menu = $this->builder->createActionsMenu();
         $this->assertNotNull($menu->getChild('action.delete'));
 
@@ -260,7 +252,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
+     * @covers \Kunstmaan\NodeBundle\Helper\Menu\ActionsMenuBuilder::createActionsMenu
      */
     public function testShouldShowRecopyButtonWhenTheNodeHasTranslations()
     {
@@ -271,7 +263,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $node->addNodeTranslation($nodeTranslation);
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
@@ -282,7 +274,7 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
         $node->addNodeTranslation($nodeTranslation);
 
         $nodeVersion = new NodeVersion();
-        $nodeVersion->setType("public");
+        $nodeVersion->setType('public');
         $nodeVersion->setNodeTranslation($nodeTranslation);
 
         $this->builder->setActiveNodeVersion($nodeVersion);
@@ -292,5 +284,4 @@ class ActionsMenuBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('page-main-actions js-auto-collapse-buttons', $menu->getChildrenAttribute('class'));
     }
-
 }

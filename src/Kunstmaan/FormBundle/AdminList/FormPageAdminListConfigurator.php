@@ -61,11 +61,11 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     {
         $create_route = function (EntityInterface $item) {
             return array(
-                'path'   => 'KunstmaanFormBundle_formsubmissions_list',
-                'params' => array('nodeTranslationId' => $item->getId())
+                'path' => 'KunstmaanFormBundle_formsubmissions_list',
+                'params' => array('nodeTranslationId' => $item->getId()),
             );
         };
-        $ia           = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction(
+        $ia = new \Kunstmaan\AdminListBundle\AdminList\ItemAction\SimpleItemAction(
             $create_route,
             'eye',
             'View'
@@ -83,8 +83,8 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
     public function getEditUrlFor($item)
     {
         return array(
-            'path'   => 'KunstmaanFormBundle_formsubmissions_list',
-            'params' => array('nodeTranslationId' => $item->getId())
+            'path' => 'KunstmaanFormBundle_formsubmissions_list',
+            'params' => array('nodeTranslationId' => $item->getId()),
         );
     }
 
@@ -122,7 +122,7 @@ class FormPageAdminListConfigurator extends AbstractDoctrineORMAdminListConfigur
      */
     public function getAddUrlFor(array $params = array())
     {
-        return "";
+        return '';
     }
 
     /**

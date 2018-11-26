@@ -33,7 +33,7 @@ class DateFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::bindRequest
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::bindRequest
      */
     public function testBindRequest()
     {
@@ -52,7 +52,7 @@ class DateFilterTypeTest extends DBALFilterTypeTestCase
      * @param mixed  $value       The value
      * @param mixed  $testValue   The test value
      *
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::apply
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::apply
      * @dataProvider applyDataProvider
      */
     public function testApply($comparator, $whereClause, $value, $testValue)
@@ -79,7 +79,7 @@ class DateFilterTypeTest extends DBALFilterTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::getTemplate
+     * @covers \Kunstmaan\AdminListBundle\AdminList\FilterType\DBAL\DateFilterType::getTemplate
      */
     public function testGetTemplate()
     {

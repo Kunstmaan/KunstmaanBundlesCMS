@@ -1,5 +1,7 @@
 <?php
+
 namespace Kunstmaan\PagePartBundle\Tests\Form;
+
 use Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType;
 
 /**
@@ -31,7 +33,7 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::buildForm
+     * @covers \Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::buildForm
      */
     public function testBuildForm()
     {
@@ -39,12 +41,12 @@ class ToTopPagePartAdminTypeTest extends PagePartAdminTypeTestCase
     }
 
     /**
-     * @covers Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::configureOptions
+     * @covers \Kunstmaan\PagePartBundle\Form\ToTopPagePartAdminType::configureOptions
      */
     public function testConfigureOptions()
     {
         $this->object->configureOptions($this->resolver);
         $resolve = $this->resolver->resolve();
-        $this->assertEquals($resolve["data_class"], 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart');
+        $this->assertEquals($resolve['data_class'], 'Kunstmaan\PagePartBundle\Entity\ToTopPagePart');
     }
 }

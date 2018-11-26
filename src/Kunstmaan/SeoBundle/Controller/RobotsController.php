@@ -14,6 +14,7 @@ class RobotsController extends Controller
      *
      * @Route(path="/robots.txt", name="KunstmaanSeoBundle_robots", defaults={"_format": "txt"})
      * @Template(template="@KunstmaanSeo/Admin/Robots/index.html.twig")
+     *
      * @param Request $request
      *
      * @return array
@@ -26,7 +27,7 @@ class RobotsController extends Controller
         if ($entity && $entity->getRobotsTxt()) {
             $robots = $entity->getRobotsTxt();
         } else {
-            $file = $request->getBasePath() . "robots.txt";
+            $file = $request->getBasePath() . 'robots.txt';
             if (file_exists($file)) {
                 $robots = file_get_contents($file);
             }
