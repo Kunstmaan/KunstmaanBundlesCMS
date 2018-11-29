@@ -183,7 +183,7 @@ EOQ;
         try {
             // Fetch new translation ID
             $translationId = $this->getUniqueTranslationId();
-            /**
+            /*
              * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
@@ -216,7 +216,7 @@ EOQ;
         $this->getEntityManager()->beginTransaction();
 
         try {
-            /**
+            /*
              * @var TextWithLocale
              */
             foreach ($translationModel->getTexts() as $textWithLocale) {
