@@ -19,7 +19,6 @@ class KunstmaanMediaPagePartExtensionTest extends AbstractPrependableExtensionTe
         return [new KunstmaanMediaPagePartExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('empty_extension', true);

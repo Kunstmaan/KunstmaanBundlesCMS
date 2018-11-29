@@ -82,7 +82,6 @@ class Lazy implements LazyLoadingTaggableInterface
 
 /**
  * Class TagManagerTest
- * @package Tests\Kunstmaan\TaggingBundle\Entity
  */
 class TagManagerTest extends PHPUnit_Framework_TestCase
 {
@@ -165,7 +164,7 @@ class TagManagerTest extends PHPUnit_Framework_TestCase
 
         $repo->expects($this->any())
         ->method('findAll')
-        ->will($this->returnValue(new ArrayCollection));
+        ->will($this->returnValue(new ArrayCollection()));
 
         $em->expects($this->any())
             ->method('getRepository')
@@ -194,13 +193,12 @@ class TagManagerTest extends PHPUnit_Framework_TestCase
         ->getMock();
 
         $object = new TagManager($em);
-        $this->assertNull( $object->findById(null));
-
+        $this->assertNull($object->findById(null));
     }
 
     public function testFindAll()
     {
-        $this->assertInstanceOf( ArrayCollection::class, $this->object->findAll());
+        $this->assertInstanceOf(ArrayCollection::class, $this->object->findAll());
     }
 
     public function testFindRelatedItems()
@@ -241,10 +239,9 @@ class TagManagerTest extends PHPUnit_Framework_TestCase
 
         $this->object = new TagManager($this->em);
 
-
         $item = new Random();
         $results = $this->object->findRelatedItems($item, Random::class, 'en');
-        $this->assertInstanceOf( ArrayCollection::class, $results);
+        $this->assertInstanceOf(ArrayCollection::class, $results);
     }
 
     public function testFindRelatedItemsReturnsNull()

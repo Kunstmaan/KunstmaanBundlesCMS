@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class FormMailerTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testSendContactMail()
     {
         $mailer = $this->createMock(\Swift_Mailer::class);

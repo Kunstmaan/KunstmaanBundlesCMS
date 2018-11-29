@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @final since 5.1
+ *
  * @deprecated since 5.1
  * NEXT_MAJOR extend from `Command` and remove `$this->getContainer` usages
  * NEXT_MAJOR file will be renamed
@@ -59,10 +60,8 @@ class ImportTranslationsCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

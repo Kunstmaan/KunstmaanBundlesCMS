@@ -2,15 +2,11 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
-use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
-use Kunstmaan\AdminBundle\Form\GroupType;
 use Kunstmaan\AdminBundle\Form\MediaTokenTransformer;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class MediaTokenTransformerTest
- * @package Tests\Kunstmaan\AdminBundle\Form
  */
 class MediaTokenTransformerTest extends PHPUnit_Framework_TestCase
 {

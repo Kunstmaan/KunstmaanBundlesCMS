@@ -75,7 +75,9 @@ class TagManager extends BaseTagManager
 
     /**
      * @param $id
+     *
      * @return mixed|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findById($id)
@@ -112,6 +114,7 @@ class TagManager extends BaseTagManager
      * @param $class
      * @param $locale
      * @param int $nbOfItems
+     *
      * @return array|null
      */
     public function findRelatedItems(Taggable $item, $class, $locale, $nbOfItems = 1)

@@ -41,7 +41,6 @@ class SessionSecurityListenerTest extends PHPUnit_Framework_TestCase
         $listener->onKernelRequest($event);
     }
 
-
     public function testOnKernelResponse()
     {
         $logger = $this->createMock(LoggerInterface::class);
@@ -67,7 +66,6 @@ class SessionSecurityListenerTest extends PHPUnit_Framework_TestCase
         $event = $this->createMock(FilterResponseEvent::class);
         $listener->onKernelResponse($event);
     }
-
 
     public function testInvalidateSessionWithNoIpSet()
     {

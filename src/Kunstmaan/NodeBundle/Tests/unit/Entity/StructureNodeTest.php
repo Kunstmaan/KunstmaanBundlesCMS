@@ -30,7 +30,6 @@ class TestNode extends AbstractPage
 
 /**
  * Class StructureNodeTest
- * @package Tests\Kunstmaan\NodeBundle\Entity
  */
 class StructureNodeTest extends PHPUnit_Framework_TestCase
 {
@@ -79,6 +78,4 @@ class StructureNodeTest extends PHPUnit_Framework_TestCase
         $node = new TestStructureNode();
         $node->service(new Container(), new Request(), new RenderContext());
     }
-
-
 }

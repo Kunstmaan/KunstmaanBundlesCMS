@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\AdminBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Kunstmaan\AdminBundle\Service\AclManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -10,10 +9,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Security\Acl\Domain\Acl;
-use Symfony\Component\Security\Acl\Domain\Entry;
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Permission\PermissionMapInterface;
 
 /**
@@ -76,7 +71,7 @@ class UpdateAclCommand extends ContainerAwareCommand
         if (null === $this->aclManager) {
             $this->aclManager = $this->getContainer()->get('kunstmaan_admin.acl.manager');
         }
-        if (null === $this->em ) {
+        if (null === $this->em) {
             $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
         }
         if (null === $this->permissionMap) {

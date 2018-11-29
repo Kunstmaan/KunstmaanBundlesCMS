@@ -82,7 +82,7 @@ class KunstmaanConfigConfigurationPassCompilerPassTest extends AbstractCompilerP
 
         $this->container->setParameter($svcId, [
             'entities' => [
-                'Test\Kunstmaan\ConfigBundle\DependencyInjection\Compiler\RandomEntity'
+                'Test\Kunstmaan\ConfigBundle\DependencyInjection\Compiler\RandomEntity',
             ],
         ]);
         $this->container->setDefinition('doctrine', new Definition($doctrine));
@@ -111,7 +111,7 @@ class KunstmaanConfigConfigurationPassCompilerPassTest extends AbstractCompilerP
 
         $this->container->setParameter($svcId, [
             'entities' => [
-                'BrokenEntity'
+                'BrokenEntity',
             ],
         ]);
         $this->container->setDefinition('doctrine', new Definition($doctrine));
@@ -131,7 +131,7 @@ class KunstmaanConfigConfigurationPassCompilerPassTest extends AbstractCompilerP
 
         $this->container->setParameter($svcId, [
             'entities' => [
-                'Test\Kunstmaan\ConfigBundle\DependencyInjection\Compiler\RandomNonConfigEntity'
+                'Test\Kunstmaan\ConfigBundle\DependencyInjection\Compiler\RandomNonConfigEntity',
             ],
         ]);
         $this->container->setDefinition('doctrine', new Definition($doctrine));

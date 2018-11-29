@@ -19,7 +19,7 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
     private $em;
 
     /**
-     * @param EntityManagerInterface|null   $em
+     * @param EntityManagerInterface|null $em
      */
     public function __construct(/* EntityManagerInterface */ $em = null)
     {
@@ -46,6 +46,7 @@ class GoogleAnalyticsConfigsListCommand extends ContainerAwareCommand
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)

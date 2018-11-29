@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DashboardCommand extends ContainerAwareCommand
 {
-
     private $widgetManager;
 
     public function __construct(WidgetManager $widgetManager = null)
@@ -44,6 +43,7 @@ class DashboardCommand extends ContainerAwareCommand
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)

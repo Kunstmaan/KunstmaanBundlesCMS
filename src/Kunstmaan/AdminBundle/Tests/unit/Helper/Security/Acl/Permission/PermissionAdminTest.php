@@ -29,7 +29,6 @@ use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Kunstmaan\AdminBundle\Tests\Entity\TestEntity;
 
 class PermissionAdminTest extends \PHPUnit_Framework_TestCase
 {
@@ -309,7 +308,7 @@ class PermissionAdminTest extends \PHPUnit_Framework_TestCase
         $token->expects($this->once())->method('getUser')->willReturn(new User());
         $request = $this->createMock(Request::class);
         $request->request = $this->createMock(Request::class);
-        $request->request->expects($this->any())->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' =>  ['VIEW']]], true));
+        $request->request->expects($this->any())->method('get')->will($this->onConsecutiveCalls(['ADMIN' => ['ADD' => ['VIEW']]], true));
 
         $mirror = new ReflectionClass(PermissionAdmin::class);
         $property = $mirror->getProperty('tokenStorage');

@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\DashboardBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\ChartDataCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\GoalCommandHelper;
 use Kunstmaan\DashboardBundle\Command\Helper\Analytics\MetricsCommandHelper;
@@ -34,8 +33,8 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     private $serviceHelper;
 
     /**
-     * @param EntityManagerInterface|null   $em
-     * @param ServiceHelper                 $serviceHelper
+     * @param EntityManagerInterface|null $em
+     * @param ServiceHelper               $serviceHelper
      */
     public function __construct(/* EntityManagerInterface */ $em = null, ServiceHelper $serviceHelper = null)
     {
@@ -87,6 +86,7 @@ class GoogleAnalyticsDataCollectCommand extends ContainerAwareCommand
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)

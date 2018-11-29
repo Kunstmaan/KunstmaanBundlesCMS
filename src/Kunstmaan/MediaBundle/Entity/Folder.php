@@ -23,11 +23,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Folder extends AbstractEntity implements GedmoNode
 {
-    const TYPE_FILES     = 'files';
-    const TYPE_IMAGE     = 'image';
-    const TYPE_MEDIA     = 'media';
+    const TYPE_FILES = 'files';
+    const TYPE_IMAGE = 'image';
+    const TYPE_MEDIA = 'media';
     const TYPE_SLIDESHOW = 'slideshow';
-    const TYPE_VIDEO     = 'video';
+    const TYPE_VIDEO = 'video';
 
     /**
      * @var string
@@ -149,11 +149,11 @@ class Folder extends AbstractEntity implements GedmoNode
     public static function allTypes()
     {
         return [
-            self::TYPE_MEDIA     => self::TYPE_MEDIA,
-            self::TYPE_IMAGE     => self::TYPE_IMAGE,
-            self::TYPE_FILES     => self::TYPE_FILES,
+            self::TYPE_MEDIA => self::TYPE_MEDIA,
+            self::TYPE_IMAGE => self::TYPE_IMAGE,
+            self::TYPE_FILES => self::TYPE_FILES,
             self::TYPE_SLIDESHOW => self::TYPE_SLIDESHOW,
-            self::TYPE_VIDEO     => self::TYPE_VIDEO,
+            self::TYPE_VIDEO => self::TYPE_VIDEO,
         ];
     }
 

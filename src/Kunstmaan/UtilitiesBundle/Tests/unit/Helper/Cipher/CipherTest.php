@@ -53,5 +53,4 @@ class CipherTest extends \PHPUnit_Framework_TestCase
         $this->expectException(\Exception::class);
         new Cipher('');
     }
-
 }

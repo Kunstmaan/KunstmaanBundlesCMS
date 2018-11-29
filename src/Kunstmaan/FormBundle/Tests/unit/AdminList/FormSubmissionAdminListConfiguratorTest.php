@@ -38,13 +38,12 @@ class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCas
     }
 
     /**
-     *
      * @return \Doctrine\ORM\EntityManager
      */
     protected function getMockedEntityManager()
     {
         $configuration = Stub::make(Configuration::class, [
-            'getQuoteStrategy' => null
+            'getQuoteStrategy' => null,
         ]);
 
         $repository = Stub::make(EntityRepository::class, [
@@ -57,9 +56,9 @@ class FormSubmissionAdminListConfiguratorTest extends \PHPUnit_Framework_TestCas
         $emMock = Stub::make(EntityManager::class, [
             'getRepository' => $repository,
             'getConfiguration' => $configuration,
-            'getClassMetaData' => (object)['name' => 'aClass'],
+            'getClassMetaData' => (object) ['name' => 'aClass'],
             'persist' => null,
-            'flush' => null
+            'flush' => null,
         ]);
 
         return $emMock;

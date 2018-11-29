@@ -64,11 +64,12 @@ class TranslatorController extends AdminListController
 
     /**
      * @param Request $request
-     * @param string                                    $keyword
-     * @param string                                    $domain
-     * @param string                                    $locale
+     * @param string  $keyword
+     * @param string  $domain
+     * @param string  $locale
      *
      * @return array|RedirectResponse
+     *
      * @throws \Doctrine\ORM\OptimisticLockException
      *
      * @Route("/add", name="KunstmaanTranslatorBundle_settings_translations_add")
@@ -203,6 +204,7 @@ class TranslatorController extends AdminListController
      * @Template("KunstmaanTranslatorBundle:Translator:addTranslation.html.twig")
      *
      * @param Request $request
+     *
      * @return array
      */
     public function uploadFileAction(Request $request)
@@ -219,7 +221,7 @@ class TranslatorController extends AdminListController
                 $file = $data['file'];
                 $force = $data['force'];
                 $imported = $this->container->get('kunstmaan_translator.service.importer.importer')->importFromSpreadsheet($file, $locales, $force);
-                $this->addFlash(FlashTypes::SUCCESS, sprintf("Translation imported: %d", $imported));
+                $this->addFlash(FlashTypes::SUCCESS, sprintf('Translation imported: %d', $imported));
             }
         }
 
@@ -233,6 +235,7 @@ class TranslatorController extends AdminListController
      * @param $domain
      * @param $locale
      * @param $keyword
+     *
      * @return RedirectResponse
      *
      * @Method({"GET"})
@@ -260,6 +263,7 @@ class TranslatorController extends AdminListController
 
     /**
      * @param $id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws NotFoundHttpException
@@ -302,9 +306,9 @@ class TranslatorController extends AdminListController
         return $this->adminListConfigurator;
     }
 
-
     /**
      * @param Request $request
+     *
      * @return JsonResponse|Response
      *
      * @Route("/inline-edit", name="KunstmaanTranslatorBundle_settings_translations_inline_edit")
@@ -319,7 +323,7 @@ class TranslatorController extends AdminListController
             throw $this->createAccessDeniedException('Not allowed to edit this translation');
         }
 
-        $id = isset($values['pk']) ? (int)$values['pk'] : 0;
+        $id = isset($values['pk']) ? (int) $values['pk'] : 0;
         $em = $this->getDoctrine()->getManager();
         /**
          * @var TranslatorInterface

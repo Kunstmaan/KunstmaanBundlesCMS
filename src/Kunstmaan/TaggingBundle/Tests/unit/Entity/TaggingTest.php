@@ -9,7 +9,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class TagTest
- * @package Tests\Kunstmaan\SiteMapBundle\Entity
  */
 class TaggingTest extends PHPUnit_Framework_TestCase
 {
@@ -31,6 +30,5 @@ class TaggingTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DateTime::class, $object->getCreatedAt());
         $this->assertInstanceOf(DateTime::class, $object->getUpdatedAt());
         $this->assertInstanceOf(Tag::class, $object->getTag());
-
     }
 }

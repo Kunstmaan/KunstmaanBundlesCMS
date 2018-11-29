@@ -30,13 +30,14 @@ class TranslationRepository extends AbstractTranslatorRepository
 
     /**
      * Get an array of all non disabled translations
+     *
      * @param string $locale
      * @param string $domain
+     *
      * @return array
      */
     public function findAllNotDisabled($locale, $domain = null)
     {
-
         $qb = $this->createQueryBuilder('t');
         $qb
             ->select('t')
@@ -104,6 +105,7 @@ EOQ;
     /**
      * @param $locales
      * @param $domains
+     *
      * @return mixed
      */
     public function getTranslationsByLocalesAndDomains($locales, $domains)
@@ -135,6 +137,7 @@ EOQ;
 
     /**
      * @param null $entity
+     *
      * @return mixed
      */
     public function flush($entity = null)
@@ -148,6 +151,7 @@ EOQ;
 
     /**
      * @param $entity
+     *
      * @return mixed
      */
     public function persist($entity)
@@ -157,6 +161,7 @@ EOQ;
 
     /**
      * @param TranslationModel $translationModel
+     *
      * @return bool
      */
     public function isUnique(TranslationModel $translationModel)
@@ -282,7 +287,8 @@ EOQ;
 
     /**
      * @param DateTime $date
-     * @param string $domain
+     * @param string   $domain
+     *
      * @return mixed
      */
     public function findDeprecatedTranslationsBeforeDate(DateTime $date, $domain)

@@ -12,7 +12,6 @@ use Kunstmaan\AdminBundle\Entity\AclChangeset;
 
 /**
  * Class AclManager
- * @package Kunstmaan\AdminBundle\Security
  */
 class AclManager
 {
@@ -57,13 +56,12 @@ class AclManager
             }
         }
         $this->aclProvider->updateAcl($newAcl);
-
     }
 
     /**
-     * @param array     $nodes
-     * @param string    $role
-     * @param int       $mask
+     * @param array  $nodes
+     * @param string $role
+     * @param int    $mask
      */
     public function updateNodesAclToRole(array $nodes, $role, $mask)
     {
@@ -80,15 +78,13 @@ class AclManager
                     continue;
                 }
                 $acl->updateObjectAce($index, $mask);
+
                 break;
             }
             $this->aclProvider->updateAcl($acl);
         }
     }
 
-    /**
-     *
-     */
     public function applyAclChangesets()
     {
         /* @var AclChangesetRepository $aclRepo */

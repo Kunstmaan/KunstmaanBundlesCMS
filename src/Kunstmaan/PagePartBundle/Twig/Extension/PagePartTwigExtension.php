@@ -78,7 +78,7 @@ class PagePartTwigExtension extends \Twig_Extension
 
     /**
      * @param HasPagePartsInterface $page
-     * @param string $context
+     * @param string                $context
      *
      * @return bool
      */

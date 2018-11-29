@@ -5,6 +5,7 @@ namespace Kunstmaan\MenuBundle\Tests\DependencyInjection;
 use Kunstmaan\MenuBundle\DependencyInjection\KunstmaanMenuExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Kunstmaan\AdminBundle\Tests\unit\AbstractPrependableExtensionTestCase;
+
 /**
  * Class KunstmaanMenuExtensionTest
  */
@@ -18,10 +19,8 @@ class KunstmaanMenuExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanMenuExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
-
         $this->load();
 
         $this->assertContainerBuilderHasParameter('kunstmaan_menu.menus');

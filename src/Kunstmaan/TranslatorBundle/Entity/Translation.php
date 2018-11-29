@@ -25,7 +25,7 @@ class Translation
     const FLAG_UPDATED = 'updated';
     const STATUS_DEPRECATED = 'deprecated';
     const STATUS_DISABLED = 'disabled';
-    const STATUS_ENABLED =  'enabled';
+    const STATUS_ENABLED = 'enabled';
 
     /**
      * @ORM\Id
@@ -57,8 +57,8 @@ class Translation
     protected $locale;
 
     /**
-     * @var string $status
-     * The translations deprecation date
+     * @var string
+     *             The translations deprecation date
      *
      * @ORM\column(type="string", length=10, options={"default" : "enabled"})
      */
@@ -131,7 +131,6 @@ class Translation
         if ($this->flag === null) {
             $this->flag = self::FLAG_UPDATED;
         }
-
     }
 
     /**
@@ -344,16 +343,18 @@ class Translation
 
     /**
      * @param string $status
+     *
      * @return Translation
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDisabled()
     {
@@ -361,7 +362,7 @@ class Translation
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeprecated()
     {
@@ -369,7 +370,7 @@ class Translation
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return TranslationModel
      */
@@ -379,6 +380,7 @@ class Translation
         $translationModel->setKeyword($this->getKeyword());
         $translationModel->setDomain($this->getDomain());
         $translationModel->addText($this->getLocale(), $this->getText(), $id);
+
         return $translationModel;
     }
 }

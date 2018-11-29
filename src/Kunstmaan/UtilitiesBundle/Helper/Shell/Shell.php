@@ -36,7 +36,7 @@ class Shell implements ShellInterface
     {
         exec("ps $pid", $processState);
 
-        return (count($processState) >= 2);
+        return count($processState) >= 2;
     }
 
     /**

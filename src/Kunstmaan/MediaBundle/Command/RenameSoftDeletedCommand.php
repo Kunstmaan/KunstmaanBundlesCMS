@@ -53,7 +53,7 @@ class RenameSoftDeletedCommand extends ContainerAwareCommand
             ->setName('kuma:media:rename-soft-deleted')
             ->setDescription('Rename physical files for soft-deleted media.')
             ->setHelp(
-                "The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename."
+                'The <info>kuma:media:rename-soft-deleted</info> command can be used to rename soft-deleted media which is still publically available under the original filename.'
             )
             ->addOption(
                 'original',

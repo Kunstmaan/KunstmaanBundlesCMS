@@ -63,13 +63,12 @@ class ActionsMenuBuilder
      */
     private $enableExportPageTemplate = true;
 
-
     /**
-     * @param FactoryInterface              $factory              The factory
-     * @param EntityManager                 $em                   The entity manager
-     * @param RouterInterface               $router               The router
-     * @param EventDispatcherInterface      $dispatcher           The event dispatcher
-     * @param AuthorizationCheckerInterface $authorizationChecker The security authorization checker
+     * @param FactoryInterface              $factory                  The factory
+     * @param EntityManager                 $em                       The entity manager
+     * @param RouterInterface               $router                   The router
+     * @param EventDispatcherInterface      $dispatcher               The event dispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker     The security authorization checker
      * @param PagesConfiguration            $pagesConfiguration
      * @param bool                          $enableExportPageTemplate
      */

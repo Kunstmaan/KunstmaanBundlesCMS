@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\unit\Model;
 
 use Kunstmaan\AdminListBundle\Entity\LockableEntityInterface;

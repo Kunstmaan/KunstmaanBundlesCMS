@@ -14,17 +14,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * Class FormWidgetTest
- * @package Tests\Kunstmaan\AdminBundle\Helper\FormWidgets
  */
 class FormWidgetTest extends PHPUnit_Framework_TestCase
 {
     public function testWidget()
     {
         $views = new ArrayIterator();
-        $views->vars = ['errors' =>[new FormError('bang')]];
+        $views->vars = ['errors' => [new FormError('bang')]];
         $view = new FakeView();
         $view->offsetSet('a', $views);
 
@@ -51,7 +49,7 @@ class FormWidgetTest extends PHPUnit_Framework_TestCase
         $widget->addType('test', new ColorType());
         $this->assertCount(2, $widget->getTypes());
 
-        /** @var FormBuilderInterface $builder*/
+        /* @var FormBuilderInterface $builder*/
         $widget->buildForm($builder);
     }
 }

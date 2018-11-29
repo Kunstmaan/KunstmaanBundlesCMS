@@ -67,13 +67,13 @@ class CreatePdfPreviewCommand extends ContainerAwareCommand
             ->setName('kuma:media:create-pdf-previews')
             ->setDescription('Create preview images for PDFs that have already been uploaded')
             ->setHelp(
-                "The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded."
+                'The <info>kuma:media:create-pdf-previews</info> command can be used to create preview images for PDFs that have already been uploaded.'
             );
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (null ===  $this->em) {
+        if (null === $this->em) {
             $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
             $this->pdfTransformer = $this->getContainer()->get('kunstmaan_media.pdf_transformer');
             $this->webRoot = $this->getContainer()->getParameter('kunstmaan_media.web_root');

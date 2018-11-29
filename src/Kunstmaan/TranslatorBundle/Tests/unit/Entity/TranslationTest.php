@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class TranslationTest
- * @package Tests\Kunstmaan\TranslationBundle\Entity
  */
 class TranslationTest extends PHPUnit_Framework_TestCase
 {

@@ -38,7 +38,7 @@ class HostOverrideCleanupHandlerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler::logout
+     * @covers \Kunstmaan\MultiDomainBundle\Helper\HostOverrideCleanupHandler::logout
      */
     public function testLogoutWithOverride()
     {

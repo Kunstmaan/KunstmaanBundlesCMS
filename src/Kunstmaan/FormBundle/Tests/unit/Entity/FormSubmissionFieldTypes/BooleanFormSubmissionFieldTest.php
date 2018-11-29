@@ -20,7 +20,5 @@ class BooleanFormSubmissionFieldTest extends \PHPUnit_Framework_TestCase
         $object->setValue(false);
         $this->assertFalse($object->getValue());
         $this->assertEquals('false', $object->__toString());
-
     }
-
 }

@@ -19,7 +19,6 @@ class KunstmaanFixturesExtensionTest extends AbstractPrependableExtensionTestCas
         return [new KunstmaanFixturesExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('empty_extension', true);

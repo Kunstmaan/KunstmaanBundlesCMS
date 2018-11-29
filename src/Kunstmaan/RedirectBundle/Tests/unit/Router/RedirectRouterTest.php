@@ -11,7 +11,6 @@ use Symfony\Component\Routing\RequestContext;
 
 /**
  * Class RedirectRouterTest
- * @package Tests\Kunstmaan\RedirectBundle\Router
  */
 class RedirectRouterTest extends PHPUnit_Framework_TestCase
 {

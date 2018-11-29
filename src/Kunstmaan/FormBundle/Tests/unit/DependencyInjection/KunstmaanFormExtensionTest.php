@@ -19,7 +19,6 @@ class KunstmaanFormExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanFormExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('kernel.root_dir', '/somewhere/over/the/rainbow');

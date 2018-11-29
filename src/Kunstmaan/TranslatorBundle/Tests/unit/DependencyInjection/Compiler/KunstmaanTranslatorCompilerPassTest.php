@@ -24,7 +24,7 @@ class KunstmaanTranslatorCompilerPassTest extends AbstractCompilerPassTestCase
         $this->setDefinition($svcId, $svc);
 
         $this->setDefinition('kunstmaan_translator.service.translator.translator', new Definition(null, [
-            'container', 'formatter', 'default_locale', 'replaceMe', 'options'
+            'container', 'formatter', 'default_locale', 'replaceMe', 'options',
         ]));
 
         $this->setDefinition('kunstmaan_translator.service.exporter.exporter', new Definition());

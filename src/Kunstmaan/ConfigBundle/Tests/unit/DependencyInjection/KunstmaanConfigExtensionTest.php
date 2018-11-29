@@ -19,7 +19,6 @@ class KunstmaanConfigExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanConfigExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->load();

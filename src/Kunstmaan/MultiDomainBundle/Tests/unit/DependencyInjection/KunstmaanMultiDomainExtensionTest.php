@@ -19,10 +19,8 @@ class KunstmaanMultiDomainExtensionTest extends AbstractPrependableExtensionTest
         return [new KunstmaanMultiDomainExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
-
         $this->load([
             'hosts' => [
                 [

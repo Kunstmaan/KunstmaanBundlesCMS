@@ -28,6 +28,7 @@ final class ImportTranslationsFromFileCommand extends Command
 
     /**
      * ImportTranslationsFromFileCommand constructor.
+     *
      * @param Importer   $importer
      * @param Translator $translator
      * @param            $locales
@@ -55,10 +56,8 @@ final class ImportTranslationsFromFileCommand extends Command
     /**
      * @throws LogicException
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -66,7 +65,7 @@ final class ImportTranslationsFromFileCommand extends Command
         $force = $input->getOption('force');
 
         $this->importer->importFromSpreadsheet($file, $this->locales, $force);
-        if($force) {
+        if ($force) {
             $confirmation = $this->translator->trans('kuma_translator.command.import.flash.force_success');
         } else {
             $confirmation = $this->translator->trans('kuma_translator.command.import.flash.success');

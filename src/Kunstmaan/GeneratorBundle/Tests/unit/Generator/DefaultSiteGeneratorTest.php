@@ -1,13 +1,13 @@
 <?php
 
 namespace Kunstmaan\GeneratorBundle\Tests\Generator;
+
 use Kunstmaan\GeneratorBundle\Generator\DefaultSiteGenerator;
 use Kunstmaan\GeneratorBundle\Helper\CommandAssistant;
 use Symfony\Component\Filesystem\Filesystem;
 
 class DefaultSiteGeneratorTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGenerator()
     {
         $filesystem = new Filesystem();

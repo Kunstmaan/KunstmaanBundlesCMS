@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SlugSecurityEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class SlugSecurityEventTest extends PHPUnit_Framework_TestCase
 {

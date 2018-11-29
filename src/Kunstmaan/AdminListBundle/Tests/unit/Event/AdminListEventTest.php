@@ -11,12 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AdminListEventTest
- * @package Tests\Kunstmaan\AdminListBundle\Event
  */
 class AdminListEventTest extends PHPUnit_Framework_TestCase
 {
-
-
     public function testGetSet()
     {
         $date = new DateTime();
@@ -34,5 +31,4 @@ class AdminListEventTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Response::class, $event->getResponse());
         $this->assertTrue($event->isPropagationStopped());
     }
-
 }

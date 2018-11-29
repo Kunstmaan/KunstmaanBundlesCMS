@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class NodeSearchTest
- * @package Tests\Kunstmaan\NodeSearchBundle\Entity
  */
 class NodeSearchTest extends PHPUnit_Framework_TestCase
 {

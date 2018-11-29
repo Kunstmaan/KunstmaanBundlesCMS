@@ -13,7 +13,6 @@ use Kunstmaan\FormBundle\Entity\FormSubmissionFieldTypes\BooleanFormSubmissionFi
 use Kunstmaan\NodeBundle\Entity\Node;
 use Kunstmaan\NodeBundle\Entity\NodeTranslation;
 use Symfony\Component\Translation\Translator;
-use Kunstmaan\FormBundle\Tests\Stubs\TestConfiguration;
 
 class FakeFormSubmission extends FormSubmission
 {
@@ -66,7 +65,6 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             $field,
         ]));
 
-
         $submissions = [
             [$sub],
             [new FormSubmission()],
@@ -81,7 +79,7 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->willReturn($submissions);
 
         $methods = [
-            'select', 'from', 'innerJoin', 'andWhere', 'setParameter', 'addOrderBy'
+            'select', 'from', 'innerJoin', 'andWhere', 'setParameter', 'addOrderBy',
         ];
         foreach ($methods as $method) {
             $queryBuilder->expects($this->any())
@@ -94,7 +92,7 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
             ->willReturn($query);
 
         $configuration = Stub::make(Configuration::class, [
-            'getQuoteStrategy' => null
+            'getQuoteStrategy' => null,
         ]);
         $repository = Stub::make(EntityRepository::class, [
             'find' => null,
@@ -104,12 +102,12 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
         /** @var \Doctrine\ORM\EntityManager $emMock */
         $emMock = Stub::make(EntityManager::class, [
             'getRepository' => $repository,
-            'getClassMetaData' => (object)['name' => 'aClass'],
+            'getClassMetaData' => (object) ['name' => 'aClass'],
             'getConfiguration' => $configuration,
             'clear' => null,
             'createQueryBuilder' => $queryBuilder,
             'persist' => null,
-            'flush' => null
+            'flush' => null,
         ]);
 
         return $emMock;
@@ -140,6 +138,5 @@ class FormSubmissionExportListConfiguratorTest extends \PHPUnit_Framework_TestCa
         $first = $first[0];
         $this->assertArrayHasKey('check', $first);
         $this->assertEquals('true', $first['check']);
-
     }
 }

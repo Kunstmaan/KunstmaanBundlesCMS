@@ -9,7 +9,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class TagTest
- * @package Tests\Kunstmaan\SiteMapBundle\Entity
  */
 class TagTest extends PHPUnit_Framework_TestCase
 {
@@ -31,6 +30,5 @@ class TagTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DateTime::class, $object->getUpdatedAt());
         $this->assertEquals(TagAdminType::class, $object->getDefaultAdminType());
         $this->assertEquals('Nigel Farage', $object->__toString());
-
     }
 }

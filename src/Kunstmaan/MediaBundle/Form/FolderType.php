@@ -40,7 +40,7 @@ class FolderType extends AbstractType
                 ChoiceType::class,
                 array(
                     'choices' => Folder::allTypes(),
-                    'label' => 'media.folder.addsub.form.rel'
+                    'label' => 'media.folder.addsub.form.rel',
                 )
             )
             ->add(

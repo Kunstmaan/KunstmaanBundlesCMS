@@ -51,6 +51,7 @@ class SlugRouter implements RouterInterface
 
     /**
      * @var ContainerInterface
+     *
      * @deprecated in KunstmaanNodeBundle 5.1 and will be removed in KunstmaanNodeBundle 6.0.
      */
     protected $container;
@@ -68,8 +69,7 @@ class SlugRouter implements RouterInterface
         RequestStack $requestStack = null,
         EntityManagerInterface $em = null,
         $adminKey = null
-    )
-    {
+    ) {
         $this->slugPattern = "[a-zA-Z0-9\-_\/]*";
 
         if ($domainConfiguration instanceof ContainerInterface) {

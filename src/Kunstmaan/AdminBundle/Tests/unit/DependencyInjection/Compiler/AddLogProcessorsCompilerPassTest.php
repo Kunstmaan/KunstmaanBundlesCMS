@@ -28,7 +28,7 @@ class AddLogProcessorsCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $svcId,
             'pushProcessor',
-            [ new Reference($svcId)]
+            [new Reference($svcId)]
         );
     }
 }

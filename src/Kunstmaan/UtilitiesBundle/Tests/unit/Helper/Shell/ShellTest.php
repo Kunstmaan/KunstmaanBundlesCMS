@@ -6,7 +6,6 @@ use Kunstmaan\UtilitiesBundle\Helper\Shell\Shell;
 
 /**
  * Class ShellTest
- * @package Tests\Kunstmaan\UtilitiesBundle\Helper\Cipher
  */
 class ShellTest extends \PHPUnit_Framework_TestCase
 {

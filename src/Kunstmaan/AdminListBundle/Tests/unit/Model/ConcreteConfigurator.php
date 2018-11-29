@@ -1,4 +1,5 @@
 <?php
+
 namespace Kunstmaan\AdminListBundle\Tests\unit\Model;
 
 use ArrayIterator;
@@ -33,29 +34,31 @@ class ConcreteConfigurator extends AbstractAdminListConfigurator
 
     /**
      * @param array|object $item
+     *
      * @return array
      */
     public function getEditUrlFor($item)
     {
         return [
-            'Xyz' =>  [
+            'Xyz' => [
                 'path' => 'xyz_admin_xyz_edit',
                 'params' => [],
-            ]
+            ],
         ];
     }
 
     /**
      * @param array|object $item
+     *
      * @return array
      */
     public function getDeleteUrlFor($item)
     {
         return [
-            'Xyz' =>  [
+            'Xyz' => [
                 'path' => 'xyz_admin_xyz_delete',
                 'params' => [],
-            ]
+            ],
         ];
     }
 

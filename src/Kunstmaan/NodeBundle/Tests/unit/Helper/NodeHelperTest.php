@@ -2,7 +2,6 @@
 
 namespace Kunstmaan\NodeBundle\Tests\Helper;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -80,7 +79,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
     public function testUpdatePage()
     {
         /**
-         * @var TestPage $page
+         * @var TestPage
          * @var NodeTranslation $nodeTranslation
          */
         list($page, $nodeTranslation, $node) = $this->createNodeEntities();
@@ -121,7 +120,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         list($homePage, , $nodeHomePage) = $this->createNodeEntities('Homepage');
 
         /**
-         * @var TestPage $page
+         * @var TestPage
          * @var NodeTranslation $nodeTranslationChildPage
          */
         list($page, $nodeTranslationChildPage, $nodeChildPage) = $this->createNodeEntities($title);
@@ -142,7 +141,6 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($user)
             )
             ->willReturn($nodeChildPage);
-
 
         $nodeTranslationRepository = $this->getMockBuilder(NodeTranslationRepository::class)
             ->disableOriginalConstructor()
@@ -182,14 +180,14 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
     public function testDeletePage()
     {
         /**
-         * @var Node $nodeHomePage
+         * @var Node
          * @var NodeTranslation $nodeTranslationHomePage
          */
         list($homePage, $nodeTranslationHomePage, $nodeHomePage) = $this->createNodeEntities('Homepage');
         $nodeVersionHomePage = $nodeTranslationHomePage->getPublicNodeVersion();
 
         /**
-         * @var TestPage $page
+         * @var TestPage
          * @var NodeTranslation $nodeTranslationChildPage
          */
         list($page, $nodeTranslationChildPage, $nodeChildPage) = $this->createNodeEntities('Test page');
@@ -205,7 +203,6 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
                 [$this->equalTo(Events::POST_DELETE), $this->equalTo(new NodeEvent($nodeChildPage, $nodeTranslationChildPage, $nodeVersionChildPage, $page))],
                 [$this->equalTo(Events::POST_DELETE), $this->equalTo(new NodeEvent($nodeHomePage, $nodeTranslationHomePage, $nodeVersionHomePage, $homePage))]
             );
-        ;
 
         $result = $this->nodeHelper->deletePage($nodeHomePage, $this->locale);
 
@@ -288,7 +285,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
                 $this->nodeAdminPublisher,
                 $this->tokenStorage,
                 $this->cloneHelper,
-                $this->eventDispatcher
+                $this->eventDispatcher,
             ])
             ->setMethods(['createDraftVersion'])
             ->getMock();
@@ -303,7 +300,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
     public function testCreateDraftVersion()
     {
         /**
-         * @var TestPage $page
+         * @var TestPage
          * @var NodeTranslation $nodeTranslation
          */
         list($page, $nodeTranslation, $node) = $this->createNodeEntities();
@@ -382,7 +379,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $targetPage = new TestPage();
 
         /**
-         * @var TestPage $sourcePage
+         * @var TestPage
          * @var NodeTranslation $sourceNodeTranslation
          */
         list($sourcePage, $sourceNodeTranslation, $node) = $this->createNodeEntities();
@@ -444,9 +441,9 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         list(, $nodeTranslationHomePage, $nodeHomePage) = $this->createNodeEntities('Homepage');
 
         /**
-         * @var TestPage $sourcePage
+         * @var TestPage
          * @var NodeTranslation $sourceNodeTranslation
-         * @var Node $node
+         * @var Node            $node
          */
         list($sourcePage, $sourceNodeTranslation, $node) = $this->createNodeEntities();
         $node->setParent($nodeHomePage);
@@ -488,7 +485,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
         $targetPage = new TestPage();
 
         /**
-         * @var TestPage $sourcePage
+         * @var TestPage
          * @var NodeTranslation $sourceNodeTranslation
          */
         list($sourcePage, $sourceNodeTranslation, $node) = $this->createNodeEntities();
@@ -640,6 +637,7 @@ class NodeHelperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $title
+     *
      * @return array
      */
     private function createNodeEntities($title = 'Test page')

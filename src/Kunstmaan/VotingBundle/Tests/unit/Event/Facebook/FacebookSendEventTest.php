@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FacebookSendEventTest
- * @package Tests\Kunstmaan\NodeBundle\Event
  */
 class FacebookSendEventTest extends PHPUnit_Framework_TestCase
 {

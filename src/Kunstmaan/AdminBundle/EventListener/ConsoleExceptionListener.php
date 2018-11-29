@@ -18,6 +18,7 @@ class ConsoleExceptionListener
 
     /**
      * ConsoleExceptionListener constructor.
+     *
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
@@ -31,7 +32,7 @@ class ConsoleExceptionListener
     public function onConsoleException(ConsoleExceptionEvent $event)
     {
         // if the newer error event exists, don't bother with the old exception, our subscriber will handle this
-        if (class_exists(ConsoleErrorEvent::class)){
+        if (class_exists(ConsoleErrorEvent::class)) {
             return;
         }
 

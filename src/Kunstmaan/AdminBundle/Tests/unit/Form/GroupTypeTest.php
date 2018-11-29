@@ -2,14 +2,12 @@
 
 namespace Kunstmaan\AdminBundle\Tests\Form;
 
-use Kunstmaan\AdminBundle\Form\DashboardConfigurationType;
 use Kunstmaan\AdminBundle\Form\GroupType;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Form\FormBuilder;
 
 /**
  * Class GroupTypeTest
- * @package Tests\Kunstmaan\AdminBundle\Form
  */
 class GroupTypeTest extends PHPUnit_Framework_TestCase
 {
@@ -23,7 +21,7 @@ class GroupTypeTest extends PHPUnit_Framework_TestCase
             ->method('add')
             ->willReturn($builder);
 
-        /** @var FormBuilder $builder */
+        /* @var FormBuilder $builder */
         $type->buildForm($builder, []);
 
         $this->assertEquals('group', $type->getBlockPrefix());

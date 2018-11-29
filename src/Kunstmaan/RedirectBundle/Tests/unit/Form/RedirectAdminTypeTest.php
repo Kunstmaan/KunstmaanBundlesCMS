@@ -8,7 +8,6 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * Class RedirectAdminTypeTest
- * @package Tests\Kunstmaan\RedirectBundle\Form
  */
 class RedirectAdminTypeTest extends PHPUnit_Framework_TestCase
 {

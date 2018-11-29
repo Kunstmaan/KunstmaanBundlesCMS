@@ -19,7 +19,6 @@ class KunstmaanAdminExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanAdminExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('kernel.logs_dir', '/somewhere/over/the/rainbow');

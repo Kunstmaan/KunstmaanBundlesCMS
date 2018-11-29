@@ -87,6 +87,7 @@ class InitAclCommand extends ContainerAwareCommand
         foreach ($nodes as $node) {
             ++$count;
             $objectIdentity = $this->oidStrategy->getObjectIdentity($node);
+
             try {
                 $this->aclProvider->deleteAcl($objectIdentity);
             } catch (AclNotFoundException $e) {

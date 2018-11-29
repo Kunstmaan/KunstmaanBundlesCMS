@@ -2,9 +2,7 @@
 
 namespace Kunstmaan\FormBundle\Tests\Form;
 
-use Kunstmaan\FormBundle\Entity\PageParts\ChoicePagePart;
 use Kunstmaan\FormBundle\Entity\PageParts\EmailPagePart;
-use Kunstmaan\FormBundle\Form\ChoicePagePartAdminType;
 use Kunstmaan\FormBundle\Form\EmailPagePartAdminType;
 use Symfony\Component\Form\Test\TypeTestCase;
 

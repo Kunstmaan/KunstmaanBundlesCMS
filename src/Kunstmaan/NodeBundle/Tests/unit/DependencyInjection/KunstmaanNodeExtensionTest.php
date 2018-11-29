@@ -19,7 +19,6 @@ class KunstmaanNodeExtensionTest extends AbstractPrependableExtensionTestCase
         return [new KunstmaanNodeExtension()];
     }
 
-
     public function testCorrectParametersHaveBeenSet()
     {
         $this->container->setParameter('twig.form.resources', []);

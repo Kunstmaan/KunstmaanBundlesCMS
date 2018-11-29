@@ -180,7 +180,6 @@ class NodeTranslationTest extends PHPUnit_Framework_TestCase
 
     public function testGetSetRef()
     {
-
         $entity = new NodeVersion();
         $entity->setType(NodeVersion::PUBLIC_VERSION);
 

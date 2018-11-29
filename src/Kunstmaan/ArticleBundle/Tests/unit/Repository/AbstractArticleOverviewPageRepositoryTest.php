@@ -10,11 +10,12 @@ use Kunstmaan\ArticleBundle\Repository\AbstractArticleOverviewPageRepository;
 use PHPUnit_Framework_TestCase;
 use Tests\DoctrineExtensions\Taggable\Fixtures\Article;
 
-class Repo extends AbstractArticleOverviewPageRepository {}
+class Repo extends AbstractArticleOverviewPageRepository
+{
+}
 
 /**
  * Class AbstractArticleOverviewPageRepositoryTest
- * @package Tests\Kunstmaan\ArticleBundle\Repository
  */
 class AbstractArticleOverviewPageRepositoryTest extends PHPUnit_Framework_TestCase
 {

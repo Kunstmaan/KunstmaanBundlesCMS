@@ -63,9 +63,9 @@ class ActionsMenuBuilderTest extends PHPUnit_Framework_TestCase
         /** @var \Doctrine\ORM\EntityManager $emMock */
         $emMock = Stub::make(EntityManager::class, [
             'getRepository' => $repository,
-            'getClassMetaData' => (object)['name' => 'aClass'],
+            'getClassMetaData' => (object) ['name' => 'aClass'],
             'persist' => null,
-            'flush' => null
+            'flush' => null,
         ]);
 
         return $emMock;

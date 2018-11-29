@@ -30,7 +30,7 @@ class AbstractConfigTest extends PHPUnit_Framework_TestCase
 {
     public function testGettersAndSetters()
     {
-        $entity = new Config();;
+        $entity = new Config();
 
         $this->assertTrue(is_array($entity->getRoles()));
         $this->assertEquals('ROLE_SUPER_ADMIN', $entity->getRoles()[0]);

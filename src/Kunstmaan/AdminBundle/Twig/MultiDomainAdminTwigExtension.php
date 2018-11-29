@@ -38,8 +38,8 @@ class MultiDomainAdminTwigExtension extends Twig_Extension
      * Render multidomain switcher widget.
      *
      * @param Twig_Environment $env
-     * @param string            $route      The route
-     * @param array             $parameters The route parameters
+     * @param string           $route      The route
+     * @param array            $parameters The route parameters
      *
      * @return string
      */
@@ -83,6 +83,7 @@ class MultiDomainAdminTwigExtension extends Twig_Extension
     public function switchedHostIsCurrent()
     {
         $hostInfo = $this->getSwitchedHost();
+
         return $this->domainConfiguration->getHost() === $hostInfo['host'];
     }
 
@@ -93,6 +94,4 @@ class MultiDomainAdminTwigExtension extends Twig_Extension
     {
         return $this->domainConfiguration->getHosts();
     }
-
 }
-
